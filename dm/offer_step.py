@@ -235,7 +235,7 @@ class dm_offer_document(osv.osv):
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
-        'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
+        'copywriter_id' : fields.many2one('res.partner', 'Copywriter', domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
         'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
     }

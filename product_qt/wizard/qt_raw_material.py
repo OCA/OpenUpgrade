@@ -142,3 +142,5 @@ class wizard_qty_test(wizard.interface):
 
     }
 wizard_qty_test('qty_test')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

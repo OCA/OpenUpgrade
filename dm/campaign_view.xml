@@ -1084,6 +1084,16 @@
     </record>
     <menuitem name="Direct Marketing/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
 
+    <record model="ir.actions.act_window" id="action_campaign_mygroup_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.group</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_campaign_group_tree"/>
+        <field name="domain">[('create_uid','=',uid)]</field>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/My Campaigns Groups" id="menu_action_campaign_mygroup_form" action="action_campaign_mygroup_form"/>
+
     <!--
     =======================================================
     Campaign Type

@@ -447,6 +447,7 @@
 						<field name="recommended_trademark"/>
 						<field name="preoffer_type" select="2"/>
 						<field name="preoffer_offer_id" select="2"/>
+						<field name="offer_responsible_id"/>
 						<field name="active" select="2"/>
 						<newline/>
 						<separator string="Categories" colspan="4"/>
@@ -488,7 +489,7 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="action_preoffer_form">
-		<field name="name">PreOffers</field>
+		<field name="name">Offer Ideas</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -502,7 +503,6 @@
 		<field name="view_id" ref="view_offer_tree"/>
 		<field name="act_window_id" ref="action_preoffer_form"/>
 	</record>
-
 	<record model="ir.actions.act_window.view" id="action_preoffer_form_view">
 		<field name="view_mode">form</field>
 		<field name="sequence">10</field>
@@ -510,6 +510,29 @@
 		<field name="act_window_id" ref="action_preoffer_form"/>
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offer Ideas" id="menu_action_preoffer_form" action="action_preoffer_form"/>
+
+	<record model="ir.actions.act_window" id="action_mypreoffer_form">
+		<field name="name">My Offer Ideas</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.offer</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('type','=','preoffer'), ('offer_responsible_id','=',uid)]</field>
+		<field name="context">{'type':'preoffer'}</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_mypreoffer_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="sequence">1</field>
+		<field name="view_id" ref="view_offer_tree"/>
+		<field name="act_window_id" ref="action_mypreoffer_form"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_mypreoffer_form_view">
+		<field name="view_mode">form</field>
+		<field name="sequence">2</field>
+		<field name="view_id" ref="view_preoffer_form"/>
+		<field name="act_window_id" ref="action_mypreoffer_form"/>
+	</record>
+	<menuitem name="Direct Marketing/Offers/My Offer Ideas" id="menu_action_mypreoffer_form" action="action_mypreoffer_form"/>
 
 	<!--
 	======================

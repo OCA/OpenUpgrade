@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -72,6 +72,56 @@ import datetime
 
 class profile_game_retail(osv.osv):
     _name="profile.game.retail"
+
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
+        res = super(profile_game_retail,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
+        p_id=self.search(cr,uid,[])
+        p_br=self.browse(cr,uid,p_id)
+        invisible=False
+        if p_br[0].hr_user_id:
+            hr_name=p_br[0].hr_user_id.name
+        else:
+            hr_name=''
+        if p_br[0].state=='3':
+            invisible=True
+        res['arch']="""<?xml version="1.0" encoding="utf-8"?>
+                <form string="Game Details">
+                    <newline/>
+                    <group col="2" colspan="2">
+                        <separator colspan="2" string="Finance Manager: %s"/>
+                        <field name="expenses_forecast"/>
+                        <field name="current_treasury"/>
+                        <field name="total_refund"/>
+                        <field name="total_current_refund"/>
+                        <button colspan="2" string="Loans" type="object"/>
+                    </group>
+                    <group col="2" colspan="2" invisible ="%s">
+                        <separator colspan="2" string="HR Manager: %s"/>
+                        <field name="hr_budget"/>
+                    </group>
+                    <group col="2" colspan="2">
+                        <separator colspan="2" string="Sales Manager: %s"/>
+                        <field name="last_total_sale"/>
+                        <field name="sale_forcast"/>
+                        <field name="margin_forcast"/>
+                    </group>
+                    <group col="2" colspan="2">
+                        <separator colspan="2" string="Logistic Manager :%s"/>
+                        <field name="last_avg_stock"/>
+                        <field name="avg_stock_forcast"/>
+                        <field name="cost_purchase_forcast"/>
+                    </group>
+                    <newline/>
+                    <separator colspan="4" string="Objectives Achievement"/>
+                    <field name="last_turnover"/>
+                    <field name="total_benefit"/>
+                    <field name="total_sold_products"/>
+                    <field name="turnover_growth"/>
+                    <field name="benefits_growth"/>
+                    <field name="products_growth"/>
+                    <field colspan="4" name="note"/>
+                </form>"""%(p_br[0].finance_user_id.name,invisible,hr_name,p_br[0].sales_user_id.name,p_br[0].logistic_user_id.name)
+        return res
     def _calculate_detail(self, cr, uid, ids, field_names, arg, context):
         res = {}
         print field_names
@@ -280,10 +330,13 @@ class profile_game_retail(osv.osv):
                         else:
                             res[val.id][field]=((product_sold[0] -product_sold[1])*100)/product_sold[1]
         return res
-
     _columns = {
         'name':fields.char('Name',size=64),
-        'players':fields.selection([('3','3'),('4','4')],'Number of Players'),
+        'state':fields.selection([('3','3'),('4','4')],'Number of Players'),
+        'finance_user_id':fields.many2one('res.users','Name of Financial Manager',readonly=True),
+        'logistic_user_id':fields.many2one('res.users','Name of Logistic Manager', readonly=True),
+        'sales_user_id':fields.many2one('res.users','Name of Sales Manager',readonly=True),
+        'hr_user_id':fields.many2one('res.users','Name of HR Manager',readonly=True,invisible=False),
         'objectives':fields.selection([
             ('on_max_turnover','Maximise Turnover of Last Year'),
             ('on_max_cumulative','Maximise Cumulative Benefit'),
@@ -351,7 +404,7 @@ class profile_game_config_wizard(osv.osv_memory):
         'years': lambda *args: '5',
         'objectives': lambda *args: 'on_max_turnover',
         'state': lambda *args: '3',
-    }    
+    }
     def action_cancel(self,cr,uid,ids,conect=None):
         return {
             'view_type': 'form',
@@ -369,12 +422,12 @@ class profile_game_config_wizard(osv.osv_memory):
             if res.get('id',False):
                 del res['id']
             game_vals={
-                'players':res['state'],
+                'state':res['state'],
                 'objectives':res['objectives'],
                 'years':res['years'],
                 'difficulty':res['difficulty'],
             }
-            game_obj.create(cr,uid,game_vals,context=context)
+            game_id=game_obj.create(cr,uid,game_vals,context=context)
             lower=-2
             years=int(res['years'])
             players=int(res['state'])
@@ -398,6 +451,15 @@ class profile_game_config_wizard(osv.osv_memory):
                     continue
                 user_ids=user_obj.name_search(cr,uid,user_name)
                 user_id=len(user_ids) and user_ids[0][0] or False
+                if user_name =='finance':
+                    game_vals['finance_user_id']= user_id
+                if user_name =='sales':
+                    game_vals['sales_user_id']=user_id
+                if user_name =='logistic':
+                    game_vals['logistic_user_id']=user_id
+                if user_name =='hr':
+                    game_vals['hr_user_id']=user_id
+                game_obj.write(cr,uid,game_id,game_vals)
                 name=res.get(user_name+'_name','')
                 if name:
                     email=res.get(user_name+'_email','')
