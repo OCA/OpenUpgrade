@@ -57,30 +57,30 @@ def _get_cases(self, cr, uid, data, context):
                     'default':get_default(prod_obj.id)}
     arch_lst.append('\n')
 
-    for case in prod_obj.raw_m_test:
-        arch_lst.append('<label colspan="4" string="%s :" />' % case.name.name)
-        arch_lst.append('\n')
-        arch_lst.append('<separator colspan="4"/>')
-        arch_lst.append('\n')
-        arch_lst.append('<field name="min%s" colspan="1"/>' % (case.name.id,))
-        fields['min'+'%s'%case.name.id]={'string':'Min Limit',
-                                                'type':'float','readonly':True,'default':get_default(case.min_limit)}
-        arch_lst.append('<field name="max%s" colspan="1"/>' % (case.name.id,))
-        fields['max'+'%s'%case.name.id]={'string':'Max Limit',
-                                                'type':'float','readonly':True,'default':get_default(case.max_limit)}
-        arch_lst.append('<field name="actual%s" colspan="1"/>' % (case.name.id,))
-        fields['actual'+'%s'%case.name.id]={'string':'Actual','type':'float'}
-        arch_lst.append('<field name="uom%s" colspan="1"/>' % (case.name.id,))
-        fields['uom'+'%s'%case.name.id] = {'string': 'UOM','readonly':True,
-                    'type': 'many2one', 'relation': 'product.uom',
-                    'default':get_default(case.uom.id)}
+    if prod_obj.raw_m_test:
 
-        arch_lst.append('<field name="active%s" colspan="1"/>' % (case.name.id,))
-        fields['active'+'%s'%case.name.id] = {'string': 'Active',
-                    'type': 'boolean'}
+        for case in prod_obj.raw_m_test:
+            arch_lst.append('<label colspan="4" string="%s :" />' % case.name.name)
+            arch_lst.append('\n')
+            arch_lst.append('<separator colspan="4"/>')
+            arch_lst.append('\n')
+            arch_lst.append('<field name="min%s" colspan="1"/>' % (case.name.id,))
+            fields['min'+'%s'%case.name.id]={'string':'Min Limit',
+                                                    'type':'float','readonly':True,'default':get_default(case.min_limit)}
+            arch_lst.append('<field name="max%s" colspan="1"/>' % (case.name.id,))
+            fields['max'+'%s'%case.name.id]={'string':'Max Limit',
+                                                    'type':'float','readonly':True,'default':get_default(case.max_limit)}
+            arch_lst.append('<field name="actual%s" colspan="1"/>' % (case.name.id,))
+            fields['actual'+'%s'%case.name.id]={'string':'Actual','type':'float'}
+            arch_lst.append('<field name="uom%s" colspan="1"/>' % (case.name.id,))
+            fields['uom'+'%s'%case.name.id] = {'string': 'UOM','readonly':True,
+                        'type': 'many2one', 'relation': 'product.uom',
+                        'default':get_default(case.uom.id)}
 
-        arch_lst.append('\n')
-
+            arch_lst.append('<field name="active%s" colspan="1"/>' % (case.name.id,))
+            fields['active'+'%s'%case.name.id] = {'string': 'Active',
+                        'type': 'boolean'}
+            arch_lst.append('\n')
 
     arch_lst.append('\n')
     arch_lst.append('</form>')
@@ -97,7 +97,7 @@ def check(self, cr, uid, data, context):
     if prod_obj.raw_m_test:
         flag=False
         res={}
-        res={'product':data['form']['product'],'tester':data['form']['tester'],'test_date':data['form']['test_date']}
+        res={'type':'rw_mat','product':data['form']['product'],'tester':data['form']['tester'],'test_date':data['form']['test_date']}
         test_id=test_obj.create(cr,uid,res)
 
         for case in prod_obj.raw_m_test:

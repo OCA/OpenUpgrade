@@ -85,12 +85,11 @@ class mrp_repair(osv.osv):
     
     def onchange_partner_id(self, cr, uid, ids, part):
         if not part:
-            return {'value':{'address_id': False ,'partner_invoice_id' : False }}
+            return {'value':{'address_id': False ,'partner_invoice_id' : False , 'pricelist_id' : self.pool.get('product.pricelist').search(cr,uid,[('type','=','sale')])[0]}}
         addr = self.pool.get('res.partner').address_get(cr, uid, [part],  ['delivery','invoice','default'])
-#        pricelist = self.pool.get('res.partner').property_get(cr, uid,
-#                        part,property_pref=['property_product_pricelist']).get('property_product_pricelist',False)
-#        return {'value':{'address_id': addr['delivery'], 'partner_invoice_id' :  addr['invoice'] ,  'pricelist_id': pricelist}}
-        return {'value':{'address_id': addr['invoice'], 'partner_invoice_id' :  addr['invoice'] }}
+        partner = self.pool.get('res.partner').browse(cr, uid,part)
+        pricelist = partner.property_product_pricelist and partner.property_product_pricelist.id or False
+        return {'value':{'address_id': addr['delivery'], 'partner_invoice_id' :  addr['invoice'] ,  'pricelist_id': pricelist}}
 
     
     def onchange_lot_id(self, cr, uid, ids, lot ):
@@ -141,12 +140,16 @@ class mrp_repair(osv.osv):
     def action_invoice_create(self, cr, uid, ids, grouped=False, states=['2binvoiced','done']):
         inv_id=False
         for order in self.browse(cr, uid, ids, context={}):
-            if (order.invoice_method != 'none') and (order.partner_id.id) and (order.address_id.id) and (order.state in states):
+            if order.invoice_id:
+                return False
+            if not (order.partner_id.id and order.address_id.id):
+                return False
+            if (order.invoice_method != 'none'):
                 a = order.partner_id.property_account_receivable.id
                 inv = {
-                    'name': order.product_id.name,
+                    'name': 'Repair: '+order.product_id.name,
                     'type': 'out_invoice',
-                    'reference': "P%dSO%d"%(order.partner_id.id,order.id),
+                    'reference': "Repair%dP%d"%(order.id,order.product_id.id),
                     'account_id': a,
                     'partner_id': order.partner_id.id,
                     'address_invoice_id': order.address_id.id,
@@ -155,6 +158,7 @@ class mrp_repair(osv.osv):
                 }
                 inv_obj = self.pool.get('account.invoice')
                 inv_id = inv_obj.create(cr, uid, inv)
+                self.write(cr, uid, order.id , {'invoice_id' : inv_id})
                 if order.operations:
                     for operation in order.operations:
                         invoice_line_id=self.pool.get('account.invoice.line').create(cr, uid, {
@@ -183,7 +187,8 @@ class mrp_repair(osv.osv):
                 return inv_id
             else:
                 return False
-        
+    
+
     def action_invoice_cancel(self, cr, uid, ids, context={}):
         for repair in self.browse(cr, uid, ids):
             for line in repair.operations:
@@ -196,7 +201,7 @@ class mrp_repair(osv.osv):
                 self.pool.get('sale.order.line').write(cr, uid, [line.id], {'invoiced': invoiced})
         self.write(cr, uid, ids, {'state':'invoice_except', 'invoice_ids':False})
         return True
-
+    
     def action_ship_create(self, cr, uid, ids, *args):
         picking_id=False
         company = self.pool.get('res.users').browse(cr, uid, uid).company_id
@@ -338,10 +343,12 @@ class mrp_repair_lines(osv.osv):
     def _get_price(self, cr, uid, ids, name, arg, context={}):
         res = {}
         for val in self.browse(cr, uid, ids):
+            res[val.id] = {}
             if val.repair_id:
                 current_date = time.strftime('%Y-%m-%d')
                 if current_date < val.repair_id.guarantee_limit:
-                    res[val.id] = 0.0
+                    res[val.id]['price_unit'] = 0.0
+                    res[val.id]['invoice'] = False
                 if current_date >= val.repair_id.guarantee_limit:
                     price = 0.0
                     pricelist = val.repair_id.pricelist_id.id
@@ -355,7 +362,8 @@ class mrp_repair_lines(osv.osv):
                                 "You have to change either the product, the quantity or the pricelist."
                             }
                     else:
-                        res[val.id] = price
+                        res[val.id]['price_unit'] = price
+                        res[val.id]['invoice'] = True
         return res
     
     def _amount_line_net(self, cr, uid, ids, field_name, arg, context):
@@ -363,7 +371,7 @@ class mrp_repair_lines(osv.osv):
         for line in self.browse(cr, uid, ids):
             res[line.id] = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
         return res
-
+    
     def _amount_line(self, cr, uid, ids, field_name, arg, context):
         res = {}
         cur_obj=self.pool.get('res.currency')
@@ -376,12 +384,13 @@ class mrp_repair_lines(osv.osv):
                 'name' : fields.char('Name',size=24),
                 'repair_id': fields.many2one('mrp.repair', 'Repair Order Ref',ondelete='cascade', select=True),
                 'type': fields.selection([('add','Add'),('remove','Remove')],'Type'),
-                'invoice': fields.boolean('Invoice'),
+#                'invoice': fields.boolean('Invoice', readonly=True),
+                'invoice': fields.function(_get_price,  method=True, store= True, type='boolean', string='Invoice', multi='invoice'),
                 'delay': fields.float('Delivery Delay', required=True),
                 'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok','=',True)],  required=True),
                 'invoiced': fields.boolean('Invoiced'),
                 'procurement_id': fields.many2one('mrp.procurement', 'Procurement'),
-                'price_unit': fields.function(_get_price,  method=True, store= True, type='float', string='Price'),
+                'price_unit': fields.function(_get_price,  method=True, store= True, type='float', string='Price', multi='price_unit'),
                 'price_net': fields.function(_amount_line_net, method=True, string='Net Price'),
                 'price_subtotal': fields.function(_amount_line, method=True, string='Subtotal'),
                 'tax_id': fields.many2many('account.tax', 'sale_order_tax', 'order_line_id', 'tax_id', 'Taxes'),

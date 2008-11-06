@@ -59,14 +59,11 @@ def _makeInvoices(self, cr, uid, data, context):
         }
         
     newinv = order_obj.action_invoice_create(cr, uid, data['ids'], data['form']['grouped'])
+    
     if not newinv:
         raise wizard.except_wizard(_('Warning'),
                         _('You must select Partner and Delivery address'))
-    else:
-        for id in data['ids']:
-            wf_service = netsvc.LocalService("workflow")
-            wf_service.trg_validate(uid, 'mrp.repair', id, 'make_invoice', cr)
-
+        
     return {
         'domain': [('id','=', newinv)],
         'name': 'Invoices',

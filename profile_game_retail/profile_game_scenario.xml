@@ -8,14 +8,14 @@
 Description of the scenario.
         </field>
         <field name="state">draft</field>
-    </record>        
-            
-            
+    </record>
+
+
 
 	<record model="game.scenario.step" id="step_invoice_print">
 		<field name="name">Print Invoice</field>
-        <field name="scenario_id" ref="retail_phase1"/>        
-        <field name="menu_id" ref="account.invoice_form"/>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="account.menu_action_invoice_tree1"/>
         <field name="description">
 In this phase, you must print Invoice.
         </field>
@@ -34,13 +34,13 @@ In this phase, you must print Invoice.
         <field name="post_process_object">profile.game.retail.phase1</field>
         <field name="post_process_method">post_process_invoice_print</field>
         <field name="state">draft</field>
-        
+
     </record>
 
 	<record model="game.scenario.step" id="step_invoice_create">
 		<field name="name">Confirm Invoice</field>
-        <field name="scenario_id" ref="retail_phase1"/>        
-        <field name="menu_id" ref="account.invoice_form"/>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="account.menu_action_invoice_tree1"/>
         <field name="description">
 In this phase, you must confirm Invoice.
         </field>
@@ -58,14 +58,14 @@ In this phase, you must confirm Invoice.
 
         <field name="post_process_object">profile.game.retail.phase1</field>
         <field name="post_process_method">post_process_invoice_create</field>
-        <field name="state">draft</field>	
-        <field name="step_next_ids" eval="[(6,0,[ref('step_invoice_print')])]"/>	
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_invoice_print')])]"/>
     </record>
 
    <record model="game.scenario.step" id="step_deliver">
 		<field name="name">Deliver Products</field>
-        <field name="scenario_id" ref="retail_phase1"/>        
-        <field name="menu_id" ref="stock.view_picking_out_form"/>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="stock.menu_action_picking_tree"/>
         <field name="description">
 In this phase, you must deliver Products.
         </field>
@@ -83,15 +83,15 @@ In this phase, you must deliver Products.
 
         <field name="post_process_object">profile.game.retail.phase1</field>
         <field name="post_process_method">post_process_deliver</field>
-        <field name="state">draft</field>	
-        <field name="step_next_ids" eval="[(6,0,[ref('step_invoice_create')])]"/>	
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_invoice_create')])]"/>
     </record>
 
 
 	<record model="game.scenario.step" id="step_receive">
 		<field name="name">Receive Products</field>
-        <field name="scenario_id" ref="retail_phase1"/>        
-        <field name="menu_id" ref="stock.view_picking_in_form"/>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="stock.menu_action_picking_tree4"/>
         <field name="description">
 In this phase, you must receive Products.
         </field>
@@ -109,15 +109,15 @@ In this phase, you must receive Products.
 
         <field name="post_process_object">profile.game.retail.phase1</field>
         <field name="post_process_method">post_process_receive</field>
-        <field name="state">draft</field>	
-        <field name="step_next_ids" eval="[(6,0,[ref('step_deliver')])]"/>	
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_deliver')])]"/>
     </record>
 
 
 	<record model="game.scenario.step" id="step_confirm_po">
 		<field name="name">Confirm Purchase Order</field>
-        <field name="scenario_id" ref="retail_phase1"/>        
-        <field name="menu_id" ref="purchase.purchase_order_form"/>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="purchase.menu_purchase_form_action"/>
         <field name="description">
 In this phase, you must confirm Purchase Order.
         </field>
@@ -135,8 +135,8 @@ In this phase, you must confirm Purchase Order.
 
         <field name="post_process_object">profile.game.retail.phase1</field>
         <field name="post_process_method">post_process_confirm_po</field>
-        <field name="state">draft</field>	
-        <field name="step_next_ids" eval="[(6,0,[ref('step_receive')])]"/>	
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_receive')])]"/>
     </record>
 
 
@@ -144,8 +144,8 @@ In this phase, you must confirm Purchase Order.
 
 	<record model="game.scenario.step" id="step_modify_price">
 		<field name="name">Modify Price RfQ</field>
-        <field name="scenario_id" ref="retail_phase1"/>        
-        <field name="menu_id" ref="purchase.purchase_order_form"/>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="purchase.menu_purchase_form_action"/>
         <field name="description">
 In this phase, you must modify price of Request for Quotation.
         </field>
@@ -161,15 +161,15 @@ In this phase, you must modify price Request for Quotation.
 
         <field name="post_process_object">profile.game.retail.phase1</field>
         <field name="post_process_method">post_process_modify_price</field>
-        <field name="state">draft</field>	
-        <field name="step_next_ids" eval="[(6,0,[ref('step_confirm_po')])]"/>	
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_confirm_po')])]"/>
     </record>
 
 
 	<record model="game.scenario.step" id="step_print_rfq">
 		<field name="name">Print Request for Quotation</field>
-        <field name="scenario_id" ref="retail_phase1"/>        
-        <field name="menu_id" ref="purchase.purchase_order_form"/>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="purchase.menu_purchase_form_action"/>
         <field name="description">
 In this phase, you must print Request for Quotation.
         </field>
@@ -187,15 +187,15 @@ In this phase, you must print Request for Quotation.
 
         <field name="post_process_object">profile.game.retail.phase1</field>
         <field name="post_process_method">post_process_print_rfq</field>
-        <field name="state">draft</field>		
+        <field name="state">draft</field>
         <field name="step_next_ids" eval="[(6,0,[ref('step_modify_price')])]"/>
     </record>
 
 
 	<record model="game.scenario.step" id="step_sale">
 		<field name="name">Confirm the order</field>
-        <field name="scenario_id" ref="retail_phase1"/>        
-        <field name="menu_id" ref="sale.view_order_form"/>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="sale.menu_sale_order"/>
         <field name="description">
 In this phase, you must confirm the order.
         </field>
@@ -219,8 +219,8 @@ In this phase, you must confirm the order.
 
     <record model="game.scenario.step" id="step_print_quote">
 		<field name="name">Print the quotation</field>
-        <field name="scenario_id" ref="retail_phase1"/>        
-        <field name="menu_id" ref="sale.view_order_form"/>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="sale.menu_sale_order"/>
         <field name="description">
 In this phase, you must print the quotation you just created.
         </field>
@@ -245,8 +245,8 @@ In this phase, you must print the quotation you just created.
 
     <record model="game.scenario.step" id="step_quotation">
 		<field name="name">Create a Quotation</field>
-        <field name="scenario_id" ref="retail_phase1"/>        
-        <field name="menu_id" ref="sale.view_order_form"/>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="sale.menu_sale_order"/>
         <field name="description">
 In this first phase, the <i>Sales Manager</i> must create a quotation for the
 customer <i>Agrolait</i>. This quotation must include two products, with the

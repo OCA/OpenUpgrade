@@ -55,6 +55,7 @@ class testing_result(osv.osv):
         'test_case':fields.one2many('quality.test.config', 'test_id', 'Cases'),
         'tester': fields.many2one('hr.employee',string='Tested By'),
         'test_date': fields.date('Testing Date'),
+        'type':fields.selection([('rw_mat','Raw Material Testing'),('in_prod','During Production Testing'),('finish_prod','Finish Goods Testing')],'Testing Type', readonly=True, select=True),
                 }
     _defaults = {
         'test_date':lambda *a: time.strftime('%Y-%m-%d')
@@ -105,7 +106,17 @@ class stock_move(osv.osv):
                   }
 stock_move()
 
-
+class mrp_production_workcenter_line(osv.osv):
+    _inherit = 'mrp.production.workcenter.line'
+    _columns ={
+        'qlty_test_accept': fields.boolean('Accepted',readonly=True),
+        'qlty_test_reject': fields.boolean('Rejected',readonly=True),
+                }
+    _defaults = {
+        'qlty_test_accept': lambda *a: False,
+        'qlty_test_reject': lambda *a: False,
+                  }
+mrp_production_workcenter_line()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
