@@ -9,15 +9,15 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="project.edit_project" />
         <field name="arch" type="xml">
-            <field name="warn_manager" position="after">
-                <field name="sprint_size"/>
-                <field name="product_owner_id" select="1" required="1"/>
+            <field name="warn_manager" position="after" >
+                <field name="sprint_size" groups="base.group_user"/>
+                <field name="product_owner_id" select="1" required="1" groups="base.group_user"/>
                 <newline/>
             </field>
         </field>
     </record>
 
-    <record model="ir.ui.view" id="portal_scrum_project_tree">
+    <!--<record model="ir.ui.view" id="portal_scrum_project_tree">
         <field name="name">scrum.project.tree</field>
         <field name="model">scrum.project</field>
         <field name="type">tree</field>
@@ -31,7 +31,7 @@
                 <field name="effective_hours" />
             </tree>
         </field>
-    </record>
+    </record>-->
 
 
 <!--     <record model="ir.ui.view" id="portal_scrum_backlog_tree"> -->

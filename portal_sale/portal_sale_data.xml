@@ -17,7 +17,7 @@
 				<field name="name">Sale Model</field>
 				<field name="model_id" search="[('model','=','sale.order')]"/>
 				<field name="rule_group_id" ref="sale_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[ref('portal_sale_form'),ref('portal_sale_tree')])]"/>
+				<field name="view_ids" eval="[(6,0,[ref('sale.view_order_form'),ref('sale.view_order_tree')])]"/>
 	</record>
 
 </data>
@@ -43,16 +43,16 @@
 	<record model="ir.actions.act_window.view" id="window_view_tree_sale">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">tree</field>
-		<field name="view_id" ref="portal_sale_tree"/>
+		<field name="view_id" ref="sale.view_order_tree"/>
 		<field name="act_window_id" ref="portal_action_sale_order"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="window_view_form_sale">
 		<field name="sequence" eval="2"/>
 		<field name="view_mode">form</field>
-		<field name="view_id" ref="portal_sale_form"/>
+		<field name="view_id" ref="sale.view_order_form"/>
 		<field name="act_window_id" ref="portal_action_sale_order"/>
 	</record>
-	
+
 	<menuitem name="Order" id="menu_portal_customer_order" parent="portal.menu_portal_customer"/>
 	<menuitem name="Sale Order" id="menu_portal_customer_order_sale" parent="menu_portal_customer_order"  action="portal_action_sale_order"/>
 

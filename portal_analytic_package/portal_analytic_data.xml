@@ -21,19 +21,5 @@
 	</record>
 
 
-	<record model="ir.ui.view" id="portal_product_tree">
-		<field name="name">Products List</field>
-		<field name="model">product.product</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Products Units" link="0">
-				<field name="name"/>
-				<field name="package_weight"/>
-			</tree>
-		</field>
-	</record>
-
-
-
 </data>
 </openerp>

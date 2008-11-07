@@ -2,8 +2,8 @@
 <openerp>
 <data>
 	<record id="crm.crm_business_opportunities_report" model="ir.actions.report.xml">
-		<field name="portal_visible" eval="False" />
-	</record> 
+		<field name="portal_visible" eval="True" />
+	</record>
 
 	<record model="ir.rule.group" id="case_rule_group">
 		<field name="name">Portal case rule</field>
@@ -22,7 +22,7 @@
 		<field name="name" >Case Model</field>
 		<field name="model_id" search="[('model','=','crm.case')]"/>
 		<field name="rule_group_id" ref="case_rule_group"/>
-		<field name="view_ids" eval="[(6,0,[ref('portal_crm_case_tree_view'),ref('portal_crm_case_view')])]"/>
+		<field name="view_ids" eval="[(6,0,[ref('crm.crm_case_tree-view'),ref('crm.crm_case-view')])]"/>
 	</record>
 
 	<record model="portal.model" id="model_case_normal">
@@ -31,14 +31,14 @@
 		<field name="rule_group_id" ref="case_rule_group"/>
 		<field name="view_ids" eval="[(6,0,[ref('crm.crm_case_tree-view'),ref('crm.crm_case-view')])]"/>
 	</record>
-	
+
 	<record model="portal.model" id="model_case_simplified">
 		<field name="name" >Case Model - Simplified</field>
 		<field name="model_id" search="[('model','=','crm.case')]"/>
 		<field name="rule_group_id" ref="case_rule_group"/>
 		<field name="view_ids" eval="[(6,0,[ref('portal_crm_case_tree_view_simplified'),ref('portal_crm_case_view_simplified')])]"/>
 	</record>
-	
+
 </data>
 <data noupdate="1">
 	<record model="res.groups" id="portal.portal_group">
@@ -62,19 +62,19 @@
 	<record model="ir.actions.act_window.view" id="window_view_tree_case_a">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">tree</field>
-		<field name="view_id" ref="portal_crm_case_tree_view"/>
+		<field name="view_id" ref="crm.crm_case_tree-view"/>
 		<field name="act_window_id" ref="portal_action_crm_case_all"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="window_view_form_case_a">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">form</field>
-		<field name="view_id" ref="portal_crm_case_view"/>
+		<field name="view_id" ref="crm.crm_case-view"/>
 		<field name="act_window_id" ref="portal_action_crm_case_all"/>
 	</record>
 
 	<menuitem name="Support" id="menu_portal_customer_support" parent="portal.menu_portal_customer"/>
 	<menuitem name="All Support Cases" id="menu_portal_customer_all_cases" parent="menu_portal_customer_support" action="portal_action_crm_case_all"/>
-	
+
 	<record model="ir.actions.act_window" id="portal_action_crm_case_open">
 		<field name="name">My opened cases</field>
 		<field name="res_model">crm.case</field>
@@ -85,16 +85,16 @@
 	<record model="ir.actions.act_window.view" id="window_view_tree_case_o">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">tree</field>
-		<field name="view_id" ref="portal_crm_case_tree_view"/>
+		<field name="view_id" ref="crm.crm_case_tree-view"/>
 		<field name="act_window_id" ref="portal_action_crm_case_open"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="window_view_form_case_o">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">form</field>
-		<field name="view_id" ref="portal_crm_case_view"/>
+		<field name="view_id" ref="crm.crm_case-view"/>
 		<field name="act_window_id" ref="portal_action_crm_case_open"/>
 	</record>
-	
+
 	<menuitem name="Opened Cases" id="menu_portal_customer_all_cases_open" parent="menu_portal_customer_all_cases" action="portal_action_crm_case_open"/>
 
 	<record model="ir.actions.act_window" id="portal_action_crm_case_closed">
@@ -107,13 +107,13 @@
 	<record model="ir.actions.act_window.view" id="window_view_tree_case_c">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">tree</field>
-		<field name="view_id" ref="portal_crm_case_tree_view"/>
+		<field name="view_id" ref="crm.crm_case_tree-view"/>
 		<field name="act_window_id" ref="portal_action_crm_case_closed"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="window_view_form_case_c">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">form</field>
-		<field name="view_id" ref="portal_crm_case_view"/>
+		<field name="view_id" ref="crm.crm_case-view"/>
 		<field name="act_window_id" ref="portal_action_crm_case_closed"/>
 	</record>
 
