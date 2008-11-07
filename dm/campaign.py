@@ -1494,13 +1494,15 @@ class project_task(osv.osv):
     def default_get(self, cr, uid, fields, context=None):
         if 'type' in context and 'project_id' in context:
             self.context_data = context.copy()
-        value = super(project_task, self).default_get(cr, uid, fields, context)
-        return value
+            self.context_data['flag'] = True
+        else:
+            self.context_data['flag'] = False
+        return super(project_task, self).default_get(cr, uid, fields, context)
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
         result = super(project_task,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-        if not context.has_key('active_id'):
-            if 'project_id' in self.context_data and self.context_data['project_id']:
+        if 'flag' in self.context_data or 'type' in context:
+            if 'project_id' in self.context_data:
                 if result['type']=='form':
                     result['arch']= """<?xml version="1.0" encoding="utf-8"?>\n<form string="Task edition">\n<group colspan="6" col="6">\n<field name="name" select="1"/>\n<field name="project_id" readonly="1" select="1"/>\n
                         <field name="total_hours" widget="float_time"/>\n<field name="user_id" select="1"/>\n<field name="date_deadline" select="2"/>\n<field name="progress" widget="progressbar"/>\n</group>\n
@@ -1518,19 +1520,20 @@ class project_task(osv.osv):
         return result
     
     def create(self,cr,uid,vals,context={}):
-        if context.has_key('read_delta'):
+        if 'flag' in self.context_data:
             if 'type' in self.context_data:
                 task_type = self.pool.get('project.task.type').search(cr,uid,[('name','=',self.context_data['type'])])[0]
                 vals['type']=task_type
                 vals['project_id']=self.context_data['project_id']
+                self.context_data = {}
             if 'planned_hours' not in vals:
-                vals['planned_hours'] = 0.00
+                vals['planned_hours'] = 0.0
         return super(project_task, self).create(cr, uid, vals, context)
     
     _columns = {
         'date_reviewed': fields.datetime('Reviewed Date'),
         'date_planned': fields.datetime('Planned Date'),
-     }
+    }
 
 project_task()
 
