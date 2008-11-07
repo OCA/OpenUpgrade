@@ -163,8 +163,8 @@ unexploited markets, to see broader and larger.'''
         if type!='report' and (object not in ("sale.order", 'sale.order.line')):
             return False
 
-        #if type!='report' and (object in ("sale.order", 'sale.order.line') and (method not in ('read','button_dummy','write'))):
-        #    self.error(cr, uid,step_id)
+        if type!='report' and (object in ("sale.order", 'sale.order.line') and (method not in ('read','button_dummy','write'))):
+            self.error(cr, uid,step_id)
         return (type=='report' and (object in ("sale.order", 'sale.order.line')))
 
     def post_process_print_quote(self,cr,uid,step_id,object, method,type,*args):
