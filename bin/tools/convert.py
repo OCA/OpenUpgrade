@@ -87,8 +87,10 @@ def _eval_xml(self,node, pool, cr, uid, idref, context=None):
             a_eval = node.getAttribute('eval')
             if len(a_eval):
                 import time
+                from mx import DateTime
                 idref2 = idref.copy()
                 idref2['time'] = time
+                idref2['DateTime'] = DateTime
                 import release
                 idref2['version'] = release.version.rsplit('.', 1)[0]
                 idref2['ref'] = lambda x: self.id_get(cr, False, x)
@@ -784,7 +786,6 @@ def convert_csv_import(cr, module, fname, csvcontent, idref=None, mode='init',
     input = StringIO.StringIO(csvcontent)
     reader = csv.reader(input, quotechar='"', delimiter=',')
     fields = reader.next()
-
     fname_partial = ""
     if config.get('import_partial'):
         fname_partial = module + '/'+ fname
@@ -807,13 +808,16 @@ def convert_csv_import(cr, module, fname, csvcontent, idref=None, mode='init',
     for line in reader:
         if (not line) or not reduce(lambda x,y: x or y, line) :
             continue
-        datas.append( map(lambda x:x.decode('utf8').encode('utf8'), line))
+        try:
+            datas.append( map(lambda x:x.decode('utf8').encode('utf8'), line))
+        except:
+            print "ERROR while importing the line: ", line
     pool.get(model).import_data(cr, uid, fields, datas,mode, module,noupdate,filename=fname_partial)
-
     if config.get('import_partial'):
         data = pickle.load(file(config.get('import_partial')))
         data[fname_partial] = 0
         pickle.dump(data, file(config.get('import_partial'),'wb'))
+        cr.commit()
 
 #
 # xml import/export
