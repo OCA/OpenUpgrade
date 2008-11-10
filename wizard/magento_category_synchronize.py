@@ -74,7 +74,6 @@ def do_export(self, cr, uid, data, context):
             
         if len(categ_not) > 0: raise wizard.except_wizard("Error", "you asked to export non-exportable categories : IDs %s" % categ_not)
 
-    
     #===============================================================================
     #  Server communication
     #===============================================================================
@@ -95,7 +94,10 @@ def do_export(self, cr, uid, data, context):
     #===============================================================================
     #  Category packaging
     #===============================================================================
-    for category in pool.get('product.category').browse(cr, uid, categ_ids, context=context):
+    categories=pool.get('product.category').browse(cr, uid, categ_ids, context=context)
+    categories.sort(lambda x, y : (int(x.parent_id) or 0) - int(y.parent_id))
+
+    for category in categories :
     
         path=''             #construct path
         magento_parent_id=1 #root catalog
@@ -120,7 +122,7 @@ def do_export(self, cr, uid, data, context):
                 'path' : path,
                 'is_active' : 1,
         }
-        
+
         #===============================================================================
         #  Category upload to Magento
         #===============================================================================
