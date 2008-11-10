@@ -488,5 +488,66 @@ rkJggg==
 			<field name="product_id" ref="product_product_openerpdiscoverydayonmay0"/>
 		</record>
 	</data>
+	<data noupdate="1">
+		<record id="dm_offer_step_item_0" model="dm.offer.step.item">
+			<field name="offer_step_id" ref="dm.dm_offer_step_imforopenerpondemandfreetrial2009"/>
+			<field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
+			<field eval="&quot;&quot;&quot;The Open ERP User Book&quot;&quot;&quot;" name="notes"/>
+			<field name="product_id" ref="dm.product_product_openerpuserbook0"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="dm_offer_step_item_1" model="dm.offer.step.item">
+			<field name="offer_step_id" ref="dm.dm_offer_step_piforopenerpondemandfreetrial2009"/>
+			<field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
+			<field eval="&quot;&quot;&quot;Subscription for the Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="notes"/>
+			<field name="product_id" ref="dm.product_product_openerpdiscoverydayonmay0"/>
+		</record>
+	</data>
+
+	<data noupdate="1">
+		<record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
+			<field eval="1" name="keep_prices"/>
+			<field eval="0" name="force_sm_price"/>
+			<field eval="1" name="keep_segments"/>
+			<field eval="&quot;&quot;&quot;init&quot;&quot;&quot;" name="proposition_type"/>
+			<field eval="5.0" name="sale_rate"/>
+			<field eval="&quot;&quot;&quot;OpenERP OnDemand Free Trial 2009 - Bookstore Offer&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="payment_methods"/>
+			<field name="camp_id" ref="dm.dm_campaign_openerpondemandfreetrial2009"/>
+			<field eval="&quot;&quot;&quot;2009-03-01&quot;&quot;&quot;" name="date_start"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
+			<field name="customer_pricelist_id" ref="product.list0"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
+			<field eval="&quot;&quot;&quot;
+1 month OpenERP OnDemand Free Trial for the Bookstore Offer&quot;&quot;&quot;" name="notes"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="dm_campaign_proposition_ondemandfreetrialassociationoffer0" model="dm.campaign.proposition">
+			<field eval="1" name="keep_prices"/>
+			<field eval="0" name="force_sm_price"/>
+			<field eval="1" name="keep_segments"/>
+			<field eval="&quot;&quot;&quot;init&quot;&quot;&quot;" name="proposition_type"/>
+			<field eval="7.0" name="sale_rate"/>
+			<field eval="&quot;&quot;&quot;OpenERP OnDemand Free Trial 2009 - Association Offer&quot;&quot;&quot;" name="name"/>
+			<field name="customer_pricelist_id" ref="product.list0"/>
+			<field eval="[(6,0,[])]" name="payment_methods"/>
+			<field name="camp_id" ref="dm.dm_campaign_openerpondemandfreetrial2009"/>
+			<field eval="&quot;&quot;&quot;2009-03-01&quot;&quot;&quot;" name="date_start"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_campaign_proposition_ondemandfreetrialassociationoffer0" model="dm.campaign.proposition">
+			<field eval="&quot;&quot;&quot;
+1 month OpenERP OnDemand Free Trial for the Association Offer&quot;&quot;&quot;" name="notes"/>
+		</record>
+	</data>
 
 </openerp>
