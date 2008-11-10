@@ -22,7 +22,7 @@
 import wizard
 import pooler
 
-class wizard_proposition_products(wizard.interface):
+class wizard_proposition_items(wizard.interface):
 
     new_prices_prog = '''<?xml version="1.0"?>
     <form string="Select Prices Progression">
