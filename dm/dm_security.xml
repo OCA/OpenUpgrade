@@ -1,20 +1,23 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
+
+	<!-- User Groups -->
+
+	<record id="res_groups_alluser" model="res.groups">
+		<field name="name">Direct Marketing / User</field>
+	</record>
 	<record id="res_groups_offeradmin" model="res.groups">
-		<field name="name">Offer Admin</field>
+		<field name="name">Direct Marketing / Offer Admin</field>
 	</record>
 	<record id="res_groups_offermanager" model="res.groups">
-		<field name="name">Offer Manager</field>
-	</record>
-	<record id="res_groups_alluser" model="res.groups">
-		<field name="name">All User</field>
+		<field name="name">Direct Marketing / Offer Manager</field>
 	</record>
 	<record id="res_groups_campaignadmin" model="res.groups">
-		<field name="name">Campaign Admin</field>
+		<field name="name">Direct Marketing / Campaign Admin</field>
 	</record>
 	<record id="res_groups_campaignmanager" model="res.groups">
-		<field name="name">Campaign Manager</field>
+		<field name="name">Direct Marketing / Campaign Manager</field>
 	</record>
 
 	<record id="base.user_admin" model="res.users">
@@ -101,8 +104,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_customerorderforofferadmin1" model="ir.model.access">
-<!--		<field name="model_id" ref="dm.model_dm_customer_offer"/>-->
-		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.offer')]"/>
+<!--		<field name="model_id" ref="dm.model_dm_customer.order"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.order')]"/>
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;customers order for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -342,9 +345,9 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_customerorderforoffermanager1" model="ir.model.access">
-			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.offer')]"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.order')]"/>
 			<field eval="1" name="perm_read"/>
-			<field eval="&quot;&quot;&quot;customer offer for offer manager&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;customer.order for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
 			<field eval="1" name="perm_write"/>
 			<field eval="1" name="perm_create"/>
@@ -695,9 +698,9 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_customerorderforcampaignadmin1" model="ir.model.access">
-				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.offer')]"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.order')]"/>
 				<field eval="1" name="perm_read"/>
-				<field eval="&quot;&quot;&quot;customer offer for campaign admin&quot;&quot;&quot;" name="name"/>
+				<field eval="&quot;&quot;&quot;customer.order for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
 				<field eval="1" name="perm_write"/>
 				<field eval="1" name="perm_create"/>
@@ -956,9 +959,9 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_customerorderforcampaignmanager1" model="ir.model.access">
-					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.offer')]"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.order')]"/>
 					<field eval="1" name="perm_read"/>
-					<field eval="&quot;&quot;&quot;customer offer for campaign manager&quot;&quot;&quot;" name="name"/>
+					<field eval="&quot;&quot;&quot;customer.order for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
 					<field eval="1" name="perm_write"/>
 					<field eval="1" name="perm_create"/>
@@ -1217,7 +1220,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_customerorderforalluser1" model="ir.model.access">
-						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.offer')]"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.order')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;customer order for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>

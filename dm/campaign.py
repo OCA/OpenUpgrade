@@ -349,7 +349,7 @@ class dm_campaign(osv.osv):
 
     _columns = {
         'code1' : fields.function(_campaign_code,string='Code',type="char",size="64",method=True,readonly=True),
-        'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])],
+        'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])], required=True,
             help="Choose the commercial offer to use with this campaign, only offers in open state can be assigned"),
         'country_id' : fields.many2one('res.country', 'Country',required=True, 
             help="The language and currency will be automaticaly assigned if they are defined for the country"),
@@ -632,7 +632,7 @@ class dm_campaign_proposition(osv.osv):
             qty = 0
             numeric=True
             for segment in propo.segment_ids:
-                if segment.AAA:
+                if segment.all_add_avail:
                     result[propo.id]='AAA for a Segment'
                     numeric=False
                     continue
@@ -815,6 +815,7 @@ class dm_campaign_proposition_segment(osv.osv):
         'quantity_cleaned_cleaner' : fields.integer('Cleaned Quantity'),
         'quantity_usable' : fields.function(_quantity_usable_get,string='Usable Quantity',type="integer",method=True,readonly=True),
         'AAA': fields.boolean('All Adresses Available'),
+        'all_add_avail': fields.boolean('All Adresses Available'),
         'split_id' : fields.many2one('dm.campaign.proposition.segment','Split'),
         'start_census' :fields.integer('Start Census (days)'),
         'end_census' : fields.integer('End Census (days)'),
@@ -948,6 +949,16 @@ class dm_campaign_purchase_line(osv.osv):
                 print "Campaign ID : ",pline.campaign_id
                 print "Group ID : ",pline.campaign_group_id
 
+                # if in a group, obj = 1st campaign of the group, if not it's the campaing
+                if pline.campaign_group_id:
+                    obj = pline.campaign_group_id.campaign_ids[0]
+                    code = pline.campaign_group_id.code
+                    print "First campaign of group : ", obj.name
+                else:
+                    obj = pline.campaign_id
+                    code = pline.campaign_id.code1
+
+                print "obj : ",obj
 #                if not pline.quantity and pline.type_quantity != 'quantity_free' and pline.type_quantity != 'quantity_wanted':
 #                    raise  osv.except_osv('Warning', "There's no quantity defined for this purchase line")
 
@@ -957,7 +968,7 @@ class dm_campaign_purchase_line(osv.osv):
                 #create purchase tender
 #                tender_desc = 'Purchase Tender for : ' + pline.product_id.name + ' for campaign ' + pline.campaign_id.name
                 tender_desc = 'Test'
-                tender_id = self.pool.get('purchase.tender').create(cr, uid,{'description':tender_desc})
+                tender_id = self.pool.get('purchase.tender').create(cr, uid,{'description':tender_desc,'state':'open'})
 
                 # Create a po / supplier
                 for supplier in pline.product_id.seller_ids:
@@ -981,16 +992,6 @@ class dm_campaign_purchase_line(osv.osv):
                         raise osv.except_osv('Warning', "There's no proposition defined for this campaign : %s" % (pline.campaign_id.name,) )
                     """
 
-                    # if in a group, obj = 1st campaign of the group, if not it's the campaing
-                    if pline.campaign_group_id:
-                        obj = pline.campaign_group_id.campaign_ids[0]
-                        code = pline.campaign_group_id.code
-                        print "First campaign of group : ", obj.name
-                    else:
-                        obj = pline.campaign_id
-                        code = pline.campaign_id.code1
-
-                    print "obj : ",obj
 
                     # Get constraints
                     constraints = []
@@ -1188,7 +1189,8 @@ class dm_campaign_purchase_line(osv.osv):
                                             quantity = segment.quantity_estimated
                                         elif pline.type_quantity == 'quantity_wanted':
                                             quantity = segment.quantity_wanted
-                                            if segment.AAA:
+#                                            if segment.AAA:
+                                            if segment.all_add_Avail:
                                                 quantity = 0
                                                 line_name = propo.code1 + ' - ' + segment.list_id.name + ' - All Addresses Available'
                                         elif pline.type_quantity == 'quantity_delivered':
@@ -1220,7 +1222,8 @@ class dm_campaign_purchase_line(osv.osv):
                                         quantity = segment.quantity_estimated
                                     elif pline.type_quantity == 'quantity_wanted':
                                         quantity = segment.quantity_wanted
-                                        if segment.AAA:
+#                                        if segment.AAA:
+                                        if segment.all_add_avail:
                                             quantity = 0
                                             line_name = propo.code1 + ' - ' + segment.list_id.name + ' - All Addresses Available'
                                     elif pline.type_quantity == 'quantity_delivered':

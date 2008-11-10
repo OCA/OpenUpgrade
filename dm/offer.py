@@ -135,8 +135,8 @@ class dm_customers_list(osv.osv):
     }
 dm_customers_list()
 
-class dm_customer_offer(osv.osv):
-    _name = "dm.customer.offer"
+class dm_customer_order(osv.osv):
+    _name = "dm.customer.order"
     _columns ={
         'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete='cascade'),
         'customer_number' : fields.char('Customer Number',size=16),
@@ -245,7 +245,7 @@ class dm_customer_offer(osv.osv):
         self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
         return True
 
-dm_customer_offer()
+dm_customer_order()
 
 class dm_offer(osv.osv):
     _name = "dm.offer"

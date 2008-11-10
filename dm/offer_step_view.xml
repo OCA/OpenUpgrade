@@ -1,11 +1,16 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
+
+    <menuitem name="Offer Steps" id="menu_dm_config_offer_steps" parent="dm.menu_dm_config" sequence="3"/>
+	<menuitem name="Documents" id="menu_action_offer_doc" parent="dm.menu_dm_config_offer_steps" sequence="1" />
 	
+	<!--
 	=======================================================
 	Offer Step Document Category Views
 	=======================================================
-	
+	-->
+
 	<record model="ir.ui.view" id="view_offer_step_document_categ_form">
 		<field name="name">dm.offer.document.category.form</field>
 		<field name="model">dm.offer.document.category</field>
@@ -17,6 +22,7 @@
 			</form>
 		</field>
 	</record>
+
 	<record model="ir.ui.view" id="view_offer_step_document_categ_tree">
 		<field name="name">dm.offer.document.category.tree</field>
 		<field name="model">dm.offer.document.category</field>
@@ -27,21 +33,22 @@
 			</tree>
 		</field>
 	</record>
+
 	<record model="ir.actions.act_window" id="action_doc_categ_form">
+		<field name="name">Edit document categories</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.document.category</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_document_categ_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents" id="menu_action_offer_doc" sequence="2" />
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/Edit document categories" id="menu_action_offer_doc_categ_form" action="action_doc_categ_form" sequence="2"/>
 
+	<menuitem id="menu_action_offer_doc_categ_form" parent="dm.menu_action_offer_doc" action="action_doc_categ_form" sequence="1"/>
 
+	<!--
 	=======================================================
 	Offer Step Document Views
 	=======================================================
-
-
+	-->
 
 	<record model="ir.ui.view" id="view_offer_step_document_form">
 		<field name="name">dm.offer.document.form</field>
@@ -58,6 +65,7 @@
 			</form>
 		</field>
 	</record>
+
 	<record model="ir.ui.view" id="view_offer_step_document_tree">
 		<field name="name">dm.offer.document.tree</field>
 		<field name="model">dm.offer.document</field>
@@ -70,13 +78,16 @@
 			</tree>
 		</field>
 	</record>
+
 	<record model="ir.actions.act_window" id="action_document_form">
+		<field name="name">All Documents</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.document</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_document_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/All Documents" id="menu_action_document_form" action="action_document_form" sequence="1"/>
+
+	<menuitem id="menu_action_document_form" parent="dm.menu_action_offer_doc" action="action_document_form" sequence="2"/>
 
 
 	<!--
@@ -101,6 +112,7 @@
 			</form>
 		</field>
 	</record>
+
 	<record model="ir.ui.view" id="view_offer_step_type_tree">
 		<field name="name">dm.offer.step.type.tree</field>
 		<field name="model">dm.offer.step.type</field>
@@ -113,13 +125,16 @@
 			</tree>
 		</field>
 	</record>
+
 	<record model="ir.actions.act_window" id="action_step_type_form">
+		<field name="name">All Offer Step Types</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.step.type</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_type_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Step Types" id="menu_action_step_type_form" action="action_step_type_form" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager,res_groups_offermanager"/>
+
+	<menuitem id="menu_action_step_type_form" parent="dm.menu_dm_config_offer_steps" action="action_step_type_form" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager,res_groups_offermanager"/>
 
 	<!--
 	=======================================================
@@ -134,14 +149,14 @@
 		<field name="arch" type="xml">
 			<tree string="Offer Steps">
 				<field name="type"/>
-				<field name="offer_id"/>
-				<field name="incoming_transition_ids" context="{'type':'incoming'}"/>
-				<field name="outgoing_transition_ids" context="{'type':'outgoing'}"/>
-				<field name="state"/>
 				<field name="name"/>
+				<field name="code"/>
+				<field name="offer_id"/>
+				<field name="state"/>
 			</tree>
 		</field>
 	</record>
+
 	<record model="ir.ui.view" id="view_offer_step_form">
 		<field name="name">dm.offer.step.form</field>
 		<field name="model">dm.offer.step</field>
@@ -268,21 +283,16 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="action_offer_step_form">
+		<field name="name">All Offer Steps</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.step</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Steps" id="menu_action_offer_step_form" action="action_offer_step_form"/>
 
-	<act_window name="Offer Steps"
-		res_model="dm.offer.step"
-		src_model="dm.offer"
-		view_type="form"
-		view_mode="tree,form"
-		id="act_offer_step_opened"
-		domain = "[('offer_id','=',active_id)]"/>
-  <!--
+	<menuitem id="menu_action_offer_step_form" parent="dm.menu_dm_config_offer_steps" action="action_offer_step_form"/>
+
+    <!--
 	=======================================================
 	Offer Step Transition Views
 	=======================================================
@@ -341,6 +351,7 @@
 			</form>
 		</field>
 	</record>
+
 	<record model="ir.ui.view" id="view_offer_step_workitem_tree">
 		<field name="name">dm.offer.step.workitem.tree</field>
 		<field name="model">dm.offer.step.workitem</field>
@@ -355,23 +366,18 @@
 			</tree>
 		</field>
 	</record>
+
 	<record model="ir.actions.act_window" id="action_offer_step_workitem">
+		<field name="name">All Work Items</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.step.workitem</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_workitem_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Work Items" id="menu_action_offer_step_workitem" action="action_offer_step_workitem" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/><!--
 
-	<act_window name="WorkItems"
-		res_model="dm.offer.step.workitem"
-		src_model="dm.offer.step"
-		view_type="form"
-		view_mode="tree,form"
-		id="act_workitem_opened"
-		domain = "[('step_id','=',active_id)]"/>
+	<menuitem id="menu_action_offer_step_workitem" parent="dm.menu_dm_config_offer_steps"  action="action_offer_step_workitem" groups="res_groups_offeradmin,res_groups_campaignadmin"/>
 
-	--><!--
+	<!--
 	=======================================================
 	Offer Step History Views
 	=======================================================
@@ -390,6 +396,7 @@
 			</form>
 		</field>
 	</record>
+
 	<record model="ir.ui.view" id="view_offer_step_history_tree">
 		<field name="name">dm.offer.step.history.tree</field>
 		<field name="model">dm.offer.step.history</field>
@@ -402,6 +409,7 @@
 			</tree>
 		</field>
 	</record>
+
 
 	<!--
 	=======================================================
@@ -421,6 +429,7 @@
 			</tree>
 		</field>
 	</record>
+
 	<record model="ir.ui.view" id="view_product_form">
 		<field name="name">dm.step.product.form</field>
 		<field name="model">dm.step.product</field>
@@ -433,13 +442,16 @@
 			</form>
 		</field>
 	</record>
+
 	<record model="ir.actions.act_window" id="action_offer_step_product">
+		<field name="name">All Items</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.step.product</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_product_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Items" id="menu_action_offer_step_product" action="action_offer_step_product" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
+
+	<menuitem id="menu_action_offer_step_product" parent="dm.menu_dm_config_offer_steps" action="action_offer_step_product" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
 
 	<act_window name="Products"
 		res_model="dm.step.product"
@@ -470,6 +482,7 @@
 			</form>
 		</field>
 	</record>
+
 	<record model="ir.ui.view" id="view_offer_step_manufacturing_constraint_tree">
 		<field name="name">dm.offer.step.manufacturing_constraint.tree</field>
 		<field name="model">dm.offer.step.manufacturing_constraint</field>
@@ -483,12 +496,85 @@
 			</tree>
 		</field>
 	</record>
+
 	<record model="ir.actions.act_window" id="action_step_manufacturing_constraint_form">
+		<field name="name">All Manufacturing Constraints</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.step.manufacturing_constraint</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_manufacturing_constraint_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Manufacturing Constraints" id="menu_action_step_manufacturing_constraint_form" action="action_step_manufacturing_constraint_form" groups="res_groups_offeradmin,res_groups_campaignadmin"/>
+
+	<menuitem id="menu_action_step_manufacturing_constraint_form" parent="dm.menu_dm_config_offer_steps" action="action_step_manufacturing_constraint_form" groups="res_groups_offeradmin,res_groups_campaignadmin"/>
+
+
+    <!--
+    =======================================================
+    Offer Media Views
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_media_form">
+        <field name="name">dm.media.form</field>
+        <field name="model">dm.media</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Offer Media">
+                <field name="name" select="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_media_tree">
+        <field name="name">dm.meida.tree</field>
+        <field name="model">dm.media</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="All Offer Medias">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_media_form">
+        <field name="name">All Offer Medias</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.media</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_media_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_media_form" parent="dm.menu_dm_config_offer_steps" action="action_dm_media_form" sequence="2" />
+
+	<!-- ############## Relates ############### -->
+
+	<act_window name="Offer Steps"
+		res_model="dm.offer.step"
+		src_model="dm.offer"
+		view_type="form"
+		view_mode="tree,form"
+		id="act_offer_step_opened"
+		domain = "[('offer_id','=',active_id)]"/>
+
+<!--
+	<act_window name="WorkItems"
+		res_model="dm.offer.step.workitem"
+		src_model="dm.offer.step"
+		view_type="form"
+		view_mode="tree,form"
+		id="act_workitem_opened"
+		domain = "[('step_id','=',active_id)]"/>
+-->
+
+
+<!--
+	<act_window name="WorkItems"
+		res_model="dm.offer.step.workitem"
+		src_model="dm.offer.step"
+		view_type="form"
+		view_mode="tree,form"
+		id="act_workitem_opened"
+		domain = "[('step_id','=',active_id)]"/>
+-->
 </data>
 </openerp>
