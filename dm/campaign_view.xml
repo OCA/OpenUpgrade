@@ -528,13 +528,13 @@
                     <separator string="Prices policy" colspan="4"/>
                     <group colspan="4">
                     <field name="customer_pricelist_id"/>
-                    <button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+                    <button string="Get Items" name="%(dm.wizard_proposition_items)d" type="action"/>
                     </group>
                     <field name="force_sm_price"/>
                     <field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
                     <field name="keep_prices"/>
                     <field name="forwarding_charges"/>
-                    <field name="product_ids" colspan="4" nolabel="1">
+                    <field name="item_ids" colspan="4" nolabel="1">
                         <form string="Catalogue">
                             <field name="offer_step_type"/>
                             <field name="product_id" string="Item"/>
