@@ -273,6 +273,17 @@ class training_location(osv.osv):
 
 training_location()
 
+class training_group(osv.osv):
+    _name = 'training.group'
+    _columns = {
+        'name': fields.char('Name', size=64, required=True, select=True),
+    }
+training_group()
+
+class training_subscription(osv.osv):
+    _name = 'training.subscription'
+training_subscription()
+
 class training_event(osv.osv):
     _name = 'training.event'
 
@@ -320,12 +331,6 @@ class training_plannified_examen(osv.osv):
 
 training_plannified_examen()
 
-class training_group(osv.osv):
-    _name = 'training.group'
-    _columns = {
-        'name': fields.char('Name', size=64, required=True, select=True),
-    }
-training_group()
 
 class training_catering_type(osv.osv):
     _name = 'training.catering.type'
@@ -441,6 +446,7 @@ training_question()
 
 class training_examen_answers(osv.osv):
     _name = 'training.examen_answers'
+    _rec_name = 'plannified_examen_id'
     _columns = {
         'plannified_examen_id' : fields.many2one('training.plannified_examen', 'Plannified Examen', select=True, required=True),
         'question_id' : fields.many2one('training.question', 'Question', select=True, required=True),
