@@ -112,7 +112,7 @@ class dm_offer_step(osv.osv):
         'document_ids' : fields.one2many('dm.offer.document', 'step_id', 'DTP Documents'),
         'flow_start' : fields.boolean('Flow Start'),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
-        'product_ids' : fields.one2many('dm.step.product', 'offer_step_id', 'Products'),
+        'item_ids' : fields.one2many('dm.offer.step.item', 'offer_step_id', 'Items'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',readonly=True),
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
@@ -299,8 +299,8 @@ class dm_offer_step_workitem(osv.osv):
 dm_offer_step_workitem()
 
 
-class dm_step_product(osv.osv):
-    _name = "dm.step.product"
+class dm_offer_step_item(osv.osv):
+    _name = "dm.offer.step.item"
 
     def _step_type(self, cr, uid, ids, name, args, context={}):
         result={}
@@ -318,11 +318,11 @@ class dm_step_product(osv.osv):
         'notes' : fields.text('Notes'),
         'purchase_constraints' : fields.text('Purchase Constraints'),
     }
-dm_step_product()
+dm_offer_step_item()
 
 
-class dm_product(osv.osv):
-    _name = "dm.product"
+class dm_item(osv.osv):
+    _name = "dm.item"
     _rec_name = 'product_id'
     _columns = {
         'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
@@ -334,7 +334,7 @@ class dm_product(osv.osv):
         'offer_step_type': fields.char(string='Offer Step Type',type="char",size=64), 
         'notes' : fields.text('Notes'),
     }
-dm_product()
+dm_item()
 
 class dm_offer_step_manufacturing_constaint(osv.osv):
     _name = "dm.offer.step.manufacturing_constraint"

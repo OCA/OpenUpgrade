@@ -2,12 +2,12 @@
 <openerp>
 <data>
 
-	<!-- User Groups -->
+	<!-- USER GROUPS -->
 
 	<record id="res_groups_alluser" model="res.groups">
 		<field name="name">Direct Marketing / User</field>
 	</record>
-	<record id="res_groups_alluser" model="res.groups">
+	<record id="res_groups_dmadmin" model="res.groups">
 		<field name="name">Direct Marketing / Admin</field>
 	</record>
 	<record id="res_groups_offeradmin" model="res.groups">
@@ -22,22 +22,22 @@
 	<record id="res_groups_campaignmanager" model="res.groups">
 		<field name="name">Direct Marketing / Campaign Manager</field>
 	</record>
-	<record id="res_groups_offeradmin" model="res.groups">
+	<record id="res_groups_itemadmin" model="res.groups">
 		<field name="name">Direct Marketing / Item Admin</field>
 	</record>
-	<record id="res_groups_offermanager" model="res.groups">
+	<record id="res_groups_itemmanager" model="res.groups">
 		<field name="name">Direct Marketing / Item Manager</field>
 	</record>
-	<record id="res_groups_campaignadmin" model="res.groups">
+	<record id="res_groups_manufacturingadmin" model="res.groups">
 		<field name="name">Direct Marketing / Manufacturing Admin</field>
 	</record>
-	<record id="res_groups_campaignmanager" model="res.groups">
+	<record id="res_groups_manufacturingmanager" model="res.groups">
 		<field name="name">Direct Marketing / Manufacturing Manager</field>
 	</record>
-	<record id="res_groups_campaignadmin" model="res.groups">
+	<record id="res_groups_dtpadmin" model="res.groups">
 		<field name="name">Direct Marketing / DTP Admin</field>
 	</record>
-	<record id="res_groups_campaignmanager" model="res.groups">
+	<record id="res_groups_dtpmanager" model="res.groups">
 		<field name="name">Direct Marketing / DTP Manager</field>
 	</record>
 
