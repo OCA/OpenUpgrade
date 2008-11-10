@@ -10,7 +10,7 @@
 
     <!--
     =======================================================
-    Offer Views
+    OFFER VIEWS
     =======================================================
     -->
     <record model="ir.ui.view" id="view_offer_list">
@@ -131,7 +131,7 @@
         </field>
     </record>
 
-        <!-- All Offers -->
+        <!-- ALL OFFERS -->
 
     <record model="ir.actions.act_window" id="action_offer_form">
         <field name="name">All Offers</field>
@@ -242,7 +242,7 @@
     <menuitem id="menu_action_offer_form_all3" parent="dm.menu_action_offer_form"  action="action_offer_form_all3"/>
 
 
-        <!-- My Offers -->
+        <!-- MY OFFERS -->
 
     <record model="ir.actions.act_window" id="action_offer_form_my">
         <field name="name">My Offers</field>
@@ -356,7 +356,7 @@
 
     <!--
     =======================================================
-    Offer Model Views
+    OFFER MODEL VIEWS
     =======================================================
     -->
 
@@ -444,7 +444,7 @@
 
     <!--
     =======================================================
-    Pre-Offer Views
+    PRE-OFFER VIEWS
     =======================================================
     -->
     <record model="ir.ui.view" id="view_preoffer_form">
@@ -552,7 +552,7 @@
 
     <!--
     ======================
-    Categories
+    OFFER CATEGORY
     ======================
     -->
     <record model="ir.ui.view" id="view_offer_category_form">
@@ -630,7 +630,7 @@
 
     <!--
     ======================
-    History
+    HISTORY
     ======================
     -->
 
@@ -663,7 +663,7 @@
 
     <!--
     ======================
-    Customer
+    CUSTOMER
     ======================
     -->
 
@@ -745,7 +745,7 @@
 
     <!--
     =======================================================
-    Customer Order Views
+    CUSTOMER ORDER VIEWS
     =======================================================
     -->
 
@@ -804,69 +804,6 @@
     </record>
 
     <menuitem id="menu_action_dm_customer_order_form" parent="dm.menu_dm_config_customer" action="action_dm_customer_order_form" sequence="2" />
-
-    <!--
-    =======================================================
-    Customers List
-    =======================================================
-    -->
-
-    <record model="ir.ui.view" id="view_dm_customers_list_form">
-        <field name="name">dm.customers_list.form</field>
-        <field name="model">dm.customers_list</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Customer File">
-                <field name="name" select="1"/>
-                <field name="code" select="2"/>
-                <field name="broker_id" select="1"/>
-                <field name="delivery_date" select="2"/>
-                <field name="segment_ids" colspan="4">
-                <form>
-                    <field name="name" string="Name" select="1"/>
-                    <field name="code1" string="Code"/>
-                    <field name="proposition_id" />
-                    <field name="active" />
-                    <newline/>
-                    <field name="split_id" />
-                    <field name="reuse_id" />
-                    <field name="start_census"/>
-                    <field name="end_census"/>
-                    <field name="deduplication_level"/>
-                    <field name="note" colspan="4"/>
-                </form>
-                <tree string="Segments">
-                    <field name="name" string="Name"/>
-                    <field name="code1" string="Code"/>
-                </tree>
-                </field>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_dm_customers_list_tree">
-        <field name="name">dm.customers_list.tree</field>
-        <field name="model">dm.customers_list</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Customer Files">
-                <field name="name"/>
-                <field name="code"/>
-                <field name="broker_id"/>
-                <field name="delivery_date"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_dm_customers_list">
-        <field name="name">All Customers Lists</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.customers_list</field>
-        <field name="view_type">form</field>
-        <field name="view_id" ref="view_dm_customers_list_tree"/>
-    </record>
-
-    <menuitem id="menu_action_dm_customes_list" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_list" sequence="1" />
 
     </data>
 </openerp>
