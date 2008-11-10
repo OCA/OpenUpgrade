@@ -215,7 +215,7 @@ class training_session(osv.osv):
         'offer_id' : fields.many2one('training.offer', 'Offer', select=True, required=True),
         'catalog_id' : fields.many2one('training.catalog', 'Catalog', select=True),
         'event_ids' : fields.one2many('training.event', 'session_id', 'Events', readonly=True, ondelete="cascade"),
-        'date_start' : fields.datetime('Date Start', required=True),
+        'date' : fields.datetime('Date', required=True),
     }
 
     def _find_catalog_id(self,cr,uid,data,context=None):
@@ -286,33 +286,41 @@ training_subscription()
 class training_event(osv.osv):
     _name = 'training.event'
 
-    def _check_date_start(self,cr,uid,ids,context=None):
+    def _check_date(self,cr,uid,ids,context=None):
         obj = self.browse(cr, uid, ids)[0]
-        return self.browse(cr,uid,ids)[0].date_start > time.strftime('%Y-%m-%d')
+        return self.browse(cr,uid,ids)[0].date > time.strftime('%Y-%m-%d')
 
-    def _check_dates(self, cr, uid, ids, context = None):
-        obj = self.browse( cr, uid, ids )[0]
-        return obj.date_start < obj.date_stop
+    def _support_ok_get( self, cr, uid, ids, name, args, context ):
+        res = {}
+        for id in ids:
+            res[id] = True
+        return res
+
+    def _catering_ok_get( self, cr, uid, ids, name, args, context ):
+        res = {}
+        for id in ids:
+            res[id] = True
+        return res
 
     _columns = {
         'name' : fields.char('Name', size=64, select=True, required=True),
         'session_id' : fields.many2one('training.session', 'Session', required=True, select=True, ondelete="cascade"),
         # Attention, la date doit etre obligatoire
-        'date_start' : fields.datetime('Date', required=False, select=True),
+        'date' : fields.datetime('Date', required=False, select=True),
         'duration' : fields.time('Duration', required=False, select=True),
         'location_id' : fields.many2one('training.location', 'Location', select=True),
         'participant_ids' : fields.many2many( 'training.subscription', 'training_participation', 'event_id', 'subscription_id', 'Participants', domain="[('group_id', '=', group_id)]" ),
         'group_id' : fields.many2one('training.group', 'Group'),
-        
+        'support_ok' : fields.function( _support_ok_get, method=True, type="boolean", string="Support OK", readonly=True ),
+        'catering_ok' : fields.function( _catering_ok_get, method=True, type="boolean", string="Catering OK", readonly=True ),
     }
 
     _constraints = [
-        #    ( _check_date_start, "Errorr, Can you check your start date", ['date_start']),
-        #( _check_dates, "Error with the start date and the stop date", ['date_start', 'date_stop']) 
+        ( _check_date, "Errorr, Can you check your start date", ['date']),
     ]
 
     _defaults = {
-        'date_start' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'date' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
 training_event()
@@ -356,6 +364,7 @@ class training_seance(osv.osv):
     _inherits = {
         'training.event' : 'event_id'
     }
+
     _columns = {
         'partner_ids' : fields.many2many('res.partner', 'training_seance_partner_rel', 'seance_id', 'partner_id', 'StakeHolders'),
         'event_id' : fields.many2one('training.event', 'Event'),

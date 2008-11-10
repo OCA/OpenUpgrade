@@ -357,7 +357,7 @@
                             <field name="session_ids" colspan="4" nolabel="1">
                                 <tree string="Sessions">
                                     <field name="name" />
-                                    <field name="date_start" />
+                                    <field name="date" />
                                     <field name="state" />
                                     <field name="offer_id" />
                                 </tree>
@@ -425,7 +425,7 @@
             <field name="arch" type="xml">
                 <form string="Session">
                     <field name="name" />
-                    <field name="date_start" />
+                    <field name="date" />
                     <newline />
                     <field name="offer_id" /> 
                     <field name="catalog_id" />
@@ -433,9 +433,10 @@
                     <field name="event_ids" readonly="true" colspan="4" nolabel="1">
                         <tree string="Events">
                             <field name="name" />
-                            <field name="date_start" />
+                            <field name="date" />
                             <field name="duration" />
-                            <field name="location_id" />
+                            <field name="support_ok" />
+                            <field name="catering_ok" />
                         </tree>
                     </field>
                     <group colspan="4" col="5">
@@ -504,7 +505,7 @@
                 <form string="Event">
                     <field name="name" />
                     <field name="session_id" />
-                    <field name="date_start" />
+                    <field name="date" />
                     <field name="duration" />
                     <field name="location_id" />
                 </form>
@@ -519,7 +520,7 @@
                 <tree string="Events">
                     <field name="name" />
                     <field name="session_id" />
-                    <field name="date_start" />
+                    <field name="date" />
                     <field name="duration" />
                     <field name="location_id" />
                 </tree>
@@ -531,7 +532,7 @@
             <field name="model">training.event</field>
             <field name="type">calendar</field>
             <field name="arch" type="xml">
-                <calendar string="Events" color="session_id" date_start="date_start">
+                <calendar string="Events" color="session_id" date_start="date">
                     <field name="name"/>
                     <field name="session_id" />
                     <field name="location_id"/>
@@ -561,7 +562,7 @@
                 <form string="Seance">
                     <field name="name" />
                     <field name="session_id" />
-                    <field name="date_start" />
+                    <field name="date" />
                     <field name="duration" />
 
                     <notebook colspan="4">
@@ -615,7 +616,7 @@
                 <tree string="Seances">
                     <field name="name" />
                     <field name="session_id" />
-                    <field name="date_start" />
+                    <field name="date" />
                     <field name="duration" />
                     <field name="state" />
                 </tree>
@@ -631,7 +632,7 @@
                     <field name="name" />
                     <field name="partner_id" />
                     <field name="session_id" />
-                    <field name="date_start" />
+                    <field name="date" />
                     <field name="duration" />
                     <field name="state" />
                 </calendar>
@@ -693,7 +694,7 @@
             <field name="model">training.plannified_examen</field>
             <field name="type">calendar</field>
             <field name="arch" type="xml">
-                <calendar string="Events" color="session_id" date_start="date_start">
+                <calendar string="Events" color="session_id" date_start="date">
                     <field name="name"/>
                     <field name="session_id" />
                     <field name="location_id"/>
