@@ -76,6 +76,8 @@ class profile_game_retail(osv.osv):
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
         res = super(profile_game_retail,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
         p_id=self.search(cr,uid,[])
+        if not len(p_id):
+            return res
         p_br=self.browse(cr,uid,p_id)
         invisible=False
         if p_br[0].hr_user_id:
