@@ -25,7 +25,7 @@ import campaign_pos
 import campaign_group_pos
 import offer_document
 import campaign_group
-import proposition_products
+import proposition_items
 import campaign_group_project
 import campaign_group_tasks
 #import proposition_copy
