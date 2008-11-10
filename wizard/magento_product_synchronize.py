@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # Copyright (c) 2008 Smile S.A. (http://www.smile.fr) All Rights Reserved.
-# @authors: Sylvain Pamart, Rapha�l Valyi
+# @authors: Sylvain Pamart, Rapha￯﾿ﾽl Valyi
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -95,65 +95,78 @@ def do_export(self, cr, uid, data, context):
     #===============================================================================
     #  Product packaging
     #===============================================================================
-    for product in pool.get('product.product').browse(cr, uid, prod_ids, context=context):
     
-        #Getting Magento categories
-        category_tab ={'0':1}
-        key=1
-        last_category = product.categ_id
-        while(type(last_category.parent_id.id) == (int)):
-            category_tab[str(key)]=last_category.magento_id
-            last_category=pool.get('product.category').browse(cr, uid, last_category.parent_id.id)
-            key=key+1
+    # splitting the prod_ids array in subarrays
 
-        #Getting tax class
-        tax_class_id = 1    
-        if(product.magento_tax_class_id != 0):
-            tax_class_id=product.magento_tax_class_id
-        
-        #Getting the set attribute  
-        #TODO: customize this code in order to pass custom attribute sets (configurable products)  
-        sets = server.call(session, 'product_attribute_set.list')
-        for set in sets:
-            if set['name']=='Default':
-                attr_set_id=set['set_id'] 
-        
-        #product Data        
-        sku='mag'+str(product.id)  
-        product_data={
-            'name': product.name,
-            'price' : product.list_price, 
-            'weight': product.weight_net, 
-            'category_ids': category_tab, #fix product.categ_id.magento_id ), 
-            'description' : product.description,
-            'short_description' : product.description_sale,
-            'websites':['base'],
-            'tax_class_id': tax_class_id,
-            'status': 1,
-        }
-        
-        stock_data={
-            'qty': product.virtual_available,
-            'is_in_stock': product.virtual_available,
-        }
-        
-        #===============================================================================
-        #  Product upload to Magento
-        #===============================================================================
-        try:
-            if(product.magento_id == 0):
-                new_id=server.call(session, 'product.create', ['simple',attr_set_id, sku, product_data])
-                pool.get('product.product').write_magento_id(cr, uid, product.id, {'magento_id': new_id})
-                server.call(session,'product_stock.update',[sku,stock_data])
-                prod_new += 1
-            else:
-                server.call(session, 'product.update',[sku,product_data])
-                server.call(session,'product_stock.update',[sku,stock_data])
-                prod_update += 1
-                 
-        except xmlrpclib.Fault,error:
-            logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on product id %s . Error %s" % (product.id,error))   
+    import math
+    l=200
+    f = lambda v, l: [v[i*l:(i+1)*l] for i in range(int(math.ceil(len(v)/float(l))))]
+    split_prod_id_arrays= f(prod_ids,l)
     
+    for prod_ids in split_prod_id_arrays:
+    
+        for product in pool.get('product.product').browse(cr, uid, prod_ids, context=context):
+
+            #Getting Magento categories
+            category_tab ={'0':1}
+            key=1
+            last_category = product.categ_id
+            while(type(last_category.parent_id.id) == (int)):
+                category_tab[str(key)]=last_category.magento_id
+                last_category=pool.get('product.category').browse(cr, uid, last_category.parent_id.id)
+                key=key+1
+
+            #Getting tax class
+            tax_class_id = 1    
+            if(product.magento_tax_class_id != 0):
+                tax_class_id=product.magento_tax_class_id
+
+            
+            #Getting the set attribute  
+            #TODO: customize this code in order to pass custom attribute sets (configurable products)  
+            sets = server.call(session, 'product_attribute_set.list')
+            for set in sets:
+                if set['name']=='Default':
+                    attr_set_id=set['set_id'] 
+            
+            #product Data        
+            sku='mag'+str(product.id)
+        
+        
+            product_data={
+                'name': product.name,
+                'price' : product.list_price, 
+                'weight': (product.weight_net or 0), 
+                'category_ids': category_tab, #fix product.categ_id.magento_id ), 
+                'description' : (product.description or "description"),
+                'short_description' : (product.description_sale or "short description"),
+                'websites':['base'],
+                'tax_class_id': (tax_class_id or 1),
+                'status': 1,
+            }
+            
+            stock_data={
+                'qty': product.virtual_available,
+                'is_in_stock': product.virtual_available,
+            }
+            
+            #===============================================================================
+            #  Product upload to Magento
+            #===============================================================================
+            try:
+                if(product.magento_id == 0):
+                    new_id=server.call(session, 'product.create', ['simple',attr_set_id, sku, product_data])
+                    pool.get('product.product').write_magento_id(cr, uid, product.id, {'magento_id': new_id})
+                    server.call(session,'product_stock.update',[sku,stock_data])
+                    prod_new += 1
+                else:
+                    server.call(session, 'product.update',[sku,product_data])
+                    server.call(session,'product_stock.update',[sku,stock_data])
+                    prod_update += 1
+                     
+            except xmlrpclib.Fault,error:
+                logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on product id %s . Error %s" % (product.id,error))   
+        
     server.endSession(session)            
     return {'prod_new':prod_new, 'prod_update':prod_update}
 
