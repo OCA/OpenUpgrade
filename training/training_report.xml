@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
+        <report id="training_seance_booking_support" 
+            model="training.seance" 
+            name="training.seance.booking.support"
+            string="Support Booking" />
+        <report id="training_seance_booking_classroom" 
+            model="training.seance" 
+            name="training.seance.booking.classroom"
+            string="Classroom Booking" />
         <report id="training_subscription_cancel_report" 
             model="training.subscription" 
             name="training.subscription.cancel"
