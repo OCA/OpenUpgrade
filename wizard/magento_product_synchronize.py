@@ -129,8 +129,8 @@ def do_export(self, cr, uid, data, context):
                 if set['name']=='Default':
                     attr_set_id=set['set_id'] 
             
-            #product Data        
-            sku='mag'+str(product.id)
+            #product Data
+            sku = product.code or product.ean13 or "mag"+str(product.id)
         
         
             product_data={

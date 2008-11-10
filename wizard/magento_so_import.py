@@ -218,16 +218,16 @@ def _do_import(self, cr, uid, data, context):
             # is the Magento id known?
             product=self.pool.get('product.product').search(cr, uid, [('magento_id', '=', line["product_magento_id"])])
             if product: # then save the line
-                get_product=self.pool.get('product.product').browse(cr, uid, product[0])
+                product = self.pool.get('product.product').browse(cr, uid, product[0])
                 self.pool.get('sale.order.line').create(cr, uid, {
-                        'product_id': line['product_sku'][3:],
+                        'product_id': product.id,
                         'name': line['product_name'],
                         'order_id': order_id,
-                        'product_uom': get_product.uom_id.id,
+                        'product_uom': product.uom_id.id,
                         'product_uom_qty': line['product_qty'],
                         'price_unit': line['product_price'],
                         'discount' : float(100*float(line['product_discount_amount']))/(float(line['product_price'])*float(line['product_qty'])),
-                        'tax_id' : [(6, 0, [x.id for x in get_product.taxes_id])] #See fields.py, many2many set method.
+                        'tax_id' : [(6, 0, [x.id for x in product.taxes_id])] #See fields.py, many2many set method.
                 })
                 
             # report the error   

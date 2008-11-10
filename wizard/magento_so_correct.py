@@ -106,16 +106,16 @@ def _do_correct(self, cr, uid, data, context):
                 
                 # if found, register the line
                 if product:
-                    get_product=product=self.pool.get('product.product').browse(cr, uid, product[0])
+                    product = self.pool.get('product.product').browse(cr, uid, product[0])
                     self.pool.get('sale.order.line').create(cr, uid, {
-                                'product_id': get_product.id,
+                                'product_id': product.id,
                                 'name': mag_line['product_name'],
                                 'order_id': error_so.id,
-                                'product_uom': get_product.uom_id.id,
+                                'product_uom': product.uom_id.id,
                                 'product_uom_qty': mag_line['product_qty'],
                                 'price_unit': mag_line['product_price'],
                                 'discount' : mag_line['product_discount_amount']/mag_line['product_price']*100,
-                                'tax_id' : [(6,0,[x.id for x in get_product.taxes_id])] # See fields.py, many2many set method.
+                                'tax_id' : [(6,0,[x.id for x in product.taxes_id])] # See fields.py, many2many set method.
                     })
                 # else declare the error
                 else:
