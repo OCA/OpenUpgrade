@@ -321,8 +321,8 @@ class dm_offer_step_item(osv.osv):
 dm_offer_step_item()
 
 
-class dm_item(osv.osv):
-    _name = "dm.item"
+class dm_campaign_proposition_item(osv.osv):
+    _name = "dm.campaign.proposition.item"
     _rec_name = 'product_id'
     _columns = {
         'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
@@ -334,7 +334,7 @@ class dm_item(osv.osv):
         'offer_step_type': fields.char(string='Offer Step Type',type="char",size=64), 
         'notes' : fields.text('Notes'),
     }
-dm_item()
+dm_campaign_proposition_item()
 
 class dm_offer_step_manufacturing_constaint(osv.osv):
     _name = "dm.offer.step.manufacturing_constraint"

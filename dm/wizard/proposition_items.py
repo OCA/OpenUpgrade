@@ -68,7 +68,7 @@ class wizard_proposition_items(wizard.interface):
         pprog_obj=pool.get('dm.campaign.proposition.prices_progression').browse(cr, uid, prices_prog_id)
         if prop_obj.item_ids:
             for p in prop_obj.item_ids:
-                pool.get('dm.item').unlink(cr, uid, p.id)
+                pool.get('dm.campaign.proposition.item').unlink(cr, uid, p.id)
 
         stp=0
 
@@ -93,7 +93,7 @@ class wizard_proposition_items(wizard.interface):
                             'price':price,
                             'offer_step_type':item.offer_step_id.type
                             }
-                    new_id=pool.get('dm.item').create(cr, uid, vals)
+                    new_id=pool.get('dm.campaign.proposition.item').create(cr, uid, vals)
             stp=stp+1
 
         """

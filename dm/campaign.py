@@ -723,7 +723,7 @@ class dm_campaign_proposition(osv.osv):
         'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
-        'item_ids' : fields.one2many('dm.item', 'proposition_id', 'Catalogue'),
+        'item_ids' : fields.one2many('dm.campaign.proposition.item', 'proposition_id', 'Catalogue'),
         'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
         'keep_segments' : fields.boolean('Keep Segments'),
         'keep_prices' : fields.boolean('Keep Prices At Duplication'),
