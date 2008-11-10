@@ -114,7 +114,6 @@ class training_course(osv.osv):
         'reference_id' : fields.many2one('training.course', 'Master Course'),
 
         'analytic_account_id' : fields.many2one( 'account.analytic.account', 'Account' ),
-        #'category_id' : fields.many2one( 'training.course_category', 'Category', required=True),
         'course_type_id' : fields.many2one('training.course_type', 'Type', required=True),
 
         'instructor_ids' : fields.many2many( 
@@ -299,8 +298,8 @@ class training_event(osv.osv):
         'name' : fields.char('Name', size=64, select=True, required=True),
         'session_id' : fields.many2one('training.session', 'Session', required=True, select=True, ondelete="cascade"),
         # Attention, la date doit etre obligatoire
-        'date_start' : fields.datetime('Date Start', required=False, select=True),
-        'date_stop' : fields.datetime('Date Stop', required=False, select=True),
+        'date_start' : fields.datetime('Date', required=False, select=True),
+        'duration' : fields.time('Duration', required=False, select=True),
         'location_id' : fields.many2one('training.location', 'Location', select=True),
         'participant_ids' : fields.many2many( 'training.subscription', 'training_participation', 'event_id', 'subscription_id', 'Participants', domain="[('group_id', '=', group_id)]" ),
         'group_id' : fields.many2one('training.group', 'Group'),
@@ -314,7 +313,6 @@ class training_event(osv.osv):
 
     _defaults = {
         'date_start' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        'date_stop' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
 training_event()
