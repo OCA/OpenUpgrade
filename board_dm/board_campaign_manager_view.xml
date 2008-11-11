@@ -16,7 +16,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar,gantt,graph</field>
             <field name="view_id" ref="project.view_task_tree2"/>
-            <field name="domain" eval="[('date_start','like',time.strftime('%Y-%m-%d'))]"/>
+            <field name="domain" eval="[('date_start','=',time.strftime('%Y-%m-%d'))]"/>
         </record>
 
 	    <record id="action_dash_view_taskdeadline" model="ir.actions.act_window">
