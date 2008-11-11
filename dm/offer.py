@@ -1,4 +1,24 @@
 # -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 import time
 import offer_step
 
@@ -17,7 +37,7 @@ AVAILABLE_TYPE = [
     ('new','New'),
     ('standart','Standart'),
     ('rewrite','Rewrite'),
-    ('preoffer','Preoffer')
+    ('preoffer','Offer Idea')
 ]
 
 
@@ -272,7 +292,7 @@ class dm_offer(osv.osv):
         'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),
         'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),
         'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer',domain=[('type','in',['new','standart','rewrite'])]),
-        'preoffer_original_id' : fields.many2one('dm.offer', 'Original Preoffer',domain=[('type','=','preoffer')] ),
+        'preoffer_original_id' : fields.many2one('dm.offer', 'Original Offer Idea',domain=[('type','=','preoffer')] ),
         'active' : fields.boolean('Active'),
         'quotation' : fields.char('Quotation', size=16),
         'legal_state' : fields.selection([('validated','Validated'), ('notvalidated','Not Validated'), ('inprogress','In Progress'), ('refused','Refused')],'Legal State'),
@@ -310,7 +330,7 @@ class dm_offer(osv.osv):
     }
 
     _constraints = [
-        (_check_preoffer, 'Error ! this preoffer is already assigned to an offer',['preoffer_original_id'])
+        (_check_preoffer, 'Error ! this offer idea is already assigned to an offer',['preoffer_original_id'])
     ]
 
 #    def change_code(self,cr,uid,ids,type,copywriter_id) :

@@ -29,7 +29,7 @@
 from osv import fields, osv
 
 class cci_country(osv.osv):
-    _name = "cci_country"
+    _name = "ccicountry"
     _description = "country or area for CCI"
     _columns = {
         'code' : fields.char('Code',size=3,required=True),
@@ -43,7 +43,7 @@ class cci_country(osv.osv):
         'valid4certificate' : fields.boolean('Certificates',help='Indicates if this code can be used for certificates'),
         'valid4ata' : fields.boolean('ATA',help='Indicates if this code can be used for carnets ATA'),
         'valid4embassy' : fields.boolean('Embassy',help='Indicates if this code can be used for Embassies'),
-        'cci_country_ids' : fields.many2many('cci.country','cci_country_rel','country_id','current_country_id','Linked Countries-Areas'),
+        'cci_country_ids' : fields.many2many('ccicountry','cci_country_rel','country_id','current_country_id','Linked Countries-Areas'),
     }
     _defaults = {
         'iscountry' : lambda *a: True,
