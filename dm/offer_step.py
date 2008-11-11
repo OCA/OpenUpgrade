@@ -336,7 +336,7 @@ class dm_campaign_proposition_item(osv.osv):
     }
 dm_campaign_proposition_item()
 
-class dm_offer_step_manufacturing_constaint(osv.osv):
+class dm_offer_step_manufacturing_constraint(osv.osv):
     _name = "dm.offer.step.manufacturing_constraint"
     _columns = {
         'name': fields.char('Description', size=64, required=True),
@@ -344,7 +344,7 @@ class dm_offer_step_manufacturing_constaint(osv.osv):
         'constraint': fields.text('Manufacturing Description'),
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
     }
-dm_offer_step_manufacturing_constaint()
+dm_offer_step_manufacturing_constraint()
 
 
 class product_product(osv.osv):

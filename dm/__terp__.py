@@ -53,8 +53,9 @@
 #                  "campaign_data.xml",
                   ],
     "update_xml" : [
+                    "security/dm_security.xml",
+                    "security/ir.model.access.csv",
                     "dm_wizard.xml",
-                    "dm_security.xml",
                     "offer_view.xml",
                     "offer_step_view.xml",
                     "campaign_view.xml",
