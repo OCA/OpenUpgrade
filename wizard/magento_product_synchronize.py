@@ -31,6 +31,7 @@ import wizard
 import pooler
 import xmlrpclib
 import netsvc
+import server_common
 
 
 def do_export(self, cr, uid, data, context):
@@ -53,16 +54,15 @@ def do_export(self, cr, uid, data, context):
 
     prod_new = 0
     prod_update = 0
-    logger = netsvc.Logger()
-    pool = pooler.get_pool(cr.dbname)
+    proxy_common = server_common.server_common(cr, uid)
 
     if data['model'] == 'ir.ui.menu':
-        prod_ids = pool.get('product.product').search(cr, uid, [('exportable', '=', True)])
+        prod_ids = proxy_common.pool.get('product.product').search(cr, uid, [('exportable', '=', True)])
     else:
         prod_ids = []
         prod_not = []
         for id in data['ids']:
-            exportable_product = pool.get('product.product').search(cr, uid, [('id', '=', id), ('exportable', '=', True)]) 
+            exportable_product = proxy_common.pool.get('product.product').search(cr, uid, [('id', '=', id), ('exportable', '=', True)]) 
             if len(exportable_product) == 1:
                 prod_ids.append(exportable_product[0])
             else:
@@ -71,31 +71,10 @@ def do_export(self, cr, uid, data, context):
         if len(prod_not) > 0:
             raise wizard.except_wizard("Error", "you asked to export non-exportable products : IDs %s" % prod_not)
 
-    #===============================================================================
-    # Server communication
-    #===============================================================================
-    
-    magento_web_id = pool.get('magento.web').search(cr, uid, [('magento_id', '=', 1)])
-    try:
-        magento_web = pool.get('magento.web').browse(cr, uid, magento_web_id[0])
-        server = xmlrpclib.ServerProxy("%sindex.php/api/xmlrpc" % magento_web.magento_url)   
-    except:
-        raise wizard.except_wizard("UserError", "You must have a declared website with a valid URL, a Magento username and password")
-    try:
-        try:
-            session = server.login(magento_web.api_user, magento_web.api_pwd)
-        except xmlrpclib.Fault, error:
-            raise wizard.except_wizard("MagentoError", "Magento returned %s" % error)
-    except:
-        raise wizard.except_wizard("ConnectionError", "Couldn't connect to Magento with URL %sindex.php/api/xmlrpc" % magento_web.magento_url)
-        
-    #===============================================================================
-    #  Products export
-    #===============================================================================
     
     #Getting the set attribute  
     #TODO: customize this code in order to pass custom attribute sets (configurable products), possibly per product
-    sets = server.call(session, 'product_attribute_set.list')
+    sets = proxy_common.server.call(proxy_common.session, 'product_attribute_set.list')
     for set in sets:
         if set['name'] == 'Default':
             attr_set_id = set['set_id']
@@ -109,7 +88,7 @@ def do_export(self, cr, uid, data, context):
     
     for prod_ids in split_prod_id_arrays:
     
-        for product in pool.get('product.product').browse(cr, uid, prod_ids, context=context):
+        for product in proxy_common.pool.get('product.product').browse(cr, uid, prod_ids, context=context):
 
             #Getting Magento categories
             category_tab = {'0':1}
@@ -117,10 +96,9 @@ def do_export(self, cr, uid, data, context):
             last_category = product.categ_id
             while(type(last_category.parent_id.id) == (int)):
                 category_tab[str(key)] = last_category.magento_id
-                last_category = pool.get('product.category').browse(cr, uid, last_category.parent_id.id)
+                last_category = proxy_common.pool.get('product.category').browse(cr, uid, last_category.parent_id.id)
                 key += 1
             
-            #product Data
             sku = product.code or product.ean13 or "mag" + str(product.id)
         
             product_data = {
@@ -145,25 +123,25 @@ def do_export(self, cr, uid, data, context):
             #===============================================================================
             try:
                 if(product.magento_id == 0):
-                    _create_remote_product(session, attr_set_id, sku, product_data, uid, server, stock_data, logger)
+                    _create_remote_product(proxy_common.session, attr_set_id, sku, product_data, uid, proxy_common.server, stock_data, proxy_common.logger)
                     prod_new += 1
                 else:
-                    _update_remote_product(session, attr_set_id, sku, product_data, uid, server, stock_data, logger)
+                    _update_remote_product(proxy_common.session, attr_set_id, sku, product_data, uid, proxy_common.server, stock_data, proxy_common.logger)
                     prod_update += 1
                      
             except xmlrpclib.Fault, error:
                 if error.faultCode == 101: #turns out that the product doesn't exist in Magento (might have been deleted), try to create a new one.
                     try:
-                        _create_remote_product(session, attr_set_id, sku, product_data, uid, server, stock_data, logger)
+                        _create_remote_product(proxy_common.session, attr_set_id, sku, product_data, uid, proxy_common.server, stock_data, proxy_common.logger)
                         prod_new += 1
                     except xmlrpclib.Fault, error:
-                        logger.notifyChannel("Magento Export ", netsvc.LOG_ERROR, " Magento API return an error on product id %s . Error %s" % (product.id, error))
+                        proxy_common.logger.notifyChannel("Magento Export ", netsvc.LOG_ERROR, " Magento API return an error on product id %s . Error %s" % (product.id, error))
                 else:
-                    logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on product id %s . Error %s" % (product.id, error))
+                    proxy_common.logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on product id %s . Error %s" % (product.id, error))
             
 
         
-    server.endSession(session)      
+    proxy_common.server.endSession(proxy_common.session)      
     return {'prod_new':prod_new, 'prod_update':prod_update}
 
 

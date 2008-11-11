@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # Copyright (c) 2008 Smile S.A. (http://www.smile.fr) All Rights Reserved.
-# @authors: Sylvain Pamart, Rapha�l Valyi
+# @authors: Sylvain Pamart, Raphaël Valyi
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -33,26 +33,8 @@ import wizard
 import netsvc
 from xml.parsers.expat import ExpatError
 
-#===============================================================================
-#    Information Form & Fields
-#===============================================================================
-
-_update_done_form = '''<?xml version="1.0"?>
-<form string="Saleorders import">
-    <separator string="Magento Sale Orders Update" colspan="4" />
-    <field name="updated"/>
-</form>'''
-
-_update_done_fields = {
-    'updated': {'string':'Sales Orders Updated', 'readonly':True, 'type':'integer'},
-}
-
 
 def _do_update(self, cr, uid, data, context):
-    
-    #===============================================================================
-    #  Init
-    #===============================================================================
 
     updated = 0
     self.pool = pooler.get_pool(cr.dbname)
@@ -102,7 +84,18 @@ def _do_update(self, cr, uid, data, context):
 #===============================================================================
 #   Wizard Declaration
 #===============================================================================
-        
+
+_update_done_form = '''<?xml version="1.0"?>
+<form string="Saleorders import">
+    <separator string="Magento Sale Orders Update" colspan="4" />
+    <field name="updated"/>
+</form>'''
+
+_update_done_fields = {
+    'updated': {'string':'Sales Orders Updated', 'readonly':True, 'type':'integer'},
+}
+
+
 class wiz_magento_so_update(wizard.interface):
     states = {
         'init': {

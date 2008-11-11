@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # Copyright (c) 2008 Smile S.A. (http://www.smile.fr) All Rights Reserved.
-# @authors: Sylvain Pamart, Rapha�l Valyi
+# @authors: Sylvain Pamart, Raphaêl Valyi
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -32,6 +32,7 @@ import xmlrpclib
 import pooler
 import wizard
 from xml.parsers.expat import ExpatError
+import server_common
 
 #===============================================================================
 #    Payment mapping constants; change them if you need
@@ -43,31 +44,12 @@ default_payment = 'prepaid'
 #other possible OpenERP values would be: 'manual', 'postpaid' and 'picking'
 #using 'postpaid' might be interresting for testing purposes
 
-#===============================================================================
-#    Information Form & Fields
-#===============================================================================
-
-_import_done_form = '''<?xml version="1.0"?>
-<form string="Saleorders import">
-    <separator string="Magento Sale Orders Synchronization" colspan="4" />
-    <field name="so_nb"/>
-    <field name="has_error"/>
-</form>'''
-
-_import_done_fields = {
-    'so_nb': {'string':'New Sales Orders', 'readonly':True, 'type':'integer'},
-    'has_error': {'string':'Sales Orders With Error', 'readonly':True, 'type':'integer'},
-}
-
 
 def _do_import(self, cr, uid, data, context):
     
-    #===============================================================================
-    #  Init
-    #===============================================================================
     so_nb = 0
     has_error = 0
-    
+
     self.pool = pooler.get_pool(cr.dbname)
     logger = netsvc.Logger()
     
@@ -80,14 +62,15 @@ def _do_import(self, cr, uid, data, context):
     except:
         raise wizard.except_wizard("UserError", "You must have a declared website with a valid URL! provided URL: %s/openerp-synchro.php" % magento_web.magento_url)
              
+    
     #===============================================================================
     #    Sale order sync processing
     #===============================================================================
     
-    magento_orders=self.pool.get('sale.order').search(cr, uid, [('magento_id', '>', 0)])
+    magento_orders = self.pool.get('sale.order').search(cr, uid, [('magento_id', '>', 0)])
     if magento_orders:
-        last_order=self.pool.get('sale.order').browse(cr, uid, max(magento_orders))
-        last_order_id=last_order.magento_id     
+        last_order = self.pool.get('sale.order').browse(cr, uid, max(magento_orders))
+        last_order_id = last_order.magento_id     
     else:
         last_order_id = 0
     
@@ -95,7 +78,7 @@ def _do_import(self, cr, uid, data, context):
     sale_order_array=[]
     try:
         try:
-            sale_order_array=server.sale_orders_sync(last_order_id)
+            sale_order_array = server.sale_orders_sync(last_order_id)
         except ExpatError, error:
             logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
             raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % magento_web.magento_url)
@@ -114,12 +97,12 @@ def _do_import(self, cr, uid, data, context):
             known_sa= False
             
             # getting all the partner addresses
-            adr_ids=self.pool.get('res.partner.address').search(cr, uid, [('partner_id', '=', partner_id[0])])
+            adr_ids = self.pool.get('res.partner.address').search(cr, uid, [('partner_id', '=', partner_id[0])])
             
             # checks for bill an ship address
             for adr_id in adr_ids:
                 # iterates over the addresses
-                address=self.pool.get('res.partner.address').browse(cr, uid, adr_id)
+                address = self.pool.get('res.partner.address').browse(cr, uid, adr_id)
                 # Does the address exist?
                 if ((address.name == so['billing_address']['firstname']+" "+so['billing_address']['lastname']) and 
                     (address.street == so['billing_address']['street']) and 
@@ -153,7 +136,7 @@ def _do_import(self, cr, uid, data, context):
             known_sa= False
             
             
-        if(type(partner_id)== list):
+        if(type(partner_id) == list):
             fixed_partner_id = partner_id[0]
         else:
             fixed_partner_id = partner_id
@@ -250,7 +233,7 @@ def _do_import(self, cr, uid, data, context):
         })
         
         # done fields counter   
-        if line_error :
+        if line_error:
             has_error += 1
         
         so_nb += 1
@@ -262,6 +245,18 @@ def _do_import(self, cr, uid, data, context):
 #   Wizard Declaration
 #===============================================================================
         
+_import_done_form = '''<?xml version="1.0"?>
+<form string="Saleorders import">
+    <separator string="Magento Sale Orders Synchronization" colspan="4" />
+    <field name="so_nb"/>
+    <field name="has_error"/>
+</form>'''
+
+_import_done_fields = {
+    'so_nb': {'string':'New Sales Orders', 'readonly':True, 'type':'integer'},
+    'has_error': {'string':'Sales Orders With Error', 'readonly':True, 'type':'integer'},
+}
+
 class wiz_magento_so_import(wizard.interface):
     states = {
         'init': {

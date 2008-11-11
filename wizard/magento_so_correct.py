@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # Copyright (c) 2008 Smile S.A. (http://www.smile.fr) All Rights Reserved.
-# @authors: Sylvain Pamart, Rapha�l Valyi
+# @authors: Sylvain Pamart, Raphaël Valyi
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -32,22 +32,6 @@ import pooler
 import wizard
 import netsvc
 from xml.parsers.expat import ExpatError
-
-#===============================================================================
-#    Information Form & Fields
-#===============================================================================
-
-_correct_done_form = '''<?xml version="1.0"?>
-<form string="Saleorders import">
-    <separator string="Magento Sale Orders Correction" colspan="4" />
-    <field name="corrected"/>
-    <field name="has_error"/>
-</form>'''
-
-_correct_done_fields = {
-    'corrected': {'string':'Corrected Sales Orders', 'readonly':True, 'type':'integer'},
-    'has_error': {'string':'Sales Orders With Error', 'readonly':True, 'type':'integer'},
-}
 
 
 def _do_correct(self, cr, uid, data, context):
@@ -133,6 +117,18 @@ def _do_correct(self, cr, uid, data, context):
 #===============================================================================
 #   Wizard Declaration
 #===============================================================================
+
+_correct_done_form = '''<?xml version="1.0"?>
+<form string="Saleorders import">
+    <separator string="Magento Sale Orders Correction" colspan="4" />
+    <field name="corrected"/>
+    <field name="has_error"/>
+</form>'''
+
+_correct_done_fields = {
+    'corrected': {'string':'Corrected Sales Orders', 'readonly':True, 'type':'integer'},
+    'has_error': {'string':'Sales Orders With Error', 'readonly':True, 'type':'integer'},
+}
         
 class wiz_magento_so_correct(wizard.interface):
     states = {
