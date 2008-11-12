@@ -56,12 +56,44 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Documents">
-				<field name="name" select="1"/>
-				<field name="code" select="2"/>
-				<field name="lang_id"/>
-				<field name="copywriter_id" select="1"/>
-				<separator string="Document Categories" colspan="4"/>
-				<field name="category_ids" colspan="4" nolabel="1"/>
+				<notebook>
+				<page string="General">
+					<field name="name" select="1"/>
+					<field name="code" select="2"/>
+					<field name="lang_id"/>
+					<field name="copywriter_id" select="1"/>
+					<separator string="Document Categories" colspan="4"/>
+					<field name="category_ids" colspan="4" nolabel="1"/>
+				</page>
+				<page string="Document Fields">
+				<group colspan="2" col="2">
+					<separator string="Customer Fields" colspan="2"/>
+					<field name="customer_field_ids" nolabel="1" colspan="2">
+						<form string="Customer Field">
+							<field name="name"/>
+							<field name="field_description"/>
+						</form>
+						<tree string="Customer Fields">
+							<field name="name"/>
+							<field name="field_description"/>
+						</tree>
+					</field>
+				</group>
+				<group colspan="2" col="2">
+					<separator string="Customer Order Fields" colspan="4"/>
+					<field name="customer_order_field_ids" nolabel="1" colspan="4">
+						<form string="Customer Order Field">
+							<field name="name"/>
+							<field name="field_description"/>
+						</form>
+						<tree string="Customer Order Fields">
+							<field name="name"/>
+							<field name="field_description"/>
+						</tree>
+					</field>
+				</group>
+				</page>
+				</notebook>
 			</form>
 		</field>
 	</record>

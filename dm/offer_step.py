@@ -238,6 +238,13 @@ class dm_offer_document(osv.osv):
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter', domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
         'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
+        'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
+                                            'document_id','customer_field_id','Customer Fields',
+                                            domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+                                                        '!',('model_id','like','dm.customers_list')]),
+        'customer_order_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_order_field_rel',
+                                            'document_id','customer_order_field_id','Customer Order Fields',
+                                            domain=[('model_id','like','dm.customer.order')]),
     }
 
 dm_offer_document()
