@@ -30,13 +30,16 @@ class sale_forecast(osv.osv):
     _description = "Sales Forecast"
     _columns = {
         'name': fields.char('Sales Forecast', size=32, required=True),
-        'user_id': fields.many2one('res.users', 'Responsible', required=True),
+        'user_id': fields.many2one('res.users', 'Responsible', required=True, select=1),
         'date_from':fields.date('Start Period', required=True),
         'date_to':fields.date('End Period', required=True),
         'line_ids': fields.one2many('sale.forecast.line', 'forecast_id', 'Forecast lines'),
+        'state': fields.selection([('draft','Draft'),('open','Open'),('close','Closed'),('cancel','Canceled')], 'State', required=True, select=1),
+        'note': fields.text('Notes'),
     }
     _defaults = {
         'name': lambda *a: time.strftime('%Y-%m-%d'),
+        'state': lambda *a: 'draft',
         'date_from': lambda *a: time.strftime('%Y-%m-01'),
         'date_to': lambda *a: (mx.DateTime.now()+mx.DateTime.RelativeDateTime(months=1,day=1,days=-1)).strftime('%Y-%m-%d'),
         'user_id': lambda self,cr,uid,c: uid

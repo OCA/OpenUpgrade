@@ -21,46 +21,59 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Sales Forecast">
-                    <notebook>
+                    <field name="name" select="1"/>
+                    <field name="user_id" select="1"/>
+                    <field name="date_from" select="2"/>
+                    <field name="date_to"/>
+                    <notebook colspan="4">
                     <page string="Sales Forecast">
-                        <field name="name" select="1"/>
-                        <field name="user_id" select="1"/>
-                        <field name="date_from" select="2"/>
-                        <field name="date_to"/>
                         <field name="line_ids" widget="one2many_list" colspan="4" nolabel="1" mode="tree,form">
                             <form tring="Forecast Lines" >
-                                <notebook>
-                                    <page string="Forecast Details">
+                                <group col="4" colspan="2">
+                                    <separator string="Forecasts" colspan="4"/>
                                     <field name="user_id"/>
+                                    <newline/>
                                     <field name="computation_type"/>
-                                    <field name="amount"/>                                                                        
-                                    <group>
-                                    <field name="state_draft"/>
-                                    <field name="state_confirmed"/>
-                                    <field name="state_cancel"/>
-                                    <field name="state_done"/>
-                                    </group>
-                                    <field name="crm_case_section" colspan="4"/>
-                                    <field name="crm_case_categ" colspan="4"/>
-                                    </page>
-                                    <page string="Feedback">
+                                    <field name="amount"/>
+                                </group>
+                                <group col="2" colspan="2">
+                                    <separator string="Results" colspan="2"/>
                                     <field name="computed_amount"/>
                                     <field name="final_evolution"/>
-                                    <field name="feedback" colspan="4"/>
-                                    <field name="note" colspan="4"/>
+                                </group>
+                                <notebook colspan="4">
+                                    <page string="Forecast Details">
+                                        <separator string="Filter on States" colspan="4"/>
+                                        <field name="state_draft"/>
+                                        <field name="state_confirmed"/>
+                                        <field name="state_cancel"/>
+                                        <field name="state_done"/>
+                                        <separator string="Filter on Cases Sections" colspan="4"/>
+                                        <field name="crm_case_section" colspan="4" nolabel="1"/>
+                                        <separator string="Filter on Cases Categories" colspan="4"/>
+                                        <field name="crm_case_categ" colspan="4" nolabel="1"/>
+                                    </page>
+                                    <page string="Notes">
+                                        <field name="note" colspan="4" nolabel="1"/>
+                                    </page>
+                                    <page string="Feedback">
+                                        <field name="feedback" colspan="4" nolabel="1"/>
                                     </page>
                                 </notebook>
-                            </form>                        
+                            </form>
                             <tree string="Forecast Lines" >
                                 <field name="user_id"/>
-                                <field name="computation_type"/>                                
+                                <field name="computation_type"/>
                                 <field name="amount"/>
-                                <field name="computed_amount"/>                                
+                                <field name="computed_amount"/>
                                 <field name="final_evolution"/>
-                                <field name="feedback"/>
-                                <field name="note"/>
                             </tree>
                         </field>
+                        <separator string="States" colspan="4"/>
+                        <field name="state"/>
+                    </page>
+                    <page string="Notes">
+                        <field name="note" nolabel="1" colspan="4"/>
                     </page>
                     </notebook>
                 </form>
@@ -68,13 +81,17 @@
         </record>
 
         <record model="ir.actions.act_window" id="action_sale_forecast_view_form">
-            <field name="name">Sales Forecast</field>
+            <field name="name">New Sales Forecasts</field>
             <field name="res_model">sale.forecast</field>
             <field name="view_type">form</field>
             <field name="view_mode">form,tree</field>
         </record>
-        
-        <menuitem name="Sales Forecast" id="menu_sale_forecast" parent="sale.menu_sale_root" action="action_sale_forecast_view_form"/>
+        <menuitem
+            name="Sales Forecasts"
+            id="menu_sale_forecast"
+            parent="sale.menu_sale_root"/>
+
+        <menuitem id="menu_sale_forecast_new" parent="menu_sale_forecast" action="action_sale_forecast_view_form"/>
 
         <record model="ir.actions.act_window" id="action_invoice_salesman_forecast_view_form_my">
             <field name="res_model">sale.forecast</field>
