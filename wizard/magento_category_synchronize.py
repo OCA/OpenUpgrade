@@ -36,6 +36,17 @@ import server_common
 
 def do_export(self, cr, uid, data, context):
     
+    def _create_remote_category(session, magento_parent_id, category_data, uid, server, logger):
+        new_id = proxy_common.server.call(proxy_common.session,'category.create', [magento_parent_id, category_data])
+        proxy_common.pool.get('product.category').write_magento_id(cr, uid, category.id, {'magento_id': new_id})
+        logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully created category with OpenERP id %s and Magento id %s" % (category.id, new_id))
+
+    def _update_remote_category(session, category_magento_id, category_data, uid, server, logger):
+        #category_data['path'] = category_data['path'] + "/" + str(category.magento_id)
+        proxy_common.server.call(proxy_common.session,'category.update',[category_magento_id, category_data])
+        logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully updated category with OpenERP id %s and Magento id %s" % (category.id, category.magento_id))
+    
+    
     categ_new = 0
     categ_update = 0
     proxy_common = server_common.server_common(cr, uid)
@@ -68,7 +79,7 @@ def do_export(self, cr, uid, data, context):
     
         path=''             #construct path
         magento_parent_id=1 #root catalog
-        if(type(category.parent_id.id)== (int)): #if not root category
+        if(type(category.parent_id.id) == (int)): #if not root category
             
             last_parent=proxy_common.pool.get('product.category').browse(cr, uid, category.parent_id.id)
             magento_parent_id=last_parent.magento_id
@@ -84,9 +95,9 @@ def do_export(self, cr, uid, data, context):
         if path.endswith('/'): 
             path=path[0:-1]
         
-        category_data={
+        category_data = {
                 'name' : category.name,
-                'path' : path,
+                #'path' : path,
                 'is_active' : 1,
         }
 
@@ -96,18 +107,26 @@ def do_export(self, cr, uid, data, context):
         
         try:
             if(category.magento_id == 0):
-                new_id = proxy_common.server.call(proxy_common.session,'category.create', [magento_parent_id, category_data])
-                proxy_common.pool.get('product.category').write_magento_id(cr, uid, category.id, {'magento_id': new_id})
+                _create_remote_category(proxy_common.session, magento_parent_id, category_data, uid, proxy_common.server, proxy_common.logger)
                 categ_new += 1
                 
             else:
-                category_data['path'] = category_data['path'] + "/" + str(category.magento_id)
-                proxy_common.server.call(proxy_common.session,'category.update',[category.magento_id, category_data])
+                _update_remote_category(proxy_common.session, category.magento_id, category_data, uid, proxy_common.server, proxy_common.logger)
                 categ_update += 1
-            
                 
-        except xmlrpclib.Fault,error:
-            proxy_common.logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on category id %s . Error %s" % (category.id, error))   
+                
+        except xmlrpclib.Fault, error:
+            print "aa"
+            if error.faultCode == 102: #turns out that the category doesn't exist in Magento (might have been deleted), try to create a new one.
+                try:
+                    print "bb"
+                    _create_remote_category(proxy_common.session, magento_parent_id, category_data, uid, proxy_common.server, proxy_common.logger)
+                    categ_new += 1
+                except xmlrpclib.Fault, error:
+                    proxy_common.logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on category id %s . Error %s" % (category.id, error))   
+            else:
+                proxy_common.logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on category id %s . Error %s" % (category.id, error))   
+
 
     proxy_common.server.endSession(proxy_common.session)        
     
