@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name" : "Sales Forecast and Statistics",
+    "name" : "Sales Forecasts, goals and statistics",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
@@ -32,7 +32,7 @@ Different reports are set up for forecast and sales analysis.
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "report_invoice_salesman_view.xml"
+        "sale_forecast_view.xml"
     ],
     "active": False,
     "installable": True
