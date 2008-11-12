@@ -51,7 +51,7 @@ class sale_forecast_line(osv.osv):
     _name = "sale.forecast.line"
     _description = "Forecast Line"
     _rec_name = 'user_id'
-    
+
     def _final_evolution(self, cr, uid, ids, name, args, context={}):
         forecast_line =  self.browse(cr, uid, ids)
         result ={forecast_line[0].id :0}
@@ -66,7 +66,7 @@ class sale_forecast_line(osv.osv):
             where = []
             if state :
                 where.append(('state','in',state))
-            where.append(('user_id','=',line.user_id.id))           
+            where.append(('user_id','=',line.user_id.id))
             if line.computation_type in ('invoice_fix','amount_invoiced') :
                 obj = 'account.invoice'
                 where.append(('date_invoice','>=',line.forecast_id.date_from))
@@ -74,7 +74,7 @@ class sale_forecast_line(osv.osv):
             elif line.computation_type == 'cases' :
                 obj = 'crm.case'
                 where.append(('create_date','>=',line.forecast_id.date_from))
-                where.append(('date_closed','<=',line.forecast_id.date_to))             
+                where.append(('date_closed','<=',line.forecast_id.date_to))
                 if line.crm_case_section:
                     section_id = map(lambda x : x.id ,line.crm_case_section)
                     where.append(('section_id','in',section_id))
@@ -84,40 +84,38 @@ class sale_forecast_line(osv.osv):
             else :
                 obj = 'sale.order'
                 where.append(('date_order','>=',line.forecast_id.date_from))
-                where.append(('date_order','<=',line.forecast_id.date_to))          
+                where.append(('date_order','<=',line.forecast_id.date_to))
             searched_ids = self.pool.get(obj).search(cr,uid,where)
-            if  line.computation_type  in ('amount_sales','amount_invoiced') :
+            if line.computation_type  in ('amount_sales','amount_invoiced') :
                 res = self.pool.get(obj).browse(cr,uid,searched_ids)
                 amount =0
                 for r in res:
                     amount += r.amount_untaxed
-                print amount
                 result[line.id]=amount
-            else:   
-                result[line.id]=len(searched_ids)       
+            else:
+                result[line.id]=len(searched_ids)
         return result
-    
+
     _columns = {
         'forecast_id': fields.many2one('sale.forecast', 'Forecast',ondelete='cascade',required =True),
         'user_id': fields.many2one('res.users', 'Salesman',required=True),
-        'computation_type' : fields.selection([('invoice_fix','Number of Invoice'),('amount_invoiced','Amount Invoiced'),('cases','No of Cases'),('number_of_sale_order','Number of sale order'),('amount_sales','Amount Sales')],'Computation Base On',required=True),
+        'computation_type' : fields.selection([('invoice_fix','Number of Invoices'),('amount_invoiced','Amount Invoiced'),('cases','Nbr of Cases'),('number_of_sale_order','Number of Sales Order'),('amount_sales','Total of Sales')],'Computation Based On',required=True),
         'state_draft' : fields.boolean('Draft'),
         'state_confirmed': fields.boolean('Confirmed'),
         'state_done': fields.boolean('Done'),
         'state_cancel': fields.boolean('Cancel'),
         'crm_case_section' : fields.many2many('crm.case.section', 'crm_case_section_forecast', 'forecast_id','section_id', 'Case Section'),
         'crm_case_categ' : fields.many2many('crm.case.categ', 'crm_case_categ_forecast', 'forecast_id','categ_id', 'Case Category',),
-        'note':fields.text('Note', size=64),        
+        'note':fields.text('Note', size=64),
         'amount': fields.float('Value Forecasted'),
         'computed_amount': fields.function(_final_evolution, string='Real Value',method=True, store=True,),
-        'final_evolution' : fields.selection([('bad','Bad'),('to_be_improved','To Be Improved'),('normal','Noraml'),('good','Good'),('very_good','Very Good')],'Performance',),
-        'feedback' : fields.text('Feedback Comment')    
+        'final_evolution' : fields.selection([('bad','Bad'),('to_be_improved','To Be Improved'),('normal','Normal'),('good','Good'),('very_good','Very Good')],'Performance',),
+        'feedback' : fields.text('Feedback Comment')
     }
     _order = 'user_id'
     _defaults = {
         'computation_type' : lambda *a : 'invoice_fix'
     }
-    
+
 sale_forecast_line()
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
