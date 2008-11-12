@@ -25,15 +25,15 @@ from osv import fields,osv
 import time
 import mx.DateTime
 
-class report_invoice_salesman_forecast(osv.osv):
-    _name = "report_invoice_salesman.forecast"
+class sale_forecast(osv.osv):
+    _name = "sale.forecast"
     _description = "Sales Forecast"
     _columns = {
         'name': fields.char('Sales Forecast', size=32, required=True),
         'user_id': fields.many2one('res.users', 'Responsible', required=True),
         'date_from':fields.date('Start Period', required=True),
         'date_to':fields.date('End Period', required=True),
-        'line_ids': fields.one2many('report_invoice_salesman.forecast.line', 'forecast_id', 'Forecast lines'),
+        'line_ids': fields.one2many('sale.forecast.line', 'forecast_id', 'Forecast lines'),
     }
     _defaults = {
         'name': lambda *a: time.strftime('%Y-%m-%d'),
@@ -42,10 +42,10 @@ class report_invoice_salesman_forecast(osv.osv):
         'user_id': lambda self,cr,uid,c: uid
     }
     _order = 'date_from desc'
-report_invoice_salesman_forecast()
+sale_forecast()
 
-class report_invoice_salesman_forecast_line(osv.osv):
-    _name = "report_invoice_salesman.forecast.line"
+class sale_forecast_line(osv.osv):
+    _name = "sale.forecast.line"
     _description = "Forecast Line"
     _rec_name = 'user_id'
     
@@ -95,7 +95,7 @@ class report_invoice_salesman_forecast_line(osv.osv):
         return result
     
     _columns = {
-        'forecast_id': fields.many2one('report_invoice_salesman.forecast', 'Forecast',ondelete='cascade',required =True),
+        'forecast_id': fields.many2one('sale.forecast', 'Forecast',ondelete='cascade',required =True),
         'user_id': fields.many2one('res.users', 'Salesman',required=True),
         'computation_type' : fields.selection([('invoice_fix','Number of Invoice'),('amount_invoiced','Amount Invoiced'),('cases','No of Cases'),('number_of_sale_order','Number of sale order'),('amount_sales','Amount Sales')],'Computation Base On',required=True),
         'state_draft' : fields.boolean('Draft'),
@@ -115,6 +115,6 @@ class report_invoice_salesman_forecast_line(osv.osv):
         'computation_type' : lambda *a : 'invoice_fix'
     }
     
-report_invoice_salesman_forecast_line()
+sale_forecast_line()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
