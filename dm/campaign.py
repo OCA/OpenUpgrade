@@ -349,7 +349,7 @@ class dm_campaign(osv.osv):
 
     _columns = {
         'code1' : fields.function(_campaign_code,string='Code',type="char",size="64",method=True,readonly=True),
-        'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])],
+        'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])], required=True,
             help="Choose the commercial offer to use with this campaign, only offers in open state can be assigned"),
         'country_id' : fields.many2one('res.country', 'Country',required=True, 
             help="The language and currency will be automaticaly assigned if they are defined for the country"),
@@ -632,7 +632,7 @@ class dm_campaign_proposition(osv.osv):
             qty = 0
             numeric=True
             for segment in propo.segment_ids:
-                if segment.AAA:
+                if segment.all_add_avail:
                     result[propo.id]='AAA for a Segment'
                     numeric=False
                     continue
@@ -723,8 +723,7 @@ class dm_campaign_proposition(osv.osv):
         'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
-        'product_ids' : fields.one2many('dm.product', 'proposition_id', 'Catalogue'),
-#        'product_ids' : fields.many2many('dm.product', 'proposition_product_rel', 'proposition_id', 'product_id', 'Catalogue'),
+        'item_ids' : fields.one2many('dm.campaign.proposition.item', 'proposition_id', 'Catalogue'),
         'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
         'keep_segments' : fields.boolean('Keep Segments'),
         'keep_prices' : fields.boolean('Keep Prices At Duplication'),
@@ -815,6 +814,7 @@ class dm_campaign_proposition_segment(osv.osv):
         'quantity_cleaned_cleaner' : fields.integer('Cleaned Quantity'),
         'quantity_usable' : fields.function(_quantity_usable_get,string='Usable Quantity',type="integer",method=True,readonly=True),
         'AAA': fields.boolean('All Adresses Available'),
+        'all_add_avail': fields.boolean('All Adresses Available'),
         'split_id' : fields.many2one('dm.campaign.proposition.segment','Split'),
         'start_census' :fields.integer('Start Census (days)'),
         'end_census' : fields.integer('End Census (days)'),
@@ -948,6 +948,16 @@ class dm_campaign_purchase_line(osv.osv):
                 print "Campaign ID : ",pline.campaign_id
                 print "Group ID : ",pline.campaign_group_id
 
+                # if in a group, obj = 1st campaign of the group, if not it's the campaing
+                if pline.campaign_group_id:
+                    obj = pline.campaign_group_id.campaign_ids[0]
+                    code = pline.campaign_group_id.code
+                    print "First campaign of group : ", obj.name
+                else:
+                    obj = pline.campaign_id
+                    code = pline.campaign_id.code1
+
+                print "obj : ",obj
 #                if not pline.quantity and pline.type_quantity != 'quantity_free' and pline.type_quantity != 'quantity_wanted':
 #                    raise  osv.except_osv('Warning', "There's no quantity defined for this purchase line")
 
@@ -957,7 +967,7 @@ class dm_campaign_purchase_line(osv.osv):
                 #create purchase tender
 #                tender_desc = 'Purchase Tender for : ' + pline.product_id.name + ' for campaign ' + pline.campaign_id.name
                 tender_desc = 'Test'
-                tender_id = self.pool.get('purchase.tender').create(cr, uid,{'description':tender_desc})
+                tender_id = self.pool.get('purchase.tender').create(cr, uid,{'description':tender_desc,'state':'open'})
 
                 # Create a po / supplier
                 for supplier in pline.product_id.seller_ids:
@@ -981,16 +991,6 @@ class dm_campaign_purchase_line(osv.osv):
                         raise osv.except_osv('Warning', "There's no proposition defined for this campaign : %s" % (pline.campaign_id.name,) )
                     """
 
-                    # if in a group, obj = 1st campaign of the group, if not it's the campaing
-                    if pline.campaign_group_id:
-                        obj = pline.campaign_group_id.campaign_ids[0]
-                        code = pline.campaign_group_id.code
-                        print "First campaign of group : ", obj.name
-                    else:
-                        obj = pline.campaign_id
-                        code = pline.campaign_id.code1
-
-                    print "obj : ",obj
 
                     # Get constraints
                     constraints = []
@@ -1188,7 +1188,8 @@ class dm_campaign_purchase_line(osv.osv):
                                             quantity = segment.quantity_estimated
                                         elif pline.type_quantity == 'quantity_wanted':
                                             quantity = segment.quantity_wanted
-                                            if segment.AAA:
+#                                            if segment.AAA:
+                                            if segment.all_add_Avail:
                                                 quantity = 0
                                                 line_name = propo.code1 + ' - ' + segment.list_id.name + ' - All Addresses Available'
                                         elif pline.type_quantity == 'quantity_delivered':
@@ -1220,7 +1221,8 @@ class dm_campaign_purchase_line(osv.osv):
                                         quantity = segment.quantity_estimated
                                     elif pline.type_quantity == 'quantity_wanted':
                                         quantity = segment.quantity_wanted
-                                        if segment.AAA:
+#                                        if segment.AAA:
+                                        if segment.all_add_avail:
                                             quantity = 0
                                             line_name = propo.code1 + ' - ' + segment.list_id.name + ' - All Addresses Available'
                                     elif pline.type_quantity == 'quantity_delivered':
@@ -1494,13 +1496,15 @@ class project_task(osv.osv):
     def default_get(self, cr, uid, fields, context=None):
         if 'type' in context and 'project_id' in context:
             self.context_data = context.copy()
-        value = super(project_task, self).default_get(cr, uid, fields, context)
-        return value
+            self.context_data['flag'] = True
+        else:
+            self.context_data['flag'] = False
+        return super(project_task, self).default_get(cr, uid, fields, context)
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
         result = super(project_task,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-        if not context.has_key('active_id'):
-            if 'project_id' in self.context_data and self.context_data['project_id']:
+        if 'flag' in self.context_data or 'type' in context:
+            if 'project_id' in self.context_data:
                 if result['type']=='form':
                     result['arch']= """<?xml version="1.0" encoding="utf-8"?>\n<form string="Task edition">\n<group colspan="6" col="6">\n<field name="name" select="1"/>\n<field name="project_id" readonly="1" select="1"/>\n
                         <field name="total_hours" widget="float_time"/>\n<field name="user_id" select="1"/>\n<field name="date_deadline" select="2"/>\n<field name="progress" widget="progressbar"/>\n</group>\n
@@ -1518,19 +1522,20 @@ class project_task(osv.osv):
         return result
     
     def create(self,cr,uid,vals,context={}):
-        if context.has_key('read_delta'):
+        if 'flag' in self.context_data:
             if 'type' in self.context_data:
                 task_type = self.pool.get('project.task.type').search(cr,uid,[('name','=',self.context_data['type'])])[0]
                 vals['type']=task_type
                 vals['project_id']=self.context_data['project_id']
+                self.context_data = {}
             if 'planned_hours' not in vals:
-                vals['planned_hours'] = 0.00
+                vals['planned_hours'] = 0.0
         return super(project_task, self).create(cr, uid, vals, context)
     
     _columns = {
         'date_reviewed': fields.datetime('Reviewed Date'),
         'date_planned': fields.datetime('Planned Date'),
-     }
+    }
 
 project_task()
 

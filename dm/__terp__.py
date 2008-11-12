@@ -29,21 +29,19 @@
 
         Marketing Campaign Management Module
 
-        This module allows to manage :
+        This module allows to :
 
         * Commercial Offers :
-            - Create Commercial Offers
-            - Multimedia aware
-            - Graphical View of the Offer Steps
-            - Create offers from offer models
-            - Preoffer management (ideas)
+            - Create  Multimedia Commercial Offers
+            - View a Graphicalreprsesentation of the offer steps
+            - Create offers from offer models and offer ideas
 
         * Marketing Campaign
-            - Marketing Campaign Plannification
-            - Retro planning generation (automaticaly creates all the tasks necessary to launch your campaign)
-            - Assign automatic price progression for each campaign steps
-            - Auto generate the pruchase orders for all the products of the campaign
-            - Manage Customers segments and segmentation criteria
+            - Plan your Marketing Campaign and Commercial Propositions
+            - Generate the Retro planning (automaticaly creates all the tasks necessary to launch your campaign)
+            - Assign automatic prices to the items of your commercial propositions
+            - Auto generate the purchase orders for all the items of the campaign
+            - Manage Customers Fils, segments and segmentation criteria
             - Create campaigns from campaign models
             - Manage copywriters, brokers, dealers, addresses deduplicators and cleaners
 
@@ -55,12 +53,13 @@
 #                  "campaign_data.xml",
                   ],
     "update_xml" : [
+                    "security/dm_security.xml",
+                    "security/ir.model.access.csv",
                     "dm_wizard.xml",
-                    "dm_security.xml",
                     "offer_view.xml",
                     "offer_step_view.xml",
-                    "trademark_view.xml",
                     "campaign_view.xml",
+                    "trademark_view.xml",
                     "dm_report.xml",
                     "offer_sequence.xml",
                     "dm_data.xml",

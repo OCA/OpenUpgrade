@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -29,7 +29,7 @@
     "description": """
      """,
     "init_xml" : [],
-    "update_xml" : ["portal_sale_view.xml","portal_conf_data.xml"],
+    "update_xml" : ["portal_conf_data.xml"],
     "demo_xml" : ["portal_sale_data.xml"],
     "active": False,
     "installable": True

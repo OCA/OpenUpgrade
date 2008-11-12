@@ -67,6 +67,8 @@ class profile_game_retail_phase_one(osv.osv):
         res = super(profile_game_retail_phase_one,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
         p_obj=self.pool.get('profile.game.retail')
         p_id=p_obj.search(cr,uid,[])
+        if not len(p_id):
+            return res
         p_br=p_obj.browse(cr,uid,p_id)
         invisible=False
         if p_br[0].hr_user_id:
@@ -163,8 +165,8 @@ unexploited markets, to see broader and larger.'''
         if type!='report' and (object not in ("sale.order", 'sale.order.line')):
             return False
 
-        #if type!='report' and (object in ("sale.order", 'sale.order.line') and (method not in ('read','button_dummy','write'))):
-        #    self.error(cr, uid,step_id)
+        if type!='report' and (object in ("sale.order", 'sale.order.line') and (method not in ('read','button_dummy','write'))):
+            self.error(cr, uid,step_id)
         return (type=='report' and (object in ("sale.order", 'sale.order.line')))
 
     def post_process_print_quote(self,cr,uid,step_id,object, method,type,*args):
