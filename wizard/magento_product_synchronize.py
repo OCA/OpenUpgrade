@@ -36,7 +36,7 @@ import server_common
 
 def do_export(self, cr, uid, data, context):
     
-    def _create_remote_product(session, attr_set_id, sku, product_data, uid, server, stock_data, logger):
+    def _create_remote_product(session, attr_set_id, sku, product_data, uid, server, stock_data, logger, pool):
         new_id = server.call(session, 'product.create', ['simple', attr_set_id, sku, product_data])
         pool.get('product.product').write_magento_id(cr, uid, product.id, {'magento_id': new_id})
         server.call(session, 'product_stock.update', [sku, stock_data])
@@ -123,7 +123,7 @@ def do_export(self, cr, uid, data, context):
             #===============================================================================
             try:
                 if(product.magento_id == 0):
-                    _create_remote_product(proxy_common.session, attr_set_id, sku, product_data, uid, proxy_common.server, stock_data, proxy_common.logger)
+                    _create_remote_product(proxy_common.session, attr_set_id, sku, product_data, uid, proxy_common.server, stock_data, proxy_common.logger, proxy_common.pool)
                     prod_new += 1
                 else:
                     _update_remote_product(proxy_common.session, attr_set_id, sku, product_data, uid, proxy_common.server, stock_data, proxy_common.logger)
@@ -132,10 +132,11 @@ def do_export(self, cr, uid, data, context):
             except xmlrpclib.Fault, error:
                 if error.faultCode == 101: #turns out that the product doesn't exist in Magento (might have been deleted), try to create a new one.
                     try:
-                        _create_remote_product(proxy_common.session, attr_set_id, sku, product_data, uid, proxy_common.server, stock_data, proxy_common.logger)
+                        _create_remote_product(proxy_common.session, attr_set_id, sku, product_data, uid, proxy_common.server, stock_data, proxy_common.logger, proxy_common.pool)
                         prod_new += 1
                     except xmlrpclib.Fault, error:
                         proxy_common.logger.notifyChannel("Magento Export ", netsvc.LOG_ERROR, " Magento API return an error on product id %s . Error %s" % (product.id, error))
+
                 else:
                     proxy_common.logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on product id %s . Error %s" % (product.id, error))
             
