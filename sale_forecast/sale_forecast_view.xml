@@ -12,6 +12,7 @@
                     <field name="date_from"/>
                     <field name="date_to"/>
                     <field name="state"/>
+                    <field name="forecast_rate" widget="progressbar"/>
                 </tree>
             </field>
         </record>
@@ -33,8 +34,8 @@
                                 <group col="4" colspan="2">
                                     <separator string="Forecasts" colspan="4"/>
                                     <field name="user_id"/>
-                                    <newline/>
                                     <field name="computation_type"/>
+                                    <newline/>
                                     <field name="amount"/>
                                 </group>
                                 <group col="2" colspan="2">
@@ -72,6 +73,7 @@
                                 <field name="amount"/>
                                 <field name="computed_amount"/>
                                 <field name="final_evolution"/>
+                                <field name="forecast_rate" widget="progressbar"/>
                             </tree>
                         </field>
                         <separator string="States" colspan="4"/>

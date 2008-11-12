@@ -28,6 +28,18 @@ import mx.DateTime
 class sale_forecast(osv.osv):
     _name = "sale.forecast"
     _description = "Sales Forecast"
+
+    def _forecast_rate(self, cr, uid, ids, field_names, args, context):
+        res = {}
+        amount = 0
+        avg = 0
+        for forecast in self.browse(cr, uid, ids, context=context):
+            for line in forecast.line_ids:
+                amount += line.forecast_rate
+                avg += 1
+            res[forecast.id] = (amount/avg)
+        return res
+
     _columns = {
         'name': fields.char('Sales Forecast', size=32, required=True),
         'user_id': fields.many2one('res.users', 'Responsible', required=True, select=1),
@@ -36,6 +48,7 @@ class sale_forecast(osv.osv):
         'line_ids': fields.one2many('sale.forecast.line', 'forecast_id', 'Forecast lines'),
         'state': fields.selection([('draft','Draft'),('open','Open'),('close','Closed'),('cancel','Canceled')], 'State', required=True, select=1),
         'note': fields.text('Notes'),
+        'forecast_rate' : fields.function(_forecast_rate, method=True, string='Progress (%)',)
 
     }
     _defaults = {
@@ -120,6 +133,11 @@ class sale_forecast_line(osv.osv):
                 result[line.id]=len(searched_ids)
         return result
 
+    def _forecast_rate(self, cr, uid, ids, field_names, args, context):
+        res = {}
+        for line in self.browse(cr, uid, ids, context=context):
+            res[line.id] = (line.computed_amount/line.amount) * 100
+        return res
     _columns = {
         'forecast_id': fields.many2one('sale.forecast', 'Forecast',ondelete='cascade',required =True),
         'user_id': fields.many2one('res.users', 'Salesman',required=True),
@@ -136,7 +154,8 @@ class sale_forecast_line(osv.osv):
         'amount': fields.float('Value Forecasted'),
         'computed_amount': fields.function(_final_evolution, string='Real Value',method=True, store=True,),
         'final_evolution' : fields.selection([('bad','Bad'),('to_be_improved','To Be Improved'),('normal','Noraml'),('good','Good'),('very_good','Very Good')],'Performance',),
-        'feedback' : fields.text('Feedback Comment')
+        'feedback' : fields.text('Feedback Comment'),
+        'forecast_rate' : fields.function(_forecast_rate, method=True, string='Progress (%)',)
     }
     _order = 'user_id'
     _defaults = {
