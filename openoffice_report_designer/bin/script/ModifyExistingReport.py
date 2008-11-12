@@ -59,19 +59,19 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                 model_ids = sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=', report['model'])])
                 model_res_other = sock.execute(database, uid, self.password, 'ir.model', 'read', model_ids, [ 'name', 'model' ] )
                 if model_res_other <> []:
-                    name = model_res_other[0]['name'] + " - " + report['name'] 
+                    name = model_res_other[0]['name'] + " - " + report['name']
                 else:
                     name = report['name'] + " - " + report['model']
                 self.report_with_id.append( (report['id'], name, report['model'] ) )
 
-        self.report_with_id.sort( lambda x, y: cmp( x[1], y[1] ) )	
+        self.report_with_id.sort( lambda x, y: cmp( x[1], y[1] ) )
 
         for id, report_name, model_name in self.report_with_id:
             self.lstReport.addItem( report_name, self.lstReport.getItemCount() )
 
-        self.win.addButton('btnSave',-2 ,-5,80,15,'Open Report' ,actionListenerProc = self.btnOk_clicked )
-        self.win.addButton('btnCancel',-2 -80 ,-5,45,15,'Cancel' ,actionListenerProc = self.btnCancel_clicked )
-
+        self.win.addButton('btnSave',10,-5,50,15,'Open Report' ,actionListenerProc = self.btnOk_clicked )
+        self.win.addButton('btnCancel',-10 ,-5,50,15,'Cancel' ,actionListenerProc = self.btnCancel_clicked )
+        self.win.addButton('btnDelete',15 -80 ,-5,50,15,'Delete Report',actionListenerProc = self.btnDelete_clicked)
         self.win.doModalDialog("lstReport",self.report_with_id[0][1] )
 
     def btnOk_clicked(self, oActionEvent):
@@ -87,12 +87,12 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
 
             fp_name = tempfile.mktemp('.'+"sxw")
             fp_name1="r"+fp_name
-            fp_path=os.path.join(fp_name1).replace("\\","/") 
+            fp_path=os.path.join(fp_name1).replace("\\","/")
             fp_win=fp_path[1:]
 
             filename = ( os.name == 'nt' and fp_win or fp_name )
             if res['report_sxw_content']:
-                write_data_to_file( filename, base64.decodestring(res['report_sxw_content'])) 
+                write_data_to_file( filename, base64.decodestring(res['report_sxw_content']))
             url = "file:///%s" % filename
 
             arr=Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
@@ -118,8 +118,31 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             ErrorDialog("Report has not been downloaded", "Report: %s\nDetails: %s" % ( fp_name, e ),"Download Message")
         self.win.endExecute()
 
-    def btnCancel_clicked( self, oActionEvent ): 
+    def btnCancel_clicked( self, oActionEvent ):
         self.win.endExecute()
+
+    def btnDelete_clicked( self, oActionEvent ):
+         desktop=getDesktop()
+         doc = desktop.getCurrentComponent()
+         docinfo=doc.getDocumentInfo()
+         sock = xmlrpclib.ServerProxy( self.hostname +'/xmlrpc/object')
+         selectedItemPos = self.win.getListBoxSelectedItemPos( "lstReport" )
+         name=self.win.getListBoxSelectedItem ("lstReport")
+         id = self.report_with_id[ selectedItemPos ][0]
+         temp = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'unlink', id,)
+         str_value='ir.actions.report.xml,'+str(id)
+         ids = sock.execute(database, uid, self.password, 'ir.values' ,  'search',[('value','=',str_value)])
+         if ids:
+              rec = sock.execute(database, uid, self.password, 'ir.values', 'unlink', ids,)
+         else :
+            pass
+         if temp:
+              ErrorDialog("Report","Report has been Delete:\n "+name,"Message")
+         else:
+             ErrorDialog("Report","Report has not Delete:\n"+name," Message")
+         self.win.endExecute()
+
+
 
 if __name__<>"package" and __name__=="__main__":
     ModifyExistingReport(None)
