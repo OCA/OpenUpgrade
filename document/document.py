@@ -245,8 +245,10 @@ class document_directory(osv.osv):
         if directory:
             _parent(dir_id,path)
             path.append(self.pool.get(directory.ressource_type_id.model).browse(cr,uid,res_id).name)
-            user=self.pool.get('res.users').browse(cr,uid,uid)
-            return "ftp://%s:%s@localhost:8021/%s/%s"%(user.login,user.password,cr.dbname,'/'.join(path))
+            #user=self.pool.get('res.users').browse(cr,uid,uid)
+            #return "ftp://%s:%s@localhost:8021/%s/%s"%(user.login,user.password,cr.dbname,'/'.join(path))
+	    # No way we will return the password!
+	    return "ftp://user:pass@host:port/test/this"
         return False
     def _check_duplication(self, cr, uid,vals):
         if 'name' in vals:
