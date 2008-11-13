@@ -62,12 +62,16 @@ def mkDateTime(dateString,strFormat="%Y-%m-%d"):
     return datetime.datetime.fromtimestamp(eSeconds)
 
 def _get_tax_code_id(char):
+#/!\/!\/!\/!\/!\/!\/!\/!\/!\/!\
+#TODO: a modifier parceque les notes de credits sur achats ne fonctionnent pas comme ca: il manque une account_move_line avec debit = credit = 0 et 100 dans case 85 (-100 dans 82/81)
     if char == '':
         return ''
+    tmp = ''
     for c in char.split(';'):
         if c != '':
             if c[0] == '+':
-                return 'l10n_be.vat_code_a'+c[2:4]
+                tmp.append('l10n_be.vat_code_a'+c[2:4])
+                #return 'l10n_be.vat_code_a'+c[2:4]
         else:
             return ''
     return 'l10n_be.vat_code_a'+char[2:4]
@@ -92,8 +96,8 @@ def construct_vat_dict(reader_vat_code, reader_vat, vat_dict):
             if row['VSTORED,A,15']:
                 vat_dict[row['VSTORED,A,15']] = {
                     'inv':_get_tax_code_id(row['VLBAINV,A,30']),
-                    'vat':_get_tax_code_id(row['VLBACRE,A,30']),
-                    'ref_inv':_get_tax_code_id(row['VLTAINV,A,30']),
+                    'vat':_get_tax_code_id(row['VLTAINV,A,30']),
+                    'ref_inv':_get_tax_code_id(row['VLBACRE,A,30']),
                     'ref_vat':_get_tax_code_id(row['VLTACRE,A,30']),
                 }
         else:
@@ -116,7 +120,7 @@ def construct_vat_dict(reader_vat_code, reader_vat, vat_dict):
                     'ref_account':'',
                 }
         count += 1
-
+    print vat_dict['NSTF 21']
     return vat_dict
 
 
@@ -684,17 +688,21 @@ def _get_ammount_currency(x):
 
 def _check_debit_vat(x, ref):
     if ref.startswith('-'):
-        return _check_debit(x) * (-1)
-    return _check_debit(x)
+        return 0
+    if (float(x) < 0):
+        return -(float(x))
+    return float(x)
 
 def _check_credit_vat(x, ref):
     if ref.startswith('-'):
-        return _check_credit(x) * (-1)
-    return _check_credit(x)
+        if (float(x) < 0):
+            return -(float(x))
+        return float(x)
+    return 0
 
 def _get_ammount_currency_vat(x):
     if x['HORDERNO,I,4'] != '1':
-        return _check_debit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8']) + _check_credit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8'])
+        return _check_debit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8']) - _check_credit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8'])
     return 0
 
 def _pick_vat_code(x, vat_dict, is_vat=False):
@@ -867,16 +875,16 @@ def import_moves_and_lines(reader_move, writer_move, writer, move_map, map, dict
 
 #specific part for CCI
 
-#~ reader_partner_matching = csv.DictReader(file('_conv_bob_id.csv','rb'))
-#~ bob_conv_matching = {}
-#~ bob_conv_matching[''] = ''
-#~ for row in reader_partner_matching:
-    #~ bob_conv_matching[row['bob']] = row['partner']
-#~ def _get_partner_id(char):
-    #~ if bob_conv_matching.has_key(char):
-        #~ return bob_conv_matching[char]
-    #~ return 'account_bob_import.res_partner_destroyed' #or char ?
-#~ partner_dict['GRAMME'] = ''
+reader_partner_matching = csv.DictReader(file('_conv_bob_id.csv','rb'))
+bob_conv_matching = {}
+bob_conv_matching[''] = ''
+for row in reader_partner_matching:
+    bob_conv_matching[row['bob']] = row['partner']
+def _get_partner_id(char):
+    if bob_conv_matching.has_key(char):
+        return bob_conv_matching[char]
+    return 'account_bob_import.res_partner_destroyed' #or char ?
+partner_dict['GRAMME'] = ''
 
 #end of specific part
 
@@ -933,7 +941,6 @@ def run():
 
     print "importing account.move.line"
     reader_move = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/ahisto.csv','rb'))
-    #pxview IFahisto.db -c > ~/tinydev/cci/code/addons-extra/account_bob_import/original_csv/move.csv
     writer_move = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.csv', 'wb'), move_map.keys())
     writer_move_line = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.line.csv', 'wb'), move_line_map.keys())
     import_moves_and_lines(reader_move, writer_move, writer_move_line, move_map, move_line_map, dict_ahisto, dict_chisto, vat_dict)
