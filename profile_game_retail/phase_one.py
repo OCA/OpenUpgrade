@@ -185,12 +185,15 @@ unexploited markets, to see broader and larger.'''
             self.error(cr, uid,step_id)
         return (object in ("sale.order")) and (method in ('order_confirm'))
     def post_process_sale(self,cr,uid,step_id,object, method,type,*args):
+
         res=args[-1]
         res=res and res.get('result',False) or False
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
         pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
 
         if pid:
+            proc_obj = self.pool.get('mrp.procurement')
+            proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
             return self.write(cr,uid,pid,{'step3':True,'state':'print_rfq'})
         return False
 

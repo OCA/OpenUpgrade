@@ -6,7 +6,7 @@
             <field name="login">finance</field>
             <field name="password">finance</field>
             <field name="groups_id" eval="[(6,0,[ref('account.group_account_manager'),ref('base.group_user')])]"/>
-            
+			<field name="roles_id" eval="[(6,0,[ref('account.res_roles_invoice0')])]" />
         </record>
         <record id="hr.user_hr" model="res.users">
             <field name="name">Human Ressources Manager</field>
@@ -25,10 +25,10 @@
             <field name="login">sales</field>
             <field name="password">sales</field>
             <field name="groups_id" eval="[(6,0,[ref('sale.group_sale_manager'),ref('sale.group_sale_user'),ref('base.group_user')])]"/>
-            <field name="roles_id" eval="[(6,0,[ref('sale.res_roles_salesman0')])]" />
+            <field name="roles_id" eval="[(6,0,[ref('sale.res_roles_salesman0'),ref('mrp.res_roles_mrp0')])]" />
         </record>
 
-		
+
 
 		<!-- short cut -->
 		<record id="ir_ui_view_sc_finance" model="ir.ui.view_sc">
@@ -70,6 +70,6 @@
 			<field eval="&quot;Sending Products&quot;" name="name"/>
 			<field name="user_id" ref="stock.user_logistic"/>
 		</record>
-		
+
     </data>
 </openerp>

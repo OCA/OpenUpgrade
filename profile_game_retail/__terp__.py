@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -43,6 +43,7 @@
         "profile_game_partner.xml",
         "profile_game_phase1.xml",
         "profile_game_config.xml",
+        "profile_game_account_data.xml",
         "profile_game_product.xml",
         "security/ir.model.access.csv"
     ],
