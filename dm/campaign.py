@@ -21,7 +21,6 @@
 ##############################################################################
 import time
 import datetime
-import offer
 import warnings
 import netsvc
 from mx import DateTime
@@ -703,7 +702,6 @@ class dm_campaign_proposition(osv.osv):
     _columns = {
         'code1' : fields.function(_proposition_code,string='Code',type="char",size="64",method=True,readonly=True),
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade',required=True),
-        'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays', ondelete='cascade'),
         'sale_rate' : fields.float('Sale Rate (%)', digits=(16,2),
                     help='This is the estimated sale rate (in percent) for this commercial proposition'),
         'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching'),('split','Split')],"Type"),
@@ -758,6 +756,23 @@ class dm_campaign_proposition(osv.osv):
         return True
 
 dm_campaign_proposition()
+
+
+class dm_customers_list(osv.osv):
+    _name = "dm.customers_list"
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=16, required=True),
+        'broker_id' : fields.many2one('res.partner', 'Broker', domain=[('category_id','ilike','Broker')], context={'category':'Broker'}),
+        'country_id' : fields.many2one('res.country','Country'),
+#        'per_thousand_price' : fields.float('Price per Thousand'),
+#        'delivery_cost' : fields.float('Delivery Cost'),
+#        'selection_cost' : fields.float('Selection Cost'),
+        'delivery_date' : fields.date('Delivery Date'),
+        'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'list_id', 'Segments', readonly=True),
+    }
+dm_customers_list()
+
 
 class dm_campaign_proposition_segment(osv.osv):
 
@@ -833,15 +848,25 @@ class dm_campaign_proposition_segment(osv.osv):
 
 dm_campaign_proposition_segment()
 
-class dm_campaign_delay(osv.osv):
-    _name = "dm.campaign.delay"
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'value' : fields.integer('Value'),
-        'proposition_id' : fields.many2one('dm.campaign.proposition', 'Proposition')
-    }
+AVAILABLE_ITEM_TYPES = [
+    ('main','Main Item'),
+    ('standart','Standart Item'),
+]
 
-dm_campaign_delay()
+class dm_campaign_proposition_item(osv.osv):
+    _name = "dm.campaign.proposition.item"
+    _rec_name = 'product_id'
+    _columns = {
+        'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
+        'qty_planned' : fields.integer('Planned Quantity'),
+        'qty_real' : fields.integer('Real Quantity'),
+        'price' : fields.float('Sale Price'),
+        'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
+        'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
+        'offer_step_type': fields.char(string='Offer Step Type',type="char",size=64), 
+        'notes' : fields.text('Notes'),
+    }
+dm_campaign_proposition_item()
 
 
 PURCHASE_LINE_TRIGGERS = [
@@ -1191,7 +1216,6 @@ class dm_campaign_purchase_line(osv.osv):
                                             quantity = segment.quantity_estimated
                                         elif pline.type_quantity == 'quantity_wanted':
                                             quantity = segment.quantity_wanted
-#                                            if segment.AAA:
                                             if segment.all_add_Avail:
                                                 quantity = 0
                                                 line_name = propo.code1 + ' - ' + segment.list_id.name + ' - All Addresses Available'
@@ -1224,7 +1248,6 @@ class dm_campaign_purchase_line(osv.osv):
                                         quantity = segment.quantity_estimated
                                     elif pline.type_quantity == 'quantity_wanted':
                                         quantity = segment.quantity_wanted
-#                                        if segment.AAA:
                                         if segment.all_add_avail:
                                             quantity = 0
                                             line_name = propo.code1 + ' - ' + segment.list_id.name + ' - All Addresses Available'

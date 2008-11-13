@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -31,10 +31,15 @@ class dm_customers_list(osv.osv):
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'broker_id' : fields.many2one('res.partner', 'Broker', domain=[('category_id','ilike','Broker')], context={'category':'Broker'}),
+        'country_id' : fields.many2one('res.country','Country'),
+#        'per_thousand_price' : fields.float('Price per Thousand'),
+#        'delivery_cost' : fields.float('Delivery Cost'),
+#        'selection_cost' : fields.float('Selection Cost'),
         'delivery_date' : fields.date('Delivery Date'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'list_id', 'Segments', readonly=True),
     }
 dm_customers_list()
+
 
 class dm_order(osv.osv):
     _name = "dm.order"
@@ -75,6 +80,7 @@ class dm_order(osv.osv):
 
 dm_order()
 
+
 class dm_customer(osv.osv):
     _name = "dm.customer"
     _columns = {
@@ -96,6 +102,7 @@ class dm_customer(osv.osv):
         'distribution_office' : fields.char('Distribution Office', size=64),
     }
 dm_customer()
+
 
 class dm_customer_order(osv.osv):
     _name = "dm.customer.order"
@@ -184,4 +191,64 @@ class dm_customer_order(osv.osv):
         """
 
 dm_customer_order()
+
+"""
+class dm_workitem(osv.osv):
+    _name = "dm.workitem"
+    _columns = {
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step',required=True, ondelete="cascade"),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', required=True, ondelete="cascade"),
+        'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete="cascade"),
+        'date_next_action' : fields.date('Next Action'),
+        'purchase_amount' : fields.float('Amount', digits=(16,2))
+    }
+    def create(self, cr, uid, vals, context=None, check=True):
+        step = self.pool.get('dm.offer.step').browse(cr,uid,[vals['step_id']])[0]
+        if step.outgoing_transition_ids:
+            transitions = dict(map(lambda x : (x.id,x.delay),step.outgoing_transition_ids))
+            print "DEBUG - Creating new workitem"
+            print "DEBUG - transitions items: ", transitions.items()
+            print "DEBUG - transitions values: ", transitions.values()
+            trans = [(k,v) for k,v in transitions.items() if v == min(transitions.values())][0]
+            new_date = datetime.date.today() + datetime.timedelta(trans[1])
+            vals['date_next_action'] = new_date
+            print "DEBUG - vals : ",vals
+        return super(dm_offer_step_workitem, self).create(cr, uid, vals, context)
+
+    def _update_workitem(self, cr, uid, ids=False, context={}):
+        '''
+        Function called by the sceduler to update workitem from the segments of propositions.
+        '''
+"""
+"""
+        print "DEBUG - _update_workitem called by scheduler"
+        wrkitem_ids =self.search(cr,uid,[('date_next_action','=',time.strftime('%Y-%m-%d'))])
+        wrkitems =self.browse(cr,uid,wrkitem_ids)
+        if not wrkitems:
+            print "DEBUG - no workitem to update"
+            return
+        for wrkitem in wrkitems :
+            step = wrkitem.step_id
+            if step.outgoing_transition_ids:
+                transitions = dict(map(lambda x : (x,int(x.delay)),step.outgoing_transition_ids))
+                print "DEBUG - transitions items: ", transitions.items()
+                print "DEBUG - transitions values: ", transitions.values()
+                trans = [k for k,v in transitions.items() if v == min(transitions.values())][0]
+                # If relaunching
+                if trans.step_to.type == 'RL':
+                    prop_id = self.pool.get('dm.campaign.proposition').copy(cr, uid, wrkitem.segment_id.proposition_id.id,
+                        {'proposition_type':'relaunching', 'initial_proposition_id':wrkitem.segment_id.proposition_id.id})
+                    print "DEBUG - Creating new proposition - id : ",prop_id
+                    self.pool.get('dm.campaign.proposition.segment').write(cr, uid, wrkitem.segment_id.id, {'proposition_id':prop_id})
+                    re_step_id = self.pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',step.offer_id.id),('flow_start','=',True),('media_id','=',step.media_id.id)])
+                    self.write(cr,uid,wrkitem.id,{'step_id':re_step_id[0]}) 
+                else :
+                    print "DEBUG - Updating workitem for segment"
+                    self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to.id})
+"""
+"""
+        return True
+
+dm_workitem()
+"""
 

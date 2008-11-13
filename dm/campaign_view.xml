@@ -1,10 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-	<!--
-    <menuitem name="Direct Marketing" icon="terp-crm" id="menu_dm"/>
-    <menuitem name="Configuration" id="menu_dm_config" parent="menu_dm" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager" sequence="0"/>
-	-->
+
     <menuitem name="Campaigns" id="menu_dm_config_campaign" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
     <menuitem name="Customers Lists" id="menu_dm_config_camp_custlist" parent="dm.menu_dm_config_campaign" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
     <menuitem name="Campaigns" id="menu_dm_campaign" parent="menu_dm" sequence="4"/>
@@ -931,19 +928,6 @@
 
     <menuitem id="menu_action_dm_overlay_form" parent="dm.menu_dm_config_campaign" action="action_dm_overlay_form"/>
 
-<!--
-    <record model="ir.actions.act_window" id="action_campaign_trademark_form">
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="base.view_partner_tree"/>
-        <field name="domain">[('category_id','like','Trademark')]</field>
-        <field name="context">{'category_id':'Trademark'}</field>
-    </record>
-    <menuitem name="Direct Marketing/Configuration/Campaigns/All Trademarks" id="menu_action_campaign_trademark_form" action="action_campaign_trademark_form"/>
--->
-
     <record model="ir.actions.act_window" id="action_campaign_dealer_form">
         <field name="name">All Dealers</field>
         <field name="type">ir.actions.act_window</field>
@@ -1008,9 +992,11 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Campaign Prices Progression">
-                <field name="name" colspan="4" select="1"/>
+                <separator string="Price Progression Description" colspan="4"/>
+                <field name="name" select="1"/>
+                <separator string="Progression" colspan="4"/>
                 <field name="fixed_prog" select="1"/>
-                <field name="percent_prog" select="2"/>
+                <field name="percent_prog" select="1"/>
             </form>
         </field>
     </record>

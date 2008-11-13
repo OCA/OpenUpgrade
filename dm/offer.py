@@ -20,7 +20,7 @@
 #
 ##############################################################################
 import time
-import offer_step
+#import offer_step
 
 from osv import fields
 from osv import osv
@@ -58,7 +58,6 @@ class dm_media(osv.osv):
     _columns = {
         'name' : fields.char('Media', size=64, required=True),
     }
-
 dm_media()
 
 class dm_offer_category(osv.osv):
