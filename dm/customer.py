@@ -25,21 +25,6 @@ from osv import fields
 from osv import osv
 
 
-class dm_customers_list(osv.osv):
-    _name = "dm.customers_list"
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=16, required=True),
-        'broker_id' : fields.many2one('res.partner', 'Broker', domain=[('category_id','ilike','Broker')], context={'category':'Broker'}),
-        'country_id' : fields.many2one('res.country','Country'),
-#        'per_thousand_price' : fields.float('Price per Thousand'),
-#        'delivery_cost' : fields.float('Delivery Cost'),
-#        'selection_cost' : fields.float('Selection Cost'),
-        'delivery_date' : fields.date('Delivery Date'),
-        'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'list_id', 'Segments', readonly=True),
-    }
-dm_customers_list()
-
 
 class dm_order(osv.osv):
     _name = "dm.order"

@@ -137,17 +137,21 @@
                             </tree>
                         </field>
                     </page>
-                    <page string="Customers Lists">
-                        <separator string="Customers Lists" colspan="4"/>
-                        <field name="files_responsible_id"/>
-                        <field name="invoiced_partner_id"/>
-                        <field name="files_delivery_address_id"/>
-                        <field name="deduplicator_id"/>
-                        <field name="owner_id"/>
-                        <field name="router_id"/>
-                        <field name="cleaner_id"/>
+                    <page string="Customers Files">
+                        <group colspan="2" col="2">
+                            <separator string="Customers Files" colspan="2"/>
+                            <field name="files_responsible_id"/>
+                            <field name="invoiced_partner_id"/>
+                            <field name="files_delivery_address_id"/>
+                        </group>
+                        <group colspan="2" col="2">
+                            <separator string="Intermediaries" colspan="2"/>
+                            <field name="cleaner_id"/>
+                            <field name="deduplicator_id"/>
+                            <field name="router_id"/>
+                        </group>
                         <field name="cust_file_task_ids" nolabel="1" colspan="4" context="{'type':'Customers List','project_id':project_id}">
-                            <tree string="Customers List Tasks" editable="bottom">
+                            <tree string="Customers Files Tasks" editable="bottom">
                                 <field name="name" string="Task Name"/>
                                 <field name="date_deadline" string="Theorical Date"/>
                                 <field name="date_reviewed"/>
@@ -512,7 +516,7 @@
                     </group>
                     <group colspan="2" col="2">
                     <separator string="Quantities" colspan="2"/>
-                    <field name="quantity_estimated" select="2"/>
+                    <field name="quantity_planned" select="2"/>
                     <field name="quantity_wanted"/>
                     <field name="quantity_delivered"/>
                     <field name="quantity_usable"/>
@@ -529,8 +533,7 @@
                     </group>
                     <field name="force_sm_price"/>
                     <field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
-                    <field name="keep_prices"/>
-                    <field name="forwarding_charges"/>
+<!--                    <field name="forwarding_charges"/>-->
                     <field name="item_ids" colspan="4" nolabel="1">
                         <form string="Catalogue">
                             <field name="offer_step_type"/>
@@ -543,35 +546,35 @@
                             <field name="offer_step_type"/>
                             <field name="product_id" string="Item"/>
                             <field name="price"/>
-<!--                            <field name="qty_planned"/>
-                            <field name="qty_real"/>-->
                             <field name="item_type"/>
                             <field name="notes"/>
                         </tree>
                     </field>
-<!--                    <field name="starting_mail_price"/>-->
                     <separator string="Payment Methods" colspan="4"/>
                     <field name="payment_methods" colspan="4" nolabel="1"/>
+                    <separator string="" colspan="4"/>
+                    <field name="keep_prices" string="Keep Prices at Duplication"/>
                 </page>
                 <page string="Segments">
                 <field name="segment_ids" colspan="4" nolabel="1">
                     <form string="Segment">
+                        <group colspan="4">
+                            <separator string="Segment Description" colspan="4"/>
+                            <field name="name" string="Name" select="1"/>
+                            <field name="code1" string="Code" select="1"/>
+                            <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
+                            <field name="customers_file_id" select="1"/>
+                        </group>
                         <notebook colspan="4">
                             <page string="General">
-                                <separator string="General" colspan="4"/>
-                                <field name="name" string="Name" select="1"/>
-                                <field name="code1" string="Code"/>
-<!--                                <field name="proposition_id" />-->
-                                <field name="list_id" />
-                                <field name="active" />
-                                <newline/>
+                                <separator string="Segment Origin" colspan="4"/>
                                 <field name="split_id" />
                                 <field name="reuse_id" />
+                                <field name="active" />
                                 <separator string="Segmentation" colspan="4"/>
                                 <field name="start_census"/>
                                 <field name="end_census"/>
                                 <field name="deduplication_level"/>
-                                <field name="price_per_thousand"/>
                                 <separator string="Segmentation Criteria" colspan="4"/>
                                 <field name="segmentation_criteria" colspan="4" nolabel="1"/>
                                 <separator string="Notes" colspan="4"/>
@@ -579,10 +582,8 @@
                             </page>
                             <page string="Quantities">
                                 <separator string="Addresses Quantities" colspan="4"/>
-                                <field name="quantity_estimated" select="2"/>
+                                <field name="quantity_planned" select="2"/>
                                 <newline/>
-<!--                                <field name="quantity_wanted" select="2" attrs="{'readonly':[('AAA','=',1)]}"/>
-                                <field name="AAA" select="2"/>-->
                                 <field name="quantity_wanted" select="2" attrs="{'readonly':[('all_add_avail','=',1)]}"/>
                                 <field name="all_add_avail" select="2"/>
                                 <field name="quantity_delivered" select="2"/>
@@ -606,15 +607,17 @@
                         </notebook>
                    </form>
                     <tree string="Segments">
-                        <field name="name" string="Name" select="1"/>
+                        <field name="name" string="Name" />
                         <field name="deduplication_level" />
-                        <field name="code1" string="Code" select="2"/>
-                        <field name="quantity_estimated" select="2"/>
-                        <field name="quantity_wanted" select="2"/>
-                        <field name="quantity_delivered" select="2"/>
-                        <field name="quantity_usable" select="2"/>
+                        <field name="code1" string="Code" />
+                        <field name="quantity_planned" />
+                        <field name="quantity_wanted" />
+                        <field name="quantity_delivered" />
+                        <field name="quantity_usable" />
+                        <field name="note" />
                     </tree>
                 </field>
+                <separator string="" colspan="4"/>
                 <field name="keep_segments" string="Keep Segments at Duplication"/>
                 </page>
             </notebook>
@@ -687,22 +690,24 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Segment">
+                <group colspan="4">
+                    <separator string="Segment Description" colspan="4"/>
+                    <field name="name" string="Name" select="1"/>
+                    <field name="code1" string="Code" select="1"/>
+                    <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
+                    <field name="customers_file_id" select="1" />
+                </group>
                 <notebook colspan="4">
                     <page string="General">
-                        <separator string="General" colspan="4"/>
-                        <field name="name" string="Name" select="1"/>
-                        <field name="code1" string="Code"/>
+                        <separator string="Segment Origin" colspan="4"/>
                         <field name="proposition_id" />
-                        <field name="list_id" />
                         <field name="active" />
-                        <newline/>
                         <field name="split_id" />
                         <field name="reuse_id" />
                         <separator string="Segmentation" colspan="4"/>
                         <field name="start_census"/>
                         <field name="end_census"/>
                         <field name="deduplication_level"/>
-                        <field name="price_per_thousand"/>
                         <separator string="Segmentation Criteria" colspan="4"/>
                         <field name="segmentation_criteria" colspan="4" nolabel="1"/>
                         <separator string="Notes" colspan="4"/>
@@ -710,10 +715,8 @@
                     </page>
                     <page string="Quantities">
                         <separator string="Addresses Quantities" colspan="4"/>
-                        <field name="quantity_estimated" select="2"/>
+                        <field name="quantity_planned" select="2"/>
                         <newline/>
-<!--                        <field name="quantity_wanted" select="2" attrs="{'readonly':[('AAA','=',1)]}"/>
-                        <field name="AAA" select="2"/>-->
                         <field name="quantity_wanted" select="2" attrs="{'readonly':[('all_add_avail','=',1)]}"/>
                         <field name="all_add_avail" select="2"/>
                         <field name="quantity_delivered" select="2"/>
@@ -747,16 +750,17 @@
             <tree string="Segments">
                 <field name="name" string="Name"/>
                 <field name="code1" string="Code"/>
-                <field name="quantity_estimated" select="2"/>
+                <field name="quantity_planned" select="2"/>
                 <field name="quantity_wanted" select="2"/>
                 <field name="quantity_delivered" select="2"/>
                 <field name="quantity_usable" select="2"/>
+                <field name="note"/>
             </tree>
         </field>
     </record>
 
     <record model="ir.actions.act_window" id="action_campaign_proposition_segment_form">
-        <field name="name">All Campaign Segments</field>
+        <field name="name">All Segments</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">dm.campaign.proposition.segment</field>
         <field name="view_type">form</field>
@@ -790,7 +794,7 @@
                     <field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
                     <group colspan="4">
                     <separator string="Total Quantities" colspan="4"/>
-                    <field name="quantity_estimated_total"/>
+                    <field name="quantity_planned_total"/>
                     <field name="quantity_wanted_total"/>
                     <field name="quantity_delivered_total"/>
                     <field name="quantity_usable_total"/>
@@ -942,7 +946,7 @@
     <menuitem id="menu_action_campaign_dealer_form" parent="dm.menu_dm_config_campaign" action="action_campaign_dealer_form"/>
 
     <record model="ir.actions.act_window" id="action_campaign_broker_form">
-        <field name="name">All Customer Lists Brokers</field>
+        <field name="name">All Customers Lists Brokers</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
         <field name="view_type">form</field>
@@ -952,7 +956,7 @@
         <field name="context">{'category':'Broker'}</field>
     </record>
 
-    <menuitem id="menu_action_campaign_broker_form" parent="dm.menu_dm_config_camp_custlist" action="action_campaign_broker_form"/>
+    <menuitem id="menu_action_campaign_broker_form" parent="dm.menu_dm_config_camp_custlist" action="action_campaign_broker_form" sequence="0"/>
 
     <record model="ir.actions.act_window" id="action_campaign_duplicator_form">
         <field name="name">All Deduplicator</field>
@@ -978,7 +982,6 @@
     </record>
     <menuitem name="Direct Marketing/Configuration/Campaigns/All Translators" id="menu_action_campaign_translator_form" action="action_campaign_translator_form"/>
 -->
-
 
     <!--
     =======================================================
@@ -1024,8 +1027,7 @@
     </record>
 
     <menuitem id="menu_action_dm_campaign_proposition_prices_progression_form" parent="dm.menu_dm_config_campaign" action="action_dm_campaign_proposition_prices_progression_form"/>
-    
-    
+
     <!--
     =======================================================
     PURCHASE LINE
@@ -1102,7 +1104,6 @@
 
     <menuitem id="menu_action_campaign_purchase_line_form" parent="menu_dm_config_campaign" action="action_campaign_purchase_line_form"/>
 
-
     <!--
     =======================================================
     CUSTOMERS LIST
@@ -1115,11 +1116,71 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Customer File">
+                <separator string="Customers List Description" colspan="4"/>
                 <field name="name" select="1"/>
                 <field name="code" select="2"/>
-                <field name="broker_id" select="1"/>
-                <field name="delivery_date" select="2"/>
-                <field name="segment_ids" colspan="4">
+                <group colspan="2" col="2">
+                    <separator string="General" colspan="2"/>
+                    <field name="product_id" select="1"/>
+                    <field name="owner_id" select="1"/>
+                    <field name="broker_id" select="1"/>
+                    <field name="country_id" select="1"/>
+                </group>
+                <group colspan="2" col="2">
+                    <separator string="Costs" colspan="2"/>
+                    <field name="per_thousand_price" select="2"/>
+                    <field name="delivery_cost" select="2"/>
+                    <field name="selection_cost" select="2"/>
+                    <field name="broker_cost" select="2"/>
+                    <field name="broker_discount" select="2"/>
+                    <field name="other_cost" select="2"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_customers_list_tree">
+        <field name="name">dm.customers_list.tree</field>
+        <field name="model">dm.customers_list</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Files">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="broker_id"/>
+                <field name="country_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_customers_list">
+        <field name="name">All Customers Lists</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.customers_list</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_customers_list_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_customers_list" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_list" sequence="1" />
+
+    <!--
+    =======================================================
+    CUSTOMERS FILE
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_customers_file_form">
+        <field name="name">dm.customers_file.form</field>
+        <field name="model">dm.customers_file</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Customer File">
+                <separator string="Customers Lists Description" colspan="4"/>
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+                <field name="customers_list_id" select="1"/>
+                <field name="delivery_date" select="1"/>
+                <field name="segment_ids" colspan="4" nolabel="1">
                 <form>
                     <field name="name" string="Name" select="1"/>
                     <field name="code1" string="Code"/>
@@ -1142,29 +1203,29 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_dm_customers_list_tree">
-        <field name="name">dm.customers_list.tree</field>
-        <field name="model">dm.customers_list</field>
+    <record model="ir.ui.view" id="view_dm_customers_file_tree">
+        <field name="name">dm.customers_file.tree</field>
+        <field name="model">dm.customers_file</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Customer Files">
                 <field name="name"/>
                 <field name="code"/>
-                <field name="broker_id"/>
+                <field name="customers_list_id"/>
                 <field name="delivery_date"/>
             </tree>
         </field>
     </record>
 
-    <record model="ir.actions.act_window" id="action_dm_customers_list">
-        <field name="name">All Customers Lists</field>
+    <record model="ir.actions.act_window" id="action_dm_customers_file">
+        <field name="name">All Customers Files</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.customers_list</field>
+        <field name="res_model">dm.customers_file</field>
         <field name="view_type">form</field>
-        <field name="view_id" ref="view_dm_customers_list_tree"/>
+        <field name="view_id" ref="view_dm_customers_file_tree"/>
     </record>
 
-    <menuitem id="menu_action_dm_customers_list" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_list" sequence="1" />
+    <menuitem id="menu_action_dm_customers_file" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_file" sequence="2" />
 
     <!--
     =======================================================
