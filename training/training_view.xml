@@ -453,7 +453,7 @@
             name="Participants" 
             id="training_session_participants_act"
             src_model="training.session"
-            domain="[('session_id', '=', active_id)]"
+            domain="[('session_ids', 'in', [active_id])]"
             res_model="training.subscription" />
 
         <record model="ir.ui.view" id="training_session_tree">
@@ -504,10 +504,10 @@
             <field name="arch" type="xml">
                 <form string="Event">
                     <field name="name" />
-                    <field name="session_id" />
                     <field name="date" />
                     <field name="duration" />
                     <field name="location_id" />
+                    <field name="session_ids" />
                 </form>
             </field>
         </record>
@@ -519,10 +519,10 @@
             <field name="arch" type="xml">
                 <tree string="Events">
                     <field name="name" />
-                    <field name="session_id" />
                     <field name="date" />
                     <field name="duration" />
                     <field name="location_id" />
+                    <field name="session_ids" />
                 </tree>
             </field>
         </record>
@@ -532,9 +532,9 @@
             <field name="model">training.event</field>
             <field name="type">calendar</field>
             <field name="arch" type="xml">
-                <calendar string="Events" color="session_id" date_start="date">
+                <calendar string="Events" date_start="date">
                     <field name="name"/>
-                    <field name="session_id" />
+                    <field name="session_ids" />
                     <field name="location_id"/>
                 </calendar>
             </field>
@@ -561,7 +561,7 @@
             <field name="arch" type="xml">
                 <form string="Seance">
                     <field name="name" />
-                    <field name="session_id" />
+                    <field name="session_ids" />
                     <field name="date" />
                     <field name="duration" />
 
@@ -585,7 +585,7 @@
                         </page>
                         <page string="Participants">
                             <field name="group_id" />
-                            <field name="participant_ids" colspan="4" nolabel="1" domain="[('group_id', '=', group_id), ('session_id', '=', session_id)]" />
+                            <field name="participant_ids" colspan="4" nolabel="1" domain="[('group_id', '=', group_id), ('session_ids', 'in', [ session_id ])]" />
                         </page>
                         <page string="StakeHolders">
                             <field name="partner_ids" nolabel="1"/>
@@ -615,10 +615,10 @@
             <field name="arch" type="xml">
                 <tree string="Seances">
                     <field name="name" />
-                    <field name="session_id" />
                     <field name="date" />
                     <field name="duration" />
                     <field name="state" />
+                    <field name="session_ids" />
                 </tree>
             </field>
         </record>
@@ -631,10 +631,10 @@
                 <calendar string="Seances">
                     <field name="name" />
                     <field name="partner_id" />
-                    <field name="session_id" />
                     <field name="date" />
                     <field name="duration" />
                     <field name="state" />
+                    <field name="session_ids" />
                 </calendar>
             </field>
         </record>
@@ -694,10 +694,10 @@
             <field name="model">training.plannified_examen</field>
             <field name="type">calendar</field>
             <field name="arch" type="xml">
-                <calendar string="Events" color="session_id" date_start="date">
+                <calendar string="Events" date_start="date">
                     <field name="name"/>
-                    <field name="session_id" />
                     <field name="location_id"/>
+                    <field name="session_ids" />
                 </calendar>
             </field>
         </record>

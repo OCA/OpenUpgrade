@@ -214,7 +214,8 @@ class training_session(osv.osv):
             ),
         'offer_id' : fields.many2one('training.offer', 'Offer', select=True, required=True),
         'catalog_id' : fields.many2one('training.catalog', 'Catalog', select=True),
-        'event_ids' : fields.one2many('training.event', 'session_id', 'Events', readonly=True, ondelete="cascade"),
+        #'event_ids' : fields.one2many('training.event', 'session_id', 'Events', readonly=True, ondelete="cascade"),
+        'event_ids' : fields.many2many('training.event', 'training_session_event_rel', 'session_id', 'event_id', 'Events', ondelete='cascade'),
         'date' : fields.datetime('Date', required=True),
     }
 
@@ -304,7 +305,7 @@ class training_event(osv.osv):
 
     _columns = {
         'name' : fields.char('Name', size=64, select=True, required=True),
-        'session_id' : fields.many2one('training.session', 'Session', required=True, select=True, ondelete="cascade"),
+        'session_ids' : fields.many2many('training.session', 'training_session_event_rel', 'event_id', 'session_id', 'Sessions', ondelete='cascade'),
         # Attention, la date doit etre obligatoire
         'date' : fields.datetime('Date', required=False, select=True),
         'duration' : fields.time('Duration', required=False, select=True),
