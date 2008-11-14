@@ -38,7 +38,11 @@ from email.Utils import COMMASPACE, formatdate
 
 import netsvc
 import random
-from md5 import md5
+import sys
+if sys.version[0:3] > '2.4':
+    from hashlib import md5
+else:
+    from md5 import md5
 
 
 
