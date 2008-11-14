@@ -34,7 +34,6 @@ AVAILABLE_STATES = [
     ('closed', 'Close')
 ]
 
-
 AVAILABLE_ITEM_TYPES = [
     ('main','Main Item'),
     ('standart','Standart Item'),
@@ -259,7 +258,6 @@ class dm_offer_step_item(osv.osv):
         result={}
         for id in ids:
             result[id] = self.browse(cr, uid, id).offer_step_id.type
-            print "DM - result[id]",result[id]
         return result
 
     _rec_name = 'product_id'
@@ -268,6 +266,8 @@ class dm_offer_step_item(osv.osv):
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'offer_step_type': fields.function(_step_type,string='Offer Step Type',type="char",method=True,readonly=True), 
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
+        'price' : fields.float('Price',digits=(16,2)),
+        'forwarding_charges' : fields.float('Forwarding Charges',digits=(16,2)),
         'notes' : fields.text('Notes'),
         'purchase_constraints' : fields.text('Purchase Constraints'),
     }

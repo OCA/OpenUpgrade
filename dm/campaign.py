@@ -768,12 +768,12 @@ class dm_customers_list(osv.osv):
         'country_id' : fields.many2one('res.country','Country'),
         'product_id' : fields.many2one('product.product','Product', domain=[('categ_id','ilike','Customers List')],
                                 context={'category':'Customers List'}, required=True),
-        'per_thousand_price' : fields.float('Price per Thousand'),
-        'delivery_cost' : fields.float('Delivery Cost'),
-        'selection_cost' : fields.float('Selection Cost'),
-        'broker_cost' : fields.float('Broker Cost'),
-        'broker_discount' : fields.float('Broker Discount (%)'),
-        'other_cost' : fields.float('Other Cost'),
+        'per_thousand_price' : fields.float('Price per Thousand',digits=(16,2)),
+        'delivery_cost' : fields.float('Delivery Cost',digits=(16,2)),
+        'selection_cost' : fields.float('Selection Cost',digits=(16,2)),
+        'broker_cost' : fields.float('Broker Cost',digits=(16,2)),
+        'broker_discount' : fields.float('Broker Discount (%)',digits=(16,2)),
+        'other_cost' : fields.float('Other Cost',digits=(16,2)),
     }
 dm_customers_list()
 
