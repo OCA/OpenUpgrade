@@ -30,7 +30,7 @@
 import wizard
 import pooler
 
-form='''<?xml version="1.0"?>
+form='''<?xml version="1.0" encoding="utf-8"?>
 <form string="Label Report Options">
     <field name="label_format" colspan="4"/>
     <separator string="Printer Margins" colspan="4"/>
@@ -58,22 +58,22 @@ fields={
     'first_col': {'string': 'First Column', 'type': 'integer', 'help': 'The Column of the first label in the first page'},
 }
 
-top_form='''<?xml version="1.0"?>
+top_form='''<?xml version="1.0" encoding="utf-8"?>
 <form string="Notification">
 <label string="Printer top margin bigger than (top label margin + label height). Try again." colspan="4"/>
 </form>'''
 
-bottom_form='''<?xml version="1.0"?>
+bottom_form='''<?xml version="1.0" encoding="utf-8"?>
 <form string="Notification">
 <label string="Printer bottom margin bigger than (bottom label margin + label height). Try again." colspan="4"/>
 </form>'''
 
-left_form='''<?xml version="1.0"?>
+left_form='''<?xml version="1.0" encoding="utf-8"?>
 <form string="Notification">
 <label string="Printer left margin bigger than (left label margin + label width). Try again." colspan="4"/>
 </form>'''
 
-right_form='''<?xml version="1.0"?>
+right_form='''<?xml version="1.0" encoding="utf-8"?>
 <form string="Notification">
 <label string="Printer right margin bigger than (right label margin + label width). Try again." colspan="4"/>
 </form>'''

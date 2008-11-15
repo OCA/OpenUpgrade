@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -34,7 +35,7 @@ import pooler
 import tools
 import base64
 
-email_send_form = '''<?xml version="1.0"?>
+email_send_form = '''<?xml version="1.0" encoding="utf-8"?>
 <form string="Mass Mailing">
     <field name="from"/>
     <newline/>
@@ -95,7 +96,7 @@ email_send_fields = {
     'file3': {'string':'File 3', 'type':'binary'},
 }
 
-email_done_form = '''<?xml version="1.0"?>
+email_done_form = '''<?xml version="1.0" encoding="utf-8"?>
 <form string="Mass Mailing">
     <field name="email_sent"/>
 </form>'''
