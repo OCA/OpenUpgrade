@@ -160,6 +160,21 @@
                             </tree>
                         </field>
                     </page>
+                    <page string="Items Procurement">
+                        <separator string="Items Procurement" colspan="4"/>
+                        <group colspan="2" col="2">
+                            <field name="item_responsible_id"/>
+                        </group>
+                        <field name="item_task_ids" nolabel="1" colspan="4" context="{'type':'Items Procurement','project_id':project_id}">
+                            <tree string="Items Procurement Tasks" editable="bottom">
+                                <field name="name" string="Task Name"/>
+                                <field name="date_deadline" string="Theorical Date"/>
+                                <field name="date_reviewed"/>
+                                <field name="date_planned"/>
+                                <field name="date_close" string="Real Date"/>
+                            </tree>
+                        </field>
+                    </page>
                     <page string="Notes">
                         <separator string="Notes" colspan="4"/>
                         <field name="notes" colspan="4" nolabel="1"/>

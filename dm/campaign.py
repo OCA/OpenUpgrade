@@ -220,6 +220,8 @@ class one2many_mod_task(fields.one2many):
                 ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',project_ids),('type','=','Mailing Manufacturing')], limit=self._limit)
             elif name[0] == 'c':
                 ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',project_ids),('type','=','Customers List')], limit=self._limit)
+            elif name[0] == 'i':
+                ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',project_ids),('type','=','Items Procurement')], limit=self._limit)
             else :
                 ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',project_ids),('type','=','Mailing Manufacturing')], limit=self._limit)
             for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
@@ -372,6 +374,7 @@ class dm_campaign(osv.osv):
         'manufacturing_responsible_id' : fields.many2one('res.users','Responsible'),
         'dtp_responsible_id' : fields.many2one('res.users','Responsible'),
         'files_responsible_id' : fields.many2one('res.users','Responsible'),
+        'item_responsible_id' : fields.many2one('res.users','Responsible'),
         'invoiced_partner_id' : fields.many2one('res.partner','Invoiced Partner'),
         'files_delivery_address_id' : fields.many2one('res.partner.address','Delivery Address'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
@@ -391,6 +394,8 @@ class dm_campaign(osv.osv):
                                                         domain=[('type','ilike','Mailing Manufacturing')],context={'type':'Mailing Manufacturing'}),
         'cust_file_task_ids': one2many_mod_task('project.task', 'project_id', "Customer Files tasks",
                                                         domain=[('type','ilike','Customers List')], context={'type':'Customers List'}),
+        'item_task_ids': one2many_mod_task('project.task', 'project_id', "Items Procurement tasks",
+                                                        domain=[('type','ilike','Items Procurement')], context={'type':'Items Procurement'}),
         'quantity_planned_total' : fields.function(_quantity_planned_total, string='Total planned Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_wanted_total' : fields.function(_quantity_wanted_total, string='Total Wanted Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size="64",method=True,readonly=True),

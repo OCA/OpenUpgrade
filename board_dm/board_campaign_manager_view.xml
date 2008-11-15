@@ -8,7 +8,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar</field>
             <field name="view_id" ref="dm.view_campaign_tree"/>
-            <field name="domain" eval="[('date_start','&gt;=',(DateTime.now() - DateTime.RelativeDateTime(months=2)).strftime('%Y-%m-%d')), ('date_start','&lt;=',(DateTime.now() + DateTime.RelativeDateTime(months=2)).strftime('%Y-%m-%d'))]"/>
+            <field name="domain" eval="[('date_start','&gt;=',(DateTime.now() - DateTime.RelativeDateTime(months=2)).strftime('%Y-%m-%d'))]"/>
         </record>
 
         <record id="action_dash_view_task" model="ir.actions.act_window">
@@ -16,7 +16,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar,gantt,graph</field>
             <field name="view_id" ref="project.view_task_tree2"/>
-            <field name="domain" eval="[('date_start','=',time.strftime('%Y-%m-%d'))]"/>
+            <field name="domain" eval="[('date_start','like',time.strftime('%Y-%m-%d')),('project_id.parent_id','ilike','Direct Marketing Retro-Planning')]"/>
         </record>
 
         <record id="action_dash_view_taskdeadline" model="ir.actions.act_window">
@@ -24,7 +24,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar,gantt,graph</field>
             <field name="view_id" ref="project.view_task_tree2"/>
-            <field name="domain" eval="[('date_deadline','&lt;=',time.strftime('%Y-%m-%d'))]"/>
+            <field name="domain" eval="[('date_deadline','&lt;',time.strftime('%Y-%m-%d')),('project_id.parent_id','ilike','Direct Marketing Retro-Planning')]"/>
         </record>
 
         <record id="board_campaign_form" model="ir.ui.view">
@@ -35,11 +35,13 @@
                 <form string="Campaign Manager Board">
                     <hpaned>
                         <child1>
-                            <action height="300" colspan="4" name="%(action_campaign_form_board)d" string="Current Campaigns" width="210"/>
+                            <action colspan="4" name="%(action_campaign_form_board)d" string="Current Campaigns"/>
                         </child1>
+                    </hpaned>
+                    <hpaned>
                         <child2>
-                            <action colspan="4" name="%(action_dash_view_task)d" string="Tasks For Today"/>
-                            <action colspan="4" name="%(action_dash_view_taskdeadline)d" string="Tasks With Deadline Passed"/>
+                            <action colspan="2" name="%(action_dash_view_task)d" string="Tasks For Today"/>
+                            <action colspan="2" name="%(action_dash_view_taskdeadline)d" string="Tasks With Deadline Passed"/>
                         </child2>
                     </hpaned>
                 </form>
@@ -55,7 +57,7 @@
             <field name="view_id" ref="board_campaign_form"/>
         </record>
 
-        <menuitem id="next_id_112" name="Direct Marketing" parent="board.dashboard_menu" groups="dm.res_groups_offeradmin,dm.res_groups_offermanager,dm.res_groups_campaignadmin,dm.res_groups_campaignmanager"/>
+        <menuitem id="next_id_112" name="Direct Marketing" parent="board.dashboard_menu" groups="dm.res_groups_offeradmin,dm.res_groups_offermanager,dm.res_groups_campaignadmin,dm.res_groups_campaignmanager,dm.res_groups_itemmanager,dm.res_groups_manufacturingmanager,dm.res_groups_dtpmanager,dm.res_groups_custfilemanager"/>
         <menuitem id="menu_board_campaign" parent="next_id_112" action="open_board_campaign" icon="terp-graph" groups="dm.res_groups_campaignmanager" sequence="1"/>
 
     </data>

@@ -29,12 +29,23 @@
         "dm",
     ],
     "demo_xml":[],
-    "update_xml":["board_campaign_manager_view.xml"],
+    "update_xml":[
+        "board_campaign_manager_view.xml",
+        "board_customer_manager_view.xml",
+        "board_manufacturing_manager_view.xml",
+        "board_dtp_manager_view.xml",
+        "board_item_manager_view.xml",
+        "board_offer_manager_view.xml",
+    ],
     "description": """
 This module implements a dashboard for campaign manager that includes:
     * List of campaigns that have started at max 2 month ago and those that will start in the 2 month to come
     * List of the tasks of the day
     * List of  the tasks with a deadline passed
+    
+This module implements a dashboard for offer manager that includes:
+    * Offers
+    * Offer Ideas
     """,
     "active":False,
     "installable":True,
