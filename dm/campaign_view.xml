@@ -488,7 +488,7 @@
 
     <!--
     =======================================================
-    CAMAPAIGN PROPOSITION VIEWS
+    CAMPAIGN PROPOSITION VIEWS
     =======================================================
     -->
 
@@ -996,6 +996,50 @@
 -->
 
 
+    <!--
+    =======================================================
+    CAMPAIGN PROPOSITION PRICES PROGRESSION
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_campaign_proposition_prices_progression_form">
+        <field name="name">dm.campaign.proposition.prices_progression.form</field>
+        <field name="model">dm.campaign.proposition.prices_progression</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Campaign Prices Progression">
+                <field name="name" colspan="4" select="1"/>
+                <field name="fixed_prog" select="1"/>
+                <field name="percent_prog" select="2"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_campaign_proposition_prices_progression_tree">
+        <field name="name">dm.campaign.proposition.prices_progression.tree</field>
+        <field name="model">dm.campaign.proposition.prices_progression</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Campaign Prices Progression">
+                <field name="name"/>
+                <field name="fixed_prog"/>
+                <field name="percent_prog"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_campaign_proposition_prices_progression_form">
+        <field name="name">All Campaign Prices Progression</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.proposition.prices_progression</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_dm_campaign_proposition_prices_progression_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_campaign_proposition_prices_progression_form" parent="dm.menu_dm_config_campaign" action="action_dm_campaign_proposition_prices_progression_form"/>
+    
+    
     <!--
     =======================================================
     PURCHASE LINE

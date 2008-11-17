@@ -59,6 +59,7 @@
                     "offer_view.xml",
                     "offer_step_view.xml",
                     "campaign_view.xml",
+                    "customer_view.xml",
                     "trademark_view.xml",
                     "dm_report.xml",
                     "offer_sequence.xml",

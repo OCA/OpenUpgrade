@@ -548,7 +548,10 @@ class dm_campaign(osv.osv):
     def copy(self, cr, uid, id, default=None, context={}):
         cmp_id = super(dm_campaign, self).copy(cr, uid, id, default, context=context)
         data = self.browse(cr, uid, cmp_id, context)
-        name_default='Copy of %s' % data.name
+        if 'name' in default:
+            name_default=default['name']
+        else:
+            name_default='Copy of %s' % data.name
         super(dm_campaign, self).write(cr, uid, cmp_id, {'name':name_default, 'date_start':0, 'date':0, 'project_id':0})
         return cmp_id
     

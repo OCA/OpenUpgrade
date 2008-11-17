@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -28,6 +28,18 @@ import mx.DateTime
 class sale_forecast(osv.osv):
     _name = "sale.forecast"
     _description = "Sales Forecast"
+
+    def _forecast_rate(self, cr, uid, ids, field_names, args, context):
+        res = {}
+        amount = 0
+        avg = 0
+        for forecast in self.browse(cr, uid, ids, context=context):
+            for line in forecast.line_ids:
+                amount += line.forecast_rate
+                avg += 1
+            res[forecast.id] = (amount/avg)
+        return res
+
     _columns = {
         'name': fields.char('Sales Forecast', size=32, required=True),
         'user_id': fields.many2one('res.users', 'Responsible', required=True, select=1),
@@ -36,6 +48,8 @@ class sale_forecast(osv.osv):
         'line_ids': fields.one2many('sale.forecast.line', 'forecast_id', 'Forecast lines'),
         'state': fields.selection([('draft','Draft'),('open','Open'),('close','Closed'),('cancel','Canceled')], 'State', required=True, select=1),
         'note': fields.text('Notes'),
+        'forecast_rate' : fields.function(_forecast_rate, method=True, string='Progress (%)',)
+
     }
     _defaults = {
         'name': lambda *a: time.strftime('%Y-%m-%d'),
@@ -54,7 +68,7 @@ class sale_forecast_line(osv.osv):
 
     def _final_evolution(self, cr, uid, ids, name, args, context={}):
         forecast_line =  self.browse(cr, uid, ids)
-        result ={forecast_line[0].id :0}
+        result = {}#{forecast_line[0].id :0}
         for line in forecast_line:
             state_dict = {
                 'draft' : line.state_draft,
@@ -64,6 +78,14 @@ class sale_forecast_line(osv.osv):
             }
             state = filter(lambda x : state_dict[x],state_dict)
             where = []
+            where2=[]
+            if line.product_categ:
+                categ_id = map(lambda x : x.id ,line.product_categ)
+                where2.append(('categ_id','in',categ_id))
+            if line.product_product:
+                p_id = map(lambda x : x.id ,line.product_product)
+                where2.append(('id','in',p_id))
+            product_id = self.pool.get('product.product').search(cr,uid,where2)
             if state :
                 where.append(('state','in',state))
             where.append(('user_id','=',line.user_id.id))
@@ -71,6 +93,7 @@ class sale_forecast_line(osv.osv):
                 obj = 'account.invoice'
                 where.append(('date_invoice','>=',line.forecast_id.date_from))
                 where.append(('date_invoice','<=',line.forecast_id.date_to))
+                self.pool.get('account.invoice.line').search(cr,uid,[('product_id','in',product_id)])
             elif line.computation_type == 'cases' :
                 obj = 'crm.case'
                 where.append(('create_date','>=',line.forecast_id.date_from))
@@ -85,32 +108,54 @@ class sale_forecast_line(osv.osv):
                 obj = 'sale.order'
                 where.append(('date_order','>=',line.forecast_id.date_from))
                 where.append(('date_order','<=',line.forecast_id.date_to))
+
             searched_ids = self.pool.get(obj).search(cr,uid,where)
-            if line.computation_type  in ('amount_sales','amount_invoiced') :
+            if  line.computation_type  in ('amount_sales','amount_invoiced') :
+                if line.computation_type == 'amount_sales':
+                    li='sale.order.line'
+                elif line.computation_type == 'amount_invoiced':
+                    li='account.invoice.line'
                 res = self.pool.get(obj).browse(cr,uid,searched_ids)
                 amount =0
                 for r in res:
-                    amount += r.amount_untaxed
+                    if line.computation_type == 'amount_sales' and product_id:
+                        for sline in r.order_line:
+                            if sline.product_id.id in product_id:
+                                amount += r.amount_untaxed
+                    elif line.computation_type == 'amount_invoiced' and product_id:
+                        for iline in r.invoice_line:
+                            if iline.product_id.id in product_id:
+                                amount += r.amount_untaxed
+                    else:
+                        amount += r.amount_untaxed
                 result[line.id]=amount
             else:
                 result[line.id]=len(searched_ids)
         return result
 
+    def _forecast_rate(self, cr, uid, ids, field_names, args, context):
+        res = {}
+        for line in self.browse(cr, uid, ids, context=context):
+            res[line.id] = (line.computed_amount/line.amount) * 100
+        return res
     _columns = {
         'forecast_id': fields.many2one('sale.forecast', 'Forecast',ondelete='cascade',required =True),
         'user_id': fields.many2one('res.users', 'Salesman',required=True),
-        'computation_type' : fields.selection([('invoice_fix','Number of Invoices'),('amount_invoiced','Amount Invoiced'),('cases','Nbr of Cases'),('number_of_sale_order','Number of Sales Order'),('amount_sales','Total of Sales')],'Computation Based On',required=True),
+        'computation_type' : fields.selection([('invoice_fix','Number of Invoice'),('amount_invoiced','Amount Invoiced'),('cases','No of Cases'),('number_of_sale_order','Number of sale order'),('amount_sales','Amount Sales'),],'Computation Base On',required=True),
         'state_draft' : fields.boolean('Draft'),
         'state_confirmed': fields.boolean('Confirmed'),
         'state_done': fields.boolean('Done'),
         'state_cancel': fields.boolean('Cancel'),
         'crm_case_section' : fields.many2many('crm.case.section', 'crm_case_section_forecast', 'forecast_id','section_id', 'Case Section'),
         'crm_case_categ' : fields.many2many('crm.case.categ', 'crm_case_categ_forecast', 'forecast_id','categ_id', 'Case Category',),
+        'product_product' : fields.many2many('product.product', 'product_product_forecast', 'forecast_id','product_id', 'Products'),
+        'product_categ': fields.many2many('product.category', 'product_categ_forecast', 'forecast_id','categ_id', 'Product Category'),
         'note':fields.text('Note', size=64),
         'amount': fields.float('Value Forecasted'),
         'computed_amount': fields.function(_final_evolution, string='Real Value',method=True, store=True,),
-        'final_evolution' : fields.selection([('bad','Bad'),('to_be_improved','To Be Improved'),('normal','Normal'),('good','Good'),('very_good','Very Good')],'Performance',),
-        'feedback' : fields.text('Feedback Comment')
+        'final_evolution' : fields.selection([('bad','Bad'),('to_be_improved','To Be Improved'),('normal','Noraml'),('good','Good'),('very_good','Very Good')],'Performance',),
+        'feedback' : fields.text('Feedback Comment'),
+        'forecast_rate' : fields.function(_forecast_rate, method=True, string='Progress (%)',)
     }
     _order = 'user_id'
     _defaults = {
@@ -118,4 +163,5 @@ class sale_forecast_line(osv.osv):
     }
 
 sale_forecast_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
