@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -24,11 +24,11 @@
     "version" : "1.0",
     "author" : "Tiny",
     "depends" : ["base", "hr", "process"],
-    "category" : "Generic Modules/Inventory Control",
+    "category" : "Generic Modules/Base",
     "description": "Synchronise partners through a LDAP module. Has been used to synchronise partners in Outlook and Tiny ERP.",
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["wizard.xml", 
+    "update_xml" : ["wizard.xml",
                     "process/partner_ldap_process.xml"
                     ],
     "active": False,
