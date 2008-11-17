@@ -28,7 +28,6 @@ import mx.DateTime
 class sale_forecast(osv.osv):
     _name = "sale.forecast"
     _description = "Sales Forecast"
-
     def _forecast_rate(self, cr, uid, ids, field_names, args, context):
         res = {}
         amount = 0
@@ -132,11 +131,20 @@ class sale_forecast_line(osv.osv):
             else:
                 result[line.id]=len(searched_ids)
         return result
-
     def _forecast_rate(self, cr, uid, ids, field_names, args, context):
         res = {}
+
         for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = (line.computed_amount/line.amount) * 100
+            print "== line.computed_amount",line.computed_amount
+            print "== line.amount",line.amount
+#            if line.computed_amount == 0 :
+#                res[line.id] = 0
+#            else :
+#                res[line.id] = (line.amount / line.computed_amount) * 100
+            try:
+                res[line.id] = (line.computed_amount/line.amount) * 100
+            except:
+                res[line.id] = 0
         return res
     _columns = {
         'forecast_id': fields.many2one('sale.forecast', 'Forecast',ondelete='cascade',required =True),

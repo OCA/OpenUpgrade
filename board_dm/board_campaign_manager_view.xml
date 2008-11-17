@@ -2,31 +2,31 @@
 <openerp>
     <data>
 
-	    <record model="ir.actions.act_window" id="action_campaign_form_board">
-	        <field name="type">ir.actions.act_window</field>
-	        <field name="res_model">dm.campaign</field>
-	        <field name="view_type">form</field>
-	        <field name="view_mode">tree,form,calendar</field>
-	        <field name="view_id" ref="dm.view_campaign_tree"/>
-	        <field name="domain" eval="[('date_start','&gt;=',(DateTime.now() - DateTime.RelativeDateTime(months=2)).strftime('%Y-%m-%d')), ('date_start','&lt;=',(DateTime.now() + DateTime.RelativeDateTime(months=2)).strftime('%Y-%m-%d'))]"/>
-	    </record>
-	    
-	    <record id="action_dash_view_task" model="ir.actions.act_window">
-            <field name="res_model">project.task</field>
+        <record model="ir.actions.act_window" id="action_campaign_form_board">
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">dm.campaign</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar,gantt,graph</field>
-            <field name="view_id" ref="project.view_task_tree2"/>
-            <field name="domain" eval="[('date_start','=',time.strftime('%Y-%m-%d'))]"/>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="view_id" ref="dm.view_campaign_tree"/>
+            <field name="domain" eval="[('date_start','&gt;=',(DateTime.now() - DateTime.RelativeDateTime(months=2)).strftime('%Y-%m-%d'))]"/>
         </record>
 
-	    <record id="action_dash_view_taskdeadline" model="ir.actions.act_window">
+        <record id="action_dash_view_task" model="ir.actions.act_window">
             <field name="res_model">project.task</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar,gantt,graph</field>
             <field name="view_id" ref="project.view_task_tree2"/>
-            <field name="domain" eval="[('date_deadline','&lt;=',time.strftime('%Y-%m-%d'))]"/>
+            <field name="domain" eval="[('date_start','=',time.strftime('%Y-%m-%d')),('project_id.parent_id','ilike','Direct Marketing Retro-Planning')]"/>
         </record>
-           
+
+        <record id="action_dash_view_taskdeadline" model="ir.actions.act_window">
+            <field name="res_model">project.task</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,gantt,graph</field>
+            <field name="view_id" ref="project.view_task_tree2"/>
+            <field name="domain" eval="[('date_deadline','&lt;',time.strftime('%Y-%m-%d')),('project_id.parent_id','ilike','Direct Marketing Retro-Planning')]"/>
+        </record>
+
         <record id="board_campaign_form" model="ir.ui.view">
             <field name="name">board.campaign.form</field>
             <field name="model">board.board</field>
@@ -35,17 +35,15 @@
                 <form string="Campaign Manager Board">
                     <hpaned>
                         <child1>
-                            <action height="110" colspan="4" name="%(action_campaign_form_board)d" string="Campaigns" width="210"/>
+                            <action colspan="4" name="%(action_campaign_form_board)d" string="Current Campaigns"/>
+                        	<action colspan="2" name="%(action_dash_view_task)d" string="Tasks For Today"/>
+                           	<action colspan="2" name="%(action_dash_view_taskdeadline)d" string="Tasks With Deadline Passed"/>
                         </child1>
-                        <child2>
-                        	<action colspan="4" name="%(action_dash_view_task)d" string="Tasks For Today"/>
-                        	<action colspan="4" name="%(action_dash_view_taskdeadline)d" string="Tasks With Deadline Passed"/>
-                        </child2>
                     </hpaned>
                 </form>
             </field>
         </record>
-        
+
         <record id="open_board_campaign" model="ir.actions.act_window">
             <field name="name">Campaign Manager Dashboard</field>
             <field name="res_model">board.board</field>
@@ -54,8 +52,9 @@
             <field name="usage">menu</field>
             <field name="view_id" ref="board_campaign_form"/>
         </record>
-        
-        <menuitem id="next_id_112" name="Direct Marketing" parent="board.dashboard_menu" groups="dm.res_groups_offeradmin,dm.res_groups_offermanager,dm.res_groups_campaignadmin,dm.res_groups_campaignmanager"/><menuitem action="open_board_campaign" icon="terp-graph" id="menu_board_campaign" parent="next_id_112" sequence="1" groups="dm.res_groups_campaignmanager"/>
 
-	</data>
+        <menuitem id="next_id_112" name="Direct Marketing" parent="board.dashboard_menu" groups="dm.res_groups_offeradmin,dm.res_groups_offermanager,dm.res_groups_campaignadmin,dm.res_groups_campaignmanager,dm.res_groups_itemmanager,dm.res_groups_manufacturingmanager,dm.res_groups_dtpmanager,dm.res_groups_custfilemanager"/>
+        <menuitem id="menu_board_campaign" parent="next_id_112" action="open_board_campaign" icon="terp-graph" groups="dm.res_groups_campaignmanager" sequence="1"/>
+
+    </data>
 </openerp>

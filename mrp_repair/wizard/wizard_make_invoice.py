@@ -46,6 +46,17 @@ def _makeInvoices(self, cr, uid, data, context):
     order_obj = pooler.get_pool(cr.dbname).get('mrp.repair')
     newinv = []
     order = order_obj.browse( cr, uid, data['ids'])[0]
+    if order.invoice_method=='none':
+        return {
+            'domain': [('id','in', newinv)],
+            'name': 'Invoices',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.invoice',
+            'view_id': False,
+            'context': "{'type':'out_refund'}",
+            'type': 'ir.actions.act_window'
+        }
     if order.state== 'draft':
         return {
             'domain': [('id','in', newinv)],
@@ -59,10 +70,9 @@ def _makeInvoices(self, cr, uid, data, context):
         }
         
     newinv = order_obj.action_invoice_create(cr, uid, data['ids'], data['form']['grouped'])
-    
     if not newinv:
         raise wizard.except_wizard(_('Warning'),
-                        _('You must select Partner and Delivery address'))
+                        _('You must select Partner and Invoice address'))
         
     return {
         'domain': [('id','=', newinv)],

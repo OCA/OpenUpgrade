@@ -22,8 +22,13 @@
 
 import wizard
 import pooler
-from md5 import md5
 import time
+import sys
+if sys.version[0:3] > '2.4':
+    from hashlib import md5
+else:
+    from md5 import md5
+
 
 form = '''<?xml version="1.0"?>
 <form string="Send Code">

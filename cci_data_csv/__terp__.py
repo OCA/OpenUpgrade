@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -22,7 +22,7 @@
 
 {
     'name': 'cci Data 1',
-    'category': 'Data Module 1',
+    'category': 'Data Module',
     'init_xml':[],
     'author': 'OpenERP',
     'depends': ['base','cci_partner'],

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
-    "depends" : ["account", "account_invoice_salesman","crm"],
+    "depends" : ["account", "account_invoice_salesman","crm","sale"],
     "category" : "Generic Modules/Accounting",
     "description": """This module allows manager to do their sales forecast.
 Different reports are set up for forecast and sales analysis.
@@ -32,7 +32,10 @@ Different reports are set up for forecast and sales analysis.
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "sale_forecast_view.xml"
+        "sale_forecast_view.xml",
+        "sale_forecast_report.xml",
+        "sale_forecast_wizard.xml",
+
     ],
     "active": False,
     "installable": True
