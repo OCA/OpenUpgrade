@@ -28,25 +28,6 @@ import mx.DateTime
 class sale_forecast(osv.osv):
     _name = "sale.forecast"
     _description = "Sales Forecast"
-<<<<<<< TREE
-
-    def _forecast_rate(self, cr, uid, ids, field_names, args, context):
-        res = {}
-        amount = 0
-        avg = 0
-
-        for forecast in self.browse(cr, uid, ids, context=context):
-            for line in forecast.line_ids:
-                amount += line.forecast_rate
-                avg += 1
-            if avg == 0:
-                res[forecast.id] = amount
-            else:
-                res[forecast.id] = (amount/avg)
-        return res
-
-=======
-
     def _forecast_rate(self, cr, uid, ids, field_names, args, context):
         res = {}
         amount = 0
@@ -58,7 +39,6 @@ class sale_forecast(osv.osv):
             res[forecast.id] = (amount/avg)
         return res
 
->>>>>>> MERGE-SOURCE
     _columns = {
         'name': fields.char('Sales Forecast', size=32, required=True),
         'user_id': fields.many2one('res.users', 'Responsible', required=True, select=1),
@@ -87,12 +67,7 @@ class sale_forecast_line(osv.osv):
 
     def _final_evolution(self, cr, uid, ids, name, args, context={}):
         forecast_line =  self.browse(cr, uid, ids)
-<<<<<<< TREE
-        print "==================forecast_line",forecast_line
         result = {}#{forecast_line[0].id :0}
-=======
-        result = {}#{forecast_line[0].id :0}
->>>>>>> MERGE-SOURCE
         for line in forecast_line:
             state_dict = {
                 'draft' : line.state_draft,
@@ -156,8 +131,6 @@ class sale_forecast_line(osv.osv):
             else:
                 result[line.id]=len(searched_ids)
         return result
-
-<<<<<<< TREE
     def _forecast_rate(self, cr, uid, ids, field_names, args, context):
         res = {}
 
@@ -168,16 +141,11 @@ class sale_forecast_line(osv.osv):
 #                res[line.id] = 0
 #            else :
 #                res[line.id] = (line.amount / line.computed_amount) * 100
-            res[line.id] = (line.computed_amount/line.amount) * 100
-            res[line.id] = 0
+            try:
+                res[line.id] = (line.computed_amount/line.amount) * 100
+            except:
+                res[line.id] = 0
         return res
-=======
-    def _forecast_rate(self, cr, uid, ids, field_names, args, context):
-        res = {}
-        for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = (line.computed_amount/line.amount) * 100
-        return res
->>>>>>> MERGE-SOURCE
     _columns = {
         'forecast_id': fields.many2one('sale.forecast', 'Forecast',ondelete='cascade',required =True),
         'user_id': fields.many2one('res.users', 'Salesman',required=True),
