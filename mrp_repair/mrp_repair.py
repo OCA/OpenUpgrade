@@ -29,6 +29,18 @@ from mx.DateTime import RelativeDateTime, now, DateTime, localtime
 class mrp_repair(osv.osv):
     _name = 'mrp.repair'
     _description = 'Repairs Order'
+    
+    def _invoiced(self, cursor, user, ids, name, arg, context=None):
+        res = {}
+        for repair in self.browse(cursor, user, ids, context):
+            res[repair.id] = True
+            if not repair.invoice_id:
+                res[repair.id] = False
+            if repair.invoice_id.state <> 'paid':
+                res[repair.id] = False
+
+        return res
+    
     _columns = {
         'name' : fields.char('Name',size=24),
         'product_id': fields.many2one('product.product', string='Product to Repair', required=True, readonly=True, states={'draft':[('readonly',False)]}),
@@ -50,17 +62,19 @@ class mrp_repair(osv.osv):
         'guarantee_limit': fields.date('Guarantee limit'),
         'operations' : fields.one2many('mrp.repair.lines', 'repair_id', 'Operation Lines', readonly=True, states={'draft':[('readonly',False)]}),
         'pricelist_id': fields.many2one('product.pricelist', 'Pricelist'),
-        'partner_invoice_id':fields.many2one('res.partner.address', 'Invoice to', readonly=True, states={'draft':[('readonly',False)]}, domain="[('partner_id','=',partner_id)]"),
+        'partner_invoice_id':fields.many2one('res.partner.address', 'Invoice to',  domain="[('partner_id','=',partner_id)]"),
         'invoice_method':fields.selection([
             ("none","No Invoice"),
             ("b4repair","Before Repair"),
             ("after_repair","After Repair")
            ], "Invoice Method", 
-            select=True),
+            select=True, states={'draft':[('readonly',False)]}, readonly=True),
         'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
         'fees_lines' : fields.one2many('mrp.repair.fee', 'repair_id', 'Fees Lines', readonly=True, states={'draft':[('readonly',False)]}),
         'internal_notes' : fields.text('Internal Notes'),
         'quotation_notes' : fields.text('Quotation Notes'),
+         'invoiced': fields.function(_invoiced, method=True, string='Paid', type='boolean'),
+        'shipped' : fields.boolean('Picked', readonly=True),
     }
     
     _defaults = {
@@ -68,6 +82,7 @@ class mrp_repair(osv.osv):
         'invoice_method': lambda *a: 'none',
         'pricelist_id': lambda self, cr, uid,context : self.pool.get('product.pricelist').search(cr,uid,[('type','=','sale')])[0]
     }
+    
     
     def onchange_product_id(self, cr, uid, ids, prod_id=False, move_id=False ):
         if not prod_id:
@@ -141,8 +156,9 @@ class mrp_repair(osv.osv):
         inv_id=False
         for order in self.browse(cr, uid, ids, context={}):
             if order.invoice_id:
-                return False
-            if not (order.partner_id.id and order.address_id.id):
+                self.pool.get('account.invoice').write(cr, uid, [order.invoice_id.id], {'state':'cancel'})
+            
+            if not (order.partner_id.id and order.partner_invoice_id.id):
                 return False
             if (order.invoice_method != 'none'):
                 a = order.partner_id.property_account_receivable.id
@@ -190,16 +206,7 @@ class mrp_repair(osv.osv):
     
 
     def action_invoice_cancel(self, cr, uid, ids, context={}):
-        for repair in self.browse(cr, uid, ids):
-            for line in repair.operations:
-                invoiced=False
-                for iline in line.invoice_lines:
-                    if iline.invoice_id and iline.invoice_id.state == 'cancel':
-                        continue
-                    else:
-                        invoiced=True
-                self.pool.get('sale.order.line').write(cr, uid, [line.id], {'invoiced': invoiced})
-        self.write(cr, uid, ids, {'state':'invoice_except', 'invoice_ids':False})
+        self.write(cr, uid, ids, {'state':'invoice_except', 'invoice_id':False})
         return True
     
     def action_ship_create(self, cr, uid, ids, *args):
@@ -224,8 +231,7 @@ class mrp_repair(osv.osv):
                                 'note': repair.internal_notes,
                                 'invoice_state': 'none',
                             })
-#                            operation = self.pool.get('stock.move')
-#                            operation.write(cr, uid, line.id,{'picking_id' : picking_id} )
+                        
                         vals = {
                             'name': line.product_id.name[:64],
                             'picking_id': picking_id,
@@ -259,7 +265,7 @@ class mrp_repair(osv.osv):
                         wf_service = netsvc.LocalService("workflow")
                         wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
                         self.pool.get('mrp.repair.lines').write(cr, uid, [line.id], {'procurement_id': proc_id})
-                    elif line.product_id and line.product_id.product_tmpl_id.type=='service':
+                    elif line.product_id and pr_id.product_tmpl_id.type=='service':
                         proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
                             'name': line.name or 'Repair',
                             'origin': repair.name,
@@ -317,7 +323,7 @@ class mrp_repair(osv.osv):
         if write_done_ids:
             self.pool.get('mrp.repair.lines').write(cr, uid, write_done_ids, {'state': 'done'})
         if write_cancel_ids:
-            self.pool.get('mrp.repair.liness').write(cr, uid, write_cancel_ids, {'state': 'cancel'})
+            self.pool.get('mrp.repair.lines').write(cr, uid, write_cancel_ids, {'state': 'cancel'})
 
         if mode=='finished':
             return finished
@@ -325,6 +331,7 @@ class mrp_repair(osv.osv):
             return canceled
         
     def action_ship_end(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids,{'shipped' : 1})
         for order in self.browse(cr, uid, ids):
             val = {}
             if (order.invoice_method=='after_repair'):
