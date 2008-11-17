@@ -118,6 +118,9 @@
         <record id="sale.user_sales" model="res.users">
             <field name="action_id" ref="open_board_game"/>
         </record>
+        <record id="base.user_root" model="res.users">
+            <field name="action_id" ref="open_board_game"/>
+        </record>
 
      </data>
 </openerp>
