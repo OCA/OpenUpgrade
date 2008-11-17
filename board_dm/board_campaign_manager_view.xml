@@ -36,13 +36,9 @@
                     <hpaned>
                         <child1>
                             <action colspan="4" name="%(action_campaign_form_board)d" string="Current Campaigns"/>
+                        	<action colspan="2" name="%(action_dash_view_task)d" string="Tasks For Today"/>
+                           	<action colspan="2" name="%(action_dash_view_taskdeadline)d" string="Tasks With Deadline Passed"/>
                         </child1>
-                    </hpaned>
-                    <hpaned>
-                        <child2>
-                            <action colspan="2" name="%(action_dash_view_task)d" string="Tasks For Today"/>
-                            <action colspan="2" name="%(action_dash_view_taskdeadline)d" string="Tasks With Deadline Passed"/>
-                        </child2>
                     </hpaned>
                 </form>
             </field>
