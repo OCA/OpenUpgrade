@@ -46,11 +46,10 @@
             - Manage copywriters, brokers, dealers, addresses deduplicators and cleaners
 
             """,
-    "depends" : ["project_retro_planning","purchase","purchase_tender"],
+    "depends" : ["project_retro_planning","purchase","purchase_tender","base_language"],
     "init_xml" : [ ],
     "demo_xml" : [
                     "dm_demo.xml"
-#                  "campaign_data.xml",
                   ],
     "update_xml" : [
                     "security/dm_security.xml",

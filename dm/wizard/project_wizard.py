@@ -52,6 +52,8 @@ def _create_duplicate(self, cr, uid, data, context):
                 new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.manufacturing_responsible_id.id,'state':'open'})
             elif task.type.name == 'Customers List' and campaign.files_responsible_id:
                 new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.files_responsible_id.id,'state':'open'})
+            elif task.type.name == 'Items Procurement' and campaign.item_responsible_id:
+                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.item_responsible_id.id,'state':'open'})
             else:
                 new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'state':'open'})
         else:
@@ -62,8 +64,6 @@ def _create_duplicate(self, cr, uid, data, context):
 
 
     project_obj.write(cr, uid, duplicate_project_id, {'name': project_obj.browse(cr, uid, duplicate_project_id, context).name + " for " + campaign.name})
-#    project_obj.write(cr, uid, duplicate_project_id, {'name': project_obj.browse(cr, uid, duplicate_project_id, context).name + " for " + campaign.name,
-#                                                        'date_end': campaign.date_start})
     campaign_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
     return {}
 

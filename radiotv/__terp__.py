@@ -12,11 +12,12 @@ Features:
     * Menu entries to see daily and weekly broadcasts
     * The date/time end of each broadcast is computed automatically
     * The broadcasts can be copied from a range of days to other
-    * A TinyERP cron is provided to copy broadcasts every day 
+    * A TinyERP cron is provided to copy broadcasts every day
     * Several broadcasting reports are included
     * Several wizards to synchronize the channels, programs and broadcasts to a
       mysql-php web site are included. They can be also synchronized automatically.""",
     "website" : "www.zikzakmedia.com",
+    "category" : "Generic Modules/Others",
     "license" : "GPL-2",
     "depends" : ["base"],
     "init_xml" : ['radiotv_data.xml',],

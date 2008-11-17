@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name" : "Base Contact",
+    "name" : "Base Language",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",

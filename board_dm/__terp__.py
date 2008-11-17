@@ -28,7 +28,9 @@
         "board",
         "dm",
     ],
-    "demo_xml":[],
+    "demo_xml":[
+        "board_dm_demo.xml",
+    ],
     "update_xml":[
         "board_campaign_manager_view.xml",
         "board_customer_manager_view.xml",

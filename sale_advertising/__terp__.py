@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -23,7 +23,7 @@
     "name" : "Sales: Avertising Sales",
     "version" : "0.1",
     "author" : "Tiny",
-    "category" : "Generic Modules/Sales",
+    "category" : "Generic Modules/Sales & Purchases",
     "website" : "http://tinyerp.com/",
     "description": """This module allow you to use the Sale Management to encode your advertising sales ... TODO
 """,
