@@ -24,33 +24,12 @@
             <field name="inherit_id" ref="base_contact.view_partner_contact_form" />
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <field name="job_ids" position="replace">
-                    <field name="job_ids" colspan="4" nolabel="1" mode="tree, form">
-                        <form string="Functions">
-                            <field name="function_id"/>
-                            <field name="address_id"/>
-                            <field name="name"/>
-                            <field name="sequence_contact"/>
-                            <field name="phone"/>
-                            <field name="email"/>
-                            <field name="date_start" />
-                            <field name="date_stop" />
-                            <field name="state" />
-                            <field name="external_matricule" />
-                            <field name="departments" colspan="4" />
-                            <field name="orientation" colspan="4" />
-                        </form>
-                        <tree string="Functions">
-                            <field name="sequence_contact" string="Seq."/>
-                            <field name="function_id"/>
-                            <field name="name"/>
-                            <field name="address_id"/>
-                            <field name="phone"/>
-                            <field name="email"/>
-                            <field name="state" />
-                        </tree>
-                    </field>
-                </field>
+                <xpath expr="/form/notebook/page[@string='General']/field[@name='job_ids']/form/field[@name='state']" position="after">
+                    <field name="team_id" />
+                    <field name="external_matricule" />
+                    <field name="departments" colspan="4" />
+                    <field name="orientation" colspan="4" />
+                </xpath>
             </field>
         </record>
 
