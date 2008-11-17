@@ -16,7 +16,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar,gantt,graph</field>
             <field name="view_id" ref="project.view_task_tree2"/>
-            <field name="domain" eval="[('date_start','like',time.strftime('%Y-%m-%d')),('project_id.parent_id','ilike','Direct Marketing Retro-Planning'),('type','ilike','Mailing Manufacturing')]"/>
+            <field name="domain" eval="[('date_start','=',time.strftime('%Y-%m-%d')),('project_id.parent_id','ilike','Direct Marketing Retro-Planning'),('type','ilike','Mailing Manufacturing')]"/>
         </record>
 
 	    <record id="action_dash_manufacturing_view_taskdeadline" model="ir.actions.act_window">
