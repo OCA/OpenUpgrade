@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 
+	<!-- PARTNER -->
+
     <data noupdate="1">
         <record id="base.main_partner" model="res.partner">
             <field eval="&quot;&quot;&quot;TINY&quot;&quot;&quot;" name="ref"/>
@@ -17,21 +19,15 @@
             <field eval="&quot;&quot;&quot;OpenERP&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
-    <!--
-    <data>
-        <record id="dm_test_pertner0" model="res.partner">
-            <field name="name">Toto</field>
-            <field eval="[(6,0,[])]" name="country_ids"/>
-            <field eval="[(6,0,[])]" name="state_ids"/>
-        </record>
-    </data>
-    -->
     <data>
         <record id="dm_offer_category_ondemandoffer0" model="dm.offer.category">
             <field name="parent_id" ref="dm_offer_category_openerp0"/>
             <field eval="&quot;&quot;&quot;OnDemand Offer&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
+
+	<!-- OFFER -->
+
     <data noupdate="1">
         <record id="dm_offer_openerpondemandfreetrial2009" model="dm.offer">
             <field eval="&quot;&quot;&quot;ODFREETRIAL09&quot;&quot;&quot;" name="code"/>
@@ -98,7 +94,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="&quot;&quot;&quot;Get confirmation of the OpenERP Discovery Day&quot;&quot;&quot;" name="planning_note"/>
             <field eval="0" name="mailing_at_dates"/>
             <field eval="[(6,0,[ref('dm.media_paper')])]" name="media_ids"/>
-            <field eval="&quot;&quot;&quot;Propose to subscribe to the Open ERP Discovery Day on May 2009 in Paris&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Propose to subscribe to the Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;The Package Insert that join the OpenERP Book proposes to subscribe to the next OpenERP Discovery Day in Paris on May 2009.&quot;&quot;&quot;" name="desc"/>
             <field eval="&quot;&quot;&quot;PI&quot;&quot;&quot;" name="type"/>
@@ -152,7 +148,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
         </record>
     </data>
     <data noupdate="1">
-<!--        <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step"/>-->
         <record id="dm_offer_step_transition_0" model="dm.offer.step.transition">
             <field eval="4" name="delay"/>
             <field name="step_to" ref="dm_offer_step_piforopenerpondemandfreetrial2009"/>
@@ -564,5 +559,93 @@ rkJggg==
         <field eval="&quot;&quot;&quot;No Price Progression&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
+
+
+	<!-- Users -->
+
+<data noupdate="1">
+		<record id="res_users_tom0" model="res.users">
+			<field eval="[(6,0,[ref('dm.res_groups_manufacturingmanager')])]" name="groups_id"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="password"/>
+			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+			<field eval="&quot;&quot;&quot;Tom&quot;&quot;&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="login"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="res_users_jim0" model="res.users">
+			<field eval="[(6,0,[ref('dm.res_groups_campaignmanager')])]" name="groups_id"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="password"/>
+			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+			<field eval="&quot;&quot;&quot;Jim&quot;&quot;&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="login"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="res_users_bob0" model="res.users">
+			<field eval="[(6,0,[ref('dm.res_groups_offermanager')])]" name="groups_id"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="password"/>
+			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+			<field eval="&quot;&quot;&quot;Bob&quot;&quot;&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="login"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="res_users_sue0" model="res.users">
+			<field eval="[(6,0,[ref('dm.res_groups_itemmanager')])]" name="groups_id"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="password"/>
+			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+			<field eval="&quot;&quot;&quot;Sue&quot;&quot;&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="login"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="res_users_ann0" model="res.users">
+			<field eval="[(6,0,[ref('dm.res_groups_dtpmanager')])]" name="groups_id"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="password"/>
+			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+			<field eval="&quot;&quot;&quot;Ann&quot;&quot;&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="login"/>
+		</record>
+	</data>
+<data noupdate="1">
+		<record id="res_users_joe0" model="res.users">
+			<field eval="[(6,0,[ref('dm.res_groups_custfilemanager')])]" name="groups_id"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="password"/>
+			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+			<field eval="&quot;&quot;&quot;Joe&quot;&quot;&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="login"/>
+		</record>
+	</data>
+
+	<!-- CAMAPAIGN RESPONSIBLE -->
+
+	<data noupdate="1">
+		<record id="dm.dm_campaign_openerpondemandfreetrial2009" model="dm.campaign">
+			<field name="item_responsible_id" ref="dm.res_users_sue0"/>
+			<field name="dtp_responsible_id" ref="dm.res_users_ann0"/>
+			<field name="manufacturing_responsible_id" ref="dm.res_users_tom0"/>
+			<field name="responsible_id" ref="dm.res_users_jim0"/>
+			<field name="files_responsible_id" ref="res_users_joe0"/>
+		</record>
+	</data>
 
 </openerp>

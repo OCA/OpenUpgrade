@@ -32,12 +32,12 @@
             <field name="model">board.board</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Manufacturing Manager Board">
+                <form string="Mailing Manufacturing Manager Board">
                     <hpaned>
                         <child1>
                             <action colspan="4" name="%(action_manufacturing_manager_board)d" string="Current Campaigns"/>
-                        	<action colspan="2" name="%(action_dash_manufacturing_view_task)d" string="Mailing Manufacturing Tasks For Today"/>
-                        	<action colspan="2" name="%(action_dash_manufacturing_view_taskdeadline)d" string="Mailing Manufacturing Tasks With Deadline Passed"/>
+                        	<action colspan="2" name="%(action_dash_manufacturing_view_task)d" string="Tasks For Today"/>
+                        	<action colspan="2" name="%(action_dash_manufacturing_view_taskdeadline)d" string="Tasks With Deadline Passed"/>
                         </child1>
                     </hpaned>
                 </form>
@@ -45,7 +45,7 @@
         </record>
         
         <record id="board_manufacturing_manager" model="ir.actions.act_window">
-            <field name="name">Manufacturing Manager Dashboard</field>
+            <field name="name">Mailing Manufacturing Manager Dashboard</field>
             <field name="res_model">board.board</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>

@@ -389,6 +389,38 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
+    <data noupdate="1">
+        <record id="project_task_itemspurchase0" model="project.task">
+            <field eval="10" name="sequence"/>
+            <field eval="1.0" name="planned_hours"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field name="project_id" ref="project_project_defaultretroplanning0"/>
+            <field name="type" ref="dm.project_task_type_items0"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;Items Purchase&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;2009-08-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
+            <field eval="1.0" name="remaining_hours"/>
+            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="project_task_itemdelivery0" model="project.task">
+            <field eval="10" name="sequence"/>
+            <field eval="1.0" name="planned_hours"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;2&quot;&quot;&quot;" name="priority"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field name="project_id" ref="project_project_defaultretroplanning0"/>
+            <field name="type" ref="dm.project_task_type_items0"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;Items Delivery&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;2009-09-11 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
+            <field eval="1.0" name="remaining_hours"/>
+            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+        </record>
+    </data>
 
     <!-- Default Products -->
 
@@ -548,100 +580,4 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         </record>
     </data>
 
-    <!-- Languages -->
-<!--
-    <data>
-        <record id="res_lang_afrikaanssouthafrica0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;af_ZA&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;Afrikaans_South Africa&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>
-        <record id="res_lang_chinesehongkong0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;zh_HK&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;Chinese_Hong Kong&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>
-        <record id="res_lang_chinesepeoplesrepublicofchina0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;zh_CN&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;Chinese_People's Republic of China&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>
-        <record id="res_lang_dutchbelgium0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;nl_BE&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;Dutch_Belgium&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>
-        <record id="res_lang_dutchnetherlands0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;nl_NL&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;Dutch_Netherlands&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>
-        <record id="res_lang_englishcanada0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;en_AU&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;English_Canada&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>    
-        <record id="res_lang_englishunitedkingdom0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;en_GB&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;English_United Kingdom&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>    
-        <record id="res_lang_englishunitedstates0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;English_United States&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>
-        <record id="res_lang_englishcanada0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;en_AU&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;English_Canada&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>    
-        <record id="res_lang_frenchbelgium0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;fr_BE&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;French_Belgium&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>    
-        <record id="res_lang_englishunitedstates0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;fr_CA&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;English_United States&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>
-        <record id="res_lang_frenchfrance0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;fr_FR&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;French_France&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>    
-        <record id="res_lang_germangermany0" model="res.lang">
-            <field eval="&quot;&quot;&quot;ltr&quot;&quot;&quot;" name="direction"/>
-            <field eval="&quot;&quot;&quot;de_DE&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;German_Germany&quot;&quot;&quot;" name="name"/>
-            <field eval="0" name="translatable"/>
-            <field eval="1" name="active"/>
-        </record>        
-    </data>
--->
 </openerp>
