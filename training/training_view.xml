@@ -33,11 +33,11 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="res_partner_contact_tree_inherit">
-            <field name="name">res.partner.contact.tree.inherit</field>
+        <record model="ir.ui.view" id="res_partner_contact_form_inherit3">
+            <field name="name">res.partner.contact.form.inherit3</field>
             <field name="model">res.partner.contact</field>
-            <field name="inherit_id" ref="base_contact.view_partner_contact_tree" />
-            <field name="type">tree</field>
+            <field name="inherit_id" ref="base_contact.view_partner_contact_form" />
+            <field name="type">form</field>
             <field name="arch" type="xml">
                 <xpath expr="/tree/notebook/page[@string='General']/field[@name='job_ids']/tree/field[@name='name']" position="after">
                     <field name="team_id" />
