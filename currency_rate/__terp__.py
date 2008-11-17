@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -23,13 +23,13 @@
     "name" : "Currency Rates",
     "version" : "1.0",
     "author" : "Axelor",
-    "category" : "Generic Modules",
+    "category" : "Generic Modules/Tools",
     "website": "http://www.axelor.com",
     "depends" : ["base", "multi_company_currency"],
     "init_xml" : [],
     "update_xml" : [
                     "currency_data.xml",
-                    "currency_wizard.xml",                                     
+                    "currency_wizard.xml",
                     ],
     "demo_xml" : [],
     "installable": True,

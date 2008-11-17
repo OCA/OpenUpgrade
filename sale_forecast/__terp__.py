@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
-    "depends" : ["account", "account_invoice_salesman","crm"],
+    "depends" : ["account", "account_invoice_salesman","crm","sale"],
     "category" : "Generic Modules/Accounting",
     "description": """This module allows manager to do their sales forecast.
 Different reports are set up for forecast and sales analysis.
