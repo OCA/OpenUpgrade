@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -23,7 +23,7 @@
     "name":"Margins in Sale Orders",
     "version":"1.0",
     "author":"Tiny",
-    "category":"Custom",
+    "category" : "Generic Modules/Sales",
     "depends":["sale","account"],
     "demo_xml":[],
     "update_xml":["sale_margin_view.xml","report_margin_view.xml"],

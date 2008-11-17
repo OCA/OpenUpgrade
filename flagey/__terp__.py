@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -23,6 +23,7 @@
     "name" : "Auction module - Flagey Customs",
     "version" : "1.0",
     "depends" : ["auction"],
+    "category" : "Generic Modules/Auction",
     "update_xml" : ["flagey_report.xml"],
     "demo_xml" : [ ],
     "init_xml" : [],

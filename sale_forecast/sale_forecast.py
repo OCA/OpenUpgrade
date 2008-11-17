@@ -28,17 +28,6 @@ import mx.DateTime
 class sale_forecast(osv.osv):
     _name = "sale.forecast"
     _description = "Sales Forecast"
-    def _forecast_rate(self, cr, uid, ids, field_names, args, context):
-        res = {}
-        amount = 0
-        avg = 0
-        for forecast in self.browse(cr, uid, ids, context=context):
-            for line in forecast.line_ids:
-                amount += line.forecast_rate
-                avg += 1
-            res[forecast.id] = (amount/avg)
-        return res
-
     _columns = {
         'name': fields.char('Sales Forecast', size=32, required=True),
         'user_id': fields.many2one('res.users', 'Responsible', required=True, select=1),
@@ -67,7 +56,6 @@ class sale_forecast_line(osv.osv):
 
     def _final_evolution(self, cr, uid, ids, name, args, context={}):
         forecast_line =  self.browse(cr, uid, ids)
-        result = {}#{forecast_line[0].id :0}
         for line in forecast_line:
             state_dict = {
                 'draft' : line.state_draft,
@@ -135,12 +123,7 @@ class sale_forecast_line(osv.osv):
         res = {}
 
         for line in self.browse(cr, uid, ids, context=context):
-            print "== line.computed_amount",line.computed_amount
-            print "== line.amount",line.amount
-#            if line.computed_amount == 0 :
-#                res[line.id] = 0
-#            else :
-#                res[line.id] = (line.amount / line.computed_amount) * 100
+            if line.amount:
             try:
                 res[line.id] = (line.computed_amount/line.amount) * 100
             except:
