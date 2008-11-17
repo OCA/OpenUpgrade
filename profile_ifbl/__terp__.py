@@ -7,7 +7,7 @@
     'category' : 'Profile',
     'depends' : ['training', 'crm', 'project', 'account_analytic_analysis', 'document'],
     'init_xml' : [],
-    'update_xml' : ['document_view.xml'],
+    'update_xml' : ['document_view.xml', 'base_contact_team_view.xml'],
     'demo_xml' : [],
     'installable' : True, 
     'active' : False,
