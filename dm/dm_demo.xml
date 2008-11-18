@@ -8,18 +8,13 @@
             <field eval="&quot;&quot;&quot;TINY&quot;&quot;&quot;" name="ref"/>
             <field eval="[(6,0,[ref('dm.cat_cleaner'),ref('dm.cat_copywriter'),ref('dm.cat_dealer')])]" name="category_id"/>
         </record>
-    </data>
-    <data noupdate="1">
         <record id="base.res_partner_thymbra" model="res.partner">
             <field eval="[(6,0,[ref('base.res_partner_category_4'),ref('dm.cat_broker')])]" name="category_id"/>
+
         </record>
-    </data>
-    <data>
         <record id="dm_offer_category_openerp0" model="dm.offer.category">
             <field eval="&quot;&quot;&quot;OpenERP&quot;&quot;&quot;" name="name"/>
         </record>
-    </data>
-    <data>
         <record id="dm_offer_category_ondemandoffer0" model="dm.offer.category">
             <field name="parent_id" ref="dm_offer_category_openerp0"/>
             <field eval="&quot;&quot;&quot;OnDemand Offer&quot;&quot;&quot;" name="name"/>
@@ -47,8 +42,6 @@
             <field eval="&quot;&quot;&quot;This is a demo offer about a 1 month free trial on several OnDemand offers.&quot;&quot;&quot;" name="notes"/>
             <field eval="[(6,0,[ref('base.fj')])]" name="forbidden_country_ids"/>
         </record>
-    </data>
-    <data>
         <record id="dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="0" name="floating date"/>
             <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
@@ -62,15 +55,11 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
         </record>
-    </data>
-    <data>
         <record id="dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
             <field eval="&quot;&quot;&quot;Use the new OnDemand logo in the mailing&quot;&quot;&quot;" name="dtp_note"/>
             <field eval="&quot;&quot;&quot;Check with the SysAdmin if the several OnDemand profiles are installed and tested&quot;&quot;&quot;" name="planning_note"/>
         </record>
-    </data>
-    <data noupdate="1">
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
             <field eval="0" name="floating date"/>
@@ -85,8 +74,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
         </record>
-    </data>
-    <data noupdate="1">
         <record id="dm_offer_step_piforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="2" name="doc_number"/>
             <field eval="0" name="floating date"/>
@@ -101,8 +88,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
         </record>
-    </data>
-    <data noupdate="1">
         <record id="dm_offer_step_alpiforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
             <field eval="0" name="floating date"/>
@@ -116,8 +101,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
         </record>
-    </data>
-    <data noupdate="1">
         <record id="dm_offer_step_alimforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
             <field eval="0" name="floating date"/>
@@ -131,23 +114,15 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
         </record>
-    </data>
-    <data>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="&quot;&quot;&quot;The Intermediate mailing is a phone by a commercial call to thank the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
         </record>
-    </data>
-    <data noupdate="1">
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="[(6,0,[ref('dm.media_phone')])]" name="media_ids"/>
         </record>
-    </data>
-    <data>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="&quot;&quot;&quot;Check availability of the commercials for the phone calls&quot;&quot;&quot;" name="planning_note"/>
         </record>
-    </data>
-    <data noupdate="1">
         <record id="dm_offer_step_transition_0" model="dm.offer.step.transition">
             <field eval="4" name="delay"/>
             <field name="step_to" ref="dm_offer_step_piforopenerpondemandfreetrial2009"/>
@@ -155,9 +130,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="media_id" ref="dm.media_paper"/>
             <field eval="&quot;&quot;&quot;automatic&quot;&quot;&quot;" name="condition"/>
         </record>
-    </data>
-
-    <data noupdate="1">
         <record id="dm_offer_step_transition_1" model="dm.offer.step.transition">
             <field name="step_to" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
             <field name="step_from" ref="dm_offer_step_smforopenerpondemandfreetrial2009"/>
@@ -165,8 +137,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="&quot;&quot;&quot;purchased&quot;&quot;&quot;" name="condition"/>
             <field eval="0" name="delay"/>
         </record>
-    </data>
-    <data noupdate="1">
         <record id="dm_offer_step_transition_2" model="dm.offer.step.transition">
             <field name="step_to" ref="dm_offer_step_alimforopenerpondemandfreetrial2009"/>
             <field name="step_from" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
@@ -174,8 +144,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="&quot;&quot;&quot;purchased&quot;&quot;&quot;" name="condition"/>
             <field eval="0" name="delay"/>
         </record>
-    </data>
-    <data noupdate="1">
         <record id="dm_offer_step_transition_3" model="dm.offer.step.transition">
             <field name="step_to" ref="dm_offer_step_alpiforopenerpondemandfreetrial2009"/>
             <field name="step_from" ref="dm_offer_step_piforopenerpondemandfreetrial2009"/>

@@ -454,6 +454,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="0" name="rental"/>
         </record>
     </data>
+	<!--
     <data noupdate="1">
         <record id="product_supplierinfo_0" model="product.supplierinfo">
             <field name="name" ref="base.res_partner_agrolait"/>
@@ -468,6 +469,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="product_id" ref="product_product_defaultpapermailing0"/>
         </record>
     </data>
+	-->
     <data noupdate="1">
         <record id="product_product_defaultitem0" model="product.product">
             <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
@@ -498,12 +500,14 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="1.0" name="produce_delay"/>
             <field eval="0" name="rental"/>
         </record>
+		<!--
         <record id="product_supplierinfo_2" model="product.supplierinfo">
             <field name="name" ref="base.res_partner_6"/>
             <field eval="1" name="sequence"/>
             <field eval="1" name="delay"/>
             <field name="product_id" ref="product_product_defaultitem0"/>
         </record>
+		-->
     </data>
     <data noupdate="1">
         <record id="product_product_defaultcustomerslist0" model="product.product">
@@ -535,12 +539,14 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="1.0" name="produce_delay"/>
             <field eval="0" name="rental"/>
         </record>
+		<!--
         <record id="product_supplierinfo_3" model="product.supplierinfo">
             <field name="name" ref="base.res_partner_thymbra"/>
             <field eval="1" name="sequence"/>
             <field eval="1" name="delay"/>
             <field name="product_id" ref="product_product_defaultcustomerslist0"/>
         </record>
+		-->
     </data>
     <data noupdate="1">
         <record id="product_product_defaulttranslation0" model="product.product">
@@ -572,12 +578,14 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="1.0" name="produce_delay"/>
             <field eval="0" name="rental"/>
         </record>
+		<!--
         <record id="product_supplierinfo_4" model="product.supplierinfo">
             <field name="name" ref="base.res_partner_c2c"/>
             <field eval="1" name="sequence"/>
             <field eval="1" name="delay"/>
             <field name="product_id" ref="product_product_defaulttranslation0"/>
         </record>
+		-->
     </data>
 
 </openerp>
