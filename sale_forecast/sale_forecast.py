@@ -121,9 +121,7 @@ class sale_forecast_line(osv.osv):
         return result
     def _forecast_rate(self, cr, uid, ids, field_names, args, context):
         res = {}
-
         for line in self.browse(cr, uid, ids, context=context):
-            if line.amount:
             try:
                 res[line.id] = (line.computed_amount/line.amount) * 100
             except:
