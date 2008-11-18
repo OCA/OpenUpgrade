@@ -75,7 +75,8 @@
         <record id="act_invoice_end" model="workflow.activity">
             <field name="wkf_id" ref="wkf_repair"/>
             <field name="name">invoice_end</field>
-            <field name="kind">dummy</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'confirmed', 'invoiced' : 1})</field>
         </record>
         <record id="act_invoice_cancel" model="workflow.activity">
             <field name="wkf_id" ref="wkf_repair"/>
