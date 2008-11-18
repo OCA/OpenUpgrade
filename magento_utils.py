@@ -1,38 +1,7 @@
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-# Copyright (c) 2008 Smile S.A. (http://www.smile.fr) All Rights Reserved.
-# @authors: Sylvain Pamart, Raphaêl Valyi
-#
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
-#
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#
-##############################################################################
-
 import netsvc
 import xmlrpclib
 import pooler
 import wizard
-from xml.parsers.expat import ExpatError
-import server_common
 
 #===============================================================================
 #    Payment mapping constants; change them if you need
@@ -44,50 +13,27 @@ default_payment = 'prepaid'
 #other possible OpenERP values would be: 'manual', 'postpaid' and 'picking'
 #using 'postpaid' might be interresting for testing purposes
 
+class magento_utils:
 
-def _do_import(self, cr, uid, data, context):
-    
-    so_nb = 0
-    has_error = 0
+    def __init__(self):
+	self.logger = netsvc.Logger()
 
-    self.pool = pooler.get_pool(cr.dbname)
-    logger = netsvc.Logger()
-    
-    # Magento server communication
-    magento_web_id=self.pool.get('magento.web').search(cr, uid, [('magento_id', '=', 1)])
-    try:
-        magento_web=self.pool.get('magento.web').browse(cr, uid, magento_web_id[0])
-        server = xmlrpclib.ServerProxy("%sapp/code/local/Smile/OpenERPSync/openerp-synchro.php" % magento_web.magento_url)# % website.url)
+    def createOrders(self, cr, uid, sale_order_array):
+        so_nb = 0
+        has_error = 0
+        self.pool = pooler.get_pool(cr.dbname)
 
-    except:
-        raise wizard.except_wizard("UserError", "You must have a declared website with a valid URL! provided URL: %s/openerp-synchro.php" % magento_web.magento_url)
-             
-    
-    #===============================================================================
-    #    Sale order sync processing
-    #===============================================================================
-    
-    magento_orders = self.pool.get('sale.order').search(cr, uid, [('magento_id', '>', 0)])
-    if magento_orders:
-        last_order = self.pool.get('sale.order').browse(cr, uid, max(magento_orders))
-        last_order_id = last_order.magento_id     
-    else:
-        last_order_id = 0
-    
-    # attempt to retrieve the sale order
-    sale_order_array=[]
-    try:
-        try:
-            sale_order_array = server.sale_orders_sync(last_order_id)
-        except ExpatError, error:
-            logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
-            raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % magento_web.magento_url)
-    except :
-        raise wizard.except_wizard("ConnectionError", "Couldn't connect to Magento with URL %sindex.php/api/xmlrpc" % magento_web.magento_url)
-    
-    # order Processing
-    for so in sale_order_array:
+        # order Processing
+        for so in sale_order_array:
+            has_error += self.createOrder(cr, uid, so) 
+            so_nb += 1
+
+        return {'so_nb':so_nb, 'has_error':has_error}
+
         
+    def createOrder(self, cr, uid, so): 
+        has_error = 0
+
         # is there a matching OpenERP partner?
         partner_id = self.pool.get('res.partner').search(cr, uid, [('magento_id', '=', so['customer']['customer_id'])])
         
@@ -97,12 +43,12 @@ def _do_import(self, cr, uid, data, context):
             known_sa= False
             
             # getting all the partner addresses
-            adr_ids = self.pool.get('res.partner.address').search(cr, uid, [('partner_id', '=', partner_id[0])])
+            adr_ids=self.pool.get('res.partner.address').search(cr, uid, [('partner_id', '=', partner_id[0])])
             
             # checks for bill an ship address
             for adr_id in adr_ids:
                 # iterates over the addresses
-                address = self.pool.get('res.partner.address').browse(cr, uid, adr_id)
+                address=self.pool.get('res.partner.address').browse(cr, uid, adr_id)
                 # Does the address exist?
                 if ((address.name == so['billing_address']['firstname']+" "+so['billing_address']['lastname']) and 
                     (address.street == so['billing_address']['street']) and 
@@ -124,7 +70,6 @@ def _do_import(self, cr, uid, data, context):
                     known_sa= True
                     ship_adr_id = address.id
         
-                
         # unknown business partner -> create a new one 
         else:
             partner_id = self.pool.get('res.partner').create(cr, uid, {
@@ -136,7 +81,7 @@ def _do_import(self, cr, uid, data, context):
             known_sa= False
             
             
-        if(type(partner_id) == list):
+        if(type(partner_id)== list):
             fixed_partner_id = partner_id[0]
         else:
             fixed_partner_id = partner_id
@@ -153,7 +98,7 @@ def _do_import(self, cr, uid, data, context):
             'phone': so['billing_address']['phone'],
             })
             
-        # if the address does'nt exist & isn't the same as billing, create it
+        # if the address doesn't exist & isn't the same as billing, create it
         if((so['shipping_address'] == so['billing_address']) and known_sa == False):      
             ship_adr_id = self.pool.get('res.partner.address').create(cr, uid, {
                 'partner_id': fixed_partner_id,
@@ -168,7 +113,6 @@ def _do_import(self, cr, uid, data, context):
         else:
             ship_adr_id = bill_adr_id
                 
-        
         # retrieves Magento Shop in OpenERP
         shop_id=self.pool.get('sale.shop').search(cr, uid, [('magento_id', '>', 0)])
         if shop_id and len(shop_id) >= 1:
@@ -201,21 +145,21 @@ def _do_import(self, cr, uid, data, context):
             # is the Magento id known?
             product=self.pool.get('product.product').search(cr, uid, [('magento_id', '=', line["product_magento_id"])])
             if product: # then save the line
-                product = self.pool.get('product.product').browse(cr, uid, product[0])
+                get_product=self.pool.get('product.product').browse(cr, uid, product[0])
                 self.pool.get('sale.order.line').create(cr, uid, {
-                        'product_id': product.id,
+                        'product_id': product[0], #line['product_sku'][3:],
                         'name': line['product_name'],
                         'order_id': order_id,
-                        'product_uom': product.uom_id.id,
+                        'product_uom': get_product.uom_id.id,
                         'product_uom_qty': line['product_qty'],
                         'price_unit': line['product_price'],
                         'discount' : float(100*float(line['product_discount_amount']))/(float(line['product_price'])*float(line['product_qty'])),
-                        'tax_id' : [(6, 0, [x.id for x in product.taxes_id])] #See fields.py, many2many set method.
+                        'tax_id' : [(6, 0, [x.id for x in get_product.taxes_id])] #See fields.py, many2many set method.
                 })
                 
             # report the error   
             else:
-                logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Sale Order %s : Error on product id : %s sku : %s name %s" % (order_id , line['product_magento_id'], line['product_sku'], line['product_name']))    
+                self.logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Sale Order %s : Cannot find product with id : %s sku : %s name %s" % (order_id , line['product_magento_id'], line['product_sku'], line['product_name']))    
                 self.pool.get('sale.order').write(cr, uid, order_id, {'has_error' : 1})
                 line_error = True
            
@@ -233,35 +177,9 @@ def _do_import(self, cr, uid, data, context):
         })
         
         # done fields counter   
-        if line_error:
-            has_error += 1
+        if line_error :
+            has_error = 1
         
-        so_nb += 1
-    
-    return {'so_nb':so_nb, 'has_error':has_error}
+        return has_error
 
-
-#===============================================================================
-#   Wizard Declaration
-#===============================================================================
-        
-_import_done_form = '''<?xml version="1.0"?>
-<form string="Saleorders import">
-    <separator string="Magento Sale Orders Synchronization" colspan="4" />
-    <field name="so_nb"/>
-    <field name="has_error"/>
-</form>'''
-
-_import_done_fields = {
-    'so_nb': {'string':'New Sales Orders', 'readonly':True, 'type':'integer'},
-    'has_error': {'string':'Sales Orders With Error', 'readonly':True, 'type':'integer'},
-}
-
-class wiz_magento_so_import(wizard.interface):
-    states = {
-        'init': {
-            'actions': [_do_import],
-            'result': {'type': 'form', 'arch': _import_done_form, 'fields': _import_done_fields, 'state': [('end', 'End')] }
-        }
-    }
-wiz_magento_so_import('magento.saleorders.import');
+magento_utils()

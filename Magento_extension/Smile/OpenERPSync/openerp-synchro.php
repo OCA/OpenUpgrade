@@ -15,7 +15,7 @@
  * @category   Mage
  * @package    Mage_OpenERP
  * @copyright  Copyright (c) 2008 Smile S.A. (http://www.smile.fr)
- * @authors	Sylvain Pamart, Raphaël Valyi
+ * @authors	Sylvain Pamart, Raphaï¿½l Valyi
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -245,10 +245,10 @@ if (isset($headers['Accept'])) {
 
 /** Init the XML/RPC server */
 function initRPCServer() {
-	require_once('../../../Mage.php');	//Magento import
+	require_once('../../../../Mage.php');	//Magento import
 	Mage::app();	//bootstarp the Magento Model layer (at least) and autoload function
 	
-	require_once('../../../../lib/Zend/XmlRpc/Server.php');
+	require_once('../../../../../lib/Zend/XmlRpc/Server.php');
 	$server = new Zend_XmlRpc_Server();
 	$server->setClass('OpenERPConnector');
 	echo $server->handle();
