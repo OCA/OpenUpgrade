@@ -95,32 +95,32 @@ class profile_game_retail_phase_one(osv.osv):
         return False
 
     def pre_process_print_quote(self,cr,uid,step_id,object, method,type,*args):
-        if type!='report' and (object not in ("sale.order", 'sale.order.line')):
-            return False
-
-        if type!='report' and (object in ("sale.order", 'sale.order.line') and (method not in ('read','button_dummy','write'))):
-            self.error(cr, uid,step_id)
-        return (type=='report' and (object in ("sale.order", 'sale.order.line')))
+        if (type=='execute') and (object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink')):
+            print '1'
+            self.error(cr, uid, step_id)
+        if type=='execute_wkf':
+            self.error(cr, uid, step_id)
+        return (type=='report') and (object=="sale.order")
 
     def post_process_print_quote(self,cr,uid,step_id,object, method,type,*args):
         res=args[-1]
         res=res and res.get('result',False) or False
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
         pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
-
         if pid:
             return self.write(cr,uid,pid,{'step2':True,'state':'sale'})
         return False
 
     def pre_process_sale(self,cr,uid,step_id,object, method,type,*args):
-        print 'PRE Process', object, method, type
-        if (type!='execute_wkf'):
-
+        if (type=='execute') and (method in ('create','unlink')):
+            self.error(cr, uid, step_id)
+        if (type=='execute') and (object not in ("sale.order",'sale.order.line')) and (method=='write'):
+            self.error(cr, uid, step_id)
+        if type!='execute_wkf':
             return False
-        if ((object not in ("sale.order",'sale.order.line')) and (method in ('create','write','unlink'))):
-            self.error(cr, uid,step_id)
-        print 'ok'
-        return (object in ("sale.order")) and (method in ('order_confirm'))
+        if method<>'order_confirm':
+            self.error(cr, uid, step_id)
+        return True
 
     def post_process_sale(self,cr,uid,step_id,object, method,type,*args):
         print 'POST Process', object, method, type
@@ -137,7 +137,6 @@ class profile_game_retail_phase_one(osv.osv):
         return False
 
     def pre_process_print_rfq(self, cr,uid,step_id, object, method,type, *args):
-        print 'Print RFQ', object, step_id, method, type
         if (type=='execute') and ((object not in ("purchase.order", 'purchase.order.line')) and (method in ('create','write','unlink'))):
             self.error(cr, uid,step_id)
         if type not in ('execute','report'):
@@ -187,7 +186,6 @@ class profile_game_retail_phase_one(osv.osv):
             return self.write(cr,uid,pid,{'step6':True,'state':'receive'})
         return False
 
-
     def pre_process_receive(self,cr,uid,step_id,object, method,type,*args):
          # TO DO : fetch name of wizard
         if type!='wizard':
@@ -227,11 +225,13 @@ class profile_game_retail_phase_one(osv.osv):
         return False
 
     def pre_process_invoice_create(self,cr,uid,step_id,object, method,type,*args):
-        if type!='execute_wkf':
-            return False
-        if ((object not in ("account.invoice")) and (method in ('create','write','unlink'))):
+        if (type=='execute') and ((object not in ("account.invoice",'account.invoice.line')) and (method in ('create','write','unlink'))):
             self.error(cr, uid,step_id)
-        return (object in ("account.invoice")) and (method in ('invoice_open'))
+        if (type!='execute_wkf'):
+            return False
+        if (type=='execute_wkf') and (method<>'invoice_open'):
+            self.error(cr, uid,step_id)
+        return True
 
     def post_process_invoice_create(self,cr,uid,step_id,object, method,type,*args):
         res=args[-1]
