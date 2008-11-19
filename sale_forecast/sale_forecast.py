@@ -36,7 +36,7 @@ class sale_forecast(osv.osv):
         'line_ids': fields.one2many('sale.forecast.line', 'forecast_id', 'Forecast lines'),
         'state': fields.selection([('draft','Draft'),('open','Open'),('close','Closed'),('cancel','Canceled')], 'State', required=True, select=1),
         'note': fields.text('Notes'),
-        'forecast_rate' : fields.function(_forecast_rate, method=True, string='Progress (%)',)
+        #'forecast_rate' : fields.function(_forecast_rate, method=True, string='Progress (%)')
 
     }
     _defaults = {
@@ -124,9 +124,8 @@ class sale_forecast_line(osv.osv):
 
         for line in self.browse(cr, uid, ids, context=context):
             if line.amount:
-            try:
                 res[line.id] = (line.computed_amount/line.amount) * 100
-            except:
+            else:
                 res[line.id] = 0
         return res
     _columns = {
