@@ -339,11 +339,11 @@ rkJggg==
             <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="manufacturing_state"/>
             <field name="dealer_id" ref="base.main_partner"/>
             <field name="country_id" ref="base.us"/>
-            <field eval="&quot;&quot;&quot;2009-03-01&quot;&quot;&quot;" name="date_start"/>
+            <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
             <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="translation_state"/>
             <field name="offer_id" ref="dm.dm_offer_openerpondemandfreetrial2009"/>
             <field name="responsible_id" ref="base.user_root"/>
-            <field eval="&quot;&quot;&quot;2010-03-01&quot;&quot;&quot;" name="date"/>
+            <field eval=" str(time.localtime()[0] + 1) + time.strftime('-%m-%d')" name="date"/>
             <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="customer_file_state"/>
             <field eval="&quot;&quot;&quot;OpenERP OnDemand Free Trial 2009&quot;&quot;&quot;" name="name"/>
             <field name="lang_id" ref="base.lang_en"/>
@@ -488,7 +488,7 @@ rkJggg==
             <field eval="&quot;&quot;&quot;Bookstore Offer Free Trial&quot;&quot;&quot;" name="name"/>
             <field eval="[(6,0,[])]" name="payment_methods"/>
             <field name="camp_id" ref="dm.dm_campaign_openerpondemandfreetrial2009"/>
-            <field eval="&quot;&quot;&quot;2009-03-01&quot;&quot;&quot;" name="date_start"/>
+            <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
         </record>
     </data>
     <data noupdate="1">
@@ -513,7 +513,7 @@ rkJggg==
             <field name="customer_pricelist_id" ref="product.list0"/>
             <field eval="[(6,0,[])]" name="payment_methods"/>
             <field name="camp_id" ref="dm.dm_campaign_openerpondemandfreetrial2009"/>
-            <field eval="&quot;&quot;&quot;2009-03-01&quot;&quot;&quot;" name="date_start"/>
+            <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
         </record>
     </data>
     <data>
