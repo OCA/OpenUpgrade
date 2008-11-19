@@ -22,8 +22,8 @@
         </record>
         <record id="sale.user_sales" model="res.users">
             <field name="name">Sales Manager</field>
-            <field name="login">sales</field>
-            <field name="password">sales</field>
+            <field name="login">sale</field>
+            <field name="password">sale</field>
             <field name="groups_id" eval="[(6,0,[ref('sale.group_sale_manager'),ref('sale.group_sale_user'),ref('base.group_user')])]"/>
             <field name="roles_id" eval="[(6,0,[ref('sale.res_roles_salesman0'),ref('mrp.res_roles_mrp0')])]" />
         </record>

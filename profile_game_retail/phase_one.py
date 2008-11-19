@@ -25,8 +25,8 @@ import pooler
 
 class profile_game_retail_phase_one(osv.osv):
     _name="profile.game.retail.phase1"
+    _rec_name = 'state'
     _columns = {
-		'name':fields.char('Name',size=64,readonly=True),
         'step1': fields.boolean('Create Quotation', readonly=True),
         'step1_so_id': fields.many2one('sale.order', 'Quotation / Sale Order', readonly=True),
         'step2': fields.boolean('Print Customer Quotation', readonly=True),
@@ -63,88 +63,21 @@ class profile_game_retail_phase_one(osv.osv):
     #
     # TODO: check pre process very carefully
     #
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
-        res = super(profile_game_retail_phase_one,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
-        p_obj=self.pool.get('profile.game.retail')
-        p_id=p_obj.search(cr,uid,[])
-        if not len(p_id):
-            return res
-        p_br=p_obj.browse(cr,uid,p_id)
-        invisible=False
-        if p_br[0].hr_user_id:
-            hr_name=p_br[0].hr_user_id.name
-        else:
-            hr_name=''
+    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
+        res = super(profile_game_retail_phase_one, self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
 
-        if p_br[0].state=='3':
-            invisible=True
-
-        if p_br[0].objectives=='on_max_turnover':
-                objective='''After a few years of presence on the market concerned, the head office \
-wishes to be bigger (s'agrandir). To attack the sales turnover in a \
-company, it is initially to analyze if the services and products meet a \
-need... '''
-        elif p_br[0].objectives=='on_max_cumulative':
-                objective='''The Boss of the company is old of 57ans and wishes to increase the \
-benefit in Net. New offices, new buildings and ambitions with the \
-international level require increase in the clear benefit so as to \
-capitalize in the company.'''
-        else:
-                objective='''The head office must prove reliable of manners to create a comfortable \
-position on the market. To adapt its prices to competition, to aim at \
-unexploited markets, to see broader and larger.'''
-
-        if res['type']=='form':
-             res['arch']="""<?xml version="1.0" encoding="utf-8"?>
-                    <form string="Game Scenario">
-                    <field align="0.0" name="name"/>
-                    <separator colspan="4" string="Retail Scenario - Objectives"/>
-                    <label align="0.0" colspan="4" string="%s"/>
-                    <newline/>
-                    <separator colspan="4" string="Retail Scenario - Scenario"/>
-                    <label align="0.0" colspan="4" string="Explain the scenario system here..."/>
-                    <label align="0.0" colspan="4" string="Explain the scenario system here..."/>
-                    <label align="0.0" colspan="4" string="Explain the scenario system here..."/>
-                    <label align="0.0" colspan="4" string="You can get the explanation at http://openerp.com..."/>
-                    <group col="2" colspan="1">
-                        <separator colspan="2" string="Sales Manager: %s"/>
-                        <field name="step1"/>
-                        <field name="step2"/>
-                        <field name="step3"/>
-                    </group>
-                    <group col="2" colspan="1" invisible ="%s">
-                        <separator colspan="2" string="HR Manager: %s"/>
-                        <field name="step4"/>
-                        <field name="step5"/>
-                        <field name="step6"/>
-                    </group>
-                    <group col="2" colspan="1">
-                        <separator colspan="2" string="Logistic Manager: %s"/>
-                        <field name="step7"/>
-                        <field name="step8"/>
-                    </group>
-                    <group col="2" colspan="1">
-                        <separator colspan="2" string="Financial Manager: %s"/>
-                        <field name="step9"/>
-                        <field name="step10"/>
-                    </group>
-                    <newline/>
-                    <group colspan="4">
-                        <separator colspan="4" string="References"/>
-                        <field align="0.0" name="step1_so_id"/>
-                        <separator colspan="4" string="State"/>
-                        <field align="0.0" name="state"/>
-                        <button name="confirm" states="not running" string="Start Scenario" type="object"/>
-                    </group>
-                </form>"""%(objective,p_br[0].sales_user_id.name,invisible,hr_name,p_br[0].logistic_user_id.name,p_br[0].finance_user_id.name)
+        res['arch'] = res['arch'].replace('role1', 'Fabien')
+        res['arch'] = res['arch'].replace('role2', 'Fabien')
+        res['arch'] = res['arch'].replace('role3', 'Fabien')
+        res['arch'] = res['arch'].replace('role4', 'Fabien')
         return res
-
     def error(self, cr, uid,step_id, msg=''):
         err_msg=''
         step=step_id and self.pool.get('game.scenario.step').browse(cr,uid,step_id) or False
         if step:
            err_msg=step.error
         raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', err_msg+'\n\n'+msg))
+
     def pre_process_quotation(self, cr,uid,step_id, object, method,type, *args):
         if (not method) and type!='execute':
             return False
@@ -178,31 +111,37 @@ unexploited markets, to see broader and larger.'''
         if pid:
             return self.write(cr,uid,pid,{'step2':True,'state':'sale'})
         return False
+
     def pre_process_sale(self,cr,uid,step_id,object, method,type,*args):
-        if type!='execute_wkf':
+        print 'PRE Process', object, method, type
+        if (type!='execute_wkf'):
+
             return False
         if ((object not in ("sale.order",'sale.order.line')) and (method in ('create','write','unlink'))):
             self.error(cr, uid,step_id)
+        print 'ok'
         return (object in ("sale.order")) and (method in ('order_confirm'))
-    def post_process_sale(self,cr,uid,step_id,object, method,type,*args):
 
+    def post_process_sale(self,cr,uid,step_id,object, method,type,*args):
+        print 'POST Process', object, method, type
         res=args[-1]
         res=res and res.get('result',False) or False
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
         pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
-
         if pid:
-            proc_obj = self.pool.get('mrp.procurement')
-            proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
+            #proc_obj = self.pool.get('mrp.procurement')
+            #proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
+            print 'Complex'
             return self.write(cr,uid,pid,{'step3':True,'state':'print_rfq'})
+        print 'False'
         return False
 
-
-
-
     def pre_process_print_rfq(self, cr,uid,step_id, object, method,type, *args):
-        if type!='report' and (object not in ("purchase.order", 'purchase.order.line')):
-            return False
+        print 'Print RFQ', object, step_id, method, type
+        if (type=='execute') and ((object not in ("purchase.order", 'purchase.order.line')) and (method in ('create','write','unlink'))):
+            self.error(cr, uid,step_id)
+        if type not in ('execute','report'):
+            self.error(cr, uid,step_id)
         #if type!='report' and (object in ("purchase.order", 'purchase.order.line') and (method not in ('fields_view_get','create','write','read','button_dummy'))):
         #    self.error(cr, uid,step_id)
         return (type=='report' and (object in ("purchase.quotation")))
@@ -213,7 +152,8 @@ unexploited markets, to see broader and larger.'''
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
         pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid and res:
-            return self.write(cr,uid,pid,{'step4':True,'state':'modify_price'})
+            self.write(cr,uid,pid,{'step4':True,'state':'modify_price'})
+            return True
         return False
 
     def pre_process_modify_price(self,cr,uid,step_id,object, method,type,*args):

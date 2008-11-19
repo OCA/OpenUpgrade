@@ -28,10 +28,12 @@
         "board",
         "base",
         "game_scenario",
+        "purchase_approve",
         "sale",
         "sale_wo_production",
         "stock_planning",
-        "crm_configuration"
+        "crm_configuration",
+        "mrp_jit"
     ],
     "init_xml":[
         "profile_game_data.xml",

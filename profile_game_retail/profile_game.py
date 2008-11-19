@@ -448,14 +448,14 @@ class profile_game_config_wizard(osv.osv_memory):
                 new_id=fiscal_obj.create(cr, uid, vals, context=context)
                 fiscal_obj.create_period3(cr,uid,[new_id])
                 lower+=1
-            for user_name in ['finance','sales','logistic','hr']:
+            for user_name in ['finance','sale','logistic','hr']:
                 if user_name=='hr' and players<4:
                     continue
                 user_ids=user_obj.name_search(cr,uid,user_name)
                 user_id=len(user_ids) and user_ids[0][0] or False
                 if user_name =='finance':
                     game_vals['finance_user_id']= user_id
-                if user_name =='sales':
+                if user_name =='sale':
                     game_vals['sales_user_id']=user_id
                 if user_name =='logistic':
                     game_vals['logistic_user_id']=user_id
