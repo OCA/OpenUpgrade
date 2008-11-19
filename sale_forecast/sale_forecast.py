@@ -37,7 +37,6 @@ class sale_forecast(osv.osv):
                 amount += line.forecast_rate
                 avg += 1
             res[forecast.id] = (amount/avg)
-        print res
         return res
     _columns = {
         'name': fields.char('Sales Forecast', size=32, required=True),
@@ -138,7 +137,6 @@ class sale_forecast_line(osv.osv):
                 res[line.id] = (line.computed_amount/line.amount) * 100
             except:
                 res[line.id] = 0
-        print "res>>>",res
         return res
     _columns = {
         'forecast_id': fields.many2one('sale.forecast', 'Forecast',ondelete='cascade',required =True),
