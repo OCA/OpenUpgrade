@@ -39,25 +39,15 @@ class sale_forecast_salesman(report_sxw.rml_parse):
         self.context=context
 
     def _get_salesman(self,id):
-
-        print "=====_get_salesman_name=======",id
-#
         tids = self.pool.get('res.users').search(self.cr,self.uid,[('id', '=',id)])
         res = self.pool.get('res.users').browse(self.cr,self.uid,tids)
-#        print res
-#        print "=rrrrrrrrrrrrrr",res[0]['name']
-
         return res[0]['name']
 
-
     def _get_data(self,form):
-
         d1=form['date_start']
         d2=form['date_end']
         s=form['user_id']
         data={}
-#        print "====== ",d1,d2,s
-#        print ab
         self.cr.execute("select sf.name as date, rs.name as user_name, " \
                         "sfl.user_id,sfl.computation_type,sfl.amount, " \
                         "sfl.computed_amount,sfl.final_evolution " \
@@ -69,15 +59,6 @@ class sale_forecast_salesman(report_sxw.rml_parse):
                             ,(form['date_start'],form['date_end'],form['user_id'],form['user_id']))
 
         data=self.cr.dictfetchall()
-#        print "data================",data
-#        for i in data:
-#            j= data[0]['user_id']
-#
-#            tids = self.pool.get('res.users').search(self.cr,self.uid,[('id', '=',j )])
-#            res = self.pool.get('res.users').browse(self.cr,self.uid,tids)
-#        print "=====data=========",res
-#        print "=rrrrrrrrrrrrrr",data[0]['name']
-
         return data
 
 report_sxw.report_sxw('report.sale.forecast.salesman', 'sale.forecast.line', 'addons/sale_forecast/report/sale_forecast_salesman.rml',parser= sale_forecast_salesman,header=False)

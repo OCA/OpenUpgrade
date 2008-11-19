@@ -23,7 +23,7 @@
                         <field name="product_id" required="1"/>
                         <separator string="Tasks management" colspan="4"/>
                         <field name="project_id"/>
-                        <button string="Create Retro-Planning" name="%(event.event_wiz)d" type="action"/>
+                        <button string="Create Retro-Planning" name="%(event_project.event_wiz)d" type="action"/>
                         <separator string="Status" colspan="4"/>
                         <field name="state" select="1"/>
                         <group col="4" colspan="2">

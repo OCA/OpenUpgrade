@@ -476,7 +476,7 @@ class profile_game_config_wizard(osv.osv_memory):
                                 'name':name.strip(),
                                 'work_email':email
                         })
-                    user_obj.write(cr,uid,[user_id],{'login':name.strip(),'password':name.strip(),'name':name.strip()})
+                    user_obj.write(cr,uid,[user_id],{'name':name.strip()})
         return {
                 'view_type': 'form',
                 "view_mode": 'form',

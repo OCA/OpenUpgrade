@@ -31,9 +31,10 @@
 
     """,
     "depends" : ["base"],
-    "init_xml" : [],
-    "demo_xml" : [
+    "init_xml" : [
         "base_language_data.xml"
+    ],
+    "demo_xml" : [
     ],
     "update_xml" : [],
     "active": False,

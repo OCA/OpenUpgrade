@@ -44,7 +44,7 @@
     "category":"Custom",
     "depends":["sale","account"],
     "demo_xml":[],
-    "update_xml":["mrp_repair_wizard.xml", "mrp_repair_view.xml", "mrp_repair_workflow.xml", "mrp_repair_report.xml"],
+    "update_xml":["mrp_repair_sequence.xml","mrp_repair_wizard.xml", "mrp_repair_view.xml", "mrp_repair_workflow.xml", "mrp_repair_report.xml"],
     "active": False,
     "installable": True,
 }

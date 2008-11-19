@@ -66,7 +66,7 @@ email_done_fields = {
 def _get_defaults(self, cr, uid, data, context):
     p = pooler.get_pool(cr.dbname)
     user = p.get('res.users').browse(cr, uid, uid, context)
-    subject = user.company_id.name+'. Num.'
+    subject = user.company_id.name+_('. Num.')
     text = '\n--\n' + user.signature
 
     orders = p.get(data['model']).browse(cr, uid, data['ids'], context)
@@ -74,7 +74,7 @@ def _get_defaults(self, cr, uid, data, context):
     partner_id = orders[0].partner_id.id
     for o in orders:
         if partner_id != o.partner_id.id:
-            raise osv.except_osv('Warning', 'You have selected documents for different partners.')
+            raise osv.except_osv(_('Warning'), _('You have selected documents for different partners.'))
         if o.name:
             subject = subject + ' ' + o.name
         if o.client_order_ref:
@@ -101,21 +101,20 @@ def _send_mails(self, cr, uid, data, context):
     p = pooler.get_pool(cr.dbname)
 
     user = p.get('res.users').browse(cr, uid, uid, context)
-    file_name = user.company_id.name.replace(' ','_')+'_sale_order'
+    file_name = user.company_id.name.replace(' ','_')+'_'+_('Sale_Order')
     sale_smtpserver_id = p.get('email.smtpclient').search(cr, uid, [('type','=','sale'),('state','=','confirm')], context=False)
     if not sale_smtpserver_id:
         default_smtpserver_id = p.get('email.smtpclient').search(cr, uid, [('type','=','default'),('state','=','confirm')], context=False)
     smtpserver_id = sale_smtpserver_id or default_smtpserver_id
     if not smtpserver_id:
-        raise osv.except_osv('Error', 'No SMTP Server Defined!')
-    smtpserver = p.get('email.smtpclient').browse(cr, uid, smtpserver_id, context=False)[0]
+        raise osv.except_osv(_('Error'), _('No SMTP Server has been defined!'))
 
     nbr = 0
     for email in data['form']['to'].split(','):
-        print email, data['form']['subject'], data['ids'], data['model'], file_name, data['form']['text']
-        state = smtpserver.send_email(cr, uid, smtpserver_id, email, data['form']['subject'], data['ids'], data['form']['text'], data['model'], file_name)
+        #print email, data['form']['subject'], data['ids'], data['model'], file_name, data['form']['text']
+        state = p.get('email.smtpclient').send_email(cr, uid, smtpserver_id, email, data['form']['subject'], data['ids'], data['form']['text'], data['model'], file_name)
         if not state:
-            raise osv.except_osv('Error sending email', 'Please check the Server Configuration!')
+            raise osv.except_osv(_('Error sending email'), _('Please check the Server Configuration!'))
         nbr += 1
 
     # Add a partner event
@@ -124,9 +123,9 @@ def _send_mails(self, cr, uid, data, context):
     c_id = p.get('res.partner.canal').search(cr ,uid, [('name','ilike','EMAIL'),('active','=',True)])
     c_id = c_id and c_id[0] or False
     p.get('res.partner.event').create(cr, uid,
-            {'name': 'Email sent through sale order wizard',
+            {'name': _('Email sent through sale order wizard'),
              'partner_id': partner_id,
-             'description': 'To: ' + data['form']['to'] + '\n\nSubject: ' + data['form']['subject'] + '\n\nText:\n' + data['form']['text'],
+             'description': _('To: ') + data['form']['to'] + _('\n\nSubject: ') + data['form']['subject'] + _('\n\nText:\n') + data['form']['text'],
              'document': data['model']+','+str(docs[0].id),
              'canal_id': c_id,
              'user_id': uid, })
