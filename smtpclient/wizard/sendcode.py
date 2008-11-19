@@ -22,6 +22,8 @@
 
 import wizard
 import pooler
+from osv import osv
+
 import time
 import sys
 if sys.version[0:3] > '2.4':
@@ -36,23 +38,22 @@ form = '''<?xml version="1.0"?>
 </form>'''
 
 fields = {
-    'emailto': {'string': 'Email Address', 'required':True, 'size': 255 , 'type': 'char', 'help': 'Enter email on which address you want to get the Verifiation Code'}
+    'emailto': {'string': 'Email Address', 'required':True, 'size': 255 , 'type': 'char', 'help': 'Enter the address Email where you want to get the Verification Code'}
 }
 
 class sendcode(wizard.interface):
-    
+
     def send_code(self, cr, uid, data, context):
-        
+
         key = md5(time.strftime('%Y-%m-%d %H:%M:%S') + data['form']['emailto']).hexdigest();
-        
-        smtpserver = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, data['id'], context)
-        state = smtpserver.test_verivy_email(cr, uid, [data['id']], data['form']['emailto'], code=key)
+
+        state = pooler.get_pool(cr.dbname).get('email.smtpclient').test_verify_email(cr, uid, [data['id']], data['form']['emailto'], code=key)
         if not state:
-            raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
-        
+            raise osv.except_osv(_('Error'), _('Verification Failed. Please check the Server Configuration!'))
+
         pooler.get_pool(cr.dbname).get('email.smtpclient').write(cr, uid, [data['id']], {'state':'waiting', 'code':key})
         return {}
-    
+
     states = {
         'init': {
             'actions': [],
