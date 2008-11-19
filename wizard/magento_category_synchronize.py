@@ -97,7 +97,7 @@ def do_export(self, cr, uid, data, context):
         
         category_data = {
                 'name' : category.name,
-                #'path' : path,
+                'path' : path,
                 'is_active' : 1,
         }
 
@@ -116,10 +116,8 @@ def do_export(self, cr, uid, data, context):
                 
                 
         except xmlrpclib.Fault, error:
-            print "aa"
             if error.faultCode == 102: #turns out that the category doesn't exist in Magento (might have been deleted), try to create a new one.
                 try:
-                    print "bb"
                     _create_remote_category(proxy_common.session, magento_parent_id, category_data, uid, proxy_common.server, proxy_common.logger)
                     categ_new += 1
                 except xmlrpclib.Fault, error:
