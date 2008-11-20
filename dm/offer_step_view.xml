@@ -203,7 +203,8 @@
 				<notebook colspan="4">
 					<page string="General">
 						<field name="name" select="1" />
-						<field name="type" select="2" on_change="onchange_type(type,offer_id)"/>
+<!--						<field name="type" select="2" widget="selection" on_change="onchange_type(type,offer_id)"/>-->
+						<field name="type" select="2" widget="selection"/>
 						<field name="quotation" select="2"/>
 						<field name="legal_state" select="2" />
 						<newline/>
