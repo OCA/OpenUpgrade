@@ -41,7 +41,7 @@ def _create_duplicate(self, cr, uid, data, context):
     campaign = campaign_obj.browse(cr, uid, data['id'])
     tasks_obj = pooler.get_pool(cr.dbname).get('project.task')
     tasks_ids = tasks_obj.search(cr, uid, [('project_id','=',data['form']['project_id'])])
-    duplicate_project_id= project_obj.copy(cr, uid,data['form']['project_id'], {'active': True})
+    duplicate_project_id= project_obj.copy(cr, uid,data['form']['project_id'], {'active': True, 'parent_id':data['form']['project_id']})
 
     for task in tasks_obj.browse(cr, uid, tasks_ids):
 
