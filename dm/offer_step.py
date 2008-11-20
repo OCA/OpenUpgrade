@@ -258,7 +258,7 @@ class dm_offer_step_item(osv.osv):
     def _step_type(self, cr, uid, ids, name, args, context={}):
         result={}
         for id in ids:
-            result[id] = self.browse(cr, uid, id).offer_step_id.type
+            result[id] = self.browse(cr, uid, id).offer_step_id.type.code
         return result
 
     _rec_name = 'product_id'
