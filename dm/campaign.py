@@ -258,12 +258,6 @@ class dm_campaign(osv.osv):
             result[id]=code1
         return result
 
-    def _get_campaign_type(self,cr,uid,context={}):
-        campaign_type = self.pool.get('dm.campaign.type')
-        type_ids = campaign_type.search(cr,uid,[])
-        type = campaign_type.browse(cr,uid,type_ids)
-        return map(lambda x : [x.code,x.name],type)
-
     def onchange_lang_currency(self, cr, uid, ids, country_id):
         value = {}
         if country_id:
@@ -361,7 +355,7 @@ class dm_campaign(osv.osv):
         'campaign_group_id' : fields.many2one('dm.campaign.group', 'Campaign group'),
         'notes' : fields.text('Notes'),
         'proposition_ids' : fields.one2many('dm.campaign.proposition', 'camp_id', 'Proposition'),
-        'campaign_type' : fields.selection(_get_campaign_type,'Type'),
+        'campaign_type' : fields.many2one('dm.campaign.type','Type'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status',readonly=True),
         'items_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Items Status',readonly=True),
@@ -408,7 +402,6 @@ class dm_campaign(osv.osv):
         'items_state': lambda *a: 'pending',
         'translation_state': lambda *a: 'pending',
         'customer_file_state': lambda *a: 'pending',
-        'campaign_type': lambda *a: 'general',
         'responsible_id' : lambda obj, cr, uid, context: uid,
     }
 
