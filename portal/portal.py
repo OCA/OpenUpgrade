@@ -250,7 +250,7 @@ class portal_config_install_modules_wizard(osv.osv_memory):
             for r in res:
                 if r<>'id' and res[r]:
                     ids = mod_obj.search(cr, uid, [('name', '=', r)])
-                    mod_obj.action_install(cr, uid, ids, context=context)
+                    mod_obj.button_install(cr, uid, ids, context=context)
         cr.commit()
         db, pool = pooler.restart_pool(cr.dbname,force_demo=True, update_module=True)
         return {
