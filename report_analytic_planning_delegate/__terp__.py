@@ -25,7 +25,7 @@
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
     "depends" : ["report_analytic_planning"],
-    "category" : "Generic Modules/Human Ressources",
+    "category" : "Generic Modules/Human Resources",
     "description": "Planning on analytic accounts, delegation in the hierarchy.",
     "init_xml" : [],
     "demo_xml" : [

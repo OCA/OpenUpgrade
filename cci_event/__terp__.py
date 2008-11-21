@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
-    "category" : "Generic Modules/CCI Event",
+    "category" : "Generic Modules/CCI",
     "description": """
         specific module for cci project which will use event module from extra addons.
     """,

@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
-    "category" : "Generic Modules/Base Language",
+    "category" : "Generic Modules/Base",
     "description": """
     
         This module allows you to load different languages. 

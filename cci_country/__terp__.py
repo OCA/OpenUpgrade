@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "CCILV",
     "website" : "http://www.ccilv.be",
-    "category" : "Generic Modules/CCI Country and Zones Management",
+    "category" : "Generic Modules/CCI",
     "description": """
         For some applications in the OpenERP software used by some belgain Chamber of Commerce,
         we need a table regrouping countries and areas (group of countries). The table used by
