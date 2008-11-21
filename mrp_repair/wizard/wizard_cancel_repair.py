@@ -26,7 +26,7 @@ import pooler
 
 cancel_form = """<?xml version="1.0"?>
 <form string="Cancel Repair...??">
-    <label colspan="4" string="This operation  will  cancel the  Repair process, but  not the  Invoice  or Packing generated.\nDo you want to continue?" />
+    <label colspan="4" string="This operation  will  cancel the  Repair process, but  will not cancel it's Invoice.\nDo you want to continue?" />
 </form>
 """
 
