@@ -19,18 +19,18 @@ class Fields(unohelper.Base, XJobExecutor ):
         LoginTest()
         if not loginstatus and __name__=="package":
             exit(1)
-        self.win = DBModalDialog(60, 50, 180, 225, "Field Builder")
+        self.win = DBModalDialog(60, 50, 200, 225, "Field Builder")
 
         self.win.addFixedText("lblVariable", 27, 12, 60, 15, "Variable :")
-        self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True, itemListenerProc=self.cmbVariable_selected)
+        self.win.addComboBox("cmbVariable", 180-120-2, 10, 130, 15,True, itemListenerProc=self.cmbVariable_selected)
         self.insVariable = self.win.getControl( "cmbVariable" )
 
         self.win.addFixedText("lblFields", 10, 32, 60, 15, "Variable Fields :")
-        self.win.addComboListBox("lstFields", 180-120-2, 30, 120, 150, False,True,itemListenerProc=self.lstbox_selected)
+        self.win.addComboListBox("lstFields", 180-120-2, 30, 130, 150, False,True,itemListenerProc=self.lstbox_selected)
         self.insField = self.win.getControl( "lstFields" )
 
         self.win.addFixedText("lblUName", 8, 187, 60, 15, "Displayed name :")
-        self.win.addEdit("txtUName", 180-120-2, 185, 120, 15,)
+        self.win.addEdit("txtUName", 180-120-2, 185, 130, 15,)
 
         self.win.addButton('btnOK',-5 ,-5,45,15,'Ok' ,actionListenerProc = self.btnOk_clicked )
         self.win.addButton('btnCancel',-5 - 45 - 5 ,-5,45,15,'Cancel' ,actionListenerProc = self.btnCancel_clicked )
