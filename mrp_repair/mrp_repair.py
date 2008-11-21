@@ -244,39 +244,45 @@ class mrp_repair(osv.osv):
             self.write(cr, uid, [order.id], val)
         return True     
 
-    def action_repair_done(self, cr, uid, ids, *args):        
-        picking_id=False        
+    def action_repair_done(self, cr, uid, ids, *args):
+        in_picking_id=False
+        out_picking_id=False
         company = self.pool.get('res.users').browse(cr, uid, uid).company_id
         for repair in self.browse(cr, uid, ids, context={}):
             if repair.location_dest_id:                
                 location_dest_id = False
                 for line in repair.operations:
-                    proc_id=False
                     date_planned = time.strftime('%Y-%m-%d %H:%M:%S')
                     pr_id = self.pool.get('product.product').browse(cr, uid, line.product_id.id)
                     if line.product_id and pr_id.product_tmpl_id.type in ('product', 'consu'):
                         location_id = False
                         stock_id = self.pool.get('stock.location').search(cr, uid, [('name','=','Stock')])[0]
                         produc_id = self.pool.get('stock.location').search(cr, uid, [('name','=','Default Production')])[0]
+                        if not (in_picking_id and  out_picking_id):
+                            picking_val = {
+                                    'origin': repair.name,
+                                    'state': 'auto',
+                                    'move_type': 'one',
+                                    'address_id': repair.address_id and repair.address_id.id or False,
+                                    'note': repair.internal_notes,
+                                    'invoice_state': 'none',
+                                }
                         if line.type == 'add':
+                            picking_val['type'] = "out"
                             location_id= stock_id 
                             location_dest_id= produc_id
+                            if not out_picking_id:
+                                out_picking_id = self.pool.get('stock.picking').create(cr, uid,picking_val)
+                                
                         if line.type == 'remove':
+                            picking_val['type'] = "in"
                             location_id=produc_id
-                        if not picking_id:
-                            picking_id = self.pool.get('stock.picking').create(cr, uid, {
-                                'origin': repair.name,
-                                'type': 'out',
-                                'state': 'auto',
-                                'move_type': 'one',
-                                'address_id': repair.address_id and repair.address_id.id or False,
-                                'note': repair.internal_notes,
-                                'invoice_state': 'none',
-                            })
+                            if not in_picking_id:
+                                in_picking_id = self.pool.get('stock.picking').create(cr, uid, picking_val)
                         
                         vals = {
                             'name': line.product_id.name[:64],
-                            'picking_id': picking_id,
+                            'picking_id': (line.type == 'remove' and in_picking_id) or (line.type == 'add' and out_picking_id),
                             'product_id': line.product_id.id,
                             'date_planned': date_planned,
                             'product_qty': line.product_uom_qty,
@@ -292,9 +298,12 @@ class mrp_repair(osv.osv):
                         move_id = self.pool.get('stock.move').create(cr, uid, vals)                      
                 
     				
-                if picking_id:
+                if in_picking_id:
                     wf_service = netsvc.LocalService("workflow")
-                    wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
+                    wf_service.trg_validate(uid, 'stock.picking', in_picking_id, 'button_confirm', cr)
+                if out_picking_id:
+                    wf_service = netsvc.LocalService("workflow")
+                    wf_service.trg_validate(uid, 'stock.picking', out_picking_id, 'button_confirm', cr)
             self.write(cr, uid, [repair.id], {'state':'done'})
             self.pool.get('mrp.repair.lines').write(cr, uid, map(lambda x:x.id,repair.operations), {'state':'done'})    
         return True   
