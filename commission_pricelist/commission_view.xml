@@ -53,7 +53,7 @@
         <field name="domain">[('in_date','like',time.strftime('%Y-%m'))]</field>
     </record>
     
-    <menuitem name="Reporting" id="menu_sale_commisions_reporting" parent="menu_sale_commisions"/>
+    <menuitem name="Reporting" id="menu_sale_commisions_reporting" parent="sale.menu_sale_root"/>
     <menuitem name="This Month" id="menu_sale_commisions_reporting_this" parent="menu_sale_commisions_reporting"/>
     <menuitem name="Commissions of This Month" id="menu_sale_commisions_reporting_this_of_commision" parent="menu_sale_commisions_reporting_this" action="action_sales agent commission_tree_month"/>
     
