@@ -23,7 +23,7 @@
     "name":"Margins in Sale Orders",
     "version":"1.0",
     "author":"Tiny",
-    "category" : "Generic Modules/Sales",
+    "category" : "Generic Modules/Sales & Purchases",
     "depends":["sale","account"],
     "demo_xml":[],
     "update_xml":["sale_margin_view.xml","report_margin_view.xml"],

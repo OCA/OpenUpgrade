@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
-    "category" : "Generic Modules/CCI CRM Profile",
+    "category" : "Generic Modules/CCI",
     "description": """
         specific module for cci project which will use crm_profile module.
     """,

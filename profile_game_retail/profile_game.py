@@ -386,8 +386,8 @@ class profile_game_config_wizard(osv.osv_memory):
         'hr_email':fields.char('Email of Hurman Ressources Manager',size='64',readonly=True,required=False,states={'4':[('readonly',False),('required',False)]}),
         'logistic_name':fields.char('Name of Logistic Manager',size='64', required=True),
         'logistic_email':fields.char('Email of Logistic Manager',size='64'),
-        'sales_name':fields.char('Name of Sales Manager',size='64', required=True),
-        'sales_email':fields.char('Email of Sales Manager',size='64'),
+        'sale_name':fields.char('Name of Sales Manager',size='64', required=True),
+        'sale_email':fields.char('Email of Sales Manager',size='64'),
         'objectives':fields.selection([
             ('on_max_turnover','Maximise Turnover of Last Year'),
             ('on_max_cumulative','Maximise Cumulative Benefit'),

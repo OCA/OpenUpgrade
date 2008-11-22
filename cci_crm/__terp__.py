@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
-    "category" : "Generic Modules/CCI CRM",
+    "category" : "Generic Modules/CCI",
     "description": """
         - define some groups with access rules
         - so using above rules , new object which will be confidential (can only be accessed by some users of group)

@@ -23,7 +23,7 @@
     "name":"Margins in Sale Delivery Lines",
     "version":"1.0",
     "author":"Tiny",
-    "category" : "Generic Modules/Sales",
+    "category" : "Generic Modules/Sales & Purchases",
     "depends":["sale_delivery"],
     "demo_xml":[],
     "update_xml":["sale_margin_delivery_view.xml"],

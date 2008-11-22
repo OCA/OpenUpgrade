@@ -26,14 +26,11 @@ import pooler
 
 invoice_form = """<?xml version="1.0"?>
 <form string="Create invoices">
-    <separator colspan="4" string="Do you really want to create the invoices ?" />
-    <field name="grouped" />
+    <separator colspan="4" string="Do you really want to create the invoices ?" />    
 </form>
 """
 
-invoice_fields = {
-    'grouped' : {'string':'Group the invoices', 'type':'boolean', 'default': lambda x,y,z: False}
-}
+
 
 ack_form = """<?xml version="1.0"?>
 <form string="Create invoices">
@@ -69,10 +66,7 @@ def _makeInvoices(self, cr, uid, data, context):
             'type': 'ir.actions.act_window'
         }
         
-    newinv = order_obj.action_invoice_create(cr, uid, data['ids'], data['form']['grouped'])
-    if not newinv:
-        raise wizard.except_wizard(_('Warning'),
-                        _('You must select Partner and Invoice address'))
+    newinv = order_obj.action_invoice_create(cr, uid, data['ids'])    
         
     return {
         'domain': [('id','=', newinv)],
@@ -92,7 +86,7 @@ class make_invoice(wizard.interface):
             'actions' : [],
             'result' : {'type' : 'form',
                     'arch' : invoice_form,
-                    'fields' : invoice_fields,
+                    'fields' : {},
                     'state' : [('end', 'Cancel'),('invoice', 'Create invoices') ]}
         },
         'invoice' : {

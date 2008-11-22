@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.tinyerp.com",
-    "category" : "Generic Modules/CCI Security",
+    "category" : "Generic Modules/CCI",
     "description": """
         give access of objects to different groups of cci using csv
     """,

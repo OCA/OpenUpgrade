@@ -81,7 +81,7 @@
 <!-- Act window defining a shorcut on partners to open directly a new RSF -->
         <act_window name="Open a New RSF"
             domain="[('partner_id', '=', active_id)]"
-            context="{'partner_id':active_id,'section_id':ref('case_section_rsf')}"
+            context="{'section_id':ref('case_section_rsf')}"
             res_model="crm.case"
             src_model="res.partner"
             view_mode='form'

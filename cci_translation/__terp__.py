@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
-    "category" : "Generic Modules/CCI Translation",
+    "category" : "Generic Modules/CCI",
     "description": """
         cci translation
     """,

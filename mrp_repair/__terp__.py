@@ -24,25 +24,17 @@
     "version":"1.0",
     "author":"Tiny",
     "description": """
-            The aim is to have a complete module to manage all products repairs. The following topics 
-        should be covered by this module:
-           Add/remove products in the reparation
-
-           Impact for stocks
-
-           Invoicing (products and/or services)
-
-           Warrenty concept
-
-           Repair quotation report
-
-           Notes for the technician and for the final customer
-
-           (Link to Cases) (option)
+           The aim is to have a complete module to manage all products repairs. The following topics should be covered by this module:
+           * Add/remove products in the reparation
+           * Impact for stocks
+           * Invoicing (products and/or services)
+           * Warrenty concept
+           * Repair quotation report
+           * Notes for the technician and for the final customer           
 """,    
     
     "category":"Custom",
-    "depends":["sale","account"],
+    "depends":["base","sale","account"],
     "demo_xml":[],
     "update_xml":["mrp_repair_sequence.xml","mrp_repair_wizard.xml", "mrp_repair_view.xml", "mrp_repair_workflow.xml", "mrp_repair_report.xml"],
     "active": False,

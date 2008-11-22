@@ -23,7 +23,7 @@
     "name" : "Currency Rates",
     "version" : "1.0",
     "author" : "Axelor",
-    "category" : "Generic Modules/Tools",
+    "category" : "Tools",
     "website": "http://www.axelor.com",
     "depends" : ["base", "multi_company_currency"],
     "init_xml" : [],
