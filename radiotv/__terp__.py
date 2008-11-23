@@ -22,7 +22,13 @@ Features:
     "depends" : ["base"],
     "init_xml" : ['radiotv_data.xml',],
     "demo_xml" : [],
-    "update_xml" : ['radiotv_view.xml', 'radiotv_report.xml', 'radiotv_wizard.xml',],
+    "update_xml" : [
+        "security/radiotv_security.xml",
+        "security/ir.model.access.csv",
+        'radiotv_view.xml',
+        'radiotv_report.xml',
+        'radiotv_wizard.xml',
+    ],
     "installable" : True,
     "active" : False,
 

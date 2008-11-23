@@ -27,11 +27,12 @@
 	"category" : "Generic Modules/Base",
 	"description": """Creates a model for storing cities
 Zip code, city, state and country fields are replaced with a location field in partner and partner contact forms.
-This module helps to keep homogenous address data in our database.""",
+This module helps to keep homogenous address data in the database.""",
 	"depends" : ["base"],
 	"init_xml" : [],
 	"update_xml" : [
 	    'city_view.xml',
+	    'security/ir.model.access.csv'
 	    ],
 	"active": False,
 	"installable": True
