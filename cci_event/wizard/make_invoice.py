@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -77,14 +77,17 @@ def _makeInvoices(self, cr, uid, data, context):
             inv_reject = inv_reject + 1
             inv_rej_reason += "ID "+str(reg.id)+": Event Related Don't Have any Product \n"
             continue
-        if not reg.partner_address_id:
-            inv_reject = inv_reject + 1
-            inv_rej_reason += "ID "+str(reg.id)+": Registration Don't Have any Contact \n"
-            continue
         if not reg.partner_invoice_id:
             inv_reject = inv_reject + 1
             inv_rej_reason += "ID "+str(reg.id)+": Registration Don't Have any Partner to Invoice \n"
             continue
+        partner_address_list = reg.partner_invoice_id and pool_obj.get('res.partner').address_get(cr, uid, [reg.partner_invoice_id.id], adr_pref=['invoice'])
+        partner_address_id = partner_address_list['invoice']
+        if not partner_address_id:
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(reg.id)+": Registered partner doesn't have an address to make the invoice. \n"
+            continue
+
 
         inv_create = inv_create + 1
         value=obj_lines.product_id_change(cr, uid, [], reg.event_id.product_id.id,uom =False, partner_id=reg.partner_invoice_id.id)
@@ -122,8 +125,8 @@ def _makeInvoices(self, cr, uid, data, context):
             'reference': False,
             'account_id': reg.partner_invoice_id.property_account_receivable.id,
             'partner_id': reg.partner_invoice_id.id,
-            'address_invoice_id':reg.partner_address_id.id,
-            'address_contact_id':reg.partner_address_id.id,
+            'address_invoice_id':partner_address_id,
+            'address_contact_id':partner_address_id,
             'invoice_line': [(6,0,[inv_id])],
             'currency_id' :reg.partner_invoice_id.property_product_pricelist.currency_id.id,# 1,
             'comment': "",
@@ -138,7 +141,7 @@ def _makeInvoices(self, cr, uid, data, context):
         #FIXME: if the next line is commented/removed, tiny will crash. This is probably due to a bug into the orm
         reg=pool_obj.get('event.registration').browse(cr,uid,[reg.id])[0]
 
-        obj_event_reg._history(cr, uid,[reg], 'Invoiced', history=True)
+        obj_event_reg._history(cr, uid,[reg.id], 'Invoiced', history=True)
 
     return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv, 'inv_rej_reason': inv_rej_reason}
 
