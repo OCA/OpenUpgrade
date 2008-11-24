@@ -232,6 +232,13 @@
             </field>
         </record>
 
+        <act_window 
+            src_model="training.course" 
+            res_model="ir.attachment" 
+            domain="[('res_id', '=', active_id)]" 
+            name="Attachments" 
+            id="training_course_attachment" />
+
         <record model="ir.ui.view" id="training_course_tree">
             <field name="name">training.course.tree</field>
             <field name="model">training.course</field>
