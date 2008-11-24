@@ -5,8 +5,7 @@
     "author" : "Jordi Esteve. Zikzakmedia SL",
     "description" : """This module allows to control TV & Radio channels, programs, grid of date/time of broadcasting and podcasts
 
-channel <-------> program <-------> broadcast <-------> podcast
-         n     m           1      n            1     n
+channel <--n---m--> program <--1---n--> broadcast <--1---n--> podcast
 
 Features:
     * Menu entries to see daily and weekly broadcasts
