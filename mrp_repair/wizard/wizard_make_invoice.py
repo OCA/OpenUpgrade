@@ -26,14 +26,11 @@ import pooler
 
 invoice_form = """<?xml version="1.0"?>
 <form string="Create invoices">
-    <separator colspan="4" string="Do you really want to create the invoices ?" />
-    <field name="grouped" />
+    <separator colspan="4" string="Do you really want to create the invoices ?" />    
 </form>
 """
 
-invoice_fields = {
-    'grouped' : {'string':'Group the invoices', 'type':'boolean', 'default': lambda x,y,z: False}
-}
+
 
 ack_form = """<?xml version="1.0"?>
 <form string="Create invoices">
@@ -46,6 +43,17 @@ def _makeInvoices(self, cr, uid, data, context):
     order_obj = pooler.get_pool(cr.dbname).get('mrp.repair')
     newinv = []
     order = order_obj.browse( cr, uid, data['ids'])[0]
+    if order.invoice_method=='none':
+        return {
+            'domain': [('id','in', newinv)],
+            'name': 'Invoices',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.invoice',
+            'view_id': False,
+            'context': "{'type':'out_refund'}",
+            'type': 'ir.actions.act_window'
+        }
     if order.state== 'draft':
         return {
             'domain': [('id','in', newinv)],
@@ -58,15 +66,8 @@ def _makeInvoices(self, cr, uid, data, context):
             'type': 'ir.actions.act_window'
         }
         
-    newinv = order_obj.action_invoice_create(cr, uid, data['ids'], data['form']['grouped'])
-    if not newinv:
-        raise wizard.except_wizard(_('Warning'),
-                        _('You must select Partner and Delivery address'))
-    else:
-        for id in data['ids']:
-            wf_service = netsvc.LocalService("workflow")
-            wf_service.trg_validate(uid, 'mrp.repair', id, 'make_invoice', cr)
-
+    newinv = order_obj.action_invoice_create(cr, uid, data['ids'])    
+        
     return {
         'domain': [('id','=', newinv)],
         'name': 'Invoices',
@@ -85,7 +86,7 @@ class make_invoice(wizard.interface):
             'actions' : [],
             'result' : {'type' : 'form',
                     'arch' : invoice_form,
-                    'fields' : invoice_fields,
+                    'fields' : {},
                     'state' : [('end', 'Cancel'),('invoice', 'Create invoices') ]}
         },
         'invoice' : {

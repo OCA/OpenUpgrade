@@ -23,7 +23,7 @@
     "name" : "Sale Expected Invoice Date",
     "version" : "0.1",
     "author" : "Tiny",
-    "category" : "Generic Modules/Sales",
+    "category" : "Generic Modules/Sales & Purchases",
     "website" : "http://tinyerp.com/",
     "description": """
      * add one field on sale order line

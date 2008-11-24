@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -22,19 +22,26 @@
 
 {
     'name': 'cci Data 1',
-    'category': 'Data Module 1',
+    'category': 'Data Module',
     'init_xml':[],
     'author': 'OpenERP',
-    'depends': ['base','cci_partner'],
+    'depends': ['base','account','l10n_be'],
     'version': '1.0',
     'active': False,
     'demo_xml': [],
     'update_xml':[
-#        'res.groups.csv',
-#        'res.users.csv',
+        'misc_data.xml',
+        'account.account.csv',
+        'account.journal.csv',
+        "account.fiscalyear.csv",
+        'account.period.csv',
+        'account.move.csv',
+        'account.move.line.csv',
+        "nothing",
+        #'res.users.csv',
 #        'ir.model.access.csv',
-        'res.partner.state.csv',
-        'res.partner.state2.csv',
+#        'res.partner.state-1.csv',
+#        'res.partner.state-2.csv',
 
     ],
     'installable': True

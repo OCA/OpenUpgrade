@@ -201,23 +201,22 @@ def send_mail(self, cr, uid, data, context):
     if not stock_smtpserver_id:
         default_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
     smtpserver_id = stock_smtpserver_id or default_smtpserver_id
-    if email:       
+    if email:
         if not smtpserver_id:
-            raise Exception, 'Verification Failed, No Server Defined!!!'
+            raise osv.except_osv(_('Error'), _('Verification failed. No Server has been defined!'))
         smtpserver_id = stock_smtpserver_id or default_smtpserver_id
-        smtpserver = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, smtpserver_id, context)[0]
-        body= "Your picking is validated. \n Please See the attachment."
-        state = smtpserver.send_email(cr, uid, smtpserver_id, email,"Tiny ERP : Picking Validated",data['id'],body,'sale.shipping','Delivery_order')
+        body= _("Your picking is validated.\nPlease, see the attachment.")
+        state = pooler.get_pool(cr.dbname).get('email.smtpclient').send_email(cr, uid, smtpserver_id, email,_("OpenERP : Picking Validated"),data['id'],body,'sale.shipping',_('Delivery_Order'))
         if not state:
-            raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
+            raise osv.except_osv(_('Error'), _('Verification failed. Please check the Server Configuration!'))
         return {}
     else:
         model_id=pooler.get_pool(cr.dbname).get('ir.model').search(cr, uid, [('model','=','stock.picking')], context=False)[0]
         if smtpserver_id:
             pooler.get_pool(cr.dbname).get('email.smtpclient.history').create \
-            (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : smtpserver_id[0],'name':'The Email is not sent because the Partner have no Email','email':'','model':model_id,'resource_id':data['id']})
+            (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : smtpserver_id[0],'name':_('The Email is not sent because the Partner have no Email'),'email':'','model':model_id,'resource_id':data['id']})
     return {}
-        
+
 class partial_picking(wizard.interface):
 
     states = {

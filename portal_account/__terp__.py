@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -26,8 +26,8 @@
     "website" : "http://tinyerp.com/",
     "depends" : ["base", "portal","account","mrp"],
     "category" : "Generic Modules/Others",
-    "description": "Potal Management - Account specific data.",
-    "init_xml" : ["portal_account_view.xml"],
+    "description": "Portal Management - Account specific data.",
+    "init_xml" : [],
     "update_xml" : ["portal_account_data.xml", "portal_conf_data.xml"],
     "demo_xml" : [],
     "active": False,

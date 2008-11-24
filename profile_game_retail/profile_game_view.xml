@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>       
+    <data>
 
         <record model="ir.ui.view" id="view_game_detail_form">
             <field name="name">profile.game.retail.form</field>
@@ -40,7 +40,6 @@
                     <field name="turnover_growth"/>
                     <field name="benefits_growth"/>
                     <field name="products_growth"/>
-                    <field name="objectives"/>
                     <field name="note" colspan="4"/>
                 </form>
             </field>
@@ -98,8 +97,8 @@
                     </group>
                     <separator string="Sales Manager" colspan="4"/>
                     <group name="sales" colspan="4">
-                        <field name="sales_name" string="Name"/>
-                        <field name="sales_email" string="Email"/>
+                        <field name="sale_name" string="Name"/>
+                        <field name="sale_email" string="Email"/>
                     </group>
                     <separator string="Hurman Ressources Manager" colspan="4"/>
                     <group name="hr" colspan="4">

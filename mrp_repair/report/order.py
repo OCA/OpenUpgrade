@@ -29,7 +29,17 @@ class order(report_sxw.rml_parse):
         super(order, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
+            'total': self.total
         })
+        
+        
+    def total(self, repair):
+        total = 0.0
+        for operation in repair.operations:
+           total+=operation.price_subtotal 
+        for fee in repair.fees_lines:
+           total+=fee.price_subtotal
+        return total
 report_sxw.report_sxw('report.repair.order','mrp.repair','addons/mrp_repair/report/order.rml',parser=order)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

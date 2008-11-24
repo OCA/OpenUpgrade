@@ -30,7 +30,7 @@ This modules is an improvement of the basic planning module and offers additiona
         - additional data for planned ressources: the start and end dates
     """,
     "website" : "http://tinyerp.com/",
-    "category" : "Generic Modules/Human Ressources",
+    "category" : "Generic Modules/Human Resources",
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml":["report_analytic_planning_long_term_view.xml"],

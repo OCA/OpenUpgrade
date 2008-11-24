@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -23,6 +23,7 @@
     'name' : 'Sale agent Information',
     'version': '0.1',
     'author' : 'Tiny',
+    "category": "Generic Modules/Sales & Purchases",
     'depends' : ['base','product'],
     'description': 'Sale agent Info',
     'init_xml' : [],

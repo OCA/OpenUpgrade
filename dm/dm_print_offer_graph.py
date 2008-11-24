@@ -33,7 +33,7 @@ def graph_get(cr, uid, graph, offer_id):
     nodes = {}
     for step in offer.step_ids:
         args = {}
-        args['label'] = step.type
+        args['label'] = step.type.code
         graph.add_node(pydot.Node(step.id, **args))
 
     for step in offer.step_ids:

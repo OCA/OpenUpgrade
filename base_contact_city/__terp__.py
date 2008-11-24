@@ -2,7 +2,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -24,6 +24,7 @@
 	"name" : "City for base_contat",
 	"version" : "1.0",
 	"author" : "Pablo Rocandio",
+	"category" : "Generic Modules/Base",
 	"description": """Zip code, city, state and country fields are replaced with a location field in partner form when base_contact module is installed.
 This module helps to keep homogenous address data in our database.""",
 	"depends" : ["base", "base_contact", "city"],

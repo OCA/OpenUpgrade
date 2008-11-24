@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
-    "category" : "Generic Modules/CCI Partner",
+    "category" : "Generic Modules/CCI",
     "description": """
         Specific module for cci project which will inherit partner module
     """,

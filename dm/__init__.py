@@ -21,9 +21,10 @@
 ##############################################################################
 
 import trademark
-import offer_step
 import offer
+import offer_step
 import campaign
+import customer
 import reportdm
 import wizard
 import dm_print_offer_graph

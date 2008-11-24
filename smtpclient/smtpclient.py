@@ -38,7 +38,11 @@ from email.Utils import COMMASPACE, formatdate
 
 import netsvc
 import random
-from md5 import md5
+import sys
+if sys.version[0:3] > '2.4':
+    from hashlib import md5
+else:
+    from md5 import md5
 
 
 
@@ -63,18 +67,19 @@ class SmtpClient(osv.osv):
         'active' : fields.boolean("Active"),
         'date_create': fields.date('Date Create', required=True, readonly=True, states={'new':[('readonly',False)]}),
         'test_email' : fields.text('Test Message'),
-        'body' : fields.text('Message', help="specify the message text here that will be send along with the email which is send through this server"),
+        'body' : fields.text('Message', help="The message text that will be send along with the email which is send through this server"),
         'verify_email' : fields.text('Verify Message', readonly=True, states={'new':[('readonly',False)]}),
         'code' : fields.char('Verification Code', size=256),
         'type' : fields.selection([("default", "Default"),("account", "Account"),("sale","Sale"),("stock","Stock")], "Server Type",required=True),
         'history_line': fields.one2many('email.smtpclient.history', 'server_id', 'History'),
-        'server_statestics': fields.one2many('report.smtp.server', 'server_id', 'Statestics')
+        'server_statistics': fields.one2many('report.smtp.server', 'server_id', 'Statistics')
         
     }
     
     _defaults = {
         'date_create': lambda *a: time.strftime('%Y-%m-%d'),
         'state': lambda *a: 'new',
+        'verify_email': lambda *a: _("Verification Message. This is the code\n\n__code__\n\nyou must copy in the OpenERP Email Server (Verify Server wizard).\n\nCreated by user __user__"),
     }
     
     def init(self, cr):
@@ -96,14 +101,14 @@ class SmtpClient(osv.osv):
         
         return True
     
-    def test_verivy_email(self, cr, uid, ids, toemail, test=False, code=False):
+    def test_verify_email(self, cr, uid, ids, toemail, test=False, code=False):
         
         self.open_connection(cr, uid, ids, ids[0])
         
         if test and self.server['state'] != 'confirm':
             pooler.get_pool(cr.dbname).get('email.smtpclient.history').create \
-                (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':'Please Verify Email Server, without verification you can not send Email(s).'})
-            raise osv.except_osv('Server Error !', 'Please Verify Email Server, without verification you can not send Email(s).')           
+                (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':_('Please verify Email Server, without verification you can not send Email(s).')})
+            raise osv.except_osv(_('Server Error!'), _('Please verify Email Server, without verification you can not send Email(s).'))
         
         try:
             if test and self.server['state'] == 'confirm':
@@ -118,17 +123,17 @@ class SmtpClient(osv.osv):
                 body = body.replace("__code__", key)
                 
             user = pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, [uid])[0]
-            body = body.replace("%(user)", user.name)
+            body = body.replace("__user__", user.name)
             
             if len(body.strip()) <= 0:
-                raise osv.except_osv('Message Error !', 'Please Configure Email Server Messagess [Verification / Test]')
+                raise osv.except_osv(_('Message Error!'), _('Please configure Email Server Messages [Verification / Test]'))
             
             msg = MIMEText(body or '', _charset='utf-8')
             
             if not test and not self.server['state'] == 'confirm':
-                msg['Subject'] = 'TinyERP SMTP server Email Registration Code!!!'
+                msg['Subject'] = _('OpenERP SMTP server Email Registration Code!')
             else:
-                msg['Subject'] = 'TinyERP Test Email!!!'
+                msg['Subject'] = _('OpenERP Test Email!')
             
             msg['To'] = toemail
             msg['From'] = str(self.server['from'])
@@ -142,11 +147,11 @@ class SmtpClient(osv.osv):
         if serverid:
             self.server = self.read(cr, uid, [serverid])[0]
         else:
-            raise osv.except_osv('Read Error !', 'Unable to read Server Settings')
+            raise osv.except_osv(_('Read Error!'), _('Unable to read Server Settings'))
         
         if permission:
             if not self.check_permissions(cr, uid, ids):
-                raise osv.except_osv('Permission Error !', 'You have no Permission to Access SMTP Server : %s ' % (self.server['name'],) )
+                raise osv.except_osv(_('Permission Error!'), _('You have no permission to access SMTP Server : %s ') % (self.server['name'],) )
                 
         if self.server:
             try:
@@ -161,7 +166,7 @@ class SmtpClient(osv.osv):
                     
                 self.smtpServer.login(str(self.server['user']),str(self.server['password']))
             except Exception, e:
-                raise osv.except_osv('SMTP Server Error !', e)
+                raise osv.except_osv(_('SMTP Server Error!'), e)
             
         return True
     
@@ -199,7 +204,7 @@ class SmtpClient(osv.osv):
         
         def create_report(self,cr,uid,res_ids,report_name=False,file_name=False):
             if not report_name or not res_ids:
-                return (False,Exception('Report name and Resources ids are required !!!'))
+                return (False,Exception(_('Report name and Resources ids are required!')))
 
             try:
                 ret_file_name = file_name+'.pdf'
@@ -228,7 +233,7 @@ class SmtpClient(osv.osv):
                 msg.attach(MIMEText(body or '', _charset='utf-8'))
                 part = MIMEBase('application', "octet-stream")
                 if is_file:
-                    part.set_payload( open(file_name,"rb").read())               
+                    part.set_payload( open(file_name,"rb").read())
                     part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file_name))
                     msg.attach(part)
                 Encoders.encode_base64(part)
@@ -236,11 +241,11 @@ class SmtpClient(osv.osv):
                 
                 report_id = pooler.get_pool(cr.dbname).get('ir.actions.report.xml').search(cr, uid, [('report_name','=',report_name)], context=False)
                 report_model=pooler.get_pool(cr.dbname).get('ir.actions.report.xml').read(cr,uid,report_id,['model'])[0]['model']
-                model_id=pooler.get_pool(cr.dbname).get('ir.model').search(cr, uid, [('model','=',report_model)], context=False)[0]               
+                model_id=pooler.get_pool(cr.dbname).get('ir.model').search(cr, uid, [('model','=',report_model)], context=False)[0]
                 
-                for resource in resource_id:                    
+                for resource in resource_id:
                     r=pooler.get_pool(cr.dbname).get('email.smtpclient.history').create \
-                    (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':'The Email is sent successfully to corresponding address','email':emailto,'model':model_id,'resource_id':resource})
+                    (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':_('The Email is sent successfully to corresponding address'),'email':emailto,'model':model_id,'resource_id':resource})
         except Exception, e:
             print 'Exception :',e
             return False
@@ -273,7 +278,7 @@ HistoryLine()
 
 class report_smtp_server(osv.osv):
     _name = "report.smtp.server"
-    _description = "Server Statestics"
+    _description = "Server Statistics"
     _auto = False
     _columns = {
         'server_id':fields.many2one('email.smtpclient','Server ID',readonly=True),

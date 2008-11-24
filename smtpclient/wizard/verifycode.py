@@ -22,6 +22,7 @@
 
 import wizard
 import pooler
+from osv import osv
 
 form = '''<?xml version="1.0"?>
 <form string="Verify Code">
@@ -29,24 +30,24 @@ form = '''<?xml version="1.0"?>
 </form>'''
 
 fields = {
-    'code': {'string': 'Verification Code','required':True,  'size': 255 , 'type': 'char', 'help': 'Enter verification code thay you get in your Verification Email'}
+    'code': {'string': 'Verification Code','required':True,  'size': 255 , 'type': 'char', 'help': 'Enter the verification code thay you get in your verification Email'}
 }
 
 class verifycode(wizard.interface):
-    
+
     def checkcode(self, cr, uid, data, context):
-        
+
         state = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, data['id'], context).state
         if state == 'confirm':
-            raise Exception, 'Server already Verified!!!'
-            
+            raise osv.except_osv(_('Error'), _('Server already verified!'))
+
         code = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, data['id'], context).code
         if code == data['form']['code']:
             pooler.get_pool(cr.dbname).get('email.smtpclient').write(cr, uid, [data['id']], {'state':'confirm'})
         else:
-            raise Exception, 'Verification Failed, Invalid Verification Code!!!'
+            raise osv.except_osv(_('Error'), _('Verification failed. Invalid Verification Code!'))
         return {}
-    
+
     states = {
         'init': {
             'actions': [],

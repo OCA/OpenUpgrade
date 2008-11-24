@@ -80,6 +80,12 @@
 	</record>
 
 <!-- sequence production lot -->
+
+	<record model="ir.sequence.type" id="sequence_prodlot_type">
+		<field name="name">Production Lot</field>
+		<field name="code">stock.production.lot</field>
+	</record>
+
 	<record model="ir.sequence" id="sequence_prodlot">
 		<field name="name">Production Lot</field>
 		<field name="code">stock.production.lot</field>

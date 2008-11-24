@@ -1,68 +1,68 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-	<menuitem name="Sales Management" icon="terp-sale" id="menu_sale_root"/>
+    <menuitem name="Sales Management" icon="terp-sale" id="menu_sale_root"/>
 <!--
-	=======================
-	Saleagent Information
-	=======================
-	-->
-	<record model="ir.ui.view" id="view_saleagent_tree">
-		<field name="name">saleagent.info.tree</field>
-		<field name="model">sale.agent</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Saleagent">
+    =======================
+    Saleagent Information
+    =======================
+    -->
+    <record model="ir.ui.view" id="view_saleagent_tree">
+        <field name="name">saleagent.info.tree</field>
+        <field name="model">sale.agent</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Saleagent">
 
                          <field name="name"  select="1"/>
                          <field name="active" select="1"/>
-       			        <field name="partner_id" select="1" />
-       			        <field name="comprice_id" select="1"/>
+                           <field name="partner_id" select="1" />
+                           <field name="comprice_id" select="1"/>
 
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_saleagent_form">
-		<field name="name">saleagent.info.form</field>
-		<field name="model">sale.agent</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Saleagent">
-			<notebook>
-				<page string="Basic Info">
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_saleagent_form">
+        <field name="name">saleagent.info.form</field>
+        <field name="model">sale.agent</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Saleagent">
+            <notebook>
+                <page string="Basic Info">
                                         <separator string="General Information" colspan="4"/>
 
-        				    <field name="name" select="1"/>
-        				    <field name="partner_id"  select="1"/>
-        				    <field name="comprice_id" select="1"/>
-        				    <field name="active"/>
-        				    <!--field name="customer" mode="form,tree" widget="one2many_list" colspan="4" nolabel="1" select="1" readonly="1" mode="tree,graph-->
-        				    <field name="customer" widget="one2many_list" colspan="4" nolabel="1" mode="tree,graph"  readonly="1">
-						<tree string="Sale agent customers">
-						<field name="name"/>
+                            <field name="name" select="1"/>
+                            <field name="partner_id"  select="1"/>
+                            <field name="comprice_id" select="1"/>
+                            <field name="active"/>
+                            <!--field name="customer" mode="form,tree" widget="one2many_list" colspan="4" nolabel="1" select="1" readonly="1" mode="tree,graph-->
+                            <field name="customer" widget="one2many_list" colspan="4" nolabel="1" mode="tree,graph"  readonly="1">
+                        <tree string="Sale agent customers">
+                        <field name="name"/>
 
-					</tree>
-					</field>
-
-
-
-				</page>
-			</notebook>
-			</form>
-		</field>
-	</record>
+                    </tree>
+                    </field>
 
 
-	<record model="ir.actions.act_window" id="action_saleagent_form">
-		<field name="name">saleagent.info.form</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">sale.agent</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="view_saleagent_form"/>
 
-	</record>
-	<menuitem name="Sales Management/Commissions" groups="base.group_admin" sequence="1"/>
-	<menuitem name="Sales Management/Commissions/Sales agent"  id="saleagent_id_new" action="action_saleagent_form"/>
+                </page>
+            </notebook>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_saleagent_form">
+        <field name="name">saleagent.info.form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.agent</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_saleagent_form"/>
+
+    </record>
+    <menuitem name="Sales Management/Commissions" sequence="1"/>
+    <menuitem name="Sales Management/Commissions/Sales agent"  id="saleagent_id_new" action="action_saleagent_form"/>
 
 </data>
 </openerp>

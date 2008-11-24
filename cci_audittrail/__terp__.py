@@ -27,7 +27,7 @@
     "author" : "Tiny",
     "init_xml" : [],
     "description": "Allows the administrator to track every user operations on all objects of the system.",
-    "category" : "Generic Modules/Others",
+    "category" : "Generic Modules/CCI",
     "update_xml" : ["audittrail_view.xml"],
     "demo_xml" : ["audittrail_demo.xml"],
     "active" : False,

@@ -1,36 +1,36 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
-		<record model="ir.ui.view" id="view_server_statestics_graph">
+		<record model="ir.ui.view" id="view_server_statistics_graph">
 			<field name="name">report.smtp.server.graph</field>
 			<field name="model">report.smtp.server</field>
 			<field name="type">graph</field>
 			<field name="arch" type="xml">
-				<graph string="Server Statestics" type="bar">
+				<graph string="Server Statistics" type="bar">
 					<field name="model" />
 					<field name="no" operator="+" />
 					<field name="history" operator="+" group="True" />
 				</graph>
 			</field>
 		</record>
-		<record model="ir.ui.view" id="view_server_statestics_tree">
+		<record model="ir.ui.view" id="view_server_statistics_tree">
 			<field name="name">report.smtp.server.tree</field>
 			<field name="model">report.smtp.server</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Server Statestics">
+				<tree string="Server Statistics">
 					<field name="model" />
 					<field name="no" />
 					<field name="history" />
 				</tree>
 			</field>
 		</record>
-		<record model="ir.ui.view" id="view_server_statestics_form">
+		<record model="ir.ui.view" id="view_server_statistics_form">
 			<field name="name">report.smtp.server.form</field>
 			<field name="model">report.smtp.server</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Server Statestics">
+				<form string="Server Statistics">
 					<field name="model" select="1" />
 					<field name="no" />
 					<field name="history" select="1" />
@@ -39,11 +39,11 @@
 		</record>
 
 		<record model="ir.actions.act_window"
-			id="action_view_server_statestics_graph">
+			id="action_view_server_statistics_graph">
 			<field name="res_model">report.smtp.server</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">graph,tree</field>
-			<field name="view_id" ref="view_server_statestics_graph" />
+			<field name="view_id" ref="view_server_statistics_graph" />
 		</record>
 
 		<record model="ir.ui.view" id="company_form">
@@ -77,14 +77,10 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="SMTP Server">
-					<notebook>
-
+					<field name="name" select="1" />
+					<field name="date_create" select="1" />
+						<notebook colspan="4">
 						<page string="Configuration">
-							<separator string="General Information"
-								colspan="4" />
-							<field name="name" select="1" />
-							<field name="date_create" select="1" />
-							<newline />
 							<separator string="User Information"
 								colspan="4" />
 							<field name="from" select="1" />
@@ -92,7 +88,7 @@
 								on_change="change_email(email)" />
 							<newline />
 							<field name="user" select="1" />
-							<field name="password" select="1" />
+							<field name="password" select="2" />
 							<newline />
 							<separator string="Server Information"
 								colspan="4" />
@@ -106,24 +102,24 @@
 							<field name="active" select="1" />
 						</page>
 
-						<page string="Messagess">
+						<page string="Messages">
 							<vpaned>
 								<child1>
 									<separator
 										string="Verification Message" colspan="4" />
 									<field name="verify_email"
-										select="1" colspan="4" nolabel="1" />
+										select="2" colspan="4" nolabel="1" />
 									<label
 										string="__code__ for Verification Code" />
 									<separator string="Test Message"
 										colspan="4" />
-									<field name="test_email" select="1"
+									<field name="test_email" select="2"
 										colspan="4" nolabel="1" />
 								</child1>
 								<child2>
 									<separator string="Message"
 										colspan="4" />
-									<field name="body" select="1"
+									<field name="body" select="2"
 										colspan="4" nolabel="1" />
 									<label
 										string="__name__ for Customer Name" />
@@ -142,13 +138,13 @@
 								colspan="4" nolabel="1" />
 						</page>
 
-						<page string="Statestic">
-							<field name="server_statestics"
+						<page string="Statistics">
+							<field name="server_statistics"
 								mode="graph,tree" colspan="4" nolabel="1" />
 						</page>
 
 						<page string="History">
-							<field name="history_line" select="1"
+							<field name="history_line" select="2"
 								colspan="4" nolabel="1">
 								<tree string="Server History">
 									<field name="user_id" />
@@ -183,7 +179,7 @@
 					<field name="name" />
 					<field name="from" />
 					<field name="user" />
-					<field name="password" />
+					<!--<field name="password" />-->
 					<field name="server" />
 					<field name="port" />
 					<field name="type" />

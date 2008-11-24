@@ -20,11 +20,12 @@
 #
 ##############################################################################
 import time
-import campaign
+import datetime
+#import campaign
 
 from osv import fields
 from osv import osv
-import datetime
+from tools import translate 
 
 AVAILABLE_STATES = [
     ('draft','Draft'),
@@ -37,6 +38,7 @@ AVAILABLE_ITEM_TYPES = [
     ('main','Main Item'),
     ('standart','Standart Item'),
 ]
+
 
 class dm_offer_step_type(osv.osv):
     _name="dm.offer.step.type"
@@ -71,30 +73,33 @@ class dm_offer_step(osv.osv):
             obj.create(cr, uid, data, context)
         return True
 
-    def _offer_code(self, cr, uid, ids, name, args, context={}):
+    def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
+        print "Offer Step Context : ",context
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
-            code = '_'.join([offer_step.offer_id.code,(offer_step.type or '')])
+            res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type.id])
+            type_code = res_trans[offer_step.type.id] or offer_step.type.code
+            code = '_'.join([offer_step.offer_id.code,(type_code or '')])
             result[id]=code
         return result
-
+    """
     def _get_offer_step_type(self,cr,uid,context={}):
         offer_step_type = self.pool.get('dm.offer.step.type')
         type_ids = offer_step_type.search(cr,uid,[])
         type = offer_step_type.browse(cr,uid,type_ids)
         return map(lambda x : [x.code,x.code],type)
-
+    """
     _columns = {
         'name' : fields.char('Name',size=64, required=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade"),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32),
-        'code' : fields.function(_offer_code,string='Code',type="char",method=True,readonly=True),
+        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,readonly=True),
         'quotation' : fields.char('Quotation', size=16),
         'media_ids' : fields.many2many('dm.media', 'dm_offer_step_media_rel','step_id','media_id', 'Medias'),
-        'type' : fields.selection(_get_offer_step_type,'Type',required=True),
+        'type' : fields.many2one('dm.offer.step.type','Type',required=True),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
         'desc' : fields.text('Description'),
         'dtp_note' : fields.text('DTP Notes'),
@@ -112,7 +117,7 @@ class dm_offer_step(osv.osv):
         'document_ids' : fields.one2many('dm.offer.document', 'step_id', 'DTP Documents'),
         'flow_start' : fields.boolean('Flow Start'),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
-        'product_ids' : fields.one2many('dm.step.product', 'offer_step_id', 'Products'),
+        'item_ids' : fields.one2many('dm.offer.step.item', 'offer_step_id', 'Items'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',readonly=True),
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
@@ -125,21 +130,26 @@ class dm_offer_step(osv.osv):
         'state': lambda *a : 'open',
         'split_mode' : lambda *a : 'or',
     }
-
-    def onchange_type(self,cr,uid,ids,type,offer_id):
-        step_type_ids= self.pool.get('dm.offer.step.type').search(cr,uid,[('code','=',type)])
-        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,step_type_ids)[0]
+    
+    def onchange_type(self,cr,uid,ids,type,offer_id,context):
+        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type])[0]
         value = {
                     'flow_start':step_type['flow_start'],
                 }
         if offer_id :
             offer = self.pool.get('dm.offer').browse(cr,uid,[offer_id])[0]
             if offer.type == 'model':
+                res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,name', 'model', context.get('lang', False) or 'en_US',[step_type.id])
+                type_code = res_trans[step_type.id] or step_type.name
                 value['name'] = step_type.name
             else :
-                value['name'] = "%s for %s"% (step_type.code,offer.name) 
+                res_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[step_type.id])
+                type_code = res_code[step_type.id] or step_type.code
+#                res_offer = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,name', 'model', context.get('lang', False) or 'en_US',[offer.id])
+#                offer_name = res_offer[offer.id] or offer.name
+                value['name'] = "%s for %s"% (type_code,offer.name) 
         return {'value':value}
-
+    
     def state_close_set(self, cr, uid, ids, *args):
         self.__history(cr,uid, ids, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
@@ -231,82 +241,43 @@ dm_offer_document_category()
 class dm_offer_document(osv.osv):
     _name = "dm.offer.document"
     _rec_name = 'name'
+    
+    def _has_attchment_fnc(self, cr, uid, ids, name, arg, context={}):
+        res={}
+        for id in ids :
+            attachment_id = self.pool.get('ir.attachment').search(cr,uid,[('res_model','=','dm.offer.document'),('res_id','=',id)])
+            if attachment_id :
+                res[id]=True
+            else :  
+                res[id]=False
+        return res
+    
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
-        'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
+        'copywriter_id' : fields.many2one('res.partner', 'Copywriter', domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
         'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
+        'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
+        'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
+                                            'document_id','customer_field_id','Customer Fields',
+                                            domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+                                                        '!',('model_id','like','dm.customers_list')]),
+        'customer_order_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_order_field_rel',
+                                            'document_id','customer_order_field_id','Customer Order Fields',
+                                            domain=[('model_id','like','dm.customer.order')]),
     }
-
 dm_offer_document()
 
-class dm_offer_step_workitem(osv.osv):
-    _name = "dm.offer.step.workitem"
-    _columns = {
-        'step_id' : fields.many2one('dm.offer.step', 'Offer Step',required=True, ondelete="cascade"),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', required=True, ondelete="cascade"),
-        'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete="cascade"),
-        'date_next_action' : fields.date('Next Action'),
-        'purchase_amount' : fields.float('Amount', digits=(16,2))
-    }
-    def create(self, cr, uid, vals, context=None, check=True):
-        step = self.pool.get('dm.offer.step').browse(cr,uid,[vals['step_id']])[0]
-        if step.outgoing_transition_ids:
-            transitions = dict(map(lambda x : (x.id,x.delay),step.outgoing_transition_ids))
-            print "DEBUG - Creating new workitem"
-            print "DEBUG - transitions items: ", transitions.items()
-            print "DEBUG - transitions values: ", transitions.values()
-            trans = [(k,v) for k,v in transitions.items() if v == min(transitions.values())][0]
-            new_date = datetime.date.today() + datetime.timedelta(trans[1])
-            vals['date_next_action'] = new_date
-            print "DEBUG - vals : ",vals
-        return super(dm_offer_step_workitem, self).create(cr, uid, vals, context)
 
-    def _update_workitem(self, cr, uid, ids=False, context={}):
-        '''
-        Function called by the sceduler to update workitem from the segments of propositions.
-        '''
-        """
-        print "DEBUG - _update_workitem called by scheduler"
-        wrkitem_ids =self.search(cr,uid,[('date_next_action','=',time.strftime('%Y-%m-%d'))])
-        wrkitems =self.browse(cr,uid,wrkitem_ids)
-        if not wrkitems:
-            print "DEBUG - no workitem to update"
-            return
-        for wrkitem in wrkitems :
-            step = wrkitem.step_id
-            if step.outgoing_transition_ids:
-                transitions = dict(map(lambda x : (x,int(x.delay)),step.outgoing_transition_ids))
-                print "DEBUG - transitions items: ", transitions.items()
-                print "DEBUG - transitions values: ", transitions.values()
-                trans = [k for k,v in transitions.items() if v == min(transitions.values())][0]
-                # If relaunching
-                if trans.step_to.type == 'RL':
-                    prop_id = self.pool.get('dm.campaign.proposition').copy(cr, uid, wrkitem.segment_id.proposition_id.id,
-                        {'proposition_type':'relaunching', 'initial_proposition_id':wrkitem.segment_id.proposition_id.id})
-                    print "DEBUG - Creating new proposition - id : ",prop_id
-                    self.pool.get('dm.campaign.proposition.segment').write(cr, uid, wrkitem.segment_id.id, {'proposition_id':prop_id})
-                    re_step_id = self.pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',step.offer_id.id),('flow_start','=',True),('media_id','=',step.media_id.id)])
-                    self.write(cr,uid,wrkitem.id,{'step_id':re_step_id[0]}) 
-                else :
-                    print "DEBUG - Updating workitem for segment"
-                    self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to.id})
-        """
-        return True
-
-dm_offer_step_workitem()
-
-
-class dm_step_product(osv.osv):
-    _name = "dm.step.product"
+class dm_offer_step_item(osv.osv):
+    _name = "dm.offer.step.item"
 
     def _step_type(self, cr, uid, ids, name, args, context={}):
         result={}
         for id in ids:
-            result[id] = self.browse(cr, uid, id).offer_step_id.type
-            print "DM - result[id]",result[id]
+            result[id] = self.browse(cr, uid, id).offer_step_id.type.code
         return result
 
     _rec_name = 'product_id'
@@ -315,28 +286,15 @@ class dm_step_product(osv.osv):
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'offer_step_type': fields.function(_step_type,string='Offer Step Type',type="char",method=True,readonly=True), 
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
+        'price' : fields.float('Price',digits=(16,2)),
+        'forwarding_charges' : fields.float('Forwarding Charges',digits=(16,2)),
         'notes' : fields.text('Notes'),
         'purchase_constraints' : fields.text('Purchase Constraints'),
     }
-dm_step_product()
+dm_offer_step_item()
 
 
-class dm_product(osv.osv):
-    _name = "dm.product"
-    _rec_name = 'product_id'
-    _columns = {
-        'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
-        'qty_planned' : fields.integer('Planned Quantity'),
-        'qty_real' : fields.integer('Real Quantity'),
-        'price' : fields.float('Sale Price'),
-        'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
-        'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
-        'offer_step_type': fields.char(string='Offer Step Type',type="char",size=64), 
-        'notes' : fields.text('Notes'),
-    }
-dm_product()
-
-class dm_offer_step_manufacturing_constaint(osv.osv):
+class dm_offer_step_manufacturing_constraint(osv.osv):
     _name = "dm.offer.step.manufacturing_constraint"
     _columns = {
         'name': fields.char('Description', size=64, required=True),
@@ -344,7 +302,7 @@ class dm_offer_step_manufacturing_constaint(osv.osv):
         'constraint': fields.text('Manufacturing Description'),
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
     }
-dm_offer_step_manufacturing_constaint()
+dm_offer_step_manufacturing_constraint()
 
 
 class product_product(osv.osv):

@@ -1,10 +1,11 @@
+# -*- encoding: utf-8 -*-
 {
-	"name" : "Partner labels. SMS and Email spam to partner",
-	"version" : "1.0",
-	"author" : "Zikzakmedia SL",
-	"website" : "www.zikzakmedia.com",
-	"category" : "Generic Modules",
-	"description": """Flexible partner labels:
+    "name" : "Partner labels. SMS and Email spam to partner",
+    "version" : "1.0",
+    "author" : "Zikzakmedia SL",
+    "website" : "www.zikzakmedia.com",
+    "category" : "Generic Modules",
+    "description": """Flexible partner labels:
   * Definition of page sizes, label manufacturers and label formats
   * Flexible label formats (page size, portrait or landscape, manufacturer, rows, columns, width, height, top margin, left margin, ...)
   * Initial data for page sizes and label formats (from Avery and Apli manufacturers)
@@ -32,11 +33,11 @@ Improved SMS and Email spam to partner:
       [[fax]] -> Fax
       [[mobile]] -> Mobile
       [[birthdate]] -> Birthday
-	""",
-	"depends" : ["base",],
-	"init_xml" : ["report_label_data.xml",],
-	"demo_xml" : [],
-	"update_xml" : ["partner_wizard.xml", "report_label_view.xml", "partner_contact_view.xml",],
-	"active": False,
-	"installable": True
+    """,
+    "depends" : ["base",],
+    "init_xml" : ["report_label_data.xml",],
+    "demo_xml" : [],
+    "update_xml" : ["partner_wizard.xml", "report_label_view.xml", "partner_contact_view.xml",],
+    "active": False,
+    "installable": True
 }

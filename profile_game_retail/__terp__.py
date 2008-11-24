@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name":"Bussiness Game Retail",
+    "name":"Bussiness Game",
     "version":"1.0",
     "author":"Tiny",
     "category":"Profile",
@@ -28,9 +28,12 @@
         "board",
         "base",
         "game_scenario",
+        "purchase_approve",
         "sale",
         "sale_wo_production",
-        "stock_planning"
+        "stock_planning",
+        "crm_configuration",
+        "mrp_jit"
     ],
     "init_xml":[
         "profile_game_data.xml",
@@ -42,6 +45,7 @@
         "profile_game_partner.xml",
         "profile_game_phase1.xml",
         "profile_game_config.xml",
+        "profile_game_account_data.xml",
         "profile_game_product.xml",
         "security/ir.model.access.csv"
     ],

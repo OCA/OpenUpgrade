@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -25,7 +25,7 @@
     "name":"Account CODA",
     "version":"1.0",
     "author":"Tiny",
-    "category":"Account Coda",
+    "category":"Account CODA",
     "depends":["base", "account","account_report","base_iban"],
     "demo_xml":["coda_demo.xml"],
     "init_xml":[],

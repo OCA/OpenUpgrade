@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<record id="quality_testing_form_view" model="ir.ui.view">
+            <field name="name">quality.testing.form</field>
+            <field name="model">quality.test</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            	<form string="Quality Testing">
+                	<field name="name" colspan="4" select="2"/>
+                	<field name="description" colspan="4" nolabel="1"/>
+                </form>
+            </field>
+        </record>
+
+		<record id="quality_testing_tree_view" model="ir.ui.view">
+            <field name="name">quality.testing.tree</field>
+            <field name="model">quality.test</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+            	<tree string="Quality Testing">
+                	<field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+		<record id="quality_testing_config_tree_view" model="ir.ui.view">
+            <field name="name">quality.testing.config.tree</field>
+            <field name="model">quality.test.config</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+            	<tree string="QT Configuration">
+                	<field name="name"/>
+                	<field name="min_limit"/>
+                	<field name="max_limit"/>
+                	<field name="uom"/>
+                </tree>
+            </field>
+        </record>
+
+		<record id="quality_testing_config_form_view" model="ir.ui.view">
+            <field name="name">quality.testing.config.form</field>
+            <field name="model">quality.test.config</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            	<form string="QT Configuration">
+                	<field name="name" colspan="4" select="1"/>
+                	<field name="min_limit" select="2"/>
+                	<field name="max_limit" select="2"/>
+                	<field name="uom" select="2"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_testing_form_view" model="ir.ui.view">
+            <field name="name">product.testing.form</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <notebook colspan="4" position = "inside">
+                    <page string="QC Config">
+                    	<field name="raw_m_test" colspan="4"/>
+                    	<field name="production_test" colspan="4"/>
+                    	<field name="finished_test" colspan="4"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+<!-- stock.picking Testing Raw Material for incoming Products-->
+
+        <record id="quality_testing_stock_picking_view" model="ir.ui.view">
+            <field name="name">quality.testing.form</field>
+            <field name="model">stock.picking</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form"/>
+            <field name="arch" type="xml">
+           		<separator colspan="4" string="Move State" position="before">
+                    <separator colspan="4" string="Quality Testing"/>
+                    	<field name="qlty_test_accept"/>
+                    	<newline/>
+                    	<field name="qlty_test_reject"/>
+                    	<button name="%(qty_test_id)d" string="Quality Testing" type="action"/>
+            	</separator>
+            </field>
+        </record>
+
+<!-- stock.move Testing Raw Material -->
+        <record id="quality_testing_stock_move_view" model="ir.ui.view">
+            <field name="name">quality.testing.move.form</field>
+            <field name="model">stock.move</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+           		<separator colspan="4" string="Move State" position="before">
+                    <separator colspan="4" string="Quality Testing"/>
+                    <field name="qlty_test_accept"/>
+                    <newline/>
+                    <field name="qlty_test_reject"/>
+                    	<button name="%(qty_test_id)d" string="Quality Testing" type="action"/>
+            	</separator>
+            </field>
+        </record>
+
+<!-- Testing Result -->
+
+        <record id="testing_result_tree_view" model="ir.ui.view">
+            <field name="name">testing_result.tree</field>
+            <field name="model">testing.result</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+            	<tree string="Testing Result">
+            		<field name="product"/>
+                	<field name="test_date"/>
+                	<field name="tester"/>
+                </tree>
+            </field>
+        </record>
+
+		<record id="testing_result_form_view" model="ir.ui.view">
+            <field name="name">testing_result.form</field>
+            <field name="model">testing.result</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            	<form string="Testing Result">
+                	<field name="product" colspan="4"/>
+                	<newline/>
+                	<field name="test_date" colspan="2" select="1"/>
+                	<field name="tester" colspan="2"/>
+                	<field colspan="4" name="test_case" nolabel="1" widget="one2many_list">
+                        <form string="Testing Result">
+        					<field name="name" colspan="4" select="1"/>
+        					<field name="min_limit" select="2"/>
+        					<field name="max_limit" select="2"/>
+        					<field name="actual_val" select="2"/>
+        					<field name="uom" select="2"/>
+        					<field name="state" select="2"/>
+       					 </form>
+               			<tree string="Testing Result">
+		                	<field name="name"/>
+		                	<field name="min_limit"/>
+		                	<field name="max_limit"/>
+		                	<field name="actual_val" select="2"/>
+                			<field name="uom" select="2"/>
+                			<field name="state" select="2"/>
+                		</tree>
+            		</field>
+            	</form>
+            </field>
+        </record>
+        <record id="action_testing_result_form" model="ir.actions.act_window">
+            <field name="name">Testing Result</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">testing.result</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="testing_result_tree_view"/>
+        </record>
+
+		<menuitem id="menu_testing_result" name="Testing Result" parent="stock.menu_stock_root" sequence="1"/>
+		<menuitem action="action_testing_result_form" id="menu_action_testing_result" parent="menu_testing_result"/>
+
+<!-- mrp.production.workcenter.line Testing during production -->
+
+		<record id="quality_testing_mrp_production_workcenter_line_view" model="ir.ui.view">
+            <field name="name">quality.testing.mrp.production.form</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view"/>
+            <field name="arch" type="xml">
+           		<field name="hour" position="after">
+                    <separator colspan="4" string="Quality Testing"/>
+                    	<field name="qlty_test_accept"/>
+                    	<newline/>
+                    	<field name="qlty_test_reject"/>
+                    	<button name="%(qty_test_prod_id)d" string="Quality Testing" type="action"/>
+            	</field>
+           </field>
+        </record>
+
+		<record id="quality_testing_mrp_production_workcenter_tree_view" model="ir.ui.view">
+            <field name="name">quality.testing.mrp.production.tree</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workcenter_tree_view"/>
+            <field name="arch" type="xml">
+           		<field name="hour" position="after">
+                    <separator colspan="4" string="Quality Testing"/>
+                    	<field name="qlty_test_accept"/>
+                    	<newline/>
+                    	<field name="qlty_test_reject"/>
+            	</field>
+           </field>
+        </record>
+
+<!-- mrp.production Testing For Finished Goods -->
+
+		<record id="quality_testing_mrp_production_view" model="ir.ui.view">
+            <field name="name">quality.testing.mrp.form</field>
+            <field name="model">mrp.production</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+           		<field colspan="4" name="move_lines" nolabel="1" widget="one2many_list" position="after">
+                    	<button name="%(qty_test_finish_id)d" string="Quality Testing" type="action" states="in_production"/>
+            	</field>
+           </field>
+        </record>
+
+    </data>
+</openerp>
