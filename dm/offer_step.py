@@ -73,7 +73,7 @@ class dm_offer_step(osv.osv):
             obj.create(cr, uid, data, context)
         return True
 
-    def _offer_code(self, cr, uid, ids, name, args, context={}):
+    def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         print "Offer Step Context : ",context
         for id in ids:
@@ -94,7 +94,7 @@ class dm_offer_step(osv.osv):
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade"),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32),
-        'code' : fields.function(_offer_code,string='Code',type="char",method=True,readonly=True),
+        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,readonly=True),
         'quotation' : fields.char('Quotation', size=16),
         'media_ids' : fields.many2many('dm.media', 'dm_offer_step_media_rel','step_id','media_id', 'Medias'),
         'type' : fields.many2one('dm.offer.step.type','Type',required=True),
@@ -128,10 +128,9 @@ class dm_offer_step(osv.osv):
         'state': lambda *a : 'open',
         'split_mode' : lambda *a : 'or',
     }
-    """
+    
     def onchange_type(self,cr,uid,ids,type,offer_id):
-        step_type_ids= self.pool.get('dm.offer.step.type').search(cr,uid,[('code','=',type)])
-        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,step_type_ids)[0]
+        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type])[0]
         value = {
                     'flow_start':step_type['flow_start'],
                 }
@@ -142,7 +141,7 @@ class dm_offer_step(osv.osv):
             else :
                 value['name'] = "%s for %s"% (step_type.code,offer.name) 
         return {'value':value}
-    """
+    
     def state_close_set(self, cr, uid, ids, *args):
         self.__history(cr,uid, ids, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
