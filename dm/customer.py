@@ -23,8 +23,8 @@ import time
 
 from osv import fields
 from osv import osv
-
-
+import pooler
+from report.report_sxw import report_sxw,browse_record_list,_fields_process
 
 class dm_order(osv.osv):
     _name = "dm.order"
@@ -237,3 +237,10 @@ class dm_workitem(osv.osv):
 dm_workitem()
 """
 
+#class new_report_sxw(report_sxw.report_sxw):
+def mygetObjects(self, cr, uid, ids, context):
+    if self.table == 'dm.offer.document':
+        ids = pooler.get_pool(cr.dbname).get('dm.customer').search(cr,uid,[])
+    table_obj = pooler.get_pool(cr.dbname).get('dm.customer')
+    return table_obj.browse(cr, uid, ids, list_class=browse_record_list, context=context, fields_process=_fields_process)
+report_sxw.getObjects = mygetObjects 
