@@ -145,9 +145,9 @@ class dm_offer_step(osv.osv):
             else :
                 res_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[step_type.id])
                 type_code = res_code[step_type.id] or step_type.code
-                res_offer = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,name', 'model', context.get('lang', False) or 'en_US',[offer.id])
-                offer_name = res_offer[offer] or offer.name
-                value['name'] = "%s for %s"% (type_code,offer_name) 
+#                res_offer = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,name', 'model', context.get('lang', False) or 'en_US',[offer.id])
+#                offer_name = res_offer[offer.id] or offer.name
+                value['name'] = "%s for %s"% (type_code,offer.name) 
         return {'value':value}
     
     def state_close_set(self, cr, uid, ids, *args):
