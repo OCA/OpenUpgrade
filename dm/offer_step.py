@@ -25,7 +25,7 @@ import datetime
 
 from osv import fields
 from osv import osv
-
+from tools import translate 
 
 AVAILABLE_STATES = [
     ('draft','Draft'),
@@ -79,7 +79,9 @@ class dm_offer_step(osv.osv):
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
-            code = '_'.join([offer_step.offer_id.code,(offer_step.type.code or '')])
+            res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type.id])
+            type_code = res_trans[offer_step.type.id] or offer_step.type.code
+            code = '_'.join([offer_step.offer_id.code,(type_code or '')])
             result[id]=code
         return result
     """
@@ -129,7 +131,7 @@ class dm_offer_step(osv.osv):
         'split_mode' : lambda *a : 'or',
     }
     
-    def onchange_type(self,cr,uid,ids,type,offer_id):
+    def onchange_type(self,cr,uid,ids,type,offer_id,context):
         step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type])[0]
         value = {
                     'flow_start':step_type['flow_start'],
@@ -137,9 +139,15 @@ class dm_offer_step(osv.osv):
         if offer_id :
             offer = self.pool.get('dm.offer').browse(cr,uid,[offer_id])[0]
             if offer.type == 'model':
+                res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,name', 'model', context.get('lang', False) or 'en_US',[step_type.id])
+                type_code = res_trans[step_type.id] or step_type.name
                 value['name'] = step_type.name
             else :
-                value['name'] = "%s for %s"% (step_type.code,offer.name) 
+                res_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[step_type.id])
+                type_code = res_code[step_type.id] or step_type.code
+                res_offer = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,name', 'model', context.get('lang', False) or 'en_US',[offer.id])
+                offer_name = res_offer[offer] or offer.name
+                value['name'] = "%s for %s"% (type_code,offer_name) 
         return {'value':value}
     
     def state_close_set(self, cr, uid, ids, *args):
@@ -233,6 +241,17 @@ dm_offer_document_category()
 class dm_offer_document(osv.osv):
     _name = "dm.offer.document"
     _rec_name = 'name'
+    
+    def _has_attchment_fnc(self, cr, uid, ids, name, arg, context={}):
+        res={}
+        for id in ids :
+            attachment_id = self.pool.get('ir.attachment').search(cr,uid,[('res_model','=','dm.offer.document'),('res_id','=',id)])
+            if attachment_id :
+                res[id]=True
+            else :  
+                res[id]=False
+        return res
+    
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
@@ -240,6 +259,7 @@ class dm_offer_document(osv.osv):
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter', domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
         'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
+        'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
         'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
                                             'document_id','customer_field_id','Customer Fields',
                                             domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
