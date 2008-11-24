@@ -103,10 +103,11 @@
 		<field name="model">dm.offer.document</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Documents">
+			<tree colors="red:not bool(has_attachment)" string="Documents">
 				<field name="name"/>
 				<field name="code"/>
 				<field name="copywriter_id"/>
+				<field name="has_attachment" invisible="1"/>
 			</tree>
 		</field>
 	</record>
@@ -203,9 +204,9 @@
 				<notebook colspan="4">
 					<page string="General">
 						<field name="name" select="1" />
-<!--						<field name="type" select="2" widget="selection" on_change="onchange_type(type,offer_id)"/>-->
+						<field name="type" select="2" widget="selection" on_change="onchange_type(type,offer_id,context)"/>
 <!--						<field name="type" select="2" widget="selection"/>-->
-						<field name="type" select="2"/>
+<!--						<field name="type" select="2"/>-->
 						<field name="quotation" select="2"/>
 						<field name="legal_state" select="2" />
 						<newline/>
