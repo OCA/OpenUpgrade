@@ -55,7 +55,7 @@ def _export(self, cr, uid, data, context):
         (program_new, program_update, program_delete) = export_table.export_table(self, cr, uid, data, context, server, 'program',
             ['id', 'name', 'introduction', 'description', 'state', 'team', 'email', 'category_id', 'production_year', 'classification', 'broadcast_language', 'original_language', 'production_type', 'editor', 'production_country_id', 'approx_duration',])
     else:
-        raise osv.except_osv('Error!', 'No website defined!\nPlease create one.')
+        raise osv.except_osv(_('Error!'), _('No website defined!\nPlease create one.'))
 
     return {
         'channel_new':channel_new, 'channel_update':channel_update, 'channel_delete':channel_delete,

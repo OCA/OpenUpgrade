@@ -246,6 +246,25 @@
         </tr>
       </blockTable>
     </section>
+    <section>
+      <para style="P20">[[ repeatIn(o.fees_lines,'fee_line') ]]</para>
+      <blockTable colWidths="240.0,131.0,71.0,95.0" style="Order_Desc_Table">
+        <tr>         
+          <td>
+            <para style="P5">[[ fee_line.product_id.name ]]</para>
+          </td>
+          <td>
+            <para style="P19">[[ fee_line.product_uom_qty or '0.00' ]] [[ fee_line.product_uom.name ]] </para>
+          </td>
+          <td>
+            <para style="P2">[[ fee_line.price_unit ]]</para>
+          </td>
+          <td>
+            <para style="P3">[[ fee_line.price_subtotal ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+    </section>
     <blockTable colWidths="436.0,39.0,40.0,22.0" style="Total_Table">
       <tr>
         <td>

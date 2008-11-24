@@ -5,8 +5,7 @@
     "author" : "Jordi Esteve. Zikzakmedia SL",
     "description" : """This module allows to control TV & Radio channels, programs, grid of date/time of broadcasting and podcasts
 
-channel <-------> program <-------> broadcast <-------> podcast
-         n     m           1      n            1     n
+channel <--n---m--> program <--1---n--> broadcast <--1---n--> podcast
 
 Features:
     * Menu entries to see daily and weekly broadcasts
@@ -22,7 +21,13 @@ Features:
     "depends" : ["base"],
     "init_xml" : ['radiotv_data.xml',],
     "demo_xml" : [],
-    "update_xml" : ['radiotv_view.xml', 'radiotv_report.xml', 'radiotv_wizard.xml',],
+    "update_xml" : [
+        "security/radiotv_security.xml",
+        "security/ir.model.access.csv",
+        'radiotv_view.xml',
+        'radiotv_report.xml',
+        'radiotv_wizard.xml',
+    ],
     "installable" : True,
     "active" : False,
 

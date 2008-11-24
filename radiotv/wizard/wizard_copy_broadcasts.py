@@ -81,11 +81,11 @@ def _copy(self, cr, uid, data, context):
         d_from = "%04i-%02i-%02i" % (start.year, start.month, start.day)
         d_to   = "%04i-%02i-%02i" % (to.year, to.month, to.day)
         #print d_from, d_to
-        
+
         # deletes previous broadcasts
         broadcast_ids = b.search(cr, uid, [('channel_id','=',channel_id),('dt_start','>=','%s 00:00:00' % d_to),('dt_start','<=','%s 23:59:59' % d_to)])
         b.unlink(cr, uid, broadcast_ids)
-        
+
         # copies new broadcasts
         broadcast_ids = b.search(cr, uid, [('channel_id','=',channel_id),('dt_start','>=','%s 00:00:00' % d_from),('dt_start','<=','%s 23:59:59' % d_from)])
         for broadcast in b.browse(cr, uid, broadcast_ids, context):

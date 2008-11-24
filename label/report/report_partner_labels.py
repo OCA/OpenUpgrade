@@ -117,4 +117,4 @@ class report_custom(report_rml):
 
         return xml
 
-report_custom('report.res.partner.address.label', 'res.partner', '', 'addons/partner_spam/report/partner_address.xsl')
+report_custom('report.res.partner.address.label', 'res.partner', '', 'addons/label/report/partner_address.xsl')

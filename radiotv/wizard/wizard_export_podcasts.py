@@ -74,7 +74,7 @@ def _export(self, cr, uid, data, context):
         (podcast_new, podcast_update, podcast_delete) = export_table.export_table(self, cr, uid, data, context, server, 'podcast',
             ['id', 'name', 'file_name', 'description', 'broadcast_id', 'author', 'category', 'duration', 'keywords', 'subtitle', 'block', 'explicit', 'pub_date'], filter, filterphp)
     else:
-        raise osv.except_osv('Error!', 'No website defined!\nPlease create one.')
+        raise osv.except_osv(_('Error!'), _('No website defined!\nPlease create one.'))
 
     return {'podcast_new':podcast_new, 'podcast_update':podcast_update, 'podcast_delete':podcast_delete,}
 
