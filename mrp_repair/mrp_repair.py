@@ -318,7 +318,7 @@ class mrp_repair_line(osv.osv):
         res = {}
         cur_obj=self.pool.get('res.currency')
         for line in self.browse(cr, uid, ids):
-            res[line.id] = line.price_unit * line.product_uom_qty
+            res[line.id] = line.to_invoice and line.price_unit * line.product_uom_qty or 0
             cur = line.repair_id.pricelist_id.currency_id
             res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
         return res
