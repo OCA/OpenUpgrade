@@ -380,15 +380,18 @@ class mrp_repair_line(osv.osv):
         return {'value': result , 'warning':warning}
      
      
-    def onchange_operation_type(self, cr, uid, ids, type ):
+    def onchange_operation_type(self, cr, uid, ids, type,guarantee_limit):
         if not type:
             return {'value':{'location_id': False , 'location_dest_id' :  False}}
         stock_id = self.pool.get('stock.location').search(cr, uid, [('name','=','Stock')])[0]
         produc_id = self.pool.get('stock.location').search(cr, uid, [('name','=','Default Production')])[0]
+        to_invoice=False
+        if guarantee_limit and now()> mx.DateTime.strptime(guarantee_limit, '%Y-%m-%d'):
+            to_invoice=True
         if type == 'add':
-            return {'value':{'location_id': stock_id , 'location_dest_id' : produc_id}}
+            return {'value':{'to_invoice':to_invoice,'location_id': stock_id , 'location_dest_id' : produc_id}}
         if type == 'remove':
-            return {'value':{'location_id': produc_id}}
+            return {'value':{'to_invoice':to_invoice,'location_id': produc_id}}
         
     
     
