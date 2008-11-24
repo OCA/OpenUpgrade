@@ -29,5 +29,4 @@
 
 import wizard_sms
 import wizard_spam
-import wizard_partner_labels
 
