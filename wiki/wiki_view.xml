@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <menuitem name="Document Management" icon="terp-stock" id="menu_document2"/>
+        <menuitem name="Wiki Configuration" id="menu_document_configuration" parent="menu_document2"/>
+        <menuitem parent="menu_document2" name="Wiki" id="menu_document"/>
+    
+        <wizard
+            id="wizard_group_menu_create"
+            string="Create Menu"
+            name="wiki.create.menu"/>
+            
+        <record model="ir.ui.view" id="wiki_group_tree">
+            <field name="name">wiki.groups.tree</field>
+            <field name="model">wiki.groups</field>
+            <field name="type">tree</field>
+            <field name="field_parent">child_ids</field>
+            <field name="arch" type="xml">
+                <tree srting="Wiki Groups">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="wiki_group_form">
+            <field name="name">wiki.groups.form</field>
+            <field name="model">wiki.groups</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form srting="Wiki Groups">
+                    <group colspan="4" col="6">
+                        <field name="name" select="1"/>
+                        <field name="parent_id" select="2"/>
+                        <field name="create_date" readonly="2"/>
+                    </group>
+                    <notebook colspan="4">
+                    <page string="Notes">
+                        <field name="notes" colspan="4" nolabel="1"/>
+                    </page><page string="Configuration">
+                        <separator string="Page Template" colspan="4"/>
+                        <field name="template" colspan="4" nolabel="1" widget="text_wiki"/>
+                    </page>
+                    </notebook>
+                    <button
+                        name="%(wizard_group_menu_create)d"
+                        string="Create a Menu"
+                        type="action"
+                        target="new"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wiki_groups">
+            <field name="name">Wiki Groups</field>
+            <field name="res_model">wiki.groups</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            parent="menu_document_configuration"
+            id="menu_action_wiki_groups"
+            action="action_wiki_groups"/>
+
+        <record model="ir.actions.act_window" id="action_wiki_groups_browse">
+            <field name="name">Wiki Groups</field>
+            <field name="res_model">wiki.groups</field>
+            <field name="domain">[('parent_id','=',False)]</field>
+            <field name="view_type">tree</field>
+        </record>
+        <menuitem
+            parent="menu_document"
+            id="menu_action_wiki_groups_browse"
+            action="action_wiki_groups_browse"/>
+
+        <record model="ir.ui.view" id="view_wiki_tree">
+            <field name="name">wiki.wiki.tree</field>
+            <field name="model">wiki.wiki</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Wiki">
+                    <field name="section"/>
+                    <field name="name"/>
+                    <field name="write_uid"/>
+                    <field name="write_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_wiki_form">
+            <field name="name">wiki.wiki.form</field>
+            <field name="model">wiki.wiki</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Wiki">
+                    <group col="6" colspan="4">
+                        <field name="name" select="1"/>
+                        <field name="group_id" select="1" on_change="onchange_group_id(group_id, text_area)"/>
+                        <field name="section" select="2"/>
+
+                        <field name="write_date" readonly="1" select="2"/>
+                        <field name="write_uid" readonly="1" select="2"/>
+                        <field name="tags" select="2" groups="base.group_extended"/>
+                        <field name="minor_edit" select="2" groups="base.group_extended"/>
+                        <field name="summary" colspan="4" select="2" groups="base.group_extended"/>
+                    </group>
+                    <field name="text_area" nolabel="1" colspan="4" select="1" widget="text_wiki"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_wiki">
+            <field name="name">Wiki Pages</field>
+            <field name="res_model">wiki.wiki</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_wiki_tree"/>
+        </record>
+        <menuitem
+            parent="menu_document"
+            id="menu_action_wiki_wiki"
+            string="All Wiki Pages"
+            action="action_wiki"/>
+
+        <record model="ir.ui.view" id="view_wiki_history_tree">
+            <field name="name">wiki.wiki.history.tree</field>
+            <field name="model">wiki.wiki.history</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree srting="Wiki History">
+                    <field name="date_time"/>
+                    <field name="modify_by"/>
+                    <field name="minor_edit"/>
+                    <field name="summary"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="wiki_history_form">
+            <field name="name">wiki.wiki.history.form</field>
+            <field name="model">wiki.wiki.history</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form srting="Wiki History">
+                    <field name="history_wiki_id" select="1" colspan="4"/>
+                    <field name="summary" select="1" colspan="4"/>
+                    <field name="text_area" select="1" colspan="4" widget="text_wiki"/>
+                    <field name="date_time" select="1"/>
+                    <field name="minor_edit" select="1"/>
+                    <field name="history_wiki_id"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_history">
+            <field name="name">All Page Histories</field>
+            <field name="res_model">wiki.wiki.history</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            parent="menu_document_configuration"
+            id="menu_action_history"
+            action="action_history"/>
+
+        <act_window domain="[('history_wiki_id', '=', active_id)]"
+            id="act_wiki_wiki_history"
+            name="History"
+            res_model="wiki.wiki.history"
+            src_model="wiki.wiki"/>
+
+        <act_window
+            domain="[('group_id', '=', active_id)]"
+            id="act_wiki_group_open"
+            name="Wiki Pages"
+            res_model="wiki.wiki"
+            src_model="wiki.groups"/>
+
+        <record id="ir_open_journal_period" model="ir.values">
+            <field name="key2">tree_but_open</field>
+            <field name="model">wiki.groups</field>
+            <field name="name">Wiki Pages</field>
+            <field eval="'ir.actions.wizard,%d'%act_wiki_group_open" name="value"/>
+            <field eval="True" name="object"/>
+        </record>
+
+    </data>
+</openerp>

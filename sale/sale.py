@@ -79,7 +79,7 @@ class sale_order(osv.osv):
             cur=order.pricelist_id.currency_id
             for line in order.order_line:
                 for c in self.pool.get('account.tax').compute(cr, uid, line.tax_id, line.price_unit * (1-(line.discount or 0.0)/100.0), line.product_uom_qty, order.partner_invoice_id.id, line.product_id, order.partner_id):
-                    val+= cur_obj.round(cr, uid, cur, c['amount'])
+                    val+= c['amount']
             res[order.id]=cur_obj.round(cr, uid, cur, val)
         return res
 
@@ -220,7 +220,7 @@ class sale_order(osv.osv):
   - The 'Invoice after delivery' choice will generate the draft invoice after the packing list have been finished.
   - The 'Invoice from the packings' choice is used to create an invoice during the packing process."""),
         'pricelist_id':fields.many2one('product.pricelist', 'Pricelist', required=True, readonly=True, states={'draft':[('readonly',False)]}),
-        'project_id':fields.many2one('account.analytic.account', 'Analytic account', readonly=True, states={'draft':[('readonly', False)]}),
+        'project_id':fields.many2one('account.analytic.account', 'Analytic Account', readonly=True, states={'draft':[('readonly', False)]}),
 
         'order_line': fields.one2many('sale.order.line', 'order_id', 'Order Lines', readonly=True, states={'draft':[('readonly',False)]}),
         'invoice_ids': fields.many2many('account.invoice', 'sale_order_invoice_rel', 'order_id', 'invoice_id', 'Invoice', help="This is the list of invoices that have been generated for this sale order. The same sale order may have been invoiced in several times (by line for example)."),
@@ -253,6 +253,16 @@ class sale_order(osv.osv):
     _order = 'name desc'
 
     # Form filling
+    def unlink(self, cr, uid, ids):
+        sale_orders = self.read(cr, uid, ids, ['state'])
+        unlink_ids = []
+        for s in sale_orders:
+            if s['state'] in ['draft','canceled']:
+                unlink_ids.append(s['id'])
+            else:
+                raise osv.except_osv(_('Invalid action !'), _('Cannot delete Sale Order(s) which are already confirmed !'))
+        return osv.osv.unlink(self, cr, uid, unlink_ids)        
+    
     def onchange_shop_id(self, cr, uid, ids, shop_id):
         v={}
         if shop_id:
@@ -421,7 +431,7 @@ class sale_order(osv.osv):
                         'user_id': (o.user_id and o.user_id.id) or uid,\
                         'partner_type': 'customer', 'probability': 1.0,\
                         'planned_revenue': o.amount_untaxed})
-            if (o.order_policy == 'manual') and (not o.invoice_ids):
+            if (o.order_policy == 'manual'):
                 self.write(cr, uid, [o.id], {'state': 'manual'})
             else:
                 self.write(cr, uid, [o.id], {'state': 'progress'})
@@ -725,6 +735,7 @@ class sale_order_line(osv.osv):
                 a = self.pool.get('account.fiscal.position').map_account(cr, uid, line.order_id.partner_id, a)
                 inv_id = self.pool.get('account.invoice.line').create(cr, uid, {
                     'name': line.name,
+                    'origin':line.order_id.name,
                     'account_id': a,
                     'price_unit': pu,
                     'quantity': uosqty,
@@ -894,7 +905,6 @@ class sale_order_line(osv.osv):
                     }
             else:
                 result.update({'price_unit': price})
-        print result
         return {'value': result, 'domain': domain,'warning':warning}
 
     def product_uom_change(self, cursor, user, ids, pricelist, product, qty=0,
@@ -952,7 +962,6 @@ class sale_config_picking_policy(osv.osv_memory):
         for o in self.browse(cr, uid, ids, context=context):
             ir_values_obj = self.pool.get('ir.values')
             ir_values_obj.set(cr,uid,'default',False,'picking_policy',['sale.order'],o.picking_policy)
-            ir_values_obj = self.pool.get('ir.values')
             ir_values_obj.set(cr,uid,'default',False,'order_policy',['sale.order'],o.order_policy)
 
             if o.step=='one':

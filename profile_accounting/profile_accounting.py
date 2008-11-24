@@ -32,7 +32,7 @@ class profile_accounting_config_install_modules_wizard(osv.osv_memory):
         'account_payment':fields.boolean('Suppliers Payment Management'),
         'account_asset':fields.boolean('Asset Management'),
         'hr_timesheet_invoice':fields.boolean('Invoice on Analytic Entries'),
-        'account_budget_crossover':fields.boolean('Analytic Budgets'),
+        'account_budget':fields.boolean('Budgets', help="Helps you to manage financial and analytic budgets."),
         'board_document':fields.boolean('Document Management',help= "The Document Management System of Open ERP allows you to store, browse, automatically index, search and preview all kind of documents (internal documents, printed reports, calendar system). It opens an FTP access for the users to easily browse association's document."),
 
 
@@ -54,7 +54,7 @@ class profile_accounting_config_install_modules_wizard(osv.osv_memory):
             for r in res:
                 if r<>'id' and res[r]:
                     ids += mod_obj.search(cr, uid, [('name', '=', r)])
-                    mod_obj.action_install(cr, uid, ids, context=context)
+                    mod_obj.button_install(cr, uid, ids, context=context)
         cr.commit()
         db, pool = pooler.restart_pool(cr.dbname,update_module=True)
         return {

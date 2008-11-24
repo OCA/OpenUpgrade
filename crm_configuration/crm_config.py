@@ -68,6 +68,25 @@ class crm_cases(osv.osv):
         'partner_phone': fields.char('Phone', size=16),
         'partner_mobile': fields.char('Mobile', size=16),
     }
+    def stage_next(self, cr, uid, ids, context={}):
+        ok = False
+        sid = self.pool.get('crm.case.stage').search(cr, uid, [], context=context)
+        s = {}
+        previous = {}
+        for stage in self.pool.get('crm.case.stage').browse(cr, uid, sid, context=context):
+            section = stage.section_id.id or False
+            s.setdefault(section, {})
+            s[section][previous.get(section, False)] = stage.id
+            previous[section] = stage.id
+
+        for case in self.browse(cr, uid, ids, context):
+            section = (case.section_id.id or False)
+            if section in s:
+                st = case.stage_id.id  or False
+                if st in s[section]:
+                    self.write(cr, uid, [case.id], {'stage_id': s[section][st]})
+
+        return True
     def onchange_case_id(self, cr, uid, ids, case_id, name, partner_id, context={}):
         if not case_id: return {}
         case = self.browse(cr, uid, case_id, context=context)
@@ -96,12 +115,11 @@ class crm_menu_config_wizard(osv.osv_memory):
         'bugs' : fields.boolean('Bug Tracking', help="Used by companies to track bugs and support requests on softwares"),
         'helpdesk': fields.boolean('Helpdesk', help="Manages an Helpdesk service."),
         'fund' : fields.boolean('Fund Raising Operations', help="This may help associations in their fund raising process and tracking."),
-        'claims' : fields.boolean('Supplier Claims', help="Manages the supplier complaints."),
-        'phonecall' : fields.boolean('Phone Calls', help="Help you to encode the result of a phone call"),
+        'claims' : fields.boolean('Claims', help="Manages the supplier and customers claims, including your corrective or preventive actions."),
+        'phonecall' : fields.boolean('Phone Calls', help="Help you to encode the result of a phone call or to planify a list of phone calls to process."),
     }
     _defaults = {
         'meeting': lambda *args: True,
-        'jobs': lambda *args: True,
         'opportunity': lambda *args: True,
         'phonecall': lambda *args: True,
     }

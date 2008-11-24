@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -410,6 +410,15 @@ class mrp_production(osv.osv):
         'name': lambda x,y,z,c: x.pool.get('ir.sequence').get(y,z,'mrp.production') or '/',
     }
     _order = 'date_planned asc, priority desc';
+    def unlink(self, cr, uid, ids):
+        productions = self.read(cr, uid, ids, ['state'])
+        unlink_ids = []
+        for s in productions:
+            if s['state'] in ['draft','cancel']:
+                unlink_ids.append(s['id'])
+            else:
+                raise osv.except_osv(_('Invalid action !'), _('Cannot delete Production Order(s) which are in %s State!' % s['state']))
+        return osv.osv.unlink(self, cr, uid, unlink_ids)
 
     def location_id_change(self, cr, uid, ids, src, dest, context={}):
         if dest:
@@ -466,7 +475,7 @@ class mrp_production(osv.osv):
             if production.move_created_ids:
                 self.pool.get('stock.move').action_cancel(cr, uid, [x.id for x in production.move_created_ids])
             self.pool.get('stock.move').action_cancel(cr, uid, [x.id for x in production.move_lines])
-        self.write(cr, uid, ids, {'state':'cancel','move_lines':[(6,0,[])]})
+        self.write(cr, uid, ids, {'state':'cancel'}) #,'move_lines':[(6,0,[])]})
         return True
 
     #XXX: may be a bug here; lot_lines are unreserved for a few seconds;
@@ -490,30 +499,9 @@ class mrp_production(osv.osv):
                             (parent_id, child_id) VALUES (%d,%d)',
                             (res.id, move.id))
                 move_ids.append(res.id)
-            if production.move_created_ids:
-                #TODO There we should handle the residus move creation
-                vals= {'state':'confirmed'}
-                new_moves = [x.id for x in production.move_created_ids]
-                self.pool.get('stock.move').write(cr, uid, new_moves, vals)
-            else:
-                #XXX Why is it there ? Aren't we suppose to already have a created_move ?
-                source = production.product_id.product_tmpl_id.property_stock_production.id
-                vals = {
-                    'name':'PROD:'+production.name,
-                    'date_planned': production.date_planned,
-                    'product_id': production.product_id.id,
-                    'product_qty': production.product_qty,
-                    'product_uom': production.product_uom.id,
-                    'product_uos_qty': production.product_uos and production.product_uos_qty or False,
-                    'product_uos': production.product_uos and production.product_uos.id or False,
-                    'location_id': source,
-                    'location_dest_id': production.location_dest_id.id,
-                    'move_dest_id': production.move_prod_id.id,
-                    'state': 'confirmed'
-                }
-                new_moves = [self.pool.get('stock.move').create(cr, uid, vals)]
-                self.write(cr, uid, [production.id],
-                        {'move_created_ids': [(6, 'WTF', new_moves)]})
+            vals= {'state':'confirmed'}
+            new_moves = [x.id for x in production.move_created_ids]
+            self.pool.get('stock.move').write(cr, uid, new_moves, vals)
             if not production.date_finnished:
                 self.write(cr, uid, [production.id],
                         {'date_finnished': time.strftime('%Y-%m-%d %H:%M:%S')})
@@ -581,6 +569,7 @@ class mrp_production(osv.osv):
 
     def action_confirm(self, cr, uid, ids):
         picking_id=False
+        proc_ids = []
         for production in self.browse(cr, uid, ids):
             if not production.product_lines:
                 self.action_compute(cr, uid, [production.id])
@@ -602,7 +591,6 @@ class mrp_production(osv.osv):
                 'address_id': address_id,
                 'auto_picking': self._get_auto_picking(cr, uid, production),
             })
-            toconfirm = True
 
             source = production.product_id.product_tmpl_id.property_stock_production.id
             data = {
@@ -669,9 +657,9 @@ class mrp_production(osv.osv):
                 })
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-            if toconfirm:
-                wf_service = netsvc.LocalService("workflow")
-                wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
+                proc_ids.append(proc_id)
+            wf_service = netsvc.LocalService("workflow")
+            wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
             self.write(cr, uid, [production.id], {'picking_id':picking_id, 'move_lines': [(6,0,moves)], 'state':'confirmed'})
         return picking_id
 
@@ -697,8 +685,8 @@ class mrp_production_workcenter_line(osv.osv):
     _columns = {
         'name': fields.char('Name', size=64, required=True),
         'workcenter_id': fields.many2one('mrp.workcenter', 'Workcenter', required=True),
-        'cycle': fields.float('Nbr of cycle'),
-        'hour': fields.float('Nbr of hour'),
+        'cycle': fields.float('Nbr of cycle', digits=(16,2)),
+        'hour': fields.float('Nbr of hour', digits=(16,2)),
         'sequence': fields.integer('Sequence', required=True),
         'production_id': fields.many2one('mrp.production', 'Production Order', select=True),
     }
@@ -771,6 +759,17 @@ class mrp_procurement(osv.osv):
         'close_move': lambda *a: 0,
         'procure_method': lambda *a: 'make_to_order',
     }
+     
+    def unlink(self, cr, uid, ids):
+        procurements = self.read(cr, uid, ids, ['state'])
+        unlink_ids = []
+        for s in procurements:
+            if s['state'] in ['draft','cancel']:
+                unlink_ids.append(s['id'])
+            else:
+                raise osv.except_osv(_('Invalid action !'), _('Cannot delete Procurement Order(s) which are in %s State!' % s['state']))
+        return osv.osv.unlink(self, cr, uid, unlink_ids)        
+    
     def onchange_product_id(self, cr, uid, ids, product_id, context={}):
         if product_id:
             w=self.pool.get('product.product').browse(cr,uid,product_id, context)
@@ -971,7 +970,7 @@ class mrp_procurement(osv.osv):
                 'location_src_id': procurement.location_id.id,
                 'location_dest_id': procurement.location_id.id,
                 'bom_id': procurement.bom_id and procurement.bom_id.id or False,
-                'date_planned': newdate,
+                'date_planned': newdate.strftime('%Y-%m-%d %H:%M:%S'),
                 'move_prod_id': res_id,
             })
             self.write(cr, uid, [procurement.id], {'state':'running'})
@@ -1034,10 +1033,10 @@ class mrp_procurement(osv.osv):
     def action_cancel(self, cr, uid, ids):
         todo = []
         for proc in self.browse(cr, uid, ids):
-            if proc.move_id:
+            if proc.move_id and proc.move_id.state=='waiting':
                 todo.append(proc.move_id.id)
         if len(todo):
-            self.pool.get('stock.move').action_cancel(cr, uid, [proc.move_id.id])
+            self.pool.get('stock.move').write(cr, uid, todo, {'state':'assigned'})
         self.write(cr, uid, ids, {'state':'cancel'})
 
         wf_service = netsvc.LocalService("workflow")
@@ -1211,7 +1210,7 @@ class StockPicking(osv.osv):
     # Explode picking by replacing phantom BoMs
     #
     def action_explode(self, cr, uid, picks, *args):
-        for move in picks:
+        for move in self.pool.get('stock.move').browse(cr, uid, picks):
             self.pool.get('stock.move')._action_explode(cr, uid, move)
         return picks
 
