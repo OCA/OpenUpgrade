@@ -338,7 +338,7 @@
 
 <!-- event.registration form.. change name crm.case to event.registration -->
 
-    <record model="ir.ui.view" id="event.event_registration_form">
+<!--    <record model="ir.ui.view" id="event.event_registration_form">
         <field name="name">cci.event.registration.form.1</field>
         <field name="model">event.registration</field>
         <field name="type">form</field>
@@ -480,7 +480,155 @@
                 </notebook>
             </form>
         </field>
-    </record>
+    </record> -->
+<!-- start reg here -->
+	<record model="ir.ui.view" id="event_registration_inherit6">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<button name="button_reg_close" string="Registration Invoiced" states="open" type="object" position="replace"/>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit7">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<button name="button_reg_cancel" string="Cancel Registration" states="draft,open" type="object" position="replace"/>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit8">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<button name="%(event.event_confirm_registration)d" string="Confirm Registration" states="draft" type="action" position="replace"/>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<field name="date_action_next" position="after">
+				<separator colspan="4" string="Estimates"/>
+				<field name="planned_revenue"/>
+                <field name="planned_cost"/>
+                <field name="probability"/>
+			</field>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="event_registration_inherit2">
+		<field name="name">event.registration.form.cci</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+                <page string="Communication">
+					<group col="2" colspan="2" expand="1">
+                        <field name="canal_id"/>
+                        <field name="som" select="2"/>
+                        <button name="add_reply" string="Add Last Mail for Replying"
+                            states="open" type="object" colspan="2"/>
+                        <field name="description" colspan="2" select="2" nolabel="1"/>
+                        <button name="case_log_reply"
+                            string="Send Partner &amp; Historize" states="open"
+                            type="object"/>
+                        <button name="case_log" string="Historize" states="open"
+                            type="object"/>
+                    </group>
+                </page>
+			</notebook>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="event_registration_inherit3">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<field name="invoice_id" position="after">
+                    <field name="payment_mode" />
+                    <newline/>
+                    <field name="training_authorization"/>
+                    <newline/>
+                    <field name="check_mode"/>
+                    <field name="check_amount" select="2"/>
+                    <newline/>
+                    <field name="check_ids" colspan="4" mode="tree, form" select="2">
+                        <tree string="Event Check">
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="unit_nbr"/>
+                        </tree>
+                        <form string="Event Check">
+                            <field name="name" select="1"/>
+                            <field name="code" select="1"/>
+                            <field name="unit_nbr" select="1"/>
+                            <field name="type_id" select="1" />
+                            <newline/>
+                            <field name="date_reception" select="2"/>
+                            <field name="date_limit" select="2"/>
+                            <field name="date_submission" select="2"/>
+                        </form>
+                    </field>
+                    <field name="payment_ids" colspan="4" select="2"/>
+			</field>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit4">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<field name="email_from" position="after">
+                <field name="date" select="1"/>
+                <field name="priority"/>
+			</field>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit5">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<field name="badge_partner" position="after">
+				<separator colspan="4" string=""/>
+                <field name="group_id"/>
+                <field name="cavalier"/>
+			</field>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit9">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<field name="state" select="1" position="replace">
+				 <field name="state" select="1"/>
+                    <group col="4" colspan="2">
+                        <button name="cci_event_reg_done" string="Close" states="open" type="object"/>
+                        <button name="cci_event_reg_open" string="Open" states="draft" type="object"/>
+                        <button name="cci_event_reg_cancel" string="Cancel" states="draft,open" type="object"/>
+					</group>
+			</field>
+	</field>
+	</record>
+<!-- end event
+
+-->
+<!-- end reg form here -->
 
 <!-- view for  event.meeting.table -->
         <record model="ir.ui.view" id="view_event_meeting_table_form">
