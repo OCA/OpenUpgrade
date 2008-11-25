@@ -30,7 +30,44 @@ class mrp_repair(osv.osv):
     _name = 'mrp.repair'
     _description = 'Repairs Order'   
     
-    
+    def _amount_untaxed(self, cr, uid, ids, field_name, arg, context):
+        res = {}
+        cur_obj=self.pool.get('res.currency')
+        for repair in self.browse(cr, uid, ids):
+            res[repair.id] = 0.0
+            for line in repair.operations:
+                res[repair.id] += line.price_subtotal
+            for line in repair.fees_lines:
+                res[repair.id] += line.price_subtotal
+            cur = repair.pricelist_id.currency_id
+            res[repair.id] = cur_obj.round(cr, uid, cur, res[repair.id])
+        return res
+
+    def _amount_tax(self, cr, uid, ids, field_name, arg, context):
+        res = {}
+        cur_obj=self.pool.get('res.currency')
+        for repair in self.browse(cr, uid, ids):
+            val = 0.0
+            cur=repair.pricelist_id.currency_id
+            for line in repair.operations:
+                for c in self.pool.get('account.tax').compute(cr, uid, line.tax_id, line.price_unit, line.product_uom_qty, repair.partner_invoice_id.id, line.product_id, repair.partner_id):
+                    val+= c['amount']
+            for line in repair.fees_lines:
+                for c in self.pool.get('account.tax').compute(cr, uid, line.tax_id, line.price_unit, line.product_uom_qty, repair.partner_invoice_id.id, line.product_id, repair.partner_id):
+                    val+= c['amount']
+            res[repair.id]=cur_obj.round(cr, uid, cur, val)
+        return res
+
+    def _amount_total(self, cr, uid, ids, field_name, arg, context):
+        res = {}
+        untax = self._amount_untaxed(cr, uid, ids, field_name, arg, context)
+        tax = self._amount_tax(cr, uid, ids, field_name, arg, context)
+        cur_obj=self.pool.get('res.currency')
+        for id in ids:
+            repair=self.browse(cr, uid, [id])[0]
+            cur=repair.pricelist_id.currency_id
+            res[id] = cur_obj.round(cr, uid, cur, untax.get(id, 0.0) + tax.get(id, 0.0))
+        return res
     _columns = {
         'name' : fields.char('Name',size=24, required=True),
         'product_id': fields.many2one('product.product', string='Product to Repair', required=True, readonly=True, states={'draft':[('readonly',False)]}),
@@ -67,6 +104,9 @@ class mrp_repair(osv.osv):
         'quotation_notes' : fields.text('Quotation Notes'),
         'invoiced': fields.boolean('Invoiced', readonly=True),
         'repaired' : fields.boolean('Repaired', readonly=True),
+        'amount_untaxed': fields.function(_amount_untaxed, method=True, string='Untaxed Amount'),
+        'amount_tax': fields.function(_amount_tax, method=True, string='Taxes'),
+        'amount_total': fields.function(_amount_total, method=True, string='Total'),
     }
     
     _defaults = {
@@ -78,17 +118,18 @@ class mrp_repair(osv.osv):
     
     def copy(self, cr, uid, id, default=None,context={}):
         if not default:
-            default = {}
+            default = {}   
         default.update({
             'state':'draft',
-            'shipped':False,
+            'repaired':False,
             'invoiced':False,
             'invoice_id': False,
+            'picking_id': False,
             'name': self.pool.get('ir.sequence').get(cr, uid, 'mrp.repair'),
         })
         return super(mrp_repair, self).copy(cr, uid, id, default, context)
 
-
+    
     def onchange_product_id(self, cr, uid, ids, prod_id=False, move_id=False ):
         if not prod_id:
             return  {'value':{'prodlot_id': False , 'move_id': False,'guarantee_limit':False, 'location_id' :  False}}
@@ -102,7 +143,8 @@ class mrp_repair(osv.osv):
             }
             return { 'value' : result }
         return {}
-    
+    def button_dummy(self, cr, uid, ids, context={}):
+        return True
     def onchange_partner_id(self, cr, uid, ids, part):
         if not part:
             return {'value':{'address_id': False ,'partner_invoice_id' : False , 'pricelist_id' : self.pool.get('product.pricelist').search(cr,uid,[('type','=','sale')])[0]}}
@@ -212,26 +254,28 @@ class mrp_repair(osv.osv):
                             'origin':repair.name,
                             'account_id' : a,
                             'quantity' : operation.product_uom_qty,
+                            'invoice_line_tax_id': [(6,0,[x.id for x in operation.tax_id])],
                             'uos_id' : operation.product_uom.id,
                             'price_unit' : operation.price_unit,
                             'price_subtotal' : operation.product_uom_qty*operation.price_unit,
-                            'product_id' : operation.product_id.id
+                            'product_id' : operation.product_id and operation.product_id.id or False
                             })                   
                         self.pool.get('mrp.repair.line').write(cr, uid, [operation.id], {'invoiced':True,'invoice_line_id':invoice_line_id})
                 for fee in repair.fees_lines:
                     if fee.to_invoice == True:
                         if group:
-                            name = repair.name + '-' + fee.product_id.name
+                            name = repair.name + '-' + fee.name
                         else:
-                            name = fee.product_id.name
+                            name = fee.name
                         invoice_fee_id=self.pool.get('account.invoice.line').create(cr, uid, {
                             'invoice_id' : inv_id,
                             'name' : name,
                             'origin':repair.name,
                             'account_id' : a,
                             'quantity' : fee.product_uom_qty,
+                            'invoice_line_tax_id': [(6,0,[x.id for x in fee.tax_id])],
                             'uos_id' : fee.product_uom.id,
-                            'product_id' : fee.product_id.id,
+                            'product_id' : fee.product_id and fee.product_id.id or False,
                             'price_unit' : fee.price_unit,
                             'price_subtotal' : fee.product_uom_qty*fee.price_unit
                             })
@@ -345,6 +389,11 @@ class mrp_repair_line(osv.osv):
     _name = 'mrp.repair.line'
     _description = 'Repair Operations Lines'    
     
+    def copy(self, cr, uid, id, default=None, context={}):
+        if not default: default = {}
+        default.update( {'invoice_line_id':False,'move_ids':[],'invoiced':False,'state':'draft'})
+        return super(mrp_repair_line, self).copy(cr, uid, id, default, context)
+    
 
     def _amount_line(self, cr, uid, ids, field_name, arg, context):
         res = {}
@@ -359,10 +408,11 @@ class mrp_repair_line(osv.osv):
                 'repair_id': fields.many2one('mrp.repair', 'Repair Order Ref',ondelete='cascade', select=True),
                 'type': fields.selection([('add','Add'),('remove','Remove')],'Type'),
                 'to_invoice': fields.boolean('To Invoice'),                
-                'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok','=',True)],  required=True),
+                'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok','=',True)]),
                 'invoiced': fields.boolean('Invoiced',readonly=True),                
-                'price_unit': fields.float('Unit Price', required=True, digits=(16, int(config['price_accuracy']))),
-                'price_subtotal': fields.function(_amount_line, method=True, string='Subtotal',digits=(16, int(config['price_accuracy']))),                
+                'price_unit': fields.float('Unit Price', required=True, digits=(16, int(config['price_accuracy']))),                
+                'price_subtotal': fields.function(_amount_line, method=True, string='Subtotal',digits=(16, int(config['price_accuracy']))),  
+                'tax_id': fields.many2many('account.tax', 'repair_operation_line_tax', 'repair_operation_line_id', 'tax_id', 'Taxes'),              
                 'product_uom_qty': fields.float('Quantity (UoM)', digits=(16,2), required=True),
                 'product_uom': fields.many2one('product.uom', 'Product UoM', required=True),          
                 'invoice_line_id': fields.many2one('account.invoice.line', 'Invoice Line', readonly=True),   
@@ -432,6 +482,10 @@ mrp_repair_line()
 class mrp_repair_fee(osv.osv):
     _name = 'mrp.repair.fee'
     _description = 'Repair Fees line'
+    def copy(self, cr, uid, id, default=None, context={}):
+        if not default: default = {}
+        default.update( {'invoice_line_id':False,'invoiced':False})
+        return super(mrp_repair_fee, self).copy(cr, uid, id, default, context)
     def _amount_line(self, cr, uid, ids, field_name, arg, context):
         res = {}
         cur_obj=self.pool.get('res.currency')
@@ -442,12 +496,13 @@ class mrp_repair_fee(osv.osv):
         return res
     _columns = {
         'repair_id': fields.many2one('mrp.repair', 'Repair Order Ref', required=True, ondelete='cascade', select=True),
-        'name': fields.char('Description', size=8, select=True),
-        'product_id': fields.many2one('product.product', 'Product', required=True),
+        'name': fields.char('Description', size=64, select=True,required=True),
+        'product_id': fields.many2one('product.product', 'Product'),
         'product_uom_qty': fields.float('Quantity', digits=(16,2), required=True),
         'price_unit': fields.float('Unit Price', required=True),
         'product_uom': fields.many2one('product.uom', 'Product UoM', required=True),
         'price_subtotal': fields.function(_amount_line, method=True, string='Subtotal',digits=(16, int(config['price_accuracy']))),
+        'tax_id': fields.many2many('account.tax', 'repair_fee_line_tax', 'repair_fee_line_id', 'tax_id', 'Taxes'),
         'invoice_line_id': fields.many2one('account.invoice.line', 'Invoice Line', readonly=True),
         'to_invoice': fields.boolean('To Invoice'),
         'invoiced': fields.boolean('Invoiced',readonly=True),
@@ -460,6 +515,7 @@ class mrp_repair_fee(osv.osv):
         product_obj =  self.pool.get('product.product').browse(cr, uid, product)
         result = {}
         result['product_uom_qty']= product_uom_qty and product_uom_qty or 1
+        result['name']=product_obj.partner_ref
         if not pricelist:
             warning={
                 'title':'No Pricelist !',

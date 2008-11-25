@@ -192,8 +192,7 @@
             <font color="white"> </font>
           </para>
         </td>
-        <td>
-          <para style="P35">[[ o.partner_id.name ]]</para>
+        <td>          
           <para style="P34">[[ o.partner_id and adr_get(o.partner_id, 'default')['name'] ]]</para>
           <para style="P34">[[ o.partner_id and adr_get(o.partner_id, 'default')['street'] ]]</para>
           <para style="P34">[[ o.partner_id and adr_get(o.partner_id, 'default')['zip'] ]] [[ o.partner_id and adr_get(o.partner_id, 'default')['city'] ]]</para>
