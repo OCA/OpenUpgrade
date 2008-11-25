@@ -1,7 +1,7 @@
 <openerp>
     <data>
 <!-- event.event form view (not inherited) -->
-        <record model="ir.ui.view" id="event.view_event_form">
+<!--        <record model="ir.ui.view" id="event.view_event_form">
             <field name="name">Events</field>
             <field name="model">event.event</field>
             <field name="type">form</field>
@@ -77,7 +77,100 @@
                     </notebook>
                 </form>
             </field>
-        </record>
+        </record> -->
+
+<!-- start event here -->
+	<record model="ir.ui.view" id="event_event_form_inherit1">
+		<field name="name">event.event.form.cci</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+                <page string="Extra Info">
+                    <field name="fse_code" />
+                    <field name="fse_hours" />
+                    <field name="signet_type" select="2"/>
+                    <field name="account_analytic_id"/>
+                    <newline/>
+                    <field name="agreement_nbr"/>
+                    <field name="check_type"/>
+                    <newline/>
+                    <field name="note" colspan="4"/>
+                </page>
+			</notebook>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="event_event_form_inherit2">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<field name="parent_id" domain="[('parent_id','child_of','Event')]" string="Parent Category" position="replace">
+				<field name="parent_id" domain="[('parent_id','child_of','Event')]" string="Category"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="event_event_form_inherit3">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<button string="Confirm Event" name="button_confirm" states="draft" type="object" position="replace"/>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_event_form_inherit4">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<button string="Cancel Event" name="button_cancel" states="draft,confirm" type="object" position="replace"/>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_event_form_inherit5">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<button string="Event Done" name="button_done" states="confirm" type="object" position="replace"/>
+		</field>
+		</record>
+	<record model="ir.ui.view" id="event_event_form_inherit6">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<button string="Set To Draft" name="button_draft" states="confirm,cancel,done" type="object" position="replace"/>
+	</field>
+	</record>
+	<record model="ir.ui.view" id="event_event_form_inherit7">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<field name="state" select="1" position="replace">
+				 <field name="state" select="1"/>
+                    <group col="4" colspan="2">
+                        <button string="Cancel Event" name="cci_event_cancel" states="fixed,open" type="object"/>
+                        <button string="Confirm Date" name="cci_event_fixed" states="draft" type="object"/>
+                        <button string="Open Event" name="cci_event_open" states="fixed" type="object"/>
+                        <button string="Confirm Event" name="cci_event_confirm" states="open" type="object"/>
+                        <button string="Event is Running" name="cci_event_running" states="confirm" type="object"/>
+                        <button string="Event Done" name="cci_event_done" states="running" type="object"/>
+                        <button string="Close Event" name="cci_event_closed" states="done" type="object"/>
+					</group>
+			</field>
+	</field>
+	</record>
+<!-- end event form -->
 
 <!-- event.event tree view -->
     <record model="ir.ui.view" id="view_event_tree">
