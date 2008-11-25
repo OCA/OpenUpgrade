@@ -26,50 +26,30 @@ import pooler
 
 invoice_form = """<?xml version="1.0"?>
 <form string="Create invoices">
-    <separator colspan="4" string="Do you really want to create the invoices ?" />    
+    <separator colspan="4" string="Do you really want to create the invoices ?" />  
+    <field name="group"/>  
 </form>
 """
-
-
+invoice_fields = {	
+	'group': {
+		'string': 'Group by partner invoice address',
+		'type':'boolean'
+	},
+}
 
 ack_form = """<?xml version="1.0"?>
 <form string="Create invoices">
-    <separator string="Invoices created" />
+    <separator string="Invoices created" />    
 </form>"""
 
 ack_fields = {}
 
 def _makeInvoices(self, cr, uid, data, context):
-    order_obj = pooler.get_pool(cr.dbname).get('mrp.repair')
-    newinv = []
-    order = order_obj.browse( cr, uid, data['ids'])[0]
-    if order.invoice_method=='none':
-        return {
-            'domain': [('id','in', newinv)],
-            'name': 'Invoices',
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'res_model': 'account.invoice',
-            'view_id': False,
-            'context': "{'type':'out_refund'}",
-            'type': 'ir.actions.act_window'
-        }
-    if order.state== 'draft':
-        return {
-            'domain': [('id','in', newinv)],
-            'name': 'Invoices',
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'res_model': 'account.invoice',
-            'view_id': False,
-            'context': "{'type':'out_refund'}",
-            'type': 'ir.actions.act_window'
-        }
-        
-    newinv = order_obj.action_invoice_create(cr, uid, data['ids'])    
+    order_obj = pooler.get_pool(cr.dbname).get('mrp.repair')       
+    newinv = order_obj.action_invoice_create(cr, uid, data['ids'],group=data['form']['group'],context=context)    
         
     return {
-        'domain': [('id','=', newinv)],
+        'domain': [('id','in', newinv.values())],
         'name': 'Invoices',
         'view_type': 'form',
         'view_mode': 'tree,form',
@@ -78,7 +58,7 @@ def _makeInvoices(self, cr, uid, data, context):
         'context': "{'type':'out_refund'}",
         'type': 'ir.actions.act_window'
     }
-    return {}
+    
 
 class make_invoice(wizard.interface):
     states = {
@@ -86,7 +66,7 @@ class make_invoice(wizard.interface):
             'actions' : [],
             'result' : {'type' : 'form',
                     'arch' : invoice_form,
-                    'fields' : {},
+                    'fields' : invoice_fields,
                     'state' : [('end', 'Cancel'),('invoice', 'Create invoices') ]}
         },
         'invoice' : {

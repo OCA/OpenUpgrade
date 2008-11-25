@@ -160,35 +160,56 @@ class mrp_repair(osv.osv):
             mrp_line_obj.write(cr, uid, [l.id for l in repair.operations], {'state': 'cancel'})
         self.write(cr,uid,ids,{'state':'cancel'})
         return True
-    
-    def action_invoice_create(self, cr, uid, ids, grouped=False, states=['2binvoiced','done']):
-        inv_id=False        
-        for repair in self.browse(cr, uid, ids, context={}):
-            if repair.invoice_id:                                
+    def wkf_invoice_create(self, cr, uid, ids,*args):
+        res=self.action_invoice_create(cr, uid, ids)
+        return True
+    def action_invoice_create(self, cr, uid, ids, group=False,context={}):
+        res={}        
+        invoices_group = {}
+        for repair in self.browse(cr, uid, ids, context=context):
+            res[repair.id]=False
+            if repair.state in ('draft','cancel') or repair.invoice_id:                                
                 continue           
             if not (repair.partner_id.id and repair.partner_invoice_id.id):
                 raise osv.except_osv('No partner !','You have to select a partner in the repair form ! ')
+            comment=repair.quotation_notes
             if (repair.invoice_method != 'none'):
-                a = repair.partner_id.property_account_receivable.id
-                inv = {
-                    'name': repair.name +':'+repair.product_id.name,
-                    'origin':repair.name +':'+repair.product_id.name,
-                    'type': 'out_invoice',                    
-                    'account_id': a,
-                    'partner_id': repair.partner_id.id,
-                    'address_invoice_id': repair.address_id.id,
-                    'currency_id' : repair.pricelist_id.currency_id.id,
-                    'comment': repair.internal_notes,
-                }
-                inv_obj = self.pool.get('account.invoice')
-                inv_id = inv_obj.create(cr, uid, inv)
+                if group and repair.partner_invoice_id.id in invoices_group:
+                    inv_id= invoices_group[repair.partner_invoice_id.id]
+                    invoice=invoice_obj.browse(cr, uid,inv_id)      
+                    invoice_vals = {
+                        'name': invoice.name +', '+repair.name,
+                        'origin': invoice.origin+', '+repair.name,    
+                        'comment':(comment and (invoice.comment and invoice.comment+"\n"+comment or comment)) or (invoice.comment and invoice.comment or ''),
+                    }                 
+                    invoice_obj.write(cr, uid, [inv_id],invoice_vals,context=context)
+                else:
+                    a = repair.partner_id.property_account_receivable.id
+                    inv = {
+                        'name': repair.name ,
+                        'origin':repair.name ,
+                        'type': 'out_invoice',                    
+                        'account_id': a,
+                        'partner_id': repair.partner_id.id,
+                        'address_invoice_id': repair.address_id.id,
+                        'currency_id' : repair.pricelist_id.currency_id.id,
+                        'comment': repair.quotation_notes,
+                    }
+                    inv_obj = self.pool.get('account.invoice')
+                    inv_id = inv_obj.create(cr, uid, inv)
+                    invoices_group[repair.partner_invoice_id.id] = inv_id 
                 self.write(cr, uid, repair.id , {'invoiced':True,'invoice_id' : inv_id}) 
                                 
                 for operation in repair.operations:
-                    if operation.to_invoice == True:
+                    if operation.to_invoice == True:                                        
+                        if group:
+                            name = repair.name + '-' + operation.name
+                        else:
+                            name = operation.name
                         invoice_line_id=self.pool.get('account.invoice.line').create(cr, uid, {
                             'invoice_id' : inv_id, 
-                            'name' : operation.product_id.name,
+                            'name' : name,
+                            'origin':repair.name,
                             'account_id' : a,
                             'quantity' : operation.product_uom_qty,
                             'uos_id' : operation.product_uom.id,
@@ -199,9 +220,14 @@ class mrp_repair(osv.osv):
                         self.pool.get('mrp.repair.line').write(cr, uid, [operation.id], {'invoiced':True,'invoice_line_id':invoice_line_id})
                 for fee in repair.fees_lines:
                     if fee.to_invoice == True:
+                        if group:
+                            name = repair.name + '-' + fee.product_id.name
+                        else:
+                            name = fee.product_id.name
                         invoice_fee_id=self.pool.get('account.invoice.line').create(cr, uid, {
                             'invoice_id' : inv_id,
-                            'name' : fee.product_id.name,
+                            'name' : name,
+                            'origin':repair.name,
                             'account_id' : a,
                             'quantity' : fee.product_uom_qty,
                             'uos_id' : fee.product_uom.id,
@@ -210,9 +236,9 @@ class mrp_repair(osv.osv):
                             'price_subtotal' : fee.product_uom_qty*fee.price_unit
                             })
                         self.pool.get('mrp.repair.fee').write(cr, uid, [fee.id], {'invoiced':True,'invoice_line_id':invoice_fee_id})
-                
-        self.action_invoice_end(cr, uid, ids)
-        return inv_id
+                res[repair.id]=inv_id
+        #self.action_invoice_end(cr, uid, ids)
+        return res
     
 
     def action_invoice_cancel(self, cr, uid, ids, context={}):
@@ -251,11 +277,17 @@ class mrp_repair(osv.osv):
                 pass
             self.write(cr, uid, [order.id], val)
         return True     
-
-    def action_repair_done(self, cr, uid, ids, *args):        
+    def wkf_repair_done(self, cr, uid, ids, *args):
+        print args,ids
+        res=self.action_repair_done(cr,uid,ids)
+        return True
+        
+    def action_repair_done(self, cr, uid, ids, context={}):    
+        res={}    
         out_picking_id=False
         company = self.pool.get('res.users').browse(cr, uid, uid).company_id
-        for repair in self.browse(cr, uid, ids, context={}):                            
+        for repair in self.browse(cr, uid, ids, context=context): 
+            res[repair.id]=False
             location_dest_id = False
             for line in repair.operations:
                 out_picking_id=False
@@ -302,8 +334,8 @@ class mrp_repair(osv.osv):
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'stock.picking', out_picking_id, 'button_confirm', cr)
             self.write(cr, uid, [repair.id], {'state':'done','picking_id':out_picking_id})
-                
-        return True   
+            res[repair.id]=out_picking_id
+        return res   
         
            
 mrp_repair()

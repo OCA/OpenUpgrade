@@ -35,7 +35,7 @@
             <field name="name">done</field>
             <field name="flow_stop">True</field>
             <field name="kind">function</field>
-            <field name="action">action_repair_done()</field>
+            <field name="action">wkf_repair_done()</field>
             <field name="join_mode">XOR</field>
         </record>
        <!-- <record id="act_invoice" model="workflow.activity">
@@ -64,7 +64,7 @@
             <field name="wkf_id" ref="wkf_repair"/>
             <field name="name">invoice_end</field>
             <field name="kind">function</field>
-            <field name="action">action_invoice_create()</field>
+            <field name="action">wkf_invoice_create()</field>
         </record>
         <record id="act_repair_end" model="workflow.activity">
             <field name="wkf_id" ref="wkf_repair"/>
