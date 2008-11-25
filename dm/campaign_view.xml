@@ -96,9 +96,6 @@
                             <button name="state_draft_set" string="Set to draft" states="open,pending,close" type="object"/>
                         </group>
                     </page>
-                    <page string="Supplying">
-                        <field name="purchase_line_ids" colspan="4" nolabel="1" widget="one2many_list"/>
-                    </page>
                     <page string="Manufacturing">
                         <separator string="Manufacturing" colspan="4"/>
                         <field name="manufacturing_responsible_id"/>
@@ -122,6 +119,7 @@
                                 <field name="amount"/>
                             </tree>
                         </field>
+                        <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
                     </page>
                     <page string="Desktop Publishing">
                         <separator string="Desktop Publishing" colspan="4"/>
@@ -137,6 +135,7 @@
                                 <field name="date_close" string="Real Date"/>
                             </tree>
                         </field>
+                        <field name="dtp_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
                     </page>
                     <page string="Customers Files">
                         <group colspan="2" col="2">
@@ -160,6 +159,7 @@
                                 <field name="date_close" string="Real Date"/>
                             </tree>
                         </field>
+                        <field name="cust_file_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
                     </page>
                     <page string="Items Procurement">
                         <separator string="Items Procurement" colspan="4"/>
@@ -175,6 +175,7 @@
                                 <field name="date_close" string="Real Date"/>
                             </tree>
                         </field>
+                        <field name="item_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
                     </page>
                     <page string="Notes">
                         <separator string="Notes" colspan="4"/>
@@ -1296,5 +1297,14 @@
         domain="[('camp_id','=',active_id)]"
     />
 
+    <act_window name="Purchase Lines"
+        res_model="dm.campaign.purchase_line"
+        src_model="dm.campaign"
+        view_type="form"
+        view_mode="tree,form"
+        id="act_campaign_purchase_line_opened"
+        domain="[('campaign_id','=',active_id)]"
+    />
+    
 </data>
 </openerp>

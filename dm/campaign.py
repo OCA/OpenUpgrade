@@ -200,13 +200,12 @@ class dm_overlay(osv.osv):
     }
 dm_overlay()
 
-
 class one2many_mod_task(fields.one2many):
     def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
         if not context:
             context = {}
         if not values:
-                values = {}
+             values = {}
         res = {}
         for id in ids:
             res[id] = []
@@ -226,8 +225,42 @@ class one2many_mod_task(fields.one2many):
                 ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',project_ids),('type','=','Mailing Manufacturing')], limit=self._limit)
             for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
                 res[id].append( r['id'] )
-        return res
+        return res 
 
+class one2many_mod_pline(fields.one2many):
+    def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
+        if not context:
+            context = {}
+        if not values:
+                values = {}
+        res = {}
+        for id in ids:
+            res[id] = []
+        cr.execute("select id from product_category where name='Direct Marketing'")
+        direct_id = cr.fetchone()
+        print direct_id
+        sql="select id,name from product_category where parent_id=%d" %direct_id
+        cr.execute(sql)
+        res_type = cr.fetchall()
+        type={}
+        for x in res_type:
+            type[x[1]]=x[0]
+        print type    
+        for id in ids:
+            if name[0] == 'd':
+                ids2 = obj.pool.get(self._obj).search(cr, user, [('campaign_id','=',id),('product_category','=',type['DTP'])], limit=self._limit)
+            elif name[0] == 'm':
+                ids2 = obj.pool.get(self._obj).search(cr, user, [('campaign_id','=',id),('product_category','=',type['Mailing Manufacturing'])], limit=self._limit)
+            elif name[0] == 'c':
+                ids2 = obj.pool.get(self._obj).search(cr, user, [('campaign_id','=',id),('product_category','=',type['Customers List'])], limit=self._limit)
+            elif name[0] == 'i':
+                ids2 = obj.pool.get(self._obj).search(cr, user, [('campaign_id','=',id),('product_category','=',type['Items'])], limit=self._limit)
+            else :
+                ids2 = obj.pool.get(self._obj).search(cr, user, [('campaign_id','=',id),('product_category','=',type['Mailing Manufacturing'])], limit=self._limit)
+            for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
+                res[id].append( r['id'] )
+        return res
+    
 class dm_campaign(osv.osv):
     _name = "dm.campaign"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
@@ -379,7 +412,7 @@ class dm_campaign(osv.osv):
         'currency_id' : fields.many2one('res.currency','Currency',ondelete='cascade'),
         'manufacturing_cost_ids': fields.one2many('dm.campaign.manufacturing_cost','campaign_id','Manufacturing Costs'),
         'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
-        'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_id', 'Purchase Lines'),
+#        'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_id', 'Purchase Lines'),
         'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
         'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'}),
         'dtp_task_ids': one2many_mod_task('project.task', 'project_id', "DTP tasks",
@@ -394,6 +427,14 @@ class dm_campaign(osv.osv):
         'quantity_wanted_total' : fields.function(_quantity_wanted_total, string='Total Wanted Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_usable_total' : fields.function(_quantity_usable_total, string='Total Usable Quantity',type="char",size="64",method=True,readonly=True),
+        'dtp_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "DTP Purchase Lines",
+                                                        domain=[('product_category','ilike','DTP')], context={'product_category':'DTP'}),
+        'manufacturing_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Manufacturing Purchase Lines",
+                                                        domain=[('product_category','=','Mailing Manufacturing')],context={'product_category':'Mailing Manufacturing'}),
+        'cust_file_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Customer Files Purchase Lines",
+                                                        domain=[('product_category','=','Customers List')], context={'product_category':'Customers List'}),
+        'item_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Items Purchase Lines",
+                                                        domain=[('product_category','=','Items')], context={'product_category':'Items'}),
     }
 
     _defaults = {
@@ -1399,17 +1440,20 @@ class dm_campaign_purchase_line(osv.osv):
 
         return {'value':value}
 
+    def _default_category_get(self, cr, uid, context):
+        if 'product_category' in context and context['product_category']:
+            cr.execute('select id from product_category where name=%s order by id limit 1', (context['product_category'],))
+        else:
+            cr.execute('select id from product_category where name=%s order by id limit 1', ('Mailing Manufacturing',))
+        res = cr.fetchone()
+        return str(res[0]) or False
+
     def _product_category_get(self,cr,uid,context={}):
         type_obj = self.pool.get('product.category')
         dmcat_id = type_obj.search(cr,uid,[('name','ilike','Direct Marketing')])[0]
         type_ids = type_obj.search(cr,uid,[('parent_id','=',dmcat_id)])
         type = type_obj.browse(cr,uid,type_ids)
-        return map(lambda x : [str(x.id),x.name],type)
-
-    def _default_category_get(self, cr, uid, *args):
-        cr.execute('select id from product_category where name=%s order by id limit 1', ('Mailing Manufacturing',))
-        res = cr.fetchone()
-        return str(res[0]) or False
+        return map(lambda x : [str(x.id),x.name],type) 
 
     _columns = {
         'campaign_id': fields.many2one('dm.campaign', 'Campaign'),
