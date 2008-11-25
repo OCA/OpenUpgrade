@@ -123,8 +123,7 @@ class mrp_repair(osv.osv):
             return lst_move
         if len(move_ids): 
             move_id = move_ids[0]
-            move = get_last_move(self.pool.get('stock.move').browse(cr, uid, move_id))
-            print move
+            move = get_last_move(self.pool.get('stock.move').browse(cr, uid, move_id))            
             product = self.pool.get('product.product').browse(cr, uid, product_id)
             date = move.date_planned
             limit = mx.DateTime.strptime(date, '%Y-%m-%d %H:%M:%S') + RelativeDateTime(months=product.warranty)            
@@ -197,19 +196,20 @@ class mrp_repair(osv.osv):
                             'price_subtotal' : operation.product_uom_qty*operation.price_unit,
                             'product_id' : operation.product_id.id
                             })                   
-                        self.pool.get('mrp.repair.line').write(cr, uid, [operation.id], {'invoiced':'True','invoice_line_id':invoice_line_id})
+                        self.pool.get('mrp.repair.line').write(cr, uid, [operation.id], {'invoiced':True,'invoice_line_id':invoice_line_id})
                 for fee in repair.fees_lines:
-                    invoice_fee_id=self.pool.get('account.invoice.line').create(cr, uid, {
-                        'invoice_id' : inv_id,
-                        'name' : fee.product_id.name,
-                        'account_id' : a,
-                        'quantity' : fee.product_uom_qty,
-                        'uos_id' : fee.product_uom.id,
-                        'product_id' : fee.product_id.id,
-                        'price_unit' : fee.price_unit,
-                        'price_subtotal' : fee.product_uom_qty*fee.price_unit
-                        })
-                    self.pool.get('mrp.repair.fee').write(cr, uid, [fee.id], {'invoice_line_id':invoice_fee_id})
+                    if fee.to_invoice == True:
+                        invoice_fee_id=self.pool.get('account.invoice.line').create(cr, uid, {
+                            'invoice_id' : inv_id,
+                            'name' : fee.product_id.name,
+                            'account_id' : a,
+                            'quantity' : fee.product_uom_qty,
+                            'uos_id' : fee.product_uom.id,
+                            'product_id' : fee.product_id.id,
+                            'price_unit' : fee.price_unit,
+                            'price_subtotal' : fee.product_uom_qty*fee.price_unit
+                            })
+                        self.pool.get('mrp.repair.fee').write(cr, uid, [fee.id], {'invoiced':True,'invoice_line_id':invoice_fee_id})
                 
         self.action_invoice_end(cr, uid, ids)
         return inv_id
@@ -391,7 +391,7 @@ class mrp_repair_line(osv.osv):
         if type == 'add':
             return {'value':{'to_invoice':to_invoice,'location_id': stock_id , 'location_dest_id' : produc_id}}
         if type == 'remove':
-            return {'value':{'to_invoice':to_invoice,'location_id': produc_id}}
+            return {'value':{'to_invoice':to_invoice,'location_id': produc_id,'location_dest_id':False}}
         
     
     
@@ -404,7 +404,7 @@ class mrp_repair_fee(osv.osv):
         res = {}
         cur_obj=self.pool.get('res.currency')
         for line in self.browse(cr, uid, ids):
-            res[line.id] = line.price_unit * line.product_uom_qty
+            res[line.id] = line.to_invoice and line.price_unit * line.product_uom_qty or 0
             cur = line.repair_id.pricelist_id.currency_id
             res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
         return res
@@ -417,9 +417,11 @@ class mrp_repair_fee(osv.osv):
         'product_uom': fields.many2one('product.uom', 'Product UoM', required=True),
         'price_subtotal': fields.function(_amount_line, method=True, string='Subtotal',digits=(16, int(config['price_accuracy']))),
         'invoice_line_id': fields.many2one('account.invoice.line', 'Invoice Line', readonly=True),
+        'to_invoice': fields.boolean('To Invoice'),
+        'invoiced': fields.boolean('Invoiced',readonly=True),
     }
     
-    def product_id_change(self, cr, uid, ids, pricelist, product, uom=False, product_uom_qty = 0,partner_id=False ):
+    def product_id_change(self, cr, uid, ids, pricelist, product, uom=False, product_uom_qty = 0,partner_id=False,guarantee_limit=False ):
         if not product:
             return {'value': {'product_uom_qty' : 0.0, 'product_uom': False},'domain': {'product_uom': []}}
         
@@ -447,7 +449,11 @@ class mrp_repair_fee(osv.osv):
             else:
                 result.update({'price_unit': price})
         if not uom:
-            result['product_uom'] = product_obj.uom_id.id        
+            result['product_uom'] = product_obj.uom_id.id 
+        to_invoice=False
+        if guarantee_limit and now()> mx.DateTime.strptime(guarantee_limit, '%Y-%m-%d'):
+            to_invoice=True  
+        result['to_invoice']=to_invoice     
         return {'value': result}
     
 mrp_repair_fee()

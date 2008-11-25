@@ -95,11 +95,16 @@
                             <form string="Fees Line">
                                     <notebook>
                                         <page string="Fees Line">   
-		                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)" colspan="4"/>
-		                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
+		                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id,parent.guarantee_limit)" colspan="4"/>
+		                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id,parent.guarantee_limit)"/>
 		                                    <field name="product_uom" string="UoM" /> 
 		                                    <field name="price_unit"/>  
 		                                    <field name="price_subtotal"/>  
+                                            <newline/>
+                                            <group colspan="2">                                                
+                                                <field name="to_invoice"/>
+    		                                    <field name="invoiced"/>  
+                                            </group>
                                          </page>
 										 <page string="History" groups="base.group_extended">                                            
                                             <field colspan="4" name="invoice_line_id" />                                            
@@ -107,11 +112,12 @@
                                       </notebook>                     
                                 </form>
                                 <tree string="Fees lines" editable="bottom">
-                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
-                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
+                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id,parent.guarantee_limit)"/>
+                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id,parent.guarantee_limit)"/>
                                     <field name="product_uom" string="UoM"/>
                                     <field name="price_unit"/>  
-                                    <field name="price_subtotal"/>                                  
+                                    <field name="price_subtotal"/>  
+                                    <field name="to_invoice"/>                                
                                 </tree>
                                 </field>
                         </page>
