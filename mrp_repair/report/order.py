@@ -37,6 +37,8 @@ class order(report_sxw.rml_parse):
         total = 0.0
         for operation in repair.operations:
            total+=operation.price_subtotal 
+        for fee in repair.fees_lines:
+           total+=fee.price_subtotal
         return total
 report_sxw.report_sxw('report.repair.order','mrp.repair','addons/mrp_repair/report/order.rml',parser=order)
 

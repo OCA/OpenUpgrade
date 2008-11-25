@@ -27,28 +27,45 @@
                             <newline/>
                             <separator colspan="4" string="Operations"/>
                             <field colspan="4" mode="tree,form" name="operations" nolabel="1" widget="one2many_list">
-                                <form string="Operations">                                   
-                                    <field name="name"/>
-                                    <field name="type"  on_change="onchange_operation_type(type)"/> 
-                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
-                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
-                                    <field name="product_uom" string="UoM"/>
-                                    <field name="price_unit"/>     
-                                    <field name="price_subtotal"/>  
-                                    <field name="to_invoice"/>
-                                    <field name="invoiced"/>  
-                                    <field name="invoice_line_id"/>          
-                                    <newline/>
-                                    <field name="state"/>
+                                <form string="Operations"> 
+                                    <notebook>
+                                        <page string="Repair Line">                                                                      
+		                                    <field name="name" colspan="4"/>		                                     
+		                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)" colspan="4"/>                                            
+		                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
+		                                    <field name="product_uom" string="UoM"/>
+		                                    <field name="price_unit"/>     
+		                                    <field name="price_subtotal"/> 		                                    
+		                                    <field name="location_id"/>
+		                                    <field name="location_dest_id"/>
+                                            <newline/>
+                                            <field name="type"  on_change="onchange_operation_type(type,parent.guarantee_limit)"/>
+                                            <group colspan="2">                                                
+                                                <field name="to_invoice"/>
+    		                                    <field name="invoiced"/>  
+                                            </group>
+                                            <separator colspan="4" string="States"/>
+                                            <field name="state"/>
+										</page>
+                                        <page string="History" groups="base.group_extended">
+                                            <separator colspan="4" string="Invoice Lines"/>
+                                            <field colspan="4" name="invoice_line_id" nolabel="1"/>                                      
+                                            
+                                            <separator colspan="4" string="Stock Moves"/>
+                                            <field colspan="4" name="move_ids" nolabel="1" widget="many2many"/>
+                                        </page>
+		                                         
+                                     </notebook>
                                 </form>
                                 <tree string="Operations lines" editable="bottom">
-                                    <field name="type"/>
-                                    <field name="name"/>
-                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
+                                    <field name="type" on_change="onchange_operation_type(type,parent.guarantee_limit)"/>                                    
+                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>                                    
+                                    <field name="location_id"/>
+                                    <field name="location_dest_id"/> 
                                     <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
                                     <field name="product_uom" string="UoM"/>                                    
                                     <field name="price_unit"/>   
-                                    <field name="price_subtotal"/>                                 
+                                    <field name="price_subtotal"/>                                
                                     <field name="to_invoice"/>
                                 </tree>
                             </field>
@@ -76,16 +93,25 @@
                             <separator colspan="4" string="Fees"/>
                             <field colspan="4" mode="tree,form" name="fees_lines" nolabel="1" widget="one2many_list">
                             <form string="Fees Line">
-                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
-                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
-                                    <field name="product_uom" string="UoM" /> 
-                                    <field name="price_unit"/>                                   
+                                    <notebook>
+                                        <page string="Fees Line">   
+		                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)" colspan="4"/>
+		                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
+		                                    <field name="product_uom" string="UoM" /> 
+		                                    <field name="price_unit"/>  
+		                                    <field name="price_subtotal"/>  
+                                         </page>
+										 <page string="History" groups="base.group_extended">                                            
+                                            <field colspan="4" name="invoice_line_id" />                                            
+                                        </page>     
+                                      </notebook>                     
                                 </form>
                                 <tree string="Fees lines" editable="bottom">
                                     <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
                                     <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
                                     <field name="product_uom" string="UoM"/>
-                                    <field name="price_unit"/>                                    
+                                    <field name="price_unit"/>  
+                                    <field name="price_subtotal"/>                                  
                                 </tree>
                                 </field>
                         </page>
@@ -94,6 +120,10 @@
                             <field colspan="4" name="internal_notes" nolabel="1"/>
                             <separator colspan="4" string="Quotation Notes"/>
                             <field colspan="4" name="quotation_notes" nolabel="1"/>
+                        </page>
+                        <page string="History" groups="base.group_extended">                            
+                            <!-- <field name="invoice_id"/> -->
+                            <field name="picking_id"/>
                         </page>
                     </notebook>
                 </form>

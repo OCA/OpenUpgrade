@@ -104,7 +104,8 @@ class ecommerce_sale_order(osv.osv):
             address_contact = False
             address_invoice = False
             address_delivery = False
-
+        
+       
             for tmp_addr_var in data_partner.address:
                 if tmp_addr_var.type == 'contact':
                     address_contact = tmp_addr_var.id
@@ -137,7 +138,7 @@ class ecommerce_sale_order(osv.osv):
                     'product_uom': line.product_uom_id.id,
                     'price_unit': line.price_unit,
                 }
-                val_new = self.pool.get('sale.order.line').product_id_change(cr, uid, None, pricelist_id, line.product_id.id, line.product_qty, line.product_uom_id.id, name=line.name)['value']
+                val_new = self.pool.get('sale.order.line').product_id_change(cr, uid, None, pricelist_id, line.product_id.id, line.product_qty, line.product_uom_id.id, name=line.name, partner_id=partner_id)['value']
                 del val_new['price_unit']
                 del val_new['th_weight']
                 val_new['product_uos'] = 'product_uos' in val_new and val_new['product_uos'] and val_new['product_uos'][0] or False
@@ -156,7 +157,8 @@ class ecommerce_sale_order(osv.osv):
                 'partner_order_id':address_contact,  
                 'partner_shipping_id':address_delivery,  
                 'pricelist_id': order.pricelist_id.id,
-                'order_line':order_lines
+                'order_line':order_lines,
+                'order_policy': 'manual'
             })      
             get_ids.extend(ids)
             get_ids.append(int(order_id))
@@ -192,16 +194,21 @@ class ecommerce_sale_order(osv.osv):
         inv_id = []
         datas = {}
         ids.append(so_ids)
+    
         create_wf = self.order_create_function(cr, uid, ids, context={})
-
         ecom_soid = create_wf[0]
         sale_orderid = create_wf[1]
-
+    
         wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'order_confirm', cr)
         wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'manual_invoice', cr)
-        
+        cr.commit()
         get_data = self.pool.get('sale.order').browse(cr,uid,sale_orderid)
-        invoice_id = get_data.invoice_ids[0].id
+             
+        if(get_data.invoice_ids):              
+            invoice_id = get_data.invoice_ids[0].id
+        else:
+            raise osv.except_osv('Error','Yet Not Create Invoice!');
+         
         wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_open', cr)
         inv_id.append(invoice_id)
       
