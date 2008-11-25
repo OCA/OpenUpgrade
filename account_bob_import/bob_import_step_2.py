@@ -817,7 +817,7 @@ for row in reader_partner_matching:
 def _get_partner_id(char):
     if bob_conv_matching.has_key(char):
         return bob_conv_matching[char]
-    return 'account_bob_import.res_partner_destroyed' #or char ?
+    return 'res_partner_destroyed'
 partner_dict['GRAMME'] = ''
 
 
