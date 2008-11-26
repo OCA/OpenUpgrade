@@ -59,16 +59,16 @@ Click on 'Get Complete Scenario' to get the document explaining the details of t
                     <group colspan="4" col="5">
                         <field name="state" align="0.0"/>
                         <button
-                            string="Start Scenario" 
-                            name="confirm" 
-                            states="not running" 
+                            string="Start Scenario"
+                            name="confirm"
+                            states="not running"
                             type="object"
                             icon="gtk-ok"/>
                         <button
                             string="Continue to Strategic Game"
-                            name="next_phase"
-                            states="end"
-                            type="object"/>
+                            name="%(prepare_phase2_id)d"
+                            states="done"
+                            type="action"/>
                         <button
                             string="Get Complete Scenario"
                             name="next_phase" states="not running" type="object"

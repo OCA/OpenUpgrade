@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_game_phase2_form">
+            <field name="name">profile.game.retail.phase2.form</field>
+            <field name="model">profile.game.retail.phase2</field>
+            <field name="arch" type="xml">
+                <form string="Business Game Phase Two">
+                    <separator string="Introduction Phase Two" colspan="4"/>
+                    <label colspan="4" align="0.0" angle="0">This business game will help you to discover Open ERP and it's enterprise management processes.
+The game is based on a company called 'GoodSound' selling audio and video hardware and organising sonorisation events.
+
+The game is structured into two phases:
+   1. You will discover the Open ERP interface through a complete sale flow: from the quotation to the invoice,
+   2. The goal of the next phase is to make some strategic choices in the system to increase company's profitability
+      within a few turns of one year each.
+
+Click on the button "Continue To Next Year" to begin the phase Two.
+
+After this, you will have to disconnect form the system and log in using the different users to process the
+above steps, in the right order, of a complete sale flow. You can use the shortcuts of each user to process
+the required steps.
+
+Click on 'Get Complete Scenario' to get the document explaining the details of the game.</label>
+                    <group colspan="1" col="2">
+                        <separator string="1. Salesman (role1)" colspan="2"/>
+                        <label string="(login: sale, password: sale)" colspan="2"/>
+                        <field name="step1"/>
+                        <field name="step2"/>
+                        <field name="step3"/>
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="3. Logistic (role2)" colspan="2"/>
+                        <label string="(login: logistic, password: logistic)" colspan="2"/>
+                        <field name="step4"/>
+                        <field name="step5"/>
+                        <field name="step6"/>
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="4. Accountant (role3)" colspan="2"/>
+                        <label string="(login: finance, password: finance)" colspan="2"/>
+                        <field name="step7"/>
+                        <field name="step8"/>
+                        <field name="step9"/>
+                    </group>
+                    <newline/>
+                    <separator string="Game Status" colspan="4"/>
+                    <group colspan="4" col="5">
+                        <field name="state" align="0.0"/>
+                        <button
+                            string="Continue To Next Year"
+                            name="confirm"
+                            states="not running"
+                            type="object"
+                            icon="gtk-ok"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_game_phase2_form">
+            <field name="name">Business Game</field>
+            <field name="res_model">profile.game.retail.phase2</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="open_board_game2" model="ir.actions.act_window">
+            <field name="name">Business Game Dashboard</field>
+            <field name="res_model">profile.game.retail.phase2</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" eval="False"/>
+        </record>
+
+     </data>
+</openerp>

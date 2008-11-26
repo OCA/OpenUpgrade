@@ -54,6 +54,7 @@ class profile_game_retail_phase_one(osv.osv):
             ('deliver','Deliver Products'),
             ('invoice_create','Confirm Invoice'),
             ('invoice_print','Print Invoice'),
+            ('started_phase2','Started Phase Two'),
             ('done','Done'),
         ], 'State', required=True,readonly=True)
     }
@@ -129,8 +130,8 @@ class profile_game_retail_phase_one(osv.osv):
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
         pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid:
-            #proc_obj = self.pool.get('mrp.procurement')
-            #proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
+            proc_obj = self.pool.get('mrp.procurement')
+            proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
             print 'Complex'
             return self.write(cr,uid,pid,{'step3':True,'state':'print_rfq'})
         print 'False'

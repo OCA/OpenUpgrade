@@ -19,40 +19,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name":"Bussiness Game",
-    "version":"1.0",
-    "author":"Tiny",
-    "category":"Profile",
-    "depends":[
-        "board",
-        "base",
-        "game_scenario",
-        "purchase_approve",
-        "sale",
-        "sale_wo_production",
-        "stock_planning",
-        "crm_configuration",
-        "mrp_jit"
-    ],
-    "init_xml":[
-        "profile_game_data.xml",
-        "profile_game_scenario.xml",
-    ],
-    "demo_xml":[],
-    "update_xml":[
-        "profile_game_view.xml",
-        "wizard_game_phase2.xml",
-        "profile_game_partner.xml",
-        "profile_game_phase1.xml",
-        "profile_game_phase2.xml",
-        "profile_game_config.xml",
-        "profile_game_account_data.xml",
-        "profile_game_product.xml",
-        "security/ir.model.access.csv"
-    ],
-    "active":False,
-    "installable":True,
-}
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+import prepare_phase2
