@@ -24,7 +24,7 @@ import time
 from osv import fields,osv
 import netsvc
 import mx.DateTime
-from mx.DateTime import RelativeDateTime, now, DateTime, localtime
+from mx.DateTime import RelativeDateTime, today, DateTime, localtime
 from tools import config
 class mrp_repair(osv.osv):
     _name = 'mrp.repair'
@@ -468,7 +468,7 @@ class mrp_repair_line(osv.osv):
         stock_id = self.pool.get('stock.location').search(cr, uid, [('name','=','Stock')])[0]
         produc_id = self.pool.get('stock.location').search(cr, uid, [('name','=','Default Production')])[0]
         to_invoice=False
-        if guarantee_limit and now()> mx.DateTime.strptime(guarantee_limit, '%Y-%m-%d'):
+        if guarantee_limit and today() > mx.DateTime.strptime(guarantee_limit, '%Y-%m-%d'):
             to_invoice=True
         if type == 'add':
             return {'value':{'to_invoice':to_invoice,'location_id': stock_id , 'location_dest_id' : produc_id}}
@@ -539,7 +539,7 @@ class mrp_repair_fee(osv.osv):
         if not uom:
             result['product_uom'] = product_obj.uom_id.id 
         to_invoice=False
-        if guarantee_limit and now()> mx.DateTime.strptime(guarantee_limit, '%Y-%m-%d'):
+        if guarantee_limit and today() > mx.DateTime.strptime(guarantee_limit, '%Y-%m-%d'):
             to_invoice=True  
         result['to_invoice']=to_invoice     
         return {'value': result}
