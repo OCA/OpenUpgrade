@@ -32,13 +32,12 @@ class profile_game_retail_phase_two(osv.osv):
         'step2': fields.boolean('Validate Purchase Orders', readonly=True),
         'step3': fields.boolean('Confirm all draft supplier invoices', readonly=True),
         #logistic
-        'step4': fields.boolean('Run the scheduler', readonly=True),
-        'step5': fields.boolean('Receive Products from Supplier', readonly=True),
-        'step6': fields.boolean('Deliver Products to Customer', readonly=True),
+        'step4': fields.boolean('Receive Products from Supplier', readonly=True),
+        'step5': fields.boolean('Deliver Products to Customer', readonly=True),
          #financial
-        'step7': fields.boolean('Pay all supplier invoices', readonly=True),
-        'step8': fields.boolean('Validate all Draft customer invoices ', readonly=True),
-        'step9': fields.boolean('Pay all open customer invoices', readonly=True),
+        'step6': fields.boolean('Pay all supplier invoices', readonly=True),
+        'step7': fields.boolean('Validate all Draft customer invoices ', readonly=True),
+        'step8': fields.boolean('Pay all open customer invoices', readonly=True),
 
         'state' :fields.selection([
             ('not running','Not Running'),
