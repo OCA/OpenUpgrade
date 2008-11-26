@@ -130,9 +130,12 @@ class mrp_repair(osv.osv):
         return super(mrp_repair, self).copy(cr, uid, id, default, context)
 
     
-    def onchange_product_id(self, cr, uid, ids, prod_id=False, move_id=False ):
+    def onchange_product_id(self, cr, uid, ids, product_id=None):
+        return {'value': {'prodlot_id': False, 'move_id': False, 'guarantee_limit' :False, 'location_id':  False}}
+    
+    def onchange_move_id(self, cr, uid, ids, prod_id=False, move_id=False):
         if not prod_id:
-            return  {'value':{'prodlot_id': False , 'move_id': False,'guarantee_limit':False, 'location_id' :  False}}
+            return  {'value':{'prodlot_id': False, 'move_id': False, 'guarantee_limit' :False, 'location_id':  False}}
         if move_id:
             move =  self.pool.get('stock.move').browse(cr, uid, move_id)
             product = self.pool.get('product.product').browse(cr, uid, prod_id)
@@ -142,7 +145,8 @@ class mrp_repair(osv.osv):
                 'guarantee_limit': limit.strftime('%Y-%m-%d'),
             }
             return { 'value' : result }
-        return {}
+    
+    
     def button_dummy(self, cr, uid, ids, context={}):
         return True
     def onchange_partner_id(self, cr, uid, ids, part):
@@ -154,14 +158,14 @@ class mrp_repair(osv.osv):
         return {'value':{'address_id': addr['delivery'], 'partner_invoice_id' :  addr['invoice'] ,  'pricelist_id': pricelist}}
 
     
-    def onchange_lot_id(self, cr, uid, ids, lot,product_id ):
+    def onchange_lot_id(self, cr, uid, ids, lot, product_id):
         if not lot:
-            return {'value':{'location_id': False , 'move_id' :  False}}
-        lot_info = self.pool.get('stock.production.lot').browse(cr, uid, [lot])[0]
+            return {'value':{'location_id': False, 'move_id':  False}}
+        lot_info = self.pool.get('stock.production.lot').browse(cr, uid, lot)
         move_ids = self.pool.get('stock.move').search(cr, uid,[('prodlot_id','=',lot)] )  
-        def get_last_move(lst_move):            
-            if lst_move.move_dest_id:
-                lst_move=get_last_move(lst_move.move_dest_id)
+        def get_last_move(lst_move):
+            while lst_move.move_dest_id and lst_move.state == 'done':
+                lst_move = lst_move.move_dest_id
             return lst_move
         if len(move_ids): 
             move_id = move_ids[0]
