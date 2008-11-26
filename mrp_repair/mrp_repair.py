@@ -385,7 +385,44 @@ class mrp_repair(osv.osv):
 mrp_repair()
 
 
-class mrp_repair_line(osv.osv):
+class ProductChangeMixin(object):
+    def product_id_change(self, cr, uid, ids, pricelist, product, uom=False, product_uom_qty=0, partner_id=False, guarantee_limit=False):
+        result = {}
+        warning = {}       
+        
+        if not product_uom_qty:
+            product_uom_qty = 1
+        result['product_uom_qty'] = product_uom_qty 
+
+        if product:
+            product_obj =  self.pool.get('product.product').browse(cr, uid, product)
+            result['name'] = product_obj.partner_ref
+            result['product_uom'] = product_obj.uom_id and product_obj.uom_id.id or False
+            if not pricelist:
+                warning={
+                    'title':'No Pricelist !',
+                    'message':
+                        'You have to select a pricelist in the Repair form !\n'
+                        'Please set one before choosing a product.'
+                }
+            else:
+                price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist],
+                            product, product_uom_qty, partner_id, {'uom': uom,})[pricelist]
+            
+                if price is False:
+                     warning={
+                        'title':'No valid pricelist line found !',
+                        'message':
+                            "Couldn't find a pricelist line matching this product and quantity.\n"
+                            "You have to change either the product, the quantity or the pricelist."
+                    }
+                else:
+                    result.update({'price_unit': price, 'price_subtotal' :price*product_uom_qty})
+        
+        return {'value': result, 'warning': warning}
+     
+
+class mrp_repair_line(osv.osv, ProductChangeMixin):
     _name = 'mrp.repair.line'
     _description = 'Repair Operations Lines'    
     
@@ -394,7 +431,6 @@ class mrp_repair_line(osv.osv):
         default.update( {'invoice_line_id':False,'move_ids':[],'invoiced':False,'state':'draft'})
         return super(mrp_repair_line, self).copy(cr, uid, id, default, context)
     
-
     def _amount_line(self, cr, uid, ids, field_name, arg, context):
         res = {}
         cur_obj=self.pool.get('res.currency')
@@ -403,6 +439,7 @@ class mrp_repair_line(osv.osv):
             cur = line.repair_id.pricelist_id.currency_id
             res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
         return res
+
     _columns = {
                 'name' : fields.char('Name',size=64,required=True),
                 'repair_id': fields.many2one('mrp.repair', 'Repair Order Ref',ondelete='cascade', select=True),
@@ -426,42 +463,6 @@ class mrp_repair_line(osv.osv):
                  'product_uom_qty':lambda *a:1,                 
     }
      
-     
-    def product_id_change(self, cr, uid, ids, pricelist, product, uom=False, product_uom_qty = 0,partner_id=False ):
-        if not product:
-            return {'value': {'product_uom_qty' : 0.0, 'product_uom': False},'domain': {'product_uom': []}}
-        product_obj =  self.pool.get('product.product').browse(cr, uid, product)
-        result = {}
-        domain = {}
-        warning = {}       
-        result['name'] = product_obj.partner_ref
-        result['product_uom'] = product_obj.uom_id and product_obj.uom_id.id or False
-        result['product_uom_qty']= product_uom_qty and product_uom_qty or 1
-        if not pricelist:
-            warning={
-                'title':'No Pricelist !',
-                'message':
-                    'You have to select a pricelist in the Repair form !\n'
-                    'Please set one before choosing a product.'
-                }
-        else:
-            price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist],
-                    product, product_uom_qty, partner_id, {
-                        'uom': uom,
-                        })[pricelist]
-            
-            if price is False:
-                 warning={
-                    'title':'No valid pricelist line found !',
-                    'message':
-                        "Couldn't find a pricelist line matching this product and quantity.\n"
-                        "You have to change either the product, the quantity or the pricelist."
-                    }
-            else:
-                result.update({'price_unit': price, 'price_subtotal' :price*product_uom_qty })
-        return {'value': result , 'warning':warning}
-     
-     
     def onchange_operation_type(self, cr, uid, ids, type,guarantee_limit):
         if not type:
             return {'value':{'location_id': False , 'location_dest_id' :  False}}
@@ -474,12 +475,10 @@ class mrp_repair_line(osv.osv):
             return {'value':{'to_invoice':to_invoice,'location_id': stock_id , 'location_dest_id' : produc_id}}
         if type == 'remove':
             return {'value':{'to_invoice':to_invoice,'location_id': produc_id,'location_dest_id':False}}
-        
-    
     
 mrp_repair_line()
 
-class mrp_repair_fee(osv.osv):
+class mrp_repair_fee(osv.osv, ProductChangeMixin):
     _name = 'mrp.repair.fee'
     _description = 'Repair Fees line'
     def copy(self, cr, uid, id, default=None, context={}):
@@ -494,6 +493,7 @@ class mrp_repair_fee(osv.osv):
             cur = line.repair_id.pricelist_id.currency_id
             res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
         return res
+
     _columns = {
         'repair_id': fields.many2one('mrp.repair', 'Repair Order Ref', required=True, ondelete='cascade', select=True),
         'name': fields.char('Description', size=64, select=True,required=True),
@@ -507,42 +507,9 @@ class mrp_repair_fee(osv.osv):
         'to_invoice': fields.boolean('To Invoice'),
         'invoiced': fields.boolean('Invoiced',readonly=True),
     }
-    
-    def product_id_change(self, cr, uid, ids, pricelist, product, uom=False, product_uom_qty = 0,partner_id=False,guarantee_limit=False ):
-        if not product:
-            return {'value': {'product_uom_qty' : 0.0, 'product_uom': False},'domain': {'product_uom': []}}
-        
-        product_obj =  self.pool.get('product.product').browse(cr, uid, product)
-        result = {}
-        result['product_uom_qty']= product_uom_qty and product_uom_qty or 1
-        result['name']=product_obj.partner_ref
-        if not pricelist:
-            warning={
-                'title':'No Pricelist !',
-                'message':
-                    'You have to select a pricelist in the Repair form !\n'
-                    'Please set one before choosing a product.'
-                }
-        else:
-            price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist],product, product_uom_qty or 1.0, partner_id, {
-                        'uom': uom,
-                        })[pricelist]
-            if price is False:
-                 warning={
-                    'title':'No valid pricelist line found !',
-                    'message':
-                        "Couldn't find a pricelist line matching this product and quantity.\n"
-                        "You have to change either the product, the quantity or the pricelist."
-                    }
-            else:
-                result.update({'price_unit': price})
-        if not uom:
-            result['product_uom'] = product_obj.uom_id.id 
-        to_invoice=False
-        if guarantee_limit and today() > mx.DateTime.strptime(guarantee_limit, '%Y-%m-%d'):
-            to_invoice=True  
-        result['to_invoice']=to_invoice     
-        return {'value': result}
+    _defaults = {
+        'to_invoice': lambda *a: True,
+    }
     
 mrp_repair_fee()
 
