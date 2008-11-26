@@ -111,6 +111,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_0" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>
@@ -169,6 +171,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_3" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>
@@ -218,6 +222,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 	</data>
 	<data noupdate="1">
@@ -269,6 +275,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_11" model="product.supplierinfo">
 			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
@@ -360,6 +368,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_7" model="product.supplierinfo">
 			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
@@ -403,6 +413,8 @@ Le JackHammer est le subwoofer anniversaire pour célébrer les 35 ans d’MTX. 
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_8" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>
@@ -430,48 +442,48 @@ Le JackHammer est le subwoofer anniversaire pour célébrer les 35 ans d’MTX. 
             <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
         </record>
         <record id="stock_warehouse_min_rules_2" model="stock.warehouse.orderpoint">
-            <field name="product_max_qty">20.0</field>
-            <field name="product_min_qty">5.0</field>
+            <field name="product_max_qty">100.0</field>
+            <field name="product_min_qty">50.0</field>
             <field model="product.uom" name="product_uom" search="[]"/>
             <field model="stock.warehouse" name="warehouse_id" search="[]"/>
             <field model="product.product" name="product_id" search="[('default_code','=','HT-SF2000')]"/>
             <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
         </record>
 		<record id="stock_warehouse_min_rules_3" model="stock.warehouse.orderpoint">
-            <field name="product_max_qty">20.0</field>
-            <field name="product_min_qty">5.0</field>
+            <field name="product_max_qty">50.0</field>
+            <field name="product_min_qty">10.0</field>
             <field model="product.uom" name="product_uom" search="[]"/>
             <field model="stock.warehouse" name="warehouse_id" search="[]"/>
             <field model="product.product" name="product_id" search="[('default_code','=','HT-SF1300')]"/>
             <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
         </record>
 		<record id="stock_warehouse_min_rules_4" model="stock.warehouse.orderpoint">
-            <field name="product_max_qty">20.0</field>
-            <field name="product_min_qty">5.0</field>
+            <field name="product_max_qty">200.0</field>
+            <field name="product_min_qty">100.0</field>
             <field model="product.uom" name="product_uom" search="[]"/>
             <field model="stock.warehouse" name="warehouse_id" search="[]"/>
             <field model="product.product" name="product_id" search="[('default_code','=','HT-SS1000')]"/>
             <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
         </record>
 		<record id="stock_warehouse_min_rules_5" model="stock.warehouse.orderpoint">
-            <field name="product_max_qty">20.0</field>
-            <field name="product_min_qty">5.0</field>
+            <field name="product_max_qty">500.0</field>
+            <field name="product_min_qty">100.0</field>
             <field model="product.uom" name="product_uom" search="[]"/>
             <field model="stock.warehouse" name="warehouse_id" search="[]"/>
             <field model="product.product" name="product_id" search="[('default_code','=','KCONF')]"/>
             <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
         </record>
         	<record id="stock_warehouse_min_rules_6" model="stock.warehouse.orderpoint">
-            <field name="product_max_qty">20.0</field>
-            <field name="product_min_qty">5.0</field>
+            <field name="product_max_qty">250.0</field>
+            <field name="product_min_qty">150.0</field>
             <field model="product.uom" name="product_uom" search="[]"/>
             <field model="stock.warehouse" name="warehouse_id" search="[]"/>
             <field model="product.product" name="product_id" search="[('default_code','=','EC-180-180')]"/>
             <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
         </record>
         	<record id="stock_warehouse_min_rules_7" model="stock.warehouse.orderpoint">
-            <field name="product_max_qty">20.0</field>
-            <field name="product_min_qty">5.0</field>
+            <field name="product_max_qty">400.0</field>
+            <field name="product_min_qty">50.0</field>
             <field model="product.uom" name="product_uom" search="[]"/>
             <field model="stock.warehouse" name="warehouse_id" search="[]"/>
             <field model="product.product" name="product_id" search="[('default_code','=','JH-T9922-44')]"/>

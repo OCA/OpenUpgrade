@@ -22,6 +22,8 @@
 
 from osv import fields, osv
 import pooler
+import netsvc
+from mx.DateTime import now
 
 class profile_game_retail_phase_two(osv.osv):
     _name="profile.game.retail.phase2"
@@ -55,6 +57,36 @@ class profile_game_retail_phase_two(osv.osv):
     _defaults = {
         'state': lambda *args: 'not running'
     }
+    def continue_next_year(self, cr, uid, ids, context={}):
+        partner_ids=self.pool.get('res.partner').search(cr,uid,[])
+        prod_ids=self.pool.get('product.product').search(cr,uid,[])
+        shop=self.pool.get('sale.shop').search(cr,uid,[])
+        wf_service = netsvc.LocalService('workflow')
+        for i in range(0,5):
+            partner_addr = self.pool.get('res.partner').address_get(cr, uid, [partner_ids[i]],
+                            ['invoice', 'delivery', 'contact'])
+            pricelist = self.pool.get('res.partner').browse(cr, uid, partner_ids[i],
+                            context).property_product_pricelist.id
+            vals = {
+                    'shop_id': shop[0],
+                    'partner_id': partner_ids[i],
+                    'pricelist_id': pricelist,
+                    'partner_invoice_id': partner_addr['invoice'],
+                    'partner_order_id': partner_addr['contact'],
+                    'partner_shipping_id': partner_addr['delivery'],
+                    'order_policy': 'postpaid',
+                    'date_order': now(),
+                }
+            new_id = self.pool.get('sale.order').create(cr, uid, vals)
+            value = self.pool.get('sale.order.line').product_id_change(cr, uid, [], pricelist,
+                            prod_ids[i], qty=i, partner_id=partner_ids[i])['value']
+            value['product_id'] = prod_ids[i]
+            value['product_uom_qty']=i+100
+            value['order_id'] = new_id
+            self.pool.get('sale.order.line').create(cr, uid, value)
+            wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
+       # self.pool.get('mrp.procurement').run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
+        return self.write(cr, uid, ids, {'state':'confirm_po'})
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
         res = super(profile_game_retail_phase_two, self).fields_view_get(cr, user, view_id, view_type, context, toolbar)

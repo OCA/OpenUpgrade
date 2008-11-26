@@ -22,45 +22,17 @@
 import wizard
 import pooler
 import netsvc
-from mx.DateTime import now
 
-def create_random_so(self,cr,uid,data,context):
-    pool=pooler.get_pool(cr.dbname)
-    partner_ids=pool.get('res.partner').search(cr,uid,[])
-    prod_ids=pool.get('product.product').search(cr,uid,[])
-    shop=pool.get('sale.shop').search(cr,uid,[])
-    wf_service = netsvc.LocalService('workflow')
-    for i in range(0,5):
-        partner_addr = pool.get('res.partner').address_get(cr, uid, [partner_ids[i]],
-                        ['invoice', 'delivery', 'contact'])
-        pricelist = pool.get('res.partner').browse(cr, uid, partner_ids[i],
-                        context).property_product_pricelist.id
-        vals = {
-                'shop_id': shop[0],
-                'partner_id': partner_ids[i],
-                'pricelist_id': pricelist,
-                'partner_invoice_id': partner_addr['invoice'],
-                'partner_order_id': partner_addr['contact'],
-                'partner_shipping_id': partner_addr['delivery'],
-                'order_policy': 'postpaid',
-                'date_order': now(),
-            }
-        new_id = pool.get('sale.order').create(cr, uid, vals)
-        value = pool.get('sale.order.line').product_id_change(cr, uid, [], pricelist,
-                        prod_ids[i], qty=i, partner_id=partner_ids[i])['value']
-        value['product_id'] = prod_ids[i]
-        value['product_uom_qty']=i+100
-        value['order_id'] = new_id
-        pool.get('sale.order.line').create(cr, uid, value)
-        wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
-   # pool.get('mrp.procurement').run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
-    return True
 def get_ready_phase2(self, cr, uid, data, context):
+        pool=pooler.get_pool(cr.dbname)
         sm_action=['menu_purchase_order_draft','menu_action_invoice_tree8']
         lm_action=['mrp_Sched_all','menu_action_picking_tree4','menu_action_picking_tree']
         fm_action=['menu_action_invoice_tree9','menu_invoice_draft','menu_action_invoice_tree7']
+        sm_group=['Purchase / Manager','Purchase / User','Employee','Finance / Accountant','Finance / Invoice']
+        sm_group_ids=pool.get('res.groups').search(cr,uid,[('name','in',sm_group)])
+        sm_roles=['Purchase','Invoice']
+        sm_role_ids=pool.get('res.roles').search(cr,uid,[('name','in',sm_roles)])
 
-        pool=pooler.get_pool(cr.dbname)
         mod_obj = pooler.get_pool(cr.dbname).get('ir.model.data')
         phase1_obj=pool.get('profile.game.retail.phase1')
 
@@ -79,6 +51,10 @@ def get_ready_phase2(self, cr, uid, data, context):
 
         for user in user_browse:
             if user.login=='sale':
+                cr.execute('delete from res_groups_users_rel where uid =%d'%(user.id))
+                cr.execute('delete from res_roles_users_rel where uid =%d'%(user.id))
+                pool.get('res.users').write(cr,uid,user.id,{'groups_id':[[6,0,sm_group_ids]],
+                                                            'roles_id':[[6,0,sm_role_ids]]})
                 for action in sm_action:
                     val={}
                     if action =='menu_purchase_order_draft':
@@ -119,7 +95,7 @@ def get_ready_phase2(self, cr, uid, data, context):
                     val['name']=pool.get('ir.ui.menu').read(cr,uid,[res_id],['name'])[0]['name']
                     pool.get('ir.ui.view_sc').create(cr,uid,val)
 
-        create_random_so(self,cr,uid,data,context)
+
        # if obj.state != 'done':
            # phase1_obj.write(cr,uid,data['id'],{'state':'done'})
         return  {

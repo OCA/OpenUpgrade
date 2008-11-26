@@ -38,6 +38,7 @@
     "init_xml":[
         "profile_game_data.xml",
         "profile_game_scenario.xml",
+        "profile_game_scenario_phase2.xml",
     ],
     "demo_xml":[],
     "update_xml":[
