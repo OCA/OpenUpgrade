@@ -116,7 +116,7 @@ class mrp_repair(osv.osv):
         'pricelist_id': lambda self, cr, uid,context : self.pool.get('product.pricelist').search(cr,uid,[('type','=','sale')])[0]
     }
     
-    def copy(self, cr, uid, id, default=None,context={}):
+    def copy(self, cr, uid, id, default=None, context=None):
         if not default:
             default = {}   
         default.update({
@@ -147,8 +147,9 @@ class mrp_repair(osv.osv):
             return { 'value' : result }
     
     
-    def button_dummy(self, cr, uid, ids, context={}):
+    def button_dummy(self, cr, uid, ids, context=None):
         return True
+
     def onchange_partner_id(self, cr, uid, ids, part):
         if not part:
             return {'value':{'address_id': False ,'partner_invoice_id' : False , 'pricelist_id' : self.pool.get('product.pricelist').search(cr,uid,[('type','=','sale')])[0]}}
@@ -199,17 +200,18 @@ class mrp_repair(osv.osv):
                 mrp_line_obj.write(cr, uid, [l.id for l in o.operations], {'state': 'confirmed'})
         return True
     
-    def action_cancel(self, cr, uid, ids, context={}):
+    def action_cancel(self, cr, uid, ids, context=None):
         ok=True
         mrp_line_obj = self.pool.get('mrp.repair.line')
         for repair in self.browse(cr, uid, ids):
             mrp_line_obj.write(cr, uid, [l.id for l in repair.operations], {'state': 'cancel'})
         self.write(cr,uid,ids,{'state':'cancel'})
         return True
-    def wkf_invoice_create(self, cr, uid, ids,*args):
-        res=self.action_invoice_create(cr, uid, ids)
-        return True
-    def action_invoice_create(self, cr, uid, ids, group=False,context={}):
+
+    def wkf_invoice_create(self, cr, uid, ids, *args):
+        return self.action_invoice_create(cr, uid, ids)
+
+    def action_invoice_create(self, cr, uid, ids, group=False, context=None):
         res={}        
         invoices_group = {}
         for repair in self.browse(cr, uid, ids, context=context):
@@ -287,21 +289,20 @@ class mrp_repair(osv.osv):
                 res[repair.id]=inv_id
         #self.action_invoice_end(cr, uid, ids)
         return res
-    
 
-    def action_invoice_cancel(self, cr, uid, ids, context={}):
+    def action_invoice_cancel(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state':'invoice_except'})
         return True
 
-    def action_repair_ready(self, cr, uid, ids, context={}):
+    def action_repair_ready(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state':'ready'})
         return True
 
-    def action_repair_start(self, cr, uid, ids, context={}):
+    def action_repair_start(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state':'under_repair'})
         return True
     
-    def action_invoice_end(self, cr, uid, ids, context={}):        
+    def action_invoice_end(self, cr, uid, ids, context=None):        
         for order in self.browse(cr, uid, ids):
             val = {}             
             if (order.invoice_method=='b4repair'):
@@ -312,7 +313,7 @@ class mrp_repair(osv.osv):
             self.write(cr, uid, [order.id], val)
         return True     
 
-    def action_repair_end(self, cr, uid, ids, context={}):        
+    def action_repair_end(self, cr, uid, ids, context=None):
         for order in self.browse(cr, uid, ids):
             val = {}
             val['repaired']=True
@@ -330,7 +331,7 @@ class mrp_repair(osv.osv):
         res=self.action_repair_done(cr,uid,ids)
         return True
         
-    def action_repair_done(self, cr, uid, ids, context={}):    
+    def action_repair_done(self, cr, uid, ids, context=None):    
         res={}    
         out_picking_id=False
         company = self.pool.get('res.users').browse(cr, uid, uid).company_id
@@ -430,7 +431,7 @@ class mrp_repair_line(osv.osv, ProductChangeMixin):
     _name = 'mrp.repair.line'
     _description = 'Repair Operations Lines'    
     
-    def copy(self, cr, uid, id, default=None, context={}):
+    def copy(self, cr, uid, id, default=None, context=None):
         if not default: default = {}
         default.update( {'invoice_line_id':False,'move_ids':[],'invoiced':False,'state':'draft'})
         return super(mrp_repair_line, self).copy(cr, uid, id, default, context)
@@ -485,7 +486,7 @@ mrp_repair_line()
 class mrp_repair_fee(osv.osv, ProductChangeMixin):
     _name = 'mrp.repair.fee'
     _description = 'Repair Fees line'
-    def copy(self, cr, uid, id, default=None, context={}):
+    def copy(self, cr, uid, id, default=None, context=None):
         if not default: default = {}
         default.update( {'invoice_line_id':False,'invoiced':False})
         return super(mrp_repair_fee, self).copy(cr, uid, id, default, context)
