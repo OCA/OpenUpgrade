@@ -150,7 +150,11 @@
             <field name="parent_id" ref="product_category_directmarketing0"/>
         </record>
 
-
+		<record id="product_category_dtp0" model="product.category">
+            <field name="property_stock_journal" ref="stock.stock_journal"/>
+            <field eval="&quot;&quot;&quot;DTP&quot;&quot;&quot;" name="name"/>
+            <field name="parent_id" ref="product_category_directmarketing0"/>
+        </record>
         <!-- Offer Step Types -->
 
         <record id="dm_offer_step_type_startingmailing0" model="dm.offer.step.type">

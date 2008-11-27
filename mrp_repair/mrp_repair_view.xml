@@ -11,7 +11,7 @@
                     <group col="6" colspan="4">
                     	<field name="name"/>
                     	<newline/>
-                        <field name="product_id" select="1"  on_change="onchange_product_id(product_id, move_id)"/>
+                        <field name="product_id" select="1"  on_change="onchange_product_id(product_id)"/>
                         <field name="prodlot_id" select="2" on_change="onchange_lot_id(prodlot_id,product_id)"/>
                         <field name="repaired"/>
                         <field name="partner_id" select="2" on_change="onchange_partner_id(partner_id)" />
@@ -21,7 +21,7 @@
                     <notebook colspan="4">
                         <page string="Products">
                             <field name="location_id"/>
-                            <field name="move_id"   on_change="onchange_product_id(product_id, move_id)"/>
+                            <field name="move_id"   on_change="onchange_move_id(product_id, move_id)"/>
                             <field name="location_dest_id"/>
                             <field name="guarantee_limit" />
                             <newline/>
@@ -44,6 +44,8 @@
                                                 <field name="to_invoice"/>
     		                                    <field name="invoiced"/>  
                                             </group>
+                                            <newline/>
+                                            <field colspan="4" name="tax_id" domain="[('parent_id','=',False)]"/>
                                             <separator colspan="4" string="States"/>
                                             <field name="state"/>
 										</page>
@@ -59,6 +61,7 @@
                                 </form>
                                 <tree string="Operations lines" editable="bottom">
                                     <field name="type" on_change="onchange_operation_type(type,parent.guarantee_limit)"/>                                    
+                                    <field name='name'/> 
                                     <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>                                    
                                     <field name="location_id"/>
                                     <field name="location_dest_id"/> 
@@ -69,6 +72,13 @@
                                     <field name="to_invoice"/>
                                 </tree>
                             </field>
+                            <newline/>
+                            <group col="7" colspan="4">
+                                <field name="amount_untaxed" sum="Untaxed amount"/>
+                                <field name="amount_tax"/>
+                                <field name="amount_total" sum="Total amount"/>
+                                <button name="button_dummy" states="draft" string="Compute" type="object"/>
+                            </group>
                             <newline/>
                             <group col="13" colspan="4">                              
                                 <field name="state" select="2"/>
@@ -94,12 +104,20 @@
                             <field colspan="4" mode="tree,form" name="fees_lines" nolabel="1" widget="one2many_list">
                             <form string="Fees Line">
                                     <notebook>
-                                        <page string="Fees Line">   
-		                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)" colspan="4"/>
-		                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
+                                        <page string="Fees Line"> 
+                                            <field name='name'/>  
+		                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id,parent.guarantee_limit)" colspan="4"/>
+		                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id,parent.guarantee_limit)"/>
 		                                    <field name="product_uom" string="UoM" /> 
 		                                    <field name="price_unit"/>  
 		                                    <field name="price_subtotal"/>  
+                                            <newline/>
+                                            <group colspan="2">                                                
+                                                <field name="to_invoice"/>
+    		                                    <field name="invoiced"/>  
+                                            </group>
+                                            <newline/>
+                                            <field colspan="4" name="tax_id" domain="[('parent_id','=',False)]"/>
                                          </page>
 										 <page string="History" groups="base.group_extended">                                            
                                             <field colspan="4" name="invoice_line_id" />                                            
@@ -107,11 +125,13 @@
                                       </notebook>                     
                                 </form>
                                 <tree string="Fees lines" editable="bottom">
-                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
-                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
+                                    <field name='name'/> 
+                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id,parent.guarantee_limit)"/>
+                                    <field name="product_uom_qty" string="Qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id,parent.guarantee_limit)"/>
                                     <field name="product_uom" string="UoM"/>
                                     <field name="price_unit"/>  
-                                    <field name="price_subtotal"/>                                  
+                                    <field name="price_subtotal"/>  
+                                    <field name="to_invoice"/>                                
                                 </tree>
                                 </field>
                         </page>

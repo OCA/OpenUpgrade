@@ -34,6 +34,7 @@ import time
 import math
 
 from tools import config
+import mx.DateTime
 
 class maintenance_maintenance_module(osv.osv):
     _name ="maintenance.maintenance.module"
@@ -48,6 +49,18 @@ maintenance_maintenance_module()
 class maintenance_maintenance(osv.osv):
     _name = "maintenance.maintenance"
     _description = "maintenance"
+
+    def _contract_date(self, cr, uid, ids):
+        for contract in self.browse(cr, uid, ids):
+            cr.execute('SELECT id \
+                    FROM maintenance_maintenance \
+                    WHERE (date_from < %s and %s < date_to) \
+                        AND id <> %d', (contract.date_to, contract.date_from,
+                            contract.id))
+            if cr.fetchall():
+                return False
+        return True
+
     _columns = {
     'name' : fields.char('Test Case', size=64),
     'partner_id' : fields.many2one('res.partner','Partner'),
@@ -66,17 +79,14 @@ class maintenance_maintenance(osv.osv):
         'state': lambda *a: 'draft',
               }
 
+    _constraints = [
+        (_contract_date, 'You can not have 2 contracts that overlaps !', ['date_from','date_to']),
+    ]
+
+
     def check_contract(self, cr, uid, modules, contract):
-#        raise osv.except_osv(_('Error !'),_('''Maintenance Contract
-#-----------------------------------------------------------
-#You do not have a valid maintenance contract ! If you use\
-#Open ERP, it's highly suggested to take a maintenance \
-#contract. The maintenance program offers you: migrations on \
-#new versions, bugfixes guarantee, monthly announces on bugs, \
-#security alerts, access to the customer portal.
-#* Check the maintenance contract (www.openerp.com)'''))
         external_modules=[]
-        maintenance_ids=self.search(cr,uid,[('name','=',contract['name']),('password','=',contract['password']),('date_from','<=',contract['contract_date']),('date_to','>=',contract['contract_date'])],limit=1)
+        maintenance_ids=self.search(cr,uid,[('name','=',contract['name']),('password','=',contract['password']),('date_from','<=',mx.DateTime.now()),('date_to','>=',mx.DateTime.now())],limit=1)
         if maintenance_ids:
             maintenance_obj=self.browse(cr,uid,maintenance_ids)[0]
             name=map(lambda x:x['name'],maintenance_obj.module_ids)

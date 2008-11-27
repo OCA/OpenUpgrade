@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -46,8 +46,9 @@ class game_scenario_step(osv.osv):
     _name="game.scenario.step"
     _columns = {
         'name':fields.char('Name',size=64, required=True),
+        'phase':fields.char('Game Phase',size=64,required=True),
         'description' : fields.text('Description'),
-        'menu_id' : fields.many2one('ir.ui.menu', 'Menu', required=True),        
+        'menu_id' : fields.many2one('ir.ui.menu', 'Menu', required=True),
         'tip' : fields.text('Tip'),
         'error' : fields.text('Error'),
         'pre_process_object' : fields.char('Preprocess Object', size=64),
@@ -63,10 +64,10 @@ class game_scenario_step(osv.osv):
         }
 game_scenario_step()
 
-def _execute(cr, uid, object, method, step, type='execute',mode='pre',*args):    
+def _execute(cr, uid, object, method, step, type='execute',mode='pre',*args):
     pool = pooler.get_pool(cr.dbname)
     res=False
-    if pool.get('game.scenario'):        
+    if pool.get('game.scenario'):
         if step[mode+'_process_object'] and step[mode+'_process_method']:
             try:
                 return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid,step['id'], object, method,type, *args)
@@ -78,13 +79,13 @@ def _execute(cr, uid, object, method, step, type='execute',mode='pre',*args):
     return res
 
 def _pre_process(db,uid,passwd,object,method,type='execute',*args):
-    security.check(db, uid, passwd)  
+    security.check(db, uid, passwd)
     pool = pooler.get_pool(db)
     steps=False
-    if pool.get('game.scenario'):       
+    if pool.get('game.scenario'):
         cr = pooler.get_db_only(db).cursor()
         cr.execute('select s.* from game_scenario_step s left join game_scenario g on (s.scenario_id=g.id) where g.state=%s and s.state=%s', ('running', 'running'))
-        steps_orig = cr.dictfetchall()                           
+        steps_orig = cr.dictfetchall()
         steps=[]
         for step in steps_orig:
             res = _execute(cr, uid, object, method, step, type,'pre',*args)
@@ -92,12 +93,12 @@ def _pre_process(db,uid,passwd,object,method,type='execute',*args):
                 steps.append(step)
         cr.close()
     return steps
-    
+
 def _post_process(db,uid,passwd,object,method,steps,type='execute',*args):
     security.check(db, uid, passwd)
     pool = pooler.get_pool(db)
-    res=False   
-    if  pool.get('game.scenario') and steps:                     
+    res=False
+    if  pool.get('game.scenario') and steps:
         cr = pooler.get_db_only(db).cursor()
         for step in steps:
            _execute(cr, uid, object, method,step,type, 'post',*args)
@@ -105,7 +106,7 @@ def _post_process(db,uid,passwd,object,method,steps,type='execute',*args):
         cr.execute('update game_scenario_step set state=%s where id in ('+ids+')', ('done',))
         cr.execute('update game_scenario_step set state=%s where id in (select next_step_id from next_step_rel where step_id in ('+ids+')) and state=%s', ('running','draft'))
         cr.commit()
-        cr.close()    
+        cr.close()
     return res
 
 class scenario_objects_proxy(web_services.objects_proxy):
@@ -117,8 +118,8 @@ class scenario_objects_proxy(web_services.objects_proxy):
         _post_process(db,uid,passwd,object,method,steps,'execute_wkf',*args)
         return res
 
-    def execute(self, db, uid, passwd, object, method, *args):   
-        steps=_pre_process(db,uid,passwd,object,method,'execute',args) 
+    def execute(self, db, uid, passwd, object, method, *args):
+        steps=_pre_process(db,uid,passwd,object,method,'execute',args)
         res=super(scenario_objects_proxy,self).execute(db, uid, passwd, object, method, *args)
         args+={'result':res},
         _post_process(db,uid,passwd,object,method,steps,'execute',*args)
@@ -137,9 +138,9 @@ class scenario_wizard(web_services.wizard):
 scenario_wizard()
 
 class scenario_report_spool(web_services.report_spool):
-    def report(self,db, uid, passwd, object, ids, datas=None, context=None):        
+    def report(self,db, uid, passwd, object, ids, datas=None, context=None):
         args=ids,datas,context,
-        steps=_pre_process(db,uid,passwd,object,None,'report',*args)     
+        steps=_pre_process(db,uid,passwd,object,None,'report',*args)
         res=super(scenario_report_spool,self).report(db, uid, passwd, object, ids, datas, context)
         _post_process(db,uid,passwd,object, None,steps,'report',*args)
         return res

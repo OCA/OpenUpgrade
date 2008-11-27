@@ -49,14 +49,13 @@
 	<record id="account_bob_0" model="account.account">
 		<field name="code">0</field>
 		<field name="name">Plan comptable importé de Bob</field>
-		<!--<field name="parent_id" eval="[]"/>-->
-		<field name="type">view</field> <!-- TODO: replace by root -->
+		<field name="type">view</field>
 		<field name="user_type" ref="l10n_be.user_type_view"/>
 	</record>
 
 
     <!-- partner missing -->
-	<!--<record id="res_partner_destroyed" model="res.partner">
+	<record id="res_partner_destroyed" model="res.partner">
 		<field eval="0" name="alert_legalisations"/>
 		<field eval="0" name="alert_events"/>
 		<field eval="0" name="invoice_special"/>
@@ -70,14 +69,14 @@
 		<field eval="0" name="alert_membership"/>
 		<field eval="0" name="invoice_public"/>
 		<field eval="0" name="dir_exclude"/>
-	</record>-->
+	</record>
 
 	<!-- address of missing partner -->
-	<!--<record id="res_partner_address_bob" model="res.partner.address">
+	<record id="res_partner_address_bob" model="res.partner.address">
             <field name="name">Missing Partners Address</field>
             <field name="type">default</field>
             <field name="partner_id" ref="res_partner_destroyed"/>
-     </record>-->
+     </record>
 
 	<!-- function missing -->
 	<record id="res_partner_function_bob" model="res.partner.function">

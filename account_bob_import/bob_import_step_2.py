@@ -615,8 +615,8 @@ def _pick_vat_code(x, vat_dict, is_vat=False):
 def _pick_vat_account(x, vat_dict):
     if x['HDBTYPE,A,3'][2]=='C':
         #the move is a refund
-        return 'account_'+vat_dict[x['HVATCODE,A,10']]['ref_account']
-    return 'account_'+vat_dict[x['HVATCODE,A,10']]['inv_account']
+        return vat_dict[x['HVATCODE,A,10']]['ref_account'] and 'account_'+vat_dict[x['HVATCODE,A,10']]['ref_account'] or 'account_'+x['HID,A,10']
+    return vat_dict[x['HVATCODE,A,10']]['inv_account'] and 'account_'+vat_dict[x['HVATCODE,A,10']]['inv_account'] or 'account_'+x['HID,A,10']
 
 def _create_vat_move(x, vat_dict, count):
     res = []
@@ -639,8 +639,8 @@ def _create_vat_move_vat(x, vat_code, vat_dict, count,base_or_vat):
         'tax_code_id:id': vat_code[1],
         'tax_amount': str(abs(float(x[base_or_vat])) * _get_float(vat_code[0])),
         'state': 'draft',
-        'debit': 0,
-        'credit': 0,
+        'debit': '0',
+        'credit': '0',
         'ref':  x['HDOCNO,I,4'],
         'account_id:id': _pick_vat_account(x, vat_dict),
         'period_id:id': 'period_'+x['HFYEAR,A,5']+"/"+x['HMONTH,I,4'],
@@ -787,7 +787,7 @@ def import_moves_and_lines(reader_move, writer_move, writer, move_map, map, dict
                         record['tax_amount']= str(abs(float(row['HBASE,$,8'])) * _get_float(vat_code[0]))
                         record['tax_code_id:id'] = vat_code[1]
                     else:
-                        writer.writerow(_create_vat_move_vat(row, vat_code, vat_dict, count,'HBASE,$,8'))
+                        writer.writerow(convert2utf(_create_vat_move_vat(row, vat_code, vat_dict, count,'HBASE,$,8')))
 
                 #generate the vat movement
                 vat_move_list = _create_vat_move(row, vat_dict, tvacount)
@@ -817,8 +817,9 @@ for row in reader_partner_matching:
 def _get_partner_id(char):
     if bob_conv_matching.has_key(char):
         return bob_conv_matching[char]
-    return 'account_bob_import.res_partner_destroyed' #or char ?
+    return 'res_partner_destroyed'
 partner_dict['GRAMME'] = ''
+
 
 #end of specific part
 
