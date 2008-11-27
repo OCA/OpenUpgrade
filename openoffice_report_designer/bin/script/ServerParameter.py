@@ -69,8 +69,18 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         sLogin=self.win.getEditText("txtLoginName")
         sPassword=self.win.getEditText("txtPassword")
         UID = sock.login(sDatabase,sLogin,sPassword)
-        if not UID:
+        try:
+            sock_g = xmlrpclib.ServerProxy(self.win.getEditText("txtHost") +'/xmlrpc/object')
+            ids  = sock_g.execute(sDatabase,UID,sPassword, 'res.groups' ,  'search', [('name','=','OpenOfficeReportDesinger')])
+            dict_groups = sock_g.execute(sDatabase, UID,sPassword, 'res.groups' , 'read',ids,['users'])
+        except :
+            pass
+        if not UID :
             ErrorDialog("Connection Refuse...","Please enter valid Login/Password")
+            self.win.endExecute()
+        if UID not in dict_groups[0]['users']:
+            ErrorDialog("Connection Refuse...","You have not access these Report Desinger")
+            self.win.endExecute()
         else:
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
