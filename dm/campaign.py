@@ -49,7 +49,7 @@ class dm_campaign_group(osv.osv):
                     break
             if numeric:
                 result[group.id]=str(quantity)
-        print "planned : ",result
+#        print "planned : ",result
         return result
 
     def _quantity_wanted_total(self, cr, uid, ids, name, args, context={}):
@@ -57,12 +57,12 @@ class dm_campaign_group(osv.osv):
         numeric=True
         quantity=0
         groups = self.browse(cr,uid,ids)
-        print "ids : ",ids
+#        print "ids : ",ids
         for group in groups:
             for campaign in group.campaign_ids:
                 quantity=0
                 numeric=True
-                print "wanted total : ", campaign.quantity_wanted_total
+#                print "wanted total : ", campaign.quantity_wanted_total
                 if campaign.quantity_wanted_total.isdigit():
                     quantity += int(campaign.quantity_wanted_total)
                 elif campaign.quantity_wanted_total == "AAA for a Segment":
@@ -75,7 +75,7 @@ class dm_campaign_group(osv.osv):
                     break
             if numeric:
                 result[group.id]=str(quantity)
-        print "Wanted : ",result
+#        print "Wanted : ",result
         return result
 
     def _quantity_delivered_total(self, cr, uid, ids, name, args, context={}):
@@ -95,7 +95,7 @@ class dm_campaign_group(osv.osv):
                     break
             if numeric:
                 result[group.id]=str(quantity)
-        print "Delivered : ",result
+#        print "Delivered : ",result
         return result
 
     def _quantity_usable_total(self, cr, uid, ids, name, args, context={}):
@@ -115,7 +115,7 @@ class dm_campaign_group(osv.osv):
                     break
             if numeric:
                 result[group.id]=str(quantity)
-        print "Usable : ",result
+#        print "Usable : ",result
         return result
 
     def _camp_group_code(self, cr, uid, ids, name, args, context={}):
@@ -238,14 +238,12 @@ class one2many_mod_pline(fields.one2many):
             res[id] = []
         cr.execute("select id from product_category where name='Direct Marketing'")
         direct_id = cr.fetchone()
-        print direct_id
         sql="select id,name from product_category where parent_id=%d" %direct_id
         cr.execute(sql)
         res_type = cr.fetchall()
         type={}
         for x in res_type:
             type[x[1]]=x[0]
-        print type    
         for id in ids:
             if name[0] == 'd':
                 ids2 = obj.pool.get(self._obj).search(cr, user, [('campaign_id','=',id),('product_category','=',type['DTP'])], limit=self._limit)
@@ -428,7 +426,7 @@ class dm_campaign(osv.osv):
         'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_usable_total' : fields.function(_quantity_usable_total, string='Total Usable Quantity',type="char",size="64",method=True,readonly=True),
         'dtp_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "DTP Purchase Lines",
-                                                        domain=[('product_category','ilike','DTP')], context={'product_category':'DTP'}),
+                                                        domain=[('product_category','=','DTP')], context={'product_category':'DTP'}),
         'manufacturing_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Manufacturing Purchase Lines",
                                                         domain=[('product_category','=','Mailing Manufacturing')],context={'product_category':'Mailing Manufacturing'}),
         'cust_file_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Customer Files Purchase Lines",
@@ -1017,19 +1015,19 @@ class dm_campaign_purchase_line(osv.osv):
         for pline in plines:
             if pline.state == 'pending':
 
-                print "Campaign ID : ",pline.campaign_id
-                print "Group ID : ",pline.campaign_group_id
+#                print "Campaign ID : ",pline.campaign_id
+#                print "Group ID : ",pline.campaign_group_id
 
                 # if in a group, obj = 1st campaign of the group, if not it's the campaing
                 if pline.campaign_group_id:
                     obj = pline.campaign_group_id.campaign_ids[0]
                     code = pline.campaign_group_id.code
-                    print "First campaign of group : ", obj.name
+#                    print "First campaign of group : ", obj.name
                 else:
                     obj = pline.campaign_id
                     code = pline.campaign_id.code1
 
-                print "obj : ",obj
+#                print "obj : ",obj
 #                if not pline.quantity and pline.type_quantity != 'quantity_free' and pline.type_quantity != 'quantity_wanted':
 #                    raise  osv.except_osv('Warning', "There's no quantity defined for this purchase line")
 
@@ -1067,7 +1065,7 @@ class dm_campaign_purchase_line(osv.osv):
                     # Get constraints
                     constraints = []
                     if pline.desc_from_offer:
-                        print "pline.product_category : ",pline.product_category
+#                        print "pline.product_category : ",pline.product_category
                         if int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Mailing Manufacturing')])[0]:
                             for step in obj.offer_id.step_ids:
                                 for const in step.manufacturing_constraint_ids:
@@ -1133,7 +1131,7 @@ class dm_campaign_purchase_line(osv.osv):
 
                     ''' If Translation Order => Get Number of documents in Offer '''
                     if int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Translation')])[0]:
-                        print "In translation"
+#                        print "In translation"
                         quantity=0
                         for step in pline.campaign_id.offer_id.step_ids:
                             quantity += step.doc_number
@@ -1152,7 +1150,7 @@ class dm_campaign_purchase_line(osv.osv):
                         ''' Create po lines for each proposition (of each campaign if group)'''
                         lines = []
                         if pline.campaign_group_id:
-                            print "Creating PO line for group"
+#                            print "Creating PO line for group"
                             for campaign in pline.campaign_group_id.campaign_ids:
                                 for propo in campaign.proposition_ids:
                                     line_name = propo.code1 + '-' + propo.type
@@ -1390,9 +1388,8 @@ class dm_campaign_purchase_line(osv.osv):
 #        pline = self.browse(cr, uid, ids)[0]
 #        if not pline.campaign_id:
 #            raise  osv.except_osv('Warning', "You must first save this Purchase Line and the campaign before using this button")
-
-        print "Quantity Type : ",type_quantity
         """
+        print "Quantity Type : ",type_quantity
         print "Parent_type : ",parent_type
         print "Parent_id : ",parent_id
         """

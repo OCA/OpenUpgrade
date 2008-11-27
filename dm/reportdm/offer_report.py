@@ -37,15 +37,15 @@ class offer_report(report_sxw.rml_parse):
         self.context = context
     def offer_docs(self,offer_id):
         attachment_ids = self.pool.get('ir.attachment').search(self.cr,self.uid,[('res_id','=',offer_id),('res_model','=','dm.offer')])
-        print attachment_ids
+#        print attachment_ids
         attachment = self.pool.get('ir.attachment').read(self.cr,self.uid,attachment_ids,['name'])
-        print attachment
+#        print attachment
         return ','.join(map(lambda x:x['name'],attachment))
     
     def offer_step_docs(self,offer_step_id):
         attachment_ids = self.pool.get('ir.attachment').search(self.cr,self.uid,[('res_id','=',offer_step_id),('res_model','=','dm.offer.step')])
         attachment = self.pool.get('ir.attachment').read(self.cr,self.uid,attachment_ids,['name'])
-        print attachment
+#        print attachment
         return ','.join(map(lambda x:x['name'],attachment)) 
 #    def offer_steps(self,offer_id):
 #        offer_step_ids = self.pool.get('dm.offer.step').search(self.cr,self.uid,[('offer_id','=',offer_id)])

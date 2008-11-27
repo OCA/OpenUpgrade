@@ -75,7 +75,7 @@ class dm_offer_step(osv.osv):
 
     def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
-        print "Offer Step Context : ",context
+#        print "Offer Step Context : ",context
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
@@ -184,7 +184,7 @@ class dm_offer_step_transition(osv.osv):
     }
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
-        print "Transition context : ",context
+#        print "Transition context : ",context
         if context.has_key('type'):
 #            if not context['step_id']:
 #                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
