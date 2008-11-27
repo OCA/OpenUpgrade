@@ -75,22 +75,20 @@ class dm_offer_step(osv.osv):
 
     def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
+<<<<<<< TREE
+=======
 #        print "Offer Step Context : ",context
+>>>>>>> MERGE-SOURCE
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
-            res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type.id])
+            res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
+                    context.get('lang', False) or 'en_US',[offer_step.type.id])
             type_code = res_trans[offer_step.type.id] or offer_step.type.code
             code = '_'.join([offer_step.offer_id.code,(type_code or '')])
             result[id]=code
         return result
-    """
-    def _get_offer_step_type(self,cr,uid,context={}):
-        offer_step_type = self.pool.get('dm.offer.step.type')
-        type_ids = offer_step_type.search(cr,uid,[])
-        type = offer_step_type.browse(cr,uid,type_ids)
-        return map(lambda x : [x.code,x.code],type)
-    """
+
     _columns = {
         'name' : fields.char('Name',size=64, required=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade"),
@@ -184,7 +182,6 @@ class dm_offer_step_transition(osv.osv):
     }
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
-#        print "Transition context : ",context
         if context.has_key('type'):
 #            if not context['step_id']:
 #                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")

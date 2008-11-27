@@ -258,7 +258,7 @@ class one2many_mod_pline(fields.one2many):
             for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
                 res[id].append( r['id'] )
         return res
-    
+
 class dm_campaign(osv.osv):
     _name = "dm.campaign"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
@@ -905,7 +905,8 @@ class dm_campaign_proposition_item(osv.osv):
         'price' : fields.float('Sale Price'),
         'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
-        'offer_step_type': fields.char(string='Offer Step Type',type="char",size=64), 
+#        'offer_step_type': fields.char(string='Offer Step Type',type="char",size=64), 
+        'offer_step_type_id': fields.many2one('dm.offer.step.type','Offer Step Type'), 
         'notes' : fields.text('Notes'),
     }
 dm_campaign_proposition_item()

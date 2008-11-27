@@ -56,7 +56,7 @@ class dm_media(osv.osv):
         return brse_rec      
     
     _columns = {
-        'name' : fields.char('Media', size=64, required=True),
+        'name' : fields.char('Media', size=64, translate=True, required=True),
     }
 dm_media()
 
