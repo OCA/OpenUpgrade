@@ -37,8 +37,8 @@ class profile_game_retail_phase_two(osv.osv):
         'step4': fields.boolean('Receive Products from Supplier', readonly=True),
         'step5': fields.boolean('Deliver Products to Customer', readonly=True),
          #financial
-        'step6': fields.boolean('Pay all supplier invoices', readonly=True),
-        'step7': fields.boolean('Validate all Draft customer invoices ', readonly=True),
+        'step6': fields.boolean('Pay all open supplier invoices', readonly=True),
+        'step7': fields.boolean('Confirm all Draft customer invoices ', readonly=True),
         'step8': fields.boolean('Pay all open customer invoices', readonly=True),
 
         'state' :fields.selection([
@@ -46,11 +46,10 @@ class profile_game_retail_phase_two(osv.osv):
             ('confirm_po','Confirm Purchase Order'),
             ('validate_po','Validate Purchase Order'),
             ('confirm_supp_inv','Confirm Supplier Invoice'),
-            ('receive','Receive Products'),
-            ('run_sche','Run the Schedular'),
-            ('confirm_pickings','confirm pickings'),
+            ('receive','Receive Products from Supplier'),
+            ('deliver','Deliver Products to Customer'),
             ('supp_invoice_pay','Pay Supplier Invoice'),
-            ('validate_customer_inv','Validate Customer Invoice'),
+            ('confirm_customer_inv','Confirm Customer Invoice'),
             ('cust_invoice_pay','Pay Customer Invoice'),
             ('done','Done'),], 'State', required=True,readonly=True),
         }
@@ -86,7 +85,14 @@ class profile_game_retail_phase_two(osv.osv):
             self.pool.get('sale.order.line').create(cr, uid, value)
             wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
        # self.pool.get('mrp.procurement').run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
-        return self.write(cr, uid, ids, {'state':'confirm_po'})
+        self.write(cr, uid, ids, {'state':'confirm_po'})
+        sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'retail_phase2')
+        sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
+        self.pool.get('game.scenario').write(cr, uid, [sid], {'state':'running'})
+        sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'step_confirm_po2')
+        sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
+        return self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})
+
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
         res = super(profile_game_retail_phase_two, self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
@@ -94,4 +100,143 @@ class profile_game_retail_phase_two(osv.osv):
         res['arch'] = res['arch'].replace('role2', 'Fabien')
         res['arch'] = res['arch'].replace('role3', 'Fabien')
         return res
+
+    def error(self, cr, uid,step_id, msg=''):
+        err_msg=''
+        step=step_id and self.pool.get('game.scenario.step').browse(cr,uid,step_id) or False
+        if step:
+           err_msg=step.error
+        raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', err_msg+'\n\n'+msg))
+
+    def pre_process_confirm_po2(self,cr,uid,step_id,object, method,type,*args):
+        if type!='execute_wkf':
+            return False
+        if ((object not in ("purchase.order",'purchase.order.line')) and (method in ('create','write','unlink'))):
+            self.error(cr, uid,step_id)
+        return (object in ("purchase.order")) and (method in ('purchase_confirm'))
+
+    def post_process_confirm_po2(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase2')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+        if pid:
+            self.write(cr,uid,pid,{'step1':True,'state':'validate_po'})
+            return self.write(cr,uid,pid,{'step2':True,'state':'confirm_supp_inv'})
+        return False
+
+    def pre_confirm_supp_invoice(self, cr,uid,step_id, object, method,type, *args):
+        if (type=='execute') and ((object not in ("account.invoice",'account.invoice.line')) and (method in ('create','write','unlink'))):
+            self.error(cr, uid,step_id)
+        if (type!='execute_wkf'):
+            return False
+        if (type=='execute_wkf') and (method<>'invoice_open'):
+            self.error(cr, uid,step_id)
+        return True
+
+    def post_confirm_supp_invoice(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase2')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+        if pid:
+            return self.write(cr,uid,pid,{'step3':True,'state':'receive'})
+        return False
+
+    def pre_process_receive2(self,cr,uid,step_id,object, method,type,*args):
+        if type!='wizard':
+            return False
+        wizard_id=args[0]
+        object=args[1]['model']
+        if object not in ("stock.picking"):
+            self.error(cr, uid,step_id)
+        return object in ("stock.picking") and wizard_id
+
+    def post_process_receive2(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase2')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+        if pid:
+            return self.write(cr,uid,pid,{'step4':True,'state':'deliver'})
+        return False
+
+    def pre_process_deliver2(self,cr,uid,step_id,object, method,type,*args):
+        if type!='wizard':
+            return False
+        wizard_id=args[0]
+        object=args[1]['model']
+        if object not in ("stock.picking"):
+            self.error(cr, uid,step_id)
+        return object in ("stock.picking") and wizard_id
+
+    def post_process_deliver2(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase2')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+        if pid:
+            return self.write(cr,uid,pid,{'step5':True,'state':'supp_invoice_pay'})
+        return False
+
+
+    def pre_supp_inv_pay(self,cr,uid,step_id,object, method,type,*args):
+        if type!='wizard' or (type =='wizard' and args[1]['model'] not in ("account.invoice")):
+                return False
+        wizard_id=args[0]
+        object=args[1]['model']
+        if object not in ("account.invoice"):
+            self.error(cr, uid,step_id)
+        return object in ("account.invoice") and wizard_id
+
+    def post_supp_inv_pay(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase2')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+        if pid:
+            return self.write(cr,uid,pid,{'step6':True,'state':'confirm_customer_inv'})
+        return False
+
+    def pre_confirm_cust_invoice(self, cr,uid,step_id, object, method,type, *args):
+        print "pre_confirm_cust_invoice",step_id, object, method,type, args
+        if (type=='execute') and ((object not in ("account.invoice",'account.invoice.line')) and (method in ('create','write','unlink'))):
+            self.error(cr, uid,step_id)
+        if (type!='execute_wkf'):
+            return False
+        if (type=='execute_wkf') and (method<>'invoice_open'):
+            self.error(cr, uid,step_id)
+        return True
+
+
+    def post_confirm_cust_invoice(self,cr,uid,step_id,object, method,type,*args):
+        print "post_confirm_cust_invoice",step_id, object, method,type, args
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase2')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+        if pid:
+            return self.write(cr,uid,pid,{'step7':True,'state':'cust_invoice_pay'})
+        return False
+
+    def pre_cust_inv_pay(self,cr,uid,step_id,object, method,type,*args):
+        if type!='wizard':
+            return False
+        wizard_id=args[0]
+        object=args[1]['model']
+        if object not in ("account.invoice"):
+            self.error(cr, uid,step_id)
+        return object in ("account.invoice") and wizard_id
+
+    def post_cust_inv_pay(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase2')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+        if pid:
+             sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'retail_phase2')
+             sid = self.pool.get('ir.model.data').browse(cr, uid, sid).res_id
+             self.pool.get('game.scenario').write(cr, uid, [sid], {'state':'done'})
+             return self.write(cr,uid,pid,{'step8':True,'state':'done'})
+        return False
 profile_game_retail_phase_two()

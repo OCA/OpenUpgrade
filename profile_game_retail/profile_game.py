@@ -85,7 +85,12 @@ class profile_game_retail(osv.osv):
         else:
             hr_name=''
         if p_br[0].state=='3':
-            invisible=True
+            invisible='True'
+
+       # res['arch'] = res['arch'].replace('role1',p_br[0].finance_user_id.name)
+       # res['arch'] = res['arch'].replace('role2',hr_name)
+        #res['arch'] = res['arch'].replace('role3', p_br[0].sales_user_id.name)
+        #res['arch'] = res['arch'].replace('role4', p_br[0].logistic_user_id.name)
         res['arch']="""<?xml version="1.0" encoding="utf-8"?>
                 <form string="Game Details">
                     <newline/>

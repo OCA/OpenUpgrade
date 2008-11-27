@@ -151,7 +151,7 @@ class profile_game_retail_phase_one(osv.osv):
         res=res and res.get('result',False) or False
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
         pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
-        if pid and res:
+        if pid:
             self.write(cr,uid,pid,{'step4':True,'state':'modify_price'})
             return True
         return False
@@ -256,6 +256,9 @@ class profile_game_retail_phase_one(osv.osv):
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
         pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid:
+            sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'retail_phase1')
+            sid = self.pool.get('ir.model.data').browse(cr, uid, sid).res_id
+            self.pool.get('game.scenario').write(cr, uid, [sid], {'state':'done'})
             return self.write(cr,uid,pid,{'step10':True,'state':'done'})
         return False
 

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
+	<data noupdate="1">
+        <record model="profile.game.retail.phase2" id="phase2">
+            <field name="state">not running</field>
+        </record>
+    </data>
     <data>
         <record model="ir.ui.view" id="view_game_phase2_form">
             <field name="name">profile.game.retail.phase2.form</field>
@@ -56,7 +61,16 @@ Click on 'Get Complete Scenario' to get the document explaining the details of t
                 </form>
             </field>
         </record>
-
+		<record model="ir.ui.view" id="view_game_phase2_tree">
+            <field name="name">profile.game.retail.phase2.tree</field>
+            <field name="model">profile.game.retail.phase2</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Business Game">
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
         <record model="ir.actions.act_window" id="action_game_phase2_form">
             <field name="name">Business Game</field>
             <field name="res_model">profile.game.retail.phase2</field>
@@ -70,6 +84,13 @@ Click on 'Get Complete Scenario' to get the document explaining the details of t
             <field name="view_mode">form</field>
             <field name="view_id" eval="False"/>
         </record>
+         <menuitem
+            name="Business Game Scenario(Phase2)"
+            parent="business_game"
+            sequence="1"
+            id="menu_game_phase2"
+            action="action_game_phase2_form"/>
+
 
      </data>
 </openerp>
