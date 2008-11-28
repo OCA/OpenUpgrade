@@ -98,12 +98,12 @@ def _makeInvoices(self, cr, uid, data, context):
         for tax in data_product[0].taxes_id:
             tax_ids.append(tax.id)
 
-        note = ''
-        cci_special_reference = False
++        note = ''
++        cci_special_reference = False
 
-        if reg.check_mode:
-            note = 'Check payment for a total of ' + str(reg.check_amount)
-            cci_special_reference = "event.registration*" + str(reg.id)
++        if reg.check_mode:
++            note = 'Check payment for a total of ' + str(reg.check_amount)
++            cci_special_reference = "event.registration*" + str(reg.id)
         vals = {
                 'name': reg.name,
                 'account_id':value['value']['account_id'],
@@ -113,8 +113,8 @@ def _makeInvoices(self, cr, uid, data, context):
                 'uos_id': value['value']['uos_id'],
                 'product_id': reg.event_id.product_id.id,
                 'invoice_line_tax_id': [(6,0,tax_ids)],
-                'note': note,
-                'cci_special_reference': cci_special_reference
++                'note': note,
++                'cci_special_reference': cci_special_reference
         }
         result_analytic = obj_lines.product_id_change(cr, uid, ids=[] , product = reg.event_id.product_id.id, uom =False ,partner_id=reg.partner_invoice_id.id)
         analytic_id = False
@@ -138,7 +138,7 @@ def _makeInvoices(self, cr, uid, data, context):
             'address_invoice_id':partner_address_id,
             'address_contact_id':partner_address_id,
             'invoice_line': [(6,0,[inv_id])],
-            'currency_id' :reg.partner_invoice_id.property_product_pricelist.currency_id.id,# 1,
+            'currency_id' :reg.partner_invoice_id.property_product_pricelist.currency_id.id,
             'comment': "",
             'payment_term':reg.partner_invoice_id.property_payment_term.id,
         }
@@ -149,7 +149,7 @@ def _makeInvoices(self, cr, uid, data, context):
         obj_event_reg.write(cr, uid,reg.id, {'invoice_id' : inv_id,'state':'done'})
 
         #FIXME: if the next line is commented/removed, tiny will crash. This is probably due to a bug into the orm
-        reg=pool_obj.get('event.registration').browse(cr,uid,[reg.id])[0]
+        #reg=pool_obj.get('event.registration').browse(cr,uid,[reg.id])[0]
 
         obj_event_reg._history(cr, uid,[reg.id], 'Invoiced', history=True)
 
