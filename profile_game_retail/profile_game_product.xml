@@ -46,6 +46,10 @@
 		</record>
 	</data>
 	<data noupdate="1">
+		<record id="base.main_partner" model="res.partner">
+            <field name="property_account_receivable" ref="profile_game_retail.account_account_t0"/>
+			<field name="property_account_payable" ref="profile_game_retail.account_account_t1"/>
+        </record>
 		<record id="res_partner_chinasoundelectronic0" model="res.partner">
 			<field eval="&quot;&quot;&quot;Très bons tarifs et sérieux.
 Le seul problème sont les délais de livraison par bateau qui sont très longs.&quot;&quot;&quot;" name="comment"/>

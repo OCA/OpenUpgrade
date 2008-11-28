@@ -29,11 +29,11 @@ You can not perform this operation in the current phase of the business game.
 In this phase, you must Pay All Customer Invoice.
         </field>
 
-       <!-- <field name="pre_process_object">profile.game.retail.phase1</field>
-        <field name="pre_process_method">pre_process_print_rfq</field>
+        <field name="pre_process_object">profile.game.retail.phase2</field>
+        <field name="pre_process_method">pre_cust_inv_pay</field>
 
-        <field name="post_process_object">profile.game.retail.phase1</field>
-        <field name="post_process_method">post_process_print_rfq</field>-->
+        <field name="post_process_object">profile.game.retail.phase2</field>
+        <field name="post_process_method">post_cust_inv_pay</field>
         <field name="state">draft</field>
     </record>
 
@@ -53,12 +53,12 @@ In this phase, you must modify Confirm Draft Customer Invoice.
 You can not perform this operation in the current phase of the business game.
 In this phase, you must modify Confirm Draft Customer Invoice.
         </field>
-<!--
-        <field name="pre_process_object">profile.game.retail.phase1</field>
-        <field name="pre_process_method">pre_process_modify_price</field>
 
-        <field name="post_process_object">profile.game.retail.phase1</field>
-        <field name="post_process_method">post_process_modify_price</field>-->
+        <field name="pre_process_object">profile.game.retail.phase2</field>
+        <field name="pre_process_method">pre_confirm_cust_invoice</field>
+
+        <field name="post_process_object">profile.game.retail.phase2</field>
+        <field name="post_process_method">post_confirm_cust_invoice</field>
         <field name="state">draft</field>
         <field name="step_next_ids" eval="[(6,0,[ref('step_pay_cust_inv')])]"/>
     </record>
@@ -82,11 +82,11 @@ You can not perform this operation in the current phase of the business game.
 In this phase, you must Pay All Supplier Invoice.
         </field>
 
-      <!--<field name="pre_process_object">profile.game.retail.phase1</field>
-        <field name="pre_process_method">pre_process_confirm_po</field>
+      <field name="pre_process_object">profile.game.retail.phase2</field>
+        <field name="pre_process_method">pre_supp_inv_pay</field>
 
-        <field name="post_process_object">profile.game.retail.phase1</field>
-        <field name="post_process_method">post_process_confirm_po</field>-->
+        <field name="post_process_object">profile.game.retail.phase2</field>
+        <field name="post_process_method">post_supp_inv_pay</field>
         <field name="state">draft</field>
         <field name="step_next_ids" eval="[(6,0,[ref('step_confirm_cust_inv')])]"/>
     </record>
@@ -110,11 +110,11 @@ You can not perform this operation in the current phase of the business game.
 In this phase, you must deliver Products.
         </field>
 
-       <!-- <field name="pre_process_object">profile.game.retail.phase1</field>
-        <field name="pre_process_method">pre_process_deliver</field>
+        <field name="pre_process_object">profile.game.retail.phase2</field>
+        <field name="pre_process_method">pre_process_deliver2</field>
 
-        <field name="post_process_object">profile.game.retail.phase1</field>
-        <field name="post_process_method">post_process_deliver</field>-->
+        <field name="post_process_object">profile.game.retail.phase2</field>
+        <field name="post_process_method">post_process_deliver2</field>
         <field name="state">draft</field>
         <field name="step_next_ids" eval="[(6,0,[ref('step_pay_supp_inv')])]"/>
     </record>
@@ -138,11 +138,11 @@ You can not perform this operation in the current phase of the business game.
 In this phase, you must receive Products.
         </field>
 
-    <!--    <field name="pre_process_object">profile.game.retail.phase1</field>
-        <field name="pre_process_method">pre_process_receive</field>
+       <field name="pre_process_object">profile.game.retail.phase2</field>
+        <field name="pre_process_method">pre_process_receive2</field>
 
-        <field name="post_process_object">profile.game.retail.phase1</field>
-        <field name="post_process_method">post_process_receive</field>-->
+        <field name="post_process_object">profile.game.retail.phase2</field>
+        <field name="post_process_method">post_process_receive2</field>
         <field name="state">draft</field>
         <field name="step_next_ids" eval="[(6,0,[ref('step_deliver2')])]"/>
     </record>
@@ -165,11 +165,11 @@ You can not perform this operation in the current phase of the business game.
 In this phase, you must confirm Draft Supplier Invoice.
         </field>
 
-      <!--  <field name="pre_process_object">profile.game.retail.phase1</field>
-        <field name="pre_process_method">pre_process_invoice_create</field>
+      <field name="pre_process_object">profile.game.retail.phase2</field>
+        <field name="pre_process_method">pre_confirm_supp_invoice</field>
 
-        <field name="post_process_object">profile.game.retail.phase1</field>
-        <field name="post_process_method">post_process_invoice_create</field>-->
+        <field name="post_process_object">profile.game.retail.phase2</field>
+        <field name="post_process_method">post_confirm_supp_invoice</field>
         <field name="state">draft</field>
         <field name="step_next_ids" eval="[(6,0,[ref('step_receive2')])]"/>
     </record>
@@ -192,12 +192,12 @@ You can use the menu: Purchase Management / Purchase Orders / Request For Quotat
 You can not perform this operation in the current phase of the business game.
 In this phase, you must Confirm the Purchase Order.
         </field>
-<!--
-        <field name="pre_process_object">profile.game.retail.phase2</field>
-        <field name="pre_process_method">pre_process_invoice_print</field>
 
-        <field name="post_process_object">profile.game.retail.phase1</field>
-        <field name="post_process_method">post_process_invoice_print</field>-->
+        <field name="pre_process_object">profile.game.retail.phase2</field>
+        <field name="pre_process_method">pre_process_confirm_po2</field>
+
+        <field name="post_process_object">profile.game.retail.phase2</field>
+        <field name="post_process_method">post_process_confirm_po2</field>
         <field name="state">draft</field>
  		<field name="step_next_ids" eval="[(6,0,[ref('step_confirm_Supp_inv')])]"/>
     </record>

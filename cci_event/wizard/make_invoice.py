@@ -104,8 +104,7 @@ def _makeInvoices(self, cr, uid, data, context):
         if reg.check_mode:
             note = 'Check payment for a total of ' + str(reg.check_amount)
             cci_special_reference = "event.registration*" + str(reg.id)
-
-        inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
+        vals = {
                 'name': reg.name,
                 'account_id':value['value']['account_id'],
                 'price_unit': reg.unit_price,
@@ -116,7 +115,18 @@ def _makeInvoices(self, cr, uid, data, context):
                 'invoice_line_tax_id': [(6,0,tax_ids)],
                 'note': note,
                 'cci_special_reference': cci_special_reference
-        })
+        }
+        result_analytic = obj_lines.product_id_change(cr, uid, ids=[] , product = reg.event_id.product_id.id, uom =False ,partner_id=reg.partner_invoice_id.id)
+        analytic_id = False
+        if result_analytic['value'].has_key('account_analytic_id') and result_analytic['value']['account_analytic_id']:
+                analytic_id = result_analytic['value']['account_analyitic_id']
+                vals.update({'account_analyitic_id':analytic_id})
+        if result_analytic['value'].has_key('analytics_id') and result_analytic['value']['analytics_id']:
+                analytic_id = result_analytic['value']['analytics_id']
+                vals.update({'analytics_id':analytic_id})
+
+
+        inv_id =pool_obj.get('account.invoice.line').create(cr, uid, vals )
 
         inv = {
             'name': reg.invoice_label,

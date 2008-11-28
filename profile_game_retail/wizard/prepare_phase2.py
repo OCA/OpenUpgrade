@@ -26,7 +26,7 @@ import netsvc
 def get_ready_phase2(self, cr, uid, data, context):
         pool=pooler.get_pool(cr.dbname)
         sm_action=['menu_purchase_order_draft','menu_action_invoice_tree8']
-        lm_action=['mrp_Sched_all','menu_action_picking_tree4','menu_action_picking_tree']
+        lm_action=['menu_action_picking_tree4','menu_action_picking_tree']
         fm_action=['menu_action_invoice_tree9','menu_invoice_draft','menu_action_invoice_tree7']
         sm_group=['Purchase / Manager','Purchase / User','Employee','Finance / Accountant','Finance / Invoice']
         sm_group_ids=pool.get('res.groups').search(cr,uid,[('name','in',sm_group)])
@@ -99,8 +99,10 @@ def get_ready_phase2(self, cr, uid, data, context):
        # if obj.state != 'done':
            # phase1_obj.write(cr,uid,data['id'],{'state':'done'})
         return  {
+        'domain':"[('id', '=',1)]",
         'name': 'Business Game',
         'view_type': 'form',
+        'view_mode':'tree,form',
         'res_model': 'profile.game.retail.phase2',
         'view_id':False,
         'type': 'ir.actions.act_window',

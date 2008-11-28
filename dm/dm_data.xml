@@ -2,7 +2,6 @@
 <openerp>
     <data noupdate="1">
 
-
         <!-- Partner Categories -->
 
         <record id="res_partner_category_directmarketing0" model="res.partner.category">
@@ -150,7 +149,7 @@
             <field name="parent_id" ref="product_category_directmarketing0"/>
         </record>
 
-		<record id="product_category_dtp0" model="product.category">
+        <record id="product_category_dtp0" model="product.category">
             <field name="property_stock_journal" ref="stock.stock_journal"/>
             <field eval="&quot;&quot;&quot;DTP&quot;&quot;&quot;" name="name"/>
             <field name="parent_id" ref="product_category_directmarketing0"/>
@@ -458,22 +457,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="0" name="rental"/>
         </record>
     </data>
-	<!--
-    <data noupdate="1">
-        <record id="product_supplierinfo_0" model="product.supplierinfo">
-            <field name="name" ref="base.res_partner_agrolait"/>
-            <field eval="1" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_defaultpapermailing0"/>
-        </record>
-        <record id="product_supplierinfo_1" model="product.supplierinfo">
-            <field name="name" ref="base.res_partner_10"/>
-            <field eval="1" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_defaultpapermailing0"/>
-        </record>
-    </data>
-	-->
     <data noupdate="1">
         <record id="product_product_defaultitem0" model="product.product">
             <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
@@ -504,14 +487,14 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="1.0" name="produce_delay"/>
             <field eval="0" name="rental"/>
         </record>
-		<!--
+        <!--
         <record id="product_supplierinfo_2" model="product.supplierinfo">
             <field name="name" ref="base.res_partner_6"/>
             <field eval="1" name="sequence"/>
             <field eval="1" name="delay"/>
             <field name="product_id" ref="product_product_defaultitem0"/>
         </record>
-		-->
+        -->
     </data>
     <data noupdate="1">
         <record id="product_product_defaultcustomerslist0" model="product.product">
@@ -543,14 +526,14 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="1.0" name="produce_delay"/>
             <field eval="0" name="rental"/>
         </record>
-		<!--
+        <!--
         <record id="product_supplierinfo_3" model="product.supplierinfo">
             <field name="name" ref="base.res_partner_thymbra"/>
             <field eval="1" name="sequence"/>
             <field eval="1" name="delay"/>
             <field name="product_id" ref="product_product_defaultcustomerslist0"/>
         </record>
-		-->
+        -->
     </data>
     <data noupdate="1">
         <record id="product_product_defaulttranslation0" model="product.product">
@@ -582,14 +565,94 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="1.0" name="produce_delay"/>
             <field eval="0" name="rental"/>
         </record>
-		<!--
+        <!--
         <record id="product_supplierinfo_4" model="product.supplierinfo">
             <field name="name" ref="base.res_partner_c2c"/>
             <field eval="1" name="sequence"/>
             <field eval="1" name="delay"/>
             <field name="product_id" ref="product_product_defaulttranslation0"/>
         </record>
-		-->
+        -->
     </data>
+
+    <!-- Document Categories -->
+
+    <data>
+        <record id="dm_offer_document_category_analysis0" model="dm.offer.document.category">
+            <field eval="&quot;&quot;&quot;Analysis&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="dm_offer_document_category_reference0" model="dm.offer.document.category">
+            <field eval="&quot;&quot;&quot;Reference&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="dm_offer_document_category_production0" model="dm.offer.document.category">
+            <field eval="&quot;&quot;&quot;Production&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+
+    <!-- DMS Directories -->
+
+    <data noupdate="1">
+        <record id="document_directory_directmarketing0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Direct Marketing&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field eval="&quot;&quot;&quot;directory&quot;&quot;&quot;" name="type"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_offers0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Offers&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field name="parent_id" ref="document_directory_directmarketing0"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_offer"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_steps0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Steps&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('offer_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_offer"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_offer_step"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_documentsbycategory0" model="document.directory">
+            <field eval="1" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents by Category&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_offer_step"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_offer_document_category"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_documents0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('category_ids','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_offer_document_category"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_offer_document"/>
+        </record>
+    </data>
+
 
 </openerp>

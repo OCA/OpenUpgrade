@@ -98,8 +98,22 @@
                     </page>
                     <page string="Manufacturing">
                         <separator string="Manufacturing" colspan="4"/>
-                        <field name="manufacturing_responsible_id"/>
-                        <field name="campaign_group_id"/>
+                        <group colspan="2" col="2">
+                            <field name="manufacturing_responsible_id"/>
+                            <field name="campaign_group_id"/>
+                        </group>
+                        <group colspan="2" col="2">
+                            <field name="manufacturing_cost_ids" nolabel="1">
+                                <form string="Manufacturing Cost">
+                                    <field name="name" colspan="4"/>
+                                    <field name="amount" col="2"/>
+                                </form>
+                                <tree string="Manufacturing Costs">
+                                    <field name="name"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </group>
                         <field name="manufacturing_task_ids" nolabel="1" colspan="4" widget="one2many_list" context="{'type':'Mailing Manufacturing','project_id':project_id}">
                             <tree string="Manufacturing tasks" editable="bottom">
                                 <field name="name" string="Task Name"/>
@@ -107,16 +121,6 @@
                                 <field name="date_reviewed"/>
                                 <field name="date_planned"/>
                                 <field name="date_close" string="Real Date"/>
-                            </tree>
-                        </field>
-                        <field name="manufacturing_cost_ids" colspan="4" nolabel="1">
-                            <form string="Manufacturing Cost">
-                                <field name="name" colspan="4"/>
-                                <field name="amount" col="2"/>
-                            </form>
-                            <tree string="Manufacturing Costs">
-                                <field name="name"/>
-                                <field name="amount"/>
                             </tree>
                         </field>
                         <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
@@ -553,14 +557,16 @@
 <!--                    <field name="forwarding_charges"/>-->
                     <field name="item_ids" colspan="4" nolabel="1">
                         <form string="Catalogue">
-                            <field name="offer_step_type"/>
+<!--                            <field name="offer_step_type"/>-->
+                            <field name="offer_step_type_id"/>
                             <field name="product_id" string="Item"/>
                             <field name="price"/>
                             <field name="item_type"/>
                             <field name="notes"/>
                         </form>
                         <tree string="Catalogue" editable="bottom">
-                            <field name="offer_step_type"/>
+<!--                            <field name="offer_step_type"/>-->
+                            <field name="offer_step_type_id"/>
                             <field name="product_id" string="Item"/>
                             <field name="price"/>
                             <field name="item_type"/>

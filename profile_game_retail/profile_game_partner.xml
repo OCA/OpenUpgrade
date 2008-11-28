@@ -80,6 +80,7 @@
 			<field eval="&quot;&quot;&quot;t&quot;&quot;&quot;" name="name"/>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="&quot;&quot;&quot;receivable&quot;&quot;&quot;" name="type"/>
+			<field eval="True" name="reconcile"/>
 			<field eval="[(6,0,[])]" name="tax_ids"/>
 		</record>
 	</data>
@@ -93,6 +94,7 @@
 			<field eval="&quot;&quot;&quot;t&quot;&quot;&quot;" name="name"/>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="&quot;&quot;&quot;payable&quot;&quot;&quot;" name="type"/>
+			<field eval="True" name="reconcile"/>
 			<field eval="[(6,0,[])]" name="tax_ids"/>
 		</record>
 	</data>
