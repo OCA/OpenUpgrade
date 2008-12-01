@@ -68,6 +68,7 @@ dm_order()
 
 class dm_customer(osv.osv):
     _name = "dm.customer"
+    _rec_name = "firstname"
     _columns = {
         'code' : fields.char('Code',size=64),
         'language_id' : fields.many2one('res.lang','Main Language'),
