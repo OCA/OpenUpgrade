@@ -38,7 +38,6 @@
     "init_xml":[
         "profile_game_data.xml",
         "profile_game_scenario.xml",
-        "profile_game_scenario_phase2.xml",
     ],
     "demo_xml":[],
     "update_xml":[
@@ -46,7 +45,6 @@
         "wizard_game_phase2.xml",
         "profile_game_partner.xml",
         "profile_game_phase1.xml",
-        "profile_game_phase2.xml",
         "profile_game_config.xml",
         "profile_game_account_data.xml",
         "profile_game_product.xml",

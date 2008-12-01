@@ -14,7 +14,6 @@ Description of the scenario.
 
 	<record model="game.scenario.step" id="step_invoice_print">
 		<field name="name">Print Invoice</field>
-		<field name="phase">ONE</field>
         <field name="scenario_id" ref="retail_phase1"/>
         <field name="menu_id" ref="account.menu_action_invoice_tree1"/>
         <field name="description">
@@ -40,7 +39,6 @@ In this phase, you must print Invoice.
 
 	<record model="game.scenario.step" id="step_invoice_create">
 		<field name="name">Confirm Invoice</field>
-		<field name="phase">ONE</field>
         <field name="scenario_id" ref="retail_phase1"/>
         <field name="menu_id" ref="account.menu_action_invoice_tree1"/>
         <field name="description">
@@ -66,7 +64,6 @@ In this phase, you must confirm Invoice.
 
    <record model="game.scenario.step" id="step_deliver">
 		<field name="name">Deliver Products</field>
-		<field name="phase">ONE</field>
         <field name="scenario_id" ref="retail_phase1"/>
         <field name="menu_id" ref="stock.menu_action_picking_tree"/>
         <field name="description">
@@ -93,7 +90,6 @@ In this phase, you must deliver Products.
 
 	<record model="game.scenario.step" id="step_receive">
 		<field name="name">Receive Products</field>
-		<field name="phase">ONE</field>
         <field name="scenario_id" ref="retail_phase1"/>
         <field name="menu_id" ref="stock.menu_action_picking_tree4"/>
         <field name="description">
@@ -120,7 +116,6 @@ In this phase, you must receive Products.
 
 	<record model="game.scenario.step" id="step_confirm_po">
 		<field name="name">Confirm Purchase Order</field>
-		<field name="phase">ONE</field>
         <field name="scenario_id" ref="retail_phase1"/>
         <field name="menu_id" ref="purchase.menu_purchase_form_action"/>
         <field name="description">
@@ -149,7 +144,6 @@ In this phase, you must confirm Purchase Order.
 
 	<record model="game.scenario.step" id="step_modify_price">
 		<field name="name">Modify Price RfQ</field>
-		<field name="phase">ONE</field>
         <field name="scenario_id" ref="retail_phase1"/>
         <field name="menu_id" ref="purchase.menu_purchase_form_action"/>
         <field name="description">
@@ -174,7 +168,6 @@ In this phase, you must modify price Request for Quotation.
 
 	<record model="game.scenario.step" id="step_print_rfq">
 		<field name="name">Print Request for Quotation</field>
-		<field name="phase">ONE</field>
         <field name="scenario_id" ref="retail_phase1"/>
         <field name="menu_id" ref="purchase.menu_purchase_form_action"/>
         <field name="description">
@@ -201,7 +194,6 @@ In this phase, you must print Request for Quotation.
 
 	<record model="game.scenario.step" id="step_sale">
 		<field name="name">Confirm the order</field>
-		<field name="phase">ONE</field>
         <field name="scenario_id" ref="retail_phase1"/>
         <field name="menu_id" ref="sale.menu_sale_order"/>
         <field name="description">
@@ -226,7 +218,6 @@ In this phase, you must confirm the order.
     </record>
 
     <record model="game.scenario.step" id="step_print_quote">
-    	<field name="phase">ONE</field>
 		<field name="name">Print the quotation</field>
         <field name="scenario_id" ref="retail_phase1"/>
         <field name="menu_id" ref="sale.menu_sale_order"/>
@@ -254,7 +245,6 @@ In this phase, you must print the quotation you just created.
 
     <record model="game.scenario.step" id="step_quotation">
 		<field name="name">Create a Quotation</field>
-		<field name="phase">ONE</field>
         <field name="scenario_id" ref="retail_phase1"/>
         <field name="menu_id" ref="sale.menu_sale_order"/>
         <field name="description">

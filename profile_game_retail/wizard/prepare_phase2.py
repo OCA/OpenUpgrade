@@ -25,85 +25,23 @@ import netsvc
 
 def get_ready_phase2(self, cr, uid, data, context):
         pool=pooler.get_pool(cr.dbname)
-        sm_action=['menu_purchase_order_draft','menu_action_invoice_tree8']
-        lm_action=['menu_action_picking_tree4','menu_action_picking_tree']
-        fm_action=['menu_action_invoice_tree9','menu_invoice_draft','menu_action_invoice_tree7']
-        sm_group=['Purchase / Manager','Purchase / User','Employee','Finance / Accountant','Finance / Invoice']
-        sm_group_ids=pool.get('res.groups').search(cr,uid,[('name','in',sm_group)])
-        sm_roles=['Purchase','Invoice']
-        sm_role_ids=pool.get('res.roles').search(cr,uid,[('name','in',sm_roles)])
-
         mod_obj = pooler.get_pool(cr.dbname).get('ir.model.data')
         phase1_obj=pool.get('profile.game.retail.phase1')
-
         obj=phase1_obj.browse(cr,uid,data['id'])
-      #  phase1_obj.write(cr,uid,data['id'],{'state':'started_phase2'})
 
         user_ids=pool.get('res.users').search(cr,uid,[])
-        user_browse=pool.get('res.users').browse(cr,uid,user_ids)
-        sc_ids=pool.get('ir.ui.view_sc').search(cr,uid,[('user_id','in',user_ids)])
-        pool.get('ir.ui.view_sc').unlink(cr,uid,sc_ids)
-
         result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'open_board_game2')
+        print "result ",result
         id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+        print "id..........",id
         for user in user_ids:
             pool.get('res.users').write(cr,uid,user,{'action_id':id})
 
-        for user in user_browse:
-            if user.login=='sale':
-                cr.execute('delete from res_groups_users_rel where uid =%d'%(user.id))
-                cr.execute('delete from res_roles_users_rel where uid =%d'%(user.id))
-                pool.get('res.users').write(cr,uid,user.id,{'groups_id':[[6,0,sm_group_ids]],
-                                                            'roles_id':[[6,0,sm_role_ids]]})
-                for action in sm_action:
-                    val={}
-                    if action =='menu_purchase_order_draft':
-                        module='purchase'
-                    else:
-                        module='account'
-                    res=mod_obj._get_id(cr, uid, module, action)
-                    res_id = mod_obj.read(cr, uid, [res], ['res_id'])[0]['res_id']
-                    val['res_id']=res_id
-                    val['resource']='ir.ui.menu'
-                    val['user_id'] =user.id
-                    val['name']=pool.get('ir.ui.menu').read(cr,uid,[res_id],['name'])[0]['name']
-                    pool.get('ir.ui.view_sc').create(cr,uid,val)
-
-            if user.login=='logistic':
-                for action in lm_action:
-                    val={}
-                    if action =='mrp_Sched_all':
-                        module='mrp'
-                    else:
-                        module='stock'
-                    res=mod_obj._get_id(cr, uid, module, action)
-                    res_id = mod_obj.read(cr, uid, [res], ['res_id'])[0]['res_id']
-                    val['res_id']=res_id
-                    val['resource']='ir.ui.menu'
-                    val['user_id'] =user.id
-                    val['name']=pool.get('ir.ui.menu').read(cr,uid,[res_id],['name'])[0]['name']
-                    pool.get('ir.ui.view_sc').create(cr,uid,val)
-
-            if user.login=='finance':
-                for action in fm_action:
-                    val={}
-                    res=mod_obj._get_id(cr, uid, 'account', action)
-                    res_id = mod_obj.read(cr, uid, [res], ['res_id'])[0]['res_id']
-                    val['res_id']=res_id
-                    val['resource']='ir.ui.menu'
-                    val['user_id'] =user.id
-                    val['name']=pool.get('ir.ui.menu').read(cr,uid,[res_id],['name'])[0]['name']
-                    pool.get('ir.ui.view_sc').create(cr,uid,val)
-
-
-       # if obj.state != 'done':
-           # phase1_obj.write(cr,uid,data['id'],{'state':'done'})
+      #  phase1_obj.write(cr,uid,data['id'],{'state':'started_phase2'})
         return  {
-        'domain':"[('id', '=',1)]",
         'name': 'Business Game',
         'view_type': 'form',
-        'view_mode':'tree,form',
-        'res_model': 'profile.game.retail.phase2',
+        'res_model': 'profile.game.retail',
         'view_id':False,
         'type': 'ir.actions.act_window',
         }

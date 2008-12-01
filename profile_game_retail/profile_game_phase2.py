@@ -24,6 +24,9 @@ import pooler
 import time
 from mx import DateTime
 import datetime
+import netsvc
+from mx.DateTime import now
+
 # develop following dashboard
 #Financial Manager (Fabien Pinckaers, put here the name of the financial manager user)
 #-----------------
@@ -73,62 +76,6 @@ import datetime
 class profile_game_retail(osv.osv):
     _name="profile.game.retail"
 
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
-        res = super(profile_game_retail,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
-        p_id=self.search(cr,uid,[])
-        if not len(p_id):
-            return res
-        p_br=self.browse(cr,uid,p_id)
-        invisible=False
-        if p_br[0].hr_user_id:
-            hr_name=p_br[0].hr_user_id.name
-        else:
-            hr_name=''
-        if p_br[0].state=='3':
-            invisible='True'
-
-       # res['arch'] = res['arch'].replace('role1',p_br[0].finance_user_id.name)
-       # res['arch'] = res['arch'].replace('role2',hr_name)
-        #res['arch'] = res['arch'].replace('role3', p_br[0].sales_user_id.name)
-        #res['arch'] = res['arch'].replace('role4', p_br[0].logistic_user_id.name)
-        res['arch']="""<?xml version="1.0" encoding="utf-8"?>
-                <form string="Game Details">
-                    <newline/>
-                    <group col="2" colspan="2">
-                        <separator colspan="2" string="Finance Manager: %s"/>
-                        <field name="expenses_forecast"/>
-                        <field name="current_treasury"/>
-                        <field name="total_refund"/>
-                        <field name="total_current_refund"/>
-                        <button colspan="2" string="Loans" type="object"/>
-                    </group>
-                    <group col="2" colspan="2" invisible ="%s">
-                        <separator colspan="2" string="HR Manager: %s"/>
-                        <field name="hr_budget"/>
-                    </group>
-                    <group col="2" colspan="2">
-                        <separator colspan="2" string="Sales Manager: %s"/>
-                        <field name="last_total_sale"/>
-                        <field name="sale_forcast"/>
-                        <field name="margin_forcast"/>
-                    </group>
-                    <group col="2" colspan="2">
-                        <separator colspan="2" string="Logistic Manager :%s"/>
-                        <field name="last_avg_stock"/>
-                        <field name="avg_stock_forcast"/>
-                        <field name="cost_purchase_forcast"/>
-                    </group>
-                    <newline/>
-                    <separator colspan="4" string="Objectives Achievement"/>
-                    <field name="last_turnover"/>
-                    <field name="total_benefit"/>
-                    <field name="total_sold_products"/>
-                    <field name="turnover_growth"/>
-                    <field name="benefits_growth"/>
-                    <field name="products_growth"/>
-                    <field colspan="4" name="note"/>
-                </form>"""%(p_br[0].finance_user_id.name,invisible,hr_name,p_br[0].sales_user_id.name,p_br[0].logistic_user_id.name)
-        return res
     def _calculate_detail(self, cr, uid, ids, field_names, arg, context):
         res = {}
         print field_names
@@ -379,6 +326,46 @@ class profile_game_retail(osv.osv):
         'products_growth' : fields.function(_calculate_detail, method=True, type='float', string='Growth Products', multi='objectives',help="Growth Products"),
         'note':fields.text('Notes'),
     }
+    def confirm_draft_po(self,cr,uid,ids,context={}):
+        wf_service = netsvc.LocalService('workflow')
+        po_obj=self.pool.get('purchase.order')
+        po_ids=po_obj.search(cr,uid,[('state','=','draft')])
+        for id in po_ids:
+            wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_confirm', cr)
+        return
+    def continue_next_year(self, cr, uid, ids, context={}):
+        partner_ids=self.pool.get('res.partner').search(cr,uid,[])
+        prod_ids=self.pool.get('product.product').search(cr,uid,[])
+        shop=self.pool.get('sale.shop').search(cr,uid,[])
+        wf_service = netsvc.LocalService('workflow')
+## Create Random number of sale orders ##
+        for i in range(0,5):
+            partner_addr = self.pool.get('res.partner').address_get(cr, uid, [partner_ids[i]],
+                            ['invoice', 'delivery', 'contact'])
+            pricelist = self.pool.get('res.partner').browse(cr, uid, partner_ids[i],
+                            context).property_product_pricelist.id
+            vals = {
+                    'shop_id': shop[0],
+                    'partner_id': partner_ids[i],
+                    'pricelist_id': pricelist,
+                    'partner_invoice_id': partner_addr['invoice'],
+                    'partner_order_id': partner_addr['contact'],
+                    'partner_shipping_id': partner_addr['delivery'],
+                    'order_policy': 'postpaid',
+                    'date_order': now(),
+                }
+            new_id = self.pool.get('sale.order').create(cr, uid, vals)
+            value = self.pool.get('sale.order.line').product_id_change(cr, uid, [], pricelist,
+                            prod_ids[i], qty=i, partner_id=partner_ids[i])['value']
+            value['product_id'] = prod_ids[i]
+            value['product_uom_qty']=i+100
+            value['order_id'] = new_id
+            self.pool.get('sale.order.line').create(cr, uid, value)
+            wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
+            ## confirm Purchase Order ##
+            self.confirm_draft_po(cr,uid,ids)
+        return True
+
 profile_game_retail()
 
 class profile_game_config_wizard(osv.osv_memory):
