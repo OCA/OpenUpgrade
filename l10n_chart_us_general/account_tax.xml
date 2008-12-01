@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data noupdate="1">
-<record id="tax1" model="account.tax">
+
+<record id="tax1" model="account.tax.template">
+	<field name="chart_template_id" ref="us_general_template"/>
 	<field name="name">Sales Tax(5.0%)</field>
-	<field name="amount">0.050000</field>
+	<field eval="0.050000" name="amount"/>
 	<field name="type">percent</field>
 	<field name="account_collected_id" ref="chart2150"/>
 	<field name="account_paid_id" ref="chart2150"/>
