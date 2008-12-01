@@ -8,12 +8,13 @@ class stock_move(osv.osv):
     _inherit = "stock.move"
 
     def _check_unique_product_lot(self, cr, uid, ids):
-         for move in self.browse(cr, uid, ids):
+         for move in self.browse(cr, uid, ids):#TODO deal with the other regular tracking constraints?
              if move.state == 'done' and move.product_id.unique_production_number and move.product_qty > 1:
                 return False
          return True
 
-    _columns = {
+    _columns = {#FIXME: that column is only used to get an edition widget, so that's unfortunate to add a DB column
+                #ideally would would have some in memory field, but a whole wizard seems overkill, any better idea?
         'new_prodlot_code': fields.char('Production Tracking Code To Create', size=64),
     }
         
@@ -43,7 +44,8 @@ stock_move()
 class stock_picking(osv.osv):
     _inherit = "stock.picking"
     
-    
+    #TODO: ensure the perf is okay, optimize eventually. I think it's okay because
+    #we don't browse picking lists intensively
     def read(self, cr, uid, ids, fields=None, context=None, load='_classic_read'):
         records = super(stock_picking, self).read(cr, uid, ids, fields, context, load)
         for record in records:
