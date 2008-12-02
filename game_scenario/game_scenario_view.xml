@@ -14,7 +14,6 @@
         <field name="arch" type="xml">
             <tree string="Steps">
                 <field name="name"/>
-                <field name="phase"/>
                 <field name="menu_id"/>
                 <field name="pre_process_object"/>
                 <field name="pre_process_method"/>
@@ -32,7 +31,6 @@
         <field name="arch" type="xml">
             <form string="Scenario Steps">
                 <field name="name" select="1"/>
-                <field name="phase"/>
                 <field name="menu_id"/>
                 <field name="scenario_id" select="1"/>
                 <notebook colspan="4">

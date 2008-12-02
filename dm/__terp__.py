@@ -63,6 +63,7 @@
                     "dm_report.xml",
                     "offer_sequence.xml",
                     "dm_data.xml",
+                    "dm_workflow.xml",
                     ],
     "active": False,
     "installable": True

@@ -20,6 +20,7 @@
 #
 ##############################################################################
 import time
+import netsvc
 import datetime
 #import campaign
 
@@ -75,10 +76,7 @@ class dm_offer_step(osv.osv):
 
     def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
-<<<<<<< TREE
-=======
 #        print "Offer Step Context : ",context
->>>>>>> MERGE-SOURCE
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
@@ -148,22 +146,29 @@ class dm_offer_step(osv.osv):
                 value['name'] = "%s for %s"% (type_code,offer.name) 
         return {'value':value}
     
-    def state_close_set(self, cr, uid, ids, *args):
+    def state_close_set(self, cr, uid, ids, context=None):
         self.__history(cr,uid, ids, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
         return True
 
-    def state_open_set(self, cr, uid, ids, *args):
+    def state_open_set(self, cr, uid, ids, context=None):
         self.__history(cr,uid,ids, 'open')
-        self.write(cr, uid, ids, {'state':'open'})
-        return True
+        res = self.write(cr, uid, ids, {'state':'open'})
+        for step in self.browse(cr,uid,ids,context):
+            for doc in step.document_ids:
+                if doc.state != 'validate':
+                    raise osv.except_osv(
+                            _('Could not open this offer step !'),
+                            _('You must first validate all documents attached to this offer step.'))
+#                    self.pool.get('dm.offer.document').write(cr,uid,[doc.id],{'state':'validate'})
+        return res
 
-    def state_freeze_set(self, cr, uid, ids, *args):
+    def state_freeze_set(self, cr, uid, ids, context=None):
         self.__history(cr,uid,ids, 'freeze')
         self.write(cr, uid, ids, {'state':'freeze'})
         return True
 
-    def state_draft_set(self, cr, uid, ids, *args):
+    def state_draft_set(self, cr, uid, ids, context=None):
         self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True
@@ -260,11 +265,24 @@ class dm_offer_document(osv.osv):
         'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
                                             'document_id','customer_field_id','Customer Fields',
                                             domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-                                                        '!',('model_id','like','dm.customers_list')]),
+                                                        '!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
         'customer_order_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_order_field_rel',
                                             'document_id','customer_order_field_id','Customer Order Fields',
-                                            domain=[('model_id','like','dm.customer.order')]),
+                                            domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
+        'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
     }
+    _defaults = {
+        'state': lambda *a: 'draft',
+    }
+
+    def state_validate_set(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'validate'})
+        for doc in self.browse(cr,uid,ids,context):
+            if doc.step_id:
+                wf_service = netsvc.LocalService("workflow")
+                wf_service.trg_validate(uid, 'dm.offer.step', doc.step_id.id, 'state_open_set', cr)
+        return True
+    
 dm_offer_document()
 
 

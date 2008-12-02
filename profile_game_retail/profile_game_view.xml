@@ -14,7 +14,6 @@
                         <field name="current_treasury"/>
                         <field name="total_refund"/>
                         <field name="total_current_refund"/>
-                        <button string="Loans" type="object" colspan="2"/>
                     </group>
                     <group col="2" colspan="2">
                         <separator colspan="2" string="HR Manager"/>
@@ -40,7 +39,14 @@
                     <field name="turnover_growth"/>
                     <field name="benefits_growth"/>
                     <field name="products_growth"/>
-                    <field name="note" colspan="4"/>
+                    <group colspan="4" col="5">
+                       <field name="note" colspan="4"/>
+                    	<button
+                        	string="Continue To Next Year"
+                        	name="continue_next_year"
+                       	 	type="object"
+                       		icon="gtk-ok"/>
+                    </group>
                 </form>
             </field>
         </record>
@@ -64,11 +70,17 @@
         </record>
 
         <record model="ir.actions.act_window" id="action_game_detail_form">
-            <field name="name">Game</field>
+            <field name="name">Business Game</field>
             <field name="res_model">profile.game.retail</field>
             <field name="view_type">form</field>
             <field name="view_mode">form,tree</field>
-            <field name="view_id" ref="view_game_detail_form"/>
+        </record>
+         <record id="open_board_game2" model="ir.actions.act_window">
+            <field name="name">Business Game Dashboard</field>
+            <field name="res_model">profile.game.retail</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" eval="False"/>
         </record>
 
         <menuitem id="business_game" name="Business Game" parent="board.dashboard_menu"/>

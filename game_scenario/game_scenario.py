@@ -46,7 +46,6 @@ class game_scenario_step(osv.osv):
     _name="game.scenario.step"
     _columns = {
         'name':fields.char('Name',size=64, required=True),
-        'phase':fields.char('Game Phase',size=64,required=True),
         'description' : fields.text('Description'),
         'menu_id' : fields.many2one('ir.ui.menu', 'Menu', required=True),
         'tip' : fields.text('Tip'),
