@@ -389,6 +389,7 @@ class dm_campaign(osv.osv):
         'campaign_type' : fields.many2one('dm.campaign.type','Type'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status',readonly=True),
+        'dtp_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'DTP Status',readonly=True),
         'items_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Items Status',readonly=True),
         'translation_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Translation Status',readonly=True),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status',readonly=True),
@@ -441,6 +442,7 @@ class dm_campaign(osv.osv):
         'items_state': lambda *a: 'pending',
         'translation_state': lambda *a: 'pending',
         'customer_file_state': lambda *a: 'pending',
+        'dtp_state': lambda *a: 'pending',
         'responsible_id' : lambda obj, cr, uid, context: uid,
     }
 
@@ -449,13 +451,25 @@ class dm_campaign(osv.osv):
         return True
 
     def state_close_set(self, cr, uid, ids, *args):
+        for camp in self.browse(cr,uid,ids):
+            if (camp.date != time.strftime('%Y-%m-%d')):
+                raise osv.except_osv("Error!!","Campaign can be closed only on end date!!!")
         self.write(cr, uid, ids, {'state':'close'})
         return True
 
     def state_pending_set(self, cr, uid, ids, *args):
+        self.state_inprogress_set(cr, uid, ids, *args)
         self.write(cr, uid, ids, {'state':'pending'})
         return True
 
+    def state_inprogress_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'manufacturing_state':'inprogress', 'dtp_state':'inprogress', 'customer_file_state':'inprogress', 'items_state':'inprogress'})
+        return True
+    
+    def state_done_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'manufacturing_state':'done', 'dtp_state':'done', 'customer_file_state':'done', 'items_state':'done'})
+        return True
+    
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
         if camp.offer_id:
@@ -466,6 +480,15 @@ class dm_campaign(osv.osv):
                 raise osv.except_osv("Error!!","This offer is not valid in this country")
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id :
             raise osv.except_osv("Error!!","Informations are missing. Check Date Start, Dealer and Trademark")
+
+        if ((camp.manufacturing_state != 'done') or (camp.dtp_state != 'done') or (camp.customer_file_state != 'done') or (camp.items_state != 'done')):
+            raise osv.except_osv(
+                _('Could not open this Campaign !'),
+                _('You must first close all states related to this campaign.'))
+        
+        if (camp.date_start != time.strftime('%Y-%m-%d')):
+            raise osv.except_osv("Error!!","Campaign can be opened only on drop date!!!")
+
         super(dm_campaign,self).write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
         return True
 
@@ -475,7 +498,7 @@ class dm_campaign(osv.osv):
         srch_offer_ids = self.search(cr, uid, [('offer_id', '=', camp.offer_id.id)])
 
         c = camp.country_id.id
-        if 'date_start' in vals and vals['date_start']:
+        if ('date_start' in vals) and not ('date' in vals):
             time_format = "%Y-%m-%d"
             d = time.strptime(vals['date_start'],time_format)
             d = datetime.date(d[0], d[1], d[2])

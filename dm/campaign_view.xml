@@ -77,7 +77,7 @@
                         <separator string="Tasks Management" colspan="4"/>
                         <group colspan="4">
                         <field name="project_id" string="Retro Planning"/>
-                        <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('state','!=','open'),('project_id','!=',False)]}"/>
+                         <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" states = "pending,open" attrs="{'invisible':[('project_id','!=',False)]}"/> 
                         </group>
 <!--                        <separator string="Process State" colspan="4"/>
                         <group colspan="8">
@@ -90,10 +90,9 @@
                         <separator string="Campaign Status" colspan="4"/>
                         <group col="10" colspan="4">
                             <field name="state" readonly="1" select="2" nolabel="1"/>
-                            <button name="state_open_set" string="Open" states="draft,pending" type="object"/>
-                            <button name="state_close_set" string="Close" states="draft,open,pending" type="object"/>
-                            <button name="state_pending_set" string="Set pending" states="open" type="object"/>
-                            <button name="state_draft_set" string="Set to draft" states="open,pending,close" type="object"/>
+                            <button name="state_pending_set" string="Set pending" states="draft"/>
+                            <button name="state_open_set" string="Open" states="pending"/>
+							<button name="state_close_set" string="Close" states="open"/>
                         </group>
                     </page>
                     <page string="Manufacturing">
@@ -124,6 +123,12 @@
                             </tree>
                         </field>
                         <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
+                        <separator string="Manufacturing Status" colspan="4"/>
+                        <group col="8" colspan="4">
+	                       	<field name="manufacturing_state" nolabel="1"/>
+							<button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('manufacturing_state','!=','pending')]}" type="object"/>
+							<button name="state_done_set" string="Done" attrs="{'invisible':[('manufacturing_state','!=','inprogress')]}" type="object"/>
+                        </group>
                     </page>
                     <page string="Desktop Publishing">
                         <separator string="Desktop Publishing" colspan="4"/>
@@ -140,6 +145,12 @@
                             </tree>
                         </field>
                         <field name="dtp_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
+                        <separator string="DTP Status" colspan="4"/>
+                        <group col="8" colspan="4">
+                        	<field name="dtp_state" nolabel="1"/>
+                        	<button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('dtp_state','!=','pending')]}" type="object"/>
+							<button name="state_done_set" string="Done" attrs="{'invisible':[('dtp_state','!=','inprogress')]}" type="object"/>
+                        </group>
                     </page>
                     <page string="Customers Files">
                         <group colspan="2" col="2">
@@ -164,6 +175,12 @@
                             </tree>
                         </field>
                         <field name="cust_file_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
+                        <separator string="Customers Files Status" colspan="4"/>
+                        <group col="8" colspan="4">
+                        	<field name="customer_file_state" nolabel="1"/>
+                        	<button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('customer_file_state','!=','pending')]}" type="object"/>
+							<button name="state_done_set" string="Done" attrs="{'invisible':[('customer_file_state','!=','inprogress')]}" type="object"/>
+                        </group>
                     </page>
                     <page string="Items Procurement">
                         <separator string="Items Procurement" colspan="4"/>
@@ -180,6 +197,12 @@
                             </tree>
                         </field>
                         <field name="item_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
+                        <separator string="Items Procurement Status" colspan="4"/>
+                        <group col="8" colspan="4">
+                        	<field name="items_state" nolabel="1"/>
+                        	<button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('items_state','!=','pending')]}" type="object"/>
+							<button name="state_done_set" string="Done" attrs="{'invisible':[('items_state','!=','inprogress')]}" type="object"/>
+                        </group>
                     </page>
                     <page string="Notes">
                         <separator string="Notes" colspan="4"/>
