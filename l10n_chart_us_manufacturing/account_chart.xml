@@ -2,26 +2,69 @@
 <openerp>
 	<data noupdate="1">
 	
-	<!-- tax type -->
+	<!-- Account types -->
 	
+	<record id="account_type_root" model="account.account.type">
+            <field name="name">View</field>
+            <field name="code">view</field>
+            <field name="close_method">none</field>
+    </record>
+    
+    <record id="account_type_asset" model="account.account.type">
+            <field name="name">Asset</field>
+            <field name="code">asset</field>
+            <field name="close_method">balance</field>
+    </record>
+    
+    <record id="account_type_liability" model="account.account.type">
+            <field name="name">Liability</field> 
+            <field name="code">liability</field>
+            <field name="close_method">balance</field>
+    </record>
+    
+    <record id="account_type_cash_equity" model="account.account.type">
+            <field name="name">Equity</field> 
+            <field name="code">equity</field>
+            <field name="close_method">balance</field>
+    </record>
+    
+    <record id="account_type_income" model="account.account.type">
+            <field name="name">Income</field> 
+            <field name="code">income</field>
+            <field name="close_method">unreconciled</field>
+    </record>
+    
+    <record id="account_type_expense" model="account.account.type">
+            <field name="name">Expense</field> 
+            <field name="code">expense</field>
+            <field name="close_method">unreconciled</field>
+    </record>
+    
+    <record id="account_type_cash_moves" model="account.account.type">
+            <field name="name">Cash</field> 
+            <field name="code">cash</field>
+            <field name="close_method">balance</field>
+    </record>
+   		
    	<record id="account_type_tax_moves" model="account.account.type">
       <field name="name">Tax</field> 
       <field name="code">tax</field>
       <field name="close_method">balance</field>
 	</record>
 	
-	<!-- Account Chart  -->
+	<!-- Account Templates  -->
+	
 	<record id="chart0" model="account.account.template">
 		<field name="code">0</field>
-		<field name="name">Account Chart</field>
+		<field name="name">Account Chart for US</field>
 		<field name="type">view</field>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>
+		<field name="user_type" ref="account_type_root"/>
 	</record>
 	<record id="chart1000" model="account.account.template">
 		<field name="code">1000</field>
 		<field name="reconcile" eval="False"/>
 		<field name="parent_id" ref="chart0"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>
+		<field name="user_type" ref="account_type_root"/>
 		<field name="type">view</field>
 		<field name="name">CURRENT ASSETS</field>
 	</record>
@@ -29,14 +72,14 @@
 		<field name="code">1060</field>
 		<field name="reconcile" eval="False"/>
 		<field name="parent_id" ref="chart0"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="type">other</field>
 		<field name="name">Checking Account</field>
 	</record>
 	<record id="chart1065" model="account.account.template">
 		<field name="code">1065</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Petty Cash</field>
@@ -44,7 +87,7 @@
 	<record id="chart1200" model="account.account.template">
 		<field name="code">1200</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Accounts Receivables</field>
@@ -52,7 +95,7 @@
 	<record id="chart1205" model="account.account.template">
 		<field name="code">1205</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Allowance for doubtful accounts</field>
@@ -60,7 +103,7 @@
 	<record id="chart1500" model="account.account.template">
 		<field name="code">1500</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>
+		<field name="user_type" ref="account_type_root"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">view</field>
 		<field name="name">INVENTORY ASSETS</field>
@@ -68,7 +111,7 @@
 	<record id="chart1520" model="account.account.template">
 		<field name="code">1520</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>	
+		<field name="user_type" ref="account_type_asset"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Inventory / General</field>
@@ -76,7 +119,7 @@
 	<record id="chart1530" model="account.account.template">
 		<field name="code">1530</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Inventory / Raw Materials</field>
@@ -84,7 +127,7 @@
 	<record id="chart1540" model="account.account.template">
 		<field name="code">1540</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Inventory / Work in process</field>
@@ -92,7 +135,7 @@
 	<record id="chart1550" model="account.account.template">
 		<field name="code">1550</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Inventory / Finished Goods</field>
@@ -100,7 +143,7 @@
 	<record id="chart1800" model="account.account.template">
 		<field name="code">1800</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>
+		<field name="user_type" ref="account_type_root"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">view</field>
 		<field name="name">CAPITAL ASSETS</field>
@@ -108,7 +151,7 @@
 	<record id="chart1820" model="account.account.template">
 		<field name="code">1820</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Office Furniture &amp; Equipment</field>
@@ -116,7 +159,7 @@
 	<record id="chart1825" model="account.account.template">
 		<field name="code">1825</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Accum. Amort. -Furn. &amp; Equip.</field>
@@ -124,7 +167,7 @@
 	<record id="chart1840" model="account.account.template">
 		<field name="code">1840</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Vehicle</field>
@@ -132,7 +175,7 @@
 	<record id="chart1845" model="account.account.template">
 		<field name="code">1845</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_asset"/>
+		<field name="user_type" ref="account_type_asset"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Accum. Amort. -Vehicle</field>
@@ -140,7 +183,7 @@
 	<record id="chart2000" model="account.account.template">
 		<field name="code">2000</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>
+		<field name="user_type" ref="account_type_root"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">view</field>
 		<field name="name">CURRENT LIABILITIES</field>
@@ -148,7 +191,7 @@
 	<record id="chart2100" model="account.account.template">
 		<field name="code">2100</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_cash_moves"/>
+		<field name="user_type" ref="account_type_cash_moves"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Accounts Payable</field>
@@ -156,7 +199,7 @@
 	<record id="chart2110" model="account.account.template">
 		<field name="code">2110</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_cash_moves"/>
+		<field name="user_type" ref="account_type_cash_moves"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Accrued Income Tax - Federal</field>
@@ -164,7 +207,7 @@
 	<record id="chart2120" model="account.account.template">
 		<field name="code">2120</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_cash_moves"/>
+		<field name="user_type" ref="account_type_cash_moves"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Accrued Income Tax - State</field>
@@ -172,7 +215,7 @@
 	<record id="chart2130" model="account.account.template">
 		<field name="code">2130</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_cash_moves"/>	
+		<field name="user_type" ref="account_type_cash_moves"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Accrued Franchise Tax</field>
@@ -180,7 +223,7 @@
 	<record id="chart2140" model="account.account.template">
 		<field name="code">2140</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_cash_moves"/>
+		<field name="user_type" ref="account_type_cash_moves"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Accrued Real &amp; Personal Prop Tax</field>
@@ -188,7 +231,7 @@
 	<record id="chart2150" model="account.account.template">
 		<field name="code">2150</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_cash_moves"/>
+		<field name="user_type" ref="account_type_cash_moves"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Sales Tax</field>
@@ -196,7 +239,7 @@
 	<record id="chart2210" model="account.account.template">
 		<field name="code">2210</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_cash_moves"/>
+		<field name="user_type" ref="account_type_cash_moves"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Accrued Wages</field>
@@ -204,7 +247,7 @@
 	<record id="chart2600" model="account.account.template">
 		<field name="code">2600</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>
+		<field name="user_type" ref="account_type_root"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">view</field>
 		<field name="name">LONG TERM LIABILITIES</field>
@@ -212,7 +255,7 @@
 	<record id="chart2620" model="account.account.template">
 		<field name="code">2620</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_cash_moves"/>
+		<field name="user_type" ref="account_type_cash_moves"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Bank Loans</field>
@@ -220,7 +263,7 @@
 	<record id="chart2680" model="account.account.template">
 		<field name="code">2680</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_cash_moves"/>
+		<field name="user_type" ref="account_type_cash_moves"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Loans from Shareholders</field>
@@ -228,7 +271,7 @@
 	<record id="chart3300" model="account.account.template">
 		<field name="code">3300</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>
+		<field name="user_type" ref="account_type_root"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">view</field>
 		<field name="name">SHARE CAPITAL</field>
@@ -244,7 +287,7 @@
 	<record id="chart3500" model="account.account.template">
 		<field name="code">3500</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>	
+		<field name="user_type" ref="account_type_root"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">view</field>
 		<field name="name">RETAINED EARNINGS</field>
@@ -260,7 +303,7 @@
 	<record id="chart4000" model="account.account.template">
 		<field name="code">4000</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>		
+		<field name="user_type" ref="account_type_root"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">SALES REVENUE</field>
@@ -268,7 +311,7 @@
 	<record id="us_a_income" model="account.account.template">
 		<field name="code">4020</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_income"/>	
+		<field name="user_type" ref="account_type_income"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Sales / General</field>
@@ -276,7 +319,7 @@
 	<record id="chart4030" model="account.account.template">
 		<field name="code">4030</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_income"/>		
+		<field name="user_type" ref="account_type_income"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Sales / Manufactured Goods</field>
@@ -284,7 +327,7 @@
 	<record id="chart4040" model="account.account.template">
 		<field name="code">4040</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_income"/>		
+		<field name="user_type" ref="account_type_income"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Sales / Aftermarket Parts</field>
@@ -292,7 +335,7 @@
 	<record id="chart4400" model="account.account.template">
 		<field name="code">4400</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>		
+		<field name="user_type" ref="account_type_root"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">view</field>
 		<field name="name">OTHER REVENUE</field>
@@ -300,7 +343,7 @@
 	<record id="chart4430" model="account.account.template">
 		<field name="code">4430</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_income"/>		
+		<field name="user_type" ref="account_type_income"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Shipping &amp; Handling</field>	
@@ -308,7 +351,7 @@
 	<record id="chart4440" model="account.account.template">
 		<field name="code">4440</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_income"/>		
+		<field name="user_type" ref="account_type_income"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Interest</field>	
@@ -316,7 +359,7 @@
 	<record id="us_a_recv" model="account.account.template">
 		<field name="code">4450</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_income"/>		
+		<field name="user_type" ref="account_type_income"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Foreign Exchange Gain</field>
@@ -324,7 +367,7 @@
 	<record id="chart5000" model="account.account.template">
 		<field name="code">5000</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>	
+		<field name="user_type" ref="account_type_root"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">view</field>
 		<field name="name">COST OF GOODS SOLD</field>
@@ -332,7 +375,7 @@
 	<record id="chart5010" model="account.account.template">
 		<field name="code">5010</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Purchases</field>
@@ -340,7 +383,7 @@
 	<record id="us_a_expense" model="account.account.template">
 		<field name="code">5020</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>		
+		<field name="user_type" ref="account_type_expense"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">COGS / General</field>
@@ -348,7 +391,7 @@
 	<record id="chart5030" model="account.account.template">
 		<field name="code">5030</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">COGS / Raw Materials</field>
@@ -356,7 +399,7 @@
 	<record id="chart5040" model="account.account.template">
 		<field name="code">5040</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">COGS / Direct Labor</field>
@@ -364,7 +407,7 @@
 	<record id="chart5050" model="account.account.template">
 		<field name="code">5050</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">COGS / Overhead</field>	
@@ -372,7 +415,7 @@
 	<record id="chart5100" model="account.account.template">
 		<field name="code">5100</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Freight</field>
@@ -380,7 +423,7 @@
 	<record id="chart5400" model="account.account.template">
 		<field name="code">5400</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>	
+		<field name="user_type" ref="account_type_root"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">view</field>
 		<field name="name">PAYROLL EXPENSES</field>	
@@ -388,7 +431,7 @@
 	<record id="chart5410" model="account.account.template">
 		<field name="code">5410</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>
+		<field name="user_type" ref="account_type_expense"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Wages &amp; Salaries</field>
@@ -396,7 +439,7 @@
 	<record id="chart5510" model="account.account.template">
 		<field name="code">5510</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Inc Tax Exp - Federal</field>	
@@ -404,7 +447,7 @@
 	<record id="chart5520" model="account.account.template">
 		<field name="code">5520</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Inc Tax Exp - State</field>
@@ -412,7 +455,7 @@
 	<record id="chart5530" model="account.account.template">
 		<field name="code">5530</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Taxes - Real Estate</field>
@@ -420,7 +463,7 @@
 	<record id="chart5540" model="account.account.template">
 		<field name="code">5540</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Taxes - Personal Property</field>
@@ -428,7 +471,7 @@
 	<record id="chart5550" model="account.account.template">
 		<field name="code">5550</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Taxes - Franchise</field>
@@ -436,7 +479,7 @@
 	<record id="chart5560" model="account.account.template">
 		<field name="code">5560</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>		
+		<field name="user_type" ref="account_type_expense"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Taxes - Foreign Withholding</field>	
@@ -444,7 +487,7 @@
 	<record id="chart5600" model="account.account.template">
 		<field name="code">5600</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_root"/>	
+		<field name="user_type" ref="account_type_root"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">view</field>
 		<field name="name">GENERAL &amp; ADMINISTRATIVE EXPENSES</field>
@@ -452,7 +495,7 @@
 	<record id="chart5610" model="account.account.template">
 		<field name="code">5610</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>		
+		<field name="user_type" ref="account_type_expense"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Accounting &amp; Legal</field>
@@ -460,7 +503,7 @@
 	<record id="chart5615" model="account.account.template">
 		<field name="code">5615</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Advertising &amp; Promotions</field>
@@ -468,7 +511,7 @@
 	<record id="chart5620" model="account.account.template">
 		<field name="code">5620</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>		
+		<field name="user_type" ref="account_type_expense"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Bad Debts</field>
@@ -476,7 +519,7 @@
 	<record id="chart5660" model="account.account.template">
 		<field name="code">5660</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Amortization Expense</field>
@@ -484,7 +527,7 @@
 	<record id="chart5685" model="account.account.template">
 		<field name="code">5685</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Insurance</field>
@@ -492,7 +535,7 @@
 	<record id="chart5690" model="account.account.template">
 		<field name="code">5690</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Interest &amp; Bank Charges</field>
@@ -500,7 +543,7 @@
 	<record id="chart5700" model="account.account.template">
 		<field name="code">5700</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Office Supplies</field>
@@ -508,7 +551,7 @@
 	<record id="chart5760" model="account.account.template">
 		<field name="code">5760</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Rent</field>
@@ -516,7 +559,7 @@
 	<record id="chart5765" model="account.account.template">
 		<field name="code">5765</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Repair &amp; Maintenance</field>
@@ -524,7 +567,7 @@
 	<record id="chart5780" model="account.account.template">
 		<field name="code">5780</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Telephone</field>
@@ -532,7 +575,7 @@
 	<record id="chart5785" model="account.account.template">
 		<field name="code">5785</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Travel &amp; Entertainment</field>
@@ -540,7 +583,7 @@
 	<record id="chart5790" model="account.account.template">
 		<field name="code">5790</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>
+		<field name="user_type" ref="account_type_expense"/>
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Utilities</field>
@@ -548,7 +591,7 @@
 	<record id="chart5795" model="account.account.template">
 		<field name="code">5795</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Registrations</field>	
@@ -556,7 +599,7 @@
 	<record id="chart5800" model="account.account.template">
 		<field name="code">5800</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>		
+		<field name="user_type" ref="account_type_expense"/>		
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Licenses</field>
@@ -564,7 +607,7 @@
 	<record id="us_a_pay" model="account.account.template">
 		<field name="code">5810</field>
 		<field name="reconcile" eval="False"/>
-		<field name="user_type" ref="l10n_chart_us_general.account_type_expense"/>	
+		<field name="user_type" ref="account_type_expense"/>	
 		<field name="parent_id" ref="chart0"/>
 		<field name="type">other</field>
 		<field name="name">Foreign Exchange Loss</field>
@@ -573,7 +616,7 @@
 	
 	<!-- Chart template -->
 	<record id="us_manufacturing_template" model="account.chart.template">
-	    <field name="name">US Manufacturing</field>
+	    <field name="name">US - Chart of Accounts - Manufacturing Profile</field>
 	    <field name="account_root_id" ref="chart0"/>
 	    <field name="tax_code_root_id" ref="us_manuf_vat_code_tax"/>
 	    <field name="bank_account_view_id" ref="chart5690"/>
