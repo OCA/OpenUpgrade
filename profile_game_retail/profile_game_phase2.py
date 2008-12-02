@@ -24,6 +24,7 @@ import pooler
 import time
 from mx import DateTime
 import datetime
+import time
 import netsvc
 from mx.DateTime import now
 
@@ -326,19 +327,110 @@ class profile_game_retail(osv.osv):
         'products_growth' : fields.function(_calculate_detail, method=True, type='float', string='Growth Products', multi='objectives',help="Growth Products"),
         'note':fields.text('Notes'),
     }
-    def confirm_draft_po(self,cr,uid,ids,context={}):
+    def pay_supplier_invoice(self,cr,uid,ids,context):
+        acc_obj = self.pool.get('account.account')
+        acc_type_obj = self.pool.get('account.account.type')
+        cash_acc_id = acc_type_obj.search(cr,uid,[('name','=','Cash')])
+        acc_ids = acc_obj.search(cr,uid,[('user_type','in',cash_acc_id)])
+        acc_br = acc_obj.browse(cr,uid,acc_ids)
+        sum = 0
+        for acc in acc_br:
+            sum += acc.balance
+        inv_obj = self.pool.get('account.invoice')
+        open_inv_id = inv_obj.search(cr,uid,[('state','=','open'),('type','=','in_invoice')])
+        inv_br = inv_obj.browse(cr,uid,open_inv_id)
+        sum1=0
+        for inv in inv_br:
+            sum1 += inv.amount_total
+        if sum1 > sum:
+            raise osv.except_osv(_('Warning !'),
+                        _('You cannot pay the supplier invoices as you do not have sufficient balance in your accounts \n'
+                          'Your Balance is : %d \n'
+                          'Amount to be paid :%d') % \
+                                (sum,sum1))
+        else:
+            journal = self.pool.get('account.journal').search(cr,uid,[('type','=','cash')])
+            jour_br = self.pool.get('account.journal').browse(cr,uid,journal)
+            for journl in jour_br:
+                temp_bal=journl.default_debit_account_id.balance
+                open_inv_id = inv_obj.search(cr,uid,[('state','=','open'),('type','=','in_invoice')])
+                inv_br = inv_obj.browse(cr,uid,open_inv_id)
+                for inv in inv_br:
+                    if temp_bal >=inv.amount_total:
+                        self._pay_and_reconcile(cr, uid, ids, inv.id, journl.id, inv.amount_total, context)
+                        temp_bal=temp_bal-inv.amount_total
+        return
+
+    def _pay_and_reconcile(self,cr,uid,ids,invoice_id,journal_id,amount,context):
+        ids = self.pool.get('account.period').find(cr, uid, context=context)
+        period_id = False
+        if len(ids):
+           period_id = ids[0]
+        writeoff_account_id = False
+        writeoff_journal_id = False
+        cur_obj = self.pool.get('res.currency')
+
+        invoice = self.pool.get('account.invoice').browse(cr, uid, invoice_id, context)
+        journal = self.pool.get('account.journal').browse(cr, uid, journal_id, context)
+        if journal.currency and invoice.company_id.currency_id.id<>journal.currency.id:
+            ctx = {'date':time.strftime('%Y-%m-%d')}
+            amount = cur_obj.compute(cr, uid, journal.currency.id, invoice.company_id.currency_id.id, amount, context=ctx)
+        acc_id = journal.default_credit_account_id and journal.default_credit_account_id.id
+        if not acc_id:
+            raise wizard.except_wizard(_('Error !'), _('Your journal must have a default credit and debit account.'))
+        self.pool.get('account.invoice').pay_and_reconcile(cr, uid, [invoice_id],
+                amount, acc_id, period_id, journal_id, False,
+                period_id, False, context, invoice.origin)
+        return
+
+    def confirm_draft_supplier_invoice(self,cr,uid,ids,context):
+        wf_service = netsvc.LocalService('workflow')
+        inv_obj=self.pool.get('account.invoice')
+        draft_inv_id=inv_obj.search(cr,uid,[('state','=','draft'),('type','=','in_invoice')])
+        for id in draft_inv_id:
+            wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_open', cr)
+        return
+
+    def confirm_draft_po(self,cr,uid,ids,context):
         wf_service = netsvc.LocalService('workflow')
         po_obj=self.pool.get('purchase.order')
         po_ids=po_obj.search(cr,uid,[('state','=','draft')])
         for id in po_ids:
-            wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_confirm', cr)
+            brow_po=po_obj.browse(cr,uid,id)
+            unpaid_inv_id=self.pool.get('account.invoice').search(cr,uid,[('state','!=','draft'),('reconciled','=',False),('partner_id','=',brow_po.partner_id.id),('type','=','in_invoice')])
+            if len(unpaid_inv_id):
+                raise osv.except_osv(_('Warning !'),
+                        _('There are unpaid Supplier Invoice' \
+                                ' for the Supplier: "%s"') % \
+                                (brow_po.partner_id.name,))
+            else:
+                wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_confirm', cr)
         return
-    def continue_next_year(self, cr, uid, ids, context={}):
+
+    def receive_products(self, cr, uid, ids, context):
+        picking_obj = self.pool.get('stock.picking')
+        picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=','in')])
+        pick_br = picking_obj.browse(cr,uid,picking_ids)
+        for picking in pick_br:
+            data=temp={}
+            moves=[]
+            for move in picking.move_lines:
+                temp['move%s'%(move.id,)]=move.product_qty
+                moves.append(move.id)
+            temp['moves']=moves
+            data['form']=temp
+            data['ids']=[picking.id]
+            data['report_type']= 'pdf'
+            data['model']='stock.picking'
+            data['id']=picking.id
+        return
+
+    def continue_next_year(self, cr, uid, ids, context):
         partner_ids=self.pool.get('res.partner').search(cr,uid,[])
         prod_ids=self.pool.get('product.product').search(cr,uid,[])
         shop=self.pool.get('sale.shop').search(cr,uid,[])
         wf_service = netsvc.LocalService('workflow')
-## Create Random number of sale orders ##
+        ## Create Random number of sale orders ##
         for i in range(0,5):
             partner_addr = self.pool.get('res.partner').address_get(cr, uid, [partner_ids[i]],
                             ['invoice', 'delivery', 'contact'])
@@ -362,8 +454,18 @@ class profile_game_retail(osv.osv):
             value['order_id'] = new_id
             self.pool.get('sale.order.line').create(cr, uid, value)
             wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
-            ## confirm Purchase Order ##
-            self.confirm_draft_po(cr,uid,ids)
+            wf_service.trg_validate(uid, 'sale.order', new_id, 'manual_invoice', cr)
+
+        proc_obj = self.pool.get('mrp.procurement')
+        proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
+        ## confirm Purchase Order ##
+        self.confirm_draft_po(cr, uid, ids, context)
+        ## confirm all Draft Supplier Invoice ##
+        self.confirm_draft_supplier_invoice(cr, uid, ids, context)
+        ## Pay All Supplier Invoice ##
+        self.pay_supplier_invoice(cr, uid, ids, context)
+        ## Receive Products"
+        self.receive_products(cr, uid, ids, context)
         return True
 
 profile_game_retail()
