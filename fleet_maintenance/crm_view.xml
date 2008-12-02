@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+
+		<record model="ir.ui.view" id="view_crm_case_form_fleet_maintenance">
+			<field name="name">crm.case.form.fleet_maintenance</field>
+			<field name="model">crm.case</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+            <form string="Fleet Incident">
+                <group col="6" colspan="4">
+                    <field name="partner_id"/>
+                    <field name="user_id" select="2" string="Responsible"/>
+                    <field name="section_id"/>
+                    <newline/>
+                    <field name="date" string="Incident date"/>
+                    <field name="categ_id" on_change="onchange_categ_id(categ_id)" select="1" string="Type of Incident"/>
+                        <label align="1.0" string="Stage: "/>
+                        <group col="2" colspan="1">
+                            <field name="stage_id" nolabel="1" select="1"/>
+                            <button icon="gtk-go-forward" name="stage_next" string="" type="object"/>
+                        </group>
+                </group>
+                <notebook>
+                <page string="Incident Info">
+                    <field colspan="1" name="partner_address_id" on_change="onchange_partner_address_id(partner_address_id, email_from)" string="Contact"/>
+                    <field name="email_from"/>
+                    <field name="partner_phone"/>
+                    <field name="partner_mobile"/>
+                    <newline/>
+                    <field name="planned_cost" string="Incident Cost"/>
+                    <field name="planned_revenue" string="Incident Revenue"/>
+                    <field name="priority"/>
+                    <field name="category2_id" select="1" string="Type of Action"/>
+                    <field name="ref" string="Product"/>
+                    <field name="ref2" string="Serial ID"/>
+                    <!-- <field name="fleet_id" string="Fleet" domain="[('partner_id','&lt;&gt;','')]"/>  -->
+                    <field name="picking_id" string="Repair movements"/>
+                    <separator colspan="2" string="Claim Description"/>
+                    <separator colspan="2" string="Action Description"/>
+                    <field colspan="2" name="note" nolabel="1"/>
+                    <field colspan="2" name="description" nolabel="1"/>
+                    <label colspan="2" string=""/>
+                    <group colspan="2">
+                        <button name="case_log_reply" states="open" string="Send Partner &amp; Historize" type="object"/>
+                        <button name="case_log" states="open" string="Historize" type="object"/>
+                    </group>
+                    <separator colspan="4" string="Status"/>
+                    <group col="8" colspan="4">
+                        <field name="state" select="1"/> 
+                         <button name="case_close" states="open,draft,pending" string="Done" type="object"/>
+                        <button name="case_open" states="draft,pending" string="Open" type="object"/>
+                        <button name="case_cancel" states="draft,open,pending" string="Cancel" type="object"/>
+                        <button name="case_pending" states="draft,open" string="Pending" type="object"/>
+                        <button name="case_reset" states="done,cancel" string="Reset to Draft" type="object"/>
+                    </group>
+                </page>
+                <page groups="base.group_extended" string="Extra Info">
+                    <field name="id"/>
+                    <field name="active"/>
+                    <field name="email_cc"/>
+                    <field name="canal_id"/>
+                    <separator colspan="4" string="Dates"/>
+                    <field name="create_date"/>
+                    <field name="date_closed"/>
+                    <field name="date_action_last"/>
+                    <field name="date_action_next"/>
+                        <field name="som"/>
+                    <separator colspan="4" string="History"/>
+                    <field colspan="4" mode="tree,form" name="history_line" nolabel="1">
+                        <form string="Communication history">
+                            <group col="6" colspan="4">
+                                <field name="date"/>
+                                <field name="email"/>
+                                <field name="canal_id"/>
+                            </group>
+                            <newline/>
+                            <field colspan="4" name="description" nolabel="1"/>
+                        </form>
+                        <tree string="Communication history">
+                            <field name="description"/>
+                            <field name="email"/>
+                            <field name="date"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="History">
+                    <field colspan="4" name="log_ids" nolabel="1">
+                        <form string="Actions">
+                            <separator colspan="4" string="Action Information"/>
+                            <field colspan="4" name="name"/>
+                            <field name="date"/>
+                            <field name="user_id"/>
+                            <field name="som"/>
+                            <field name="canal_id"/>
+                        </form>
+                    </field>
+                </page>
+                </notebook>
+            </form>
+        
+        </field>
+   		</record>
+
+	
+
+		<record id="fleet_incident_action" model="ir.actions.act_window">
+			<field name="name">All Fleet Incidents</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.case</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,calendar</field>
+		</record>
+
+		<menuitem icon="terp-product" id="menu_fleet_incidents" name="Fleet Incidents" parent="menu_main_fleets" />
+		<menuitem action="fleet_incident_action" id="all_fleet_incidents" parent="menu_fleet_incidents" />
+		
+		<record id="ir_actions_act_window_view_crm_incident" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_incident_action" />
+			<field eval="1" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.view_crm_case_form_fleet_maintenance" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+	
+	</data>
+</openerp>

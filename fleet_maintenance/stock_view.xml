@@ -1,0 +1,271 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<menuitem icon="terp-product" id="menu_main_fleets" name="Fleets" />
+		<menuitem icon="terp-product" id="menu_fleet_maintenance" name="Fleet Maintenance Contracts" parent="menu_main_fleets" />
+		<menuitem icon="terp-product" id="menu_fleet" name="Fleets" parent="menu_main_fleets" />
+		<menuitem icon="terp-product" id="menu_fleet_extensions" name="Fleet Extensions" parent="menu_main_fleets" />		
+
+		<menuitem action="stock.action_production_lot_form" id="menu_action_fleet_serial_tracking" parent="menu_main_fleets" />
+		
+
+
+		
+		
+		<!-- Fleet -->
+
+		<record model="ir.ui.view" id="view_location_form_fleet_maintenance">
+			<field name="name">stock.location.form.fleet_maintenance</field>
+			<field name="model">stock.location</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<form string="Fleet">
+					<field name="name" select="1" string="Fleet Name"/>
+					<field name="partner_id" required="1"/>
+					<field name="usage" select="1" />
+					<field context="{'context_display':'partner'}" name="address_id" />
+					<field name="location_id" />
+					<field name="active" select="2" />
+					<separator string="Maintenance Dates" colspan="4"/>
+					<group col="6" colspan="4">
+						<field name="intrinsic_anniversary_time" string="Anniversary Time"/>
+					</group>
+					<separator string="Fleet Extensions" colspan="4"/>
+					<group col="6" colspan="4">
+						<field name="child_ids"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		
+		
+		<record id="view_location_tree_fleet" model="ir.ui.view">
+			<field name="name">fleet_maintenance.tree</field>
+			<field name="model">stock.location</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Stock location" colors="red:is_expired==True;">
+					<field name="complete_name" />
+					<field name="partner_id" />
+					<field name="stock_real"/>
+					<field name="stock_virtual"/>
+				</tree>
+			</field>
+		</record>
+		
+
+
+		<record id="fleet_normal_action" model="ir.actions.act_window">
+			<field name="name">Fleets</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.location</field>
+			<field name="view_type">form</field>
+			<field name="domain">[('partner_id','&lt;&gt;','')]</field>
+			<field name="view_id" ref="view_location_form_fleet_maintenance" />
+		</record>
+		<menuitem action="fleet_normal_action" id="all_fleets" parent="menu_fleet" />
+
+		<record id="ir_actions_act_window_view_0" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_normal_action" />
+			<field eval="0" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.view_location_tree_fleet" />
+			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
+		</record>
+		<record id="ir_actions_act_window_view_1" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_normal_action" />
+			<field eval="1" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.view_location_form_fleet_maintenance" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+		
+
+		<record id="action_fleet_new" model="ir.actions.act_window">
+			<field name="name">New Fleet</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.location</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree,calendar,graph</field>
+		</record>
+		<menuitem action="action_fleet_new" id="menu_action_fleet_new" parent="menu_fleet" />
+
+
+		<record id="ir_actions_act_window_view_fleet_new" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="action_fleet_new" />
+			<field eval="0" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.view_location_form_fleet_maintenance" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+		
+		
+		
+		
+		
+
+		
+		<!-- Fleet extension -->
+		
+		<record model="ir.ui.view" id="view_location_form_fleet_extension">
+			<field name="name">stock.location.form.fleet_maintenance</field>
+			<field name="model">stock.location</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<form string="Stock location">
+					<field name="name" select="1" string="Fleet Extension Name"/>
+					<field name="usage" select="1" />
+					<field name="location_id" domain="[('partner_id','&lt;&gt;','')]"/>
+					<field context="{'context_display':'partner'}" name="address_id" />
+					<field name="active" select="2" />
+					<separator string="Maintenance Dates" colspan="4"/>
+					<group col="6" colspan="4">
+						<field name="is_expired" />
+						<field name="time_to_expire" />
+						<field name="expire_time" />
+     				<newline/>
+						<field name="anniversary_time" />
+					</group>
+
+					<newline />
+
+					<notebook colspan="4">
+						<page string="General">
+							<field colspan="4" rowspan="4" mode="tree,form,calendar" nolabel="1" name="account_invoice_lines" />
+						</page>
+						<page string="History">
+							<field colspan="4" nolabel="1" name="sale_order_lines" />
+							<field colspan="4" nolabel="1" name="crm_cases" />
+						</page>
+						<page string="Note">
+							<field colspan="4" name="comment" nolabel="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		
+		
+		<record id="view_location_tree_fleet_extension" model="ir.ui.view">
+			<field name="name">fleet_maintenance.tree</field>
+			<field name="model">stock.location</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Stock location" colors="red:is_expired==True;">
+					<field name="complete_name" />
+					<field name="is_expired" />
+					<field name="stock_real"/>
+					<field name="stock_virtual"/>
+				</tree>
+			</field>
+		</record>
+		
+		
+
+		<record id="fleet_extension_normal_action" model="ir.actions.act_window">
+			<field name="name">All Fleet Extensions</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.location</field>
+			<field name="view_type">form</field>
+			<field name="domain">[('inherited_partner','&lt;&gt;',0)]</field>
+			<field name="view_id" ref="view_location_form_fleet_maintenance" />
+		</record>
+		<menuitem action="fleet_extension_normal_action" id="all_fleet_extensions" parent="menu_fleet_extensions" />
+
+		<record id="ir_actions_act_window_view_2" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_extension_normal_action" />
+			<field eval="0" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.view_location_tree_fleet_extension" />
+			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
+		</record>
+		<record id="ir_actions_act_window_view_3" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_extension_normal_action" />
+			<field eval="1" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.view_location_form_fleet_extension" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+		
+		
+		
+		<record id="action_fleet_extension_new" model="ir.actions.act_window">
+			<field name="name">New Fleet Extension</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.location</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree,calendar,graph</field>
+		</record>
+		<menuitem action="action_fleet_extension_new" id="menu_action_fleet_extension_new" parent="menu_fleet_extensions" />
+
+
+		<record id="ir_actions_act_window_view_fleet_new" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="action_fleet_extension_new" />
+			<field eval="0" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.view_location_form_fleet_extension" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+
+
+
+
+		
+		
+		
+
+		
+		
+		
+		<!-- Fleet Maintenance orders -->
+
+
+	<act_window id="act_stock_location_2_sale_order" name="Fleet Extensions Order"
+		res_model="sale.order" src_model="stock.location" />
+            
+		<record id="ir_actions_act_window_view_new_maintenance_form" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="act_stock_location_2_sale_order" />
+			<field eval="1" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.view_location_form_fleet_maintenance" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+		
+		<record id="ir_actions_act_window_view_new_maintenance_tree" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="act_stock_location_2_sale_order" />
+			<field eval="0" name="multi" />
+			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
+		</record>
+
+
+
+		<record id="all_maintenances" model="ir.actions.act_window">
+			<field name="name">All Maintenance Orders</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,calendar,graph</field>
+		</record>
+		<menuitem action="all_maintenances" id="menu_action_all_maintenances" parent="menu_fleet_maintenance" />
+
+		<record id="action_maintenance_new" model="ir.actions.act_window">
+			<field name="name">New Maintenance quotation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree,calendar,graph</field>
+		</record>
+		<menuitem action="action_maintenance_new" id="menu_action_maintenance_new" parent="menu_fleet_maintenance" />
+
+
+		<record id="ir_actions_act_window_view_maintenance_new" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="action_maintenance_new" />
+			<field eval="0" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.sale_order_form_fleet_maintenance" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+
+
+	
+		
+
+
+
+	</data>
+</openerp>
