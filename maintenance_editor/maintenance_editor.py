@@ -88,7 +88,7 @@ class maintenance_maintenance(osv.osv):
         ids = self.search(cr, uid, [('name', '=', contract_id), ('password', '=', password), 
                                     ('date_from', '<=', mx.DateTime.today()), ('date_to', '>=', mx.DateTime.today()) ])
         if not ids:
-            raise osv.except_osv(_('Maintenance Contract'), _('Unable to find your maintenance contract\nPlease call Tiny SPRL')) 
+            return False
 
         contract = self.browse(cr, uid, ids[0])
         return {
