@@ -377,10 +377,34 @@ class training_seance(osv.osv):
         'place' : fields.char('Place', size=32),
         'room' : fields.char('Room', size=32),
         'limit' : fields.integer('Limit'), 
+        'procurement_id' : fields.many2one('mrp.procurement', 'Procurement', readonly=True),
     }
     _defaults = {
         'state' : lambda *a: 'draft',
     }
+
+    def create(self, cr, uid, vals, context=None):
+        if context is None:
+            context = {}
+
+        # Creation d'un procurement 
+        #proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
+        #    'name': (production.origin or '').split(':')[0] + ':' + production.name,
+        #    'origin': (production.origin or '').split(':')[0] + ':' + production.name,
+        #    'date_planned': newdate,
+        #    'product_id': line.product_id.id,
+        #    'product_qty': line.product_qty,
+        #    'product_uom': line.product_uom.id,
+        #    'product_uos_qty': line.product_uos and line.product_qty or False,
+        #    'product_uos': line.product_uos and line.product_uos.id or False,
+        #    'location_id': production.location_src_id.id,
+        #    'procure_method': line.product_id.procure_method,
+        #    'move_id': move_id,
+        #})
+        #wf_service = netsvc.LocalService("workflow")
+        #wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
+
+        return super(training_seance, self).create(cr, uid, vals, context=context)
 
 training_seance()
 
