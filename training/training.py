@@ -166,6 +166,26 @@ training_offer()
 
 class training_questionnaire(osv.osv):
     _name = 'training.questionnaire'
+training_questionnaire()
+
+class training_questionnaire_line(osv.osv):
+    _name = 'training.questionnaire.line'
+
+    _columns = {
+        'questionnaire_id': fields.many2one('training.questionnaire', 'Questionnaire', select=True, required=True),
+        'kind' : fields.selection([('mandatory', 'Mandatory'),('eliminatory', 'Eliminatory'),('normal', 'Normal')], 'Kind', required=True),
+        'type' : fields.selection([('plain', 'Plain'),('qcm', 'QCM')], 'Type', required=True ),
+        'name' : fields.text('Question', required=True),
+    }
+    _defaults = {
+        'kind' : lambda *a: 'normal',
+        'type' : lambda *a: 'plain',
+    }
+
+training_questionnaire_line()
+
+class training_questionnaire(osv.osv):
+    _name = 'training.questionnaire'
 
     _columns = {
         'name' : fields.char( 'Name', size=32, required=True ),
@@ -173,9 +193,7 @@ class training_questionnaire(osv.osv):
         'state' : fields.selection([('draft', 'Draft'),('mature', 'Mature'),('deprecated', 'Deprecated')], 'State', required=True),
         'objective' : fields.text('Objective'),
         'description' : fields.text('Description'),
-    }
-    _defaults = {
-        'name': lambda *a: 'draft'
+        'questionnaire_line_ids' : fields.one2many('training.questionnaire.line', 'questionnaire_id', 'Questions', required=True),
     }
 
 training_questionnaire()
@@ -457,12 +475,7 @@ class training_participation(osv.osv):
     _name = 'training.participation'
     _columns = {
         'event_id' : fields.many2one('training.event', 'Event' ),
-        'subscription_id' : 
-            fields.many2one(
-                'training.subscription', 'Subscription', 
-                select=True, 
-                required=True
-            ),
+        'subscription_id' : fields.many2one('training.subscription', 'Subscription', select=True, required=True),
     }
 
 training_participation()
@@ -470,12 +483,7 @@ training_participation()
 class training_question(osv.osv):
     _name = 'training.question'
     _columns = {
-        'questionnaire_id' : 
-            fields.many2one(
-                'training.questionnaire', 'Questionnaire', 
-                select=True, 
-                required=True
-            ),
+        'questionnaire_id': fields.many2one('training.questionnaire', 'Questionnaire', select=True, required=True),
     }
 
 training_question()

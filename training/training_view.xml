@@ -314,10 +314,28 @@
                 <form string="Questionnaire">
                     <field name="name" />
                     <field name="course_id" />
-                    <separator string="Objective" colspan="4" />
-                    <field name="objective" nolabel="1" colspan="4" />
-                    <separator string="Exam Content" colspan="4" />
-                    <field name="description" nolabel="1" colspan="4" />
+                    <notebook colspan="4">
+                        <page string="General">
+                            <separator string="Objective" colspan="4" />
+                            <field name="objective" nolabel="1" colspan="4" />
+                            <separator string="Exam Content" colspan="4" />
+                            <field name="description" nolabel="1" colspan="4" />
+                        </page>
+                        <page string="Questions">
+                            <field name="questionnaire_line_ids" colspan="4" nolabel="1">
+                                <tree string="Questions">
+                                    <field name="name"/> 
+                                    <field name="kind" />
+                                    <field name="type" />
+                                </tree>
+                                <form string="Questions">
+                                    <field name="name" colspan="4"/> 
+                                    <field name="kind" />
+                                    <field name="type" />
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
                 </form>
             </field>
         </record>
