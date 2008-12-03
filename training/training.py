@@ -295,12 +295,6 @@ class training_event(osv.osv):
             res[id] = True
         return res
 
-    def _catering_ok_get( self, cr, uid, ids, name, args, context ):
-        res = {}
-        for id in ids:
-            res[id] = True
-        return res
-
     _columns = {
         'name' : fields.char('Name', size=64, select=True, required=True),
         'session_ids' : fields.many2many('training.session', 'training_session_event_rel', 'event_id', 'session_id', 'Sessions', ondelete='cascade'),
@@ -311,7 +305,6 @@ class training_event(osv.osv):
         'participant_ids' : fields.many2many( 'training.subscription', 'training_participation', 'event_id', 'subscription_id', 'Participants', domain="[('group_id', '=', group_id)]" ),
         'group_id' : fields.many2one('training.group', 'Group'),
         'support_ok' : fields.function( _support_ok_get, method=True, type="boolean", string="Support OK", readonly=True ),
-        'catering_ok' : fields.function( _catering_ok_get, method=True, type="boolean", string="Catering OK", readonly=True ),
     }
 
     _constraints = [
@@ -337,26 +330,22 @@ class training_plannified_examen(osv.osv):
 training_plannified_examen()
 
 
-class training_catering_type(osv.osv):
-    _name = 'training.catering.type'
-    _columns = {
-        'name': fields.char('Name', size=64, required=True),
-    }
-training_catering_type()
-
 class training_seance(osv.osv):
     _name = 'training.seance'
 training_seance()
 
-class training_catering(osv.osv):
-    _name = 'training.catering'
-    _rec_name = 'type'
+class training_seance_purchase_line(osv.osv):
+    _name = 'training.seance.purchase_line'
+
     _columns = {
-        'type' : fields.many2one('training.catering.type', 'Type', required=True),
-        'hour' : fields.time('Hour'),
         'seance_id' : fields.many2one('training.seance', 'Seance', required=True),
+        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'quantity' : fields.integer('Quantity', required=True),
+        'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
+        'procurement_id' : fields.many2one('mrp.procurement', readonly=True),
     }
-training_catering()
+
+training_seance_purchase_line()
 
 class training_seance(osv.osv):
     _name = 'training.seance'
@@ -368,7 +357,6 @@ class training_seance(osv.osv):
         'partner_ids' : fields.many2many('res.partner', 'training_seance_partner_rel', 'seance_id', 'partner_id', 'StakeHolders'),
         'event_id' : fields.many2one('training.event', 'Event'),
         'state' : fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('cancel','Cancel')], 'State', required=True),
-        'catering_ids' : fields.one2many('training.catering', 'seance_id', 'Catering'),
         'course_id' : fields.many2one('training.course', 'Course', required=True),
         'copies' : fields.integer('Copies'),
         'printed' : fields.boolean('Printed'),
@@ -377,7 +365,7 @@ class training_seance(osv.osv):
         'place' : fields.char('Place', size=32),
         'room' : fields.char('Room', size=32),
         'limit' : fields.integer('Limit'), 
-        'procurement_id' : fields.many2one('mrp.procurement', 'Procurement', readonly=True),
+        'purchase_line_ids' : fields.one2many('training.seance.purchase_line', 'seance_id', 'Supplier Commands'),
     }
     _defaults = {
         'state' : lambda *a: 'draft',
