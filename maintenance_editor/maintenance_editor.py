@@ -42,7 +42,6 @@ class maintenance_maintenance_module(osv.osv):
     _description = "maintenance modules"
     _columns = {
         'name' : fields.char('Name', size=128, required=True),
-        'module_name': fields.char('Module Name', size=128, required=True,),
         'version': fields.char('Version', size=64,),
     }
 maintenance_maintenance_module()
@@ -94,7 +93,7 @@ class maintenance_maintenance(osv.osv):
         return {
             'date_from' : contract.date_from,
             'date_to' : contract.date_to,
-            'modules' : [ (module['name'], module['module_name'], module['version'] ) for module in contract.module_ids ],
+            'modules' : [ (module['name'], module['version'] ) for module in contract.module_ids ],
         }
 
     def check_contract(self, cr, uid, modules, contract):

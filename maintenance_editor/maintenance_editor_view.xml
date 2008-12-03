@@ -52,7 +52,6 @@
             <field name="arch" type="xml">
                 <tree string="Maintenance Modules">
                     <field name="name"/>
-                    <field name="module_name"/>
                     <field name="version"/>
                 </tree>
             </field>
@@ -65,7 +64,6 @@
             <field name="arch" type="xml">
                 <form string="Maintenance Modules">
                     <field name="name" select="1"/>
-                    <field name="module_name" select="1"/>
                     <field name="version" select="1"/>
                 </form>
             </field>
