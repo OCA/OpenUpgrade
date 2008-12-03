@@ -97,7 +97,6 @@ class profile_game_retail_phase_one(osv.osv):
 
     def pre_process_print_quote(self,cr,uid,step_id,object, method,type,*args):
         if (type=='execute') and (object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink')):
-            print '1'
             self.error(cr, uid, step_id)
         if type=='execute_wkf':
             self.error(cr, uid, step_id)
@@ -124,7 +123,6 @@ class profile_game_retail_phase_one(osv.osv):
         return True
 
     def post_process_sale(self,cr,uid,step_id,object, method,type,*args):
-        print 'POST Process', object, method, type
         res=args[-1]
         res=res and res.get('result',False) or False
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
@@ -132,9 +130,7 @@ class profile_game_retail_phase_one(osv.osv):
         if pid:
             proc_obj = self.pool.get('mrp.procurement')
             proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
-            print 'Complex'
             return self.write(cr,uid,pid,{'step3':True,'state':'print_rfq'})
-        print 'False'
         return False
 
     def pre_process_print_rfq(self, cr,uid,step_id, object, method,type, *args):

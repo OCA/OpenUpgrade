@@ -24,6 +24,7 @@ import pooler
 import time
 from mx import DateTime
 import datetime
+from datetime import date
 import time
 import netsvc
 from mx.DateTime import now
@@ -79,17 +80,13 @@ class profile_game_retail(osv.osv):
 
     def _calculate_detail(self, cr, uid, ids, field_names, arg, context):
         res = {}
-        print field_names
-        for id in ids:
-            res[id] = {}.fromkeys(field_names, 0.0)
-        print res
-        return res
-
         fiscal_obj = self.pool.get('account.fiscalyear')
         account_obj = self.pool.get('account.account')
         account_type_obj = self.pool.get('account.account.type')
         for val in self.browse(cr, uid, ids,context=context):
             res[val.id] = {}
+            if 'hr_budget' in field_names:
+                res[val.id] = {}.fromkeys(field_names, 0.0)
             fiscalyear_id=context.get('fiscalyear_id', False)
             if not fiscalyear_id:
                 fiscalyear_id=fiscal_obj.find(cr,uid)
@@ -108,7 +105,7 @@ class profile_game_retail(osv.osv):
                 for field in mapping:
                     sql="""
                     select
-                        sum(invoice.amount_total) as total,
+                        sum(invoice.amount_total) as total
                     from account_invoice invoice
                     where invoice.type in ('%s') and date_invoice>='%s' and date_invoice<='%s'
                     """%(mapping[field],fiscalyear.date_start,fiscalyear.date_stop)
@@ -407,15 +404,23 @@ class profile_game_retail(osv.osv):
                 wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_confirm', cr)
         return
 
-    def receive_products(self, cr, uid, ids, context):
-        picking_obj = self.pool.get('stock.picking')
-        picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=','in')])
-        pick_br = picking_obj.browse(cr,uid,picking_ids)
+    def process_pickings(self, cr, uid, ids, pick_br, context):
+        from stock.wizard import wizard_partial_picking
         for picking in pick_br:
             data=temp={}
             moves=[]
             for move in picking.move_lines:
-                temp['move%s'%(move.id,)]=move.product_qty
+                temp['move%s'% move.id]=move.product_qty
+                if (picking.type == 'in') and (move.product_id.cost_method == 'average'):
+                    price=0
+                    if hasattr(move, 'purchase_line_id') and move.purchase_line_id:
+                        price=move.purchase_line_id.price_unit
+                    currency=0
+                    if hasattr(picking, 'purchase_id') and picking.purchase_id:
+                        currency=picking.purchase_id.pricelist_id.currency_id.id
+                    temp['uom%s'% move.id]=move.product_uom.id
+                    temp['price%s' % move.id]=price
+                    temp['currency%s' % move.id]=currency
                 moves.append(move.id)
             temp['moves']=moves
             data['form']=temp
@@ -423,6 +428,43 @@ class profile_game_retail(osv.osv):
             data['report_type']= 'pdf'
             data['model']='stock.picking'
             data['id']=picking.id
+            wizard_partial_picking._do_split(self, cr, uid, data, context)
+        return
+
+    def receive_products(self, cr, uid, ids, context):
+        picking_obj = self.pool.get('stock.picking')
+        picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=','in')])
+        pick_br = picking_obj.browse(cr,uid,picking_ids)
+        self.process_pickings(cr, uid, ids, pick_br, context)
+        return
+
+    def deliver_products(self, cr, uid, ids, context):
+        picking_obj = self.pool.get('stock.picking')
+        picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=','out')])
+        pick_br = picking_obj.browse(cr,uid,picking_ids)
+        self.process_pickings(cr, uid, ids, pick_br, context)
+        return
+
+    def confirm_draft_customer_invoice(self,cr,uid,ids,context):
+        wf_service = netsvc.LocalService('workflow')
+        inv_obj=self.pool.get('account.invoice')
+        draft_inv_id=inv_obj.search(cr,uid,[('state','=','draft'),('type','=','out_invoice')])
+        for id in draft_inv_id:
+            wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_open', cr)
+        return
+
+    def pay_all_customer_invoice(self,cr,uid,ids,context):
+        inv_obj=self.pool.get('account.invoice')
+        journal = self.pool.get('account.journal').search(cr,uid,[('type','=','cash')])
+        jour_br = self.pool.get('account.journal').browse(cr,uid,journal[0])
+        if type(jour_br) == []:
+            jour_br =jour_br[0]
+        open_inv_id=inv_obj.search(cr,uid,[('state','=','open'),('type','=','out_invoice')])
+        inv_br = inv_obj.browse(cr,uid,open_inv_id)
+        for inv in inv_br:
+            maturity_date = inv.move_id.line_id[0].date_maturity
+            if (not maturity_date) or (maturity_date  <= now()):
+                self._pay_and_reconcile(cr, uid, ids, inv.id, jour_br.id, inv.amount_total, context)
         return
 
     def continue_next_year(self, cr, uid, ids, context):
@@ -458,14 +500,27 @@ class profile_game_retail(osv.osv):
 
         proc_obj = self.pool.get('mrp.procurement')
         proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
+
         ## confirm Purchase Order ##
         self.confirm_draft_po(cr, uid, ids, context)
+
         ## confirm all Draft Supplier Invoice ##
         self.confirm_draft_supplier_invoice(cr, uid, ids, context)
+
         ## Pay All Supplier Invoice ##
         self.pay_supplier_invoice(cr, uid, ids, context)
-        ## Receive Products"
+
+        ## Receive Products ##
         self.receive_products(cr, uid, ids, context)
+
+        ## Deliver Products ##
+        self.deliver_products(cr, uid, ids, context)
+
+        ## Confirm all Draft customer invoice ##
+        self.confirm_draft_customer_invoice(cr,uid,ids,context)
+
+        ## Confirm all Draft customer invoice ##
+        self.pay_all_customer_invoice(cr, uid, ids, context)
         return True
 
 profile_game_retail()
