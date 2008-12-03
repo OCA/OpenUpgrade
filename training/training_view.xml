@@ -220,6 +220,20 @@
                             <separator string="Preliminary Courses" colspan="4" />
                             <separator string="Complementary Courses" colspan="4" />
                         </page>
+                        <page string="Supplier Commands">
+                            <field name="purchase_line_ids" nolabel="1" colspan="4">
+                                <form string="Command">
+                                    <field name="product_id" />
+                                    <field name="quantity" />
+                                    <field name="uom_id" />
+                                </form>
+                                <tree string="Command" editable="bottom">
+                                    <field name="product_id" />
+                                    <field name="quantity" />
+                                    <field name="uom_id" />
+                                </tree>
+                            </field>
+                        </page>
                     </notebook>
                     <group colspan="4" col="5">
                         <field name="state" required="True" />

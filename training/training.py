@@ -85,6 +85,20 @@ training_offer()
 
 class training_course(osv.osv):
     _name = 'training.course'
+training_course()
+
+class training_course_purchase_line(osv.osv):
+    _name = 'training.course.purchase_line'
+    _columns = {
+        'course_id' : fields.many2one('training.course', 'course', required=True),
+        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'quantity' : fields.integer('Quantity', required=True),
+        'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
+    }
+training_course_purchase_line()
+
+class training_course(osv.osv):
+    _name = 'training.course'
     _inherits = {
         'account.analytic.account' : 'analytic_account_id'
     }
@@ -110,24 +124,14 @@ class training_course(osv.osv):
         'sequence' : fields.integer('Sequence'),
         'target_public' : fields.char('Target Public', 256),
         'reference_id' : fields.many2one('training.course', 'Master Course'),
-
         'analytic_account_id' : fields.many2one( 'account.analytic.account', 'Account' ),
         'course_type_id' : fields.many2one('training.course_type', 'Type', required=True),
-
-        'instructor_ids' : fields.many2many( 
-            'res.partner', 'training_course_partner_rel', 
-            'course_id', 'partner_id',
-            'Instructors'
-        ),
-
+        'instructor_ids' : fields.many2many( 'res.partner', 'training_course_partner_rel', 'course_id', 'partner_id', 'Instructors'),
         'internal_note' : fields.text('Note'),
-
         'lang_id' : fields.many2one('res.lang', 'Language', required=True),
-        'offer_ids' : fields.many2many( 
-            'training.offer', 'training_course_offer_rel', 
-            'course_id', 'offer_id',
-            'Offers' ),
+        'offer_ids' : fields.many2many( 'training.offer', 'training_course_offer_rel', 'course_id', 'offer_id', 'Offers' ),
         'state' : fields.selection([('draft', 'Draft'),('mature', 'Mature'), ('deprecated', 'Deprecated')], 'State'),
+        'purchase_line_ids' : fields.one2many('training.course.purchase_line', 'course_id', 'Supplier Commands'),
     }
 
     _defaults = {
@@ -303,14 +307,10 @@ class training_event(osv.osv):
     _name = 'training.event'
 
     def _check_date(self,cr,uid,ids,context=None):
-        obj = self.browse(cr, uid, ids)[0]
-        return self.browse(cr,uid,ids)[0].date > time.strftime('%Y-%m-%d')
+        return self.browse(cr, uid, ids)[0].date > time.strftime('%Y-%m-%d')
 
     def _support_ok_get( self, cr, uid, ids, name, args, context ):
-        res = {}
-        for id in ids:
-            res[id] = True
-        return res
+        return {}.fromkeys(ids, True)
 
     _columns = {
         'name' : fields.char('Name', size=64, select=True, required=True),
