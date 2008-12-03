@@ -197,6 +197,23 @@ class training_event(osv.osv):
     _name = 'training.event'
 training_event()
 
+
+class training_session(osv.osv):
+    _name = 'training.session'
+training_session()
+
+class training_session_purchase_line(osv.osv):
+    _name = 'training.session.purchase_line'
+
+    _columns = {
+        'session_id' : fields.many2one('training.session', 'Session', required=True),
+        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'quantity' : fields.integer('Quantity', required=True),
+        'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
+    }
+
+training_session_purchase_line()
+
 class training_session(osv.osv):
     _name = 'training.session'
     _columns = {
@@ -212,9 +229,9 @@ class training_session(osv.osv):
             ),
         'offer_id' : fields.many2one('training.offer', 'Offer', select=True, required=True),
         'catalog_id' : fields.many2one('training.catalog', 'Catalog', select=True),
-        #'event_ids' : fields.one2many('training.event', 'session_id', 'Events', readonly=True, ondelete="cascade"),
         'event_ids' : fields.many2many('training.event', 'training_session_event_rel', 'session_id', 'event_id', 'Events', ondelete='cascade'),
         'date' : fields.datetime('Date', required=True),
+        'purchase_line_ids' : fields.one2many('training.session.purchase_line', 'session_id', 'Supplier Commands'),
     }
 
     def _find_catalog_id(self,cr,uid,data,context=None):
