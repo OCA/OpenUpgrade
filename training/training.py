@@ -23,7 +23,7 @@ class res_partner_contact(osv.osv):
         'matricule' : fields.char( 'Matricule', size=32, required=True ),
         'birthplace' : fields.char( 'BirthPlace', size=64 ),
         'education_level' : fields.char( 'Education Level', size=128 ),
-                'technical_skill_ids' : fields.many2many('res.partner.contact_technical_skill', 
+        'technical_skill_ids' : fields.many2many('res.partner.contact_technical_skill', 
                                                  'res_partner_contact_technical_skill_rel', 
                                                  'contact_id', 
                                                  'skill_id', 
@@ -75,8 +75,6 @@ class training_course_type(osv.osv):
         'description' : fields.text('Description'),
         'min_limit' : fields.integer('Minimum Limit', required=True, select=2),
         'max_limit' : fields.integer('Maximum Limit', required=True, select=2),
-        # Doit-il se trouver ici dans en tant qu'_inherit dans profile_ifbl
-        'pedagogical_limit' : fields.integer('Pedagogical Limit', required=True, select=2),
     }
     
 training_course_type()
@@ -378,6 +376,7 @@ class training_seance(osv.osv):
         'layout' : fields.char('Layout', size=32),
         'place' : fields.char('Place', size=32),
         'room' : fields.char('Room', size=32),
+        'limit' : fields.integer('Limit'), 
     }
     _defaults = {
         'state' : lambda *a: 'draft',

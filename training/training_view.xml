@@ -137,7 +137,6 @@
                     <separator string="Limit" colspan="4" />
                     <field name="min_limit" />
                     <field name="max_limit" />
-                    <field name="pedagogical_limit" />
                     <separator string="Description" colspan="4"/>
                     <field name="description" nolabel="1" colspan="4"/>
                     <separator string="Objective" colspan="4"/>
@@ -559,12 +558,13 @@
             <field name="arch" type="xml">
                 <form string="Seance">
                     <field name="name" />
-                    <field name="session_ids" />
+                    <newline />
                     <field name="date" />
                     <field name="duration" />
 
                     <notebook colspan="4">
                         <page string="General">
+                            <field name="limit" />
                             <separator string="Location" colspan="4" />
                             <field name="place" />
                             <field name="room" />
@@ -573,6 +573,7 @@
                             <separator string="Supports" colspan="4" />
                             <field name="copies" />
                             <field name="printed" />
+                            <!--
                             <separator string="Caterings" colspan="4" />
                             <field name="catering_ids" nolabel="1" colspan="4" view_mode="tree">
                                 <tree string="Catering" editable="True">
@@ -580,6 +581,10 @@
                                     <field name="hour" widget="float_time" />
                                 </tree>
                             </field>
+                            -->
+                        </page>
+                        <page string="Sessions">
+                            <field name="session_ids" colspan="4" nolabel="1"/>
                         </page>
                         <page string="Participants">
                             <field name="group_id" />
