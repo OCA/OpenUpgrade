@@ -132,6 +132,7 @@ class training_course(osv.osv):
         'offer_ids' : fields.many2many( 'training.offer', 'training_course_offer_rel', 'course_id', 'offer_id', 'Offers' ),
         'state' : fields.selection([('draft', 'Draft'),('mature', 'Mature'), ('deprecated', 'Deprecated')], 'State'),
         'purchase_line_ids' : fields.one2many('training.course.purchase_line', 'course_id', 'Supplier Commands'),
+        'questionnaire_ids' : fields.one2many('training.questionnaire', 'course_id', 'Questionnaire'),
     }
 
     _defaults = {
@@ -194,6 +195,10 @@ class training_questionnaire(osv.osv):
         'objective' : fields.text('Objective'),
         'description' : fields.text('Description'),
         'questionnaire_line_ids' : fields.one2many('training.questionnaire.line', 'questionnaire_id', 'Questions', required=True),
+    }
+
+    _defaults = {
+        'state' : lambda *a: 'draft',
     }
 
 training_questionnaire()

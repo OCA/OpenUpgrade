@@ -234,6 +234,18 @@
                                 </tree>
                             </field>
                         </page>
+                        <page string="Questionnaires">
+                            <field name="questionnaire_ids" nolabel="1" colspan="4">
+                                <tree string="Questionnaire">
+                                    <field name="name" />
+                                    <field name="state" />
+                                </tree>
+                                <form string="Questionnaire">
+                                    <field name="name" />
+                                    <field name="state" />
+                                </form>
+                            </field> 
+                        </page>
                     </notebook>
                     <group colspan="4" col="5">
                         <field name="state" required="True" />
@@ -336,6 +348,12 @@
                             </field>
                         </page>
                     </notebook>
+                    <group colspan="4" col="5">
+                        <field name="state" required="True" />
+                        <button string="Draft" type="object" />
+                        <button string="Mature" type="object" />
+                        <button string="Deprecated" type="object" />
+                    </group>
                 </form>
             </field>
         </record>
