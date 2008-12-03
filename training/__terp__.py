@@ -4,7 +4,7 @@
     'author' : 'Tiny SPRL',
     'website' : 'http://www.openerp.com',
     'description' : 'Training',
-    'depends' : ['account', 'base_contact_team', 'base_iban', 'product'],
+    'depends' : ['account', 'base_contact_team', 'base_iban', 'product', 'mrp'],
     'init_xml' : [
         'training_sequence.xml'
     ],
