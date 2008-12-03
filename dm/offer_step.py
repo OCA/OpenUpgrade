@@ -76,7 +76,6 @@ class dm_offer_step(osv.osv):
 
     def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
-#        print "Offer Step Context : ",context
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
@@ -263,12 +262,12 @@ class dm_offer_document(osv.osv):
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
         'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
-                                            'document_id','customer_field_id','Customer Fields',
-                                            domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-                                                        '!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
+              'document_id','customer_field_id','Customer Fields',
+              domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+              '!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
         'customer_order_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_order_field_rel',
-                                            'document_id','customer_order_field_id','Customer Order Fields',
-                                            domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
+              'document_id','customer_order_field_id','Customer Order Fields',
+              domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
     }
     _defaults = {

@@ -79,20 +79,12 @@
                         <field name="project_id" string="Retro Planning"/>
                          <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" states = "pending,open" attrs="{'invisible':[('project_id','!=',False)]}"/> 
                         </group>
-<!--                        <separator string="Process State" colspan="4"/>
-                        <group colspan="8">
-                        <field name="manufacturing_state" select="2"/>
-                        <field name="customer_file_state" select="2"/>
-                        <field name="items_state" select="2"/>
-                        <field name="translation_state" select="2"/>
-                        </group>-->
-<!--                        <field name="campaign_stat_ids"/>-->
                         <separator string="Campaign Status" colspan="4"/>
                         <group col="10" colspan="4">
                             <field name="state" readonly="1" select="2" nolabel="1"/>
                             <button name="state_pending_set" string="Set pending" states="draft"/>
-                            <button name="state_open_set" string="Open" states="pending"/>
-							<button name="state_close_set" string="Close" states="open"/>
+                            <button name="state_open_set" string="Start Campaign" states="pending"/>
+                            <button name="state_close_set" string="Close" states="open"/>
                         </group>
                     </page>
                     <page string="Manufacturing">
@@ -122,12 +114,35 @@
                                 <field name="date_close" string="Real Date"/>
                             </tree>
                         </field>
-                        <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
+<!--                        <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" context="{'campaign_id':active_id}"/>-->
+                        <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
+                            <form string="Purchase Line" colspan="4">
+                                <group colspan="2" col="2">
+                                    <separator string="Purchase Line Product" colspan="2"/>
+                                    <field name="product_category"/>
+                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
+                                    <field name="uom_id"/>
+                                    <separator string=" " colspan="2"/>
+                                    <field name="desc_from_offer" />
+<!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
+                                </group>
+                                <group colspan="2" col="2">
+                                    <separator string="Quantity" colspan="2"/>
+                                    <field name="type_quantity"/>
+                                    <separator string="Dates" colspan="4"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_delivery"/>
+                                </group>
+                                <separator string="Description" colspan="4"/>
+                                <field name="notes" colspan="4" nolabel="1"/>
+                                <field name="state" nolabel="1"/>
+                            </form>
+                        </field>
                         <separator string="Manufacturing Status" colspan="4"/>
                         <group col="8" colspan="4">
-	                       	<field name="manufacturing_state" nolabel="1"/>
-							<button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('manufacturing_state','!=','pending')]}" type="object"/>
-							<button name="state_done_set" string="Done" attrs="{'invisible':[('manufacturing_state','!=','inprogress')]}" type="object"/>
+                               <field name="manufacturing_state" nolabel="1"/>
+                            <button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('manufacturing_state','!=','pending')]}" type="object"/>
+                            <button name="state_done_set" string="Done" attrs="{'invisible':[('manufacturing_state','!=','inprogress')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Desktop Publishing">
@@ -147,17 +162,17 @@
                         <field name="dtp_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
                         <separator string="DTP Status" colspan="4"/>
                         <group col="8" colspan="4">
-                        	<field name="dtp_state" nolabel="1"/>
-                        	<button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('dtp_state','!=','pending')]}" type="object"/>
-							<button name="state_done_set" string="Done" attrs="{'invisible':[('dtp_state','!=','inprogress')]}" type="object"/>
+                            <field name="dtp_state" nolabel="1"/>
+                            <button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('dtp_state','!=','pending')]}" type="object"/>
+                            <button name="state_done_set" string="Done" attrs="{'invisible':[('dtp_state','!=','inprogress')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Customers Files">
                         <group colspan="2" col="2">
                             <separator string="Customers Files" colspan="2"/>
                             <field name="files_responsible_id"/>
-                            <field name="invoiced_partner_id"/>
-                            <field name="files_delivery_address_id"/>
+<!--                            <field name="invoiced_partner_id"/>
+                            <field name="files_delivery_address_id"/>-->
                         </group>
                         <group colspan="2" col="2">
                             <separator string="Intermediaries" colspan="2"/>
@@ -177,9 +192,9 @@
                         <field name="cust_file_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
                         <separator string="Customers Files Status" colspan="4"/>
                         <group col="8" colspan="4">
-                        	<field name="customer_file_state" nolabel="1"/>
-                        	<button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('customer_file_state','!=','pending')]}" type="object"/>
-							<button name="state_done_set" string="Done" attrs="{'invisible':[('customer_file_state','!=','inprogress')]}" type="object"/>
+                            <field name="customer_file_state" nolabel="1"/>
+                            <button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('customer_file_state','!=','pending')]}" type="object"/>
+                            <button name="state_done_set" string="Done" attrs="{'invisible':[('customer_file_state','!=','inprogress')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Items Procurement">
@@ -199,9 +214,9 @@
                         <field name="item_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
                         <separator string="Items Procurement Status" colspan="4"/>
                         <group col="8" colspan="4">
-                        	<field name="items_state" nolabel="1"/>
-                        	<button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('items_state','!=','pending')]}" type="object"/>
-							<button name="state_done_set" string="Done" attrs="{'invisible':[('items_state','!=','inprogress')]}" type="object"/>
+                            <field name="items_state" nolabel="1"/>
+                            <button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('items_state','!=','pending')]}" type="object"/>
+                            <button name="state_done_set" string="Done" attrs="{'invisible':[('items_state','!=','inprogress')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Notes">
@@ -645,10 +660,12 @@
                                 <field name="quantity_dedup_cleaner" string="- Deduplication"/>
                                 <newline/>
                                 <field name="quantity_cleaned_cleaner" string="- Cleaning"/>
+                                <field name="quantity_purged" select="2"/>
                                 <newline/>
                                 <separator string="" colspan="2"/>
                                 <newline/>
                                 <field name="quantity_usable" string="= Usable Quantity" select="2"/>
+                                <field name="quantity_real" select="2"/>
                             </page>
                         </notebook>
                    </form>
@@ -778,10 +795,12 @@
                         <field name="quantity_dedup_cleaner" string="- Deduplication"/>
                         <newline/>
                         <field name="quantity_cleaned_cleaner" string="- Cleaning"/>
+                        <field name="quantity_purged" select="2"/>
                         <newline/>
                         <separator string="" colspan="2"/>
                         <newline/>
                         <field name="quantity_usable" string="= Usable Quantity" select="2"/>
+                        <field name="quantity_real" select="2"/>
                     </page>
                 </notebook>
             </form>
@@ -1088,15 +1107,12 @@
             <tree string="Purchase Lines">
                 <field name="product_category"/>
                 <field name="product_id"/>
-<!--                <field name="quantity"/>-->
                 <field name="type_quantity"/>
                 <field name="type_document"/>
                 <field name="date_planned"/>
                 <field name="date_delivery"/>
                 <field name="state"/>
-<!--                <button name="quantity_get" string="Get Total Quantity" states="pending" type="object"/>-->
                 <button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
-<!--                <button name="po_generate" string="Generate Purchase Orders" attrs="{'invisible':[('state','!=','pending')]}" type="object"/>-->
             </tree>
         </field>
     </record>
@@ -1110,31 +1126,25 @@
                 <group colspan="2" col="2">
                     <separator string="Purchase Line Product" colspan="2"/>
                     <field name="product_category"/>
-<!--                    <field name="product_id" domain="['|',(int(product_category),'=',0),('categ_id','=',int(product_category))]"/>-->
                     <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
                     <field name="uom_id"/>
 <!--                    <field name="type_document"/>-->
-                <field name="desc_from_offer" />
-
+                    <separator string=" " colspan="2"/>
+                    <field name="campaign_id" />
+                    <field name="campaign_group_id" />
+                    <field name="desc_from_offer" />
+<!--                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
                 </group>
                 <group colspan="2" col="2">
                     <separator string="Quantity" colspan="2"/>
                     <field name="type_quantity"/>
-<!--                    <field name="type_quantity" on_change="onchange_type_quantity(type_quantity)"/>-->
                     <separator string="Dates" colspan="4"/>
                     <field name="date_planned"/>
                     <field name="date_delivery"/>
-<!--                    <field name="quantity" attrs="{'readonly':[('type_quantity','!=','quantity_free')]}"/>
-                    <field name="quantity_warning" nolabel="1" colspan="2"/>-->
                 </group>
-<!--                <group colspan="4">
-                    <separator string="Dates" colspan="4"/>
-                    <field name="date_planned"/>
-                    <field name="date_delivery"/>
-                </group>-->
                 <separator string="Description" colspan="4"/>
                 <field name="notes" colspan="4" nolabel="1"/>
-                <field name="state" nolabel="1"/>-->
+                <field name="state" nolabel="1"/>
             </form>
         </field>
     </record>
@@ -1161,7 +1171,7 @@
         <field name="model">dm.customers_list</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Customer File">
+            <form string="Customer List">
                 <separator string="Customers List Description" colspan="4"/>
                 <field name="name" select="1"/>
                 <field name="code" select="2"/>
@@ -1190,7 +1200,7 @@
         <field name="model">dm.customers_list</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="Customer Files">
+            <tree string="Customer Lists">
                 <field name="name"/>
                 <field name="code"/>
                 <field name="broker_id"/>
@@ -1291,6 +1301,28 @@
                 </field>
             </field>
         </record>
+
+
+    <!--
+    =======================================================
+    PRODUCT EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_product_product_form_inherit" model="ir.ui.view">
+        <field name="name">product.product.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <page string="Packaging" position="after">
+                <page string="Direct Marketing">
+                    <field name="list_country_id" attrs="{'readonly':['!',('category_id','like','Customers List')]}"/>
+                </page>
+            </page>
+        </field>
+    </record>
+
 
     <!--
     =======================================================

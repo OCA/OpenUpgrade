@@ -86,6 +86,12 @@ class dm_customer(osv.osv):
         'zip' : fields.char('Zip Code', size=16),
         'zip_summary' : fields.char('Zip Summary', size=64),
         'distribution_office' : fields.char('Distribution Office', size=64),
+        'decoy_address' : fields.boolean('Decoy Address', help='A decoy address is an address used to identify unleagal uses of a customers file'),
+        'decoy_owner' : fields.many2one('res.partner','Decoy Address Owner', help='The partner this decoy address belongs to'),
+        'decoy_external_ref' : fields.char('External Reference', size=64, help='The reference of the decoy address for the owner'),
+        'decoy_media_ids': fields.many2many('dm.media','dm_decoy_media_rel','decoy_media_id','customer_id','decoy address for Media'),
+        'decoy_for_campaign': fields.boolean('Used for Campaigns', help='Define if this decoy address can be used with campaigns'),
+        'decoy_for_renting': fields.boolean('Used for File Renting', help='Define if this decoy address can be used with used with customers files renting'),
     }
 dm_customer()
 
