@@ -33,7 +33,9 @@
         "sale_wo_production",
         "stock_planning",
         "crm_configuration",
-        "mrp_jit"
+        "mrp_jit",
+        "account_budget",
+        "sale_forecast"
     ],
     "init_xml":[
         "profile_game_data.xml",

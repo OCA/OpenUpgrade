@@ -8,45 +8,52 @@
             <field name="arch" type="xml">
                 <form string="Game Details">
                     <newline/>
-                    <group col="2" colspan="2">
-                        <separator colspan="2" string="Finance Manager"/>
-                        <field name="expenses_forecast"/>
-                        <field name="current_treasury"/>
-                        <field name="total_refund"/>
-                        <field name="total_current_refund"/>
-                    </group>
-                    <group col="2" colspan="2">
-                        <separator colspan="2" string="HR Manager"/>
-                        <field name="hr_budget"/>
-                    </group>
-                    <group col="2" colspan="2">
-                        <separator colspan="2" string="Sales Manager"/>
-                        <field name="last_total_sale"/>
-                        <field name="sale_forcast"/>
-                        <field name="margin_forcast"/>
-                    </group>
-                    <group col="2" colspan="2">
-                        <separator colspan="2" string="Logistic Manager"/>
-                        <field name="last_avg_stock"/>
-                        <field name="avg_stock_forcast"/>
-                        <field name="cost_purchase_forcast"/>
-                    </group>
-                    <newline/>
-                    <separator colspan="4" string="Objectives Achievement"/>
-                    <field name="last_turnover"/>
-                    <field name="total_benefit"/>
-                    <field name="total_sold_products"/>
-                    <field name="turnover_growth"/>
-                    <field name="benefits_growth"/>
-                    <field name="products_growth"/>
-                    <group colspan="4" col="5">
-                       <field name="note" colspan="4"/>
-                    	<button
-                        	string="Continue To Next Year"
-                        	name="continue_next_year"
-                       	 	type="object"
-                       		icon="gtk-ok"/>
-                    </group>
+                    <notebook>
+	                    <page string="Details">
+		                    <group col="2" colspan="2">
+		                        <separator colspan="2" string="Finance Manager"/>
+		                        <field name="expenses_forecast"/>
+		                        <field name="current_treasury"/>
+		                        <field name="total_refund"/>
+		                        <field name="total_current_refund"/>
+		                    </group>
+		                    <group col="2" colspan="2">
+		                        <separator colspan="2" string="HR Manager"/>
+		                        <field name="hr_budget"/>
+		                    </group>
+		                    <group col="2" colspan="2">
+		                        <separator colspan="2" string="Sales Manager"/>
+		                        <field name="last_total_sale"/>
+		                        <field name="sale_forcast"/>
+		                        <field name="margin_forcast"/>
+		                    </group>
+		                    <group col="2" colspan="2">
+		                        <separator colspan="2" string="Logistic Manager"/>
+		                        <field name="last_avg_stock"/>
+		                        <field name="avg_stock_forcast"/>
+		                        <field name="cost_purchase_forcast"/>
+		                    </group>
+		                    <newline/>
+		                    <separator colspan="4" string="Objectives Achievement"/>
+		                    <field name="last_turnover"/>
+		                    <field name="total_benefit"/>
+		                    <field name="total_sold_products"/>
+		                    <field name="turnover_growth"/>
+		                    <field name="benefits_growth"/>
+		                    <field name="products_growth"/>
+		                    <group col="2" colspan="3">
+		                    <label string=""  align="1.0"/>
+		                    <button
+	                        	string="Continue To Next Year"
+	                        	name="continue_next_year"
+	                       	 	type="object"
+	                       		icon="gtk-ok"/>
+	                       	</group>
+		                 </page>
+		                 <page string="Notes">
+		                       <field name="note" nolabel="1" colspan="4"/>
+						</page>
+					</notebook>
                 </form>
             </field>
         </record>
