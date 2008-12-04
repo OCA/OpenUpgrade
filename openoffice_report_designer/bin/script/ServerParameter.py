@@ -69,15 +69,20 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         sLogin=self.win.getEditText("txtLoginName")
         sPassword=self.win.getEditText("txtPassword")
         UID = sock.login(sDatabase,sLogin,sPassword)
-        try:
-            sock_g = xmlrpclib.ServerProxy(self.win.getEditText("txtHost") +'/xmlrpc/object')
-            ids  = sock_g.execute(sDatabase,UID,sPassword, 'res.groups' ,  'search', [('name','=','OpenOfficeReportDesinger')])
-            dict_groups = sock_g.execute(sDatabase, UID,sPassword, 'res.groups' , 'read',ids,['users'])
-        except :
-            pass
         if not UID :
             ErrorDialog("Connection Refuse...","Please enter valid Login/Password")
             self.win.endExecute()
+        try:
+            sock_g = xmlrpclib.ServerProxy(self.win.getEditText("txtHost") +'/xmlrpc/object')
+            ids  = sock_g.execute(sDatabase,UID,sPassword, 'res.groups' ,  'search', [('name','=','OpenOfficeReportDesinger')])
+            ids_module = sock_g.execute(sDatabase, UID, sPassword, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
+            dict_groups = sock_g.execute(sDatabase, UID,sPassword, 'res.groups' , 'read',ids,['users'])
+        except :
+            pass
+        if not len(ids_module):
+            ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
+            self.win.endExecute()
+
         if UID not in dict_groups[0]['users']:
             ErrorDialog("Connection Refuse...","You have not access these Report Desinger")
             self.win.endExecute()
