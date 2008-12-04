@@ -118,12 +118,12 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 			    self.insVariable.setText( sItem )
 
 		    genTree(
-			sItem[sItem.find("(")+1:sItem.find(")")], 
-			self.aListRepeatIn, 
-			self.insField, 
-			self.sMyHost, 
-			2, 
-			ending=['one2many','many2many'], 
+			sItem[sItem.find("(")+1:sItem.find(")")],
+			self.aListRepeatIn,
+			self.insField,
+			self.sMyHost,
+			2,
+			ending=['one2many','many2many'],
 			recur=['one2many','many2many']
 		    )
 
@@ -178,7 +178,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     sItem = var
             self.aListRepeatIn=[]
 
-	    data = ( sItem[sItem.rfind(" ") + 1:] == docinfo.getUserFieldValue(3) ) and docinfo.getUserFieldValue(3) or sItem[sItem.find("(")+1:sItem.find(")")] 
+	    data = ( sItem[sItem.rfind(" ") + 1:] == docinfo.getUserFieldValue(3) ) and docinfo.getUserFieldValue(3) or sItem[sItem.find("(")+1:sItem.find(")")]
 	    genTree( data, self.aListRepeatIn, self.insField, self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'] )
 
             self.win.selectListBoxItemPos("lstFields", 0, True )
@@ -218,12 +218,17 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                 oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
                 if self.win.getListBoxSelectedItem("lstFields") == "objects":
                     oInputList.Items = (sKey,sValue)
-                    widget = ( cursor.TextTable or selectedItem <> 'objects' ) and cursor.TextTable.getCellByName( cursor.Cell.CellName ) or doc.Text
-                    widget.insertTextContent(cursor,oInputList,False)
-                else:
-                    oInputList.Items = (sKey,sValue)
                     doc.Text.insertTextContent(cursor,oInputList,False)
-            self.win.endExecute()
+                else:
+                    sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[selectedItemPos].replace("/",".") + ",'" + txtName +"') ]]"
+                    if cursor.TextTable==None:
+                        oInputList.Items = (sKey,sValue)
+                        doc.Text.insertTextContent(cursor,oInputList,False)
+                    else:
+                        oInputList.Items = (sKey,sValue)
+                        widget = ( cursor.TextTable or selectedItem <> 'objects' ) and cursor.TextTable.getCellByName( cursor.Cell.CellName ) or doc.Text
+                        widget.insertTextContent(cursor,oInputList,False)
+                self.win.endExecute()
         else:
             ErrorDialog("Please Fill appropriate data in Object Field or Name field \nor select perticular value from the list of fields")
 
@@ -234,4 +239,4 @@ if __name__<>"package" and __name__=="__main__":
     RepeatIn()
 elif __name__=="package":
     g_ImplementationHelper = unohelper.ImplementationHelper()
-    g_ImplementationHelper.addImplementation( RepeatIn, "org.openoffice.openerp.report.repeatln", ("com.sun.star.task.Job",),) 
+    g_ImplementationHelper.addImplementation( RepeatIn, "org.openoffice.openerp.report.repeatln", ("com.sun.star.task.Job",),)
