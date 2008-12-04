@@ -10,6 +10,8 @@
     ],
     'demo_xml' : [],
     'update_xml' : [
+        'partner_view.xml', 
+        'base_contact_view.xml', 
         'training_view.xml', 
         'training_wizard.xml',
         'training_report.xml',
