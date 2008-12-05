@@ -300,9 +300,9 @@
 					<page string="History">
 						<field name="history_ids" nolabel="1" colspan="4"/>
 					</page>
-					<page string="DTP Documents">
-						<field name="document_ids" colspan="4" nolabel="1"/>
-					</page>
+<!--					<page string="DTP Documents">-->
+<!--						<field name="document_ids" colspan="4" nolabel="1"/>-->
+<!--					</page>-->
 					<page string="Manufacturing">
 						<field name="manufacturing_constraint_ids" colspan="4" nolabel="1">
 							<form string="Manufacturing Description">
@@ -332,6 +332,22 @@
 	</record>
 
 	<menuitem id="menu_action_offer_step_form" parent="dm.menu_dm_config_offer_steps" action="action_offer_step_form"/>
+
+    <!--
+    =======================================================
+        RELATES
+    =======================================================
+    -->
+
+    <act_window name="DTP Documents"
+        res_model="dm.offer.document"
+        src_model="dm.offer.step"
+        view_type="form"
+        view_mode="tree,form"
+        id="act_offer_document_opened"
+        domain="[('step_id','=',active_id)]"
+    />
+
 
     <!--
 	=======================================================
