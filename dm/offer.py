@@ -373,6 +373,12 @@ class dm_offer(osv.osv):
         return True  
 
     def state_open_set(self, cr, uid, ids, *args):
+        for step in self.browse(cr,uid,ids):
+            for step_id in step.step_ids:
+                if step_id.state != 'open':
+                    raise osv.except_osv(
+                            _('Could not open this offer !'),
+                            _('You must first open all offer steps related to this offer.'))
         self.__history(cr,uid, ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True 

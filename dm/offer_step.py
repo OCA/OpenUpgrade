@@ -151,8 +151,6 @@ class dm_offer_step(osv.osv):
         return True
 
     def state_open_set(self, cr, uid, ids, context=None):
-        self.__history(cr,uid,ids, 'open')
-        res = self.write(cr, uid, ids, {'state':'open'})
         for step in self.browse(cr,uid,ids,context):
             for doc in step.document_ids:
                 if doc.state != 'validate':
@@ -160,7 +158,9 @@ class dm_offer_step(osv.osv):
                             _('Could not open this offer step !'),
                             _('You must first validate all documents attached to this offer step.'))
 #                    self.pool.get('dm.offer.document').write(cr,uid,[doc.id],{'state':'validate'})
-        return res
+        self.__history(cr,uid,ids, 'open')
+        self.write(cr, uid, ids, {'state':'open'})
+        return True
 
     def state_freeze_set(self, cr, uid, ids, context=None):
         self.__history(cr,uid,ids, 'freeze')
@@ -276,10 +276,6 @@ class dm_offer_document(osv.osv):
 
     def state_validate_set(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'validate'})
-        for doc in self.browse(cr,uid,ids,context):
-            if doc.step_id:
-                wf_service = netsvc.LocalService("workflow")
-                wf_service.trg_validate(uid, 'dm.offer.step', doc.step_id.id, 'state_open_set', cr)
         return True
     
 dm_offer_document()

@@ -394,7 +394,6 @@ class dm_campaign(osv.osv):
         'translation_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Translation Status',readonly=True),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status',readonly=True),
         'customer_file_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Customers Files Status',readonly=True),
-        'dtp_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Customers Files Status',readonly=True),
         'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'},
             help="The dealer is the partner the campaign is planned for"),
         'responsible_id' : fields.many2one('res.users','Responsible'),
@@ -454,24 +453,19 @@ class dm_campaign(osv.osv):
 
     def state_close_set(self, cr, uid, ids, *args):
         for camp in self.browse(cr,uid,ids):
-            if (camp.date != time.strftime('%Y-%m-%d')):
-                raise osv.except_osv("Error!!","Campaign can be closed only on end date!!!")
+            if (camp.date > time.strftime('%Y-%m-%d')):
+                raise osv.except_osv("Error!!","Campaign cannot be closed before end date!!!")
         self.write(cr, uid, ids, {'state':'close'})
         return True
 
     def state_pending_set(self, cr, uid, ids, *args):
-        self.state_inprogress_set(cr, uid, ids, *args)
+        self.manufacturing_state_inprogress_set(cr, uid, ids, *args)
+        self.dtp_state_inprogress_set(cr, uid, ids, *args)
+        self.customer_file_state_inprogress_set(cr, uid, ids, *args)
+        self.items_state_inprogress_set(cr, uid, ids, *args)
         self.write(cr, uid, ids, {'state':'pending'})
         return True
 
-    def state_inprogress_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'manufacturing_state':'inprogress', 'dtp_state':'inprogress', 'customer_file_state':'inprogress', 'items_state':'inprogress'})
-        return True
-    
-    def state_done_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'manufacturing_state':'done', 'dtp_state':'done', 'customer_file_state':'done', 'items_state':'done'})
-        return True
-    
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
         if camp.offer_id:
@@ -488,10 +482,43 @@ class dm_campaign(osv.osv):
                 _('Could not open this Campaign !'),
                 _('You must first close all states related to this campaign.'))
         
-        if (camp.date_start != time.strftime('%Y-%m-%d')):
-            raise osv.except_osv("Error!!","Campaign can be opened only on drop date!!!")
+        if (camp.date_start > time.strftime('%Y-%m-%d')):
+            raise osv.except_osv("Error!!","Campaign cannot be opened before drop date!!!")
 
-        super(dm_campaign,self).write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
+        self.write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
+        return True
+
+    def manufacturing_state_inprogress_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'manufacturing_state':'inprogress'})
+        return True
+
+    def dtp_state_inprogress_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'dtp_state':'inprogress'})
+        return True
+ 
+    def customer_file_state_inprogress_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'customer_file_state':'inprogress'})
+        return True       
+    
+    def items_state_inprogress_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'items_state':'inprogress'})
+        return True 
+    
+    def manufacturing_state_done_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'manufacturing_state':'done'})
+        return True
+    
+    def dtp_state_done_set(self, cr, uid, ids, *args):
+        print "6"
+        self.write(cr, uid, ids, {'dtp_state':'done'})
+        return True
+
+    def customer_file_state_done_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'customer_file_state':'done'})
+        return True
+    
+    def items_state_done_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'items_state':'done'})
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -614,7 +641,7 @@ class dm_campaign(osv.osv):
             name_default='Copy of %s' % data.name
         super(dm_campaign, self).write(cr, uid, cmp_id, {'name':name_default, 'date_start':0, 'date':0, 'project_id':0})
         return cmp_id
-    
+
 dm_campaign()
 
 
@@ -1147,8 +1174,8 @@ class dm_campaign_purchase_line(osv.osv):
                                     constraints.append('planned Quantity : %s' % (obj.quantity_planned_total,))
     #                                constraints.append('Responsible : %s' % (obj.files_responsible_id.name,))
 
-                                    if obj.files_delivery_address_id:
-                                        delivery_address = obj.files_delivery_address_id
+#                                    if obj.files_delivery_address_id:
+#                                        delivery_address = obj.files_delivery_address_id
 
                         elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Translation')])[0]:
                             if not obj.lang_id:
