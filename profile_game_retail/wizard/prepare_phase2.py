@@ -56,7 +56,6 @@ def assign_full_access_rights(self, cr, uid, data, context):
             login = 'logistic'
         else:
             login = 'finance'
-        print "name,login",name,login
         user = user_obj.search(cr, uid, [('login','=',login)])
         user_browse = user_obj.browse(cr, uid, user)[0]
         add_menu = []

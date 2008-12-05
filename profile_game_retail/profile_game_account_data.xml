@@ -90,7 +90,38 @@
             <field name="default_credit_account_id" ref="account_cash"/>
             <field name="user_id" ref="base.user_root"/>
         </record>
-     <!--
+	<!--
+	Analytical Accounts
+	-->
+	<record id="analytic_administrative" model="account.analytic.account">
+            <field name="name">Administrative Expenses</field>
+            <field name="code">AD:EXP</field>
+     </record>
+     <record id="analytic_indirect" model="account.analytic.account">
+            <field name="name">Indirect Expenses</field>
+            <field name="code">INDIRECT:EXP</field>
+            <field name="parent_id" ref="analytic_administrative"/>
+     </record>
+     <record id="analytic_salary" model="account.analytic.account">
+            <field name="name">Salary</field>
+            <field name="code">SAL:EXP</field>
+            <field name="parent_id" ref="analytic_indirect"/>
+            <field eval="time.strftime('%Y-01-01')" name="date_start"/>
+            <field eval="str(time.localtime()[0] + 1) + '-12-31'" name="date"/>
+     </record>
+     <record id="analytic_sales" model="account.analytic.account">
+            <field name="name">Sales</field>
+            <field name="code">SAL</field>
+            <field eval="time.strftime('%Y-01-01')" name="date_start"/>
+            <field eval="str(time.localtime()[0] + 1) + '-12-31'" name="date"/>
+     </record>
+      <record id="analytic_purchase" model="account.analytic.account">
+            <field name="name">Purchase</field>
+            <field name="code">PUR</field>
+            <field eval="time.strftime('%Y-01-01')" name="date_start"/>
+            <field eval="str(time.localtime()[0] + 1) + '-12-31'" name="date"/>
+     </record>
+    <!--
 	Fiscal year
 	-->
 
