@@ -76,7 +76,8 @@ import time
 class report_xml(osv.osv):
     _inherit = 'ir.actions.report.xml'
     _columns = {
-        'actual_model':fields.char('Report Object', size=64, required=True),
+        'actual_model':fields.char('Report Object', size=64),
+        'document_id':fields.integer('Document'),
         }
 #
 #    def upload_report(self, cr, uid, report_id, file_sxw, context):
