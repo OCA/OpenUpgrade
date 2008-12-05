@@ -389,10 +389,12 @@ class dm_campaign(osv.osv):
         'campaign_type' : fields.many2one('dm.campaign.type','Type'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status',readonly=True),
+        'dtp_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'DTP Status',readonly=True),
         'items_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Items Status',readonly=True),
         'translation_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Translation Status',readonly=True),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status',readonly=True),
         'customer_file_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Customers Files Status',readonly=True),
+        'dtp_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Customers Files Status',readonly=True),
         'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'},
             help="The dealer is the partner the campaign is planned for"),
         'responsible_id' : fields.many2one('res.users','Responsible'),
@@ -400,8 +402,8 @@ class dm_campaign(osv.osv):
         'dtp_responsible_id' : fields.many2one('res.users','Responsible'),
         'files_responsible_id' : fields.many2one('res.users','Responsible'),
         'item_responsible_id' : fields.many2one('res.users','Responsible'),
-        'invoiced_partner_id' : fields.many2one('res.partner','Invoiced Partner'),
-        'files_delivery_address_id' : fields.many2one('res.partner.address','Delivery Address'),
+#        'invoiced_partner_id' : fields.many2one('res.partner','Invoiced Partner'),
+#        'files_delivery_address_id' : fields.many2one('res.partner.address','Delivery Address'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
         'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','ilike','Deduplicator')], context={'category':'Deduplicator'},
             help="The deduplicator is a partner responsible to remove identical addresses from the customers list"),
@@ -428,7 +430,8 @@ class dm_campaign(osv.osv):
         'dtp_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "DTP Purchase Lines",
                                                         domain=[('product_category','=','DTP')], context={'product_category':'DTP'}),
         'manufacturing_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Manufacturing Purchase Lines",
-                                                        domain=[('product_category','=','Mailing Manufacturing')],context={'product_category':'Mailing Manufacturing'}),
+                                                        domain=[('product_category','=','Mailing Manufacturing')],
+                                                        context={'product_category':'Mailing Manufacturing'}),
         'cust_file_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Customer Files Purchase Lines",
                                                         domain=[('product_category','=','Customers List')], context={'product_category':'Customers List'}),
         'item_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Items Purchase Lines",
@@ -441,6 +444,7 @@ class dm_campaign(osv.osv):
         'items_state': lambda *a: 'pending',
         'translation_state': lambda *a: 'pending',
         'customer_file_state': lambda *a: 'pending',
+        'dtp_state': lambda *a: 'pending',
         'responsible_id' : lambda obj, cr, uid, context: uid,
     }
 
@@ -449,13 +453,25 @@ class dm_campaign(osv.osv):
         return True
 
     def state_close_set(self, cr, uid, ids, *args):
+        for camp in self.browse(cr,uid,ids):
+            if (camp.date != time.strftime('%Y-%m-%d')):
+                raise osv.except_osv("Error!!","Campaign can be closed only on end date!!!")
         self.write(cr, uid, ids, {'state':'close'})
         return True
 
     def state_pending_set(self, cr, uid, ids, *args):
+        self.state_inprogress_set(cr, uid, ids, *args)
         self.write(cr, uid, ids, {'state':'pending'})
         return True
 
+    def state_inprogress_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'manufacturing_state':'inprogress', 'dtp_state':'inprogress', 'customer_file_state':'inprogress', 'items_state':'inprogress'})
+        return True
+    
+    def state_done_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'manufacturing_state':'done', 'dtp_state':'done', 'customer_file_state':'done', 'items_state':'done'})
+        return True
+    
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
         if camp.offer_id:
@@ -466,6 +482,15 @@ class dm_campaign(osv.osv):
                 raise osv.except_osv("Error!!","This offer is not valid in this country")
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id :
             raise osv.except_osv("Error!!","Informations are missing. Check Date Start, Dealer and Trademark")
+
+        if ((camp.manufacturing_state != 'done') or (camp.dtp_state != 'done') or (camp.customer_file_state != 'done') or (camp.items_state != 'done')):
+            raise osv.except_osv(
+                _('Could not open this Campaign !'),
+                _('You must first close all states related to this campaign.'))
+        
+        if (camp.date_start != time.strftime('%Y-%m-%d')):
+            raise osv.except_osv("Error!!","Campaign can be opened only on drop date!!!")
+
         super(dm_campaign,self).write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
         return True
 
@@ -475,7 +500,7 @@ class dm_campaign(osv.osv):
         srch_offer_ids = self.search(cr, uid, [('offer_id', '=', camp.offer_id.id)])
 
         c = camp.country_id.id
-        if 'date_start' in vals and vals['date_start']:
+        if ('date_start' in vals) and not ('date' in vals):
             time_format = "%Y-%m-%d"
             d = time.strptime(vals['date_start'],time_format)
             d = datetime.date(d[0], d[1], d[2])
@@ -838,6 +863,12 @@ class dm_campaign_proposition_segment(osv.osv):
             result[segment.id]=segment.quantity_delivered - segment.quantity_dedup_dedup - segment.quantity_cleaned_dedup - segment.quantity_dedup_cleaner- segment.quantity_cleaned_cleaner
         return result
 
+    def _quantity_purged_get(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for segment in self.browse(cr,uid,ids):
+            result[segment.id]=segment.quantity_delivered - segment.quantity_usable
+        return result
+
     def _segment_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
@@ -867,19 +898,37 @@ class dm_campaign_proposition_segment(osv.osv):
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
         'customers_list_id': fields.many2one('dm.customers_list','Customers List',required=True),
         'customers_file_id': fields.many2one('dm.customers_file','Customers File',readonly=True),
-        'quantity_planned' : fields.integer('planned Quantity'),
-        'quantity_wanted' : fields.integer('Wanted Quantity'),
-        'quantity_delivered' : fields.integer('Delivered Quantity'),
-        'quantity_dedup_dedup' : fields.integer('Deduplication Quantity'),
-        'quantity_dedup_cleaner' : fields.integer('Deduplication Quantity'),
-        'quantity_cleaned_dedup' : fields.integer('Cleaned Quantity'),
-        'quantity_cleaned_cleaner' : fields.integer('Cleaned Quantity'),
-        'quantity_usable' : fields.function(_quantity_usable_get,string='Usable Quantity',type="integer",method=True,readonly=True),
-        'all_add_avail': fields.boolean('All Adresses Available'),
+        'quantity_real' : fields.integer('Real Quantity',
+                    help='The real quantity is the number of addresses that are really in the customers file (by counting).'),
+        'quantity_planned' : fields.integer('planned Quantity',
+                    help='The planned quantity is an estimation of the usable quantity of addresses you  will get after delivery, deduplication and cleaning\n' \
+                            'This is usually the quantity used to order the manufacturing of the mailings'),
+        'quantity_wanted' : fields.integer('Wanted Quantity',
+                    help='The wanted quantity is the number of addresses you wish to get for that segment.\n' \
+                            'This is usually the quantity used to order Customers Lists\n' \
+                            'The wanted quantity could be AAA for All Addresses Available'),
+        'quantity_delivered' : fields.integer('Delivered Quantity',
+                    help='The delivered quantity is the number of addresses you receive from the broker.'),
+        'quantity_dedup_dedup' : fields.integer('Deduplication Quantity',
+                    help='The quantity of duplicated addresses removed by the deduplicator.'),
+        'quantity_dedup_cleaner' : fields.integer('Deduplication Quantity',
+                    help='The quantity of duplicated addresses removed by the cleaner.'),
+        'quantity_cleaned_dedup' : fields.integer('Cleaned Quantity',
+                    help='The quantity of wrong addresses removed by the deduplicator.'),
+        'quantity_cleaned_cleaner' : fields.integer('Cleaned Quantity',
+                    help='The quantity of wrong addresses removed by the cleaner.'),
+        'quantity_usable' : fields.function(_quantity_usable_get,string='Usable Quantity',type="integer",method=True,readonly=True,
+                    help='The usable quantity is the number of addresses you have after delivery, deduplication and cleaning.'),
+        'quantity_purged' : fields.function(_quantity_purged_get,string='Purged Quantity',type="integer",method=True,readonly=True,
+                    help='The purged quantity is the number of addresses removed from deduplication and cleaning.'),
+        'all_add_avail': fields.boolean('All Adresses Available',
+                    help='Used to order all adresses available in the customers list based on the segmentation criteria'),
         'split_id' : fields.many2one('dm.campaign.proposition.segment','Split'),
-        'start_census' :fields.integer('Start Census (days)'),
+        'start_census' :fields.integer('Start Census (days)',help='The recency is the time since the latest purchase.\n' \
+                                    'For example : A 0-30 recency means all the customers that have purchased in the last 30 days'),
         'end_census' : fields.integer('End Census (days)'),
-        'deduplication_level' : fields.integer('Deduplication Level'),
+        'deduplication_level' : fields.integer('Deduplication Level',
+                    help='The deduplication level defines the order in which the deduplication takes place.'),
         'active' : fields.boolean('Active'),
         'reuse_id' : fields.many2one('dm.campaign.proposition.segment','Reuse'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
@@ -887,6 +936,9 @@ class dm_campaign_proposition_segment(osv.osv):
         'segmentation_criteria': fields.text('Segmentation Criteria'),
     }
     _order = 'deduplication_level'
+    _defaults =  {
+        'all_add_avail': lambda *a: True,
+    }
 
 dm_campaign_proposition_segment()
 
@@ -1085,7 +1137,7 @@ class dm_campaign_purchase_line(osv.osv):
                                     constraints.append("---------------------------------------------------------------------------")
                                     constraints.append(item.product_id.name)
                                     constraints.append(item.purchase_constraints)
-                        elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Customers File')])[0]:
+                        elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Customers List')])[0]:
                                     constraints.append("---------------------------------------------------------------------------")
                                     constraints.append('Campaign Name : %s' % (obj.name,))
                                     constraints.append('Campaign Code : %s' % (obj.code1,))
@@ -1167,8 +1219,8 @@ class dm_campaign_purchase_line(osv.osv):
                                         if propo.quantity_wanted.isdigit():
                                             quantity = propo.quantity_wanted
                                         elif propo.quantity_wanted == 'AAA for a Segment':
-                                            quantity = 0
-                                            line_name = propo.code1 + '-' + propo.type + '- All Addresses Available'
+                                            raise osv.except_osv('Warning',
+                                                'Cannot use wanted quantity for Mailing Manufacturing if there is AAA defined for a segment')
                                         else :
                                             raise osv.except_osv('Warning',
                                                 'Cannot get wanted quantity, check prososition %s' % (propo.name,)) 
@@ -1214,8 +1266,8 @@ class dm_campaign_purchase_line(osv.osv):
                                     if propo.quantity_wanted.isdigit():
                                         quantity = propo.quantity_wanted
                                     elif propo.quantity_wanted == 'AAA for a Segment':
-                                        quantity = 0
-                                        line_name = propo.code1 + '-' + propo.type + '- All Addresses Available'
+                                        raise osv.except_osv('Warning',
+                                            'Cannot use wanted quantity for Mailing Manufacturing if there is AAA defined for a segment')
                                     else :
                                         raise osv.except_osv('Warning',
                                             'Cannot get wanted quantity, check prososition %s' % (propo.name,))
@@ -1245,7 +1297,7 @@ class dm_campaign_purchase_line(osv.osv):
                                    'taxes_id': [(6, 0, [x.id for x in pline.product_id.product_tmpl_id.supplier_taxes_id])],
                                    'account_analytic_id': propo.analytic_account_id,
                                 })
-                    elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Customers File')])[0]:
+                    elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Customers List')])[0]:
                         lines = []
                         if pline.campaign_group_id:
                             for campaign in pline.campaign_group_id.campaign_ids:
@@ -1283,7 +1335,7 @@ class dm_campaign_purchase_line(osv.osv):
                         else:
                             for propo in obj.proposition_ids:
                                 for segment in propo.segment_ids:
-                                    line_name = propo.code1 + ' - ' + segment.customers_file_id.name
+                                    line_name = propo.code1 + ' - ' + segment.customers_list_id.name
                                     if pline.type_quantity == 'quantity_free':
                                         raise osv.except_osv('Warning',
                                             'You cannot use a free quantity for a Customers List order')
@@ -1293,7 +1345,7 @@ class dm_campaign_purchase_line(osv.osv):
                                         quantity = segment.quantity_wanted
                                         if segment.all_add_avail:
                                             quantity = 0
-                                            line_name = propo.code1 + ' - ' + segment.customers_file_id.name + ' - All Addresses Available'
+                                            line_name = propo.code1 + ' - ' + segment.customers_list_id.name + ' - All Addresses Available'
                                     elif pline.type_quantity == 'quantity_delivered':
                                         quantity = propo.quantity_delivered
                                     elif pline.type_quantity == 'quantity_usable':
@@ -1339,6 +1391,18 @@ class dm_campaign_purchase_line(osv.osv):
         return []
 
 
+    def desc_from_offer_get(self, cr, uid, ids, context={}):
+        """Get  Descriptions from offer"""
+
+        print "desc_from_offer_get Context : ", context
+        """
+        pl =  self.browse(cr, uid, ids)[0]
+        print "id : ", pl.id
+        print "campaign : ", pl.campaign_id
+        """
+        return True
+
+
     def _state_get(self, cr, uid, ids, name, args, context={}):
         result = {}
         for pline in self.browse(cr, uid, ids):
@@ -1381,62 +1445,6 @@ class dm_campaign_purchase_line(osv.osv):
                         result[pline.id] = po.picking_ids[0].date_done
                     continue
         return result
-
-    def onchange_type_quantity(self, cr, uid, ids, type_quantity):
-        value = {}
-        quantity = 0
-
-#        pline = self.browse(cr, uid, ids)[0]
-#        if not pline.campaign_id:
-#            raise  osv.except_osv('Warning', "You must first save this Purchase Line and the campaign before using this button")
-        """
-        print "Quantity Type : ",type_quantity
-        print "Parent_type : ",parent_type
-        print "Parent_id : ",parent_id
-        """
-        """
-        if pline.campaign_group_id:
-            obj = pline.campaign_group_id
-        else:
-            obj = pline.campaign_id
-        """
-
-        if type_quantity == 'quantity_free':
-            if not quantity:
-                quantity = 0
-        elif type_quantity == 'quantity_planned':
-            if obj.quantity_planned_total.isdigit():
-                quantity = obj.quantity_planned_total
-            else :
-                raise osv.except_osv('Warning',
-                    'Cannot get wanted quantity, check prososition segments')
-        elif type_quantity == 'quantity_wanted':
-            if obj.quantity_wanted_total.isdigit():
-                quantity = obj.quantity_wanted_total
-            elif obj.quantity_wanted_total == 'AAA for a Segment':
-                quantity = 0
-            else :
-                raise osv.except_osv('Warning',
-                    "Cannot get wanted quantity, check prososition segments")
-        elif type_quantity == 'quantity_delivered':
-            if obj.quantity_delivered_total.isdigit():
-                quantity = obj.quantity_delivered_total
-            else :
-                raise osv.except_osv('Warning',
-                    "Cannot get delivered quantity, check prososition segments")
-        elif type_quantity == 'quantity_usable':
-            if obj.quantity_usable_total.isdigit():
-                quantity = obj.quantity_usable_total
-            else :
-                raise osv.except_osv('Warning',
-                    "Cannot get usable quantity, check prososition segments")
-        else:
-            raise osv.except_osv('Warning','Error getting quantity')
-
-#        pline.write({'quantity':quantity})
-        value['quantity']=quantity
-
-        return {'value':value}
 
     def _default_category_get(self, cr, uid, context):
         if 'product_category' in context and context['product_category']:
@@ -1609,5 +1617,17 @@ class project_task(osv.osv):
     }
 
 project_task()
+
+
+class product_product(osv.osv):
+    _name = "product.product"
+    _inherit = "product.product"
+
+    _columns = {
+        'list_country_id': fields.many2one('res.country','List for Country'),
+    }
+
+product_product()
+
 
 #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

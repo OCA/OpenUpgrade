@@ -70,7 +70,7 @@
 		<field name="user_type" ref="account_type_root"/>
 		<field name="name">CURRENT ASSETS</field>
 	</record>
-	<record id="account.a_cash" model="account.account.template">
+	<record id="us_a_cash" model="account.account.template">
 		<field name="code">1060</field>
 		<field name="reconcile" eval="False"/>
 		<field name="type">other</field>
@@ -659,7 +659,7 @@
 		<field name="reconcile" eval="False"/>
 		<field name="type">other</field>
 		<field name="parent_id" ref="chart0"/>
-		<field name="user_type" ref="account.account_type_expense"/>
+		<field name="user_type" ref="account_type_expense"/>
 		<field name="name">Utilities</field>
 	</record>
 	<record id="chart5795" model="account.account.template">

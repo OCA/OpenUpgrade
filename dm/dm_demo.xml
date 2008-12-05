@@ -558,7 +558,7 @@ rkJggg==
 	<data noupdate="1">
 		<record id="res_users_bob0" model="res.users">
 			<field eval="[(6,0,[ref('dm.res_groups_offermanager')])]" name="groups_id"/>
-			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="[(6,0,[ref('dm.res_roles_offermanager')])]" name="roles_id"/>
 			<field eval="1" name="active"/>
 			<field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="password"/>
 			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>

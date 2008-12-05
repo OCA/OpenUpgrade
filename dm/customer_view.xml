@@ -36,6 +36,17 @@
                     <field name="country_id" select="1"/>
                     <field name="distribution_office" select="2"/>
                 </page>
+                <page string="Decoy Address">
+                    <separator string="Decoy Address Infos" colspan="4"/>
+                    <field name="decoy_address" select="1"/>
+                    <field name="decoy_owner" select="2"/>
+                    <field name="decoy_external_ref" select="2"/>
+                    <separator string="Decoy address for Media" colspan="4"/>
+                    <field name="decoy_media_ids" nolabel="1" colspan="4" select="2"/>
+                    <separator string="Usability" colspan="4"/>
+                    <field name="decoy_for_campaign" select="2"/>
+                    <field name="decoy_for_renting" select="2"/>
+                </page>
                 <page string="Extra Infos">
                     <group colspan="2" col="2">
                         <separator string="Main Language" colspan="2"/>
