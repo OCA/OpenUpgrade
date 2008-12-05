@@ -83,21 +83,10 @@ class maintenance_maintenance(osv.osv):
         (_contract_date, 'You can not have 2 contracts that overlaps !', ['date_from','date_to']),
     ]
 
-    def get_module_for_contract( self, cr, uid, contract_id, password ):
-        ids = self.search(cr, uid, [('name', '=', contract_id), ('password', '=', password), 
-                                    ('date_from', '<=', mx.DateTime.today()), ('date_to', '>=', mx.DateTime.today()) ])
-        if not ids:
-            return False
-
-        contract = self.browse(cr, uid, ids[0])
-        return {
-            'date_from' : contract.date_from,
-            'date_to' : contract.date_to,
-            'modules' : [ (module['name'], module['version'] ) for module in contract.module_ids ],
-        }
-
     def check_contract(self, cr, uid, modules, contract):
-        external_modules=[]
+        external_modules = []
+        contract_module_list = []
+        date_from = date_to = False
         maintenance_ids=self.search(cr,uid,
                                     [('name','=',contract['name']),
                                      ('password','=',contract['password']),
@@ -105,15 +94,20 @@ class maintenance_maintenance(osv.osv):
                                      ('date_to','>=',mx.DateTime.today())
                                     ],limit=1)
         if maintenance_ids:
-            maintenance_obj=self.browse(cr,uid,maintenance_ids)[0]
-            contract_module_list=map(lambda x:(x['name'], x['version']),maintenance_obj.module_ids)
+            maintenance_obj = self.browse(cr,uid,maintenance_ids)[0]
+            date_from = maintenance_obj.date_from
+            date_to = maintenance_obj.date_to
+            contract_module_list = map(lambda x:(x['name'], x['version']),maintenance_obj.module_ids)
             for module in modules:
                 if (module['name'],module['installed_version']) not in contract_module_list:
                     external_modules.append(module['name'])
         return { 
             'status': (maintenance_ids and ('full', 'partial')[bool(external_modules)] or 'none'),
-            'modules': external_modules,
+            'external_modules': external_modules,
+            'modules_with_contract' : contract_module_list,
             'message': '',
+            'date_from': date_from,
+            'date_to': date_to,
         }
 
     def onchange_partner_id(self, cr, uid, ids, part):
