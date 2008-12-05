@@ -16,12 +16,13 @@
 		<!-- Fleet -->
 
 		<record model="ir.ui.view" id="view_location_form_fleet_maintenance">
-			<field name="name">stock.location.form.fleet_maintenance</field>
+			<field name="name">stock.location.fleet.form.fleet_maintenance</field>
 			<field name="model">stock.location</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 
 				<form string="Fleet">
+					<field name="is_fleet" invisible="1"/>
 					<field name="name" select="1" string="Fleet Name"/>
 					<field name="partner_id" required="1"/>
 					<field name="usage" select="1" />
@@ -62,7 +63,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">stock.location</field>
 			<field name="view_type">form</field>
-			<field name="domain">[('partner_id','&lt;&gt;','')]</field>
+			<field name="domain">[('is_fleet','=',True)]</field>
 			<field name="view_id" ref="view_location_form_fleet_maintenance" />
 		</record>
 		<menuitem action="fleet_normal_action" id="all_fleets" parent="menu_fleet" />
@@ -86,12 +87,12 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">stock.location</field>
 			<field name="view_type">form</field>
+			<field name="domain">[('is_fleet','=',True)]</field>
 			<field name="view_mode">form,tree,calendar,graph</field>
 		</record>
 		<menuitem action="action_fleet_new" id="menu_action_fleet_new" parent="menu_fleet" />
 
-
-		<record id="ir_actions_act_window_view_fleet_new" model="ir.actions.act_window.view">
+		<record id="ir_actions_act_window_view_3" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="action_fleet_new" />
 			<field eval="0" name="multi" />
 			<field name="view_id" ref="fleet_maintenance.view_location_form_fleet_maintenance" />
@@ -107,16 +108,17 @@
 		<!-- Fleet extension -->
 		
 		<record model="ir.ui.view" id="view_location_form_fleet_extension">
-			<field name="name">stock.location.form.fleet_maintenance</field>
+			<field name="name">stock.location.sub_fleet.form.fleet_maintenance</field>
 			<field name="model">stock.location</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 
 				<form string="Stock location">
+					<field name="is_sub_fleet" invisible="1" />
 					<field name="name" select="1" string="Fleet Extension Name"/>
-					<field name="usage" select="1" />
-					<field name="location_id" domain="[('partner_id','&lt;&gt;','')]"/>
-					<field context="{'context_display':'partner'}" name="address_id" />
+					<field name="usage"/>
+					<field name="location_id" domain="[('is_fleet','=',True)]" required="1"/>
+          <field name="address_id" context="{'context_display':'partner'}"/>
 					<field name="active" select="2" />
 					<separator string="Maintenance Dates" colspan="4"/>
 					<group col="6" colspan="4">
@@ -147,11 +149,12 @@
 		
 		
 		<record id="view_location_tree_fleet_extension" model="ir.ui.view">
-			<field name="name">fleet_maintenance.tree</field>
+			<field name="name">sub_fleet.tree</field>
 			<field name="model">stock.location</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Stock location" colors="red:is_expired==True;">
+					<field name="is_sub_fleet" />
 					<field name="complete_name" />
 					<field name="is_expired" />
 					<field name="stock_real"/>
@@ -167,7 +170,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">stock.location</field>
 			<field name="view_type">form</field>
-			<field name="domain">[('inherited_partner','&lt;&gt;',0)]</field>
+			<field name="domain">[('is_sub_fleet','=',True)]</field>
 			<field name="view_id" ref="view_location_form_fleet_maintenance" />
 		</record>
 		<menuitem action="fleet_extension_normal_action" id="all_fleet_extensions" parent="menu_fleet_extensions" />
