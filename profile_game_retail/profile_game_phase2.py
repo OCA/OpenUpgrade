@@ -80,13 +80,11 @@ class profile_game_retail(osv.osv):
     _name="profile.game.retail"
 
     def _calculate_detail(self, cr, uid, ids, field_names, arg, context):
-        print "field_names",field_names
         res = {}
         fiscal_obj = self.pool.get('account.fiscalyear')
         account_obj = self.pool.get('account.account')
         account_type_obj = self.pool.get('account.account.type')
         for val in self.browse(cr, uid, ids,context=context):
-           # print "valllllllllllllllllllL",val
             res[val.id] = {}
             if 'hr_budget' in field_names:
                 res[val.id] = {}.fromkeys(field_names, 0.0)
@@ -269,7 +267,6 @@ class profile_game_retail(osv.osv):
                         res[val.id][field] = total_benefit[0]
 
                     elif field == 'total_sold_products':
-                        print "product_sold AFTER",product_sold
                         res[val.id][field] = product_sold[0]
 
                     elif field == 'turnover_growth':

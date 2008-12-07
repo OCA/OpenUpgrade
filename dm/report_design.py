@@ -76,7 +76,8 @@ import time
 class report_xml(osv.osv):
     _inherit = 'ir.actions.report.xml'
     _columns = {
-        'actual_model':fields.char('Report Object', size=64, required=True),
+        'actual_model':fields.char('Report Object', size=64),
+        'document_id':fields.integer('Document'),
         }
 #
 #    def upload_report(self, cr, uid, report_id, file_sxw, context):
@@ -104,7 +105,7 @@ def mygetObjects(self, cr, uid, ids, context):
     table = self.table
     if 'actual_model' in context and context['actual_model']:
         table =context['actual_model']
-    ids = pooler.get_pool(cr.dbname).get(table).search(cr,uid,[])
+        ids = pooler.get_pool(cr.dbname).get(table).search(cr,uid,[])
     res = pooler.get_pool(cr.dbname).get(table).browse(cr, uid, ids, list_class=browse_record_list, context=context, fields_process=_fields_process)
     return res
 report_sxw.getObjects = mygetObjects

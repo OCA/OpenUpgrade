@@ -56,7 +56,6 @@ def assign_full_access_rights(self, cr, uid, data, context):
             login = 'logistic'
         else:
             login = 'finance'
-        print "name,login",name,login
         user = user_obj.search(cr, uid, [('login','=',login)])
         user_browse = user_obj.browse(cr, uid, user)[0]
         add_menu = []
@@ -87,7 +86,30 @@ def create_monthly_sale_periods(self, cr, uid, data, context):
             ds = ds + RelativeDateTime(months=1)
         return
 
+def create_phase2_menu(self, cr, uid, data, context):
+    pool = pooler.get_pool(cr.dbname)
+    mod_obj = pool.get('ir.model.data')
+    result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'business_game')
+    parent_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+    result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'action_game_detail_form')
+    action_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+    menu_id = pool.get('ir.ui.menu').create(cr, uid, {
+            'name': 'Business Game Details',
+            'parent_id': parent_id,
+            'icon': 'STOCK_NEW'
+            })
+    value_id = pool.get('ir.values').create(cr, uid, {
+            'name': 'Business Game Phase2',
+            'key2': 'tree_but_open',
+            'model': 'ir.ui.menu',
+            'res_id': menu_id,
+            'value': 'ir.actions.act_window,%d'%action_id,
+            'object': True
+            })
+    return
+
 def get_ready_phase2(self, cr, uid, data, context):
+        create_phase2_menu(self, cr, uid, data, context)
         assign_full_access_rights(self, cr, uid, data, context)
         create_monthly_sale_periods(self, cr, uid, data, context)
 
@@ -138,7 +160,7 @@ def get_ready_phase2(self, cr, uid, data, context):
                     val['user_id'] =user.id
                     val['name']=pool.get('ir.ui.menu').read(cr,uid,[res_id],['name'])[0]['name']
                     pool.get('ir.ui.view_sc').create(cr,uid,val)
-      #  phase1_obj.write(cr,uid,data['id'],{'state':'started_phase2'})
+        phase1_obj.write(cr,uid,data['id'],{'state':'started_phase2'})
         return  {
         'name': 'Business Game',
         'view_type': 'form',

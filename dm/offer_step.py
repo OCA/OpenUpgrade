@@ -151,8 +151,6 @@ class dm_offer_step(osv.osv):
         return True
 
     def state_open_set(self, cr, uid, ids, context=None):
-        self.__history(cr,uid,ids, 'open')
-        res = self.write(cr, uid, ids, {'state':'open'})
         for step in self.browse(cr,uid,ids,context):
             for doc in step.document_ids:
                 if doc.state != 'validate':
@@ -160,7 +158,9 @@ class dm_offer_step(osv.osv):
                             _('Could not open this offer step !'),
                             _('You must first validate all documents attached to this offer step.'))
 #                    self.pool.get('dm.offer.document').write(cr,uid,[doc.id],{'state':'validate'})
-        return res
+        self.__history(cr,uid,ids, 'open')
+        self.write(cr, uid, ids, {'state':'open'})
+        return True
 
     def state_freeze_set(self, cr, uid, ids, context=None):
         self.__history(cr,uid,ids, 'freeze')
@@ -263,25 +263,25 @@ class dm_offer_document(osv.osv):
         'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
         'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
               'document_id','customer_field_id','Customer Fields',
-              domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-              '!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
+               domain=[('model_id','like','dm.customer')],context={'model':'dm.customer'}),
+#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),'!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
         'customer_order_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_order_field_rel',
               'document_id','customer_order_field_id','Customer Order Fields',
-              domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
+               domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
     }
     _defaults = {
         'state': lambda *a: 'draft',
     }
-
+    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
+        result=super(dm_offer_document,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
+        if result['type']=='form' and 'toolbar' in result:
+            result['toolbar']['print']=[]
+        return result
     def state_validate_set(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'validate'})
-        for doc in self.browse(cr,uid,ids,context):
-            if doc.step_id:
-                wf_service = netsvc.LocalService("workflow")
-                wf_service.trg_validate(uid, 'dm.offer.step', doc.step_id.id, 'state_open_set', cr)
         return True
-    
+  
 dm_offer_document()
 
 
