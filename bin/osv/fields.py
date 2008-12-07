@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -160,7 +160,7 @@ class char(_column):
             u_symb = symb
         else:
             u_symb = unicode(symb)
-        return u_symb.encode('utf8')[:self.size]
+        return u_symb[:self.size].encode('utf8')
 
 
 class text(_column):
@@ -597,6 +597,9 @@ class function(_column):
         self._type = type
         self._fnct_search = fnct_search
         self.store = store
+        if store:
+            self._classic_read = True
+            self._classic_write = True
         if type == 'float':
             self._symbol_c = '%f'
             self._symbol_f = lambda x: __builtin__.float(x or 0.0)
@@ -708,7 +711,7 @@ class related(function):
                 else:
                     t_data = t_data[self.arg[i]]
             if type(t_data) == type(objlst[0]):
-                res[data.id] = t_data.id
+                res[data.id] = (t_data.id,t_data.name)
             else:
                 res[data.id] = t_data
         return res
@@ -719,7 +722,7 @@ class related(function):
 
     # TODO: call field_get on the object, not in the DB
     def _field_get(self, cr, uid, obj, model_name, prop):
-        fields = obj.pool.get(model_name).fields_get(cr, uid,)
+        fields = obj.pool.get(model_name).fields_get(cr, uid,[prop])
         if fields.get(prop, False):
             return(fields[prop].get('relation', False), fields[prop].get('type', False), fields)
         else:
