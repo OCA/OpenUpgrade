@@ -34,6 +34,7 @@ import time
 import math
 
 from tools import config
+import mx.DateTime
 
 class maintenance_maintenance_module(osv.osv):
     _name ="maintenance.maintenance.module"
@@ -42,69 +43,61 @@ class maintenance_maintenance_module(osv.osv):
         'name' : fields.char('Name', size=128, required=True),
         'module_name': fields.char('Module Name', size=128, required=True,),
         'version': fields.char('Version', size=64,),
-                }
+    }
 maintenance_maintenance_module()
 
 class maintenance_maintenance(osv.osv):
     _name = "maintenance.maintenance"
     _description = "maintenance"
+
+    def _contract_date(self, cr, uid, ids):
+        for contract in self.browse(cr, uid, ids):
+            cr.execute('SELECT id \
+                    FROM maintenance_maintenance \
+                    WHERE (date_from < %s and %s < date_to) \
+                        AND id <> %d', (contract.date_to, contract.date_from,
+                            contract.id))
+            if cr.fetchall():
+                return False
+        return True
+
     _columns = {
-    'name' : fields.char('Test Case', size=64),
-    'partner_id' : fields.many2one('res.partner','Partner'),
-    'partner_invoice_id' : fields.many2one('res.partner.address','Address'),
-    'date_from' : fields.date('Date From'),
-    'date_to' : fields.date('Date To'),
-    'password' : fields.char('password', size=64, invisible=True),
-    'module_ids' : fields.many2many('maintenance.maintenance.module','maintenance_module_rel','maintenance_id','module_id',string='Modules'),
-    'state' : fields.selection([('draft','Draft'), ('open','Open'), ('cancel','Cancel'), ('done','Done')], 'State', readonly=True),
-        }
+        'name' : fields.char('Test Case', size=64),
+        'partner_id' : fields.many2one('res.partner','Partner'),
+        'partner_invoice_id' : fields.many2one('res.partner.address','Address'),
+        'date_from' : fields.date('Date From'),
+        'date_to' : fields.date('Date To'),
+        'password' : fields.char('password', size=64, invisible=True),
+        'module_ids' : fields.many2many('maintenance.maintenance.module','maintenance_module_rel','maintenance_id','module_id',string='Modules'),
+        'state' : fields.selection([('draft','Draft'), ('open','Open'), ('cancel','Cancel'), ('done','Done')], 'State', readonly=True),
+    }
 
     _defaults = {
         'date_from':lambda *a: time.strftime('%Y-%m-%d'),
         'password' : lambda obj,cr,uid,context={} : '',
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'maintenance.maintenance'),
         'state': lambda *a: 'draft',
-              }
+    }
+
+    _constraints = [
+        (_contract_date, 'You can not have 2 contracts that overlaps !', ['date_from','date_to']),
+    ]
 
     def check_contract(self, cr, uid, modules, contract):
-#        raise osv.except_osv(_('Error !'),_('''Maintenance Contract
-#-----------------------------------------------------------
-#You do not have a valid maintenance contract ! If you use\
-#Open ERP, it's highly suggested to take a maintenance \
-#contract. The maintenance program offers you: migrations on \
-#new versions, bugfixes guarantee, monthly announces on bugs, \
-#security alerts, access to the customer portal.
-#* Check the maintenance contract (www.openerp.com)'''))
         external_modules=[]
-        maintenance_ids=self.search(cr,uid,[('name','=',contract['name']),('password','=',contract['password']),('date_from','<=',contract['contract_date']),('date_to','>=',contract['contract_date'])],limit=1)
+        maintenance_ids=self.search(cr,uid,[('name','=',contract['name']),('password','=',contract['password']),('date_from','<=',mx.DateTime.today()),('date_to','>=',mx.DateTime.today())],limit=1)
         if maintenance_ids:
             maintenance_obj=self.browse(cr,uid,maintenance_ids)[0]
-            name=map(lambda x:x['name'],maintenance_obj.module_ids)
-            version=map(lambda x:x['version'],maintenance_obj.module_ids)
-            contract_module_list=zip(name,version)
+            contract_module_list=map(lambda x:(x['name'], x['version']),maintenance_obj.module_ids)
             for module in modules:
-                if(module['name'],module['installed_version']) in contract_module_list:
-                    continue
-                else:
+                if (module['name'],module['installed_version']) not in contract_module_list:
                     external_modules.append(module['name'])
-            if external_modules:
-                return{
-                    'status': 'partial',
-                    'modules': external_modules,
-                    'message': ''
-                    }
-            else:
-                return{
-                    'status': 'ok',
-                    'modules': external_modules,
-                    'message': ''
-                    }
-        else:
-            return{
-                    'status': 'ko',
-                    'modules': external_modules,
-                    'message': ''
-                    }
+
+        return { 
+            'status': (maintenance_ids and ('full', 'partial')[bool(external_modules)] or 'none'),
+            'modules': external_modules,
+            'message': '',
+        }
 
     def onchange_partner_id(self, cr, uid, ids, part):
         if not part:

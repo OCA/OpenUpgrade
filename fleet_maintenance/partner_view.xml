@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_partner_form_fleet_maintenance">
+			<field name="name">res.partner.form.fleet_maintenance.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="type">form</field>			
+      <field name="arch" type="xml">
+	        <notebook position="inside">
+	        	<page string="Sub Fleets">
+	        		<!--  field name="sub_fleets"/ -->
+	        	</page>
+	        </notebook>
+	    </field>
+		</record>
+	</data>
+</openerp>

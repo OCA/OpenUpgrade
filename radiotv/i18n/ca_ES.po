@@ -16,6 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: radiotv
+#, python-format
+#: code:addons/radiotv/wizard/wizard_export_channels_programs.py:0
+#: code:addons/radiotv/wizard/wizard_export_broadcasts.py:0
+#: code:addons/radiotv/wizard/wizard_export_podcasts.py:0
+msgid "No website defined!\nPlease create one."
+msgstr "No s'ha definit un lloc web!\nSi us plau, creeu-ne un."
+
+#. module: radiotv
 #: rml:radiotv.broadcast.declaration.report:0
 msgid "Company name:"
 msgstr "Nom de l'empresa:"
@@ -39,7 +47,7 @@ msgstr "Autor"
 #. module: radiotv
 #: wizard_field:radiotv.broadcast.compact.report,init,d_from:0
 #: wizard_field:radiotv.broadcast.declaration.report,init,d_from:0
-msgid "Inicio"
+msgid "Start"
 msgstr "Inici"
 
 #. module: radiotv
@@ -56,7 +64,7 @@ msgstr "Informe d'emissions de Radio TV"
 #. module: radiotv
 #: wizard_field:radiotv.broadcast.compact.report,init,d_to:0
 #: wizard_field:radiotv.broadcast.declaration.report,init,d_to:0
-msgid "Fin"
+msgid "End"
 msgstr "Fi"
 
 #. module: radiotv
@@ -434,7 +442,7 @@ msgstr "Copia les emissions des d'un interval de dies origen (o un dia) cap a un
 #. module: radiotv
 #: wizard_field:radiotv.broadcast.compact.report,init,channel_id:0
 #: wizard_field:radiotv.broadcast.declaration.report,init,channel_id:0
-msgid "Canal"
+msgid "Channel"
 msgstr "Canal"
 
 #. module: radiotv
@@ -473,10 +481,14 @@ msgid "Not recommended for minors of 7"
 msgstr "No recomenat per a menors de 7 anys"
 
 #. module: radiotv
-#: wizard_field:radiotv.broadcast.copy,init,d_to:0
 #: wizard_field:radiotv.broadcast.copy,init,d_from:0
 #: wizard_field:radiotv.broadcast.export,init,d_from:0
 #: wizard_field:radiotv.podcast.export,init,d_from:0
+msgid "From"
+msgstr "Des del"
+
+#. module: radiotv
+#: wizard_field:radiotv.broadcast.copy,init,d_to:0
 msgid "From"
 msgstr "Cap al"
 

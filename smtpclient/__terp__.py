@@ -33,13 +33,13 @@
     "website" : "http://tinyerp.com",
     "category" : "Generic Modules",
     "init_xml" : [
-        
     ],
     "demo_xml" : [
     ],
     "update_xml" : [
         "smtpclient_view.xml",
-        "smtpclient_wizard.xml"
+        "smtpclient_wizard.xml",
+        "security/ir.model.access.csv",
     ],
     "active": False,
     "installable": True

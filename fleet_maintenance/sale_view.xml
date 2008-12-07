@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="sale_order_form_fleet_maintenance">
+			<field name="name">sale.order.form.fleet_maintenance.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="type">form</field>
+      <field name="arch" type="xml">
+				<xpath expr="/form/notebook/page/field/form/notebook/page" position="after">
+						<page string="Maintenance">
+		     			<field name="fleet_id" domain="[('is_sub_fleet','=',True)]"/>
+		     			<field name="order_id"/>
+		     			<newline/>
+		     			<field name="maintainance_start_date"/>
+		     			<field name="maintainance_end_date"/>
+						</page>
+				</xpath>
+	    </field>
+		</record>
+	</data>
+</openerp>

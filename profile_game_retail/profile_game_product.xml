@@ -46,13 +46,17 @@
 		</record>
 	</data>
 	<data noupdate="1">
+		<record id="base.main_partner" model="res.partner">
+            <field name="property_account_receivable" ref="profile_game_retail.account_recv"/>
+			<field name="property_account_payable" ref="profile_game_retail.account_pay"/>
+        </record>
 		<record id="res_partner_chinasoundelectronic0" model="res.partner">
 			<field eval="&quot;&quot;&quot;Très bons tarifs et sérieux.
 Le seul problème sont les délais de livraison par bateau qui sont très longs.&quot;&quot;&quot;" name="comment"/>
 			<field eval="1" name="active"/>
 			<field name="property_product_pricelist" ref="product.list0"/>
-			<field name="property_account_receivable" ref="profile_game_retail.account_account_t0"/>
-			<field name="property_account_payable" ref="profile_game_retail.account_account_t1"/>
+			<field name="property_account_receivable" ref="profile_game_retail.account_recv"/>
+			<field name="property_account_payable" ref="profile_game_retail.account_pay"/>
 			<field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
 			<field eval="&quot;&quot;&quot;CSE&quot;&quot;&quot;" name="ref"/>
 			<field eval="1" name="supplier"/>
@@ -111,6 +115,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_0" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>
@@ -169,6 +175,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_3" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>
@@ -218,6 +226,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 	</data>
 	<data noupdate="1">
@@ -225,6 +235,13 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field name="property_stock_journal" ref="stock.stock_journal"/>
 			<field eval="&quot;&quot;&quot;Matériel Divers&quot;&quot;&quot;" name="name"/>
 			<field name="parent_id" ref="product_category_matrieldesono0"/>
+		</record>
+		<record id="product_supplierinfo_10" model="product.supplierinfo">
+			<field name="name" ref="res_partner_chinasoundelectronic0"/>
+			<field eval="2" name="sequence"/>
+			<field eval="50.0" name="qty"/>
+			<field eval="160" name="delay"/>
+			<field name="product_id" ref="product_product_homecinmasonyss0"/>
 		</record>
 	</data>
 	<data noupdate="1">
@@ -262,6 +279,15 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
+		</record>
+		<record id="product_supplierinfo_11" model="product.supplierinfo">
+			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
+			<field eval="1" name="sequence"/>
+			<field eval="1.0" name="qty"/>
+			<field eval="1" name="delay"/>
+			<field name="product_id" ref="product_product_kitconfrencepro0"/>
 		</record>
 	</data>
 	<data noupdate="1">
@@ -346,6 +372,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_7" model="product.supplierinfo">
 			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
@@ -366,7 +394,7 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="&quot;&quot;&quot;JH-T9922-44&quot;&quot;&quot;" name="default_code"/>
 			<field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
 			<field eval="1.0" name="uos_coeff"/>
-			<field eval="&quot;&quot;&quot;make_to_order&quot;&quot;&quot;" name="procure_method"/>
+			<field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
 			<field eval="1" name="sale_ok"/>
 			<field eval="1" name="purchase_ok"/>
 			<field eval="0" name="track_outgoing"/>
@@ -389,6 +417,8 @@ Le JackHammer est le subwoofer anniversaire pour célébrer les 35 ans d’MTX. 
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
+			<field ref="account_pay" name="property_account_expense"/>
+			<field ref="account_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_8" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>
@@ -407,7 +437,7 @@ Le JackHammer est le subwoofer anniversaire pour célébrer les 35 ans d’MTX. 
 
 		<!--
 		Stock minimum rules"-->
-		<record id="stock_warehouse_min_rules_" model="stock.warehouse.orderpoint">
+		<record id="stock_warehouse_min_rules_1" model="stock.warehouse.orderpoint">
             <field name="product_max_qty">20.0</field>
             <field name="product_min_qty">5.0</field>
             <field model="product.uom" name="product_uom" search="[]"/>
@@ -415,5 +445,54 @@ Le JackHammer est le subwoofer anniversaire pour célébrer les 35 ans d’MTX. 
             <field model="product.product" name="product_id" search="[('default_code','=','LU1200')]"/>
             <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
         </record>
+        <record id="stock_warehouse_min_rules_2" model="stock.warehouse.orderpoint">
+            <field name="product_max_qty">100.0</field>
+            <field name="product_min_qty">50.0</field>
+            <field model="product.uom" name="product_uom" search="[]"/>
+            <field model="stock.warehouse" name="warehouse_id" search="[]"/>
+            <field model="product.product" name="product_id" search="[('default_code','=','HT-SF2000')]"/>
+            <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
+        </record>
+		<record id="stock_warehouse_min_rules_3" model="stock.warehouse.orderpoint">
+            <field name="product_max_qty">50.0</field>
+            <field name="product_min_qty">10.0</field>
+            <field model="product.uom" name="product_uom" search="[]"/>
+            <field model="stock.warehouse" name="warehouse_id" search="[]"/>
+            <field model="product.product" name="product_id" search="[('default_code','=','HT-SF1300')]"/>
+            <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
+        </record>
+		<record id="stock_warehouse_min_rules_4" model="stock.warehouse.orderpoint">
+            <field name="product_max_qty">200.0</field>
+            <field name="product_min_qty">100.0</field>
+            <field model="product.uom" name="product_uom" search="[]"/>
+            <field model="stock.warehouse" name="warehouse_id" search="[]"/>
+            <field model="product.product" name="product_id" search="[('default_code','=','HT-SS1000')]"/>
+            <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
+        </record>
+		<record id="stock_warehouse_min_rules_5" model="stock.warehouse.orderpoint">
+            <field name="product_max_qty">500.0</field>
+            <field name="product_min_qty">100.0</field>
+            <field model="product.uom" name="product_uom" search="[]"/>
+            <field model="stock.warehouse" name="warehouse_id" search="[]"/>
+            <field model="product.product" name="product_id" search="[('default_code','=','KCONF')]"/>
+            <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
+        </record>
+        	<record id="stock_warehouse_min_rules_6" model="stock.warehouse.orderpoint">
+            <field name="product_max_qty">250.0</field>
+            <field name="product_min_qty">150.0</field>
+            <field model="product.uom" name="product_uom" search="[]"/>
+            <field model="stock.warehouse" name="warehouse_id" search="[]"/>
+            <field model="product.product" name="product_id" search="[('default_code','=','EC-180-180')]"/>
+            <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
+        </record>
+        	<record id="stock_warehouse_min_rules_7" model="stock.warehouse.orderpoint">
+            <field name="product_max_qty">400.0</field>
+            <field name="product_min_qty">50.0</field>
+            <field model="product.uom" name="product_uom" search="[]"/>
+            <field model="stock.warehouse" name="warehouse_id" search="[]"/>
+            <field model="product.product" name="product_id" search="[('default_code','=','JH-T9922-44')]"/>
+            <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
+        </record>
+
 	</data>
 </openerp>

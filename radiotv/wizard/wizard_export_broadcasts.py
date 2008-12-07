@@ -74,7 +74,7 @@ def _export(self, cr, uid, data, context):
         (broadcast_new, broadcast_update, broadcast_delete) = export_table.export_table(self, cr, uid, data, context, server, 'broadcast',
             ['id', 'dt_start', 'dt_end', 'channel_id', 'program_id', 'description', 'url'], filter, filterphp)
     else:
-        raise osv.except_osv('Error!', 'No website defined!\nPlease create one.')
+        raise osv.except_osv(_('Error!'), _('No website defined!\nPlease create one.'))
 
     return {'broadcast_new':broadcast_new, 'broadcast_update':broadcast_update, 'broadcast_delete':broadcast_delete,}
 

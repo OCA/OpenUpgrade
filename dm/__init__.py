@@ -28,5 +28,6 @@ import customer
 import reportdm
 import wizard
 import dm_print_offer_graph
+import report_design
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

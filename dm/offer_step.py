@@ -20,6 +20,7 @@
 #
 ##############################################################################
 import time
+import netsvc
 import datetime
 #import campaign
 
@@ -75,22 +76,16 @@ class dm_offer_step(osv.osv):
 
     def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
-        print "Offer Step Context : ",context
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
-            res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type.id])
+            res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
+                    context.get('lang', False) or 'en_US',[offer_step.type.id])
             type_code = res_trans[offer_step.type.id] or offer_step.type.code
             code = '_'.join([offer_step.offer_id.code,(type_code or '')])
             result[id]=code
         return result
-    """
-    def _get_offer_step_type(self,cr,uid,context={}):
-        offer_step_type = self.pool.get('dm.offer.step.type')
-        type_ids = offer_step_type.search(cr,uid,[])
-        type = offer_step_type.browse(cr,uid,type_ids)
-        return map(lambda x : [x.code,x.code],type)
-    """
+
     _columns = {
         'name' : fields.char('Name',size=64, required=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade"),
@@ -150,22 +145,29 @@ class dm_offer_step(osv.osv):
                 value['name'] = "%s for %s"% (type_code,offer.name) 
         return {'value':value}
     
-    def state_close_set(self, cr, uid, ids, *args):
+    def state_close_set(self, cr, uid, ids, context=None):
         self.__history(cr,uid, ids, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
         return True
 
-    def state_open_set(self, cr, uid, ids, *args):
+    def state_open_set(self, cr, uid, ids, context=None):
+        for step in self.browse(cr,uid,ids,context):
+            for doc in step.document_ids:
+                if doc.state != 'validate':
+                    raise osv.except_osv(
+                            _('Could not open this offer step !'),
+                            _('You must first validate all documents attached to this offer step.'))
+#                    self.pool.get('dm.offer.document').write(cr,uid,[doc.id],{'state':'validate'})
         self.__history(cr,uid,ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True
 
-    def state_freeze_set(self, cr, uid, ids, *args):
+    def state_freeze_set(self, cr, uid, ids, context=None):
         self.__history(cr,uid,ids, 'freeze')
         self.write(cr, uid, ids, {'state':'freeze'})
         return True
 
-    def state_draft_set(self, cr, uid, ids, *args):
+    def state_draft_set(self, cr, uid, ids, context=None):
         self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True
@@ -184,7 +186,6 @@ class dm_offer_step_transition(osv.osv):
     }
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
-        print "Transition context : ",context
         if context.has_key('type'):
 #            if not context['step_id']:
 #                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
@@ -261,13 +262,26 @@ class dm_offer_document(osv.osv):
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
         'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
-                                            'document_id','customer_field_id','Customer Fields',
-                                            domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-                                                        '!',('model_id','like','dm.customers_list')]),
+              'document_id','customer_field_id','Customer Fields',
+               domain=[('model_id','like','dm.customer')],context={'model':'dm.customer'}),
+#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),'!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
         'customer_order_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_order_field_rel',
-                                            'document_id','customer_order_field_id','Customer Order Fields',
-                                            domain=[('model_id','like','dm.customer.order')]),
+              'document_id','customer_order_field_id','Customer Order Fields',
+               domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
+        'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
     }
+    _defaults = {
+        'state': lambda *a: 'draft',
+    }
+    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
+        result=super(dm_offer_document,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
+        if result['type']=='form' and 'toolbar' in result:
+            result['toolbar']['print']=[]
+        return result
+    def state_validate_set(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'validate'})
+        return True
+  
 dm_offer_document()
 
 

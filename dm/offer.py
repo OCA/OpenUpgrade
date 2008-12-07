@@ -56,7 +56,7 @@ class dm_media(osv.osv):
         return brse_rec      
     
     _columns = {
-        'name' : fields.char('Media', size=64, required=True),
+        'name' : fields.char('Media', size=64, translate=True, required=True),
     }
 dm_media()
 
@@ -373,6 +373,12 @@ class dm_offer(osv.osv):
         return True  
 
     def state_open_set(self, cr, uid, ids, *args):
+        for step in self.browse(cr,uid,ids):
+            for step_id in step.step_ids:
+                if step_id.state != 'open':
+                    raise osv.except_osv(
+                            _('Could not open this offer !'),
+                            _('You must first open all offer steps related to this offer.'))
         self.__history(cr,uid, ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True 
@@ -459,18 +465,18 @@ class dm_offer(osv.osv):
         offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
         offer_step_obj = self.pool.get('dm.offer.step')
         offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])
-        print "DEBUG - offer_step_ids : ",offer_step_ids
+#        print "DEBUG - offer_step_ids : ",offer_step_ids
         offer_steps = offer_step_obj.browse(cr,uid,offer_step_ids)
-        print "DEBUG - offer_steps :",offer_steps
+#        print "DEBUG - offer_steps :",offer_steps
         #            offer step are copied
         new_steps = []
         for step in offer_steps :
             nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]})#,'document_ids':[]})
             new_steps.append({'old_id':step.id,'new_id':nid,'o_trans_id':step.outgoing_transition_ids})
-            print "DEBUG - step :",step
-            print "DEBUG - step transition :",step.outgoing_transition_ids
+#            print "DEBUG - step :",step
+#            print "DEBUG - step transition :",step.outgoing_transition_ids
 
-        print "DEBUG new_steps : ",new_steps
+#        print "DEBUG new_steps : ",new_steps
         #            transitions are copied
         for step in new_steps : 
             if step['o_trans_id']:
