@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2007 Zikzakmedia SL (http://www.zikzakmedia.com) All Rights Reserved.
@@ -28,20 +29,20 @@
 import time
 
 def obt_date(self, date, items=3, sep='-'):
-	if items==1:
-		res = time.strftime('%Y', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
-	elif items==2:
-		res = time.strftime('%m'+sep+'%Y', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
-	else:
-		res = time.strftime('%d'+sep+'%m'+sep+'%Y', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
-	return res
+    if items==1:
+        res = time.strftime('%Y', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
+    elif items==2:
+        res = time.strftime('%m'+sep+'%Y', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
+    else:
+        res = time.strftime('%d'+sep+'%m'+sep+'%Y', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
+    return res
 
 def obt_time(self, date, items=3, sep=':'):
-	if items==1:
-		res = time.strftime('%H', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
-	elif items==2:
-		res = time.strftime('%H'+sep+'%M', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
-	else:
-		res = time.strftime('%H'+sep+'%M'+sep+'%S', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
-	return res
+    if items==1:
+        res = time.strftime('%H', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
+    elif items==2:
+        res = time.strftime('%H'+sep+'%M', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
+    else:
+        res = time.strftime('%H'+sep+'%M'+sep+'%S', time.strptime(date, '%Y-%m-%d %H:%M:%S'))
+    return res
 

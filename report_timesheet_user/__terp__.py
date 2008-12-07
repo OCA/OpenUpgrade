@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -25,6 +25,7 @@
     'name' : 'Report for timesheet',
     'version' :'1.0',
     'author' : 'Tiny',
+    "category" : "Generic Modules/Human Resources",
     'depends' : ['hr_timesheet','multi_company'],
     'description': 'New report for timesheet',
     'init_xml' : [],

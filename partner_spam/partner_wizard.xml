@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
         <!-- Redeclaration of the wizards defined in base/res/partner/wizard -->
@@ -8,8 +8,5 @@
         <!-- partner_address wizards similar to the partner wizards -->
         <wizard string="Send SMS" model="res.partner.address" name="res.partner.address.sms_send" id="res_partner_address_send_sms_wizard"/>
         <wizard string="Send Email" model="res.partner.address" name="res.partner.address.spam_send" id="res_partner_address_mass_mailing_wizard"/>
-
-        <!-- Redeclaration of the report defined in base/res/partner/report -->
-        <wizard string="Labels" model="res.partner" name="res.partner.address.label" id="res_partner_address_report"/>
-       </data>
+    </data>
 </openerp>

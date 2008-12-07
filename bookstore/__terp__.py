@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -23,7 +23,7 @@
     "name" : "Bookstore Verticalisation",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Data Module",
+    "category" : "Generic Modules/Others",
     "depends" : ["library","delivery"],
     "init_xml" : ["partner_sequence.xml","bookstore_data.xml"],
     "update_xml": ["bookstore_view.xml","lot_sequence.xml",

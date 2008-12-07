@@ -26,7 +26,7 @@
     "category" : "Localisation/Account charts",
     "depends" : ["account", "account_chart"],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml'],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml','l10n_us_wizard.xml'],
     "active": False,
     "installable": True
 }

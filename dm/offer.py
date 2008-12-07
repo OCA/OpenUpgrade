@@ -20,7 +20,7 @@
 #
 ##############################################################################
 import time
-import offer_step
+#import offer_step
 
 from osv import fields
 from osv import osv
@@ -56,9 +56,8 @@ class dm_media(osv.osv):
         return brse_rec      
     
     _columns = {
-        'name' : fields.char('Media', size=64, required=True),
+        'name' : fields.char('Media', size=64, translate=True, required=True),
     }
-
 dm_media()
 
 class dm_offer_category(osv.osv):
@@ -111,19 +110,7 @@ class dm_offer_production_cost(osv.osv):
     }
 
 dm_offer_production_cost()
-
-class dm_customer(osv.osv):
-    _name = "dm.customer"
-    _inherit = 'res.partner'
-    _columns = {
-        'customer_number' : fields.char('Customer Number',size=16),
-        'language_id' : fields.many2one('res.lang','Main Language'),
-        'language_ids' : fields.many2many('res.lang','dm_customer_langs','lang_id','customer_id','Other Languages'),
-        'prospect_media_ids' : fields.many2many('dm.media','dm_customer_prospect_media','prospect_media_id','customer_id','Prospect for Media'),
-        'client_media_ids' : fields.many2many('dm.media','dm_customer_client_media','client_media_id','customer_id','Client for Media'),
-    }
-dm_customer()
-
+"""
 class dm_customers_list(osv.osv):
     _name = "dm.customers_list"
     _columns = {
@@ -135,45 +122,82 @@ class dm_customers_list(osv.osv):
     }
 dm_customers_list()
 
-class dm_customer_offer(osv.osv):
-    _name = "dm.customer.offer"
-    _columns ={
-        'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete='cascade'),
-        'customer_number' : fields.char('Customer Number',size=16),
-        'title' : fields.char('Title',size=16),
-        'customer_firstname' : fields.char('First Name', size=16,required=True),
-        'customer_lastname' : fields.char('Last Name', size=16),
-        'customer_add1' : fields.char('Address1', size=16),
-        'customer_add2' : fields.char('Address2', size=16),
-        'customer_add3' : fields.char('Address3', size=16),
-        'customer_add4' : fields.char('Address4', size=16),
+class dm_order(osv.osv):
+    _name = "dm.order"
+    _columns = {
+        'raw_datas' : fields.char('Raw Datas', size=128),
+        'customer_code' : fields.char('Customer Code',size=64),
+        'title' : fields.char('Title',size=32),
+        'customer_firstname' : fields.char('First Name', size=64),
+        'customer_lastname' : fields.char('Last Name', size=64),
+        'customer_add1' : fields.char('Address1', size=64),
+        'customer_add2' : fields.char('Address2', size=64),
+        'customer_add3' : fields.char('Address3', size=64),
+        'customer_add4' : fields.char('Address4', size=64),
         'country' : fields.char('Country', size=16),
         'zip' : fields.char('Zip Code', size=12),
         'zip_summary' : fields.char('Zip Summary', size=64),
         'distribution_office' : fields.char('Distribution Office', size=64),
-        'action_code' : fields.char('Action Code', size=16,required=True),
-#        'offer_step_id' : fields.many2one('dm.offer.step', 'Offer Step', ondelete="cascade"),
-        'offer_step' : fields.char('Offer Step', size=16,required=True),
-        'raw_datas' : fields.char('Raw Datas', size=128),
+        'segment_code' : fields.char('Segment Code', size=64),
+        'offer_step_code' : fields.char('Offer Step Code', size=64),
+        'state' : fields.selection([('draft','Draft'),('done','Done')], 'Status', readonly=True),
+    }
+    _defaults = {
+        'state': lambda *a: 'draft',
+    }
+
+    def set_confirm(self, cr, uid, ids, *args):
+
+        return True
+
+    def onchange_rawdatas(self,cr,uid,ids,raw_datas):
+        if not raw_datas:
+            return {}
+        raw_datas = "2;00573G;162220;MR;Shah;Harshit;W Sussex;;25 Oxford Road;;GBR;BN;BN11 1XQ;WORTHING.LU.SX"
+        value = raw_datas.split(';')
+        key = ['datamatrix_type','segment_code','customer_code','title','customer_lastname','customer_firstname','customer_add1','customer_add2','customer_add3','customer_add4','country','zip_summary','zip','distribution_office']
+        value = dict(zip(key,value))
+        return {'value':value}
+
+dm_order()
+
+class dm_customer(osv.osv):
+    _name = "dm.customer"
+    _columns = {
+        'code' : fields.char('Code',size=64),
+        'language_id' : fields.many2one('res.lang','Main Language'),
+        'language_ids' : fields.many2many('res.lang','dm_customer_langs','lang_id','customer_id','Other Languages'),
+        'prospect_media_ids' : fields.many2many('dm.media','dm_customer_prospect_media','prospect_media_id','customer_id','Prospect for Media'),
+        'client_media_ids' : fields.many2many('dm.media','dm_customer_client_media','client_media_id','customer_id','Client for Media'),
+        'title' : fields.char('Title',size=32),
+        'firstname' : fields.char('First Name', size=64),
+        'lastname' : fields.char('Last Name', size=64),
+        'add1' : fields.char('Address1', size=64),
+        'add2' : fields.char('Address2', size=64),
+        'add3' : fields.char('Address3', size=64),
+        'add4' : fields.char('Address4', size=64),
+        'country_id' : fields.many2one('res.country','Country'),
+        'zip' : fields.char('Zip Code', size=16),
+        'zip_summary' : fields.char('Zip Summary', size=64),
+        'distribution_office' : fields.char('Distribution Office', size=64),
+    }
+dm_customer()
+
+class dm_customer_order(osv.osv):
+    _name = "dm.customer.order"
+    _columns ={
+        'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete='cascade'),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
+        'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
         'note' : fields.text('Notes'),
         'state' : fields.selection([('draft','Draft'),('done','Done')], 'Status', readonly=True),
     }
     _defaults = {
         'state': lambda *a: 'draft',
     }
-    def onchange_rawdatas(self,cr,uid,ids,raw_datas):
-        if not raw_datas:
-            return {}
-        raw_datas = "2;00573G;162220;MR;Shah;Harshit;W Sussex;;25 Oxford Road;;GBR;BN;BN11 1XQ;WORTHING.LU.SX"
-        value = raw_datas.split(';')
-        key = ['datamatrix_type','action_code','customer_number','title','customer_lastname','customer_firstname','customer_add1','customer_add2','customer_add3','customer_add4','country','zip_summary','zip','distribution_office']
-        value = dict(zip(key,value))
-        if value['customer_number']:
-            dm_customer = self.pool.get('dm.customer').search(cr,uid,[('customer_number','=',value['customer_number'])])
-            if dm_customer:
-                value['customer_id']=dm_customer[0]
-        return {'value':value}
+"""
 
+"""
     def set_confirm(self, cr, uid, ids, *args):
         res = self.browse(cr,uid,ids)[0]
 #        if res.customer_id:
@@ -189,7 +213,7 @@ class dm_customer_offer(osv.osv):
 
         if not res.customer_id:
               vals={}
-              vals['customer_number']=res.customer_number
+              vals['customer_code']=res.customer_code
               vals['name'] = ( res.customer_firstname or '') + ' ' + (res.customer_lastname or '')
               address={'city':res.customer_add3,
                        'name': vals['name'], 
@@ -244,8 +268,9 @@ class dm_customer_offer(osv.osv):
 
         self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
         return True
+"""
 
-dm_customer_offer()
+#dm_customer_order()
 
 class dm_offer(osv.osv):
     _name = "dm.offer"
@@ -348,6 +373,12 @@ class dm_offer(osv.osv):
         return True  
 
     def state_open_set(self, cr, uid, ids, *args):
+        for step in self.browse(cr,uid,ids):
+            for step_id in step.step_ids:
+                if step_id.state != 'open':
+                    raise osv.except_osv(
+                            _('Could not open this offer !'),
+                            _('You must first open all offer steps related to this offer.'))
         self.__history(cr,uid, ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True 
@@ -434,18 +465,18 @@ class dm_offer(osv.osv):
         offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
         offer_step_obj = self.pool.get('dm.offer.step')
         offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])
-        print "DEBUG - offer_step_ids : ",offer_step_ids
+#        print "DEBUG - offer_step_ids : ",offer_step_ids
         offer_steps = offer_step_obj.browse(cr,uid,offer_step_ids)
-        print "DEBUG - offer_steps :",offer_steps
+#        print "DEBUG - offer_steps :",offer_steps
         #            offer step are copied
         new_steps = []
         for step in offer_steps :
             nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]})#,'document_ids':[]})
             new_steps.append({'old_id':step.id,'new_id':nid,'o_trans_id':step.outgoing_transition_ids})
-            print "DEBUG - step :",step
-            print "DEBUG - step transition :",step.outgoing_transition_ids
+#            print "DEBUG - step :",step
+#            print "DEBUG - step transition :",step.outgoing_transition_ids
 
-        print "DEBUG new_steps : ",new_steps
+#        print "DEBUG new_steps : ",new_steps
         #            transitions are copied
         for step in new_steps : 
             if step['o_trans_id']:

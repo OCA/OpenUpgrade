@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -25,7 +25,7 @@
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
     "depends" : ['account','account_chart'],
-    "category" : "Generic Modules",
+    "category" : "Generic Modules/Accounting",
     "description": "A module that adds new reports format based on the Indian account module.",
     "init_xml" : [],
     "demo_xml" : [],

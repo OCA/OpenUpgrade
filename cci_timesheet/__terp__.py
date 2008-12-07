@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "OpenERP",
     "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/CCI Timesheet",
+    "category" : "Generic Modules/CCI",
     "description": """
         A Customized timesheet module.
     """,

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -25,7 +25,7 @@
     "name":"Payment Order Export",
     "version":"1.0",
     "author":"Tiny",
-    "category":"Payment Order Export",
+    "category":"Generic Modules/Accounting",
     "depends":["base_vat","base_iban","account_payment"],
     "demo_xml":[],
     "init_xml":[],

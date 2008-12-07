@@ -31,10 +31,10 @@
 			name="wizard_campaign_group"
 			id="wizard_campaign_group"/>
 
-		<wizard string="Get Products"
+		<wizard string="Get Items"
 			model="dm.campaign.proposition"
-			name="wizard_proposition_products"
-			id="wizard_proposition_products"
+			name="wizard_proposition_items"
+			id="wizard_proposition_items"
 			menu="False"/>
 
 		<wizard
@@ -54,6 +54,12 @@
 			model="dm.campaign.group"
 			name="wizard_campaign_group_pos"
 			id="wizard_campaign_group_pos"/>
+			
+		<wizard
+			string="Document Report"
+			model="dm.offer.document"
+			name="wizard_document_report"
+			id="wizard_document_report"/>			
 
 <!-- 		<wizard
 			string="Duplicate"

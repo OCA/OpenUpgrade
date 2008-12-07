@@ -1,58 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data noupdate="1">
-		<record model="profile.game.retail.phase1" id="phase1">
-		        <field name="name">Phase1</field>        
-		        <field name="state">not running</field>
-    	</record>
-	</data>
+    <data noupdate="1">
+        <record model="profile.game.retail.phase1" id="phase1">
+            <field name="state">not running</field>
+        </record>
+    </data>
     <data>
 
         <record model="ir.ui.view" id="view_game_phase1_form">
             <field name="name">profile.game.retail.phase1.form</field>
             <field name="model">profile.game.retail.phase1</field>
             <field name="arch" type="xml">
-                <form string="Game Scenario">
-                    <field name="name" align="0.0"/>
-                    <separator string="Retail Scenario - Objectives" colspan="4"/>
-                    <label string="Explain the scenario introduction here..." align="0.0" colspan="4"/>
-                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
-                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
-                    <newline/>
-                    <separator string="Retail Scenario - Scenario" colspan="4"/>
-                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
-                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
-                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
-                    <label string="You can get the explanation at http://openerp.com..." align="0.0" colspan="4"/>
+                <form string="Business Game">
+                    <separator string="Introduction" colspan="4"/>
+                    <label colspan="4" align="0.0" angle="0">This business game will help you to discover Open ERP and it's enterprise management processes.
+The game is based on a company called 'GoodSound' selling audio and video hardware and organising sonorisation events.
+
+The game is structured into two phases:
+   1. You will discover the Open ERP interface through a complete sale flow: from the quotation to the invoice,
+   2. The goal of the next phase is to make some strategic choices in the system to increase company's profitability
+      within a few turns of one year each.
+
+Click on the button "Start Scenario" to begin the phase one.
+
+After this, you will have to disconnect form the system and log in using the different users to process the
+above steps, in the right order, of a complete sale flow. You can use the shortcuts of each user to process
+the required steps.
+
+Click on 'Get Complete Scenario' to get the document explaining the details of the game.</label>
                     <group colspan="1" col="2">
-                        <separator string="Sales Manager" colspan="2"/>
+                        <separator string="1. Salesman (role1)" colspan="2"/>
+                        <label string="(login: sale, password: sale)" colspan="2"/>
                         <field name="step1"/>
                         <field name="step2"/>
                         <field name="step3"/>
                     </group>
                     <group colspan="1" col="2">
-                        <separator string="HR Manager" colspan="2"/>
+                        <separator string="2. Purchase (role2)" colspan="2"/>
+                        <label string="(login: hr, password: hr)" colspan="2"/>
                         <field name="step4"/>
                         <field name="step5"/>
                         <field name="step6"/>
                     </group>
                     <group colspan="1" col="2">
-                        <separator string="Logistic Manager" colspan="2"/>
+                        <separator string="3. Logistic (role3)" colspan="2"/>
+                        <label string="(login: logistic, password: logistic)" colspan="2"/>
                         <field name="step7"/>
                         <field name="step8"/>
                     </group>
                     <group colspan="1" col="2">
-                        <separator string="Financial Manager" colspan="2"/>
+                        <separator string="4. Accountant (role4)" colspan="2"/>
+                        <label string="(login: finance, password: finance)" colspan="2"/>
                         <field name="step9"/>
                         <field name="step10"/>
                     </group>
                     <newline/>
-                    <group colspan="4">
-                        <separator string="References" colspan="4"/>
-                        <field name="step1_so_id" align="0.0"/>
-                        <separator string="State" colspan="4"/>
+                    <separator string="Game Status" colspan="4"/>
+                    <group colspan="4" col="5">
                         <field name="state" align="0.0"/>
-                        <button string="Start Scenario" name="confirm" states="not running" type="object"/>
+                        <button
+                            string="Start Scenario"
+                            name="confirm"
+                            states="not running"
+                            type="object"
+                            icon="gtk-ok"/>
+                        <button
+                            string="Continue to Strategic Game"
+                            name="%(prepare_phase2_id)d"
+                            states="done"
+                            type="action"
+                            icon="gtk-ok"/>
+                        <button
+                            string="Get Complete Scenario"
+                            name="next_phase" states="not running" type="object"
+                            icon="gtk-help"/>
                     </group>
                 </form>
             </field>
@@ -62,44 +83,24 @@
             <field name="model">profile.game.retail.phase1</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Game Scenario">
-                    <field name="name"/>
+                <tree string="Business Game">
                     <field name="state"/>
                 </tree>
             </field>
         </record>
         <record model="ir.actions.act_window" id="action_game_phase1_form">
-            <field name="name">Game Scenario</field>
+            <field name="name">Business Game</field>
             <field name="res_model">profile.game.retail.phase1</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-		<record id="note_game_type" model="board.note.type">
-            <field name="name">Business Game</field>
-        </record>
-        
-        <record id="board_game_form" model="ir.ui.view">
-            <field name="name">board.game.form</field>
-            <field name="model">board.board</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Business Game Board">
-                    <hpaned position="100">
-                        <child1>
-                            <action colspan="4" view_mode="form" height="200" name="%(action_game_phase1_form)d" string="My Game operation" width="510"/>
-                         </child1>   
-                    </hpaned>
-                </form>
-            </field>
-        </record>
-        
         <record id="open_board_game" model="ir.actions.act_window">
             <field name="name">Business Game Dashboard</field>
-            <field name="res_model">board.board</field>
+            <field name="res_model">profile.game.retail.phase1</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="board_game_form"/>
+            <field name="view_id" eval="False"/>
         </record>
 
         <menuitem
@@ -109,17 +110,20 @@
             id="menu_game_phase1"
             action="action_game_phase1_form"/>
 
-		<record id="account.user_finance" model="res.users">
-            <field name="action_id" ref="open_board_game"/>           
+        <record id="account.user_finance" model="res.users">
+            <field name="action_id" ref="open_board_game"/>
         </record>
         <record id="hr.user_hr" model="res.users">
-            <field name="action_id" ref="open_board_game"/> 
+            <field name="action_id" ref="open_board_game"/>
         </record>
         <record id="stock.user_logistic" model="res.users">
-            <field name="action_id" ref="open_board_game"/> 
+            <field name="action_id" ref="open_board_game"/>
         </record>
         <record id="sale.user_sales" model="res.users">
-            <field name="action_id" ref="open_board_game"/> 
+            <field name="action_id" ref="open_board_game"/>
+        </record>
+        <record id="base.user_root" model="res.users">
+            <field name="action_id" ref="open_board_game"/>
         </record>
 
      </data>

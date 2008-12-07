@@ -33,12 +33,33 @@ def graph_get(cr, uid, graph, offer_id):
     nodes = {}
     for step in offer.step_ids:
         args = {}
-        args['label'] = step.type
+
+        # Get user language
+        usr_obj = pooler.get_pool(cr.dbname).get('res.users')
+        user = usr_obj.browse(cr, uid, [uid])[0]
+        user_lang = user.context_lang
+
+        trans_obj =  pooler.get_pool(cr.dbname).get('ir.translation')
+        res_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
+                           user_lang or 'en_US',[step.type.id])
+        print "res_trans : ",res_trans
+        type_code = res_trans[step.type.id] or step.type.code
+        print "type_code : ",type_code
+
+        args['label'] = type_code
         graph.add_node(pydot.Node(step.id, **args))
 
     for step in offer.step_ids:
         for transition in step.outgoing_transition_ids:
+#            tr_cond_trans = trans_obj._get_ids(cr, uid, 'dm.offer.transition,condition', 'model',
+#                                       user_lang or 'en_US',[step.type.id])
+
+#            tr_condition = 
+#            tr_condition = 
+#            tr_delay_unit =
+
             trargs = {
+#                'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay) + ' days'
                 'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay) + ' days'
             }
             if step.split_mode=='and':

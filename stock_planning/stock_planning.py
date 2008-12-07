@@ -179,17 +179,26 @@ class stock_planning(osv.osv):
         if not context:
             context = {}
         mapping = {
-            'incoming': "incoming_qty",
-            'outgoing': "outgoing_qty",
+            'incoming': {
+                'field': "incoming_qty",
+                'adapter': lambda x: x,
+            },
+            'outgoing': {
+                'field': "outgoing_qty",
+                'adapter': lambda x: -x,
+            },
         }
+
+
         for val in self.browse(cr, uid, ids):
             res[val.id] = {}
             context['from_date'] = val.period_id.date_start
             context['to_date'] = val.period_id.date_stop
             context['warehouse'] = val.warehouse_id.id or False
             product_obj =  self.pool.get('product.product').read(cr, uid,val.product_id.id,[], context)
-            product_qty =product_obj[' , '.join(map(lambda x: mapping[x], field_names))]# 0.0
-            res[val.id][field_names[0]] = product_qty
+            for fn in field_names:
+                product_qty = product_obj[mapping[fn]['field']]
+                res[val.id][fn] = mapping[fn]['adapter'](product_qty)
         return res
     
     def _get_planned_sale(self, cr, uid, ids, field_name, arg, context):

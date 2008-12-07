@@ -1,17 +1,17 @@
 <?xml version="1.0"?>
 <openerp>
-	<data>
-		<menuitem id="menu_wizard_url_menu_main" parent="base.menu_custom" name="Menu Management"/>
-		<wizard
-			id="wizard_url_menu"
-			string="Create URL Menus"
-			model="url.menu"
-			name="url.menu.menu"/>
-  		<menuitem 
-			id="menu_wizard_url_menu" parent="menu_wizard_url_menu_main"
-			name="Create a menu that links to an URL" 
-			action="wizard_url_menu"  
-			type="wizard"
-            groups="base.group_admin"/> 
-	</data>
+    <data>
+        <menuitem id="menu_wizard_url_menu_main" parent="base.menu_custom" name="Menu Management"/>
+        <wizard
+            id="wizard_url_menu"
+            string="Create URL Menus"
+            model="url.menu"
+            name="url.menu.menu"/>
+          <menuitem 
+            id="menu_wizard_url_menu" parent="menu_wizard_url_menu_main"
+            name="Create a menu that links to an URL" 
+            action="wizard_url_menu"  
+            type="wizard"
+            /> 
+    </data>
 </openerp>

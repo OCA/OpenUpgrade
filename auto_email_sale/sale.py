@@ -29,7 +29,7 @@ from tools.misc import UpdateableStr, UpdateableDict
 class sale_order(osv.osv):
     _name = "sale.order"
     _inherit = "sale.order"
-    
+
     def action_wait(self, cr, uid, ids):
         result = None
         context = None
@@ -45,21 +45,20 @@ class sale_order(osv.osv):
                 default_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
             smtpserver_id = sale_smtpserver_id or default_smtpserver_id
             if address_data['email']:
-                email = address_data['email']                
+                email = address_data['email']
                 if not smtpserver_id:
-                    raise Exception, 'Verification Failed, No Server Defined!!!'
+                    raise osv.except_osv(_('Error'), _('Verification failed, No Server has been defined!'))
                 smtpserver_id = sale_smtpserver_id or default_smtpserver_id
-                smtpserver = self.pool.get('email.smtpclient').browse(cr, uid, smtpserver_id, context=False)[0]
-                body= "Your order is confirmed... \n Please See the attachment..."
-                state = smtpserver.send_email(cr, uid, smtpserver_id, email,"Tiny ERP: Sale Order Confirmed",ids,body,'sale.order','sale_order')
+                body= _("Your order is confirmed.\nPlease, see the attachment.")
+                state = self.pool.get('email.smtpclient').send_email(cr, uid, smtpserver_id, email,_("OpenERP: Sale Order Confirmed"),ids,body,'sale.order',_('Sale_Order'))
                 if not state:
-                    raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
+                    raise osv.except_osv(_('Error'), _('Verification failed. Please check the Server Configuration!'))
                 return {}
             else:
                 model_id=self.pool.get('ir.model').search(cr, uid, [('model','=','sale.order')], context=False)[0]
                 if smtpserver_id:
                     self.pool.get('email.smtpclient.history').create \
-                    (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : smtpserver_id[0],'name':'The Email is not sent because the Partner have no Email','email':'','model':model_id,'resource_id':ids[0]})
+                    (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : smtpserver_id[0],'name':_('The Email is not sent because the Partner have no Email'),'email':'','model':model_id,'resource_id':ids[0]})
         return result
 sale_order()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

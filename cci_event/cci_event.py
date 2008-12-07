@@ -105,7 +105,6 @@ class event(osv.osv):
             'fse_hours':fields.integer('FSE Hours'),
             'signet_type':fields.selection(_group_names, 'Signet type'),
             'localisation':fields.char('Localisation',size=20),
-            'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),
             'check_type': fields.many2one('event.check.type','Check Type'),
             }
 event()
@@ -130,7 +129,7 @@ class event_check(osv.osv):
         "name": fields.char('Name', size=128, required=True),
         "code": fields.char('Code', size=64),
         "reg_id": fields.many2one('event.registration','Inscriptions',required=True),
-        "state": fields.selection([('draft','Draft'),('block','Blocked'),('confirm','Confirm'),('cancel','Cancel'),('asked','Asked')], 'State', readonly=True),#should be check (previous states :('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')])
+        "state": fields.selection([('draft','Draft'),('block','Blocked'),('confirm','Confirm'),('cancel','Cancel'),('asked','Asked')], 'State', readonly=True),
         "unit_nbr": fields.float('Value'),
         "type_id":fields.many2one('event.check.type','Type'),
         "date_reception":fields.date("Reception Date"),
@@ -195,13 +194,26 @@ class event_registration(osv.osv):
             res[reg.id] = total
         return res
 
+    def _create_invoice_lines(self, cr, uid, ids, vals):
+        for reg in self.browse(cr, uid, ids):
+            note = ''
+            cci_special_reference = False
+            if reg.check_mode:
+                note = 'Check payment for a total of ' + str(reg.check_amount)
+                cci_special_reference = "event.registration*" + str(reg.id)
+                vals.update({
+                    'note': note,
+                    'cci_special_reference': cci_special_reference,
+                })
+        return self.pool.get('account.invoice.line').create(cr, uid,vals)
+
     _inherit = 'event.registration'
     _description="event.registration"
     _columns={
             "contact_order_id":fields.many2one('res.partner.contact','Contact Order'),
             "group_id": fields.many2one('event.group','Event Group'),
             "cavalier": fields.boolean('Cavalier',help="Check if we should print papers with participant name"),
-            "payment_mode":fields.many2one('payment.mode',"Payment Mode"),#should be check (m2o ?)
+            "payment_mode":fields.many2one('payment.mode',"Payment Mode"),
             "check_mode":fields.boolean('Check Mode'),
             "check_ids":fields.one2many('event.check','reg_id',"Check ids"),
             "payment_ids":fields.many2many("account.move.line","move_line_registration", "reg_id", "move_line_id","Payment", readonly=True),
@@ -219,7 +231,8 @@ class event_registration(osv.osv):
                 args[1]['training_authorization'] = data_partner.training_authorization
         return super(event_registration, self).write(cr, uid, *args, **argv)
 
-    def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
+    def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):
+    #raise an error if the partner cannot participate to event.
         if part:
             data_partner = self.pool.get('res.partner').browse(cr,uid,part)
             if data_partner.alert_events:
@@ -247,30 +260,6 @@ class event_registration(osv.osv):
             data['unit_price']=self.pool.get('product.product').price_get(cr, uid, [data_event.product_id.id],context=context)[data_event.product_id.id]
             return {'value':data}
         return {'value':data}
-
-#   def pay_and_recon(self,cr,uid,reg,inv_obj,inv_id,context={}):
-#
-#       if reg.check_ids:
-#           total = 0
-#           writeoff_account_id = False # should be check
-#           writeoff_journal_id = False # should be check
-#           data_inv = inv_obj.browse(cr,uid,inv_id)
-#           journal_obj = self.pool.get('account.journal')
-#           wf_service = netsvc.LocalService('workflow')
-#
-#           for check in reg.check_ids:
-#               total = total + check.unit_nbr
-
-#           ids = self.pool.get('account.period').find(cr, uid, context=context)
-#           period_id = False
-#           if len(ids):
-#               period_id = ids[0]
-#
-#           cash_id = journal_obj.search(cr, uid, [('type', '=', 'cash')])
-#           acc_id = journal_obj.browse(cr, uid, cash_id[0], context).default_credit_account_id.id
-#           wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
-#           inv_obj.pay_and_reconcile(cr,uid,[inv_id],total, acc_id, period_id, cash_id[0], writeoff_account_id, period_id, writeoff_journal_id, context)
-
 
 event_registration()
 

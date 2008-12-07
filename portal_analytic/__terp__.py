@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -28,7 +28,7 @@
     "category" : "Generic Modules/Others",
     "description": "Potal Management - Service company specific data for analytic accounting.",
     "init_xml" : [],
-    "update_xml" : ["portal_analytic_view.xml","portal_analytic_data.xml" ],
+    "update_xml" : ["portal_analytic_data.xml" ],
     "demo_xml" : [],
     "active": False,
     "installable": True

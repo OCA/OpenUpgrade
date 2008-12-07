@@ -17,9 +17,9 @@
 				<field name="name" >Scrum Project Model</field>
 				<field name="model_id" search="[('model','=','scrum.project')]"/>
 				<field name="rule_group_id" ref="scrum_project_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[ref('portal_scrum_project_tree'),ref('portal_scrum_project_form')])]"/>
+				<field name="view_ids" eval="[(6,0,[ref('scrum.view_scrum_project_tree'),ref('portal_scrum_project_form')])]"/>
 	</record>
-	
+
 </data>
 
 <data noupdate="1">
