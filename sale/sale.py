@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -60,38 +60,29 @@ class sale_order(osv.osv):
         })
         return super(sale_order, self).copy(cr, uid, id, default, context)
 
-    def _amount_untaxed(self, cr, uid, ids, field_name, arg, context):
-        res = {}
-        cur_obj=self.pool.get('res.currency')
-        for sale in self.browse(cr, uid, ids):
-            res[sale.id] = 0.0
-            for line in sale.order_line:
-                res[sale.id] += line.price_subtotal
-            cur = sale.pricelist_id.currency_id
-            res[sale.id] = cur_obj.round(cr, uid, cur, res[sale.id])
-        return res
+    def _amount_line_tax(self, cr, uid, line, context={}):
+        val = 0.0
+        for c in self.pool.get('account.tax').compute(cr, uid, line.tax_id, line.price_unit * (1-(line.discount or 0.0)/100.0), line.product_uom_qty, line.order_id.partner_invoice_id.id, line.product_id, line.order_id.partner_id):
+            val+= c['amount']
+        return val
 
-    def _amount_tax(self, cr, uid, ids, field_name, arg, context):
+    def _amount_all(self, cr, uid, ids, field_name, arg, context):
         res = {}
         cur_obj=self.pool.get('res.currency')
         for order in self.browse(cr, uid, ids):
-            val = 0.0
+            res[order.id] = {
+                'amount_untaxed': 0.0,
+                'amount_tax': 0.0,
+                'amount_total': 0.0,
+            }
+            val = val1 = 0.0
             cur=order.pricelist_id.currency_id
             for line in order.order_line:
-                for c in self.pool.get('account.tax').compute(cr, uid, line.tax_id, line.price_unit * (1-(line.discount or 0.0)/100.0), line.product_uom_qty, order.partner_invoice_id.id, line.product_id, order.partner_id):
-                    val+= c['amount']
-            res[order.id]=cur_obj.round(cr, uid, cur, val)
-        return res
-
-    def _amount_total(self, cr, uid, ids, field_name, arg, context):
-        res = {}
-        untax = self._amount_untaxed(cr, uid, ids, field_name, arg, context)
-        tax = self._amount_tax(cr, uid, ids, field_name, arg, context)
-        cur_obj=self.pool.get('res.currency')
-        for id in ids:
-            order=self.browse(cr, uid, [id])[0]
-            cur=order.pricelist_id.currency_id
-            res[id] = cur_obj.round(cr, uid, cur, untax.get(id, 0.0) + tax.get(id, 0.0))
+                val1 += line.price_subtotal
+                val += self._amount_line_tax(cr, uid, line, context)
+            res[order.id]['amount_tax']=cur_obj.round(cr, uid, cur, val)
+            res[order.id]['amount_untaxed']=cur_obj.round(cr, uid, cur, val1)
+            res[order.id]['amount_total']=res[order.id]['amount_untaxed'] + res[order.id]['amount_tax']
         return res
 
     def _picked_rate(self, cr, uid, ids, name, arg, context=None):
@@ -209,15 +200,15 @@ class sale_order(osv.osv):
         'picking_policy': fields.selection([('direct','Partial Delivery'),('one','Complete Delivery')],
             'Packing Policy', required=True, help="""If you don't have enough stock available to deliver all at once, do you accept partial shippings or not."""),
         'order_policy': fields.selection([
-            ('prepaid','Payment before delivery'),
+            ('prepaid','Payment Before Delivery'),
             ('manual','Shipping & Manual Invoice'),
-            ('postpaid','Automatic Invoice after delivery'),
+            ('postpaid','Invoice on Order After Delivery'),
             ('picking','Invoice from the packings'),
         ], 'Shipping Policy', required=True, readonly=True, states={'draft':[('readonly',False)]},
                     help="""The Shipping Policy is used to synchronise invoice and delivery operations.
   - The 'Pay before delivery' choice will first generate the invoice and then generate the packing order after the payment of this invoice.
   - The 'Shipping & Manual Invoice' will create the packing order directly and wait for the user to manually click on the 'Invoice' button to generate the draft invoice.
-  - The 'Invoice after delivery' choice will generate the draft invoice after the packing list have been finished.
+  - The 'Invoice on Order Ater Delivery' choice will generate the draft invoice based on sale order after all packing lists have been finished.
   - The 'Invoice from the packings' choice is used to create an invoice during the packing process."""),
         'pricelist_id':fields.many2one('product.pricelist', 'Pricelist', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'project_id':fields.many2one('account.analytic.account', 'Analytic Account', readonly=True, states={'draft':[('readonly', False)]}),
@@ -231,9 +222,12 @@ class sale_order(osv.osv):
         'invoiced': fields.function(_invoiced, method=True, string='Paid',
             fnct_search=_invoiced_search, type='boolean'),
         'note': fields.text('Notes'),
-        'amount_untaxed': fields.function(_amount_untaxed, method=True, string='Untaxed Amount'),
-        'amount_tax': fields.function(_amount_tax, method=True, string='Taxes'),
-        'amount_total': fields.function(_amount_total, method=True, string='Total'),
+
+        'amount_untaxed': fields.function(_amount_all, method=True, string='Untaxed Amount',
+            store=True, multi='sums'),
+        'amount_tax': fields.function(_amount_all, method=True, string='Taxes', store=True, multi='sums'),
+        'amount_total': fields.function(_amount_all, method=True, string='Total', store=True, multi='sums'),
+
         'invoice_quantity': fields.selection([('order','Ordered Quantities'),('procurement','Shipped Quantities')], 'Invoice on', help="The sale order will automatically create the invoice proposition (draft invoice). Ordered and delivered quantities may not be the same. You have to choose if you invoice based on ordered or shipped quantities. If the product is a service, shipped quantities means hours spent on the associated tasks.",required=True),
         'payment_term' : fields.many2one('account.payment.term', 'Payment Term'),
     }
@@ -261,8 +255,9 @@ class sale_order(osv.osv):
                 unlink_ids.append(s['id'])
             else:
                 raise osv.except_osv(_('Invalid action !'), _('Cannot delete Sale Order(s) which are already confirmed !'))
-        return osv.osv.unlink(self, cr, uid, unlink_ids)        
-    
+        return osv.osv.unlink(self, cr, uid, unlink_ids)
+
+
     def onchange_shop_id(self, cr, uid, ids, shop_id):
         v={}
         if shop_id:
@@ -294,6 +289,32 @@ class sale_order(osv.osv):
         pricelist = part.property_product_pricelist and part.property_product_pricelist.id or False
         payment_term = part.property_payment_term and part.property_payment_term.id or False
         return {'value':{'partner_invoice_id': addr['invoice'], 'partner_order_id':addr['contact'], 'partner_shipping_id':addr['delivery'], 'pricelist_id': pricelist, 'payment_term' : payment_term}}
+
+    def shipping_policy_change(self, cr, uid, ids, policy, context={}):
+        if not policy:
+            return {}
+        inv_qty = 'order'
+        if policy=='prepaid':
+            inv_qty = 'order'
+        elif policy=='picking':
+            inv_qty = 'procurement'
+        return {'value':{'invoice_quantity':inv_qty}}
+
+    def write(self, cr, uid, ids, vals, context=None):
+        if vals.has_key('order_policy'):
+            if vals['order_policy']=='prepaid':
+                vals.update({'invoice_quantity':'order'})
+            elif vals['order_policy']=='picking':
+                vals.update({'invoice_quantity':'procurement'})
+        return super(sale_order, self).write(cr, uid, ids, vals, context=context)
+
+    def create(self, cr, uid, vals, context={}):
+        if vals.has_key('order_policy'):
+            if vals['order_policy']=='prepaid':
+                vals.update({'invoice_quantity':'order'})
+            if vals['order_policy']=='picking':
+                vals.update({'invoice_quantity':'procurement'})
+        return super(sale_order, self).create(cr, uid, vals, context=context)
 
     def button_dummy(self, cr, uid, ids, context={}):
         return True
@@ -336,7 +357,7 @@ class sale_order(osv.osv):
         data = inv_obj.onchange_payment_term_date_invoice(cr, uid, [inv_id],
             pay_term,time.strftime('%Y-%m-%d'))
         if data.get('value',False):
-            inv_obj.write(cr, uid, [inv_id], inv.update(data['value']), context=context)
+            inv_obj.write(cr, uid, [inv_id], data['value'], context=context)
         inv_obj.button_compute(cr, uid, [inv_id])
         return inv_id
 
@@ -452,7 +473,7 @@ class sale_order(osv.osv):
     def test_state(self, cr, uid, ids, mode, *args):
         assert mode in ('finished', 'canceled'), _("invalid mode for test_state")
         finished = True
-        canceled = False 
+        canceled = False
         notcanceled = False
         write_done_ids = []
         write_cancel_ids = []
@@ -565,9 +586,9 @@ class sale_order(osv.osv):
                         'procure_method': line.type,
                         'property_ids': [(6, 0, [x.id for x in line.property_ids])],
                     })
+                    self.pool.get('sale.order.line').write(cr, uid, [line.id], {'procurement_id': proc_id})
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-                    self.pool.get('sale.order.line').write(cr, uid, [line.id], {'procurement_id': proc_id})
                 else:
                     #
                     # No procurement because no product in the sale.order.line.

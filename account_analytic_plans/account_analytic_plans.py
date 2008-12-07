@@ -191,9 +191,6 @@ class account_analytic_plan_instance(osv.osv):
                 if total_per_plan < item.min_required or total_per_plan > item.max_required:
                     raise osv.except_osv("Value Error" ,"The Total Should be Between " + str(item.min_required) + " and " + str(item.max_required))
 
-        if not vals['name'] and not vals['code']:
-            raise osv.except_osv('Error', 'Make sure You have entered Name and Code for the model !')
-
         return super(account_analytic_plan_instance, self).create(cr, uid, vals, context)
 
     def write(self, cr, uid, ids, vals, context={}, check=True, update_check=True):
@@ -213,10 +210,7 @@ class account_analytic_plan_instance(osv.osv):
                 vals['name'] = this.name and (str(this.name)+'*') or "*"
             if not vals.has_key('code'):
                 vals['code'] = this.code and (str(this.code)+'*') or "*"
-            return self.write(cr, uid, [this.id],vals, context)
-        else:
-            #this plan instance isn't a model, so a simple write is fine
-            return super(account_analytic_plan_instance, self).write(cr, uid, ids, vals, context)
+        return super(account_analytic_plan_instance, self).write(cr, uid, ids, vals, context)
 
 account_analytic_plan_instance()
 
@@ -280,28 +274,29 @@ class account_move_line(osv.osv):
         'analytics_id':fields.many2one('account.analytic.plan.instance','Analytic Distribution'),
     }
 
-    def _analytic_update(self, cr, uid, ids, context):
-       if self.called:
-           self.called=False
-           return False
+    def _default_get_move_form_hook(self, cursor, user, data):
+        data = super(account_move_line, self)._default_get_move_form_hook(cursor, user, data)
+        if data.has_key('analytics_id'):
+            del(data['analytics_id'])
+        return data
 
-       obj_line=self.pool.get('account.analytic.line')
-
-       for line in self.browse(cr, uid, ids, context):
+    def create_analytic_lines(self, cr, uid, ids, context={}):
+        super(account_move_line, self).create_analytic_lines(cr, uid, ids, context)
+        for line in self.browse(cr, uid, ids, context):
            if line.analytics_id:
-               toremove = obj_line.search(cr, uid, [('move_id','=',line.id)], context=context)
+               toremove = self.pool.get('account.analytic.line').search(cr, uid, [('move_id','=',line.id)], context=context)
                if toremove:
-                   obj_line.unlink(cr, uid, toremove, context=context)
-
+                    obj_line.unlink(cr, uid, toremove, context=context)
                for line2 in line.analytics_id.account_ids:
-                   val = (line.debit or 0.0) - (line.credit or  0.0)
+                   val = (line.credit or  0.0) - (line.debit or 0.0)
                    amt=val * (line2.rate/100)
                    al_vals={
                        'name': line.name,
                        'date': line.date,
-                       'unit_amount':1,
-                       'product_id':12,
                        'account_id': line2.analytic_account_id.id,
+                       'unit_amount': line.quantity,
+                       'product_id': line.product_id and line.product_id.id or False,
+                       'product_uom_id': line.product_uom_id and line.product_uom_id.id or False,
                        'amount': amt,
                        'general_account_id': line.account_id.id,
                        'move_id': line.id,
@@ -309,25 +304,7 @@ class account_move_line(osv.osv):
                        'ref': line.ref,
                    }
                    ali_id=self.pool.get('account.analytic.line').create(cr,uid,al_vals)
-       self.called=True
-       return True
-
-    def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
-        self.called=False
-        if ('analytics_id' in vals) and (not vals['analytics_id']):
-            for line in self.browse(cr, uid, ids, context):
-                toremove = self.pool.get('account.analytic.line').search(cr, uid, [('move_id','=',line.id)], context=context)
-                if toremove:
-                    self.pool.get('account.analytic.line').unlink(cr, uid, toremove, context=context)
-        result = super(account_move_line, self).write(cr, uid, ids, vals, context, check, update_check)
-        self._analytic_update(cr, uid, ids, context)
-        return result
-
-    def create(self, cr, uid, vals, context=None, check=True):
-        self.called=False
-        result = super(account_move_line, self).create(cr, uid, vals, context, check)
-        self._analytic_update(cr, uid, [result], context)
-        return result
+        return True
 
 account_move_line()
 
@@ -340,7 +317,7 @@ class account_invoice(osv.osv):
         res['analytics_id']=x.get('analytics_id',False)
         return res
 
-    def _get_analityc_lines(self, cr, uid, id):
+    def _get_analytic_lines(self, cr, uid, id):
         inv = self.browse(cr, uid, [id])[0]
         cur_obj = self.pool.get('res.currency')
 

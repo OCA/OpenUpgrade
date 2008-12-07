@@ -31,24 +31,19 @@ from tools import config
 from tools.translate import _
 
 class account_invoice(osv.osv):
-    def _amount_untaxed(self, cr, uid, ids, name, args, context={}):
-        id_set=",".join(map(str,ids))
-        cr.execute("SELECT s.id,COALESCE(SUM(l.price_subtotal),0)::decimal(16,2) AS amount FROM account_invoice s LEFT OUTER JOIN account_invoice_line l ON (s.id=l.invoice_id) WHERE s.id IN ("+id_set+") GROUP BY s.id ")
-        res=dict(cr.fetchall())
-        return res
-
-    def _amount_tax(self, cr, uid, ids, name, args, context={}):
-        id_set=",".join(map(str,ids))
-        cr.execute("SELECT s.id,COALESCE(SUM(l.amount),0)::decimal(16,2) AS amount FROM account_invoice s LEFT OUTER JOIN account_invoice_tax l ON (s.id=l.invoice_id) WHERE s.id IN ("+id_set+") GROUP BY s.id ")
-        res=dict(cr.fetchall())
-        return res
-
-    def _amount_total(self, cr, uid, ids, name, args, context={}):
-        untax = self._amount_untaxed(cr, uid, ids, name, args, context)
-        tax = self._amount_tax(cr, uid, ids, name, args, context)
+    def _amount_all(self, cr, uid, ids, name, args, context={}):
         res = {}
-        for id in ids:
-            res[id] = untax.get(id,0.0) + tax.get(id,0.0)
+        for invoice in self.browse(cr,uid,ids):
+            res[invoice.id] = {
+                'amount_untaxed': 0.0,
+                'amount_tax': 0.0,
+                'amount_total': 0.0
+            }
+            for line in invoice.invoice_line:
+                res[invoice.id]['amount_untaxed'] += line.price_subtotal
+            for line in invoice.tax_line:
+                res[invoice.id]['amount_tax'] += line.amount
+            res[invoice.id]['amount_total'] = res[invoice.id]['amount_tax'] + res[invoice.id]['amount_untaxed']
         return res
 
     def _get_journal(self, cr, uid, context):
@@ -118,6 +113,18 @@ class account_invoice(osv.osv):
                 res[id]=[x for x in l if x <> line.id]
         return res
 
+    def _get_invoice_line(self, cr, uid, ids, context={}):
+        result = {}
+        for tax in self.pool.get('account.invoice.line').browse(cr, uid, ids, context=context):
+            result[tax.invoice_id.id] = True
+        return result.keys()
+
+    def _get_invoice_tax(self, cr, uid, ids, context={}):
+        result = {}
+        for tax in self.pool.get('account.invoice.tax').browse(cr, uid, ids, context=context):
+            result[tax.invoice_id.id] = True
+        return result.keys()
+
     def _compute_lines(self, cr, uid, ids, name, args, context={}):
         result = {}
         for invoice in self.browse(cr, uid, ids, context):
@@ -178,18 +185,42 @@ class account_invoice(osv.osv):
         'tax_line': fields.one2many('account.invoice.tax', 'invoice_id', 'Tax Lines', readonly=True, states={'draft':[('readonly',False)]}),
 
         'move_id': fields.many2one('account.move', 'Invoice Movement', readonly=True, help="Link to the automatically generated account moves."),
-        'amount_untaxed': fields.function(_amount_untaxed, method=True, digits=(16,2),string='Untaxed', store=True),
-        'amount_tax': fields.function(_amount_tax, method=True, digits=(16,2), string='Tax', store=True),
-        'amount_total': fields.function(_amount_total, method=True, digits=(16,2), string='Total', store=True),
+        'amount_untaxed': fields.function(_amount_all, method=True, digits=(16,2),string='Untaxed',
+            store={
+                'account.invoice': (lambda self, cr, uid, ids, c={}: ids, None, 10),
+                'account.invoice.tax': (_get_invoice_tax, None, 10),
+                'account.invoice.line': (_get_invoice_line, None, 10),
+            },
+            multi='all'),
+        'amount_tax': fields.function(_amount_all, method=True, digits=(16,2), string='Tax',
+            store={
+                'account.invoice': (lambda self, cr, uid, ids, c={}: ids, None, 10),
+                'account.invoice.tax': (_get_invoice_tax, None, 10),
+                'account.invoice.line': (_get_invoice_line, None, 10),
+            },
+            multi='all'),
+        'amount_total': fields.function(_amount_all, method=True, digits=(16,2), string='Total',
+            store={
+                'account.invoice': (lambda self, cr, uid, ids, c={}: ids, None, 10),
+                'account.invoice.tax': (_get_invoice_tax, None, 10),
+                'account.invoice.line': (_get_invoice_line, None, 10),
+            },
+            multi='all'),
         'currency_id': fields.many2one('res.currency', 'Currency', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'journal_id': fields.many2one('account.journal', 'Journal', required=True,readonly=True, states={'draft':[('readonly',False)]}),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'check_total': fields.float('Total', digits=(16,2), states={'open':[('readonly',True)],'close':[('readonly',True)]}),
-        'reconciled': fields.function(_reconciled, method=True, string='Paid/Reconciled', type='boolean', store=True, help="The account moves of the invoice have been reconciled with account moves of the payment(s)."),
+        'reconciled': fields.function(_reconciled, method=True, string='Paid/Reconciled', type='boolean',
+            store=True, help="The account moves of the invoice have been reconciled with account moves of the payment(s)."),
         'partner_bank': fields.many2one('res.partner.bank', 'Bank Account',
             help='The bank account to pay to or to be paid from'),
         'move_lines':fields.function(_get_lines , method=True,type='many2many' , relation='account.move.line',string='Move Lines'),
-        'residual': fields.function(_amount_residual, method=True, digits=(16,2),string='Residual', store=True, help="Remaining amount due."),
+        'residual': fields.function(_amount_residual, method=True, digits=(16,2),string='Residual',
+            store={
+                'account.invoice': (lambda self, cr, uid, ids, c={}: ids, None, 12),
+                'account.invoice.tax': (_get_invoice_tax, None, 12),
+            },
+            help="Remaining amount due."),
         'payment_ids': fields.function(_compute_lines, method=True, relation='account.move.line', type="many2many", string='Payments'),
         'move_name': fields.char('Account Move', size=64),
     }
@@ -381,7 +412,7 @@ class account_invoice(osv.osv):
     def _convert_ref(self, cr, uid, ref):
         return (ref or '').replace('/','')
 
-    def _get_analityc_lines(self, cr, uid, id):
+    def _get_analytic_lines(self, cr, uid, id):
         inv = self.browse(cr, uid, [id])[0]
         cur_obj = self.pool.get('res.currency')
 
@@ -419,6 +450,7 @@ class account_invoice(osv.osv):
         for inv in self.browse(cr, uid, ids):
             if inv.move_id:
                 continue
+            self.button_compute(cr, uid, ids, context={},set_total=True)
             if inv.type in ('in_invoice', 'in_refund') and abs(inv.check_total - inv.amount_total) >= (inv.currency_id.rounding/2.0):
                 raise osv.except_osv(_('Bad total !'), _('Please verify the price of the invoice !\nThe real total does not match the computed total.'))
             if not inv.date_invoice:
@@ -428,7 +460,7 @@ class account_invoice(osv.osv):
             line_ids = self.read(cr, uid, [inv.id], ['invoice_line'])[0]['invoice_line']
             ils = self.pool.get('account.invoice.line').read(cr, uid, line_ids)
             # one move line per invoice line
-            iml = self._get_analityc_lines(cr, uid, inv.id)
+            iml = self._get_analytic_lines(cr, uid, inv.id)
             # check if taxes are all computed
             compute_taxes = ait_obj.compute(cr, uid, inv.id)
             if not inv.tax_line:
@@ -611,6 +643,8 @@ class account_invoice(osv.osv):
             'tax_amount': x.get('tax_amount', False),
             'ref':x.get('ref',False),
             'quantity':x.get('quantity',1.00),
+            'product_id':x.get('product_id', False),
+            'product_uom_id':x.get('uos_id',False),
             'analytic_account_id':x.get('account_analytic_id',False),
         }
 

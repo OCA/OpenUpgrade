@@ -11,9 +11,14 @@
     "depends" : ["base"],
     "website" : "http://openerp.com",
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : [
+        "data/wiki_faq.xml",
+    ],
     "update_xml" : [
         "wiki_view.xml",
+        "data/wiki_quickstart.xml",
+        "data/wiki_main.xml",
+        "wizard/wizard_view.xml",
         "security/ir.model.access.csv"
     ],
     "active": False,
