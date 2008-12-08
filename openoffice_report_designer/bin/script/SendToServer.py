@@ -12,7 +12,7 @@ if __name__<>'package':
     from lib.gui import *
     from lib.error import *
     from lib.functions import *
-    from lib.tools import * 
+    from lib.tools import *
     from LoginTest import *
     database="test"
     uid = 3
@@ -76,7 +76,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         self.win.addComboListBox("lstResourceType", -5, 58, 123, 15,True,itemListenerProc=self.lstbox_selected)
         self.lstResourceType = self.win.getControl( "lstResourceType" )
 
-        for kind in self.Kind.keys(): 
+        for kind in self.Kind.keys():
             self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
 
         self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server", actionListenerProc = self.btnOk_clicked)
@@ -102,18 +102,29 @@ class SendtoServer(unohelper.Base, XJobExecutor):
 
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             if docinfo.getUserFieldValue(2)=="":
-                id=self.getID()
-                docinfo.setUserFieldValue(2,id)
-                rec = { 
-                    'name': self.win.getEditText("txtReportName"), 
-                    'key': 'action', 
-                    'model': docinfo.getUserFieldValue(3),
-                    'value': 'ir.actions.report.xml,'+str(id),
-                    'key2': 'client_print_multi',
-                    'object': True 
-                }
-                res = sock.execute(database, uid, self.password, 'ir.values' , 'create',rec )
+                name=self.win.getEditText("txtName"),
+                name_id={}
+                try:
+                    name_id = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' , 'search',[('name','=',name)])
+                    if not name_id:
+                        id=self.getID()
+                        docinfo.setUserFieldValue(2,id)
+                        rec = {
+                                'name': self.win.getEditText("txtReportName"),
+                                'key': 'action',
+                                'model': docinfo.getUserFieldValue(3),
+                                'value': 'ir.actions.report.xml,'+str(id),
+                                'key2': 'client_print_multi',
+                                'object': True
+                            }
+                        res = sock.execute(database, uid, self.password, 'ir.values' , 'create',rec )
+                    else :
+                        ErrorDialog(" Report Name is all ready given !!!\n\n\n Please specify other Name","","Report Name")
+                        self.win.endExecute()
+                except Exception,e:
+                   ErrorDialog(" Report Error\n\n",e,"Error Message")
             else:
+
                 id = docinfo.getUserFieldValue(2)
                 vId = sock.execute(database, uid, self.password, 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
                 rec = { 'name': self.win.getEditText("txtReportName") }
@@ -137,6 +148,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             self.win.endExecute()
         else:
             ErrorDialog("Either Report Name or Technical Name is blank !!!\nPlease specify appropriate Name","","Blank Field ERROR")
+            self.win.endExecute()
 
     def getID(self):
         desktop=getDesktop()
