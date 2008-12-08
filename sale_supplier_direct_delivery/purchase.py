@@ -28,12 +28,12 @@ class purchase_order_line(osv.osv):
     def _get_partner_address_id(self, cr, uid, ids, field_name, arg, context={}):
         result = {}
         for rec in self.browse(cr, uid, ids, context):
-            result[rec.id] = (rec.sale_order_line.order_id.partner_shipping_id.id) or False
+            result[rec.id] = (rec.sale_order_line and rec.sale_order_line.order_id.partner_shipping_id.id) or False
         return result
     
     _columns = {
         'partner_address_id': fields.function(_get_partner_address_id, method=True, type='many2one', relation='res.partner.address', string='Address'),
-        'sale_order_line':fields.many2one('sale.order.line', 'Address', required=False),
+        'sale_order_line':fields.many2one('sale.order.line', 'Related Sale Order Line', required=False),
         'is_supplier_direct_delivery': fields.boolean('Is Direct Delivery?'),
     }
     
