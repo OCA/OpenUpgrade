@@ -17,7 +17,8 @@ class product_product(osv.osv):
         res = {}
         def is_direct_delivery_from_suppliers(product):
             cr.execute('select direct_delivery_flag from product_supplierinfo where product_id=%d order by sequence ASC LIMIT 1;' % product.id)
-            if cr.fetchone()[0]:
+            result = cr.fetchone()
+            if result and result[0]:
                 return True
             return False
         

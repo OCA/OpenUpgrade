@@ -19,9 +19,12 @@
 			<field name="inherit_id" ref="sale.view_order_form" />
 			<field name="type">form</field>
       <field name="arch" type="xml">
-				<xpath expr="/form/notebook/page/field/form/notebook/page" position="after">
+				<xpath expr="/form/notebook/page/field/form/notebook" position="inside">
 						<page string="Supplier Direct Delivery">
 		     			<field name="is_supplier_direct_delivery"/>
+		     			<field name="purchase_order" readonly="1"/>
+		     			<field name="purchase_order_line" readonly="1"/>
+		     			<field name="purchase_order_state" readonly="1"/>
 						</page>
 				</xpath>
 	    </field>
