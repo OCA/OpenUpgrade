@@ -83,18 +83,29 @@
                         <group col="10" colspan="4">
                             <field name="state" readonly="1" select="2" nolabel="1"/>
                             <button name="state_pending_set" string="Set pending" states="draft"/>
-                            <button name="state_open_set" string="Start Campaign" states="pending"/>
+                            <button name="state_open_set" string="Start Campaign" states="pending"/> <!--  attrs="{'required': [('manufacturing_state','=','done'),('dtp_state','=','done'),('customer_file_state','=','done'),('items_state','=','done')]}" -->
                             <button name="state_close_set" string="Close" states="open"/>
                         </group>
                     </page>
                     <page string="Manufacturing">
                         <separator string="Manufacturing" colspan="4"/>
-                        <group colspan="2" col="2">
+                        <group colspan="4">
                             <field name="manufacturing_responsible_id"/>
                             <field name="campaign_group_id"/>
                         </group>
-                        <group colspan="2" col="2">
-                            <field name="manufacturing_cost_ids" nolabel="1">
+                        <group colspan="3">
+                            <field name="manufacturing_task_ids" nolabel="1" widget="one2many_list" context="{'type':'Mailing Manufacturing','project_id':project_id}">
+                                <tree string="Manufacturing tasks" editable="bottom">
+                                    <field name="name" string="Task Name"/>
+                                    <field name="date_deadline" string="Theorical Date"/>
+                                    <field name="date_reviewed"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_close" string="Real Date"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group colspan="1">
+                            <field name="manufacturing_cost_ids" nolabel="1" colspan="2">
                                 <form string="Manufacturing Cost">
                                     <field name="name" colspan="4"/>
                                     <field name="amount" col="2"/>
@@ -105,24 +116,16 @@
                                 </tree>
                             </field>
                         </group>
-                        <field name="manufacturing_task_ids" nolabel="1" colspan="4" widget="one2many_list" context="{'type':'Mailing Manufacturing','project_id':project_id}">
-                            <tree string="Manufacturing tasks" editable="bottom">
-                                <field name="name" string="Task Name"/>
-                                <field name="date_deadline" string="Theorical Date"/>
-                                <field name="date_reviewed"/>
-                                <field name="date_planned"/>
-                                <field name="date_close" string="Real Date"/>
-                            </tree>
-                        </field>
 <!--                        <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" context="{'campaign_id':active_id}"/>-->
-                        <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
-                            <form string="Purchase Line" colspan="4">
+                        <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" >
+                            <form string="Mailing Manufacturing Purchase Line" colspan="4">
                                 <group colspan="2" col="2">
                                     <separator string="Purchase Line Product" colspan="2"/>
                                     <field name="product_category"/>
                                     <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
                                     <field name="uom_id"/>
-                                    <separator string=" " colspan="2"/>
+                                    <separator string="Documents Generation" colspan="2"/>
+                                    <field name="type_document"/>
                                     <field name="desc_from_offer" />
 <!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
                                 </group>
@@ -133,7 +136,7 @@
                                     <field name="date_planned"/>
                                     <field name="date_delivery"/>
                                 </group>
-                                <separator string="Description" colspan="4"/>
+                                <separator string="Notes" colspan="4"/>
                                 <field name="notes" colspan="4" nolabel="1"/>
                                 <field name="state" nolabel="1"/>
                             </form>
@@ -141,8 +144,8 @@
                         <separator string="Manufacturing Status" colspan="4"/>
                         <group col="8" colspan="4">
                                <field name="manufacturing_state" nolabel="1"/>
-                            <button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('manufacturing_state','!=','pending')]}" type="object"/>
-                            <button name="state_done_set" string="Done" attrs="{'invisible':[('manufacturing_state','!=','inprogress')]}" type="object"/>
+                            <button name="manufacturing_state_inprogress_set" string="In Progress" attrs="{'invisible':[('manufacturing_state','!=','pending')]}" type="object"/>
+                            <button name="manufacturing_state_done_set" string="Done" attrs="{'invisible':[('manufacturing_state','!=','inprogress')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Desktop Publishing">
@@ -163,8 +166,8 @@
                         <separator string="DTP Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="dtp_state" nolabel="1"/>
-                            <button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('dtp_state','!=','pending')]}" type="object"/>
-                            <button name="state_done_set" string="Done" attrs="{'invisible':[('dtp_state','!=','inprogress')]}" type="object"/>
+                            <button name="dtp_state_inprogress_set" string="In Progress" attrs="{'invisible':[('dtp_state','!=','pending')]}" type="object"/>
+                            <button name="dtp_state_done_set" string="Done" attrs="{'invisible':[('dtp_state','!=','inprogress')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Customers Files">
@@ -189,12 +192,35 @@
                                 <field name="date_close" string="Real Date"/>
                             </tree>
                         </field>
-                        <field name="cust_file_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
+                        <field name="cust_file_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
+                            <form string="Customers Files Purchase Line" colspan="4">
+                                <group colspan="2" col="2">
+                                    <separator string="Purchase Line Product" colspan="2"/>
+                                    <field name="product_category"/>
+                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
+                                    <field name="uom_id"/>
+                                    <separator string="Documents Generation" colspan="2"/>
+                                    <field name="type_document"/>
+                                    <field name="desc_from_offer" />
+<!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
+                                </group>
+                                <group colspan="2" col="2">
+                                    <separator string="Quantity" colspan="2"/>
+                                    <field name="type_quantity"/>
+                                    <separator string="Dates" colspan="4"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_delivery"/>
+                                </group>
+                                <separator string="Notes" colspan="4"/>
+                                <field name="notes" colspan="4" nolabel="1"/>
+                                <field name="state" nolabel="1"/>
+                            </form>
+                        </field>
                         <separator string="Customers Files Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="customer_file_state" nolabel="1"/>
-                            <button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('customer_file_state','!=','pending')]}" type="object"/>
-                            <button name="state_done_set" string="Done" attrs="{'invisible':[('customer_file_state','!=','inprogress')]}" type="object"/>
+                            <button name="customer_file_state_inprogress_set" string="In Progress" attrs="{'invisible':[('customer_file_state','!=','pending')]}" type="object"/>
+                            <button name="customer_file_state_done_set" string="Done" attrs="{'invisible':[('customer_file_state','!=','inprogress')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Items Procurement">
@@ -215,8 +241,8 @@
                         <separator string="Items Procurement Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="items_state" nolabel="1"/>
-                            <button name="state_inprogress_set" string="In Progress" attrs="{'invisible':[('items_state','!=','pending')]}" type="object"/>
-                            <button name="state_done_set" string="Done" attrs="{'invisible':[('items_state','!=','inprogress')]}" type="object"/>
+                            <button name="items_state_inprogress_set" string="In Progress" attrs="{'invisible':[('items_state','!=','pending')]}" type="object"/>
+                            <button name="items_state_done_set" string="Done" attrs="{'invisible':[('items_state','!=','inprogress')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Notes">
@@ -1112,7 +1138,7 @@
                 <field name="date_planned"/>
                 <field name="date_delivery"/>
                 <field name="state"/>
-                <button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
+                <button name="pline_doc_generate" string="Generate Documents" states="pending" type="object"/>
             </tree>
         </field>
     </record>
@@ -1128,12 +1154,12 @@
                     <field name="product_category"/>
                     <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
                     <field name="uom_id"/>
-<!--                    <field name="type_document"/>-->
-                    <separator string=" " colspan="2"/>
+                    <separator string="Document" colspan="2"/>
+                    <field name="type_document"/>
+                    <field name="desc_from_offer" />
                     <field name="campaign_id" />
                     <field name="campaign_group_id" />
-                    <field name="desc_from_offer" />
-<!--                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
+<!--                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':campaign_id}"/>-->
                 </group>
                 <group colspan="2" col="2">
                     <separator string="Quantity" colspan="2"/>
@@ -1181,15 +1207,22 @@
                     <field name="owner_id" select="1"/>
                     <field name="broker_id" select="1"/>
                     <field name="country_id" select="1"/>
+                    <field name="currency_id" select="2"/>
                 </group>
                 <group colspan="2" col="2">
                     <separator string="Costs" colspan="2"/>
                     <field name="per_thousand_price" select="2"/>
                     <field name="delivery_cost" select="2"/>
                     <field name="selection_cost" select="2"/>
-                    <field name="broker_cost" select="2"/>
                     <field name="broker_discount" select="2"/>
                     <field name="other_cost" select="2"/>
+                    <separator string="" colspan="2"/>
+                    <field name="invoice_base" select="2"/>
+                    <field name="broker_cost" select="2"/>
+                </group>
+                <group colspan="4">
+                    <separator string="Descrition" colspan="4"/>
+                    <field name="notes" colspan="4" nolabel="1"/>
                 </group>
             </form>
         </field>

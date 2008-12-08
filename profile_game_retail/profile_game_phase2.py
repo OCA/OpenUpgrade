@@ -198,58 +198,65 @@ class profile_game_retail(osv.osv):
                 or 'turnover_growth' in field_names or 'benefits_growth' in field_names or 'products_growth' in field_names:
 
               fy_start_stop = [fiscalyear.date_start,prev_fy_datestart,fiscalyear.date_stop,prev_fy_datestop]
-              turnover = total_benefit = product_sold = []
-              for i in range(0,2):
-            #  ************turn over **************************************
-                  sql="""
-                            select
-                                sum(l.quantity * l.price_unit) as total
-                            from account_invoice_line l
-                            left join account_invoice i on (l.invoice_id = i.id)
-                            left join product_template product on (product.id=l.product_id)
-                            where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
-                            """%(fy_start_stop[i],fy_start_stop[i+2])
-                  cr.execute(sql)
-                  result = cr.fetchall()[0]
-                  turnover.append(result[0] or 0.0)
+              turnover = []
+              total_benefit = []
+              product_sold = []
+              for field in field_names:
+                  for i in range(0,2):
+                  #  ************turn over **************************************
+                      if field == 'last_turnover':
+                          sql="""
+                                    select
+                                        sum(l.quantity * l.price_unit) as total
+                                    from account_invoice_line l
+                                    left join account_invoice i on (l.invoice_id = i.id)
+                                    left join product_template product on (product.id=l.product_id)
+                                    where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                                    """%(fy_start_stop[i],fy_start_stop[i+2])
+                          cr.execute(sql)
+                          result = cr.fetchall()[0]
+                          turnover.append(result[0] or 0.0)
 
-            #****************total_benefit ********************
-                  sql1="""
-                            select
-                                sum(l.quantity * l.price_unit) as total,
-                                sum(l.quantity * product.list_price) as sale_expected,
-                                sum(l.quantity * product.standard_price) as normal_cost
-                            from account_invoice_line l
-                            left join account_invoice i on (l.invoice_id = i.id)
-                            left join product_template product on (product.id=l.product_id)
-                            where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
-                            """%(fy_start_stop[i],fy_start_stop[i+2])
-                  cr.execute(sql1)
-                  result1 = cr.fetchall()[0]
 
-                  sql2="""
-                            select
-                                sum(l.quantity * l.price_unit) as total
-                            from account_invoice_line l
-                            left join account_invoice i on (l.invoice_id = i.id)
-                            left join product_template product on (product.id=l.product_id)
-                            where i.type ='in_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
-                            """%(fy_start_stop[i],fy_start_stop[i+2])
-                  cr.execute(sql2)
-                  result2 = cr.fetchall()[0]
-                  total_benefit.append(((result1[1] or 0.0) -(result1[0] or 0.0))-((result1[2] or 0.0) -(result2[0] or 0.0)))
+                #****************total_benefit ********************
+                      if field == 'total_benefit':
+                          sql1="""
+                                    select
+                                        sum(l.quantity * l.price_unit) as total,
+                                        sum(l.quantity * product.list_price) as sale_expected,
+                                        sum(l.quantity * product.standard_price) as normal_cost
+                                    from account_invoice_line l
+                                    left join account_invoice i on (l.invoice_id = i.id)
+                                    left join product_template product on (product.id=l.product_id)
+                                    where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                                    """%(fy_start_stop[i],fy_start_stop[i+2])
+                          cr.execute(sql1)
+                          result1 = cr.fetchall()[0]
 
+                          sql2="""
+                                    select
+                                        sum(l.quantity * l.price_unit) as total
+                                    from account_invoice_line l
+                                    left join account_invoice i on (l.invoice_id = i.id)
+                                    left join product_template product on (product.id=l.product_id)
+                                    where i.type ='in_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                                    """%(fy_start_stop[i],fy_start_stop[i+2])
+                          cr.execute(sql2)
+                          result2 = cr.fetchall()[0]
+                          total_benefit.append(((result1[1] or 0.0) -(result1[0] or 0.0))-((result1[2] or 0.0) -(result2[0] or 0.0)))
             #***************** # product sold *************************
-                  sql="""
-                            select
-                            sum(invoice_line.quantity) as total
-                            from account_invoice_line invoice_line
-                            where invoice_line.invoice_id in (select id from account_invoice invoice
-                            where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s')
-                            """%(fy_start_stop[i],fy_start_stop[i+2])
-                  cr.execute(sql)
-                  result = cr.fetchall()[0]
-                  product_sold.append(result[0] or 0.0)
+                      if field == 'total_sold_products':
+                          sql="""
+                                    select
+                                    sum(invoice_line.quantity) as total
+                                    from account_invoice_line invoice_line
+                                    where invoice_line.invoice_id in (select id from account_invoice invoice
+                                    where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s')
+                                    """%(fy_start_stop[i],fy_start_stop[i+2])
+                          cr.execute(sql)
+                          result = cr.fetchall()[0]
+                          product_sold.append(result[0] or 0.0)
+
 # NOTE : 0 stands for current
 #        1 stands for previous
               for field in field_names:

@@ -275,18 +275,28 @@ class dm_customer_order(osv.osv):
 class dm_offer(osv.osv):
     _name = "dm.offer"
     _rec_name = 'name'
-
-    def __history(self, cr, uid, ids, keyword, context={}):
-        for id in ids:
-            data = {
-                'date' : time.strftime('%Y-%m-%d'),
-                'user_id': uid,
-                'state' : keyword,
-                'offer_id': id
-            }
-            obj = self.pool.get('dm.offer.history')
-            obj.create(cr, uid, data, context)
-        return True
+    
+    #    def __history(self, cr, uid, ids, keyword, context={}):
+#    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
+#        print "iiiiiiiiiiiiiiiiiiiiiii", ids
+#        for id in ids:
+#            camp_id = self.pool.get('dm.campaign').search(cr, uid, [('offer_id','=',id)])
+#            print "camp_id:::::::", camp_id
+#            for i in camp_id:
+#                browse_id = self.pool.get('dm.campaign').browse(cr, uid, [i])[0]
+#                print "browse_id:::::::", browse_id
+#                data = {
+#                    'date' : browse_id.date_start,
+#                    'responsible': browse_id.responsible_id.name,
+#    #                'state' : keyword,
+#                    'offer_id': id,
+#                    'campaign': browse_id.name,
+#                    'code': browse_id.code1,
+#                }
+#                print "DATA:::::::", data
+#                obj = self.pool.get('dm.offer.history')
+#                obj.create(cr, uid, data, context)
+#        return super(dm_offer, self).read(cr, uid, ids, fields=fields, context=context, load=load)
 
     def dtp_last_modification_date(self, cr, uid, ids, field_name, arg, context={}):
         result={}
@@ -331,7 +341,7 @@ class dm_offer(osv.osv):
         'production_cost' : fields.many2one('dm.offer.production.cost', 'Production Cost'),
         'purchase_note' : fields.text('Purchase Notes'),
         'purchase_category_ids' : fields.many2many('dm.offer.category','dm_offer_purchase_category','offer_id','offer_purchase_categ_id', 'Purchase Categories', domain="[('domain','=','purchase')]"),
-        'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History', ondelete="cascade"),
+        'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History', ondelete="cascade", readonly=True),
         'translation_ids' : fields.one2many('dm.offer.translation', 'offer_id', 'Translations', ondelete="cascade", readonly=True),
         'order_date' : fields.date('Order Date'),
         'last_modification_date' : fields.function(dtp_last_modification_date, method=True,type="char", string='Last Modification Date',readonly=True),
@@ -368,28 +378,34 @@ class dm_offer(osv.osv):
 #        return {'value':{'code':''}}
 
     def state_close_set(self, cr, uid, ids, *args):
-        self.__history(cr,uid, ids, 'closed')
+#        self.__history(cr,uid, ids, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
         return True  
 
     def state_open_set(self, cr, uid, ids, *args):
-        self.__history(cr,uid, ids, 'open')
+        for step in self.browse(cr,uid,ids):
+            for step_id in step.step_ids:
+                if step_id.state != 'open':
+                    raise osv.except_osv(
+                            _('Could not open this offer !'),
+                            _('You must first open all offer steps related to this offer.'))
+#        self.__history(cr,uid, ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True 
     
     def state_freeze_set(self, cr, uid, ids, *args):
-        self.__history(cr,uid,ids, 'freeze')
+#        self.__history(cr,uid,ids, 'freeze')
         self.write(cr, uid, ids, {'state':'freeze'})
         return True
     
     def state_draft_set(self, cr, uid, ids, *args):
-        self.__history(cr,uid,ids, 'draft')
+#        self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True  
     
     def go_to_offer(self,cr, uid, ids, *args):
         self.copy(cr,uid,ids[0],{'type':'standart'})
-        self.__history(cr,uid,ids, 'open')
+#        self.__history(cr,uid,ids, 'open')
         #self.write(cr, uid, ids, {'state':'open'})
         return True
     
@@ -500,12 +516,15 @@ class dm_offer_history(osv.osv):
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer', required=True, ondelete="cascade"),
         'date' : fields.date('Date'),
-        'user_id' : fields.many2one('res.users', 'User'),
-        'state': fields.selection(AVAILABLE_STATES, 'Status', size=16)
+#        'user_id' : fields.many2one('res.users', 'User'),
+#        'state': fields.selection(AVAILABLE_STATES, 'Status', size=16)
+        'campaign' : fields.char('Name', size=64),
+        'code' : fields.char('Code', size=16),
+        'responsible' : fields.char('Responsible', size=64),
     }
-    _defaults = {
-        'date': lambda *a: time.strftime('%Y-%m-%d'),
-    }
+#    _defaults = {
+#        'date': lambda *a: time.strftime('%Y-%m-%d'),
+#    }
 dm_offer_history()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

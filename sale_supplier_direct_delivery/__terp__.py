@@ -20,15 +20,21 @@
 #
 ##############################################################################
 {
-    "name":"WARNING: THIS IS STILL A WORK IN PROGRESS - Manage the maintenance contracts of a product fleet",
+    "name":"WARNING: THIS IS STILL A WORK IN PROGRESS - Automates direct delivery between a supplier and a customer",
     "version":"0.1",
-    "author":"Smile.fr for Anevia",
+    "author":"Smile.fr for Loyalty Expert",
     "category":"Custom",
-    "depends":["base", "product", "stock", "sale", "crm_configuration", "account", "delivery"],#the delivery dependence is important
-    #because if delivery is installed, then declaring the dependence controls where our stock.picking.action_invoice_create action is called
-    #and makes it properly add extra invoice line fields to the invoice line, even if invoiced on delivery. 
+    "description": """
+Warning:
+1) We set automatically a Sale Order line to direct delivery if there isn't enough product in the stock.
+2) We don't try to split such a line, but we set it entirely to direct delivery even if some products are available
+3) In a sale order, some lines can be set to direct while some others are on stock at the same time
+4) When we look if there is enough product on virtual stock for a line, we look at the time the sale order is confirmed,
+we don't try to anticipate if there will be enough virtual stock is the future if the sale order is planned for later.
+    """,
+    "depends":["base", "product", "sale", "purchase"],
     "demo_xml":[],
-    "update_xml":["product_view.xml", "sale_view.xml", "invoice_view.xml", "stock_view.xml", "partner_view.xml", "crm_view.xml"],
+    "update_xml":["product_view.xml", "sale_view.xml", "purchase_view.xml"],
     "active": False,
     "installable": True,
 }

@@ -41,8 +41,9 @@
 		                    <field name="turnover_growth"/>
 		                    <field name="benefits_growth"/>
 		                    <field name="products_growth"/>
-		                    <group col="2" colspan="3">
-		                    <label string=""  align="1.0"/>
+		                    <group col="3" colspan="3">
+		                    <label string=" "  align="0.0"/>
+		                    <label string=" "  align="0.0"/>
 		                    <button
 	                        	string="Continue To Next Year"
 	                        	name="continue_next_year"
@@ -91,7 +92,6 @@
         </record>
 
         <menuitem id="business_game" name="Business Game" parent="board.dashboard_menu"/>
-        <menuitem name="Business Game Details" parent="business_game" id="menu_game_Detail_form" action="action_game_detail_form"/>
 
          <record id="view_confirm_wizard_form" model="ir.ui.view">
             <field name="name">Configuration of Business Game</field>

@@ -46,7 +46,7 @@
             <field name="kind">stopall</field>
             <field name="action">state_close_set()</field>
         </record>
-        
+
         <!-- Transition -->
         <record id="trans_step_draft_open" model="workflow.transition">
             <field name="act_from" ref="act_step_draft"/>
@@ -157,6 +157,62 @@
             <field name="action">state_close_set()</field>
         </record>
 
+        <record id="act_campaign_manufacturing_inprogress" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">manufacturing_inprogress</field>
+            <field name="kind">function</field>
+            <field name="action">manufacturing_state_inprogress_set()</field>
+        </record>   
+        
+        <record id="act_campaign_dtp_inprogress" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">dtp_inprogress</field>
+            <field name="kind">function</field>
+            <field name="action">dtp_state_inprogress_set()</field>
+        </record>
+        
+        <record id="act_campaign_customer_file_inprogress" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">customer_file_inprogress</field>
+            <field name="kind">function</field>
+            <field name="action">customer_file_state_inprogress_set()</field>
+        </record>
+        
+        <record id="act_campaign_items_inprogress" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">items_inprogress</field>
+            <field name="kind">function</field>
+            <field name="action">items_state_inprogress_set()</field>
+        </record>      
+
+        <record id="act_campaign_manufacturing_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">manufacturing_done</field>
+            <field name="kind">function</field>
+            <field name="action">manufacturing_state_done_set()</field>
+        </record>   
+        
+        <record id="act_campaign_dtp_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">dtp_done</field>
+            <field name="kind">function</field>
+            <field name="action">dtp_state_done_set()</field>
+        </record>
+        
+        <record id="act_campaign_customer_file_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">customer_file_done</field>
+            <field name="kind">function</field>
+            <field name="action">customer_file_state_done_set()</field>
+        </record>
+        
+        <record id="act_campaign_items_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">items_done</field>
+            <field name="kind">function</field>
+            <field name="action">items_state_done_set()</field>
+        </record>
+
         <!-- Transition -->
         <record id="trans_campaign_draft_pending" model="workflow.transition">
             <field name="act_from" ref="act_campaign_draft"/>
@@ -171,13 +227,97 @@
             <field name="signal">state_open_set</field>
             <field name="role_id" ref="res_roles_campaignmanager"/>
         </record>
-
+        
         <record id="trans_campaign_open_close" model="workflow.transition">
             <field name="act_from" ref="act_campaign_open"/>
             <field name="act_to" ref="act_campaign_close"/>
             <field name="signal">state_close_set</field>
             <field name="role_id" ref="res_roles_campaignmanager"/>
         </record>
+	    
+	    <record id="trans_campaign_pending_manufacturing_inprogress" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_pending"/>
+            <field name="act_to" ref="act_campaign_manufacturing_inprogress"/>
+            <field name="signal">manufacturing_state_inprogress_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_pending_dtp_inprogress" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_pending"/>
+            <field name="act_to" ref="act_campaign_dtp_inprogress"/>
+            <field name="signal">dtp_state_inprogress_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_pending_customer_file_inprogress" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_pending"/>
+            <field name="act_to" ref="act_campaign_customer_file_inprogress"/>
+            <field name="signal">customer_file_state_inprogress_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_pending_items_inprogress" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_pending"/>
+            <field name="act_to" ref="act_campaign_items_inprogress"/>
+            <field name="signal">items_state_inprogress_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+	    <record id="trans_campaign_manufacturing_inprogress_done" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_manufacturing_inprogress"/>
+            <field name="act_to" ref="act_campaign_manufacturing_done"/>
+            <field name="signal">manufacturing_state_done_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
 
+		<record id="trans_campaign_dtp_inprogress_done" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_dtp_inprogress"/>
+            <field name="act_to" ref="act_campaign_dtp_done"/>
+            <field name="signal">dtp_state_done_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_customer_file_inprogress_done" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_customer_file_inprogress"/>
+            <field name="act_to" ref="act_campaign_customer_file_done"/>
+            <field name="signal">customer_file_state_done_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_items_inprogress_done" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_items_inprogress"/>
+            <field name="act_to" ref="act_campaign_items_done"/>
+            <field name="signal">items_state_done_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_manufacturing_done_open" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_manufacturing_done"/>
+            <field name="act_to" ref="act_campaign_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_dtp_done_open" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_dtp_done"/>
+            <field name="act_to" ref="act_campaign_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_customer_file_done_open" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_customer_file_done"/>
+            <field name="act_to" ref="act_campaign_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_items_done_open" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_items_done"/>
+            <field name="act_to" ref="act_campaign_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
 	</data>
 </openerp>

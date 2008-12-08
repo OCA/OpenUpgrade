@@ -24,8 +24,8 @@
     "website" : "http://rvalyi.blogspot.com",
     "depends" : ["product", "stock"],
     "category" : "Generic Modules/Inventory Control",
-    "description":"""WARNING - YET TO BE CONFIRMED -Turn production lot tracking codes into unique codes 
-    associtated per product instance. Moreover, it
+    "description":"""Turn production lot tracking codes into unique codes 
+    associated per product instance. Moreover, it
     1) add a new checkbox on the product form to enable or disable this behavior
     2) then forbid to perform a move if a move involves more than one product instance
     3) automagically splits up picking list movements into one movement per product instance

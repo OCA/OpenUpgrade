@@ -11,6 +11,7 @@
 
             <form string="Fleet Incident">
                 <group col="6" colspan="4">
+                   	<field name="name" String="Description"/>
                     <field name="partner_id"/>
                     <field name="user_id" select="2" string="Responsible"/>
                     <field name="section_id"/>
@@ -36,7 +37,7 @@
                     <field name="category2_id" select="1" string="Type of Action"/>
                     <field name="ref" string="Product"/>
                     <field name="ref2" string="Serial ID"/>
-                    <!-- <field name="fleet_id" string="Fleet" domain="[('partner_id','&lt;&gt;','')]"/>  -->
+                    <field name="fleet_id" string="Sub Fleet" domain="[('is_sub_fleet','=',True)]"/>
                     <field name="picking_id" string="Repair movements"/>
                     <separator colspan="2" string="Claim Description"/>
                     <separator colspan="2" string="Action Description"/>

@@ -74,19 +74,14 @@
             <field name="name">order_policy</field>
             <field name="key">default</field>
             <field name="model">sale.order</field>
-            <field name="value">S'postpaid
-p0
-.</field>
+            <field name="value">S'postpaid p0.</field>
         </record>
 
         <record id="default_sale" model="ir.values">
             <field name="name">invoice_method</field>
             <field name="key">default</field>
             <field name="model">purchase.order</field>
-            <field name="value">S'manual'
-p0
-.</field>
-
+            <field name="value">S'manual'p0.</field>
         </record>
 
     </data>
