@@ -105,7 +105,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 name=self.win.getEditText("txtName"),
                 name_id={}
                 try:
-                    name_id = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' , 'search',[('name','=',name)])
+                    name_id = sock.execute(database, uid, self.password, 'ir.actions.report.xml' , 'search',[('name','=',name)])
                     if not name_id:
                         id=self.getID()
                         docinfo.setUserFieldValue(2,id)
