@@ -522,6 +522,12 @@ class dm_campaign(osv.osv):
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
+        ''' modify offer history'''
+        if 'offer_id' in vals :
+            history=self.pool.get("dm.offer.history")
+            history_id = history.search(cr,uid,[('campaign_id','=',ids[0])])
+            if history_id:
+                history.write(cr,uid,history_id,{'offer_id':vals['offer_id']})
         res = super(dm_campaign,self).write(cr, uid, ids, vals, context)
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
         srch_offer_ids = self.search(cr, uid, [('offer_id', '=', camp.offer_id.id)])
@@ -570,7 +576,7 @@ class dm_campaign(osv.osv):
                 super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay_ids1}, context)
         else:
             super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':0}, context)
-
+            
         return res
 
     def create(self,cr,uid,vals,context={}):
@@ -589,7 +595,7 @@ class dm_campaign(osv.osv):
             super(dm_campaign,self).write(cr, uid, id_camp, {'date':date_end})
 
         # Set trademark to offer's trademark only if trademark is null
-        if not vals['campaign_type'] == 'model':
+        if vals['campaign_type'] != 'model':
             if vals['offer_id'] and (not vals['trademark_id']):
                 offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
                 super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
@@ -612,7 +618,17 @@ class dm_campaign(osv.osv):
                 overlay_country_ids.append(data_cam1.country_id.id)
                 overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_ids':[[6,0,overlay_country_ids]]}, context)
                 super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay_ids1}, context)
-
+                
+        ''' cretae offer history'''
+        history_vals={
+              'offer_id' : data_cam1.offer_id.id,
+              'date' : data_cam1.date_start,
+              'campaign_id' : data_cam1.id,
+              'code' : data_cam1.code1,
+              'responsible_id' : data_cam1.responsible_id.id,
+              }
+        history=self.pool.get("dm.offer.history")
+        history.create(cr, uid, history_vals,{})
         return id_camp
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):

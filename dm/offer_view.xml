@@ -640,11 +640,11 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Actions">
-            	<field name="campaign"/>
+            	<field name="campaign_id"/>
                 <field name="code"/>
                 <field name="offer_id"/>
                 <field name="date"/>
-                <field name="responsible"/>
+                <field name="responsible_id"/>
 <!--                <field name="state"/>-->
             </form>
         </field>
@@ -656,10 +656,10 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Actions">
-                <field name="campaign"/>
+                <field name="campaign_id"/>
                 <field name="code"/>
                 <field name="date"/>
-                <field name="responsible"/>
+                <field name="responsible_id"/>
 <!--                <field name="state"/>-->
             </tree>
         </field>

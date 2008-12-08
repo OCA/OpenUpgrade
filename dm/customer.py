@@ -242,3 +242,20 @@ class dm_workitem(osv.osv):
 
 dm_workitem()
 """
+
+class dm_offer_history(osv.osv):
+    _name = "dm.offer.history"
+    _order = 'date'
+    _columns = {
+        'offer_id' : fields.many2one('dm.offer', 'Offer', required=True, ondelete="cascade"),
+        'date' : fields.date('Date'),
+#        'user_id' : fields.many2one('res.users', 'User'),
+#        'state': fields.selection(AVAILABLE_STATES, 'Status', size=16)
+        'campaign_id' : fields.many2one('dm.campaign','Name'),
+        'code' : fields.char('Code', size=16),
+        'responsible_id' : fields.many2one('res.users','Responsible'),
+    }
+#    _defaults = {
+#        'date': lambda *a: time.strftime('%Y-%m-%d'),
+#    }
+dm_offer_history()

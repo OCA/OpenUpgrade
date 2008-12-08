@@ -510,21 +510,21 @@ class dm_offer_translation(osv.osv):
     }
 dm_offer_translation()
 
-class dm_offer_history(osv.osv):
-    _name = "dm.offer.history"
-    _order = 'date'
-    _columns = {
-        'offer_id' : fields.many2one('dm.offer', 'Offer', required=True, ondelete="cascade"),
-        'date' : fields.date('Date'),
-#        'user_id' : fields.many2one('res.users', 'User'),
-#        'state': fields.selection(AVAILABLE_STATES, 'Status', size=16)
-        'campaign' : fields.char('Name', size=64),
-        'code' : fields.char('Code', size=16),
-        'responsible' : fields.char('Responsible', size=64),
-    }
-#    _defaults = {
-#        'date': lambda *a: time.strftime('%Y-%m-%d'),
+#class dm_offer_history(osv.osv):
+#    _name = "dm.offer.history"
+#    _order = 'date'
+#    _columns = {
+#        'offer_id' : fields.many2one('dm.offer', 'Offer', required=True, ondelete="cascade"),
+#        'date' : fields.date('Date'),
+##        'user_id' : fields.many2one('res.users', 'User'),
+##        'state': fields.selection(AVAILABLE_STATES, 'Status', size=16)
+#        'campaign_id' : fields.many2one('dm.campaign','Name'),
+#        'code' : fields.char('Code', size=16),
+#        'responsible_id' : fields.many2one('res.users','Responsible'),
 #    }
-dm_offer_history()
+##    _defaults = {
+##        'date': lambda *a: time.strftime('%Y-%m-%d'),
+##    }
+#dm_offer_history()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
