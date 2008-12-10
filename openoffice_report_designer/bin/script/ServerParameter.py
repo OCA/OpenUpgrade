@@ -74,7 +74,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
             self.win.endExecute()
         try:
             sock_g = xmlrpclib.ServerProxy(self.win.getEditText("txtHost") +'/xmlrpc/object')
-            ids  = sock_g.execute(sDatabase,UID,sPassword, 'res.groups' ,  'search', [('name','=','OpenOfficeReportDesinger')])
+            ids  = sock_g.execute(sDatabase,UID,sPassword, 'res.groups' ,  'search', [('name','=','OpenOfficeReportDesigner')])
             ids_module = sock_g.execute(sDatabase, UID, sPassword, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
             dict_groups = sock_g.execute(sDatabase, UID,sPassword, 'res.groups' , 'read',ids,['users'])
         except :
@@ -84,7 +84,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
             self.win.endExecute()
 
         if UID not in dict_groups[0]['users']:
-            ErrorDialog("Connection Refuse...","You have not access these Report Desinger")
+            ErrorDialog("Connection Refuse...","You have not access these Report Designer")
             self.win.endExecute()
         else:
             desktop=getDesktop()
