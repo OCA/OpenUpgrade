@@ -5,14 +5,21 @@
 		<wizard string="Synchronize Products And Stocks" model="product.product"
 			name="magento.products.sync" id="wizard_magento_products" />
 		<menuitem
-			name="Sales Management/Magento/Synchronization/Synchronize Products And Stocks"
+			name="Magento/Synchronization/Synchronize Products And Stocks"
 			action="wizard_magento_products" type="wizard" id="menu_magento_products" />
+		
+		<!-- Synchronize Categories -->
+		<wizard string="Synchronize Categories" model="product.category"
+			name="magento.categories.sync" id="wizard_magento_categories" />
+		<menuitem
+			name="Magento/Synchronization/Synchronize Categories"
+			action="wizard_magento_categories" type="wizard" id="menu_magento_categories" />
 
 		<!-- Import Sales Orders -->
 		<wizard string="Import sale orders" model="sale.order"
 			name="magento.saleorders.import" id="wizard_magento_saleorders_import" />
 		<menuitem
-			name="Sales Management/Magento/Synchronization/Import sale orders"
+			name="Magento/Synchronization/Import sale orders"
 			action="wizard_magento_saleorders_import" type="wizard"
 			id="menu_magento_saleorders_import" /> 
 		
@@ -20,7 +27,7 @@
 		<wizard string="Correct sale orders" model="sale.order"
 			name="magento.saleorders.correct" id="wizard_magento_saleorders_correct" />
 		<menuitem
-			name="Sales Management/Magento/Synchronization/Correct sale orders"
+			name="Magento/Synchronization/Correct sale orders"
 			action="wizard_magento_saleorders_correct" type="wizard"
 			id="menu_magento_saleorders_correct" /> 
 			
@@ -28,16 +35,11 @@
 		<wizard string="Update sale orders" model="sale.order"
 			name="magento.saleorders.update" id="wizard_magento_saleorders_update" />
 		<menuitem
-			name="Sales Management/Magento/Synchronization/Update sale orders"
+			name="Magento/Synchronization/Update sale orders"
 			action="wizard_magento_saleorders_update" type="wizard"
 			id="menu_magento_saleorders_update" />
 		
-		<!-- Synchronize Categories -->
-		<wizard string="Synchronize Categories" model="product.category"
-			name="magento.categories.sync" id="wizard_magento_categories" />
-		<menuitem
-			name="Sales Management/Magento/Synchronization/Synchronize Categories"
-			action="wizard_magento_categories" type="wizard" id="menu_magento_categories" />	
+			
 		
 	</data>
 </terp>

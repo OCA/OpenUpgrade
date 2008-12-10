@@ -18,7 +18,8 @@
 						<newline />
 						<field name="magento_id" position="inside" colspan="4" />
 						<field name="exportable" position="inside" colspan="4" />
-						<field name="magento_tax_class_id" position="inside" colspan="4" />			
+						<field name="updated" position="inside" colspan="4" readonly="1"/>	
+						<field name="magento_tax_class_id" position="inside" colspan="4" />
 					</page>
 				</page>
 			</field>
@@ -32,6 +33,8 @@
 			<field name="arch" type="xml">
 				<tree string="Products">
 					<field name="magento_id" position="after" />
+					<field name="updated" position="inside" colspan="4" readonly="1"/>
+					<field name="exportable" position="inside" colspan="4" />
 				</tree>
 			</field>
 		</record>
@@ -46,9 +49,10 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Product Categories">
-					<separator string="Magento Information" colspan="4"
-						position="after" />
+					<separator string="Magento Information" colspan="4" position="after" />
 					<field name="magento_id" position="after" />
+					<field name="exportable" position="inside" colspan="4" />
+					<field name="updated" position="inside" colspan="4" readonly="1"/>
 					<field name="magento_product_type" position="inside" colspan="4" />
 					<field name="magento_product_attribute_set_id" position="inside" colspan="4" />
 				</form>
@@ -125,7 +129,7 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Sale Shop">
-					<field name="magento_id" position="after" />
+					<field name="magento_flag" position="after" />
 				</tree>
 			</field>
 		</record>
@@ -138,7 +142,7 @@
 				<form string="Sale Shop">
 					<separator string="Magento Information" colspan="4"
 						position="after" />
-					<field name="magento_id" position="after" />
+					<field name="magento_flag" position="after" />
 				</form>
 			</field>
 		</record>
@@ -150,7 +154,7 @@
 			<field name="res_model">magento.web</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Sales Management/Magento/Magento Web" id="menu_magento_web_form"
+		<menuitem name="Magento/Magento Web" id="menu_magento_web_form"
 			action="action_magento_web_form" />
 		<record model="ir.ui.view" id="view_magento_web_form">
 			<field name="name">magento.web.form</field>
@@ -161,9 +165,11 @@
 					<separator string="Magento Information" colspan="4" />
 					<field name="magento_name" />
 					<newline />
-					<field name="magento_id" />
-					<newline />
 					<field name="magento_url" />
+					<newline />
+					<field name="magento_flag" />
+					<newline />
+					<field name="auto_update" />
 					<separator string="Magento Api Information" colspan="4" />
 					<field name="api_user" />
 					<newline />
@@ -178,8 +184,8 @@
 			<field name="arch" type="xml">
 				<tree string="Magento web">
 					<field name="magento_name" />
-					<field name="magento_id" />
 					<field name="magento_url" />
+					<field name="magento_flag" />
 				</tree>
 			</field>
 		</record>

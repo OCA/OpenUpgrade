@@ -36,29 +36,29 @@ import server_common
 
 def do_export(self, cr, uid, data, context):
     
-    def _create_remote_category(session, magento_parent_id, category_data, uid, server, logger):
-        new_id = proxy_common.server.call(proxy_common.session,'category.create', [magento_parent_id, category_data])
-        proxy_common.pool.get('product.category').write_magento_id(cr, uid, category.id, {'magento_id': new_id})
-        logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully created category with OpenERP id %s and Magento id %s" % (category.id, new_id))
-
-    def _update_remote_category(session, category_magento_id, category_data, uid, server, logger):
-        #category_data['path'] = category_data['path'] + "/" + str(category.magento_id)
-        proxy_common.server.call(proxy_common.session,'category.update',[category_magento_id, category_data])
-        logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully updated category with OpenERP id %s and Magento id %s" % (category.id, category.magento_id))
-    
-    
     categ_new = 0
     categ_update = 0
-    proxy_common = server_common.server_common(cr, uid)
+    categ_fail = 0 
     
+    logger = netsvc.Logger()
+    self.pool = pooler.get_pool(cr.dbname)
+    categ_pool = self.pool.get('product.category')
+    
+    mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+    mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
+    (server, session) = mw.connect()
+    
+    #===============================================================================
+    #  Getting ids
+    #===============================================================================
      
     if data['model'] == 'ir.ui.menu':
-        categ_ids = proxy_common.pool.get('product.category').search(cr, uid, [('exportable', '=', True)])
+        categ_ids = categ_pool.search(cr, uid, [('exportable', '=', True)])
     else:
         categ_ids=[]
         categ_not=[]
         for id in data['ids']:
-            exportable_category=proxy_common.pool.get('product.category').search(cr, uid, [('id', '=', id), ('exportable', '=', True)]) 
+            exportable_category = categ_pool.search(cr, uid, [('id', '=', id), ('exportable', '=', True)]) 
             if len(exportable_category) == 1:
                 categ_ids.append(exportable_category[0])
             else:
@@ -67,12 +67,10 @@ def do_export(self, cr, uid, data, context):
         if len(categ_not) > 0:
             raise wizard.except_wizard("Error", "you asked to export non-exportable categories : IDs %s" % categ_not)
 
-
-    
     #===============================================================================
     #  Category packaging
     #===============================================================================
-    categories = proxy_common.pool.get('product.category').browse(cr, uid, categ_ids, context=context)
+    categories = categ_pool.browse(cr, uid, categ_ids, context=context)
     categories.sort(lambda x, y : (int(x.parent_id) or 0) - int(y.parent_id))
 
     for category in categories :
@@ -81,13 +79,13 @@ def do_export(self, cr, uid, data, context):
         magento_parent_id=1 #root catalog
         if(type(category.parent_id.id) == (int)): #if not root category
             
-            last_parent=proxy_common.pool.get('product.category').browse(cr, uid, category.parent_id.id)
+            last_parent=categ_pool.browse(cr, uid, category.parent_id.id)
             magento_parent_id=last_parent.magento_id
             path= str(last_parent.magento_id)
             
             while(type(last_parent.parent_id.id) == (int)):
                 
-                last_parent=proxy_common.pool.get('product.category').browse(cr, uid, last_parent.parent_id.id)
+                last_parent=categ_pool.browse(cr, uid, last_parent.parent_id.id)
                 path=str(last_parent.magento_id)+'/'+path
                 
         path='1/'+path
@@ -107,28 +105,37 @@ def do_export(self, cr, uid, data, context):
         
         try:
             if(category.magento_id == 0):
-                _create_remote_category(proxy_common.session, magento_parent_id, category_data, uid, proxy_common.server, proxy_common.logger)
+                new_id = server.call(session,'category.create', [magento_parent_id, category_data])
+                categ_pool.write_magento_id(cr, uid, category.id, {'magento_id': new_id})
+                logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully created category with OpenERP id %s and Magento id %s" % (category.id, new_id))
                 categ_new += 1
                 
             else:
-                _update_remote_category(proxy_common.session, category.magento_id, category_data, uid, proxy_common.server, proxy_common.logger)
+                server.call(session,'category.update',[category_magento_id, category_data])
+                logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully updated category with OpenERP id %s and Magento id %s" % (category.id, category.magento_id))
                 categ_update += 1
-                
                 
         except xmlrpclib.Fault, error:
             if error.faultCode == 102: #turns out that the category doesn't exist in Magento (might have been deleted), try to create a new one.
                 try:
-                    _create_remote_category(proxy_common.session, magento_parent_id, category_data, uid, proxy_common.server, proxy_common.logger)
+                    new_id = server.call(session,'category.create', [magento_parent_id, category_data])
+                    categ_pool.write_magento_id(cr, uid, category.id, {'magento_id': new_id})
+                    logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully created category with OpenERP id %s and Magento id %s" % (category.id, new_id))
                     categ_new += 1
+                    
                 except xmlrpclib.Fault, error:
-                    proxy_common.logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on category id %s . Error %s" % (category.id, error))   
+                    logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on category id %s . Error %s" % (category.id, error))
+                    categ_fail += 1    
             else:
-                proxy_common.logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on category id %s . Error %s" % (category.id, error))   
+                logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on category id %s . Error %s" % (category.id, error))   
+                categ_fail += 1 
+                
+        except Exception, error:
+                raise wizard.except_wizard("OpenERP Error", "An error occured : %s " % error)   
 
-
-    proxy_common.server.endSession(proxy_common.session)        
+    server.endSession(session)        
     
-    return {'categ_new':categ_new, 'categ_update':categ_update }
+    return {'categ_new':categ_new, 'categ_update':categ_update, 'categ_fail':categ_fail }
 
 
 
@@ -141,11 +148,13 @@ _export_done_form = '''<?xml version="1.0"?>
     <separator string="Categories exported" colspan="4" />
     <field name="categ_new"/>
     <field name="categ_update"/>
+    <field name="categ_fail" />
 </form>'''
 
 _export_done_fields = {
     'categ_new': {'string':'New Categories', 'readonly': True, 'type':'integer'},
     'categ_update': {'string':'Updated Categories', 'readonly': True, 'type':'integer'},
+    'categ_fail': {'string':'Failed to export Categories', 'readonly': True, 'type':'integer'},
 }
 
 class wiz_magento_category_synchronize(wizard.interface):
