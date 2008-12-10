@@ -36,6 +36,7 @@ import StringIO
 import random
 import string
 
+from tools import config
 
 def random_name():
     random.seed()
@@ -94,7 +95,6 @@ class node_class(object):
                     if test_nodename.find('/'):
                         test_nodename=test_nodename.replace('/', '_')
                     path = self.path+'/'+test_nodename
-                    #path = self.path+'/'+self.object2.name + (content.suffix or '') + (content.extension or '')
                     if not nodename:
                         n = node_class(self.cr, self.uid,path, self.object2, False, content=content, type='content', root=False)
                         res2.append( n)
@@ -262,10 +262,11 @@ class document_directory(osv.osv):
             _parent(dir_id,path)
             path.append(self.pool.get(directory.ressource_type_id.model).browse(cr,uid,res_id).name)
             #user=self.pool.get('res.users').browse(cr,uid,uid)
-            #return "ftp://%s:%s@localhost:8021/%s/%s"%(user.login,user.password,cr.dbname,'/'.join(path))
+            #return "ftp://%s:%s@localhost:%s/%s/%s"%(user.login,user.password,config.get('ftp_server_port',8021),cr.dbname,'/'.join(path))
 	    # No way we will return the password!
 	    return "ftp://user:pass@host:port/test/this"
-        return False    
+        return False
+
     def _check_recursion(self, cr, uid, ids):
         level = 100
         while len(ids):
@@ -367,7 +368,7 @@ class document_directory(osv.osv):
                     ressource_id=directory.ressource_id and directory.ressource_id.id or 0                
                 res=self.search(cr,uid,[('id','<>',directory.id),('name','=',name),('parent_id','=',parent_id),('ressource_parent_type_id','=',ressource_parent_type_id),('ressource_id','=',ressource_id)])
                 if len(res):
-	                return False
+                    return False
         if op=='create':
             res=self.search(cr,uid,[('name','=',name),('parent_id','=',parent_id),('ressource_parent_type_id','=',ressource_parent_type_id),('ressource_id','=',ressource_id)])
             if len(res):
