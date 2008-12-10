@@ -530,9 +530,14 @@ class dm_campaign(osv.osv):
                 history.write(cr,uid,history_id,{'offer_id':vals['offer_id']})
         res = super(dm_campaign,self).write(cr, uid, ids, vals, context)
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
-        srch_offer_ids = self.search(cr, uid, [('offer_id', '=', camp.offer_id.id)])
+        offers = self.pool.get('dm.offer').browse(cr, uid, camp.offer_id.id)
+        list_off = []
+        for off in offers.forbidden_country_ids:
+            list_off.append(off.id)
+            if camp.country_id.id in list_off:
+                raise osv.except_osv("Error!!","You cannot use this offer in this country")
 
-        c = camp.country_id.id
+        # Set campaign end date at one year after start date if end date does not exist
         if ('date_start' in vals) and not ('date' in vals):
             time_format = "%Y-%m-%d"
             d = time.strptime(vals['date_start'],time_format)
@@ -541,14 +546,6 @@ class dm_campaign(osv.osv):
             super(osv.osv,self).write(cr, uid, camp.id, {'date':date_end})
             if camp.project_id:
                 self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
-        if camp.offer_id:
-            d = camp.offer_id.id
-            offers = self.pool.get('dm.offer').browse(cr, uid, d)
-            list_off = []
-            for off in offers.forbidden_country_ids:
-                list_off.append(off.id)
-                if c in list_off:
-                    raise osv.except_osv("Error!!","You cannot use this offer in this country")
 
             """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
             if not camp.trademark_id:
@@ -586,14 +583,21 @@ class dm_campaign(osv.osv):
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
 
         data_cam = self.browse(cr, uid, id_camp)
-        # Set campaign end date at one year after start date
+        offers = self.pool.get('dm.offer').browse(cr, uid, data_cam.offer_id.id)
+        list_off = []
+        for off in offers.forbidden_country_ids:
+            list_off.append(off.id)
+            if data_cam.country_id.id in list_off:
+                raise osv.except_osv("Error!!","You cannot use this offer in this country")
+            
+        # Set campaign end date at one year after start date if end date does not exist
         if (data_cam.date_start) and (not data_cam.date):
             time_format = "%Y-%m-%d"
             d = time.strptime(data_cam.date_start,time_format)
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
             super(dm_campaign,self).write(cr, uid, id_camp, {'date':date_end})
-
+                
         # Set trademark to offer's trademark only if trademark is null
         if vals['campaign_type'] != type_id:
             if vals['offer_id'] and (not vals['trademark_id']):
