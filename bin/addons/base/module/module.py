@@ -37,6 +37,7 @@ import netsvc
 
 from tools.parse_version import parse_version
 
+
 class module_repository(osv.osv):
     _name = "ir.module.repository"
     _description = "Module Repository"
@@ -208,7 +209,7 @@ class module(osv.osv):
                         _('You try to remove a module that is installed or will be installed'))
         return super(module, self).unlink(cr, uid, ids, context=context)
 
-    def state_update(self, cr, uid, ids, newstate, states_to_update, context={}, level=50):
+    def state_update(self, cr, uid, ids, newstate, states_to_update, context={}, level=100):
         if level<1:
             raise orm.except_orm(_('Error'), _('Recursion error in modules dependencies !'))
         demo = False
@@ -324,14 +325,14 @@ class module(osv.osv):
                 if not terp or not terp.get('installable', True):
                     continue
 
-                if not os.path.isfile( mod_path ):
-                    import imp
-                    path = imp.find_module(mod_name, [addons.ad, addons._ad])
-                    imp.load_module(name, *path)
-                else:
-                    import zipimport
-                    zimp = zipimport.zipimporter(mod_path)
-                    zimp.load_module(mod_name)
+                #if not os.path.isfile( mod_path ):
+                #    import imp
+                #    path = imp.find_module(mod_name, [addons.ad, addons._ad])
+                #    imp.load_module(name, *path)
+                #else:
+                #    import zipimport
+                #    zimp = zipimport.zipimporter(mod_path)
+                #    zimp.load_module(mod_name)
                 id = self.create(cr, uid, {
                     'name': mod_name,
                     'state': 'uninstalled',
@@ -346,8 +347,8 @@ class module(osv.osv):
                 self._update_dependencies(cr, uid, id, terp.get('depends', []))
                 self._update_category(cr, uid, id, terp.get('category', 'Uncategorized'))
 
-        import socket
-        socket.setdefaulttimeout(10)
+        #import socket
+        #socket.setdefaulttimeout(10)
         for repository in robj.browse(cr, uid, robj.search(cr, uid, [])):
             try:
                 index_page = urllib.urlopen(repository.url).read()
