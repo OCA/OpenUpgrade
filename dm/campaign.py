@@ -580,9 +580,9 @@ class dm_campaign(osv.osv):
         return res
 
     def create(self,cr,uid,vals,context={}):
+        type_id = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','model')])[0]
         if context.has_key('campaign_type') and context['campaign_type']=='model':
-            vals['campaign_type']='model'
-
+            vals['campaign_type']=type_id
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
 
         data_cam = self.browse(cr, uid, id_camp)
@@ -595,7 +595,7 @@ class dm_campaign(osv.osv):
             super(dm_campaign,self).write(cr, uid, id_camp, {'date':date_end})
 
         # Set trademark to offer's trademark only if trademark is null
-        if vals['campaign_type'] != 'model':
+        if vals['campaign_type'] != type_id:
             if vals['offer_id'] and (not vals['trademark_id']):
                 offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
                 super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
@@ -619,7 +619,7 @@ class dm_campaign(osv.osv):
                 overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_ids':[[6,0,overlay_country_ids]]}, context)
                 super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay_ids1}, context)
                 
-        ''' cretae offer history'''
+        ''' create offer history'''
         history_vals={
               'offer_id' : data_cam1.offer_id.id,
               'date' : data_cam1.date_start,
@@ -643,7 +643,7 @@ class dm_campaign(osv.osv):
         camp = self.browse(cr,uid,ids)[0]
         default={}
         default['name']='New campaign from model %s' % camp.name
-        default['campaign_type'] = 'recruiting'
+        default['campaign_type'] = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','recruiting')])[0]
         default['responsible_id'] = uid
         self.copy(cr,uid,ids[0],default)
         return True

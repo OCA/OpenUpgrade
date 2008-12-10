@@ -551,7 +551,7 @@
         <field name="res_model">dm.campaign</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[('campaign_type','=','model')]</field>
+        <field name="domain">[('campaign_type.code','=','model')]</field>
         <field name="context">{'campaign_type':'model'}</field>
     </record>
 
