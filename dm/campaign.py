@@ -695,17 +695,16 @@ class dm_campaign_proposition(osv.osv):
                  l.append(i.id)
                  self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
                  super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'segment_ids':[(6,0,[])]})
-            return proposition_id
+        
         """
-        Function to duplicate segments only if 'keep_prices' is set to yes else not to duplicate products
+        Function to duplicate products only if 'keep_prices' is set to yes else not to duplicate products
         """
         if data.keep_prices == False:
             l = []
-            for i in data.product_ids:
+            for i in data.item_ids:
                  l.append(i.id)
-                 self.pool.get('dm.product').unlink(cr,uid,l)
-                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'product_ids':[(6,0,[])]})
-            return proposition_id
+                 self.pool.get('dm.campaign.proposition.item').unlink(cr,uid,l)
+                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'item_ids':[(6,0,[])]})
         return proposition_id
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
