@@ -1991,6 +1991,8 @@ class dm_campaign_purchase_line(osv.osv):
         else:
             cr.execute('select id from product_category where name=%s order by id limit 1', ('Mailing Manufacturing',))
         res = cr.fetchone()
+	if not res:
+		return False
         return str(res[0]) or False
 
     def _product_category_get(self,cr,uid,context={}):
