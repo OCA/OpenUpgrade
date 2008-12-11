@@ -458,6 +458,15 @@ class dm_campaign(osv.osv):
         self.write(cr, uid, ids, {'state':'close'})
         return True
 
+    def check_forbidden_country(self,cr, uid, offer_id,country):
+        offers = self.pool.get('dm.offer').browse(cr, uid, offer_id)
+        forbidden_state_ids = [state_id.country_id.id for state_id in offers.forbidden_state_ids]
+        forbidden_country_ids = [country_id.id for country_id in offers.forbidden_country_ids]
+        forbidden_country_ids.extend(forbidden_state_ids)
+        if country  in  forbidden_country_ids :
+            return False
+        return True      
+
     def state_pending_set(self, cr, uid, ids, *args):
         self.manufacturing_state_inprogress_set(cr, uid, ids, *args)
         self.dtp_state_inprogress_set(cr, uid, ids, *args)
@@ -465,15 +474,10 @@ class dm_campaign(osv.osv):
         self.items_state_inprogress_set(cr, uid, ids, *args)
         self.write(cr, uid, ids, {'state':'pending'})
         return True
+  
 
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
-        if camp.offer_id:
-            forbidden_state_ids = [state_id.country_id.id for state_id in camp.offer_id.forbidden_state_ids]
-            forbidden_country_ids = [country_id.id for country_id in camp.offer_id.forbidden_country_ids]
-            forbidden_country_ids.extend(forbidden_state_ids)
-            if camp.offer_id.forbidden_country_ids and camp.country_id.id  in  forbidden_country_ids :
-                raise osv.except_osv("Error!!","This offer is not valid in this country")
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id :
             raise osv.except_osv("Error!!","Informations are missing. Check Date Start, Dealer and Trademark")
 
@@ -530,12 +534,8 @@ class dm_campaign(osv.osv):
                 history.write(cr,uid,history_id,{'offer_id':vals['offer_id']})
         res = super(dm_campaign,self).write(cr, uid, ids, vals, context)
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
-        offers = self.pool.get('dm.offer').browse(cr, uid, camp.offer_id.id)
-        list_off = []
-        for off in offers.forbidden_country_ids:
-            list_off.append(off.id)
-            if camp.country_id.id in list_off:
-                raise osv.except_osv("Error!!","You cannot use this offer in this country")
+        if not self.check_forbidden_country(cr, uid, camp.offer_id.id,camp.country_id.id):
+            raise osv.except_osv("Error!!","You cannot use this offer in this country")        
 
         # Set campaign end date at one year after start date if end date does not exist
         if ('date_start' in vals) and not ('date' in vals):
@@ -575,20 +575,15 @@ class dm_campaign(osv.osv):
             super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':0}, context)
             
         return res
-
+    
     def create(self,cr,uid,vals,context={}):
         type_id = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','model')])[0]
         if context.has_key('campaign_type') and context['campaign_type']=='model':
             vals['campaign_type']=type_id
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
-
         data_cam = self.browse(cr, uid, id_camp)
-        offers = self.pool.get('dm.offer').browse(cr, uid, data_cam.offer_id.id)
-        list_off = []
-        for off in offers.forbidden_country_ids:
-            list_off.append(off.id)
-            if data_cam.country_id.id in list_off:
-                raise osv.except_osv("Error!!","You cannot use this offer in this country")
+        if not self.check_forbidden_country(cr, uid, data_cam.offer_id.id,data_cam.country_id.id):
+            raise osv.except_osv("Error!!","You cannot use this offer in this country")
             
         # Set campaign end date at one year after start date if end date does not exist
         if (data_cam.date_start) and (not data_cam.date):
