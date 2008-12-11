@@ -431,7 +431,7 @@ class stock_picking(osv.osv):
                     todo.append(r.id)
         todo = self.action_explode(cr, uid, todo, context)
         if len(todo):
-            self.pool.get('stock.move').action_confirm_moves(cr, uid, todo, context)
+            self.pool.get('stock.move').action_confirm(cr, uid, todo, context)
         return True
 
     def test_auto_picking(self, cr, uid, ids):
