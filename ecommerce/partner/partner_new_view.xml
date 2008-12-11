@@ -67,8 +67,9 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_partner_ecommerce_tree"/>
 	</record>
-	<menuitem name="ecommerce/Partner/partners" action="action_partner_ecommerce_form" id="menu_partner_ecommerce_form"/>
-
+	<menuitem id="menu_ecommerce_partners" name="Partners" parent="ecommerce.menu_ecommerce"/>
+	<menuitem name="Partners" parent="menu_ecommerce_partners" action="action_partner_ecommerce_form" id="menu_partner_ecommerce_form"/>
+	
 	<!-- partner Address -->
 
 	<record model="ir.ui.view" id="view_partner_ecommerce_address_tree">
@@ -121,6 +122,6 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_partner_ecommerce_address_tree"/>
 	</record>
-	<menuitem name="ecommerce/Partner/partner Contacts" action="action_partner_ecommerce_address_form" id="menu_action_partner_ecommerce_address_form"/>
+	<menuitem name="Partner Contacts" parent="menu_ecommerce_partners" action="action_partner_ecommerce_address_form" id="menu_action_partner_ecommerce_address_form"/>
 	</data>
 </openerp>

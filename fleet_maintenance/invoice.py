@@ -11,4 +11,5 @@ class account_invoice_line(osv.osv):
         'maintainance_start_date':fields.date('Maintenance Start Date', required = False),
         'maintainance_end_date':fields.date('Maintenance End Date', required = False),
     }
+        
 account_invoice_line()

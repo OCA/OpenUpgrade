@@ -47,16 +47,16 @@
 	</data>
 	<data noupdate="1">
 		<record id="base.main_partner" model="res.partner">
-            <field name="property_account_receivable" ref="profile_game_retail.account_account_t0"/>
-			<field name="property_account_payable" ref="profile_game_retail.account_account_t1"/>
+            <field name="property_account_receivable" ref="profile_game_retail.account_recv"/>
+			<field name="property_account_payable" ref="profile_game_retail.account_pay"/>
         </record>
 		<record id="res_partner_chinasoundelectronic0" model="res.partner">
 			<field eval="&quot;&quot;&quot;Très bons tarifs et sérieux.
 Le seul problème sont les délais de livraison par bateau qui sont très longs.&quot;&quot;&quot;" name="comment"/>
 			<field eval="1" name="active"/>
 			<field name="property_product_pricelist" ref="product.list0"/>
-			<field name="property_account_receivable" ref="profile_game_retail.account_account_t0"/>
-			<field name="property_account_payable" ref="profile_game_retail.account_account_t1"/>
+			<field name="property_account_receivable" ref="profile_game_retail.account_recv"/>
+			<field name="property_account_payable" ref="profile_game_retail.account_pay"/>
 			<field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
 			<field eval="&quot;&quot;&quot;CSE&quot;&quot;&quot;" name="ref"/>
 			<field eval="1" name="supplier"/>

@@ -2,7 +2,7 @@
 <openerp>
 <data noupdate="1">
 
-	<!-- tax type -->
+	<!-- Account Types -->
 	<record id="account_type_root" model="account.account.type">
             <field name="name">View</field>
             <field name="code">view</field>
@@ -51,10 +51,10 @@
       <field name="close_method">balance</field>
 	</record>
 
-	<!-- Account Chart -->
+	<!-- Account Templates -->
 	<record id="chart0" model="account.account.template">
 		<field name="code">0</field>
-		<field name="name">Account Chart</field>
+		<field name="name">Account Chart for US</field>
 		<field name="user_type" ref="account_type_root"/>
 		<field name="type">view</field>
 	</record>
@@ -1822,7 +1822,7 @@
 	
 	<!-- Chart template -->
 	<record id="us_ucoa_ez_template" model="account.chart.template">
-	    <field name="name">US Ucoa ez</field>
+	    <field name="name">US - Chart of Accounts - UCOA ez Profile</field>
 	    <field name="account_root_id" ref="chart0"/>
 	    <field name="tax_code_root_id" ref="us_ucoa_ez_tax"/>
 	    <field name="bank_account_view_id" ref="chart1010"/>

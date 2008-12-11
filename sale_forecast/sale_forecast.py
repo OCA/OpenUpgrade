@@ -46,7 +46,7 @@ class sale_forecast(osv.osv):
         'line_ids': fields.one2many('sale.forecast.line', 'forecast_id', 'Forecast lines'),
         'state': fields.selection([('draft','Draft'),('open','Open'),('close','Closed'),('cancel','Canceled')], 'State', required=True, select=1),
         'note': fields.text('Notes'),
-        #'forecast_rate' : fields.function(_forecast_rate, method=True, string='Progress (%)')
+        'forecast_rate' : fields.function(_forecast_rate, method=True, string='Progress (%)')
 
     }
     _defaults = {

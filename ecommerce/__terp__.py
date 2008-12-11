@@ -38,8 +38,8 @@
                     "partner/partner_new_view.xml",
                     "sale_order/sale_order_view.xml",
                     "sale_order/sale_order_sequence.xml",
-                    "report_shipping.xml"     
-                          
+                    "report_shipping.xml", 
+                    "security/ir.model.access.csv"                            
    ],
     "active": False,
     "installable": True

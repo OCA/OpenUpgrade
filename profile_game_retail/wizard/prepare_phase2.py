@@ -22,22 +22,130 @@
 import wizard
 import pooler
 import netsvc
+import datetime
+import mx.DateTime
+from mx.DateTime import RelativeDateTime, now, DateTime, localtime
+import time
+import math
+
+def assign_full_access_rights(self, cr, uid, data, context):
+    pool = pooler.get_pool(cr.dbname)
+    gp = pool.get('res.groups')
+    user_obj = pool.get('res.users')
+    user_name = ['sale','logistic','hr','finance']
+    user_ids = user_obj.search(cr, uid, [('login','in',user_name)])
+    gp_ids = gp.search(cr, uid, [('users','in',user_ids)])
+    gp_name = ['Game / Phase 2 / Sales Manager','Game / Phase 2 / HR Manager','Game / Phase 2 / Logistic Manager','Game / Phase 2 / Finance Manager']
+    for name in gp_name:
+        new_id = gp.create(cr, uid, {'name':name})
+        for group in gp.browse(cr, uid, gp_ids):
+            for access in group.model_access:
+                pool.get('ir.model.access').create(cr, uid,{'name' : access.name,
+                                             'model_id' : access.model_id.id,
+                                             'group_id' : access.group_id,
+                                             'group_id' : new_id,
+                                             'perm_read' : True,
+                                             'perm_write' : True,
+                                             'perm_create' : True,
+                                             'perm_unlink' : True })
+        if name == 'Game / Phase 2 / Sales Manager':
+            login = 'sale'
+        elif name == 'Game / Phase 2 / HR Manager':
+            login = 'hr'
+        elif name == 'Game / Phase 2 / Logistic Manager':
+            login = 'logistic'
+        else:
+            login = 'finance'
+        user = user_obj.search(cr, uid, [('login','=',login)])
+        user_browse = user_obj.browse(cr, uid, user)[0]
+        add_menu = []
+        for user_gp in user_browse.groups_id:
+            for menu_id in user_gp.menu_access:
+                add_menu.append(menu_id)
+
+        cr.execute('delete from res_groups_users_rel where uid =%d'%(user[0]))
+        cr.execute('delete from res_roles_users_rel where uid =%d'%(user[0]))
+        gp.write(cr, uid, new_id,{'menu_access' : [[6,0,add_menu]],'users':[[6,0,user]]})
+    role_ids = pool.get('res.roles').search(cr, uid, [])
+    for user in user_ids:
+        user_obj.write(cr, uid, user, {'roles_id':[[6,0,role_ids]]})
+    return
+
+
+def create_phase2_menu(self, cr, uid, data, context):
+    pool = pooler.get_pool(cr.dbname)
+    mod_obj = pool.get('ir.model.data')
+    result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'business_game')
+    parent_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+    result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'action_game_detail_form')
+    action_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+    menu_id = pool.get('ir.ui.menu').create(cr, uid, {
+            'name': 'Business Game Details',
+            'parent_id': parent_id,
+            'icon': 'STOCK_NEW'
+            })
+    value_id = pool.get('ir.values').create(cr, uid, {
+            'name': 'Business Game Phase2',
+            'key2': 'tree_but_open',
+            'model': 'ir.ui.menu',
+            'res_id': menu_id,
+            'value': 'ir.actions.act_window,%d'%action_id,
+            'object': True
+            })
+    return
 
 def get_ready_phase2(self, cr, uid, data, context):
-        pool=pooler.get_pool(cr.dbname)
-        mod_obj = pooler.get_pool(cr.dbname).get('ir.model.data')
-        phase1_obj=pool.get('profile.game.retail.phase1')
-        obj=phase1_obj.browse(cr,uid,data['id'])
+        create_phase2_menu(self, cr, uid, data, context)
+        assign_full_access_rights(self, cr, uid, data, context)
 
-        user_ids=pool.get('res.users').search(cr,uid,[])
+        pool = pooler.get_pool(cr.dbname)
+        lm_action = ['menu_stock_planning','menu_action_orderpoint_form']
+        mod_obj = pool.get('ir.model.data')
+        phase1_obj = pool.get('profile.game.retail.phase1')
+        obj = phase1_obj.browse(cr, uid, data['id'])
+
+        user_ids = pool.get('res.users').search(cr, uid, [])
+        user_browse = pool.get('res.users').browse(cr, uid, user_ids)
+
+        sc_ids = pool.get('ir.ui.view_sc').search(cr, uid, [('user_id','in',user_ids)])
+        pool.get('ir.ui.view_sc').unlink(cr, uid, sc_ids)
+
         result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'open_board_game2')
-        print "result ",result
         id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
-        print "id..........",id
         for user in user_ids:
-            pool.get('res.users').write(cr,uid,user,{'action_id':id})
+            pool.get('res.users').write(cr, uid, user, {'action_id':id})
 
-      #  phase1_obj.write(cr,uid,data['id'],{'state':'started_phase2'})
+        for user in user_browse:
+            if user.login in ('sale','finance'):
+                val = {}
+                if user.login=='sale':
+                    res=mod_obj._get_id(cr, uid, 'sale_forecast', 'menu_sale_forecast_my_managing')
+
+                if user.login=='finance':
+                    res=mod_obj._get_id(cr, uid, 'account_budget', 'menu_budget_post_form')
+
+                res_id = mod_obj.read(cr, uid, [res], ['res_id'])[0]['res_id']
+                val['res_id']=res_id
+                val['resource']='ir.ui.menu'
+                val['user_id'] =user.id
+                val['name']=pool.get('ir.ui.menu').read(cr,uid,[res_id],['name'])[0]['name']
+                pool.get('ir.ui.view_sc').create(cr,uid,val)
+
+            if user.login=='logistic':
+                for action in lm_action:
+                    val={}
+                    if action =='menu_action_orderpoint_form':
+                        module='mrp'
+                    else:
+                        module='stock_planning'
+                    res=mod_obj._get_id(cr, uid, module, action)
+                    res_id = mod_obj.read(cr, uid, [res], ['res_id'])[0]['res_id']
+                    val['res_id']=res_id
+                    val['resource']='ir.ui.menu'
+                    val['user_id'] =user.id
+                    val['name']=pool.get('ir.ui.menu').read(cr,uid,[res_id],['name'])[0]['name']
+                    pool.get('ir.ui.view_sc').create(cr,uid,val)
+        phase1_obj.write(cr,uid,data['id'],{'state':'started_phase2'})
         return  {
         'name': 'Business Game',
         'view_type': 'form',

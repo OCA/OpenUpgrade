@@ -90,7 +90,38 @@
             <field name="default_credit_account_id" ref="account_cash"/>
             <field name="user_id" ref="base.user_root"/>
         </record>
-     <!--
+	<!--
+	Analytical Accounts
+	-->
+	<record id="analytic_administrative" model="account.analytic.account">
+            <field name="name">Administrative Expenses</field>
+            <field name="code">AD:EXP</field>
+     </record>
+     <record id="analytic_indirect" model="account.analytic.account">
+            <field name="name">Indirect Expenses</field>
+            <field name="code">INDIRECT:EXP</field>
+            <field name="parent_id" ref="analytic_administrative"/>
+     </record>
+     <record id="analytic_salary" model="account.analytic.account">
+            <field name="name">Salary</field>
+            <field name="code">SAL:EXP</field>
+            <field name="parent_id" ref="analytic_indirect"/>
+            <field eval="time.strftime('%Y-01-01')" name="date_start"/>
+            <field eval="str(time.localtime()[0] + 1) + '-12-31'" name="date"/>
+     </record>
+     <record id="analytic_sales" model="account.analytic.account">
+            <field name="name">Sales</field>
+            <field name="code">SAL</field>
+            <field eval="time.strftime('%Y-01-01')" name="date_start"/>
+            <field eval="str(time.localtime()[0] + 1) + '-12-31'" name="date"/>
+     </record>
+      <record id="analytic_purchase" model="account.analytic.account">
+            <field name="name">Purchase</field>
+            <field name="code">PUR</field>
+            <field eval="time.strftime('%Y-01-01')" name="date_start"/>
+            <field eval="str(time.localtime()[0] + 1) + '-12-31'" name="date"/>
+     </record>
+    <!--
 	Fiscal year
 	-->
 
@@ -174,6 +205,71 @@
         <record id="game_period_12" model="account.period">
             <field eval="'Dec.'+time.strftime('%Y')" name="name"/>
             <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
+            <field eval="time.strftime('%Y')+'-12-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-12-31'" name="date_stop"/>
+        </record>
+
+     <!--
+	Sale Periods By Months
+	-->
+
+        <record id="game_sale_period_1" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '01'" name="name"/>
+            <field eval="time.strftime('%Y')+'-01-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-01-31'" name="date_stop"/>
+        </record>
+        <record id="game_sale_period_2" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '02'" name="name"/>
+            <field eval="time.strftime('%Y')+'-02-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-02-28'" name="date_stop"/>
+        </record>
+        <record id="game_sale_period_3" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '03'" name="name"/>
+            <field eval="time.strftime('%Y')+'-03-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-03-31'" name="date_stop"/>
+        </record>
+        <record id="game_sale_period_4" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '04'" name="name"/>
+            <field eval="time.strftime('%Y')+'-04-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-04-30'" name="date_stop"/>
+        </record>
+        <record id="game_sale_period_5" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '05'" name="name"/>
+            <field eval="time.strftime('%Y')+'-05-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-05-31'" name="date_stop"/>
+        </record>
+        <record id="game_sale_period_6" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '06'" name="name"/>
+            <field eval="time.strftime('%Y')+'-06-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-06-30'" name="date_stop"/>
+        </record>
+        <record id="game_sale_period_7" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '07'" name="name"/>
+            <field eval="time.strftime('%Y')+'-07-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-07-31'" name="date_stop"/>
+        </record>
+        <record id="game_period_8" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '08'" name="name"/>
+            <field eval="time.strftime('%Y')+'-08-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-08-31'" name="date_stop"/>
+        </record>
+        <record id="game_sale_period_9" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '09'" name="name"/>
+            <field eval="time.strftime('%Y')+'-09-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-09-30'" name="date_stop"/>
+        </record>
+        <record id="game_sale_period_10" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '10'" name="name"/>
+            <field eval="time.strftime('%Y')+'-10-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-10-31'" name="date_stop"/>
+        </record>
+        <record id="game_sale_period_11" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '11'" name="name"/>
+            <field eval="time.strftime('%Y')+'-11-01'" name="date_start"/>
+            <field eval="time.strftime('%Y')+'-11-30'" name="date_stop"/>
+        </record>
+        <record id="game_sale_period_12" model="stock.period">
+            <field eval="time.strftime('%Y') + '/' + '12'" name="name"/>
             <field eval="time.strftime('%Y')+'-12-01'" name="date_start"/>
             <field eval="time.strftime('%Y')+'-12-31'" name="date_stop"/>
         </record>

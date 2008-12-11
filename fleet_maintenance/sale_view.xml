@@ -9,7 +9,8 @@
       <field name="arch" type="xml">
 				<xpath expr="/form/notebook/page/field/form/notebook/page" position="after">
 						<page string="Maintenance">
-		     			<field name="fleet_id"/>
+		     			<field name="fleet_id" domain="[('is_sub_fleet','=',True)]"/>
+		     			<field name="order_id"/>
 		     			<newline/>
 		     			<field name="maintainance_start_date"/>
 		     			<field name="maintainance_end_date"/>
