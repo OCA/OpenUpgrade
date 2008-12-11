@@ -413,7 +413,8 @@ class dm_campaign(osv.osv):
         'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
 #        'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_id', 'Purchase Lines'),
         'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
-        'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'}),
+        'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'},
+            help="The router is the partner who will send the mailing to the final customer"),
         'dtp_task_ids': one2many_mod_task('project.task', 'project_id', "DTP tasks",
                                                         domain=[('type','ilike','DTP')], context={'type':'DTP'}),
         'manufacturing_task_ids': one2many_mod_task('project.task', 'project_id', "Manufacturing tasks",
@@ -794,6 +795,20 @@ class dm_campaign_proposition(osv.osv):
             result[propo.id]=str(qty)
         return result
 
+    def _quantity_real_get(self, cr, uid, ids, name, args, context={}):
+        result={}
+        for propo in self.browse(cr,uid,ids):
+            if not propo.segment_ids:
+                result[propo.id]='No segments defined'
+                continue
+            qty = 0
+            for segment in propo.segment_ids:
+                if segment.quantity_real == 0:
+                    result[propo.id]='Real Quantity missing in a Segment'
+                    continue
+                qty += segment.quantity_real
+            result[propo.id]=str(qty)
+        return result
 
     def _default_camp_date(self, cr, uid, context={}):
         if 'date1' in context and context['date1']:
@@ -820,7 +835,8 @@ class dm_campaign_proposition(osv.osv):
                     help='The delivered quantity is the number of addresses you receive from the broker.'),
         'quantity_usable' : fields.function(_quantity_usable_get,string='Usable Quantity',type="char",size="64",method=True,readonly=True,
                     help='The usable quantity is the number of addresses you have after delivery, deduplication and cleaning.'),
-        'quantity_real': fields.integer('Real Quantity'),
+        'quantity_real' : fields.function(_quantity_real_get,string='Real Quantity',type="char",size="64",method=True,readonly=True,
+                    help='The real quantity is the number of addresses you really get in the file.'),
         'starting_mail_price' : fields.float('Starting Mail Price',digits=(16,2)),
         'customer_pricelist_id':fields.many2one('product.pricelist','Items Pricelist', required=False),
         'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
@@ -1075,26 +1091,39 @@ class dm_campaign_purchase_line(osv.osv):
                 """If Mailing Manufacturing purchase line"""
                 if int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Mailing Manufacturing')])[0]:
 
-                    """Get Manufacturing Criteria if asked"""
-                    criteria = []
+                    """If the product is a compound product (BoM) => Add Subproducts infos in document notes"""
+                    note = []
+                    cr.execute("select id from mrp_bom where product_id = %d limit 1" % (pline.product_id.id))
+                    bom_id = cr.fetchone()
+                    if bom_id:
+                        bom = self.pool.get('mrp.bom').browse(cr, uid, [bom_id[0]])[0]
+                        note.append("Product Composed of : ")
+                        note.append("---------------------------------------------------------------------------")
+                        for bom_child in bom.child_ids:
+                            note.append(bom_child.name)
+                            note.append("---------------------------------------------------------------------------")
+
+                    """Get Manufacturing Descriptions if asked"""
                     if pline.desc_from_offer:
                         for step in obj.offer_id.step_ids:
                             for const in step.manufacturing_constraint_ids:
                                 if not const.country_ids:
-                                    criteria.append("---------------------------------------------------------------------------")
-                                    criteria.append(const.name)
-                                    criteria.append(const.constraint)
+                                    note.append("---------------------------------------------------------------------------")
+                                    note.append("Description : ")
+                                    note.append("---------------------------------------------------------------------------")
+                                    note.append(const.name)
+                                    note.append(const.constraint)
                                 elif obj.country_id in const.country_ids:
-                                    criteria.append("---------------------------------------------------------------------------")
-                                    criteria.append(const.name + ' for country :' +  obj.country_id.name)
-                                    criteria.append(const.constraint)
+                                    note.append("---------------------------------------------------------------------------")
+                                    note.append(const.name + ' for country :' +  obj.country_id.name)
+                                    note.append(const.constraint)
 
                     """Add note if defined"""
                     if pline.notes:
-                        criteria.append("---------------------------------------------------------------------------")
-                        criteria.append(pline.notes)
+                        note.append("---------------------------------------------------------------------------")
+                        note.append(pline.notes)
                     else:
-                        criteria.append(' ')
+                        note.append(' ')
 
                     """If Document Type is Request for Quotation => create 1 Request for Quotation/Supplier grouped in a Tender"""
                     """If Document Type is Purchase Order => Create One Purchase Order for the main Supplier"""
@@ -1126,7 +1155,7 @@ class dm_campaign_purchase_line(osv.osv):
                                 #'dest_address_id': delivery_address.id,
                                 'location_id': 1,
                                 'pricelist_id': pricelist_id,
-                                'notes': "\n".join(criteria),
+                                'notes': "\n".join(note),
                                 'tender_id': tender_id,
                                 'dm_campaign_purchase_line': pline.id
                             })
@@ -1252,7 +1281,7 @@ class dm_campaign_purchase_line(osv.osv):
                             #'dest_address_id': delivery_address.id,
                             'location_id': 1,
                             'pricelist_id': pricelist_id,
-                            'notes': "\n".join(criteria),
+                            'notes': "\n".join(note),
                             'dm_campaign_purchase_line': pline.id
                         })
 
@@ -1355,24 +1384,24 @@ class dm_campaign_purchase_line(osv.osv):
                     """If Customers List purchase line"""
                 elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Customers List')])[0]:
 
-                    """Get Customers File Criteria if asked"""
-                    criteria = []
+                    """Get Customers File note if asked"""
+                    note = []
                     if pline.desc_from_offer:
-                        criteria.append("---------------------------------------------------------------------------")
-                        criteria.append('Campaign Name : %s' % (obj.name,))
-                        criteria.append('Campaign Code : %s' % (obj.code1,))
-                        criteria.append('Drop Date : %s' % (obj.date_start,))
-                        criteria.append("---------------------------------------------------------------------------")
-                        criteria.append('Trademark : %s' % (obj.trademark_id.name,))
-                        criteria.append('planned Quantity : %s' % (obj.quantity_planned_total,))
-                        criteria.append('Responsible : %s' % (obj.files_responsible_id.name,))
+                        note.append("---------------------------------------------------------------------------")
+                        note.append('Campaign Name : %s' % (obj.name,))
+                        note.append('Campaign Code : %s' % (obj.code1,))
+                        note.append('Drop Date : %s' % (obj.date_start,))
+                        note.append("---------------------------------------------------------------------------")
+                        note.append('Trademark : %s' % (obj.trademark_id.name,))
+                        note.append('planned Quantity : %s' % (obj.quantity_planned_total,))
+                        note.append('Responsible : %s' % (obj.files_responsible_id.name,))
 
                     """Add note if defined"""
                     if pline.notes:
-                        criteria.append("---------------------------------------------------------------------------")
-                        criteria.append(pline.notes)
+                        note.append("---------------------------------------------------------------------------")
+                        note.append(pline.notes)
                     else:
-                        criteria.append(' ')
+                        note.append(' ')
 
 
                     """If Document Type is Request for Quotation => create 1 Request for Quotation/Supplier grouped in a Tender"""
@@ -1405,7 +1434,7 @@ class dm_campaign_purchase_line(osv.osv):
                                 #'dest_address_id': delivery_address.id,
                                 'location_id': 1,
                                 'pricelist_id': pricelist_id,
-                                'notes': "\n".join(criteria),
+                                'notes': "\n".join(note),
                                 'tender_id': tender_id,
                                 'dm_campaign_purchase_line': pline.id
                             })
@@ -1520,7 +1549,7 @@ class dm_campaign_purchase_line(osv.osv):
                                 'dest_address_id': dest_address_id,
                                 'location_id': 1,
                                 'pricelist_id': pricelist_id,
-                                'notes': "\n".join(criteria),
+                                'notes': "\n".join(note),
                                 'dm_campaign_purchase_line': pline.id
                             })
 
@@ -1924,20 +1953,6 @@ class dm_campaign_purchase_line(osv.osv):
                                        'account_analytic_id': propo.analytic_account_id,
                                     })
 
-                    if pline.type_document == 'po':
-                        print "Set as Purchase Order"
-
-                    '''
-                    # Set campaign supervision states
-                    if pline.type == 'translation':
-                        pline.campaign_id.write({'translation_state':'inprogress'})
-                    elif pline.type == 'manufacturing':
-                        pline.campaign_id.write({'manufacturing_state':'inprogress'})
-                    elif pline.type == 'items':
-                        pline.campaign_id.write({'items_state':'inprogress'})
-                    elif pline.type == 'customer_file':
-                        pline.campaign_id.write({'customer_file_state':'inprogress'})
-                    '''
 
         return True
 
