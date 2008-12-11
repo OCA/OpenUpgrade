@@ -20,5 +20,7 @@
 #
 ##############################################################################
 # import order
+import holidays_summary
+import holidays_summary_employee
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
