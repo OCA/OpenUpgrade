@@ -49,8 +49,10 @@
             <form string="Campaigns">
                 <group colspan="3" col="4">
                     <separator string="Campaign Description" colspan="5"/>
-                    <field name="name" string="Name" select="1" col="3"/>
-                    <field name="code1" string="Code" select="2" col="2"/>
+<!--                    <field name="name" string="Name" select="1" col="3"/>
+                    <field name="code1" string="Code" select="2" col="2"/>-->
+                    <field name="name" string="Name" select="1"/>
+                    <field name="code1" string="Code" select="2"/>
                 </group>
                 <notebook colspan="4">
                     <page string="General">
@@ -108,7 +110,7 @@
                             <field name="manufacturing_cost_ids" nolabel="1" colspan="2">
                                 <form string="Manufacturing Cost">
                                     <field name="name" colspan="4"/>
-                                    <field name="amount" col="2"/>
+                                    <field name="amount" />
                                 </form>
                                 <tree string="Manufacturing Costs">
                                     <field name="name"/>
@@ -118,7 +120,7 @@
                         </group>
 <!--                        <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" context="{'campaign_id':active_id}"/>-->
                         <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" >
-                            <form string="Mailing Manufacturing Purchase Line" colspan="4">
+                            <form string="Mailing Manufacturing Purchase Line">
                                 <group colspan="2" col="2">
                                     <separator string="Purchase Line Product" colspan="2"/>
                                     <field name="product_category"/>
@@ -127,7 +129,6 @@
                                     <separator string="Documents Generation" colspan="2"/>
                                     <field name="type_document"/>
                                     <field name="desc_from_offer" />
-<!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
                                 </group>
                                 <group colspan="2" col="2">
                                     <separator string="Quantity" colspan="2"/>
@@ -193,7 +194,7 @@
                             </tree>
                         </field>
                         <field name="cust_file_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
-                            <form string="Customers Files Purchase Line" colspan="4">
+                            <form string="Customers Files Purchase Line">
                                 <group colspan="2" col="2">
                                     <separator string="Purchase Line Product" colspan="2"/>
                                     <field name="product_category"/>
@@ -202,7 +203,6 @@
                                     <separator string="Documents Generation" colspan="2"/>
                                     <field name="type_document"/>
                                     <field name="desc_from_offer" />
-<!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
                                 </group>
                                 <group colspan="2" col="2">
                                     <separator string="Quantity" colspan="2"/>
@@ -586,8 +586,8 @@
             <form string="Propositions">
             <group colspan="3" col="4">
             <separator string="Commercial Proposition Description" colspan="5"/>
-            <field name="name" string="Name" select="1" col="3"/>
-            <field name="code1" string="Code" select="2" col="2"/>
+            <field name="name" string="Name" select="1" />
+            <field name="code1" string="Code" select="2" />
             </group>
             <notebook colspan="4">
                 <page string="General">
@@ -1148,7 +1148,7 @@
         <field name="model">dm.campaign.purchase_line</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Purchase Line" colspan="4">
+            <form string="Purchase Line">
                 <group colspan="2" col="2">
                     <separator string="Purchase Line Product" colspan="2"/>
                     <field name="product_category"/>
@@ -1159,7 +1159,6 @@
                     <field name="desc_from_offer" />
                     <field name="campaign_id" />
                     <field name="campaign_group_id" />
-<!--                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':campaign_id}"/>-->
                 </group>
                 <group colspan="2" col="2">
                     <separator string="Quantity" colspan="2"/>
@@ -1208,6 +1207,10 @@
                     <field name="broker_id" select="1"/>
                     <field name="country_id" select="1"/>
                     <field name="currency_id" select="2"/>
+                    <separator string="" colspan="2"/>
+                    <field name="list_type" select="2"/>
+                    <field name="recruiting_origin" select="2"/>
+                    <field name="update_frq" select="2"/>
                 </group>
                 <group colspan="2" col="2">
                     <separator string="Costs" colspan="2"/>
@@ -1251,6 +1254,88 @@
     </record>
 
     <menuitem id="menu_action_dm_customers_list" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_list" sequence="1" />
+
+    <!--
+    =======================================================
+    CUSTOMERS LIST TYPE
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_customers_list_type_form">
+        <field name="name">dm.customers_list.type.form</field>
+        <field name="model">dm.customers_list.type</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Customer List Type">
+                <separator string="Customers List Type Description" colspan="4"/>
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_customers_list_type_tree">
+        <field name="name">dm.customers_list.type.tree</field>
+        <field name="model">dm.customers_list.type</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Customer List Type">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_customers_list_type">
+        <field name="name">All Customers List Recruiting Origin</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.customers_list.type</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_customers_list_type_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_customers_list_type" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_list_type" sequence="1" />
+
+    <!--
+    =======================================================
+    CUSTOMERS LIST RECRUITING ORIGIN
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_customers_list_recruit_origin_form">
+        <field name="name">dm.customers_list.recruit_origin.form</field>
+        <field name="model">dm.customers_list.recruit_origin</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Customer List Recruiting Origin">
+                <separator string="Customers List Recruiting Origin Description" colspan="4"/>
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_customers_list_recruit_origin_tree">
+        <field name="name">dm.customers_list.recruit_origin.tree</field>
+        <field name="model">dm.customers_list.recruit_origin</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Customer Lists Recruiting Origin">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_customers_list_recruit_origin">
+        <field name="name">All Customers List Recruiting Origin</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.customers_list.recruit_origin</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_customers_list_recruit_origin_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_customers_list_recruit_origin" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_list_recruit_origin" sequence="1" />
 
     <!--
     =======================================================

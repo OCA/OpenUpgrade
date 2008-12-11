@@ -876,6 +876,24 @@ class dm_campaign_proposition(osv.osv):
 dm_campaign_proposition()
 
 
+class dm_customers_list_recruit_origin(osv.osv):
+    _name = "dm.customers_list.recruit_origin"
+    _description = "The origin of the adresses of a list"
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=16, required=True),
+    }
+dm_customers_list_recruit_origin()
+
+class dm_customers_list_type(osv.osv):
+    _name = "dm.customers_list.type"
+    _description = "Type of the adress list"
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=16, required=True),
+    }
+dm_customers_list_type()
+
 class dm_customers_list(osv.osv):
     _name = "dm.customers_list"
     _description = "A list of addresses proposed by an adresses broker"
@@ -895,6 +913,9 @@ class dm_customers_list(osv.osv):
         'broker_discount' : fields.float('Broker Discount (%)',digits=(16,2)),
         'other_cost' : fields.float('Other Cost',digits=(16,2)),
         'invoice_base' : fields.selection([('net','Net Addresses Quantity'),('raw','Raw Addresses Quantity')],'Invoicing based on'),
+        'recruiting_origin' : fields.many2one('dm.customers_list.recruit_origin','Recruiting Origin'),
+        'list_type' : fields.many2one('dm.customers_list.type','Type'),
+        'update_frq' : fields.integer('Update Frequency'),
         'notes': fields.text('Description'),
     }
     _defaults =  {
@@ -1285,6 +1306,11 @@ class dm_campaign_purchase_line(osv.osv):
                             'dm_campaign_purchase_line': pline.id
                         })
 
+                        # Set as PO
+                        wf_service = netsvc.LocalService("workflow")
+                        wf_service.trg_validate(uid, 'purchase.order', purchase_id, 'purchase_confirm', cr)
+
+
                         ''' Create po lines for each proposition (of each campaign if group)'''
                         lines = []
                         if pline.campaign_group_id:
@@ -1510,9 +1536,7 @@ class dm_campaign_purchase_line(osv.osv):
                         for propo in obj.proposition_ids:
                             for segment in propo.segment_ids:
                                 lists.append(segment.customers_list_id)
-                        print "Customers List : ", lists
                         cust_lists = set(lists)
-                        print "Customers List (unique) : ", cust_lists
 
                         """Create 1 PO / Customets List"""
                         for list in cust_lists:
@@ -1552,6 +1576,10 @@ class dm_campaign_purchase_line(osv.osv):
                                 'notes': "\n".join(note),
                                 'dm_campaign_purchase_line': pline.id
                             })
+
+                            # Set as PO
+                            wf_service = netsvc.LocalService("workflow")
+                            wf_service.trg_validate(uid, 'purchase.order', purchase_id, 'purchase_confirm', cr)
 
                             for propo in obj.proposition_ids:
                                 for segment in propo.segment_ids:
@@ -1963,12 +1991,6 @@ class dm_campaign_purchase_line(osv.osv):
             #print "From _default_date : ",newdate.strftime('%Y-%m-%d %H:%M:%S')
             return newdate.strftime('%Y-%m-%d %H:%M:%S')
         return []
-
-
-    def desc_from_offer_get(self, cr, uid, ids, context={}):
-        """Get  Descriptions from offer"""
-
-        return True
 
 
     def _state_get(self, cr, uid, ids, name, args, context={}):

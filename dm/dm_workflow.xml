@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data>
-	<!-- USER ROLES -->
-		<record model="res.roles" id="res_roles_offermanager">
-			<field eval="&quot;&quot;&quot;Offer Manager&quot;&quot;&quot;" name="name"/>
-		</record>
-		
-		<record model="res.roles" id="res_roles_campaignmanager">
-			<field eval="&quot;&quot;&quot;Campaign Manager&quot;&quot;&quot;" name="name"/>
-		</record>
-	<!-- ==================Offer Step================== -->
+    <data>
+    <!-- USER ROLES -->
+        <record model="res.roles" id="res_roles_offermanager">
+            <field eval="&quot;&quot;&quot;Offer Manager&quot;&quot;&quot;" name="name"/>
+        </record>
+        
+        <record model="res.roles" id="res_roles_campaignmanager">
+            <field eval="&quot;&quot;&quot;Campaign Manager&quot;&quot;&quot;" name="name"/>
+        </record>
+    <!-- ==================Offer Step================== -->
         <record id="wkf_dm_step" model="workflow">
             <field name="name">dm.offer.step.basic</field>
             <field name="osv">dm.offer.step</field>
@@ -91,14 +91,14 @@
         </record>
 
 
-	<!-- ==================Offer Document================== -->
+    <!-- ==================Offer Document================== -->
         <record id="wkf_dm_offer_document" model="workflow">
             <field name="name">dm.offer.document.basic</field>
             <field name="osv">dm.offer.document</field>
             <field name="on_create">True</field>
         </record>
 
-		<!-- Activity -->
+        <!-- Activity -->
         <record id="act_draft" model="workflow.activity">
             <field name="wkf_id" ref="wkf_dm_offer_document"/>
             <field name="flow_start">True</field>
@@ -113,7 +113,7 @@
             <field name="action">state_validate_set()</field>
         </record>
 
-		<!-- Transition -->
+        <!-- Transition -->
         <record id="trans_draft_validate" model="workflow.transition">
             <field name="act_from" ref="act_draft"/>
             <field name="act_to" ref="act_validate"/>
@@ -121,7 +121,7 @@
             <field name="role_id" ref="res_roles_offermanager"/>
         </record>
 
-	<!-- ==================Campaigns================== -->
+    <!-- ==================Campaigns================== -->
         <record id="wkf_dm_campaign" model="workflow">
             <field name="name">dm.campaign.basic</field>
             <field name="osv">dm.campaign</field>
@@ -234,8 +234,8 @@
             <field name="signal">state_close_set</field>
             <field name="role_id" ref="res_roles_campaignmanager"/>
         </record>
-	    
-	    <record id="trans_campaign_pending_manufacturing_inprogress" model="workflow.transition">
+        
+        <record id="trans_campaign_pending_manufacturing_inprogress" model="workflow.transition">
             <field name="act_from" ref="act_campaign_pending"/>
             <field name="act_to" ref="act_campaign_manufacturing_inprogress"/>
             <field name="signal">manufacturing_state_inprogress_set</field>
@@ -263,14 +263,14 @@
             <field name="role_id" ref="res_roles_campaignmanager"/>
         </record>
         
-	    <record id="trans_campaign_manufacturing_inprogress_done" model="workflow.transition">
+        <record id="trans_campaign_manufacturing_inprogress_done" model="workflow.transition">
             <field name="act_from" ref="act_campaign_manufacturing_inprogress"/>
             <field name="act_to" ref="act_campaign_manufacturing_done"/>
             <field name="signal">manufacturing_state_done_set</field>
             <field name="role_id" ref="res_roles_campaignmanager"/>
         </record>
 
-		<record id="trans_campaign_dtp_inprogress_done" model="workflow.transition">
+        <record id="trans_campaign_dtp_inprogress_done" model="workflow.transition">
             <field name="act_from" ref="act_campaign_dtp_inprogress"/>
             <field name="act_to" ref="act_campaign_dtp_done"/>
             <field name="signal">dtp_state_done_set</field>
@@ -319,5 +319,5 @@
             <field name="role_id" ref="res_roles_campaignmanager"/>
         </record>
         
-	</data>
+    </data>
 </openerp>
