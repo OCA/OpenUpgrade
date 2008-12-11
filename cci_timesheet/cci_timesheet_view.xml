@@ -3,6 +3,7 @@
     <data>
         <menuitem name="Timesheet" id="menu_hr_root"/>
         <menuitem name="Configuration" id="menu_time_configuration" parent="menu_hr_root"/>
+        <menuitem name="Timesheet" id="menu_timesheet" parent="menu_hr_root"/>
 
     <!-- Timesheet Grant -->
         <record model="ir.ui.view" id="view_cci_timesheet_grant_form">
@@ -36,7 +37,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Grant" id="menu_time_config_grant" parent="menu_hr_root" action="action_grant_tree" />
+        <menuitem name="Grant" id="menu_time_config_grant" parent="menu_time_configuration" action="action_grant_tree" />
 
     <!-- Timesheet -->
         <record model="ir.ui.view" id="view_cci_timesheet_form">
@@ -120,7 +121,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem name="Timesheet" id="menu_time_timesheet" parent="menu_hr_root" action="action_timesheet_tree"/>
+        <menuitem name="Timesheet" id="menu_time_timesheet" parent="menu_timesheet" action="action_timesheet_tree"/>
 
     <!-- Timesheet Lines -->
 
@@ -180,7 +181,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem name="Timesheet Lines" id="menu_time_line" parent="menu_hr_root" action="action_cci_timesheet_line_tree" />
+        <menuitem name="Timesheet Lines" id="menu_time_line" parent="menu_timesheet" action="action_cci_timesheet_line_tree" />
 
 
     <!-- Timesheet Affectation -->
@@ -228,7 +229,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem name="Timesheet Affectation" id="menu_time_timesheet_affect" parent="menu_hr_root" action="action_timesheet_affectation_tree"/>
+        <menuitem name="Timesheet Affectation" id="menu_time_timesheet_affect" parent="menu_timesheet" action="action_timesheet_affectation_tree"/>
 
 <!-- Timesheet reporting -->
 
