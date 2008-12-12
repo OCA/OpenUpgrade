@@ -164,7 +164,7 @@
                             </tree>
                         </field>
                         <field name="dtp_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
-                        	<form string="DTP Purchase Line" colspan="4">
+                        	<form string="DTP Purchase Line">
                                 <group colspan="2" col="2">
                                     <separator string="Purchase Line Product" colspan="2"/>
                                     <field name="product_category"/>
@@ -261,7 +261,7 @@
                             </tree>
                         </field>
                         <field name="item_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
-	                        <form string="Item Purchase Line" colspan="4">
+	                        <form string="Item Purchase Line">
                                 <group colspan="2" col="2">
                                     <separator string="Purchase Line Product" colspan="2"/>
                                     <field name="product_category"/>
