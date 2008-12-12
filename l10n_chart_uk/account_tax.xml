@@ -4,8 +4,8 @@
 	
 		<record id="tax1" model="account.tax.template">
 			<field name="chart_template_id" ref="l10n_uk_chart_template_main"/>
-			<field name="name">VAT (17.5%)(17.5%)</field>
-			<field name="amount">0.175000</field>
+			<field name="name">VAT (15%)(15.0%)</field>
+			<field name="amount">0.150000</field>
 			<field name="type">percent</field>
 			<field name="account_collected_id" ref="l10n_chart_uk.chart2200"/>
 			<field name="account_paid_id" ref="l10n_chart_uk.chart2200"/>
