@@ -32,12 +32,13 @@ import tools
 class wizard_product_ecom_view(wizard.interface):
         def _action_open_product_view(self, cr, uid, data, context):
     
-            product_obj = pooler.get_pool(cr.dbname).get('ecommerce.category')
-            product_id = product_obj.browse(cr,uid,data['ids'][0]).category_id
+            category_obj = pooler.get_pool(cr.dbname).get('ecommerce.category')
+            category_id = category_obj.browse(cr,uid,data['ids'][0]).category_id
+            category_name = category_obj.read(cr, uid,data['ids'][0],['name'])
          
             print {
-                'domain': "[('categ_id','child_of',%s)]" % ([product_id.id]),
-                'name': 'Product View',
+                'domain': "[('categ_id','child_of',%s)]" % ([category_id.id]),
+                'name': category_name['name'],
                 'view_type': 'tree',
                 'res_model': 'product.product',
                 'view_id': False,       
@@ -45,8 +46,8 @@ class wizard_product_ecom_view(wizard.interface):
             }
             
             return  {
-                'domain': "[('categ_id','child_of',%s)]" % ([product_id.id]),
-                'name': 'Product View',
+                'domain': "[('categ_id','child_of',%s)]" % ([category_id.id]),
+                'name': category_name['name'],
                 'view_type': 'tree',
                 'res_model': 'product.product',
                 'view_id': False,       

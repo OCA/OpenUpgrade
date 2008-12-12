@@ -32,6 +32,7 @@ from osv import osv, fields
 import pooler
 import time
 import math
+import uuid
 
 from tools import config
 import mx.DateTime
@@ -41,7 +42,6 @@ class maintenance_maintenance_module(osv.osv):
     _description = "maintenance modules"
     _columns = {
         'name' : fields.char('Name', size=128, required=True),
-        'module_name': fields.char('Module Name', size=128, required=True,),
         'version': fields.char('Version', size=64,),
     }
 maintenance_maintenance_module()
@@ -62,19 +62,19 @@ class maintenance_maintenance(osv.osv):
         return True
 
     _columns = {
-        'name' : fields.char('Test Case', size=64),
-        'partner_id' : fields.many2one('res.partner','Partner'),
+        'name' : fields.char('Contract ID', size=64, required=True),
+        'partner_id' : fields.many2one('res.partner','Partner', required=True),
         'partner_invoice_id' : fields.many2one('res.partner.address','Address'),
-        'date_from' : fields.date('Date From'),
-        'date_to' : fields.date('Date To'),
-        'password' : fields.char('password', size=64, invisible=True),
+        'date_from' : fields.date('Date From', required=True),
+        'date_to' : fields.date('Date To', required=True),
+        'password' : fields.char('Password', size=64, invisible=True, required=True),
         'module_ids' : fields.many2many('maintenance.maintenance.module','maintenance_module_rel','maintenance_id','module_id',string='Modules'),
         'state' : fields.selection([('draft','Draft'), ('open','Open'), ('cancel','Cancel'), ('done','Done')], 'State', readonly=True),
     }
 
     _defaults = {
         'date_from':lambda *a: time.strftime('%Y-%m-%d'),
-        'password' : lambda obj,cr,uid,context={} : '',
+        'password' : lambda *a : str(uuid.uuid4()).split('-')[-1],
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'maintenance.maintenance'),
         'state': lambda *a: 'draft',
     }
@@ -84,19 +84,30 @@ class maintenance_maintenance(osv.osv):
     ]
 
     def check_contract(self, cr, uid, modules, contract):
-        external_modules=[]
-        maintenance_ids=self.search(cr,uid,[('name','=',contract['name']),('password','=',contract['password']),('date_from','<=',mx.DateTime.today()),('date_to','>=',mx.DateTime.today())],limit=1)
+        external_modules = []
+        contract_module_list = []
+        date_from = date_to = False
+        maintenance_ids=self.search(cr,uid,
+                                    [('name','=',contract['name']),
+                                     ('password','=',contract['password']),
+                                     ('date_from','<=',mx.DateTime.today()),
+                                     ('date_to','>=',mx.DateTime.today())
+                                    ],limit=1)
         if maintenance_ids:
-            maintenance_obj=self.browse(cr,uid,maintenance_ids)[0]
-            contract_module_list=map(lambda x:(x['name'], x['version']),maintenance_obj.module_ids)
+            maintenance_obj = self.browse(cr,uid,maintenance_ids)[0]
+            date_from = maintenance_obj.date_from
+            date_to = maintenance_obj.date_to
+            contract_module_list = map(lambda x:(x['name'], x['version']),maintenance_obj.module_ids)
             for module in modules:
                 if (module['name'],module['installed_version']) not in contract_module_list:
                     external_modules.append(module['name'])
-
         return { 
             'status': (maintenance_ids and ('full', 'partial')[bool(external_modules)] or 'none'),
-            'modules': external_modules,
+            'external_modules': external_modules,
+            'modules_with_contract' : contract_module_list,
             'message': '',
+            'date_from': date_from,
+            'date_to': date_to,
         }
 
     def onchange_partner_id(self, cr, uid, ids, part):
@@ -105,6 +116,14 @@ class maintenance_maintenance(osv.osv):
         addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['default'])
         return {'value':{'partner_invoice_id': addr['default']}}
 
+    def onchange_date_from(self, cr, uid, ids, date_from):
+        if not date_from:
+            return {'value:':{'date_to':False}}
+        return { 
+            'value': { 
+                'date_to' : (mx.DateTime.strptime(date_from, '%Y-%m-%d') + mx.DateTime.RelativeDate(years=1)).strftime("%Y-%m-%d") 
+            }
+        }
 maintenance_maintenance()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

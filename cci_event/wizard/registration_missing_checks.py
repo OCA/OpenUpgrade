@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -42,7 +42,7 @@ class missing_check_reg(wizard.interface):
         model_data_ids = pool_obj.get('ir.model.data').search(cr,uid,[('model','=','ir.ui.view'),('name','=','event_registration_form')])
         resource_id = pool_obj.get('ir.model.data').read(cr,uid,model_data_ids,fields=['res_id'])[0]['res_id']
         return {
-            'domain': "[('case_id','in', ["+','.join(map(str,data['form']['ids_case']))+"])]",
+            'domain': "[('id','in', ["+','.join(map(str,data['form']['ids_case']))+"])]",
             'name': 'Registration',
             'view_type': 'form',
             'view_mode': 'tree,form',

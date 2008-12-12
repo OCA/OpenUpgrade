@@ -68,8 +68,10 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_shop_basic_tree"/>
 	</record>
-	<menuitem name="ecommerce/Configuration/Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form"/>
-
+	<menuitem id="menu_ecommerce" name="Ecommerce"/>
+	<menuitem id="menu_ecommerce_configuration" name="Configuration" parent="menu_ecommerce"/>
+	<menuitem name="Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form" parent="menu_ecommerce_configuration"/>
+	
 	<!-- TREE VIEW OF THE CATEGORY -->
 
 		<record model="ir.ui.view" id="product_category_form_view">
@@ -103,8 +105,9 @@
 			<field name="view_type">tree</field>
 			<field name="view_id" ref="ecommerce_product_category_tree_view"/>
 		</record>
-		<menuitem name="ecommerce/Products/Products by Category" id="menu_ecommerce_product_category_action" action="ecommerce_product_category_action"/>
-
+		<menuitem id="menu_ecommerce_products" name="Products" parent="menu_ecommerce"/>
+		<menuitem name="Products by Category" id="menu_ecommerce_product_category_action" parent="menu_ecommerce_products" action="ecommerce_product_category_action"/>
+		
 <!--		Payment Address -->
 
 		<record model="ir.ui.view" id="view_payment_address">
@@ -161,7 +164,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_payment_address"/>
 	</record>
-	<menuitem name="ecommerce/Configuration/Payment Configuration" action="action_payment_ecommerce_form" id="menu_payment_ecommerce_form"/>
+	<menuitem name="Payment Configuration" parent="menu_ecommerce_configuration" action="action_payment_ecommerce_form" id="menu_payment_ecommerce_form"/>
 
 <!--		Payment Received -->
 
@@ -202,9 +205,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_payment_received"/>
 		</record>
-		<menuitem name="ecommerce/Configuration/Payment Received" action="action_payment_received_form" id="menu_payment_received_form"/>
-<!--	<menuitem parent="ecommerce.menu_payment_ecommerce_form" action="action_payment_received_form" id="menu_payment_received_form"/>-->
-
+		<menuitem name="Payment Received" parent="menu_ecommerce_configuration" action="action_payment_received_form" id="menu_payment_received_form"/>	
 </data>
 </openerp>
 

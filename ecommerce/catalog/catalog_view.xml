@@ -32,7 +32,7 @@
 			</field>
 		</field>
 	    </record>
-
+	    
 	   <!--  Reviews -->
 		<record model="ir.ui.view" id="ecommerce_reviews_view_tree">
 		 <field name="name">ecommerce.reviews.tree</field>
@@ -71,7 +71,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="ecommerce_reviews_view_tree"/>
 		</record>
-	    <menuitem name="ecommerce/Catalog/Reviews" id="menu_action_ecommerce_reviews_view_form" action="action_ecommerce_reviews_view_form"/>
-
+	    <menuitem name="Product Reviews" parent="ecommerce.menu_ecommerce_products" id="menu_action_ecommerce_reviews_view_form" action="action_ecommerce_reviews_view_form"/>
+	  
 	</data>
 </openerp>

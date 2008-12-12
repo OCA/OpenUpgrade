@@ -24,12 +24,11 @@
     "website" : "http://rvalyi.blogspot.com",
     "depends" : ["product", "stock"],
     "category" : "Generic Modules/Inventory Control",
-    "description":"""Turn production lot tracking codes into unique codes 
-    associated per product instance. Moreover, it
-    1) add a new checkbox on the product form to enable or disable this behavior
-    2) then forbid to perform a move if a move involves more than one product instance
+    "description":"""Turn production lot tracking into unique per product instance code. Moreover, it
+    1) adds a new checkbox on the product form to enable or disable this behavior
+    2) then forbids to perform a move if a move involves more than one product instance
     3) automagically splits up picking list movements into one movement per product instance
-    4) turn incoming pickings into an editable grid where you can directly type the code
+    4) turns incoming pickings into an editable grid where you can directly type the code
     of a new production number/code to create and associate to the move (it also checks it
     doesn't exist yet)""",
     "init_xml" : [],

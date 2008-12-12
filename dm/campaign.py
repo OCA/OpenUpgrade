@@ -413,7 +413,8 @@ class dm_campaign(osv.osv):
         'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
 #        'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_id', 'Purchase Lines'),
         'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
-        'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'}),
+        'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'},
+            help="The router is the partner who will send the mailing to the final customer"),
         'dtp_task_ids': one2many_mod_task('project.task', 'project_id', "DTP tasks",
                                                         domain=[('type','ilike','DTP')], context={'type':'DTP'}),
         'manufacturing_task_ids': one2many_mod_task('project.task', 'project_id', "Manufacturing tasks",
@@ -458,6 +459,15 @@ class dm_campaign(osv.osv):
         self.write(cr, uid, ids, {'state':'close'})
         return True
 
+    def check_forbidden_country(self,cr, uid, offer_id,country):
+        offers = self.pool.get('dm.offer').browse(cr, uid, offer_id)
+        forbidden_state_ids = [state_id.country_id.id for state_id in offers.forbidden_state_ids]
+        forbidden_country_ids = [country_id.id for country_id in offers.forbidden_country_ids]
+        forbidden_country_ids.extend(forbidden_state_ids)
+        if country  in  forbidden_country_ids :
+            return False
+        return True      
+
     def state_pending_set(self, cr, uid, ids, *args):
         self.manufacturing_state_inprogress_set(cr, uid, ids, *args)
         self.dtp_state_inprogress_set(cr, uid, ids, *args)
@@ -465,15 +475,10 @@ class dm_campaign(osv.osv):
         self.items_state_inprogress_set(cr, uid, ids, *args)
         self.write(cr, uid, ids, {'state':'pending'})
         return True
+  
 
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
-        if camp.offer_id:
-            forbidden_state_ids = [state_id.country_id.id for state_id in camp.offer_id.forbidden_state_ids]
-            forbidden_country_ids = [country_id.id for country_id in camp.offer_id.forbidden_country_ids]
-            forbidden_country_ids.extend(forbidden_state_ids)
-            if camp.offer_id.forbidden_country_ids and camp.country_id.id  in  forbidden_country_ids :
-                raise osv.except_osv("Error!!","This offer is not valid in this country")
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id :
             raise osv.except_osv("Error!!","Informations are missing. Check Date Start, Dealer and Trademark")
 
@@ -530,9 +535,10 @@ class dm_campaign(osv.osv):
                 history.write(cr,uid,history_id,{'offer_id':vals['offer_id']})
         res = super(dm_campaign,self).write(cr, uid, ids, vals, context)
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
-        srch_offer_ids = self.search(cr, uid, [('offer_id', '=', camp.offer_id.id)])
+        if not self.check_forbidden_country(cr, uid, camp.offer_id.id,camp.country_id.id):
+            raise osv.except_osv("Error!!","You cannot use this offer in this country")        
 
-        c = camp.country_id.id
+        # Set campaign end date at one year after start date if end date does not exist
         if ('date_start' in vals) and not ('date' in vals):
             time_format = "%Y-%m-%d"
             d = time.strptime(vals['date_start'],time_format)
@@ -541,14 +547,6 @@ class dm_campaign(osv.osv):
             super(osv.osv,self).write(cr, uid, camp.id, {'date':date_end})
             if camp.project_id:
                 self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
-        if camp.offer_id:
-            d = camp.offer_id.id
-            offers = self.pool.get('dm.offer').browse(cr, uid, d)
-            list_off = []
-            for off in offers.forbidden_country_ids:
-                list_off.append(off.id)
-                if c in list_off:
-                    raise osv.except_osv("Error!!","You cannot use this offer in this country")
 
             """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
             if not camp.trademark_id:
@@ -578,24 +576,26 @@ class dm_campaign(osv.osv):
             super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':0}, context)
             
         return res
-
+    
     def create(self,cr,uid,vals,context={}):
+        type_id = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','model')])[0]
         if context.has_key('campaign_type') and context['campaign_type']=='model':
-            vals['campaign_type']='model'
-
+            vals['campaign_type']=type_id
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
-
         data_cam = self.browse(cr, uid, id_camp)
-        # Set campaign end date at one year after start date
+        if not self.check_forbidden_country(cr, uid, data_cam.offer_id.id,data_cam.country_id.id):
+            raise osv.except_osv("Error!!","You cannot use this offer in this country")
+            
+        # Set campaign end date at one year after start date if end date does not exist
         if (data_cam.date_start) and (not data_cam.date):
             time_format = "%Y-%m-%d"
             d = time.strptime(data_cam.date_start,time_format)
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
             super(dm_campaign,self).write(cr, uid, id_camp, {'date':date_end})
-
+                
         # Set trademark to offer's trademark only if trademark is null
-        if vals['campaign_type'] != 'model':
+        if vals['campaign_type'] != type_id:
             if vals['offer_id'] and (not vals['trademark_id']):
                 offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
                 super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
@@ -619,7 +619,7 @@ class dm_campaign(osv.osv):
                 overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_ids':[[6,0,overlay_country_ids]]}, context)
                 super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay_ids1}, context)
                 
-        ''' cretae offer history'''
+        ''' create offer history'''
         history_vals={
               'offer_id' : data_cam1.offer_id.id,
               'date' : data_cam1.date_start,
@@ -643,7 +643,7 @@ class dm_campaign(osv.osv):
         camp = self.browse(cr,uid,ids)[0]
         default={}
         default['name']='New campaign from model %s' % camp.name
-        default['campaign_type'] = 'recruiting'
+        default['campaign_type'] = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','recruiting')])[0]
         default['responsible_id'] = uid
         self.copy(cr,uid,ids[0],default)
         return True
@@ -695,17 +695,16 @@ class dm_campaign_proposition(osv.osv):
                  l.append(i.id)
                  self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
                  super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'segment_ids':[(6,0,[])]})
-            return proposition_id
+        
         """
-        Function to duplicate segments only if 'keep_prices' is set to yes else not to duplicate products
+        Function to duplicate products only if 'keep_prices' is set to yes else not to duplicate products
         """
         if data.keep_prices == False:
             l = []
-            for i in data.product_ids:
+            for i in data.item_ids:
                  l.append(i.id)
-                 self.pool.get('dm.product').unlink(cr,uid,l)
-                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'product_ids':[(6,0,[])]})
-            return proposition_id
+                 self.pool.get('dm.campaign.proposition.item').unlink(cr,uid,l)
+                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'item_ids':[(6,0,[])]})
         return proposition_id
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
@@ -796,6 +795,20 @@ class dm_campaign_proposition(osv.osv):
             result[propo.id]=str(qty)
         return result
 
+    def _quantity_real_get(self, cr, uid, ids, name, args, context={}):
+        result={}
+        for propo in self.browse(cr,uid,ids):
+            if not propo.segment_ids:
+                result[propo.id]='No segments defined'
+                continue
+            qty = 0
+            for segment in propo.segment_ids:
+                if segment.quantity_real == 0:
+                    result[propo.id]='Real Quantity missing in a Segment'
+                    continue
+                qty += segment.quantity_real
+            result[propo.id]=str(qty)
+        return result
 
     def _default_camp_date(self, cr, uid, context={}):
         if 'date1' in context and context['date1']:
@@ -822,7 +835,8 @@ class dm_campaign_proposition(osv.osv):
                     help='The delivered quantity is the number of addresses you receive from the broker.'),
         'quantity_usable' : fields.function(_quantity_usable_get,string='Usable Quantity',type="char",size="64",method=True,readonly=True,
                     help='The usable quantity is the number of addresses you have after delivery, deduplication and cleaning.'),
-        'quantity_real': fields.integer('Real Quantity'),
+        'quantity_real' : fields.function(_quantity_real_get,string='Real Quantity',type="char",size="64",method=True,readonly=True,
+                    help='The real quantity is the number of addresses you really get in the file.'),
         'starting_mail_price' : fields.float('Starting Mail Price',digits=(16,2)),
         'customer_pricelist_id':fields.many2one('product.pricelist','Items Pricelist', required=False),
         'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
@@ -862,6 +876,24 @@ class dm_campaign_proposition(osv.osv):
 dm_campaign_proposition()
 
 
+class dm_customers_list_recruit_origin(osv.osv):
+    _name = "dm.customers_list.recruit_origin"
+    _description = "The origin of the adresses of a list"
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=16, required=True),
+    }
+dm_customers_list_recruit_origin()
+
+class dm_customers_list_type(osv.osv):
+    _name = "dm.customers_list.type"
+    _description = "Type of the adress list"
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=16, required=True),
+    }
+dm_customers_list_type()
+
 class dm_customers_list(osv.osv):
     _name = "dm.customers_list"
     _description = "A list of addresses proposed by an adresses broker"
@@ -881,6 +913,9 @@ class dm_customers_list(osv.osv):
         'broker_discount' : fields.float('Broker Discount (%)',digits=(16,2)),
         'other_cost' : fields.float('Other Cost',digits=(16,2)),
         'invoice_base' : fields.selection([('net','Net Addresses Quantity'),('raw','Raw Addresses Quantity')],'Invoicing based on'),
+        'recruiting_origin' : fields.many2one('dm.customers_list.recruit_origin','Recruiting Origin'),
+        'list_type' : fields.many2one('dm.customers_list.type','Type'),
+        'update_frq' : fields.integer('Update Frequency'),
         'notes': fields.text('Description'),
     }
     _defaults =  {
@@ -1077,26 +1112,39 @@ class dm_campaign_purchase_line(osv.osv):
                 """If Mailing Manufacturing purchase line"""
                 if int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Mailing Manufacturing')])[0]:
 
-                    """Get Manufacturing Criteria if asked"""
-                    criteria = []
+                    """If the product is a compound product (BoM) => Add Subproducts infos in document notes"""
+                    note = []
+                    cr.execute("select id from mrp_bom where product_id = %d limit 1" % (pline.product_id.id))
+                    bom_id = cr.fetchone()
+                    if bom_id:
+                        bom = self.pool.get('mrp.bom').browse(cr, uid, [bom_id[0]])[0]
+                        note.append("Product Composed of : ")
+                        note.append("---------------------------------------------------------------------------")
+                        for bom_child in bom.child_ids:
+                            note.append(bom_child.name)
+                            note.append("---------------------------------------------------------------------------")
+
+                    """Get Manufacturing Descriptions if asked"""
                     if pline.desc_from_offer:
                         for step in obj.offer_id.step_ids:
                             for const in step.manufacturing_constraint_ids:
                                 if not const.country_ids:
-                                    criteria.append("---------------------------------------------------------------------------")
-                                    criteria.append(const.name)
-                                    criteria.append(const.constraint)
+                                    note.append("---------------------------------------------------------------------------")
+                                    note.append("Description : ")
+                                    note.append("---------------------------------------------------------------------------")
+                                    note.append(const.name)
+                                    note.append(const.constraint)
                                 elif obj.country_id in const.country_ids:
-                                    criteria.append("---------------------------------------------------------------------------")
-                                    criteria.append(const.name + ' for country :' +  obj.country_id.name)
-                                    criteria.append(const.constraint)
+                                    note.append("---------------------------------------------------------------------------")
+                                    note.append(const.name + ' for country :' +  obj.country_id.name)
+                                    note.append(const.constraint)
 
                     """Add note if defined"""
                     if pline.notes:
-                        criteria.append("---------------------------------------------------------------------------")
-                        criteria.append(pline.notes)
+                        note.append("---------------------------------------------------------------------------")
+                        note.append(pline.notes)
                     else:
-                        criteria.append(' ')
+                        note.append(' ')
 
                     """If Document Type is Request for Quotation => create 1 Request for Quotation/Supplier grouped in a Tender"""
                     """If Document Type is Purchase Order => Create One Purchase Order for the main Supplier"""
@@ -1128,7 +1176,7 @@ class dm_campaign_purchase_line(osv.osv):
                                 #'dest_address_id': delivery_address.id,
                                 'location_id': 1,
                                 'pricelist_id': pricelist_id,
-                                'notes': "\n".join(criteria),
+                                'notes': "\n".join(note),
                                 'tender_id': tender_id,
                                 'dm_campaign_purchase_line': pline.id
                             })
@@ -1254,9 +1302,14 @@ class dm_campaign_purchase_line(osv.osv):
                             #'dest_address_id': delivery_address.id,
                             'location_id': 1,
                             'pricelist_id': pricelist_id,
-                            'notes': "\n".join(criteria),
+                            'notes': "\n".join(note),
                             'dm_campaign_purchase_line': pline.id
                         })
+
+                        # Set as PO
+                        wf_service = netsvc.LocalService("workflow")
+                        wf_service.trg_validate(uid, 'purchase.order', purchase_id, 'purchase_confirm', cr)
+
 
                         ''' Create po lines for each proposition (of each campaign if group)'''
                         lines = []
@@ -1357,24 +1410,24 @@ class dm_campaign_purchase_line(osv.osv):
                     """If Customers List purchase line"""
                 elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Customers List')])[0]:
 
-                    """Get Customers File Criteria if asked"""
-                    criteria = []
+                    """Get Customers File note if asked"""
+                    note = []
                     if pline.desc_from_offer:
-                        criteria.append("---------------------------------------------------------------------------")
-                        criteria.append('Campaign Name : %s' % (obj.name,))
-                        criteria.append('Campaign Code : %s' % (obj.code1,))
-                        criteria.append('Drop Date : %s' % (obj.date_start,))
-                        criteria.append("---------------------------------------------------------------------------")
-                        criteria.append('Trademark : %s' % (obj.trademark_id.name,))
-                        criteria.append('planned Quantity : %s' % (obj.quantity_planned_total,))
-                        criteria.append('Responsible : %s' % (obj.files_responsible_id.name,))
+                        note.append("---------------------------------------------------------------------------")
+                        note.append('Campaign Name : %s' % (obj.name,))
+                        note.append('Campaign Code : %s' % (obj.code1,))
+                        note.append('Drop Date : %s' % (obj.date_start,))
+                        note.append("---------------------------------------------------------------------------")
+                        note.append('Trademark : %s' % (obj.trademark_id.name,))
+                        note.append('planned Quantity : %s' % (obj.quantity_planned_total,))
+                        note.append('Responsible : %s' % (obj.files_responsible_id.name,))
 
                     """Add note if defined"""
                     if pline.notes:
-                        criteria.append("---------------------------------------------------------------------------")
-                        criteria.append(pline.notes)
+                        note.append("---------------------------------------------------------------------------")
+                        note.append(pline.notes)
                     else:
-                        criteria.append(' ')
+                        note.append(' ')
 
 
                     """If Document Type is Request for Quotation => create 1 Request for Quotation/Supplier grouped in a Tender"""
@@ -1407,7 +1460,7 @@ class dm_campaign_purchase_line(osv.osv):
                                 #'dest_address_id': delivery_address.id,
                                 'location_id': 1,
                                 'pricelist_id': pricelist_id,
-                                'notes': "\n".join(criteria),
+                                'notes': "\n".join(note),
                                 'tender_id': tender_id,
                                 'dm_campaign_purchase_line': pline.id
                             })
@@ -1483,9 +1536,7 @@ class dm_campaign_purchase_line(osv.osv):
                         for propo in obj.proposition_ids:
                             for segment in propo.segment_ids:
                                 lists.append(segment.customers_list_id)
-                        print "Customers List : ", lists
                         cust_lists = set(lists)
-                        print "Customers List (unique) : ", cust_lists
 
                         """Create 1 PO / Customets List"""
                         for list in cust_lists:
@@ -1522,9 +1573,13 @@ class dm_campaign_purchase_line(osv.osv):
                                 'dest_address_id': dest_address_id,
                                 'location_id': 1,
                                 'pricelist_id': pricelist_id,
-                                'notes': "\n".join(criteria),
+                                'notes': "\n".join(note),
                                 'dm_campaign_purchase_line': pline.id
                             })
+
+                            # Set as PO
+                            wf_service = netsvc.LocalService("workflow")
+                            wf_service.trg_validate(uid, 'purchase.order', purchase_id, 'purchase_confirm', cr)
 
                             for propo in obj.proposition_ids:
                                 for segment in propo.segment_ids:
@@ -1926,20 +1981,6 @@ class dm_campaign_purchase_line(osv.osv):
                                        'account_analytic_id': propo.analytic_account_id,
                                     })
 
-                    if pline.type_document == 'po':
-                        print "Set as Purchase Order"
-
-                    '''
-                    # Set campaign supervision states
-                    if pline.type == 'translation':
-                        pline.campaign_id.write({'translation_state':'inprogress'})
-                    elif pline.type == 'manufacturing':
-                        pline.campaign_id.write({'manufacturing_state':'inprogress'})
-                    elif pline.type == 'items':
-                        pline.campaign_id.write({'items_state':'inprogress'})
-                    elif pline.type == 'customer_file':
-                        pline.campaign_id.write({'customer_file_state':'inprogress'})
-                    '''
 
         return True
 
@@ -1950,12 +1991,6 @@ class dm_campaign_purchase_line(osv.osv):
             #print "From _default_date : ",newdate.strftime('%Y-%m-%d %H:%M:%S')
             return newdate.strftime('%Y-%m-%d %H:%M:%S')
         return []
-
-
-    def desc_from_offer_get(self, cr, uid, ids, context={}):
-        """Get  Descriptions from offer"""
-
-        return True
 
 
     def _state_get(self, cr, uid, ids, name, args, context={}):
