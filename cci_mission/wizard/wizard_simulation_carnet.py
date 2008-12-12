@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -26,8 +26,8 @@ import pooler
 
 from osv import fields, osv
 form = """<?xml version="1.0"?>
-<form string="Create invoices">
-    <field name="msg" width="400"/>
+<form string="Simulation">
+    <field name="msg" width="400" nolabel="1"/>
 </form>
 """
 
@@ -36,7 +36,6 @@ fields = {
          }
 
 def _createInvoices(self, cr, uid, data, context):
-    pool_obj = pooler.get_pool(cr.dbname)
     obj_carnet = pool_obj.get('cci_missions.ata_carnet')
     data_carnet = obj_carnet.browse(cr,uid,data['ids'])
     obj_lines=pool_obj.get('account.invoice.line')
@@ -59,7 +58,7 @@ def _createInvoices(self, cr, uid, data, context):
         list.append(carnet.warranty_product_id.id)
 
         if carnet.invoice_id:
-            message_total += "ID "+str(carnet.id)+ " : " + str(carnet.invoice_id.amount_total) + "\n"
+            message_total += "ID: "+str(carnet.id)+ " , " +'Total Amount to Pay: ' + str(carnet.invoice_id.amount_total) + "\n"
             continue
         context.update({'date':carnet.creation_date})
 
@@ -140,7 +139,7 @@ def _createInvoices(self, cr, uid, data, context):
             cur = carnet.partner_id.property_product_pricelist.currency_id #should be check , if its corect or not!
             amount = cur_obj.round(cr, uid, cur, amount)
             total = total + amount
-        message_total += "ID "+str(carnet.id)+ " : " + str(total) + "\n"
+        message_total += "ID: "+str(carnet.id)+ " , " + 'Total Amount to Pay: ' +str(total) + "\n"
     return {'msg' : message_total}
 
 class create_invoice(wizard.interface):

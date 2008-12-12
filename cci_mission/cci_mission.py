@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -174,7 +174,8 @@ class cci_missions_embassy_folder(osv.osv):
         'section_id': lambda obj, cr, uid, context: obj.pool.get('crm.case.section').search(cr, uid, [('name','=','Embassy Folder')])[0],
         'invoice_date': lambda *a: False,
         'name': lambda *args: '/',
-        'state' :  lambda *a : 'draft'
+        'state' :  lambda *a : 'draft',
+        "date": lambda *a: time.strftime("%Y-%m-%d %H:%M:%S")
     }
 
     _constraints = [(check_folder_line, 'Error: Only One Embassy Folder line allowed for each type!', ['embassy_folder_line_ids'])]
@@ -270,7 +271,7 @@ class cci_missions_dossier_type(osv.osv):
         'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA','ATA Carnet')],'Type',required=True),
         'warranty_product_1': fields.many2one('product.product', 'Warranty product for ATA carnet if Own Risk'),
         'warranty_product_2': fields.many2one('product.product', 'Warranty product for ATA carnet if not own Risk'),
-        'id_letter' : fields.char('ID Letter', size=1, help='for identify the type of certificate by the federation' ), 
+        'id_letter' : fields.char('ID Letter', size=1, help='for identify the type of certificate by the federation' ),
     }
 
 cci_missions_dossier_type()
