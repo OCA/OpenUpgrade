@@ -35,7 +35,7 @@
                 <field name="campaign_type"/>
                 <field name="date_start"/>
                 <field name="responsible_id" />
-                <field name="country_id" />
+				<field name="country_id" />
                 <field name="state"/>
             </tree>
         </field>
@@ -163,7 +163,30 @@
                                 <field name="date_close" string="Real Date"/>
                             </tree>
                         </field>
-                        <field name="dtp_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
+                        <field name="dtp_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
+                        	<form string="DTP Purchase Line" colspan="4">
+                                <group colspan="2" col="2">
+                                    <separator string="Purchase Line Product" colspan="2"/>
+                                    <field name="product_category"/>
+                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
+                                    <field name="uom_id"/>
+                                    <separator string="Documents Generation" colspan="2"/>
+                                    <field name="type_document"/>
+                                    <field name="desc_from_offer" />
+<!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
+                                </group>
+                                <group colspan="2" col="2">
+                                    <separator string="Quantity" colspan="2"/>
+                                    <field name="type_quantity"/>
+                                    <separator string="Dates" colspan="4"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_delivery"/>
+                                </group>
+                                <separator string="Notes" colspan="4"/>
+                                <field name="notes" colspan="4" nolabel="1"/>
+                                <field name="state" nolabel="1"/>
+                            </form>
+                        </field>
                         <separator string="DTP Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="dtp_state" nolabel="1"/>
@@ -237,7 +260,30 @@
                                 <field name="date_close" string="Real Date"/>
                             </tree>
                         </field>
-                        <field name="item_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list"/>
+                        <field name="item_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
+	                        <form string="Item Purchase Line" colspan="4">
+                                <group colspan="2" col="2">
+                                    <separator string="Purchase Line Product" colspan="2"/>
+                                    <field name="product_category"/>
+                                    <field name="product_id" domain="[('categ_id','=',int(product_category))]"/>
+                                    <field name="uom_id"/>
+                                    <separator string="Documents Generation" colspan="2"/>
+                                    <field name="type_document"/>
+                                    <field name="desc_from_offer" />
+<!--                                    <button name="desc_from_offer_get" string="Get Description from Offer" type="object" context="{'campaign_id':'test'}"/>-->
+                                </group>
+                                <group colspan="2" col="2">
+                                    <separator string="Quantity" colspan="2"/>
+                                    <field name="type_quantity"/>
+                                    <separator string="Dates" colspan="4"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_delivery"/>
+                                </group>
+                                <separator string="Notes" colspan="4"/>
+                                <field name="notes" colspan="4" nolabel="1"/>
+                                <field name="state" nolabel="1"/>
+                            </form>
+                        </field>
                         <separator string="Items Procurement Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="items_state" nolabel="1"/>
@@ -1474,6 +1520,7 @@
         view_mode="tree,form"
         id="act_campaing_proposition_opened"
         domain="[('camp_id','=',active_id)]"
+        context="{'camp_id':active_id}"
     />
 
     <act_window name="Purchase Lines"

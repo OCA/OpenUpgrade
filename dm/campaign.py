@@ -491,6 +491,17 @@ class dm_campaign(osv.osv):
             raise osv.except_osv("Error!!","Campaign cannot be opened before drop date!!!")
 
         self.write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
+        
+        ''' create offer history'''
+        history_vals={
+              'offer_id' : camp.offer_id.id,
+              'date' : camp.date_start,
+              'campaign_id' : camp.id,
+              'code' : camp.code1,
+              'responsible_id' : camp.responsible_id.id,
+              }
+        history=self.pool.get("dm.offer.history")
+        history.create(cr, uid, history_vals,{})
         return True
 
     def manufacturing_state_inprogress_set(self, cr, uid, ids, *args):
@@ -527,12 +538,6 @@ class dm_campaign(osv.osv):
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
-        ''' modify offer history'''
-        if 'offer_id' in vals :
-            history=self.pool.get("dm.offer.history")
-            history_id = history.search(cr,uid,[('campaign_id','=',ids[0])])
-            if history_id:
-                history.write(cr,uid,history_id,{'offer_id':vals['offer_id']})
         res = super(dm_campaign,self).write(cr, uid, ids, vals, context)
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
         if not self.check_forbidden_country(cr, uid, camp.offer_id.id,camp.country_id.id):
@@ -619,16 +624,6 @@ class dm_campaign(osv.osv):
                 overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_ids':[[6,0,overlay_country_ids]]}, context)
                 super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay_ids1}, context)
                 
-        ''' create offer history'''
-        history_vals={
-              'offer_id' : data_cam1.offer_id.id,
-              'date' : data_cam1.date_start,
-              'campaign_id' : data_cam1.id,
-              'code' : data_cam1.code1,
-              'responsible_id' : data_cam1.responsible_id.id,
-              }
-        history=self.pool.get("dm.offer.history")
-        history.create(cr, uid, history_vals,{})
         return id_camp
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
@@ -658,6 +653,12 @@ class dm_campaign(osv.osv):
         super(dm_campaign, self).write(cr, uid, cmp_id, {'name':name_default, 'date_start':0, 'date':0, 'project_id':0})
         return cmp_id
 
+    def unlink(self, cr, uid, ids, context={}):
+        for campaign in self.browse(cr, uid, ids, context):
+            history_id = self.pool.get('dm.offer.history').search(cr, uid, [('campaign_id','=',campaign.id)])
+            self.pool.get('dm.offer.history').unlink(cr, uid, history_id, context)
+        return super(dm_campaign, self).unlink(cr, uid, ids, context)
+
 dm_campaign()
 
 
@@ -665,21 +666,12 @@ class dm_campaign_proposition(osv.osv):
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
 
-    def write(self, cr, uid, ids, vals, context=None):
-        res = super(dm_campaign_proposition,self).write(cr, uid, ids, vals, context)
-        camp = self.pool.get('dm.campaign.proposition').browse(cr,uid,ids)[0]
-        c = camp.camp_id.id
-        id = self.pool.get('dm.campaign').browse(cr, uid, c)
-        if not camp.date_start:
-            super(osv.osv, self).write(cr, uid, camp.id, {'date_start':id.date_start})
-        return res
-
-    def create(self,cr,uid,vals,context={}):
-        id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
-        if not vals['date_start']:
-            if id.date_start:
-                vals['date_start']=id.date_start
-        return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
+    def default_get(self, cr, uid, fields, context=None):
+        value = super(dm_campaign_proposition, self).default_get(cr, uid, fields, context)
+        if 'camp_id' in context:
+            campaign = self.pool.get('dm.campaign').browse(cr, uid, context['camp_id'])
+            value['date_start'] = campaign.date_start
+        return value
 
     def copy(self, cr, uid, id, default=None, context={}):
         """

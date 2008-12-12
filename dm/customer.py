@@ -248,10 +248,10 @@ class dm_offer_history(osv.osv):
     _order = 'date'
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer', required=True, ondelete="cascade"),
-        'date' : fields.date('Date'),
+        'date' : fields.date('Drop Date'),
 #        'user_id' : fields.many2one('res.users', 'User'),
 #        'state': fields.selection(AVAILABLE_STATES, 'Status', size=16)
-        'campaign_id' : fields.many2one('dm.campaign','Name'),
+        'campaign_id' : fields.many2one('dm.campaign','Name', ondelete="cascade"),
         'code' : fields.char('Code', size=16),
         'responsible_id' : fields.many2one('res.users','Responsible'),
     }
