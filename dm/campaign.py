@@ -505,19 +505,35 @@ class dm_campaign(osv.osv):
         return True
 
     def manufacturing_state_inprogress_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'manufacturing_state':'inprogress'})
+        for id in self.browse(cr,uid,ids):
+            if (id.state == 'draft') or (id.state == 'pending'):
+                self.write(cr, uid, ids, {'manufacturing_state':'inprogress'})
+            else:
+                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
         return True
 
     def dtp_state_inprogress_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'dtp_state':'inprogress'})
+        for id in self.browse(cr,uid,ids):
+            if (id.state == 'draft') or (id.state == 'pending'):
+                self.write(cr, uid, ids, {'dtp_state':'inprogress'})
+            else:
+                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
         return True
  
     def customer_file_state_inprogress_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'customer_file_state':'inprogress'})
+        for id in self.browse(cr,uid,ids):
+            if (id.state == 'draft') or (id.state == 'pending'):
+                self.write(cr, uid, ids, {'customer_file_state':'inprogress'})
+            else:
+                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
         return True       
     
     def items_state_inprogress_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'items_state':'inprogress'})
+        for id in self.browse(cr,uid,ids):
+            if (id.state == 'draft') or (id.state == 'pending'):
+                self.write(cr, uid, ids, {'items_state':'inprogress'})
+            else:
+                raise osv.except_osv("Error!!","You cannot be set back to 'In Progress' once the campaign is opened!!!")
         return True 
     
     def manufacturing_state_done_set(self, cr, uid, ids, *args):
@@ -525,7 +541,6 @@ class dm_campaign(osv.osv):
         return True
     
     def dtp_state_done_set(self, cr, uid, ids, *args):
-        print "6"
         self.write(cr, uid, ids, {'dtp_state':'done'})
         return True
 
@@ -673,6 +688,22 @@ class dm_campaign_proposition(osv.osv):
             value['date_start'] = campaign.date_start
         return value
 
+    def write(self, cr, uid, ids, vals, context=None):
+        res = super(dm_campaign_proposition,self).write(cr, uid, ids, vals, context)
+        camp = self.pool.get('dm.campaign.proposition').browse(cr,uid,ids)[0]
+        c = camp.camp_id.id
+        id = self.pool.get('dm.campaign').browse(cr, uid, c)
+        if not camp.date_start:
+            super(osv.osv, self).write(cr, uid, camp.id, {'date_start':id.date_start})
+        return res
+
+    def create(self,cr,uid,vals,context={}):
+        id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
+        if not vals['date_start']:
+            if id.date_start:
+                vals['date_start']=id.date_start
+        return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
+    
     def copy(self, cr, uid, id, default=None, context={}):
         """
         Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments

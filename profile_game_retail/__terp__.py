@@ -34,6 +34,7 @@
         "stock_planning",
         "crm_configuration",
         "mrp_jit",
+        "l10n_fr",
         "account_budget",
         "sale_forecast"
     ],

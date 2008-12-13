@@ -144,9 +144,10 @@
                         </field>
                         <separator string="Manufacturing Status" colspan="4"/>
                         <group col="8" colspan="4">
-                               <field name="manufacturing_state" nolabel="1"/>
+                            <field name="manufacturing_state" nolabel="1"/>
                             <button name="manufacturing_state_inprogress_set" string="In Progress" attrs="{'invisible':[('manufacturing_state','!=','pending')]}" type="object"/>
                             <button name="manufacturing_state_done_set" string="Done" attrs="{'invisible':[('manufacturing_state','!=','inprogress')]}" type="object"/>
+                        	<button name="manufacturing_state_inprogress_set" string="Set to In Progress" attrs="{'invisible':[('manufacturing_state','!=','done')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Desktop Publishing">
@@ -192,6 +193,7 @@
                             <field name="dtp_state" nolabel="1"/>
                             <button name="dtp_state_inprogress_set" string="In Progress" attrs="{'invisible':[('dtp_state','!=','pending')]}" type="object"/>
                             <button name="dtp_state_done_set" string="Done" attrs="{'invisible':[('dtp_state','!=','inprogress')]}" type="object"/>
+                        	<button name="dtp_state_inprogress_set" string="Set to In Progress" attrs="{'invisible':[('dtp_state','!=','done')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Customers Files">
@@ -244,6 +246,7 @@
                             <field name="customer_file_state" nolabel="1"/>
                             <button name="customer_file_state_inprogress_set" string="In Progress" attrs="{'invisible':[('customer_file_state','!=','pending')]}" type="object"/>
                             <button name="customer_file_state_done_set" string="Done" attrs="{'invisible':[('customer_file_state','!=','inprogress')]}" type="object"/>
+                        	<button name="customer_file_state_inprogress_set" string="Set to In Progress" attrs="{'invisible':[('customer_file_state','!=','done')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Items Procurement">
@@ -289,6 +292,7 @@
                             <field name="items_state" nolabel="1"/>
                             <button name="items_state_inprogress_set" string="In Progress" attrs="{'invisible':[('items_state','!=','pending')]}" type="object"/>
                             <button name="items_state_done_set" string="Done" attrs="{'invisible':[('items_state','!=','inprogress')]}" type="object"/>
+                        	<button name="items_state_inprogress_set" string="Set to In Progress" attrs="{'invisible':[('items_state','!=','done')]}" type="object"/>
                         </group>
                     </page>
                     <page string="Notes">
@@ -1530,6 +1534,15 @@
         view_mode="tree,form"
         id="act_campaign_purchase_line_opened"
         domain="[('campaign_id','=',active_id)]"
+    />
+    
+	<act_window name="Back To Campaign"
+        res_model="dm.campaign"
+        src_model="dm.campaign.proposition"
+        view_type="form"
+        view_mode="tree,form"
+        id="act_campaign_opened"
+        domain="[('proposition_ids','in',[active_id])]"
     />
     
 </data>
