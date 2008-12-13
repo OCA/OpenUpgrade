@@ -47,16 +47,16 @@
 	</data>
 	<data noupdate="1">
 		<record id="base.main_partner" model="res.partner">
-            <field name="property_account_receivable" ref="profile_game_retail.account_recv"/>
-			<field name="property_account_payable" ref="profile_game_retail.account_pay"/>
+            <field name="property_account_receivable" ref="l10n_fr.a_recv"/>
+			<field name="property_account_payable" ref="l10n_fr.a_pay"/>
         </record>
 		<record id="res_partner_chinasoundelectronic0" model="res.partner">
 			<field eval="&quot;&quot;&quot;Très bons tarifs et sérieux.
 Le seul problème sont les délais de livraison par bateau qui sont très longs.&quot;&quot;&quot;" name="comment"/>
 			<field eval="1" name="active"/>
 			<field name="property_product_pricelist" ref="product.list0"/>
-			<field name="property_account_receivable" ref="profile_game_retail.account_recv"/>
-			<field name="property_account_payable" ref="profile_game_retail.account_pay"/>
+		    <field name="property_account_receivable" ref="l10n_fr.a_recv"/>
+			<field name="property_account_payable" ref="l10n_fr.a_pay"/>
 			<field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
 			<field eval="&quot;&quot;&quot;CSE&quot;&quot;&quot;" name="ref"/>
 			<field eval="1" name="supplier"/>
@@ -115,8 +115,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field ref="account_pay" name="property_account_expense"/>
-			<field ref="account_recv" name="property_account_income"/>
+			<field ref="l10n_fr.a_pay" name="property_account_expense"/>
+			<field ref="l10n_fr.a_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_0" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>
@@ -175,8 +175,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field ref="account_pay" name="property_account_expense"/>
-			<field ref="account_recv" name="property_account_income"/>
+			<field ref="l10n_fr.a_pay" name="property_account_expense"/>
+			<field ref="l10n_fr.a_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_3" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>
@@ -226,8 +226,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field ref="account_pay" name="property_account_expense"/>
-			<field ref="account_recv" name="property_account_income"/>
+			<field ref="l10n_fr.a_pay" name="property_account_expense"/>
+			<field ref="l10n_fr.a_recv" name="property_account_income"/>
 		</record>
 	</data>
 	<data noupdate="1">
@@ -279,8 +279,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field ref="account_pay" name="property_account_expense"/>
-			<field ref="account_recv" name="property_account_income"/>
+			<field ref="l10n_fr.a_pay" name="property_account_expense"/>
+			<field ref="l10n_fr.a_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_11" model="product.supplierinfo">
 			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
@@ -323,9 +323,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field ref="account_pay" name="property_account_expense"/>
-			<field ref="account_recv" name="property_account_income"/>
-
+			<field ref="l10n_fr.a_pay" name="property_account_expense"/>
+			<field ref="l10n_fr.a_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_5" model="product.supplierinfo">
 			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
@@ -372,8 +371,8 @@ Le seul problème sont les délais de livraison par bateau qui sont très longs.
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field ref="account_pay" name="property_account_expense"/>
-			<field ref="account_recv" name="property_account_income"/>
+			<field ref="l10n_fr.a_pay" name="property_account_expense"/>
+			<field ref="l10n_fr.a_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_7" model="product.supplierinfo">
 			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
@@ -417,8 +416,8 @@ Le JackHammer est le subwoofer anniversaire pour célébrer les 35 ans d’MTX. 
 			<field eval="[(6,0,[])]" name="taxes_id"/>
 			<field eval="1.0" name="produce_delay"/>
 			<field eval="0" name="rental"/>
-			<field ref="account_pay" name="property_account_expense"/>
-			<field ref="account_recv" name="property_account_income"/>
+			<field ref="l10n_fr.a_pay" name="property_account_expense"/>
+			<field ref="l10n_fr.a_recv" name="property_account_income"/>
 		</record>
 		<record id="product_supplierinfo_8" model="product.supplierinfo">
 			<field name="name" ref="res_partner_chinasoundelectronic0"/>

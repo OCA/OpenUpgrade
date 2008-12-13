@@ -64,14 +64,21 @@ class profile_game_retail_phase_one(osv.osv):
     #
     # TODO: check pre process very carefully
     #
-    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
+    def fields_view_get(self, cr, uid, user, view_id=None, view_type='form', context=None, toolbar=False):
         res = super(profile_game_retail_phase_one, self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-
-        res['arch'] = res['arch'].replace('role1', 'Fabien')
-        res['arch'] = res['arch'].replace('role2', 'Fabien')
-        res['arch'] = res['arch'].replace('role3', 'Fabien')
-        res['arch'] = res['arch'].replace('role4', 'Fabien')
+        p_obj=self.pool.get('profile.game.retail')
+        p_id=p_obj.search(cr,uid,[])
+        p_br=p_obj.browse(cr,uid,p_id)
+        if p_br[0].hr_user_id:
+            hr_name=p_br[0].hr_user_id.name
+        else:
+            hr_name=''
+        res['arch'] = res['arch'].replace('SM', p_br[0].sales_user_id.name)
+        res['arch'] = res['arch'].replace('HR',hr_name)
+        res['arch'] = res['arch'].replace('FM',p_br[0].finance_user_id.name)
+        res['arch'] = res['arch'].replace('LG', p_br[0].logistic_user_id.name)
         return res
+
     def error(self, cr, uid,step_id, msg=''):
         err_msg=''
         step=step_id and self.pool.get('game.scenario.step').browse(cr,uid,step_id) or False
@@ -128,8 +135,8 @@ class profile_game_retail_phase_one(osv.osv):
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
         pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid:
-            proc_obj = self.pool.get('mrp.procurement')
-            proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
+       #     proc_obj = self.pool.get('mrp.procurement')
+       #     proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
             return self.write(cr,uid,pid,{'step3':True,'state':'print_rfq'})
         return False
 

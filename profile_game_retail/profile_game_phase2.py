@@ -79,6 +79,21 @@ import random
 class profile_game_retail(osv.osv):
     _name="profile.game.retail"
 
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
+        res = super(profile_game_retail,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
+        p_id = self.search(cr, uid, [])
+        p_br = self.browse(cr, uid, p_id)
+        if p_br[0].hr_user_id:
+            hr_name = p_br[0].hr_user_id.name
+        else:
+            hr_name=''
+        res['arch'] = res['arch'].replace('SM', p_br[0].sales_user_id.name)
+        res['arch'] = res['arch'].replace('HR',hr_name)
+        res['arch'] = res['arch'].replace('FM',p_br[0].finance_user_id.name)
+        res['arch'] = res['arch'].replace('LG', p_br[0].logistic_user_id.name)
+        return res
+
+
     def _calculate_detail(self, cr, uid, ids, field_names, arg, context):
         res = {}
         fiscal_obj = self.pool.get('account.fiscalyear')
@@ -93,8 +108,8 @@ class profile_game_retail(osv.osv):
             cur_year = int(fiscalyear.code[2:])
             prev_fy_datestart = date(cur_year - 1,01,01)
             prev_fy_datestop = date(cur_year - 1,12,31)
-            print "prev_fy_datestart",prev_fy_datestart
-            print "prev_fy_datestop",prev_fy_datestop
+       #     print "prev_fy_datestart",prev_fy_datestart
+        #    print "prev_fy_datestop",prev_fy_datestop
             # calculate finance detail
             if 'expenses_forecast' in field_names or 'total_refund' in field_names or 'total_current_refund' in field_names:
                 mapping={
@@ -503,7 +518,7 @@ class profile_game_retail(osv.osv):
         id = self.pool.get('account.fiscalyear').search(cr, uid, [('code','=',prev_fy)])
         self.pool.get('account.fiscalyear').write(cr, uid, id,{'state':'done'})
         periods = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id','in',id)])
-        print ":::::::::periods:",periods,self.pool.get('account.fiscalyear').browse(cr, uid, periods)
+        #print ":::::::::periods:",periods,self.pool.get('account.fiscalyear').browse(cr, uid, periods)
         for period in self.pool.get('account.fiscalyear').browse(cr, uid, periods):
             self.pool.get('account.period').write(cr, uid, period.id, {'state':'done'})
         return
@@ -643,8 +658,8 @@ class profile_game_config_wizard(osv.osv_memory):
             lower = -2
             years = int(res['years'])
             players = int(res['state'])
-            start_date = DateTime.strptime(time.strftime('%Y-01-01'),'%Y-%m-%d')
-            stop_date = DateTime.strptime(time.strftime('%Y-12-31'),'%Y-%m-%d')
+            start_date = mx.DateTime.strptime(time.strftime('%Y-01-01'),'%Y-%m-%d')
+            stop_date = mx.DateTime.strptime(time.strftime('%Y-12-31'),'%Y-%m-%d')
             while lower <= years:
                 new_start_date = datetime.date(start_date.year+lower,1,1)
                 new_stop_date = datetime.date(stop_date.year+lower,12,31)
