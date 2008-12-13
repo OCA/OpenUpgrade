@@ -90,8 +90,9 @@
         		<hpaned>
         			<child1>
             			<action colspan="4" name="%(action_view_forecast)d" string="Draft Sales Forecast Lines" width="500"/>
-            			<button colspan="4" icon="terp-purchase" name="%(hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_validate)d" string="My Department's Timesheet to Validate" type="action" width="300"/>
+            			<button colspan="4" icon="terp-purchase" name="%(hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_validate)d" string="My Departments' Timesheets to Validate" type="action" width="300"/>
             			<action colspan="4" name="%(report_sale.action_turnover_month_tree)d" string="Turnover Per Month"/>
+            			<action colspan="4" name="%(report_crm.action_report_crm_case_section_tree)d" string="Cases By Section"/>
             		</child1>
             		<child2>
             			<action colspan="4" name="%(report_sale.action_so_pipeline)d" string="Sales Pipeline"/>
