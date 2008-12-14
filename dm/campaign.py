@@ -1137,7 +1137,7 @@ class dm_campaign_purchase_line(osv.osv):
 
                     """If the product is a compound product (BoM) => Add Subproducts infos in document notes"""
                     note = []
-                    cr.execute("select id from mrp_bom where product_id = %d limit 1" % (pline.product_id.id))
+                    cr.execute("select id from mrp_bom where product_id = %s limit 1" % (pline.product_id.id))
                     bom_id = cr.fetchone()
                     if bom_id:
                         bom = self.pool.get('mrp.bom').browse(cr, uid, [bom_id[0]])[0]
@@ -1301,7 +1301,7 @@ class dm_campaign_purchase_line(osv.osv):
 
                         """Create 1 PO for the main supplier"""
                         """Get the main supplier = the 1st product supplier with sequence = 1"""
-                        cr.execute('select name from product_supplierinfo where product_id = %d and sequence = 1', (pline.product_id.id,))
+                        cr.execute('select name from product_supplierinfo where product_id = %s and sequence = 1', (pline.product_id.id,))
                         res = cr.fetchone()
                         supplier = self.pool.get('res.partner').browse(cr,uid,[res[0]])[0]
                         partner_id = supplier.id

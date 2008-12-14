@@ -29,7 +29,7 @@ class product_index(osv.osv):
         res={}
         date = context.get('date', time.strftime('%Y-%m-%d'))
         for id in ids:
-            cr.execute("SELECT index_id, rate FROM product_index_rate WHERE index_id = %d AND name <= '%s' ORDER BY name desc LIMIT 1" % (id, date))
+            cr.execute("SELECT index_id, rate FROM product_index_rate WHERE index_id = %s AND name <= '%s' ORDER BY name desc LIMIT 1" % (id, date))
             if cr.rowcount:
                 id, rate=cr.fetchall()[0]
                 res[id]=rate
@@ -61,9 +61,9 @@ class product_index(osv.osv):
     def compute(self, cr, uid, index, amount, date_from, date_to=None, round=True, context={}):
         if not date_to:
             date_to = time.strftime('%Y-%m-%d')
-        cr.execute('select rate from product_index_rate where name<=%s and index_id=%d order by name desc limit 1', (date_from, index.id))
+        cr.execute('select rate from product_index_rate where name<=%s and index_id=%s order by name desc limit 1', (date_from, index.id))
         ifrom = cr.rowcount and cr.fetchone()[0] or 1.0
-        cr.execute('select rate from product_index_rate where name<=%s and index_id=%d order by name desc limit 1', (date_to, index.id))
+        cr.execute('select rate from product_index_rate where name<=%s and index_id=%s order by name desc limit 1', (date_to, index.id))
         ito = cr.rowcount and cr.fetchone()[0] or 1.0
         val = amount * ito / ifrom
         if round:

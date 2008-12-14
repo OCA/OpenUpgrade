@@ -204,7 +204,7 @@ class stock_planning(osv.osv):
     def _get_planned_sale(self, cr, uid, ids, field_name, arg, context):
         res = {}
         for val in self.browse(cr, uid, ids):
-            cr.execute('select sum(product_qty) from stock_planning_sale_prevision where product_id = %d and period_id = %d',(val.product_id.id,val.period_id.id))
+            cr.execute('select sum(product_qty) from stock_planning_sale_prevision where product_id = %s and period_id = %s',(val.product_id.id,val.period_id.id))
             product_qty = cr.fetchall()[0][0]
             res[val.id] = product_qty
         return res

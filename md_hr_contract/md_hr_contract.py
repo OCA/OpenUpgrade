@@ -83,7 +83,7 @@ class hr_contract(osv.osv):
                 print "fornm dsf sdsdf",vals['form_of_employment']
                 print "vals['department_id']:",vals['department_id']
                 
-                cr.execute('select count(id) from hr_contract where form_of_employment=%s and department_id =%d',(vals['form_of_employment'],vals['department_id']))
+                cr.execute('select count(id) from hr_contract where form_of_employment=%s and department_id =%s',(vals['form_of_employment'],vals['department_id']))
                 rec=cr.fetchall()
                 dept_obj=self.pool.get('hr.department').browse(cr,uid,vals['department_id'])
                 if rec[0][0]+1>dept_obj.max_temp_contract:

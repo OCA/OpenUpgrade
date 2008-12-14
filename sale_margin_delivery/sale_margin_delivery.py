@@ -31,7 +31,7 @@ class sale_delivery_line(osv.osv):
         res = {}
         for line in self.browse(cr, uid, ids):
             res[line.id] = 0
-            cr.execute('select id from sale_order_line where order_id = %d and product_id = %d',(line.order_id.id,line.product_id.id))
+            cr.execute('select id from sale_order_line where order_id = %s and product_id = %s',(line.order_id.id,line.product_id.id))
             sale_line_id = cr.fetchall()[0][0]
             sale_line_obj = self.pool.get('sale.order.line').browse(cr, uid,sale_line_id )
             res[line.id] = round((sale_line_obj.price_unit*line.product_qty*(100.0-sale_line_obj.discount)/100.0) -(sale_line_obj.product_id.standard_price*line.product_qty),2)

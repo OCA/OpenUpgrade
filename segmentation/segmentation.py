@@ -130,14 +130,14 @@ class profile(osv.osv):
         return ids_to_check
 
     def process_continue(self, cr, uid, ids, state=False):
-        cr.execute('delete from partner_profile_rel where profile_id=%d', (ids[0],))
+        cr.execute('delete from partner_profile_rel where profile_id=%s', (ids[0],))
 
         cr.execute('select id from res_partner order by id ')
         partners = [x[0] for x in cr.fetchall()]
         to_remove_list=[]
         for pid in partners:
 
-            cr.execute('select distinct(answer) from partner_question_rel where partner=%d' % pid)
+            cr.execute('select distinct(answer) from partner_question_rel where partner=%s' % pid)
             answers_ids = [x[0] for x in cr.fetchall()]
             if (not test_prof(self, cr, uid, ids[0], pid, answers_ids)):
                 to_remove_list.append(pid)
@@ -146,7 +146,7 @@ class profile(osv.osv):
             partners.remove(pid)
 
         for partner_id in partners:
-            cr.execute('insert into partner_profile_rel (profile_id,partner_id) values (%d,%d)', (ids[0],partner_id))
+            cr.execute('insert into partner_profile_rel (profile_id,partner_id) values (%s,%s)', (ids[0],partner_id))
         cr.commit()
 
         cr.commit()

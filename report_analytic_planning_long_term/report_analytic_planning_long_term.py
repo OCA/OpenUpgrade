@@ -57,7 +57,7 @@ class report_account_analytic_planning_stat_product(osv.osv):
         for line in self.browse(cr, uid, ids, context):
             result[line.id] = 0.0
             if line.product_id:
-                cr.execute('select sum(unit_amount) from account_analytic_line where product_id=%d and date>=%s and date<=%s', (line.product_id.id,line.planning_id.date_from,line.planning_id.date_to))
+                cr.execute('select sum(unit_amount) from account_analytic_line where product_id=%s and date>=%s and date<=%s', (line.product_id.id,line.planning_id.date_from,line.planning_id.date_to))
                 result[line.id] = cr.fetchone()[0]
         return result
 
