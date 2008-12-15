@@ -71,20 +71,6 @@ def assign_full_access_rights(self, cr, uid, data, context):
         user_obj.write(cr, uid, user, {'roles_id':[[6,0,role_ids]]})
     return
 
-def create_monthly_sale_periods(self, cr, uid, data, context):
-        start_date = datetime.date(now().year,1,1)
-        stop_date = datetime.date(now().year,12,31)
-
-        ds = mx.DateTime.strptime(str(start_date), '%Y-%m-%d')
-        while ds.strftime('%Y-%m-%d') < str(stop_date):
-            de = ds + RelativeDateTime(months=1, days=-1)
-            pooler.get_pool(cr.dbname).get('stock.period').create(cr, uid, {
-                'name': ds.strftime('%Y/%m'),
-                'date_start': ds.strftime('%Y-%m-%d'),
-                'date_stop': de.strftime('%Y-%m-%d'),
-            })
-            ds = ds + RelativeDateTime(months=1)
-        return
 
 def create_phase2_menu(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
@@ -111,7 +97,6 @@ def create_phase2_menu(self, cr, uid, data, context):
 def get_ready_phase2(self, cr, uid, data, context):
         create_phase2_menu(self, cr, uid, data, context)
         assign_full_access_rights(self, cr, uid, data, context)
-        create_monthly_sale_periods(self, cr, uid, data, context)
 
         pool = pooler.get_pool(cr.dbname)
         lm_action = ['menu_stock_planning','menu_action_orderpoint_form']

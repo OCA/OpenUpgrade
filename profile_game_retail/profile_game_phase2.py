@@ -22,12 +22,12 @@
 from osv import fields, osv
 import pooler
 import time
-from mx import DateTime
 import datetime
+import mx.DateTime
+from mx.DateTime import RelativeDateTime, now, DateTime, localtime
+import math
 from datetime import date
-import time
 import netsvc
-from mx.DateTime import now
 import random
 
 # develop following dashboard
@@ -88,15 +88,14 @@ class profile_game_retail(osv.osv):
             res[val.id] = {}
             if 'hr_budget' in field_names:
                 res[val.id] = {}.fromkeys(field_names, 0.0)
-            fiscalyear_id = context.get('fiscalyear_id', False)
-            if not fiscalyear_id:
-                fiscalyear_id = fiscal_obj.find(cr,uid)
-            fiscalyear = fiscal_obj.browse(cr,uid,fiscalyear_id)
-            cur_year = date(int(fiscalyear.date_start[0:4]),int(fiscalyear.date_start[5:7]),int(fiscalyear.date_start[8:10]))
-            prev_fy_datestart = date(cur_year.year - 1,01,01)
-            prev_fy_datestop = date(cur_year.year - 1,12,31)
-
-            # calculate finace detail
+            fiscalyear_id = fiscal_obj.search(cr, uid, [('state','=','draft')])
+            fiscalyear = fiscal_obj.browse(cr,uid,fiscalyear_id)[0]
+            cur_year = int(fiscalyear.code[2:])
+            prev_fy_datestart = date(cur_year - 1,01,01)
+            prev_fy_datestop = date(cur_year - 1,12,31)
+            print "prev_fy_datestart",prev_fy_datestart
+            print "prev_fy_datestop",prev_fy_datestop
+            # calculate finance detail
             if 'expenses_forecast' in field_names or 'total_refund' in field_names or 'total_current_refund' in field_names:
                 mapping={
                     'expenses_forecast' : 'in_invoice',
@@ -112,7 +111,7 @@ class profile_game_retail(osv.osv):
                     """%(mapping[field],fiscalyear.date_start,fiscalyear.date_stop)
                     cr.execute(sql)
                     result = cr.fetchall()[0]
-                    res[val.id][field] = result[0] and result[0] or 0.0
+                    res[val.id][field] = result[0] and (result[0] or 0.0)
             if 'current_treasury' in field_names:
                 type_ids = account_type_obj.search(cr,uid,[('code','=','cash')])
                 cash_account_ids = account_obj.search(cr,uid,[('user_type','in',type_ids)])
@@ -144,7 +143,7 @@ class profile_game_retail(osv.osv):
                                 """%(start_date,stop_date)
                        cr.execute(sql)
                        result = cr.fetchall()[0]
-                       res[val.id][field] = result[0] or 0.0
+                       res[val.id][field] = (result[0] or 0.0)
                    else:
                         inv_type = ['in_invoice','out_refund']
                         sql="""
@@ -155,7 +154,7 @@ class profile_game_retail(osv.osv):
                             """%("','".join(inv_type),start_date,stop_date)
                         cr.execute(sql)
                         result = cr.fetchall()[0]
-                        res[val.id][field] = result[0] or 0.0
+                        res[val.id][field] = (result[0] or 0.0)
 
             # calculate sales detail
 
@@ -177,7 +176,7 @@ class profile_game_retail(osv.osv):
                             """%(start_date,stop_date)
                         cr.execute(sql)
                         result = cr.fetchall()[0]
-                        res[val.id][field] = result[0] or 0.0
+                        res[val.id][field] = (result[0] or 0.0)
                    else:
                          invoice_types = ['in_invoice','out_invoice']
                          sql="""
@@ -191,9 +190,10 @@ class profile_game_retail(osv.osv):
                             """%("','".join(invoice_types),start_date,stop_date)
                          cr.execute(sql)
                          result = cr.fetchall()[0]
-                         res[val.id][field] = result[0] or 0.0 - result[1] or 0.0
+                         res[val.id][field] = (result[0] or 0.0) - (result[1] or 0.0)
 
             # calculate Objectives Achievement
+            print "field_names",field_names
             if 'last_turnover' in field_names or 'total_benefit' in field_names or 'total_sold_products' in field_names \
                 or 'turnover_growth' in field_names or 'benefits_growth' in field_names or 'products_growth' in field_names:
 
@@ -330,7 +330,7 @@ class profile_game_retail(osv.osv):
         'note':fields.text('Notes'),
     }
 
-    def pay_supplier_invoice(self, cr, uid, ids, context):
+    def pay_supplier_invoice(self, cr, uid, ids, od, context):
         acc_obj = self.pool.get('account.account')
         acc_type_obj = self.pool.get('account.account.type')
         cash_acc_id = acc_type_obj.search(cr,uid,[('name','=','Cash')])
@@ -360,12 +360,12 @@ class profile_game_retail(osv.osv):
                 inv_br = inv_obj.browse(cr,uid,open_inv_id)
                 for inv in inv_br:
                     if temp_bal >= inv.amount_total:
-                        self._pay_and_reconcile(cr, uid, ids, inv.id, journl.id, inv.amount_total, context)
+                        self._pay_and_reconcile(cr, uid, ids, inv.id, journl.id, inv.amount_total, od, context)
                         temp_bal = temp_bal-inv.amount_total
         return
 
-    def _pay_and_reconcile(self, cr, uid, ids, invoice_id, journal_id, amount, context):
-        ids = self.pool.get('account.period').find(cr, uid, context=context)
+    def _pay_and_reconcile(self, cr, uid, ids, invoice_id, journal_id, amount, od, context):
+        ids = self.pool.get('account.period').find(cr, uid, od, context=context)
         period_id = False
         if len(ids):
            period_id = ids[0]
@@ -459,7 +459,7 @@ class profile_game_retail(osv.osv):
             wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_open', cr)
         return
 
-    def pay_all_customer_invoice(self, cr, uid, ids, context):
+    def pay_all_customer_invoice(self, cr, uid, ids, od, context):
         inv_obj = self.pool.get('account.invoice')
         journal = self.pool.get('account.journal').search(cr,uid,[('type','=','cash')])
         jour_br = self.pool.get('account.journal').browse(cr,uid,journal[0])
@@ -470,55 +470,115 @@ class profile_game_retail(osv.osv):
         for inv in inv_br:
             maturity_date = inv.move_id.line_id[0].date_maturity
             if (not maturity_date) or (maturity_date  <= now()):
-                self._pay_and_reconcile(cr, uid, ids, inv.id, jour_br.id, inv.amount_total, context)
+                self._pay_and_reconcile(cr, uid, ids, inv.id, jour_br.id, inv.amount_total, od, context)
+        return
+
+    def create_fiscalyear_and_period(self,cr, uid, ids, context={}, interval=1):
+        period = self.pool.get('account.fiscalyear').search(cr, uid, [])
+        period = int(self.pool.get('account.fiscalyear').browse(cr, uid, period[len(period)-1]).code[2:]) + 1
+        start_date = datetime.date(period,1,1)
+        stop_date = datetime.date(period,12,31)
+        fiscal_id = self.pool.get('account.fiscalyear').create(cr, uid,
+                    {'name':'Fiscal Year %d'%(period),'code': 'FY%d'%(period),'date_start': start_date,
+                    'date_stop': stop_date})
+
+        ds = mx.DateTime.strptime(str(start_date), '%Y-%m-%d')
+        while ds.strftime('%Y-%m-%d')< str(stop_date):
+            de = ds + RelativeDateTime(months=interval, days=-1)
+            if de.strftime('%Y-%m-%d')>str(stop_date):
+                de=mx.DateTime.strptime(stop_date, '%Y-%m-%d')
+
+            self.pool.get('account.period').create(cr, uid, {
+                'name': ds.strftime('%m/%Y'),
+                'code': ds.strftime('%m/%Y'),
+                'date_start': ds.strftime('%Y-%m-%d'),
+                'date_stop': de.strftime('%Y-%m-%d'),
+                'fiscalyear_id': fiscal_id,
+            })
+            ds = ds + RelativeDateTime(months=interval)
+        return fiscal_id
+
+    def close_prev_fiscalyear(self, cr, uid, ids, fy, context):
+        prev_fy = 'FY' + str(int(fy.code[2:]) - 1)
+        id = self.pool.get('account.fiscalyear').search(cr, uid, [('code','=',prev_fy)])
+        self.pool.get('account.fiscalyear').write(cr, uid, id,{'state':'done'})
+        periods = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id','in',id)])
+        print ":::::::::periods:",periods,self.pool.get('account.fiscalyear').browse(cr, uid, periods)
+        for period in self.pool.get('account.fiscalyear').browse(cr, uid, periods):
+            self.pool.get('account.period').write(cr, uid, period.id, {'state':'done'})
+        return
+
+    def create_monthly_sale_periods(self, cr, uid, ids, context):
+        period = self.pool.get('stock.period').search(cr, uid, [])
+        period = int(self.pool.get('stock.period').browse(cr, uid, period[len(period)-1]).name[:4]) + 1
+        start_date = datetime.date(period,1,1)
+        stop_date = datetime.date(period,12,31)
+        ds = mx.DateTime.strptime(str(start_date), '%Y-%m-%d')
+        while ds.strftime('%Y-%m-%d') < str(stop_date):
+            de = ds + RelativeDateTime(months=1, days=-1)
+            self.pool.get('stock.period').create(cr, uid, {
+                'name': ds.strftime('%Y/%m'),
+                'date_start': ds.strftime('%Y-%m-%d'),
+                'date_stop': de.strftime('%Y-%m-%d'),
+            })
+            ds = ds + RelativeDateTime(months=1)
         return
 
     def continue_next_year(self, cr, uid, ids, context):
+        fiscal_year_id = self.create_fiscalyear_and_period(cr, uid, ids, context)
+        self.create_monthly_sale_periods(cr, uid, ids, context)
+
+        fy = self.pool.get('account.fiscalyear').browse(cr, uid, fiscal_year_id)
         partner_ids = self.pool.get('res.partner').search(cr,uid,[])
         prod_ids = self.pool.get('product.product').search(cr,uid,[])
         shop = self.pool.get('sale.shop').search(cr,uid,[])
         wf_service = netsvc.LocalService('workflow')
+
         ## Create Random number of sale orders ##
+        for period in fy.period_ids:
+            for i in range(0,random.randrange(10)):
+                partner = random.randrange(len(partner_ids))
+                partner_addr = self.pool.get('res.partner').address_get(cr, uid, [partner_ids[partner]],
+                                ['invoice', 'delivery', 'contact'])
+                pricelist = self.pool.get('res.partner').browse(cr, uid, partner_ids[partner],
+                                context).property_product_pricelist.id
+                dstart = mx.DateTime.strptime(str(period.date_start), '%Y-%m-%d')
+                dstop =  mx.DateTime.strptime(str(period.date_stop), '%Y-%m-%d')
+                order_date = datetime.date(dstart.year,dstart.month,random.randrange(1,dstop.day + 1))
+                od = (mx.DateTime.strptime(str(order_date), '%Y-%m-%d')).strftime('%Y-%m-%d')
+                vals = {
+                        'shop_id': shop[0],
+                        'partner_id': partner_ids[partner],
+                        'pricelist_id': pricelist,
+                        'partner_invoice_id': partner_addr['invoice'],
+                        'partner_order_id': partner_addr['contact'],
+                        'partner_shipping_id': partner_addr['delivery'],
+                        'order_policy': 'postpaid',
+                        'date_order':od
+                    }
+                new_id = self.pool.get('sale.order').create(cr, uid, vals)
 
-        for i in range(0,random.randrange(10)):
-            partner = random.randrange(len(partner_ids))
-            partner_addr = self.pool.get('res.partner').address_get(cr, uid, [partner_ids[partner]],
-                            ['invoice', 'delivery', 'contact'])
-            pricelist = self.pool.get('res.partner').browse(cr, uid, partner_ids[partner],
-                            context).property_product_pricelist.id
-            vals = {
-                    'shop_id': shop[0],
-                    'partner_id': partner_ids[partner],
-                    'pricelist_id': pricelist,
-                    'partner_invoice_id': partner_addr['invoice'],
-                    'partner_order_id': partner_addr['contact'],
-                    'partner_shipping_id': partner_addr['delivery'],
-                    'order_policy': 'postpaid',
-                    'date_order': now(),
-                }
-            new_id = self.pool.get('sale.order').create(cr, uid, vals)
+                for j in range(0,random.randrange(5)):
+                    product = random.randrange(len(prod_ids))
+                    value = self.pool.get('sale.order.line').product_id_change(cr, uid, [], pricelist,
+                                    prod_ids[product], qty=i, partner_id=partner_ids[partner])['value']
+                    value['product_id'] = prod_ids[product]
+                    value['product_uom_qty'] = j + 100
+                    value['order_id'] = new_id
+                    self.pool.get('sale.order.line').create(cr, uid, value)
+                wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
+                wf_service.trg_validate(uid, 'sale.order', new_id, 'manual_invoice', cr)
+            proc_obj = self.pool.get('mrp.procurement')
+            proc_obj.run_scheduler(cr, uid, automatic = True, use_new_cursor = cr.dbname)
 
-            for j in range(0,random.randrange(5)):
-                product = random.randrange(len(prod_ids))
-                value = self.pool.get('sale.order.line').product_id_change(cr, uid, [], pricelist,
-                                prod_ids[product], qty=i, partner_id=partner_ids[partner])['value']
-                value['product_id'] = prod_ids[product]
-                value['product_uom_qty'] = j + 100
-                value['order_id'] = new_id
-                self.pool.get('sale.order.line').create(cr, uid, value)
-            wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
-            wf_service.trg_validate(uid, 'sale.order', new_id, 'manual_invoice', cr)
-
-        proc_obj = self.pool.get('mrp.procurement')
-        proc_obj.run_scheduler(cr, uid, automatic = True, use_new_cursor = cr.dbname)
-
-        self.confirm_draft_po(cr, uid, ids, context)
-        self.confirm_draft_supplier_invoice(cr, uid, ids, context)
-        self.pay_supplier_invoice(cr, uid, ids, context)
-        self.receive_products(cr, uid, ids, context)
-        self.deliver_products(cr, uid, ids, context)
-        self.confirm_draft_customer_invoice(cr, uid, ids, context)
-        self.pay_all_customer_invoice(cr, uid, ids, context)
+            self.confirm_draft_po(cr, uid, ids, context)
+            self.confirm_draft_supplier_invoice(cr, uid, ids, context)
+            self.pay_supplier_invoice(cr, uid, ids, od, context)
+            self.receive_products(cr, uid, ids, context)
+            self.deliver_products(cr, uid, ids, context)
+            self.confirm_draft_customer_invoice(cr, uid, ids, context)
+            self.pay_all_customer_invoice(cr, uid, ids, od, context)
+        self.close_prev_fiscalyear(cr, uid, ids, fy, context)
         return True
 
 profile_game_retail()

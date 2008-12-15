@@ -2,35 +2,35 @@
 <openerp>
     <data>
 
-		<record id="maintenance_maintenance_tree_view" model="ir.ui.view">
+        <record id="maintenance_maintenance_tree_view" model="ir.ui.view">
             <field name="name">maintenance.maintenance.tree</field>
             <field name="model">maintenance.maintenance</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-            	<tree string="Maintenance">
-                	<field name="name"/>
-                	<field name="partner_id"/>
-                	<field name="date_from"/>
-                	<field name="date_to"/>
-                	<field name="state"/>
+                <tree string="Maintenance">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
 
-		<record id="maintenance_maintenance_form_view" model="ir.ui.view">
+        <record id="maintenance_maintenance_form_view" model="ir.ui.view">
             <field name="name">maintenance.maintenance.form</field>
             <field name="model">maintenance.maintenance</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-            	<form string="Maintenance">
-                	<field name="name" select="1"/>
-                	<field name="password" password="True"/>
-                	<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id)"/>
-                	<field name="partner_invoice_id"/>
-                	<field name="date_from" select="2"/>
-                	<field name="date_to" select="2"/>
-                	<field name="module_ids" nolabel="1" colspan="4"/>
-                	<field name="state" colspan="4"/>
+                <form string="Maintenance">
+                    <field name="name" select="1"/>
+                    <field name="password" readonly="True"/>
+                    <field name="partner_id" select="1" on_change="onchange_partner_id(partner_id)"/>
+                    <field name="partner_invoice_id"/>
+                    <field name="date_from" select="2" on_change="onchange_date_from(date_from)"/>
+                    <field name="date_to" select="2"/>
+                    <field name="module_ids" nolabel="1" colspan="4"/>
+                    <field name="state" colspan="4"/>
                 </form>
             </field>
         </record>
@@ -42,31 +42,29 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-		<menuitem parent="base.menu_management"	name="Maintenance"	id="menu_maintenance_main"/>
-		<menuitem action="action_maintenance_maintenance_form" id="menu_maintenance_configuration" name="Maintenance Configuration" parent="menu_maintenance_main"/>
+        <menuitem parent="base.menu_management"	name="Maintenance Editor" id="menu_maintenance_main"/>
+        <menuitem action="action_maintenance_maintenance_form" id="menu_maintenance_configuration" name="Maintenance Configuration" parent="menu_maintenance_main"/>
 
-		<record id="maintenance_maintenance_module_tree_view" model="ir.ui.view">
+        <record id="maintenance_maintenance_module_tree_view" model="ir.ui.view">
             <field name="name">maintenance.maintenance.module.tree</field>
             <field name="model">maintenance.maintenance.module</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-            	<tree string="Maintenance Modules">
-                	<field name="name"/>
-                	<field name="module_name"/>
-                	<field name="version"/>
+                <tree string="Maintenance Modules">
+                    <field name="name"/>
+                    <field name="version"/>
                 </tree>
             </field>
         </record>
 
-		<record id="maintenance_maintenance_module_form_view" model="ir.ui.view">
+        <record id="maintenance_maintenance_module_form_view" model="ir.ui.view">
             <field name="name">maintenance.maintenance.module.form</field>
             <field name="model">maintenance.maintenance.module</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-            	<form string="Maintenance Modules">
-                	<field name="name" select="1"/>
-                	<field name="module_name" select="1"/>
-                	<field name="version" select="1"/>
+                <form string="Maintenance Modules">
+                    <field name="name" select="1"/>
+                    <field name="version" select="1"/>
                 </form>
             </field>
         </record>
@@ -78,7 +76,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-		<menuitem action="action_maintenance_module_form" id="menu_maintenance_module" parent="menu_maintenance_main"/>
+        <menuitem action="action_maintenance_module_form" id="menu_maintenance_module" parent="menu_maintenance_main"/>
 
     </data>
 </openerp>

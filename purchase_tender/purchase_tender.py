@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -53,10 +53,11 @@ class purchase_order(osv.osv):
     def wkf_confirm_order(self, cr, uid, ids, context={}):
         res = super(purchase_order, self).wkf_confirm_order(cr, uid, ids, context)
         for po in self.browse(cr, uid, ids, context):
-            for order in po.tender_id.purchase_ids:
-                if order.id<>po.id:
-                    wf_service = netsvc.LocalService("workflow")
-                    wf_service.trg_validate(uid, 'purchase.order', order.id, 'purchase_cancel', cr)
-                self.pool.get('purchase.tender').write(cr, uid, [po.tender_id.id], {'state':'close'})
+            if po.tender_id:
+                for order in po.tender_id.purchase_ids:
+                    if order.id<>po.id:
+                        wf_service = netsvc.LocalService("workflow")
+                        wf_service.trg_validate(uid, 'purchase.order', order.id, 'purchase_cancel', cr)
+                    self.pool.get('purchase.tender').write(cr, uid, [po.tender_id.id], {'state':'close'})
         return res
 purchase_order()
