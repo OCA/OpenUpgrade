@@ -23,7 +23,7 @@
     "name" : "CCI Account",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.opeerp.com",
     "category" : "Generic Modules/CCI",
     "description": """
         specific module for cci project which will use account module (Reports).

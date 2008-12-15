@@ -22,7 +22,7 @@
 {
     "name" : "CCI Timesheet",
     "version" : "1.0",
-    "author" : "OpenERP",
+    "author" : "Tiny",
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/CCI",
     "description": """
