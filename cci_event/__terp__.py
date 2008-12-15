@@ -23,7 +23,7 @@
     "name" : "CCI EVENT",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/CCI",
     "description": """
         specific module for cci project which will use event module from extra addons.

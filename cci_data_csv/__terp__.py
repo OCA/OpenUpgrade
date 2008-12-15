@@ -24,7 +24,7 @@
     'name': 'cci Data 1',
     'category': 'Data Module',
     'init_xml':[],
-    'author': 'OpenERP',
+    'author': 'Tiny',
     'depends': ['base','account','l10n_be'],
     'version': '1.0',
     'active': False,
