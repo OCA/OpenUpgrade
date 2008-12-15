@@ -47,10 +47,11 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="sale_order_tree"/>
 	</record>
-	<menuitem name="ecommerce/Sale Order/sale order" id="menu_sale_order_form" action="action_sale_order_form"/>
-
-	<!-- Sale Order Line -->
-
+	<menuitem id="menu_ecommerce_saleorder" name="Sales Orders" parent="ecommerce.menu_ecommerce"/>	
+	<menuitem name="Sale order" id="menu_sale_order_form" parent="menu_ecommerce_saleorder" action="action_sale_order_form"/>  
+	
+	<!-- Sale Order Line -->	
+	  
 	<record model="ir.ui.view" id="order_line_form">
 		<field name="name">orderline.form</field>
 		<field name="model">ecommerce.order.line</field>

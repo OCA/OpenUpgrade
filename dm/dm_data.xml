@@ -24,7 +24,7 @@
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
 
-        <record model="res.partner.category" id="cat_duplicator">
+        <record model="res.partner.category" id="cat_deduplicator">
             <field name="name" eval="&quot;Deduplicator&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
@@ -51,6 +51,21 @@
 
         <record model="res.partner.category" id="cat_router">
             <field name="name" eval="&quot;Router&quot;"/>
+            <field name="parent_id" ref="res_partner_category_directmarketing0" />
+        </record>
+
+        <record model="res.partner.category" id="cat_mailing_supplier">
+            <field name="name" eval="&quot;Mailing Supplier&quot;"/>
+            <field name="parent_id" ref="res_partner_category_directmarketing0" />
+        </record>
+
+        <record model="res.partner.category" id="cat_dtp_supplier">
+            <field name="name" eval="&quot;DTP Supplier&quot;"/>
+            <field name="parent_id" ref="res_partner_category_directmarketing0" />
+        </record>
+
+        <record model="res.partner.category" id="cat_item_supplier">
+            <field name="name" eval="&quot;Item Supplier&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
 

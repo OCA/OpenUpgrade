@@ -33,17 +33,22 @@ class stock_move(osv.osv):
     }
     
 
-    def _check_unique_product_lot(self, cr, uid, ids):
-         for move in self.browse(cr, uid, ids):#TODO deal with the other regular tracking constraints?
-             if move.state == 'done' and move.product_id.unique_production_number and move.product_qty > 1:
-                return False
-         return True
-        
-    _constraints = [
-        (_check_unique_product_lot,
-            """_(The product associated to the move require a unique (per instance) production number, 
-            you should split the move assign a different number to every move)""",
-            ['prodlot_id'])]
+#    def _check_unique_product_lot(self, cr, uid, ids):
+#        print "########"
+#        for move in self.browse(cr, uid, ids):
+#            if move.state == 'done' and move.product_id.unique_production_number and move.product_qty > 1 and (\
+#                (move.product_id.track_production and move.location_id.usage == 'production') or \
+#                (move.product_id.track_production and move.location_dest_id.usage == 'production') or \
+#                (move.product_id.track_incoming and move.location_id.usage == 'supplier') or \
+#                (move.product_id.track_outgoing and move.location_dest_id.usage == 'customer')):
+#                return False
+#        return True
+#        
+#    _constraints = [
+#        (_check_unique_product_lot,
+#            """_(The product associated to the move require a unique (per instance) production number, 
+#            you should split the move assign a different number to every move)""",
+#            ['prodlot_id'])]
     
 stock_move()
 
@@ -57,13 +62,19 @@ class stock_picking(osv.osv):
         for picking in self.browse(cr, uid, ids):
                 additional_move_lines = []
                 for move in picking.move_lines:
-                    if move.product_id.unique_production_number and move.product_qty > 1:
-                        while move.product_qty > 1:
-                            new_move_id = self.pool.get('stock.move').copy(cr, uid, move.id, {'product_qty': 1, 'state': move.state, 'prodlot_id': None})
-                            print new_move_id
+                    if move.product_id.unique_production_number and move.product_qty > 1 and (\
+                    (move.product_id.track_production and move.location_id.usage == 'production') or \
+                    (move.product_id.track_production and move.location_dest_id.usage == 'production') or \
+                    (move.product_id.track_incoming and move.location_id.usage == 'supplier') or \
+                    (move.product_id.track_outgoing and move.location_dest_id.usage == 'customer')):
+
+                        while move.product_qty > 0:
+                            new_move_id = self.pool.get('stock.move').copy(cr, uid, move.id, {'product_qty': 1, 'product_uos_qty': move.product_id.uos_coeff, 'state': move.state, 'prodlot_id': None})
                             additional_move_lines.append(new_move_id)
                             move.product_qty -= 1;
-                        self.pool.get('stock.move').write(cr, uid, [move.id], {'product_qty': 1})
+                        
+                        self.pool.get('stock.move').write(cr, uid, move.id, {'state': 'draft'})
+                        self.pool.get('stock.move').unlink(cr, uid, [move.id], {})
         
         return result
         

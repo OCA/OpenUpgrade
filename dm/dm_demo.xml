@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 
-	<!-- PARTNER -->
+    <!-- PARTNER -->
 
     <data noupdate="1">
         <record id="base.main_partner" model="res.partner">
             <field eval="&quot;&quot;&quot;TINY&quot;&quot;&quot;" name="ref"/>
-            <field eval="[(6,0,[ref('dm.cat_cleaner'),ref('dm.cat_copywriter'),ref('dm.cat_dealer')])]" name="category_id"/>
+            <field eval="[(6,0,[ref('dm.cat_cleaner'),ref('dm.cat_deduplicator'),ref('dm.cat_broker'),ref('dm.cat_owner'),ref('dm.cat_copywriter'),ref('dm.cat_dealer')])]" name="category_id"/>
         </record>
         <record id="base.res_partner_thymbra" model="res.partner">
             <field eval="[(6,0,[ref('base.res_partner_category_4'),ref('dm.cat_broker')])]" name="category_id"/>
@@ -21,7 +21,7 @@
         </record>
     </data>
 
-	<!-- OFFER -->
+    <!-- OFFER -->
 
     <data noupdate="1">
         <record id="dm_offer_openerpondemandfreetrial2009" model="dm.offer">
@@ -419,7 +419,7 @@ rkJggg==
             <field eval="1" name="active"/>
             <field eval="1.0" name="price_margin"/>
         </record>
-        <record id="product_supplierinfo_0" model="product.supplierinfo">
+        <record id="product_supplierinfo_2" model="product.supplierinfo">
             <field name="name" ref="base.main_partner"/>
             <field eval="1" name="sequence"/>
             <field eval="1" name="delay"/>
@@ -437,11 +437,191 @@ rkJggg==
             <field eval="1" name="active"/>
             <field eval="1.0" name="price_margin"/>
         </record>
-        <record id="product_supplierinfo_1" model="product.supplierinfo">
+        <record id="product_supplierinfo_3" model="product.supplierinfo">
             <field name="name" ref="base.main_partner"/>
             <field eval="1" name="sequence"/>
             <field eval="1" name="delay"/>
             <field name="product_id" ref="product_product_openerpdiscoverydayonmay0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_papermailingus0" model="product.product">
+            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
+            <field eval="1.0" name="list_price"/>
+            <field eval="0" name="track_production"/>
+            <field eval="1.0" name="standard_price"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="&quot;&quot;&quot;MAILPAPERUS&quot;&quot;&quot;" name="default_code"/>
+            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+            <field eval="1.0" name="uos_coeff"/>
+            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+            <field eval="0" name="sale_ok"/>
+            <field eval="1" name="purchase_ok"/>
+            <field eval="0" name="track_outgoing"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field eval="1.0" name="price_margin"/>
+            <field eval="&quot;&quot;&quot;Demo Paper Mailing for the US&quot;&quot;&quot;" name="description"/>
+            <field eval="0" name="track_incoming"/>
+            <field name="property_stock_production" ref="stock.location_production"/>
+            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+            <field eval="1" name="active"/>
+            <field name="property_stock_inventory" ref="stock.location_inventory"/>
+            <field name="property_stock_procurement" ref="stock.location_procurement"/>
+            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+            <field eval="&quot;&quot;&quot;Paper Mailing US&quot;&quot;&quot;" name="name"/>
+            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
+            <field eval="[(6,0,[])]" name="taxes_id"/>
+            <field eval="1.0" name="produce_delay"/>
+            <field eval="0" name="rental"/>
+        </record>
+        <record id="product_supplierinfo_4" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_maxmailing0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_papermailingus0"/>
+        </record>
+        <record id="product_supplierinfo_5" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_papercut0"/>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_papermailingus0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_printingus0" model="product.product">
+            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
+            <field eval="1.0" name="list_price"/>
+            <field eval="0" name="track_production"/>
+            <field eval="1.0" name="standard_price"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="&quot;&quot;&quot;PRINTINGUS&quot;&quot;&quot;" name="default_code"/>
+            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+            <field eval="1.0" name="uos_coeff"/>
+            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+            <field eval="0" name="sale_ok"/>
+            <field eval="1" name="purchase_ok"/>
+            <field eval="0" name="track_outgoing"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field eval="1.0" name="price_margin"/>
+            <field eval="&quot;&quot;&quot;Demo Paper Printing for the US&quot;&quot;&quot;" name="description"/>
+            <field eval="0" name="track_incoming"/>
+            <field name="property_stock_production" ref="stock.location_production"/>
+            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+            <field eval="1" name="active"/>
+            <field name="property_stock_inventory" ref="stock.location_inventory"/>
+            <field name="property_stock_procurement" ref="stock.location_procurement"/>
+            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+            <field eval="&quot;&quot;&quot;Paper Printing US&quot;&quot;&quot;" name="name"/>
+            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
+            <field eval="[(6,0,[])]" name="taxes_id"/>
+            <field eval="1.0" name="produce_delay"/>
+            <field eval="0" name="rental"/>
+        </record>
+        <record id="product_supplierinfo_10" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_maxmailing0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_printingus0"/>
+        </record>
+        <record id="product_supplierinfo_11" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_papercut0"/>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_printingus0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_sendingenveloppeus0" model="product.product">
+            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
+            <field eval="1.0" name="list_price"/>
+            <field eval="0" name="track_production"/>
+            <field eval="1.0" name="standard_price"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="&quot;&quot;&quot;SNDENVELPUS&quot;&quot;&quot;" name="default_code"/>
+            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+            <field eval="1.0" name="uos_coeff"/>
+            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+            <field eval="0" name="sale_ok"/>
+            <field eval="1" name="purchase_ok"/>
+            <field eval="0" name="track_outgoing"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field eval="1.0" name="price_margin"/>
+            <field eval="&quot;&quot;&quot;Demo Sending Enveloppe for the US&quot;&quot;&quot;" name="description"/>
+            <field eval="0" name="track_incoming"/>
+            <field name="property_stock_production" ref="stock.location_production"/>
+            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+            <field eval="1" name="active"/>
+            <field name="property_stock_inventory" ref="stock.location_inventory"/>
+            <field name="property_stock_procurement" ref="stock.location_procurement"/>
+            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+            <field eval="&quot;&quot;&quot;Sending Enveloppe US&quot;&quot;&quot;" name="name"/>
+            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
+            <field eval="[(6,0,[])]" name="taxes_id"/>
+            <field eval="1.0" name="produce_delay"/>
+            <field eval="0" name="rental"/>
+        </record>
+        <record id="product_supplierinfo_12" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_maxmailing0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_sendingenveloppeus0"/>
+        </record>
+        <record id="product_supplierinfo_13" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_papercut0"/>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_sendingenveloppeus0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_returnenveloppeus0" model="product.product">
+            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
+            <field eval="1.0" name="list_price"/>
+            <field eval="0" name="track_production"/>
+            <field eval="1.0" name="standard_price"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="&quot;&quot;&quot;RTNENVELPUS&quot;&quot;&quot;" name="default_code"/>
+            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+            <field eval="1.0" name="uos_coeff"/>
+            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+            <field eval="0" name="sale_ok"/>
+            <field eval="1" name="purchase_ok"/>
+            <field eval="0" name="track_outgoing"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field eval="1.0" name="price_margin"/>
+            <field eval="&quot;&quot;&quot;Demo Return Enveloppe for the US&quot;&quot;&quot;" name="description"/>
+            <field eval="0" name="track_incoming"/>
+            <field name="property_stock_production" ref="stock.location_production"/>
+            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+            <field eval="1" name="active"/>
+            <field name="property_stock_inventory" ref="stock.location_inventory"/>
+            <field name="property_stock_procurement" ref="stock.location_procurement"/>
+            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+            <field eval="&quot;&quot;&quot;Return Enveloppe US&quot;&quot;&quot;" name="name"/>
+            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
+            <field eval="[(6,0,[])]" name="taxes_id"/>
+            <field eval="1.0" name="produce_delay"/>
+            <field eval="0" name="rental"/>
+        </record>
+        <record id="product_supplierinfo_12" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_maxmailing0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_returnenveloppeus0"/>
+        </record>
+        <record id="product_supplierinfo_13" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_papercut0"/>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_returnenveloppeus0"/>
         </record>
     </data>
 
@@ -529,91 +709,763 @@ rkJggg==
     </data>
 
 
-	<!-- Users -->
+    <!-- Users -->
 
 <data noupdate="1">
-		<record id="res_users_tom0" model="res.users">
-			<field eval="[(6,0,[ref('dm.res_groups_manufacturingmanager')])]" name="groups_id"/>
-			<field eval="[(6,0,[])]" name="roles_id"/>
-			<field eval="1" name="active"/>
-			<field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="password"/>
-			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-			<field eval="&quot;&quot;&quot;Tom&quot;&quot;&quot;" name="name"/>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="login"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="res_users_jim0" model="res.users">
-			<field eval="[(6,0,[ref('dm.res_groups_campaignmanager')])]" name="groups_id"/>
-			<field eval="[(6,0,[])]" name="roles_id"/>
-			<field eval="1" name="active"/>
-			<field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="password"/>
-			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-			<field eval="&quot;&quot;&quot;Jim&quot;&quot;&quot;" name="name"/>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="login"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="res_users_bob0" model="res.users">
-			<field eval="[(6,0,[ref('dm.res_groups_offermanager')])]" name="groups_id"/>
-			<field eval="[(6,0,[ref('dm.res_roles_offermanager')])]" name="roles_id"/>
-			<field eval="1" name="active"/>
-			<field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="password"/>
-			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-			<field eval="&quot;&quot;&quot;Bob&quot;&quot;&quot;" name="name"/>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="login"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="res_users_sue0" model="res.users">
-			<field eval="[(6,0,[ref('dm.res_groups_itemmanager')])]" name="groups_id"/>
-			<field eval="[(6,0,[])]" name="roles_id"/>
-			<field eval="1" name="active"/>
-			<field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="password"/>
-			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-			<field eval="&quot;&quot;&quot;Sue&quot;&quot;&quot;" name="name"/>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="login"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="res_users_ann0" model="res.users">
-			<field eval="[(6,0,[ref('dm.res_groups_dtpmanager')])]" name="groups_id"/>
-			<field eval="[(6,0,[])]" name="roles_id"/>
-			<field eval="1" name="active"/>
-			<field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="password"/>
-			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-			<field eval="&quot;&quot;&quot;Ann&quot;&quot;&quot;" name="name"/>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="login"/>
-		</record>
-	</data>
-<data noupdate="1">
-		<record id="res_users_joe0" model="res.users">
-			<field eval="[(6,0,[ref('dm.res_groups_custfilemanager')])]" name="groups_id"/>
-			<field eval="[(6,0,[])]" name="roles_id"/>
-			<field eval="1" name="active"/>
-			<field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="password"/>
-			<field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-			<field eval="&quot;&quot;&quot;Joe&quot;&quot;&quot;" name="name"/>
-			<field name="company_id" ref="base.main_company"/>
-			<field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="login"/>
-		</record>
-	</data>
+        <record id="res_users_tom0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_manufacturingmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Tom&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_jim0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_campaignmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Jim&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_bob0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_offermanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[ref('dm.res_roles_offermanager')])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Bob&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_sue0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_itemmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Sue&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_ann0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_dtpmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Ann&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_joe0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_custfilemanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Joe&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
 
-	<!-- CAMAPAIGN RESPONSIBLE -->
+    <!-- CAMAPAIGN RESPONSIBLE -->
 
-	<data noupdate="1">
-		<record id="dm.dm_campaign_openerpondemandfreetrial2009" model="dm.campaign">
-			<field name="item_responsible_id" ref="dm.res_users_sue0"/>
-			<field name="dtp_responsible_id" ref="dm.res_users_ann0"/>
-			<field name="manufacturing_responsible_id" ref="dm.res_users_tom0"/>
-			<field name="responsible_id" ref="dm.res_users_jim0"/>
-			<field name="files_responsible_id" ref="res_users_joe0"/>
-		</record>
-	</data>
+    <data noupdate="1">
+        <record id="dm.dm_campaign_openerpondemandfreetrial2009" model="dm.campaign">
+            <field name="item_responsible_id" ref="dm.res_users_sue0"/>
+            <field name="dtp_responsible_id" ref="dm.res_users_ann0"/>
+            <field name="manufacturing_responsible_id" ref="dm.res_users_tom0"/>
+            <field name="responsible_id" ref="dm.res_users_jim0"/>
+            <field name="files_responsible_id" ref="res_users_joe0"/>
+        </record>
+    </data>
+
+    <!-- CUSTOMERS LIST -->
+
+    <data noupdate="1">
+        <record id="res_partner_northamericalistexpert0" model="res.partner">
+            <field eval="[(6,0,[ref('base.af'),ref('base.al'),ref('base.dz'),ref('base.as'),
+            ref('base.ad'),ref('base.ao'),ref('base.ai'),ref('base.aq'),ref('base.ag'),ref('base.ar'),ref('base.am'),
+            ref('base.aw'),ref('base.au'),ref('base.at'),ref('base.az'),ref('base.bs'),ref('base.bh'),ref('base.bd'),
+            ref('base.bb'),ref('base.by'),ref('base.be'),ref('base.bz'),ref('base.bj'),ref('base.bm'),ref('base.bt'),
+            ref('base.bo'),ref('base.ba'),ref('base.bw'),ref('base.bv'),ref('base.br'),ref('base.io'),ref('base.bn'),
+            ref('base.bg'),ref('base.bf'),ref('base.bi'),ref('base.kh'),ref('base.cm'),ref('base.ca'),ref('base.cv'),
+            ref('base.ky'),ref('base.cf'),ref('base.td'),ref('base.cl'),ref('base.cn'),ref('base.cx'),ref('base.cc'),
+            ref('base.co'),ref('base.km'),ref('base.cg'),ref('base.cd'),ref('base.ck'),ref('base.cr'),ref('base.hr'),
+            ref('base.cu'),ref('base.cy'),ref('base.cz'),ref('base.dk'),ref('base.dj'),ref('base.dm'),ref('base.do'),
+            ref('base.tp'),ref('base.ec'),ref('base.eg'),ref('base.sv'),ref('base.gq'),ref('base.er'),ref('base.ee'),
+            ref('base.et'),ref('base.fk'),ref('base.fo'),ref('base.fj'),ref('base.fi'),ref('base.fr'),ref('base.gf'),
+            ref('base.tf'),ref('base.ga'),ref('base.gm'),ref('base.ge'),ref('base.de'),ref('base.gh'),ref('base.gi'),
+            ref('base.gr'),ref('base.gl'),ref('base.gd'),ref('base.gp'),ref('base.gu'),ref('base.gt'),ref('base.gn'),
+            ref('base.gw'),ref('base.gy'),ref('base.ht'),ref('base.hm'),ref('base.va'),ref('base.hn'),ref('base.hk'),
+            ref('base.hu'),ref('base.is'),ref('base.in'),ref('base.id'),ref('base.ir'),ref('base.iq'),ref('base.ie'),
+            ref('base.il'),ref('base.it'),ref('base.ci'),ref('base.jm'),ref('base.jp'),ref('base.jo'),ref('base.kz'),
+            ref('base.ke'),ref('base.ki'),ref('base.kw'),ref('base.kg'),ref('base.la'),ref('base.lv'),ref('base.lb'),
+            ref('base.ls'),ref('base.lr'),ref('base.ly'),ref('base.li'),ref('base.lt'),ref('base.lu'),ref('base.mo'),
+            ref('base.mk'),ref('base.mg'),ref('base.mw'),ref('base.my'),ref('base.mv'),ref('base.ml'),ref('base.mt'),
+            ref('base.mh'),ref('base.mq'),ref('base.mr'),ref('base.mu'),ref('base.yt'),ref('base.mx'),ref('base.fm'),
+            ref('base.md'),ref('base.mc'),ref('base.mn'),ref('base.me'),ref('base.ms'),ref('base.ma'),ref('base.mz'),
+            ref('base.mm'),ref('base.na'),ref('base.nr'),ref('base.np'),ref('base.nl'),ref('base.an'),ref('base.nt'),
+            ref('base.nc'),ref('base.nz'),ref('base.ni'),ref('base.ne'),ref('base.ng'),ref('base.nu'),ref('base.nf'),
+            ref('base.mp'),ref('base.kp'),ref('base.no'),ref('base.om'),ref('base.pk'),ref('base.pw'),ref('base.pa'),
+            ref('base.pg'),ref('base.py'),ref('base.pe'),ref('base.ph'),ref('base.pn'),ref('base.pl'),ref('base.pf'),
+            ref('base.pt'),ref('base.pr'),ref('base.qa'),ref('base.re'),ref('base.ro'),ref('base.ru'),ref('base.rw'),
+            ref('base.sh'),ref('base.kn'),ref('base.lc'),ref('base.pm'),ref('base.st'),ref('base.vc'),ref('base.ws'),
+            ref('base.sm'),ref('base.sa'),ref('base.sn'),ref('base.rs'),ref('base.sc'),ref('base.gs'),ref('base.sl'),
+            ref('base.sg'),ref('base.sk'),ref('base.si'),ref('base.sb'),ref('base.so'),ref('base.za'),ref('base.kr'),
+            ref('base.es'),ref('base.lk'),ref('base.sd'),ref('base.sr'),ref('base.sj'),ref('base.sz'),ref('base.se'),
+            ref('base.ch'),ref('base.sy'),ref('base.tw'),ref('base.tj'),ref('base.tz'),ref('base.th'),ref('base.tg'),
+            ref('base.tk'),ref('base.to'),ref('base.tt'),ref('base.tn'),ref('base.tr'),ref('base.tm'),ref('base.tc'),
+            ref('base.tv'),ref('base.ug'),ref('base.ua'),ref('base.ae'),ref('base.uk'),ref('base.us'),ref('base.uy'),
+            ref('base.um'),ref('base.uz'),ref('base.vu'),ref('base.ve'),ref('base.vn'),ref('base.vg'),ref('base.vi'),
+            ref('base.wf'),ref('base.eh'),ref('base.ye'),ref('base.yu'),ref('base.zr'),ref('base.zm'),ref('base.zw')])]" name="country_ids"/>
+            <field name="property_product_pricelist" ref="product.list0"/>
+            <field eval="&quot;&quot;&quot;Corp.&quot;&quot;&quot;" name="title"/>
+            <field model="account.account" name="property_account_payable" search="[('name','=','Effets à payer')]"/>
+            <field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
+            <field eval="&quot;&quot;&quot;NAMEC&quot;&quot;&quot;" name="ref"/>
+            <field eval="0" name="customer"/>
+            <field eval="1" name="supplier"/>
+            <field name="property_stock_customer" ref="stock.stock_location_customers"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="lang"/>
+            <field eval="&quot;&quot;&quot;North America List Expert&quot;&quot;&quot;" name="name"/>
+            <field name="property_product_pricelist_purchase" ref="purchase.list0"/>
+            <field eval="[(6,0,[ref('base.sd-23'),ref('base.ng-ab'),ref('base.sd-26'),ref('base.br-ac'),ref('base.ng-ad'),
+            ref('base.et-af'),ref('base.mx-agu'),ref('base.pw-002'),ref('base.pw-004'),ref('base.sd-07'),ref('base.sd-03'),
+            ref('base.us-ak'),ref('base.ng-ak'),ref('base.us-al'),ref('base.br-al'),ref('base.et-am'),ref('base.br-am'),
+            ref('base.sd-04'),ref('base.ng-an'),ref('base.sd-08'),ref('base.sd-24'),ref('base.pw-010'),ref('base.br-ap'),
+            ref('base.in-ap'),ref('base.sd-06'),ref('base.us-ar'),ref('base.in-ar'),ref('base.sd-01'),ref('base.in-as'),
+            ref('base.sd-22'),ref('base.us-az'),ref('base.ng-ba'),ref('base.br-ba'),ref('base.sd-17'),ref('base.de-bb'),
+            ref('base.mx-bcn'),ref('base.mx-bcs'),ref('base.ng-be'),ref('base.et-be'),ref('base.de-be'),ref('base.at-1'),
+            ref('base.ng-bo'),ref('base.in-br'),ref('base.sd-18'),ref('base.de-bw'),ref('base.de-by'),ref('base.ng-by'),
+            ref('base.us-ca'),ref('base.mx-cam'),ref('base.br-ce'),ref('base.mm-14'),ref('base.mx-chh'),ref('base.mx-chp'),
+            ref('base.us-co'),ref('base.mx-coa'),ref('base.mx-col'),ref('base.ng-cr'),ref('base.us-ct'),ref('base.in-ct'),
+            ref('base.us-dc'),ref('base.us-de'),ref('base.ng-de'),ref('base.mx-dur'),ref('base.ng-eb'),ref('base.ng-ed'),
+            ref('base.ng-ek'),ref('base.ng-en'),ref('base.br-es'),ref('base.us-fl'),ref('base.br-fn'),ref('base.us-ga'),
+            ref('base.et-ga'),ref('base.in-ga'),ref('base.sd-16'),ref('base.sd-14'),ref('base.sd-12'),ref('base.in-gj'),
+            ref('base.ng-go'),ref('base.br-go'),ref('base.mx-gro'),ref('base.mx-gua'),ref('base.et-ha'),ref('base.pw-050'),
+            ref('base.de-hb'),ref('base.de-he'),ref('base.de-hh'),ref('base.us-hi'),ref('base.mx-hid'),ref('base.in-hp'),
+            ref('base.in-hr'),ref('base.us-ia'),ref('base.us-id'),ref('base.us-il'),ref('base.ng-im'),ref('base.us-in'),
+            ref('base.mx-jal'),ref('base.sd-11'),ref('base.in-jh'),ref('base.ng-ji'),ref('base.sd-13'),ref('base.in-jk'),
+            ref('base.my-01'),ref('base.sd-20'),ref('base.at-2'),ref('base.in-ka'),ref('base.sd-05'),ref('base.pw-100'),
+            ref('base.mm-11'),ref('base.ng-kd'),ref('base.my-02'),ref('base.ng-ke'),ref('base.my-03'),ref('base.mm-12'),
+            ref('base.in-kl'),ref('base.ng-kn'),ref('base.ng-ko'),ref('base.pw-150'),ref('base.us-ks'),ref('base.fm-ksa'),
+            ref('base.ng-kt'),ref('base.ng-kw'),ref('base.us-ky'),ref('base.mm-13'),ref('base.us-la'),ref('base.ng-la'),
+            ref('base.us-ma'),ref('base.br-ma'),ref('base.us-md'),ref('base.us-me'),ref('base.pw-212'),ref('base.my-04'),
+            ref('base.mx-mex'),ref('base.br-mg'),ref('base.in-mh'),ref('base.us-mi'),ref('base.mx-mic'),ref('base.in-ml'),
+            ref('base.us-mn'),ref('base.in-mn'),ref('base.us-mo'),ref('base.mm-15'),ref('base.mx-mor'),ref('base.in-mp'),
+            ref('base.us-ms'),ref('base.br-ms'),ref('base.us-mt'),ref('base.br-mt'),ref('base.de-mv'),ref('base.in-mz'),
+            ref('base.ng-na'),ref('base.mx-nay'),ref('base.us-nc'),ref('base.us-nd'),ref('base.us-ne'),ref('base.kn-n'),
+            ref('base.pw-214'),ref('base.pw-226'),ref('base.pw-228'),ref('base.pw-218'),ref('base.pw-227'),ref('base.pw-222'),
+            ref('base.pw-224'),ref('base.us-nh'),ref('base.at-3'),ref('base.ng-ni'),ref('base.de-ni'),ref('base.us-nj'),
+            ref('base.in-nl'),ref('base.mx-nle'),ref('base.us-nm'),ref('base.my-05'),ref('base.au-nsw'),ref('base.us-nv'),
+            ref('base.de-nw'),ref('base.us-ny'),ref('base.mx-oax'),ref('base.at-4'),ref('base.ng-og'),ref('base.us-oh'),
+            ref('base.us-ok'),ref('base.ng-on'),ref('base.us-or'),ref('base.in-or'),ref('base.et-or'),ref('base.ng-os'),
+            ref('base.ng-oy'),ref('base.us-pa'),ref('base.br-pa'),ref('base.my-06'),ref('base.in-pb'),ref('base.br-pb'),
+            ref('base.br-pe'),ref('base.pw-350'),ref('base.my-09'),ref('base.my-08'),ref('base.br-pi'),ref('base.ng-pl'),
+            ref('base.fm-pni'),ref('base.my-07'),ref('base.br-pr'),ref('base.mx-pue'),ref('base.au-qld'),ref('base.mx-que'),
+            ref('base.us-ri'),ref('base.ng-ri'),ref('base.br-rj'),ref('base.in-rj'),ref('base.mm-16'),ref('base.br-rn'),
+            ref('base.br-ro'),ref('base.mx-roo'),ref('base.de-rp'),ref('base.br-rr'),ref('base.br-rs'),ref('base.at-5'),
+            ref('base.au-sa'),ref('base.my-12'),ref('base.my-13'),ref('base.sd-15'),ref('base.us-sc'),ref('base.br-sc'),
+            ref('base.us-sd'),ref('base.sd-02'),ref('base.br-se'),ref('base.my-10'),ref('base.mm-17'),ref('base.de-sh'),
+            ref('base.sd-19'),ref('base.mx-sin'),ref('base.sd-09'),ref('base.in-sk'),ref('base.kn-k'),ref('base.de-sl'),
+            ref('base.mx-slp'),ref('base.sd-25'),ref('base.et-sn'),ref('base.de-sn'),ref('base.et-so'),ref('base.ng-so'),
+            ref('base.pw-370'),ref('base.mx-son'),ref('base.br-sp'),ref('base.at-6'),ref('base.de-st'),ref('base.ng-ta'),
+            ref('base.mx-tab'),ref('base.mx-tam'),ref('base.au-tas'),ref('base.my-11'),ref('base.de-th'),ref('base.at-7'),
+            ref('base.et-ti'),ref('base.mx-tla'),ref('base.us-tn'),ref('base.in-tn'),ref('base.br-to'),ref('base.in-tr'),
+            ref('base.fm-trk'),ref('base.us-tx'),ref('base.in-ul'),ref('base.in-up'),ref('base.us-ut'),ref('base.us-va'),
+            ref('base.at-8'),ref('base.mx-ver'),ref('base.au-vic'),ref('base.us-vt'),ref('base.us-wa'),ref('base.au-wa'),
+            ref('base.sd-21'),ref('base.in-wb'),ref('base.us-wi'),ref('base.at-9'),ref('base.us-wv'),ref('base.us-wy'),
+            ref('base.fm-yap'),ref('base.ng-yo'),ref('base.mx-yuc'),ref('base.ng-za'),ref('base.mx-zac')])]" name="state_ids"/>
+            <field model="account.account" name="property_account_receivable" search="[('name','=','Effets à recevoir - clients')]"/>
+            <field eval="[(6,0,[ref('dm.cat_broker')])]" name="category_id"/>
+        </record>
+        <record id="res_partner_address_billpicolo0" model="res.partner.address">
+            <field name="function" ref="base.function_sale"/>
+            <field eval="&quot;&quot;&quot;Archam&quot;&quot;&quot;" name="city"/>
+            <field eval="&quot;&quot;&quot;Bill Picolo&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;01456&quot;&quot;&quot;" name="zip"/>
+            <field eval="&quot;&quot;&quot;M.&quot;&quot;&quot;" name="title"/>
+            <field name="partner_id" ref="res_partner_northamericalistexpert0"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="&quot;&quot;&quot;Far Street 34&quot;&quot;&quot;" name="street"/>
+            <field eval="1" name="active"/>
+            <field name="state_id" ref="base.us-ma"/>
+            <field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;bill@namec.com&quot;&quot;&quot;" name="email"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="res_partner_bosslist0" model="res.partner">
+            <field eval="[(6,0,[ref('base.af'),ref('base.al'),ref('base.dz'),ref('base.as'),
+            ref('base.ad'),ref('base.ao'),ref('base.ai'),ref('base.aq'),ref('base.ag'),ref('base.ar'),ref('base.am'),
+            ref('base.aw'),ref('base.au'),ref('base.at'),ref('base.az'),ref('base.bs'),ref('base.bh'),ref('base.bd'),
+            ref('base.bb'),ref('base.by'),ref('base.be'),ref('base.bz'),ref('base.bj'),ref('base.bm'),ref('base.bt'),
+            ref('base.bo'),ref('base.ba'),ref('base.bw'),ref('base.bv'),ref('base.br'),ref('base.io'),ref('base.bn'),
+            ref('base.bg'),ref('base.bf'),ref('base.bi'),ref('base.kh'),ref('base.cm'),ref('base.ca'),ref('base.cv'),
+            ref('base.ky'),ref('base.cf'),ref('base.td'),ref('base.cl'),ref('base.cn'),ref('base.cx'),ref('base.cc'),
+            ref('base.co'),ref('base.km'),ref('base.cg'),ref('base.cd'),ref('base.ck'),ref('base.cr'),ref('base.hr'),
+            ref('base.cu'),ref('base.cy'),ref('base.cz'),ref('base.dk'),ref('base.dj'),ref('base.dm'),ref('base.do'),
+            ref('base.tp'),ref('base.ec'),ref('base.eg'),ref('base.sv'),ref('base.gq'),ref('base.er'),ref('base.ee'),
+            ref('base.et'),ref('base.fk'),ref('base.fo'),ref('base.fj'),ref('base.fi'),ref('base.fr'),ref('base.gf'),
+            ref('base.tf'),ref('base.ga'),ref('base.gm'),ref('base.ge'),ref('base.de'),ref('base.gh'),ref('base.gi'),
+            ref('base.gr'),ref('base.gl'),ref('base.gd'),ref('base.gp'),ref('base.gu'),ref('base.gt'),ref('base.gn'),
+            ref('base.gw'),ref('base.gy'),ref('base.ht'),ref('base.hm'),ref('base.va'),ref('base.hn'),ref('base.hk'),
+            ref('base.hu'),ref('base.is'),ref('base.in'),ref('base.id'),ref('base.ir'),ref('base.iq'),ref('base.ie'),
+            ref('base.il'),ref('base.it'),ref('base.ci'),ref('base.jm'),ref('base.jp'),ref('base.jo'),ref('base.kz'),
+            ref('base.ke'),ref('base.ki'),ref('base.kw'),ref('base.kg'),ref('base.la'),ref('base.lv'),ref('base.lb'),
+            ref('base.ls'),ref('base.lr'),ref('base.ly'),ref('base.li'),ref('base.lt'),ref('base.lu'),ref('base.mo'),
+            ref('base.mk'),ref('base.mg'),ref('base.mw'),ref('base.my'),ref('base.mv'),ref('base.ml'),ref('base.mt'),
+            ref('base.mh'),ref('base.mq'),ref('base.mr'),ref('base.mu'),ref('base.yt'),ref('base.mx'),ref('base.fm'),
+            ref('base.md'),ref('base.mc'),ref('base.mn'),ref('base.me'),ref('base.ms'),ref('base.ma'),ref('base.mz'),
+            ref('base.mm'),ref('base.na'),ref('base.nr'),ref('base.np'),ref('base.nl'),ref('base.an'),ref('base.nt'),
+            ref('base.nc'),ref('base.nz'),ref('base.ni'),ref('base.ne'),ref('base.ng'),ref('base.nu'),ref('base.nf'),
+            ref('base.mp'),ref('base.kp'),ref('base.no'),ref('base.om'),ref('base.pk'),ref('base.pw'),ref('base.pa'),
+            ref('base.pg'),ref('base.py'),ref('base.pe'),ref('base.ph'),ref('base.pn'),ref('base.pl'),ref('base.pf'),
+            ref('base.pt'),ref('base.pr'),ref('base.qa'),ref('base.re'),ref('base.ro'),ref('base.ru'),ref('base.rw'),
+            ref('base.sh'),ref('base.kn'),ref('base.lc'),ref('base.pm'),ref('base.st'),ref('base.vc'),ref('base.ws'),
+            ref('base.sm'),ref('base.sa'),ref('base.sn'),ref('base.rs'),ref('base.sc'),ref('base.gs'),ref('base.sl'),
+            ref('base.sg'),ref('base.sk'),ref('base.si'),ref('base.sb'),ref('base.so'),ref('base.za'),ref('base.kr'),
+            ref('base.es'),ref('base.lk'),ref('base.sd'),ref('base.sr'),ref('base.sj'),ref('base.sz'),ref('base.se'),
+            ref('base.ch'),ref('base.sy'),ref('base.tw'),ref('base.tj'),ref('base.tz'),ref('base.th'),ref('base.tg'),
+            ref('base.tk'),ref('base.to'),ref('base.tt'),ref('base.tn'),ref('base.tr'),ref('base.tm'),ref('base.tc'),
+            ref('base.tv'),ref('base.ug'),ref('base.ua'),ref('base.ae'),ref('base.uk'),ref('base.us'),ref('base.uy'),
+            ref('base.um'),ref('base.uz'),ref('base.vu'),ref('base.ve'),ref('base.vn'),ref('base.vg'),ref('base.vi'),
+            ref('base.wf'),ref('base.eh'),ref('base.ye'),ref('base.yu'),ref('base.zr'),ref('base.zm'),ref('base.zw')])]" name="country_ids"/>
+            <field name="property_product_pricelist" ref="product.list0"/>
+            <field eval="&quot;&quot;&quot;Corp.&quot;&quot;&quot;" name="title"/>
+            <field model="account.account" name="property_account_payable" search="[('name','=','Effets à payer')]"/>
+            <field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
+            <field eval="&quot;&quot;&quot;BOSSLIST&quot;&quot;&quot;" name="ref"/>
+            <field eval="0" name="customer"/>
+            <field eval="1" name="supplier"/>
+            <field name="property_stock_customer" ref="stock.stock_location_customers"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="lang"/>
+            <field eval="&quot;&quot;&quot;BossList&quot;&quot;&quot;" name="name"/>
+            <field name="property_product_pricelist_purchase" ref="purchase.list0"/>
+            <field eval="[(6,0,[ref('base.sd-23'),ref('base.ng-ab'),ref('base.sd-26'),ref('base.br-ac'),ref('base.ng-ad'),
+            ref('base.et-af'),ref('base.mx-agu'),ref('base.pw-002'),ref('base.pw-004'),ref('base.sd-07'),ref('base.sd-03'),
+            ref('base.us-ak'),ref('base.ng-ak'),ref('base.us-al'),ref('base.br-al'),ref('base.et-am'),ref('base.br-am'),
+            ref('base.sd-04'),ref('base.ng-an'),ref('base.sd-08'),ref('base.sd-24'),ref('base.pw-010'),ref('base.br-ap'),
+            ref('base.in-ap'),ref('base.sd-06'),ref('base.us-ar'),ref('base.in-ar'),ref('base.sd-01'),ref('base.in-as'),
+            ref('base.sd-22'),ref('base.us-az'),ref('base.ng-ba'),ref('base.br-ba'),ref('base.sd-17'),ref('base.de-bb'),
+            ref('base.mx-bcn'),ref('base.mx-bcs'),ref('base.ng-be'),ref('base.et-be'),ref('base.de-be'),ref('base.at-1'),
+            ref('base.ng-bo'),ref('base.in-br'),ref('base.sd-18'),ref('base.de-bw'),ref('base.de-by'),ref('base.ng-by'),
+            ref('base.us-ca'),ref('base.mx-cam'),ref('base.br-ce'),ref('base.mm-14'),ref('base.mx-chh'),ref('base.mx-chp'),
+            ref('base.us-co'),ref('base.mx-coa'),ref('base.mx-col'),ref('base.ng-cr'),ref('base.us-ct'),ref('base.in-ct'),
+            ref('base.us-dc'),ref('base.us-de'),ref('base.ng-de'),ref('base.mx-dur'),ref('base.ng-eb'),ref('base.ng-ed'),
+            ref('base.ng-ek'),ref('base.ng-en'),ref('base.br-es'),ref('base.us-fl'),ref('base.br-fn'),ref('base.us-ga'),
+            ref('base.et-ga'),ref('base.in-ga'),ref('base.sd-16'),ref('base.sd-14'),ref('base.sd-12'),ref('base.in-gj'),
+            ref('base.ng-go'),ref('base.br-go'),ref('base.mx-gro'),ref('base.mx-gua'),ref('base.et-ha'),ref('base.pw-050'),
+            ref('base.de-hb'),ref('base.de-he'),ref('base.de-hh'),ref('base.us-hi'),ref('base.mx-hid'),ref('base.in-hp'),
+            ref('base.in-hr'),ref('base.us-ia'),ref('base.us-id'),ref('base.us-il'),ref('base.ng-im'),ref('base.us-in'),
+            ref('base.mx-jal'),ref('base.sd-11'),ref('base.in-jh'),ref('base.ng-ji'),ref('base.sd-13'),ref('base.in-jk'),
+            ref('base.my-01'),ref('base.sd-20'),ref('base.at-2'),ref('base.in-ka'),ref('base.sd-05'),ref('base.pw-100'),
+            ref('base.mm-11'),ref('base.ng-kd'),ref('base.my-02'),ref('base.ng-ke'),ref('base.my-03'),ref('base.mm-12'),
+            ref('base.in-kl'),ref('base.ng-kn'),ref('base.ng-ko'),ref('base.pw-150'),ref('base.us-ks'),ref('base.fm-ksa'),
+            ref('base.ng-kt'),ref('base.ng-kw'),ref('base.us-ky'),ref('base.mm-13'),ref('base.us-la'),ref('base.ng-la'),
+            ref('base.us-ma'),ref('base.br-ma'),ref('base.us-md'),ref('base.us-me'),ref('base.pw-212'),ref('base.my-04'),
+            ref('base.mx-mex'),ref('base.br-mg'),ref('base.in-mh'),ref('base.us-mi'),ref('base.mx-mic'),ref('base.in-ml'),
+            ref('base.us-mn'),ref('base.in-mn'),ref('base.us-mo'),ref('base.mm-15'),ref('base.mx-mor'),ref('base.in-mp'),
+            ref('base.us-ms'),ref('base.br-ms'),ref('base.us-mt'),ref('base.br-mt'),ref('base.de-mv'),ref('base.in-mz'),
+            ref('base.ng-na'),ref('base.mx-nay'),ref('base.us-nc'),ref('base.us-nd'),ref('base.us-ne'),ref('base.kn-n'),
+            ref('base.pw-214'),ref('base.pw-226'),ref('base.pw-228'),ref('base.pw-218'),ref('base.pw-227'),ref('base.pw-222'),
+            ref('base.pw-224'),ref('base.us-nh'),ref('base.at-3'),ref('base.ng-ni'),ref('base.de-ni'),ref('base.us-nj'),
+            ref('base.in-nl'),ref('base.mx-nle'),ref('base.us-nm'),ref('base.my-05'),ref('base.au-nsw'),ref('base.us-nv'),
+            ref('base.de-nw'),ref('base.us-ny'),ref('base.mx-oax'),ref('base.at-4'),ref('base.ng-og'),ref('base.us-oh'),
+            ref('base.us-ok'),ref('base.ng-on'),ref('base.us-or'),ref('base.in-or'),ref('base.et-or'),ref('base.ng-os'),
+            ref('base.ng-oy'),ref('base.us-pa'),ref('base.br-pa'),ref('base.my-06'),ref('base.in-pb'),ref('base.br-pb'),
+            ref('base.br-pe'),ref('base.pw-350'),ref('base.my-09'),ref('base.my-08'),ref('base.br-pi'),ref('base.ng-pl'),
+            ref('base.fm-pni'),ref('base.my-07'),ref('base.br-pr'),ref('base.mx-pue'),ref('base.au-qld'),ref('base.mx-que'),
+            ref('base.us-ri'),ref('base.ng-ri'),ref('base.br-rj'),ref('base.in-rj'),ref('base.mm-16'),ref('base.br-rn'),
+            ref('base.br-ro'),ref('base.mx-roo'),ref('base.de-rp'),ref('base.br-rr'),ref('base.br-rs'),ref('base.at-5'),
+            ref('base.au-sa'),ref('base.my-12'),ref('base.my-13'),ref('base.sd-15'),ref('base.us-sc'),ref('base.br-sc'),
+            ref('base.us-sd'),ref('base.sd-02'),ref('base.br-se'),ref('base.my-10'),ref('base.mm-17'),ref('base.de-sh'),
+            ref('base.sd-19'),ref('base.mx-sin'),ref('base.sd-09'),ref('base.in-sk'),ref('base.kn-k'),ref('base.de-sl'),
+            ref('base.mx-slp'),ref('base.sd-25'),ref('base.et-sn'),ref('base.de-sn'),ref('base.et-so'),ref('base.ng-so'),
+            ref('base.pw-370'),ref('base.mx-son'),ref('base.br-sp'),ref('base.at-6'),ref('base.de-st'),ref('base.ng-ta'),
+            ref('base.mx-tab'),ref('base.mx-tam'),ref('base.au-tas'),ref('base.my-11'),ref('base.de-th'),ref('base.at-7'),
+            ref('base.et-ti'),ref('base.mx-tla'),ref('base.us-tn'),ref('base.in-tn'),ref('base.br-to'),ref('base.in-tr'),
+            ref('base.fm-trk'),ref('base.us-tx'),ref('base.in-ul'),ref('base.in-up'),ref('base.us-ut'),ref('base.us-va'),
+            ref('base.at-8'),ref('base.mx-ver'),ref('base.au-vic'),ref('base.us-vt'),ref('base.us-wa'),ref('base.au-wa'),
+            ref('base.sd-21'),ref('base.in-wb'),ref('base.us-wi'),ref('base.at-9'),ref('base.us-wv'),ref('base.us-wy'),
+            ref('base.fm-yap'),ref('base.ng-yo'),ref('base.mx-yuc'),ref('base.ng-za'),ref('base.mx-zac')])]" name="state_ids"/>
+            <field model="account.account" name="property_account_receivable" search="[('name','=','Effets à recevoir - clients')]"/>
+            <field eval="[(6,0,[ref('dm.cat_broker')])]" name="category_id"/>
+        </record>
+        <record id="res_partner_address_mariaboss0" model="res.partner.address">
+            <field name="function" ref="base.function_sale"/>
+            <field eval="&quot;&quot;&quot;Wislon&quot;&quot;&quot;" name="city"/>
+            <field eval="&quot;&quot;&quot;Maria Boss&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;01542&quot;&quot;&quot;" name="zip"/>
+            <field eval="&quot;&quot;&quot;M.&quot;&quot;&quot;" name="title"/>
+            <field name="partner_id" ref="res_partner_bosslist0"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="&quot;&quot;&quot;Boss Higway&quot;&quot;&quot;" name="street"/>
+            <field eval="1" name="active"/>
+            <field name="state_id" ref="base.us-fl"/>
+            <field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;maria@bosslist.com&quot;&quot;&quot;" name="email"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="res_partner_papercut0" model="res.partner">
+            <field eval="[(6,0,[ref('base.af'),ref('base.al'),ref('base.dz'),ref('base.as'),
+            ref('base.ad'),ref('base.ao'),ref('base.ai'),ref('base.aq'),ref('base.ag'),ref('base.ar'),ref('base.am'),
+            ref('base.aw'),ref('base.au'),ref('base.at'),ref('base.az'),ref('base.bs'),ref('base.bh'),ref('base.bd'),
+            ref('base.bb'),ref('base.by'),ref('base.be'),ref('base.bz'),ref('base.bj'),ref('base.bm'),ref('base.bt'),
+            ref('base.bo'),ref('base.ba'),ref('base.bw'),ref('base.bv'),ref('base.br'),ref('base.io'),ref('base.bn'),
+            ref('base.bg'),ref('base.bf'),ref('base.bi'),ref('base.kh'),ref('base.cm'),ref('base.ca'),ref('base.cv'),
+            ref('base.ky'),ref('base.cf'),ref('base.td'),ref('base.cl'),ref('base.cn'),ref('base.cx'),ref('base.cc'),
+            ref('base.co'),ref('base.km'),ref('base.cg'),ref('base.cd'),ref('base.ck'),ref('base.cr'),ref('base.hr'),
+            ref('base.cu'),ref('base.cy'),ref('base.cz'),ref('base.dk'),ref('base.dj'),ref('base.dm'),ref('base.do'),
+            ref('base.tp'),ref('base.ec'),ref('base.eg'),ref('base.sv'),ref('base.gq'),ref('base.er'),ref('base.ee'),
+            ref('base.et'),ref('base.fk'),ref('base.fo'),ref('base.fj'),ref('base.fi'),ref('base.fr'),ref('base.gf'),
+            ref('base.tf'),ref('base.ga'),ref('base.gm'),ref('base.ge'),ref('base.de'),ref('base.gh'),ref('base.gi'),
+            ref('base.gr'),ref('base.gl'),ref('base.gd'),ref('base.gp'),ref('base.gu'),ref('base.gt'),ref('base.gn'),
+            ref('base.gw'),ref('base.gy'),ref('base.ht'),ref('base.hm'),ref('base.va'),ref('base.hn'),ref('base.hk'),
+            ref('base.hu'),ref('base.is'),ref('base.in'),ref('base.id'),ref('base.ir'),ref('base.iq'),ref('base.ie'),
+            ref('base.il'),ref('base.it'),ref('base.ci'),ref('base.jm'),ref('base.jp'),ref('base.jo'),ref('base.kz'),
+            ref('base.ke'),ref('base.ki'),ref('base.kw'),ref('base.kg'),ref('base.la'),ref('base.lv'),ref('base.lb'),
+            ref('base.ls'),ref('base.lr'),ref('base.ly'),ref('base.li'),ref('base.lt'),ref('base.lu'),ref('base.mo'),
+            ref('base.mk'),ref('base.mg'),ref('base.mw'),ref('base.my'),ref('base.mv'),ref('base.ml'),ref('base.mt'),
+            ref('base.mh'),ref('base.mq'),ref('base.mr'),ref('base.mu'),ref('base.yt'),ref('base.mx'),ref('base.fm'),
+            ref('base.md'),ref('base.mc'),ref('base.mn'),ref('base.me'),ref('base.ms'),ref('base.ma'),ref('base.mz'),
+            ref('base.mm'),ref('base.na'),ref('base.nr'),ref('base.np'),ref('base.nl'),ref('base.an'),ref('base.nt'),
+            ref('base.nc'),ref('base.nz'),ref('base.ni'),ref('base.ne'),ref('base.ng'),ref('base.nu'),ref('base.nf'),
+            ref('base.mp'),ref('base.kp'),ref('base.no'),ref('base.om'),ref('base.pk'),ref('base.pw'),ref('base.pa'),
+            ref('base.pg'),ref('base.py'),ref('base.pe'),ref('base.ph'),ref('base.pn'),ref('base.pl'),ref('base.pf'),
+            ref('base.pt'),ref('base.pr'),ref('base.qa'),ref('base.re'),ref('base.ro'),ref('base.ru'),ref('base.rw'),
+            ref('base.sh'),ref('base.kn'),ref('base.lc'),ref('base.pm'),ref('base.st'),ref('base.vc'),ref('base.ws'),
+            ref('base.sm'),ref('base.sa'),ref('base.sn'),ref('base.rs'),ref('base.sc'),ref('base.gs'),ref('base.sl'),
+            ref('base.sg'),ref('base.sk'),ref('base.si'),ref('base.sb'),ref('base.so'),ref('base.za'),ref('base.kr'),
+            ref('base.es'),ref('base.lk'),ref('base.sd'),ref('base.sr'),ref('base.sj'),ref('base.sz'),ref('base.se'),
+            ref('base.ch'),ref('base.sy'),ref('base.tw'),ref('base.tj'),ref('base.tz'),ref('base.th'),ref('base.tg'),
+            ref('base.tk'),ref('base.to'),ref('base.tt'),ref('base.tn'),ref('base.tr'),ref('base.tm'),ref('base.tc'),
+            ref('base.tv'),ref('base.ug'),ref('base.ua'),ref('base.ae'),ref('base.uk'),ref('base.us'),ref('base.uy'),
+            ref('base.um'),ref('base.uz'),ref('base.vu'),ref('base.ve'),ref('base.vn'),ref('base.vg'),ref('base.vi'),
+            ref('base.wf'),ref('base.eh'),ref('base.ye'),ref('base.yu'),ref('base.zr'),ref('base.zm'),ref('base.zw')])]" name="country_ids"/>
+            <field name="property_product_pricelist" ref="product.list0"/>
+            <field eval="&quot;&quot;&quot;Corp.&quot;&quot;&quot;" name="title"/>
+            <field model="account.account" name="property_account_payable" search="[('name','=','Effets à payer')]"/>
+            <field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
+            <field eval="&quot;&quot;&quot;PAPERCUT&quot;&quot;&quot;" name="ref"/>
+            <field eval="0" name="customer"/>
+            <field eval="1" name="supplier"/>
+            <field name="property_stock_customer" ref="stock.stock_location_customers"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="lang"/>
+            <field eval="&quot;&quot;&quot;Paper Cut&quot;&quot;&quot;" name="name"/>
+            <field name="property_product_pricelist_purchase" ref="purchase.list0"/>
+            <field eval="[(6,0,[ref('base.sd-23'),ref('base.ng-ab'),ref('base.sd-26'),ref('base.br-ac'),ref('base.ng-ad'),
+            ref('base.et-af'),ref('base.mx-agu'),ref('base.pw-002'),ref('base.pw-004'),ref('base.sd-07'),ref('base.sd-03'),
+            ref('base.us-ak'),ref('base.ng-ak'),ref('base.us-al'),ref('base.br-al'),ref('base.et-am'),ref('base.br-am'),
+            ref('base.sd-04'),ref('base.ng-an'),ref('base.sd-08'),ref('base.sd-24'),ref('base.pw-010'),ref('base.br-ap'),
+            ref('base.in-ap'),ref('base.sd-06'),ref('base.us-ar'),ref('base.in-ar'),ref('base.sd-01'),ref('base.in-as'),
+            ref('base.sd-22'),ref('base.us-az'),ref('base.ng-ba'),ref('base.br-ba'),ref('base.sd-17'),ref('base.de-bb'),
+            ref('base.mx-bcn'),ref('base.mx-bcs'),ref('base.ng-be'),ref('base.et-be'),ref('base.de-be'),ref('base.at-1'),
+            ref('base.ng-bo'),ref('base.in-br'),ref('base.sd-18'),ref('base.de-bw'),ref('base.de-by'),ref('base.ng-by'),
+            ref('base.us-ca'),ref('base.mx-cam'),ref('base.br-ce'),ref('base.mm-14'),ref('base.mx-chh'),ref('base.mx-chp'),
+            ref('base.us-co'),ref('base.mx-coa'),ref('base.mx-col'),ref('base.ng-cr'),ref('base.us-ct'),ref('base.in-ct'),
+            ref('base.us-dc'),ref('base.us-de'),ref('base.ng-de'),ref('base.mx-dur'),ref('base.ng-eb'),ref('base.ng-ed'),
+            ref('base.ng-ek'),ref('base.ng-en'),ref('base.br-es'),ref('base.us-fl'),ref('base.br-fn'),ref('base.us-ga'),
+            ref('base.et-ga'),ref('base.in-ga'),ref('base.sd-16'),ref('base.sd-14'),ref('base.sd-12'),ref('base.in-gj'),
+            ref('base.ng-go'),ref('base.br-go'),ref('base.mx-gro'),ref('base.mx-gua'),ref('base.et-ha'),ref('base.pw-050'),
+            ref('base.de-hb'),ref('base.de-he'),ref('base.de-hh'),ref('base.us-hi'),ref('base.mx-hid'),ref('base.in-hp'),
+            ref('base.in-hr'),ref('base.us-ia'),ref('base.us-id'),ref('base.us-il'),ref('base.ng-im'),ref('base.us-in'),
+            ref('base.mx-jal'),ref('base.sd-11'),ref('base.in-jh'),ref('base.ng-ji'),ref('base.sd-13'),ref('base.in-jk'),
+            ref('base.my-01'),ref('base.sd-20'),ref('base.at-2'),ref('base.in-ka'),ref('base.sd-05'),ref('base.pw-100'),
+            ref('base.mm-11'),ref('base.ng-kd'),ref('base.my-02'),ref('base.ng-ke'),ref('base.my-03'),ref('base.mm-12'),
+            ref('base.in-kl'),ref('base.ng-kn'),ref('base.ng-ko'),ref('base.pw-150'),ref('base.us-ks'),ref('base.fm-ksa'),
+            ref('base.ng-kt'),ref('base.ng-kw'),ref('base.us-ky'),ref('base.mm-13'),ref('base.us-la'),ref('base.ng-la'),
+            ref('base.us-ma'),ref('base.br-ma'),ref('base.us-md'),ref('base.us-me'),ref('base.pw-212'),ref('base.my-04'),
+            ref('base.mx-mex'),ref('base.br-mg'),ref('base.in-mh'),ref('base.us-mi'),ref('base.mx-mic'),ref('base.in-ml'),
+            ref('base.us-mn'),ref('base.in-mn'),ref('base.us-mo'),ref('base.mm-15'),ref('base.mx-mor'),ref('base.in-mp'),
+            ref('base.us-ms'),ref('base.br-ms'),ref('base.us-mt'),ref('base.br-mt'),ref('base.de-mv'),ref('base.in-mz'),
+            ref('base.ng-na'),ref('base.mx-nay'),ref('base.us-nc'),ref('base.us-nd'),ref('base.us-ne'),ref('base.kn-n'),
+            ref('base.pw-214'),ref('base.pw-226'),ref('base.pw-228'),ref('base.pw-218'),ref('base.pw-227'),ref('base.pw-222'),
+            ref('base.pw-224'),ref('base.us-nh'),ref('base.at-3'),ref('base.ng-ni'),ref('base.de-ni'),ref('base.us-nj'),
+            ref('base.in-nl'),ref('base.mx-nle'),ref('base.us-nm'),ref('base.my-05'),ref('base.au-nsw'),ref('base.us-nv'),
+            ref('base.de-nw'),ref('base.us-ny'),ref('base.mx-oax'),ref('base.at-4'),ref('base.ng-og'),ref('base.us-oh'),
+            ref('base.us-ok'),ref('base.ng-on'),ref('base.us-or'),ref('base.in-or'),ref('base.et-or'),ref('base.ng-os'),
+            ref('base.ng-oy'),ref('base.us-pa'),ref('base.br-pa'),ref('base.my-06'),ref('base.in-pb'),ref('base.br-pb'),
+            ref('base.br-pe'),ref('base.pw-350'),ref('base.my-09'),ref('base.my-08'),ref('base.br-pi'),ref('base.ng-pl'),
+            ref('base.fm-pni'),ref('base.my-07'),ref('base.br-pr'),ref('base.mx-pue'),ref('base.au-qld'),ref('base.mx-que'),
+            ref('base.us-ri'),ref('base.ng-ri'),ref('base.br-rj'),ref('base.in-rj'),ref('base.mm-16'),ref('base.br-rn'),
+            ref('base.br-ro'),ref('base.mx-roo'),ref('base.de-rp'),ref('base.br-rr'),ref('base.br-rs'),ref('base.at-5'),
+            ref('base.au-sa'),ref('base.my-12'),ref('base.my-13'),ref('base.sd-15'),ref('base.us-sc'),ref('base.br-sc'),
+            ref('base.us-sd'),ref('base.sd-02'),ref('base.br-se'),ref('base.my-10'),ref('base.mm-17'),ref('base.de-sh'),
+            ref('base.sd-19'),ref('base.mx-sin'),ref('base.sd-09'),ref('base.in-sk'),ref('base.kn-k'),ref('base.de-sl'),
+            ref('base.mx-slp'),ref('base.sd-25'),ref('base.et-sn'),ref('base.de-sn'),ref('base.et-so'),ref('base.ng-so'),
+            ref('base.pw-370'),ref('base.mx-son'),ref('base.br-sp'),ref('base.at-6'),ref('base.de-st'),ref('base.ng-ta'),
+            ref('base.mx-tab'),ref('base.mx-tam'),ref('base.au-tas'),ref('base.my-11'),ref('base.de-th'),ref('base.at-7'),
+            ref('base.et-ti'),ref('base.mx-tla'),ref('base.us-tn'),ref('base.in-tn'),ref('base.br-to'),ref('base.in-tr'),
+            ref('base.fm-trk'),ref('base.us-tx'),ref('base.in-ul'),ref('base.in-up'),ref('base.us-ut'),ref('base.us-va'),
+            ref('base.at-8'),ref('base.mx-ver'),ref('base.au-vic'),ref('base.us-vt'),ref('base.us-wa'),ref('base.au-wa'),
+            ref('base.sd-21'),ref('base.in-wb'),ref('base.us-wi'),ref('base.at-9'),ref('base.us-wv'),ref('base.us-wy'),
+            ref('base.fm-yap'),ref('base.ng-yo'),ref('base.mx-yuc'),ref('base.ng-za'),ref('base.mx-zac')])]" name="state_ids"/>
+            <field model="account.account" name="property_account_receivable" search="[('name','=','Effets à recevoir - clients')]"/>
+            <field eval="[(6,0,[ref('dm.cat_mailing_supplier')])]" name="category_id"/>
+        </record>
+        <record id="res_partner_address_natylore0" model="res.partner.address">
+            <field name="function" ref="base.function_sale"/>
+            <field eval="&quot;&quot;&quot;Dinland&quot;&quot;&quot;" name="city"/>
+            <field eval="&quot;&quot;&quot;Naty Lore&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;01652&quot;&quot;&quot;" name="zip"/>
+            <field eval="&quot;&quot;&quot;M.&quot;&quot;&quot;" name="title"/>
+            <field name="partner_id" ref="res_partner_papercut0"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="&quot;&quot;&quot;Mail Street&quot;&quot;&quot;" name="street"/>
+            <field eval="1" name="active"/>
+            <field name="state_id" ref="base.us-fl"/>
+            <field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;n.lore@papercut.com&quot;&quot;&quot;" name="email"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="res_partner_maxmailing0" model="res.partner">
+            <field eval="[(6,0,[ref('base.af'),ref('base.al'),ref('base.dz'),ref('base.as'),
+            ref('base.ad'),ref('base.ao'),ref('base.ai'),ref('base.aq'),ref('base.ag'),ref('base.ar'),ref('base.am'),
+            ref('base.aw'),ref('base.au'),ref('base.at'),ref('base.az'),ref('base.bs'),ref('base.bh'),ref('base.bd'),
+            ref('base.bb'),ref('base.by'),ref('base.be'),ref('base.bz'),ref('base.bj'),ref('base.bm'),ref('base.bt'),
+            ref('base.bo'),ref('base.ba'),ref('base.bw'),ref('base.bv'),ref('base.br'),ref('base.io'),ref('base.bn'),
+            ref('base.bg'),ref('base.bf'),ref('base.bi'),ref('base.kh'),ref('base.cm'),ref('base.ca'),ref('base.cv'),
+            ref('base.ky'),ref('base.cf'),ref('base.td'),ref('base.cl'),ref('base.cn'),ref('base.cx'),ref('base.cc'),
+            ref('base.co'),ref('base.km'),ref('base.cg'),ref('base.cd'),ref('base.ck'),ref('base.cr'),ref('base.hr'),
+            ref('base.cu'),ref('base.cy'),ref('base.cz'),ref('base.dk'),ref('base.dj'),ref('base.dm'),ref('base.do'),
+            ref('base.tp'),ref('base.ec'),ref('base.eg'),ref('base.sv'),ref('base.gq'),ref('base.er'),ref('base.ee'),
+            ref('base.et'),ref('base.fk'),ref('base.fo'),ref('base.fj'),ref('base.fi'),ref('base.fr'),ref('base.gf'),
+            ref('base.tf'),ref('base.ga'),ref('base.gm'),ref('base.ge'),ref('base.de'),ref('base.gh'),ref('base.gi'),
+            ref('base.gr'),ref('base.gl'),ref('base.gd'),ref('base.gp'),ref('base.gu'),ref('base.gt'),ref('base.gn'),
+            ref('base.gw'),ref('base.gy'),ref('base.ht'),ref('base.hm'),ref('base.va'),ref('base.hn'),ref('base.hk'),
+            ref('base.hu'),ref('base.is'),ref('base.in'),ref('base.id'),ref('base.ir'),ref('base.iq'),ref('base.ie'),
+            ref('base.il'),ref('base.it'),ref('base.ci'),ref('base.jm'),ref('base.jp'),ref('base.jo'),ref('base.kz'),
+            ref('base.ke'),ref('base.ki'),ref('base.kw'),ref('base.kg'),ref('base.la'),ref('base.lv'),ref('base.lb'),
+            ref('base.ls'),ref('base.lr'),ref('base.ly'),ref('base.li'),ref('base.lt'),ref('base.lu'),ref('base.mo'),
+            ref('base.mk'),ref('base.mg'),ref('base.mw'),ref('base.my'),ref('base.mv'),ref('base.ml'),ref('base.mt'),
+            ref('base.mh'),ref('base.mq'),ref('base.mr'),ref('base.mu'),ref('base.yt'),ref('base.mx'),ref('base.fm'),
+            ref('base.md'),ref('base.mc'),ref('base.mn'),ref('base.me'),ref('base.ms'),ref('base.ma'),ref('base.mz'),
+            ref('base.mm'),ref('base.na'),ref('base.nr'),ref('base.np'),ref('base.nl'),ref('base.an'),ref('base.nt'),
+            ref('base.nc'),ref('base.nz'),ref('base.ni'),ref('base.ne'),ref('base.ng'),ref('base.nu'),ref('base.nf'),
+            ref('base.mp'),ref('base.kp'),ref('base.no'),ref('base.om'),ref('base.pk'),ref('base.pw'),ref('base.pa'),
+            ref('base.pg'),ref('base.py'),ref('base.pe'),ref('base.ph'),ref('base.pn'),ref('base.pl'),ref('base.pf'),
+            ref('base.pt'),ref('base.pr'),ref('base.qa'),ref('base.re'),ref('base.ro'),ref('base.ru'),ref('base.rw'),
+            ref('base.sh'),ref('base.kn'),ref('base.lc'),ref('base.pm'),ref('base.st'),ref('base.vc'),ref('base.ws'),
+            ref('base.sm'),ref('base.sa'),ref('base.sn'),ref('base.rs'),ref('base.sc'),ref('base.gs'),ref('base.sl'),
+            ref('base.sg'),ref('base.sk'),ref('base.si'),ref('base.sb'),ref('base.so'),ref('base.za'),ref('base.kr'),
+            ref('base.es'),ref('base.lk'),ref('base.sd'),ref('base.sr'),ref('base.sj'),ref('base.sz'),ref('base.se'),
+            ref('base.ch'),ref('base.sy'),ref('base.tw'),ref('base.tj'),ref('base.tz'),ref('base.th'),ref('base.tg'),
+            ref('base.tk'),ref('base.to'),ref('base.tt'),ref('base.tn'),ref('base.tr'),ref('base.tm'),ref('base.tc'),
+            ref('base.tv'),ref('base.ug'),ref('base.ua'),ref('base.ae'),ref('base.uk'),ref('base.us'),ref('base.uy'),
+            ref('base.um'),ref('base.uz'),ref('base.vu'),ref('base.ve'),ref('base.vn'),ref('base.vg'),ref('base.vi'),
+            ref('base.wf'),ref('base.eh'),ref('base.ye'),ref('base.yu'),ref('base.zr'),ref('base.zm'),ref('base.zw')])]" name="country_ids"/>
+            <field name="property_product_pricelist" ref="product.list0"/>
+            <field eval="&quot;&quot;&quot;Corp.&quot;&quot;&quot;" name="title"/>
+            <field model="account.account" name="property_account_payable" search="[('name','=','Effets à payer')]"/>
+            <field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
+            <field eval="&quot;&quot;&quot;Max Mailing&quot;&quot;&quot;" name="ref"/>
+            <field eval="0" name="customer"/>
+            <field eval="1" name="supplier"/>
+            <field name="property_stock_customer" ref="stock.stock_location_customers"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="lang"/>
+            <field eval="&quot;&quot;&quot;Max Mailing&quot;&quot;&quot;" name="name"/>
+            <field name="property_product_pricelist_purchase" ref="purchase.list0"/>
+            <field eval="[(6,0,[ref('base.sd-23'),ref('base.ng-ab'),ref('base.sd-26'),ref('base.br-ac'),ref('base.ng-ad'),
+            ref('base.et-af'),ref('base.mx-agu'),ref('base.pw-002'),ref('base.pw-004'),ref('base.sd-07'),ref('base.sd-03'),
+            ref('base.us-ak'),ref('base.ng-ak'),ref('base.us-al'),ref('base.br-al'),ref('base.et-am'),ref('base.br-am'),
+            ref('base.sd-04'),ref('base.ng-an'),ref('base.sd-08'),ref('base.sd-24'),ref('base.pw-010'),ref('base.br-ap'),
+            ref('base.in-ap'),ref('base.sd-06'),ref('base.us-ar'),ref('base.in-ar'),ref('base.sd-01'),ref('base.in-as'),
+            ref('base.sd-22'),ref('base.us-az'),ref('base.ng-ba'),ref('base.br-ba'),ref('base.sd-17'),ref('base.de-bb'),
+            ref('base.mx-bcn'),ref('base.mx-bcs'),ref('base.ng-be'),ref('base.et-be'),ref('base.de-be'),ref('base.at-1'),
+            ref('base.ng-bo'),ref('base.in-br'),ref('base.sd-18'),ref('base.de-bw'),ref('base.de-by'),ref('base.ng-by'),
+            ref('base.us-ca'),ref('base.mx-cam'),ref('base.br-ce'),ref('base.mm-14'),ref('base.mx-chh'),ref('base.mx-chp'),
+            ref('base.us-co'),ref('base.mx-coa'),ref('base.mx-col'),ref('base.ng-cr'),ref('base.us-ct'),ref('base.in-ct'),
+            ref('base.us-dc'),ref('base.us-de'),ref('base.ng-de'),ref('base.mx-dur'),ref('base.ng-eb'),ref('base.ng-ed'),
+            ref('base.ng-ek'),ref('base.ng-en'),ref('base.br-es'),ref('base.us-fl'),ref('base.br-fn'),ref('base.us-ga'),
+            ref('base.et-ga'),ref('base.in-ga'),ref('base.sd-16'),ref('base.sd-14'),ref('base.sd-12'),ref('base.in-gj'),
+            ref('base.ng-go'),ref('base.br-go'),ref('base.mx-gro'),ref('base.mx-gua'),ref('base.et-ha'),ref('base.pw-050'),
+            ref('base.de-hb'),ref('base.de-he'),ref('base.de-hh'),ref('base.us-hi'),ref('base.mx-hid'),ref('base.in-hp'),
+            ref('base.in-hr'),ref('base.us-ia'),ref('base.us-id'),ref('base.us-il'),ref('base.ng-im'),ref('base.us-in'),
+            ref('base.mx-jal'),ref('base.sd-11'),ref('base.in-jh'),ref('base.ng-ji'),ref('base.sd-13'),ref('base.in-jk'),
+            ref('base.my-01'),ref('base.sd-20'),ref('base.at-2'),ref('base.in-ka'),ref('base.sd-05'),ref('base.pw-100'),
+            ref('base.mm-11'),ref('base.ng-kd'),ref('base.my-02'),ref('base.ng-ke'),ref('base.my-03'),ref('base.mm-12'),
+            ref('base.in-kl'),ref('base.ng-kn'),ref('base.ng-ko'),ref('base.pw-150'),ref('base.us-ks'),ref('base.fm-ksa'),
+            ref('base.ng-kt'),ref('base.ng-kw'),ref('base.us-ky'),ref('base.mm-13'),ref('base.us-la'),ref('base.ng-la'),
+            ref('base.us-ma'),ref('base.br-ma'),ref('base.us-md'),ref('base.us-me'),ref('base.pw-212'),ref('base.my-04'),
+            ref('base.mx-mex'),ref('base.br-mg'),ref('base.in-mh'),ref('base.us-mi'),ref('base.mx-mic'),ref('base.in-ml'),
+            ref('base.us-mn'),ref('base.in-mn'),ref('base.us-mo'),ref('base.mm-15'),ref('base.mx-mor'),ref('base.in-mp'),
+            ref('base.us-ms'),ref('base.br-ms'),ref('base.us-mt'),ref('base.br-mt'),ref('base.de-mv'),ref('base.in-mz'),
+            ref('base.ng-na'),ref('base.mx-nay'),ref('base.us-nc'),ref('base.us-nd'),ref('base.us-ne'),ref('base.kn-n'),
+            ref('base.pw-214'),ref('base.pw-226'),ref('base.pw-228'),ref('base.pw-218'),ref('base.pw-227'),ref('base.pw-222'),
+            ref('base.pw-224'),ref('base.us-nh'),ref('base.at-3'),ref('base.ng-ni'),ref('base.de-ni'),ref('base.us-nj'),
+            ref('base.in-nl'),ref('base.mx-nle'),ref('base.us-nm'),ref('base.my-05'),ref('base.au-nsw'),ref('base.us-nv'),
+            ref('base.de-nw'),ref('base.us-ny'),ref('base.mx-oax'),ref('base.at-4'),ref('base.ng-og'),ref('base.us-oh'),
+            ref('base.us-ok'),ref('base.ng-on'),ref('base.us-or'),ref('base.in-or'),ref('base.et-or'),ref('base.ng-os'),
+            ref('base.ng-oy'),ref('base.us-pa'),ref('base.br-pa'),ref('base.my-06'),ref('base.in-pb'),ref('base.br-pb'),
+            ref('base.br-pe'),ref('base.pw-350'),ref('base.my-09'),ref('base.my-08'),ref('base.br-pi'),ref('base.ng-pl'),
+            ref('base.fm-pni'),ref('base.my-07'),ref('base.br-pr'),ref('base.mx-pue'),ref('base.au-qld'),ref('base.mx-que'),
+            ref('base.us-ri'),ref('base.ng-ri'),ref('base.br-rj'),ref('base.in-rj'),ref('base.mm-16'),ref('base.br-rn'),
+            ref('base.br-ro'),ref('base.mx-roo'),ref('base.de-rp'),ref('base.br-rr'),ref('base.br-rs'),ref('base.at-5'),
+            ref('base.au-sa'),ref('base.my-12'),ref('base.my-13'),ref('base.sd-15'),ref('base.us-sc'),ref('base.br-sc'),
+            ref('base.us-sd'),ref('base.sd-02'),ref('base.br-se'),ref('base.my-10'),ref('base.mm-17'),ref('base.de-sh'),
+            ref('base.sd-19'),ref('base.mx-sin'),ref('base.sd-09'),ref('base.in-sk'),ref('base.kn-k'),ref('base.de-sl'),
+            ref('base.mx-slp'),ref('base.sd-25'),ref('base.et-sn'),ref('base.de-sn'),ref('base.et-so'),ref('base.ng-so'),
+            ref('base.pw-370'),ref('base.mx-son'),ref('base.br-sp'),ref('base.at-6'),ref('base.de-st'),ref('base.ng-ta'),
+            ref('base.mx-tab'),ref('base.mx-tam'),ref('base.au-tas'),ref('base.my-11'),ref('base.de-th'),ref('base.at-7'),
+            ref('base.et-ti'),ref('base.mx-tla'),ref('base.us-tn'),ref('base.in-tn'),ref('base.br-to'),ref('base.in-tr'),
+            ref('base.fm-trk'),ref('base.us-tx'),ref('base.in-ul'),ref('base.in-up'),ref('base.us-ut'),ref('base.us-va'),
+            ref('base.at-8'),ref('base.mx-ver'),ref('base.au-vic'),ref('base.us-vt'),ref('base.us-wa'),ref('base.au-wa'),
+            ref('base.sd-21'),ref('base.in-wb'),ref('base.us-wi'),ref('base.at-9'),ref('base.us-wv'),ref('base.us-wy'),
+            ref('base.fm-yap'),ref('base.ng-yo'),ref('base.mx-yuc'),ref('base.ng-za'),ref('base.mx-zac')])]" name="state_ids"/>
+            <field model="account.account" name="property_account_receivable" search="[('name','=','Effets à recevoir - clients')]"/>
+            <field eval="[(6,0,[ref('dm.cat_mailing_supplier')])]" name="category_id"/>
+        </record>
+        <record id="res_partner_address_stevecobbs0" model="res.partner.address">
+            <field name="function" ref="base.function_sale"/>
+            <field eval="&quot;&quot;&quot;Howlead&quot;&quot;&quot;" name="city"/>
+            <field eval="&quot;&quot;&quot;Steve Cobbs&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;02656&quot;&quot;&quot;" name="zip"/>
+            <field eval="&quot;&quot;&quot;M.&quot;&quot;&quot;" name="title"/>
+            <field name="partner_id" ref="res_partner_maxmailing0"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="&quot;&quot;&quot;Howl Street&quot;&quot;&quot;" name="street"/>
+            <field eval="1" name="active"/>
+            <field name="state_id" ref="base.us-fl"/>
+            <field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;stevecoobs@maxmailing.com&quot;&quot;&quot;" name="email"/>
+        </record>
+    </data>
+<!--        <record id="product_supplierinfo_2" model="product.supplierinfo">
+            <field name="name" ref="res_partner_papercut0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_defaultpapermailing0"/>
+        </record>
+        <record id="product_supplierinfo_3" model="product.supplierinfo">
+            <field name="name" ref="res_partner_maxmailing0"/>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_defaultpapermailing0"/>
+        </record>-->
+
+    <data noupdate="1">
+        <record id="product_product_bookstorecustomerslist0" model="product.product">
+            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
+            <field eval="1.0" name="list_price"/>
+            <field eval="0" name="track_production"/>
+            <field eval="1.0" name="standard_price"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="&quot;&quot;&quot;BOOKLIST&quot;&quot;&quot;" name="default_code"/>
+            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+            <field eval="1.0" name="uos_coeff"/>
+            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+            <field eval="0" name="sale_ok"/>
+            <field eval="1" name="purchase_ok"/>
+            <field eval="0" name="track_outgoing"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field eval="1.0" name="price_margin"/>
+            <field eval="0" name="track_incoming"/>
+            <field name="property_stock_production" ref="stock.location_production"/>
+            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+            <field eval="1" name="active"/>
+            <field name="property_stock_inventory" ref="stock.location_inventory"/>
+            <field name="property_stock_procurement" ref="stock.location_procurement"/>
+            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+            <field eval="&quot;&quot;&quot;Bookstore Customers List&quot;&quot;&quot;" name="name"/>
+            <field name="categ_id" ref="dm.product_category_customerslist0"/>
+            <field eval="[(6,0,[])]" name="taxes_id"/>
+            <field eval="1.0" name="produce_delay"/>
+            <field eval="0" name="rental"/>
+        </record>
+        <record id="product_supplierinfo_6" model="product.supplierinfo">
+            <field name="name" ref="res_partner_northamericalistexpert0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_bookstorecustomerslist0"/>
+        </record>
+        <record id="product_supplierinfo_7" model="product.supplierinfo">
+            <field name="name" ref="res_partner_bosslist0"/>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_bookstorecustomerslist0"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="product_product_associationcustomerslist0" model="product.product">
+            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
+            <field eval="1.0" name="list_price"/>
+            <field eval="0" name="track_production"/>
+            <field eval="1.0" name="standard_price"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="&quot;&quot;&quot;ASSOCLIST&quot;&quot;&quot;" name="default_code"/>
+            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+            <field eval="1.0" name="uos_coeff"/>
+            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+            <field eval="0" name="sale_ok"/>
+            <field eval="1" name="purchase_ok"/>
+            <field eval="0" name="track_outgoing"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field eval="1.0" name="price_margin"/>
+            <field eval="0" name="track_incoming"/>
+            <field name="property_stock_production" ref="stock.location_production"/>
+            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+            <field eval="1" name="active"/>
+            <field name="property_stock_inventory" ref="stock.location_inventory"/>
+            <field name="property_stock_procurement" ref="stock.location_procurement"/>
+            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+            <field eval="&quot;&quot;&quot;Associations Customers List&quot;&quot;&quot;" name="name"/>
+            <field name="categ_id" ref="dm.product_category_customerslist0"/>
+            <field eval="[(6,0,[])]" name="taxes_id"/>
+            <field eval="1.0" name="produce_delay"/>
+            <field eval="0" name="rental"/>
+        </record>
+        <record id="product_supplierinfo_8" model="product.supplierinfo">
+            <field name="name" ref="res_partner_northamericalistexpert0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_associationcustomerslist0"/>
+        </record>
+        <record id="product_supplierinfo_9" model="product.supplierinfo">
+            <field name="name" ref="res_partner_bosslist0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_associationcustomerslist0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="dm_customers_list_openerpcustomers0" model="dm.customers_list">
+            <field eval="1.0" name="other_cost"/>
+            <field eval="&quot;&quot;&quot;OERPCUSTS&quot;&quot;&quot;" name="code"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="broker_id" ref="base.main_partner"/>
+            <field name="owner_id" ref="base.main_partner"/>
+            <field eval="2.0" name="delivery_cost"/>
+            <field name="product_id" ref="dm.product_product_defaultcustomerslist0"/>
+            <field eval="3.0" name="selection_cost"/>
+            <field eval="0.1" name="broker_discount"/>
+            <field eval="&quot;&quot;&quot;Open ERP Customers&quot;&quot;&quot;" name="name"/>
+            <field eval="15.0" name="per_thousand_price"/>
+            <field eval="&quot;&quot;&quot;The list of all Open ERP Customers&quot;&quot;&quot;" name="notes"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="&quot;&quot;&quot;net&quot;&quot;&quot;" name="invoice_base"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="dm_customers_list_bookstore_namec_us0" model="dm.customers_list">
+            <field eval="1.0" name="other_cost"/>
+            <field eval="&quot;&quot;&quot;BOOKSTORE-NAMEC-US&quot;&quot;&quot;" name="code"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="broker_id" ref="res_partner_northamericalistexpert0"/>
+            <field eval="2.0" name="delivery_cost"/>
+            <field name="product_id" ref="product_product_bookstorecustomerslist0"/>
+            <field eval="3.0" name="selection_cost"/>
+            <field eval="0.1" name="broker_discount"/>
+            <field eval="&quot;&quot;&quot;NAMEC US Bookstores List&quot;&quot;&quot;" name="name"/>
+            <field eval="15.0" name="per_thousand_price"/>
+            <field eval="&quot;&quot;&quot;NAMEC Addresses List of Bookstores in the US&quot;&quot;&quot;" name="notes"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="&quot;&quot;&quot;net&quot;&quot;&quot;" name="invoice_base"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="dm_customers_list_assoc_bosslist_us0" model="dm.customers_list">
+            <field eval="1.5" name="other_cost"/>
+            <field eval="&quot;&quot;&quot;ASSOC-BOSSLIST-US&quot;&quot;&quot;" name="code"/>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="broker_id" ref="res_partner_bosslist0"/>
+            <field eval="1.0" name="delivery_cost"/>
+            <field name="product_id" ref="product_product_associationcustomerslist0"/>
+            <field eval="2.0" name="selection_cost"/>
+            <field eval="0.0" name="broker_discount"/>
+            <field eval="&quot;&quot;&quot;BossList US Associations List&quot;&quot;&quot;" name="name"/>
+            <field eval="13.0" name="per_thousand_price"/>
+            <field eval="&quot;&quot;&quot;BossList Addresses List of Associations in the US&quot;&quot;&quot;" name="notes"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="&quot;&quot;&quot;net&quot;&quot;&quot;" name="invoice_base"/>
+        </record>
+    </data>
+
+    <!-- SEGMENT -->
+
+    <data noupdate="1">
+        <record id="dm_campaign_proposition_segment_namecusbookstoreslist0" model="dm.campaign.proposition.segment">
+            <field eval="23" name="quantity_cleaned_cleaner"/>
+            <field eval="1" name="active"/>
+            <field eval="2000" name="quantity_planned"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_namec_us0"/>
+            <field eval="1932" name="quantity_delivered"/>
+            <field name="proposition_id" ref="dm.dm_campaign_proposition_ondemandfreetrialbookstoreoffer0"/>
+            <field eval="30" name="end_census"/>
+            <field eval="1" name="all_add_avail"/>
+            <field eval="1" name="deduplication_level"/>
+            <field eval="&quot;&quot;&quot;NAMEC US Bookstores List-0/30&quot;&quot;&quot;" name="name"/>
+            <field eval="19" name="quantity_dedup_dedup"/>
+            <field eval="1887" name="quantity_real"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="dm_campaign_proposition_segment_namecusbookstoreslist1" model="dm.campaign.proposition.segment">
+            <field eval="1" name="active"/>
+            <field eval="37" name="quantity_dedup_cleaner"/>
+            <field eval="30" name="start_census"/>
+            <field eval="1600" name="quantity_planned"/>
+            <field name="proposition_id" ref="dm.dm_campaign_proposition_ondemandfreetrialbookstoreoffer0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_namec_us0"/>
+            <field eval="1647" name="quantity_delivered"/>
+            <field eval="60" name="end_census"/>
+            <field eval="1" name="all_add_avail"/>
+            <field eval="2" name="deduplication_level"/>
+            <field eval="&quot;&quot;&quot;NAMEC US Bookstores List-30/60&quot;&quot;&quot;" name="name"/>
+            <field eval="12" name="quantity_dedup_dedup"/>
+            <field eval="1598" name="quantity_real"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="dm_campaign_proposition_segment_namecusassociationslist1" model="dm.campaign.proposition.segment">
+            <field eval="1" name="active"/>
+            <field eval="39" name="quantity_dedup_cleaner"/>
+            <field eval="0" name="start_census"/>
+            <field eval="1600" name="quantity_planned"/>
+            <field name="proposition_id" ref="dm.dm_campaign_proposition_ondemandfreetrialassociationoffer0"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field name="customers_list_id" ref="dm.dm_customers_list_assoc_bosslist_us0"/>
+            <field eval="2649" name="quantity_delivered"/>
+            <field eval="90" name="end_census"/>
+            <field eval="1" name="all_add_avail"/>
+            <field eval="0" name="deduplication_level"/>
+            <field eval="&quot;&quot;&quot;BossList US Associations List-0/90&quot;&quot;&quot;" name="name"/>
+            <field eval="10" name="quantity_dedup_dedup"/>
+            <field eval="2600" name="quantity_real"/>
+        </record>
+    </data>
 
 </openerp>
