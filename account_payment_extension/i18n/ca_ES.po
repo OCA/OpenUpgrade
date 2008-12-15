@@ -1,0 +1,201 @@
+# Translation of OpenERP Server.
+# This file containt the translation of the following modules:
+#	* account_payment_extension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0-rc1\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2008-12-15 17:50:10+0000\n"
+"PO-Revision-Date: 2008-12-16 00:05+0100\n"
+"Last-Translator: Jordi Esteve <jesteve@zikzakmedia.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: account_payment_extension
+#: selection:payment.order,type:0
+msgid "Receivable"
+msgstr "A cobrar"
+
+#. module: account_payment_extension
+#: model:ir.ui.menu,name:account_payment_extension.menu_pay_payments
+msgid "Payable payment orders"
+msgstr "Ordres de pag. a pagar"
+
+#. module: account_payment_extension
+#: wizard_view:populate_payment_ext,init:0
+msgid "Search Payment lines"
+msgstr "Cerca línies de pagament"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_rec_payment_order_tree
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_rec_payment_order_form
+msgid "Rec. payment order"
+msgstr "Ordre de pag. a cobrar"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_pay_payment_order_draft
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_pay_payment_order_draft
+msgid "Draft pay. payment order"
+msgstr "Ordre de pag. a pagar esborrany"
+
+#. module: account_payment_extension
+#: wizard_field:populate_payment_ext,search,communication2:0
+msgid "Communication 2"
+msgstr "Comunicació 2"
+
+#. module: account_payment_extension
+#: field:payment.order,type:0
+msgid "Type"
+msgstr "Tipus"
+
+#. module: account_payment_extension
+#: model:ir.ui.menu,name:account_payment_extension.menu_rec_payments
+msgid "Receivable payment orders"
+msgstr "Ordres de pag. a cobrar"
+
+#. module: account_payment_extension
+#: wizard_field:populate_payment_ext,init,duedate:0
+msgid "Due Date"
+msgstr "Data venciment"
+
+#. module: account_payment_extension
+#: field:payment.order,payment_type_name:0
+msgid "Payment type name"
+msgstr "Nom tipus de pagament"
+
+#. module: account_payment_extension
+#: selection:payment.order,type:0
+msgid "Payable"
+msgstr "A pagar"
+
+#. module: account_payment_extension
+#: model:ir.actions.wizard,name:account_payment_extension.wizard_populate_payment_ext
+msgid "Populate payment to pay"
+msgstr "Cerca pagaments a pagar/cobrar"
+
+#. module: account_payment_extension
+#: view:payment.order:0
+msgid "Select invoices to pay/receive payment"
+msgstr "Selecciona factures a pagar/cobrar"
+
+#. module: account_payment_extension
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_payments_payable
+msgid "All paid and to pay payments"
+msgstr "Tots els pag. pagats i a pagar"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_pay_payment_order_open
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_pay_payment_order_open
+msgid "Pay. payment orders to validate"
+msgstr "Ordre de pag. a pagar per validar"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_pay_payment_order_tree_new
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_pay_payment_order_form_new
+msgid "New Pay. payment Order"
+msgstr "Nova ordre de pag. a pagar"
+
+#. module: account_payment_extension
+#: wizard_field:populate_payment_ext,search,entries:0
+msgid "Entries"
+msgstr "Entrades"
+
+#. module: account_payment_extension
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "XML invàlid per a la definició de la vista!"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_rec_payment_order_open
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_rec_payment_order_open
+msgid "Rec. payment orders to validate"
+msgstr "Ordre de pag. a cobrar per validar"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_rec_payment_order_tree_new
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_rec_payment_order_form_new
+msgid "New rec. payment order"
+msgstr "Nova ordre de pag. a cobrar"
+
+#. module: account_payment_extension
+#: wizard_button:populate_payment_ext,search,create:0
+msgid "_Add to payment order"
+msgstr "_Afegir a l'ordre de pagament"
+
+#. module: account_payment_extension
+#: wizard_button:populate_payment_ext,init,search:0
+msgid "_Search"
+msgstr "_Cerca"
+
+#. module: account_payment_extension
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_payments_receivable
+msgid "All received and to receive payments"
+msgstr "Tots els pag. cobrats i a cobrar"
+
+#. module: account_payment_extension
+#: model:ir.ui.menu,name:account_payment_extension.menu_finance_payments
+#: view:account.move.line:0
+msgid "Payments"
+msgstr "Pagaments"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_payments_payable
+msgid "Payable payments"
+msgstr "Pagaments a pagar"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_payments_to_pay
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_payments_to_pay
+msgid "Payments to pay"
+msgstr "Pagaments a pagar"
+
+#. module: account_payment_extension
+#: view:payment.type:0
+msgid "Description"
+msgstr "Descripció"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_payments_receivable
+msgid "Receivable payments"
+msgstr "Pagaments a cobrar"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_payment_type_form
+#: field:account.move.line,payment_type:0
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_payment_type_form
+msgid "Payment type"
+msgstr "Tipus de pagament"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_pay_payment_order_tree
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_pay_payment_order_form
+msgid "Pay. payment order"
+msgstr "Ordre de pag. a pagar"
+
+#. module: account_payment_extension
+#: wizard_button:populate_payment_ext,init,end:0
+#: wizard_button:populate_payment_ext,search,end:0
+msgid "_Cancel"
+msgstr "_Cancel·la"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_payments_to_receive
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_payments_to_receive
+msgid "Payments to receive"
+msgstr "Pagaments a cobrar"
+
+#. module: account_payment_extension
+#: view:res.partner:0
+msgid "Bank Details"
+msgstr "Detalls del banc"
+
+#. module: account_payment_extension
+#: model:ir.actions.act_window,name:account_payment_extension.action_rec_payment_order_draft
+#: model:ir.ui.menu,name:account_payment_extension.menu_action_rec_payment_order_draft
+msgid "Draft rec. payment order"
+msgstr "Ordre de pag. a cobrar esborrany"
+
