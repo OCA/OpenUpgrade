@@ -7,7 +7,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Models">
-                    <field  name="model_id" onchange="model_change(model_id)" select="1"/> 
+                    <field  name="model_id" on_change="model_change(model_id)" select="1"/> 
                     <field name="name" select="1"/>
                 </form>
             </field>
