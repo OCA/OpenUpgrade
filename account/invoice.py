@@ -616,6 +616,10 @@ class account_invoice(osv.osv):
                 move['period_id'] = period_id
                 for i in line:
                     i[2]['period_id'] = period_id
+
+            if not 'name' in move:
+                move['name'] = inv.name
+
             move_id = self.pool.get('account.move').create(cr, uid, move)
             new_move_name = self.pool.get('account.move').browse(cr, uid, move_id).name
             # make the invoice point to that move
@@ -836,7 +840,7 @@ class account_invoice(osv.osv):
         }
 
         lines = [(0, 0, l1), (0, 0, l2)]
-        move = {'ref': inv.number, 'line_id': lines, 'journal_id': pay_journal_id, 'period_id': period_id, 'date': date}
+        move = {'ref': invoice.number, 'line_id': lines, 'journal_id': pay_journal_id, 'period_id': period_id, 'date': date}
         move_id = self.pool.get('account.move').create(cr, uid, move)
 
         line_ids = []
