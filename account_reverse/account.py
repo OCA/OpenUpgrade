@@ -3,9 +3,10 @@ from osv import fields, osv
 class account_move(osv.osv):
 	_name = 'account.move'
 	_inherit = 'account.move'
-	_columns = {
-		'date': fields.related('line_id', 'date', type='date', string='Date'),
-	}
+	# Date has been included in account.move
+	#_columns = {
+	#	'date': fields.related('line_id', 'date', type='date', string='Date'),
+	#}
 
 	def revert_move(self, cr, uid, ids, journal, period, date, reconcile=True, context={}):
 		for move in self.browse(cr, uid, ids):
@@ -19,13 +20,10 @@ class account_move(osv.osv):
 			j_obj = self.pool.get('account.journal').browse(cr, uid, journal)
 			if j_obj.sequence_id:
 				name = self.pool.get('ir.sequence').get(cr, uid, j_obj.sequence_id.code)
-			self.write(cr, uid, [copy_id], {'journal_id': journal, 'period_id': period, 'name':name})
+			self.write(cr, uid, [copy_id], {'journal_id': journal, 'period_id': period, 'name':name, 'date': date})
 			copy_move = self.browse(cr, uid, copy_id)
 			for line in copy_move.line_id:
-				if date:
-					line.write({'date': date, 'credit': line.debit, 'debit': line.credit})
-				else:
-					line.write({'credit': line.debit, 'debit': line.credit})
+				line.write({'credit': line.debit, 'debit': line.credit})
 			if original_state <> 'draft':
 				self.post(cr,uid, [move.id, copy_move.id])
 			if reconcile:
