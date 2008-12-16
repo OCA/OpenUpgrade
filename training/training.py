@@ -165,10 +165,6 @@ class training_offer(osv.osv):
     }
 training_offer()
 
-class training_questionnaire(osv.osv):
-    _name = 'training.questionnaire'
-training_questionnaire()
-
 class training_questionnaire_line(osv.osv):
     _name = 'training.questionnaire.line'
 
