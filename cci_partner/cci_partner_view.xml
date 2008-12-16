@@ -734,7 +734,7 @@ TODO: revoir la vue tree aussi
 		<field name="inherit_id" ref="base_contact.view_partner_address_form_inherited5"/>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<field name="job_ids" mode="tree, form" colspan="4" position="replace">
+			<field name="job_ids" mode="tree,form" colspan="4" position="replace">
 				<field name="job_ids" colspan="4" nolabel="1" mode="tree,form">
 					<tree string="Functions">
 						<field name="contact_id"/>
