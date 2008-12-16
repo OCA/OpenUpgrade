@@ -276,18 +276,7 @@
                             <field name="description" nolabel="1" colspan="4" />
                         </page>
                         <page string="Questions">
-                            <field name="questionnaire_line_ids" colspan="4" nolabel="1">
-                                <tree string="Questions">
-                                    <field name="name"/> 
-                                    <field name="kind" />
-                                    <field name="type" />
-                                </tree>
-                                <form string="Questions">
-                                    <field name="name" colspan="4"/> 
-                                    <field name="kind" />
-                                    <field name="type" />
-                                </form>
-                            </field>
+                            <label string="To do" colpsan="4"/>
                         </page>
                     </notebook>
                     <group colspan="4" col="5">
@@ -860,48 +849,6 @@
         </record>
         -->
 
-
-        <record model="ir.ui.view" id="training_question_form">
-            <field name="name">training.question.form</field>
-            <field name="model">training.question</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="question">
-                    <field name="questionnaire_id" />
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="training_question_tree">
-            <field name="name">training.question.tree</field>
-            <field name="model">training.question</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="questions">
-                    <field name="questionnaire_id" />
-                </tree>
-            </field>
-        </record>
-
-        <!--
-        <record model="ir.actions.act_window" id="training_question_all_act">
-            <field name="name">Questions</field>
-            <field name="res_model">training.question</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        -->
-
-        <!--
-        <record model="ir.actions.act_window" id="training_question_new_act">
-            <field name="name">New Question</field>
-            <field name="res_model">training.question</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-        </record>
-        -->
-
-
         <record model="ir.ui.view" id="training_offer_form">
             <field name="name">training.offer.form</field>
             <field name="model">training.offer</field>
@@ -961,50 +908,6 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
         </record>
-
-
-        <record model="ir.ui.view" id="training_examen_answers_form">
-            <field name="name">training.examen_answers.form</field>
-            <field name="model">training.examen_answers</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Exam Answer">
-                    <field name="plannified_examen_id" />
-                    <field name="question_id" />
-                    <field name="partner_id" />
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="training_examen_answers_tree">
-            <field name="name">training.examen_answers.tree</field>
-            <field name="model">training.examen_answers</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Exam Answers">
-                    <field name="plannified_examen_id" />
-                    <field name="question_id" />
-                    <field name="partner_id" />
-                </tree>
-            </field>
-        </record>
-
-        <!--
-        <record model="ir.actions.act_window" id="training_examen_answers_all_act">
-            <field name="name">Exam Answers</field>
-            <field name="res_model">training.examen_answers</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        -->
-        <!--
-        <record model="ir.actions.act_window" id="training_examen_answers_new_act">
-            <field name="name">New Exam Answer</field>
-            <field name="res_model">training.examen_answers</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-        </record>
-        -->
 
         <record id="training_massive_subscription_wizard" model="ir.ui.view">
             <field name="name">Massive Subscribing</field>

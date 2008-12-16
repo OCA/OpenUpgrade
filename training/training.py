@@ -165,21 +165,33 @@ class training_offer(osv.osv):
     }
 training_offer()
 
-class training_questionnaire_line(osv.osv):
-    _name = 'training.questionnaire.line'
+class training_examen_answer(osv.osv):
+    _name = 'training.examen_answer'
+    _columns = {
+        'name' : fields.char('Response', size=128, required=True),
+        'is_response' : fields.boolean('Correct Answer'),
+        'question_id' : fields.many2one('training.question', 'Question', select=True, required=True),
+    }
+training_examen_answer()
 
+class training_question(osv.osv):
+    _name = 'training.question'
     _columns = {
         'questionnaire_id': fields.many2one('training.questionnaire', 'Questionnaire', select=True, required=True),
         'kind' : fields.selection([('mandatory', 'Mandatory'),('eliminatory', 'Eliminatory'),('normal', 'Normal')], 'Kind', required=True),
-        'type' : fields.selection([('plain', 'Plain'),('qcm', 'QCM')], 'Type', required=True ),
+        'type' : fields.selection([('plain', 'Plain'),('qcm', 'QCM'),('yesno', 'Yes/No')], 'Type', required=True ),
         'name' : fields.text('Question', required=True),
+        'response_plain' : fields.text('Response Plain'),
+        'response_yesno' : fields.boolean('Response Yes/No'),
+        'examen_answer_ids' : fields.one2many('training.examen_answers', 'question_id', 'Response QCM'),
     }
     _defaults = {
         'kind' : lambda *a: 'normal',
         'type' : lambda *a: 'plain',
+        'response_yesno' : lambda *a: False,
     }
 
-training_questionnaire_line()
+training_question()
 
 class training_questionnaire(osv.osv):
     _name = 'training.questionnaire'
@@ -190,7 +202,10 @@ class training_questionnaire(osv.osv):
         'state' : fields.selection([('draft', 'Draft'),('mature', 'Mature'),('deprecated', 'Deprecated')], 'State', required=True),
         'objective' : fields.text('Objective'),
         'description' : fields.text('Description'),
-        'questionnaire_line_ids' : fields.one2many('training.questionnaire.line', 'questionnaire_id', 'Questions', required=True),
+        'question_ids' : fields.many2many('training.question',
+                                          'training_questionnaire_question_rel', 
+                                          'questionnaire_id',
+                                          'question_id', 'Questions'),
     }
 
     _defaults = {
@@ -483,24 +498,6 @@ class training_participation(osv.osv):
 
 training_participation()
 
-class training_question(osv.osv):
-    _name = 'training.question'
-    _columns = {
-        'questionnaire_id': fields.many2one('training.questionnaire', 'Questionnaire', select=True, required=True),
-    }
-
-training_question()
-
-class training_examen_answers(osv.osv):
-    _name = 'training.examen_answers'
-    _rec_name = 'plannified_examen_id'
-    _columns = {
-        'plannified_examen_id' : fields.many2one('training.plannified_examen', 'Plannified Examen', select=True, required=True),
-        'question_id' : fields.many2one('training.question', 'Question', select=True, required=True),
-        'partner_id' : fields.many2one('res.partner', select=True, required=True),
-    }
-
-training_examen_answers()
 
 class res_partner_team(osv.osv):
     _inherit = 'res.partner.team'
