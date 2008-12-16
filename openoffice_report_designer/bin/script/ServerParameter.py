@@ -79,6 +79,9 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
             dict_groups = sock_g.execute(sDatabase, UID,sPassword, 'res.groups' , 'read',ids,['users'])
         except :
             pass
+        if not len(ids) or len(dict_groups):
+            ErrorDialog("Group Not Found!!!  Create a group  named  \n\n"'"OpenOfficeReportDesigner"'"  \n\n  ","","Group Name Error")
+            self.win.endExecute()
         if not len(ids_module):
             ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
             self.win.endExecute()
