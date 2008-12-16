@@ -26,7 +26,7 @@
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/CCI",
     "description": """
-        give access of objects to different groups of cci using csv
+        This module assigns access of objects to different groups of cci using csv.
     """,
     "depends" : ["base"],
     "init_xml" : [],
