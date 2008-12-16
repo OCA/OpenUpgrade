@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -27,7 +27,7 @@ from osv import fields, osv
 class res_company(osv.osv):
     _inherit = 'res.company'
     _description = 'res.company'
-    
+
     _columns = {
         'federation_key' : fields.char('ID for the Federation',size=50,help="ID key for the sending of data to the belgian CCI's Federation"),
     }
@@ -303,6 +303,7 @@ class res_partner_zip(osv.osv):
             zip_city = str(r['name'] or '')
             if r['name'] and r['city']:
                 zip_city += ' '
+            r['city'] = r['city'].encode('utf-8')
             zip_city += str(r['city'] or '')
             res.append((r['id'], zip_city))
         return res
