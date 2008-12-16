@@ -20,6 +20,7 @@
 #
 ##############################################################################
 import time
+import netsvc
 #import offer_step
 
 from osv import fields
@@ -401,6 +402,9 @@ class dm_offer(osv.osv):
     def state_draft_set(self, cr, uid, ids, *args):
 #        self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
+        wf_service = netsvc.LocalService("workflow")
+        for off_id in ids:
+            wf_service.trg_create(uid, 'dm.offer', off_id, cr)
         return True  
     
     def go_to_offer(self,cr, uid, ids, *args):
