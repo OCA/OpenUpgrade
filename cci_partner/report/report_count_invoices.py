@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -45,7 +45,7 @@ class cci_count_invoices(report_sxw.rml_parse):
         obj_inv=pooler.get_pool(self.cr.dbname).get('account.invoice')
         obj_partner=pooler.get_pool(self.cr.dbname).get('res.partner')
 
-        states=['draft','proforma','open','paid','cancel']
+        states=['draft','proforma','open','paid','cancel','proforma2']
         types=['out_invoice','in_invoice']
 
         for type in types:
@@ -64,6 +64,7 @@ class cci_count_invoices(report_sxw.rml_parse):
                 if find_ids:
                     res[state] +=len(find_ids)
 
+            res['proforma'] +=res['proforma2']
             result.append(res)
         return result
 
