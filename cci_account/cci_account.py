@@ -167,7 +167,6 @@ class sale_order(osv.osv):
 sale_order()
 
 
-
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
     _columns = {

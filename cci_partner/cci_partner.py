@@ -245,6 +245,7 @@ class res_partner(osv.osv):
         'magazine_subscription': lambda *a: 'prospect',
         'state_id': _get_partner_state,
         'state_id2': _get_customer_state,
+        'invoice_special' :lambda *a: 1,
         }
     _constraints = [(check_address, 'Only One default address is allowed!', ['address']),(_check_activity, 'Partner Should have only one Main Activity!', ['activity_code_ids'])]
 
