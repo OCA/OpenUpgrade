@@ -361,6 +361,8 @@ class training_plannified_examen(osv.osv):
     _columns = {
         'partner_id' : fields.many2one('res.partner', 'Partner', domain=[('is_guardian', '=', True)], select=True, required=True),
         'event_id' : fields.many2one('training.event', 'Event'),
+        'questionnaire_id' : fields.many2one('training.questionnaire', 'Questionnaire',
+                                             required=True),
     }
 
 training_plannified_examen()
