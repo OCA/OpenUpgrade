@@ -147,7 +147,7 @@ class training_question(osv.osv):
         'kind' : fields.selection([('mandatory', 'Mandatory'),('eliminatory',
                                                                'Eliminatory'),('normal', 'Normal')],
                                   'Kind', required=True, select=1),
-        'state' : fields.selection([('plain', 'Plain'),('qcm', 'QCM'),('yesno', 'Yes/No')], 'Type',
+        'type' : fields.selection([('plain', 'Plain'),('qcm', 'QCM'),('yesno', 'Yes/No')], 'Type',
                                    required=True, select=1 ),
         'response_plain' : fields.text('Response Plain'),
         'response_yesno' : fields.boolean('Response Yes/No'),
@@ -160,7 +160,7 @@ class training_question(osv.osv):
     }
     _defaults = {
         'kind' : lambda *a: 'normal',
-        'state' : lambda *a: 'plain',
+        'type' : lambda *a: 'plain',
         'response_yesno' : lambda *a: False,
     }
 
