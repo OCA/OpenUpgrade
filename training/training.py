@@ -3,44 +3,6 @@
 from osv import osv, fields
 import time
 
-class res_partner_contact_technical_skill(osv.osv):
-    _name = 'res.partner.contact_technical_skill'
-
-    _columns = {
-        'name' : fields.char('Name', size=32, select=True),
-    }
-
-    _sql_constraints = [
-        ('unique_name', 'unique(name)', 'Unique name for the technical skill')
-    ]
-
-res_partner_contact_technical_skill()
-
-class res_partner_contact(osv.osv):
-    _inherit = 'res.partner.contact'
-
-    _columns = {
-        'matricule' : fields.char( 'Matricule', size=32, required=True ),
-        'birthplace' : fields.char( 'BirthPlace', size=64 ),
-        'education_level' : fields.char( 'Education Level', size=128 ),
-        'technical_skill_ids' : fields.many2many('res.partner.contact_technical_skill', 
-                                                 'res_partner_contact_technical_skill_rel', 
-                                                 'contact_id', 
-                                                 'skill_id', 
-                                                 'Technical Skill'),
-    }
-res_partner_contact()
-
-class res_partner_job(osv.osv):
-    _inherit = 'res.partner.job'
-    _columns = {
-        'external_matricule' : fields.char( 'Matricule', size=32 ),
-        'departments' : fields.text( 'Departments' ),
-        'orientation' : fields.text( 'Orientation' ),
-    }
-res_partner_job()
-
-
 class training_course_category(osv.osv):
     _name = 'training.course_category'
     _inherits = {
@@ -165,6 +127,10 @@ class training_offer(osv.osv):
     }
 training_offer()
 
+class training_question(osv.osv):
+    _name= 'training.question'
+training_question()
+
 class training_examen_answer(osv.osv):
     _name = 'training.examen_answer'
     _columns = {
@@ -177,17 +143,24 @@ training_examen_answer()
 class training_question(osv.osv):
     _name = 'training.question'
     _columns = {
-        'questionnaire_id': fields.many2one('training.questionnaire', 'Questionnaire', select=True, required=True),
-        'kind' : fields.selection([('mandatory', 'Mandatory'),('eliminatory', 'Eliminatory'),('normal', 'Normal')], 'Kind', required=True),
-        'type' : fields.selection([('plain', 'Plain'),('qcm', 'QCM'),('yesno', 'Yes/No')], 'Type', required=True ),
-        'name' : fields.text('Question', required=True),
+        'name' : fields.text('Question', required=True, select=1),
+        'kind' : fields.selection([('mandatory', 'Mandatory'),('eliminatory',
+                                                               'Eliminatory'),('normal', 'Normal')],
+                                  'Kind', required=True, select=1),
+        'state' : fields.selection([('plain', 'Plain'),('qcm', 'QCM'),('yesno', 'Yes/No')], 'Type',
+                                   required=True, select=1 ),
         'response_plain' : fields.text('Response Plain'),
         'response_yesno' : fields.boolean('Response Yes/No'),
-        'examen_answer_ids' : fields.one2many('training.examen_answers', 'question_id', 'Response QCM'),
+        'examen_answer_ids' : fields.one2many('training.examen_answer', 'question_id', 'Response QCM'),
+        'questionnaire_ids': fields.many2many('training.questionnaire',
+                                              'training_questionnaire_question_rel', 
+                                              'question_id',
+                                              'questionnaire_id', 
+                                              'Questionnaire'),
     }
     _defaults = {
         'kind' : lambda *a: 'normal',
-        'type' : lambda *a: 'plain',
+        'state' : lambda *a: 'plain',
         'response_yesno' : lambda *a: False,
     }
 
@@ -498,11 +471,3 @@ class training_participation(osv.osv):
 
 training_participation()
 
-
-class res_partner_team(osv.osv):
-    _inherit = 'res.partner.team'
-    _columns = {
-        'specialisation_id' : fields.many2one('training.course_category', 'Specialisation', required=True)
-    }
-
-res_partner_team()
