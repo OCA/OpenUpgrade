@@ -18,7 +18,7 @@
             <field name="model">res.partner.team</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form name="Team">
+                <form string="Team">
                     <field name="name" />
                     <newline />
                     <separator string="Description" colspan="4" />
@@ -32,7 +32,7 @@
             <field name="model">res.partner.team</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree name="Team">
+                <tree string="Team">
                     <field name="name" />
                     <field name="description" colspan="4" nolabel="1"/>
                 </tree>
