@@ -226,9 +226,7 @@ class dm_customer_order(osv.osv):
 #              state_id = self.pool.get("res.country.state")
 #              country_id = self.pool.get("res.country")
               vals['address'] = [[0, 0,address]]
-              print "DEBUG - customer vals : ",vals
               customer_id = self.pool.get('dm.customer').create(cr,uid,vals)
-              print "DEBUG - created new customer : ",customer_id
         # Workitem
 
         segment = self.pool.get('dm.campaign.proposition.segment')
@@ -257,14 +255,12 @@ class dm_customer_order(osv.osv):
         # change workitem
         if workitem_id : 
 
-            print "DEBUG - updating workitem for customer"
             workitem.write(cr,uid,workitem_id,vals)
         # create new workitem
         else:
             vals['customer_id']=customer_id
             if segment_id :
                 vals['segment_id']=segment_id[0]
-            print "DEBUG - Creating new workitem for customer"
             workitem.create(cr,uid,vals)
 
         self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
@@ -279,13 +275,10 @@ class dm_offer(osv.osv):
     
     #    def __history(self, cr, uid, ids, keyword, context={}):
 #    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
-#        print "iiiiiiiiiiiiiiiiiiiiiii", ids
 #        for id in ids:
 #            camp_id = self.pool.get('dm.campaign').search(cr, uid, [('offer_id','=',id)])
-#            print "camp_id:::::::", camp_id
 #            for i in camp_id:
 #                browse_id = self.pool.get('dm.campaign').browse(cr, uid, [i])[0]
-#                print "browse_id:::::::", browse_id
 #                data = {
 #                    'date' : browse_id.date_start,
 #                    'responsible': browse_id.responsible_id.name,
@@ -294,7 +287,6 @@ class dm_offer(osv.osv):
 #                    'campaign': browse_id.name,
 #                    'code': browse_id.code1,
 #                }
-#                print "DATA:::::::", data
 #                obj = self.pool.get('dm.offer.history')
 #                obj.create(cr, uid, data, context)
 #        return super(dm_offer, self).read(cr, uid, ids, fields=fields, context=context, load=load)
@@ -473,24 +465,18 @@ class dm_offer(osv.osv):
         default = default.copy()
         offer = self.browse(cr,uid,[id])[0]
         default['name']='New offer from model %s' % offer.name
-        print default['name']
         default['step_ids']=[]
         #            offer is copied
         offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
         offer_step_obj = self.pool.get('dm.offer.step')
         offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])
-#        print "DEBUG - offer_step_ids : ",offer_step_ids
         offer_steps = offer_step_obj.browse(cr,uid,offer_step_ids)
-#        print "DEBUG - offer_steps :",offer_steps
         #            offer step are copied
         new_steps = []
         for step in offer_steps :
             nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]})#,'document_ids':[]})
             new_steps.append({'old_id':step.id,'new_id':nid,'o_trans_id':step.outgoing_transition_ids})
-#            print "DEBUG - step :",step
-#            print "DEBUG - step transition :",step.outgoing_transition_ids
 
-#        print "DEBUG new_steps : ",new_steps
         #            transitions are copied
         for step in new_steps : 
             if step['o_trans_id']:

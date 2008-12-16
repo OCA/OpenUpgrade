@@ -59,10 +59,6 @@ def _create_duplicate(self, cr, uid, data, context):
         else:
             new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'state':'open'})
 
-#    print "Project Date : ",campaign.date_start
-#    print "Project Dat typee : ",type(campaign.date_start)
-
-
     project_obj.write(cr, uid, duplicate_project_id, {'name': project_obj.browse(cr, uid, duplicate_project_id, context).name + " for " + campaign.name})
     campaign_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
     return {}
