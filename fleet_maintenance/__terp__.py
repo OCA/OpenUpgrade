@@ -28,6 +28,7 @@
     #because if delivery is installed, then declaring the dependence controls where our stock.picking.action_invoice_create action is called
     #and makes it properly add extra invoice line fields to the invoice line, even if invoiced on delivery. 
     "demo_xml":[],
+    #"update_xml":[],
     "update_xml":["product_view.xml", "sale_view.xml", "invoice_view.xml", "stock_view.xml", "partner_view.xml", "crm_view.xml"],
     "active": False,
     "installable": True,

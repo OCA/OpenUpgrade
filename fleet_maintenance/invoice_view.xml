@@ -7,11 +7,13 @@
 			<field name="inherit_id" ref="account.view_invoice_line_form" />
 			<field name="type">form</field>
       <field name="arch" type="xml">
-				<field name="uos_id" position="before">
-	     			<field name="fleet_id"/>
-	     			<field name="maintainance_start_date"/>
-	     			<field name="maintainance_end_date"/>
-				</field>
+				<notebook position="inside">
+					<page string="Maintenance">
+	     			<field name="fleet_id" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
+	     			<field name="maintenance_start_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
+	     			<field name="maintenance_end_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
+	     		</page>
+				</notebook>
 	    </field>
 		</record>
 		
@@ -22,8 +24,8 @@
 			<field name="type">tree</field>
       <field name="arch" type="xml">
 				<field name="uos_id" position="before">
-	     			<field name="maintainance_start_date"/>
-	     			<field name="maintainance_end_date"/>
+	     			<field name="maintenance_start_date"/>
+	     			<field name="maintenance_end_date"/>
 				</field>
 	    </field>
 		</record>    
@@ -33,7 +35,7 @@
 			<field name="model">account.invoice.line</field>
 			<field name="type">calendar</field>
       <field name="arch" type="xml">
-				<calendar color="name" date_start="maintainance_start_date" date_stop="maintainance_end_date" string="Calendar View">
+				<calendar color="name" date_start="maintenance_start_date" date_stop="maintenance_end_date" string="Calendar View">
 					<field name="origin"/>
 					<field name="fleet_id"/>
        	</calendar>

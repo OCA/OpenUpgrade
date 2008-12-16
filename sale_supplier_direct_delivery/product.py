@@ -24,8 +24,6 @@ class product_product(osv.osv):
         
         for product in self.browse(cr, uid, ids):
             if context.has_key('qty'):
-                print context['qty']
-                print product.virtual_available
                 if product.virtual_available < context['qty']: #TODO deal with partial availability?
                     res[product.id] = is_direct_delivery_from_suppliers(product)
                 else: #available in stock
