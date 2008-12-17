@@ -81,22 +81,22 @@ crm_fields = {
 class show_partners(wizard.interface):
 
     def _defaults(self, cr, uid, data, context):
-        data['form']['select']='lines'
+        data['form']['select'] = 'lines'
         return data['form']
 
     def _defaults_lines(self, cr, uid, data, context):
-        today=datetime.datetime.today()
-        from_date=today-datetime.timedelta(30)
+        today = datetime.datetime.today()
+        from_date = today - datetime.timedelta(30)
         data['form']['date_from'] = from_date.strftime('%Y-%m-%d')
-        data['form']['member_state']='free'
+        data['form']['member_state'] = 'free'
         return data['form']
 
     def _defaults_crm(self, cr, uid, data, context):
-        data['form']['state']='open'
+        data['form']['state'] = 'open'
         return data['form']
 
     def _check(self, cr, uid, data, context):
-        if data['form']['select']=='crm':
+        if data['form']['select'] == 'crm':
             return 'crm'
         return 'entry_lines'
 
@@ -106,22 +106,22 @@ class show_partners(wizard.interface):
         act_obj = pooler.get_pool(cr.dbname).get('ir.actions.act_window')
 
         result = mod_obj._get_id(cr, uid, 'base', 'action_partner_form')
-        list_ids=[]
+        list_ids = []
 
-        if data['form']['select']=='lines':
-            cr.execute("select distinct(partner_id) from account_move_line where credit>=%f and (date between to_date(%s,'yyyy-mm-dd') and to_date(%s,'yyyy-mm-dd')) and (partner_id is not null)",(data['form']['amount'],data['form']['date_from'],data['form']['date_to']))
+        if data['form']['select'] == 'lines':
+            cr.execute("select distinct(partner_id) from account_move_line where credit>=%f and (date between to_date(%s,'yyyy-mm-dd') and to_date(%s,'yyyy-mm-dd')) and (partner_id is not null)", (data['form']['amount'], data['form']['date_from'], data['form']['date_to']))
             entry_lines = cr.fetchall()
 
-            entry_ids=[x[0] for x in  entry_lines]
+            entry_ids = [x[0] for x in  entry_lines]
             a_id = pooler.get_pool(cr.dbname).get('res.partner').read(cr, uid, entry_ids, ['membership_state'])
 
-            for i in range(0,len(a_id)):
-                if a_id[i]['membership_state']==data['form']['member_state']:
+            for i in range(0, len(a_id)):
+                if a_id[i]['membership_state'] == data['form']['member_state']:
                     list_ids.append(a_id[i]['id'])
         else:
-            cr.execute("select distinct(partner_id),section_id,state from crm_case where section_id=%d and state=%s and (partner_id is not null)",(data['form']['section'],data['form']['state']))
-            p_ids=cr.fetchall()
-            list_ids=[x[0] for x in p_ids]
+            cr.execute("select distinct(partner_id),section_id,state from crm_case where section_id=%d and state=%s and (partner_id is not null)", (data['form']['section'], data['form']['state']))
+            p_ids = cr.fetchall()
+            list_ids = [x[0] for x in p_ids]
 
 
         id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
@@ -137,21 +137,21 @@ class show_partners(wizard.interface):
     states = {
         'init' : {
             'actions' : [_defaults],
-            'result' : {'type' : 'form' ,   'arch' : form,
+            'result' : {'type' : 'form' , 'arch' : form,
                     'fields' : fields,
-                    'state' : [('end','Cancel'),('go','Go')]}
+                    'state' : [('end', 'Cancel'), ('go', 'Go')]}
         },
         'go': {
             'actions': [],
-            'result': {'type':'choice','next_state':_check}
+            'result': {'type':'choice', 'next_state':_check}
         },
         'entry_lines': {
             'actions': [_defaults_lines],
-            'result': {'type':'form','arch':lines_form,'fields':lines_fields,'state':[('end','Cancel'),('choose','Choose')]}
+            'result': {'type':'form', 'arch':lines_form, 'fields':lines_fields, 'state':[('end', 'Cancel'),('choose','Choose')]}
         },
         'crm': {
             'actions': [_defaults_crm],
-            'result': {'type':'form','arch':crm_form,'fields':crm_fields,'state':[('end','Cancel'),('choose','Choose')]}
+            'result': {'type':'form', 'arch':crm_form, 'fields':crm_fields, 'state':[('end', 'Cancel'),('choose', 'Choose')]}
         },
         'choose': {
             'actions': [],

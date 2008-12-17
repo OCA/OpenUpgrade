@@ -21,9 +21,7 @@
 ##############################################################################
 
 import wizard
-import pooler
 
-from osv import fields, osv
 form = """<?xml version="1.0"?>
 <form string="Members Total Sold">
     <field name="start_date"/>
