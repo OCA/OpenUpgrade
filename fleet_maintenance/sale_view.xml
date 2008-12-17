@@ -8,7 +8,7 @@
 			<field name="type">form</field>
       <field name="arch" type="xml">
 				<field name="partner_id" position="after">
-						<field name="fleet_id" string="Default Sub Fleet" domain="[('fleet_type','=','sub_fleet')]" domain="[('fleet_type','=','sub_fleet', ('parent_partner_id','=',partner_id)]"/>
+						<field name="fleet_id" string="Default Sub Fleet" context="[('fleet_type','=','sub_fleet')]" domain="[('fleet_type','=','sub_fleet', ('parent_partner_id','=',partner_id)]"/>
 				</field>
 	    </field>
 		</record>
