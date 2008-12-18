@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -52,7 +52,7 @@ lines_fields = {
     'date_to': {'string':'End of period', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-%m-%d')},
     'amount': {'string':'Amount', 'type':'float', 'required':True, 'default': lambda *a: 0.0},
     'member_state':{'string':'Current Membership state','type':'selection','selection':[('none', 'Non Member'),('canceled','Canceled Member'),('old','Old Member'),('waiting','Waiting Member'),('invoiced','Invoiced Member'),('associated','Associated Member'),('free','Free Member'),('paid','Paid Member')],'required':True, 'help':'The wizard will only pay attention to partners in this membership state'},
-    'removing_from_list': {'string':'Keep only fetching partners', 'type':'boolean', 'help': """The result will be a list of partner: 
+    'removing_from_list': {'string':'Keep only fetching partners', 'type':'boolean', 'help': """The result will be a list of partner:
 \n* Either only the fetching partners, if this box is checked.
 \n* Otherwise, all the partners minus the ones that fetch the criteria."""},
 }
@@ -72,7 +72,7 @@ crm_form = """<?xml version="1.0"?>
 crm_fields = {
     'section': {'string': 'Event', 'type': 'many2one', 'relation': 'crm.case.section','required':True, 'domain':"[('parent_id','like','Events')]",},
     'state':{'string':'State','type':'selection','selection':[('draft','Draft'),('open','Open'),('cancel', 'Cancel'),('done', 'Close'),('pending','Pending')],'required':True,'help':'The wizard will look if a partner has a registration of that specified state for the chosen event'},
-    'removing_from_list': {'string':'Keep only fetching partners', 'type':'boolean', 'help': """The result will be a list of partner: 
+    'removing_from_list': {'string':'Keep only fetching partners', 'type':'boolean', 'help': """The result will be a list of partner:
 \n* Either only the fetching partners, if this box is checked.
 \n* Otherwise, all the partners minus the ones that fetch the criteria."""},
 }
@@ -109,6 +109,8 @@ class show_partners(wizard.interface):
         list_ids = []
 
         if data['form']['select'] == 'lines':
+            if not data['form']['amount']:
+                raise wizard.except_wizard('Warning','Amount should be greater than zero')
             cr.execute("select distinct(partner_id) from account_move_line where credit>=%f and (date between to_date(%s,'yyyy-mm-dd') and to_date(%s,'yyyy-mm-dd')) and (partner_id is not null)", (data['form']['amount'], data['form']['date_from'], data['form']['date_to']))
             entry_lines = cr.fetchall()
 
@@ -129,7 +131,7 @@ class show_partners(wizard.interface):
 
         if data['form']['removing_from_list']:
             result['domain'] = [('id', 'in', list_ids)]
-        else: 
+        else:
             result['domain'] = [('id', 'not in', list_ids)]
 #       result['context'] = ({'id': entry_ids})
         return result
