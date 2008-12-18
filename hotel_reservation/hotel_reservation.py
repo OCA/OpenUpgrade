@@ -148,12 +148,5 @@ class hotel_reservation_line(osv.osv):
         }
 hotel_reservation_line()
 
-
-
-
-
-
-
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
