@@ -22,15 +22,14 @@
 {
     "name" : "Audit Trail",
     "version" : "1.0",
-    "depends" : ["base","account","purchase","mrp","audittrail"],
-    "depends" : ["base","account","purchase","mrp"],
+    "depends" : ["audittrail"],
     "website" : "http://www.openerp.com",
     "author" : "Tiny",
     "init_xml" : [],
     "description": "Allows the administrator to track every user operations on all objects of the system.",
     "category" : "Generic Modules/CCI",
     "update_xml" : ["audittrail_view.xml"],
-    "demo_xml" : [],#
+    "demo_xml" : [],
     "active" : False,
     "installable": True
 }
