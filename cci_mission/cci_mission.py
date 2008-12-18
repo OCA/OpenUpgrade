@@ -29,7 +29,7 @@ import netsvc
 
 STATE = [
     ('none', 'Non Member'),
-    ('canceled', 'Canceled Member'),
+    ('canceled', 'Cancelled Member'),
     ('old', 'Old Member'),
     ('waiting', 'Waiting Member'),
     ('invoiced', 'Invoiced Member'),
