@@ -220,18 +220,22 @@ def _do_import(self, cr, uid, data, context):
                 line_error = True
            
         # shipping line
-        ship_product_id=self.pool.get('product.product').search(cr, uid, [('default_code', '=', 'SHIP')])
-        ship_product=self.pool.get('product.product').browse(cr, uid, ship_product_id[0])
+        try:
+            ship_product_id=self.pool.get('product.product').search(cr, uid, [('default_code', '=', 'SHIP')])
+            ship_product=self.pool.get('product.product').browse(cr, uid, ship_product_id[0])
+    
+            self.pool.get('sale.order.line').create(cr, uid, {
+                    'product_id': ship_product_id[0],
+                    'name': ship_product.name,
+                    'order_id': order_id,
+                    'product_uom': ship_product.uom_id.id,
+                    'product_uom_qty': 1,
+                    'price_unit': so['shipping_amount'],
+            })
 
-        self.pool.get('sale.order.line').create(cr, uid, {
-                'product_id': ship_product_id[0],
-                'name': ship_product.name,
-                'order_id': order_id,
-                'product_uom': ship_product.uom_id.id,
-                'product_uom_qty': 1,
-                'price_unit': so['shipping_amount'],
-        })
-        
+        except error:
+            logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "ERROR: couldn't create a shipping product, did you configure a shipping product in the delivery module? %s" % error)
+            
         # done fields counter   
         if line_error:
             has_error += 1
