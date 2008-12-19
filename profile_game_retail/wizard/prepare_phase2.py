@@ -61,7 +61,7 @@ def assign_full_access_rights(self, cr, uid, data, context):
         add_menu = []
         for user_gp in user_browse.groups_id:
             for menu_id in user_gp.menu_access:
-                add_menu.append(menu_id)
+                add_menu.append(menu_id.id)
 
         cr.execute('delete from res_groups_users_rel where uid =%d'%(user[0]))
         cr.execute('delete from res_roles_users_rel where uid =%d'%(user[0]))
@@ -72,30 +72,40 @@ def assign_full_access_rights(self, cr, uid, data, context):
     return
 
 
-def create_phase2_menu(self, cr, uid, data, context):
+#def create_phase2_menu(self, cr, uid, data, context):
+#    pool = pooler.get_pool(cr.dbname)
+#    mod_obj = pool.get('ir.model.data')
+#    result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'business_game')
+#    parent_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+#    result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'action_game_detail_form')
+#    action_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+#    menu_id = pool.get('ir.ui.menu').create(cr, uid, {
+#            'name': 'Business Game Details',
+#            'parent_id': parent_id,
+#            'icon': 'STOCK_NEW'
+#            })
+#    value_id = pool.get('ir.values').create(cr, uid, {
+#            'name': 'Business Game Phase2',
+#            'key2': 'tree_but_open',
+#            'model': 'ir.ui.menu',
+#            'res_id': menu_id,
+#            'value': 'ir.actions.act_window,%d'%action_id,
+#            'object': True
+#            })
+#    return
+def remove_fiscal_years(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
-    mod_obj = pool.get('ir.model.data')
-    result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'business_game')
-    parent_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
-    result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'action_game_detail_form')
-    action_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
-    menu_id = pool.get('ir.ui.menu').create(cr, uid, {
-            'name': 'Business Game Details',
-            'parent_id': parent_id,
-            'icon': 'STOCK_NEW'
-            })
-    value_id = pool.get('ir.values').create(cr, uid, {
-            'name': 'Business Game Phase2',
-            'key2': 'tree_but_open',
-            'model': 'ir.ui.menu',
-            'res_id': menu_id,
-            'value': 'ir.actions.act_window,%d'%action_id,
-            'object': True
-            })
+    fy_id = pool.get('account.fiscalyear').search(cr, uid, [])
+    for year in pool.get('account.fiscalyear').browse(cr, uid, fy_id):
+        if not ((year.code) == time.strftime('%Y')):
+            period_ids = pool.get('account.period').search(cr, uid, [('fiscalyear_id','=',year.id)])
+            pool.get('account.period').unlink(cr, uid, period_ids)
+            pool.get('account.fiscalyear').unlink(cr, uid, year.id)
     return
 
 def get_ready_phase2(self, cr, uid, data, context):
-        create_phase2_menu(self, cr, uid, data, context)
+       # create_phase2_menu(self, cr, uid, data, context)
+        remove_fiscal_years(self, cr, uid, data, context)
         assign_full_access_rights(self, cr, uid, data, context)
 
         pool = pooler.get_pool(cr.dbname)
@@ -145,7 +155,7 @@ def get_ready_phase2(self, cr, uid, data, context):
                     val['user_id'] =user.id
                     val['name']=pool.get('ir.ui.menu').read(cr,uid,[res_id],['name'])[0]['name']
                     pool.get('ir.ui.view_sc').create(cr,uid,val)
-        phase1_obj.write(cr,uid,data['id'],{'state':'started_phase2'})
+        #phase1_obj.write(cr,uid,data['id'],{'state':'started_phase2'})
         return  {
         'name': 'Business Game',
         'view_type': 'form',

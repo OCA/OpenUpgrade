@@ -19,43 +19,40 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name":"Bussiness Game",
-    "version":"1.0",
-    "author":"Tiny",
-    "category":"Profile",
-    "depends":[
-        "board",
-        "base",
-        "account",
-        "game_scenario",
-        "purchase_approve",
-        "sale",
-        "sale_wo_production",
-        "stock_planning",
-        "crm_configuration",
-        "mrp_jit",
-        "l10n_fr",
-        "account_budget",
-        "sale_forecast"
-    ],
-    "init_xml":[
-        "profile_game_data.xml",
-        "profile_game_scenario.xml",
-    ],
-    "demo_xml":[],
-    "update_xml":[
-        "wizard_game_phase2.xml",
-        "profile_game_view.xml",
-        "profile_game_config.xml",
-        "profile_game_account_data.xml",
-        "profile_game_partner.xml",
-        "profile_game_phase1.xml",
-        "profile_game_product.xml",
-        "security/ir.model.access.csv"
-    ],
-    "active":False,
-    "installable":True,
-}
+
+
+import wizard
+import netsvc
+import time
+import pooler
+from osv import osv
+
+class wiz_launch_phase1(wizard.interface):
+
+    def _launch_phase1(self, cr, uid, data, context):
+        pool = pooler.get_pool(cr.dbname)
+        mod_obj = pool.get('ir.model.data')
+        result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+
+        value = {
+            'name': 'Business Game',
+            'view_type': 'form',
+            'view_mode': 'form,tree',
+            'res_model': 'profile.game.retail.phase1',
+            'view_id': False,
+            'res_id' : id,
+            'type': 'ir.actions.act_window'
+        }
+        return value
+
+    states = {
+        'init' : {
+            'actions' : [],
+            'result' : {'type':'action', 'action':_launch_phase1, 'state':'end'}
+        }
+    }
+wiz_launch_phase1('profile_game_retail.open.phase1')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

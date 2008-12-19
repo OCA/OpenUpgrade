@@ -64,19 +64,25 @@ class profile_game_retail_phase_one(osv.osv):
     #
     # TODO: check pre process very carefully
     #
-    def fields_view_get(self, cr, uid, user, view_id=None, view_type='form', context=None, toolbar=False):
-        res = super(profile_game_retail_phase_one, self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-        p_obj=self.pool.get('profile.game.retail')
-        p_id=p_obj.search(cr,uid,[])
-        p_br=p_obj.browse(cr,uid,p_id)
-        if p_br[0].hr_user_id:
-            hr_name=p_br[0].hr_user_id.name
-        else:
-            hr_name=''
-        res['arch'] = res['arch'].replace('SM', p_br[0].sales_user_id.name)
-        res['arch'] = res['arch'].replace('HR',hr_name)
-        res['arch'] = res['arch'].replace('FM',p_br[0].finance_user_id.name)
-        res['arch'] = res['arch'].replace('LG', p_br[0].logistic_user_id.name)
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False):
+        res = super(profile_game_retail_phase_one, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar)
+        p_obj = self.pool.get('profile.game.retail')
+        p_id = p_obj.search(cr,uid,[])
+        p_br = p_obj.browse(cr,uid,p_id)
+        for rec in p_br:
+            if len(rec.sales_user_id.name):
+                hr_name = " "
+                if rec.hr_user_id:
+                   hr_name = rec.hr_user_id.name
+                res['arch'] = res['arch'].replace('SM', rec.sales_user_id.name)
+                res['arch'] = res['arch'].replace('HRM',hr_name)
+                res['arch'] = res['arch'].replace('FM',rec.finance_user_id.name)
+                res['arch'] = res['arch'].replace('LM', rec.logistic_user_id.name)
+                return res
+        res['arch'] = res['arch'].replace('(SM)',"")
+        res['arch'] = res['arch'].replace('(HR)',"")
+        res['arch'] = res['arch'].replace('(FM)',"")
+        res['arch'] = res['arch'].replace('(LM)',"")
         return res
 
     def error(self, cr, uid,step_id, msg=''):
@@ -84,7 +90,7 @@ class profile_game_retail_phase_one(osv.osv):
         step=step_id and self.pool.get('game.scenario.step').browse(cr,uid,step_id) or False
         if step:
            err_msg=step.error
-        raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', err_msg+'\n\n'+msg))
+        raise Exception("%s -- %s\n\n%s"%('warning', _('Warning !'), err_msg+'\n\n'+msg))
 
     def pre_process_quotation(self, cr,uid,step_id, object, method,type, *args):
         if (not method) and type!='execute':
@@ -103,6 +109,7 @@ class profile_game_retail_phase_one(osv.osv):
         return False
 
     def pre_process_print_quote(self,cr,uid,step_id,object, method,type,*args):
+       # print "PREEEEEEEEEEEuid,step_id,object, method,type,*args",uid,step_id,object, method,type,args
         if (type=='execute') and (object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink')):
             self.error(cr, uid, step_id)
         if type=='execute_wkf':
@@ -110,6 +117,7 @@ class profile_game_retail_phase_one(osv.osv):
         return (type=='report') and (object=="sale.order")
 
     def post_process_print_quote(self,cr,uid,step_id,object, method,type,*args):
+       # print "uid,step_id,object, method,type,*args",uid,step_id,object, method,type,args
         res=args[-1]
         res=res and res.get('result',False) or False
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
@@ -135,8 +143,6 @@ class profile_game_retail_phase_one(osv.osv):
         pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
         pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid:
-       #     proc_obj = self.pool.get('mrp.procurement')
-       #     proc_obj.run_scheduler(cr, uid, automatic=True, use_new_cursor=cr.dbname)
             return self.write(cr,uid,pid,{'step3':True,'state':'print_rfq'})
         return False
 
@@ -265,16 +271,53 @@ class profile_game_retail_phase_one(osv.osv):
             return self.write(cr,uid,pid,{'step10':True,'state':'done'})
         return False
 
-
+#Check whether the chart template is created or not
+#    def check_chart_template(self, cr, uid, ids, context={}):
+#        mod_obj = self.pool.get('ir.model.data')
+#        result = mod_obj._get_id(cr, uid, 'account', 'action_wizard_multi_chart')
+#        id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+#        chart_id = self.pool.get('ir.actions.todo').search(cr, uid, [('action_id','=',id),('state','!=','done')])
+#        temp = self.pool.get('ir.actions.todo').browse(cr, uid, chart_id)
+#        if len(chart_id):
+#             raise osv.except_osv(_('Critical Warning !'),
+#                            _('Please configure the Game before starting it!\n'
+#                             'You can do this by going to the menu... \n \n'
+#                              'Administration /Configuration/Configuration wizards/Configuration wizard'))
+#        return
+    def create_budgets(self, cr, uid, ids, context={}):
+        for code in ('HR','EXP','SAL'):
+            if code == 'HR':
+                name = code
+                domain = [('code','in',['631100','641100','691000'])]
+            elif code == 'EXP':
+                name = 'Expenses'
+                domain = [('code','ilike','6%'),('code','not in',['631100','641100','691000'])]
+            else:
+                name = 'Sales'
+                domain = [('code','ilike','7%')]
+            acc_ids = self.pool.get('account.account').search(cr, uid, domain)
+            self.pool.get('account.budget.post').create(cr, uid, {'name':name,'code':code,'account_ids':[[6,0,acc_ids]]})
+        return
 
     def confirm(self, cr, uid, ids, context={}):
+     #   self.check_chart_template(cr, uid, ids, context)
         self.write(cr, uid, ids, {'state':'quotation'})
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'retail_phase1')
         sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
         self.pool.get('game.scenario').write(cr, uid, [sid], {'state':'running'})
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'step_quotation')
         sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
+        self.create_budgets(cr, uid, ids, context)
         return self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})
 
 profile_game_retail_phase_one()
+
+class sale_order(osv.osv):
+    _inherit = "sale.order"
+    _columns = {}
+    _defaults = {
+        'order_policy': lambda *a: 'postpaid',
+        }
+sale_order()
+
 
