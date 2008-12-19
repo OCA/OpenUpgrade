@@ -66,7 +66,7 @@ class sale_order_line(osv.osv):
 
 
         pricelists=pricelist_obj.read(cr,uid,[pricelist],['visible_discount'])
-        if(len(pricelists)>0 and pricelists[0]['visible_discount']):
+        if(len(pricelists)>0 and pricelists[0]['visible_discount'] and list_price != 0):
             discount=(list_price-price) / list_price * 100
             result['price_unit']=list_price
             result['discount']=discount
@@ -110,7 +110,7 @@ class account_invoice_line(osv.osv):
 
             if pricelist:
                 pricelists=self.pool.get('product.pricelist').read(cr,uid,[pricelist],['visible_discount'])
-                if(len(pricelists)>0 and pricelists[0]['visible_discount']):
+                if(len(pricelists)>0 and pricelists[0]['visible_discount'] and real_price != 0):
                     discount=(real_price-price_unit) / real_price * 100
                     result['price_unit']=real_price
                     result['discount']=discount
