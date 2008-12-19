@@ -195,79 +195,74 @@
                     <notebook>
 	                    <page string="Details">
 		                    <group col="2" colspan="2">
-		                        <separator colspan="2" string="Finance Manager :(FM)"/>
-		                        <group col="3" colspan="3">
-			                        <field name="total_refund"/>
-			                        <button icon="gtk-ok" string="Details" name="%(action_total_refund)d" type="action"/>
-		                        </group>
-		                        <group col="3" colspan="3">
-			                        <field name="current_treasury"/>
-			                        <button icon="gtk-ok" string="Details" name="%(action_current_treasury)d" type="action"/>
-			                    </group>
-			                    <group col="3" colspan="3">
-				                    <label colspan ="1"/>
-			                        <separator colspan="2" string="Bank Loan"/>
-			                        <label colspan ="1"/>
-			                        <field name="loan_total_reimburse"/>
-			                        <label colspan ="1"/>
-			                        <field name="loan_total_reimburse_this_year"/>
-			                        <label colspan ="1"/>
-			                        <button	icon="gtk-ok" string="Get Loan" name="%(action_loan_detail_wiz)d" type="action" colspan ="1"/>
-			                        <button	icon="gtk-ok" string="Loan Details" name="%(action_loan_detail_tree)d" type="action" colspan ="1"/>
-			                    </group>
-		                    </group>
-		                    <group col="3" colspan="2">
-		                        <separator colspan="3" string="HR Manager :(HRM)"/>
-		                        <field name="hr_budget"/>
-		                        <button icon="gtk-ok" string="Details" name="%(action_budgets)d" type="action"/>
-		                    </group>
-		                    <group col="3" colspan="2">
-		                        <separator colspan="3" string="Sales Manager :(SM)"/>
-		                        <field name="last_total_sale"/>
-		                        <button icon="gtk-ok" string="Details" name="%(action_sales_prev)d" type="action"/>
-		                        <field name="sale_forcast"/>
-		                        <button icon="gtk-ok" string="Details" name="%(action_sale_forecast)d" type="action"/>
-		                        <field name="margin_forcast"/>
-		                        <button icon="gtk-ok" string="Details" name="%(action_margin_forecast)d" type="action"/>
-		                    </group>
-		                    <group col="3" colspan="2">
-		                        <separator colspan="3" string="Logistic Manager :(LM)"/>
-		                        <field name="last_total_purchase"/>
-		                        <button icon="gtk-ok" string="Details" name="%(action_stock_forecast)d" type="action"/>
-		                        <field name="avg_stock_forcast"/>
-		                        <button icon="gtk-ok" string="Details" name="%(action_stock_forecast)d" type="action"/>
-		                        <field name="cost_purchase_forcast"/>
-		                        <button icon="gtk-ok" string="Details" name="%(action_cost_purchaseforecast)d" type="action"/>
-		                    </group>
-		                    <newline/>
-							<group col ="8" colspan="8">
-			                    <separator colspan="8" string="Objectives Achievement"/>
-			                    <field colspan ="2" name="last_turnover"/>
-			                    <button icon="gtk-ok" colspan ="2" string="Details" name="%(action_turnover_prev)d" type="action"/>
-			                    <field colspan ="2" name="total_benefit"/>
-			                    <label string=" "  colspan ="2"/>
-			                    <field colspan ="2" name="total_sold_products"/>
-			                    <button icon="gtk-ok" colspan ="2" string="Details" name="%(action_product_sold)d" type="action"/>
-			                    <field colspan ="2" name="turnover_growth"/>
-			                    <label string=" "  colspan ="2"/>
-			                    <field colspan ="2" name="benefits_growth"/>
-			                    <label string=" "  colspan ="2"/>
-			                    <field colspan ="2" name="products_growth"/>
-			                    <label string=" "  colspan ="2"/>
-			                    <newline/>
-			                    <label string=" "  colspan ="4"/>
-			                    <button
-			                    	colspan = "2"
-		                        	string="Continue To Next Year"
-		                        	name="continue_next_year"
-		                       	 	type="object"
-		                       		icon="gtk-media-next"/>
-		                    </group>
-		                   <!-- <group col="3" colspan="3">
-			                    <label string=" "  align="0.0"/>
-			                    <label string=" "  align="0.0"/>
-
-	                       	</group>-->
+                                <separator colspan="2" string="Finance Manager :(FM)"/>
+                                <group col="3" colspan="3">
+                                    <field name="total_reimburse"/>
+                                    <button icon="gtk-ok" string="Details" name="%(action_total_refund)d" type="action"/>
+                                 </group>
+                                <group col="3" colspan="3">
+                                    <field name="current_treasury"/>
+                                    <button icon="gtk-ok" string="Details" name="%(action_current_treasury)d" type="action"/>
+                                </group>
+                                <group col="3" colspan="3">
+	                            	    <label colspan ="1"/>
+	                                    <separator colspan="2" string="Bank Loan"/>
+	                                    <label colspan ="1"/>
+	                                    <field name="loan_total_reimburse"/>
+	                                    <label colspan ="1"/>
+	                                    <field name="loan_total_reimburse_this_year"/>
+	                                    <label colspan ="1"/>
+	                                    <button icon="gtk-ok" string="Get Loan" name="%(action_loan_detail_wiz)d" type="action" colspan ="1"/>
+	                                    <button icon="gtk-ok" string="Loan Details" name="%(action_loan_detail_tree)d" type="action" colspan ="1"/>
+	                            </group>
+	                        </group>
+	                        <group col="3" colspan="2">
+	                            <separator colspan="3" string="HR Manager :(HRM)"/>
+	                        	<field name="hr_budget"/>
+	                    		<button icon="gtk-ok" string="Details" name="%(action_budgets)d" type="action"/>
+	                    	</group>
+	              			<group col="3" colspan="2">
+	            				<separator colspan="3" string="Sales Manager :(SM)"/>
+	                        	<field name="last_total_sale"/>
+	                        	<button icon="gtk-ok" string="Details" name="%(action_sales_prev)d" type="action"/>
+	                        	<field name="sale_forcast"/>
+	                    		<button icon="gtk-ok" string="Details" name="%(action_sale_forecast)d" type="action"/>
+	                        	<field name="margin_forcast"/>
+	                 			<button icon="gtk-ok" string="Details" name="%(action_margin_forecast)d" type="action"/>
+	                    	</group>
+	              			<group col="3" colspan="2">
+	                            <separator colspan="3" string="Logistic Manager :(LM)"/>
+	                            <field name="last_total_purchase"/>
+	                            <button icon="gtk-ok" string="Details" name="%(action_stock_forecast)d" type="action"/>
+	                        	<field name="avg_stock_forcast"/>
+	                        	<button icon="gtk-ok" string="Details" name="%(action_stock_forecast)d" type="action"/>
+	                        	<field name="cost_purchase_forcast"/>
+	                        	<button icon="gtk-ok" string="Details" name="%(action_cost_purchaseforecast)d" type="action"/>
+	                    	</group>
+	                        <newline/>
+	                        <group col ="8" colspan="8">
+	                            <separator colspan="8" string="Objectives Achievement"/>
+	                            <field colspan ="2" name="last_turnover"/>
+	                            <button icon="gtk-ok" colspan ="2" string="Details" name="%(action_turnover_prev)d" type="action"/>
+	                            <field colspan ="2" name="total_benefit"/>
+	                            <label string=" "  colspan ="2"/>
+	                            <field colspan ="2" name="total_sold_products"/>
+	                            <button icon="gtk-ok" colspan ="2" string="Details" name="%(action_product_sold)d" type="action"/>
+	                            <field colspan ="2" name="turnover_growth"/>
+	                            <label string=" "  colspan ="2"/>
+	                            <field colspan ="2" name="benefits_growth"/>
+	                            <label string=" "  colspan ="2"/>
+	                            <field colspan ="2" name="products_growth"/>
+	               				<label string=" "  colspan ="2"/>
+	                            <newline/>
+	                            <label string=" "  colspan ="4"/>
+	                            <button
+	                                colspan = "2"
+	                                string="Continue To Next Year"
+	                                name="continue_next_year"
+	                                type="object"
+	                                icon="gtk-media-next"/>
+	                		</group>
 		                 </page>
 		                 <page string="Traceback [Current Year]">
 		                       <field name="cy_traceback" nolabel="1" colspan="4"/>
@@ -352,7 +347,7 @@
                     <separator string="" colspan="4"/>
                     <label string="" colspan="2"/>
                     <group col="4" colspan="2">
-                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
+                       <!-- <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>-->
                         <button name="action_run" string="Install" icon='gtk-ok' type="object"/>
                     </group>
                 </form>

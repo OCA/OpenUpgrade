@@ -284,30 +284,19 @@ class profile_game_retail_phase_one(osv.osv):
 #                             'You can do this by going to the menu... \n \n'
 #                              'Administration /Configuration/Configuration wizards/Configuration wizard'))
 #        return
-    def create_budgets(self, cr, uid, ids, context={}):
-        for code in ('HR','EXP','SAL'):
-            if code == 'HR':
-                name = code
-                domain = [('code','in',['631100','641100','691000'])]
-            elif code == 'EXP':
-                name = 'Expenses'
-                domain = [('code','ilike','6%'),('code','not in',['631100','641100','691000'])]
-            else:
-                name = 'Sales'
-                domain = [('code','ilike','7%')]
-            acc_ids = self.pool.get('account.account').search(cr, uid, domain)
-            self.pool.get('account.budget.post').create(cr, uid, {'name':name,'code':code,'account_ids':[[6,0,acc_ids]]})
+
+    def generate_account_chart(self, cr, uid, ids, context={}):
+     #   action_wizard_multi_chart
         return
 
     def confirm(self, cr, uid, ids, context={}):
-     #   self.check_chart_template(cr, uid, ids, context)
+        self.generate_account_chart(cr, uid, ids, context)
         self.write(cr, uid, ids, {'state':'quotation'})
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'retail_phase1')
         sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
         self.pool.get('game.scenario').write(cr, uid, [sid], {'state':'running'})
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'step_quotation')
         sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
-        self.create_budgets(cr, uid, ids, context)
         return self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})
 
 profile_game_retail_phase_one()

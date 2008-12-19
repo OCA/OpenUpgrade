@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-    <data>       
+    <data>
 
 		<record id="sale.config_wizard_step_sale_picking_policy" model="ir.actions.todo">
 			<field name="active" eval="False"/>
@@ -8,6 +8,11 @@
 		</record>
 
 		<record id="account.config_fiscalyear" model="ir.actions.todo">
+			<field name="active" eval="False"/>
+            <field eval="'skip'" name="state"/>
+		</record>
+
+		<record id="l10n_fr.config_call_account_template" model="ir.actions.todo">
 			<field name="active" eval="False"/>
             <field eval="'skip'" name="state"/>
 		</record>

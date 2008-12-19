@@ -103,12 +103,32 @@ def remove_fiscal_years(self, cr, uid, data, context):
             pool.get('account.fiscalyear').unlink(cr, uid, year.id)
     return
 
+def create_budgets(self, cr, uid, ids, context={}):
+    pool = pooler.get_pool(cr.dbname)
+    for code in ('HR','EXP','SAL'):
+        if code == 'HR':
+            name = code
+            domain = [('code','in',['631100','641100','691000'])]
+        elif code == 'EXP':
+            name = 'Expenses'
+            domain = [('code','ilike','6%'),('code','not in',['631100','641100','691000'])]
+        else:
+            name = 'Sales'
+            domain = [('code','ilike','7%')]
+        acc_ids = pool.get('account.account').search(cr, uid, domain)
+        pool.get('account.budget.post').create(cr, uid, {'name':name,'code':code,'account_ids':[[6,0,acc_ids]]})
+    return
+
 def get_ready_phase2(self, cr, uid, data, context):
        # create_phase2_menu(self, cr, uid, data, context)
-        remove_fiscal_years(self, cr, uid, data, context)
         assign_full_access_rights(self, cr, uid, data, context)
-
+        remove_fiscal_years(self, cr, uid, data, context)
+        create_budgets(self,cr, uid, ids, context)
         pool = pooler.get_pool(cr.dbname)
+        phase2_obj = pool.get('profile.game.retail')
+        phase2_obj.create_sale_forecast_stock_planning_data(cr, uid, data, time.strftime('%Y'), context)
+
+
         lm_action = ['menu_stock_planning','menu_action_orderpoint_form']
         mod_obj = pool.get('ir.model.data')
         phase1_obj = pool.get('profile.game.retail.phase1')
