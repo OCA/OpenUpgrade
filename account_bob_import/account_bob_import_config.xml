@@ -38,7 +38,6 @@
             <field name="name">Specify BOB Import Options</field>
             <field name="note">Specify the company name,type of the BOB installation and Path or a zip containing the BOB Installation Folder.</field>
             <field name="action_id" ref="action_config_bob_import_form"/>
-            <field name="state">open</field>
     </record>
 
 	<!-- Operating for conversion of .db to .csv -->
@@ -74,7 +73,6 @@
             <field name="name">Select Folder</field>
             <field name="note">Select Folder.</field>
             <field name="action_id" ref="action_config_path_folder_form"/>
-            <field name="state">open</field>
     </record>
 -->
     </data>

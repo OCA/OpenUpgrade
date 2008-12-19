@@ -524,6 +524,11 @@
 		view_mode="tree,form"
 		id="act_offer_item_opened"/>
 
+	<!--
+	=======================================================
+	MANUFACTURING CONSTRAINT VIEWS
+	=======================================================
+	-->
 
 	<record model="ir.ui.view" id="view_offer_step_manufacturing_constraint_form">
 		<field name="name">dm.offer.step.manufacturing_constraint.form</field>
@@ -535,7 +540,8 @@
 				<field name="offer_step_id" select="2"/>
 				<separator string="Manufacturing Description" colspan="4"/>
 				<field name="constraint" colspan="4" nolabel="1" select="2"/>
-				<field name="country_ids" colspan="4" select="1"/>
+				<separator string="Used for Countries" colspan="4"/>
+				<field name="country_ids" colspan="4" nolabel="1" select="1"/>
 			</form>
 		</field>
 	</record>

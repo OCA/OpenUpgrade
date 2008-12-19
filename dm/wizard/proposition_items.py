@@ -93,7 +93,6 @@ class wizard_proposition_items(wizard.interface):
                             'price':price,
                             'offer_step_type_id':item.offer_step_id.type.id
                             }
-                    print 'Vals : ',vals
                     new_id=pool.get('dm.campaign.proposition.item').create(cr, uid, vals)
             stp=stp+1
 

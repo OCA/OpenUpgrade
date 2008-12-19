@@ -46,7 +46,6 @@ map_headers = {
 }
 
 def import_csv(writer_security, map_sec, map_headers):
-    print "creating csv"
     s = "host=localhost dbname=mra user='postgres' port=5432 password='postgres'"
     handle=psycopg.connect(s)
     cr = handle.cursor()

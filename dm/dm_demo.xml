@@ -413,7 +413,7 @@ rkJggg==
             <field eval="&quot;&quot;&quot;Corp.&quot;&quot;&quot;" name="title"/>
             <field model="account.account" name="property_account_payable" search="[('name','=','Effets à payer')]"/>
             <field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
-            <field eval="&quot;&quot;&quot;NAMEC&quot;&quot;&quot;" name="ref"/>
+            <field eval="&quot;&quot;&quot;NALE&quot;&quot;&quot;" name="ref"/>
             <field eval="0" name="customer"/>
             <field eval="1" name="supplier"/>
             <field name="property_stock_customer" ref="stock.stock_location_customers"/>
@@ -483,7 +483,7 @@ rkJggg==
             <field eval="1" name="active"/>
             <field name="state_id" ref="base.us-ma"/>
             <field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;bill@namec.com&quot;&quot;&quot;" name="email"/>
+            <field eval="&quot;&quot;&quot;bill@nale.com&quot;&quot;&quot;" name="email"/>
         </record>
     </data>
 
@@ -1383,18 +1383,18 @@ rkJggg==
     </data>
 
     <data noupdate="1">
-        <record id="dm_customers_list_bookstore_namec_us0" model="dm.customers_list">
+        <record id="dm_customers_list_bookstore_nale_us0" model="dm.customers_list">
             <field eval="1.0" name="other_cost"/>
-            <field eval="&quot;&quot;&quot;BOOKSTORE-NAMEC-US&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;BOOKSTORE-NALE-US&quot;&quot;&quot;" name="code"/>
             <field name="currency_id" ref="base.USD"/>
             <field name="broker_id" ref="res_partner_northamericalistexpert0"/>
             <field eval="2.0" name="delivery_cost"/>
             <field name="product_id" ref="product_product_bookstorecustomerslist0"/>
             <field eval="3.0" name="selection_cost"/>
             <field eval="0.1" name="broker_discount"/>
-            <field eval="&quot;&quot;&quot;NAMEC US Bookstores List&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;NALE US Bookstores List&quot;&quot;&quot;" name="name"/>
             <field eval="15.0" name="per_thousand_price"/>
-            <field eval="&quot;&quot;&quot;NAMEC Addresses List of Bookstores in the US&quot;&quot;&quot;" name="notes"/>
+            <field eval="&quot;&quot;&quot;NALE Addresses List of Bookstores in the US&quot;&quot;&quot;" name="notes"/>
             <field name="country_id" ref="base.us"/>
             <field eval="&quot;&quot;&quot;net&quot;&quot;&quot;" name="invoice_base"/>
         </record>
@@ -1421,42 +1421,42 @@ rkJggg==
     <!-- SEGMENT -->
 
     <data noupdate="1">
-        <record id="dm_campaign_proposition_segment_namecusbookstoreslist0" model="dm.campaign.proposition.segment">
+        <record id="dm_campaign_proposition_segment_naleusbookstoreslist0" model="dm.campaign.proposition.segment">
             <field eval="23" name="quantity_cleaned_cleaner"/>
             <field eval="1" name="active"/>
             <field eval="2000" name="quantity_planned"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_namec_us0"/>
+            <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_nale_us0"/>
             <field eval="1932" name="quantity_delivered"/>
             <field name="proposition_id" ref="dm.dm_campaign_proposition_ondemandfreetrialbookstoreoffer0"/>
             <field eval="30" name="end_census"/>
             <field eval="1" name="all_add_avail"/>
             <field eval="1" name="deduplication_level"/>
-            <field eval="&quot;&quot;&quot;NAMEC US Bookstores List-0/30&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;NALE US Bookstores List-0/30&quot;&quot;&quot;" name="name"/>
             <field eval="19" name="quantity_dedup_dedup"/>
             <field eval="1887" name="quantity_real"/>
         </record>
     </data>
     <data noupdate="1">
-        <record id="dm_campaign_proposition_segment_namecusbookstoreslist1" model="dm.campaign.proposition.segment">
+        <record id="dm_campaign_proposition_segment_naleusbookstoreslist1" model="dm.campaign.proposition.segment">
             <field eval="1" name="active"/>
             <field eval="37" name="quantity_dedup_cleaner"/>
             <field eval="30" name="start_census"/>
             <field eval="1600" name="quantity_planned"/>
             <field name="proposition_id" ref="dm.dm_campaign_proposition_ondemandfreetrialbookstoreoffer0"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_namec_us0"/>
+            <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_nale_us0"/>
             <field eval="1647" name="quantity_delivered"/>
             <field eval="60" name="end_census"/>
             <field eval="1" name="all_add_avail"/>
             <field eval="2" name="deduplication_level"/>
-            <field eval="&quot;&quot;&quot;NAMEC US Bookstores List-30/60&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;NALE US Bookstores List-30/60&quot;&quot;&quot;" name="name"/>
             <field eval="12" name="quantity_dedup_dedup"/>
             <field eval="1598" name="quantity_real"/>
         </record>
     </data>
     <data noupdate="1">
-        <record id="dm_campaign_proposition_segment_namecusassociationslist1" model="dm.campaign.proposition.segment">
+        <record id="dm_campaign_proposition_segment_naleusassociationslist1" model="dm.campaign.proposition.segment">
             <field eval="1" name="active"/>
             <field eval="39" name="quantity_dedup_cleaner"/>
             <field eval="0" name="start_census"/>

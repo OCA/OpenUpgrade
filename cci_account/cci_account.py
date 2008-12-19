@@ -46,8 +46,7 @@ class account_invoice(osv.osv):
         'invoice_special':fields.boolean('Special Invoice'),
         'internal_note': fields.text('Internal Note'),
     }
-
-
+   
     def action_move_create(self, cr, uid, ids, context=None):
         flag = membership_flag = False
         product_ids = []
@@ -165,7 +164,6 @@ class sale_order(osv.osv):
     }
 
 sale_order()
-
 
 
 class account_invoice_line(osv.osv):
