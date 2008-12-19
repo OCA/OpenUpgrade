@@ -20,14 +20,13 @@
 #
 ##############################################################################
 
-import netsvc
 from osv import fields, osv
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'
     _description = 'Partner'
 
-    def _membership_vcs(self,cr,uid,ids,field_name=None,arg=None,context={}):
+    def _membership_vcs(self, cr, uid, ids, field_name=None, arg=None, context={}):
         '''To obtain the ID of the partner in the form of a belgian VCS for a membership offer'''
         res = {}
         for id in ids:
@@ -35,7 +34,7 @@ class res_partner(osv.osv):
             check_digits = value_digits % 97
             if check_digits == 0:
                 check_digits = 97
-            pure_string = str(value_digits) +  ( str(check_digits).zfill(2) )
+            pure_string = str(value_digits) + ( str(check_digits).zfill(2) )
             res[id] = '***' + pure_string[0:3] + '/' + pure_string[3:7] + '/' + pure_string[7:] + '***'
         return res
 

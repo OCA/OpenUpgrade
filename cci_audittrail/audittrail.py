@@ -23,31 +23,32 @@
 from osv import osv, fields
 import time, pooler, copy
 import ir
+
 class audittrail_rule(osv.osv):
     _inherit = 'audittrail.rule'
 
-    def __init__(self,pool,cr=None):
+    def __init__(self, pool, cr=None):
         for obj_name in pool.obj_list():
             obj=pool.get(obj_name)
             for field in ('read','write','create','unlink'):
-                 setattr(obj, field, self.logging_fct(getattr(obj,field), obj))
-        super(audittrail_rule, self).__init__(pool,cr)
+                 setattr(obj, field, self.logging_fct(getattr(obj, field), obj))
+        super(audittrail_rule, self).__init__(pool, cr)
 
     def logging_fct(self, fct_src, obj):
-        object_name=obj._name
-        object=None
+        object_name = obj._name
+        object = None
         logged_uids = []
-        def get_value_text(cr, uid, field_name,values,object, context={}):
-            f_id= self.pool.get('ir.model.fields').search(cr, uid,[('name','=',field_name),('model_id','=',object.id)])
+        def get_value_text(cr, uid, field_name, values, object, context={}):
+            f_id= self.pool.get('ir.model.fields').search(cr, uid, [('name','=',field_name),('model_id','=',object.id)])
             if f_id:
-                field=self.pool.get('ir.model.fields').read(cr, uid,f_id)[0]
+                field=self.pool.get('ir.model.fields').read(cr, uid, f_id)[0]
                 model=field['relation']
 
                 if field['ttype']=='many2one':
                     if values:
                         if type(values)==tuple:
                                 values=values[0]
-                        val=self.pool.get(model).read(cr,uid,[values],['name'])
+                        val=self.pool.get(model).read(cr, uid, [values], ['name'])
                         if len(val):
                             return val[0]['name']
 
@@ -55,7 +56,7 @@ class audittrail_rule(osv.osv):
                     value=[]
                     if values:
                         for id in values:
-                            val=self.pool.get(model).read(cr,uid,[id],['name'])
+                            val=self.pool.get(model).read(cr, uid, [id], ['name'])
                             if len(val):
                                 value.append(val[0]['name'])
                     return value
@@ -65,17 +66,17 @@ class audittrail_rule(osv.osv):
                     if values:
                         value=[]
                         for id in values:
-                            val=self.pool.get(model).read(cr,uid,[id],['name'])
+                            val=self.pool.get(model).read(cr, uid, [id], ['name'])
                             if len(val):
                                 value.append(val[0]['name'])
                         return value
             return values
 
-        def create_log_line(cr,uid,id,object,lines=[]):
+        def create_log_line(cr, uid, id, object, lines=[]):
             for line in lines:
                 f_id= self.pool.get('ir.model.fields').search(cr, uid,[('name','=',line['name']),('model_id','=',object.id)])
                 if len(f_id):
-                    fields=self.pool.get('ir.model.fields').read(cr, uid,f_id)
+                    fields=self.pool.get('ir.model.fields').read(cr, uid, f_id)
                     old_value='old_value' in line and  line['old_value'] or ''
                     new_value='new_value' in line and  line['new_value'] or ''
                     old_value_text='old_value_text' in line and  line['old_value_text'] or ''
@@ -93,7 +94,7 @@ class audittrail_rule(osv.osv):
             obj_ids= self.pool.get('ir.model').search(cr, uid,[('model','=',object_name)])
             if not len(obj_ids):
                 return fct_src(cr, uid, *args, **args2)
-            object=self.pool.get('ir.model').browse(cr,uid,obj_ids)[0]
+            object=self.pool.get('ir.model').browse(cr, uid, obj_ids)[0]
             rule_ids=self.search(cr, uid, [('object_id','=',obj_ids[0]),('state','=','subscribed')])
             if not len(rule_ids):
                 return fct_src(cr, uid, *args, **args2)

@@ -273,11 +273,6 @@ class dm_offer_document(osv.osv):
     _defaults = {
         'state': lambda *a: 'draft',
     }
-    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
-        result=super(dm_offer_document,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-        if result['type']=='form' and 'toolbar' in result:
-            result['toolbar']['print']=[]
-        return result
     def state_validate_set(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'validate'})
         return True

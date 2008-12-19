@@ -1,157 +1,51 @@
 <?xml version="1.0" ?>
 <openerp>
 	<data>
-		    <!--
-	Fiscal year
-	-->
-        <record id="data_fiscalyear_game" model="account.fiscalyear">
-            <field eval="'Fiscal Year '+time.strftime('%Y')" name="name"/>
-            <field eval="'FY'+time.strftime('%Y')" name="code"/>
-            <field eval="time.strftime('%Y')+'-01-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-12-31'" name="date_stop"/>
-        </record>
-
-        <!--
-	Fiscal Periods
-	-->
-
-        <record id="game_period_1" model="account.period">
-            <field eval="'Jan.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-01-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-01-31'" name="date_stop"/>
-        </record>
-        <record id="game_period_2" model="account.period">
-            <field eval="'Feb.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-02-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-02-28'" name="date_stop"/>
-        </record>
-        <record id="game_period_3" model="account.period">
-            <field eval="'Mar.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-03-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-03-31'" name="date_stop"/>
-        </record>
-        <record id="game_period_4" model="account.period">
-            <field eval="'Apr.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-04-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-04-30'" name="date_stop"/>
-        </record>
-        <record id="game_period_5" model="account.period">
-            <field eval="'May.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-05-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-05-31'" name="date_stop"/>
-        </record>
-        <record id="game_period_6" model="account.period">
-            <field eval="'Jun.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-06-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-06-30'" name="date_stop"/>
-        </record>
-        <record id="game_period_7" model="account.period">
-            <field eval="'Jul.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-07-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-07-31'" name="date_stop"/>
-        </record>
-        <record id="game_period_8" model="account.period">
-            <field eval="'Aug.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-08-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-08-31'" name="date_stop"/>
-        </record>
-        <record id="game_period_9" model="account.period">
-            <field eval="'Sep.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-09-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-09-30'" name="date_stop"/>
-        </record>
-        <record id="game_period_10" model="account.period">
-            <field eval="'Oct.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-10-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-10-31'" name="date_stop"/>
-        </record>
-        <record id="game_period_11" model="account.period">
-            <field eval="'Nov.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-11-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-11-30'" name="date_stop"/>
-        </record>
-        <record id="game_period_12" model="account.period">
-            <field eval="'Dec.'+time.strftime('%Y')" name="name"/>
-            <field name="fiscalyear_id" ref="data_fiscalyear_game"/>
-            <field eval="time.strftime('%Y')+'-12-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-12-31'" name="date_stop"/>
-        </record>
-
      <!--
-	Sale Periods By Months
+	Sale Period for current year
 	-->
-
-        <record id="game_sale_period_1" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '01'" name="name"/>
+        <record id="game_sale_period" model="stock.period">
+            <field eval="time.strftime('%Y')" name="name"/>
             <field eval="time.strftime('%Y')+'-01-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-01-31'" name="date_stop"/>
-        </record>
-        <record id="game_sale_period_2" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '02'" name="name"/>
-            <field eval="time.strftime('%Y')+'-02-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-02-28'" name="date_stop"/>
-        </record>
-        <record id="game_sale_period_3" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '03'" name="name"/>
-            <field eval="time.strftime('%Y')+'-03-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-03-31'" name="date_stop"/>
-        </record>
-        <record id="game_sale_period_4" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '04'" name="name"/>
-            <field eval="time.strftime('%Y')+'-04-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-04-30'" name="date_stop"/>
-        </record>
-        <record id="game_sale_period_5" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '05'" name="name"/>
-            <field eval="time.strftime('%Y')+'-05-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-05-31'" name="date_stop"/>
-        </record>
-        <record id="game_sale_period_6" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '06'" name="name"/>
-            <field eval="time.strftime('%Y')+'-06-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-06-30'" name="date_stop"/>
-        </record>
-        <record id="game_sale_period_7" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '07'" name="name"/>
-            <field eval="time.strftime('%Y')+'-07-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-07-31'" name="date_stop"/>
-        </record>
-        <record id="game_period_8" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '08'" name="name"/>
-            <field eval="time.strftime('%Y')+'-08-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-08-31'" name="date_stop"/>
-        </record>
-        <record id="game_sale_period_9" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '09'" name="name"/>
-            <field eval="time.strftime('%Y')+'-09-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-09-30'" name="date_stop"/>
-        </record>
-        <record id="game_sale_period_10" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '10'" name="name"/>
-            <field eval="time.strftime('%Y')+'-10-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-10-31'" name="date_stop"/>
-        </record>
-        <record id="game_sale_period_11" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '11'" name="name"/>
-            <field eval="time.strftime('%Y')+'-11-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-11-30'" name="date_stop"/>
-        </record>
-        <record id="game_sale_period_12" model="stock.period">
-            <field eval="time.strftime('%Y') + '/' + '12'" name="name"/>
-            <field eval="time.strftime('%Y')+'-12-01'" name="date_start"/>
             <field eval="time.strftime('%Y')+'-12-31'" name="date_stop"/>
+            <field name="state">open</field>
         </record>
 
+        <record id="operations_journal" model="account.journal">
+            <field name="name">Journal des opérations diverses</field>
+            <field name="code">Op-Div</field>
+            <field name="type">purchase</field>
+            <field name="view_id" ref="account.account_journal_view"/>
+            <field name="sequence_id" ref="account.sequence_journal"/>
+            <field model="account.account" name="default_debit_account_id" search="[('type','=','payable')]"/>
+            <field model="account.account" name="default_credit_account_id" search="[('type','=','receivable')]"/>
+        </record>
+        <record id="bilan_journal" model="account.journal">
+            <field name="name">Journal d'ouverture</field>
+            <field name="code">Ouverture</field>
+            <field name="type">situation</field>
+            <field name="centralisation">True</field>
+            <field name="view_id" ref="account.account_journal_view"/>
+            <field name="sequence_id" ref="account.sequence_journal"/>
+        </record>
+
+	    <record model="account.journal" id="account.bank_journal">
+	      <field name="name">Journal de banque</field>
+	      <field name="code">JB</field>
+	      <field name="type">cash</field>
+	      <field name="view_id" ref="account.account_journal_bank_view"/>
+          <field name="sequence_id" ref="account.sequence_journal"/>
+	     <!-- <field name="default_debit_account_id" ref="account.cash"/>
+	      <field name="default_credit_account_id" ref="account.cash"/>-->
+	    </record>
+
+	    <record model="account.journal" id="closing_journal">
+	      <field name="name">Journal de clôture</field>
+	      <field name="code">JC</field>
+	      <field name="type">situation</field>
+	      <field name="centralisation">True</field>
+	      <field name="view_id" ref="account.account_journal_view"/>
+	      <field name="sequence_id" ref="account.sequence_journal"/>
+	    </record>
 	</data>
-	</openerp>
+</openerp>

@@ -21,7 +21,7 @@
 ##############################################################################
 {
     "name":"WARNING: THIS IS STILL A WORK IN PROGRESS - Manage the maintenance contracts of a product fleet",
-    "version":"0.1",
+    "version":"0.2",
     "author":"Smile.fr for Anevia",
     "category":"Custom",
     "depends":["base", "product", "stock", "sale", "crm_configuration", "account", "delivery"],#the delivery dependence is important

@@ -424,21 +424,21 @@
                     </page>
                     <page string="Extra Products">
                         <vpaned position="300">
-                        <child1>
-                            <field name="product_ids" nolabel="1" colspan="4" >
-                                <form string="Product Line">
-                                        <field name="name" select="1" colspan="4"/>
-                                        <newline/>
-                                        <field name="product_id" select="1" on_change="product_id_change(product_id)"/>
-                                        <field name="quantity" select="1"/>
-                                        <field name="uos_id"/>
-                                        <field name="price_unit" select="1"/>
-                                </form>
-                            </field>
-                        </child1>
-                        <child2>
-                        <label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
-                        </child2>
+	                        <child1>
+	                            <field name="product_ids" nolabel="1" colspan="4" >
+	                                <form string="Product Line">
+	                                        <field name="name" select="1" colspan="4"/>
+	                                        <newline/>
+	                                        <field name="product_id" select="1" on_change="product_id_change(product_id)"/>
+	                                        <field name="quantity" select="1"/>
+	                                        <field name="uos_id"/>
+	                                        <field name="price_unit" select="1"/>
+	                                </form>
+	                            </field>
+	                        </child1>
+                        	<child2>
+                        		<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
+                        	</child2>
                         </vpaned>
                     </page>
                     <page string="Links">
@@ -519,21 +519,21 @@
                     </page>
                     <page string="Extra Products">
                         <vpaned position="300">
-                        <child1>
-                            <field name="product_ids" nolabel="1" colspan="4">
-                                <form string="Product Line">
-                                    <field name="name" select="1" colspan="4"/>
-                                    <newline/>
-                                    <field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
-                                    <field name="quantity" select="1"/>
-                                    <field name="uos_id"/>
-                                    <field name="price_unit" select="1"/>
-                                </form>
-                            </field>
-                        </child1>
-                        <child2>
-                        <label string="" colspan="2"/><field name="sub_total" coslpan="2"/>
-                        </child2>
+	                        <child1>
+	                            <field name="product_ids" nolabel="1" colspan="4">
+	                                <form string="Product Line">
+	                                    <field name="name" select="1" colspan="4"/>
+	                                    <newline/>
+	                                    <field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
+	                                    <field name="quantity" select="1"/>
+	                                    <field name="uos_id"/>
+	                                    <field name="price_unit" select="1"/>
+	                                </form>
+	                            </field>
+	                        </child1>
+                       		<child2>
+                        		<label string="" colspan="2"/><field name="sub_total" coslpan="2"/>
+                        	</child2>
                         </vpaned>
                     </page>
                     <page string="Links">
@@ -753,12 +753,12 @@
                     </page>
                     <page string="Extra Products">
                         <vpaned position="300">
-                        <child1>
-                            <field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
-                        </child1>
-                        <child2>
-                        <label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
-                        </child2>
+	                        <child1>
+	                            <field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
+	                        </child1>
+	                        <child2>
+	                       		<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
+	                        </child2>
                         </vpaned>
                     </page>
                 </notebook>
