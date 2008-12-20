@@ -1,232 +1,220 @@
 <?xml version="1.0"?>
 <openerp>
-	<data>
-	<record model="ir.ui.view" id="view_employee_form1">
-			<field name="name">hr.employee.form</field>
-			<field name="model">hr.employee</field>
-			<field name="type">form</field>
-			<field name="inherit_id" ref="hr.view_employee_form"/>
-			<field name="arch" type="xml">
-				<notebook position="inside">
-					<page string="Language Details">
-						<field name="lang_id" colspan="4" nolabel="1"/>
+    <data>
+    <record model="ir.ui.view" id="view_employee_form1">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Language Details">
+                        <field name="lang_id" colspan="4" nolabel="1"/>
 
-					</page>
-				</notebook>
-			</field>
-	</record>
+                    </page>
+                </notebook>
+            </field>
+    </record>
 
 <!--Employee  Language View -->
-	<record model="ir.ui.view" id="view_emp_lang_form">
-		<field name="name">Languages</field>
-		<field name="model">emp.lang</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Language">
-				<field name="name"/>
-				<field name="read"/>
-				<field name="write"/>
-				<field name="speak"/>
-			</form>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_emp_lang_form">
+        <field name="name">Languages</field>
+        <field name="model">emp.lang</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Language">
+                <field name="name"/>
+                <field name="read"/>
+                <field name="write"/>
+                <field name="speak"/>
+            </form>
+        </field>
+    </record>
 
 <record model="ir.ui.view" id="view_emp_lang_tree">
-		<field name="name">Languages</field>
-		<field name="model">emp.lang</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Language" editable="bottom">
-				<field name="name"/>
-				<field name="read"/>
-				<field name="write"/>
-				<field name="speak"/>
-			</tree>
-		</field>
+        <field name="name">Languages</field>
+        <field name="model">emp.lang</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Language" editable="bottom">
+                <field name="name"/>
+                <field name="read"/>
+                <field name="write"/>
+                <field name="speak"/>
+            </tree>
+        </field>
 </record>
 
 <!-- Language View -->
 
 
 <record model="ir.ui.view" id="view_hr_lang_form">
-	<field name="name">Languages</field>
-	<field name="model">hr.lang</field>
-	<field name="type">form</field>
-	<field name="arch" type="xml">
-		<form string="Language">
-			<field name="name"/>
-		</form>
-	</field>
+    <field name="name">Languages</field>
+    <field name="model">hr.lang</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Language">
+            <field name="name"/>
+        </form>
+    </field>
 </record>
 
 <record model="ir.ui.view" id="view_hr_lang_tree">
-	<field name="name">Languages</field>
-	<field name="model">hr.lang</field>
-	<field name="type">tree</field>
-	<field name="arch" type="xml">
-		<tree string="Language">
-  			<field name="name"/>
+    <field name="name">Languages</field>
+    <field name="model">hr.lang</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Language">
+              <field name="name"/>
 
-		</tree>
-	</field>
+        </tree>
+    </field>
 </record>
 
 <record model="ir.actions.act_window" id="lang_view_id">
-	<field name="res_model">hr.lang</field>
-	<field name="view_type">form</field>
-	<field name="view_id" ref="view_hr_lang_form" />
+    <field name="res_model">hr.lang</field>
+    <field name="view_type">form</field>
+    <field name="view_id" ref="view_hr_lang_form" />
 </record>
 <menuitem name="Languages" parent="hr_skill.menu_hr_skill_mgt" id="menu_edit_lang" action="lang_view_id" />
 
 
-<record model="ir.ui.view" id="view_employee_grade_form">
-	<field name="name">employee.grade.form.inherit</field>
-	<field name="model">hr.employee</field>
-	<field name="type">form</field>
-	<field name="inherit_id" ref="hr.view_employee_form"/>
-	<field name="arch" type="xml">
-		<field name="started" position="after">
-			<field name="leavedate" select="1"/>
-		</field>
-	</field>
-</record>
-
 <record model="ir.ui.view" id="view_employee_grade_form1">
-	<field name="name">employee.grade.form1.inherit</field>
-	<field name="model">hr.employee</field>
-	<field name="type">form</field>
-	<field name="inherit_id" ref="hr.view_employee_form"/>
-	<field name="arch" type="xml">
-	<notebook position="inside">
-			<page string="Pay Grade">
-				<separator string="Employee Payment" colspan="4"/>
-				<field name="payscale" select="1"/>
-				<separator string="Employee Status" colspan="4"/>
-				<field name="status"/>
-			</page>
-		</notebook>
-	</field>
+    <field name="name">employee.grade.form1.inherit</field>
+    <field name="model">hr.employee</field>
+    <field name="type">form</field>
+    <field name="inherit_id" ref="hr.view_employee_form"/>
+    <field name="arch" type="xml">
+    <notebook position="inside">
+            <page string="Pay Grade">
+                <separator string="Employee Payment" colspan="4"/>
+                <field name="payscale" select="1"/>
+                <separator string="Employee Status" colspan="4"/>
+                <field name="status"/>
+            </page>
+        </notebook>
+    </field>
 </record>
 
 <record model="ir.ui.view" id="view_hr_scale_form">
-	<field name="name">Pay Scales</field>
-	<field name="model">hr.scale</field>
-	<field name="type">form</field>
-	<field name="arch" type="xml">
-		<form string="Pay Scales">
-				<field name="code" select="1"/>
-				<field name="name"/>
-				<field name="cur"/>
-				<field name="min_sal"/>
-				<field name="max_sal"/>
-				<field name="increase" select="1"/>
-		</form>
-	</field>
+    <field name="name">Pay Scales</field>
+    <field name="model">hr.scale</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Pay Scales">
+                <field name="code" select="1"/>
+                <field name="name"/>
+                <field name="cur"/>
+                <field name="min_sal"/>
+                <field name="max_sal"/>
+                <field name="increase" select="1"/>
+        </form>
+    </field>
 </record>
 
 <record model="ir.ui.view" id="view_hr_scale_tree">
-	<field name="name">Pay Scales</field>
-	<field name="model">hr.scale</field>
-	<field name="type">tree</field>
-	<field name="arch" type="xml">
-		<tree string="Pay Scales">
-  				<field name="code" select="1"/>
-				<field name="name"/>
-				<field name="cur"/>
-				<field name="min_sal"/>
-				<field name="max_sal"/>
-				<field name="increase" select="1"/>
-		</tree>
-	</field>
+    <field name="name">Pay Scales</field>
+    <field name="model">hr.scale</field>
+    <field name="type">tree</field>
+    <field name="arch" type="xml">
+        <tree string="Pay Scales">
+                  <field name="code" select="1"/>
+                <field name="name"/>
+                <field name="cur"/>
+                <field name="min_sal"/>
+                <field name="max_sal"/>
+                <field name="increase" select="1"/>
+        </tree>
+    </field>
 </record>
 
 <record model="ir.actions.act_window" id="scale_view_id">
-	<field name="res_model">hr.scale</field>
-	<field name="view_type">form</field>
-	<field name="view_id" ref="view_hr_scale_form" />
+    <field name="res_model">hr.scale</field>
+    <field name="view_type">form</field>
+    <field name="view_id" ref="view_hr_scale_form" />
 </record>
 <menuitem name="Scale Grade " parent="hr_skill.menu_hr_skill_mgt" id="menu_edit_scale" action="scale_view_id" />
 
-<!--	<record model="ir.ui.view" id="view_employee_evaluation_form">-->
-<!--		<field name="name">employee.evaluation.form.inherit</field>-->
-<!--		<field name="model">hr_skill.evaluation</field>-->
-<!--		<field name="type">form</field>-->
-<!--		<field name="inherit_id" ref="hr_skill.view_evalutation_form"/> -->
-<!--		<field name="arch" type="xml">-->
-<!--			<field name="skill_ids" colspan="4" nolanel="1" position="after">-->
-<!--				<field name="quali_ids" widget="one2many_list">-->
-<!--					<tree string="Qualification"-->
-<!--				 editable="top" nolabel="1" >-->
-<!--						<field name="name"/>-->
-<!--						<field name="rank"/>-->
-<!--						<field name="per"/>-->
-<!--					</tree>-->
-<!--				</field>-->
-<!--			</field>-->
-<!--		</field>-->
-<!--	</record>-->
-<!--	-->
+<!--    <record model="ir.ui.view" id="view_employee_evaluation_form">-->
+<!--        <field name="name">employee.evaluation.form.inherit</field>-->
+<!--        <field name="model">hr_skill.evaluation</field>-->
+<!--        <field name="type">form</field>-->
+<!--        <field name="inherit_id" ref="hr_skill.view_evalutation_form"/> -->
+<!--        <field name="arch" type="xml">-->
+<!--            <field name="skill_ids" colspan="4" nolanel="1" position="after">-->
+<!--                <field name="quali_ids" widget="one2many_list">-->
+<!--                    <tree string="Qualification"-->
+<!--                 editable="top" nolabel="1" >-->
+<!--                        <field name="name"/>-->
+<!--                        <field name="rank"/>-->
+<!--                        <field name="per"/>-->
+<!--                    </tree>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    -->
 
 <record model="ir.ui.view" id="view_employee_status_form">
-	<field name="name">employee.status.form</field>
-	<field name="model">employee.status</field>
-	<field name="type">form</field>
-	<field name="arch" type="xml">
-		<form string="Status">
-			<field name="name" select="1"/>
-		</form>
-	</field>
+    <field name="name">employee.status.form</field>
+    <field name="model">employee.status</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+        <form string="Status">
+            <field name="name" select="1"/>
+        </form>
+    </field>
 </record>
 
 <record model="ir.actions.act_window" id="open_view_employee_status">
-		<field name="res_model">employee.status</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="view_employee_status_form"/>
+        <field name="res_model">employee.status</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_employee_status_form"/>
 </record>
 <menuitem name="Employees Status" parent="hr_skill.menu_hr_skill_mgt" id="menu_open_view_employee_status" action="open_view_employee_status" />
 
-<!--	<record model="ir.ui.view" id="view_employee_quali_form">-->
-<!--		<field name="name">employee.quali.form</field>-->
-<!--		<field name="model">emp.quali</field>-->
-<!--		<field name="type">form</field>-->
-<!--		<field name="arch" type="xml">-->
-<!--			<form string="Qualification">-->
-<!--				<field name="name" select="1"/>-->
-<!--			</form>-->
-<!--		</field>-->
-<!--	</record>-->
+<!--    <record model="ir.ui.view" id="view_employee_quali_form">-->
+<!--        <field name="name">employee.quali.form</field>-->
+<!--        <field name="model">emp.quali</field>-->
+<!--        <field name="type">form</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="Qualification">-->
+<!--                <field name="name" select="1"/>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
 
-<!--	<record model="ir.actions.act_window" id="open_view_employee_quali">-->
-<!--			<field name="res_model">emp.quali</field>-->
-<!--			<field name="view_type">form</field>-->
-<!--			<field name="view_mode">form</field>-->
-<!--			<field name="view_id" ref="view_employee_quali_form"/>-->
-<!--	</record>-->
-<!--	<menuitem name="Human Resources/Configuration/Employees Qualification" id="menu_open_view_employee_quali" action="open_view_employee_quali" />-->
-<!--	-->
-<!--	<record model="ir.ui.view" id="view_employee_qualification_form">-->
-<!--		<field name="name">employee.qualification.form</field>-->
-<!--		<field name="model">employee.qualification</field>-->
-<!--		<field name="type">form</field>-->
-<!--		<field name="arch" type="xml">-->
-<!--			<form string="Qualification/Certification">-->
-<!--				<field name="name" select="1"/>-->
-<!--				<field name="rank"/>-->
-<!--				<field name="per"/>-->
-<!--				<field name="evaluation_id"/>-->
-<!--			</form>-->
-<!--		</field>-->
-<!--	</record>-->
-<!--	-->
-<!--	<record model="ir.actions.act_window" id="open_view_employee_qualification">-->
-<!--			<field name="res_model">employee.qualification</field>-->
-<!--			<field name="view_type">form</field>-->
-<!--			<field name="view_mode">form</field>-->
-<!--			<field name="view_id" ref="view_employee_qualification_form"/>-->
-<!--	</record>-->
-<!--	<menuitem name="Human Resources/Configuration/Skills Management/Qualification" id="menu_open_view_employee_qualification" action="open_view_employee_qualification" />-->
-<!--	-->
+<!--    <record model="ir.actions.act_window" id="open_view_employee_quali">-->
+<!--            <field name="res_model">emp.quali</field>-->
+<!--            <field name="view_type">form</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="view_id" ref="view_employee_quali_form"/>-->
+<!--    </record>-->
+<!--    <menuitem name="Human Resources/Configuration/Employees Qualification" id="menu_open_view_employee_quali" action="open_view_employee_quali" />-->
+<!--    -->
+<!--    <record model="ir.ui.view" id="view_employee_qualification_form">-->
+<!--        <field name="name">employee.qualification.form</field>-->
+<!--        <field name="model">employee.qualification</field>-->
+<!--        <field name="type">form</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="Qualification/Certification">-->
+<!--                <field name="name" select="1"/>-->
+<!--                <field name="rank"/>-->
+<!--                <field name="per"/>-->
+<!--                <field name="evaluation_id"/>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--    -->
+<!--    <record model="ir.actions.act_window" id="open_view_employee_qualification">-->
+<!--            <field name="res_model">employee.qualification</field>-->
+<!--            <field name="view_type">form</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="view_id" ref="view_employee_qualification_form"/>-->
+<!--    </record>-->
+<!--    <menuitem name="Human Resources/Configuration/Skills Management/Qualification" id="menu_open_view_employee_qualification" action="open_view_employee_qualification" />-->
+<!--    -->
 
 </data>
 </openerp>
