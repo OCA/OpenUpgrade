@@ -71,22 +71,25 @@ class Fields(unohelper.Base, XJobExecutor ):
             self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == "Objects", self.aObjectList ) )
 
             for i in range(len(self.aItemList)):
-                anItem = self.aItemList[i][1]
-                component = self.aComponentAdd[i]
+                try:
+                    anItem = self.aItemList[i][1]
+                    component = self.aComponentAdd[i]
 
-                if component == "Document":
-                    sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-                    self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
-
-                if tcur.TextSection:
-                    getRecersiveSection(tcur.TextSection,self.aSectionList)
-                    if component in self.aSectionList:
+                    if component == "Document":
                         sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
                         self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
-                if tcur.TextTable:
-                    if not component == "Document" and component[component.rfind(".")+1:] == tcur.TextTable.Name:
-                        VariableScope(tcur, self.aVariableList, self.aObjectList, self.aComponentAdd, self.aItemList, component)
+                    if tcur.TextSection:
+                        getRecersiveSection(tcur.TextSection,self.aSectionList)
+                        if component in self.aSectionList:
+                            sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
+                            self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
+
+                    if tcur.TextTable:
+                        if not component == "Document" and component[component.rfind(".")+1:] == tcur.TextTable.Name:
+                            VariableScope(tcur, self.aVariableList, self.aObjectList, self.aComponentAdd, self.aItemList, component)
+                except:
+                    ErrorDialog("Error in Reading Field value","","Field Error")
 
             self.bModify=bFromModify
             if self.bModify==True:
