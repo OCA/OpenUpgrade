@@ -162,7 +162,7 @@ class huissier_dossier(osv.osv):
         for r in self.browse(cr, uid, ids):
             name = r.num_vignette and u'%d: ' % r.num_vignette or u''
             name += r.etude_id.name
-            name += r.debiteur and u' (%s)' % r.debiteur.name.decode('utf8') or u''
+            name += r.debiteur and u' (%s)' % r.debiteur.name or u''
             res.append((r['id'], name))
         return res
 
@@ -218,7 +218,7 @@ class huissier_dossier(osv.osv):
                 invoice_desc += ' (%d)' % dossier.num_vignette
                 line_desc += ' (%d)' % dossier.num_vignette
             if dossier.debiteur:
-                line_desc += u' %s' % dossier.debiteur.name.decode('utf8')
+                line_desc += u' %s' % dossier.debiteur.name
                 
 #CHECKME: fo des taxes pour les factures de salle?
             lines.append((0,False, {'name':line_desc, 'quantity':1, 'account_id':dossier.salle_account_id.id, 'price_unit':dossier.amount_room_costs}))
