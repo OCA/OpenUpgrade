@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name" : "Canada - Quebec",
+    "name" : "Canada - Quebec Chart of Accounts",
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Localisation/Account Charts",

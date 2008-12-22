@@ -20,11 +20,11 @@
 #
 ##############################################################################
 {
-    "name" : "Brazil",
+    "name" : "Brazil - Chart of Accounts",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
-    "depends" : ["account", "account_chart"],
+    "category" : "Localisation/Account Charts",
+    "depends" : ["account_chart"],
     "demo_xml" : [],
     "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml'],
     "active": False,
