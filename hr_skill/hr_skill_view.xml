@@ -253,29 +253,29 @@
 
 			   </page>
 			   <page string="Skill and experiences">
-					<field name="experience_ids" colspan="4" nolanel="1">
+					<field name="experience_ids" colspan="4" nolabel="1">
 					  <tree string="Experiences"
-					editable="top" nolabel="1" >
+					editable="top" >
 						 <field name="experience_id" on_change="onchange_experience_id(experience_id)"/>
 						 <field name="weight_id"/>
 						 <field name="name"/>
 					  </tree>
 					  <form string="Experiences"
-					editable="top" nolabel="1" >
+					editable="top" >
 						 <field name="experience_id" on_change="onchange_experience_id(experience_id)"/>
 						 <field name="weight_id"/>
 						 <field name="name"/>
 					  </form>
 					</field>
-					<field name="skill_ids" colspan="4" nolanel="1">
+					<field name="skill_ids" colspan="4" nolabel="1">
 					  <tree string="Skills"
-						 editable="top" nolabel="1" >
+						 editable="top" >
 						 <field name="skill_id" on_change="onchange_skill_id(skill_id)"/>
 						 <field name="weight_id"/>
 						 <field name="name"/>
 					  </tree>
 					  <form string="Skills"
-						 editable="top" nolabel="1" >
+						 editable="top" >
 						 <field name="skill_id" on_change="onchange_skill_id(skill_id)"/>
 						 <field name="weight_id"/>
 						 <field name="name"/>
