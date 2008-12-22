@@ -128,6 +128,18 @@ class payment_order(osv.osv):
         'type': _get_type,
         'reference': _get_reference,
     }
+
+    def unlink(self, cr, uid, ids):
+        pay_orders = self.read(cr, uid, ids, ['state'])
+        unlink_ids = []
+        for t in pay_orders:
+            if t['state'] in ('draft', 'cancel'):
+                unlink_ids.append(t['id'])
+            else:
+                raise osv.except_osv(_('Invalid action!'), _('Cannot delete payment order(s) which are already confirmed or done!'))
+        osv.osv.unlink(self, cr, uid, unlink_ids)
+        return True
+
 payment_order()
 
 
