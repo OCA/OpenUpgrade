@@ -85,7 +85,7 @@
                         <group col="10" colspan="4">
                             <field name="state" readonly="1" select="2" nolabel="1"/>
                             <button name="state_pending_set" string="Set pending" states="draft"/>
-                            <button name="state_open_set" string="Start Campaign" states="pending"/> <!--  attrs="{'required': [('manufacturing_state','=','done'),('dtp_state','=','done'),('customer_file_state','=','done'),('items_state','=','done')]}" -->
+                            <button name="state_open_set" string="Start Campaign" states="pending"/>
                             <button name="state_close_set" string="Close" states="open"/>
                         </group>
                     </page>
@@ -95,7 +95,7 @@
                             <field name="manufacturing_responsible_id"/>
                             <field name="campaign_group_id"/>
                         </group>
-                        <group colspan="3">
+                        <group colspan="4">
                             <field name="manufacturing_task_ids" nolabel="1" mode="tree,gantt" widget="one2many_list" context="{'type':'Mailing Manufacturing','project_id':project_id}">
                                 <tree string="Manufacturing tasks" editable="bottom">
                                     <field name="name" string="Task Name"/>
@@ -106,7 +106,7 @@
                                 </tree>
                             </field>
                         </group>
-                        <group colspan="1">
+<!--                        <group colspan="1">
                             <field name="manufacturing_cost_ids" nolabel="1" colspan="2">
                                 <form string="Manufacturing Cost">
                                     <field name="name" colspan="4"/>
@@ -117,9 +117,8 @@
                                     <field name="amount"/>
                                 </tree>
                             </field>
-                        </group>
-<!--                        <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" context="{'campaign_id':active_id}"/>-->
-                        <field name="manufacturing_purchase_line_ids" nolabel="1" colspan="4" >
+                        </group>-->
+                        <field name="manufacturing_purchase_line_ids" widget="one2many_list" nolabel="1" colspan="4" >
                             <form string="Mailing Manufacturing Purchase Line">
                                 <group colspan="2" col="2">
                                     <separator string="Purchase Line Product" colspan="2"/>
@@ -1469,27 +1468,6 @@
                 </field>
             </field>
         </record>
-
-
-    <!--
-    =======================================================
-    PRODUCT EXTENSIONS
-    =======================================================
-    -->
-
-    <record id="view_product_product_form_inherit" model="ir.ui.view">
-        <field name="name">product.product.form.inherit</field>
-        <field name="model">product.product</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="product.product_normal_form_view"/>
-        <field name="arch" type="xml">
-            <page string="Packaging" position="after">
-                <page string="Direct Marketing">
-                    <field name="list_country_id" attrs="{'readonly':['!',('category_id','like','Customers List')]}"/>
-                </page>
-            </page>
-        </field>
-    </record>
 
 
     <!--
