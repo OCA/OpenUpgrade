@@ -44,7 +44,17 @@ class pos_order(osv.osv):
     _order = "date_order, create_date desc"
     _order = "date_order desc"
 
-    wf_service = netsvc.LocalService("workflow")
+    def unlink(self, cr, uid, ids, context={}):
+        for rec in self.browse(cr, uid, ids, context=context):
+            if rec.state<>'draft':
+                raise osv.except_osv(_('Invalid action !'), _('Cannot delete a point of sale which is already confirmed !'))
+        return super(pos_order, self).unlink(cr, uid, ids, context=context)
+
+    def onchange_partner_pricelist(self, cr, uid, ids, part, context={}):
+        if not part:
+            return {}
+        pricelist = self.pool.get('res.partner').browse(cr, uid, part).property_product_pricelist.id 
+        return {'value':{'pricelist_id': pricelist}}
 
     def _amount_total(self, cr, uid, ids, field_name, arg, context):
         id_set = ",".join(map(str, ids))
@@ -60,7 +70,9 @@ class pos_order(osv.osv):
         res = dict(cr.fetchall())
 
         for rec in self.browse(cr, uid, ids, context):
-            if rec.partner_id and rec.partner_id.property_account_tax:
+            if rec.partner_id \
+               and rec.partner_id.property_account_position \
+               and rec.partner_id.property_account_position.tax_ids:
                 res[rec.id] = res[rec.id] - rec.amount_tax
         return res
 
@@ -338,7 +350,8 @@ class pos_order(osv.osv):
                         'location_dest_id': stock_dest_id,
                     })
 
-            self.wf_service.trg_validate(uid, 'stock.picking',
+            wf_service = netsvc.LocalService("workflow")
+            wf_service.trg_validate(uid, 'stock.picking',
                     picking_id, 'button_confirm', cr)
             self.pool.get('stock.picking').force_assign(cr,
                     uid, [picking_id], context)
@@ -373,7 +386,8 @@ class pos_order(osv.osv):
             clone_id = picking_obj.copy(
                 cr, uid, order.last_out_picking.id, {'type': 'in'})
             # Confirm the picking
-            self.wf_service.trg_validate(uid, 'stock.picking',
+            wf_service = netsvc.LocalService("workflow")
+            wf_service.trg_validate(uid, 'stock.picking',
                 clone_id, 'button_confirm', cr)
             clone_list.append(clone_id)
             # Remove the ref to last picking and delete the payments
@@ -407,8 +421,9 @@ class pos_order(osv.osv):
             'amount': amount,
             })
 
-        self.wf_service.trg_validate(uid, 'pos.order', order_id, 'payment', cr)
-        self.wf_service.trg_write(uid, 'pos.order', order_id, cr)
+        wf_service = netsvc.LocalService("workflow")
+        wf_service.trg_validate(uid, 'pos.order', order_id, 'payment', cr)
+        wf_service.trg_write(uid, 'pos.order', order_id, cr)
         return payment_id
 
     def add_product(self, cr, uid, order_id, product_id, qty, context=None):
@@ -428,7 +443,8 @@ class pos_order(osv.osv):
             'qty': qty,
             'price_unit': price,
             })
-        self.wf_service.trg_write(uid, 'pos.order', order_id, cr)
+        wf_service = netsvc.LocalService("workflow")
+        wf_service.trg_write(uid, 'pos.order', order_id, cr)
 
         return order_line_id
 
@@ -502,7 +518,8 @@ class pos_order(osv.osv):
                 inv_line_ref.create(cr, uid, inv_line, context)
 
         for i in inv_ids:
-            self.wf_service.trg_validate(uid, 'account.invoice', i, 'invoice_open', cr)
+            wf_service = netsvc.LocalService("workflow")
+            wf_service.trg_validate(uid, 'account.invoice', i, 'invoice_open', cr)
         return inv_ids
 
     def create_account_move(self, cr, uid, ids, context=None):
@@ -534,7 +551,7 @@ class pos_order(osv.osv):
                 tax_amount = 0
                 taxes = [t for t in line.product_id.taxes_id]
                 computed_taxes = account_tax_obj.compute_inv(
-                    cr, uid, taxes, line.product_id.list_price, line.qty)
+                    cr, uid, taxes, line.price_unit, line.qty)
 
                 for tax in computed_taxes:
                     tax_amount += round(tax['amount'], 2)
@@ -807,7 +824,7 @@ class pos_payment(osv.osv):
 
     _columns = {
         'name': fields.char('Description', size=64),
-        'order_id': fields.many2one('pos.order', 'Order Ref', required=True),
+        'order_id': fields.many2one('pos.order', 'Order Ref', required=True, ondelete='cascade'),
         'journal_id': fields.many2one('account.journal', "Journal", required=True),
         'amount': fields.float('Amount', required=True),
     }
