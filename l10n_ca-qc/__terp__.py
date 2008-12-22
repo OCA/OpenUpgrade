@@ -23,11 +23,11 @@
     "name" : "Canada - Quebec",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
-    "depends" : ["base", "account", "account_chart"],
+    "category" : "Localisation/Account Charts",
+    "depends" : ["account_chart"],
     "init_xml" : [],
     "demo_xml" : ["account_demo.xml"],
-    "update_xml" : ["account_pc_canada.xml"],
+    "update_xml" : ["account_tax_code.xml","account_pc_canada.xml","l10n_ca-qc_wizard.xml"],
     "active": False,
     "installable": True
 }
