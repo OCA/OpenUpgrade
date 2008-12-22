@@ -20,13 +20,14 @@
 #
 ##############################################################################
 {
-    "name" : "Australia",
+    "name" : "Australia - Chart of Accounts",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
+    "category" : "Localisation/Account Charts",
     "depends" : ["account", "base_iban", "account_chart"],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml',"l10n_chart_au_wizard.xml"],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",
+                    'account_tax.xml',"l10n_chart_au_wizard.xml"],
     "active": False,
     "installable": True
 }
