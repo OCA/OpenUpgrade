@@ -143,7 +143,7 @@
 		<spacer length="2mm"/>
 		
 		<blockTable colWidths="4.9cm,4.9cm" style="num_and_price">
-			<tr><td><para style="number"><xsl:value-of select="$number"/></para></td><td><para style="price">Prix/Prijs: EUR 11,00</para></td></tr>
+			<tr><td><para style="number"><xsl:value-of select="$number"/></para></td><td><para style="price">Prix/Prijs: EUR <xsl:value-of select="format-number($price, '#.##0,00', 'MyFormat')"/></para></td></tr>
 			<tr>
 				<td><para style="salle">SALLE DE VENTE DES HUISSIERS DE JUSTICE DE BRUXELLES</para></td>
 				<td><para style="salle">VERKOOPZAAL VAN DE GERECHTS-</para><para style="salle">DEURWAARDERS BRUSSEL</para></td>
