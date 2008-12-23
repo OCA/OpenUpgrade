@@ -21,13 +21,14 @@
 ##############################################################################
 {
     "name":"WARNING: THIS IS STILL A WORK IN PROGRESS - Manage the maintenance contracts of a product fleet",
-    "version":"0.1",
+    "version":"0.2",
     "author":"Smile.fr for Anevia",
     "category":"Custom",
     "depends":["base", "product", "stock", "sale", "crm_configuration", "account", "delivery"],#the delivery dependence is important
     #because if delivery is installed, then declaring the dependence controls where our stock.picking.action_invoice_create action is called
     #and makes it properly add extra invoice line fields to the invoice line, even if invoiced on delivery. 
     "demo_xml":[],
+    #"update_xml":[],
     "update_xml":["product_view.xml", "sale_view.xml", "invoice_view.xml", "stock_view.xml", "partner_view.xml", "crm_view.xml"],
     "active": False,
     "installable": True,

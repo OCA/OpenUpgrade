@@ -26,7 +26,7 @@
     'version' :'1.0',
     'author' : 'Tiny',
     "category" : "Generic Modules/Human Resources",
-    'depends' : ['hr_timesheet','multi_company'],
+    'depends' : ['hr_timesheet_sheet','multi_company'],
     'description': 'New report for timesheet',
     'init_xml' : [],
     'update_xml': [

@@ -141,7 +141,7 @@ def _mass_mail_send(cr, uid, data, context, adr):
 
 #TODO: add some tests to check for invalid email addresses
 #CHECKME: maybe we should use res.partner/email_send
-    tools.email_send_attach(data['form']['from'], to, data['form']['subject'], mail, attach=f_attach)
+    tools.email_send(data['form']['from'], to, data['form']['subject'], mail, attach=f_attach)
 
     # Add a partner event
     c_id = pooler.get_pool(cr.dbname).get('res.partner.canal').search(cr ,uid, [('name','ilike','EMAIL'),('active','=',True)])

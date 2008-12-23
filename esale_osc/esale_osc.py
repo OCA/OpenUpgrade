@@ -49,7 +49,7 @@ class esale_osc_web(osv.osv):
     def add_all_products(self, cr, uid, ids, *args):
         product_pool=self.pool.get('esale_osc.product')
         for id in ids:
-            cr.execute("select p.id from product_product as p left join esale_osc_product as o on p.id=o.product_id and o.web_id=%d where o.id is NULL;" % id)
+            cr.execute("select p.id from product_product as p left join esale_osc_product as o on p.id=o.product_id and o.web_id=%s where o.id is NULL;" % id)
             for [product] in cr.fetchall():
                 value={ 'product_id'    : product,
                         'web_id'        : id

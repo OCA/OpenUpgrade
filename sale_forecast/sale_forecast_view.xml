@@ -30,7 +30,7 @@
                     <notebook colspan="4">
                     <page string="Sales Forecast">
                         <field name="line_ids" widget="one2many_list" colspan="4" nolabel="1" mode="tree,form">
-                            <form tring="Forecast Lines" >
+                            <form string="Forecast Lines" >
                                 <group col="4" colspan="2">
                                     <separator string="Forecasts" colspan="4"/>
                                     <field name="user_id"/>
@@ -45,19 +45,21 @@
                                 </group>
                                 <notebook colspan="4">
                                     <page string="Forecast Details">
-                                        <separator string="Filter on States" colspan="4"/>
+					<group col="8" colspan="8">
+                                        <separator string="Filter on States" colspan="8"/>
                                         <field name="state_draft" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
                                         <field name="state_confirmed" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
                                         <field name="state_cancel" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
                                         <field name="state_done" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
-                                        <separator string="Filter on Cases Sections" colspan="4"/>
-                                        <field name="crm_case_section" colspan="4" nolabel="1" attrs="{'readonly':[('computation_type','!=','cases'),]}"/>
-                                        <separator string="Filter on Cases Categories" colspan="4"/>
-                                        <field name="crm_case_categ" colspan="4" nolabel="1" attrs="{'readonly':[('computation_type','!=','cases'),]}"/>
-                                        <separator string="Filter on Products" colspan="4"/>
-	                                    <field name="product_product" colspan="4" nolabel="1" attrs="{'readonly':[('computation_type','=','cases'),('computation_type','=','invoice_fix'),('computation_type','=','number_of_sale_order')]}"/>
-                                        <separator string="Filter on Product Categories" colspan="4"/>
-	                                    <field name="product_categ" colspan="4" nolabel="1" attrs="{'readonly':[('computation_type','=','cases'),('computation_type','=','invoice_fix'),('computation_type','=','number_of_sale_order')]}"/>
+					</group>
+                                        <separator string="Filter on Cases Sections" colspan="2"/>
+                                        <separator string="Filter on Cases Categories" colspan="2"/>
+                                        <field name="crm_case_section" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','!=','cases'),]}"/>
+                                        <field name="crm_case_categ" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','!=','cases'),]}"/>
+                                        <separator string="Filter on Products" colspan="2"/>
+                                        <separator string="Filter on Product Categories" colspan="2"/>
+	                                    <field name="product_product" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','=','cases'),('computation_type','=','invoice_fix'),('computation_type','=','number_of_sale_order')]}"/>
+	                                    <field name="product_categ" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','=','cases'),('computation_type','=','invoice_fix'),('computation_type','=','number_of_sale_order')]}"/>
                                     </page>
                                     <page string="Notes">
                                         <field name="note" colspan="4" nolabel="1"/>

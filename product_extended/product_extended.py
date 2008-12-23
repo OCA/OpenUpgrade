@@ -32,7 +32,7 @@ class product_supplierinfo(osv.osv):
     def _last_order(self, cr, uid, ids, name, arg, context):
         res = {}
         for supinfo in self.browse(cr, uid, ids):
-            cr.execute("select po.id, max(po.date_approve) from purchase_order as po, purchase_order_line as line where po.id=line.order_id and product_id=%d and partner_id=%d and state='approved' group by po.id", (supinfo.product_id.id, supinfo.name.id,))
+            cr.execute("select po.id, max(po.date_approve) from purchase_order as po, purchase_order_line as line where po.id=line.order_id and product_id=%s and partner_id=%s and state='approved' group by po.id", (supinfo.product_id.id, supinfo.name.id,))
             record = cr.fetchone()
             if record:
                 res[supinfo.id] = record[0]
@@ -67,7 +67,7 @@ class product_product(osv.osv):
     def _find_op(self, cr, uid, ids, name, arg, context):
         res = {}
         for product_id in ids:
-            cr.execute('SELECT swo.id from stock_warehouse_orderpoint AS swo WHERE product_id=%d', (product_id,))
+            cr.execute('SELECT swo.id from stock_warehouse_orderpoint AS swo WHERE product_id=%s', (product_id,))
             op_id = cr.fetchone()
             if op_id:
                 res[product_id] = op_id[0]

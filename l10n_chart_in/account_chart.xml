@@ -414,117 +414,6 @@
 			<field name="parent_id" ref="IA_AC013142"/>
 		</record>
 
-		<record model="account.account.template" id="IA_AC0132">
-			<field name="name">Current Liabilities</field>
-			<field name="code">AC0132</field>
-			<field name="type">view</field>
-			<field name="user_type" ref="account_type_root_ind"/>
-			<field name="reconcile" eval="False" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC013" />
-		</record>
-		# sub type
-
-		<record model="account.account.template" id="IA_AC01321">
-			<field name="name">Creditors</field>
-			<field name="code">AC01321</field>
-			<field name="type">payable</field>
-			<field name="user_type" ref="account_type_liability_ind"/>
-			<field name="reconcile" eval="True" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC0132"/>
-		</record>
-
-		<record model="account.account.template" id="IA_AC01322">
-			<field name="name">Provisions</field>
-			<field name="code">AC01322</field>
-			<field name="type">view</field>
-			<field name="user_type" ref="account_type_root_ind"/>
-			<field name="reconcile" eval="False" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC0132"/>
-		</record>
-		# sub type
-
-		<record model="account.account.template" id="IA_AC013221">
-			<field name="name">InPut VAT</field>
-			<field name="code">AC013221</field>
-			<field name="type">other</field>
-			<field name="user_type" ref="user_type_tax_ind"/>
-			<field name="reconcile" eval="False" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC01322"/>
-		</record>
-
-		<record model="account.account.template" id="IA_AC013222">
-			<field name="name">Provident Fund</field>
-			<field name="code">AC013222</field>
-			<field name="type">payable</field>
-			<field name="user_type" ref="account_type_liability_ind"/>
-			<field name="reconcile" eval="True" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC01322"/>
-		</record>
-
-		<record model="account.account.template" id="IA_AC013223">
-			<field name="name">Pension Fund</field>
-			<field name="code">AC013223</field>
-			<field name="type">payable</field>
-			<field name="user_type" ref="account_type_liability_ind"/>
-			<field name="reconcile" eval="True" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC01322"/>
-		</record>
-
-		<record model="account.account.template" id="IA_AC013224">
-			<field name="name">Workman Profit Sharing Fund</field>
-			<field name="code">AC013224</field>
-			<field name="type">payable</field>
-			<field name="user_type" ref="account_type_liability_ind"/>
-			<field name="reconcile" eval="True" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC01322"/>
-		</record>
-
-		<record model="account.account.template" id="IA_AC013225">
-			<field name="name">Tax Deduct At Source</field>
-			<field name="code">AC013225</field>
-			<field name="type">other</field>
-			<field name="user_type" ref="user_type_tax_ind"/>
-			<field name="reconcile" eval="False" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC01322"/>
-		</record>
-
-		<record model="account.account.template" id="IA_AC013226">
-			<field name="name">Provision For Taxation</field>
-			<field name="code">AC013226</field>
-			<field name="type">other</field>
-			<field name="user_type" ref="user_type_tax_ind"/>
-			<field name="reconcile" eval="False" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC01322"/>
-		</record>
-
-		<record model="account.account.template" id="IA_AC01323">
-			<field name="name">Out Standing Expenditure</field>
-			<field name="code">AC01323</field>
-			<field name="type">payable</field>
-			<field name="user_type" ref="account_type_liability_ind"/>
-			<field name="reconcile" eval="True" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC0132"/>
-		</record>
-
-		<record model="account.account.template" id="IA_AC01324">
-			<field name="name">Bank Over Draft / Cash Credit</field>
-			<field name="code">AC01324</field>
-			<field name="type">payable</field>
-			<field name="user_type" ref="account_type_liability_ind"/>
-			<field name="reconcile" eval="True" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC0132"/>
-		</record>
 
 		<record model="account.account.template" id="IA_AC014">
 			<field name="name">Miscellaneous Expenditure</field>
@@ -682,6 +571,117 @@
 			<field name="parent_id" ref="IA_AC022"/>
 		</record>
 
+		<record model="account.account.template" id="IA_AC023">
+			<field name="name">Current Liabilities</field>
+			<field name="code">AC023</field>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_root_ind"/>
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC02" />
+		</record>
+		# sub type
+
+		<record model="account.account.template" id="IA_AC0231">
+			<field name="name">Creditors</field>
+			<field name="code">AC0231</field>
+			<field name="type">payable</field>
+			<field name="user_type" ref="account_type_liability_ind"/>
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC023"/>
+		</record>
+
+		<record model="account.account.template" id="IA_AC0232">
+			<field name="name">Provisions</field>
+			<field name="code">AC0232</field>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_root_ind"/>
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC023"/>
+		</record>
+		# sub type
+
+		<record model="account.account.template" id="IA_AC02321">
+			<field name="name">InPut VAT</field>
+			<field name="code">AC02321</field>
+			<field name="type">other</field>
+			<field name="user_type" ref="user_type_tax_ind"/>
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0232"/>
+		</record>
+
+		<record model="account.account.template" id="IA_AC02322">
+			<field name="name">Provident Fund</field>
+			<field name="code">AC02322</field>
+			<field name="type">payable</field>
+			<field name="user_type" ref="account_type_liability_ind"/>
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0232"/>
+		</record>
+
+		<record model="account.account.template" id="IA_AC02323">
+			<field name="name">Pension Fund</field>
+			<field name="code">AC02323</field>
+			<field name="type">payable</field>
+			<field name="user_type" ref="account_type_liability_ind"/>
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0232"/>
+		</record>
+
+		<record model="account.account.template" id="IA_AC02324">
+			<field name="name">Workman Profit Sharing Fund</field>
+			<field name="code">AC02324</field>
+			<field name="type">payable</field>
+			<field name="user_type" ref="account_type_liability_ind"/>
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0232"/>
+		</record>
+
+		<record model="account.account.template" id="IA_AC02325">
+			<field name="name">Tax Deduct At Source</field>
+			<field name="code">AC02325</field>
+			<field name="type">other</field>
+			<field name="user_type" ref="user_type_tax_ind"/>
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0232"/>
+		</record>
+
+		<record model="account.account.template" id="IA_AC02326">
+			<field name="name">Provision For Taxation</field>
+			<field name="code">AC02326</field>
+			<field name="type">other</field>
+			<field name="user_type" ref="user_type_tax_ind"/>
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC0232"/>
+		</record>
+
+		<record model="account.account.template" id="IA_AC0233">
+			<field name="name">Out Standing Expenditure</field>
+			<field name="code">AC0233</field>
+			<field name="type">payable</field>
+			<field name="user_type" ref="account_type_liability_ind"/>
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC023"/>
+		</record>
+
+		<record model="account.account.template" id="IA_AC0234">
+			<field name="name">Bank Over Draft / Cash Credit</field>
+			<field name="code">AC0234</field>
+			<field name="type">payable</field>
+			<field name="user_type" ref="account_type_liability_ind"/>
+			<field name="reconcile" eval="True" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC023"/>
+		</record>
 
 		<record model="account.account.template" id="IA_AC1">
 			<field name="name">Profit and Loss</field>
@@ -798,15 +798,6 @@
 		</record>
 		# sub type
 
-		<record model="account.account.template" id="IA_AC0233">
-			<field name="name">Write Off Expanse</field>
-			<field name="code">AC0233</field>
-			<field name="type">other</field>
-			<field name="user_type" ref="account_type_expense_ind"/>
-			<field name="reconcile" eval="False" />
-			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" ref="IA_AC122"/>
-		</record>
 
 		<record model="account.account.template" id="IA_AC1221">
 			<field name="name">Administrative Expenses</field>
@@ -870,6 +861,16 @@
 			<field name="parent_id" ref="IA_AC1222"/>
 		</record>
 
+		<record model="account.account.template" id="IA_AC122221">
+			<field name="name">Write Off Expanse</field>
+			<field name="code">AC122221</field>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense_ind"/>
+			<field name="reconcile" eval="False" />
+			<field name="currency_id" ref="base.IDR" />
+			<field name="parent_id" ref="IA_AC12222"/>
+		</record>
+
 		<record model="account.account.template" id="IA_AC1223">
 			<field name="name">Financial Expenses</field>
 			<field name="code">AC1223</field>
@@ -908,6 +909,10 @@
 		    <field name="account_root_id" ref="root"/>
 		    <field name="tax_code_root_id" ref="vat_code_tax"/>
 		    <field name="bank_account_view_id" ref="IA_AC013121"/>
+<!--		    <field name="property_account_receivable" ref="l10n_chart_in.in_a_recv"/>-->
+<!--	        <field name="property_account_payable" ref="l10n_chart_in.in_a_pay"/>-->
+<!--	        <field name="property_account_expense_categ" ref="l10n_chart_in.in_a_expense"/>-->
+<!--	        <field name="property_account_income_categ" ref="l10n_chart_in.in_a_income"/>-->
 		</record>
 
 	</data>

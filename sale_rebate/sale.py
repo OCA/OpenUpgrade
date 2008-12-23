@@ -141,14 +141,14 @@ class account_invoice_line_wh_rebate(osv.osv):
         tax_grouped = {}
         tax_obj = self.pool.get('account.tax')
 #TODO: rewrite using browse instead of the manual SQL queries
-        cr.execute('SELECT * FROM account_invoice_line WHERE invoice_id=%d', (invoice_id,))
+        cr.execute('SELECT * FROM account_invoice_line WHERE invoice_id=%s', (invoice_id,))
         lines = cr.dictfetchall()
         rebate_percent = invoice.rebate_percent
         rebate_amount = 0.0
         for line in lines:
             price_unit = line['price_unit'] * (100.0 - rebate_percent) / 100.0
             res.append({'type':'src', 'name':line['name'], 'price_unit':price_unit, 'quantity':line['quantity'], 'price':round(line['quantity']*price_unit, 2), 'account_id':line['account_id']})
-            cr.execute('SELECT tax_id FROM account_invoice_line_tax WHERE invoice_line_id=%d', (line['id'],))
+            cr.execute('SELECT tax_id FROM account_invoice_line_tax WHERE invoice_line_id=%s', (line['id'],))
             rebate_amount += (line['price_unit'] * rebate_percent / 100.0) * line['quantity']
             for (tax_id,) in cr.fetchall():
                 # even though we pass only one tax id at a time to compute, it can return several results
@@ -166,7 +166,7 @@ class account_invoice_line_wh_rebate(osv.osv):
                     else:
                         tax_grouped[key]['amount'] += tax['amount']
         # delete automatic tax lines for this invoice
-        cr.execute("DELETE FROM account_invoice_tax WHERE NOT manual AND invoice_id=%d", (invoice_id,))
+        cr.execute("DELETE FROM account_invoice_tax WHERE NOT manual AND invoice_id=%s", (invoice_id,))
         
         # (re)create them
         ait = self.pool.get('account.invoice.tax')

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data noupdate="1">
-<record id="tax1" model="account.tax">
+<record id="tax1" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva Descontable en compras 16%(16.0%)</field>
 	<field name="amount">0.160000</field>
 	<field name="type">percent</field>
@@ -12,7 +13,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax2" model="account.tax">
+<record id="tax2" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva Descontable en servicios 16%(16.0%)</field>
 	<field name="amount">0.160000</field>
 	<field name="type">percent</field>
@@ -23,7 +25,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax3" model="account.tax">
+<record id="tax3" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva Descontable Arri. y Hotel 7%(7.0%)</field>
 	<field name="amount">0.070000</field>
 	<field name="type">percent</field>
@@ -34,7 +37,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax4" model="account.tax">
+<record id="tax4" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva Descontable en Tiquetes 8%(8.0%)</field>
 	<field name="amount">0.080000</field>
 	<field name="type">percent</field>
@@ -45,7 +49,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax5" model="account.tax">
+<record id="tax5" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva Descontable en Servicios 20%(20.0%)</field>
 	<field name="amount">0.200000</field>
 	<field name="type">percent</field>
@@ -56,7 +61,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax6" model="account.tax">
+<record id="tax6" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva Descon. Reg. Simplif. 12%(12.0%)</field>
 	<field name="amount">0.120000</field>
 	<field name="type">percent</field>
@@ -67,7 +73,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax7" model="account.tax">
+<record id="tax7" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Honorarios Persona Natural 11%(-11.0%)</field>
 	<field name="amount">-0.110000</field>
 	<field name="type">percent</field>
@@ -78,7 +85,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax8" model="account.tax">
+<record id="tax8" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Honorarios Persona Juridica 10%(-10.0%)</field>
 	<field name="amount">-0.100000</field>
 	<field name="type">percent</field>
@@ -89,7 +97,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax9" model="account.tax">
+<record id="tax9" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Retencion ICA 8xMil(-0.8%)</field>
 	<field name="amount">-0.008000</field>
 	<field name="type">percent</field>
@@ -100,7 +109,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax10" model="account.tax">
+<record id="tax10" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">IVA Descontable en compras 20% (20.0%)</field>
 	<field name="amount">0.200000</field>
 	<field name="type">percent</field>
@@ -111,7 +121,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax11" model="account.tax">
+<record id="tax11" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva Generado por Ingresos 16%(16.0%)</field>
 	<field name="amount">0.160000</field>
 	<field name="type">percent</field>
@@ -122,7 +133,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax12" model="account.tax">
+<record id="tax12" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva Generado por Ingresos 7%(7.0%)</field>
 	<field name="amount">0.070000</field>
 	<field name="type">percent</field>
@@ -133,7 +145,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax13" model="account.tax">
+<record id="tax13" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Compra Combustibles y Lub. 0.1%(-0.1%)</field>
 	<field name="amount">-0.001000</field>
 	<field name="type">percent</field>
@@ -144,7 +157,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax14" model="account.tax">
+<record id="tax14" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Compras en General 3.5%(-3.5%)</field>
 	<field name="amount">-0.035000</field>
 	<field name="type">percent</field>
@@ -155,7 +169,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax15" model="account.tax">
+<record id="tax15" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Arriendo Maq. Obra Civil 2%(-2.0%)</field>
 	<field name="amount">-0.020000</field>
 	<field name="type">percent</field>
@@ -166,7 +181,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax16" model="account.tax">
+<record id="tax16" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Arriendo Bienes Muebles 4%(-4.0%)</field>
 	<field name="amount">-0.040000</field>
 	<field name="type">percent</field>
@@ -177,7 +193,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax17" model="account.tax">
+<record id="tax17" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Arriendo Inmuebles 3.5%(-3.5%)</field>
 	<field name="amount">-0.035000</field>
 	<field name="type">percent</field>
@@ -188,7 +205,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax18" model="account.tax">
+<record id="tax18" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Construccion Obra Civil 1%(-1.0%)</field>
 	<field name="amount">-0.010000</field>
 	<field name="type">percent</field>
@@ -199,7 +217,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax19" model="account.tax">
+<record id="tax19" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Transporte de Carga 1%(-1.0%)</field>
 	<field name="amount">-0.010000</field>
 	<field name="type">percent</field>
@@ -210,7 +229,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax20" model="account.tax">
+<record id="tax20" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Servicios en General 6%(-6.0%)</field>
 	<field name="amount">-0.060000</field>
 	<field name="type">percent</field>
@@ -221,7 +241,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax21" model="account.tax">
+<record id="tax21" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Retencion Comision del 11%(-11.0%)</field>
 	<field name="amount">-0.110000</field>
 	<field name="type">percent</field>
@@ -232,7 +253,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax22" model="account.tax">
+<record id="tax22" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Honorarios Persona Natural 10%(-10.0%)</field>
 	<field name="amount">-0.100000</field>
 	<field name="type">percent</field>
@@ -243,7 +265,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax23" model="account.tax">
+<record id="tax23" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Retefuente 7% Rendimientos Finan(-7.0%)</field>
 	<field name="amount">-0.070000</field>
 	<field name="type">percent</field>
@@ -254,7 +277,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax24" model="account.tax">
+<record id="tax24" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva Retenido 75% de 16%(-12.0%)</field>
 	<field name="amount">-0.120000</field>
 	<field name="type">percent</field>
@@ -265,7 +289,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax25" model="account.tax">
+<record id="tax25" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Honorarios Persona Juridica 11%(-11.0%)</field>
 	<field name="amount">-0.110000</field>
 	<field name="type">percent</field>
@@ -276,7 +301,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax26" model="account.tax">
+<record id="tax26" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva retenido reg simplif 12% (-12.0%)</field>
 	<field name="amount">-0.120000</field>
 	<field name="type">percent</field>
@@ -287,7 +313,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax27" model="account.tax">
+<record id="tax27" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva retenido al reg comun 16% (-12.0%)</field>
 	<field name="amount">-0.120000</field>
 	<field name="type">percent</field>
@@ -298,7 +325,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax28" model="account.tax">
+<record id="tax28" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva retenido Reg Simp.del 7% (-5.25%)</field>
 	<field name="amount">-0.052500</field>
 	<field name="type">percent</field>
@@ -309,7 +337,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax29" model="account.tax">
+<record id="tax29" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva retenido al reg comun 20% (-15.0%)</field>
 	<field name="amount">-0.150000</field>
 	<field name="type">percent</field>
@@ -320,7 +349,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax30" model="account.tax">
+<record id="tax30" model="account.tax.template">
+	<field name="chart_template_id" ref="co_chart_template"/>
 	<field name="name">Iva retenido al reg comun del 7% (-5.25%)</field>
 	<field name="amount">-0.052500</field>
 	<field name="type">percent</field>

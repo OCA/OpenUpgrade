@@ -94,14 +94,14 @@ class sale_order(osv.osv):
         company = self.pool.get('res.users').browse(cr, uid, uid).company_id
         for order in self.browse(cr, uid, ids, context={}):
             for delivery in order.delivery_line:
-                cr.execute('select id from sale_order_line where order_id = %d and product_id = %d',(delivery.order_id,delivery.product_id))
+                cr.execute('select id from sale_order_line where order_id = %s and product_id = %s',(delivery.order_id,delivery.product_id))
                 if not len(cr.fetchall()):
                     raise osv.except_osv(_('Error !'), _('You have selected a product %s for Delivery but it is not in supposed to be saled in this Sale Order') % (delivery.product_id.name))
 
             for delivery in order.delivery_line:
-                cr.execute('select sum(product_uom_qty) from sale_order_line where order_id = %d and product_id = %d',(delivery.order_id,delivery.product_id))            
+                cr.execute('select sum(product_uom_qty) from sale_order_line where order_id = %s and product_id = %s',(delivery.order_id,delivery.product_id))            
                 sale_product_qty = cr.fetchall()[0][0]
-                cr.execute('select sum(product_qty) from sale_delivery_line where order_id = %d and product_id = %d',(delivery.order_id,delivery.product_id))
+                cr.execute('select sum(product_qty) from sale_delivery_line where order_id = %s and product_id = %s',(delivery.order_id,delivery.product_id))
                 product_qty = cr.fetchall()[0][0]
                 if  sale_product_qty != product_qty:
                     raise osv.except_osv(_('Error !'), _('The quanitties plannified in Deliveries must be equals to the quantities in the Sale Order lines. \n\n [%s] %s : %d delivery qty , %d sale order qty' ) % (delivery.product_id.default_code,delivery.product_id.name,product_qty,sale_product_qty))
@@ -113,7 +113,7 @@ class sale_order(osv.osv):
             picking_id = False
                     
             for line in order.delivery_line:
-                cr.execute('select id from sale_order_line where order_id = %d and product_id = %d',(ids[0],line.product_id.id))
+                cr.execute('select id from sale_order_line where order_id = %s and product_id = %s',(ids[0],line.product_id.id))
                 sale_line_id = cr.fetchall()[0][0]
                 sale_line = self.pool.get('sale.order.line').browse(cr, uid, sale_line_id)
                 date_planned = line.date_planned
@@ -204,7 +204,7 @@ class sale_order_line(osv.osv):
     def _get_planned_deliveries(self, cr, uid, ids, field_name, arg, context):
         res = {}
         for val in self.browse(cr, uid, ids):
-            cr.execute('select sum(product_qty) from sale_delivery_line where order_id = %d and product_id = %d',(val.order_id,val.product_id))
+            cr.execute('select sum(product_qty) from sale_delivery_line where order_id = %s and product_id = %s',(val.order_id,val.product_id))
             product_qty = cr.fetchall()[0][0]
             res[val.id] = product_qty
         return res

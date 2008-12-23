@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#ffffcc" start="0,0" stop="0,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="10.0" leading="13"/>
+    <paraStyle name="P2" fontName="Helvetica" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Helvetica-Bold" fontSize="10.0" leading="13"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="16.0" leading="20" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="10.0" leading="13"/>
+    <paraStyle name="P6" fontName="Helvetica" fontSize="10.0" leading="13" alignment="RIGHT"/>
+    <paraStyle name="P7" fontName="Helvetica-Bold" fontSize="10.0" leading="13"/>
+    <paraStyle name="P8" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P10" fontName="Helvetica-Bold" fontSize="10.0" leading="13"/>
+    <paraStyle name="P11" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P12" fontName="Helvetica" fontSize="10.0" leading="13" alignment="RIGHT"/>
+    <paraStyle name="P13" fontName="Helvetica-Oblique" fontSize="10.0" leading="13"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
+  </stylesheet>
+  <story>
+    <para style="P1">[[ repeatIn(objects, 'o') ]]</para>
+    <para style="P1">[[ repeatIn(o.performance_id, 'line') ]]</para>
+    <para style="P4">[[ company.name ]]</para>
+    <para style="P2">Performance Review</para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="241.0,241.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P5">Print on : [[ time.strftime('%d-%m-%Y') ]]</para>
+        </td>
+        <td>
+          <para style="P6">Date [[ o.date_from ]] to : [[ o.date_to ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <section>
+      <blockTable colWidths="482.0" style="Table2">
+        <tr>
+          <td>
+            <para style="P7">[[ line.employee_id.sinid ]] : [[ line.employee_id.name ]]</para>
+            <para style="P7">Joined : [[ line.employee_id.birthday ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <blockTable colWidths="282.0,101.0,99.0" style="Table3">
+        <tr>
+          <td>
+            <para style="P5">[[ repeatIn(line.attribute_line,'attr')]] </para>
+            <para style="P7">[[ attr.attribute_id.name]]</para>
+            <para style="P13">[[ attr.description ]]</para>
+            <para style="P5">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P6">[[ attr.total_marks or '0']]</para>
+          </td>
+          <td>
+            <para style="P6">[[ attr.obtained_marks or '0']] Points</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P1">
+        <font color="white"> </font>
+      </para>
+      <para style="P8">Total Obtained Marks: [[line.total or '0']]</para>
+      <para style="P11">Performance in (%) : [[line.performance or '0']]</para>
+      <para style="P9">
+        <font color="white"> </font>
+      </para>
+      <blockTable colWidths="241.0,241.0" style="Table4">
+        <tr>
+          <td>
+            <para style="P3">For [[ company.name ]],</para>
+            <para style="P1">[[ o.reviewer_id.name ]]</para>
+            <para style="P1">
+              <font color="white"> </font>
+            </para>
+            <para style="P1">
+              <font color="white"> </font>
+            </para>
+            <para style="P1">
+              <font color="white"> </font>
+            </para>
+            <para style="P1">Manager,</para>
+          </td>
+          <td>
+            <para style="P1">
+              <font color="white"> </font>
+            </para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P1">
+        <font color="white"> </font>
+      </para>
+      <para style="P1">
+        <font color="white"> </font>
+      </para>
+      <para style="P1">
+        <font color="white"> </font>
+      </para>
+    </section>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+

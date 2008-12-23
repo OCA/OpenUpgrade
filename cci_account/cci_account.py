@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -46,8 +46,7 @@ class account_invoice(osv.osv):
         'invoice_special':fields.boolean('Special Invoice'),
         'internal_note': fields.text('Internal Note'),
     }
-
-
+   
     def action_move_create(self, cr, uid, ids, context=None):
         flag = membership_flag = False
         product_ids = []
@@ -70,8 +69,8 @@ class account_invoice(osv.osv):
             for product in data_product:
                 if product.membership:
                     membership_flag = True
-        if data_inv.partner_id.alert_membership and membership_flag:
-            raise osv.except_osv('Error!',data_inv.partner_id.alert_explanation or 'Partner is not valid')
+        if data_invoice.partner_id.alert_membership and membership_flag:
+            raise osv.except_osv('Error!',data_invoice.partner_id.alert_explanation or 'Partner is not valid')
 
         #create other move lines if the invoice_line is related to a check payment or an AWEX credence
         for inv in self.browse(cr, uid, ids):
@@ -165,7 +164,6 @@ class sale_order(osv.osv):
     }
 
 sale_order()
-
 
 
 class account_invoice_line(osv.osv):

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -23,13 +23,13 @@
     "name" : "CCI Membership",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/CCI",
     "description": """
         cci membership
             - vcs functionality for cci
     """,
-    "depends" : ["base","membership"],
+    "depends" : ["base","membership","cci_event"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["cci_membership_view.xml","cci_membership_report.xml","cci_membership_wizard.xml"],

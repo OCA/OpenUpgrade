@@ -78,9 +78,9 @@
                         <separator string="Offer Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="state" nolabel="1" select="1"/>
-                            <button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
-                            <button name="state_freeze_set" string="Freeze" states="open" type="object"/>
-                            <button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
+                            <button name="state_open_set" string="Open" states="draft,freeze"/>
+                            <button name="state_freeze_set" string="Freeze" states="open"/>
+                            <button name="state_close_set" string="Close" states="open,draft,freeze"/>
                             <button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
                         </group>
                     </page>

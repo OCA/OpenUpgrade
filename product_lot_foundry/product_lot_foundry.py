@@ -178,7 +178,7 @@ class stock_move(osv.osv):
                     # TODO Check for reservation
                     done.append(move.id)
                     pickings[move.picking_id.id] = 1
-                    cr.execute('update stock_move set location_id=%d where id=%d', (move.product_id.property_stock_production.id, move.id))
+                    cr.execute('update stock_move set location_id=%s where id=%s', (move.product_id.property_stock_production.id, move.id))
 
                     move_id = self.copy(cr, uid, move.id, {
                         'product_uos_qty': move.product_uos_qty,
@@ -194,13 +194,13 @@ class stock_move(osv.osv):
                         done.append(move.id)
                         pickings[move.picking_id.id] = 1
                         r = res.pop(0)
-                        cr.execute('update stock_move set location_id=%d, product_qty=%f where id=%d', (r[1],r[0], move.id))
+                        cr.execute('update stock_move set location_id=%s, product_qty=%s where id=%s', (r[1],r[0], move.id))
 
                         while res:
                             r = res.pop(0)
                             move_id = self.copy(cr, uid, move.id, {'product_qty':r[0], 'location_id':r[1]})
                             done.append(move_id)
-                            #cr.execute('insert into stock_move_history_ids values (%d,%d)', (move.id,move_id))
+                            #cr.execute('insert into stock_move_history_ids values (%s,%s)', (move.id,move_id))
         if done:
             count += len(done)
             self.write(cr, uid, done, {'state':'assigned'})

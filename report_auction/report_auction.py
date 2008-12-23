@@ -31,7 +31,7 @@ class report_auction_adjudication(osv.osv):
         tmp={}
         for id in ids:
             tmp[id]=0.0
-            cr.execute("select sum(obj_price) from auction_lots where auction_id=%d", (id,))
+            cr.execute("select sum(obj_price) from auction_lots where auction_id=%s", (id,))
             sum = cr.fetchone()
             if sum:
                 tmp[id]=sum[0]

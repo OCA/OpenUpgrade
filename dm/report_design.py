@@ -100,11 +100,13 @@ class report_xml(osv.osv):
 #
 report_xml()
 
-#class new_report_sxw(report_sxw.report_sxw):
 def mygetObjects(self, cr, uid, ids, context):
     table = self.table
-    if 'actual_model' in context and context['actual_model']:
-        table =context['actual_model']
+    if self.table=='dm.offer.document':
+        report_xml_ids = ir_actions_report_xml_obj.search(cr, uid,
+                [('report_name', '=', self.name[7:])], context=context)        
+        if report_xml_ids:
+            table=report_xml.actual_model
         ids = pooler.get_pool(cr.dbname).get(table).search(cr,uid,[])
     res = pooler.get_pool(cr.dbname).get(table).browse(cr, uid, ids, list_class=browse_record_list, context=context, fields_process=_fields_process)
     return res

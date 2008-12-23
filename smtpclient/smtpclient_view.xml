@@ -103,32 +103,22 @@
 						</page>
 
 						<page string="Messages">
-							<vpaned>
-								<child1>
-									<separator
-										string="Verification Message" colspan="4" />
-									<field name="verify_email"
-										select="2" colspan="4" nolabel="1" />
-									<label
-										string="__code__ for Verification Code" />
-									<separator string="Test Message"
-										colspan="4" />
-									<field name="test_email" select="2"
-										colspan="4" nolabel="1" />
-								</child1>
-								<child2>
-									<separator string="Message"
-										colspan="4" />
-									<field name="body" select="2"
-										colspan="4" nolabel="1" />
-									<label
-										string="__name__ for Customer Name" />
-									<label
-										string="__number__ for Invoice / Sales Number" />
-									<label
-										string="__user__ for User Name" />
-								</child2>
-							</vpaned>
+							<!--<vpaned>
+								<child1>-->
+							<separator string="Verification Message" colspan="4" />
+							<field name="verify_email" select="2" colspan="4" nolabel="1" />
+							<label string="__code__ for Verification Code" />
+							<separator string="Test Message" colspan="4" />
+							<field name="test_email" select="2" colspan="4" nolabel="1" />
+								<!--</child1>
+								<child2>-->
+							<separator string="Message" colspan="4" />
+							<field name="body" select="2" colspan="4" nolabel="1" />
+							<label string="__name__ for Customer Name" />
+							<label string="__number__ for Invoice / Sales Number" />
+							<label string="__user__ for User Name" />
+								<!--</child2>
+							</vpaned>-->
 						</page>
 
 						<page string="Permission">

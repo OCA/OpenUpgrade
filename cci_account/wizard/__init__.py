@@ -25,5 +25,6 @@ import cci_wizard_third_party_ledger
 import cci_switched_debit_credit
 import cci_wizard_vcs
 import invoice_special_message
+import cci_use_model
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

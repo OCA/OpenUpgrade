@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data noupdate="1">
-<record id="tax1" model="account.tax">
+<record id="tax1" model="account.tax.template">
+	<field name="chart_template_id" ref="br_chart_template"/>
 	<field name="name">VAT (7%)(7.0%)</field>
 	<field name="amount">0.070000</field>
 	<field name="type">percent</field>
@@ -12,7 +13,8 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax2" model="account.tax">
+<record id="tax2" model="account.tax.template">
+	<field name="chart_template_id" ref="br_chart_template"/>
 	<field name="name">VAT (8%)(8.0%)</field>
 	<field name="amount">0.080000</field>
 	<field name="type">percent</field>

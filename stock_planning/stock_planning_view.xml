@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data>
-	<record id="view_stock_planning_period_form" model="ir.ui.view">
+    <record id="view_stock_planning_period_form" model="ir.ui.view">
             <field name="name">stock.planning.period.form</field>
             <field name="model">stock.planning.period</field>
             <field name="type">form</field>
@@ -9,8 +9,8 @@
                 <form string="Stock Periods">
                     <separator colspan="4" string="Create periods for Sale Planning"/>
                     <field name="date_start"/>
-                    <field name="date_stop"/>   					      
-					<separator colspan="4" string=""/>        
+                    <field name="date_stop"/>                             
+                    <separator colspan="4" string=""/>        
                     <group col="3" colspan="4">
                         <button name="create_period" string="Create Daily Periods" type="object"/>
                         <button name="create_period_weekly" string="Create Weekly Periods" type="object"/>
@@ -22,7 +22,7 @@
         
         
         <record id="action_stock_planning_period_form" model="ir.actions.act_window">
-            <field name="name">Stock Planning Period</field>
+            <field name="name">Stock Planning Periods</field>
             <field name="res_model">stock.planning.period</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
@@ -61,29 +61,31 @@
         </record>
         
         <record id="action_stock_period_form" model="ir.actions.act_window">
-            <field name="name">Stock Period</field>
+            <field name="name">Stock and Sales Periods</field>
             <field name="res_model">stock.period</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
+        <menuitem
+            id="menu_stock_period"
+            parent="sale.menu_shop_configuration"
+            action="action_stock_period_form"/>
         
-        <menuitem id="menu_stock_period" name="Sales Periods" parent="sale.menu_shop_configuration" action="action_stock_period_form"/>
         
-        
-	<record id="view_stock_planning_prevision_form" model="ir.ui.view">
+        <record id="view_stock_planning_prevision_form" model="ir.ui.view">
             <field name="name">stock.planning.sale.prevision.form</field>
             <field name="model">stock.planning.sale.prevision</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Sales Forecast">
-	                <field name="user_id" select="1"/>
+                    <field name="user_id" select="1"/>
                     <field name="period_id" select="1"/>
                     <field name="product_id" on_change="product_id_change(product_id,product_uom,product_qty,product_amt)" />
                     <field name="product_qty" on_change="product_id_change(product_id,product_uom,product_qty,product_amt)" />
                     <field name="product_amt" on_change="product_id_change(product_id,product_uom,product_qty,product_amt)" />
                     <field name="product_uom" on_change="product_id_change(product_id,product_uom,product_qty,product_amt)" />
-					<field name="amt_sold"/>
-						<field name="state" colspan="2"/>
+                    <field name="amt_sold"/>
+                        <field name="state" colspan="2"/>
                         <button name="action_validate" string="Validate" states="draft" type="object" colspan="2"/>
                 </form>
             </field>
@@ -94,8 +96,8 @@
             <field name="model">stock.planning.sale.prevision</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Sales Forecast">
-	                <field name="user_id" select="1"/>
+                <tree string="Sales Forecast" editable="bottom">
+                    <field name="user_id" select="1"/>
                     <field name="period_id" select="1"/>
                     <field name="product_id" select="1" on_change="product_id_change(product_id,product_uom)" />
                     <field name="product_qty"/>
@@ -104,7 +106,7 @@
             </field>
         </record>
         
-   <record id="view_stock_planning_prevision_graph" model="ir.ui.view">
+       <record id="view_stock_planning_prevision_graph" model="ir.ui.view">
              <field name="name">stock.planning.sale.prevision.graph</field>
             <field name="model">stock.planning.sale.prevision</field>
             <field name="type">graph</field>
@@ -140,14 +142,14 @@
             <field name="domain">[('user_id','=',uid)]</field>
         </record>
         
-        <menuitem id="menu_stock_manual_plannification" name="Manual Plannification" parent="stock.menu_stock_root"/>
+        <menuitem id="menu_stock_manual_plannification" name="Plannification" parent="stock.menu_stock_root"/>
         
-        <menuitem id="menu_stock_prevision" name="Sales Forecasts" parent="menu_stock_manual_plannification"/>
+        <menuitem id="menu_stock_prevision" name="Sales Forecasts" parent="sale.menu_sale_root"/>
         
         <menuitem id="menu_stock_prevision_all" name="All Sales Forecasts" parent="menu_stock_prevision" action="action_view_stock_planning_prevision_form"/>
         
- 		<menuitem id="menu_stock_prevision_current" name="Sales Previsions of Current Period" parent="menu_stock_prevision_all" action="action_view_stock_planning_prevision_form"/>
- 		
+         <menuitem id="menu_stock_prevision_current" name="Sales Previsions of Current Period" parent="menu_stock_prevision_all" action="action_view_stock_planning_prevision_form"/>
+         
         <menuitem id="menu_stock_prevision_my" name="My Sales Forecasts" parent="menu_stock_prevision" action="action_view_stock_planning_prevision_form_my"/>
         
         <menuitem id="menu_stock_prevision_my_current" name="My Previsions of Current Period" parent="menu_stock_prevision_my" action="action_view_stock_planning_prevision_form"/>
@@ -169,21 +171,20 @@
                     <field name="outgoing_left"/>
                     <field name="outgoing"/>
                     <field name="planned_sale"/>
-					<field name="warehouse_id"/>
-					<group col="10" colspan="4">
-						<field name="state"/>
+                    <field name="warehouse_id"/>
+                    <group col="10" colspan="4">
+                        <field name="state"/>
                         <button name="procure_incomming_left" states="draft" string="Procure Incoming Left" type="object"/>
                     </group> 
                 </form>
             </field>
         </record>
-        
         <record id="view_stock_planning_tree" model="ir.ui.view">
              <field name="name">stock.planning.tree</field>
             <field name="model">stock.planning</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Stock Planning" editable="bottom" colors ="blue:line_time=='Past';black:line_time=='Future'">
+                <tree string="Master Procurement Schedule" editable="bottom" colors ="blue:line_time=='Past';black:line_time=='Future'">
                     <field name="period_id" select="1"/>
                     <field name="product_id" select="1" on_change="product_id_change(product_id,product_uom)" />
                     <field name="product_uom" on_change="product_id_change(product_id,product_uom)" />
@@ -196,19 +197,22 @@
                     <field name="planned_outgoing" string="Planned Out"/>
                     <field name="planned_sale"/>
                     <field name="line_time"/>
-<!--                    <field name="state"/> -->
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
-        
+
         <record id="action_view_stock_planning_form" model="ir.actions.act_window">
-            <field name="name">Stock Planning</field>
+            <field name="name">Master Procurement Schedule</field>
             <field name="res_model">stock.planning</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        
-        <menuitem id="menu_stock_planning" name="Stock Planning" parent="menu_stock_manual_plannification" action="action_view_stock_planning_form"/>
+
+        <menuitem
+            id="menu_stock_planning" 
+            parent="menu_stock_manual_plannification"
+            action="action_view_stock_planning_form"/>
         
 </data>
 </openerp>

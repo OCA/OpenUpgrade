@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -27,7 +27,7 @@ from osv import fields, osv
 class res_company(osv.osv):
     _inherit = 'res.company'
     _description = 'res.company'
-    
+
     _columns = {
         'federation_key' : fields.char('ID for the Federation',size=50,help="ID key for the sending of data to the belgian CCI's Federation"),
     }
@@ -245,6 +245,7 @@ class res_partner(osv.osv):
         'magazine_subscription': lambda *a: 'prospect',
         'state_id': _get_partner_state,
         'state_id2': _get_customer_state,
+        'invoice_special' :lambda *a: 1,
         }
     _constraints = [(check_address, 'Only One default address is allowed!', ['address']),(_check_activity, 'Partner Should have only one Main Activity!', ['activity_code_ids'])]
 
@@ -302,6 +303,7 @@ class res_partner_zip(osv.osv):
             zip_city = str(r['name'] or '')
             if r['name'] and r['city']:
                 zip_city += ' '
+            r['city'] = r['city'].encode('utf-8')
             zip_city += str(r['city'] or '')
             res.append((r['id'], zip_city))
         return res
@@ -342,7 +344,7 @@ class res_partner_job(osv.osv):
                 res = self.pool.get('res.partner.function').search(cr, uid, [('code','=', letter)])
                 if res:
                     temp += self.pool.get('res.partner.function').browse(cr, uid,res)[0].code
-            vals['function_code_label'] = temp
+            vals['function_code_label'] = temp or vals['function_code_label']
         vals['function_id'] = self.pool.get('res.partner.function').search(cr, uid, [])[0]
         return super(res_partner_job,self).create(cr, uid, vals, *args, **kwargs)
 
@@ -353,7 +355,7 @@ class res_partner_job(osv.osv):
                 res = self.pool.get('res.partner.function').search(cr, uid, [('code','=', letter)])
                 if res:
                     temp += self.pool.get('res.partner.function').browse(cr, uid,res)[0].code
-            vals['function_code_label'] = temp
+            vals['function_code_label'] = temp or vals['function_code_label']
         vals['function_id'] = self.pool.get('res.partner.function').search(cr, uid, [])[0]
         return super(res_partner_job,self).write(cr, uid, ids,vals, *args, **kwargs)
 
@@ -541,7 +543,7 @@ class res_partner_country_relation(osv.osv):
     _columns = {
         'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
         'partner_id':fields.many2one('res.partner','Partner'),
-        'country_id':fields.many2one('ccicountry','Country'),
+        'country_id':fields.many2one('cci.country','Country'),
         'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon'),('representation','Representation'),('expert','Expert')],'Types'),
     }
 res_partner_country_relation()

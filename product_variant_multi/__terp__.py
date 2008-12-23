@@ -27,9 +27,11 @@
     "depends" : ["product"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [],
+    "update_xml" : [
+        "product_variant_multi.xml"
+    ],
     "active": False,
-    "installable": False
+    "installable": True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -136,9 +136,7 @@ class dm_customer_order(osv.osv):
 #              state_id = self.pool.get("res.country.state")
 #              country_id = self.pool.get("res.country")
               vals['address'] = [[0, 0,address]]
-              print "DEBUG - customer vals : ",vals
               customer_id = self.pool.get('dm.customer').create(cr,uid,vals)
-              print "DEBUG - created new customer : ",customer_id
         # Workitem
 
         segment = self.pool.get('dm.campaign.proposition.segment')
@@ -167,14 +165,12 @@ class dm_customer_order(osv.osv):
         # change workitem
         if workitem_id : 
 
-            print "DEBUG - updating workitem for customer"
             workitem.write(cr,uid,workitem_id,vals)
         # create new workitem
         else:
             vals['customer_id']=customer_id
             if segment_id :
                 vals['segment_id']=segment_id[0]
-            print "DEBUG - Creating new workitem for customer"
             workitem.create(cr,uid,vals)
 
         self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
@@ -197,13 +193,9 @@ class dm_workitem(osv.osv):
         step = self.pool.get('dm.offer.step').browse(cr,uid,[vals['step_id']])[0]
         if step.outgoing_transition_ids:
             transitions = dict(map(lambda x : (x.id,x.delay),step.outgoing_transition_ids))
-            print "DEBUG - Creating new workitem"
-            print "DEBUG - transitions items: ", transitions.items()
-            print "DEBUG - transitions values: ", transitions.values()
             trans = [(k,v) for k,v in transitions.items() if v == min(transitions.values())][0]
             new_date = datetime.date.today() + datetime.timedelta(trans[1])
             vals['date_next_action'] = new_date
-            print "DEBUG - vals : ",vals
         return super(dm_offer_step_workitem, self).create(cr, uid, vals, context)
 
     def _update_workitem(self, cr, uid, ids=False, context={}):
@@ -212,29 +204,23 @@ class dm_workitem(osv.osv):
         '''
 """
 """
-        print "DEBUG - _update_workitem called by scheduler"
         wrkitem_ids =self.search(cr,uid,[('date_next_action','=',time.strftime('%Y-%m-%d'))])
         wrkitems =self.browse(cr,uid,wrkitem_ids)
         if not wrkitems:
-            print "DEBUG - no workitem to update"
             return
         for wrkitem in wrkitems :
             step = wrkitem.step_id
             if step.outgoing_transition_ids:
                 transitions = dict(map(lambda x : (x,int(x.delay)),step.outgoing_transition_ids))
-                print "DEBUG - transitions items: ", transitions.items()
-                print "DEBUG - transitions values: ", transitions.values()
                 trans = [k for k,v in transitions.items() if v == min(transitions.values())][0]
                 # If relaunching
                 if trans.step_to.type == 'RL':
                     prop_id = self.pool.get('dm.campaign.proposition').copy(cr, uid, wrkitem.segment_id.proposition_id.id,
                         {'proposition_type':'relaunching', 'initial_proposition_id':wrkitem.segment_id.proposition_id.id})
-                    print "DEBUG - Creating new proposition - id : ",prop_id
                     self.pool.get('dm.campaign.proposition.segment').write(cr, uid, wrkitem.segment_id.id, {'proposition_id':prop_id})
                     re_step_id = self.pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',step.offer_id.id),('flow_start','=',True),('media_id','=',step.media_id.id)])
                     self.write(cr,uid,wrkitem.id,{'step_id':re_step_id[0]}) 
                 else :
-                    print "DEBUG - Updating workitem for segment"
                     self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to.id})
 """
 """
@@ -248,10 +234,10 @@ class dm_offer_history(osv.osv):
     _order = 'date'
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer', required=True, ondelete="cascade"),
-        'date' : fields.date('Date'),
+        'date' : fields.date('Drop Date'),
 #        'user_id' : fields.many2one('res.users', 'User'),
 #        'state': fields.selection(AVAILABLE_STATES, 'Status', size=16)
-        'campaign_id' : fields.many2one('dm.campaign','Name'),
+        'campaign_id' : fields.many2one('dm.campaign','Name', ondelete="cascade"),
         'code' : fields.char('Code', size=16),
         'responsible_id' : fields.many2one('res.users','Responsible'),
     }

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -22,14 +22,14 @@
 {
     "name" : "Audit Trail",
     "version" : "1.0",
-    "depends" : ["base","account","purchase","mrp"],
-    "website" : "http://tinyerp.com",
+    "depends" : ["audittrail"],
+    "website" : "http://www.openerp.com",
     "author" : "Tiny",
     "init_xml" : [],
     "description": "Allows the administrator to track every user operations on all objects of the system.",
     "category" : "Generic Modules/CCI",
     "update_xml" : ["audittrail_view.xml"],
-    "demo_xml" : ["audittrail_demo.xml"],
+    "demo_xml" : [],
     "active" : False,
     "installable": True
 }

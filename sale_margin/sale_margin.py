@@ -70,7 +70,6 @@ class sale_order(osv.osv):
     }
 sale_order()
 
-<<<<<<< TREE
 class stock_picking(osv.osv):
     _inherit = 'stock.picking'
     
@@ -90,26 +89,5 @@ class stock_picking(osv.osv):
         picking_obj.write(cr, uid, ids,{'invoice_ids':[[6,0,invoice_ids]]})        
         return True
 stock_picking()
-=======
-class stock_picking(osv.osv):
-    _inherit = 'stock.picking'
-    
-    _columns = {
-        'invoice_ids': fields.many2many('account.invoice', 'picking_invoice_rel', 'picking_id', 'invoice_id', 'Invoices', domain=[('type','=','in_invoice')]),
-    }
-    
-    def create_invoice(self, cr, uid, ids, *args):
-        # need to carify with new requirement
-        res = False
-        invoice_ids = []
-        margin_deduce = 0.0
-        picking_obj = self.pool.get('stock.picking')
-        picking_obj.write(cr, uid, ids, {'invoice_state' : '2binvoiced'})
-        res = picking_obj.action_invoice_create(cr, uid, ids, type='out_invoice', context={})
-        invoice_ids = res.values()
-        picking_obj.write(cr, uid, ids,{'invoice_ids':[[6,0,invoice_ids]]})        
-        return True
-stock_picking()
->>>>>>> MERGE-SOURCE
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
