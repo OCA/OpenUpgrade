@@ -37,12 +37,11 @@ class res_partner_address(osv.osv):
     def write(self, cr, uid, ids, vals, context={}):
         first_name=''
         last_name=''
-        if 'first_name' in vals and vals['first_name']:
+        if ('first_name' in vals) and ('last_name' in vals):
             first_name=vals['first_name']
-        if 'last_name' in vals and vals['last_name']:
             last_name=vals['last_name']
-
-        vals['name']= first_name + ' ' + last_name
+	    vals['name']= first_name + ' ' + last_name
+	
         return super(res_partner_address, self).write(cr, uid, ids, vals, context)
 
     def create(self, cr, uid, vals, context={}):
