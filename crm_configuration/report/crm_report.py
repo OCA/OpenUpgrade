@@ -21,6 +21,8 @@
 ##############################################################################
 from osv import fields,osv
 
+import tools.sql
+
 AVAILABLE_STATES = [
     ('draft','Draft'),
     ('open','Open'),
@@ -28,6 +30,7 @@ AVAILABLE_STATES = [
     ('done', 'Closed'),
     ('pending','Pending')
 ]
+
 class report_crm_case_section_categ2(osv.osv):
     _name = "report.crm.case.section.categ2"
     _description = "Cases by section and category2"
@@ -38,6 +41,7 @@ class report_crm_case_section_categ2(osv.osv):
         'section_id':fields.many2one('crm.case.section', 'Section', readonly=True),
         'category2_id':fields.many2one('crm.case.category2', 'Type', readonly=True),
         'stage_id':fields.many2one('crm.case.stage', 'Stage', readonly=True),
+        'amount_revenue': fields.float('Est.Revenue', readonly=True),
         'nbr': fields.integer('# of Cases', readonly=True),
         'state': fields.selection(AVAILABLE_STATES, 'State', size=16, readonly=True),        
         'delay_close': fields.char('Delay Close', size=20, readonly=True),
@@ -45,8 +49,9 @@ class report_crm_case_section_categ2(osv.osv):
     _order = 'category2_id, section_id'
     
     def init(self, cr):
+        tools.sql.drop_view_if_exists(cr, "report_crm_case_section_categ2")
         cr.execute("""
-              create or replace view report_crm_case_section_categ2 as (
+              create view report_crm_case_section_categ2 as (
                 select
                     min(c.id) as id,
                     to_char(c.create_date,'YYYY-MM')||'-01' as name,
@@ -56,6 +61,7 @@ class report_crm_case_section_categ2(osv.osv):
                     c.stage_id,
                     c.section_id,
                     count(*) as nbr,
+                    sum(planned_revenue) as amount_revenue,
                     to_char(avg(date_closed-c.create_date), 'DD"d" HH24:MI:SS') as delay_close
                 from
                     crm_case c
@@ -74,6 +80,7 @@ class report_crm_case_section_stage(osv.osv):
         'section_id':fields.many2one('crm.case.section', 'Section', readonly=True),
         'categ_id':fields.many2one('crm.case.categ', 'Category', readonly=True),
         'stage_id':fields.many2one('crm.case.stage', 'Stage', readonly=True),
+        'amount_revenue': fields.float('Est.Revenue', readonly=True),
         'nbr': fields.integer('# of Cases', readonly=True),
         'state': fields.selection(AVAILABLE_STATES, 'State', size=16, readonly=True),        
         'delay_close': fields.char('Delay Close', size=20, readonly=True),
@@ -81,8 +88,9 @@ class report_crm_case_section_stage(osv.osv):
     _order = 'stage_id, section_id'
     
     def init(self, cr):
+        tools.sql.drop_view_if_exists(cr, "report_crm_case_section_stage")
         cr.execute("""
-              create or replace view report_crm_case_section_stage as (
+              create view report_crm_case_section_stage as (
                 select
                     min(c.id) as id,
                     to_char(c.create_date,'YYYY-MM')||'-01' as name,
@@ -91,6 +99,7 @@ class report_crm_case_section_stage(osv.osv):
                     c.stage_id,
                     c.section_id,
                     count(*) as nbr,
+                    sum(planned_revenue) as amount_revenue,
                     to_char(avg(date_closed-c.create_date), 'DD"d" HH24:MI:SS') as delay_close
                 from
                     crm_case c
@@ -116,8 +125,9 @@ class report_crm_case_section_categ_stage(osv.osv):
     _order = 'stage_id, section_id, categ_id'
     
     def init(self, cr):
+        tools.sql.drop_view_if_exists(cr, "report_crm_case_section_categ_stage")
         cr.execute("""
-              create or replace view report_crm_case_section_categ_stage as (
+              create view report_crm_case_section_categ_stage as (
                 select
                     min(c.id) as id,
                     to_char(c.create_date,'YYYY-MM')||'-01' as name,
@@ -153,8 +163,9 @@ class report_crm_case_section_categ_categ2(osv.osv):
     _order = 'section_id, categ_id, category2_id'
     
     def init(self, cr):
+        tools.sql.drop_view_if_exists(cr, "report_crm_case_section_categ_categ2")
         cr.execute("""
-              create or replace view report_crm_case_section_categ_categ2 as (
+              create view report_crm_case_section_categ_categ2 as (
                 select
                     min(c.id) as id,
                     to_char(c.create_date, 'YYYY-MM')||'-01' as name,
