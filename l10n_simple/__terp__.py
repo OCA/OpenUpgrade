@@ -20,7 +20,7 @@
 #
 ##############################################################################
 {
-    "name" : "Simple account chart",
+    "name" : "Simple Account Chart",
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Localisation/Europe",
