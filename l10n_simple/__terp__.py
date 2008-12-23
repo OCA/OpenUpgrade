@@ -24,9 +24,11 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Localisation/Europe",
-    "depends" : ["account", "account_chart"],
+    "depends" : ["account_chart"],
     "init_xml" : [],
-    "demo_xml" : ["account_demo.xml","account.analytic.line.csv"],
+    "demo_xml" : ["account_demo.xml",
+#                  "account.analytic.line.csv" #comment because of template system
+                  ],
     "update_xml" : ["account_pcmn_belgium.xml","l10n_simple_wizard.xml"],
     "active": False,
     "installable": True
