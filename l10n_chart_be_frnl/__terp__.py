@@ -23,10 +23,11 @@
     "name" : "Belgium - French & Dutch",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
+    "category" : "Localisation/Account Charts",
     "depends" : ["account", "base_vat", "base_iban", "account_chart"],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml'],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",
+                    'account_tax.xml',"l10n_chart_be_frnl_wizard.xml"],
     "active": False,
     "installable": True
 }

@@ -44,7 +44,7 @@ class huissier_dossier(osv.osv):
         res = {}
         for id in ids:
             res[id]=0.0
-            cr.execute("select sum(adj_price) from huissier_lots where dossier_id=%d", (id,))
+            cr.execute("select sum(adj_price) from huissier_lots where dossier_id=%s", (id,))
             sum = cr.fetchone()
             res[id] = sum and sum[0] or 0.0
         return res
@@ -162,7 +162,7 @@ class huissier_dossier(osv.osv):
         for r in self.browse(cr, uid, ids):
             name = r.num_vignette and u'%d: ' % r.num_vignette or u''
             name += r.etude_id.name
-            name += r.debiteur and u' (%s)' % r.debiteur.name.decode('utf8') or u''
+            name += r.debiteur and u' (%s)' % r.debiteur.name or u''
             res.append((r['id'], name))
         return res
 
@@ -178,7 +178,7 @@ class huissier_dossier(osv.osv):
         return self.name_get(cr, user, ids, context)
     
     def onchange_num_vignette(self, cr, uid, ids, num):
-        cr.execute("select id,name from res_partner where id=(select etude_id from huissier_vignettes where %d >= first and %d <= last)", (num,num))
+        cr.execute("select id,name from res_partner where id=(select etude_id from huissier_vignettes where %s >= first and %s <= last)", (num,num))
         res = cr.dictfetchall()
         return res and {'value': {'etude_id': (res[0]['id'],res[0]['name'])}} or {}
 
@@ -218,7 +218,7 @@ class huissier_dossier(osv.osv):
                 invoice_desc += ' (%d)' % dossier.num_vignette
                 line_desc += ' (%d)' % dossier.num_vignette
             if dossier.debiteur:
-                line_desc += u' %s' % dossier.debiteur.name.decode('utf8')
+                line_desc += u' %s' % dossier.debiteur.name
                 
 #CHECKME: fo des taxes pour les factures de salle?
             lines.append((0,False, {'name':line_desc, 'quantity':1, 'account_id':dossier.salle_account_id.id, 'price_unit':dossier.amount_room_costs}))
@@ -697,7 +697,7 @@ class huissier_deposit(osv.osv):
             }
             invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
 #           'invoice_id': fields.many2many('account.invoice', 'huissier_deposit_invoice_rel', 'deposit_id', 'invoice_id', u'Factures'),
-            cr.execute('insert into huissier_deposit_invoice_rel (deposit_id, invoice_id) values (%d, %d)', (deposit.id, invoice_id))
+            cr.execute('insert into huissier_deposit_invoice_rel (deposit_id, invoice_id) values (%s, %s)', (deposit.id, invoice_id))
 #           self.write(cr, uid, ids, {'invoice_id':invoice_id})
             invoice_ids.append(invoice_id)
         return invoice_ids

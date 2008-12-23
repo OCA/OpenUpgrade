@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -29,7 +29,7 @@ import netsvc
 
 STATE = [
     ('none', 'Non Member'),
-    ('canceled', 'Canceled Member'),
+    ('canceled', 'Cancelled Member'),
     ('old', 'Old Member'),
     ('waiting', 'Waiting Member'),
     ('invoiced', 'Invoiced Member'),
@@ -160,7 +160,7 @@ class cci_missions_embassy_folder(osv.osv):
         'crm_case_id' : fields.many2one('crm.case','Case'),
         'member_price' : fields.boolean('Member Price Allowed'),
         'customer_reference' : fields.char('Folders Reference for the Customer',size=30),
-        'destination_id' : fields.many2one('ccicountry','Destination Country', domain=[('valid4embassy','=',True)]),
+        'destination_id' : fields.many2one('cci.country','Destination Country', domain=[('valid4embassy','=',True)]),
         'link_ids': fields.one2many('cci_missions.dossier','embassy_folder_id','Linked Documents'),
         'internal_note': fields.text('Internal Note'),
         'invoice_note':fields.text('Note to Display on the Invoice',help='to display as the last embassy_folder_line of this embassy_folder.'),
@@ -174,7 +174,8 @@ class cci_missions_embassy_folder(osv.osv):
         'section_id': lambda obj, cr, uid, context: obj.pool.get('crm.case.section').search(cr, uid, [('name','=','Embassy Folder')])[0],
         'invoice_date': lambda *a: False,
         'name': lambda *args: '/',
-        'state' :  lambda *a : 'draft'
+        'state' :  lambda *a : 'draft',
+        "date": lambda *a: time.strftime("%Y-%m-%d %H:%M:%S")
     }
 
     _constraints = [(check_folder_line, 'Error: Only One Embassy Folder line allowed for each type!', ['embassy_folder_line_ids'])]
@@ -270,7 +271,7 @@ class cci_missions_dossier_type(osv.osv):
         'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA','ATA Carnet')],'Type',required=True),
         'warranty_product_1': fields.many2one('product.product', 'Warranty product for ATA carnet if Own Risk'),
         'warranty_product_2': fields.many2one('product.product', 'Warranty product for ATA carnet if not own Risk'),
-        'id_letter' : fields.char('ID Letter', size=1, help='for identify the type of certificate by the federation' ), 
+        'id_letter' : fields.char('ID Letter', size=1, help='for identify the type of certificate by the federation' ),
     }
 
 cci_missions_dossier_type()
@@ -284,7 +285,7 @@ class cci_missions_dossier(osv.osv):
         if not vals['text_on_invoice']:
             invoice_text = vals['name']
             if vals['destination_id']:
-                destination_data = self.pool.get('ccicountry').browse(cr,uid,vals['destination_id'])
+                destination_data = self.pool.get('cci.country').browse(cr,uid,vals['destination_id'])
                 invoice_text = vals['name'] + ' ' + destination_data.name + ' (' + str(vals['quantity_original'])  + ')'
             vals.update({'text_on_invoice': invoice_text})
         return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
@@ -331,7 +332,7 @@ class cci_missions_dossier(osv.osv):
         'state':fields.selection([('draft','Confirmed'),('invoiced','Invoiced'),('cancel_customer','Canceled by Customer'),('cancel_cci','Canceled by the CCI')],'State',),
         'goods':fields.char('Goods Description',size=100),
         'goods_value':fields.float('Value of the Sold Goods'),#Monetary; must be greater than zero
-        'destination_id':fields.many2one('ccicountry','Destination Country', domain=[('valid4certificate','=',True)]),
+        'destination_id':fields.many2one('cci.country','Destination Country', domain=[('valid4certificate','=',True)]),
         'embassy_folder_id':fields.many2one('cci_missions.embassy_folder','Related Embassy Folder'),
         'quantity_copies':fields.integer('Number of Copies'),
         'quantity_original' : fields.integer('Quantity of Originals',required=True),
@@ -473,7 +474,7 @@ class cci_missions_certificate(osv.osv):
         'legalization_ids' : fields.one2many('cci_missions.legalization','certificate_id','Related Legalizations'),
         'customs_ids' : fields.many2many('cci_missions.custom_code','certificate_custome_code_rel','certificate_id','custom_id','Custom Codes'),
         'sending_spf': fields.date('SPF Sending Date',help='Date of the sending of this record to the external database'),
-        'origin_ids' : fields.many2many('ccicountry','certificate_country_rel','certificate_id','country_id','Origin Countries',domain=[('valid4certificate','=',True)])
+        'origin_ids' : fields.many2many('cci.country','certificate_country_rel','certificate_id','country_id','Origin Countries',domain=[('valid4certificate','=',True)])
     }
 
     _defaults = {
@@ -854,7 +855,7 @@ class cci_missions_ata_carnet(osv.osv):
         'representer_city' : fields.char('Representer City',size=50),
         'usage_id': fields.many2one('cci_missions.ata_usage','Usage',required=True),
         'goods': fields.char('Goods',size=80),
-        'area_id': fields.many2one('ccicountry','Area',required=True,domain=[('valid4ata','=',True)]),
+        'area_id': fields.many2one('cci.country','Area',required=True,domain=[('valid4ata','=',True)]),
         'insurer_agreement' : fields.char('Insurer Agreement',size=50),
         'own_risk' : fields.boolean('Own Risks'),
         'goods_value': fields.float('Goods Value',required=True),

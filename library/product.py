@@ -35,7 +35,7 @@ class many2manysym(fields.many2many):
         limit_str = self._limit is not None and ' limit %d' % self._limit or ''
 
         for (self._id2, self._id1) in [(self._id2, self._id1), (self._id1, self._id2)]:
-            cr.execute('select '+self._id2+','+self._id1+' from '+self._rel+' where '+self._id1+' in ('+ids_s+')'+limit_str+' offset %d', (offset,))
+            cr.execute('select '+self._id2+','+self._id1+' from '+self._rel+' where '+self._id1+' in ('+ids_s+')'+limit_str+' offset %s', (offset,))
             for r in cr.fetchall():
                 res[r[1]].append(r[0])
         return res

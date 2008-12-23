@@ -11,8 +11,18 @@
 
             <form string="Fleet Incident">
                 <group col="6" colspan="4">
-                   	<field name="name" String="Description"/>
-                    <field name="partner_id"/>
+										<field name="prodlot_id" required="1" on_change="onchange_prodlot_id(prodlot_id)"/>
+                   	
+                    <field name="partner_id" readonly="1"/>
+                    
+                    <field name="fleet_id" readonly="1"/>
+                    
+                    <field name="is_fleet_expired" readonly="1"/>
+                    
+                   	<field name="name" string="Description"/>
+                   	
+                    <field name="picking_id" string="Repair movements"/>
+                    
                     <field name="user_id" select="2" string="Responsible"/>
                     <field name="section_id"/>
                     <newline/>
@@ -35,10 +45,7 @@
                     <field name="planned_revenue" string="Incident Revenue"/>
                     <field name="priority"/>
                     <field name="category2_id" select="1" string="Type of Action"/>
-                    <field name="ref" string="Product"/>
-                    <field name="ref2" string="Serial ID"/>
-                    <field name="fleet_id" string="Sub Fleet" domain="[('is_sub_fleet','=',True)]"/>
-                    <field name="picking_id" string="Repair movements"/>
+                    
                     <separator colspan="2" string="Claim Description"/>
                     <separator colspan="2" string="Action Description"/>
                     <field colspan="2" name="note" nolabel="1"/>

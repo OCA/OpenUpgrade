@@ -23,10 +23,10 @@
     "name" : "United Kingdom",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
+    "category" : "Localisation/Account Charts",
     "depends" : ["account", "base_iban", "base_vat", "account_chart"],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml'],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml','l10n_uk_wizard.xml'],
     "active": False,
     "installable": True
 }

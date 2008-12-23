@@ -267,16 +267,17 @@
 					<page string="Items">
 						<field name="item_ids" colspan="4" nolabel="1" readonly="0" select="2">
 							<form string="Item">
-								<field name="product_id"/>
+								<field name="name"/>
 								<field name="item_type"/>
-								<separator string="Purchase constraints" colspan="4"/>
-								<field name="purchase_constraints" colspan="4" nolabel="1"/>
+								<separator string="Products" colspan="4"/>
+								<field name="product_ids" colspan="4" nolabel="1"/>
 								<separator string="Notes" colspan="4"/>
 								<field name="notes" colspan="4" nolabel="1"/>
 							</form>
 							<tree string="Items">
-								<field name="product_id"/>
+								<field name="name"/>
 								<field name="item_type"/>
+								<field name="notes" />
 							</tree>
 						</field>
 					</page>
@@ -301,9 +302,9 @@
 					<page string="History">
 						<field name="history_ids" nolabel="1" colspan="4"/>
 					</page>
-					<page string="DTP Documents">
+<!--					<page string="DTP Documents">
 						<field name="document_ids" colspan="4" nolabel="1"/>
-					</page>
+					</page>-->
 					<page string="Manufacturing">
 						<field name="manufacturing_constraint_ids" colspan="4" nolabel="1">
 							<form string="Manufacturing Description">
@@ -333,22 +334,6 @@
 	</record>
 
 	<menuitem id="menu_action_offer_step_form" parent="dm.menu_dm_config_offer_steps" action="action_offer_step_form"/>
-
-    <!--
-    =======================================================
-        RELATES
-    =======================================================
-    -->
-
-    <act_window name="DTP Documents"
-        res_model="dm.offer.document"
-        src_model="dm.offer.step"
-        view_type="form"
-        view_mode="tree,form"
-        id="act_offer_document_opened"
-        domain="[('step_id','=',active_id)]"
-    />
-
 
     <!--
 	=======================================================
@@ -481,11 +466,11 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Items">
-				<field name="product_id"/>
+				<field name="name" select="1"/>
+				<field name="product_ids"/>
 				<field name="offer_step_id"/>
 				<field name="offer_step_type"/>
 				<field name="price"/>
-				<field name="forwarding_charges"/>
 				<field name="item_type"/>
 			</tree>
 		</field>
@@ -499,17 +484,15 @@
 			<form string="Item">
 				<group colspan="2">
 					<separator string="Item Description" colspan="4"/>
-					<field name="product_id" colspan="4" select="1"/>
+					<field name="name" select="1"/>
+					<field name="product_ids" colspan="4" select="1"/>
 					<field name="offer_step_id" colspan="4" select="1"/>
 					<field name="item_type" select="1"/>
 				</group>
 				<group colspan="2">
 					<separator string="Price" colspan="4"/>
 					<field name="price" select="2"/>
-					<field name="forwarding_charges" select="2"/>
 				</group>
-				<separator string="Purchase Description" colspan="4"/>
-				<field name="purchase_constraints" colspan="4" nolabel="1" select="2"/>
 				<separator string="Notes" colspan="4"/>
 				<field name="notes" colspan="4" nolabel="1" select="2"/>
 			</form>
@@ -540,6 +523,11 @@
 		view_mode="tree,form"
 		id="act_offer_item_opened"/>
 
+	<!--
+	=======================================================
+	MANUFACTURING CONSTRAINT VIEWS
+	=======================================================
+	-->
 
 	<record model="ir.ui.view" id="view_offer_step_manufacturing_constraint_form">
 		<field name="name">dm.offer.step.manufacturing_constraint.form</field>
@@ -551,7 +539,8 @@
 				<field name="offer_step_id" select="2"/>
 				<separator string="Manufacturing Description" colspan="4"/>
 				<field name="constraint" colspan="4" nolabel="1" select="2"/>
-				<field name="country_ids" colspan="4" select="1"/>
+				<separator string="Used for Countries" colspan="4"/>
+				<field name="country_ids" colspan="4" nolabel="1" select="1"/>
 			</form>
 		</field>
 	</record>
@@ -619,7 +608,11 @@
 
     <menuitem id="menu_action_dm_media_form" parent="dm.menu_dm_config_offer_steps" action="action_dm_media_form" sequence="2" />
 
-	<!-- ############## RELATES ############### -->
+    <!--
+    =======================================================
+        RELATES
+    =======================================================
+    -->
 
 	<act_window name="Offer Steps"
 		res_model="dm.offer.step"
@@ -628,6 +621,22 @@
 		view_mode="tree,form"
 		id="act_offer_step_opened"
 		domain = "[('offer_id','=',active_id)]"/>
+		
+    <act_window name="DTP Documents"
+        res_model="dm.offer.document"
+        src_model="dm.offer.step"
+        view_type="form"
+        view_mode="tree,form"
+        id="act_offer_document_opened"
+        domain="[('step_id','=',active_id)]"/>
+
+	<act_window name="Back To Offer"
+		res_model="dm.offer"
+		src_model="dm.offer.step"
+		view_type="form"
+        view_mode="tree,form"
+		id="act_offer_opened"
+		domain = "[('step_ids','in',[active_id])]"/>
 
 <!--
 	<act_window name="WorkItems"

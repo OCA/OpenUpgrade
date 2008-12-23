@@ -273,11 +273,6 @@ class dm_offer_document(osv.osv):
     _defaults = {
         'state': lambda *a: 'draft',
     }
-    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
-        result=super(dm_offer_document,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-        if result['type']=='form' and 'toolbar' in result:
-            result['toolbar']['print']=[]
-        return result
     def state_validate_set(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'validate'})
         return True
@@ -294,16 +289,18 @@ class dm_offer_step_item(osv.osv):
             result[id] = self.browse(cr, uid, id).offer_step_id.type.code
         return result
 
-    _rec_name = 'product_id'
     _columns = {
-        'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
+        'name': fields.char('Description', size=64, required=True),
+        'product_ids' : fields.many2many('product.product','dm_step_item_product_rel', 'product_id', 'item_id', 'Products', context={'flag':True}),
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'offer_step_type': fields.function(_step_type,string='Offer Step Type',type="char",method=True,readonly=True), 
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
         'price' : fields.float('Price',digits=(16,2)),
-        'forwarding_charges' : fields.float('Forwarding Charges',digits=(16,2)),
         'notes' : fields.text('Notes'),
         'purchase_constraints' : fields.text('Purchase Constraints'),
+    }
+    _defaults = {
+        'item_type' : lambda *a: 'main',
     }
 dm_offer_step_item()
 

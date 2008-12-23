@@ -20,13 +20,13 @@
 #
 ##############################################################################
 {
-    "name" : "Austria",
+    "name" : "Austria - Chart of Accounts",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
-    "depends" : ["account", "account_chart", 'base_vat'],
+    "category" : "Localisation/Account Charts",
+    "depends" : ["account_chart", 'base_vat'],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml'],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml',"l10n_chart_at_wizard.xml"],
     "active": False,
     "installable": True
 }

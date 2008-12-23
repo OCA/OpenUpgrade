@@ -72,29 +72,29 @@ class wizard_proposition_items(wizard.interface):
 
         stp=0
 
-        # Creates proposition items
+        """Creates proposition items"""
         for step in step_obj:
             item_ids=pool.get('dm.offer.step.item').search(cr, uid, [('offer_step_id','=',step.id)])
             item_obj=pool.get('dm.offer.step.item').browse(cr, uid, item_ids)
             for item in item_obj:
                 if item:
-                    if prop_obj.force_sm_price :
-                        pu = prop_obj.sm_price
-                    else :
-                        pu = pool.get('product.pricelist').price_get(cr, uid,
-                            [prop_obj.customer_pricelist_id.id], item.product_id.id,1.0,
-                            context=context)[prop_obj.customer_pricelist_id.id]
+                    for product in item.product_ids:
+                        if prop_obj.force_sm_price :
+                            pu = prop_obj.sm_price
+                        else :
+                            pu = pool.get('product.pricelist').price_get(cr, uid,
+                                [prop_obj.customer_pricelist_id.id], product.id,1.0,
+                                context=context)[prop_obj.customer_pricelist_id.id]
 
-                    price = pu * (1 + (stp * pprog_obj.percent_prog)) + (stp * pprog_obj.fixed_prog)
+                        price = pu * (1 + (stp * pprog_obj.percent_prog)) + (stp * pprog_obj.fixed_prog)
 
-                    vals = {'product_id':item.product_id.id,
-                            'proposition_id':data['ids'][0],
-                            'item_type':item.item_type,
-                            'price':price,
-                            'offer_step_type_id':item.offer_step_id.type.id
-                            }
-                    print 'Vals : ',vals
-                    new_id=pool.get('dm.campaign.proposition.item').create(cr, uid, vals)
+                        vals = {'product_id':product.id,
+                                'proposition_id':data['ids'][0],
+                                'item_type':item.item_type,
+                                'price':price,
+                                'offer_step_type_id':item.offer_step_id.type.id
+                                }
+                        new_id=pool.get('dm.campaign.proposition.item').create(cr, uid, vals)
             stp=stp+1
 
         """

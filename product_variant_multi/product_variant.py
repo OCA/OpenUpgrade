@@ -72,7 +72,7 @@ class product_product(osv.osv):
         # 'price_extra': fields.function('Price Extra'),
         # 'price_margin': fields.function('Price Margin'),
         #
-        'variants': fields.function(_variant_name_get, method=True, type='char', string='Variants'),
+        #'variants': fields.function(_variant_name_get, method=True, type='char', string='Variants'),
     }
 product_product()
 

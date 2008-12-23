@@ -35,7 +35,6 @@
 				<field name="margin"/>
 			</field>
 		</field>
-<<<<<<< TREE
 	</record>	
 	
     <wizard id="wizard_picking_invoice_create" model="stock.picking" name="stock.invoice_onshipping" string="Create invoice"/>
@@ -58,35 +57,6 @@
 			</notebook>		
 		</field>
 	</record>
-<<<<<<< TREE
 	
-=======
-
-=======
-	</record>	
-	
-    <wizard id="wizard_picking_invoice_create" model="stock.picking" name="stock.invoice_onshipping" string="Create invoice"/>
-    
->>>>>>> MERGE-SOURCE
-	<record model="ir.ui.view" id="view_picking_margin_out_form">
-		<field name="name">picking.margin.view.form</field>
-		<field name="type">form</field>
-		<field name="model">stock.picking</field>
-		<field name="inherit_id" ref="stock.view_picking_out_form" />
-		<field name="arch" type="xml">
-			<notebook colspan="4">
-			<page string="Supplier Invoices">
-					<separator string="Invoices" colspan="4"/>
-                    <field colspan="4" name="invoice_ids" nolabel="1"/>
-					<group col="10" colspan="4">
-					<label colspan="6"/>
-					<button name="create_invoice" string="Create Invoice" type="object"/>	
-					</group>
-            </page>	
-			</notebook>		
-		</field>
-	</record>
-	
->>>>>>> MERGE-SOURCE
 </data>
 </openerp>

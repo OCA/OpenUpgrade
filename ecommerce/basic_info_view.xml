@@ -105,30 +105,11 @@
 			<field name="view_type">tree</field>
 			<field name="view_id" ref="ecommerce_product_category_tree_view"/>
 		</record>
-<<<<<<< TREE
-		<menuitem name="ecommerce/Products/Products by Category" id="menu_ecommerce_product_category_action" action="ecommerce_product_category_action"/>
-<<<<<<< TREE
-<<<<<<< TREE
-
-<!--		Payment Address -->
-
-=======
-		
-<!--		Payment Address -->
-		
->>>>>>> MERGE-SOURCE
-=======
-
-<!--		Payment Address -->
-
->>>>>>> MERGE-SOURCE
-=======
 		<menuitem id="menu_ecommerce_products" name="Products" parent="menu_ecommerce"/>
 		<menuitem name="Products by Category" id="menu_ecommerce_product_category_action" parent="menu_ecommerce_products" action="ecommerce_product_category_action"/>
 		
 <!--		Payment Address -->
 
->>>>>>> MERGE-SOURCE
 		<record model="ir.ui.view" id="view_payment_address">
 		<field name="name">ecommerce.payment.tree</field>
 		<field name="model">ecommerce.payment</field>
@@ -185,99 +166,6 @@
 	</record>
 	<menuitem name="Payment Configuration" parent="menu_ecommerce_configuration" action="action_payment_ecommerce_form" id="menu_payment_ecommerce_form"/>
 
-<<<<<<< TREE
-<<<<<<< TREE
-<!--		Payment Received -->
-
-		<record model="ir.ui.view" id="view_payment_received">
-				<field name="name">ecommerce.payment.received.tree</field>
-				<field name="model">ecommerce.payment.received</field>
-				<field name="type">tree</field>
-				<field name="arch" type="xml">
-					<tree string="Payment Received Details">
-						<field name="transaction_id"/>
-						<field name="saleorder_id"/>
-						<field name="invoice_id"/>
-						<field name="transaction_date"/>
-						<field name="partner" select="2"/>
-					</tree>
-				</field>
-		</record>
-		<record model="ir.ui.view" id="view_payment_received_form">
-			<field name="name">ecommerce.payment.received.form</field>
-			<field name="model">ecommerce.payment.received</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Payment Received Details">
-					<field name="transaction_id" select="1" colsapn="2"/>
-					<field name="saleorder_id" select="2" colsapn="2"/>
-					<field name="invoice_id" select="2"/>
-					<field name="transaction_date" select="2"/>
-					<field name="partner" select="2"/>
-					<field name="paypal_acc"/>
-				</form>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_payment_received_form">
-			<field name="name">Payment Received</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">ecommerce.payment.received</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-			<field name="view_id" ref="view_payment_received"/>
-		</record>
-		<menuitem name="ecommerce/Configuration/Payment Received" action="action_payment_received_form" id="menu_payment_received_form"/>
-<!--	<menuitem parent="ecommerce.menu_payment_ecommerce_form" action="action_payment_received_form" id="menu_payment_received_form"/>-->
-
-=======
-<!--		Payment Received -->
-
-		<record model="ir.ui.view" id="view_payment_received">
-				<field name="name">ecommerce.payment.received.tree</field>
-				<field name="model">ecommerce.payment.received</field>
-				<field name="type">tree</field>
-				<field name="arch" type="xml">
-					<tree string="Payment Received Details">
-						<field name="transaction_id"/>
-						<field name="saleorder_id"/>
-						<field name="invoice_id"/>
-						<field name="transaction_date"/>
-						<field name="partner" select="2"/>
-					</tree>
-				</field>
-		</record>
-		<record model="ir.ui.view" id="view_payment_received_form">
-			<field name="name">ecommerce.payment.received.form</field>
-			<field name="model">ecommerce.payment.received</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Payment Received Details">
-					<field name="transaction_id" select="1" colsapn="2"/>
-					<field name="saleorder_id" select="2" colsapn="2"/>
-					<field name="invoice_id" select="2"/>
-					<field name="transaction_date" select="2"/>
-					<field name="partner" select="2"/>
-					<field name="paypal_acc"/>
-				</form>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_payment_received_form">
-			<field name="name">Payment Received</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">ecommerce.payment.received</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-			<field name="view_id" ref="view_payment_received"/>
-		</record>
-		<menuitem name="ecommerce/Configuration/Payment Received" action="action_payment_received_form" id="menu_payment_received_form"/>
-<!--	<menuitem parent="ecommerce.menu_payment_ecommerce_form" action="action_payment_received_form" id="menu_payment_received_form"/>-->
-<<<<<<< TREE
-	
->>>>>>> MERGE-SOURCE
-=======
-
->>>>>>> MERGE-SOURCE
-=======
 <!--		Payment Received -->
 
 		<record model="ir.ui.view" id="view_payment_received">
@@ -318,7 +206,6 @@
 			<field name="view_id" ref="view_payment_received"/>
 		</record>
 		<menuitem name="Payment Received" parent="menu_ecommerce_configuration" action="action_payment_received_form" id="menu_payment_received_form"/>	
->>>>>>> MERGE-SOURCE
 </data>
 </openerp>
 

@@ -23,10 +23,10 @@
     "name" : "CCI Security",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://www.tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/CCI",
     "description": """
-        give access of objects to different groups of cci using csv
+        This module assigns access of objects to different groups of cci using csv.
     """,
     "depends" : ["base"],
     "init_xml" : [],

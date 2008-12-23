@@ -139,25 +139,25 @@
             <field name="property_stock_journal" ref="stock.stock_journal"/>
             <field eval="&quot;&quot;&quot;Direct Marketing&quot;&quot;&quot;" name="name"/>
         </record>
-    
+
         <record id="product_category_mailingmanufacturing0" model="product.category">
             <field name="property_stock_journal" ref="stock.stock_journal"/>
             <field eval="&quot;&quot;&quot;Mailing Manufacturing&quot;&quot;&quot;" name="name"/>
             <field name="parent_id" ref="product_category_directmarketing0"/>
         </record>
-    
+
         <record id="product_category_items0" model="product.category">
             <field name="property_stock_journal" ref="stock.stock_journal"/>
             <field eval="&quot;&quot;&quot;Items&quot;&quot;&quot;" name="name"/>
             <field name="parent_id" ref="product_category_directmarketing0"/>
         </record>
-    
+
         <record id="product_category_customerslist0" model="product.category">
             <field name="property_stock_journal" ref="stock.stock_journal"/>
             <field eval="&quot;&quot;&quot;Customers List&quot;&quot;&quot;" name="name"/>
             <field name="parent_id" ref="product_category_directmarketing0"/>
         </record>
-    
+
         <record id="product_category_translation0" model="product.category">
             <field name="property_stock_journal" ref="stock.stock_journal"/>
             <field eval="&quot;&quot;&quot;Translation&quot;&quot;&quot;" name="name"/>
@@ -169,6 +169,7 @@
             <field eval="&quot;&quot;&quot;DTP&quot;&quot;&quot;" name="name"/>
             <field name="parent_id" ref="product_category_directmarketing0"/>
         </record>
+
         <!-- Offer Step Types -->
 
         <record id="dm_offer_step_type_startingmailing0" model="dm.offer.step.type">
@@ -275,7 +276,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;DTP Request&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;2009-08-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-08-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
 
@@ -292,7 +293,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;Translation Request&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;2009-08-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-08-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
     <data noupdate="1">
@@ -308,7 +309,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;Customers Files Purchase&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;2009-08-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-08-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
     <data noupdate="1">
@@ -324,7 +325,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;Mailing Requests for Quotation&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;2009-08-12 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-08-12 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
     <data noupdate="1">
@@ -338,9 +339,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="type" ref="dm.project_task_type_mailingmanufacturing0"/>
             <field eval="1" name="active"/>
             <field eval="&quot;&quot;&quot;Mailing Purchase&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-09-01 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
+            <field eval="&quot;&quot;&quot;2009-09-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-09-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
     <data noupdate="1">
@@ -356,7 +357,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;DTP First Draft Delivery&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;2009-08-22 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-08-21 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
     <data noupdate="1">
@@ -370,9 +371,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="type" ref="dm.project_task_type_mailingmanufacturing0"/>
             <field eval="1" name="active"/>
             <field eval="&quot;&quot;&quot;Translation Delivery&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-09-01 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
+            <field eval="&quot;&quot;&quot;2009-09-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-09-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
     <data noupdate="1">
@@ -386,9 +387,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="type" ref="dm.project_task_type_customerslist0"/>
             <field eval="1" name="active"/>
             <field eval="&quot;&quot;&quot;Customers Files Delivery&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;2009-09-01 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
+            <field eval="&quot;&quot;&quot;2009-09-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-09-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
     <data noupdate="1">
@@ -404,7 +405,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;DTP Delivery&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;2009-09-11 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-09-10 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
     <data noupdate="1">
@@ -420,7 +421,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;Items Purchase&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;2009-08-02 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-08-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
     <data noupdate="1">
@@ -436,7 +437,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;Items Delivery&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;2009-09-11 09:00:00&quot;&quot;&quot;" name="date_deadline"/>
             <field eval="1.0" name="remaining_hours"/>
-            <field eval="&quot;&quot;&quot;2009-10-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
+            <field eval="&quot;&quot;&quot;2009-09-10 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
 

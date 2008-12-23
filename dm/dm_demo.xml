@@ -370,433 +370,7 @@ rkJggg==
         -->
     </data>
 
-    <!-- PRODUCTS -->
-
-    <data noupdate="1">
-        <record id="product_product_ondemandbookstorefreetrial0" model="product.product">
-            <field eval="0.0" name="list_price"/>
-            <field eval="&quot;&quot;&quot;A 1 month Free Trial for the Bookstore profile&quot;&quot;&quot;" name="description"/>
-            <field eval="&quot;&quot;&quot;ODFTBOOK&quot;&quot;&quot;" name="default_code"/>
-            <field name="categ_id" ref="dm.product_category_items0"/>
-            <field eval="&quot;&quot;&quot;OnDemand Bookstore Free Trial&quot;&quot;&quot;" name="name"/>
-            <field eval="1" name="active"/>
-            <field eval="1.0" name="price_margin"/>
-        </record>
-        <record id="product_supplierinfo_0" model="product.supplierinfo">
-            <field name="name" ref="base.main_partner"/>
-            <field eval="1" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_ondemandbookstorefreetrial0"/>
-        </record>
-    </data>
-
-    <data noupdate="1">
-        <record id="product_product_ondemandassociationfreetrial0" model="product.product">
-            <field eval="0.0" name="list_price"/>
-            <field eval="&quot;&quot;&quot;A 1 month Free Trial for the Association profile&quot;&quot;&quot;" name="description"/>
-            <field eval="&quot;&quot;&quot;ODFTASSO&quot;&quot;&quot;" name="default_code"/>
-            <field name="categ_id" ref="dm.product_category_items0"/>
-            <field eval="&quot;&quot;&quot;OnDemand Association Free Trial&quot;&quot;&quot;" name="name"/>
-            <field eval="1" name="active"/>
-            <field eval="1.0" name="price_margin"/>
-        </record>
-        <record id="product_supplierinfo_1" model="product.supplierinfo">
-            <field name="name" ref="base.main_partner"/>
-            <field eval="1" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_ondemandassociationfreetrial0"/>
-        </record>
-    </data>
-
-    <data noupdate="1">
-        <record id="product_product_openerpuserbook0" model="product.product">
-            <field eval="35.0" name="list_price"/>
-            <field eval="&quot;&quot;&quot;The Open ERP User Book&quot;&quot;&quot;" name="description"/>
-            <field eval="28.0" name="standard_price"/>
-            <field eval="&quot;&quot;&quot;OERPUSRBOOK&quot;&quot;&quot;" name="default_code"/>
-            <field name="categ_id" ref="dm.product_category_items0"/>
-            <field eval="&quot;&quot;&quot;Open ERP User Book&quot;&quot;&quot;" name="name"/>
-            <field eval="1" name="active"/>
-            <field eval="1.0" name="price_margin"/>
-        </record>
-        <record id="product_supplierinfo_2" model="product.supplierinfo">
-            <field name="name" ref="base.main_partner"/>
-            <field eval="1" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_openerpuserbook0"/>
-        </record>
-    </data>
-
-    <data noupdate="1">
-        <record id="product_product_openerpdiscoverydayonmay0" model="product.product">
-            <field eval="100.0" name="list_price"/>
-            <field eval="&quot;&quot;&quot;Subscription for the Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="description"/>
-            <field eval="&quot;&quot;&quot;OERPDDAY0509&quot;&quot;&quot;" name="default_code"/>
-            <field name="categ_id" ref="dm.product_category_items0"/>
-            <field eval="&quot;&quot;&quot;Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="name"/>
-            <field eval="1" name="active"/>
-            <field eval="1.0" name="price_margin"/>
-        </record>
-        <record id="product_supplierinfo_3" model="product.supplierinfo">
-            <field name="name" ref="base.main_partner"/>
-            <field eval="1" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_openerpdiscoverydayonmay0"/>
-        </record>
-    </data>
-
-    <data noupdate="1">
-        <record id="product_product_papermailingus0" model="product.product">
-            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
-            <field eval="1.0" name="list_price"/>
-            <field eval="0" name="track_production"/>
-            <field eval="1.0" name="standard_price"/>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field eval="&quot;&quot;&quot;MAILPAPERUS&quot;&quot;&quot;" name="default_code"/>
-            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
-            <field eval="1.0" name="uos_coeff"/>
-            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
-            <field eval="0" name="sale_ok"/>
-            <field eval="1" name="purchase_ok"/>
-            <field eval="0" name="track_outgoing"/>
-            <field name="uom_po_id" ref="product.product_uom_unit"/>
-            <field eval="1.0" name="price_margin"/>
-            <field eval="&quot;&quot;&quot;Demo Paper Mailing for the US&quot;&quot;&quot;" name="description"/>
-            <field eval="0" name="track_incoming"/>
-            <field name="property_stock_production" ref="stock.location_production"/>
-            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
-            <field eval="1" name="active"/>
-            <field name="property_stock_inventory" ref="stock.location_inventory"/>
-            <field name="property_stock_procurement" ref="stock.location_procurement"/>
-            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
-            <field eval="&quot;&quot;&quot;Paper Mailing US&quot;&quot;&quot;" name="name"/>
-            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
-            <field eval="[(6,0,[])]" name="taxes_id"/>
-            <field eval="1.0" name="produce_delay"/>
-            <field eval="0" name="rental"/>
-        </record>
-        <record id="product_supplierinfo_4" model="product.supplierinfo">
-            <field name="name" ref="dm.res_partner_maxmailing0"/>
-            <field eval="1" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_papermailingus0"/>
-        </record>
-        <record id="product_supplierinfo_5" model="product.supplierinfo">
-            <field name="name" ref="dm.res_partner_papercut0"/>
-            <field eval="2" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_papermailingus0"/>
-        </record>
-    </data>
-
-    <data noupdate="1">
-        <record id="product_product_printingus0" model="product.product">
-            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
-            <field eval="1.0" name="list_price"/>
-            <field eval="0" name="track_production"/>
-            <field eval="1.0" name="standard_price"/>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field eval="&quot;&quot;&quot;PRINTINGUS&quot;&quot;&quot;" name="default_code"/>
-            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
-            <field eval="1.0" name="uos_coeff"/>
-            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
-            <field eval="0" name="sale_ok"/>
-            <field eval="1" name="purchase_ok"/>
-            <field eval="0" name="track_outgoing"/>
-            <field name="uom_po_id" ref="product.product_uom_unit"/>
-            <field eval="1.0" name="price_margin"/>
-            <field eval="&quot;&quot;&quot;Demo Paper Printing for the US&quot;&quot;&quot;" name="description"/>
-            <field eval="0" name="track_incoming"/>
-            <field name="property_stock_production" ref="stock.location_production"/>
-            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
-            <field eval="1" name="active"/>
-            <field name="property_stock_inventory" ref="stock.location_inventory"/>
-            <field name="property_stock_procurement" ref="stock.location_procurement"/>
-            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
-            <field eval="&quot;&quot;&quot;Paper Printing US&quot;&quot;&quot;" name="name"/>
-            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
-            <field eval="[(6,0,[])]" name="taxes_id"/>
-            <field eval="1.0" name="produce_delay"/>
-            <field eval="0" name="rental"/>
-        </record>
-        <record id="product_supplierinfo_10" model="product.supplierinfo">
-            <field name="name" ref="dm.res_partner_maxmailing0"/>
-            <field eval="1" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_printingus0"/>
-        </record>
-        <record id="product_supplierinfo_11" model="product.supplierinfo">
-            <field name="name" ref="dm.res_partner_papercut0"/>
-            <field eval="2" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_printingus0"/>
-        </record>
-    </data>
-
-    <data noupdate="1">
-        <record id="product_product_sendingenveloppeus0" model="product.product">
-            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
-            <field eval="1.0" name="list_price"/>
-            <field eval="0" name="track_production"/>
-            <field eval="1.0" name="standard_price"/>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field eval="&quot;&quot;&quot;SNDENVELPUS&quot;&quot;&quot;" name="default_code"/>
-            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
-            <field eval="1.0" name="uos_coeff"/>
-            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
-            <field eval="0" name="sale_ok"/>
-            <field eval="1" name="purchase_ok"/>
-            <field eval="0" name="track_outgoing"/>
-            <field name="uom_po_id" ref="product.product_uom_unit"/>
-            <field eval="1.0" name="price_margin"/>
-            <field eval="&quot;&quot;&quot;Demo Sending Enveloppe for the US&quot;&quot;&quot;" name="description"/>
-            <field eval="0" name="track_incoming"/>
-            <field name="property_stock_production" ref="stock.location_production"/>
-            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
-            <field eval="1" name="active"/>
-            <field name="property_stock_inventory" ref="stock.location_inventory"/>
-            <field name="property_stock_procurement" ref="stock.location_procurement"/>
-            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
-            <field eval="&quot;&quot;&quot;Sending Enveloppe US&quot;&quot;&quot;" name="name"/>
-            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
-            <field eval="[(6,0,[])]" name="taxes_id"/>
-            <field eval="1.0" name="produce_delay"/>
-            <field eval="0" name="rental"/>
-        </record>
-        <record id="product_supplierinfo_12" model="product.supplierinfo">
-            <field name="name" ref="dm.res_partner_maxmailing0"/>
-            <field eval="1" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_sendingenveloppeus0"/>
-        </record>
-        <record id="product_supplierinfo_13" model="product.supplierinfo">
-            <field name="name" ref="dm.res_partner_papercut0"/>
-            <field eval="2" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_sendingenveloppeus0"/>
-        </record>
-    </data>
-
-    <data noupdate="1">
-        <record id="product_product_returnenveloppeus0" model="product.product">
-            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
-            <field eval="1.0" name="list_price"/>
-            <field eval="0" name="track_production"/>
-            <field eval="1.0" name="standard_price"/>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field eval="&quot;&quot;&quot;RTNENVELPUS&quot;&quot;&quot;" name="default_code"/>
-            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
-            <field eval="1.0" name="uos_coeff"/>
-            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
-            <field eval="0" name="sale_ok"/>
-            <field eval="1" name="purchase_ok"/>
-            <field eval="0" name="track_outgoing"/>
-            <field name="uom_po_id" ref="product.product_uom_unit"/>
-            <field eval="1.0" name="price_margin"/>
-            <field eval="&quot;&quot;&quot;Demo Return Enveloppe for the US&quot;&quot;&quot;" name="description"/>
-            <field eval="0" name="track_incoming"/>
-            <field name="property_stock_production" ref="stock.location_production"/>
-            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
-            <field eval="1" name="active"/>
-            <field name="property_stock_inventory" ref="stock.location_inventory"/>
-            <field name="property_stock_procurement" ref="stock.location_procurement"/>
-            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
-            <field eval="&quot;&quot;&quot;Return Enveloppe US&quot;&quot;&quot;" name="name"/>
-            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
-            <field eval="[(6,0,[])]" name="taxes_id"/>
-            <field eval="1.0" name="produce_delay"/>
-            <field eval="0" name="rental"/>
-        </record>
-        <record id="product_supplierinfo_12" model="product.supplierinfo">
-            <field name="name" ref="dm.res_partner_maxmailing0"/>
-            <field eval="1" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_returnenveloppeus0"/>
-        </record>
-        <record id="product_supplierinfo_13" model="product.supplierinfo">
-            <field name="name" ref="dm.res_partner_papercut0"/>
-            <field eval="2" name="sequence"/>
-            <field eval="1" name="delay"/>
-            <field name="product_id" ref="product_product_returnenveloppeus0"/>
-        </record>
-    </data>
-
-    <!-- ITEMS -->
-
-    <data noupdate="1">
-        <record id="dm_offer_step_item_0" model="dm.offer.step.item">
-            <field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2009"/>
-            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
-            <field eval="&quot;&quot;&quot;A 1 month Free Trial for the Bookstore profile&quot;&quot;&quot;" name="notes"/>
-            <field name="product_id" ref="product_product_ondemandbookstorefreetrial0"/>
-        </record>
-        <record id="dm_offer_step_item_1" model="dm.offer.step.item">
-            <field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2009"/>
-            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
-            <field eval="&quot;&quot;&quot;A 1 month Free Trial for the Association profile&quot;&quot;&quot;" name="notes"/>
-            <field name="product_id" ref="product_product_ondemandassociationfreetrial0"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="dm_offer_step_item_2" model="dm.offer.step.item">
-            <field name="offer_step_id" ref="dm.dm_offer_step_imforopenerpondemandfreetrial2009"/>
-            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
-            <field eval="&quot;&quot;&quot;The Open ERP User Book&quot;&quot;&quot;" name="notes"/>
-            <field name="product_id" ref="dm.product_product_openerpuserbook0"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="dm_offer_step_item_3" model="dm.offer.step.item">
-            <field name="offer_step_id" ref="dm.dm_offer_step_piforopenerpondemandfreetrial2009"/>
-            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
-            <field eval="&quot;&quot;&quot;Subscription for the Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="notes"/>
-            <field name="product_id" ref="dm.product_product_openerpdiscoverydayonmay0"/>
-        </record>
-    </data>
-
-    <data noupdate="1">
-        <record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
-            <field eval="1" name="keep_prices"/>
-            <field eval="0" name="force_sm_price"/>
-            <field eval="1" name="keep_segments"/>
-            <field eval="&quot;&quot;&quot;init&quot;&quot;&quot;" name="proposition_type"/>
-            <field eval="5.0" name="sale_rate"/>
-            <field eval="&quot;&quot;&quot;Bookstore Offer Free Trial&quot;&quot;&quot;" name="name"/>
-            <field eval="[(6,0,[])]" name="payment_methods"/>
-            <field name="camp_id" ref="dm.dm_campaign_openerpondemandfreetrial2009"/>
-            <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
-            <field name="customer_pricelist_id" ref="product.list0"/>
-        </record>
-    </data>
-    <data>
-        <record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
-            <field eval="&quot;&quot;&quot;
-1 month OpenERP OnDemand Free Trial for the Bookstore Offer&quot;&quot;&quot;" name="notes"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="dm_campaign_proposition_ondemandfreetrialassociationoffer0" model="dm.campaign.proposition">
-            <field eval="1" name="keep_prices"/>
-            <field eval="0" name="force_sm_price"/>
-            <field eval="1" name="keep_segments"/>
-            <field eval="&quot;&quot;&quot;init&quot;&quot;&quot;" name="proposition_type"/>
-            <field eval="7.0" name="sale_rate"/>
-            <field eval="&quot;&quot;&quot;Association Offer Free Trial&quot;&quot;&quot;" name="name"/>
-            <field name="customer_pricelist_id" ref="product.list0"/>
-            <field eval="[(6,0,[])]" name="payment_methods"/>
-            <field name="camp_id" ref="dm.dm_campaign_openerpondemandfreetrial2009"/>
-            <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
-        </record>
-    </data>
-    <data>
-        <record id="dm_campaign_proposition_ondemandfreetrialassociationoffer0" model="dm.campaign.proposition">
-            <field eval="&quot;&quot;&quot;
-1 month OpenERP OnDemand Free Trial for the Association Offer&quot;&quot;&quot;" name="notes"/>
-        </record>
-    </data>
-    <data>
-        <record id="dm_campaign_proposition_prices_progression_nopriceprogression0" model="dm.campaign.proposition.prices_progression">
-        <field eval="&quot;&quot;&quot;No Price Progression&quot;&quot;&quot;" name="name"/>
-        </record>
-    </data>
-
-
-    <!-- Users -->
-
-<data noupdate="1">
-        <record id="res_users_tom0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_manufacturingmanager')])]" name="groups_id"/>
-            <field eval="[(6,0,[])]" name="roles_id"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="password"/>
-            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-            <field eval="&quot;&quot;&quot;Tom&quot;&quot;&quot;" name="name"/>
-            <field name="company_id" ref="base.main_company"/>
-            <field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="login"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="res_users_jim0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_campaignmanager')])]" name="groups_id"/>
-            <field eval="[(6,0,[])]" name="roles_id"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="password"/>
-            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-            <field eval="&quot;&quot;&quot;Jim&quot;&quot;&quot;" name="name"/>
-            <field name="company_id" ref="base.main_company"/>
-            <field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="login"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="res_users_bob0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_offermanager')])]" name="groups_id"/>
-            <field eval="[(6,0,[ref('dm.res_roles_offermanager')])]" name="roles_id"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="password"/>
-            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-            <field eval="&quot;&quot;&quot;Bob&quot;&quot;&quot;" name="name"/>
-            <field name="company_id" ref="base.main_company"/>
-            <field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="login"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="res_users_sue0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_itemmanager')])]" name="groups_id"/>
-            <field eval="[(6,0,[])]" name="roles_id"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="password"/>
-            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-            <field eval="&quot;&quot;&quot;Sue&quot;&quot;&quot;" name="name"/>
-            <field name="company_id" ref="base.main_company"/>
-            <field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="login"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="res_users_ann0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_dtpmanager')])]" name="groups_id"/>
-            <field eval="[(6,0,[])]" name="roles_id"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="password"/>
-            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-            <field eval="&quot;&quot;&quot;Ann&quot;&quot;&quot;" name="name"/>
-            <field name="company_id" ref="base.main_company"/>
-            <field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="login"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="res_users_joe0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_custfilemanager')])]" name="groups_id"/>
-            <field eval="[(6,0,[])]" name="roles_id"/>
-            <field eval="1" name="active"/>
-            <field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="password"/>
-            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
-            <field eval="&quot;&quot;&quot;Joe&quot;&quot;&quot;" name="name"/>
-            <field name="company_id" ref="base.main_company"/>
-            <field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="login"/>
-        </record>
-    </data>
-
-    <!-- CAMAPAIGN RESPONSIBLE -->
-
-    <data noupdate="1">
-        <record id="dm.dm_campaign_openerpondemandfreetrial2009" model="dm.campaign">
-            <field name="item_responsible_id" ref="dm.res_users_sue0"/>
-            <field name="dtp_responsible_id" ref="dm.res_users_ann0"/>
-            <field name="manufacturing_responsible_id" ref="dm.res_users_tom0"/>
-            <field name="responsible_id" ref="dm.res_users_jim0"/>
-            <field name="files_responsible_id" ref="res_users_joe0"/>
-        </record>
-    </data>
-
-    <!-- CUSTOMERS LIST -->
+	<!-- PARTNERS -->
 
     <data noupdate="1">
         <record id="res_partner_northamericalistexpert0" model="res.partner">
@@ -839,7 +413,7 @@ rkJggg==
             <field eval="&quot;&quot;&quot;Corp.&quot;&quot;&quot;" name="title"/>
             <field model="account.account" name="property_account_payable" search="[('name','=','Effets à payer')]"/>
             <field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
-            <field eval="&quot;&quot;&quot;NAMEC&quot;&quot;&quot;" name="ref"/>
+            <field eval="&quot;&quot;&quot;NALE&quot;&quot;&quot;" name="ref"/>
             <field eval="0" name="customer"/>
             <field eval="1" name="supplier"/>
             <field name="property_stock_customer" ref="stock.stock_location_customers"/>
@@ -909,7 +483,7 @@ rkJggg==
             <field eval="1" name="active"/>
             <field name="state_id" ref="base.us-ma"/>
             <field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;bill@namec.com&quot;&quot;&quot;" name="email"/>
+            <field eval="&quot;&quot;&quot;bill@nale.com&quot;&quot;&quot;" name="email"/>
         </record>
     </data>
 
@@ -1270,6 +844,439 @@ rkJggg==
             <field name="product_id" ref="product_product_defaultpapermailing0"/>
         </record>-->
 
+
+
+
+    <!-- PRODUCTS -->
+
+    <data noupdate="1">
+        <record id="product_product_ondemandbookstorefreetrial0" model="product.product">
+            <field eval="0.0" name="list_price"/>
+            <field eval="&quot;&quot;&quot;A 1 month Free Trial for the Bookstore profile&quot;&quot;&quot;" name="description"/>
+            <field eval="&quot;&quot;&quot;ODFTBOOK&quot;&quot;&quot;" name="default_code"/>
+            <field name="categ_id" ref="dm.product_category_items0"/>
+            <field eval="&quot;&quot;&quot;OnDemand Bookstore Free Trial&quot;&quot;&quot;" name="name"/>
+            <field eval="1" name="active"/>
+            <field eval="1.0" name="price_margin"/>
+        </record>
+        <record id="product_supplierinfo_0" model="product.supplierinfo">
+            <field name="name" ref="base.main_partner"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_ondemandbookstorefreetrial0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_ondemandassociationfreetrial0" model="product.product">
+            <field eval="0.0" name="list_price"/>
+            <field eval="&quot;&quot;&quot;A 1 month Free Trial for the Association profile&quot;&quot;&quot;" name="description"/>
+            <field eval="&quot;&quot;&quot;ODFTASSO&quot;&quot;&quot;" name="default_code"/>
+            <field name="categ_id" ref="dm.product_category_items0"/>
+            <field eval="&quot;&quot;&quot;OnDemand Association Free Trial&quot;&quot;&quot;" name="name"/>
+            <field eval="1" name="active"/>
+            <field eval="1.0" name="price_margin"/>
+        </record>
+        <record id="product_supplierinfo_1" model="product.supplierinfo">
+            <field name="name" ref="base.main_partner"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_ondemandassociationfreetrial0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_openerpuserbook0" model="product.product">
+            <field eval="35.0" name="list_price"/>
+            <field eval="&quot;&quot;&quot;The Open ERP User Book&quot;&quot;&quot;" name="description"/>
+            <field eval="28.0" name="standard_price"/>
+            <field eval="&quot;&quot;&quot;OERPUSRBOOK&quot;&quot;&quot;" name="default_code"/>
+            <field name="categ_id" ref="dm.product_category_items0"/>
+            <field eval="&quot;&quot;&quot;Open ERP User Book&quot;&quot;&quot;" name="name"/>
+            <field eval="1" name="active"/>
+            <field eval="1.0" name="price_margin"/>
+        </record>
+        <record id="product_supplierinfo_2" model="product.supplierinfo">
+            <field name="name" ref="base.main_partner"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_openerpuserbook0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_openerpdiscoverydayonmay0" model="product.product">
+            <field eval="100.0" name="list_price"/>
+            <field eval="&quot;&quot;&quot;Subscription for the Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="description"/>
+            <field eval="&quot;&quot;&quot;OERPDDAY0509&quot;&quot;&quot;" name="default_code"/>
+            <field name="categ_id" ref="dm.product_category_items0"/>
+            <field eval="&quot;&quot;&quot;Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="name"/>
+            <field eval="1" name="active"/>
+            <field eval="1.0" name="price_margin"/>
+        </record>
+        <record id="product_supplierinfo_3" model="product.supplierinfo">
+            <field name="name" ref="base.main_partner"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_openerpdiscoverydayonmay0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_papermailingus0" model="product.product">
+            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
+            <field eval="1.0" name="list_price"/>
+            <field eval="0" name="track_production"/>
+            <field eval="1.0" name="standard_price"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="&quot;&quot;&quot;MAILPAPERUS&quot;&quot;&quot;" name="default_code"/>
+            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+            <field eval="1.0" name="uos_coeff"/>
+            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+            <field eval="0" name="sale_ok"/>
+            <field eval="1" name="purchase_ok"/>
+            <field eval="0" name="track_outgoing"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field eval="1.0" name="price_margin"/>
+            <field eval="&quot;&quot;&quot;Demo Paper Mailing for the US&quot;&quot;&quot;" name="description"/>
+            <field eval="0" name="track_incoming"/>
+            <field name="property_stock_production" ref="stock.location_production"/>
+            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+            <field eval="1" name="active"/>
+            <field name="property_stock_inventory" ref="stock.location_inventory"/>
+            <field name="property_stock_procurement" ref="stock.location_procurement"/>
+            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+            <field eval="&quot;&quot;&quot;Paper Mailing US&quot;&quot;&quot;" name="name"/>
+            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
+            <field eval="[(6,0,[])]" name="taxes_id"/>
+            <field eval="1.0" name="produce_delay"/>
+            <field eval="0" name="rental"/>
+        </record>
+        <record id="product_supplierinfo_4" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_maxmailing0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_papermailingus0"/>
+        </record>
+        <record id="product_supplierinfo_5" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_papercut0"/>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_papermailingus0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_printingus0" model="product.product">
+            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
+            <field eval="1.0" name="list_price"/>
+            <field eval="0" name="track_production"/>
+            <field eval="1.0" name="standard_price"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="&quot;&quot;&quot;PRINTINGUS&quot;&quot;&quot;" name="default_code"/>
+            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+            <field eval="1.0" name="uos_coeff"/>
+            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+            <field eval="0" name="sale_ok"/>
+            <field eval="1" name="purchase_ok"/>
+            <field eval="0" name="track_outgoing"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field eval="1.0" name="price_margin"/>
+            <field eval="&quot;&quot;&quot;Demo Paper Printing for the US&quot;&quot;&quot;" name="description"/>
+            <field eval="0" name="track_incoming"/>
+            <field name="property_stock_production" ref="stock.location_production"/>
+            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+            <field eval="1" name="active"/>
+            <field name="property_stock_inventory" ref="stock.location_inventory"/>
+            <field name="property_stock_procurement" ref="stock.location_procurement"/>
+            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+            <field eval="&quot;&quot;&quot;Paper Printing US&quot;&quot;&quot;" name="name"/>
+            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
+            <field eval="[(6,0,[])]" name="taxes_id"/>
+            <field eval="1.0" name="produce_delay"/>
+            <field eval="0" name="rental"/>
+        </record>
+        <record id="product_supplierinfo_10" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_maxmailing0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_printingus0"/>
+        </record>
+        <record id="product_supplierinfo_11" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_papercut0"/>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_printingus0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_sendingenveloppeus0" model="product.product">
+            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
+            <field eval="1.0" name="list_price"/>
+            <field eval="0" name="track_production"/>
+            <field eval="1.0" name="standard_price"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="&quot;&quot;&quot;SNDENVELPUS&quot;&quot;&quot;" name="default_code"/>
+            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+            <field eval="1.0" name="uos_coeff"/>
+            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+            <field eval="0" name="sale_ok"/>
+            <field eval="1" name="purchase_ok"/>
+            <field eval="0" name="track_outgoing"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field eval="1.0" name="price_margin"/>
+            <field eval="&quot;&quot;&quot;Demo Sending Enveloppe for the US&quot;&quot;&quot;" name="description"/>
+            <field eval="0" name="track_incoming"/>
+            <field name="property_stock_production" ref="stock.location_production"/>
+            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+            <field eval="1" name="active"/>
+            <field name="property_stock_inventory" ref="stock.location_inventory"/>
+            <field name="property_stock_procurement" ref="stock.location_procurement"/>
+            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+            <field eval="&quot;&quot;&quot;Sending Enveloppe US&quot;&quot;&quot;" name="name"/>
+            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
+            <field eval="[(6,0,[])]" name="taxes_id"/>
+            <field eval="1.0" name="produce_delay"/>
+            <field eval="0" name="rental"/>
+        </record>
+        <record id="product_supplierinfo_12" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_maxmailing0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_sendingenveloppeus0"/>
+        </record>
+        <record id="product_supplierinfo_13" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_papercut0"/>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_sendingenveloppeus0"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="product_product_returnenveloppeus0" model="product.product">
+            <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
+            <field eval="1.0" name="list_price"/>
+            <field eval="0" name="track_production"/>
+            <field eval="1.0" name="standard_price"/>
+            <field name="uom_id" ref="product.product_uom_unit"/>
+            <field eval="&quot;&quot;&quot;RTNENVELPUS&quot;&quot;&quot;" name="default_code"/>
+            <field eval="&quot;&quot;&quot;consu&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+            <field eval="1.0" name="uos_coeff"/>
+            <field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+            <field eval="0" name="sale_ok"/>
+            <field eval="1" name="purchase_ok"/>
+            <field eval="0" name="track_outgoing"/>
+            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field eval="1.0" name="price_margin"/>
+            <field eval="&quot;&quot;&quot;Demo Return Enveloppe for the US&quot;&quot;&quot;" name="description"/>
+            <field eval="0" name="track_incoming"/>
+            <field name="property_stock_production" ref="stock.location_production"/>
+            <field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+            <field eval="1" name="active"/>
+            <field name="property_stock_inventory" ref="stock.location_inventory"/>
+            <field name="property_stock_procurement" ref="stock.location_procurement"/>
+            <field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+            <field eval="&quot;&quot;&quot;Return Enveloppe US&quot;&quot;&quot;" name="name"/>
+            <field name="categ_id" ref="dm.product_category_mailingmanufacturing0"/>
+            <field eval="[(6,0,[])]" name="taxes_id"/>
+            <field eval="1.0" name="produce_delay"/>
+            <field eval="0" name="rental"/>
+        </record>
+        <record id="product_supplierinfo_12" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_maxmailing0"/>
+            <field eval="1" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_returnenveloppeus0"/>
+        </record>
+        <record id="product_supplierinfo_13" model="product.supplierinfo">
+            <field name="name" ref="dm.res_partner_papercut0"/>
+            <field eval="2" name="sequence"/>
+            <field eval="1" name="delay"/>
+            <field name="product_id" ref="product_product_returnenveloppeus0"/>
+        </record>
+    </data>
+
+    <!-- ITEMS -->
+
+    <data noupdate="1">
+        <record id="dm_offer_step_item_0" model="dm.offer.step.item">
+            <field eval="&quot;&quot;&quot;Bookstore Free Trial&quot;&quot;&quot;" name="name"/>
+            <field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2009"/>
+            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
+            <field eval="&quot;&quot;&quot;A 1 month Free Trial for the Bookstore profile&quot;&quot;&quot;" name="notes"/>
+<!--            <field name="product_id" ref="product_product_ondemandbookstorefreetrial0"/>-->
+        </record>
+        <record id="dm_offer_step_item_1" model="dm.offer.step.item">
+            <field eval="&quot;&quot;&quot;Association Free Trial&quot;&quot;&quot;" name="name"/>
+            <field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2009"/>
+            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
+            <field eval="&quot;&quot;&quot;A 1 month Free Trial for the Association profile&quot;&quot;&quot;" name="notes"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="dm_offer_step_item_2" model="dm.offer.step.item">
+            <field eval="&quot;&quot;&quot;Open ERP User Book&quot;&quot;&quot;" name="name"/>
+            <field name="offer_step_id" ref="dm.dm_offer_step_imforopenerpondemandfreetrial2009"/>
+            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
+            <field eval="&quot;&quot;&quot;The Open ERP User Book&quot;&quot;&quot;" name="notes"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="dm_offer_step_item_3" model="dm.offer.step.item">
+            <field eval="&quot;&quot;&quot;Discovery Day 2009 Subscription&quot;&quot;&quot;" name="name"/>
+            <field name="offer_step_id" ref="dm.dm_offer_step_piforopenerpondemandfreetrial2009"/>
+            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
+            <field eval="&quot;&quot;&quot;Subscription for the Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="notes"/>
+        </record>
+    </data>
+
+    <data noupdate="1">
+        <record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
+            <field eval="1" name="keep_prices"/>
+            <field eval="0" name="force_sm_price"/>
+            <field eval="1" name="keep_segments"/>
+            <field eval="&quot;&quot;&quot;init&quot;&quot;&quot;" name="proposition_type"/>
+            <field eval="5.0" name="sale_rate"/>
+            <field eval="&quot;&quot;&quot;Bookstore Offer Free Trial&quot;&quot;&quot;" name="name"/>
+            <field eval="[(6,0,[])]" name="payment_methods"/>
+            <field name="camp_id" ref="dm.dm_campaign_openerpondemandfreetrial2009"/>
+            <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
+            <field name="customer_pricelist_id" ref="product.list0"/>
+        </record>
+    </data>
+    <data>
+        <record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
+            <field eval="&quot;&quot;&quot;
+1 month OpenERP OnDemand Free Trial for the Bookstore Offer&quot;&quot;&quot;" name="notes"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="dm_campaign_proposition_ondemandfreetrialassociationoffer0" model="dm.campaign.proposition">
+            <field eval="1" name="keep_prices"/>
+            <field eval="0" name="force_sm_price"/>
+            <field eval="1" name="keep_segments"/>
+            <field eval="&quot;&quot;&quot;init&quot;&quot;&quot;" name="proposition_type"/>
+            <field eval="7.0" name="sale_rate"/>
+            <field eval="&quot;&quot;&quot;Association Offer Free Trial&quot;&quot;&quot;" name="name"/>
+            <field name="customer_pricelist_id" ref="product.list0"/>
+            <field eval="[(6,0,[])]" name="payment_methods"/>
+            <field name="camp_id" ref="dm.dm_campaign_openerpondemandfreetrial2009"/>
+            <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
+        </record>
+    </data>
+    <data>
+        <record id="dm_campaign_proposition_ondemandfreetrialassociationoffer0" model="dm.campaign.proposition">
+            <field eval="&quot;&quot;&quot;
+1 month OpenERP OnDemand Free Trial for the Association Offer&quot;&quot;&quot;" name="notes"/>
+        </record>
+    </data>
+    <data>
+        <record id="dm_campaign_proposition_prices_progression_nopriceprogression0" model="dm.campaign.proposition.prices_progression">
+        <field eval="&quot;&quot;&quot;No Price Progression&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+
+
+    <!-- Users -->
+
+<data noupdate="1">
+        <record id="res_users_tom0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_manufacturingmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Tom&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_jim0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_campaignmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Jim&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_bob0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_offermanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[ref('dm.res_roles_offermanager')])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Bob&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_sue0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_itemmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Sue&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_ann0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_dtpmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Ann&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_joe0" model="res.users">
+            <field eval="[(6,0,[ref('dm.res_groups_custfilemanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="password"/>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field eval="&quot;&quot;&quot;Joe&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="login"/>
+        </record>
+    </data>
+
+    <!-- CAMAPAIGN RESPONSIBLE -->
+
+    <data noupdate="1">
+        <record id="dm.dm_campaign_openerpondemandfreetrial2009" model="dm.campaign">
+            <field name="item_responsible_id" ref="dm.res_users_sue0"/>
+            <field name="dtp_responsible_id" ref="dm.res_users_ann0"/>
+            <field name="manufacturing_responsible_id" ref="dm.res_users_tom0"/>
+            <field name="responsible_id" ref="dm.res_users_jim0"/>
+            <field name="files_responsible_id" ref="res_users_joe0"/>
+        </record>
+    </data>
+
+    <!-- CUSTOMERS LIST -->
+
+
     <data noupdate="1">
         <record id="product_product_bookstorecustomerslist0" model="product.product">
             <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
@@ -1377,18 +1384,18 @@ rkJggg==
     </data>
 
     <data noupdate="1">
-        <record id="dm_customers_list_bookstore_namec_us0" model="dm.customers_list">
+        <record id="dm_customers_list_bookstore_nale_us0" model="dm.customers_list">
             <field eval="1.0" name="other_cost"/>
-            <field eval="&quot;&quot;&quot;BOOKSTORE-NAMEC-US&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;BOOKSTORE-NALE-US&quot;&quot;&quot;" name="code"/>
             <field name="currency_id" ref="base.USD"/>
             <field name="broker_id" ref="res_partner_northamericalistexpert0"/>
             <field eval="2.0" name="delivery_cost"/>
             <field name="product_id" ref="product_product_bookstorecustomerslist0"/>
             <field eval="3.0" name="selection_cost"/>
             <field eval="0.1" name="broker_discount"/>
-            <field eval="&quot;&quot;&quot;NAMEC US Bookstores List&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;NALE US Bookstores List&quot;&quot;&quot;" name="name"/>
             <field eval="15.0" name="per_thousand_price"/>
-            <field eval="&quot;&quot;&quot;NAMEC Addresses List of Bookstores in the US&quot;&quot;&quot;" name="notes"/>
+            <field eval="&quot;&quot;&quot;NALE Addresses List of Bookstores in the US&quot;&quot;&quot;" name="notes"/>
             <field name="country_id" ref="base.us"/>
             <field eval="&quot;&quot;&quot;net&quot;&quot;&quot;" name="invoice_base"/>
         </record>
@@ -1415,42 +1422,42 @@ rkJggg==
     <!-- SEGMENT -->
 
     <data noupdate="1">
-        <record id="dm_campaign_proposition_segment_namecusbookstoreslist0" model="dm.campaign.proposition.segment">
+        <record id="dm_campaign_proposition_segment_naleusbookstoreslist0" model="dm.campaign.proposition.segment">
             <field eval="23" name="quantity_cleaned_cleaner"/>
             <field eval="1" name="active"/>
             <field eval="2000" name="quantity_planned"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_namec_us0"/>
+            <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_nale_us0"/>
             <field eval="1932" name="quantity_delivered"/>
             <field name="proposition_id" ref="dm.dm_campaign_proposition_ondemandfreetrialbookstoreoffer0"/>
             <field eval="30" name="end_census"/>
             <field eval="1" name="all_add_avail"/>
             <field eval="1" name="deduplication_level"/>
-            <field eval="&quot;&quot;&quot;NAMEC US Bookstores List-0/30&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;NALE US Bookstores List-0/30&quot;&quot;&quot;" name="name"/>
             <field eval="19" name="quantity_dedup_dedup"/>
             <field eval="1887" name="quantity_real"/>
         </record>
     </data>
     <data noupdate="1">
-        <record id="dm_campaign_proposition_segment_namecusbookstoreslist1" model="dm.campaign.proposition.segment">
+        <record id="dm_campaign_proposition_segment_naleusbookstoreslist1" model="dm.campaign.proposition.segment">
             <field eval="1" name="active"/>
             <field eval="37" name="quantity_dedup_cleaner"/>
             <field eval="30" name="start_census"/>
             <field eval="1600" name="quantity_planned"/>
             <field name="proposition_id" ref="dm.dm_campaign_proposition_ondemandfreetrialbookstoreoffer0"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_namec_us0"/>
+            <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_nale_us0"/>
             <field eval="1647" name="quantity_delivered"/>
             <field eval="60" name="end_census"/>
             <field eval="1" name="all_add_avail"/>
             <field eval="2" name="deduplication_level"/>
-            <field eval="&quot;&quot;&quot;NAMEC US Bookstores List-30/60&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;NALE US Bookstores List-30/60&quot;&quot;&quot;" name="name"/>
             <field eval="12" name="quantity_dedup_dedup"/>
             <field eval="1598" name="quantity_real"/>
         </record>
     </data>
     <data noupdate="1">
-        <record id="dm_campaign_proposition_segment_namecusassociationslist1" model="dm.campaign.proposition.segment">
+        <record id="dm_campaign_proposition_segment_naleusassociationslist1" model="dm.campaign.proposition.segment">
             <field eval="1" name="active"/>
             <field eval="39" name="quantity_dedup_cleaner"/>
             <field eval="0" name="start_census"/>
@@ -1467,5 +1474,83 @@ rkJggg==
             <field eval="2600" name="quantity_real"/>
         </record>
     </data>
+
+
+	<!-- Customers -->
+
+	<data noupdate="1">
+		<record id="dm_customer_0" model="dm.customer">
+			<field eval="&quot;&quot;&quot;JD&quot;&quot;&quot;" name="code"/>
+			<field eval="[(6,0,[])]" name="language_ids"/>
+			<field eval="[(6,0,[])]" name="prospect_media_ids"/>
+			<field eval="&quot;&quot;&quot;1090&quot;&quot;&quot;" name="zip"/>
+			<field eval="&quot;&quot;&quot;Sir.&quot;&quot;&quot;" name="title"/>
+			<field eval="0" name="decoy_address"/>
+			<field name="language_id" ref="base.lang_en"/>
+			<field eval="0" name="decoy_for_campaign"/>
+			<field eval="&quot;&quot;&quot;Nowhere Street 666&quot;&quot;&quot;" name="add1"/>
+			<field eval="&quot;&quot;&quot;John&quot;&quot;&quot;" name="firstname"/>
+			<field eval="[(6,0,[])]" name="client_media_ids"/>
+			<field eval="&quot;&quot;&quot;Doe&quot;&quot;&quot;" name="lastname"/>
+			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
+			<field eval="0" name="decoy_for_renting"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="dm_customer_0" model="dm.customer">
+			<field eval="&quot;&quot;&quot;JD&quot;&quot;&quot;" name="code"/>
+			<field eval="[(6,0,[])]" name="language_ids"/>
+			<field eval="[(6,0,[])]" name="prospect_media_ids"/>
+			<field eval="&quot;&quot;&quot;1090&quot;&quot;&quot;" name="zip"/>
+			<field eval="&quot;&quot;&quot;Sir.&quot;&quot;&quot;" name="title"/>
+			<field eval="0" name="decoy_address"/>
+			<field name="language_id" ref="base.lang_en"/>
+			<field eval="0" name="decoy_for_campaign"/>
+			<field eval="&quot;&quot;&quot;Nowhere Street 666&quot;&quot;&quot;" name="add1"/>
+			<field eval="&quot;&quot;&quot;John&quot;&quot;&quot;" name="firstname"/>
+			<field eval="[(6,0,[])]" name="client_media_ids"/>
+			<field eval="&quot;&quot;&quot;Doe&quot;&quot;&quot;" name="lastname"/>
+			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
+			<field eval="0" name="decoy_for_renting"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="dm_customer_1" model="dm.customer">
+			<field eval="&quot;&quot;&quot;BL&quot;&quot;&quot;" name="code"/>
+			<field eval="[(6,0,[])]" name="language_ids"/>
+			<field eval="[(6,0,[])]" name="prospect_media_ids"/>
+			<field eval="&quot;&quot;&quot;01234&quot;&quot;&quot;" name="zip"/>
+			<field eval="&quot;&quot;&quot;Sir.&quot;&quot;&quot;" name="title"/>
+			<field eval="0" name="decoy_address"/>
+			<field name="country_id" ref="base.us"/>
+			<field name="language_id" ref="base.lang_en"/>
+			<field eval="0" name="decoy_for_campaign"/>
+			<field eval="&quot;&quot;&quot;White House Street&quot;&quot;&quot;" name="add1"/>
+			<field eval="&quot;&quot;&quot;Biil&quot;&quot;&quot;" name="firstname"/>
+			<field eval="[(6,0,[])]" name="client_media_ids"/>
+			<field eval="&quot;&quot;&quot;Linghton&quot;&quot;&quot;" name="lastname"/>
+			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
+			<field eval="0" name="decoy_for_renting"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="dm_customer_2" model="dm.customer">
+			<field eval="&quot;&quot;&quot;DD&quot;&quot;&quot;" name="code"/>
+			<field eval="[(6,0,[])]" name="language_ids"/>
+			<field eval="[(6,0,[])]" name="prospect_media_ids"/>
+			<field eval="&quot;&quot;&quot;02543&quot;&quot;&quot;" name="zip"/>
+			<field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="title"/>
+			<field eval="0" name="decoy_address"/>
+			<field name="country_id" ref="base.us"/>
+			<field name="language_id" ref="base.lang_en"/>
+			<field eval="0" name="decoy_for_campaign"/>
+			<field eval="&quot;&quot;&quot;Walt Street&quot;&quot;&quot;" name="add1"/>
+			<field eval="&quot;&quot;&quot;Daisy&quot;&quot;&quot;" name="firstname"/>
+			<field eval="[(6,0,[])]" name="client_media_ids"/>
+			<field eval="&quot;&quot;&quot;Duck&quot;&quot;&quot;" name="lastname"/>
+			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
+			<field eval="0" name="decoy_for_renting"/>
+		</record>
+	</data>
 
 </openerp>

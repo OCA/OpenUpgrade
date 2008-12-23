@@ -23,7 +23,7 @@
     "name" : "CCI Translation",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/CCI",
     "description": """
         cci translation

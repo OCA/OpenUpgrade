@@ -20,13 +20,14 @@
 #
 ##############################################################################
 {
-    "name" : "Switzerland - German",
+    "name" : "Switzerland - German Chart of Accounts",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
+    "category" : "Localisation/Account Charts",
     "depends" : ["account", "account_chart", 'base_vat'],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml'],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",
+                    'account_tax.xml',"l10n_chart_ch_german_wizard.xml"],
     "active": False,
     "installable": True
 }

@@ -78,6 +78,7 @@ def _execute(cr, uid, object, method, step, type='execute',mode='pre',*args):
     return res
 
 def _pre_process(db,uid,passwd,object,method,type='execute',*args):
+   # print "PREEEEEEEEEEEE GAME uid,object,method,type='execute',*args",uid,object,method,type,args
     security.check(db, uid, passwd)
     pool = pooler.get_pool(db)
     steps=False
@@ -94,6 +95,7 @@ def _pre_process(db,uid,passwd,object,method,type='execute',*args):
     return steps
 
 def _post_process(db,uid,passwd,object,method,steps,type='execute',*args):
+   # print "Post GAME uid,object,method,type='execute',*args",uid,object,method,type,args
     security.check(db, uid, passwd)
     pool = pooler.get_pool(db)
     res=False

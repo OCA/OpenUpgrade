@@ -12,17 +12,15 @@ class sale_order(osv.osv):
                 res[id] = True
             else:
                 res[id] = False
-
         return res
     
     _columns = {
-        'has_supplier_direct_delivery': fields.function(_has_supplier_direct_delivery, method=True, type='boolean', string="Has Supplier Direct Delivery"),
+        'has_supplier_direct_delivery': fields.function(_has_supplier_direct_delivery, method=True, type='boolean', string="Has Supplier Direct Delivery", store=True, select=1),
 #        'composite_global_state': fields.function(_composite_global_state, method=True, type='char', size=64, string="Composite Global State"),#TODO
     }
 
     
     def action_wait(self, cr, uid, ids, context={}):
-        print "action_wait"
         for order in self.browse(cr, uid, ids):
             for order_line in order.order_line:
                 context.update( {'qty_uos': order_line.product_uom_qty})
@@ -32,7 +30,7 @@ class sale_order(osv.osv):
         super(sale_order, self).action_wait(cr, uid, ids, context)
         
         
-        
+    #cross linking direct delivery sale orders and purchase orders
     def action_ship_create(self, cr, uid, ids, *args):
         super(sale_order, self).action_ship_create(cr, uid, ids, *args)
         
@@ -47,6 +45,12 @@ class sale_order(osv.osv):
                     else:
                         self.pool.get('purchase.order.line').write(cr, uid, po.order_line[0].id, {'partner_address_id': so.partner_shipping_id.id, 'is_supplier_direct_delivery': True, 'sale_order_line':so_line.id})
                         self.pool.get('sale.order.line').write(cr, uid, so_line.id, {'purchase_order_line': po.order_line[0].id})
+                    
+                    #we remove the associated moves from Stock -> Customers as it will be replaced by moves Suppliers -> Customers
+                    #see purchase_order.action_picking_create for more details
+                    for move in so_line.move_ids:
+                        self.pool.get('stock.move').write(cr, uid, move.id, {'state': 'draft'})
+                        self.pool.get('stock.move').unlink(cr, uid, [move.id])
 
         return True
 
@@ -57,18 +61,7 @@ sale_order()
 
 class sale_order_line(osv.osv):
     _inherit = "sale.order.line"
-    
-    def _purchase_order(self, cr, uid, ids, name, arg, context=None):
-        res = {}
-        for so_line in self.browse(cr, uid, ids):
-            res[so_line.id] = so_line.purchase_order_line and so_line.purchase_order_line.order_id.id or False
-        return res
-    
-    def _purchase_order_state(self, cr, uid, ids, name, arg, context=None):
-        res = {}
-        for so_line in self.browse(cr, uid, ids):
-            res[so_line.id] = so_line.purchase_order_line and so_line.purchase_order_line.order_id.state or False
-        return res
+
     
     def _is_supplier_direct_delivery_advised(self, cr, uid, ids, name, arg, context=None):
         res = {}
@@ -81,10 +74,9 @@ class sale_order_line(osv.osv):
     _columns = {
         'is_supplier_direct_delivery': fields.boolean('Is Direct Delivery?'),
         'is_supplier_direct_delivery_advised': fields.function(_is_supplier_direct_delivery_advised, method=True, type='boolean', string="Is Supplier Direct Delivery Advised?"),
-        'purchase_order_line':fields.many2one('purchase.order.line', 'Associated Purchase Order Line', required=False),
-        'purchase_order':fields.function(_purchase_order, method = True, type = 'many2one', relation = 'purchase.order', string="Related Purchase Order"),
-        'purchase_order_state': fields.function(_purchase_order_state, method=True, type='char', size=64, string="Purchase Order State"),
-#        'picking_state': fields.function(_picking_state, method=True, type='char', size=64, string="Picking State"), #TODO ensure it works even in two steps delivery
+        'purchase_order_line':fields.many2one('purchase.order.line', 'Related Purchase Order Line', required=False),
+        'purchase_order': fields.related('purchase_order_line', 'order_id', type='many2one', relation='purchase.order', string='Related Purchase Order'),
+        'purchase_order_state': fields.related('purchase_order', 'state', type='char', size=64, string='Purchase Order State'),
     }
     
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,

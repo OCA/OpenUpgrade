@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<!-- create Sales order - Stock -->
+		<record id="ir_actions_server_soinvoicestock0" model="ir.actions.server">
+			<field eval="1" name="sequence"/>
+			<field name="state">object_create</field>
+			<field name="record_id" ref="sale.field_sale_order_client_order_ref"/>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order"/>
+			<field name="srcmodel_id" ref="account.model_account_invoice"/>
+			<field name="condition">True</field>
+			<field name="name">SO to Invoice - Stock</field>
+		</record>
+		<record id="ir_server_object_lines_0" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoicestock0"/>
+			<field name="type">equation</field>
+			<field name="value">object.partner_id.property_account_receivable.id</field>
+			<field name="col1" ref="account.field_account_invoice_account_id"/>
+		</record>
+		<record id="ir_server_object_lines_1" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoicestock0"/>
+			<field name="type">equation</field>
+			<field name="value">object.partner_invoice_id.id</field>
+			<field name="col1" ref="account.field_account_invoice_address_invoice_id"/>
+		</record>
+		<record id="ir_server_object_lines_2" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoicestock0"/>
+			<field name="type">equation</field>
+			<field name="value">object.partner_id.id</field>
+			<field name="col1" ref="account.field_account_invoice_partner_id"/>
+		</record>
+		<!-- End Sales order - Stock -->
+		
+		<!-- Link Sales Order to SO -->
+		<record id="ir_actions_server_linkinvoicetosaleorderstock0" model="ir.actions.server">
+			<field eval="2" name="sequence"/>
+			<field name="loop_action" ref="ir_actions_server_soinvoicestock0"/>
+			<field name="state">object_write</field>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order"/>
+			<field name="srcmodel_id" ref="sale.model_sale_order"/>
+			<field name="condition">True</field>
+			<field name="name">Link Invoice to SaleOrder - Stock</field>
+		</record>
+		<record id="ir_server_object_lines_22" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_linkinvoicetosaleorderstock0"/>
+			<field name="type">equation</field>
+			<field name="value">[[4,(int(object.client_order_ref))]]</field>
+			<field name="col1" ref="sale.field_sale_order_invoice_ids"/>
+		</record>
+		<!-- End Link Sales Order to SO -->
+		
+		<!-- Copy Invoice line from the SO Lines -->
+		<record id="ir_actions_server_createinvoicelinestock0" model="ir.actions.server">
+			<field eval="5" name="sequence"/>
+			<field name="state">object_create</field>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order_line"/>
+			<field name="srcmodel_id" ref="account.model_account_invoice_line"/>
+			<field name="condition">object.product_id.type == 'product'</field>
+			<field name="name">Create Invoice Line - Stock</field>
+		</record>
+		<record id="ir_server_object_lines_23" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelinestock0"/>
+			<field name="type">equation</field>
+			<field name="value">object.product_id.id</field>
+			<field name="col1" ref="account.field_account_invoice_line_product_id"/>
+		</record>
+		<record id="ir_server_object_lines_24" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelinestock0"/>
+			<field name="type">equation</field>
+			<field name="value">object.product_uom.id</field>
+			<field name="col1" ref="account.field_account_invoice_line_uos_id"/>
+		</record>
+		<record id="ir_server_object_lines_25" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelinestock0"/>
+			<field name="type">equation</field>
+			<field eval="&quot;&quot;&quot;object.price_unit&quot;&quot;&quot;" name="value"/>
+			<field name="col1" ref="account.field_account_invoice_line_price_unit"/>
+		</record>
+		<record id="ir_server_object_lines_26" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelinestock0"/>
+			<field name="type">equation</field>
+			<field name="value">object.name</field>
+			<field name="col1" ref="account.field_account_invoice_line_name"/>
+		</record>
+		<record id="ir_server_object_lines_27" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelinestock0"/>
+			<field name="type">equation</field>
+			<field name="value">object.product_uom_qty</field>
+			<field name="col1" ref="account.field_account_invoice_line_quantity"/>
+		</record>
+		<record id="ir_server_object_lines_28" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelinestock0"/>
+			<field name="type">equation</field>
+			<field name="value">object.order_id.client_order_ref</field>
+			<field name="col1" ref="account.field_account_invoice_line_invoice_id"/>
+		</record>
+		<record id="ir_server_object_lines_29" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelinestock0"/>
+			<field name="type">equation</field>
+			<field name="value">object.product_id.property_account_income.id or object.product_id.categ_id.property_account_income_categ.id</field>
+			<field name="col1" ref="account.field_account_invoice_line_account_id"/>
+		</record>
+		
+		<record id="ir_actions_server_solineinvoicelinestock0" model="ir.actions.server">
+			<field eval="5" name="sequence"/>
+			<field name="loop_action" ref="ir_actions_server_createinvoicelinestock0"/>
+			<field name="state">loop</field>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order"/>
+			<field name="condition">True</field>
+			<field name="name">SO Line to Invoice Line - Stock</field>
+			<field name="expression">object.order_line</field>
+		</record>
+		<!-- End Copy Invoice line from the SO Lines -->
+		
+		<!-- create Sales order - service -->
+		<record id="ir_actions_server_soinvoiceservice0" model="ir.actions.server">
+			<field eval="6" name="sequence"/>
+			<field name="state">object_create</field>
+			<field name="record_id" ref="sale.field_sale_order_client_order_ref"/>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order"/>
+			<field name="srcmodel_id" ref="account.model_account_invoice"/>
+			<field name="condition">True</field>
+			<field name="name">SO to Invoice - Service</field>
+		</record>
+		<record id="ir_server_object_lines_01" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoiceservice0"/>
+			<field name="type">equation</field>
+			<field name="value">object.partner_id.property_account_receivable.id</field>
+			<field name="col1" ref="account.field_account_invoice_account_id"/>
+		</record>
+		<record id="ir_server_object_lines_11" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoiceservice0"/>
+			<field name="type">equation</field>
+			<field name="value">object.partner_invoice_id.id</field>
+			<field name="col1" ref="account.field_account_invoice_address_invoice_id"/>
+		</record>
+		<record id="ir_server_object_lines_21" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoiceservice0"/>
+			<field name="type">equation</field>
+			<field name="value">object.partner_id.id</field>
+			<field name="col1" ref="account.field_account_invoice_partner_id"/>
+		</record>
+		<!-- End Sales order - service -->
+		
+		<!-- Link Sales Order to SO -->
+		<record id="ir_actions_server_linkinvoicetosaleorderservice0" model="ir.actions.server">
+			<field eval="7" name="sequence"/>
+			<field name="state">object_write</field>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order"/>
+			<field name="srcmodel_id" ref="sale.model_sale_order"/>
+			<field name="condition">True</field>
+			<field name="name">Link Invoice to SaleOrder - Service</field>
+		</record>
+		<record id="ir_server_object_lines_221" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_linkinvoicetosaleorderservice0"/>
+			<field name="type">equation</field>
+			<field name="value">[[4,(int(object.client_order_ref))]]</field>
+			<field name="col1" ref="sale.field_sale_order_invoice_ids"/>
+		</record>
+		<!-- End Link Sales Order to SO -->
+		
+		<!-- Copy Invoice line from the SO Lines -->
+		<record id="ir_actions_server_createinvoicelineservice0" model="ir.actions.server">
+			<field eval="10" name="sequence"/>
+			<field name="state">object_create</field>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order_line"/>
+			<field name="srcmodel_id" ref="account.model_account_invoice_line"/>
+			<field name="condition">object.product_id.type == 'service'</field>
+			<field name="name">Create Invoice Line - Service</field>
+		</record>
+		<record id="ir_server_object_lines_231" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelineservice0"/>
+			<field name="type">equation</field>
+			<field name="value">object.product_id.id</field>
+			<field name="col1" ref="account.field_account_invoice_line_product_id"/>
+		</record>
+		<record id="ir_server_object_lines_241" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelineservice0"/>
+			<field name="type">equation</field>
+			<field name="value">object.product_uom.id</field>
+			<field name="col1" ref="account.field_account_invoice_line_uos_id"/>
+		</record>
+		<record id="ir_server_object_lines_251" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelineservice0"/>
+			<field name="type">equation</field>
+			<field name="value">object.price_unit</field>
+			<field name="col1" ref="account.field_account_invoice_line_price_unit"/>
+		</record>
+		<record id="ir_server_object_lines_261" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelineservice0"/>
+			<field name="type">equation</field>
+			<field name="value">object.name</field>
+			<field name="col1" ref="account.field_account_invoice_line_name"/>
+		</record>
+		<record id="ir_server_object_lines_271" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelineservice0"/>
+			<field name="type">equation</field>
+			<field name="value">object.product_uom_qty</field>
+			<field name="col1" ref="account.field_account_invoice_line_quantity"/>
+		</record>
+		<record id="ir_server_object_lines_281" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelineservice0"/>
+			<field name="type">equation</field>
+			<field name="value">object.order_id.client_order_ref</field>
+			<field name="col1" ref="account.field_account_invoice_line_invoice_id"/>
+		</record>
+		<record id="ir_server_object_lines_291" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_createinvoicelineservice0"/>
+			<field name="type">equation</field>
+			<field name="value">object.product_id.property_account_income.id or object.product_id.categ_id.property_account_income_categ.id</field>
+			<field name="col1" ref="account.field_account_invoice_line_account_id"/>
+		</record>
+		
+		<record id="ir_actions_server_solineinvoicelineservice0" model="ir.actions.server">
+			<field eval="10" name="sequence"/>
+			<field name="loop_action" ref="ir_actions_server_createinvoicelineservice0"/>
+			<field name="state">loop</field>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order"/>
+			<field name="condition">True</field>
+			<field name="name">SO Line to Invoice Line - Service</field>
+			<field name="expression">object.order_line</field>
+		</record>
+		<!-- End Copy Invoice line from the SO Lines -->
+		
+		<record id="ir_actions_server_salesorderinvoicesmain0" model="ir.actions.server">
+			<field eval="0" name="sequence"/>
+			<field name="state">other</field>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order"/>
+			<field eval="[(6,0,[ref('ir_actions_server_soinvoicestock0'),ref('ir_actions_server_linkinvoicetosaleorderstock0'),ref('ir_actions_server_solineinvoicelinestock0'), ref('ir_actions_server_soinvoiceservice0'),ref('ir_actions_server_linkinvoicetosaleorderservice0'),ref('ir_actions_server_solineinvoicelineservice0')])]" name="child_ids"/>
+			<field name="condition">True</field>
+			<field name="name">Sales Order to Invoice(s) MAIN</field>
+		</record>
+	</data>
+</openerp>

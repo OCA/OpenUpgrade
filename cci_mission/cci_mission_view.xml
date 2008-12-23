@@ -424,21 +424,21 @@
                     </page>
                     <page string="Extra Products">
                         <vpaned position="300">
-                        <child1>
-                            <field name="product_ids" nolabel="1" colspan="4" >
-                                <form string="Product Line">
-                                        <field name="name" select="1" colspan="4"/>
-                                        <newline/>
-                                        <field name="product_id" select="1" on_change="product_id_change(product_id)"/>
-                                        <field name="quantity" select="1"/>
-                                        <field name="uos_id"/>
-                                        <field name="price_unit" select="1"/>
-                                </form>
-                            </field>
-                        </child1>
-                        <child2>
-                        <label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
-                        </child2>
+	                        <child1>
+	                            <field name="product_ids" nolabel="1" colspan="4" >
+	                                <form string="Product Line">
+	                                        <field name="name" select="1" colspan="4"/>
+	                                        <newline/>
+	                                        <field name="product_id" select="1" on_change="product_id_change(product_id)"/>
+	                                        <field name="quantity" select="1"/>
+	                                        <field name="uos_id"/>
+	                                        <field name="price_unit" select="1"/>
+	                                </form>
+	                            </field>
+	                        </child1>
+                        	<child2>
+                        		<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
+                        	</child2>
                         </vpaned>
                     </page>
                     <page string="Links">
@@ -519,21 +519,21 @@
                     </page>
                     <page string="Extra Products">
                         <vpaned position="300">
-                        <child1>
-                            <field name="product_ids" nolabel="1" colspan="4">
-                                <form string="Product Line">
-                                    <field name="name" select="1" colspan="4"/>
-                                    <newline/>
-                                    <field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
-                                    <field name="quantity" select="1"/>
-                                    <field name="uos_id"/>
-                                    <field name="price_unit" select="1"/>
-                                </form>
-                            </field>
-                        </child1>
-                        <child2>
-                        <label string="" colspan="2"/><field name="sub_total" coslpan="2"/>
-                        </child2>
+	                        <child1>
+	                            <field name="product_ids" nolabel="1" colspan="4">
+	                                <form string="Product Line">
+	                                    <field name="name" select="1" colspan="4"/>
+	                                    <newline/>
+	                                    <field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
+	                                    <field name="quantity" select="1"/>
+	                                    <field name="uos_id"/>
+	                                    <field name="price_unit" select="1"/>
+	                                </form>
+	                            </field>
+	                        </child1>
+                       		<child2>
+                        		<label string="" colspan="2"/><field name="sub_total" coslpan="2"/>
+                        	</child2>
                         </vpaned>
                     </page>
                     <page string="Links">
@@ -577,7 +577,7 @@
         <menuitem name="Missions/Certificates" action="action_cci_missions_certificate" id="menu_action_cci_missions_certificate"/>
 
 <!-- view for cci_missions_area -->
-        <record model="ir.ui.view" id="cci_missions_area_form">
+<!--        <record model="ir.ui.view" id="cci_missions_area_form">
             <field name="name">cci_missions.area.form</field>
             <field name="model">cci_missions.area</field>
             <field name="type">form</field>
@@ -609,7 +609,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Missions/Configuration/Area" action="action_cci_missions_area" id="menu_action_cci_missions_area"/>
+        <menuitem name="Missions/Configuration/Area" action="action_cci_missions_area" id="menu_action_cci_missions_area"/>-->
 
 <!-- view for cci_missions_ata_usage -->
         <record model="ir.ui.view" id="cci_missions_ata_usage_form">
@@ -753,12 +753,12 @@
                     </page>
                     <page string="Extra Products">
                         <vpaned position="300">
-                        <child1>
-                            <field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
-                        </child1>
-                        <child2>
-                        <label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
-                        </child2>
+	                        <child1>
+	                            <field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
+	                        </child1>
+	                        <child2>
+	                       		<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
+	                        </child2>
                         </vpaned>
                     </page>
                 </notebook>

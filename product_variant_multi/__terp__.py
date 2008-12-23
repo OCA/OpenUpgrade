@@ -27,7 +27,9 @@
     "depends" : ["product"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [],
+    "update_xml" : [
+        "product_variant_multi.xml"
+    ],
     "active": False,
     "installable": True
 }

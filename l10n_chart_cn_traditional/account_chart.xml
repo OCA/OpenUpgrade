@@ -1,634 +1,776 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-<data noupdate="1">
-<record id="chart0" model="account.account">
-	<field name="code">0</field>
-	<field name="name">Account Chart</field>
-
-<!--	<field name="parent_id" eval="[]"/>-->
-	<field name="type">view</field>
-
-</record>
-<record id="chart1000" model="account.account">
-	<field name="code">1000</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�y�ʸ겣</field>
-
-</record>
-<record id="account.a_cash" model="account.account">
-	<field name="code">1061</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">�䲼���Y</field>
-
-</record>
-<record id="chart1065" model="account.account">
-	<field name="code">1065</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">�s�Ϊ�</field>
-
-</record>
-<record id="chart1200" model="account.account">
-	<field name="code">1200</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">3���b��</field>
-
-</record>
-<record id="chart1205" model="account.account">
-	<field name="code">1205</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">�b�b�Ʃ�</field>
-
-</record>
-<record id="chart1500" model="account.account">
-	<field name="code">1500</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�s�f�겣</field>
-
-</record>
-<record id="chart1520" model="account.account">
-	<field name="code">1520</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">�w�s / �w��</field>
-
-</record>
-<record id="chart1530" model="account.account">
-	<field name="code">1530</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">�w�s / �n��</field>
-
-</record>
-<record id="chart1540" model="account.account">
-	<field name="code">1540</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">�w�s / �G�ť���s��</field>
-
-</record>
-<record id="chart1800" model="account.account">
-	<field name="code">1800</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�ꥻ�겣</field>
-
-</record>
-<record id="chart1820" model="account.account">
-	<field name="code">1820</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">�줽�Ǹ˿X�γ]��</field>
-
-</record>
-<record id="chart1825" model="account.account">
-	<field name="code">1825</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">�֭p�4eI�� - �˿X�γ]��.</field>
-
-</record>
-<record id="chart1840" model="account.account">
-	<field name="code">1840</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">�B��u��</field>
-
-</record>
-<record id="chart1845" model="account.account">
-	<field name="code">1845</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">asset</field>
-	<field name="name">�֭p�4eI�� - �B��u��</field>
-
-</record>
-<record id="chart2000" model="account.account">
-	<field name="code">2000</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�y�ʭt��</field>
-
-</record>
-<record id="chart2100" model="account.account">
-	<field name="code">2100</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">cash</field>
-	<field name="name">3�I�b��</field>
-
-</record>
-<record id="chart2160" model="account.account">
-	<field name="code">2160</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">cash</field>
-	<field name="name">3�I���q�|</field>
-
-</record>
-<record id="chart2190" model="account.account">
-	<field name="code">2190</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">cash</field>
-	<field name="name">3�I�ұo�|</field>
-
-</record>
-<record id="chart2310" model="account.account">
-	<field name="code">2310</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">cash</field>
-	<field name="name">�ӫ~�A�ȵ|</field>
-
-</record>
-<record id="chart2311" model="account.account">
-	<field name="code">2311</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">cash</field>
-	<field name="name">�a��|</field>
-
-</record>
-<record id="chart2600" model="account.account">
-	<field name="code">2600</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">��mt��</field>
-
-</record>
-<record id="chart2620" model="account.account">
-	<field name="code">2620</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">cash</field>
-	<field name="name">�Ȧ�ɴ�</field>
-
-</record>
-<record id="chart2680" model="account.account">
-	<field name="code">2680</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">cash</field>
-	<field name="name">�ѪF�U��</field>
-
-</record>
-<record id="chart3300" model="account.account">
-	<field name="code">3300</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�ѥ�ꥻ</field>
-
-</record>
-<record id="chart3350" model="account.account">
-	<field name="code">3350</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">tax</field>
-	<field name="name">���q�ѥ�</field>
-
-</record>
-<record id="chart3500" model="account.account">
-	<field name="code">3500</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�O�d�վl</field>
-
-</record>
-<record id="chart3590" model="account.account">
-	<field name="code">3590</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">tax</field>
-	<field name="name">�O�d�վl - �h�~��</field>
-
-</record>
-<record id="chart3600" model="account.account">
-	<field name="code">3600</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">tax</field>
-	<field name="name">�y�ʬվl</field>
-
-</record>
-<record id="chart4000" model="account.account">
-	<field name="code">4000</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�P��վl</field>
-
-</record>
-<record id="account.a_income" model="account.account">
-	<field name="code">4020</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">income</field>
-	<field name="name">�P�� / �w��</field>
-
-</record>
-<record id="chart4030" model="account.account">
-	<field name="code">4030</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">income</field>
-	<field name="name">�P�� / �n��</field>
-
-</record>
-<record id="chart4040" model="account.account">
-	<field name="code">4040</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">income</field>
-	<field name="name">�P�� / �G�ť���s��</field>
-
-</record>
-<record id="chart4300" model="account.account">
-	<field name="code">4300</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�Ը߬վl</field>
-
-</record>
-<record id="chart4320" model="account.account">
-	<field name="code">4320</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">income</field>
-	<field name="name">�Ը�</field>
-
-</record>
-<record id="chart4330" model="account.account">
-	<field name="code">4330</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">income</field>
-	<field name="name">�{���]�p</field>
-
-</record>
-<record id="chart4400" model="account.account">
-	<field name="code">4400</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�䥦�վl</field>
-
-</record>
-<record id="chart4430" model="account.account">
-	<field name="code">4430</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">income</field>
-	<field name="name">�B�P�O</field>
-
-</record>
-<record id="chart4440" model="account.account">
-	<field name="code">4440</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">income</field>
-	<field name="name">�Q��</field>
-
-</record>
-<record id="account.a_recv" model="account.account">
-	<field name="code">4450</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">income</field>
-	<field name="name">Foreign Exchange Gain</field>
-
-</record>
-<record id="chart5000" model="account.account">
-	<field name="code">5000</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�f�P����</field>
-
-</record>
-<record id="account.a_expense" model="account.account">
-	<field name="code">5010</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">����</field>
-
-</record>
-<record id="chart5020" model="account.account">
-	<field name="code">5020</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�f�P���� / �w��</field>
-
-</record>
-<record id="chart5030" model="account.account">
-	<field name="code">5030</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�f�P���� / �n��</field>
-
-</record>
-<record id="chart5040" model="account.account">
-	<field name="code">5040</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�f�P���� / �G�ť���s��</field>
-
-</record>
-<record id="chart5100" model="account.account">
-	<field name="code">5100</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�B�O</field>
-
-</record>
-<record id="chart5400" model="account.account">
-	<field name="code">5400</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">�~���X</field>
-
-</record>
-<record id="chart5410" model="account.account">
-	<field name="code">5410</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�~��</field>
-
-</record>
-<record id="chart5420" model="account.account">
-	<field name="code">5420</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�O�I��X</field>
-
-</record>
-<record id="chart5430" model="account.account">
-	<field name="code">5430</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�h����X</field>
-
-</record>
-<record id="chart5440" model="account.account">
-	<field name="code">5440</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">���v���X</field>
-
-</record>
-<record id="chart5470" model="account.account">
-	<field name="code">5470</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">��u�֧Q</field>
-
-</record>
-<record id="chart5600" model="account.account">
-	<field name="code">5600</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">��`�κ޲z��X</field>
-
-</record>
-<record id="chart5610" model="account.account">
-	<field name="code">5610</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�|�p�k��</field>
-
-</record>
-<record id="chart5615" model="account.account">
-	<field name="code">5615</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�s�i��P</field>
-
-</record>
-<record id="chart5620" model="account.account">
-	<field name="code">5620</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�a�b</field>
-
-</record>
-<record id="chart5660" model="account.account">
-	<field name="code">5660</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�4d�X</field>
-
-</record>
-<record id="chart5680" model="account.account">
-	<field name="code">5680</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�ұo�|</field>
-
-</record>
-<record id="chart5685" model="account.account">
-	<field name="code">5685</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�O�I</field>
-
-</record>
-<record id="chart5690" model="account.account">
-	<field name="code">5690</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�Q���λȦ����O</field>
-
-</record>
-<record id="chart5700" model="account.account">
-	<field name="code">5700</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�줽�Ϋ~</field>
-
-</record>
-<record id="chart5760" model="account.account">
-	<field name="code">5760</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">����</field>
-
-</record>
-<record id="chart5765" model="account.account">
-	<field name="code">5765</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">��׺޲z�O</field>
-
-</record>
-<record id="chart5780" model="account.account">
-	<field name="code">5780</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�q�H�O</field>
-
-</record>
-<record id="chart5781" model="account.account">
-	<field name="code">5781</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">���s�u�O</field>
-
-</record>
-<record id="chart5785" model="account.account">
-	<field name="code">5785</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�ȶO�ήT��</field>
-
-</record>
-<record id="chart5790" model="account.account">
-	<field name="code">5790</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�u��</field>
-
-</record>
-<record id="chart5795" model="account.account">
-	<field name="code">5795</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">��U�O</field>
-
-</record>
-<record id="chart5800" model="account.account">
-	<field name="code">5800</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">�v�Q��</field>
-
-</record>
-<record id="account.a_pay" model="account.account">
-	<field name="code">5810</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">expense</field>
-	<field name="name">Foreign Exchange Loss</field>
-
-</record>
-</data>
+	<data noupdate="1">
+	
+	<!-- Account Types -->
+	
+		<record model="account.account.type" id="account_type_receivable" >
+	      <field name="name">Receivable</field>
+	      <field name="code">receivable</field>
+	      <field name="close_method">unreconciled</field>
+	    </record>
+
+	    <record model="account.account.type" id="account_type_payable" >
+	      <field name="name">Payable</field>
+	      <field name="code">payable</field>
+	      <field name="close_method">unreconciled</field>
+	    </record>
+
+	    <record model="account.account.type" id="account_type_view">
+	      <field name="name">View</field>
+	      <field name="code">view</field>
+	      <field name="close_method">none</field>
+	    </record>
+
+	    <record model="account.account.type" id="account_type_income" >
+	      <field name="name">Income</field>
+	      <field name="code">income</field>
+	      <field name="close_method">none</field>
+	    </record>
+
+	    <record model="account.account.type" id="account_type_expense">
+	      <field name="name">Expense</field>
+	      <field name="code">expense</field>
+	      <field name="close_method">none</field>
+	    </record>
+
+	    <record model="account.account.type" id="account_type_tax">
+	      <field name="name">Tax</field>
+	      <field name="code">tax</field>
+	      <field name="close_method">unreconciled</field>
+	    </record>
+
+	    <record model="account.account.type" id="account_type_cash">
+	      <field name="name">Cash</field>
+	      <field name="code">cash</field>
+	      <field name="close_method">balance</field>
+	    </record>
+
+	    <record model="account.account.type" id="account_type_asset">
+	      <field name="name">Asset</field>
+	      <field name="code">asset</field>
+	      <field name="close_method">balance</field>
+	    </record>
+
+	    <record model="account.account.type" id="account_type_equity">
+	      <field name="name">Equity</field>
+	      <field name="code">equity</field>
+	      <field name="close_method">balance</field>
+	    </record>
+	    
+	<!-- Account Templates -->
+	
+		<record id="chart0" model="account.account.template">
+			<field name="code">0</field>
+			<field name="name">Account Chart</field>
+		
+		<!--	<field name="parent_id" eval="[]"/>-->
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+		
+		</record>
+		<record id="chart1000" model="account.account.template">
+			<field name="code">1000</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�y�ʸ겣</field>
+		
+		</record>
+		<record id="cn_trad_a_cash" model="account.account.template">
+			<field name="code">1061</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">�䲼���Y</field>
+		
+		</record>
+		<record id="chart1065" model="account.account.template">
+			<field name="code">1065</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">�s�Ϊ�</field>
+		
+		</record>
+		<record id="chart1200" model="account.account.template">
+			<field name="code">1200</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">3���b��</field>
+		
+		</record>
+		<record id="chart1205" model="account.account.template">
+			<field name="code">1205</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">�b�b�Ʃ�</field>
+		
+		</record>
+		<record id="chart1500" model="account.account.template">
+			<field name="code">1500</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�s�f�겣</field>
+		
+		</record>
+		<record id="chart1520" model="account.account.template">
+			<field name="code">1520</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">�w�s / �w��</field>
+		
+		</record>
+		<record id="chart1530" model="account.account.template">
+			<field name="code">1530</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">�w�s / �n��</field>
+		
+		</record>
+		<record id="chart1540" model="account.account.template">
+			<field name="code">1540</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">�w�s / �G�ť���s��</field>
+		
+		</record>
+		<record id="chart1800" model="account.account.template">
+			<field name="code">1800</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�ꥻ�겣</field>
+		
+		</record>
+		<record id="chart1820" model="account.account.template">
+			<field name="code">1820</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">�줽�Ǹ˿X�γ]��</field>
+		
+		</record>
+		<record id="chart1825" model="account.account.template">
+			<field name="code">1825</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">�֭p�4eI�� - �˿X�γ]��.</field>
+		
+		</record>
+		<record id="chart1840" model="account.account.template">
+			<field name="code">1840</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">�B��u��</field>
+		
+		</record>
+		<record id="chart1845" model="account.account.template">
+			<field name="code">1845</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_asset" />
+			<field name="name">�֭p�4eI�� - �B��u��</field>
+		
+		</record>
+		<record id="chart2000" model="account.account.template">
+			<field name="code">2000</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�y�ʭt��</field>
+		
+		</record>
+		<record id="chart2100" model="account.account.template">
+			<field name="code">2100</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_cash" />
+			<field name="name">3�I�b��</field>
+		
+		</record>
+		<record id="chart2160" model="account.account.template">
+			<field name="code">2160</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_cash" />
+			<field name="name">3�I���q�|</field>
+		
+		</record>
+		<record id="chart2190" model="account.account.template">
+			<field name="code">2190</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_cash" />
+			<field name="name">3�I�ұo�|</field>
+		
+		</record>
+		<record id="chart2310" model="account.account.template">
+			<field name="code">2310</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_cash" />
+			<field name="name">�ӫ~�A�ȵ|</field>
+		
+		</record>
+		<record id="chart2311" model="account.account.template">
+			<field name="code">2311</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_cash" />
+			<field name="name">�a��|</field>
+		
+		</record>
+		<record id="chart2600" model="account.account.template">
+			<field name="code">2600</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">��mt��</field>
+		
+		</record>
+		<record id="chart2620" model="account.account.template">
+			<field name="code">2620</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_cash" />
+			<field name="name">�Ȧ�ɴ�</field>
+		
+		</record>
+		<record id="chart2680" model="account.account.template">
+			<field name="code">2680</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_cash" />
+			<field name="name">�ѪF�U��</field>
+		
+		</record>
+		<record id="chart3300" model="account.account.template">
+			<field name="code">3300</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�ѥ�ꥻ</field>
+		
+		</record>
+		<record id="chart3350" model="account.account.template">
+			<field name="code">3350</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_tax" />
+			<field name="name">���q�ѥ�</field>
+		
+		</record>
+		<record id="chart3500" model="account.account.template">
+			<field name="code">3500</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�O�d�վl</field>
+		
+		</record>
+		<record id="chart3590" model="account.account.template">
+			<field name="code">3590</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_tax" />
+			<field name="name">�O�d�վl - �h�~��</field>
+		
+		</record>
+		<record id="chart3600" model="account.account.template">
+			<field name="code">3600</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_tax" />
+			<field name="name">�y�ʬվl</field>
+		
+		</record>
+		<record id="chart4000" model="account.account.template">
+			<field name="code">4000</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�P��վl</field>
+		
+		</record>
+		<record id="cn_trad_a_income" model="account.account.template">
+			<field name="code">4020</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_income" />
+			<field name="name">�P�� / �w��</field>
+		
+		</record>
+		<record id="chart4030" model="account.account.template">
+			<field name="code">4030</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_income" />
+			<field name="name">�P�� / �n��</field>
+		
+		</record>
+		<record id="chart4040" model="account.account.template">
+			<field name="code">4040</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_income" />
+			<field name="name">�P�� / �G�ť���s��</field>
+		
+		</record>
+		<record id="chart4300" model="account.account.template">
+			<field name="code">4300</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�Ը߬վl</field>
+		
+		</record>
+		<record id="chart4320" model="account.account.template">
+			<field name="code">4320</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_income" />
+			<field name="name">�Ը�</field>
+		
+		</record>
+		<record id="chart4330" model="account.account.template">
+			<field name="code">4330</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_income" />
+			<field name="name">�{���]�p</field>
+		
+		</record>
+		<record id="chart4400" model="account.account.template">
+			<field name="code">4400</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�䥦�վl</field>
+		
+		</record>
+		<record id="chart4430" model="account.account.template">
+			<field name="code">4430</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_income" />
+			<field name="name">�B�P�O</field>
+		
+		</record>
+		<record id="chart4440" model="account.account.template">
+			<field name="code">4440</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_income" />
+			<field name="name">�Q��</field>
+		
+		</record>
+		<record id="cn_trad_a_recv" model="account.account.template">
+			<field name="code">4450</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_income" />
+			<field name="name">Foreign Exchange Gain</field>
+		
+		</record>
+		<record id="chart5000" model="account.account.template">
+			<field name="code">5000</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�f�P����</field>
+		
+		</record>
+		<record id="cn_trad_a_expense" model="account.account.template">
+			<field name="code">5010</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">����</field>
+		
+		</record>
+		<record id="chart5020" model="account.account.template">
+			<field name="code">5020</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�f�P���� / �w��</field>
+		
+		</record>
+		<record id="chart5030" model="account.account.template">
+			<field name="code">5030</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�f�P���� / �n��</field>
+		
+		</record>
+		<record id="chart5040" model="account.account.template">
+			<field name="code">5040</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�f�P���� / �G�ť���s��</field>
+		
+		</record>
+		<record id="chart5100" model="account.account.template">
+			<field name="code">5100</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�B�O</field>
+		
+		</record>
+		<record id="chart5400" model="account.account.template">
+			<field name="code">5400</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">�~���X</field>
+		
+		</record>
+		<record id="chart5410" model="account.account.template">
+			<field name="code">5410</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�~��</field>
+		
+		</record>
+		<record id="chart5420" model="account.account.template">
+			<field name="code">5420</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�O�I��X</field>
+		
+		</record>
+		<record id="chart5430" model="account.account.template">
+			<field name="code">5430</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�h����X</field>
+		
+		</record>
+		<record id="chart5440" model="account.account.template">
+			<field name="code">5440</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">���v���X</field>
+		
+		</record>
+		<record id="chart5470" model="account.account.template">
+			<field name="code">5470</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">��u�֧Q</field>
+		
+		</record>
+		<record id="chart5600" model="account.account.template">
+			<field name="code">5600</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">view</field>
+			<field name="user_type" ref="account_type_view" />
+			<field name="name">��`�κ޲z��X</field>
+		
+		</record>
+		<record id="chart5610" model="account.account.template">
+			<field name="code">5610</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�|�p�k��</field>
+		
+		</record>
+		<record id="chart5615" model="account.account.template">
+			<field name="code">5615</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�s�i��P</field>
+		
+		</record>
+		<record id="chart5620" model="account.account.template">
+			<field name="code">5620</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�a�b</field>
+		
+		</record>
+		<record id="chart5660" model="account.account.template">
+			<field name="code">5660</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�4d�X</field>
+		
+		</record>
+		<record id="chart5680" model="account.account.template">
+			<field name="code">5680</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�ұo�|</field>
+		
+		</record>
+		<record id="chart5685" model="account.account.template">
+			<field name="code">5685</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�O�I</field>
+		
+		</record>
+		<record id="chart5690" model="account.account.template">
+			<field name="code">5690</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�Q���λȦ����O</field>
+		
+		</record>
+		<record id="chart5700" model="account.account.template">
+			<field name="code">5700</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�줽�Ϋ~</field>
+		
+		</record>
+		<record id="chart5760" model="account.account.template">
+			<field name="code">5760</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">����</field>
+		
+		</record>
+		<record id="chart5765" model="account.account.template">
+			<field name="code">5765</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">��׺޲z�O</field>
+		
+		</record>
+		<record id="chart5780" model="account.account.template">
+			<field name="code">5780</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�q�H�O</field>
+		
+		</record>
+		<record id="chart5781" model="account.account.template">
+			<field name="code">5781</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">���s�u�O</field>
+		
+		</record>
+		<record id="chart5785" model="account.account.template">
+			<field name="code">5785</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�ȶO�ήT��</field>
+		
+		</record>
+		<record id="chart5790" model="account.account.template">
+			<field name="code">5790</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�u��</field>
+		
+		</record>
+		<record id="chart5795" model="account.account.template">
+			<field name="code">5795</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">��U�O</field>
+		
+		</record>
+		<record id="chart5800" model="account.account.template">
+			<field name="code">5800</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">�v�Q��</field>
+		
+		</record>
+		<record id="cn_trad_a_pay" model="account.account.template">
+			<field name="code">5810</field>
+			<field name="reconcile" eval="False"/>
+		
+			<field name="parent_id" ref="chart0"/>
+			<field name="type">other</field>
+			<field name="user_type" ref="account_type_expense" />
+			<field name="name">Foreign Exchange Loss</field>
+		
+		</record>
+		
+		<!-- Chart template -->
+	
+		<record id="cn_trad_chart_template" model="account.chart.template">
+		    <field name="name">China Traditional - Chart of Accounts</field>
+		    <field name="account_root_id" ref="chart0"/>
+		    <field name="tax_code_root_id" ref="vat_code_tax"/>
+		    <field name="bank_account_view_id" ref="cn_trad_a_cash"/> <!-- To be corrected,possibly -->
+		    <field name="property_account_receivable" ref="cn_trad_a_recv"/>
+	        <field name="property_account_payable" ref="cn_trad_a_pay"/>
+	        <field name="property_account_expense_categ" ref="cn_trad_a_expense"/>
+	        <field name="property_account_income_categ" ref="cn_trad_a_income"/>
+		</record>
+	</data>
 </openerp>

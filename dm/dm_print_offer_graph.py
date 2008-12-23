@@ -42,9 +42,7 @@ def graph_get(cr, uid, graph, offer_id):
         trans_obj =  pooler.get_pool(cr.dbname).get('ir.translation')
         res_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
                            user_lang or 'en_US',[step.type.id])
-        print "res_trans : ",res_trans
         type_code = res_trans[step.type.id] or step.type.code
-        print "type_code : ",type_code
 
         args['label'] = type_code
         graph.add_node(pydot.Node(step.id, **args))
@@ -54,9 +52,7 @@ def graph_get(cr, uid, graph, offer_id):
 #            tr_cond_trans = trans_obj._get_ids(cr, uid, 'dm.offer.transition,condition', 'model',
 #                                       user_lang or 'en_US',[step.type.id])
 
-#            tr_condition = 
-#            tr_condition = 
-#            tr_delay_unit =
+#           Wainting for analysis to be complated
 
             trargs = {
 #                'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay) + ' days'

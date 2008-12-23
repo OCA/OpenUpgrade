@@ -20,14 +20,16 @@
 #
 ##############################################################################
 {
-    "name" : "Netherlands",
+    "name" : "Netherlands - Chart of Accounts",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
+    "category" : "Localisation/Account Charts",
     "depends" : ["account", "base_iban", "base_vat", "account_chart"],
     "demo_xml" : [],
-    "update_xml" : ['../account_chart/account_chart.xml', 'account_tax_code.xml',
-        "account_chart.xml", 'account_tax.xml'],
+    "update_xml" : [
+#                    '../account_chart/account_chart.xml', #Cannot run this file if demo data is installed.
+                    'account_tax_code.xml', "account_chart.xml",
+                    'account_tax.xml', 'l10n_chart_nl_wizard.xml'],
     "installable": True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

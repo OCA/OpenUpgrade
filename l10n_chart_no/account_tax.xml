@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data noupdate="1">
-<record id="tax1" model="account.tax">
-	<field name="name">Utgående 24% mva(24.0%)</field>
+<record id="tax1" model="account.tax.template">
+	<field name="chart_template_id" ref="no_chart_template"/>
+	<field name="name">Utgï¿½ende 24% mva(24.0%)</field>
 	<field name="amount">0.240000</field>
 	<field name="type">percent</field>
 	<field name="account_collected_id" ref="chart2710"/>
@@ -12,8 +13,9 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax2" model="account.tax">
-	<field name="name">Utgående 12% mva(12.0%)</field>
+<record id="tax2" model="account.tax.template">
+	<field name="chart_template_id" ref="no_chart_template"/>
+	<field name="name">Utgï¿½ende 12% mva(12.0%)</field>
 	<field name="amount">0.120000</field>
 	<field name="type">percent</field>
 	<field name="account_collected_id" ref="chart2715"/>
@@ -23,8 +25,9 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax3" model="account.tax">
-	<field name="name">Inngående 24% mva(24.0%)</field>
+<record id="tax3" model="account.tax.template">
+	<field name="chart_template_id" ref="no_chart_template"/>
+	<field name="name">Inngï¿½ende 24% mva(24.0%)</field>
 	<field name="amount">0.240000</field>
 	<field name="type">percent</field>
 	<field name="account_collected_id" ref="chart2720"/>
@@ -34,8 +37,9 @@
 	<field name="ref_base_code_id" ref="vat_code_receivable_net"/>
 	<field name="ref_tax_code_id" ref="vat_code_payable"/>
 </record>
-<record id="tax4" model="account.tax">
-	<field name="name">Inngående 12% mva(12.0%)</field>
+<record id="tax4" model="account.tax.template">
+	<field name="chart_template_id" ref="no_chart_template"/>
+	<field name="name">Inngï¿½ende 12% mva(12.0%)</field>
 	<field name="amount">0.120000</field>
 	<field name="type">percent</field>
 	<field name="account_collected_id" ref="chart2725"/>
