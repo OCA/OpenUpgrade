@@ -20,13 +20,14 @@
 #
 ##############################################################################
 {
-    "name" : "Colombia",
+    "name" : "Colombia - Chart of Accounts",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
+    "category" : "Localisation/Account Charts",
     "depends" : ["account", "account_chart"],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml'],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",
+                    'account_tax.xml','l10n_chart_co_wizard.xml'],
     "active": False,
     "installable": True
 }

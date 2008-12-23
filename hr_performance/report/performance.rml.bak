@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Italic" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P2" fontName="Times-BoldItalic" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P3" fontName="Times-BoldItalic" fontSize="10.0" leading="13" alignment="RIGHT"/>
+    <paraStyle name="P4" fontName="Times-BoldItalic" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Times-Bold" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="16.0" leading="20" alignment="CENTER"/>
+    <paraStyle name="P7" fontName="Times-BoldItalic" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="16.0" leading="20" alignment="CENTER"/>
+    <paraStyle name="P9" fontName="Times-BoldItalic" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Italic" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
+  </stylesheet>
+  <story>
+    <para style="Text body"/>
+    <para style="P8">HR Performance Report</para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">[[ repeatIn(objects,'o') ]]</para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2"><font color="white"> .........</font><font color="white"> .........</font>Date From : [[ o.date_from]] <font color="white"> .........</font><font color="white"> .........</font><font color="white"> .........</font><font color="white"> .........</font> Date To : [[ o.date_from]]</para>
+    <para style="P2">[[ repeatIn(o.performance_id,'per')]]<font color="white"> .........</font></para>
+    <para style="P2"/>
+    <para style="P2"><font color="white"> .........</font>Employee : [[per.employee_id.name ]]</para>
+    <blockTable colWidths="241.0,241.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P5">Attribute </para>
+        </td>
+        <td>
+          <para style="P5">Marks</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="241.0,241.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P4">[[ repeatIn(per.attribute_line,'attr')]] </para>
+          <para style="P4">[[ attr.attribute_id.name]] </para>
+        </td>
+        <td>
+          <para style="P4">[[ attr.obtained_marks or '0']]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="482.0" style="Table3">
+      <tr>
+        <td>
+          <para style="P3">Total Obtained Marks: [[per.total or '0']]</para>
+          <para style="P3">Performance in (%) : [[per.performance or '0']]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2"/>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> .........</font>
+      <font color="white"> .........</font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P7"/>
+    <para style="P2"/>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> .........</font>
+      <font color="white"> .........</font>
+    </para>
+    <para style="Text body">
+      <font color="white"> </font>
+    </para>
+    <para style="Text body">
+      <font color="white"> </font>
+    </para>
+    <para style="Standard">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,14 +20,14 @@
 #
 ##############################################################################
 {
-    "name" : "Simple account chart",
+    "name" : "Simple Account Chart",
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Localisation/Europe",
     "depends" : ["account", "account_chart"],
     "init_xml" : [],
     "demo_xml" : ["account_demo.xml","account.analytic.line.csv"],
-    "update_xml" : ["account_pcmn_belgium.xml"],
+    "update_xml" : ["account_pcmn_belgium.xml","l10n_simple_wizard.xml"],
     "active": False,
     "installable": True
 }

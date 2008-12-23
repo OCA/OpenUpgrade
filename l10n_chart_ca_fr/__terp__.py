@@ -20,13 +20,14 @@
 #
 ##############################################################################
 {
-    "name" : "Canadian - French",
+    "name" : "Canadian - French - Chart of Acounts",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
-    "depends" : ["account", "account_chart"],
+    "category" : "Localisation/Account Charts",
+    "depends" : ["account_chart"],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml'],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",
+                    'account_tax.xml',"l10n_chart_ca_fr_wizard.xml"],
     "active": False,
     "installable": True
 }

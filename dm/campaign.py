@@ -926,11 +926,17 @@ class dm_customers_list(osv.osv):
         'per_thousand_price' : fields.float('Price per Thousand',digits=(16,2)),
         'delivery_cost' : fields.float('Delivery Cost',digits=(16,2)),
         'selection_cost' : fields.float('Selection Cost Per Thousand',digits=(16,2)),
-        'broker_cost' : fields.float('Broker Cost',digits=(16,2)),
+        'broker_cost' : fields.float('Broker Cost',digits=(16,2),
+                    help='The amount given to the broker for the list renting'),
         'broker_discount' : fields.float('Broker Discount (%)',digits=(16,2)),
         'other_cost' : fields.float('Other Cost',digits=(16,2)),
-        'invoice_base' : fields.selection([('net','Net Addresses Quantity'),('raw','Raw Addresses Quantity')],'Invoicing based on'),
-        'recruiting_origin' : fields.many2one('dm.customers_list.recruit_origin','Recruiting Origin'),
+        'invoice_base' : fields.selection([('net','Net Addresses Quantity'),('raw','Raw Addresses Quantity')],'Invoicing based on',
+                    help='Net or raw quantity on which is based the final invoice depending of the term negociated with the broker.\n' \
+                            'Net : Usable quantity after deduplication\n' \
+                            'Raw : Delivered quantity\n' \
+                            'Real : Realy used qunatity'),
+        'recruiting_origin' : fields.many2one('dm.customers_list.recruit_origin','Recruiting Origin',
+                    help='Origin of the recruiting of the adresses'),
         'list_type' : fields.many2one('dm.customers_list.type','Type'),
         'update_frq' : fields.integer('Update Frequency'),
         'notes': fields.text('Description'),
@@ -1596,11 +1602,6 @@ class dm_campaign_purchase_line(osv.osv):
                             wf_service = netsvc.LocalService("workflow")
                             wf_service.trg_validate(uid, 'purchase.order', purchase_id, 'purchase_confirm', cr)
 
-                            for propo in obj.proposition_ids:
-                                for segment in propo.segment_ids:
-                                    if segment.customers_list_id == list:
-                                        print "segment : %s - list : %s" % (segment.name,list.name)
-
                             """Creare a PO line / segment for that Customers List"""
                             lines = []
                             if pline.campaign_group_id:
@@ -1625,7 +1626,6 @@ class dm_campaign_purchase_line(osv.osv):
 
                                                 """Compute price"""
                                                 price = ((list.per_thousand_price / 1000) * ((100 - list.broker_discount) / 100) * (list.selection_cost / 1000)) + list.delivery_cost + list.other_cost
-                                                print "Price : ", price
                                                 line = self.pool.get('purchase.order.line').create(cr, uid, {
                                                    'order_id': purchase_id,
                                                    'name': line_name,
@@ -1658,7 +1658,6 @@ class dm_campaign_purchase_line(osv.osv):
 
                                             """Compute price"""
                                             price = ((list.per_thousand_price / 1000) * ((100 - list.broker_discount) / 100) * (list.selection_cost / 1000)) + list.delivery_cost + list.other_cost
-                                            print "Price : ", price
                                             line = self.pool.get('purchase.order.line').create(cr, uid, {
                                                'order_id': purchase_id,
                                                'name': line_name,
@@ -1726,6 +1725,7 @@ class dm_campaign_purchase_line(osv.osv):
         for pline in self.browse(cr, uid, ids):
             delivered=False
             ordered=False
+            print 'pline po ids : ',pline.purchase_order_ids
             if pline.purchase_order_ids:
                 for po in pline.purchase_order_ids:
                     if delivered:
@@ -1952,17 +1952,6 @@ class project_task(osv.osv):
     }
 
 project_task()
-
-
-class product_product(osv.osv):
-    _name = "product.product"
-    _inherit = "product.product"
-
-    _columns = {
-        'list_country_id': fields.many2one('res.country','List for Country'),
-    }
-
-product_product()
 
 
 #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

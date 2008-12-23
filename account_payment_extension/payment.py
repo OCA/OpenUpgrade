@@ -108,6 +108,12 @@ class payment_order(osv.osv):
                 result[rec.id] = ""
         return result
 
+    def _name_get(self, cr, uid, ids, field_name, arg, context={}):
+        result = {}
+        for rec in self.browse(cr, uid, ids, context):
+            result[rec.id] = rec.reference
+        return result
+
     _columns = {
         'type': fields.selection([
             ('payable','Payable'),
@@ -115,11 +121,25 @@ class payment_order(osv.osv):
             ],'Type', readonly=True, select=True),
         # invisible field to filter payment order lines by payment type
         'payment_type_name': fields.function(_payment_type_name_get, method=True, type="char", size="64", string="Payment type name"),
+        # The field name is necessary to add attachement documents to payment orders
+        'name': fields.function(_name_get, method=True, type="char", size="64", string="Name"),
     }
     _defaults = {
         'type': _get_type,
         'reference': _get_reference,
     }
+
+    def unlink(self, cr, uid, ids):
+        pay_orders = self.read(cr, uid, ids, ['state'])
+        unlink_ids = []
+        for t in pay_orders:
+            if t['state'] in ('draft', 'cancel'):
+                unlink_ids.append(t['id'])
+            else:
+                raise osv.except_osv(_('Invalid action!'), _('Cannot delete payment order(s) which are already confirmed or done!'))
+        osv.osv.unlink(self, cr, uid, unlink_ids)
+        return True
+
 payment_order()
 
 

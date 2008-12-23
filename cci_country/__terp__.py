@@ -26,11 +26,11 @@
     "website" : "http://www.ccilv.be",
     "category" : "Generic Modules/CCI",
     "description": """
-        For some applications in the OpenERP software used by some belgain Chamber of Commerce,
+        For some applications in the OpenERP software used by some Belgian Chamber of Commerce,
         we need a table regrouping countries and areas (group of countries). The table used by
-        defaut in openERP doesn't answer to this need, because it's used in other and we need to
+        default in OpenERP doesn't answer to this need, because it's used in other and we need to
         specify if this code can be used in some cases or others
-        This table is by evidence very specific to the Chamber of Commerce dedicated modules
+        This table is by evidence very specific to the Chamber of Commerce dedicated modules.
     """,
     "depends" : ["base"],
     "init_xml" : [],
