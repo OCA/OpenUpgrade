@@ -13,8 +13,9 @@ if __name__<>"package":
     from LoginTest import *
     from lib.error import *
     from lib.tools import *
-    database="placement1"
+    database="test"
     uid = 3
+    
 
 class ExportToRML( unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
@@ -35,27 +36,23 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         if not doc.hasLocation():
             mytype = Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
             doc.storeAsURL("file://"+tmpsxw,mytype)
-
-	data = read_data_from_file( get_absolute_file_path( doc.getURL()[7:] ) )
-
+        data = read_data_from_file( get_absolute_file_path( doc.getURL()[7:] ) )
+        file_type = doc.getURL()[7:].split(".")[-1]
         if docinfo.getUserFieldValue(2) == "":
             ErrorDialog("Please Save this file on server","Use Send To Server Option in OpenERP Report Menu","Error")
             exit(1)
-
-	filename = self.GetAFileName()
-	if not filename:
-	    exit(1)
-
+    	filename = self.GetAFileName()
+    	if not filename:
+    	    exit(1)
         global passwd
         self.password = passwd
-
         try:
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
-	    if res['report_rml_content']:
-		write_data_to_file( get_absolute_file_path( filename[7:] ), res['report_rml_content'] )
+            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data),file_type)
+            if res['report_rml_content']:
+                write_data_to_file( get_absolute_file_path( filename[7:] ), res['report_rml_content'] )
         except Exception,e:
-	    ErrorDialog("Can't save the file to the hard drive.", "Exception: %s" % e, "Error" )
+	           ErrorDialog("Can't save the file to the hard drive.", "Exception: %s" % e, "Error" )
 
     def GetAFileName(self):
         sFilePickerArgs = Array(10)
