@@ -279,11 +279,15 @@ class profile_game_retail_phase_one(osv.osv):
          self.pool.get('wizard.multi.charts.accounts').action_create(cr, uid, [wiz_id], context)
          inc_acc_id = self.pool.get('account.account').search(cr, uid, [('user_type','ilike','Income')])[0]
          exp_acc_id = self.pool.get('account.account').search(cr, uid, [('user_type','ilike','Expense')])[0]
-         prod_ids = self.pool.get('product.product').search(cr, uid, [])
-         for product in prod_ids:
+         debit_ac = self.pool.get('account.account').search(cr, uid, [('code','ilike','401100')])[0]
+         credit_ac = self.pool.get('account.account').search(cr, uid, [('code','ilike','411100')])[0]
+         for journal in self.pool.get('account.journal').search(cr, uid, []):
+             self.pool.get('account.journal').write(cr, uid, journal, {'default_debit_account_id':debit_ac,
+                                                                 'default_credit_account_id':credit_ac})
+         for product in self.pool.get('product.product').search(cr, uid, []):
              self.pool.get('product.product').write(cr, uid, product,
                           {'property_account_income':inc_acc_id,'property_account_expense':exp_acc_id})
-         return
+         return True
 
     def remove_fiscal_years(self, cr, uid, ids, context):
         fy_id = self.pool.get('account.fiscalyear').search(cr, uid, [])
@@ -291,7 +295,7 @@ class profile_game_retail_phase_one(osv.osv):
             period_ids = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id','=',year.id)])
             self.pool.get('account.period').unlink(cr, uid, period_ids)
             self.pool.get('account.fiscalyear').unlink(cr, uid, year.id)
-        return
+        return True
 
     def confirm(self, cr, uid, ids, context={}):
         self.generate_account_chart(cr, uid, ids, context)

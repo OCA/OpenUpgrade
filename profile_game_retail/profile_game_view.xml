@@ -243,13 +243,13 @@
 	                		</group>
 		                 </page>
 		                 <page string="Traceback [Current Year]">
-		                       <field name="cy_traceback" nolabel="1" colspan="4"/>
+		                       <field name="cy_traceback" nolabel="1" colspan="4" widget="text_wiki"/>
 						</page>
 						<page string="Warnings &amp; Errors">
-		                       <field name="warn_error" nolabel="1" colspan="4"/>
+		                       <field name="warn_error" nolabel="1" colspan="4" widget="text_wiki"/>
 						</page>
 						<page string="Traceback [All Years]">
-		                       <field name="ay_traceback" nolabel="1" colspan="4"/>
+		                       <field name="ay_traceback" nolabel="1" colspan="4" widget="text_wiki"/>
 						</page>
 					</notebook>
                 </form>
