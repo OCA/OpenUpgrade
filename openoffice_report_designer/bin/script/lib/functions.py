@@ -55,24 +55,23 @@ def getList(aObjectList,host,count):
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     sItem=oPar.Items[1]
-		    if sItem[sItem.find("(")+1:sItem.find(",")]=="objects":
-			sMain = sItem[sItem.find(",'")+2:sItem.find("')")]
-            oParEnum = doc.getTextFields().createEnumeration()
-            aObjectList.append("List of " + docinfo.getUserFieldValue(3))
-            while oParEnum.hasMoreElements():
-                oPar = oParEnum.nextElement()
-                if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
-                    sItem=oPar.Items[1]
-		    if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn":
-			if sItem[sItem.find("(")+1:sItem.find(",")]=="objects":
-			    aObjectList.append(sItem[sItem.rfind(",'")+2:sItem.rfind("')")] + "(" + docinfo.getUserFieldValue(3) + ")")
-                        else:
-			    sTemp=sItem[sItem.find("(")+1:sItem.find(",")]
-			    if sMain == sTemp[:sTemp.find(".")]:
-				getRelation(docinfo.getUserFieldValue(3), sItem[sItem.find(".")+1:sItem.find(",")], sItem[sItem.find(",'")+2:sItem.find("')")],aObjectList,host)
-                            else:
-				sPath=getPath(sItem[sItem.find("(")+1:sItem.find(",")], sMain)
-				getRelation(docinfo.getUserFieldValue(3), sPath[sPath.find(".")+1:], sItem[sItem.find(",'")+2:sItem.find("')")],aObjectList,host)
+                    if sItem[sItem.find("(")+1:sItem.find(",")]=="objects":
+                        sMain = sItem[sItem.find(",'")+2:sItem.find("')")]
+                        oParEnum = doc.getTextFields().createEnumeration()
+                        while oParEnum.hasMoreElements():
+                            oPar = oParEnum.nextElement()
+                            if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+                                sItem=oPar.Items[1]
+                                if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn":
+                                    if sItem[sItem.find("(")+1:sItem.find(",")]=="objects":
+                                        aObjectList.append(sItem[sItem.rfind(",'")+2:sItem.rfind("')")] + "(" + docinfo.getUserFieldValue(3) + ")")
+                                    else:
+                                        sTemp=sItem[sItem.find("(")+1:sItem.find(",")]
+                                        if sMain == sTemp[:sTemp.find(".")]:
+                                            getRelation(docinfo.getUserFieldValue(3), sItem[sItem.find(".")+1:sItem.find(",")], sItem[sItem.find(",'")+2:sItem.find("')")],aObjectList,host)
+                                        else:
+                                            sPath=getPath(sItem[sItem.find("(")+1:sItem.find(",")], sMain)
+                                            getRelation(docinfo.getUserFieldValue(3), sPath[sPath.find(".")+1:], sItem[sItem.find(",'")+2:sItem.find("')")],aObjectList,host)
     else:
         aObjectList.append("List of " + docinfo.getUserFieldValue(3))
 
