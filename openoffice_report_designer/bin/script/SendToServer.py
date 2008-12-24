@@ -14,8 +14,9 @@ if __name__<>'package':
     from lib.functions import *
     from lib.tools import *
     from LoginTest import *
-    database="test"
+    database="dm"
     uid = 3
+   
 #
 #
 class SendtoServer(unohelper.Base, XJobExecutor):
@@ -99,7 +100,6 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             fp_name = tempfile.mktemp('.'+"sxw")
             if not oDoc2.hasLocation():
                 oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
-
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             if docinfo.getUserFieldValue(2)=="":
                 name=self.win.getEditText("txtName"),
@@ -124,19 +124,18 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 except Exception,e:
                    ErrorDialog(" Report Error\n\n",e,"Error Message")
             else:
-
+                
                 id = docinfo.getUserFieldValue(2)
                 vId = sock.execute(database, uid, self.password, 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
                 rec = { 'name': self.win.getEditText("txtReportName") }
                 res = sock.execute(database, uid, self.password, 'ir.values' , 'write',vId,rec)
-
             oDoc2.store()
             data = read_data_from_file( get_absolute_file_path( oDoc2.getURL()[7:] ) )
             self.getInverseFieldsRecord(0)
-
             #sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
 
+            file_type = oDoc2.getURL()[7:].split(".")[-1]
+            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),file_type,{})
             params = {
                 'name': self.win.getEditText("txtName"),
                 'model': docinfo.getUserFieldValue(3),
@@ -144,6 +143,8 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 'header': (self.win.getCheckBoxState("chkHeader") <> 0),
                 'report_type': self.Kind[self.win.getListBoxSelectedItem("lstResourceType")],
             }
+            if self.win.getListBoxSelectedItem("lstResourceType")=='OpenOffice':
+                params['report_type']=file_type
             res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
             self.win.endExecute()
         else:
