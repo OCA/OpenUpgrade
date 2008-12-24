@@ -125,7 +125,7 @@ class bank_loan(osv.osv):
                 'name':fields.char('Name',size=64),
                 'loan_duration' : fields.float('Number of Years', help="Loan duration in years"),
                 'loan_amount' : fields.float('Loan Amount',  help="Loan Amount"),
-                'rate' : fields.float('Interest Rate',help="Interest Rate"),
+                'rate' : fields.float('Interest Rate',help="Interest Rate",readonly=True),
                 'total_amount' : fields.function(_compute,method = True,  store= True, string ='Total Amount', help="Total Amount to be paid",readonly=True),
                 'reimburse_principle_amt_without_int' : fields.float('Reimburse amount[without Interest]',  help="Reimburse loan amount per month without interest"),
                 'reimburse_principle_amt_with_int' : fields.float('Reimburse amount [with Interest]', help="Reimburse loan amount per month with interest"),
@@ -177,7 +177,6 @@ class profile_game_retail(osv.osv):
                 res[val.id] = {}.fromkeys(field_names, 0.0)
 
             fiscalyear_id = fiscal_obj.search(cr, uid, [('state','=','draft')])
-            print "fiscalyear_id ",fiscalyear_id
             fiscalyear = fiscal_obj.browse(cr,uid,fiscalyear_id)[0]
             cur_year = int(fiscalyear.code)
             prev_fy_datestart = date(cur_year - 1,01,01)
@@ -585,12 +584,15 @@ class profile_game_retail(osv.osv):
         return
 
     def create_fiscalyear_and_period(self,cr, uid, ids, context={}, interval=1):
-        period = self.pool.get('account.fiscalyear').search(cr, uid, [])
-        period = int(self.pool.get('account.fiscalyear').browse(cr, uid, period[len(period)-1]).code[2:]) + 1
-        start_date = datetime.date(period,1,1)
-        stop_date = datetime.date(period,12,31)
+        fys = self.pool.get('account.fiscalyear').search(cr, uid, [])
+        if len(fys):
+            new_fy = int(self.pool.get('account.fiscalyear').browse(cr, uid, fys[len(fys)-1]).code) + 1
+        else:
+            new_fy = int(time.strftime('%Y'))
+        start_date = datetime.date(new_fy,1,1)
+        stop_date = datetime.date(new_fy,12,31)
         fiscal_id = self.pool.get('account.fiscalyear').create(cr, uid,
-                    {'name':'Fiscal Year %d'%(period),'code': 'FY%d'%(period),'date_start': start_date,
+                    {'name':'%d'%(new_fy),'code': '%d'%(new_fy),'date_start': start_date,
                     'date_stop': stop_date})
 
         ds = mx.DateTime.strptime(str(start_date), '%Y-%m-%d')
@@ -614,47 +616,42 @@ class profile_game_retail(osv.osv):
         id = self.pool.get('account.fiscalyear').search(cr, uid, [('code','=',prev_fy)])
         self.pool.get('account.fiscalyear').write(cr, uid, id,{'state':'done'})
         periods = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id','in',id)])
-        #print ":::::::::periods:",periods,self.pool.get('account.fiscalyear').browse(cr, uid, periods)
         for period in self.pool.get('account.fiscalyear').browse(cr, uid, periods):
             self.pool.get('account.period').write(cr, uid, period.id, {'state':'done'})
         return
 
     def create_monthly_sale_periods(self, cr, uid, ids, context):
         period = self.pool.get('stock.period').search(cr, uid, [])
-        period = int(self.pool.get('stock.period').browse(cr, uid, period[len(period)-1]).name[:4]) + 1
-        start_date = datetime.date(period,1,1)
-        stop_date = datetime.date(period,12,31)
-        ds = mx.DateTime.strptime(str(start_date), '%Y-%m-%d')
-        while ds.strftime('%Y-%m-%d') < str(stop_date):
-            de = ds + RelativeDateTime(months=1, days=-1)
-            self.pool.get('stock.period').create(cr, uid, {
-                'name': ds.strftime('%Y/%m'),
-                'date_start': ds.strftime('%Y-%m-%d'),
-                'date_stop': de.strftime('%Y-%m-%d'),
+        self.pool.get('stock.period').write(cr, uid, period[len(period)-1],{'state':'close'})
+        period = int(self.pool.get('stock.period').browse(cr, uid, period[len(period)-1]).name) + 1
+        start_date = mx.DateTime.strptime(str(datetime.date(period,1,1)), '%Y-%m-%d')
+        stop_date = mx.DateTime.strptime(str(datetime.date(period,12,31)), '%Y-%m-%d')
+        sale_period_id = self.pool.get('stock.period').create(cr, uid, {
+                'name': start_date.strftime('%Y'),
+                'date_start': start_date.strftime('%Y-%m-%d'),
+                'date_stop': stop_date.strftime('%Y-%m-%d'),
+                'state':'open'
             })
-            ds = ds + RelativeDateTime(months=1)
         return
 
-    def create_sale_forecast_stock_planning_data(self, cr, uid, data, syear, context):
+    def create_sale_forecast_stock_planning_data(self, cr, uid, ids, syear, context):
         user_id = self.pool.get('res.users').search(cr, uid, [('login','ilike','sale')])[0]
-        period = self.pool.get('stock.period').search(cr, uid, [('name', 'ilike', syear),('state','=','open')])[0]
+        period = self.pool.get('stock.period').search(cr, uid, [('name', '=', syear)])[0]
         prod_ids = self.pool.get('product.product').search(cr, uid, [])
-
         for product in self.pool.get('product.product').browse(cr, uid, prod_ids):
             self.pool.get('stock.planning.sale.prevision').create(cr, uid,{'user_id':user_id,
                                 'period_id':period,'product_id':product.id,'product_qty':0.00,
                                 'product_uom':product.product_tmpl_id.uom_id.id})
-            self.pool.get('stock.planning').create(cr, uid,{'period_id':period,'product_id':product.id,
-                'planned_outgoing':0.0,'to_procure':0.0,'product_uom':product.product_tmpl_id.uom_id.id})
+            if product.product_tmpl_id.procure_method == 'make_to_stock':
+                self.pool.get('stock.planning').create(cr, uid,{'period_id':period,'product_id':product.id,
+                    'planned_outgoing':0.0,'to_procure':0.0,'product_uom':product.product_tmpl_id.uom_id.id})
         return
 
     def continue_next_year(self, cr, uid, ids, context):
         fiscal_year_id = self.create_fiscalyear_and_period(cr, uid, ids, context)
         fy = self.pool.get('account.fiscalyear').browse(cr, uid, fiscal_year_id)
-
         self.create_monthly_sale_periods(cr, uid, ids, context)
-
-        self.create_sale_forecast_stock_planning_data(cr, uid, data, fy.code, context)
+        self.create_sale_forecast_stock_planning_data(cr, uid, ids, fy.code, context)
 
         partner_ids = self.pool.get('res.partner').search(cr,uid,[])
         prod_ids = self.pool.get('product.product').search(cr,uid,[])
@@ -663,7 +660,6 @@ class profile_game_retail(osv.osv):
 
         ## Create Random number of sale orders ##
         for period in fy.period_ids:
-
             for i in range(0,random.randrange(10)):
                 partner = random.randrange(len(partner_ids))
                 partner_addr = self.pool.get('res.partner').address_get(cr, uid, [partner_ids[partner]],
@@ -695,10 +691,11 @@ class profile_game_retail(osv.osv):
                     value['order_id'] = new_id
                     self.pool.get('sale.order.line').create(cr, uid, value)
                 wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
-                wf_service.trg_validate(uid, 'sale.order', new_id, 'manual_invoice', cr)
-            proc_obj = self.pool.get('mrp.procurement')
-            proc_obj.run_scheduler(cr, uid, automatic = True, use_new_cursor = cr.dbname)
-
+            #    wf_service.trg_validate(uid, 'sale.order', new_id, 'manual_invoice', cr)
+           # proc_obj = self.pool.get('mrp.procurement')
+           # proc_obj.run_scheduler(cr, uid, automatic = True, use_new_cursor = cr.dbname)
+#            pr_ids = self.pool.get('stock.planning').search(cr, uid, [])
+#            self.pool.get('stock.planning').procure_incomming_left(cr, uid, pr_ids, context)
             self.confirm_draft_po(cr, uid, ids, context)
             self.confirm_draft_supplier_invoice(cr, uid, ids, context)
             self.pay_supplier_invoice(cr, uid, ids, od, context)
