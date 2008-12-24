@@ -13,7 +13,7 @@ if __name__<>'package':
     from lib.gui import *
     from lib.error import *
     from LoginTest import *
-    database="test_001"
+    database="test"
     uid = 3
 
 #
@@ -84,8 +84,9 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             id = self.report_with_id[ selectedItemPos ][0]
 
             res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'report_get', id)
-
-            fp_name = tempfile.mktemp('.'+"sxw")
+            file_type = res['file_type'] or 'sxw'
+                
+            fp_name = tempfile.mktemp('.'+file_type)
             fp_name1="r"+fp_name
             fp_path=os.path.join(fp_name1).replace("\\","/")
             fp_win=fp_path[1:]
