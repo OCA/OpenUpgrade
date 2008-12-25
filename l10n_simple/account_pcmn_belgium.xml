@@ -320,7 +320,7 @@
 		<field name="user_type" ref="l10n_simple.account_type_cash"/>
 		<field name="parent_id" ref="a4"/>
 	</record>
-	<record model="account.account.template" id="account.cash">
+	<record model="account.account.template" id="petty_cash">
 		<field name="name">Petty Cash</field>
 		<field name="code">57</field>
 		<field name="type">other</field>
@@ -558,6 +558,7 @@
 #
 	<record model="account.tax.code.template" id="vat_tax_root">
 		<field name="name">Tax</field>
+		<field name="parent_id" eval="False"/>
 	</record>
 	<record model="account.tax.code.template" id="vat_code_a82">
 		<field name="name">A82</field>
@@ -638,7 +639,6 @@
         <field name="property_account_payable" ref="simple_a_pay"/>
         <field name="property_account_expense_categ" ref="simple_a_expense"/>
         <field name="property_account_income_categ" ref="simple_a_sale"/>
-
 	</record>
 
 		#

@@ -26,7 +26,7 @@
     "category" : "Localisation/Account charts",
     "depends" : ["account", "base_iban", "base_vat", "account_chart"],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml'],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml','l10n_chart_pl_wizard.xml'],
     "active": False,
     "installable": True
 }

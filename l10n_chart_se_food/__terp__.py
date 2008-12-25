@@ -20,13 +20,14 @@
 #
 ##############################################################################
 {
-    "name" : "Sweden - Food industries",
+    "name" : "Sweden - Food industries - Chart of Accounts",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
+    "category" : "Localisation/Account Charts",
     "depends" : ["account", "base_iban", "base_vat", "account_chart"],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml'],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",
+                    'account_tax.xml','se_food_wizard.xml'],
     "active": False,
     "installable": True
 }

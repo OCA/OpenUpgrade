@@ -443,7 +443,7 @@ Le JackHammer est le subwoofer anniversaire pour celebrer les 35 ans d’MTX. Da
             <field name="product_min_qty">5.0</field>
             <field model="product.uom" name="product_uom" search="[]"/>
             <field model="stock.warehouse" name="warehouse_id" search="[]"/>
-            <field model="product.product" name="product_id" search="[('default_code','=','LU1200')]"/>
+            <field model="product.product" name="product_id" search="[('default_code','=','HT-SF2000')]"/>
             <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
         </record>
 		<record id="stock_warehouse_min_rules_5" model="stock.warehouse.orderpoint">
@@ -451,7 +451,7 @@ Le JackHammer est le subwoofer anniversaire pour celebrer les 35 ans d’MTX. Da
             <field name="product_min_qty">100.0</field>
             <field model="product.uom" name="product_uom" search="[]"/>
             <field model="stock.warehouse" name="warehouse_id" search="[]"/>
-            <field model="product.product" name="product_id" search="[('default_code','=','KCONF')]"/>
+            <field model="product.product" name="product_id" search="[('default_code','=','HT-SF1300')]"/>
             <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
         </record>
         <record id="stock_warehouse_min_rules_6" model="stock.warehouse.orderpoint">
@@ -459,15 +459,7 @@ Le JackHammer est le subwoofer anniversaire pour celebrer les 35 ans d’MTX. Da
             <field name="product_min_qty">150.0</field>
             <field model="product.uom" name="product_uom" search="[]"/>
             <field model="stock.warehouse" name="warehouse_id" search="[]"/>
-            <field model="product.product" name="product_id" search="[('default_code','=','EC-180-180')]"/>
-            <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
-        </record>
-        <record id="stock_warehouse_min_rules_7" model="stock.warehouse.orderpoint">
-            <field name="product_max_qty">400.0</field>
-            <field name="product_min_qty">50.0</field>
-            <field model="product.uom" name="product_uom" search="[]"/>
-            <field model="stock.warehouse" name="warehouse_id" search="[]"/>
-            <field model="product.product" name="product_id" search="[('default_code','=','JH-T9922-44')]"/>
+            <field model="product.product" name="product_id" search="[('default_code','=','HT-SS1000')]"/>
             <field model="stock.location" name="location_id" search="[('name','=','Stock')]"/>
         </record>
 	</data>

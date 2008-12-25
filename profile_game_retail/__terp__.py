@@ -37,7 +37,8 @@
         "mrp_jit",
         "l10n_fr",
         "account_budget",
-        "sale_forecast"
+        "sale_forecast",
+        "product_margin"
     ],
     "init_xml":[
         "profile_game_data.xml",

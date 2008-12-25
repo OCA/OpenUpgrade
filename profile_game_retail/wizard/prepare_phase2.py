@@ -93,17 +93,8 @@ def assign_full_access_rights(self, cr, uid, data, context):
 #            'object': True
 #            })
 #    return
-def remove_fiscal_years(self, cr, uid, data, context):
-    pool = pooler.get_pool(cr.dbname)
-    fy_id = pool.get('account.fiscalyear').search(cr, uid, [])
-    for year in pool.get('account.fiscalyear').browse(cr, uid, fy_id):
-        if not ((year.code) == time.strftime('%Y')):
-            period_ids = pool.get('account.period').search(cr, uid, [('fiscalyear_id','=',year.id)])
-            pool.get('account.period').unlink(cr, uid, period_ids)
-            pool.get('account.fiscalyear').unlink(cr, uid, year.id)
-    return
 
-def create_budgets(self, cr, uid, ids, context={}):
+def create_budgets(self, cr, uid, data, context={}):
     pool = pooler.get_pool(cr.dbname)
     for code in ('HR','EXP','SAL'):
         if code == 'HR':
@@ -122,8 +113,7 @@ def create_budgets(self, cr, uid, ids, context={}):
 def get_ready_phase2(self, cr, uid, data, context):
        # create_phase2_menu(self, cr, uid, data, context)
         assign_full_access_rights(self, cr, uid, data, context)
-        remove_fiscal_years(self, cr, uid, data, context)
-        create_budgets(self,cr, uid, ids, context)
+        create_budgets(self,cr, uid, data, context)
         pool = pooler.get_pool(cr.dbname)
         phase2_obj = pool.get('profile.game.retail')
         phase2_obj.create_sale_forecast_stock_planning_data(cr, uid, data, time.strftime('%Y'), context)
