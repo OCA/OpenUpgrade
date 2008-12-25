@@ -439,6 +439,12 @@ class profile_game_retail(osv.osv):
         'warn_error':fields.text('Warnings & Errors'),
         'ay_traceback':fields.text('Traceback [All Years]'),
     }
+    _defaults = {
+        'cy_traceback' : lambda *a : "",
+        'warn_error' : lambda *a : "",
+        'ay_traceback' : lambda *a : ""
+          }
+
 
     def pay_supplier_invoice(self, cr, uid, ids, od, context):
         acc_obj = self.pool.get('account.account')
@@ -456,29 +462,27 @@ class profile_game_retail(osv.osv):
         for inv in inv_br:
             sum1 += inv.amount_total
         if sum1 > sum:
-            raise osv.except_osv(_('Warning !'),
-                        _('You cannot pay the supplier invoices as you do not have sufficient balance in your accounts \n'
-                          'Your Balance is : %d \n'
-                          'Amount to be paid :%d') % \
-                                (sum,sum1))
-        else:
-            journal = self.pool.get('account.journal').search(cr,uid,[('type','=','cash')])
-            jour_br = self.pool.get('account.journal').browse(cr,uid,journal)
-            for journl in jour_br:
-                temp_bal = journl.default_debit_account_id.balance
-                open_inv_id = inv_obj.search(cr,uid,[('state','=','open'),('type','=','in_invoice')])
-                inv_br = inv_obj.browse(cr,uid,open_inv_id)
-                for inv in inv_br:
-                    if temp_bal >= inv.amount_total:
-                        self._pay_and_reconcile(cr, uid, ids, inv.id, journl.id, inv.amount_total, od, context)
-                        temp_bal = temp_bal-inv.amount_total
-        return
+            msg = 'You do not have sufficient balance in your accounts to pay Supplier Invoices \n'\
+                  'Balance : %s \n' \
+                  'Amount to be paid :%s' % (sum,sum1)
+            self.update_messages(cr, uid, ids, msg, context)
+        journal = self.pool.get('account.journal').search(cr,uid,[('type','=','cash')])
+        jour_br = self.pool.get('account.journal').browse(cr,uid,journal)
+        for journl in jour_br:
+            temp_bal = journl.default_debit_account_id.balance
+            open_inv_id = inv_obj.search(cr,uid,[('state','=','open'),('type','=','in_invoice')])
+            inv_br = inv_obj.browse(cr,uid,open_inv_id)
+            for inv in inv_br:
+                if temp_bal >= inv.amount_total:
+                    self._pay_and_reconcile(cr, uid, ids, inv.id, journl.id, inv.amount_total, od, context)
+                    temp_bal = temp_bal-inv.amount_total
+        return True
 
     def _pay_and_reconcile(self, cr, uid, ids, invoice_id, journal_id, amount, od, context):
-        ids = self.pool.get('account.period').find(cr, uid, od, context=context)
+        p_ids = self.pool.get('account.period').find(cr, uid, od, context=context)
         period_id = False
-        if len(ids):
-           period_id = ids[0]
+        if len(p_ids):
+           period_id = p_ids[0]
         writeoff_account_id = False
         writeoff_journal_id = False
         cur_obj = self.pool.get('res.currency')
@@ -490,11 +494,12 @@ class profile_game_retail(osv.osv):
             amount = cur_obj.compute(cr, uid, journal.currency.id, invoice.company_id.currency_id.id, amount, context=ctx)
         acc_id = journal.default_credit_account_id and journal.default_credit_account_id.id
         if not acc_id:
-            raise wizard.except_wizard(_('Error !'), _('Your journal must have a default credit and debit account.'))
+            msg = 'Your journal do not have a default credit and debit account.'
+            self.update_messages(cr, uid, ids, msg, context)
         self.pool.get('account.invoice').pay_and_reconcile(cr, uid, [invoice_id],
                 amount, acc_id, period_id, journal_id, False,
                 period_id, False, context, invoice.origin)
-        return
+        return True
 
     def confirm_draft_supplier_invoice(self, cr, uid, ids, context):
         wf_service = netsvc.LocalService('workflow')
@@ -502,7 +507,7 @@ class profile_game_retail(osv.osv):
         draft_inv_id = inv_obj.search(cr,uid,[('state','=','draft'),('type','=','in_invoice')])
         for id in draft_inv_id:
             wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_open', cr)
-        return
+        return True
 
     def confirm_draft_po(self, cr, uid, ids, context):
         wf_service = netsvc.LocalService('workflow')
@@ -512,13 +517,10 @@ class profile_game_retail(osv.osv):
             brow_po = po_obj.browse(cr,uid,id)
             unpaid_inv_id = self.pool.get('account.invoice').search(cr,uid,[('state','!=','draft'),('reconciled','=',False),('partner_id','=',brow_po.partner_id.id),('type','=','in_invoice')])
             if len(unpaid_inv_id):
-                raise osv.except_osv(_('Warning !'),
-                        _('There are unpaid Supplier Invoice' \
-                                ' for the Supplier: "%s"') % \
-                                (brow_po.partner_id.name,))
-            else:
-                wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_confirm', cr)
-        return
+                msg = 'There are unpaid Supplier Invoice for the Supplier: "%s"'%(brow_po.partner_id.name,)
+                self.update_messages(cr, uid, ids, msg, context)
+            wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_confirm', cr)
+        return True
 
     def process_pickings(self, cr, uid, ids, pick_br, context):
         from stock.wizard import wizard_partial_picking
@@ -545,21 +547,21 @@ class profile_game_retail(osv.osv):
             data['model'] = 'stock.picking'
             data['id'] = picking.id
             wizard_partial_picking._do_split(self, cr, uid, data, context)
-        return
+        return True
 
     def receive_products(self, cr, uid, ids, context):
         picking_obj = self.pool.get('stock.picking')
         picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=','in')])
         pick_br = picking_obj.browse(cr,uid,picking_ids)
         self.process_pickings(cr, uid, ids, pick_br, context)
-        return
+        return True
 
     def deliver_products(self, cr, uid, ids, context):
         picking_obj = self.pool.get('stock.picking')
         picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=','out')])
         pick_br = picking_obj.browse(cr,uid,picking_ids)
         self.process_pickings(cr, uid, ids, pick_br, context)
-        return
+        return True
 
     def confirm_draft_customer_invoice(self, cr, uid, ids, context):
         wf_service = netsvc.LocalService('workflow')
@@ -567,7 +569,7 @@ class profile_game_retail(osv.osv):
         draft_inv_id = inv_obj.search(cr,uid,[('state','=','draft'),('type','=','out_invoice')])
         for id in draft_inv_id:
             wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_open', cr)
-        return
+        return True
 
     def pay_all_customer_invoice(self, cr, uid, ids, od, context):
         inv_obj = self.pool.get('account.invoice')
@@ -581,7 +583,7 @@ class profile_game_retail(osv.osv):
             maturity_date = inv.move_id.line_id[0].date_maturity
             if (not maturity_date) or (maturity_date  <= now()):
                 self._pay_and_reconcile(cr, uid, ids, inv.id, jour_br.id, inv.amount_total, od, context)
-        return
+        return True
 
     def create_fiscalyear_and_period(self,cr, uid, ids, context={}, interval=1):
         fys = self.pool.get('account.fiscalyear').search(cr, uid, [])
@@ -611,16 +613,16 @@ class profile_game_retail(osv.osv):
             ds = ds + RelativeDateTime(months=interval)
         return fiscal_id
 
-    def close_prev_fiscalyear(self, cr, uid, ids, fy, context):
-        prev_fy = 'FY' + str(int(fy.code[2:]) - 1)
-        id = self.pool.get('account.fiscalyear').search(cr, uid, [('code','=',prev_fy)])
-        self.pool.get('account.fiscalyear').write(cr, uid, id,{'state':'done'})
-        periods = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id','in',id)])
-        for period in self.pool.get('account.fiscalyear').browse(cr, uid, periods):
-            self.pool.get('account.period').write(cr, uid, period.id, {'state':'done'})
-        return
+#    def close_prev_fiscalyear(self, cr, uid, ids, fy, context):
+#        prev_fy = str(int(fy.code) - 1)
+#        id = self.pool.get('account.fiscalyear').search(cr, uid, [('code','=',prev_fy)])
+#        self.pool.get('account.fiscalyear').write(cr, uid, id,{'state':'done'})
+#        periods = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id','in',id)])
+#        for period in self.pool.get('account.fiscalyear').browse(cr, uid, periods):
+#            self.pool.get('account.period').write(cr, uid, period.id, {'state':'done'})
+#        return True
 
-    def create_monthly_sale_periods(self, cr, uid, ids, context):
+    def create_sale_periods(self, cr, uid, ids, context):
         period = self.pool.get('stock.period').search(cr, uid, [])
         self.pool.get('stock.period').write(cr, uid, period[len(period)-1],{'state':'close'})
         period = int(self.pool.get('stock.period').browse(cr, uid, period[len(period)-1]).name) + 1
@@ -632,35 +634,85 @@ class profile_game_retail(osv.osv):
                 'date_stop': stop_date.strftime('%Y-%m-%d'),
                 'state':'open'
             })
-        return
+        return True
 
     def create_sale_forecast_stock_planning_data(self, cr, uid, ids, syear, context):
         user_id = self.pool.get('res.users').search(cr, uid, [('login','ilike','sale')])[0]
         period = self.pool.get('stock.period').search(cr, uid, [('name', '=', syear)])[0]
         prod_ids = self.pool.get('product.product').search(cr, uid, [])
+        warehouse_id = self.pool.get('stock.warehouse').search(cr, uid, [])
+
         for product in self.pool.get('product.product').browse(cr, uid, prod_ids):
             self.pool.get('stock.planning.sale.prevision').create(cr, uid,{'user_id':user_id,
                                 'period_id':period,'product_id':product.id,'product_qty':0.00,
                                 'product_uom':product.product_tmpl_id.uom_id.id})
             if product.product_tmpl_id.procure_method == 'make_to_stock':
                 self.pool.get('stock.planning').create(cr, uid,{'period_id':period,'product_id':product.id,
-                    'planned_outgoing':0.0,'to_procure':0.0,'product_uom':product.product_tmpl_id.uom_id.id})
-        return
+                    'planned_outgoing':0.0,'to_procure':0.0,'product_uom':product.product_tmpl_id.uom_id.id,
+                    'warehouse_id':warehouse_id[0]})
+        return True
+
+    def procure_incomming_left(self, cr, uid, ids, cnt, context):
+        ids = self.pool.get('stock.planning').search(cr, uid, [])
+        result = {}
+        for obj in self.pool.get('stock.planning').browse(cr, uid, ids):
+            location_id = obj.warehouse_id and obj.warehouse_id.lot_stock_id.id or False
+            output_id = obj.warehouse_id and obj.warehouse_id.lot_output_id.id or False
+            if location_id and output_id:
+                move_id = self.pool.get('stock.move').create(cr, uid, {
+                                'name': obj.product_id.name[:64],
+                                'product_id': obj.product_id.id,
+                                'date_planned': obj.period_id.date_start,
+                                'product_qty': obj.stock_incoming_left / 12,
+                                'product_uom': obj.product_uom.id,
+                                'product_uos_qty': obj.stock_incoming_left / 12,
+                                'product_uos': obj.product_uom.id,
+                                'location_id': location_id,
+                                'location_dest_id': output_id,
+                                'state': 'waiting',
+                            })
+                proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
+                                'name': 'Procure left From Planning',
+                                'origin': 'Stock Planning',
+                                'date_planned': obj.period_id.date_start,
+                                'product_id': obj.product_id.id,
+                                'product_qty': obj.stock_incoming_left / 12,
+                                'product_uom': obj.product_uom.id,
+                                'product_uos_qty': obj.stock_incoming_left / 12,
+                                'product_uos': obj.product_uom.id,
+                                'location_id': obj.warehouse_id.lot_stock_id.id,
+                                'procure_method': obj.product_id.product_tmpl_id.procure_method,
+                                'move_id': move_id,
+                            })
+                wf_service = netsvc.LocalService("workflow")
+                wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
+                if cnt == 12:
+                    self.pool.get('stock.planning').write(cr, uid, obj.id,{'state':'done'})
+        return True
+
+    def update_messages(self, cr, uid, ids, msg, context):
+        prev_msg = self.read(cr, uid, ids[0],['warn_error'])
+        if prev_msg['warn_error'] == False:
+          prev_msg['warn_error'] = '\n' + '*' + msg
+        else:
+            prev_msg['warn_error'] += '\n' + '*' + msg
+        self.write(cr, uid, ids[0],{'warn_error':prev_msg['warn_error']})
+        return True
 
     def continue_next_year(self, cr, uid, ids, context):
         fiscal_year_id = self.create_fiscalyear_and_period(cr, uid, ids, context)
         fy = self.pool.get('account.fiscalyear').browse(cr, uid, fiscal_year_id)
-        self.create_monthly_sale_periods(cr, uid, ids, context)
+        self.create_sale_periods(cr, uid, ids, context)
         self.create_sale_forecast_stock_planning_data(cr, uid, ids, fy.code, context)
 
         partner_ids = self.pool.get('res.partner').search(cr,uid,[])
         prod_ids = self.pool.get('product.product').search(cr,uid,[])
         shop = self.pool.get('sale.shop').search(cr,uid,[])
         wf_service = netsvc.LocalService('workflow')
-
+        cnt = 0
         ## Create Random number of sale orders ##
         for period in fy.period_ids:
-            for i in range(0,random.randrange(10)):
+            for i in range(1,random.randrange(1,10)):
                 partner = random.randrange(len(partner_ids))
                 partner_addr = self.pool.get('res.partner').address_get(cr, uid, [partner_ids[partner]],
                                 ['invoice', 'delivery', 'contact'])
@@ -682,7 +734,7 @@ class profile_game_retail(osv.osv):
                     }
                 new_id = self.pool.get('sale.order').create(cr, uid, vals)
 
-                for j in range(0,random.randrange(5)):
+                for j in range(1,random.randrange(1,5)):
                     product = random.randrange(len(prod_ids))
                     value = self.pool.get('sale.order.line').product_id_change(cr, uid, [], pricelist,
                                     prod_ids[product], qty=i, partner_id=partner_ids[partner])['value']
@@ -691,11 +743,8 @@ class profile_game_retail(osv.osv):
                     value['order_id'] = new_id
                     self.pool.get('sale.order.line').create(cr, uid, value)
                 wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
-            #    wf_service.trg_validate(uid, 'sale.order', new_id, 'manual_invoice', cr)
-           # proc_obj = self.pool.get('mrp.procurement')
-           # proc_obj.run_scheduler(cr, uid, automatic = True, use_new_cursor = cr.dbname)
-#            pr_ids = self.pool.get('stock.planning').search(cr, uid, [])
-#            self.pool.get('stock.planning').procure_incomming_left(cr, uid, pr_ids, context)
+            cnt += 1
+            self.procure_incomming_left(cr, uid, ids, cnt, context)
             self.confirm_draft_po(cr, uid, ids, context)
             self.confirm_draft_supplier_invoice(cr, uid, ids, context)
             self.pay_supplier_invoice(cr, uid, ids, od, context)
@@ -703,7 +752,7 @@ class profile_game_retail(osv.osv):
             self.deliver_products(cr, uid, ids, context)
             self.confirm_draft_customer_invoice(cr, uid, ids, context)
             self.pay_all_customer_invoice(cr, uid, ids, od, context)
-        self.close_prev_fiscalyear(cr, uid, ids, fy, context)
+       # self.close_prev_fiscalyear(cr, uid, ids, fy, context)
         return True
 
 profile_game_retail()
