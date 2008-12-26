@@ -23,7 +23,7 @@
     "name" : "Maroc Plan comptable général pour les sociétés",
     "version" : "1.0",
     "author" : "SISatlas",
-    "category" : "Localisation/Account charts",
+    "category" : "Localisation/Account Charts",
     "website": "http://comptabilite.erp-libre.info",
     "depends" : ["base", "account"],
     "init_xml" : [],
