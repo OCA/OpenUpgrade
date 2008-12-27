@@ -310,6 +310,14 @@ class profile_game_retail_phase_one(osv.osv):
         sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
         return self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})
 
+    def check_state(self, cr, uid, context = {}):
+        curr_id = self.search(cr, uid, [])[0]
+        obj = self.browse(cr, uid, curr_id)
+        if obj.state != 'started_phase2':
+            return False
+        else:
+            return True
+
 profile_game_retail_phase_one()
 
 class sale_order(osv.osv):
