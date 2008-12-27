@@ -35,7 +35,7 @@ FIELDS = {
 field_duedate={
     'duedate': {'string':'Due Date', 'type':'date','required':True, 'default': lambda *a: time.strftime('%Y-%m-%d'),},
     }
-arch_duedate='''<?xml version="1.0"?>
+arch_duedate='''<?xml version="1.0" encoding="utf-8"?>
 <form string="Search Payment lines">
     <field name="duedate" />
 </form>'''
@@ -60,7 +60,7 @@ def search_entries(self, cr, uid, data, context):
     if payment.mode:
         domain = [('payment_type','=',payment.mode.type.name)] + domain
     line_ids = line_obj.search(cr, uid, domain, context=context)
-    FORM.string = '''<?xml version="1.0"?>
+    FORM.string = '''<?xml version="1.0" encoding="utf-8"?>
 <form string="Populate Payment:">
     <field name="entries" colspan="4" height="300" width="800" nolabel="1"
         domain="[('id', 'in', [%s])]" %s/>
