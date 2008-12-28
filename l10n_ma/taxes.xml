@@ -1,51 +1,70 @@
 <?xml version="1.0"?>
 <openerp>
 <data noupdate="True">
-<!--
-#
-# Plan comptable général
-# Mise en forme et paramétrage par http://sisatlas.com
-# version du fichier : 01-07-2007
-#
-# Définition des taux de TVA
-#
--->
-<record model="account.tax" id="tva_1">
-	<field name="name">TVA 20%</field>
-	<field name="amount" eval="0.2"/>
-	<field name="type">percent</field>
-	<field name="account_collected_id" ref="pcg_3455"/>
-	<field name="account_paid_id" ref="pcg_3456"/>
+	<!--
+	#
+	# Plan comptable général
+	# Mise en forme et paramétrage par http://sisatlas.com
+	# version du fichier : 01-07-2007
+	#
+	# Définition des taux de TVA
+	#
+	-->
+	<record model="account.tax.code.template" id="vat_ma_tax_root">
+		<field name="parent_id" eval="False"/>
+		<field name="name">Tax</field>
 	</record>
-
-<record model="account.tax" id="tva_2">
-	<field name="name">TVA 7%</field>
-	<field name="amount" eval="0.07"/>
-	<field name="type">percent</field>
-	<field name="account_collected_id" ref="pcg_3455"/>
-	<field name="account_paid_id" ref="pcg_3456"/>
+	
+	<record id="morocco_chart_template" model="account.chart.template">
+	    <field name="name">Morocco - Chart of Accounts</field>
+	    <field name="account_root_id" ref="pcg_0"/>
+	    <field name="tax_code_root_id" ref="vat_ma_tax_root"/>
+	    <field name="bank_account_view_id" ref="pcg_514"/>
+	    <field name="property_account_receivable" ref="pcg_342"/>
+	    <field name="property_account_payable" ref="pcg_341"/>
 	</record>
-
-<record model="account.tax" id="tva_3">
-	<field name="name">TVA 10%</field>
-	<field name="amount" eval="0.1"/>
-	<field name="type">percent</field>
-	<field name="account_collected_id" ref="pcg_3455"/>
-	<field name="account_paid_id" ref="pcg_3456"/>
+	
+	<record model="account.tax.template" id="tva_1">
+		<field name="name">TVA 20%</field>
+		<field name="chart_template_id" ref="morocco_chart_template"/>
+		<field name="amount" eval="0.2"/>
+		<field name="type">percent</field>
+		<field name="account_collected_id" ref="pcg_3455"/>
+		<field name="account_paid_id" ref="pcg_3456"/>
 	</record>
-
-<record model="account.tax" id="tva_4">
-	<field name="name">TVA 14%</field>
-	<field name="amount" eval="0.14"/>
-	<field name="type">percent</field>
-	<field name="account_collected_id" ref="pcg_3455"/>
-	<field name="account_paid_id" ref="pcg_3456"/>
+	
+	<record model="account.tax.template" id="tva_2">
+		<field name="name">TVA 7%</field>
+		<field name="chart_template_id" ref="morocco_chart_template"/>
+		<field name="amount" eval="0.07"/>
+		<field name="type">percent</field>
+		<field name="account_collected_id" ref="pcg_3455"/>
+		<field name="account_paid_id" ref="pcg_3456"/>
 	</record>
-
-<record model="account.tax" id="tva_exonere">
-	<field name="name">Exonéré de TVA</field>
-	<field name="amount" eval="0"/>
-	<field name="type">none</field>
+	
+	<record model="account.tax.template" id="tva_3">
+		<field name="name">TVA 10%</field>
+		<field name="chart_template_id" ref="morocco_chart_template"/>
+		<field name="amount" eval="0.1"/>
+		<field name="type">percent</field>
+		<field name="account_collected_id" ref="pcg_3455"/>
+		<field name="account_paid_id" ref="pcg_3456"/>
+	</record>
+	
+	<record model="account.tax.template" id="tva_4">
+		<field name="name">TVA 14%</field>
+		<field name="chart_template_id" ref="morocco_chart_template"/>
+		<field name="amount" eval="0.14"/>
+		<field name="type">percent</field>
+		<field name="account_collected_id" ref="pcg_3455"/>
+		<field name="account_paid_id" ref="pcg_3456"/>
+	</record>
+	
+	<record model="account.tax.template" id="tva_exonere">
+		<field name="name">Exonéré de TVA</field>
+		<field name="chart_template_id" ref="morocco_chart_template"/>
+		<field name="amount" eval="0"/>
+		<field name="type">none</field>
 	</record>
 
 </data>

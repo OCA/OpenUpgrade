@@ -1,63 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 <data noupdate="True">
-<!--
-#
-# Plan comptable général
-# Mise en forme et paramétrage par http://sisatlas.com
-# Des types sont commentés au profit des types prédéfinis dans TinyERP de base
-# version du fichier : 01-02-2007
--->
-
-
-<!--record model="account.account.type" id="account_type_tiers">
-	<field name="name">autres tiers</field>
-	<field name="code">tiers</field>
-	</record-->
-<!--record model="account.account.type" id="account_type_capitaux">
-	<field name="name">capitaux propres</field>
-	<field name="code">capitaux</field>
-	</record-->
-<!--record model="account.account.type" id="account_type_charges">
-	<field name="name">charges</field>
-	<field name="code">charges</field>
-	</record-->
-<!--record model="account.account.type" id="account_type_clients">
-	<field name="name">clients</field>
-	<field name="code">clients</field>
-	</record-->
-<record model="account.account.type" id="account_type_dettes">
-	<field name="name">dettes long terme</field>
-	<field name="code">dettes</field>
-	<field name="close_method">balance</field>
+	<!--
+	#
+	# Plan comptable général
+	# Mise en forme et paramétrage par http://sisatlas.com
+	# Des types sont commentés au profit des types prédéfinis dans TinyERP de base
+	# version du fichier : 01-02-2007
+	-->
+	
+	<record model="account.account.type" id="account_type_receivable" >
+	  <field name="name">Receivable</field>
+	  <field name="code">receivable</field>
+	  <field name="close_method">unreconciled</field>
 	</record>
-<!--record model="account.account.type" id="account_type_financier">
-	<field name="name">financier</field>
-	<field name="code">financier</field>
-	</record-->
-<!--record model="account.account.type" id="account_type_fournisseurs">
-	<field name="name">fournisseurs</field>
-	<field name="code">fournisseurs</field>
-	</record-->
-<record model="account.account.type" id="account_type_immobilisations">
-	<field name="name">immobilisations</field>
-	<field name="code">immobilisations</field>
-	<field name="close_method">balance</field>
+	<record model="account.account.type" id="account_type_payable" >
+	  <field name="name">Payable</field>
+	  <field name="code">payable</field>
+	  <field name="close_method">unreconciled</field>
 	</record>
-<!--record model="account.account.type" id="account_type_produits">
-	<field name="name">produits</field>
-	<field name="code">produits</field>
-	</record-->
-<record model="account.account.type" id="account_type_stocks">
-	<field name="name">stocks</field>
-	<field name="code">stocks</field>
-	<field name="close_method">balance</field>
+	<record model="account.account.type" id="account_type_view">
+	  <field name="name">View</field>
+	  <field name="code">view</field>
+	  <field name="close_method">none</field>
 	</record>
-<!--record model="account.account.type" id="account_type_vue">
-	<field name="name">vue</field>
-	<field name="code">vue</field>
+	<record model="account.account.type" id="account_type_income" >
+	  <field name="name">Income</field>
+	  <field name="code">income</field>
+	  <field name="close_method">none</field>
+	</record>
+	<record model="account.account.type" id="account_type_expense">
+	  <field name="name">Expense</field>
+	  <field name="code">expense</field>
+	  <field name="close_method">none</field>
+	</record>
+	<record model="account.account.type" id="account_type_tax">
+	  <field name="name">Tax</field>
+	  <field name="code">tax</field>
+	  <field name="close_method">unreconciled</field>
+	</record>
+	<record model="account.account.type" id="account_type_cash">
+	  <field name="name">Cash</field>
+	  <field name="code">cash</field>
+	  <field name="close_method">balance</field>
+	</record>
+	<record model="account.account.type" id="account_type_asset">
+	  <field name="name">Asset</field>
+	  <field name="code">asset</field>
+	  <field name="close_method">balance</field>
+	</record>
+	<!--record model="account.account.type" id="account_type_tiers">
+		<field name="name">autres tiers</field>
+		<field name="code">tiers</field>
 	</record-->
-
-
+	<!--record model="account.account.type" id="account_type_capitaux">
+		<field name="name">capitaux propres</field>
+		<field name="code">capitaux</field>
+	</record-->
+	<!--record model="account.account.type" id="account_type_charges">
+		<field name="name">charges</field>
+		<field name="code">charges</field>
+	</record-->
+	<!--record model="account.account.type" id="account_type_clients">
+		<field name="name">clients</field>
+		<field name="code">clients</field>
+	</record-->
+	<record model="account.account.type" id="account_type_dettes">
+		<field name="name">dettes long terme</field>
+		<field name="code">dettes</field>
+		<field name="close_method">balance</field>
+	</record>
+	<!--record model="account.account.type" id="account_type_financier">
+		<field name="name">financier</field>
+		<field name="code">financier</field>
+	</record-->
+	<!--record model="account.account.type" id="account_type_fournisseurs">
+		<field name="name">fournisseurs</field>
+		<field name="code">fournisseurs</field>
+	</record-->
+	<record model="account.account.type" id="account_type_immobilisations">
+		<field name="name">immobilisations</field>
+		<field name="code">immobilisations</field>
+		<field name="close_method">balance</field>
+	</record>
+	<!--record model="account.account.type" id="account_type_produits">
+		<field name="name">produits</field>
+		<field name="code">produits</field>
+	</record-->
+	<record model="account.account.type" id="account_type_stocks">
+		<field name="name">stocks</field>
+		<field name="code">stocks</field>
+		<field name="close_method">balance</field>
+	</record>
+	<!--record model="account.account.type" id="account_type_vue">
+		<field name="name">vue</field>
+		<field name="code">vue</field>
+	</record-->
 </data>
 </openerp>

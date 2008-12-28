@@ -30,8 +30,8 @@
     "version" : "1.0",
     "author" : "Simon JAILLET - CrysaLEAD",
     "website": "http://www.crysalead.com",
-    "category" : "Localisation/Account charts",
-    "depends" : ["base", "account","l10n_fr", "account_chart"],
+    "category" : "Localisation/Account Charts",
+    "depends" : ["l10n_fr"],
     "init_xml" : [
         "report.xml",
         "pcg.xml"
