@@ -271,26 +271,37 @@ class profile_game_retail_phase_one(osv.osv):
             return self.write(cr,uid,pid,{'step10':True,'state':'done'})
         return False
 
-#Check whether the chart template is created or not
-#    def check_chart_template(self, cr, uid, ids, context={}):
-#        mod_obj = self.pool.get('ir.model.data')
-#        result = mod_obj._get_id(cr, uid, 'account', 'action_wizard_multi_chart')
-#        id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
-#        chart_id = self.pool.get('ir.actions.todo').search(cr, uid, [('action_id','=',id),('state','!=','done')])
-#        temp = self.pool.get('ir.actions.todo').browse(cr, uid, chart_id)
-#        if len(chart_id):
-#             raise osv.except_osv(_('Critical Warning !'),
-#                            _('Please configure the Game before starting it!\n'
-#                             'You can do this by going to the menu... \n \n'
-#                              'Administration /Configuration/Configuration wizards/Configuration wizard'))
-#        return
-
     def generate_account_chart(self, cr, uid, ids, context={}):
-     #   action_wizard_multi_chart
-        return
+         company_id = self.pool.get('res.users').browse(cr, uid, [uid])[0].company_id.id
+         chart = self.pool.get('account.chart.template').search(cr, uid, [])
+         wiz_id = self.pool.get('wizard.multi.charts.accounts').create(cr, uid, {'company_id':company_id,
+                                                                        'chart_template_id':chart[0],'code_digits':6})
+         self.pool.get('wizard.multi.charts.accounts').action_create(cr, uid, [wiz_id], context)
+         inc_acc_id = self.pool.get('account.account').search(cr, uid, [('user_type','ilike','Income')])[0]
+         exp_acc_id = self.pool.get('account.account').search(cr, uid, [('user_type','ilike','Expense')])[0]
+         debit_ac = self.pool.get('account.account').search(cr, uid, [('code','ilike','401100')])[0]
+         credit_ac = self.pool.get('account.account').search(cr, uid, [('code','ilike','411100')])[0]
+         for journal in self.pool.get('account.journal').search(cr, uid, []):
+             self.pool.get('account.journal').write(cr, uid, journal, {'default_debit_account_id':debit_ac,
+                                                                 'default_credit_account_id':credit_ac})
+         for product in self.pool.get('product.product').search(cr, uid, []):
+             self.pool.get('product.product').write(cr, uid, product,
+                          {'property_account_income':inc_acc_id,'property_account_expense':exp_acc_id})
+         return True
+
+    def remove_fiscal_years(self, cr, uid, ids, context):
+        fy_id = self.pool.get('account.fiscalyear').search(cr, uid, [])
+        for year in self.pool.get('account.fiscalyear').browse(cr, uid, fy_id):
+            period_ids = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id','=',year.id)])
+            self.pool.get('account.period').unlink(cr, uid, period_ids)
+            self.pool.get('account.fiscalyear').unlink(cr, uid, year.id)
+        return True
 
     def confirm(self, cr, uid, ids, context={}):
         self.generate_account_chart(cr, uid, ids, context)
+        self.remove_fiscal_years(cr, uid, ids, context)
+        phase2_obj = self.pool.get('profile.game.retail')
+        phase2_obj.create_fiscalyear_and_period(cr, uid, ids, context)
         self.write(cr, uid, ids, {'state':'quotation'})
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'retail_phase1')
         sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
@@ -298,6 +309,14 @@ class profile_game_retail_phase_one(osv.osv):
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'step_quotation')
         sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
         return self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})
+
+    def check_state(self, cr, uid, context = {}):
+        curr_id = self.search(cr, uid, [])[0]
+        obj = self.browse(cr, uid, curr_id)
+        if obj.state != 'started_phase2':
+            return False
+        else:
+            return True
 
 profile_game_retail_phase_one()
 

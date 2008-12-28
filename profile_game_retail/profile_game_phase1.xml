@@ -68,6 +68,7 @@ Click on 'Get Complete Scenario' to get the document explaining the details of t
                             string="Continue to Strategic Game"
                             name="%(prepare_phase2_id)d"
                             type="action"
+                            states="done"
                             icon="gtk-ok"/>
                         <button
                             string="Get Complete Scenario"
@@ -117,5 +118,14 @@ Click on 'Get Complete Scenario' to get the document explaining the details of t
             <field name="action_id" ref="act_launch_phase_one"/>
         </record>
 
+		<record id="account_budget_inherit" model="ir.ui.view">
+            <field name="name">account.budget.inherit</field>
+            <field name="model">account.budget.post</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account_budget.view_budget_post_form"/>
+            <field name="arch" type="xml">
+                    <page string="Budget Lines" position="replace"/>
+			</field>
+		</record>
      </data>
 </openerp>

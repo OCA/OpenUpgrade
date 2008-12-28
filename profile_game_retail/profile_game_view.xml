@@ -116,15 +116,17 @@
             <field name="arch" type="xml">
                 <form string="Bank Loan">
                 	<group col="2" colspan="2">
-				 		<field name="loan_duration" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
-			            <field name="loan_amount" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
-			            <field name="rate" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
-			            <field name="total_amount"/>
+	                	<label align="0.0">This wizard will help you to get loan from bank. You just need
+	to fill up the amount you needed in the field 'Loan Amount' and the duration in years in the field 'Number of years"</label>
+	   					<group col="3" colspan="3">
+					 		<field  name="loan_duration" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
+				            <field  name="loan_amount" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
+				            <field  name="rate" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
+				            <field  name="total_amount"/>
+				            <separator colspan="3"/>
+				        	<button string="Get Loan" name="get_loan" type="object" icon="gtk-ok"/>
+				        </group>
 			        </group>
-			        <group col="3" colspan="3">
-			         	<label string=" "  align="0.0"/>
-			        	<button string="Get Loan" name="get_loan" type="object" icon="gtk-ok"/>
-					</group>
  				</form>
             </field>
         </record>
@@ -136,31 +138,6 @@
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
-
-<!-- Bank Loan Main Tree View -->
-
-	<!-- <record model="ir.ui.view" id="view_bank_loan_form">
-            <field name="name">bank.loan.form</field>
-            <field name="model">bank.loan</field>
-            <field name="arch" type="xml">
-                <form string="Bank Loan">
-                <group col="2" colspan="2">
-		            <separator colspan="2" string="Loan Details"/>
-		            <field name="loan_duration"/>
-		            <field name="loan_amount"/>
-		            <field name="rate"/>
-		            <field name="total_amount"/>
-		         </group>
-		         <group col="2" colspan="2">
-		            <separator colspan="2" string="Calculated Details"/>
-		            <field name="reimburse_principle_amt_without_int"/>
-		            <field name="reimburse_principle_amt_with_int"/>
-		            <field name="interest_per_month"/>
-		            <field name="months_left"/>
-		         </group>
-                </form>
-            </field>
-        </record>-->
 
         <record model="ir.ui.view" id="view_bank_loan_tree">
             <field name="name">bank.loan.tree</field>
@@ -198,11 +175,9 @@
                                 <separator colspan="2" string="Finance Manager :(FM)"/>
                                 <group col="3" colspan="3">
                                     <field name="total_reimburse"/>
-                                    <button icon="gtk-ok" string="Details" name="%(action_total_refund)d" type="action"/>
                                  </group>
                                 <group col="3" colspan="3">
                                     <field name="current_treasury"/>
-                                    <button icon="gtk-ok" string="Details" name="%(action_current_treasury)d" type="action"/>
                                 </group>
                                 <group col="3" colspan="3">
 	                            	    <label colspan ="1"/>
@@ -215,63 +190,66 @@
 	                                    <button icon="gtk-ok" string="Get Loan" name="%(action_loan_detail_wiz)d" type="action" colspan ="1"/>
 	                                    <button icon="gtk-ok" string="Loan Details" name="%(action_loan_detail_tree)d" type="action" colspan ="1"/>
 	                            </group>
+		                        <group col="3" colspan="2">
+		                            <separator colspan="3" string="HR Manager :(HRM)"/>
+		                        	<field name="hr_budget"/>
+		                    	</group>
 	                        </group>
-	                        <group col="3" colspan="2">
-	                            <separator colspan="3" string="HR Manager :(HRM)"/>
-	                        	<field name="hr_budget"/>
-	                    		<button icon="gtk-ok" string="Details" name="%(action_budgets)d" type="action"/>
-	                    	</group>
+	                        <group col="2" colspan="2">
+	                        	<separator colspan="2" string = "Reports"/>
+	                        	<group col="3" colspan="3">
+		                            <button icon="terp-account" string="Payable A/c" name="%(action_total_refund)d" type="action"/>
+		                            <button icon="terp-account" string="Cash A/c" name="%(action_current_treasury)d" type="action"/>
+									<button icon="terp-account" string="Budgets" name="%(action_budgets)d" type="action"/>
+									<button icon="terp-account" string="Income A/c" name="%(action_sales_prev)d" type="action"/>
+									<button icon="terp-sale" string="Sale Forecast Details" name="%(action_sale_forecast)d" type="action"/>
+									<button icon="terp-sale" string="Margin Forecast Details" name="%(action_margin_forecast)d" type="action"/>
+									<button icon="terp-stock" string="Products Stock" name="%(action_stock_forecast)d" type="action"/>
+									<button icon="terp-stock" string="Stock Location Structure" name="%(action_stock_forecast)d" type="action"/>
+									<button icon="terp-stock" string="Master Procurement Schedule" name="%(action_cost_purchaseforecast)d" type="action"/>
+									<separator colspan="2" string = "Wizard"/>
+									<button colspan = "2" icon="terp-product" string="Product Sold" name="%(product_margin.action_open_margin)d" type="action"/>
+									<separator colspan="2" string = "Continue With the Game"/>
+									<button
+		                                colspan = "2"
+		                                string="Continue To Next Year"
+		                                name="continue_next_year"
+		                                type="object"
+		                                icon="gtk-media-next"/>
+								</group>
+	                        </group>
 	              			<group col="3" colspan="2">
 	            				<separator colspan="3" string="Sales Manager :(SM)"/>
 	                        	<field name="last_total_sale"/>
-	                        	<button icon="gtk-ok" string="Details" name="%(action_sales_prev)d" type="action"/>
 	                        	<field name="sale_forcast"/>
-	                    		<button icon="gtk-ok" string="Details" name="%(action_sale_forecast)d" type="action"/>
 	                        	<field name="margin_forcast"/>
-	                 			<button icon="gtk-ok" string="Details" name="%(action_margin_forecast)d" type="action"/>
 	                    	</group>
 	              			<group col="3" colspan="2">
 	                            <separator colspan="3" string="Logistic Manager :(LM)"/>
 	                            <field name="last_total_purchase"/>
-	                            <button icon="gtk-ok" string="Details" name="%(action_stock_forecast)d" type="action"/>
 	                        	<field name="avg_stock_forcast"/>
-	                        	<button icon="gtk-ok" string="Details" name="%(action_stock_forecast)d" type="action"/>
 	                        	<field name="cost_purchase_forcast"/>
-	                        	<button icon="gtk-ok" string="Details" name="%(action_cost_purchaseforecast)d" type="action"/>
 	                    	</group>
 	                        <newline/>
 	                        <group col ="8" colspan="8">
 	                            <separator colspan="8" string="Objectives Achievement"/>
 	                            <field colspan ="2" name="last_turnover"/>
-	                            <button icon="gtk-ok" colspan ="2" string="Details" name="%(action_turnover_prev)d" type="action"/>
 	                            <field colspan ="2" name="total_benefit"/>
-	                            <label string=" "  colspan ="2"/>
 	                            <field colspan ="2" name="total_sold_products"/>
-	                            <button icon="gtk-ok" colspan ="2" string="Details" name="%(action_product_sold)d" type="action"/>
 	                            <field colspan ="2" name="turnover_growth"/>
-	                            <label string=" "  colspan ="2"/>
 	                            <field colspan ="2" name="benefits_growth"/>
-	                            <label string=" "  colspan ="2"/>
 	                            <field colspan ="2" name="products_growth"/>
-	               				<label string=" "  colspan ="2"/>
 	                            <newline/>
-	                            <label string=" "  colspan ="4"/>
-	                            <button
-	                                colspan = "2"
-	                                string="Continue To Next Year"
-	                                name="continue_next_year"
-	                                type="object"
-	                                icon="gtk-media-next"/>
 	                		</group>
 		                 </page>
 		                 <page string="Traceback [Current Year]">
-		                       <field name="cy_traceback" nolabel="1" colspan="4"/>
+		                       <field name="cy_traceback" nolabel="1" colspan="4" widget="text_wiki"/>
 						</page>
 						<page string="Warnings &amp; Errors">
-		                       <field name="warn_error" nolabel="1" colspan="4"/>
+		                       <field name="warn_error" nolabel="1" colspan="4" widget="text_wiki"/>
 						</page>
 						<page string="Traceback [All Years]">
-		                       <field name="ay_traceback" nolabel="1" colspan="4"/>
+		                       <field name="ay_traceback" nolabel="1" colspan="4" widget="text_wiki"/>
 						</page>
 					</notebook>
                 </form>
