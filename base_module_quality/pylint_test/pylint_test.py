@@ -30,18 +30,17 @@ from base_module_quality import base_module_quality
 class quality_test(base_module_quality.abstract_quality_check):
 
     def __init__(self):
-        self.result = """
-Pylint Test:
-------------
-
-    This test checks if the module satisfy the current coding standard used by OpenERP.
-
- 
-"""
+        super(quality_test, self).__init__()
+#        self.result = """
+#===Pylint Test===:
+#
+#    This test checks if the module satisfy the current coding standard used by OpenERP.
+#
+#"""
         self.bool_installed_only = False
         return None
 
-    def run_test(self, module_path):
+    def run_test(self, cr, uid, module_path):
         config_file_path = config['addons_path']+'/base_module_quality/pylint_test/pylint_test_config.txt'
         list_files = os.listdir(module_path)
         for i in list_files:
@@ -50,8 +49,10 @@ Pylint Test:
                 for j in os.listdir(path):
                     list_files.append(os.path.join(i, j))
 
-        n = 0 
+        n = 0
         score = 0.0
+        detail = ""
+        detail  = "\n===Pylint Test===\n"
         for file in list_files:
             if file.split('.')[-1] == 'py' and not file.endswith('__init__.py') and not file.endswith('__terp__.py'):
                 file_path = os.path.join(module_path, file)
@@ -66,13 +67,21 @@ Pylint Test:
 
                 try:
                     score += float(res[leftchar+1:rightchar])
-                    self.result += file + ": " + res[leftchar+1:rightchar] + "/10\n" 
+#                    self.result += file + ": " + res[leftchar+1:rightchar] + "/10\n"
+                    detail += file + ": " + res[leftchar+1:rightchar] + "/10\n"
                 except:
                     score += 0
-                    self.result += file + ": Unable to parse the result. Check the details.\n" 
-
+#                    self.result += file + ": Unable to parse the result. Check the details.\n"
+                    detail += file + ": Unable to parse the result. Check the details.\n"
                 self.result_details += res
         self.score = n and score / n or score
+        summary ="""
+===Pylint Test===:
+
+    This test checks if the module satisfy the current coding standard used by OpenERP.
+
+""" + "Score: " + str(self.score) + "/10\n"
+        self.result = self.format_table(test='pylint', data_list=[[summary],[detail]])
         return None
 
 

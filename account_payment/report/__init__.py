@@ -19,23 +19,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Timesheet - Reporting",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "description": '''Module to add timesheet views like
-    All Month, Timesheet By User, Timesheet Of Month, Timesheet By Account''',
-    "depends" : ["hr_timesheet",'hr_timesheet_invoice'],
-    "category" : "Generic Modules/Human Resources",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/ir.model.access.csv",
-        "report_timesheet_view.xml"],
-    "active": False,
-    "installable": True
-}
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
+import payment_order

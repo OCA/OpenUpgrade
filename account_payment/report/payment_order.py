@@ -19,23 +19,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Timesheet - Reporting",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "description": '''Module to add timesheet views like
-    All Month, Timesheet By User, Timesheet Of Month, Timesheet By Account''',
-    "depends" : ["hr_timesheet",'hr_timesheet_invoice'],
-    "category" : "Generic Modules/Human Resources",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-        "security/ir.model.access.csv",
-        "report_timesheet_view.xml"],
-    "active": False,
-    "installable": True
-}
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+import time
+import datetime
+from report import report_sxw
 
+class payment_order(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(payment_order, self).__init__(cr, uid, name, context)
+        self.localcontext.update( {
+            'time': time,
+
+        })
+report_sxw.report_sxw('report.payment.order', 'payment.order', 'addons/account_payment/report/payment_order.rml', parser=payment_order,header=False)
