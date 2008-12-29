@@ -12,6 +12,7 @@ if __name__<>"package":
     database="test"
     uid = 3
 
+
 class ConvertBracesToField( unohelper.Base, XJobExecutor ):
 
     def __init__(self,ctx):
@@ -61,6 +62,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             oPar = oParEnum.nextElement()
             nCount += 1
         getList(oRepeatInObjects,sHost,nCount)
+        print "============",oRepeatInObjects
         for ro in oRepeatInObjects:
             if ro.find("(")<>-1:
                 saRepeatInList.append( [ ro[:ro.find("(")], ro[ro.find("(")+1:ro.find(")")] ])
@@ -70,19 +72,19 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     for reg in regexes:
-                        res=re.findall(reg[0],oPar.Items[1])
+                        res=re.findall(reg[0],oPar.Items[1].replace(' ',""))
                         if len(res) <> 0:
                             if res[0][0] == "objects":
                                 sTemp = docinfo.getUserFieldValue(3)
                                 sTemp = "|-." + sTemp[sTemp.rfind(".")+1:] + ".-|"
-                                oPar.Items=(sTemp.encode("utf-8"),oPar.Items[1])
+                                oPar.Items=(sTemp.encode("utf-8"),oPar.Items[1].replace(' ',""))
                                 oPar.update()
                             elif type(res[0]) <> type(u''):
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
                                 sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0][res[0][0].find(".")+1:].replace(".","/"))
                                 r = sock.execute(database, uid, self.password, docinfo.getUserFieldValue(3) , 'fields_get')
                                 sExpr="|-." + r[res[0][0][res[0][0].rfind(".")+1:]]["string"] + ".-|"
-                                oPar.Items=(sExpr.encode("utf-8"),oPar.Items[1])
+                                oPar.Items=(sExpr.encode("utf-8"),oPar.Items[1].replace(' ',""))
                                 oPar.update()
                             else:
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
