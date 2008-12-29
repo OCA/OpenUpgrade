@@ -84,8 +84,12 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             id = self.report_with_id[ selectedItemPos ][0]
 
             res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'report_get', id)
-            file_type = res['file_type'] or 'sxw'
-                
+
+            if res['file_type'] in ['sxw','odt'] :
+               file_type = res['file_type']
+            else :
+               file_type = 'sxw'
+
             fp_name = tempfile.mktemp('.'+file_type)
             fp_name1="r"+fp_name
             fp_path=os.path.join(fp_name1).replace("\\","/")
