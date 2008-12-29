@@ -39,6 +39,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "account_cash_discount_view.xml",
     ],
     "active": False,
