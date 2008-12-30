@@ -283,17 +283,21 @@ class profile_game_retail_phase_one(osv.osv):
          sale_acc = acc_obj.search(cr, uid, [('code','ilike','411100')])[0]
          pur_acc = acc_obj.search(cr, uid, [('code','ilike','401100')])[0]
          bank_acc = acc_obj.search(cr, uid, [('code','ilike','512000')])[0]
+         close_acc = acc_obj.search(cr, uid, [('code','ilike','911000')])[0]
+         acc_obj.write(cr ,uid, close_acc, {'type':'other'})
 
          acc_journal = self.pool.get('account.journal')
          journal_ids = acc_journal.search(cr, uid, [])
          for journal in acc_journal.browse(cr, uid, journal_ids):
-            if journal.code in ('JB','SAJ','EXJ'):
+            if journal.code in ('JB','SAJ','EXJ','JC'):
                  if journal.code == 'JB':
                      db_ac = cr_ac = bank_acc
                  if journal.code == 'SAJ':
                      db_ac = cr_ac = sale_acc
                  if journal.code == 'EXJ':
                      db_ac = cr_ac = pur_acc
+                 if journal.code == 'JC':
+                     db_ac = cr_ac = close_acc
                  acc_journal.write(cr, uid, journal.id, {'default_debit_account_id':db_ac,
                                                                  'default_credit_account_id':cr_ac})
          for product in self.pool.get('product.product').search(cr, uid, []):

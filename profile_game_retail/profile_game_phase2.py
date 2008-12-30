@@ -103,6 +103,7 @@ class bank_loan(osv.osv):
             res['reimburse_principle_amt_without_int'] = (rec.loan_amount / (rec.loan_duration * 12))
             res['reimburse_principle_amt_with_int'] = (rec.total_amount / (rec.loan_duration * 12))
             res['interest_per_month'] = res['reimburse_principle_amt_with_int'] - res['reimburse_principle_amt_without_int']
+            res['months_left'] = rec.loan_duration * 12
             self.write(cr, uid, rec.id, res)
             move_id = self.pool.get('account.move').create(cr, uid,{'period_id':period,'journal_id':journal})
             for code in ('161000','512100'):
@@ -121,9 +122,11 @@ class bank_loan(osv.osv):
                 'type': 'ir.actions.act_window_close',
                 }
 
+
     _columns = {
                 'name':fields.char('Name',size=64),
-                'loan_duration' : fields.float('Number of Years', help="Loan duration in years"),
+                'fiscal_year':fields.many2one('account.fiscalyear', 'Fiscal Year', required=True, readonly=True, help="Year in which loan is taken"),
+                'loan_duration' : fields.float('# of Years', help="Loan duration in years"),
                 'loan_amount' : fields.float('Loan Amount',  help="Loan Amount"),
                 'rate' : fields.float('Interest Rate',help="Interest Rate",readonly=True),
                 'total_amount' : fields.function(_compute,method = True,  store= True, string ='Total Amount', help="Total Amount to be paid",readonly=True),
@@ -136,6 +139,8 @@ class bank_loan(osv.osv):
         'loan_duration' : lambda *a: 3.0,
         'loan_amount' : lambda *a: 10000.0,
         'rate' : lambda *a: 8.0,
+        'fiscal_year':lambda self, cr, uid, context=None:\
+        self.pool.get('account.fiscalyear').search(cr, uid, [('state','=','draft')])[0]
             }
 
 bank_loan()
@@ -169,85 +174,105 @@ class profile_game_retail(osv.osv):
         fiscal_obj = self.pool.get('account.fiscalyear')
         account_obj = self.pool.get('account.account')
         account_type_obj = self.pool.get('account.account.type')
-        fiscalyear_id = fiscal_obj.search(cr, uid, [('state','=','draft')])[0]
-        fiscalyear = fiscal_obj.browse(cr,uid,fiscalyear_id)
-        prev_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(fiscalyear.code) - 1))])[0]
-        prev_to_prev_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(fiscalyear.code) - 2))])[0]
-        print " field_names:::::::::::::::::::",field_names,ids
+
+        next_year_id = fiscal_obj.search(cr, uid, [('state','=','draft')])[0]
+        nextyear = fiscal_obj.browse(cr,uid,next_year_id)
+
+        curr_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(nextyear.code) - 1))])[0]
+        curryear = fiscal_obj.browse(cr,uid,curr_fy)
+
+        prev_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(nextyear.code) - 2))])
+        prev_to_prev_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(nextyear.code) - 3))])
+        year_list = []
+
+        if (prev_fy or False):
+            year_list.append(prev_fy[0])
+        if (prev_to_prev_fy or False):
+            year_list.append(prev_to_prev_fy[0])
+        print "YEARRRRRRRRRRRRRRRR",year_list,field_names
+        print "::NEXT,CURR,PREV,PREV2PREV",next_year_id,curr_fy,prev_fy,prev_to_prev_fy
 
         for val in self.browse(cr, uid, ids, context=context):
             res[val.id] = {}
             if 'hr_budget' in field_names:
-                res[val.id] = {}.fromkeys(field_names, 0.0)
-            print "cur_year,prev_fy,prev_to_prev_fy",fiscalyear.id,prev_fy,prev_to_prev_fy
-
+                res[val.id]['hr_budget'] = 0.0
+            if 'avg_stock_forcast' in field_names:
+                res[val.id]['avg_stock_forcast'] = 0.0
             # calculate finance detail
             total_reimburse = current_treasury = last_total_sale = sale_forcast = margin_forcast = last_turnover = 0.0
             total_sold_products = total_benefit = benefits_growth = turnover_growth = products_growth = cost_purchase_forcast = 0.0
             last_total_purchase = prev_to_prev_total_sale = prev_to_prev_prod_sold = prev_prod_sold = prev_to_prev_benefit = 0.0
             prev_to_prev_turnover = 0.0
+            if 'loan_total_reimburse' in field_names or 'loan_total_reimburse_this_year' in field_names:
+                total = 0.0
+                total_rem_ids = self.pool.get('bank.loan').search(cr, uid, [])
+                this_year_ids = self.pool.get('bank.loan').search(cr, uid, [('fiscal_year','=',next_year_id)])
+                print "total_rem_ids",total_rem_ids
+                print "this_year_ids",this_year_ids
+                for loan in self.pool.get('bank.loan').browse(cr, uid, total_rem_ids):
+                    total += loan.loan_amount
+                print "total111111111111111",total
+                res[val.id]['loan_total_reimburse'] = total
+                total = 0.0
+                for loan in self.pool.get('bank.loan').browse(cr, uid, this_year_ids):
+                    total += loan.loan_amount
+                print "total222222222222222222",total
+                res[val.id]['loan_total_reimburse_this_year'] = total
 
             if 'total_reimburse' in field_names:
                 account_ids = account_obj.search(cr,uid,[('user_type','ilike','payable')])
-                context = {'fiscalyear': fiscalyear_id,'target_move':'all'}
+                print "account_ids",account_ids
+                context = {'fiscalyear': curr_fy,'target_move':'all'}
                 for acc in  account_obj.browse(cr, uid, account_ids, context):
                        total_reimburse += acc.balance
-               # res[val.id]['total_reimburse'] = total_balance
+                res[val.id]['total_reimburse'] = total_reimburse
                 print "total_reimburse",total_reimburse
 
             if 'current_treasury' in field_names:
                 cash_account_ids = account_obj.search(cr,uid,[('user_type','ilike','cash')])
-                context = {'fiscalyear': fiscalyear_id,'target_move':'all'}
+                context = {'fiscalyear': curr_fy,'target_move':'all'}
                 for cash_account in account_obj.browse(cr, uid, cash_account_ids, context):
                     current_treasury += cash_account.balance
-              #  res[val.id]['current_treasury'] = total_balance
-                print "current_treasury",current_treasury
- # calculate sales detail
+                res[val.id]['current_treasury'] = current_treasury
 
             if 'last_total_sale' in field_names:
                 account_ids = account_obj.search(cr,uid,[('user_type','ilike','income')])
                 total_balance = [0,0]
                 i = 0
-                for fy in (prev_fy,prev_to_prev_fy):
+                for fy in year_list:
                     total_balance[i] = 0.0
                     context = {'fiscalyear': fy,'target_move':'all'}
                     for account in account_obj.browse(cr,uid,account_ids, context):
                         total_balance[i] += account.balance
                     i += 1
-                #res[val.id]['last_total_sale'] = total_balance[0]
                 last_total_sale = total_balance[0]
                 prev_to_prev_total_sale = total_balance[1]
-                print "last_total_sale",total_balance[0]
-                print "prev_to_prev_total_sale",total_balance[1]
+                res[val.id]['last_total_sale'] = last_total_sale
+                last_turnover = last_total_sale or 0.0
+                prev_to_prev_turnover = prev_to_prev_total_sale or 0.0
+                res[val.id]['last_turnover'] = last_turnover
 
             if 'sale_forcast' in field_names:
                 forecast_obj = self.pool.get('stock.planning.sale.prevision')
-                forecast_ids = forecast_obj.search(cr, uid, [('period_id', '=',fiscalyear_id)])
+                forecast_ids = forecast_obj.search(cr, uid, [('period_id', '=',curr_fy)])
                 total_balance = 0.0
                 for value in forecast_obj.browse(cr ,uid, forecast_ids):
                     sale_forcast += value.product_amt
-               # res[val.id]['sale_forcast'] = total_balance
-                print "sale_forcast",sale_forcast
+                res[val.id]['sale_forcast'] = sale_forcast
 
             if 'margin_forcast' in field_names:
                 forecast_obj = self.pool.get('stock.planning.sale.prevision')
-                forecast_ids = forecast_obj.search(cr, uid, [('period_id', '=',fiscalyear_id)])
+                forecast_ids = forecast_obj.search(cr, uid, [('period_id', '=',curr_fy)])
                 for value in forecast_obj.browse(cr ,uid, forecast_ids):
                     margin_forcast += value.product_amt - (value.product_qty * value.product_id.standard_price)
-              #  res[val.id]['margin_forcast'] = total_balance
-                print "margin_forcast",margin_forcast
- # calculate Objectives Achievement
-            if 'last_turnover' in field_names:
-                 last_turnover = last_total_sale or 0.0
-                 #res[val.id]['last_turnover'] =  last_total_sale or 0.0
-                 prev_to_prev_turnover = prev_to_prev_total_sale or 0.0
-                 print "last_turnover",last_total_sale or 0.0
-                 print "prev_to_prev_turnover", prev_to_prev_total_sale  or 0.0
+                res[val.id]['margin_forcast'] = margin_forcast
+
 
             if 'total_sold_products' in field_names:
                  total_balance = [0,0,0]
                  i = 0
-                 for fy in fiscal_obj.browse(cr,uid,[fiscalyear_id, prev_fy,prev_to_prev_fy]):
+                 year_list.append(curr_fy)
+                 for fy in fiscal_obj.browse(cr,uid, year_list):
                     sql="""
                         select
                         sum(invoice_line.quantity) as total
@@ -257,64 +282,53 @@ class profile_game_retail(osv.osv):
                     """%(fy.date_start,fy.date_stop)
                     cr.execute(sql)
                     result = cr.fetchall()[0]
-                    print "result",result
                     total_balance[i] = result[0] or 0.0
                     i += 1
+                 if i > 1 :
+                     prev_prod_sold = total_balance[1]
+                     prev_to_prev_prod_sold = total_balance[2]
                  total_sold_products =  total_balance[0]
-              #   res[val.id]['total_sold_products'] = total_balance[0]
-                 prev_prod_sold = total_balance[1]
-                 prev_to_prev_prod_sold = total_balance[2]
-                 print "total_sold_products", total_balance[0]
-                 print "prev_prod_sold", total_balance[1]
-                 print "prev_to_prev_prod_sold", total_balance[2]
+                 res[val.id]['total_sold_products'] = total_sold_products
 
             if 'total_benefit' in field_names:
                 total_balance = [0,0]
                 prev_to_prev_benefit = 0.0
                 account_ids = account_obj.search(cr,uid,[('user_type','ilike','expense')])
-                for fy in (prev_fy,prev_to_prev_fy):
+                for fy in year_list:
                     i = 0
                     total_balance[i] = 0.0
                     context = {'fiscalyear': fy,'target_move':'all'}
                     for account in account_obj.browse(cr,uid,account_ids, context):
                         total_balance[i] += account.balance
                 total_benefit = last_turnover or 0.0 - total_balance[0] or 0.0
-                #res[val.id]['total_benefit'] = val.last_turnover or 0.0 - total_balance[0] or 0.0
                 prev_to_prev_benefit = prev_to_prev_turnover or 0.0 - total_balance[1] or 0.0
-                print "total_benefit", total_benefit or 0.0
-                print "prev_to_prev_benefit", prev_to_prev_benefit or 0.0
+                res[val.id]['total_benefit'] = total_benefit
 
             if 'benefits_growth' in field_names:
-                benefits_growth = total_benefit or 0.0 - prev_to_prev_benefit or 0.0
-                #res[val.id]['benefits_growth'] = val.total_benefit or 0.0 - prev_to_prev_benefit or 0.0
-                print "benefits_growth", benefits_growth
+                res[val.id]['benefits_growth'] = total_benefit or 0.0 - prev_to_prev_benefit or 0.0
 
             if 'turnover_growth' in field_names:
-                turnover_growth = last_turnover or 0.0 - prev_to_prev_turnover or 0.0
-                #res[val.id]['turnover_growth'] = val.last_turnover or 0.0 - prev_to_prev_turnover or 0.0
-                print "turnover_growth", res[val.id]['turnover_growth'] or 0.0
+                res[val.id]['turnover_growth'] =  last_turnover or 0.0 - prev_to_prev_turnover or 0.0
 
             if 'products_growth' in field_names:
-                products_growth = prev_prod_sold or 0.0- prev_to_prev_prod_sold or 0.0
-               # res[val.id]['products_growth'] = prev_prod_sold or 0.0- prev_to_prev_prod_sold or 0.0
-                print "products_growth", res[val.id]['products_growth'] or 0.0
+                res[val.id]['products_growth'] = prev_prod_sold or 0.0- prev_to_prev_prod_sold or 0.0
 
             if 'cost_purchase_forcast' in field_names:
                 sum1 = 0.0
                 sum2 = 0.0
-                period_id = self.pool.get('stock.period').search(cr, uid, [('name','ilike', fiscalyear.code)])
+                period_id = self.pool.get('stock.period').search(cr, uid, [('name','ilike', curryear.code)])
                 stock_ids = self.pool.get('stock.planning').search(cr, uid, [('period_id','in', period_id)])
                 forecast_ids = self.pool.get('stock.planning.sale.prevision').search(cr, uid, [('period_id','in', period_id)])
                 for stock in self.pool.get('stock.planning').browse(cr, uid,stock_ids):
                     sum1 += stock.incoming_left * stock.product_id.standard_price
                 for forecast in self.pool.get('stock.planning.sale.prevision').browse(cr, uid, forecast_ids):
                     sum2 += forecast.product_qty * forecast.product_id.standard_price
-               # res[val.id]['cost_purchase_forcast'] = sum1 + sum2
                 cost_purchase_forcast = sum1 + sum2
-                print "cost_purchase_forcast", sum1 + sum2
+                res[val.id]['cost_purchase_forcast'] = cost_purchase_forcast
 
             if 'last_total_purchase' in field_names:
-                    fy = fiscal_obj.browse(cr,uid,prev_fy)
+                if prev_fy:
+                    fy = fiscal_obj.browse(cr,uid,prev_fy)[0]
                     sql="""
                         select
                         sum(invoice_line.quantity) as total
@@ -325,43 +339,9 @@ class profile_game_retail(osv.osv):
                     cr.execute(sql)
                     result = cr.fetchall()[0]
                     last_total_purchase =  result[0] or 0.0
-                    #res[val.id]['last_total_purchase'] = result[0] or 0.0
-                    print "last_total_purchase", result[0]
-
-            for field in field_names:
-                if field == 'total_reimburse':
-                    res[val.id][field] = total_reimburse
-
-                elif field == 'current_treasury':
-                    res[val.id][field] = current_treasury
-
-                elif field == 'last_total_sale':
-                    res[val.id][field] = last_total_sale
-
-                elif field == 'sale_forcast':
-                        res[val.id][field] = sale_forcast
-
-                elif field == 'margin_forcast':
-                        res[val.id][field] = margin_forcast
-
-                elif field == 'last_turnover':
-                        res[val.id][field] = last_turnover
-
-                elif field == 'total_sold_products':
-                        res[val.id][field] = total_sold_products
-                elif field == 'total_benefit':
-                        res[val.id][field] = total_benefit
-                elif field == 'benefits_growth':
-                        res[val.id][field] = benefits_growth
-                elif field == 'turnover_growth':
-                        res[val.id][field] = turnover_growth
-                elif field == 'products_growth':
-                        res[val.id][field] = products_growth
-
-                elif field == 'cost_purchase_forcast':
-                        res[val.id][field] = cost_purchase_forcast
-                elif field == 'last_total_purchase':
-                        res[val.id][field] = last_total_purchase
+                    res[val.id]['last_total_purchase'] = last_total_purchase
+                else:
+                    res[val.id]['last_total_purchase'] = 0.0
         return res
 
     _columns = {
@@ -387,8 +367,8 @@ class profile_game_retail(osv.osv):
         'current_treasury' : fields.function(_calculate_detail, method=True, type='float', string='Current treasury', multi='finance',help="Balance of all Cash Accounts"),
         'total_reimburse' : fields.function(_calculate_detail, method=True, type='float', string='Total to Reimburse', multi='finance',help="Total to Reimburse"),
        # 'total_current_refund' : fields.function(_calculate_detail, method=True, type='float', string='To Reimburse this Year', multi='finance',help="To Reimburse this Year"),
-        'loan_total_reimburse' : fields.float('Total to Reimburse', readonly=True, help="Total loan amount to reimburse "),
-        'loan_total_reimburse_this_year' : fields.float('Total to Reimburse this year', readonly=True, help="Total loan amount to reimburse this year"),
+        'loan_total_reimburse' : fields.function(_calculate_detail, method=True, type='float', string='Total to Reimburse', readonly=True, multi='finance', help="Total loan amount to reimburse "),
+        'loan_total_reimburse_this_year' : fields.function(_calculate_detail, method=True, type='float', string='Total to Reimburse this year', multi='finance', readonly=True, help="Total loan amount to reimburse this year"),
 
         'hr_budget' : fields.function(_calculate_detail, method=True, type='float', string='HR Budget', multi='finance',help="HR Budget"),
 
@@ -633,15 +613,24 @@ class profile_game_retail(osv.osv):
             ds = ds + RelativeDateTime(months=interval)
         #except Exception, e:
           #   self.update_messages(cr, uid, ids, e, context)
+        closing_journal = self.pool.get('account.journal').search(cr, uid, [('code','ilike','JC')])[0]
+        period_id = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id', '=', fiscal_id)])[0]
+        name = 'journalperiod' + str(new_fy)
+        journal_period = self.pool.get('account.journal.period').create(cr, uid, {'name':name,'journal_id':closing_journal,
+                                                                 'period_id':period_id})
+        self.pool.get('account.fiscalyear').write(cr, uid,fiscal_id,{'start_journal_period_id':journal_period})
         return fiscal_id
 
-    def close_fiscalyear(self, cr, uid, ids, fy, context):
-        print "close_fiscalyear"
-       # try:
-        id = self.pool.get('account.fiscalyear').search(cr, uid, [('code','=',fy.code)])
-        self.pool.get('account.fiscalyear').write(cr, uid, id,{'state':'done'})
-      #  except Exception, e:
-        #     self.update_messages(cr, uid, ids, e, context)
+    def close_fiscalyear(self, cr, uid, ids, close_fy, new_fy, context):
+        print "close_fiscalyear",close_fy,new_fy
+        data = data['form'] = {}
+        from account.wizard import wizard_fiscalyear_close
+        data['form']['report_new'] = True
+        data['form']['report_name'] = 'End of Fiscal Year Entry'
+        data['form']['fy_id'] = close_fy
+        data['form']['fy2_id'] = new_fy
+        data['form']['sure'] = True
+        wizard_fiscalyear_close._data_save(self, cr, uid, data, context)
         return True
 
     def create_sale_periods(self, cr, uid, ids, context):
@@ -794,8 +783,9 @@ class profile_game_retail(osv.osv):
             self.confirm_draft_customer_invoice(cr, uid, ids, context)
             self.pay_all_customer_invoice(cr, uid, ids, context)
             self.pool.get('account.period').write(cr, uid, period.id, {'state':'done'})
-        self.close_fiscalyear(cr, uid, ids, fy, context)
-        self.create_fiscalyear_and_period(cr, uid, ids, context)
+        new_fy = self.create_fiscalyear_and_period(cr, uid, ids, context)
+        self.close_fiscalyear(cr, uid, ids, fy.id, new_fy, context)
+
         return True
 
     def get_date(self, cr, uid,context):
