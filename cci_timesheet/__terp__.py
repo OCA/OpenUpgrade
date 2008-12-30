@@ -31,7 +31,7 @@
     "depends" : ["base","cci_partner","cci_crm","cci_base_contact"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["cci_timesheet_view.xml", "cci_timesheet_wizard.xml",'security/ir.model.access.csv','security/security.xml'],
+    "update_xml" : ["cci_timesheet_view.xml", "cci_timesheet_wizard.xml",'security/security.xml','security/ir.model.access.csv'],
     "active": False,
     "installable": True
 }
