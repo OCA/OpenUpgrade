@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -33,7 +33,7 @@
     "demo_xml" : ["cci_translation_data.xml"],
 
     "update_xml" : ["cci_translation_view.xml", "cci_translation_workflow.xml", "cci_translation_wizard.xml"
-                    ,"cci_translation_sequence.xml"],
+                    ,"cci_translation_sequence.xml",'security/ir.model.access.csv','security/security.xml','security/cci_translation_security'],
     "active": False,
     "installable": True
 }
