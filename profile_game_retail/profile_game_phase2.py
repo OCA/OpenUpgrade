@@ -169,229 +169,201 @@ class profile_game_retail(osv.osv):
         fiscal_obj = self.pool.get('account.fiscalyear')
         account_obj = self.pool.get('account.account')
         account_type_obj = self.pool.get('account.account.type')
+        fiscalyear_id = fiscal_obj.search(cr, uid, [('state','=','draft')])[0]
+        fiscalyear = fiscal_obj.browse(cr,uid,fiscalyear_id)
+        prev_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(fiscalyear.code) - 1))])[0]
+        prev_to_prev_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(fiscalyear.code) - 2))])[0]
+        print " field_names:::::::::::::::::::",field_names,ids
 
         for val in self.browse(cr, uid, ids, context=context):
             res[val.id] = {}
             if 'hr_budget' in field_names:
                 res[val.id] = {}.fromkeys(field_names, 0.0)
+            print "cur_year,prev_fy,prev_to_prev_fy",fiscalyear.id,prev_fy,prev_to_prev_fy
 
-            fiscalyear_id = fiscal_obj.search(cr, uid, [('state','=','draft')])
-            fiscalyear = fiscal_obj.browse(cr,uid,fiscalyear_id)[0]
-            cur_year = int(fiscalyear.code)
-            prev_fy_datestart = date(cur_year - 1,01,01)
-            prev_fy_datestop = date(cur_year - 1,12,31)
-       #     print "prev_fy_datestart",prev_fy_datestart
-        #    print "prev_fy_datestop",prev_fy_datestop
             # calculate finance detail
+            total_reimburse = current_treasury = last_total_sale = sale_forcast = margin_forcast = last_turnover = 0.0
+            total_sold_products = total_benefit = benefits_growth = turnover_growth = products_growth = cost_purchase_forcast = 0.0
+            last_total_purchase = prev_to_prev_total_sale = prev_to_prev_prod_sold = prev_prod_sold = prev_to_prev_benefit = 0.0
+            prev_to_prev_turnover = 0.0
+
             if 'total_reimburse' in field_names:
-                type_ids = account_type_obj.search(cr,uid,[('code','=','payable')])
-                account_ids = account_obj.search(cr,uid,[('user_type','in',type_ids)])
-                total_balance = 0
-                for account in account_obj.browse(cr,uid,account_ids):
-                    total_balance += account.balance
-                res[val.id]['total_reimburse'] = total_balance
-#
+                account_ids = account_obj.search(cr,uid,[('user_type','ilike','payable')])
+                context = {'fiscalyear': fiscalyear_id,'target_move':'all'}
+                for acc in  account_obj.browse(cr, uid, account_ids, context):
+                       total_reimburse += acc.balance
+               # res[val.id]['total_reimburse'] = total_balance
+                print "total_reimburse",total_reimburse
+
             if 'current_treasury' in field_names:
-                type_ids = account_type_obj.search(cr,uid,[('code','=','cash')])
-                cash_account_ids = account_obj.search(cr,uid,[('user_type','in',type_ids)])
-                total_balance = 0
-                for cash_account in account_obj.browse(cr,uid,cash_account_ids):
-                    total_balance += cash_account.balance
-                res[val.id]['current_treasury'] = total_balance
+                cash_account_ids = account_obj.search(cr,uid,[('user_type','ilike','cash')])
+                context = {'fiscalyear': fiscalyear_id,'target_move':'all'}
+                for cash_account in account_obj.browse(cr, uid, cash_account_ids, context):
+                    current_treasury += cash_account.balance
+              #  res[val.id]['current_treasury'] = total_balance
+                print "current_treasury",current_treasury
+ # calculate sales detail
 
-            # calculate hr detail
+            if 'last_total_sale' in field_names:
+                account_ids = account_obj.search(cr,uid,[('user_type','ilike','income')])
+                total_balance = [0,0]
+                i = 0
+                for fy in (prev_fy,prev_to_prev_fy):
+                    total_balance[i] = 0.0
+                    context = {'fiscalyear': fy,'target_move':'all'}
+                    for account in account_obj.browse(cr,uid,account_ids, context):
+                        total_balance[i] += account.balance
+                    i += 1
+                #res[val.id]['last_total_sale'] = total_balance[0]
+                last_total_sale = total_balance[0]
+                prev_to_prev_total_sale = total_balance[1]
+                print "last_total_sale",total_balance[0]
+                print "prev_to_prev_total_sale",total_balance[1]
 
-           # calculate logistic detail
-###            if 'last_total_purchase' in field_names:
-###                       sql="""
-###                            select
-###                                sum(invoice_line.quantity) as total_qty
-###                            from account_invoice_line invoice_line
-###                            where invoice_line.invoice_id in (select id from account_invoice invoice
-###                            where invoice.type ='in_invoice' and date_invoice>='%s' and date_invoice<='%s')
-###                            """%(prev_fy_datestart,prev_fy_datestop)
-###                       cr.execute(sql)
-###                       result = cr.fetchall()[0]
-###                       res[val.id]['last_total_purchase'] = (result[0] or 0.0)
-###
-###            if  'avg_stock_forcast' in field_names:
-###                       sql="""
-###                                select
-###                                    avg(invoice_line.quantity) as avg_qty
-###                                from account_invoice_line invoice_line
-###                                where invoice_line.invoice_id in (select id from account_invoice invoice
-###                                where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s')
-###                                """%(fiscalyear.date_start,fiscalyear.date_stop)
-###                       cr.execute(sql)
-###                       result = cr.fetchall()[0]
-###                       res[val.id]['avg_stock_forcast'] = (result[0] or 0.0)
+            if 'sale_forcast' in field_names:
+                forecast_obj = self.pool.get('stock.planning.sale.prevision')
+                forecast_ids = forecast_obj.search(cr, uid, [('period_id', '=',fiscalyear_id)])
+                total_balance = 0.0
+                for value in forecast_obj.browse(cr ,uid, forecast_ids):
+                    sale_forcast += value.product_amt
+               # res[val.id]['sale_forcast'] = total_balance
+                print "sale_forcast",sale_forcast
 
-           # if 'cost_purchase_forcast' in field_names:
-              #  self.pool.get('stock.planning').search()
+            if 'margin_forcast' in field_names:
+                forecast_obj = self.pool.get('stock.planning.sale.prevision')
+                forecast_ids = forecast_obj.search(cr, uid, [('period_id', '=',fiscalyear_id)])
+                for value in forecast_obj.browse(cr ,uid, forecast_ids):
+                    margin_forcast += value.product_amt - (value.product_qty * value.product_id.standard_price)
+              #  res[val.id]['margin_forcast'] = total_balance
+                print "margin_forcast",margin_forcast
+ # calculate Objectives Achievement
+            if 'last_turnover' in field_names:
+                 last_turnover = last_total_sale or 0.0
+                 #res[val.id]['last_turnover'] =  last_total_sale or 0.0
+                 prev_to_prev_turnover = prev_to_prev_total_sale or 0.0
+                 print "last_turnover",last_total_sale or 0.0
+                 print "prev_to_prev_turnover", prev_to_prev_total_sale  or 0.0
 
-            if 'last_total_purchase' in field_names or 'avg_stock_forcast' in field_names or 'cost_purchase_forcast' in field_names:
-                for field in field_names:
-                   if field == 'last_total_purchase':
-                        start_date = prev_fy_datestart
-                        stop_date = prev_fy_datestop
-                   else:
-                        start_date = fiscalyear.date_start
-                        stop_date = fiscalyear.date_stop
+            if 'total_sold_products' in field_names:
+                 total_balance = [0,0,0]
+                 i = 0
+                 for fy in fiscal_obj.browse(cr,uid,[fiscalyear_id, prev_fy,prev_to_prev_fy]):
+                    sql="""
+                        select
+                        sum(invoice_line.quantity) as total
+                        from account_invoice_line invoice_line
+                        where invoice_line.invoice_id in (select id from account_invoice invoice
+                        where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s')
+                    """%(fy.date_start,fy.date_stop)
+                    cr.execute(sql)
+                    result = cr.fetchall()[0]
+                    print "result",result
+                    total_balance[i] = result[0] or 0.0
+                    i += 1
+                 total_sold_products =  total_balance[0]
+              #   res[val.id]['total_sold_products'] = total_balance[0]
+                 prev_prod_sold = total_balance[1]
+                 prev_to_prev_prod_sold = total_balance[2]
+                 print "total_sold_products", total_balance[0]
+                 print "prev_prod_sold", total_balance[1]
+                 print "prev_to_prev_prod_sold", total_balance[2]
 
-                   if field == 'last_total_purchase' or field == 'avg_stock_forcast':
-                       sql="""
-                                select
-                                    avg(invoice_line.quantity) as avg_qty
-                                from account_invoice_line invoice_line
-                                where invoice_line.invoice_id in (select id from account_invoice invoice
-                                where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s')
-                                """%(start_date,stop_date)
-                       cr.execute(sql)
-                       result = cr.fetchall()[0]
-                       res[val.id][field] = (result[0] or 0.0)
-                   else:
-                        inv_type = ['in_invoice','out_refund']
-                        sql="""
-                            select
-                                sum(invoice.amount_total) as total
-                            from account_invoice invoice
-                            where invoice.type in ('%s') and date_invoice>='%s' and date_invoice<='%s'
-                            """%("','".join(inv_type),start_date,stop_date)
-                        cr.execute(sql)
-                        result = cr.fetchall()[0]
-                        res[val.id][field] = (result[0] or 0.0)
+            if 'total_benefit' in field_names:
+                total_balance = [0,0]
+                prev_to_prev_benefit = 0.0
+                account_ids = account_obj.search(cr,uid,[('user_type','ilike','expense')])
+                for fy in (prev_fy,prev_to_prev_fy):
+                    i = 0
+                    total_balance[i] = 0.0
+                    context = {'fiscalyear': fy,'target_move':'all'}
+                    for account in account_obj.browse(cr,uid,account_ids, context):
+                        total_balance[i] += account.balance
+                total_benefit = last_turnover or 0.0 - total_balance[0] or 0.0
+                #res[val.id]['total_benefit'] = val.last_turnover or 0.0 - total_balance[0] or 0.0
+                prev_to_prev_benefit = prev_to_prev_turnover or 0.0 - total_balance[1] or 0.0
+                print "total_benefit", total_benefit or 0.0
+                print "prev_to_prev_benefit", prev_to_prev_benefit or 0.0
 
-            # calculate sales detail
+            if 'benefits_growth' in field_names:
+                benefits_growth = total_benefit or 0.0 - prev_to_prev_benefit or 0.0
+                #res[val.id]['benefits_growth'] = val.total_benefit or 0.0 - prev_to_prev_benefit or 0.0
+                print "benefits_growth", benefits_growth
 
-            if 'last_total_sale' in field_names or 'sale_forcast' in field_names or 'margin_forcast' in field_names:
-                for field in field_names:
-                   if field == 'last_total_sale':
-                        start_date = prev_fy_datestart
-                        stop_date = prev_fy_datestop
-                   else:
-                        start_date = fiscalyear.date_start
-                        stop_date = fiscalyear.date_stop
+            if 'turnover_growth' in field_names:
+                turnover_growth = last_turnover or 0.0 - prev_to_prev_turnover or 0.0
+                #res[val.id]['turnover_growth'] = val.last_turnover or 0.0 - prev_to_prev_turnover or 0.0
+                print "turnover_growth", res[val.id]['turnover_growth'] or 0.0
 
-                   if field == 'last_total_sale' or field == 'sale_forcast':
-                        sql="""
-                            select
-                                sum(invoice.amount_total) as total
-                            from account_invoice invoice
-                            where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s'
-                            """%(start_date,stop_date)
-                        cr.execute(sql)
-                        result = cr.fetchall()[0]
-                        res[val.id][field] = (result[0] or 0.0)
-                   else:
-                         invoice_types = ['in_invoice','out_invoice']
-                         sql="""
-                            select
-                                sum(l.quantity * l.price_unit) as total,
-                                sum(l.quantity * product.standard_price) as normal_cost
-                            from account_invoice_line l
-                            left join account_invoice i on (l.invoice_id = i.id)
-                            left join product_template product on (product.id=l.product_id)
-                            where i.type in ('%s') and i.date_invoice>='%s' and i.date_invoice<='%s'
-                            """%("','".join(invoice_types),start_date,stop_date)
-                         cr.execute(sql)
-                         result = cr.fetchall()[0]
-                         res[val.id][field] = (result[0] or 0.0) - (result[1] or 0.0)
+            if 'products_growth' in field_names:
+                products_growth = prev_prod_sold or 0.0- prev_to_prev_prod_sold or 0.0
+               # res[val.id]['products_growth'] = prev_prod_sold or 0.0- prev_to_prev_prod_sold or 0.0
+                print "products_growth", res[val.id]['products_growth'] or 0.0
 
-            # calculate Objectives Achievement
-            print "field_names",field_names
-            if 'last_turnover' in field_names or 'total_benefit' in field_names or 'total_sold_products' in field_names \
-                or 'turnover_growth' in field_names or 'benefits_growth' in field_names or 'products_growth' in field_names:
+            if 'cost_purchase_forcast' in field_names:
+                sum1 = 0.0
+                sum2 = 0.0
+                period_id = self.pool.get('stock.period').search(cr, uid, [('name','ilike', fiscalyear.code)])
+                stock_ids = self.pool.get('stock.planning').search(cr, uid, [('period_id','in', period_id)])
+                forecast_ids = self.pool.get('stock.planning.sale.prevision').search(cr, uid, [('period_id','in', period_id)])
+                for stock in self.pool.get('stock.planning').browse(cr, uid,stock_ids):
+                    sum1 += stock.incoming_left * stock.product_id.standard_price
+                for forecast in self.pool.get('stock.planning.sale.prevision').browse(cr, uid, forecast_ids):
+                    sum2 += forecast.product_qty * forecast.product_id.standard_price
+               # res[val.id]['cost_purchase_forcast'] = sum1 + sum2
+                cost_purchase_forcast = sum1 + sum2
+                print "cost_purchase_forcast", sum1 + sum2
 
-              fy_start_stop = [fiscalyear.date_start,prev_fy_datestart,fiscalyear.date_stop,prev_fy_datestop]
-              turnover = []
-              total_benefit = []
-              product_sold = []
-              for field in field_names:
-                  for i in range(0,2):
-                  #  ************turn over **************************************
-                      if field == 'last_turnover':
-                          sql="""
-                                    select
-                                        sum(l.quantity * l.price_unit) as total
-                                    from account_invoice_line l
-                                    left join account_invoice i on (l.invoice_id = i.id)
-                                    left join product_template product on (product.id=l.product_id)
-                                    where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
-                                    """%(fy_start_stop[i],fy_start_stop[i+2])
-                          cr.execute(sql)
-                          result = cr.fetchall()[0]
-                          turnover.append(result[0] or 0.0)
+            if 'last_total_purchase' in field_names:
+                    fy = fiscal_obj.browse(cr,uid,prev_fy)
+                    sql="""
+                        select
+                        sum(invoice_line.quantity) as total
+                        from account_invoice_line invoice_line
+                        where invoice_line.invoice_id in (select id from account_invoice invoice
+                        where invoice.type ='in_invoice' and date_invoice>='%s' and date_invoice<='%s')
+                        """%(fy.date_start,fy.date_stop)
+                    cr.execute(sql)
+                    result = cr.fetchall()[0]
+                    last_total_purchase =  result[0] or 0.0
+                    #res[val.id]['last_total_purchase'] = result[0] or 0.0
+                    print "last_total_purchase", result[0]
 
+            for field in field_names:
+                if field == 'total_reimburse':
+                    res[val.id][field] = total_reimburse
 
-                #****************total_benefit ********************
-                      if field == 'total_benefit':
-                          sql1="""
-                                    select
-                                        sum(l.quantity * l.price_unit) as total,
-                                        sum(l.quantity * product.list_price) as sale_expected,
-                                        sum(l.quantity * product.standard_price) as normal_cost
-                                    from account_invoice_line l
-                                    left join account_invoice i on (l.invoice_id = i.id)
-                                    left join product_template product on (product.id=l.product_id)
-                                    where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
-                                    """%(fy_start_stop[i],fy_start_stop[i+2])
-                          cr.execute(sql1)
-                          result1 = cr.fetchall()[0]
+                elif field == 'current_treasury':
+                    res[val.id][field] = current_treasury
 
-                          sql2="""
-                                    select
-                                        sum(l.quantity * l.price_unit) as total
-                                    from account_invoice_line l
-                                    left join account_invoice i on (l.invoice_id = i.id)
-                                    left join product_template product on (product.id=l.product_id)
-                                    where i.type ='in_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
-                                    """%(fy_start_stop[i],fy_start_stop[i+2])
-                          cr.execute(sql2)
-                          result2 = cr.fetchall()[0]
-                          total_benefit.append(((result1[1] or 0.0) -(result1[0] or 0.0))-((result1[2] or 0.0) -(result2[0] or 0.0)))
-            #***************** # product sold *************************
-                      if field == 'total_sold_products':
-                          sql="""
-                                    select
-                                    sum(invoice_line.quantity) as total
-                                    from account_invoice_line invoice_line
-                                    where invoice_line.invoice_id in (select id from account_invoice invoice
-                                    where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s')
-                                    """%(fy_start_stop[i],fy_start_stop[i+2])
-                          cr.execute(sql)
-                          result = cr.fetchall()[0]
-                          product_sold.append(result[0] or 0.0)
+                elif field == 'last_total_sale':
+                    res[val.id][field] = last_total_sale
 
-# NOTE : 0 stands for current
-#        1 stands for previous
-              for field in field_names:
-                    if field == 'last_turnover':
-                        res[val.id][field] = turnover[1]
+                elif field == 'sale_forcast':
+                        res[val.id][field] = sale_forcast
 
-                    elif field == 'total_benefit':
-                        res[val.id][field] = total_benefit[0]
+                elif field == 'margin_forcast':
+                        res[val.id][field] = margin_forcast
 
-                    elif field == 'total_sold_products':
-                        res[val.id][field] = product_sold[0]
+                elif field == 'last_turnover':
+                        res[val.id][field] = last_turnover
 
-                    elif field == 'turnover_growth':
-                        if turnover[1] == 0.0:
-                            res[val.id][field] = 0.0
-                        else:
-                            res[val.id][field] = ((turnover[0]-turnover[1])*100)/turnover[1]
+                elif field == 'total_sold_products':
+                        res[val.id][field] = total_sold_products
+                elif field == 'total_benefit':
+                        res[val.id][field] = total_benefit
+                elif field == 'benefits_growth':
+                        res[val.id][field] = benefits_growth
+                elif field == 'turnover_growth':
+                        res[val.id][field] = turnover_growth
+                elif field == 'products_growth':
+                        res[val.id][field] = products_growth
 
-                    elif field == 'benefits_growth':
-                        if total_benefit[1] == 0.0:
-                            res[val.id][field] = 0.0
-                        else:
-                            res[val.id][field] = ((total_benefit[0]-total_benefit[1])*100)/total_benefit[1]
-
-                    elif field == 'products_growth':
-                        if product_sold[1] == 0.0:
-                            res[val.id][field]=0.0
-                        else:
-                            res[val.id][field] = ((product_sold[0] -product_sold[1])*100)/product_sold[1]
+                elif field == 'cost_purchase_forcast':
+                        res[val.id][field] = cost_purchase_forcast
+                elif field == 'last_total_purchase':
+                        res[val.id][field] = last_total_purchase
         return res
+
     _columns = {
         'name':fields.char('Name',size=64),
         'state':fields.selection([('3','3'),('4','4')],'Number of Players'),
@@ -418,22 +390,22 @@ class profile_game_retail(osv.osv):
         'loan_total_reimburse' : fields.float('Total to Reimburse', readonly=True, help="Total loan amount to reimburse "),
         'loan_total_reimburse_this_year' : fields.float('Total to Reimburse this year', readonly=True, help="Total loan amount to reimburse this year"),
 
-        'hr_budget' : fields.function(_calculate_detail, method=True, type='float', string='HR Budget', multi='hr',help="HR Budget"),
+        'hr_budget' : fields.function(_calculate_detail, method=True, type='float', string='HR Budget', multi='finance',help="HR Budget"),
 
-        'last_total_sale' : fields.function(_calculate_detail, method=True, type='float', string='Total Sales in Last Year', multi='sale',help="Total Sales in Last Year"),
-        'sale_forcast' : fields.function(_calculate_detail, method=True, type='float', string='Sales Forcast', multi='sale',help="Sales Forcast"),
-        'margin_forcast' : fields.function(_calculate_detail, method=True, type='float', string='Margin Forcast', multi='sale',help="Margin Forcast"),
+        'last_total_sale' : fields.function(_calculate_detail, method=True, type='float', string='Total Sales in Last Year', multi='finance',help="Total Sales in Last Year"),
+        'sale_forcast' : fields.function(_calculate_detail, method=True, type='float', string='Sales Forcast', multi='finance',help="Sales Forcast"),
+        'margin_forcast' : fields.function(_calculate_detail, method=True, type='float', string='Margin Forcast', multi='finance',help="Margin Forcast"),
 
-        'last_total_purchase' : fields.function(_calculate_detail, method=True, type='float', string='Total Purchases in Last year', multi='logistic',help="Total Purchases in Last year"),
-        'avg_stock_forcast' : fields.function(_calculate_detail, method=True, type='float', string='Avg. Stock Forcast', multi='logistic',help="Avg. Stock Forcast"),
-        'cost_purchase_forcast' : fields.function(_calculate_detail, method=True, type='float', string='Costs of Purchases Forecast', multi='logistic',help="Costs of Purchases Forecast"),
+        'last_total_purchase' : fields.function(_calculate_detail, method=True, type='float', string='Total Purchases in Last year', multi='finance',help="Total Purchases in Last year"),
+        'avg_stock_forcast' : fields.function(_calculate_detail, method=True, type='float', string='Avg. Stock Forcast', multi='finance',help="Avg. Stock Forcast"),
+        'cost_purchase_forcast' : fields.function(_calculate_detail, method=True, type='float', string='Costs of Purchases Forecast', multi='finance',help="Costs of Purchases Forecast"),
 
-        'last_turnover' : fields.function(_calculate_detail, method=True, type='float', string='Turnover in last year', multi='objectives',help="Turnover in last year"),
-        'total_benefit' : fields.function(_calculate_detail, method=True, type='float', string='Total Benefits', multi='objectives',help="Total Benefits"),
-        'total_sold_products' : fields.function(_calculate_detail, method=True, type='float', string='# of Products Sold', multi='objectives',help="# of Products Sold"),
-        'turnover_growth' : fields.function(_calculate_detail, method=True, type='float', string='Turnover Growth', multi='objectives',help="Turnover Growth"),
-        'benefits_growth' : fields.function(_calculate_detail, method=True, type='float', string='Benefits Growth', multi='objectives',help="Benefits Growth"),
-        'products_growth' : fields.function(_calculate_detail, method=True, type='float', string='Growth Products', multi='objectives',help="Growth Products"),
+        'last_turnover' : fields.function(_calculate_detail, method=True, type='float', string='Turnover in last year', multi='finance',help="Turnover in last year"),
+        'total_benefit' : fields.function(_calculate_detail, method=True, type='float', string='Total Benefits', multi='finance',help="Total Benefits"),
+        'total_sold_products' : fields.function(_calculate_detail, method=True, type='float', string='# of Products Sold', multi='finance',help="# of Products Sold"),
+        'turnover_growth' : fields.function(_calculate_detail, method=True, type='float', string='Turnover Growth', multi='finance',help="Turnover Growth"),
+        'benefits_growth' : fields.function(_calculate_detail, method=True, type='float', string='Benefits Growth', multi='finance',help="Benefits Growth"),
+        'products_growth' : fields.function(_calculate_detail, method=True, type='float', string='Growth Products', multi='finance',help="Growth Products"),
         'cy_traceback':fields.text('Traceback [Current Year]'),
         'warn_error':fields.text('Warnings & Errors'),
         'ay_traceback':fields.text('Traceback [All Years]'),

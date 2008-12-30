@@ -118,6 +118,7 @@
                 	<group col="2" colspan="2">
 	                	<label align="0.0">This wizard will help you to get loan from bank. You just need
 	to fill up the amount you needed in the field 'Loan Amount' and the duration in years in the field 'Number of years"</label>
+	 					<separator colspan="3"/>
 	   					<group col="3" colspan="3">
 					 		<field  name="loan_duration" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
 				            <field  name="loan_amount" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
