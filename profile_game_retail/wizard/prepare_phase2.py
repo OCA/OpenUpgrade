@@ -118,6 +118,9 @@ def get_ready_phase2(self, cr, uid, data, context):
         phase2_obj = pool.get('profile.game.retail')
         phase2_obj.create_sale_forecast_stock_planning_data(cr, uid, data, time.strftime('%Y'), context)
 
+        fys = pool.get('account.fiscalyear').search(cr, uid, [('code','=',time.strftime('%Y'))])
+        new_fy = phase2_obj.create_fiscalyear_and_period(cr, uid, data, context)
+        phase2_obj.close_fiscalyear(cr, uid, [], fys[0], new_fy, context)
 
         lm_action = ['menu_stock_planning','menu_action_orderpoint_form']
         mod_obj = pool.get('ir.model.data')
@@ -165,7 +168,7 @@ def get_ready_phase2(self, cr, uid, data, context):
                     val['user_id'] =user.id
                     val['name']=pool.get('ir.ui.menu').read(cr,uid,[res_id],['name'])[0]['name']
                     pool.get('ir.ui.view_sc').create(cr,uid,val)
-        #phase1_obj.write(cr,uid,data['id'],{'state':'started_phase2'})
+        phase1_obj.write(cr,uid,data['id'],{'state':'started_phase2'})
         return  {
         'name': 'Business Game',
         'view_type': 'form',

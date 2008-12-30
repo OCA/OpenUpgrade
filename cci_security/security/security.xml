@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+	
+	<!-- Users groups -->
+	<record model="res.groups" id="group_cci_budget_user">
+		<field name="name">CCI Budget User</field>
+	</record>
+	<record model="res.groups" id="group_cci_budget_manager">
+		<field name="name">CCI Budget Manager</field>
+	</record>
+	<record model="res.groups" id="group_quality_manager">
+		<field name="name">CCI Quality Manager</field>
+	</record>
+	<record model="res.groups" id="group_cci_monthly_bill">
+		<field name="name">CCI Monthly Billing</field>
+	</record>
+	<record model="res.groups" id="group_cci_bill_draft">
+		<field name="name">CCI Draft Billing</field>
+	</record>
+	<record model="res.groups" id="group_cci_quick_bill">
+		<field name="name">CCI Direct Billing</field>
+	</record>
+	
+	<!-- Set accesses to menu 
+	<record model="ir.ui.menu" id="menu_translation_root">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_translation_user'),ref('group_cci_translation_manager')])]"/>
+	</record>
+-->
+</data>
+</openerp>
+

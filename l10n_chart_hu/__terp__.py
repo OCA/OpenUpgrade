@@ -20,13 +20,14 @@
 #
 ##############################################################################
 {
-    "name" : "Hungary",
+    "name" : "Hungary - Chart of Accounts",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
+    "category" : "Localisation/Account Charts",
     "depends" : ["base_iban", "account_chart", 'base_vat'],
     "demo_xml" : [],
-    "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml','l10n_chart_hu_wizard.xml'],
+    "update_xml" : ['account_tax_code.xml',"account_chart.xml",
+                    'account_tax.xml','l10n_chart_hu_wizard.xml'],
     "active": False,
     "installable": True
 }

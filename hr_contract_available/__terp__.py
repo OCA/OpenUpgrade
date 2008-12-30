@@ -36,7 +36,7 @@
     """,
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["hr_contract_available_view.xml"],
+    "update_xml" : ["security/ir.model.access.csv","hr_contract_available_view.xml"],
     "active": False,
     "installable": True
 }

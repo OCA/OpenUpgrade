@@ -277,13 +277,29 @@ class profile_game_retail_phase_one(osv.osv):
          wiz_id = self.pool.get('wizard.multi.charts.accounts').create(cr, uid, {'company_id':company_id,
                                                                         'chart_template_id':chart[0],'code_digits':6})
          self.pool.get('wizard.multi.charts.accounts').action_create(cr, uid, [wiz_id], context)
-         inc_acc_id = self.pool.get('account.account').search(cr, uid, [('user_type','ilike','Income')])[0]
-         exp_acc_id = self.pool.get('account.account').search(cr, uid, [('user_type','ilike','Expense')])[0]
-         debit_ac = self.pool.get('account.account').search(cr, uid, [('code','ilike','401100')])[0]
-         credit_ac = self.pool.get('account.account').search(cr, uid, [('code','ilike','411100')])[0]
-         for journal in self.pool.get('account.journal').search(cr, uid, []):
-             self.pool.get('account.journal').write(cr, uid, journal, {'default_debit_account_id':debit_ac,
-                                                                 'default_credit_account_id':credit_ac})
+         acc_obj = self.pool.get('account.account')
+         inc_acc_id = acc_obj.search(cr, uid, [('code','ilike','701000')])[0]
+         exp_acc_id = acc_obj.search(cr, uid, [('code','ilike','601000')])[0]
+         sale_acc = acc_obj.search(cr, uid, [('code','ilike','411100')])[0]
+         pur_acc = acc_obj.search(cr, uid, [('code','ilike','401100')])[0]
+         bank_acc = acc_obj.search(cr, uid, [('code','ilike','512000')])[0]
+         close_acc = acc_obj.search(cr, uid, [('code','ilike','911000')])[0]
+         acc_obj.write(cr ,uid, close_acc, {'type':'other'})
+
+         acc_journal = self.pool.get('account.journal')
+         journal_ids = acc_journal.search(cr, uid, [])
+         for journal in acc_journal.browse(cr, uid, journal_ids):
+            if journal.code in ('JB','SAJ','EXJ','JC'):
+                 if journal.code == 'JB':
+                     db_ac = cr_ac = bank_acc
+                 if journal.code == 'SAJ':
+                     db_ac = cr_ac = sale_acc
+                 if journal.code == 'EXJ':
+                     db_ac = cr_ac = pur_acc
+                 if journal.code == 'JC':
+                     db_ac = cr_ac = close_acc
+                 acc_journal.write(cr, uid, journal.id, {'default_debit_account_id':db_ac,
+                                                                 'default_credit_account_id':cr_ac})
          for product in self.pool.get('product.product').search(cr, uid, []):
              self.pool.get('product.product').write(cr, uid, product,
                           {'property_account_income':inc_acc_id,'property_account_expense':exp_acc_id})
@@ -309,6 +325,14 @@ class profile_game_retail_phase_one(osv.osv):
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'step_quotation')
         sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
         return self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})
+
+    def check_state(self, cr, uid, context = {}):
+        curr_id = self.search(cr, uid, [])[0]
+        obj = self.browse(cr, uid, curr_id)
+        if obj.state != 'started_phase2':
+            return False
+        else:
+            return True
 
 profile_game_retail_phase_one()
 

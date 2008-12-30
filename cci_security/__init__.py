@@ -4,6 +4,8 @@
 #    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
+#    Copyright (c) 2008 CCILV asbl. (http://www.ccilv.be) All Rights Reserved.
+#                    Philippe Vandermeer <philmer@ccilv.Be>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by

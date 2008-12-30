@@ -52,7 +52,7 @@ class config_bob_import(osv.osv_memory):
         'company_id':fields.many2one('res.company','Company', required=True),
         'location': fields.selection([('locally','Locally(This Machine is the Server)'),('remotely','Remotely(This Machine is the Client)')], 'Location', required=True,help="If this machine is the server, select 'locally' as the location.If this is the client machine, create a zip of the 'Bob' folder placed in Root(Drive Letter)://Program Files/Bob.Upload it and follow the further instructions."),
         'path':fields.char('Path for BOB Folder',size=200,help="Supply a path that is a Bob Installation Folder."),
-        'zipped_file': fields.binary('Upload a Zip File',filters=['*.zip'],help="Upload a .zip file containing information of BOB Installation'"),
+        'zipped_file': fields.binary('Upload a Zip File',filters='*.zip',help="Upload a .zip file containing information of BOB Installation'"),
 #        'zipped_file': fields.binary('Upload a Zip File',filters=['*.zip','*.tar','*.tar.gz','*.tar.bz2','*.ar','*.ear','*.jar','*.war']),
     }
 
@@ -213,6 +213,7 @@ class config_path_folder(osv.osv_memory):
 
         #TODO: modify the name of account_bob_import.account_bob_0 into the name of company
         #TODO: some check to prevent errors: is file empty? add try-catch statements?
+        #TODO: chisto and ahisto_matching .csv file
 
         return {
                 'view_type': 'form',

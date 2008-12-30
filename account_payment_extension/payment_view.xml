@@ -283,6 +283,20 @@
          id="menu_action_payments_payable"/>
 
 
+    <!--***************************** BANK STATEMENT *********************************-->
+    <record id="view_bank_statement_form_ext" model="ir.ui.view">
+        <field name="name">account.bank.statement.form.ext</field>
+        <field name="model">account.bank.statement</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account_payment.view_bank_statement_form"/>
+        <field name="arch" type="xml">
+            <button name="%(account_payment.wizard_populate_statement)d" position="replace">
+                <button name="%(wizard_populate_statement_ext)d" string="Import payment lines" type="action"/>
+            </button>
+        </field>
+    </record>
+
+
     <!--***************************** PAYMENT ORDER *********************************-->
     <!-- Filter invoices by payment type. Allow negative payment amounts -->
     <record id="view_payment_order_form_ext1" model="ir.ui.view">

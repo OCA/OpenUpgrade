@@ -35,7 +35,8 @@
     "init_xml" : [],
     "demo_xml" : [
     ],
-    "update_xml" : ["hotel_housekeeping_view.xml",
+    "update_xml" : ["security/ir.model.access.csv",
+                    "hotel_housekeeping_view.xml",
                     "hotel_housekeeping_workflow.xml",
                     
     ],

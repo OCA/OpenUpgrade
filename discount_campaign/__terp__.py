@@ -29,7 +29,7 @@
     "description": "Marketing management module",
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["discount_campaign_view.xml","discount_campaign_workflow.xml"],
+    "update_xml" : ["security/ir.model.access.csv","discount_campaign_view.xml","discount_campaign_workflow.xml"],
     "active": False,
     "installable": True
 }

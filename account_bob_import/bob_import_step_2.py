@@ -343,6 +343,8 @@ def import_partner(reader_partner, writer_partner, partners_map, writer_address,
         partner_name = record['name']
         if partner_name != "":
 
+            if record['lang'] not in langs:
+                langs.append(record['lang'])
             #partner already exists
             count_address = count_address + 1
             record_address['id'] = 'add' + str(count_address)
@@ -732,6 +734,10 @@ def import_moves_and_lines(reader_move, writer_move, writer, move_map, map, dict
         count += 1
         if (count%1000) == 0:
             print count
+
+        if row['HCURRENCY,A,3'] not in currencies:
+            currencies.append(row['HCURRENCY,A,3'])
+
         #only create move and move_line if x['HMONTH,I,4'] != 0
         #and if row['HAMOUNT,$,8']!="" is different from 0 (or False)
         if row['HMONTH,I,4'] != "0" and row['HAMOUNT,$,8']!="" and not float(row['HAMOUNT,$,8']) == 0.0:
@@ -823,6 +829,9 @@ partner_dict['GRAMME'] = ''
 
 #end of specific part
 
+langs = []
+currencies = []
+
 def run():
     print 'importing chart of accounts'
     reader_account = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/accoun.csv','rb')) 
@@ -878,6 +887,10 @@ def run():
     writer_move = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.csv', 'wb'), move_map.keys())
     writer_move_line = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.line.csv', 'wb'), move_line_map.keys())
     import_moves_and_lines(reader_move, writer_move, writer_move_line, move_map, move_line_map, dict_ahisto, dict_chisto, vat_dict)
+
+    print "Make sure that you installed the following languages:",langs
+    print "\n"
+    print "Make sure that you installed the following currencies:",currencies
 
 if __name__ == '__main__':
     run()

@@ -29,7 +29,7 @@
     "description": "Ability to create employees evaluation.",
     "init_xml" : [],
     "demo_xml" : ["hr_evaluation_demo.xml"],
-    "update_xml" : ["hr_evaluation_view.xml"],
+    "update_xml" : ["security/ir.model.access.csv","hr_evaluation_view.xml"],
     "active": False,
     "installable": True
 }

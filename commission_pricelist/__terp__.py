@@ -27,7 +27,7 @@
     'depends' : ['base','product'],
     'description': 'Sale agent Info',
     'init_xml' : [],
-    'update_xml':['saleagent_view.xml','partner_view.xml','commission_view.xml','saleagent_report.xml'],
+    'update_xml':['security/ir.model.access.csv','saleagent_view.xml','partner_view.xml','commission_view.xml','saleagent_report.xml'],
     'active': False,
     'installable': True
 }

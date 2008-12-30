@@ -29,6 +29,7 @@
        ],
     "demo_xml":[],
     "update_xml":[
+            "security/ir.model.access.csv",
             "ampco_view.xml",
             "product_heatcode/product_heatcode_view.xml",
             "product_lot_foundary/product_lot_foundary.xml",

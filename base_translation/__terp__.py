@@ -30,6 +30,7 @@
     "demo_xml" : [],
     "description": """For better translation process""",
     "update_xml" : [
+                    "security/ir.model.access.csv",
                     "translation_view.xml",
                     "translation_wizard.xml",
                     "translation_workflow.xml",

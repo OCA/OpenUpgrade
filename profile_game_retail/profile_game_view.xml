@@ -4,29 +4,7 @@
 
 <!-- Actions to call different Views -->
 
-		<!-- Total Refunds -->
- 		<record id="action_total_refund" model="ir.actions.act_window">
-            <field name="name">Total Refunds</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">account.account</field>
-            <field name="domain">[('user_type','ilike','payable')]</field>
-           <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="account.view_account_tree"/>
-        </record>
-
-		<!-- Current treasury -->
- 		<record id="action_current_treasury" model="ir.actions.act_window">
-            <field name="name">Current treasury</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">account.account</field>
-            <field name="domain">[('user_type','ilike','cash')]</field>
-           <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="account.view_account_tree"/>
-        </record>
-
-		<!-- Current treasury -->
+		<!-- HR Budgets -->
  		<record id="action_budgets" model="ir.actions.act_window">
             <field name="name">HR Budgets</field>
             <field name="type">ir.actions.act_window</field>
@@ -35,7 +13,7 @@
             <field name="view_id" ref="account_budget.view_budget_post_tree"/>
         </record>
 
-        <!-- Total Sales in previous year -->
+        <!-- Total Sales in previous year
  		<record id="action_sales_prev" model="ir.actions.act_window">
             <field name="name">Sales in last Year</field>
             <field name="type">ir.actions.act_window</field>
@@ -44,7 +22,7 @@
            <field name="view_type">form</field>
             <field name="view_mode">tree</field>
             <field name="view_id" ref="account.view_account_tree"/>
-        </record>
+        </record>-->
 
  		<!--  Sale forecast -->
  		<record id="action_sale_forecast" model="ir.actions.act_window">
@@ -118,11 +96,13 @@
                 	<group col="2" colspan="2">
 	                	<label align="0.0">This wizard will help you to get loan from bank. You just need
 	to fill up the amount you needed in the field 'Loan Amount' and the duration in years in the field 'Number of years"</label>
-	   					<group col="3" colspan="3">
-					 		<field  name="loan_duration" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
-				            <field  name="loan_amount" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
-				            <field  name="rate" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
-				            <field  name="total_amount"/>
+	 					<separator colspan="3"/>
+	   					<group col="2" colspan="2">
+	   						<field  colspan="2" name="fiscal_year"/>
+					 		<field  colspan="2" name="loan_duration" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
+				            <field  colspan="2" name="loan_amount" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
+				            <field  colspan="2" name="rate" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
+				            <field  colspan="2" name="total_amount"/>
 				            <separator colspan="3"/>
 				        	<button string="Get Loan" name="get_loan" type="object" icon="gtk-ok"/>
 				        </group>
@@ -145,6 +125,7 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Loan Details">
+                	<field name="fiscal_year" select = "1"/>
                     <field name="loan_duration" select = "1"/>
 		            <field name="loan_amount" select = "1"/>
 		            <field name="rate" select = "1"/>
@@ -197,21 +178,24 @@
 	                        </group>
 	                        <group col="2" colspan="2">
 	                        	<separator colspan="2" string = "Reports"/>
-	                        	<group col="3" colspan="3">
-		                            <button icon="terp-account" string="Payable A/c" name="%(action_total_refund)d" type="action"/>
-		                            <button icon="terp-account" string="Cash A/c" name="%(action_current_treasury)d" type="action"/>
-									<button icon="terp-account" string="Budgets" name="%(action_budgets)d" type="action"/>
-									<button icon="terp-account" string="Income A/c" name="%(action_sales_prev)d" type="action"/>
-									<button icon="terp-sale" string="Sale Forecast Details" name="%(action_sale_forecast)d" type="action"/>
-									<button icon="terp-sale" string="Margin Forecast Details" name="%(action_margin_forecast)d" type="action"/>
-									<button icon="terp-stock" string="Products Stock" name="%(action_stock_forecast)d" type="action"/>
-									<button icon="terp-stock" string="Stock Location Structure" name="%(action_stock_forecast)d" type="action"/>
-									<button icon="terp-stock" string="Master Procurement Schedule" name="%(action_cost_purchaseforecast)d" type="action"/>
+	                        	<group col="2" colspan="2">
+	                        		<newline/>
+									<button  colspan = "1" icon="terp-account" string="Budgets" name="%(action_budgets)d" type="action"/>
+									<button  colspan = "1" icon="terp-sale" string="Sale Forecast Details" name="%(action_sale_forecast)d" type="action"/>
+									<button  colspan = "1" icon="terp-sale" string="Margin Forecast Details" name="%(action_margin_forecast)d" type="action"/>
+									<button  colspan = "1" icon="terp-stock" string="Products Stock" name="%(action_stock_forecast)d" type="action"/>
+									<button  colspan = "1" icon="terp-stock" string="Stock Location Structure" name="%(action_stock_forecast)d" type="action"/>
+									<button  colspan = "1" icon="terp-stock" string="Master Procurement Schedule" name="%(action_cost_purchaseforecast)d" type="action"/>
+									<newline/>
 									<separator colspan="2" string = "Wizard"/>
-									<button colspan = "2" icon="terp-product" string="Product Sold" name="%(product_margin.action_open_margin)d" type="action"/>
-									<separator colspan="2" string = "Continue With the Game"/>
+									<newline/>
+									<button colspan = "1" icon="terp-account" string="Account Chart" name="%(account.wizard_account_chart)d" type="action"/>
+									<button colspan = "1" icon="terp-product" string="Product Sold" name="%(product_margin.action_open_margin)d" type="action"/>
+									<newline/>
+									<separator colspan="1" string = "Continue With the Game"/>
+									<newline/>
 									<button
-		                                colspan = "2"
+		                                colspan = "1"
 		                                string="Continue To Next Year"
 		                                name="continue_next_year"
 		                                type="object"

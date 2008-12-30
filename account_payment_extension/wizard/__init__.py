@@ -21,6 +21,7 @@
 ##############################################################################
 
 import wizard_payment_order
+import wizard_populate_statement
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

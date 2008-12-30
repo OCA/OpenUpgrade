@@ -33,6 +33,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "partner_relation_view.xml",
     ],
     "active": False,
