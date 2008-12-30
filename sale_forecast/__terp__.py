@@ -32,6 +32,7 @@ Different reports are set up for forecast and sales analysis.
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "sale_forecast_view.xml",
         "sale_forecast_report.xml",
         "sale_forecast_wizard.xml",

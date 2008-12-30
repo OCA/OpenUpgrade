@@ -10,7 +10,6 @@
 		<field name="arch" type="xml">
 			<form string="Sale Order">
 				<notebook>
-				<separator string="Sale Order" colspan="4"/>
 					<page string="Order Line">
 							<field name="name" select="1"/>
 							<field name="date_order" select="1"/>

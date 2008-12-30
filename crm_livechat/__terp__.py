@@ -44,7 +44,9 @@ jabber user according to what you configured in the OpenERP interface.
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-        "crm_livechat_view.xml","crm_demo_data.xml"
+        "security/ir.model.access.csv",
+        "crm_livechat_view.xml",
+        "crm_demo_data.xml",
     ],
     "active": False,
     "installable": True

@@ -32,7 +32,7 @@
 #               "hr_skill.experience.category.csv","hr_skill.evaluation.category.csv"],
 #   "demo_xml" : ["hr_skill.evaluation.csv"],
     "init_xml" : [],
-    "update_xml" : ['hr_skill_report.xml','hr_skill_view.xml','hrskill_view.xml','lang_wiz_view.xml',],
+    "update_xml" : ['security/ir.model.access.csv','hr_skill_report.xml','hr_skill_view.xml','hrskill_view.xml','lang_wiz_view.xml',],
     "active": False,
     "installable": True
 }
