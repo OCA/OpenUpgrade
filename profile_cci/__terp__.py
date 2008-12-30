@@ -33,7 +33,7 @@
         "sale_expected_invoice_date",
         "account_payment",
         "l10n_be",
-        "account_asset",
+        #"account_asset",
         "account_budget",
         "account_l10nbe_domiciliation",
         "hr_holidays",
