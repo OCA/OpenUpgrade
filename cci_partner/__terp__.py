@@ -38,7 +38,7 @@
 #"category_data.xml",
 "function_data.xml"],
 
-    "update_xml" : ['cci_partner_view.xml','article_sequence.xml','cci_partner_report.xml','cci_partner_wizard.xml','security/ir.model.access.csv','security/security.xml'],
+    "update_xml" : ['cci_partner_view.xml','article_sequence.xml','cci_partner_report.xml','cci_partner_wizard.xml','security/security.xml','security/ir.model.access.csv'],
     "active": False,
     "installable": True,
 }
