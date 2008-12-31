@@ -63,11 +63,19 @@ class sale_order_line(osv.osv):
     _inherit = "sale.order.line"
 
     
-    def _is_supplier_direct_delivery_advised(self, cr, uid, ids, name, arg, context=None):
+    def _is_supplier_direct_delivery_advised(self, cr, uid, ids, name, arg, context={}):
         res = {}
         for so_line in self.browse(cr, uid, ids):
-            context = context.update({'qty': so_line.product_uos_qty}) #TODO check if context is taen into account or do like product_id_change
-            res[so_line.id] = so_line.product_id and so_line.product_id.is_direct_delivery_from_product or False
+            if so_line.product_id:
+                product_id = so_line.product_id.id #we do that to pass the qty in context properly; we can't use the order_line directly since product_id_change doesn't have a sale.order line reference
+                if context == None:
+                    context = {}
+                
+                context.update({'qty': so_line.product_uos_qty})
+                product_obj = self.pool.get('product.product').browse(cr, uid, product_id, context=context)
+                res[so_line.id] = product_obj.is_direct_delivery_from_product
+            else:
+                res[so_line.id] = False
         return res
             
     
