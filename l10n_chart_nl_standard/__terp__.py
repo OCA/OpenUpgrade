@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Localisation/Account Charts",
-    "description": "This is the module to manage the accounting chart for Netherlands in Open ERP for Standard Profile.",
+    "description": "This is the module to manage the accounting chart for Netherlands (Standard Profile) in Open ERP.",
     "depends" : ["account", "base_iban", "base_vat", "account_chart"],
     "demo_xml" : [],
     "update_xml" : [

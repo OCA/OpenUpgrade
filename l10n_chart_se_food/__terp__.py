@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Localisation/Account Charts",
-    "description": "This is the module to manage the accounting chart for Sweden in Open ERP for Food Industries.",
+    "description": "This is the module to manage the accounting chart for Sweden (Food Industries' Profile) in Open ERP.",
     "depends" : ["account", "base_iban", "base_vat", "account_chart"],
     "demo_xml" : [],
     "update_xml" : ['account_tax_code.xml',"account_chart.xml",

@@ -24,6 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Localisation/Account Charts",
+        "description": "This is the module to manage the accounting chart for Canada-Quebec for General Profile in Open ERP.",
     "depends" : ["account_chart"],
     "init_xml" : [],
     "demo_xml" : ["account_demo.xml"],
