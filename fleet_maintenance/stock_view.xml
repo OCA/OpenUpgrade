@@ -3,7 +3,7 @@
 	<data>
 
 		<menuitem icon="terp-product" id="menu_main_fleets" name="Fleets" />
-		<menuitem icon="terp-product" id="menu_fleet_maintenance" name="Fleet Maintenance Contracts" parent="fleet_maintenance.menu_main_fleets" />
+		<menuitem icon="terp-sale" id="menu_fleet_maintenance" name="Fleet Maintenance Contracts" parent="fleet_maintenance.menu_main_fleets" />
 		<menuitem icon="terp-product" id="menu_fleet" name="Fleets" parent="fleet_maintenance.menu_main_fleets" />
 		<menuitem icon="terp-product" id="menu_fleet_extensions" name="Fleet Extensions" parent="fleet_maintenance.menu_main_fleets" />
 
@@ -21,17 +21,19 @@
 			<field name="arch" type="xml">
 
 				<form string="Fleet">
-						<!-- We have to factor those fields because else forms won't validate -->
+					<!-- We have to factor those fields because else forms won't validate -->
+					<group col="2" colspan="2">
 						<field name="name" select="1" string="Name" />
+					</group>
 
-		
+
 
 					<!-- Original stock view -->
 					<group col="6" colspan="4" attrs="{'invisible':[('fleet_type','!=','none')]}">
 						<field name="active" select="2" />
 						<field name="usage" select="1" />
 						<field name="account_id" select="1" />
-						<field name="location_id"/>
+						<field name="location_id" />
 
 						<field context="{'context_display':'partner'}" name="address_id" />
 						<field name="icon" />
@@ -57,7 +59,7 @@
 					<!-- Fleet Form View -->
 					<group col="6" colspan="4" attrs="{'invisible':[('fleet_type','!=','fleet')]}">
 						<field name="fleet_type" invisible="1" />
-						<field name="partner_id" attrs="{'required':[('fleet_type','=','fleet')]}" domain="[('supplier','=', False)]" />
+						<field name="partner_id" attrs="{'required':[('fleet_type','=','fleet')]}" domain="[('customer','=', True)]" />
 						<field context="{'context_display':'partner'}" name="address_id" />
 						<field name="active" select="2" />
 						<separator string="Maintenance Dates" colspan="4" />
@@ -67,7 +69,15 @@
 						</group>
 						<separator string="Fleet Extensions" colspan="4" />
 						<group col="6" colspan="4">
-							<field name="child_ids" context="{'fleet_type':'sub_fleet'}" />
+
+							<field colspan="4" mode="tree" context="{'fleet_type':'sub_fleet'}" name="child_ids" nolabel="1">
+								<tree string="Sub Fleets">
+									<field name="name" />
+									<field name="is_expired" />
+									<field name="time_to_expire" />
+									<field name="expire_time" />
+								</tree>
+							</field>
 						</group>
 					</group>
 
@@ -75,11 +85,12 @@
 					<!-- Sub Fleets -->
 					<group col="6" colspan="4" attrs="{'invisible':[('fleet_type','!=','sub_fleet')]}">
 						<field name="fleet_type" invisible="1" />
-						<field name="parent_fleet_id" on_change="onchange_parent_fleet_id(parent_fleet_id)" domain="[('fleet_type','=','fleet')]" attrs="{'required':[('fleet_type','=','sub_fleet')]}"/>
+						<field name="parent_fleet_id" context="{'fleet_type':'sub_fleet', 'partner_id':context.get('partner_id', False)}"
+							on_change="onchange_parent_fleet_id(parent_fleet_id)" domain="[('fleet_type','=','fleet')]" attrs="{'required':[('fleet_type','=','sub_fleet')]}" />
 						<field name="address_id" context="{'context_display':'partner'}" />
 						<field name="active" select="2" />
 						<separator string="Maintenance Dates" colspan="4" />
-						<group col="6" colspan="4">
+						<group col="4" colspan="4">
 							<field name="is_expired" />
 							<field name="time_to_expire" />
 							<field name="expire_time" />
@@ -89,13 +100,40 @@
 
 						<newline />
 
+						<group col="2" colspan="2">
+							<field colspan="2" nolabel="1" mode="tree,form,calendar" name="account_invoice_lines">
+								<tree string="Invoice Lines">
+									<field name="quantity" />
+									<field name="maintenance_start_date" string="Start" />
+									<field name="maintenance_end_date" string="End" />
+									<field name="price_subtotal" />
+								</tree>
+							</field>
+						</group>
 
-						<field colspan="4" nolabel="1" mode="tree,form,calendar" name="account_invoice_lines" />
+						<group col="2" colspan="2">
+							<field colspan="2" nolabel="1" name="sale_order_lines">
+								<tree string="Sale Order Lines">
+									<field name="product_uos_qty" />
+									<field name="maintenance_start_date" string="Start" />
+									<field name="maintenance_end_date" string="End" />
+									<field name="price_subtotal" />
+								</tree>
+							</field>
+						</group>
 
-						<field colspan="4" nolabel="1" name="sale_order_lines" />
-						<field colspan="4" nolabel="1" name="crm_cases" />
 
-						<field colspan="4" name="comment"/>
+
+						<newline />
+						<field colspan="4" nolabel="1" name="crm_cases">
+							<tree string="Incidents">
+								<field name="incident_ref" />
+								<field name="prodlot_id" />
+								<field name="section_id" />
+								<field name="state" />
+								<field name="name" />
+							</tree>
+						</field>
 
 					</group>
 
@@ -105,7 +143,7 @@
 		</record>
 
 
-		<record id="stock.view_location_tree2" model="ir.ui.view">
+		<record id="fleet_maintenance.view_location_tree_fleet" model="ir.ui.view">
 			<field name="name">fleet_maintenance.tree</field>
 			<field name="model">stock.location</field>
 			<field name="type">tree</field>
@@ -154,7 +192,7 @@
 			<field name="view_type">form</field>
 			<!-- FIXME: location_id = 8 for customers is subject to changes according to your database data -->
 			<field name="context">{'fleet_type':'fleet','location_id':8}</field>
-			<field name="view_mode">form</field>
+			<field name="view_mode">form, tree</field>
 		</record>
 		<menuitem action="action_fleet_new" id="menu_action_fleet_new" parent="fleet_maintenance.menu_fleet" />
 
@@ -173,7 +211,7 @@
 
 		<!-- Fleet extension -->
 
-		<record id="view_location_tree_sub_fleet" model="ir.ui.view">
+		<record id="fleet_maintenance.view_location_tree_sub_fleet" model="ir.ui.view"><!-- TODO improve that override -->
 			<field name="name">sub_fleet.tree</field>
 			<field name="model">stock.location</field>
 			<field name="type">tree</field>
@@ -188,8 +226,22 @@
 				</tree>
 			</field>
 		</record>
-	
-	
+
+
+		<record id="view_fleet_maintenance_location_tree_bis" model="ir.ui.view">
+			<field name="name">stock.location.tree</field>
+			<field name="model">stock.location</field>
+			<field name="type">tree</field>
+			<field name="field_parent">child_ids</field>
+			<field name="inherit_id" ref="stock.view_location_tree" />
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+					<field name="partner_id" />
+				</field>
+			</field>
+		</record>
+
+
 		<record id="sub_fleet_normal_action" model="ir.actions.act_window">
 			<field name="name">All Sub Fleets</field>
 			<field name="type">ir.actions.act_window</field>
@@ -198,7 +250,7 @@
 			<field name="domain">[('fleet_type','=','sub_fleet')]</field>
 			<field name="context">{'fleet_type':'sub_fleet'}</field>
 		</record>
-		<menuitem action="sub_fleet_normal_action" id="all_s_b_fleets" parent="fleet_maintenance.menu_fleet_extensions" />
+		<menuitem action="sub_fleet_normal_action" id="all_sub_fleets" parent="fleet_maintenance.menu_fleet_extensions" />
 
 		<record id="ir_actions_act_window_view_6" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_maintenance.sub_fleet_normal_action" />
@@ -222,7 +274,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">stock.location</field>
 			<field name="view_type">form</field>
-			<field name="view_mode">form</field>
+			<field name="view_mode">form,tree</field>
 			<field name="context">{'fleet_type':'sub_fleet','location_id':8}</field>
 		</record>
 		<menuitem action="action_fleet_extension_new" id="menu_action_fleet_extension_new" parent="menu_fleet_extensions" />
@@ -257,8 +309,7 @@
 			id="ir_actions_act_window_view_new_maintenance_tree" model="ir.actions.act_window.view"> <field name="act_window_id"
 			ref="act_stock_location_2_sale_order" /> <field eval="0" name="multi" /> <field
 			eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" /> </record
-
-	-->
+		-->
 
 
 
@@ -291,6 +342,63 @@
 
 
 
+
+		<!-- Incident Picking (CRM) -->
+
+		<record id="view_picking_incident_form" model="ir.ui.view">
+			<field name="name">stock.picking.incident.form</field>
+			<field name="model">stock.picking.incident</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Packing list">
+					<group colspan="4" col="6">
+						<field name="type" />
+						<field name="name" readonly="1" />
+						<field name="date" />
+					</group>
+
+					<field colspan="4" name="move_lines" nolabel="1" widget="one2many_list" default_get="{'move_line':move_lines}">
+						<form string="Stock Moves">
+							<separator colspan="4" string="Move Information" />
+							<field name="location_id" select="1" />
+							<field name="location_dest_id" select="1" />
+							<field colspan="4" context="location=location_id" name="product_id"
+								on_change="onchange_product_id(product_id, location_id, location_dest_id)" select="1" />
+							<field name="product_qty" select="1" />
+							<field name="product_uom" select="1" />
+							<field groups="product.group_uos" name="product_uos" />
+							<field groups="product.group_uos" name="product_uos_qty" />
+							<field colspan="4" invisible="1" name="name" select="1" />
+							<field invisible="1" name="date" />
+							<field name="date_planned" />
+							<field name="address_id" select="1" context="{'context_display':'partner'}" />
+							<field groups="base.group_extended" name="product_packaging" />
+							<field name="prodlot_id" select="2" context="{'location_id':location_id, 'product_id':product_id}" domain="[('product_id','=',product_id)]"
+								on_change="onchange_lot_id(prodlot_id,product_qty, location_id)" />
+							<field groups="base.group_extended" name="tracking_id" select="2" />
+							<newline />
+							<separator colspan="4" string="Move State" />
+							<field name="state" select="1" />
+							<group>
+								<button name="force_assign" states="confirmed" string="Force Availability" type="object" />
+								<button name="cancel_assign" states="assigned" string="Cancel Availability" type="object" />
+								<button name="action_cancel" states="assigned" string="Cancel" type="object" />
+							</group>
+						</form>
+					</field>
+					<group col="10" colspan="4">
+						<field name="state" readonly="1" />
+						<button name="draft_force_assign" states="draft" string="Process Later" type="object" />
+						<button name="draft_validate" states="draft" string="Process Now" type="object" />
+						<button name="action_assign" states="confirmed" string="Check Availability" type="object" />
+						<button name="force_assign" states="confirmed" string="Force Availability" type="object" />
+						<button name="button_cancel" states="assigned,confirmed,draft" string="Cancel" />
+					</group>
+
+
+				</form>
+			</field>
+		</record>
 
 
 

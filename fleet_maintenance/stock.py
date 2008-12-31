@@ -35,8 +35,6 @@ class stock_location(osv.osv):
         now = DateTime.now()
         date = DateTime.DateTime(now.year, now.month, now.day)
         for fleet in self.browse(cr, uid, ids, context):
-            print fleet.expire_time
-            print date
             res[fleet.id] = fleet.expire_time and int((DateTime.strptime(fleet.expire_time, '%Y-%m-%d') - date).days) or False
         return res
     
@@ -65,6 +63,16 @@ class stock_location(osv.osv):
             print location
             print value
             
+    def _indented_name(self, cr, uid, ids, field_name, arg, context={}):
+        res = {}
+        for location in self.browse(cr, uid, ids):
+            if location.fleet_type == 'fleet':
+                res[location.id] = location.name
+            else:
+                res[location.id] = "     " + location.name
+            
+        return res
+            
     def onchange_parent_fleet_id(self, cr, uid, ids, location_id):
         result = {}
         result['value'] = {}
@@ -77,7 +85,8 @@ class stock_location(osv.osv):
 
 
     _columns = {
-        'fleet_type': fields.selection([('none','Not a Fleet'),('fleet','Fleet'),('sub_fleet','Sub Fleet')], 'Fleet type', required=True),
+        'indented_name':fields.function(_indented_name, method=True, type='char', string="Name"),
+        'fleet_type': fields.selection([('none','Not a Fleet'),('fleet','Fleet'),('sub_fleet','Sub Fleet')], 'Fleet type', required=False),
         'partner_id': fields.many2one('res.partner', 'Customer', required = False, ondelete = 'cascade', select = True),
         'parent_partner_id': fields.related('location_id', 'partner_id', type='many2one', relation='res.partner', string='Customer'),
         'sale_order_lines': fields.one2many('sale.order.line', 'fleet_id', 'Sale Order Lines'),
@@ -85,7 +94,7 @@ class stock_location(osv.osv):
         'crm_cases': fields.one2many('crm.case', 'fleet_id', 'Events'),
         'parent_fleet_id': fields.function(_get_parent_fleet_id, fnct_inv=_set_parent_fleet_id, method=True, type='many2one', relation='stock.location', string='Parent Fleet'),
         'is_expired': fields.function(_is_expired, method=True, type='boolean', string="Expired ?"),
-        'time_to_expire': fields.function(_time_to_expire, method=True, type='integer', string="Days before expire"),
+        'time_to_expire': fields.function(_time_to_expire, method=True, type='integer', string="Days before expiry"),
         'intrinsic_anniversary_time':fields.date('Intrinsic Time', required = False),
         #TODO anniversary_time -> fields related?
         'anniversary_time':fields.function(_anniversary_time, method=True, type='date', string="Anniversary Time"), #TODO no year!
@@ -150,18 +159,36 @@ class stock_picking(osv.osv):
             group, type, context)
         
         for picking in self.browse(cr, uid, ids, context=context):
-            for order_line in picking.sale_id.order_line:
-                for invoice_line in order_line.invoice_lines:
-                    if order_line.product_id and order_line.product_id.is_maintenance:
-                        self.pool.get('account.invoice.line').write(cr, uid, invoice_line.id, {'maintenance_start_date':order_line.maintenance_start_date, \
-                                                                                               'maintenance_end_date':order_line.maintenance_end_date, \
-                                                                                               'maintenance_month_qty':order_line.maintenance_month_qty, \
-                                                                                               'maintenance_product_qty':order_line.maintenance_product_qty, \
-                                                                                               })
-                    if order_line.fleet_id: #product sent to fleet but not maintenance -> we copy the information too
-                        self.pool.get('account.invoice.line').write(cr, uid, invoice_line.id, {'fleet_id':order_line.fleet_id.id})
-                
+            if picking.sale_id:
+                for order_line in picking.sale_id.order_line:
+                    for invoice_line in order_line.invoice_lines:
+                        if order_line.product_id and order_line.product_id.is_maintenance:
+                            self.pool.get('account.invoice.line').write(cr, uid, invoice_line.id, {'maintenance_start_date':order_line.maintenance_start_date, \
+                                                                                                   'maintenance_end_date':order_line.maintenance_end_date, \
+                                                                                                   'maintenance_month_qty':order_line.maintenance_month_qty, \
+                                                                                                   'maintenance_product_qty':order_line.maintenance_product_qty, \
+                                                                                                   })
+                        if order_line.fleet_id: #product sent to fleet but not maintenance -> we copy the information too
+                            self.pool.get('account.invoice.line').write(cr, uid, invoice_line.id, {'fleet_id':order_line.fleet_id.id})
+                    
 
         return create_ids
     
 stock_picking()
+
+#defined just in order to work around picking view definitions
+class stock_picking_incident(osv.osv):
+    _inherit = "stock.picking"
+    _name = "stock.picking.incident"
+    _table = "stock_picking"
+    
+    def _default_type(self, cr, uid, context={}):
+        return context.get('type', False)
+    
+    
+    _defaults = {
+        'type': _default_type,
+    }
+    
+stock_picking_incident()
+    
