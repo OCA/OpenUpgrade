@@ -44,7 +44,7 @@ class purchase_order_line(osv.osv):
         #'partner_address_id': fields.function(_get_partner_address_id, method=True, type='many2one', relation='res.partner.address', string='Address'),
         'sale_order_line':fields.many2one('sale.order.line', 'Related Sale Order Line', required=False),
         'sale_order': fields.related('sale_order_line', 'order_id', type='many2one', relation='sale.order', string='Related Sale Order'),
-        'partner_address_id': fields.related('sale_order', 'partner_shipping_id', type='many2one', relation='res.partner.address', string='Shipping address'),
+        'partner_address_id': fields.related('sale_order_line', 'order_id', 'partner_shipping_id', type='many2one', relation='res.partner.address', string='Shipping address'),
         'is_supplier_direct_delivery': fields.boolean('Is Direct Delivery?'),
         'move_ids': fields.one2many('stock.move', 'purchase_line_id', 'Moves'),
     }
