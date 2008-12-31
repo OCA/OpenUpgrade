@@ -116,8 +116,8 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                                     oPar.Items=(str(sExpr) ,oPar.Items[1])
                                                     oPar.update()
                                         else:
-                                            sExpr=r[0][res[0][res[0].rfind(".")+1:]]
                                             try:
+                                                sExpr=r[0][res[0][res[0].rfind(".")+1:]]
                                                 if sExpr:
                                                     oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
                                                     oPar.update()
