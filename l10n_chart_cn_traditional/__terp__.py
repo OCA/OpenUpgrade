@@ -25,6 +25,7 @@
     "author" : "Tiny",
     "category" : "Localisation/Account Charts",
     "depends" : ["account", "account_chart"],
+    "description": "This is the module to manage the accounting chart for China in Open ERP for Traditional Profile.",
     "demo_xml" : [],
     "update_xml" : ['account_tax_code.xml',"account_chart.xml",
                     'account_tax.xml','l10n_chart_cn_traditional_wizard.xml'],
