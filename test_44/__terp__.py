@@ -31,7 +31,7 @@ url widget.""",
     "depends" : ["base","sale"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["test_view.xml","test_workflow.xml"],
+    "update_xml" : ["security/ir.model.access.csv","test_view.xml","test_workflow.xml"],
     "active": False,
     "installable": True
 }

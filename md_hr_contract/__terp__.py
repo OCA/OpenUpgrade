@@ -33,7 +33,7 @@
     "category" : "Generic Modules",
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["md_hr_contract_view.xml"],
+    "update_xml" : ["security/ir.model.access.csv","md_hr_contract_view.xml"],
     "active": False,
     "installable": True
 }
