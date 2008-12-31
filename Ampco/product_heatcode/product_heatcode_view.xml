@@ -34,7 +34,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_properties_tree"/>
 	</record>
-	<menuitem name="Products/Configuration" groups="base.group_admin" sequence="1"/>
+	<menuitem name="Products/Configuration" sequence="1"/>
 	<menuitem name="Products/Configuration/Heatcode/Properties" id="menu_action_properties_form" action="action_properties_form"/>
 
 
@@ -101,13 +101,13 @@
 				<newline/>
 				<field name="heatcode" />
 				<field name="product_id" />
-				<field name="product_property" nolable="1" widget="one2many_list" colspan="4" mode="tree,graph">
-					<form name="Product Properties">
+				<field name="product_property" nolabel="1" widget="one2many_list" colspan="4" mode="tree,graph">
+					<form string="Product Properties">
 						<field name="property_id"/>
 						<field name="value" />
 						<field name="comments"/>
 					</form>
-					<tree name="Product Properties">
+					<tree string="Product Properties">
 						<field name="property_id"/>
 						<field name="value" />
 						<field name="comments"/>
@@ -124,7 +124,7 @@
 		<field name="view_id" ref="view_product_heatcode"/>
 	</record>
 
-	<menuitem name="Products/Configuration" groups="base.group_admin" sequence="1"/>
+	<menuitem name="Products/Configuration" sequence="1"/>
 	<menuitem name="Products/Configuration/Heatcode/Product Heatcode" id="menu_action_product_heatcode_form" action="action_product_heatcode_form"/>
 
 
