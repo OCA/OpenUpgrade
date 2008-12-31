@@ -19,8 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import product_lot_foundary
 import product_heatcode
+import product_lot_foundary
 import ampco
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -6,12 +6,27 @@ import pooler
 class crm_case(osv.osv):
     _inherit = "crm.case" 
     _columns = {
-        'fleet_id': fields.many2one('stock.location', 'Fleet', required = False, select = True),
-        'is_fleet_expired': fields.related('stock.location', 'is_expired', type='boolean', string='Is Fleet Expired?'),
-        #'purchase_order_state': fields.related('purchase_order', 'state', type='char', size=64, string='Purchase Order State'),
-        'picking_id': fields.many2one('stock.picking', 'Repair Movement', required = False, select = True),
-        'prodlot_id': fields.many2one('stock.production.lot', 'Serial Number', required = False, select = True),
+        'incident_ref': fields.char('Incident Ref', size=64, required=True, select=1),
+        'external_ref': fields.char('Ticket Code', size=64, select=1),
+        'fleet_id': fields.many2one('stock.location', 'Fleet', required = False, select = 1),
+        'is_fleet_expired': fields.related('fleet_id', 'is_expired', type='boolean', string='Is Fleet Expired?'),
+        'picking_id': fields.many2one('stock.picking.incident', 'Repair Picking', required = False, select = True),
+        'incoming_picking_id': fields.many2one('stock.picking.incident', 'Incoming Picking', required = False, select = 1),
+        'outgoing_picking_id': fields.many2one('stock.picking.incident', 'Outgoing Picking', required = False, select = True),
+        'in_supplier_picking_id': fields.many2one('stock.picking.incident', 'Return To Supplier Picking', required = False, select = True),
+        'out_supplier_picking_id': fields.many2one('stock.picking.incident', 'Return From Supplier Picking', required = False, select = True),
+        'prodlot_id': fields.many2one('stock.production.lot', 'Serial Number', required = False, select = 1),
+        'product_id': fields.related('prodlot_id', 'product_id', type='many2one', relation='product.product', string='Related Product'),
     }
+    
+    
+    _defaults = {
+        'incident_ref': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'crm.case'),
+        }
+    
+    #TODO deal with sequence!
+    #def copy(self, cr, uid, id, default=None,context={}):
+    
     
     def onchange_prodlot_id(self, cr, uid, ids, prodlot_id):
         result = {}
@@ -19,25 +34,27 @@ class crm_case(osv.osv):
         if not prodlot_id:
             return result
         
-        print prodlot_id
-        
         print "select stock_location.id from stock_location left join stock_move on location_dest_id = stock_location.id where stock_move.prodlot_id = %s and fleet_type = 'sub_fleet' order by stock_move.date ASC LIMIT 1 " % prodlot_id
         
         cr.execute("select stock_location.id from stock_location left join stock_move on location_dest_id = stock_location.id where stock_move.prodlot_id = %s and fleet_type = 'sub_fleet' order by stock_move.date ASC LIMIT 1 " % prodlot_id)
-        #TODO: prodlot_id, where is_sub_fleet = true !!!!!!!!
         
         
         # sale_order_line where is_supplier_direct_delivery=true and order_id=%d' % id)
         results = cr.fetchone()
-        print results
+
         if results and len(results) > 0:
             sub_fleet = self.pool.get('stock.location').browse(cr, uid, results[0])
             result['value'].update({'fleet_id': sub_fleet.id})
             result['value'].update({'partner_id': sub_fleet.parent_partner_id.id})
             result['value'].update({'is_fleet_expired': sub_fleet.is_expired})
+            product_id = self.pool.get('stock.production.lot').browse(cr, uid, prodlot_id).product_id.id
+            result['value'].update({'product_id': product_id})
+        else:
+            result['value'].update({'fleet_id': False})
+            result['value'].update({'partner_id': False})
+            result['value'].update({'is_fleet_expired': False})
 
-  
-        
+
         return result
          
         

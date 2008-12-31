@@ -26,7 +26,7 @@
     "category" : "Generic Modules/Sales & Purchases",
     "depends":["sale"],
     "demo_xml":[],
-    "update_xml":["sale_delivery_view.xml"],
+    "update_xml":["security/ir.model.access.csv","sale_delivery_view.xml"],
     "active": False,
     "installable": True,
 }

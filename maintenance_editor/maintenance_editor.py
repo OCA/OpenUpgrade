@@ -52,12 +52,24 @@ class maintenance_maintenance(osv.osv):
 
     def _contract_date(self, cr, uid, ids):
         for contract in self.browse(cr, uid, ids):
-            cr.execute('SELECT id \
-                    FROM maintenance_maintenance \
-                    WHERE (date_from < %s and %s < date_to) \
-                        AND id <> %d', (contract.date_to, contract.date_from,
-                            contract.id))
-            if cr.fetchall():
+            cr.execute("""
+                        SELECT count(1) 
+                          FROM maintenance_maintenance 
+                        WHERE (    (%(date_from)s BETWEEN date_from AND date_to)
+                                OR (%(date_to)s BETWEEN date_from AND date_to)
+                                OR (%(date_from)s < date_from AND %(date_to)s > date_to)
+                               )
+                           AND partner_id = %(partner)s 
+                           AND id <> %(id)s
+                           AND state = %(state)s
+                        """, { 
+                         "date_from": contract.date_from,
+                         "date_to": contract.date_to,
+                         "partner": contract.partner_id.id,
+                         "id": contract.id,
+                         "state": "open"
+                        })
+            if cr.fetchone()[0]:
                 return False
         return True
 
@@ -79,6 +91,9 @@ class maintenance_maintenance(osv.osv):
         'state': lambda *a: 'draft',
     }
 
+    _sql_constraints = [
+        ("check_dates", "CHECK (date_from < date_to)", 'The "from" date must not be after the "to" date.'),
+    ]
     _constraints = [
         (_contract_date, 'You can not have 2 contracts that overlaps !', ['date_from','date_to']),
     ]

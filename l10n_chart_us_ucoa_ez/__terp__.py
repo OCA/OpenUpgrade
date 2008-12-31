@@ -20,11 +20,12 @@
 #
 ##############################################################################
 {
-    "name" : "United States - UCOA EZ",
+    "name" : "United States -Chart of Accounts for UCOA EZ Profile",
     "version" : "1.0",
     "author" : "Tiny",
-    "category" : "Localisation/Account charts",
-    "depends" : ["account", "account_chart"],
+    "category" : "Localisation/Account Charts",
+    "depends" : ["account_chart"],
+    "description": "This is the module to manage the accounting chart for United States of America (UCOA EZ Profile) in Open ERP.",
     "demo_xml" : [],
     "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml','l10n_us_wizard.xml'],
     "active": False,

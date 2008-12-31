@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-	<menuitem name="Marketing Operations" groups="base.admin" id="menu_marketing_operations"/>
+	<menuitem name="Marketing Operations" groups="base.group_system" id="menu_marketing_operations"/>
 
 	<record model="ir.ui.view" id="campaign_campaign_tree">
 		<field name="model">campaign.campaign</field>
@@ -40,7 +40,7 @@
 		<field name="view_type">tree</field>
 		<field name="view_id" ref="campaign_campaign_tree"/>
 	</record>
-	<menuitem name="Marketing Operations/Campaigns" action="view_campaign_tree" groups="base.admin" id="menu_marketing_operations_campaigns"/>
+	<menuitem name="Marketing Operations/Campaigns" action="view_campaign_tree" groups="base.group_system" id="menu_marketing_operations_campaigns"/>
 
 	<record model="ir.actions.act_window" id="view_campaign_form">
 		<field name="res_model">campaign.campaign</field>
@@ -48,7 +48,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem name="Marketing Operations/Configuration" groups="base.admin" sequence="1" id="menu_op_config"/>
+	<menuitem name="Marketing Operations/Configuration" groups="base.group_system" sequence="1" id="menu_op_config"/>
 	<menuitem name="Marketing Operations/Configuration/Campaign Definition" action="view_campaign_form" id="menu_op_config_camp_def"/>
 
 	<record model="ir.ui.view" id="view_campaign_step_tree">

@@ -5,6 +5,7 @@
     "author" : "Tiny",
     "category" : "Localisation/Account Charts",
     "depends" : ["account_chart"],
+    "description": "This is the module to manage the accounting chart for India in Open ERP.",
     "demo_xml" : [],
     "update_xml" : ["account_tax_code.xml","account_chart.xml",
                     "account_tax.xml","l10n_chart_in_wizard.xml"

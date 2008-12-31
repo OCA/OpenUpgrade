@@ -32,6 +32,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "users_ldap_view.xml",
     ],
     "active": False,

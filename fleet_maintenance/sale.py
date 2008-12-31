@@ -14,17 +14,6 @@ min_maintenance_months = 6 #TODO make this a parameter!
 class sale_order_line(osv.osv):
     _inherit = "sale.order.line" 
     
-#    def _maintenance_end_date(self, cr, uid, ids, field_name, arg, context={}):
-#        res = {}    
-#        for line in self.browse(cr, uid, ids, context):
-#            if line.maintenance_start_date and line.maintenance_month_qty:
-#                res[line.id] = (DateTime.strptime(line.maintenance_start_date, '%Y-%m-%d') + DateTime.RelativeDateTime(months=line.maintenance_month_qty)).strftime('%Y-%m-%d')
-#                print res[line.id]
-#            else:
-#                res[line.id] = False
-#                
-#            return res
-    
     
     _columns = {
         'maintenance_month_qty': fields.integer('Maintenance Month Quantity', required=False),
@@ -40,35 +29,35 @@ class sale_order_line(osv.osv):
     def maintenance_qty_change(self, cr, uid, ids, maintenance_product_qty=False, maintenance_month_qty=False, maintenance_start_date=False, maintenance_end_date=False):
         result = {}
         result['value'] = {}
-        print "**************************"
         warning_messages = ""
         
         if maintenance_start_date:
             start = DateTime.strptime(maintenance_start_date, '%Y-%m-%d')
+            print "maintenance_qty_change; start_date:"
             print start
-            print start.day
             if start.day != fixed_month_init_day: 
                 warning_messages += "- Start date should should ideally start at day %s of the month; corrected to day %s\n" % (fixed_month_init_day, fixed_month_init_day)
                 start = DateTime.DateTime(start.year, start.month, fixed_month_init_day)
-                result['value'].update({'maintenance_start_date': start.strftime('%Y-%m-%d')})
+            
+            result['value'].update({'maintenance_start_date': start.strftime('%Y-%m-%d')})
                 #return result
             
 
         if maintenance_end_date:
             end = DateTime.strptime(maintenance_end_date, '%Y-%m-%d')
             en_date_check = end + DateTime.RelativeDateTime(days=fixed_days_before_month_end + 1)
+            print "maintenance_qty_change; end_date:"
             print end
-            print en_date_check
-            print end.month
-            print en_date_check.month
             
             if end.month == en_date_check.month or en_date_check.day != 1:
                 warning_messages += "- End date should should ideally end %s days before the end of the month\n" % fixed_days_before_month_end
                 #TODO correct end day eventually
-                #return result
 
         
         if maintenance_start_date and maintenance_end_date:
+            print "other callback:"
+            print maintenance_start_date
+            print maintenance_end_date
             
             if end < start:
                 result['value'].update({'maintenance_end_date': start.strftime('%Y-%m-%d')}) #TODO not good with end days!
@@ -77,7 +66,7 @@ class sale_order_line(osv.osv):
 
             print "qty checking"
             print start
-            print end + RelativeDateTime(days=fixed_days_before_month_end + 1)
+            print end
             maintenance_month_qty = self._get_maintenance_month_qty_from_start_end(cr, uid, start, end)
             result['value'].update({'maintenance_month_qty': maintenance_month_qty})
             if maintenance_month_qty < min_maintenance_months:
@@ -90,6 +79,7 @@ class sale_order_line(osv.osv):
 
         if maintenance_product_qty and maintenance_month_qty: #only set the default fleet at init
             result['value'].update({'product_uom_qty': maintenance_product_qty * maintenance_month_qty})
+            result['value'].update({'product_uos_qty': maintenance_product_qty * maintenance_month_qty}) # TODO * product_obj.uos_coeff
             
         if len(warning_messages) > 1:
             result['warning'] = {'title': 'Maintenance Dates Warning', 'message': warning_messages}
@@ -98,50 +88,56 @@ class sale_order_line(osv.osv):
     
     
     def _get_maintenance_month_qty_from_start_end(self, cr, uid, start, end):
-        return DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start).months
+        delta = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start)
+        return delta.months + delta .years * 12
     
     
-    def _get_end_date_from_start_date(self, cr, uid, start_date, sub_fleet_id):#, order_sub_fleet_id):
-        #sub_fleet_id = sub_fleet_id or order_sub_fleet_id
-        print "***"
-        print sub_fleet_id
-        print "-- 1"
-        sub_fleet = self.pool.get('stock.location').browse(cr, uid, sub_fleet_id)
-        print sub_fleet
-        print "2"
+    def _get_end_date_from_start_date(self, cr, uid, start_date, sub_fleet):
         year = start_date.year
         anniversary_time = DateTime.strptime(sub_fleet.anniversary_time, '%Y-%m-%d')
-        print anniversary_time
         month = anniversary_time.month
         day = anniversary_time.days_in_month - fixed_days_before_month_end
         end = DateTime.DateTime(year, month, day, 0, 0, 0.0)
-        print "3"
         maintenance_month_qty = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start_date).months
-        print "4"
         if maintenance_month_qty < min_maintenance_months:
-            print "5"
             end = DateTime.DateTime(year + 1, month, day, 0, 0, 0.0)
+        print "end date from start:"
         print end
         return end
     
     
-    def fleet_id_change(self, cr, uid, ids, order_fleet_id=False, fleet_id=False, product_id=False, maintenance_start_date=False):
+    def fleet_id_change(self, cr, uid, ids, order_fleet_id=False, fleet_id=False, product_id=False, maintenance_start_date=False, maintenance_product_qty=False):
         result = {}
         result['value'] = {}
         fleet_id = order_fleet_id or fleet_id
+        print "-----"
+        
         if fleet_id:
-            if not product_id: #only set the default fleet at init
-                result['value'] = {'fleet_id': fleet_id}
-            
             #retrieve the maintenance anniversary from fleet
             #TODO only for maintenance product?
-            if maintenance_start_date:
-                print "f1"
-                start = DateTime.strptime(maintenance_start_date, '%Y-%m-%d')
-                print "f2"
-                end_date = self._get_end_date_from_start_date(cr, uid, start, fleet_id)
-                result['value'].update({'maintenance_end_date': end_date.strftime('%Y-%m-%d')})
-                result['value'].update({'maintenance_month_qty': self._get_maintenance_month_qty_from_start_end(cr, uid, start, end_date)})
+            fleet = self.pool.get('stock.location').browse(cr, uid, fleet_id)
+            if fleet.expire_time and not fleet.is_expired:
+                start_date = DateTime.strptime(fleet.expire_time, '%Y-%m-%d') + RelativeDateTime(days=fixed_days_before_month_end + 1)
+                print 'non expired: start date:'
+                print start_date
+            else:
+                print 'else'
+                start_date = DateTime.strptime(maintenance_start_date, '%Y-%m-%d') or self.default_maintenance_start_date(cr, uid, context)
+            end_date = self._get_end_date_from_start_date(cr, uid, start_date, fleet)
+            print 'end date:'
+            print end_date
+            maintenance_month_qty = self._get_maintenance_month_qty_from_start_end(cr, uid, start_date, end_date)
+            result['value'].update({'maintenance_start_date': start_date.strftime('%Y-%m-%d')})
+            result['value'].update({'maintenance_end_date': end_date.strftime('%Y-%m-%d')})
+            result['value'].update({'maintenance_month_qty': maintenance_month_qty})
+            result['value'].update({'fleet_id': fleet_id})
+            
+            if product_id:
+                product = self.pool.get('product.product').browse(cr, uid, product_id)
+                if product.is_maintenance: #and maintenance_start_date
+                    result['value'].update({'product_uom_qty': maintenance_product_qty * maintenance_month_qty})
+                    result['value'].update({'product_uos_qty': maintenance_product_qty * maintenance_month_qty}) # TODO * product_obj.uos_coeff
+                    
         return result
     
     
@@ -210,7 +206,7 @@ class sale_order_line(osv.osv):
     
     _defaults = {
         'maintenance_product_qty': lambda *a: 1,
-        'maintenance_start_date': default_maintenance_start_date
+        #'maintenance_start_date': default_maintenance_start_date
         }
 
 

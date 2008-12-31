@@ -31,6 +31,7 @@
     "author" : "Simon JAILLET - CrysaLEAD",
     "website": "http://www.crysalead.com",
     "category" : "Localisation/Account Charts",
+    "description": "This is the module to manage the accounting chart for France in Open ERP.",
     "depends" : ["l10n_fr"],
     "init_xml" : [
         "report.xml",

@@ -30,6 +30,7 @@
     'description': 'New report for timesheet',
     'init_xml' : [],
     'update_xml': [
+        'security/ir.model.access.csv',
         'report_timesheet_user_view.xml',
     ],
     'installable': True

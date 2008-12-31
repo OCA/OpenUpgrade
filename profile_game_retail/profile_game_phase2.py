@@ -153,7 +153,7 @@ class profile_game_retail(osv.osv):
         p_id = self.search(cr, uid, [])
         p_br = self.browse(cr, uid, p_id)
         for rec in p_br:
-            if len(rec.sales_user_id.name):
+            if rec.sales_user_id.name or False:
                 hr_name = " "
                 if rec.hr_user_id:
                    hr_name = rec.hr_user_id.name
@@ -175,14 +175,11 @@ class profile_game_retail(osv.osv):
         account_obj = self.pool.get('account.account')
         account_type_obj = self.pool.get('account.account.type')
 
-        next_year_id = fiscal_obj.search(cr, uid, [('state','=','draft')])[0]
-        nextyear = fiscal_obj.browse(cr,uid,next_year_id)
-
-        curr_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(nextyear.code) - 1))])[0]
+        curr_fy = fiscal_obj.search(cr, uid, [('state','=','draft')])[0]
         curryear = fiscal_obj.browse(cr,uid,curr_fy)
 
-        prev_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(nextyear.code) - 2))])
-        prev_to_prev_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(nextyear.code) - 3))])
+        prev_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(curryear.code) - 1))])
+        prev_to_prev_fy = fiscal_obj.search(cr, uid, [('code','ilike', str(int(curryear.code) - 2))])
         year_list = []
 
         if (prev_fy or False):
@@ -190,7 +187,7 @@ class profile_game_retail(osv.osv):
         if (prev_to_prev_fy or False):
             year_list.append(prev_to_prev_fy[0])
         print "YEARRRRRRRRRRRRRRRR",year_list,field_names
-        print "::NEXT,CURR,PREV,PREV2PREV",next_year_id,curr_fy,prev_fy,prev_to_prev_fy
+        print "::NEXT,CURR,PREV,PREV2PREV",curr_fy,curr_fy,prev_fy,prev_to_prev_fy
 
         for val in self.browse(cr, uid, ids, context=context):
             res[val.id] = {}
@@ -206,7 +203,7 @@ class profile_game_retail(osv.osv):
             if 'loan_total_reimburse' in field_names or 'loan_total_reimburse_this_year' in field_names:
                 total = 0.0
                 total_rem_ids = self.pool.get('bank.loan').search(cr, uid, [])
-                this_year_ids = self.pool.get('bank.loan').search(cr, uid, [('fiscal_year','=',next_year_id)])
+                this_year_ids = self.pool.get('bank.loan').search(cr, uid, [('fiscal_year','=',curr_fy)])
                 print "total_rem_ids",total_rem_ids
                 print "this_year_ids",this_year_ids
                 for loan in self.pool.get('bank.loan').browse(cr, uid, total_rem_ids):
@@ -391,16 +388,15 @@ class profile_game_retail(osv.osv):
         'ay_traceback':fields.text('Traceback [All Years]'),
     }
     _defaults = {
-        'cy_traceback' : lambda *a : "",
-        'warn_error' : lambda *a : "",
-        'ay_traceback' : lambda *a : ""
+        'cy_traceback' : lambda *a : "Trace Back For Current Year",
+        'warn_error' : lambda *a : "Warnings & Error Occured During the current Year",
+        'ay_traceback' : lambda *a :"Traceback of Past Years"
           }
 
 
     def pay_supplier_invoice(self, cr, uid, ids, context):
         od = self.get_date(cr, uid,context)
         print "pay_supplier_invoice"
-     #   try:
         acc_obj = self.pool.get('account.account')
         acc_type_obj = self.pool.get('account.account.type')
         cash_acc_id = acc_type_obj.search(cr,uid,[('name','=','Cash')])
@@ -430,12 +426,9 @@ class profile_game_retail(osv.osv):
                 if temp_bal >= inv.amount_total:
                     self._pay_and_reconcile(cr, uid, ids, inv.id, journl.id, inv.amount_total, od, context)
                     temp_bal = temp_bal-inv.amount_total
-       # except Exception, e:
-            #  self.update_messages(cr, uid, ids, e, context)
         return True
 
     def _pay_and_reconcile(self, cr, uid, ids, invoice_id, journal_id, amount, od, context):
-      #   try:
         print "_pay_and_reconcile"
         p_ids = self.pool.get('account.period').find(cr, uid, od, context=context)
         period_id = False
@@ -458,8 +451,6 @@ class profile_game_retail(osv.osv):
                 amount, acc_id, period_id, journal_id, False,
                 period_id, False, context, invoice.origin)
 
-        # except Exception, e:
-         #    self.update_messages(cr, uid, ids, e, context)
         return True
 
     def confirm_draft_supplier_invoice(self, cr, uid, ids, context):
@@ -477,7 +468,6 @@ class profile_game_retail(osv.osv):
 
     def confirm_draft_po(self, cr, uid, ids, context):
         print "confirm_draft_po"
-       # try:
         wf_service = netsvc.LocalService('workflow')
         po_obj = self.pool.get('purchase.order')
         po_ids = po_obj.search(cr,uid,[('state','=','draft')])
@@ -488,13 +478,10 @@ class profile_game_retail(osv.osv):
                 msg = 'There are unpaid Supplier Invoice for the Supplier: "%s"'%(brow_po.partner_id.name,)
                 self.update_messages(cr, uid, ids, msg, context)
             wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_confirm', cr)
-        #except Exception, e:
-         #    self.update_messages(cr, uid, ids, e, context)
         return True
 
     def process_pickings(self, cr, uid, ids, pick_br, context):
         print "process_pickings"
-       # try:
         from stock.wizard import wizard_partial_picking
         for picking in pick_br:
             data = temp = {}
@@ -519,13 +506,10 @@ class profile_game_retail(osv.osv):
             data['model'] = 'stock.picking'
             data['id'] = picking.id
             wizard_partial_picking._do_split(self, cr, uid, data, context)
-       # except Exception, e:
-           #  self.update_messages(cr, uid, ids, e, context)
         return True
 
     def receive_products(self, cr, uid, ids, context):
         print "receive_products"
-       # try:
         picking_obj = self.pool.get('stock.picking')
         conf_pick = picking_obj.search(cr,uid,[('state','=','confirmed'),('type','=','in')])
         if len(conf_pick):
@@ -533,13 +517,10 @@ class profile_game_retail(osv.osv):
         picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=','in')])
         pick_br = picking_obj.browse(cr,uid,picking_ids)
         self.process_pickings(cr, uid, ids, pick_br, context)
-       # except Exception, e:
-        #     self.update_messages(cr, uid, ids, e, context)
         return True
 
     def deliver_products(self, cr, uid, ids, context):
         print "deliver_products"
-       # try:
         picking_obj = self.pool.get('stock.picking')
         conf_pick = picking_obj.search(cr,uid,[('state','=','confirmed'),('type','=','out')])
         if len(conf_pick):
@@ -547,8 +528,6 @@ class profile_game_retail(osv.osv):
         picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=','out')])
         pick_br = picking_obj.browse(cr,uid,picking_ids)
         self.process_pickings(cr, uid, ids, pick_br, context)
-       # except Exception, e:
-       #      self.update_messages(cr, uid, ids, e, context)
         return True
 
     def confirm_draft_customer_invoice(self, cr, uid, ids, context):
@@ -567,7 +546,6 @@ class profile_game_retail(osv.osv):
     def pay_all_customer_invoice(self, cr, uid, ids, context):
         od = self.get_date(cr, uid,context)
         print "pay_all_customer_invoice"
-        #try:
         inv_obj = self.pool.get('account.invoice')
         journal = self.pool.get('account.journal').search(cr,uid,[('type','=','cash')])
         jour_br = self.pool.get('account.journal').browse(cr,uid,journal[0])
@@ -576,11 +554,7 @@ class profile_game_retail(osv.osv):
         open_inv_id = inv_obj.search(cr,uid,[('state','=','open'),('type','=','out_invoice')])
         inv_br = inv_obj.browse(cr,uid,open_inv_id)
         for inv in inv_br:
-            maturity_date = inv.move_id.line_id[0].date_maturity
-           # if (not maturity_date) or (maturity_date  <= now()):
             self._pay_and_reconcile(cr, uid, ids, inv.id, jour_br.id, inv.amount_total, od, context)
-       # except Exception, e:
-            # self.update_messages(cr, uid, ids, e, context)
         return True
 
     def create_fiscalyear_and_period(self,cr, uid, ids, context={}, interval=1):
@@ -596,23 +570,7 @@ class profile_game_retail(osv.osv):
         fiscal_id = self.pool.get('account.fiscalyear').create(cr, uid,
                     {'name':'%d'%(new_fy),'code': '%d'%(new_fy),'date_start': start_date,
                     'date_stop': stop_date})
-
-        ds = mx.DateTime.strptime(str(start_date), '%Y-%m-%d')
-        while ds.strftime('%Y-%m-%d')< str(stop_date):
-            de = ds + RelativeDateTime(months=interval, days=-1)
-            if de.strftime('%Y-%m-%d')>str(stop_date):
-                de=mx.DateTime.strptime(stop_date, '%Y-%m-%d')
-
-            self.pool.get('account.period').create(cr, uid, {
-                'name': ds.strftime('%m/%Y'),
-                'code': ds.strftime('%m/%Y'),
-                'date_start': ds.strftime('%Y-%m-%d'),
-                'date_stop': de.strftime('%Y-%m-%d'),
-                'fiscalyear_id': fiscal_id,
-            })
-            ds = ds + RelativeDateTime(months=interval)
-        #except Exception, e:
-          #   self.update_messages(cr, uid, ids, e, context)
+        self.pool.get('account.fiscalyear').create_period(cr, uid, [fiscal_id])
         closing_journal = self.pool.get('account.journal').search(cr, uid, [('code','ilike','JC')])[0]
         period_id = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id', '=', fiscal_id)])[0]
         name = 'journalperiod' + str(new_fy)
@@ -724,16 +682,103 @@ class profile_game_retail(osv.osv):
                 prev_msg['warn_error'] += '\n' + '*' + msg
             self.write(cr, uid, ids[0],{'warn_error':prev_msg['warn_error']})
         except Exception, e:
-            print "There was an Exception"
+            print "There was an Exception..................................."
             pass
         return True
+
+    def adjust_loan_account(self, cr, uid, ids, year, period, date, context):
+         acc_obj = self.pool.get('account.account')
+         loan_obj = self.pool.get('bank.loan')
+         loan_ids = loan_obj.search(cr, uid, [('months_left','>',0)])
+         loans = loan_obj.browse(cr, uid, loan_ids)
+         journal = self.pool.get('account.journal').search(cr,uid,[('type','=','cash')])[0]
+         for loan in loans:
+             move_id = self.pool.get('account.move').create(cr, uid,{'period_id':period,'journal_id':journal})
+             loan_obj.write(cr, uid, loan.id,{'months_left':loan.months_left - 1})
+             for code in ('512100','161000','661160'):
+                    if code == '512100':
+                        debit = 0.0
+                        credit = loan.reimburse_principle_amt_with_int
+                    if code == '161000':
+                        debit = loan.reimburse_principle_amt_without_int
+                        credit = 0.0
+                    if code == '661160':
+                        debit = loan.interest_per_month
+                        credit = 0.0
+                    acc_id = acc_obj.search(cr, uid, [('code','ilike',code)])[0]
+                    self.pool.get('account.move.line').create(cr, uid, {'name' : 'Bank Loan','date':date,'account_id':acc_id,
+                                        'credit':credit ,'debit': debit,'date_created':date,'move_id':move_id})
+             self.pool.get('account.move').post(cr, uid, [move_id], context)
+         return
+
+    def get_traceback(self, cr, uid, ids, year, context):
+        start_date = year.date_start
+        stop_date = year.date_stop
+        sale_order = purchase_order = cust_inv = supp_inv = goods_in = goods_out = 0
+        sale_inv = pur_inv = 0
+        models = {'sale.order':'sale.order.line','purchase.order':'purchase.order.line'}
+
+        for model,model1 in models.items():
+            orders = self.pool.get(model).search(cr, uid, [('date_order','<=',stop_date),('date_order','>=',start_date)])
+            for order in orders:
+                lines = self.pool.get(model1).search(cr, uid, [('order_id','=',order)])
+                for line in self.pool.get(model1).browse(cr, uid, lines):
+                    if model == 'sale.order':
+                        sale_order += line.product_uom_qty
+                    else:
+                        purchase_order += line.product_qty
+
+        for type in ('out_invoice','in_invoice'):
+            total = 0.0
+            total1 = 0.0
+            inv_ids = self.pool.get('account.invoice').search(cr, uid, [('date_invoice','<=',stop_date),('date_invoice','>=',start_date),('type','ilike',type)])
+            for inv in self.pool.get('account.invoice').browse(cr, uid, inv_ids):
+                 total += inv.amount_total
+                 for line in inv.invoice_line:
+                     total1 += line.quantity
+            if type == 'out_invoice':
+                cust_inv = total
+                sale_inv  = total1
+            else:
+                supp_inv = total
+                pur_inv  = total1
+
+        for type in ('in','out'):
+            stock_ids = self.pool.get('stock.picking').search(cr, uid, [('date','<=',stop_date),('date','>=',start_date),('type','ilike',type)])
+            for order in self.pool.get('stock.picking').browse(cr, uid, stock_ids):
+                for moves in order.move_lines:
+                    if type == 'in':
+                        goods_in += moves.product_qty
+                    else:
+                        goods_out += moves.product_qty
+
+        msg = ''' \t\tFiscal Year : %s
+                ************************************
+                [1] Total Sale Orders Created \t\t:  %s Qty
+                [2] Total Purchase Orders Created\t\t:  %s Qty
+                [3] Total Sale Orders Invoiced\t\t\t:  %s Qty
+                [4] Total Purchase Orders Invoiced\t\t:  %s Qty
+                [5] Total Incoming Goods\t\t\t:  %s Qty
+                [6] Total Outgoing Goods\t\t\t:  %s Qty
+                [7] Total Customer Invoices\t\t\t:  %s EUR
+                [8] Total Supplier Invoices\t\t\t:  %s EUR
+                *************************************'''\
+                %(year.code,sale_order,purchase_order,sale_inv,pur_inv,goods_in,goods_out,cust_inv,supp_inv)
+        full_ids = self.search(cr, uid, [])
+        msg1 = ""
+        for rec in self.browse(cr, uid, full_ids):
+            print "rec.ay_traceback",rec.cy_traceback
+            msg1 += '\n' + rec.ay_traceback
+        print "msg1............................",msg1
+        msg1 += '\n' + msg
+        print "msg1****************",msg1
+        self.write(cr, uid, ids[0],{'cy_traceback':msg,
+                                    'ay_traceback':msg1})
+        return
 
     def continue_next_year(self, cr, uid, ids, context):
         fiscal_year_id = self.pool.get('account.fiscalyear').search(cr, uid, [('state','=','draft')])
         fy = self.pool.get('account.fiscalyear').browse(cr, uid, fiscal_year_id)[0]
-        self.create_sale_periods(cr, uid, ids, context)
-        self.create_sale_forecast_stock_planning_data(cr, uid, ids, fy.code, context)
-
         partner_ids = self.pool.get('res.partner').search(cr,uid,[])
         prod_ids = self.pool.get('product.product').search(cr,uid,[])
         shop = self.pool.get('sale.shop').search(cr,uid,[])
@@ -782,7 +827,11 @@ class profile_game_retail(osv.osv):
             self.deliver_products(cr, uid, ids, context)
             self.confirm_draft_customer_invoice(cr, uid, ids, context)
             self.pay_all_customer_invoice(cr, uid, ids, context)
-            self.pool.get('account.period').write(cr, uid, period.id, {'state':'done'})
+            self.adjust_loan_account(cr, uid, ids, fiscal_year_id, period.id, od, context)
+
+        self.get_traceback(cr, uid, ids, fy, context)
+        self.create_sale_periods(cr, uid, ids, context)
+        self.create_sale_forecast_stock_planning_data(cr, uid, ids, fy.code, context)
         new_fy = self.create_fiscalyear_and_period(cr, uid, ids, context)
         self.close_fiscalyear(cr, uid, ids, fy.id, new_fy, context)
 
@@ -836,15 +885,6 @@ class profile_game_config_wizard(osv.osv_memory):
         'state': lambda *args: '3',
     }
 
-#    def action_cancel(self, cr, uid, ids, conect = None):
-#
-#        return {
-#            'view_type': 'form',
-#            "view_mode": 'form',
-#            'res_model': 'ir.actions.configuration.wizard',
-#            'type': 'ir.actions.act_window',
-#            'target':'new',
-#        }
 
     def action_run(self, cr, uid, ids, context = None):
         game_obj = self.pool.get('profile.game.retail')
@@ -861,24 +901,6 @@ class profile_game_config_wizard(osv.osv_memory):
                 'difficulty':res['difficulty'],
             }
             game_id = game_obj.create(cr,uid,game_vals,context=context)
-            lower = -2
-            years = int(res['years'])
-            players = int(res['state'])
-            start_date = mx.DateTime.strptime(time.strftime('%Y-01-01'),'%Y-%m-%d')
-            stop_date = mx.DateTime.strptime(time.strftime('%Y-12-31'),'%Y-%m-%d')
-            while lower <= years:
-                new_start_date = datetime.date(start_date.year+lower,1,1)
-                new_stop_date = datetime.date(stop_date.year+lower,12,31)
-                name = new_start_date.strftime('%Y')
-                vals = {
-                    'name':name,
-                    'code':name,
-                    'date_start':new_start_date,
-                    'date_stop':new_stop_date,
-                }
-                new_id = fiscal_obj.create(cr, uid, vals, context=context)
-                fiscal_obj.create_period3(cr, uid, [new_id])
-                lower += 1
             for user_name in ['finance','sale','logistic','hr']:
                 if user_name == 'hr' and players < 4:
                     continue
@@ -956,7 +978,9 @@ class stock_move(osv.osv):
 
      def create(self, cr, uid, vals, context={}):
           if self.pool.get('profile.game.retail.phase1').check_state(cr, uid, context):
-              vals ['date'] = self.pool.get('profile.game.retail').get_date(cr, uid,context)
+              dt = self.pool.get('profile.game.retail').get_date(cr, uid,context)
+              vals ['date'] = dt
+              vals['date_planned'] = dt
           return super(stock_move, self).create(cr, uid, vals, context)
 
 stock_move()
@@ -971,14 +995,6 @@ class purchase_order(osv.osv):
           return super(purchase_order, self).create(cr, uid, vals, context)
 
 purchase_order()
-
-#class account_move(osv.osv):
-#    _inherit = "account.move"
-#    _columns = {}
-#    _defaults = {
-#        'period_id': _get_period,
-#        }
-#account_move()
 
 class account_move_line(osv.osv):
     _inherit = "account.move.line"
