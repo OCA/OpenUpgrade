@@ -24,6 +24,7 @@
     "version":"1.0",
     "author":"Tiny",
     "category":"Ampco",
+    "description":'''Module for Quality information, Localisation''',
     "depends":[
         "base","product","sale"
        ],

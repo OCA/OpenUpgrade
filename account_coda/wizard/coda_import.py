@@ -202,7 +202,7 @@ def _coda_parsing(self, cr, uid, data, context):
     str_not1=''
 
 
-    print "" + str(len(bank_statements)) + ' Bank Statements   : \n' + str(bank_statements)
+#    print "" + str(len(bank_statements)) + ' Bank Statements   : \n' + str(bank_statements)
     for statement in bank_statements:
         try:
             bk_st_id = pool.get('account.bank.statement').create(cr,uid,{

@@ -25,6 +25,7 @@
     "author" : "Tiny",
     "category" : "Localisation/Account Charts",
     "depends" : ["account_chart", 'base_vat'],
+    "description": "This is the module to manage the accounting chart for Austria in Open ERP.",
     "demo_xml" : [],
     "update_xml" : ['account_tax_code.xml',"account_chart.xml",'account_tax.xml',"l10n_chart_at_wizard.xml"],
     "active": False,

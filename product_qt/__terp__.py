@@ -42,6 +42,7 @@
     3> QC testing on finished goods.
     """,
     "update_xml" : [
+        "security/ir.model.access.csv",
         "wizard_view.xml",
         "product_qt_view.xml",
 

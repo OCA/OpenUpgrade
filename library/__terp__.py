@@ -28,7 +28,7 @@
     "depends" : ["point_of_sale","report_intrastat","purchase"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["library_view.xml","library_wizard.xml","library_data.xml"],
+    "update_xml" : ["security/ir.model.access.csv","library_view.xml","library_wizard.xml","library_data.xml"],
     "installable": True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

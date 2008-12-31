@@ -38,6 +38,7 @@
     module to manage maintenance contracts:
     """,
     "update_xml" : [
+        "security/ir.model.access.csv",
         "maintenance_editor_view.xml",
         "maintenance_sequence.xml"
         ],

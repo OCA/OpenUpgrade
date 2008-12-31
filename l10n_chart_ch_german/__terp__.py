@@ -24,6 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Localisation/Account Charts",
+    "description": "This is the module to manage the accounting chart for Switzerland (German Profile) in Open ERP.",
     "depends" : ["account", "account_chart", 'base_vat'],
     "demo_xml" : [],
     "update_xml" : ['account_tax_code.xml',"account_chart.xml",

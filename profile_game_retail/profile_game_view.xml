@@ -172,7 +172,7 @@
 	                                    <button icon="gtk-ok" string="Loan Details" name="%(action_loan_detail_tree)d" type="action" colspan ="1"/>
 	                            </group>
 		                        <group col="3" colspan="2">
-		                            <separator colspan="3" string="HR Manager :(HRM)"/>
+		                            <separator colspan="3" string="HR Manager :(HR)"/>
 		                        	<field name="hr_budget"/>
 		                    	</group>
 	                        </group>
@@ -248,7 +248,6 @@
                 <tree string="Game Details">
                     <field name="name"/>
                     <field name="current_treasury"/>
-                    <field name="total_refund"/>
                     <field name="sale_forcast"/>
                     <field name="margin_forcast"/>
                     <field name="cost_purchase_forcast"/>

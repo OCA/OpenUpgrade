@@ -158,7 +158,6 @@ class payment_line(osv.osv):
             line = self.pool.get('account.move.line').browse(cr, uid, move_line_id)
             if line.name != '/':
                 res['value']['communication'] = res['value']['communication'] + '. ' + line.name
-        print res
         return res
 
 payment_line()

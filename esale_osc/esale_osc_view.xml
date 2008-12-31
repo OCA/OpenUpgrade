@@ -20,19 +20,19 @@
 						<label string="Proceed with the mappings BEFORE the definitions of the active products!!" colspan="4"/>
 						<separator string="Active Products" colspan="4"/>
 						<button name="add_all_products" string="Add all products" type="object"/>
-						<field name="product_ids" colspan="4" view="esale_osc.product.web.form" widget="one2many_list" />
+						<field name="product_ids" colspan="4" ref="esale_osc.product.web.form" widget="one2many_list" />
 					</page>
 					<page string="Taxes Mapping">
 						<button type="object" string="Import Taxes" name="tax_import"/>
-						<field colspan="4" name="tax_ids" widget="one2many_list" view="esale_osc.tax.web.form"/>
+						<field colspan="4" name="tax_ids" widget="one2many_list" ref="esale_osc.tax.web.form"/>
 					</page>
 					<page string="Languages Mapping">
 						<button type="object" string="Import Languages" name="lang_import"/>
-						<field colspan="4" name="language_ids" widget="one2many_list" view="esale_osc.language.web.form"/>
+						<field colspan="4" name="language_ids" widget="one2many_list" ref="esale_osc.language.web.form"/>
 					</page>
 					<page string="Categories Mapping">
 						<button type="object" string="Import categories" name="category_import"/>
-						<field colspan="4" name="category_ids" widget="one2many_list" view="esale_osc.category.web.form"/>
+						<field colspan="4" name="category_ids" widget="one2many_list" ref="esale_osc.category.web.form"/>
 					</page>
 				</notebook>
 			</form>
@@ -45,7 +45,7 @@
 		<field name="view_id" ref="view_esale_osc_form"/>
 	</record>
 
-	<menuitem name="Websites" parent="menu_esale_osc_root" id="menu_action_esale_osc_web" action="action_esale_osc_form" groups="base.group_admin"/>
+	<menuitem name="Websites" parent="menu_esale_osc_root" id="menu_action_esale_osc_web" action="action_esale_osc_form" groups="base.group_user"/>
 
 	<record model="ir.ui.view" id="esale_osc_language_web_form">
 		<field name="name">esale_osc.language.web.form</field>
@@ -193,7 +193,7 @@
 		<field name="view_id" ref="esale_osc_saleorder_form"/>
 		<field name="domain">[('esale_osc_id','!=', 0)]</field>
 	</record>
-	<menuitem name="Sale Orders" parent="menu_esale_osc_root" id="menu_action_esale_osc_saleorder" action="action_saleorder_form" groups="base.group_admin"/>
+	<menuitem name="Sale Orders" parent="menu_esale_osc_root" id="menu_action_esale_osc_saleorder" action="action_saleorder_form" groups="base.group_user"/>
 
 
 </data>

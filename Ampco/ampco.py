@@ -115,22 +115,22 @@ class sale_order_line(osv.osv):
 sale_order_line()
 
 
-class stock_production_lot(osv.osv):
-    _name = 'stock.production.lot'
-    _inherit = 'stock.production.lot'
-    _columns = {
-        'x': fields.float('X of Product'),
-        'y': fields.float('Y of Product'),
-        'z': fields.float('Z of Product'),
-        'heatcode_id' :  fields.many2one('product.heatcode','Heatcode'),
-	}
-#Quality information
-#Localisation
-#Reservations (one2many qty, sizes)
-#Availables (computed field)
-
-
-stock_production_lot()
+#class stock_production_lot(osv.osv):
+#    _name = 'stock.production.lot'
+#    _inherit = 'stock.production.lot'
+#    _columns = {
+#        'x': fields.float('X of Product'),
+#        'y': fields.float('Y of Product'),
+#        'z': fields.float('Z of Product'),
+#        #'heatcode_id' :  fields.many2one('product.heatcode','Heatcode'),
+#	}
+##Quality information
+##Localisation
+##Reservations (one2many qty, sizes)
+##Availables (computed field)
+#
+#
+#stock_production_lot()
 
 
 
