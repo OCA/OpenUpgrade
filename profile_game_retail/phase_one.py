@@ -70,7 +70,7 @@ class profile_game_retail_phase_one(osv.osv):
         p_id = p_obj.search(cr,uid,[])
         p_br = p_obj.browse(cr,uid,p_id)
         for rec in p_br:
-            if len(rec.sales_user_id.name):
+            if rec.sales_user_id.name or False:
                 hr_name = " "
                 if rec.hr_user_id:
                    hr_name = rec.hr_user_id.name
@@ -280,9 +280,6 @@ class profile_game_retail_phase_one(osv.osv):
          acc_obj = self.pool.get('account.account')
          inc_acc_id = acc_obj.search(cr, uid, [('code','ilike','701000')])[0]
          exp_acc_id = acc_obj.search(cr, uid, [('code','ilike','601000')])[0]
-         sale_acc = acc_obj.search(cr, uid, [('code','ilike','411100')])[0]
-         pur_acc = acc_obj.search(cr, uid, [('code','ilike','401100')])[0]
-         bank_acc = acc_obj.search(cr, uid, [('code','ilike','512000')])[0]
          close_acc = acc_obj.search(cr, uid, [('code','ilike','911000')])[0]
          acc_obj.write(cr ,uid, close_acc, {'type':'other'})
 
@@ -291,31 +288,23 @@ class profile_game_retail_phase_one(osv.osv):
          for journal in acc_journal.browse(cr, uid, journal_ids):
             if journal.code in ('JB','SAJ','EXJ','JC'):
                  if journal.code == 'JB':
-                     db_ac = cr_ac = bank_acc
+                     code = '512000'
                  if journal.code == 'SAJ':
-                     db_ac = cr_ac = sale_acc
+                     code = '411100'
                  if journal.code == 'EXJ':
-                     db_ac = cr_ac = pur_acc
+                    code = '401100'
                  if journal.code == 'JC':
-                     db_ac = cr_ac = close_acc
-                 acc_journal.write(cr, uid, journal.id, {'default_debit_account_id':db_ac,
-                                                                 'default_credit_account_id':cr_ac})
+                     code = '911000'
+                 account = acc_obj.search(cr, uid, [('code','ilike',code)])[0]
+                 acc_journal.write(cr, uid, journal.id, {'default_debit_account_id':account,
+                                                                 'default_credit_account_id':account})
          for product in self.pool.get('product.product').search(cr, uid, []):
              self.pool.get('product.product').write(cr, uid, product,
                           {'property_account_income':inc_acc_id,'property_account_expense':exp_acc_id})
          return True
 
-    def remove_fiscal_years(self, cr, uid, ids, context):
-        fy_id = self.pool.get('account.fiscalyear').search(cr, uid, [])
-        for year in self.pool.get('account.fiscalyear').browse(cr, uid, fy_id):
-            period_ids = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id','=',year.id)])
-            self.pool.get('account.period').unlink(cr, uid, period_ids)
-            self.pool.get('account.fiscalyear').unlink(cr, uid, year.id)
-        return True
-
     def confirm(self, cr, uid, ids, context={}):
         self.generate_account_chart(cr, uid, ids, context)
-        self.remove_fiscal_years(cr, uid, ids, context)
         phase2_obj = self.pool.get('profile.game.retail')
         phase2_obj.create_fiscalyear_and_period(cr, uid, ids, context)
         self.write(cr, uid, ids, {'state':'quotation'})
@@ -331,8 +320,7 @@ class profile_game_retail_phase_one(osv.osv):
         obj = self.browse(cr, uid, curr_id)
         if obj.state != 'started_phase2':
             return False
-        else:
-            return True
+        return True
 
 profile_game_retail_phase_one()
 
