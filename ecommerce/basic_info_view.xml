@@ -34,7 +34,7 @@
 						<field name="chequepay_to"/>
 					</page>
 					<page string="Categories">
-					<seperator string="Category" colspan="4"/>
+					<separator string="Category" colspan="4"/>
 					<field colspan="4" name="category_ids" nolabel="1" >
 							<tree  string="Categories" editable="bottom">
 								<field name="name"/>
@@ -44,16 +44,16 @@
 						</field>
 					</page>
 					<page string="Products">
-					<seperator string="Products" colspan="4"/>
+					<separator string="Products" colspan="4"/>
 					<field name="products" colspan="4" nolabel="1"/>
 					</page>
 					<page string="Setting">
-					<seperator string="Setting" colspan='4'/>
+					<separator string="Setting" colspan='4'/>
 					<field name="currency_ids" colspan="4" nolabel='1'/>
 					<field name="language_ids" colspan="4" nolabel='1'/>
 					</page>
 					<page string="Delivery">
-					<seperator string="Delivery" colspan='4'/>
+					<separator string="Delivery" colspan='4'/>
 					<field name="delivery_ids" colspan="4" nolabel="1"/>
 					</page>
 				</notebook>
@@ -131,9 +131,9 @@
 					<page string="Payment by Cheque">
 						<separator string="Payment by Cheque" colspan="4"/>
 						<newline/>
-						<field name="name" select="1" colsapn="2"/>
+						<field name="name" select="1" colspan="2"/>
 						<newline/>
-						<field name="street" select="2" colsapn="2"/>
+						<field name="street" select="2" colspan="2"/>
 						<field name="street2" select="2"/>
 						<field name="zip" select="2"></field>
 						<field name="city" />
@@ -149,7 +149,7 @@
 						<field name="cancel_url" select="2"/>
 					</page>
 					<page string="Payment History">
-						<seperator string="Payment History" colspan='4'/>
+						<separator string="Payment History" colspan='4'/>
 						<newline/>
 						<field name="transaction_detail" colspan="4" nolabel="1"/>
 					</page>
@@ -188,8 +188,8 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Payment Received Details">
-					<field name="transaction_id" select="1" colsapn="2"/>
-					<field name="saleorder_id" select="2" colsapn="2"/>
+					<field name="transaction_id" select="1" colspan="2"/>
+					<field name="saleorder_id" select="2" colspan="2"/>
 					<field name="invoice_id" select="2"/>
 					<field name="transaction_date" select="2"/>
 					<field name="partner" select="2"/>

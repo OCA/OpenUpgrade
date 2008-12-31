@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<!-- Users groups -->
+	<record model="res.groups" id="group_cci_translation_user">
+		<field name="name">CCI Translation User</field>
+	</record>
+	<record model="res.groups" id="group_cci_translation_manager">
+		<field name="name">CCI Translation Manager</field>
+	</record>
+	
+	<!-- Set accesses to menu -->
+	<record model="ir.ui.menu" id="menu_translation_root">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_translation_user'),ref('group_cci_translation_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_translation_root_dossier">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_translation_user'),ref('group_cci_translation_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_translation_root_credit">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_translation_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_translation_root_letter">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_translation_manager')])]"/>
+	</record>
+</data>
+</openerp>
+

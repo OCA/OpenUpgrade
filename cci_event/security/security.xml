@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<!--
+ Users Groups
+-->
+    <record model="res.groups" id="group_cci_event_user">
+        <field name="name">CCI Event User</field>
+    </record>
+    
+    <!--<record model="res.groups" id="group_cci_mission_manager">to see with philmer--> 
+    <record model="res.groups" id="group_cci_event_manager">
+        <field name="name">CCI Event Access Rights</field>
+    </record>
+    
+    <!--<record model="res.groups" id="group_cci_mission_supervisor">to see with philmer--> 
+    <record model="res.groups" id="group_cci_event_supervisor">
+        <field name="name">CCI Event Supervisor</field>
+    </record>
+
+    <!--<record model="res.groups" id="group_cci_mission_master">to see with philmer--> 
+    <record model="res.groups" id="group_cci_event_master">
+        <field name="name">CCI Event Master</field>
+    </record>
+
+	<!-- Set accesses to menu -->
+	
+	<!-- Redefinition of the accesses to the menu defined in the event module -->
+	<record id="event.menu_event_config" model="ir.ui.menu">
+		<field name="groups_id" eval="[(6,0,[ref('group_cci_event_manager')])]"/>
+	</record>
+
+	<record id="event.menu_report_event" model="ir.ui.menu">
+		<field name="groups_id" eval="[(6,0,[ref('group_cci_event_user'),ref('group_cci_event_supervisor'),ref('group_cci_event_manager')])]"/>
+	</record>
+
+
+</data>
+</openerp>
+

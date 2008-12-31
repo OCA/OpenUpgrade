@@ -78,7 +78,6 @@ def _execute(cr, uid, object, method, step, type='execute',mode='pre',*args):
     return res
 
 def _pre_process(db,uid,passwd,object,method,type='execute',*args):
-   # print "PREEEEEEEEEEEE GAME uid,object,method,type='execute',*args",uid,object,method,type,args
     security.check(db, uid, passwd)
     pool = pooler.get_pool(db)
     steps=False
@@ -95,7 +94,6 @@ def _pre_process(db,uid,passwd,object,method,type='execute',*args):
     return steps
 
 def _post_process(db,uid,passwd,object,method,steps,type='execute',*args):
-   # print "Post GAME uid,object,method,type='execute',*args",uid,object,method,type,args
     security.check(db, uid, passwd)
     pool = pooler.get_pool(db)
     res=False
@@ -132,9 +130,11 @@ class scenario_wizard(web_services.wizard):
     def execute(self,db, uid, passwd, wiz_id, datas, action='init', context=None):
         args=wiz_id,datas,action,context,
         steps=_pre_process(db,uid,passwd,None,None,'wizard',*args)
+        if wiz_id==1:
+            super(scenario_wizard,self).create(db, uid, passwd, 'base_setup.base_setup', datas)
         res=super(scenario_wizard,self).execute(db, uid,passwd, wiz_id, datas, action, context)
         args+={'result':res},
-        _post_process(db,uid,passwd,None, None,steps,'wizard',*args)
+        res2=_post_process(db,uid,passwd,None, None,steps,'wizard',*args)
         return res
 scenario_wizard()
 
