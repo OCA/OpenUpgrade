@@ -4,12 +4,12 @@
      <!--
 	Sale Period for current year
 	-->
-        <record id="game_sale_period" model="stock.period">
+     <!--   <record id="game_sale_period" model="stock.period">
             <field eval="time.strftime('%Y')" name="name"/>
             <field eval="time.strftime('%Y')+'-01-01'" name="date_start"/>
             <field eval="time.strftime('%Y')+'-12-31'" name="date_stop"/>
             <field name="state">open</field>
-        </record>
+        </record>-->
 
         <record id="operations_journal" model="account.journal">
             <field name="name">Journal des opérations diverses</field>
