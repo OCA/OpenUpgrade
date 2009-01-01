@@ -51,7 +51,6 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 		<field name="domain">[('in_date','ilike',time.strftime('%Y-%m'))]</field>
-
 	</record>
 	
 	<menuitem name="Reporting" id="menu_sale_commisions_reporting" parent="menu_sale_commisions"/>

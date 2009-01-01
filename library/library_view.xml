@@ -40,12 +40,8 @@
                     <field name="note"  nolabel="1" colspan="4"/>
                     <separator string="Biography" colspan="4"/>
                     <field name="biography" nolabel="1"   colspan="4"/>
-
-
                     </page>
                 </notebook>
-
-
             </form>
         </field>
     </record>
@@ -56,8 +52,8 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Authors">
-                    <field name="name" select="1"/>
-                     <field name="first_name" select="1"/> 
+				<field name="name" select="1"/>
+				<field name="first_name" select="1"/> 
             </tree>
         </field>
     </record>
@@ -68,9 +64,9 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Authors">
-                    <field name="name" select="1"/>
-                     <field name="code" select="1"/> 
-                     <field name="active" select="1"/> 
+				<field name="name" select="1"/>
+				<field name="code" select="1"/> 
+				<field name="active" select="1"/> 
             </form>
         </field>
     </record>
@@ -154,8 +150,6 @@
                              <field name="virtual_available"/>
                              <field name="qty_available"/>
                             </group>
-
-
                         </page>
                         <page string="Details">
                             <field name="state"/>
@@ -176,7 +170,6 @@
                             <field name="taxes_id" colspan="1"/>
                             <field name="supplier_taxes_id" colspan="1"/>
                         </page>
-
                         <page string="Descriptions">
                             <separator string="Description" />
                             <field name="description" colspan="4" nolabel="1" />
@@ -209,7 +202,6 @@
                             <field name="seller_ids" colspan="4" select="2" nolabel="1"  widget="one2many_list"/>
                         </page>
                         <page string="Other">
-
                             <field name="type" />
                             <field name="uom_id"/>
                             <field name="uom_po_id"/>
@@ -217,7 +209,7 @@
                             <properties/>
                         </page>
                     </notebook>
-       </form>
+	       </form>
        </field>
     </record>
 

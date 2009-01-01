@@ -24,12 +24,16 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/Sales & Purchases",
-    #"depends" : ["point_of_sale","report_stock","report_intrastat","purchase"],
+    "description" : """Module to manage library.
+    Books Information,
+    Publisher and Author Information,
+    Book Rack Tracking etc...""",
     "depends" : ["point_of_sale","report_intrastat","purchase"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["security/ir.model.access.csv","library_view.xml","library_wizard.xml","library_data.xml"],
-    "installable": True,
+    "active" : False,
+    "installable" : True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
