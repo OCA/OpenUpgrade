@@ -25,11 +25,21 @@ from osv import fields
 from osv import osv
 import pooler
 
+
+class dm_ddf_plugin(osv.osv):
+    _name = "dm.ddf.plugin"
+    _columns = {
+        'name' : fields.char('DDF Plugin Name', size=64),
+        'file_id' : fields.binary('File'),
+    }
+dm_ddf_plugin()
+
 class dm_document_template(osv.osv):
     _name = "dm.document.template"
     _columns = {
         'name' : fields.char('Tempalte Name', size=128),
         'dynamic_fields' : fields.many2many('ir.model.fields','dm_tempalte_fields','template_field_id','tempalte_id','Fields',domain=[('model','like','dm.%')]),
+        'plugin_id' : fields.many2many('dm.ddf.plugin','dm_template_plugin_rel','dm_ddf_plugin_id','dm_document_template_id', 'Plugin'),
         }
     
     def write(self, cr, uid, ids, vals, context=None):
@@ -46,3 +56,4 @@ class dm_document_template(osv.osv):
             dm_offer_document.write(cr,uid,doc['id'],{'document_template_field_ids':[[6, 0,list2]]})
         return res                 
 dm_document_template()
+
