@@ -45,6 +45,10 @@
         "profile_game_scenario.xml",
     ],
     "demo_xml":[],
+    "description": """
+    Business Game
+    For Details Please Wait For Few Days
+    """,
     "update_xml":[
         "wizard_game_phase2.xml",
         "profile_game_view.xml",
