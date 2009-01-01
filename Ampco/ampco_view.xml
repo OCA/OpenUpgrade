@@ -78,12 +78,10 @@
     <record model="ir.ui.view" id="inherit_view_order_line_form2">
         <field name="name">sale.inherit.order.line.form2</field>
         <field name="model">sale.order.line</field>
-          <field name="inherit_id" ref="sale.view_order_line_form2"/>
+        <field name="inherit_id" ref="sale.view_order_line_form2"/>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <field name="product_uom" position="after">
-                <field name="cutting" />
-                <newline/>
+        	<field name="product_uom" readonly="2" position="after">
                 <field name="x"/>
                 <field name="y"/>
                 <field name="z"/>
