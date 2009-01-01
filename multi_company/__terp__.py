@@ -25,6 +25,7 @@
     "author" : "Tiny",
     "depends" : ["base"],
     "category" : "Generic Modules/Base",
+    "description" : """Module to handle multi company.""",
     "init_xml" : [],
     "demo_xml" : ["multi_company_demo.xml",],
     "update_xml" : [],
