@@ -99,6 +99,11 @@
 					</field>
 				</group>-->
 				</page>
+				<page string="Dynamic Fields">
+					<field name="document_template_id" select="1" colspan="4"/>
+					<separator string="Template Fields" colspan="4"/>
+					<field name="document_template_field_ids" colspan="4" nolabel="1" context="{'document_template_id':document_template_id}"/>
+				</page>				
 				</notebook>
 			</form>
 		</field>
