@@ -21,21 +21,22 @@
 ##############################################################################
 
 {
-        "name" : "Idea Manager",
+        "name" : "ERP Comparisons",
         "version" : "0.1",
         "author" : "Tiny",
-        "website" : "http://openerp.com",
+        "website" : "http://www.openerp.com",
         "category" : "Tools",
-        "description": """This module allows your user to easily and efficiently participate in the innovation of the enterprise. It allows everybody to express ideas about different subjects. Then, others users can comment these ideas and vote for particular ideas. Each idea as a score based on the different votes. The managers can obtain an easy view on best ideas from all the users. Once installed, check the menu 'Ideas' in the 'Tools' main menu.""", 
+        "description": """
+        This module lets you compare famous ERP systems and lets you vote their respective facilities(e.g. accounting, BOM Support, etc.) provided by them.
+        """, 
         "depends" : ['base'],
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "update_xml" : [
-            'idea_view.xml',
-            'idea_workflow.xml',
-            "security/idea_security.xml",
-            "security/ir.model.access.csv",
+            'comparison_view.xml',
+#            "security/ir.model.access.csv",
             ],
+        "active" : False,       
         "installable": True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
