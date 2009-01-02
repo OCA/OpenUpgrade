@@ -26,10 +26,15 @@ class sale_order_line(osv.osv):
         #'product_type': fields.related('product_id', 'type', type='selection', string='Product Type')
     }
     
-    def maintenance_qty_change(self, cr, uid, ids, maintenance_product_qty=False, maintenance_month_qty=False, maintenance_start_date=False, maintenance_end_date=False):
+    def maintenance_qty_change(self, cr, uid, ids, maintenance_product_qty=False, maintenance_month_qty=False, maintenance_start_date=False, maintenance_end_date=False, is_maintenance=False):
         result = {}
+        print is_maintenance
+        if not is_maintenance:
+            return result
+        
         result['value'] = {}
         warning_messages = ""
+        print "entering maintenance_qty_change"
         
         if maintenance_start_date:
             start = DateTime.strptime(maintenance_start_date, '%Y-%m-%d')
@@ -47,6 +52,7 @@ class sale_order_line(osv.osv):
             end = DateTime.strptime(maintenance_end_date, '%Y-%m-%d')
             en_date_check = end + DateTime.RelativeDateTime(days=fixed_days_before_month_end + 1)
             print "maintenance_qty_change; end_date:"
+            print result
             print end
             
             if end.month == en_date_check.month or en_date_check.day != 1:
@@ -108,9 +114,9 @@ class sale_order_line(osv.osv):
     
     def fleet_id_change(self, cr, uid, ids, order_fleet_id=False, fleet_id=False, product_id=False, maintenance_start_date=False, maintenance_product_qty=False):
         result = {}
+        
         result['value'] = {}
         fleet_id = order_fleet_id or fleet_id
-        print "-----"
         
         if fleet_id:
             #retrieve the maintenance anniversary from fleet
@@ -122,19 +128,22 @@ class sale_order_line(osv.osv):
                 print start_date
             else:
                 print 'else'
-                start_date = DateTime.strptime(maintenance_start_date, '%Y-%m-%d') or self.default_maintenance_start_date(cr, uid, context)
+                start_date = maintenance_start_date and DateTime.strptime(maintenance_start_date, '%Y-%m-%d') or DateTime.strptime(self.default_maintenance_start_date(cr, uid, {}), '%Y-%m-%d')
+                print start_date
             end_date = self._get_end_date_from_start_date(cr, uid, start_date, fleet)
             print 'end date:'
             print end_date
-            maintenance_month_qty = self._get_maintenance_month_qty_from_start_end(cr, uid, start_date, end_date)
-            result['value'].update({'maintenance_start_date': start_date.strftime('%Y-%m-%d')})
-            result['value'].update({'maintenance_end_date': end_date.strftime('%Y-%m-%d')})
-            result['value'].update({'maintenance_month_qty': maintenance_month_qty})
-            result['value'].update({'fleet_id': fleet_id})
             
+            result['value'].update({'fleet_id': fleet_id})
+        
             if product_id:
                 product = self.pool.get('product.product').browse(cr, uid, product_id)
-                if product.is_maintenance: #and maintenance_start_date
+                if product.is_maintenance:
+                    maintenance_month_qty = self._get_maintenance_month_qty_from_start_end(cr, uid, start_date, end_date)
+                    result['value'].update({'maintenance_start_date': start_date.strftime('%Y-%m-%d')})
+                    result['value'].update({'maintenance_end_date': end_date.strftime('%Y-%m-%d')})
+                    result['value'].update({'maintenance_month_qty': maintenance_month_qty})
+                    
                     result['value'].update({'product_uom_qty': maintenance_product_qty * maintenance_month_qty})
                     result['value'].update({'product_uos_qty': maintenance_product_qty * maintenance_month_qty}) # TODO * product_obj.uos_coeff
                     
@@ -184,7 +193,7 @@ class sale_order_line(osv.osv):
         
     def _check_maintenance_fleet(self, cr, uid, ids):
         for order_line in self.browse(cr, uid, ids):
-            if order_line.product_id.is_maintenance or order_line.product_id.type == 'product':
+            if order_line.product_id.is_maintenance or order_line.product_id.type == 'product' or order_line.product_id.type == 'consu':
                 if order_line.fleet_id and order_line.fleet_id.fleet_type == 'sub_fleet' and order_line.fleet_id.location_id.partner_id == order_line.order_id.partner_id:
                     return True
                 return False

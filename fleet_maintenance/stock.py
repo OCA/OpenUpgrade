@@ -9,14 +9,17 @@ fixed_month_init_day = 1
 fixed_default_anniversary_month = 12 
 
 class stock_location(osv.osv):
-    _inherit = "stock.location"    
+    _inherit = "stock.location"
     
     def _is_expired(self, cr, uid, ids, field_name, arg, context={}):
         res = {}
         now = DateTime.now()
         date = DateTime.DateTime(now.year, now.month, now.day, 0, 0, 0.0)
         for fleet in self.browse(cr, uid, ids, context):
-            res[fleet.id] = fleet.expire_time and date > DateTime.strptime(fleet.expire_time, '%Y-%m-%d') or False
+            if fleet.expire_time:
+                res[fleet.id] = date > DateTime.strptime(fleet.expire_time, '%Y-%m-%d')
+            else:
+                res[fleet.id] = True #by default no maintenance expire terms means no coverage
         return res
     
     

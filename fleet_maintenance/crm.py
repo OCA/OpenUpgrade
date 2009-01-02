@@ -2,6 +2,7 @@ from osv import fields,osv
 import tools
 import ir
 import pooler
+from mx import DateTime
 
 class crm_case(osv.osv):
     _inherit = "crm.case" 
@@ -11,20 +12,25 @@ class crm_case(osv.osv):
         'fleet_id': fields.many2one('stock.location', 'Fleet', required = False, select = 1),
         'is_fleet_expired': fields.related('fleet_id', 'is_expired', type='boolean', string='Is Fleet Expired?'),
         'picking_id': fields.many2one('stock.picking.incident', 'Repair Picking', required = False, select = True),
-        'incoming_picking_id': fields.many2one('stock.picking.incident', 'Incoming Picking', required = False, select = 1),
-        'outgoing_picking_id': fields.many2one('stock.picking.incident', 'Outgoing Picking', required = False, select = True),
-        'in_supplier_picking_id': fields.many2one('stock.picking.incident', 'Return To Supplier Picking', required = False, select = True),
-        'out_supplier_picking_id': fields.many2one('stock.picking.incident', 'Return From Supplier Picking', required = False, select = True),
+        'incoming_move_id': fields.many2one('stock.move', 'Incoming Move', required = False, select = 1),
+        'outgoing_move_id': fields.many2one('stock.move', 'Outgoing Move', required = False, select = True),
+        'in_supplier_move_id': fields.many2one('stock.move', 'Return To Supplier Move', required = False, select = True),
+        'out_supplier_move_id': fields.many2one('stock.move', 'Return From Supplier Move', required = False, select = True),
         'prodlot_id': fields.many2one('stock.production.lot', 'Serial Number', required = False, select = 1),
         'product_id': fields.related('prodlot_id', 'product_id', type='many2one', relation='product.product', string='Related Product'),
     }
     
+    def default_incident_date(self, cr, uid, context={}):
+        now = DateTime.now()
+        date = DateTime.DateTime(now.year, now.month, now.day, 0, 0, 0.0)
+        return date.strftime('%Y-%m-%d %H:%M:%S')
+    
     
     _defaults = {
         'incident_ref': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'crm.case'),
+        'date': default_incident_date,
         }
     
-    #TODO deal with sequence!
     #def copy(self, cr, uid, id, default=None,context={}):
     
     

@@ -23,9 +23,9 @@
 					</group>
 					<separator string="Moves" />
 					<group col="6" colspan="4">
-						<field name="incoming_picking_id" mode="form" string="Incoming picking" domain="[('type','=','in')]" context="{'type':'in'}"/>
+						<field name="incoming_move_id" mode="form" string="Incoming picking" domain="[('product_id','=',product_id),('location_id','=',fleet_id)]" context="{'product_id':product_id, 'location_id':fleet_id, 'name':'customer_to_RMA'}"/>
 						<field name="picking_id" string="Repair picking" domain="[('type','=','internal')]" context="{'partner_id':partner_id, 'type':'internal'}" />
-						<field name="outgoing_picking_id" string="Outgoing picking" domain="[('type','=','out')]" context="{'partner_id':partner_id, 'type':'out'}" />
+						<field name="outgoing_move_id" string="Outgoing picking" domain="[('product_id','=',product_id),('location_dest_id','=',fleet_id)]" context="{'product_id':product_id, 'location_dest_id':fleet_id, 'name':'RMA_to_customer'}" />
 					</group>
 					<separator string="Qualification" />
 					<group col="6" colspan="4">
@@ -115,8 +115,8 @@
 							</field>
 						</page>
 						<page string="Supplier Return?">
-							<field name="in_supplier_picking_id" />
-							<field name="out_supplier_picking_id" />
+							<field name="in_supplier_move_id" />
+							<field name="out_supplier_move_id" />
 						</page>
 						<page string="Money">
 							<field name="planned_cost" string="Incident Cost" />
