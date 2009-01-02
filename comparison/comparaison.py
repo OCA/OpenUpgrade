@@ -68,6 +68,7 @@ class comparison_factor(osv.osv):
         'note': fields.text('Note'),
         'ponderation': fields.float('Ponderation'),
         'state': fields.selection([('draft','Draft'),('open','Open'),('cancel','Cancel')], 'Status', required=True),
+        'results': fields.one2many('comparison.factor.result', 'factor_id', 'Computed Results')
     }
     _defaults = {
         'state': lambda *args: 'draft',
@@ -77,7 +78,18 @@ class comparison_factor(osv.osv):
         ('name', 'unique(parent_id,name)', 'The name of the item must be unique' )
     ]
     _order = 'parent_id,name asc'
-comparison_item()
+comparison_factor()
+
+class comparison_factor_result(osv.osv):
+    _name = "comparison.factor.result"
+    _rec_name = 'factor_id'
+    _columns = {
+        'factor_id': fields.many2one('comparison.factor','Factor', ondelete='set null'),
+        'item_id': fields.many2one('comparison.item','Item', ondelete='set null'),
+        'result': fields.float('Result') # May be a fields.function store=True ?
+        # This field must be recomputed each time we add a vote
+    }
+comparison_factor_result()
 
 class comparison_vote_values(osv.osv):
     _name = 'comparison.vote'
@@ -97,6 +109,10 @@ class comparison_vote(osv.osv):
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade'),
         'item_id': fields.many2one('comparison.item', 'Item', required=True, ondelete='cascade'),
         'score_id': fields.many2one('comparison.vote.value', 'Value', required=True)
+        'ponderation': fields.float('Ponderation')
+    }
+    _defaults = {
+        'ponderation': lambda *a: 1.0,
     }
     # TODO: overwrite create/write
 comparison_vote()
