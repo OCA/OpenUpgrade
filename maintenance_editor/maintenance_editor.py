@@ -33,6 +33,7 @@ import pooler
 import time
 import math
 import uuid
+import addons
 
 from tools import config
 import mx.DateTime
@@ -117,6 +118,7 @@ class maintenance_maintenance(osv.osv):
                 if (module['name'],module['installed_version']) not in contract_module_list:
                     external_modules.append(module['name'])
         return { 
+            'id': (maintenance_ids and maintenance_ids[0] or 0),
             'status': (maintenance_ids and ('full', 'partial')[bool(external_modules)] or 'none'),
             'external_modules': external_modules,
             'modules_with_contract' : contract_module_list,
@@ -139,6 +141,21 @@ class maintenance_maintenance(osv.osv):
                 'date_to' : (mx.DateTime.strptime(date_from, '%Y-%m-%d') + mx.DateTime.RelativeDate(years=1)).strftime("%Y-%m-%d") 
             }
         }
+    
+    def retrieve_updates(self, cr, uid, ids):
+        res = {}
+        toload = ids
+        if isinstance(ids, (int, long)):
+            toload = [ids]
+        for c in self.browse(cr, uid, toload):
+            res[str(c.id)] = {}
+            for m in c.module_ids:
+                res[str(c.id)][m.name] = addons.get_module_as_zip(m.name, b64enc=True)
+
+        if isinstance(ids, (int, long)):
+            return res[str(ids)]
+        return res
+
 maintenance_maintenance()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
