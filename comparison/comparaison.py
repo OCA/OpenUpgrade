@@ -66,6 +66,7 @@ class comparison_factor(osv.osv):
         'user_id': fields.many2one('comparison.user','User'),
         'child_ids': fields.one2many('comparison.factor','parent_id','Child Items'),
         'note': fields.text('Note'),
+        'type': fields.selection([('view','View'),('criterion','criterion')], 'Type'),
         'ponderation': fields.float('Ponderation'),
         'state': fields.selection([('draft','Draft'),('open','Open'),('cancel','Cancel')], 'Status', required=True),
         'results': fields.one2many('comparison.factor.result', 'factor_id', 'Computed Results')
