@@ -92,7 +92,7 @@ class comparison_factor_result(osv.osv):
 comparison_factor_result()
 
 class comparison_vote_values(osv.osv):
-    _name = 'comparison.vote'
+    _name = 'comparison.vote.values'
     _columns = {
         'name': fields.char('Vote Type', size=64, required=True),
         'factor': fields.float('Factor', required=True),
@@ -109,7 +109,8 @@ class comparison_vote(osv.osv):
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade'),
         'item_id': fields.many2one('comparison.item', 'Item', required=True, ondelete='cascade'),
         'score_id': fields.many2one('comparison.vote.value', 'Value', required=True)
-        'ponderation': fields.float('Ponderation')
+        'ponderation': fields.float('Ponderation'),
+        'note': fields.text('Note')
     }
     _defaults = {
         'ponderation': lambda *a: 1.0,
