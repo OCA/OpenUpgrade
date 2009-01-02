@@ -1,7 +1,7 @@
 "id","parent_id:id","name","type","sequence"
+"Factor_1",,"Features & Business Applications","view",0
 "Factor_429",,"Productivity, Ergonomy & Ease of Use","view",2
-"Factor_1",,"Functionallities","view",0
-"Factor_2","Factor_1","After-Sales Services","view",1
+"Factor_2","Factor_1","After-Sales Services","view",10
 "Factor_3","Factor_2","Repairs management","view",1
 "Factor_4","Factor_3","Manages reception of defect products and deliveries ","criterion",1
 "Factor_5","Factor_3","Manages reparation in the warehouse","criterion",1
@@ -24,7 +24,7 @@
 "Factor_22","Factor_20","Visual integration of company processes as graphs","criterion",1
 "Factor_23","Factor_20","Support for corrective and preventive actions","criterion",1
 "Factor_24","Factor_20","Support for alerts and warnings based on customizable criterions","criterion",1
-"Factor_25","Factor_1","Manufacturing Management","view",1
+"Factor_25","Factor_1","Manufacturing Management","view",6
 "Factor_26","Factor_25","MRP I Features","view",1
 "Factor_27","Factor_26","Multi-Level Bill of Materials support","criterion",1
 "Factor_28","Factor_26","Make-to-Stock / Make-to-Order support","criterion",1
@@ -72,7 +72,7 @@
 "Factor_70","Factor_69","Gantt manipulation of manufacturing orders","criterion",1
 "Factor_71","Factor_69","Gantt manipulation of work orders","criterion",1
 "Factor_72","Factor_69","Support for Drag&Drop for priorities and routings","criterion",1
-"Factor_73","Factor_1","Document Management System","view",1
+"Factor_73","Factor_429","Document Management System","view",1
 "Factor_74","Factor_73","Classification of documents","view",1
 "Factor_75","Factor_74","Ability to attach documents on any resource","criterion",1
 "Factor_76","Factor_74","Classification of attached documents into folders","criterion",1
@@ -103,7 +103,7 @@
 "Factor_101","Factor_100","Customer or supplier portal to access and put documents","criterion",1
 "Factor_102","Factor_100","Outlook integration to quickly add or get documents from application","criterion",1
 "Factor_103","Factor_100","Single point of security management for DMS and ERP","criterion",1
-"Factor_104","Factor_1","Purchase Management","view",1
+"Factor_104","Factor_1","Purchase Management","view",5
 "Factor_105","Factor_104","Automatic propositions of purchases","view",1
 "Factor_106","Factor_105","Propositions based on « Make to Order » requirements","criterion",1
 "Factor_107","Factor_105","Propositions based on minimum stock rules","criterion",1
@@ -145,7 +145,7 @@
 "Factor_143","Factor_139","Ability to confirm delivery of products","criterion",1
 "Factor_144","Factor_139","Ability to track invoices received and paid","criterion",1
 "Factor_145","Factor_139","Ability to track received products","criterion",1
-"Factor_146","Factor_1","Project Management","view",1
+"Factor_146","Factor_1","Project Management","view",4
 "Factor_147","Factor_146","Cross-project and project consolidation facilities","view",1
 "Factor_148","Factor_147","Sub-project nesting for collaborative project hierarchal management","criterion",1
 "Factor_149","Factor_147","Prioritisation and dependencies between projects","criterion",1
@@ -196,7 +196,7 @@
 "Factor_194","Factor_191","Dashboards for projects users","criterion",1
 "Factor_195","Factor_191","Dashboards for projects managager","criterion",1
 "Factor_196","Factor_191","Business Intelligence","criterion",1
-"Factor_197","Factor_1","Warehouse Management","view",1
+"Factor_197","Factor_1","Warehouse Management","view",3
 "Factor_198","Factor_197","Products Routes","view",1
 "Factor_199","Factor_198","Manage long delays in product's routes (seas/oceans/ports)","criterion",1
 "Factor_200","Factor_198","Manage product's route in the warehouse ","criterion",1
@@ -237,10 +237,10 @@
 "Factor_235","Factor_232","Graphical upstream traceability graph or tree","criterion",1
 "Factor_236","Factor_232","Graphical downstream traceability graph or tree","criterion",1
 "Factor_237","Factor_232","Tracebility up to the customer or supplier locations","criterion",1
-"Factor_238","Factor_1","Point of Sale","view",1
+"Factor_238","Factor_1","Point of Sale","view",11
 "Factor_239","Factor_238","Touchscreen interface","view",1
-"Factor_240","Factor_1","Sales Management","view",1
-"Factor_241","Factor_1","Direct Marketing","view",1
+"Factor_240","Factor_1","Sales Management","view",2
+"Factor_241","Factor_1","Direct Marketing","view",12
 "Factor_242","Factor_241","Offers management","view",1
 "Factor_243","Factor_242","Ability to define re-useable campaigns","criterion",1
 "Factor_244","Factor_241","Campaign management","view",1
@@ -258,7 +258,7 @@
 "Factor_256","Factor_241","Segmentations","view",1
 "Factor_257","Factor_256","Tools for automatic segmentations of customers or prospects","criterion",1
 "Factor_258","Factor_256","Statistics reports on return answers per segments","criterion",1
-"Factor_259","Factor_1","Financial Accounting","view",1
+"Factor_259","Factor_1","Accounting & Financial Management","view",0
 "Factor_260","Factor_259","Fast encoding of entries","view",1
 "Factor_261","Factor_260","Full keyboard support","criterion",1
 "Factor_262","Factor_260","Encoding by entries and entries lines","criterion",1
@@ -274,13 +274,13 @@
 "Factor_272","Factor_259","Supported countries","view",1
 "Factor_273","Factor_259","Bank interfaces","view",1
 "Factor_274","Factor_1","Analytic accounting","view",1
-"Factor_275","Factor_1","Human Ressources","view",1
+"Factor_275","Factor_1","Human Ressources","view",8
 "Factor_276","Factor_275","Payroll","view",1
 "Factor_277","Factor_275","Expenses","view",1
 "Factor_278","Factor_275","Skills Management","view",1
 "Factor_279","Factor_275","Holidays","view",1
 "Factor_280","Factor_275","Attendances","view",1
-"Factor_281","Factor_1","CRM & SRM","view",1
+"Factor_281","Factor_1","CRM & SRM","view",9
 "Factor_282","Factor_281","Accounts management (customers/partners)","view",1
 "Factor_283","Factor_282","Prospects management and conversion to customers","criterion",1
 "Factor_284","Factor_282","Multiple relations between enterprises (accounts) and contacts (m/n)","criterion",1
@@ -324,12 +324,12 @@
 "Factor_322","Factor_319","Fund Raising","criterion",1
 "Factor_323","Factor_318","Public","view",1
 "Factor_324","Factor_318","Network Management","view",1
-"Factor_325","Factor_1","Business Intelligence","view",1
+"Factor_325","Factor_429","Business Intelligence","view",1
 "Factor_326","Factor_325","Olap Database","view",1
 "Factor_327","Factor_325","Cube Designer","view",1
 "Factor_328","Factor_325","Data Browser","view",1
 "Factor_329","Factor_325","Data Mining","view",1
-"Factor_330","Factor_1","Customer & Supplier Portal","view",1
+"Factor_330","Factor_429","Customer & Supplier Portal","view",1
 "Factor_332","Factor_429","Ergonomy","view",1
 "Factor_333","Factor_332","Web Interface on all features","view",1
 "Factor_334","Factor_333","Support for drag & drop","criterion",1
@@ -398,7 +398,7 @@
 "Factor_397","Factor_395","Installation <1 day for experts","criterion",1
 "Factor_398","Factor_395","Configuration wizards at the installation of the software","criterion",1
 "Factor_399","Factor_395","Configuration wizards at the installation of new modules","criterion",1
-"Factor_400",,"Customisation","view",3
+"Factor_400",,"Customisations & Flexibility","view",3
 "Factor_401","Factor_400","Workflow Editor","view",1
 "Factor_402","Factor_401","Support for workflows on all resources","criterion",1
 "Factor_403","Factor_401","Editable workflows","criterion",1
@@ -430,16 +430,10 @@
 "Factor_430","Factor_429","Accessibility","view",1
 "Factor_431","Factor_430","Public resources and communities","view",1
 "Factor_432","Factor_431","Public bug tracker","criterion",1
-"Factor_433","Factor_431","Official forum and/or IRC channel","criterion",1
+"Factor_433","Factor_431","Official forum","criterion",1
+"Factor_433b","Factor_431","Official IRC channel","criterion",1
 "Factor_434","Factor_431","Official wiki for documentations","criterion",1
 "Factor_435","Factor_431","Official repository of sources","criterion",1
-"Factor_436","Factor_430","Success Stories","view",1
-"Factor_437","Factor_436","Availability of success stories","criterion",1
-"Factor_438","Factor_430","Documentations freely availables","view",1
-"Factor_439","Factor_438","User documentation","criterion",1
-"Factor_440","Factor_438","Integrator documentation","criterion",1
-"Factor_441","Factor_438","Developer documentation","criterion",1
-"Factor_442","Factor_438","Community documentation","criterion",1
 "Factor_443","Factor_430","Availability of Books","view",1
 "Factor_444","Factor_443","Books on technical architecture","criterion",1
 "Factor_445","Factor_443","Books on functionnal aspects","criterion",1
@@ -479,7 +473,7 @@
 "Factor_479","Factor_476","Ability to manages ID from original software to re-create relation","criterion",1
 "Factor_480","Factor_452","Hidden costs","view",1
 "Factor_481","Factor_480","There are no extra costs on modules","criterion",1
-"Factor_482",,"Technical quality","view",4
+"Factor_482",,"Technical Quality","view",4
 "Factor_483","Factor_482","Database flexibility","view",1
 "Factor_484","Factor_483","Support for an Open Source database","criterion",1
 "Factor_485","Factor_483","Multi-Database support","criterion",1

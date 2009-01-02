@@ -84,7 +84,6 @@ class comparison_factor(osv.osv):
         'state': fields.selection([('draft','Draft'),('open','Open'),('cancel','Cancel')], 'Status', required=True),
         'results': fields.one2many('comparison.factor.result', 'factor_id', 'Computed Results', readonly=1)
     }
-    _order='sequence'
     _defaults = {
         'state': lambda *args: 'draft',
         'ponderation': lambda *args: 1.0,
@@ -93,8 +92,7 @@ class comparison_factor(osv.osv):
     _sql_constraints = [
         ('name', 'unique(parent_id,name)', 'The name of the item must be unique' )
     ]
-    _order = 'parent_id,name asc'
-    
+    _order = 'parent_id,sequence'
 comparison_factor()
 
 class comparison_factor_result(osv.osv):
