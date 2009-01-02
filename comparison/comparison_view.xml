@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	
+    	<menuitem icon="terp-administration" id="menu_comparison" name="ERP Comparision" sequence="10"/>
+        <menuitem id="menu_config_comparison" name="Configuration" parent="menu_comparison" sequence="1"/>
+        
+        <!-- Configure User -->
+        <record id="view_comparison_user_form" model="ir.ui.view">
+            <field name="name">comparison.user.form</field>
+            <field name="model">comparison.user</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Comaparison User">
+					<field name="name" select="1"/>
+					<field name="password" password="True"/>
+                    <field name="email" widget="email" select="1"/>
+                    <field name="active"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_comparison_user_tree" model="ir.ui.view">
+            <field name="name">comparison.user.tree</field>
+            <field name="model">comparison.user</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Comaparison User">
+                    <field name="name"/>
+                    <field name="email"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_user_tree" model="ir.actions.act_window">
+            <field name="name">Users</field>
+            <field name="res_model">comparison.user</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_comparison_user_tree"/>
+        </record>
+        
+        <menuitem action="action_comparison_user_tree" id="menu_action_comparison_user_tree" parent="menu_config_comparison"/>
+        
+        <!-- Configure Items for Comparison -->
+        
+        <record id="view_comparison_item_form" model="ir.ui.view">
+            <field name="name">comparison.item.form</field>
+            <field name="model">comparison.item</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Comaparison Item">
+					<field name="name" select="1"/>
+					<field name="version"/>
+                    <field name="user_id" select="1"/>
+                    <newline/>
+                    <field name="note" colspan="4"/>
+                    <newline/>
+                    <field name="state" select="2"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_comparison_item_tree" model="ir.ui.view">
+            <field name="name">comparison.item.tree</field>
+            <field name="model">comparison.item</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Comaparison Items">
+                    <field name="name"/>
+                    <field name="version"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_item_tree" model="ir.actions.act_window">
+            <field name="name">Items</field>
+            <field name="res_model">comparison.item</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_comparison_item_tree"/>
+        </record>
+        
+        <menuitem action="action_comparison_item_tree" id="menu_action_comparison_item_tree" parent="menu_config_comparison"/>
+        
+        <!-- Configure Factors for Comparison -->
+        
+        <record id="view_comparison_factor_form" model="ir.ui.view">
+            <field name="name">comparison.factor.form</field>
+            <field name="model">comparison.factor</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Affecting Factors for Comparison">
+					<notebook>
+                        <page string="General">
+                            <field name="name" select="1"/>
+                            <field name="parent_id" select="2"/>
+                            <newline/>
+                            <field name="user_id" select="1"/>
+                            <field name="ponderation" select="2"/>
+                            <field name="type" select="1"/>
+                            <newline/>
+                            <field name="results" colspan="4"/>
+                    		<field name="state" select="2"/>
+                        </page>
+                        <page string="Notes">
+                            <field colspan="4" name="note" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_comparison_factor_tree" model="ir.ui.view">
+            <field name="name">comparison.factor.tree</field>
+            <field name="model">comparison.factor</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Comaparison Factors">
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                    <field name="user_id"/>
+                    <field name="ponderation"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_factor_tree" model="ir.actions.act_window">
+            <field name="name">Factors</field>
+            <field name="res_model">comparison.factor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_comparison_factor_tree"/>
+        </record>
+        
+        <menuitem action="action_comparison_factor_tree" id="menu_action_comparison_factor_tree" parent="menu_config_comparison"/>
+        
+        <!-- Results of the Factors for Comparison -->
+        
+<!--        <record id="view_comparison_factor_result_form" model="ir.ui.view">
+            <field name="name">comparison.factor.result.form</field>
+            <field name="model">comparison.factor.result</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Result of the Comparisons">
+					<field name="factor_id"/>
+                    <field name="item_id"/>
+                    <field name="result"/>
+                </form>
+            </field>
+        </record>-->
+
+        <record id="view_comparison_factor_result_tree" model="ir.ui.view">
+            <field name="name">comparison.factor.result.tree</field>
+            <field name="model">comparison.factor.result</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Results of the Comparisons">
+                    <field name="factor_id" select="1"/>
+                    <field name="item_id" select="1"/>
+                    <field name="result" select="2"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_factor_result_tree" model="ir.actions.act_window">
+            <field name="name">Results of the Comparisons</field>
+            <field name="res_model">comparison.factor.result</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_comparison_factor_result_tree"/>
+        </record>
+        
+        <menuitem id="menu_comparison_results" name="Reporting" parent="menu_comparison"/>
+        <menuitem action="action_comparison_factor_result_tree" id="menu_action_comparison_factor_result_tree" parent="menu_comparison_results"/>
+        
+        <!-- Configure Vote values-->
+        
+        <record id="view_comparison_vote_values_form" model="ir.ui.view">
+            <field name="name">comparison.vote.values.form</field>
+            <field name="model">comparison.vote.values</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Vote Criterias">
+					<field name="name" select="1"/>
+                    <field name="factor" select="1"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_comparison_vote_values_tree" model="ir.ui.view">
+            <field name="name">comparison.vote.values.tree</field>
+            <field name="model">comparison.vote.values</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Vote Values">
+                    <field name="name"/>
+                    <field name="factor"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_vote_values_tree" model="ir.actions.act_window">
+            <field name="name">Vote Values(Criterias)</field>
+            <field name="res_model">comparison.vote.values</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_comparison_vote_values_tree"/>
+        </record>
+        
+        <menuitem action="action_comparison_vote_values_tree" id="menu_action_comparison_vote_values_tree" parent="menu_config_comparison"/>
+        
+        <!-- Add Your vote-->
+        
+        <record id="view_comparison_vote_form" model="ir.ui.view">
+            <field name="name">comparison.vote.form</field>
+            <field name="model">comparison.vote</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Vote">
+					<field name="item_id" select="1"/>
+                    <field name="user_id" select="2"/>
+                    <field name="factor_id" select="1"/>
+                    <field name="score_id" select="1"/>
+<!--                    <field name="ponderation" select="2"/>-->
+					<field colspan="4" name="note" />
+                </form>
+            </field>
+        </record>
+
+        <record id="view_comparison_vote_tree" model="ir.ui.view">
+            <field name="name">comparison.vote.tree</field>
+            <field name="model">comparison.vote</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Votes">
+                    <field name="item_id"/>
+                    <field name="factor_id"/>
+                    <field name="score_id"/>
+<!--                    <field name="ponderation"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_vote_tree" model="ir.actions.act_window">
+            <field name="name">New Vote</field>
+            <field name="res_model">comparison.vote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_comparison_vote_form"/>
+        </record>
+        
+        <menuitem action="action_comparison_vote_tree" id="menu_action_comparison_vote_tree" parent="menu_comparison"/>
+        
+    </data>
+</openerp>

@@ -158,12 +158,12 @@ class profile_game_retail(osv.osv):
                 if rec.hr_user_id:
                    hr_name = rec.hr_user_id.name
                 res['arch'] = res['arch'].replace('SM', rec.sales_user_id.name)
-                res['arch'] = res['arch'].replace('HR',hr_name)
+                res['arch'] = res['arch'].replace('HRM',hr_name)
                 res['arch'] = res['arch'].replace('FM',rec.finance_user_id.name)
                 res['arch'] = res['arch'].replace('LM', rec.logistic_user_id.name)
                 return res
         res['arch'] = res['arch'].replace('(SM)',"")
-        res['arch'] = res['arch'].replace('(HR)',"")
+        res['arch'] = res['arch'].replace('(HRM)',"")
         res['arch'] = res['arch'].replace('(FM)',"")
         res['arch'] = res['arch'].replace('(LM)',"")
         return res
@@ -365,9 +365,9 @@ class profile_game_retail(osv.osv):
         'ay_traceback':fields.text('Traceback [All Years]'),
     }
     _defaults = {
-        'cy_traceback' : lambda *a : "Trace Back For Current Year",
-        'warn_error' : lambda *a : "Warnings & Error Occured During the current Year",
-        'ay_traceback' : lambda *a :"year"
+        #'cy_traceback' : lambda *a : "Trace Back For Current Year",
+     #   'warn_error' : lambda *a : "Warnings & Error Occured During the current Year",
+       # 'ay_traceback' : lambda *a :"All years Traceback"
           }
 
 
@@ -430,19 +430,6 @@ class profile_game_retail(osv.osv):
 
         return True
 
-    def confirm_draft_supplier_invoice(self, cr, uid, ids, context):
-        print "confirm_draft_supplier_invoice"
-        try:
-            wf_service = netsvc.LocalService('workflow')
-            inv_obj = self.pool.get('account.invoice')
-            draft_inv_id = inv_obj.search(cr,uid,[('state','=','draft'),('type','=','in_invoice')])
-            for id in draft_inv_id:
-                wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_open', cr)
-        except Exception, e:
-             msg = "There is a problem while confirming draft supplier invoices"
-             self.update_messages(cr, uid, ids, msg, context)
-        return True
-
     def confirm_draft_po(self, cr, uid, ids, context):
         print "confirm_draft_po"
         wf_service = netsvc.LocalService('workflow')
@@ -485,38 +472,33 @@ class profile_game_retail(osv.osv):
             wizard_partial_picking._do_split(self, cr, uid, data, context)
         return True
 
-    def receive_products(self, cr, uid, ids, context):
-        print "receive_products"
+    def receive_deliver_products(self, cr, uid, ids, context):
+        print "receive_deliver products"
         picking_obj = self.pool.get('stock.picking')
-        conf_pick = picking_obj.search(cr,uid,[('state','=','confirmed'),('type','=','in')])
-        if len(conf_pick):
-            picking_obj.force_assign(cr, uid, conf_pick, context)
-        picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=','in')])
-        pick_br = picking_obj.browse(cr,uid,picking_ids)
-        self.process_pickings(cr, uid, ids, pick_br, context)
+        for type in ('in','out'):
+            conf_pick = picking_obj.search(cr,uid,[('state','=','confirmed'),('type','=',type)])
+            print "conf_pick",conf_pick
+            if len(conf_pick):
+                picking_obj.force_assign(cr, uid, conf_pick, context)
+            picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=',type)])
+            print "picking_ids",picking_ids
+            pick_br = picking_obj.browse(cr,uid,picking_ids)
+            self.process_pickings(cr, uid, ids, pick_br, context)
         return True
 
-    def deliver_products(self, cr, uid, ids, context):
-        print "deliver_products"
-        picking_obj = self.pool.get('stock.picking')
-        conf_pick = picking_obj.search(cr,uid,[('state','=','confirmed'),('type','=','out')])
-        if len(conf_pick):
-            picking_obj.force_assign(cr, uid, conf_pick, context)
-        picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=','out')])
-        pick_br = picking_obj.browse(cr,uid,picking_ids)
-        self.process_pickings(cr, uid, ids, pick_br, context)
-        return True
-
-    def confirm_draft_customer_invoice(self, cr, uid, ids, context):
+    def confirm_draft_invoices(self, cr, uid, ids, type, context):
         print "confirm_draft_customer_invoice"
         try:
             wf_service = netsvc.LocalService('workflow')
             inv_obj = self.pool.get('account.invoice')
-            draft_inv_id = inv_obj.search(cr,uid,[('state','=','draft'),('type','=','out_invoice')])
+            draft_inv_id = inv_obj.search(cr,uid,[('state','=','draft'),('type','=',type)])
             for id in draft_inv_id:
                 wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_open', cr)
         except Exception, e:
-            msg = "There is a problem while confirming draft supplier invoices"
+            if type == 'out_invoice':
+                msg = "There is a problem while confirming draft Customer invoices"
+            else:
+                msg = "There is a problem while confirming draft supplier invoices"
             self.update_messages(cr, uid, ids, msg, context)
         return True
 
@@ -644,7 +626,8 @@ class profile_game_retail(osv.osv):
 
     def update_messages(self, cr, uid, ids, msg, context):
         prev_msg = self.read(cr, uid, ids[0],['warn_error'])
-        prev_msg['warn_error'] += '\n' + '*' + msg
+        prev_msg['warn_error'] = prev_msg['warn_error'] or  ""
+        prev_msg['warn_error']  += '\n' + '*' + msg
         self.write(cr, uid, ids[0],{'warn_error':prev_msg['warn_error']})
         return True
 
@@ -730,11 +713,15 @@ class profile_game_retail(osv.osv):
                  | Total [%s] Purchase Orders Invoiced with \t\t:  %s Qty of products
                 *************************************'''\
                 %(year.code,cust_inv,supp_inv,goods_in,goods_out,nos,sale_order,nop,purchase_order,noc_inv,sale_inv,nos_inv,pur_inv)
+
+        rec = self.browse(cr, uid, ids[0])
         full_ids = self.search(cr, uid, [])
         msg1 = ""
-        for rec in self.browse(cr, uid, full_ids):
-            msg1 += '\n' + rec.ay_traceback[4:]
-        msg1 += '\n' + msg
+        if not rec.ay_traceback:
+            rec1  = self.browse(cr, uid, max(full_ids))
+            msg1 += '\n' + (rec1.ay_traceback or "")+ '\n' + msg
+        else:
+            msg1 += rec.ay_traceback + '\n' + msg
         self.write(cr, uid, ids[0],{'cy_traceback':msg,'ay_traceback':msg1})
         return
 
@@ -746,19 +733,14 @@ class profile_game_retail(osv.osv):
         shop = self.pool.get('sale.shop').search(cr,uid,[])
         wf_service = netsvc.LocalService('workflow')
         cnt = 0
-        print "FYYYYYYYYYY",fy.code
-        ## Create Random number of sale orders ##
         for period in fy.period_ids:
-            for i in range(1,random.randrange(1,10)):
+            for i in range(0,random.randrange(1,10)):
                 partner = random.randrange(len(partner_ids))
                 partner_addr = self.pool.get('res.partner').address_get(cr, uid, [partner_ids[partner]],
                                 ['invoice', 'delivery', 'contact'])
                 pricelist = self.pool.get('res.partner').browse(cr, uid, partner_ids[partner],
                                 context).property_product_pricelist.id
-                dstart = mx.DateTime.strptime(str(period.date_start), '%Y-%m-%d')
-                dstop =  mx.DateTime.strptime(str(period.date_stop), '%Y-%m-%d')
-                order_date = datetime.date(dstart.year,dstart.month,random.randrange(1,dstop.day + 1))
-                od = (mx.DateTime.strptime(str(order_date), '%Y-%m-%d')).strftime('%Y-%m-%d')
+                od = self.get_date(cr, uid, context)
                 vals = {
                         'shop_id': shop[0],
                         'partner_id': partner_ids[partner],
@@ -770,8 +752,7 @@ class profile_game_retail(osv.osv):
                         'date_order':od
                     }
                 new_id = self.pool.get('sale.order').create(cr, uid, vals)
-
-                for j in range(1,random.randrange(1,5)):
+                for j in range(0,random.randrange(1,5)):
                     product = random.randrange(len(prod_ids))
                     value = self.pool.get('sale.order.line').product_id_change(cr, uid, [], pricelist,
                                     prod_ids[product], qty=i, partner_id=partner_ids[partner])['value']
@@ -783,20 +764,18 @@ class profile_game_retail(osv.osv):
             cnt += 1
             self.procure_incomming_left(cr, uid, ids, cnt, context)
             self.confirm_draft_po(cr, uid, ids, context)
-            self.confirm_draft_supplier_invoice(cr, uid, ids, context)
+            self.confirm_draft_invoices(cr, uid, ids, 'in_invoice', context)
             self.pay_supplier_invoice(cr, uid, ids, context)
-            self.receive_products(cr, uid, ids, context)
-            self.deliver_products(cr, uid, ids, context)
-            self.confirm_draft_customer_invoice(cr, uid, ids, context)
+            self.receive_deliver_products(cr, uid, ids, context)
+            self.confirm_draft_invoices(cr, uid, ids, 'out_invoice', context)
             self.pay_all_customer_invoice(cr, uid, ids, context)
             self.adjust_loan_account(cr, uid, ids, fiscal_year_id, period.id, od, context)
-
+            self.pool.get('account.period').write(cr, uid, period.id, {'state':'done'})
         self.get_traceback(cr, uid, ids, fy, context)
         self.create_sale_periods(cr, uid, ids, context)
         self.create_sale_forecast_stock_planning_data(cr, uid, ids, int(fy.code)+1, context)
         new_fy = self.create_fiscalyear_and_period(cr, uid, ids, context)
         self.close_fiscalyear(cr, uid, ids, fy.id, new_fy, context)
-
         return True
 
     def get_date(self, cr, uid,context):

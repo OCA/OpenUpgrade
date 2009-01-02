@@ -75,12 +75,12 @@ class profile_game_retail_phase_one(osv.osv):
                 if rec.hr_user_id:
                    hr_name = rec.hr_user_id.name
                 res['arch'] = res['arch'].replace('SM', rec.sales_user_id.name)
-                res['arch'] = res['arch'].replace('HR',hr_name)
+                res['arch'] = res['arch'].replace('HRM',hr_name)
                 res['arch'] = res['arch'].replace('FM',rec.finance_user_id.name)
                 res['arch'] = res['arch'].replace('LM', rec.logistic_user_id.name)
                 return res
         res['arch'] = res['arch'].replace('(SM)',"")
-        res['arch'] = res['arch'].replace('(HR)',"")
+        res['arch'] = res['arch'].replace('(HRM)',"")
         res['arch'] = res['arch'].replace('(FM)',"")
         res['arch'] = res['arch'].replace('(LM)',"")
         return res
