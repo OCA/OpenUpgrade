@@ -119,3 +119,22 @@ class comparison_vote(osv.osv):
     # TODO: overwrite create/write
 comparison_vote()
 
+
+class comparison_ponderation_suggestion(osv.osv):
+    _name = 'comparison.ponderation.suggestion'
+    _desc = 'Users can suggest new ponderations on criterions'
+    _columns = {
+        'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
+        'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade'),
+        'ponderation': fields.float('Ponderation'),
+        'state': fields.selection([('draft','Draft'),('done','Done'),('cancel','Cancel')],'State'),
+        'note': fields.text('Note')
+    }
+    _defaults = {
+        'ponderation': lambda *a: 1.0,
+        'state': lambda *a: 'draft',
+    }
+    # TODO: overwrite create/write
+comparison_ponderation_suggestion()
+
+
