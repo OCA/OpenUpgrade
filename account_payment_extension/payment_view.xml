@@ -333,7 +333,8 @@
         <field name="inherit_id" ref="account_payment.view_payment_line_form"/>
         <field name="arch" type="xml">
             <field name="move_line_id" position="replace">
-                <field name="move_line_id" on_change="onchange_move_line(move_line_id,parent.mode,parent.date_prefered,parent.date_planned,currency,company_currency,context)" select="1"/>
+                <!--<field name="move_line_id" on_change="onchange_move_line(move_line_id,parent.mode,parent.date_prefered,parent.date_planned,currency,company_currency,context)" select="1"/>-->
+                <field name="move_line_id" on_change="onchange_move_line(move_line_id, False, currency, company_currency)" select="1"/>
             </field>
         </field>
     </record>
