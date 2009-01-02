@@ -76,6 +76,7 @@ class comparison_factor(osv.osv):
         'user_id': fields.many2one('comparison.user','User'),
         'child_ids': fields.one2many('comparison.factor','parent_id','Child Items'),
         'note': fields.text('Note'),
+        'sequence': fields.integer('Sequence'),
         'type': fields.selection([('view','View'),('criterion','criterion')], 'Type'),
         'result': fields.function(_result_compute, method=True, type='char', string="Result"),
         'result_ids': fields.one2many('comparison.factor.result', 'factor_id', "Results"),
@@ -83,9 +84,11 @@ class comparison_factor(osv.osv):
         'state': fields.selection([('draft','Draft'),('open','Open'),('cancel','Cancel')], 'Status', required=True),
         'results': fields.one2many('comparison.factor.result', 'factor_id', 'Computed Results', readonly=1)
     }
+    _order='sequence'
     _defaults = {
         'state': lambda *args: 'draft',
         'ponderation': lambda *args: 1.0,
+        'sequence': lambda *args: 1,
     }
     _sql_constraints = [
         ('name', 'unique(parent_id,name)', 'The name of the item must be unique' )
