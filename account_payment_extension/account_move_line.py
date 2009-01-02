@@ -37,7 +37,7 @@ class account_move_line(osv.osv):
     _inherit = 'account.move.line'
 
     def amount_to_pay(self, cr, uid, ids, name, arg={}, context={}):
-        """ Return the amount still to pay regarding all the payemnt orders
+        """ Return the amount still to pay regarding all the payment orders
         (excepting cancelled orders). The amount to pay can be negative (Refund invoices)"""
         if not ids:
             return {}

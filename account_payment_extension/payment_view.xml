@@ -78,7 +78,7 @@
         <field name="model">payment.type</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree string="Payment Type">
                 <field name="name" />
                 <field name="code" />
                 <field name="active" />
@@ -102,7 +102,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_payment_type_form">
-        <field name="name">Payment type</field>
+        <field name="name">Payment Type</field>
         <field name="res_model">payment.type</field>
         <field name="view_mode">tree,form</field>
     </record>
