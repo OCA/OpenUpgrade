@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,17 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "VAT",
-    "description": "Enable the VAT Number for the partner. Check the validity of that VAT Number.",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "category" : "Generic Modules/Base",
-    "depends" : ["base","account"],
-    "update_xml" : ["base_vat_data.xml"],
-    "active": False,
-    "installable": True
-}
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
