@@ -87,10 +87,61 @@ comparison_factor()
 class comparison_factor_result(osv.osv):
     _name = "comparison.factor.result"
     _rec_name = 'factor_id'
+    
+#    def create(self, cr, uid, vals, context={}):
+#        result = super(comparison_factor_result, self).create(cr, uid, vals, context)
+#         
+#        record = self.browse(cr, uid, result)
+#        print "REC",record
+#        exist_ids = self.search(cr, uid, [])
+#        for records in self.browse(cr, uid, exist_ids):
+#            if (record.factor_id.parent_id):
+#                if not ((record.factor_id.parent_id.id == records.id) and (records.item_id.id == vals['item_id'])):
+#                    res = self.create(cr, uid, {'factor_id':record.factor_id.parent_id.id,'item_id':vals['item_id']})
+#
+#        return result    
+    
+    def _compute_score(self, cr, uid, ids, name, args, context):
+        if not ids: return {}
+        result = {}
+
+        for obj_factor_result in self.browse(cr, uid, ids):
+#            consider max factor = 5.0
+            result[obj_factor_result.id] = 0.00
+            root_ids =  self.pool.get('comparison.factor').search(cr, uid, [('parent_id','child_of',[obj_factor_result.id])])
+            pond_div = 5.00
+            ponderation_result = 0.00
+            
+            if not root_ids:
+                continue
+            
+            for obj_factor in self.pool.get('comparison.factor').browse(cr, uid, root_ids):
+                
+                vote_ids = self.pool.get('comparison.vote').search(cr, uid, [])
+                
+                ponderation = obj_factor.ponderation
+                
+                votes = []
+                
+                if vote_ids:
+                    for obj_vote in self.pool.get('comparison.vote').browse(cr, uid, vote_ids):
+                        if obj_vote.factor_id.id == obj_factor.id and obj_vote.item_id.id == obj_factor_result.item_id.id:
+                            votes.append(obj_vote.score_id.factor * ponderation)
+                            ponderation_result += (ponderation * pond_div)
+                else:
+                    votes = [0.00]
+                if not ponderation_result:
+                    ponderation_result = 1     
+                
+                result[obj_factor_result.id] = sum(votes)/float(ponderation_result)
+                
+                        
+        return result
+    
     _columns = {
         'factor_id': fields.many2one('comparison.factor','Factor', ondelete='set null',required=1, readonly=1),
         'item_id': fields.many2one('comparison.item','Item', ondelete='set null', required=1, readonly=1),
-        'result': fields.float('Result', required=1, readonly=1) # May be a fields.function store=True ?
+        'result': fields.function(_compute_score, digits=(16,2), method=True, string='Score', readonly=1),
         # This field must be recomputed each time we add a vote
     }
     
@@ -122,6 +173,47 @@ class comparison_vote(osv.osv):
 #        'ponderation': lambda *a: 1.0,
 #    }
 
+    def create(self, cr, uid, vals, context={}):
+        result = super(comparison_vote, self).create(cr, uid, vals, context)
+        
+        flag = False
+        result_ids = self.pool.get('comparison.factor.result').search(cr, uid, [])
+               
+        for score in  self.pool.get('comparison.factor.result').browse(cr, uid, result_ids):
+            print "score",score    
+            if score.item_id.id  == vals['item_id'] and score.factor_id.id == vals['factor_id']:
+                self.pool.get('comparison.factor.result').write(cr, uid, [score.id], {}, context=context)
+                return result
+            else:
+                flag = True
+        
+        if flag:
+            self.pool.get('comparison.factor.result').create(cr, uid,{'factor_id':vals['factor_id'],'item_id':vals['item_id']}, context)
+            
+        return result
+    
+    def write(self, cr, uid, ids, vals, context=None):
+        if not context:
+            context={}
+        result = super(comparison_vote, self).write(cr, uid, ids, vals, context=context)
+        
+        obj_vote = self.browse(cr, uid, ids[0])
+        flag = False
+        result_ids = self.pool.get('comparison.factor.result').search(cr, uid, [])
+               
+        for score in  self.pool.get('comparison.factor.result').browse(cr, uid, result_ids):
+            print score    
+            if score.item_id.id  == obj_vote.item_id.id and score.factor_id.id == obj_vote.factor_id.id:
+                self.pool.get('comparison.factor.result').write(cr, uid, [score.id], {}, context=context)
+                return result
+            else:
+                flag = True
+                
+        if flag:
+            self.pool.get('comparison.factor.result').create(cr, uid,{'factor_id':obj_vote.factor_id.id,'item_id':obj_vote.item_id.id}, context)        
+        
+        return result
+    
     # TODO: overwrite create/write
     
 comparison_vote()
