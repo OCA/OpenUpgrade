@@ -75,7 +75,7 @@ class profile_game_retail_phase_one(osv.osv):
                 if rec.hr_user_id:
                    hr_name = rec.hr_user_id.name
                 res['arch'] = res['arch'].replace('SM', rec.sales_user_id.name)
-                res['arch'] = res['arch'].replace('HRM',hr_name)
+                res['arch'] = res['arch'].replace('HR',hr_name)
                 res['arch'] = res['arch'].replace('FM',rec.finance_user_id.name)
                 res['arch'] = res['arch'].replace('LM', rec.logistic_user_id.name)
                 return res
@@ -147,9 +147,14 @@ class profile_game_retail_phase_one(osv.osv):
         return False
 
     def pre_process_print_rfq(self, cr,uid,step_id, object, method,type, *args):
+        print "pre_process_print_rfq",object, method,type
+        if type == 'wizard':
+            return False
         if (type=='execute') and ((object not in ("purchase.order", 'purchase.order.line')) and (method in ('create','write','unlink'))):
+            print "yes....................................................2"
             self.error(cr, uid,step_id)
         if type not in ('execute','report'):
+            print "yes....................................................3"
             self.error(cr, uid,step_id)
         #if type!='report' and (object in ("purchase.order", 'purchase.order.line') and (method not in ('fields_view_get','create','write','read','button_dummy'))):
         #    self.error(cr, uid,step_id)
@@ -166,6 +171,7 @@ class profile_game_retail_phase_one(osv.osv):
         return False
 
     def pre_process_modify_price(self,cr,uid,step_id,object, method,type,*args):
+        print "pre_process_modify_price",object, method,type
         if type=='execute_wkf' and object in ("purchase.order", 'purchase.order.line'):
             self.error(cr, uid,step_id)
         if ((object not in ("purchase.order", 'purchase.order.line')) and (method in ('create','write','unlink'))):
@@ -181,6 +187,7 @@ class profile_game_retail_phase_one(osv.osv):
             return self.write(cr,uid,pid,{'step5':True,'state':'confirm_po'})
         return False
     def pre_process_confirm_po(self,cr,uid,step_id,object, method,type,*args):
+        print "pre_process_confirm_po",object, method,type
         if type!='execute_wkf':
             return False
         if ((object not in ("purchase.order",'purchase.order.line')) and (method in ('create','write','unlink'))):
@@ -198,13 +205,15 @@ class profile_game_retail_phase_one(osv.osv):
 
     def pre_process_receive(self,cr,uid,step_id,object, method,type,*args):
          # TO DO : fetch name of wizard
+        print "pre_process_receive",object, method,type,args
         if type!='wizard':
             return False
         wizard_id=args[0]
-        object=args[1]['model']
-        if object not in ("stock.picking"):
-            self.error(cr, uid,step_id)
-        return object in ("stock.picking") and wizard_id
+        object=args[1].get('model',False)
+        if object:
+            if object not in ("stock.picking"):
+                self.error(cr, uid,step_id)
+            return object in ("stock.picking") and wizard_id
 
     def post_process_receive(self,cr,uid,step_id,object, method,type,*args):
         res=args[-1]
@@ -215,6 +224,7 @@ class profile_game_retail_phase_one(osv.osv):
             return self.write(cr,uid,pid,{'step7':True,'state':'deliver'})
         return False
     def pre_process_deliver(self,cr,uid,step_id,object, method,type,*args):
+        print "pre_process_deliver",object, method,type
         # TO DO : fetch name of wizard
         if type!='wizard':
             return False
@@ -235,6 +245,7 @@ class profile_game_retail_phase_one(osv.osv):
         return False
 
     def pre_process_invoice_create(self,cr,uid,step_id,object, method,type,*args):
+        print "pre_process_invoice_create",object, method,type
         if (type=='execute') and ((object not in ("account.invoice",'account.invoice.line')) and (method in ('create','write','unlink'))):
             self.error(cr, uid,step_id)
         if (type!='execute_wkf'):
@@ -253,6 +264,7 @@ class profile_game_retail_phase_one(osv.osv):
         return False
 
     def pre_process_invoice_print(self, cr,uid,step_id, object, method,type, *args):
+        print "pre_process_invoice_print",object, method,type
         if type!='report' and (object not in ("account.invoice", 'account.invoice.line')):
             return False
         #if type!='report' and (object in ("account.invoice", 'account.invoice.line') and (method not in ('create','write','read','button_dummy'))):

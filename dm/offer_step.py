@@ -239,6 +239,19 @@ class dm_offer_document_category(osv.osv):
 
 dm_offer_document_category()
 
+class ir_model_fields(osv.osv):
+    _inherit='ir.model.fields'
+    def search(self, cr, uid, args, offset=0, limit=None, order=None,context=None, count=False):
+        if 'document_template_id' in context:
+            if not context['document_template_id']:
+                return []
+            res = self.pool.get('dm.document.template').browse(cr,uid,context['document_template_id'])
+            field_id = map(lambda x : x.id,res.dynamic_fields)
+            return field_id
+        return super(ir_model_fields,self).search(cr,uid,args,offset,limit,order,context,count)
+    
+ir_model_fields()
+
 class dm_offer_document(osv.osv):
     _name = "dm.offer.document"
     _rec_name = 'name'
@@ -252,7 +265,6 @@ class dm_offer_document(osv.osv):
             else :  
                 res[id]=False
         return res
-    
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
@@ -261,13 +273,16 @@ class dm_offer_document(osv.osv):
         'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
-        'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
-              'document_id','customer_field_id','Customer Fields',
-               domain=[('model_id','like','dm.customer')],context={'model':'dm.customer'}),
+#        'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
+#              'document_id','customer_field_id','Customer Fields',
+#               domain=[('model_id','like','dm.customer')],context={'model':'dm.customer'}),
 #               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),'!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
-        'customer_order_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_order_field_rel',
-              'document_id','customer_order_field_id','Customer Order Fields',
-               domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
+#        'customer_order_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_order_field_rel',
+#              'document_id','customer_order_field_id','Customer Order Fields',
+#               domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
+        'document_template_id' : fields.many2one('dm.document.template', 'Document Template',),
+        'document_template_field_ids' : fields.many2many('ir.model.fields','dm_doc_template_field_rel',
+              'document_id','document_template_field_id','Dynamic Fields',),        
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
     }
     _defaults = {

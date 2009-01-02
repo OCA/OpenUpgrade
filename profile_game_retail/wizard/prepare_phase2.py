@@ -116,8 +116,8 @@ def get_ready_phase2(self, cr, uid, data, context):
         create_budgets(self,cr, uid, data, context)
         pool = pooler.get_pool(cr.dbname)
         phase2_obj = pool.get('profile.game.retail')
-        phase2_obj.create_sale_forecast_stock_planning_data(cr, uid, data, time.strftime('%Y'), context)
         phase2_obj.create_sale_periods(cr, uid, data, context)
+        phase2_obj.create_sale_forecast_stock_planning_data(cr, uid, data, time.strftime('%Y'), context)
 
         lm_action = ['menu_stock_planning','menu_action_orderpoint_form']
         mod_obj = pool.get('ir.model.data')

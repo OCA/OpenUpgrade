@@ -64,6 +64,7 @@
                     "offer_sequence.xml",
                     "dm_data.xml",
                     "dm_workflow.xml",
+                    "dm_document_view.xml",
                     ],
     "active": False,
     "installable": True

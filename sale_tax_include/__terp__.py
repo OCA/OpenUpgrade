@@ -26,6 +26,11 @@
     "author" : "Tiny",
     "website" : "http://tinyerp.com/module_account.html",
     "category" : "Generic Modules/Sales & Purchases",
+    "description": """Allow the user to work tax included prices.
+Especially useful for b2c businesses.
+    
+This module implement the modification on the sale order form.
+""",
     "init_xml" : [ ],
     "demo_xml" : [ ],
     "update_xml" : [ 'sale_tax_incl.xml' ],
