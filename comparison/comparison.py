@@ -62,6 +62,7 @@ comparison_item()
 
 class comparison_factor(osv.osv):
     _name = "comparison.factor"
+    
     def _result_compute(self, cr, uid, ids, name, args, context):
         result = {}
         for rec in self.browse(cr, uid, ids, context=context):
@@ -70,6 +71,7 @@ class comparison_factor(osv.osv):
                 r+='%s (%.2f), ' % (res.item_id.name, res.vote)
             result[rec.id] = r
         return result
+    
     _columns = {
         'name': fields.char('Item Name', size=64, required=True),
         'parent_id': fields.many2one('comparison.factor','Parent Item', ondelete='set null'),
@@ -89,9 +91,25 @@ class comparison_factor(osv.osv):
         'ponderation': lambda *args: 1.0,
         'sequence': lambda *args: 1,
     }
-    _sql_constraints = [
-        ('name', 'unique(parent_id,name)', 'The name of the item must be unique' )
+    
+    def _check_recursion(self, cr, uid, ids):
+        level = 100
+        while len(ids):
+            cr.execute('select distinct parent_id from comparison_factor where id in ('+','.join(map(str,ids))+')')
+            ids = filter(None, map(lambda x:x[0], cr.fetchall()))
+            if not level:
+                return False
+            level -= 1
+        return True
+    
+    _constraints = [
+        (_check_recursion, 'Error ! You cannot create recursive Factors.', ['parent_id'])
     ]
+    
+    _sql_constraints = [
+        ('name', 'unique(parent_id,name)', 'The name of the Comparison Factor must be unique!' )
+    ]
+    
     _order = 'parent_id,sequence'
 comparison_factor()
 
