@@ -37,6 +37,7 @@
             'data/comparison.factor.csv',
             'data/comparison.item.csv',
             'data/comparison.user.csv',
+            'data/comparison.vote.values.csv',
 #            "security/ir.model.access.csv",
             ],
         "active" : False,
