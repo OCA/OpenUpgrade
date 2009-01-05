@@ -486,7 +486,8 @@
 "Factor_494","Factor_493","Fully object oriented language support","criterion",1
 "Factor_495","Factor_493","Scripting language support","criterion",1
 "Factor_496","Factor_493","Based on an Open Source language","criterion",1
-"Factor_497","Factor_493","Java based","criterion",1
+"Factor_497","Factor_493","Based on a very popular language (Java, .NET, C#)","criterion",1
+"Factor_497_1","Factor_493","Based on a popular language (Python, C++)","criterion",1
 "Factor_498","Factor_482","Modularity","view",1
 "Factor_499","Factor_498","Ability to package modifications as separate modules or plugins","criterion",1
 "Factor_500","Factor_498","Sales/purchases/project/stock mgt. are distinct modules","criterion",1
@@ -494,7 +495,7 @@
 "Factor_502","Factor_482","Customisations without development","view",1
 "Factor_503","Factor_482","Screen Definition","view",1
 "Factor_505","Factor_482","Workflows Management","view",1
-"Factor_507","Factor_482","Presentation Report Editor","view",1
+"Factor_507","Factor_482","Report Editor for layouts of documents","view",1
 "Factor_508","Factor_482","Statistics Report Editor","view",1
 "Factor_509","Factor_451","Maintenance Costs","view",10
 "Factor_510","Factor_509","Availability of a fixed price maintenance contract","view",1
@@ -557,24 +558,49 @@
 "Factor_569","Factor_566","You don't need to develop to define new screens","criterion",1
 "Factor_570","Factor_503","Available widgets for screen definition","view",1
 "Factor_571","Factor_570","Widgets for relationships","view",1
-"Factor_568","Factor_571","Relation widget to one resource (1:n)","criterion",1
-"Factor_569","Factor_571","Relation widget to any number of resources (m:n)","criterion",1
-"Factor_570","Factor_571","One resource related to any number of others resources (n:1)","criterion",1
-"Factor_571","Factor_503","Specific widgets","view",1
-"Factor_572","Factor_571","Availability of currency widgets (with conversions)","criterion",1
-"Factor_573","Factor_571","Availability of time widgets","criterion",1
-"Factor_574","Factor_571","Availability of time widgets","criterion",1
-"Factor_575","Factor_503","Advanced static widgets (just for reading purpose)","view",1
-"Factor_576","Factor_575","Availability of static graphs widgets","criterion",1
-"Factor_577","Factor_575","Availability of static calendar widgets with monthly view","criterion",1
-"Factor_578","Factor_575","Availability of static gantt charts widgets","criterion",1
-"Factor_579","Factor_575","Availability of static grids widgets","criterion",1
-"Factor_580","Factor_503","Advanced dynamic widgets","view",1
-"Factor_581","Factor_575","Availability of dynamic graphs widgets","criterion",1
-"Factor_582","Factor_575","Availability of dynamic calendar widgets with monthly view","criterion",1
-"Factor_583","Factor_575","Availability of dynamic gantt charts widgets","criterion",1
-"Factor_584","Factor_575","Availability of editable grids widgets","criterion",1
-"Factor_585","Factor_503","Ability to extend views from modules/plugins","view",1
-"Factor_586","Factor_585","Ability to add custom fields in base views","criterion",1
-"Factor_587","Factor_585","Ability to remove custom fields from base views","criterion",1
-"Factor_588","Factor_585","Ability to define new kind of widgets in modules/plugins","criterion",1
+"Factor_572","Factor_571","Relation widget to one resource (1:n)","criterion",1
+"Factor_573","Factor_571","Relation widget to any number of resources (m:n)","criterion",1
+"Factor_574","Factor_571","One resource related to any number of others resources (n:1)","criterion",1
+"Factor_575","Factor_503","Specific widgets","view",1
+"Factor_576","Factor_575","Availability of currency widgets (with conversions)","criterion",1
+"Factor_577","Factor_575","Availability of time widgets","criterion",1
+"Factor_578","Factor_575","Availability of date and time widgets","criterion",1
+"Factor_579","Factor_503","Advanced static widgets (just for reading purpose)","view",1
+"Factor_580","Factor_579","Availability of static graphs widgets","criterion",1
+"Factor_581","Factor_579","Availability of static calendar widgets with monthly view","criterion",1
+"Factor_582","Factor_579","Availability of static gantt charts widgets","criterion",1
+"Factor_583","Factor_579","Availability of static grids widgets","criterion",1
+"Factor_584","Factor_503","Advanced dynamic widgets","view",1
+"Factor_585","Factor_584","Availability of dynamic graphs widgets","criterion",1
+"Factor_586","Factor_584","Availability of dynamic calendar widgets with monthly view","criterion",1
+"Factor_587","Factor_584","Availability of dynamic gantt charts widgets","criterion",1
+"Factor_588","Factor_584","Availability of editable grids widgets","criterion",1
+"Factor_589","Factor_503","Ability to extend views from modules/plugins","view",1
+"Factor_590","Factor_589","Ability to add custom fields in base views","criterion",1
+"Factor_591","Factor_589","Ability to remove custom fields from base views","criterion",1
+"Factor_592","Factor_589","Ability to define new kind of widgets in modules/plugins","criterion",1
+"Factor_593","Factor_505","Workflow engine","view",1
+"Factor_595","Factor_593","Function calls from one object to another are managed by a workflow engine","criterion",1
+"Factor_596","Factor_593","All objects of the system that require a logic uses worklows","criterion",1
+"Factor_597","Factor_593","Workflow engine support nested workflows","criterion",1
+"Factor_598","Factor_593","Workflow engine support split modes per activity: XOR, OR, AND","criterion",1
+"Factor_599","Factor_593","Workflow engine support join modes per activity: XOR, OR, AND","criterion",1
+"Factor_600","Factor_593","An instance can be in any number of activities in the same time","criterion",1
+"Factor_601","Factor_593","Different workflows can be defined for the same document","criterion",1
+"Factor_602","Factor_505","Workflow definition","view",1
+"Factor_603","Factor_602","The workflow definition is in XML","criterion",1
+"Factor_604","Factor_602","The workflow definition is compatible with WfMC","criterion",1
+"Factor_605","Factor_602","The workflow definition can be overrided in specific modules","criterion",1
+"Factor_606","Factor_602","Availability of a workflow editor that is able to save the workflow","criterion",1
+"Factor_607","Factor_505","Workflow evolution","criterion",1
+"Factor_608","Factor_607","The workflow engine as an automatic migration system","criterion",1
+"Factor_609","Factor_607","The workflow migration is able to change documents in invalid state","criterion",1
+"Factor_610","Factor_607","You do not have to define hooks to connect the workflow to objects","criterion",1
+"Factor_611","Factor_482","Lines of code required to develop a new feature","view",1
+"Factor_612","Factor_611","SLOC(*) for the whole ERP <15.000 lines","criterion",1
+"Factor_613","Factor_611","SLOC(*) for the whole ERP <25.000 lines","criterion",1
+"Factor_614","Factor_611","SLOC(*) for the whole ERP <35.000 lines","criterion",1
+"Factor_615","Factor_611","SLOC(*) for the whole ERP <55.000 lines","criterion",1
+"Factor_616","Factor_611","SLOC(*) for the whole ERP <100.000 lines","criterion",1
+"Factor_617","Factor_611","SLOC(*) for the whole ERP <200.000 lines","criterion",1
+"Factor_618","Factor_611","SLOC(*) for the whole ERP <500.000 lines","criterion",1

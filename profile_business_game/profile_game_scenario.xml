@@ -10,8 +10,6 @@ Description of the scenario.
         <field name="state">draft</field>
     </record>
 
-
-
 	<record model="game.scenario.step" id="step_invoice_print">
 		<field name="name">Print Invoice</field>
         <field name="scenario_id" ref="retail_phase1"/>

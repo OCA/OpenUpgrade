@@ -100,6 +100,7 @@
                             <field name="user_id" select="1"/>
                             <field name="ponderation" select="2"/>
                             <field name="type" select="1"/>
+                            <field name="pond_computed" />
                             <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
                             <newline/>
                     		<field name="state" select="2"/>
@@ -281,7 +282,7 @@
             <field name="name">Votes</field>
             <field name="res_model">comparison.vote</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,vote</field>
+            <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_comparison_vote_tree"/>
         </record>
         
