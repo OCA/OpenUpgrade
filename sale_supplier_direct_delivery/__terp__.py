@@ -34,7 +34,7 @@ we don't try to anticipate if there will be enough virtual stock is the future i
     """,
     "depends":["base", "product", "sale", "purchase"],
     "demo_xml":[],
-    "update_xml":["product_view.xml", "sale_view.xml", "purchase_view.xml"],
+    "update_xml":["product_view.xml", "sale_view.xml", "purchase_view.xml", "stock_view.xml"],
     "active": False,
     "installable": True,
 }

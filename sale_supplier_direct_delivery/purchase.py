@@ -14,8 +14,20 @@ class purchase_order(osv.osv):
                 res[id] = False
         return res
     
+    def _get_order(self, cr, uid, ids, context={}):
+        result = {}
+        for line in self.pool.get('purchase.order.line').browse(cr, uid, ids, context=context):
+            result[line.order_id.id] = True
+        return result.keys()
+    
+    
     _columns = {
-        'has_supplier_direct_delivery': fields.function(_has_supplier_direct_delivery, method=True, type='boolean', string="Has Supplier Direct Delivery", store=True, select=1),
+        'has_supplier_direct_delivery': fields.function(_has_supplier_direct_delivery, method=True, type='boolean', string="Has Supplier Direct Delivery",
+            store={
+                'purchase.order': (lambda self, cr, uid, ids, c={}: ids, None, 20),
+                'purchase.order.line': (_get_order, None, 20),
+            },
+            select=1),
     }
     
     #we re-attach the move to the sale order line        
@@ -34,17 +46,10 @@ purchase_order()
 class purchase_order_line(osv.osv):
     _inherit = "purchase.order.line"
     
-    def _get_partner_address_id(self, cr, uid, ids, field_name, arg, context={}):
-        result = {}
-        for rec in self.browse(cr, uid, ids, context):
-            result[rec.id] = (rec.sale_order_line and rec.sale_order_line.order_id.partner_shipping_id.id) or False
-        return result
-    
     _columns = {
-        #'partner_address_id': fields.function(_get_partner_address_id, method=True, type='many2one', relation='res.partner.address', string='Address'),
         'sale_order_line':fields.many2one('sale.order.line', 'Related Sale Order Line', required=False),
         'sale_order': fields.related('sale_order_line', 'order_id', type='many2one', relation='sale.order', string='Related Sale Order'),
-        'partner_address_id': fields.related('sale_order_line', 'order_id', 'partner_shipping_id', type='many2one', relation='res.partner.address', string='Shipping address'),
+        'partner_address_id': fields.related('sale_order', 'partner_shipping_id', type='many2one', relation='res.partner.address', string='Shipping address'),
         'is_supplier_direct_delivery': fields.boolean('Is Direct Delivery?'),
         'move_ids': fields.one2many('stock.move', 'purchase_line_id', 'Moves'),
     }

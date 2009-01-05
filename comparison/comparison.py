@@ -64,13 +64,19 @@ comparison_item()
 class comparison_factor(osv.osv):
     _name = "comparison.factor"
     
-    def _result_compute(self, cr, uid, ids, name, args, context):
+    def _ponderation_compute(self, cr, uid, ids, name, args, context):
         result = {}
         for rec in self.browse(cr, uid, ids, context=context):
-            r = 0.00
-#            for res in rec.result_ids:
-#                r += '%s (%.2f), ' % (res.item_id.name, res.vote)
-            result[rec.id] = r
+            list_pond = []
+            pond = rec.ponderation
+            if rec.parent_id:
+                for child in rec.parent_id.child_ids:
+                    list_pond.append(child.ponderation)
+            else:
+                top_level_ids = self.search(cr, uid, [('parent_id','=',False)])
+                for record in self.browse(cr, uid, top_level_ids, context=context):
+                    list_pond.append(record.ponderation)
+            result[rec.id] = pond / float(sum(list_pond))
         return result
     
     _columns = {
@@ -84,6 +90,7 @@ class comparison_factor(osv.osv):
 #        'result': fields.function(_result_compute, method=True, type='float', string="Result"),
         'result_ids': fields.one2many('comparison.factor.result', 'factor_id', "Results",),
         'ponderation': fields.float('Ponderation'),
+        'pond_computed': fields.function(_ponderation_compute, store=True, method=True, type='float', string="Computed Ponderation"),
         'state': fields.selection([('draft','Draft'),('open','Open'),('cancel','Cancel')], 'Status', required=True),
 #        'results': fields.one2many('comparison.factor.result', 'factor_id', 'Computed Results', readonly=1)
     }
