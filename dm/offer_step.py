@@ -242,10 +242,10 @@ dm_offer_document_category()
 class ir_model_fields(osv.osv):
     _inherit='ir.model.fields'
     def search(self, cr, uid, args, offset=0, limit=None, order=None,context=None, count=False):
-        if 'document_template_id' in context:
-            if not context['document_template_id']:
+        if 'template_id' in context:
+            if not context['template_id']:
                 return []
-            res = self.pool.get('dm.document.template').browse(cr,uid,context['document_template_id'])
+            res = self.pool.get('dm.document.template').browse(cr,uid,context['template_id'])
             field_id = map(lambda x : x.id,res.dynamic_fields)
             return field_id
         return super(ir_model_fields,self).search(cr,uid,args,offset,limit,order,context,count)
@@ -281,7 +281,7 @@ class dm_offer_document(osv.osv):
 #              'document_id','customer_order_field_id','Customer Order Fields',
 #               domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
         'document_template_id' : fields.many2one('dm.document.template', 'Document Template',),
-        'document_template_plugin_ids' : fields.many2many('ir.model.fields','dm_doc_template_plugin_rel',
+        'document_template_plugin_ids' : fields.many2many('dm.ddf.plugin','dm_doc_template_plugin_rel',
               'document_id','document_template_plugin_id','Dynamic Plugins',),
         'document_template_field_ids' : fields.many2many('ir.model.fields','dm_doc_template_field_rel',
               'document_id','document_template_field_id','Dynamic Fields',),        

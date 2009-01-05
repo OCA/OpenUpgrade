@@ -51,7 +51,7 @@
     """,
     "update_xml":[
         "wizard_game_phase2.xml",
-        "profile_game_view.xml",
+        "profile_game_phase2.xml",
         "profile_game_config.xml",
         "profile_game_account_data.xml",
         "profile_game_partner.xml",

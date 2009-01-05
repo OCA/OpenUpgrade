@@ -75,9 +75,9 @@ def assign_full_access_rights(self, cr, uid, data, context):
 #def create_phase2_menu(self, cr, uid, data, context):
 #    pool = pooler.get_pool(cr.dbname)
 #    mod_obj = pool.get('ir.model.data')
-#    result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'business_game')
+#    result = mod_obj._get_id(cr, uid, 'profile_business_game', 'business_game')
 #    parent_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
-#    result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'action_game_detail_form')
+#    result = mod_obj._get_id(cr, uid, 'profile_business_game', 'action_game_detail_form')
 #    action_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
 #    menu_id = pool.get('ir.ui.menu').create(cr, uid, {
 #            'name': 'Business Game Details',
@@ -115,13 +115,13 @@ def get_ready_phase2(self, cr, uid, data, context):
         assign_full_access_rights(self, cr, uid, data, context)
         create_budgets(self,cr, uid, data, context)
         pool = pooler.get_pool(cr.dbname)
-        phase2_obj = pool.get('profile.game.retail')
+        phase2_obj = pool.get('profile.game.phase2')
         phase2_obj.create_sale_periods(cr, uid, data, context)
         phase2_obj.create_sale_forecast_stock_planning_data(cr, uid, data, time.strftime('%Y'), context)
 
         lm_action = ['menu_stock_planning','menu_action_orderpoint_form']
         mod_obj = pool.get('ir.model.data')
-        phase1_obj = pool.get('profile.game.retail.phase1')
+        phase1_obj = pool.get('profile.game.phase1')
         obj = phase1_obj.browse(cr, uid, data['id'])
 
         user_ids = pool.get('res.users').search(cr, uid, [])
@@ -130,7 +130,7 @@ def get_ready_phase2(self, cr, uid, data, context):
         sc_ids = pool.get('ir.ui.view_sc').search(cr, uid, [('user_id','in',user_ids)])
         pool.get('ir.ui.view_sc').unlink(cr, uid, sc_ids)
 
-        result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'open_board_game2')
+        result = mod_obj._get_id(cr, uid, 'profile_business_game', 'open_board_game2')
         id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
         for user in user_ids:
             pool.get('res.users').write(cr, uid, user, {'action_id':id})
@@ -169,7 +169,7 @@ def get_ready_phase2(self, cr, uid, data, context):
         return  {
         'name': 'Business Game',
         'view_type': 'form',
-        'res_model': 'profile.game.retail',
+        'res_model': 'profile.game.phase2',
         'view_id':False,
         'type': 'ir.actions.act_window',
         }

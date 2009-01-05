@@ -19,6 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import phase_one
+import profile_game_phase1
 import profile_game_phase2
 import wizard

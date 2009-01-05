@@ -112,8 +112,8 @@
         </record>
 
         <record model="ir.ui.view" id="view_game_detail_form">
-            <field name="name">profile.game.retail.form</field>
-            <field name="model">profile.game.retail</field>
+            <field name="name">profile.game.phase2.form</field>
+            <field name="model">profile.game.phase2</field>
             <field name="arch" type="xml">
                 <form string="Game Details">
                     <newline/>
@@ -208,8 +208,8 @@
         </record>
 
         <record model="ir.ui.view" id="view_game_detail_tree">
-            <field name="name">profile.game.retail.tree</field>
-            <field name="model">profile.game.retail</field>
+            <field name="name">profile.game.phase2.tree</field>
+            <field name="model">profile.game.phase2</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Game Details">
@@ -226,13 +226,13 @@
 
         <record model="ir.actions.act_window" id="action_game_detail_form">
             <field name="name">Business Game</field>
-            <field name="res_model">profile.game.retail</field>
+            <field name="res_model">profile.game.phase2</field>
             <field name="view_type">form</field>
             <field name="view_mode">form,tree</field>
         </record>
          <record id="open_board_game2" model="ir.actions.act_window">
             <field name="name">Business Game Dashboard</field>
-            <field name="res_model">profile.game.retail</field>
+            <field name="res_model">profile.game.phase2</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" eval="False"/>

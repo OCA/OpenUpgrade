@@ -65,7 +65,7 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field eval="0" name="customer"/>
 			<field eval="&quot;&quot;&quot;China Sound Electronic&quot;&quot;&quot;" name="name"/>
 			<field name="property_product_pricelist_purchase" ref="purchase.list0"/>
-			<field eval="[(6,0,[ref('profile_game_retail.res_partner_category_matrieldesono0')])]" name="category_id"/>
+			<field eval="[(6,0,[ref('profile_business_game.res_partner_category_matrieldesono0')])]" name="category_id"/>
 		</record>
 		<record id="res_partner_address_luuchingtao0" model="res.partner.address">
 			<field name="function" ref="res_partner_function_salesman0"/>
@@ -127,14 +127,14 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field name="product_id" ref="product_product_homecinmasonysf0"/>
 		</record>
 		<record id="product_supplierinfo_1" model="product.supplierinfo">
-			<field name="name" ref="profile_game_retail.res_partner_musicstore0"/>
+			<field name="name" ref="profile_business_game.res_partner_musicstore0"/>
 			<field eval="2" name="sequence"/>
 			<field eval="1.0" name="qty"/>
 			<field eval="15" name="delay"/>
 			<field name="product_id" ref="product_product_homecinmasonysf0"/>
 		</record>
 		<record id="product_supplierinfo_2" model="product.supplierinfo">
-			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
+			<field name="name" ref="profile_business_game.res_partner_sound0"/>
 			<field eval="3" name="sequence"/>
 			<field eval="10.0" name="qty"/>
 			<field eval="5" name="delay"/>
@@ -187,7 +187,7 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field name="product_id" ref="product_product_homecinmasonysf1"/>
 		</record>
 		<record id="product_supplierinfo_4" model="product.supplierinfo">
-			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
+			<field name="name" ref="profile_business_game.res_partner_sound0"/>
 			<field eval="1" name="sequence"/>
 			<field eval="1.0" name="qty"/>
 			<field eval="1" name="delay"/>
@@ -284,7 +284,7 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field name="property_account_income" ref="l10n_fr.a_recv"/>
 		</record>
 		<record id="product_supplierinfo_11" model="product.supplierinfo">
-			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
+			<field name="name" ref="profile_business_game.res_partner_sound0"/>
 			<field eval="1" name="sequence"/>
 			<field eval="1.0" name="qty"/>
 			<field eval="1" name="delay"/>
@@ -328,7 +328,7 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field name="property_account_income" ref="l10n_fr.a_recv"/>
 		</record>
 		<record id="product_supplierinfo_5" model="product.supplierinfo">
-			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
+			<field name="name" ref="profile_business_game.res_partner_sound0"/>
 			<field eval="1" name="sequence"/>
 			<field eval="1.0" name="qty"/>
 			<field eval="1" name="delay"/>
@@ -376,7 +376,7 @@ Le seul probleme sont les delais de livraison par bateau qui sont tres longs.&qu
 			<field name="property_account_income" ref="l10n_fr.a_recv"/>
 		</record>
 		<record id="product_supplierinfo_7" model="product.supplierinfo">
-			<field name="name" ref="profile_game_retail.res_partner_sound0"/>
+			<field name="name" ref="profile_business_game.res_partner_sound0"/>
 			<field eval="1" name="sequence"/>
 			<field eval="1.0" name="qty"/>
 			<field eval="1" name="delay"/>
@@ -428,7 +428,7 @@ Le JackHammer est le subwoofer anniversaire pour celebrer les 35 ans d’MTX. Da
 			<field name="product_id" ref="product_product_jackhammert0"/>
 		</record>
 		<record id="product_supplierinfo_9" model="product.supplierinfo">
-			<field name="name" ref="profile_game_retail.res_partner_musicstore0"/>
+			<field name="name" ref="profile_business_game.res_partner_musicstore0"/>
 			<field eval="2" name="sequence"/>
 			<field eval="1.0" name="qty"/>
 			<field eval="20" name="delay"/>
