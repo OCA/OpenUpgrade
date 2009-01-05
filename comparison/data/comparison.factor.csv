@@ -483,7 +483,7 @@
 "Factor_491","Factor_489","The model is defined through objects, not flat data","criterion",1
 "Factor_492","Factor_489","Support for computed fields (properties method on object)","criterion",1
 "Factor_493","Factor_482","Language","view",1
-"Factor_494","Factor_493","Fully oriented language support","criterion",1
+"Factor_494","Factor_493","Fully object oriented language support","criterion",1
 "Factor_495","Factor_493","Scripting language support","criterion",1
 "Factor_496","Factor_493","Based on an Open Source language","criterion",1
 "Factor_497","Factor_493","Java based","criterion",1
@@ -491,11 +491,9 @@
 "Factor_499","Factor_498","Ability to package modifications as separate modules or plugins","criterion",1
 "Factor_500","Factor_498","Sales/purchases/project/stock mgt. are distinct modules","criterion",1
 "Factor_501","Factor_498","Integrated Object Relational Mapping system","criterion",1
-"Factor_502","Factor_482","Customizable action system","view",1
-"Factor_503","Factor_482","Screen Designer","view",1
-"Factor_504","Factor_482","MVC Architecture","view",1
+"Factor_502","Factor_482","Customisations without development","view",1
+"Factor_503","Factor_482","Screen Definition","view",1
 "Factor_505","Factor_482","Workflows Management","view",1
-"Factor_506","Factor_482","Wizards customization","view",1
 "Factor_507","Factor_482","Presentation Report Editor","view",1
 "Factor_508","Factor_482","Statistics Report Editor","view",1
 "Factor_509","Factor_451","Maintenance Costs","view",10
@@ -504,3 +502,82 @@
 "Factor_512","Factor_509","Migrations included in the maintenance contract","view",1
 "Factor_513","Factor_509","A 3 years compatibility guarantee","view",1
 "Factor_514","Factor_509","A 5 years compatibility guarantee","view",1
+"Factor_515","Factor_451","Migration system and offers","view",5
+"Factor_516","Factor_515","Migration system for major new versions","view",1
+"Factor_518","Factor_516","Automatic migration of the data without external scripts","criterion",1
+"Factor_519","Factor_516","Automatic migration of the logic/workflow without external scripts","criterion",1
+"Factor_520","Factor_516","Route and process documents from invalid to valid states","criterion",1
+"Factor_521","Factor_516","Availability of open source migration scripts","criterion",1
+"Factor_522","Factor_516","Availability of payable migration scripts instead of services","criterion",1
+"Factor_523","Factor_516","Availability of a service offer to migration","criterion",1
+"Factor_524","Factor_516","Public price available for the migration service offer","criterion",1
+"Factor_525","Factor_515","Migration system for bugfixes or small features","view",1
+"Factor_526","Factor_525","Availability of patches for bugfixes","criterion",1
+"Factor_527","Factor_525","Automatic migration of the data based on patches","criterion",1
+"Factor_528","Factor_525","Availability of open source migration scripts for patches","criterion",1
+"Factor_529","Factor_525","Availability of payable migration scripts instead of services","criterion",1
+"Factor_530","Factor_525","Availability of a service offer to apply bugfixes","criterion",1
+"Factor_531","Factor_515","Migration system and specific developments","view",1
+"Factor_532","Factor_531","Automatic migrations for screens","view",1
+"Factor_533","Factor_531","In one table, some fields may belongs to official distribution and others not","criterion",1
+"Factor_534","Factor_531","In one screen, some fields may belongs to official distribution and others not","criterion",1
+"Factor_535","Factor_531","Support for automatic migration of a part of the screen","criterion",1
+"Factor_536","Factor_515","Automatic migrations for the logic layer","criterion",1
+"Factor_537","Factor_536","The way document are processed is described through meta-data and not code","criterion",1
+"Factor_538","Factor_536","Ability to migrate workflow (or logic) with states from official release and states for specific devs","criterion",1
+"Factor_539","Factor_502","Communication Tools","view",1
+"Factor_541","Factor_529","Ability to define automatic emails on specific status of each document","criterion",1
+"Factor_542","Factor_529","Ability to define automatic SMS on specific status of each document","criterion",1
+"Factor_543","Factor_529","Ability to prepare paper based mailing on specific status of each document","criterion",1
+"Factor_544","Factor_529","Ability to trigger status change of documents based on email reception","criterion",1
+"Factor_545","Factor_529","Ability to trigger status change of documents based on sms reception","criterion",1
+"Factor_546","Factor_502","Objects changes based on events or status of documents","view",1
+"Factor_547","Factor_546","Ability to create new objects","criterion",1
+"Factor_548","Factor_546","Ability to modify existing objects","criterion",1
+"Factor_549","Factor_546","Ability to delete existing objects","criterion",1
+"Factor_550","Factor_546","Ability to trigger workflow events on specific objects","criterion",1
+"Factor_551","Factor_502","Automated actions based on events or documents status","view",1
+"Factor_552","Factor_551","Ability to trigger static reports (HTML or PDF)","criterion",1
+"Factor_553","Factor_551","Ability to trigger modifiable reports (open in Office)","criterion",1
+"Factor_554","Factor_551","Ability to trigger others actions","criterion",1
+"Factor_555","Factor_551","Ability to trigger status change","criterion",1
+"Factor_556","Factor_502","Definition of complex actions as parametrization, not development","view",1
+"Factor_557","Factor_556","Ability to define loops (for) in actions","criterion",1
+"Factor_558","Factor_556","Ability to define conditions (if) in actions","criterion",1
+"Factor_559","Factor_556","Ability to define nested actions (recursive)","criterion",1
+"Factor_560","Factor_502","Connection to external systems as parametrization","view",1
+"Factor_561","Factor_560","Ability to manges automatically Id's of third party application for synchronisation","criterion",1
+"Factor_562","Factor_560","Ability to detect third party web-services through introspection","criterion",1
+"Factor_563","Factor_560","Ability to trigger requests to third party applications using XML-RPC","criterion",1
+"Factor_564","Factor_560","Ability to trigger requests to third party applications using SOAP","criterion",1
+"Factor_565","Factor_560","Ability to trigger requests to third party applications using REST","criterion",1
+"Factor_566","Factor_503","Separation of the data and the code","view",1
+"Factor_567","Factor_566","The definition of the screens are separated from code of objects","criterion",1
+"Factor_568","Factor_566","The layout of screens are defined as data not code","criterion",1
+"Factor_569","Factor_566","You don't need to develop to define new screens","criterion",1
+"Factor_570","Factor_503","Available widgets for screen definition","view",1
+"Factor_571","Factor_570","Widgets for relationships","view",1
+"Factor_568","Factor_571","Relation widget to one resource (1:n)","criterion",1
+"Factor_569","Factor_571","Relation widget to any number of resources (m:n)","criterion",1
+"Factor_570","Factor_571","One resource related to any number of others resources (n:1)","criterion",1
+"Factor_571","Factor_503","Specific widgets","view",1
+"Factor_572","Factor_571","Availability of currency widgets (with conversions)","criterion",1
+"Factor_573","Factor_571","Availability of time widgets","criterion",1
+"Factor_574","Factor_571","Availability of time widgets","criterion",1
+"Factor_575","Factor_503","Advanced static widgets (just for reading purpose)","view",1
+"Factor_576","Factor_575","Availability of static graphs widgets","criterion",1
+"Factor_577","Factor_575","Availability of static calendar widgets with monthly view","criterion",1
+"Factor_578","Factor_575","Availability of static gantt charts widgets","criterion",1
+"Factor_579","Factor_575","Availability of static grids widgets","criterion",1
+"Factor_580","Factor_503","Advanced dynamic widgets","view",1
+"Factor_581","Factor_575","Availability of dynamic graphs widgets","criterion",1
+"Factor_582","Factor_575","Availability of dynamic calendar widgets with monthly view","criterion",1
+"Factor_583","Factor_575","Availability of dynamic gantt charts widgets","criterion",1
+"Factor_584","Factor_575","Availability of editable grids widgets","criterion",1
+"Factor_585","Factor_503","Ability to extend views from modules/plugins","view",1
+"Factor_586","Factor_585","Ability to add custom fields in base views","criterion",1
+"Factor_587","Factor_585","Ability to remove custom fields from base views","criterion",1
+"Factor_588","Factor_585","Ability to define new kind of widgets in modules/plugins","criterion",1
+
+
+
