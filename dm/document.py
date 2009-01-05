@@ -125,3 +125,13 @@ class dm_document_template(osv.osv):
         return res                 
 dm_document_template()
 
+class dm_customer_plugin(osv.osv):
+    _name = "dm.customer.plugin"
+    _columns = {
+        'customer_id' : fields.many2one('dm.customer', 'Customer Name'),
+        'plugin_id' : fields.many2one('dm.ddf.plugin', 'Plugin'),
+        'value' : fields.char('Value', size=64),
+        'date' : fields.date('Date'),
+    }
+    
+dm_customer_plugin()
