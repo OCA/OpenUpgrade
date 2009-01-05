@@ -157,10 +157,10 @@ class profile_game_retail(osv.osv):
                 hr_name = " "
                 if rec.hr_user_id:
                    hr_name = rec.hr_user_id.name
-                res['arch'] = res['arch'].replace('SM', rec.sales_user_id.name)
-                res['arch'] = res['arch'].replace('HRM',hr_name)
-                res['arch'] = res['arch'].replace('FM',rec.finance_user_id.name)
-                res['arch'] = res['arch'].replace('LM', rec.logistic_user_id.name)
+                res['arch'] = res['arch'].replace('(SM)', rec.sales_user_id.name)
+                res['arch'] = res['arch'].replace('(HRM)',hr_name)
+                res['arch'] = res['arch'].replace('(FM)',rec.finance_user_id.name)
+                res['arch'] = res['arch'].replace('(LM)', rec.logistic_user_id.name)
                 return res
         res['arch'] = res['arch'].replace('(SM)',"")
         res['arch'] = res['arch'].replace('(HRM)',"")
@@ -718,7 +718,7 @@ class profile_game_retail(osv.osv):
         full_ids = self.search(cr, uid, [])
         msg1 = ""
         if not rec.ay_traceback:
-            rec1  = self.browse(cr, uid, max(full_ids))
+            rec1  = self.browse(cr, uid, max(full_ids)-1)
             msg1 += '\n' + (rec1.ay_traceback or "")+ '\n' + msg
         else:
             msg1 += rec.ay_traceback + '\n' + msg

@@ -281,6 +281,8 @@ class dm_offer_document(osv.osv):
 #              'document_id','customer_order_field_id','Customer Order Fields',
 #               domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
         'document_template_id' : fields.many2one('dm.document.template', 'Document Template',),
+        'document_template_plugin_ids' : fields.many2many('ir.model.fields','dm_doc_template_plugin_rel',
+              'document_id','document_template_plugin_id','Dynamic Plugins',),
         'document_template_field_ids' : fields.many2many('ir.model.fields','dm_doc_template_field_rel',
               'document_id','document_template_field_id','Dynamic Fields',),        
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
