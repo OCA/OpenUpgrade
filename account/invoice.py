@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -837,7 +837,7 @@ class account_invoice(osv.osv):
             'ref':invoice.number,
         }
 
-        name = invoice.invoice_line[0].name
+        name = invoice.invoice_line and invoice.invoice_line[0].name or invoice.number
         l1['name'] = name
         l2['name'] = name
 
@@ -859,7 +859,7 @@ class account_invoice(osv.osv):
         else:
             self.pool.get('account.move.line').reconcile_partial(cr, uid, line_ids, 'manual', context)
 
-        # Update the stored value
+        # Update the stored value (fields.function), so we write to trigger recompute
         self.pool.get('account.invoice').write(cr, uid, ids, {}, context=context)
         return True
 account_invoice()

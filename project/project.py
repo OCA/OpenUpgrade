@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -77,7 +77,7 @@ class project(osv.osv):
     def unlink(self, cr, uid, ids, *args, **kwargs):
         for proj in self.browse(cr, uid, ids):
             if proj.tasks:
-                raise osv.except_osv(_('Operation Not Permited !'), _('You can not delete a project with tasks. I suggest you to desactivate it.'))
+                raise osv.except_osv(_('Operation Not Permitted !'), _('You can not delete a project with tasks. I suggest you to deactivate it.'))
         return super(project, self).unlink(cr, uid, ids, *args, **kwargs)
     _columns = {
         'name': fields.char("Project Name", size=128, required=True),
