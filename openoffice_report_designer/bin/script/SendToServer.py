@@ -12,11 +12,12 @@ if __name__<>'package':
     from lib.gui import *
     from lib.error import *
     from lib.functions import *
+    from lib.logreport import *
     from lib.tools import *
     from LoginTest import *
     database="dm"
     uid = 3
-   
+
 #
 #
 class SendtoServer(unohelper.Base, XJobExecutor):
@@ -31,6 +32,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         self.module  = "openerp_report"
         self.version = "0.1"
         LoginTest()
+        self.logobj=Logger()
         if not loginstatus and __name__=="package":
             exit(1)
 
@@ -55,7 +57,9 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 name = self.res_other[0]['name']
                 report_name = self.res_other[0]['report_name']
             except:
-                pass
+                import traceback,sys
+                info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                self.logob.log_write('ServerParameter', LOG_ERROR, info)
         elif docinfo.getUserFieldValue(3) <> "":
             name = ""
             result =  "rnd"
@@ -120,11 +124,14 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                         res = sock.execute(database, uid, self.password, 'ir.values' , 'create',rec )
                     else :
                         ErrorDialog(" Report Name is all ready given !!!\n\n\n Please specify other Name","","Report Name")
+                        self.logobj.log_write('SendToServer',LOG_WARNING, ':Report name all ready given DB %s' % (database))
                         self.win.endExecute()
                 except Exception,e:
-                   ErrorDialog(" Report Error\n\n",e,"Error Message")
+                    import traceback,sys
+                    info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                    self.logobj.log_write('ServerParameter', LOG_ERROR, info)
             else:
-                
+
                 id = docinfo.getUserFieldValue(2)
                 vId = sock.execute(database, uid, self.password, 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
                 rec = { 'name': self.win.getEditText("txtReportName") }
@@ -146,9 +153,11 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             if self.win.getListBoxSelectedItem("lstResourceType")=='OpenOffice':
                 params['report_type']=file_type
             res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
+            self.logobj.log_write('SendToServer',LOG_INFO, ':Report %s successfully send using %s'%(params['name'],database))
             self.win.endExecute()
         else:
             ErrorDialog("Either Report Name or Technical Name is blank !!!\nPlease specify appropriate Name","","Blank Field ERROR")
+            self.logobj.log_write('SendToServer',LOG_WARNING, ':Either Report Name or Technical Name is blank')
             self.win.endExecute()
 
     def getID(self):
