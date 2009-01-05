@@ -27,6 +27,7 @@ import pooler
 import os
 import base64
 import tools
+import time
 
 class dm_ddf_plugin(osv.osv):
     _name = "dm.ddf.plugin"
@@ -43,7 +44,7 @@ class dm_ddf_plugin(osv.osv):
     def _check_plugin(self, cr, uid, ids=False, context={}):
         dm_document = self.pool.get('dm.offer.document')
 #        offer_step = self.pool.get('dm.offer.step')
-#        document_template = self.pool.get('dm.document_template')
+        dm_customer_plugin = self.pool.get('dm.customer.plugin')
         ddf_plugin = self.pool.get('dm.ddf.plugin')
         dm_customer_order = self.pool.get('dm.customer.order')
         
@@ -63,6 +64,13 @@ class dm_ddf_plugin(osv.osv):
                 X =  __import__(plugin_name)
                 plugin_func = getattr(X,plugin_name)
                 plugin_value = map(lambda x : (x,plugin_func(x),plugin.id),customer_id)
+                map(lambda x :dm_customer_plugin.create(cr,uid,
+                            {'date':time.strftime('%d/%m/%Y'),
+                             'customer_id':x[0],
+                             'plugin_id':x[2],
+                             'value' : x[1]}),
+                            plugin_value
+                            )
         return True
     
     def _data_get(self, cr, uid, ids, name, arg, context):
@@ -135,3 +143,87 @@ class dm_customer_plugin(osv.osv):
     }
     
 dm_customer_plugin()
+
+class dm_offer_document_category(osv.osv):
+    _name = "dm.offer.document.category"
+    _rec_name = "name"
+    def name_get(self, cr, uid, ids, context={}):
+        if not len(ids):
+            return []
+        reads = self.read(cr, uid, ids, ['name','parent_id'], context)
+        res = []
+        for record in reads:
+            name = record['name']
+            if record['parent_id']:
+                name = record['parent_id'][1]+' / '+name
+            res.append((record['id'], name))
+        return res
+
+    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, unknow_dict):
+        res = self.name_get(cr, uid, ids)
+        return dict(res)
+
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'complete_name' : fields.function(_name_get_fnc, method=True, type='char', string='Category'),
+        'parent_id' : fields.many2one('dm.offer.document.category', 'Parent'),
+    }
+
+dm_offer_document_category()
+
+class ir_model_fields(osv.osv):
+    _inherit='ir.model.fields'
+    def search(self, cr, uid, args, offset=0, limit=None, order=None,context=None, count=False):
+        if 'template_id' in context:
+            if not context['template_id']:
+                return []
+            res = self.pool.get('dm.document.template').browse(cr,uid,context['template_id'])
+            field_id = map(lambda x : x.id,res.dynamic_fields)
+            return field_id
+        return super(ir_model_fields,self).search(cr,uid,args,offset,limit,order,context,count)
+    
+ir_model_fields()
+
+class dm_offer_document(osv.osv):
+    _name = "dm.offer.document"
+    _rec_name = 'name'
+    
+    def _has_attchment_fnc(self, cr, uid, ids, name, arg, context={}):
+        res={}
+        for id in ids :
+            attachment_id = self.pool.get('ir.attachment').search(cr,uid,[('res_model','=','dm.offer.document'),('res_id','=',id)])
+            if attachment_id :
+                res[id]=True
+            else :  
+                res[id]=False
+        return res
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=16, required=True),
+        'lang_id' : fields.many2one('res.lang', 'Language'),
+        'copywriter_id' : fields.many2one('res.partner', 'Copywriter', domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
+        'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
+        'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
+        'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
+#        'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
+#              'document_id','customer_field_id','Customer Fields',
+#               domain=[('model_id','like','dm.customer')],context={'model':'dm.customer'}),
+#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),'!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
+#        'customer_order_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_order_field_rel',
+#              'document_id','customer_order_field_id','Customer Order Fields',
+#               domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
+        'document_template_id' : fields.many2one('dm.document.template', 'Document Template',),
+        'document_template_plugin_ids' : fields.many2many('dm.ddf.plugin','dm_doc_template_plugin_rel',
+              'document_id','document_template_plugin_id','Dynamic Plugins',),
+        'document_template_field_ids' : fields.many2many('ir.model.fields','dm_doc_template_field_rel',
+              'document_id','document_template_field_id','Dynamic Fields',),        
+        'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
+    }
+    _defaults = {
+        'state': lambda *a: 'draft',
+    }
+    def state_validate_set(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'validate'})
+        return True
+  
+dm_offer_document()
