@@ -7,6 +7,7 @@ import marshal
 import tempfile
 if __name__<>"package":
     from gui import *
+    from logreport import *
     database="test"
     uid = 3
 
@@ -24,7 +25,10 @@ def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur
             if (res[k]['type'] in recur) and (level>0):
                 genTree(res[k]['relation'],aList,insField,host ,level-1, ending, ending_excl, recur,root+'/'+res[k]["string"],actualroot+'/'+k)
     except:
-        import traceback;traceback.print_exc()
+        obj=Logger()
+        import traceback,sys
+        info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+        obj.log_write('Function', LOG_ERROR, info)
 
 def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableName=""):
     if sTableName.find(".") != -1:
@@ -123,10 +127,11 @@ def EnumDocument(aItemList,aComponentAdd):
             parent = oPar.Anchor.TextSection.Name
         elif oPar.Anchor.Text:
             parent = "Document"
-        sItem=oPar.Items[1]
-	if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn" and not oPar.Items in aItemList:
-	    aItemList.append( oPar.Items )
-	    aComponentAdd.append( parent )
+        sItem=oPar.Items[1].replace(' ',"")
+        if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn" and not oPar.Items in aItemList:
+            templist=oPar.Items[0],sItem
+            aItemList.append( templist )
+            aComponentAdd.append( parent )
 
 def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
     sNames = oPar.getCellNames()
@@ -150,7 +155,7 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
                         if oSubSection.supportsService("com.sun.star.text.TextField"):
                             bEmptyTableFlag=False
                             sItem=oSubSection.TextField.Items[1]
-			    if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn":
+                            if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn":
                                 if aItemList.__contains__(oSubSection.TextField.Items)==False:
                                     aItemList.append(oSubSection.TextField.Items)
                                 if sTableName=="":
@@ -159,9 +164,11 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
                                 else:
                                     if aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
                                         aComponentAdd.append(sTableName+"."+oPar.Name)
-
             except:
-                import traceback;traceback.print_exc()
+                obj=Logger()
+                import traceback,sys
+                info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                obj.log_write('Function', LOG_ERROR, info)
     if bEmptyTableFlag==True:
         aItemList.append((u'',u''))
         if sTableName=="":
@@ -190,6 +197,11 @@ def getConnectionStatus(url):
         try:
             return sock.list()
         except:
+            obj=Logger()
+            import traceback,sys
+            info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+            obj.log_write('Function Connection',LOG_ERROR, info)
+
             return -1
     else:
         sock = mysocket
@@ -201,6 +213,10 @@ def getConnectionStatus(url):
             sock.disconnect()
             return res
         except Exception, e:
+            obj=Logger()
+            import traceback,sys
+            info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+            obj.log_write('Connection Error', LOG_ERROR, info)
             return -1
 
 class Myexception(Exception):
@@ -223,6 +239,8 @@ class mysocket:
         self.sock.connect((host, int(port)))
     def disconnect(self):
         self.sock.shutdown(socket.SHUT_RDWR)
+        obj=Logger()
+        obj.shutdown()
         self.sock.close()
     def mysend(self, msg, exception=False, traceback=None):
         msg = cPickle.dumps([msg,traceback])
