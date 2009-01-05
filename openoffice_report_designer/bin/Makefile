@@ -9,6 +9,7 @@ create:
 	    script/lib/functions.py \
 	    script/lib/gui.py \
 	    script/lib/tools.py \
+	    script/lib/logreport.py\
 	    script/Repeatln.py \
 	    script/Fields.py \
 	    script/Expression.py \
@@ -30,10 +31,10 @@ pack: clean create
 	zip $(ZIP_FILE) `find package/ | grep -v svn` 
 	
 install:
-	sh /usr/lib/openoffice/program/unopkg add -v $(ZIP_FILE)
+	sh /opt/openoffice.org3/program/unopkg add -v $(ZIP_FILE)
 	
 uninstall:
-	sh /usr/lib/openoffice/program/unopkg remove -v  $(ZIP_FILE)
+	sh /opt/openoffice.org3/program/unopkg remove -v  $(ZIP_FILE)
 
 clean:
 	rm -f $(ZIP_FILE)
