@@ -53,6 +53,7 @@
 					<field name="name" select="1"/>
 					<field name="version"/>
                     <field name="user_id" select="1"/>
+                    <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
                     <newline/>
                     <field name="note" colspan="4"/>
                     <newline/>
@@ -99,7 +100,7 @@
                             <field name="user_id" select="1"/>
                             <field name="ponderation" select="2"/>
                             <field name="type" select="1"/>
-<!--                            <field name="results" select="2"/>-->
+                            <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
                             <newline/>
                     		<field name="state" select="2"/>
                         </page>

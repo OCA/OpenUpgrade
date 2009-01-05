@@ -46,6 +46,7 @@ class comparison_item(osv.osv):
         'version': fields.char('Version', size=64, required=True),
         'note': fields.text('Description'),
         'user_id': fields.many2one('comparison.user','User'),
+        'result_ids': fields.one2many('comparison.factor.result', 'item_id', "Results"),
         'state': fields.selection([('draft','Draft'),('open','Open')], 'Status', required=True),
     }
     _defaults = {
@@ -81,7 +82,7 @@ class comparison_factor(osv.osv):
         'sequence': fields.integer('Sequence'),
         'type': fields.selection([('view','View'),('criterion','criterion')], 'Type'),
 #        'result': fields.function(_result_compute, method=True, type='float', string="Result"),
-#        'result_ids': fields.one2many('comparison.factor.result', 'factor_id', "Results"),
+        'result_ids': fields.one2many('comparison.factor.result', 'factor_id', "Results",),
         'ponderation': fields.float('Ponderation'),
         'state': fields.selection([('draft','Draft'),('open','Open'),('cancel','Cancel')], 'Status', required=True),
 #        'results': fields.one2many('comparison.factor.result', 'factor_id', 'Computed Results', readonly=1)
