@@ -13,25 +13,14 @@
             <field name="view_id" ref="account_budget.view_budget_post_tree"/>
         </record>
 
-        <!-- Total Sales in previous year
- 		<record id="action_sales_prev" model="ir.actions.act_window">
-            <field name="name">Sales in last Year</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">account.account</field>
-            <field name="domain">[('user_type','ilike','income'),('code','ilike','7%')]</field>
-           <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="account.view_account_tree"/>
-        </record>-->
-
- 		<!--  Sale forecast -->
+        <!--  Sale forecast -->
  		<record id="action_sale_forecast" model="ir.actions.act_window">
             <field name="name">Sale Forecast</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">stock.planning.sale.prevision</field>
-            <field name="domain">[('user_id','=',uid),('period_id','ilike',"time.strftime('%Y')")]</field>
+            <field name="domain">[('user_id','=',uid)</field>
            <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,form</field>
             <field name="view_id" ref="stock_planning.view_stock_planning_prevision_tree"/>
         </record>
 
@@ -42,7 +31,7 @@
             <field name="res_model">stock.planning.sale.prevision</field>
             <field name="domain">[('user_id','=',uid)]</field>
            <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,form</field>
             <field name="view_id" ref="stock_planning.view_stock_planning_prevision_tree"/>
         </record>
 
@@ -51,7 +40,7 @@
             <field name="name">Stock Details</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.product</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,form</field>
             <field name="view_id" ref="product.product_product_tree_view"/>
         </record>
 
@@ -60,30 +49,8 @@
             <field name="name">Purchase Details</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">stock.planning</field>
-            <field name="view_mode">tree</field>
+            <field name="view_mode">tree,form</field>
             <field name="view_id" ref="stock_planning.view_stock_planning_tree"/>
-        </record>
-
-
-	 <!-- Turn over in previous year -->
- 		<record id="action_turnover_prev" model="ir.actions.act_window">
-            <field name="name">Turnover in last Year</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">account.account</field>
-            <field name="domain">[('user_type','ilike','income')]</field>
-           <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="account.view_account_tree"/>
-        </record>
-
- 	<!-- # of products sold -->
- 		<record id="action_product_sold" model="ir.actions.act_window">
-            <field name="name">Product sold</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">account.invoice</field>
-            <field name="domain">[('state','=','paid')]</field>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="account.invoice_tree"/>
         </record>
 
     <!-- Bank loan Wizard view -->
