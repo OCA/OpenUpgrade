@@ -9,8 +9,11 @@ from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
+    from logreport import *
+
     database="test"
-    uid = 3
+    uid = 1
+    passwd='admin'
 
 
 class ConvertBracesToField( unohelper.Base, XJobExecutor ):
@@ -21,7 +24,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         self.module  = "openerp_report"
         self.version = "0.1"
         LoginTest()
-
+        self.logobj=Logger()
         if not loginstatus and __name__=="package":
             exit(1)
 
@@ -62,7 +65,6 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             oPar = oParEnum.nextElement()
             nCount += 1
         getList(oRepeatInObjects,sHost,nCount)
-        print "============",oRepeatInObjects
         for ro in oRepeatInObjects:
             if ro.find("(")<>-1:
                 saRepeatInList.append( [ ro[:ro.find("(")], ro[ro.find("(")+1:ro.find(")")] ])
@@ -95,8 +97,9 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                 try:
                                     sObject = self.getRes(sock, obj, res[0][res[0].find(".")+1:].replace(".","/"))
                                     r = sock.execute(database, uid, self.password, sObject , 'read',[1])
-                                except:
+                                except Exception,e:
                                     r = "TTT"
+                                    self.logobj.log_write('ConvertBracesToField', LOG_ERROR, str(e))
                                 if len(r) <> 0:
                                     if r <> "TTT":
                                         if len(res)>1:
@@ -107,12 +110,17 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                                     try:
                                                         sExpr=r[0][ires[ires.rfind(".")+1:]]
                                                         break
-                                                    except:
-                                                        pass
+                                                    except Exception,e:
+                                                        import traceback,sys
+                                                        info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                                                        self.logobj.log_write('ConvertBracesToField', LOG_ERROR,info)
                                                 try:
                                                     oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
                                                     oPar.update()
-                                                except Exception, e:
+                                                except:
+                                                    import traceback,sys
+                                                    info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                                                    self.logobj.log_write('ConvertBracesToField', LOG_ERROR, info)
                                                     oPar.Items=(str(sExpr) ,oPar.Items[1])
                                                     oPar.update()
                                         else:
@@ -124,7 +132,10 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                                 else:
                                                      oPar.Items=(u"/",oPar.Items[1])
                                                      oPar.update()
-                                            except Exception, e:
+                                            except:
+                                                import traceback,sys
+                                                info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                                                self.logobj.log_write('ConvertBracesToField', LOG_ERROR,info)
                                                 oPar.Items=(str(sExpr) ,oPar.Items[1])
                                                 oPar.update()
                                     else:
@@ -134,7 +145,9 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                     oPar.Items=(u"TTT",oPar.Items[1])
                                     oPar.update()
         except:
-            import traceback;traceback.print_exc()
+            import traceback,sys
+            info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+            self.logobj.log_write('ConvertBraceToField', LOG_ERROR, info)
 
     def getRes(self,sock,sObject,sVar):
         desktop=getDesktop()
@@ -212,8 +225,9 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                         found.String =""
                         found = doc.findNext(found.End, search)
         except:
-            import traceback;
-            traceback.print_exc()
+            import traceback,sys
+            info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+            self.logobj.log_write('ConvertBraceToField', LOG_ERROR, info)
 
 if __name__<>"package":
     ConvertBracesToField(None)
