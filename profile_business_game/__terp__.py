@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -46,8 +46,11 @@
     ],
     "demo_xml":[],
     "description": """
-    Business Game
-    For Details Please Wait For Few Days
+    This is a Business Game which consists of Two Phases
+    1. Phase One
+    2. Phase Two
+    how to play and other information regarding the game
+    will be available soon.
     """,
     "update_xml":[
         "wizard_game_phase2.xml",

@@ -1,15 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
 	<data>
-     <!--
-	Sale Period for current year
-	-->
-     <!--   <record id="game_sale_period" model="stock.period">
-            <field eval="time.strftime('%Y')" name="name"/>
-            <field eval="time.strftime('%Y')+'-01-01'" name="date_start"/>
-            <field eval="time.strftime('%Y')+'-12-31'" name="date_stop"/>
-            <field name="state">open</field>
-        </record>-->
 
         <record id="operations_journal" model="account.journal">
             <field name="name">Journal des opérations diverses</field>
@@ -35,8 +26,6 @@
 	      <field name="type">cash</field>
 	      <field name="view_id" ref="account.account_journal_bank_view"/>
           <field name="sequence_id" ref="account.sequence_journal"/>
-	     <!-- <field name="default_debit_account_id" ref="account.cash"/>
-	      <field name="default_credit_account_id" ref="account.cash"/>-->
 	    </record>
 
 	    <record model="account.journal" id="closing_journal">
