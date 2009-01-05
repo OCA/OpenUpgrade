@@ -4,12 +4,14 @@ import uno
 import string
 import unohelper
 import xmlrpclib
+
 from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
     from lib.functions import *
     from lib.error import ErrorDialog
     from LoginTest import *
+    from lib.logreport import *
     database="db_test002"
     uid = 3
 
@@ -19,6 +21,7 @@ class Fields(unohelper.Base, XJobExecutor ):
         LoginTest()
         if not loginstatus and __name__=="package":
             exit(1)
+        self.logobj=Logger()
         self.win = DBModalDialog(60, 50, 200, 225, "Field Builder")
 
         self.win.addFixedText("lblVariable", 27, 12, 60, 15, "Variable :")
@@ -89,7 +92,9 @@ class Fields(unohelper.Base, XJobExecutor ):
                         if not component == "Document" and component[component.rfind(".")+1:] == tcur.TextTable.Name:
                             VariableScope(tcur, self.aVariableList, self.aObjectList, self.aComponentAdd, self.aItemList, component)
                 except:
-                    ErrorDialog("Error in Reading Field value","","Field Error")
+                    import traceback,sys
+                    info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                    self.logobj.log_write('Fields', LOG_ERROR, info)
 
             self.bModify=bFromModify
             if self.bModify==True:
@@ -131,15 +136,17 @@ class Fields(unohelper.Base, XJobExecutor ):
             docinfo=doc.getDocumentInfo()
             sItem= self.win.getComboBoxText("cmbVariable")
             for var in self.aVariableList:
-		if var[:var.find("(")+1]==sItem[:sItem.find("(")+1]:
+                if var[:var.find("(")+1]==sItem[:sItem.find("(")+1]:
                     sItem = var
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
-	    sObject=self.getRes(sock,sItem[sItem.find("(")+1:-1],sMain[1:])
+            sObject=self.getRes(sock,sItem[sItem.find("(")+1:-1],sMain[1:])
             ids = sock.execute(database, uid, self.password, sObject ,  'search', [])
             res = sock.execute(database, uid, self.password, sObject , 'read',[ids[0]])
-	    self.win.setEditText("txtUName",res[0][sMain[sMain.rfind("/")+1:]])
+            self.win.setEditText("txtUName",res[0][sMain[sMain.rfind("/")+1:]])
         except:
-            import traceback;traceback.print_exc()
+            import traceback,sys
+            info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+            self.logobj.log_write('Fields', LOG_ERROR, info)
             self.win.setEditText("txtUName","TTT")
         if self.bModify:
             self.win.setEditText("txtUName",self.sGDisplayName)
@@ -186,7 +193,9 @@ class Fields(unohelper.Base, XJobExecutor ):
                     recur=['many2one']
                 )
             except:
-                import traceback;traceback.print_exc()
+                import traceback,sys
+                info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                self.logobj.log_write('Fields', LOG_ERROR, info)
 
     def btnOk_clicked( self, oActionEvent ):
         desktop=getDesktop()
@@ -221,7 +230,7 @@ class Fields(unohelper.Base, XJobExecutor ):
                     widget.insertTextContent(cursor,oInputList,False)
                     self.win.endExecute()
                 else:
-                        ErrorDialog("Please Fill appropriate data in Name field \nor select perticular value from the list of fields")
+                    ErrorDialog("Please Fill appropriate data in Name field \nor select perticular value from the list of fields")
 
     def btnCancel_clicked( self, oActionEvent ):
         self.win.endExecute()
