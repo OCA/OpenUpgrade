@@ -64,12 +64,11 @@ class dm_ddf_plugin(osv.osv):
                 X =  __import__(plugin_name)
                 plugin_func = getattr(X,plugin_name)
                 plugin_value = map(lambda x : (x,plugin_func(x),plugin.id),customer_id)
-                print "--------------"
                 map(lambda x :dm_customer_plugin.create(cr,uid,
                             {'date':time.strftime('%d/%m/%Y'),
                              'customer_id':x[0],
-                             'plugin_id':x[1],
-                             'value' : x[2]}),
+                             'plugin_id':x[2],
+                             'value' : x[1]}),
                             plugin_value
                             )
         return True
