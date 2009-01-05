@@ -46,20 +46,30 @@ class dm_ddf_plugin(osv.osv):
     _name = "dm.ddf.plugin"
     
     def _check_plugin(self, cr, uid, ids=False, context={}):
-#        print "==========================="
         dm_document = self.pool.get('dm.offer.document')
-        offer_step = self.pool.get('dm.offer.step')
-        document_template = self.pool.get('dm.document_template')
+#        offer_step = self.pool.get('dm.offer.step')
+#        document_template = self.pool.get('dm.document_template')
         ddf_plugin = self.pool.get('dm.ddf.plugin')
+        dm_customer_order = self.pool.get('dm.customer.order')
+        
         document_ids = dm_document.search(cr,uid,[])
         documents = dm_document.browse(cr,uid,document_ids,['document_template_id','step_id'])
+
         for d in documents:
-#            print "---------------",d
-            customers =  d.step_id.customer_id
-#            print "-----------44444----",customers
+            order_id = dm_customer_order.search(cr,uid,[('offer_step_id','=',d.step_id.id)])
+            order = dm_customer_order.browse(cr,uid,order_id)
+            customer_id = map(lambda x:x.customer_id.id,order)
+            
             plugins = d.document_template_id.plugin_ids
             for plugin in plugins:
-                print "----plugin---------", plugin
+                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
+                plugin_name = plugin.store_fname.split('.')[0]
+                import sys
+                sys.path.append(path)
+                X =  __import__(plugin_name)
+                plugin_func = getattr(X,file_fname)                
+                plugin_value=plugin_func() 
+                print "-----------------------------------",plugin_value
         return True
     
     def _data_get(self, cr, uid, ids, name, arg, context):
@@ -68,7 +78,7 @@ class dm_ddf_plugin(osv.osv):
         
         for id ,r in cr.fetchall():            
             try:
-                path = os.path.join(os.getcwd(), 'dm/dm_ddf_plugins', cr.dbname)
+                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
                 value = file(os.path.join(path,r), 'rb').read()
                 result[id] = base64.encodestring(value)
             except:
@@ -82,7 +92,7 @@ class dm_ddf_plugin(osv.osv):
         cr.execute(sql) 
         res = cr.fetchone()
 
-        path = os.path.join(os.getcwd(), "dm/dm_ddf_plugins",cr.dbname)
+        path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
         if not os.path.isdir(path):
             os.makedirs(path)
         filename = res[0]
