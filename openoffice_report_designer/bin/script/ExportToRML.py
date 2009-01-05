@@ -5,6 +5,7 @@ import string
 import tempfile
 import base64
 import sys
+
 reload(sys)
 sys.setdefaultencoding("utf8")
 from com.sun.star.task import XJobExecutor
@@ -13,9 +14,10 @@ if __name__<>"package":
     from LoginTest import *
     from lib.error import *
     from lib.tools import *
+    from lib.logreport import *
     database="test"
     uid = 3
-    
+
 
 class ExportToRML( unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
@@ -52,7 +54,10 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
             if res['report_rml_content']:
                 write_data_to_file( get_absolute_file_path( filename[7:] ), res['report_rml_content'] )
         except Exception,e:
-	           ErrorDialog("Can't save the file to the hard drive.", "Exception: %s" % e, "Error" )
+            import traceback,sys
+            info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+            self.logobj.log_write('ExportToRML',LOG_ERROR, info)
+            ErrorDialog("Can't save the file to the hard drive.", "Exception: %s" % e, "Error" )
 
     def GetAFileName(self):
         sFilePickerArgs = Array(10)
@@ -60,15 +65,15 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         oFileDialog.initialize(sFilePickerArgs)
         oFileDialog.appendFilter("OpenERP Report File Save To ....","*.rml")
 
-	f_path = "OpenERP-"+ os.path.basename( tempfile.mktemp("","") ) + ".rml"
-	initPath = tempfile.gettempdir()
+        f_path = "OpenERP-"+ os.path.basename( tempfile.mktemp("","") ) + ".rml"
+        initPath = tempfile.gettempdir()
         oUcb = createUnoService("com.sun.star.ucb.SimpleFileAccess")
         if oUcb.exists(initPath):
 	    oFileDialog.setDisplayDirectory('file://' + ( os.name == 'nt' and '/' or '' ) + initPath )
 
         oFileDialog.setDefaultName(f_path )
 
-	sPath = oFileDialog.execute() == 1 and oFileDialog.Files[0] or None
+        sPath = oFileDialog.execute() == 1 and oFileDialog.Files[0] or None
         oFileDialog.dispose()
         return sPath
 
