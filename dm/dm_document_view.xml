@@ -58,8 +58,9 @@
         <field name="arch" type="xml">
             <form string="Plugin">
                 <field name="name" select="1" colspan="4"/>
-                <field name="file_id" colspan="4"/>
-            </form>
+                <field name="file_id" colspan="4" filename="file_fname"/>
+                <field name="file_fname"/>
+			</form>
         </field>
     </record>
 

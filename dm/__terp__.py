@@ -65,6 +65,7 @@
                     "dm_data.xml",
                     "dm_workflow.xml",
                     "dm_document_view.xml",
+                    "document_data.xml",
                     ],
     "active": False,
     "installable": True
