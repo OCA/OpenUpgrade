@@ -6,6 +6,7 @@ import unohelper
 import xmlrpclib
 import base64, tempfile
 
+
 from com.sun.star.task import XJobExecutor
 import os
 import sys
@@ -13,6 +14,7 @@ if __name__<>'package':
     from lib.gui import *
     from lib.error import *
     from LoginTest import *
+    from lib.logreport import *
     database="test"
     uid = 3
 
@@ -31,11 +33,10 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         self.win.addFixedText("lblReport", 2, 3, 60, 15, "Report Selection")
         self.win.addComboListBox("lstReport", -1,15,178,80 , False )
         self.lstReport = self.win.getControl( "lstReport" )
-
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-
+        self.logobj=Logger()
         self.hostname = docinfo.getUserFieldValue(0)
         global passwd
         self.password = passwd
@@ -119,8 +120,14 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                     oDoc2.store()
 
             ErrorDialog("Download is Completed","Your file has been placed here :\n"+ fp_name,"Download Message")
+            obj=Logger()
+            obj.log_write('Modify Existing Report',LOG_INFO, ':successful download report  %s  using database %s' % (self.report_with_id[selectedItemPos][2], database))
         except Exception, e:
-            ErrorDialog("Report has not been downloaded", "Report: %s\nDetails: %s" % ( fp_name, e ),"Download Message")
+            ErrorDialog("Report has not been downloaded", "Report: %s\nDetails: %s" % ( fp_name, str(e) ),"Download Message")
+            import traceback,sys
+            info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+            self.logobj.log_write('ModifyExistingReport', LOG_ERROR, info)
+
         self.win.endExecute()
 
     def btnCancel_clicked( self, oActionEvent ):
@@ -143,6 +150,8 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             pass
          if temp:
               ErrorDialog("Report","Report has been Delete:\n "+name,"Message")
+              self.logobj.log_write('Delete Report',LOG_INFO, ':successful delete report  %s  using database %s' % (name, database))
+
          else:
              ErrorDialog("Report","Report has not Delete:\n"+name," Message")
          self.win.endExecute()
