@@ -7,6 +7,7 @@ if __name__<>"package":
     from lib.gui import *
     from lib.error import ErrorDialog
     from lib.functions import *
+    from lib.logreport import *
     from Change import *
     database="test"
 
@@ -16,6 +17,8 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.module  = "openerp_report"
         self.version = "0.1"
         desktop=getDesktop()
+        log_detail(self)
+        self.logobj=Logger()
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
         self.win=DBModalDialog(60, 50, 160, 108, "Server Connection Parameter")
@@ -78,16 +81,22 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
             ids_module = sock_g.execute(sDatabase, UID, sPassword, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
             dict_groups = sock_g.execute(sDatabase, UID,sPassword, 'res.groups' , 'read',ids,['users'])
         except :
-            pass
+            import traceback,sys
+            info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+            self.logobj.log_write('ServerParameter', LOG_ERROR, info)
+
         if not len(ids) :
             ErrorDialog("Group Not Found!!!  Create a group  named  \n\n"'"OpenOfficeReportDesigner"'"  \n\n  ","","Group Name Error")
+            self.logobj.log_write('Group Error',LOG_WARNING, ':Create a  group OpenOfficeReportDesigner   using database %s' % (sDatabase))
             self.win.endExecute()
         if not len(ids_module):
             ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
+            self.logobj.log_write('Module Not Found',LOG_WARNING, ':base_report_designer not install in  database %s' % (sDatabase))
             self.win.endExecute()
 
         if UID not in dict_groups[0]['users']:
             ErrorDialog("Connection Refuse...","You have not access these Report Designer")
+            self.logobj.log_write('Connection Refuse',LOG_WARNING, " Not Access Report Designer ")
             self.win.endExecute()
         else:
             desktop=getDesktop()
@@ -105,7 +114,9 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
             uid=UID
             #docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
             #docinfo.setUserFieldValue(3,"")
-            ErrorDialog(" You can start creating your report in \nthe current document.","Take care to save it as a .SXW file \nbefore sending to the server.","Message")
+
+            ErrorDialog(" You can start creating your report in \n  \t the current document.","After Creating  sending to the server.","Message")
+            self.logobj.log_write('successful login',LOG_INFO, ':successful login from %s  using database %s' % (sLogin, sDatabase))
             self.win.endExecute()
 
     def btnCancel_clicked( self, oActionEvent ):
