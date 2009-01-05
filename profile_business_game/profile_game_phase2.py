@@ -145,11 +145,11 @@ class bank_loan(osv.osv):
 
 bank_loan()
 
-class profile_game_retail(osv.osv):
-    _name="profile.game.retail"
+class profile_game_phase_two(osv.osv):
+    _name="profile.game.phase2"
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False):
-        res = super(profile_game_retail, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar)
+        res = super(profile_game_phase_two, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar)
         p_id = self.search(cr, uid, [])
         p_br = self.browse(cr, uid, p_id)
         for rec in p_br:
@@ -364,12 +364,6 @@ class profile_game_retail(osv.osv):
         'warn_error':fields.text('Warnings & Errors'),
         'ay_traceback':fields.text('Traceback [All Years]'),
     }
-    _defaults = {
-        #'cy_traceback' : lambda *a : "Trace Back For Current Year",
-     #   'warn_error' : lambda *a : "Warnings & Error Occured During the current Year",
-       # 'ay_traceback' : lambda *a :"All years Traceback"
-          }
-
 
     def pay_supplier_invoice(self, cr, uid, ids, context):
         od = self.get_date(cr, uid,context)
@@ -427,7 +421,6 @@ class profile_game_retail(osv.osv):
         self.pool.get('account.invoice').pay_and_reconcile(cr, uid, [invoice_id],
                 amount, acc_id, period_id, journal_id, False,
                 period_id, False, context, invoice.origin)
-
         return True
 
     def confirm_draft_po(self, cr, uid, ids, context):
@@ -716,9 +709,14 @@ class profile_game_retail(osv.osv):
 
         rec = self.browse(cr, uid, ids[0])
         full_ids = self.search(cr, uid, [])
+
         msg1 = ""
         if not rec.ay_traceback:
-            rec1  = self.browse(cr, uid, max(full_ids)-1)
+            if len(full_ids) == 1:
+                full_ids = ids[0]
+            else:
+                full_ids = max(full_ids)-1
+            rec1  = self.browse(cr, uid, full_ids)
             msg1 += '\n' + (rec1.ay_traceback or "")+ '\n' + msg
         else:
             msg1 += rec.ay_traceback + '\n' + msg
@@ -792,7 +790,7 @@ class profile_game_retail(osv.osv):
         dt = self.get_date(cr, uid,context)
         return super(account.period,self).find(cr, uid, dt, context)
 
-profile_game_retail()
+profile_game_phase_two()
 
 class profile_game_config_wizard(osv.osv_memory):
     _name='profile.game.config.wizard'
@@ -828,7 +826,7 @@ class profile_game_config_wizard(osv.osv_memory):
 
 
     def action_run(self, cr, uid, ids, context = None):
-        game_obj = self.pool.get('profile.game.retail')
+        game_obj = self.pool.get('profile.game.phase2')
         fiscal_obj = self.pool.get('account.fiscalyear')
         user_obj = self.pool.get('res.users')
         emp_obj = self.pool.get('hr.employee')
@@ -886,8 +884,8 @@ class mrp_production(osv.osv):
     _columns = {}
 
     def create(self, cr, uid, vals, context={}):
-         if self.pool.get('profile.game.retail.phase1').check_state(cr, uid, context):
-             vals ['date_planned'] = self.pool.get('profile.game.retail').get_date(cr, uid,context)
+         if self.pool.get('profile.game.phase1').check_state(cr, uid, context):
+             vals ['date_planned'] = self.pool.get('profile.game.phase2').get_date(cr, uid,context)
          return super(mrp_production, self).create(cr, uid, vals, context)
 
 mrp_production()
@@ -897,8 +895,8 @@ class mrp_procurement(osv.osv):
     _columns = {}
 
     def create(self, cr, uid, vals, context={}):
-        if self.pool.get('profile.game.retail.phase1').check_state(cr, uid, context):
-            vals ['date_planned'] = self.pool.get('profile.game.retail').get_date(cr, uid,context)
+        if self.pool.get('profile.game.phase1').check_state(cr, uid, context):
+            vals ['date_planned'] = self.pool.get('profile.game.phase2').get_date(cr, uid,context)
         return super(mrp_procurement, self).create(cr, uid, vals, context)
 
 mrp_procurement()
@@ -908,8 +906,8 @@ class stock_picking(osv.osv):
     _columns = {}
 
     def create(self, cr, uid, vals, context={}):
-        if self.pool.get('profile.game.retail.phase1').check_state(cr, uid, context):
-          vals ['date'] = self.pool.get('profile.game.retail').get_date(cr, uid,context)
+        if self.pool.get('profile.game.phase1').check_state(cr, uid, context):
+          vals ['date'] = self.pool.get('profile.game.phase2').get_date(cr, uid,context)
         return super(stock_picking, self).create(cr, uid, vals, context)
 
 stock_picking()
@@ -919,8 +917,8 @@ class stock_move(osv.osv):
      _columns = {}
 
      def create(self, cr, uid, vals, context={}):
-          if self.pool.get('profile.game.retail.phase1').check_state(cr, uid, context):
-              dt = self.pool.get('profile.game.retail').get_date(cr, uid,context)
+          if self.pool.get('profile.game.phase1').check_state(cr, uid, context):
+              dt = self.pool.get('profile.game.phase2').get_date(cr, uid,context)
               vals ['date'] = dt
               vals['date_planned'] = dt
           return super(stock_move, self).create(cr, uid, vals, context)
@@ -932,8 +930,8 @@ class purchase_order(osv.osv):
      _columns = {}
 
      def create(self, cr, uid, vals, context={}):
-          if self.pool.get('profile.game.retail.phase1').check_state(cr, uid, context):
-              vals ['date_order'] = self.pool.get('profile.game.retail').get_date(cr, uid,context)
+          if self.pool.get('profile.game.phase1').check_state(cr, uid, context):
+              vals ['date_order'] = self.pool.get('profile.game.phase2').get_date(cr, uid,context)
           return super(purchase_order, self).create(cr, uid, vals, context)
 
 purchase_order()
@@ -943,7 +941,7 @@ class account_move_line(osv.osv):
 
     def _get_date(self, cr, uid, context):
         period_obj = self.pool.get('account.period')
-        dt = self.pool.get('profile.game.retail').get_date(cr, uid,context)
+        dt = self.pool.get('profile.game.phase2').get_date(cr, uid,context)
         if ('journal_id' in context) and ('period_id' in context):
             cr.execute('select date from account_move_line ' \
                     'where journal_id=%s and period_id=%s ' \
@@ -960,9 +958,9 @@ class account_move_line(osv.osv):
 
 
     def create(self, cr, uid, vals, context={}):
-        if self.pool.get('profile.game.retail.phase1').check_state(cr, uid, context):
+        if self.pool.get('profile.game.phase1').check_state(cr, uid, context):
             vals ['date'] = self._get_date(cr, uid, context)
-            vals ['date_created'] = self.pool.get('profile.game.retail').get_date(cr, uid,context)
+            vals ['date_created'] = self.pool.get('profile.game.phase2').get_date(cr, uid,context)
         return super(account_move_line, self).create(cr, uid, vals, context)
 
     _columns = {}
@@ -974,8 +972,8 @@ class account_invoice(osv.osv):
 
 
       def create(self, cr, uid, vals, context={}):
-          if self.pool.get('profile.game.retail.phase1').check_state(cr, uid, context):
-              vals ['date_invoice'] = self.pool.get('profile.game.retail').get_date(cr, uid,context)
+          if self.pool.get('profile.game.phase1').check_state(cr, uid, context):
+              vals ['date_invoice'] = self.pool.get('profile.game.phase2').get_date(cr, uid,context)
           return super(account_invoice, self).create(cr, uid, vals, context)
 
 account_invoice()

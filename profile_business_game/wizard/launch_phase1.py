@@ -32,14 +32,14 @@ class wiz_launch_phase1(wizard.interface):
     def _launch_phase1(self, cr, uid, data, context):
         pool = pooler.get_pool(cr.dbname)
         mod_obj = pool.get('ir.model.data')
-        result = mod_obj._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        result = mod_obj._get_id(cr, uid, 'profile_business_game', 'phase1')
         id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
 
         value = {
             'name': 'Business Game',
             'view_type': 'form',
             'view_mode': 'form,tree',
-            'res_model': 'profile.game.retail.phase1',
+            'res_model': 'profile.game.phase1',
             'view_id': False,
             'res_id' : id,
             'type': 'ir.actions.act_window'
@@ -52,7 +52,7 @@ class wiz_launch_phase1(wizard.interface):
             'result' : {'type':'action', 'action':_launch_phase1, 'state':'end'}
         }
     }
-wiz_launch_phase1('profile_game_retail.open.phase1')
+wiz_launch_phase1('profile_game.open.phase1')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
