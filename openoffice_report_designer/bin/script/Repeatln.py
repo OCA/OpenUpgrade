@@ -8,6 +8,7 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from lib.functions import *
     from ServerParameter import *
+    from lib.logreport import *
     from LoginTest import *
     database="test_db1"
     uid = 3
@@ -18,7 +19,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
     def __init__(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
         # Interface Design
         LoginTest()
-
+        self.logobj=Logger()
         if not loginstatus and __name__=="package":
             exit(1)
 
@@ -80,26 +81,30 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             text = cursor.getText()
             tcur = text.createTextCursorByRange(cursor)
 
-	    self.aVariableList.extend( filter( lambda obj: obj[:obj.find(" ")] == "List", self.aObjectList ) )
+            self.aVariableList.extend( filter( lambda obj: obj[:obj.find(" ")] == "List", self.aObjectList ) )
 
-	    for i in range(len(self.aItemList)):
-		anItem = self.aItemList[i][1]
-		component = self.aComponentAdd[i]
+            for i in range(len(self.aItemList)):
+                try:
+                    anItem = self.aItemList[i][1]
+                    component = self.aComponentAdd[i]
 
-		if component == "Document":
-		    sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-		    self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
+                    if component == "Document":
+                        sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
+                        self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
-                if tcur.TextSection:
-                    getRecersiveSection(tcur.TextSection,self.aSectionList)
-		    if component in self.aSectionList:
-			sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-			self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
+                    if tcur.TextSection:
+                        getRecersiveSection(tcur.TextSection,self.aSectionList)
+                        if component in self.aSectionList:
+                            sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
+                            self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
-                if tcur.TextTable:
-		    if not component == "Document" and component[component.rfind(".") + 1:] == tcur.TextTable.Name:
-			VariableScope( tcur, self.insVariable, self.aObjectList, self.aComponentAdd, self.aItemList, component )
-
+                    if tcur.TextTable:
+                        if not component == "Document" and component[component.rfind(".") + 1:] == tcur.TextTable.Name:
+                            VariableScope( tcur, self.insVariable, self.aObjectList, self.aComponentAdd, self.aItemList, component )
+                except :
+                    import traceback,sys
+                    info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
+                    self.logobj.log_write('RepeatIn', LOG_ERROR, info)
             self.bModify=bFromModify
 
             if self.bModify==True:
