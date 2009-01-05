@@ -140,11 +140,10 @@ class comparison_factor_result(osv.osv):
                     votes.append(obj_vote.score_id.factor * ponderation)
                 ponderation_result = (ponderation * pond_div) * len(votes)    
             else:
-                votes = [0.00]
+#                votes = [0.00]
                 ponderation_result = 1.00        
                 
-                
-            result[obj_factor_result.id] = str((sum(votes)/float(ponderation_result)) * 100) + '%'
+            result[obj_factor_result.id] = str(round((sum(votes)/float(ponderation_result)),2) * 100) + '%   (' + str(len(votes)) + ' Vote(s))'
                         
         return result
     
@@ -158,6 +157,9 @@ class comparison_factor_result(osv.osv):
     def init(self, cr):
         cr.execute(""" create or replace view comparison_factor_result as (select (fr.id*10 + it.id ) as id,fr.id as factor_id,it.id as item_id,0.00 as result from comparison_factor as fr,comparison_item as it);
                     """)
+        
+    def unlink(self, cr, uid, ids, context={}):
+        raise osv.except_osv(_('Error !'), _('You cannot delete the vote result. You may have to delete the concerned Item or Factor!'))    
              
 comparison_factor_result()
 

@@ -194,7 +194,7 @@
             <field name="name">Results of the Comparisons</field>
             <field name="res_model">comparison.factor.result</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree</field>
             <field name="view_id" ref="view_comparison_factor_result_tree"/>
         </record>
         
@@ -269,7 +269,7 @@
             </field>
         </record>
 
-        <record id="action_comparison_vote_tree" model="ir.actions.act_window">
+        <record id="action_comparison_vote_form" model="ir.actions.act_window">
             <field name="name">New Vote</field>
             <field name="res_model">comparison.vote</field>
             <field name="view_type">form</field>
@@ -277,7 +277,67 @@
             <field name="view_id" ref="view_comparison_vote_form"/>
         </record>
         
-        <menuitem action="action_comparison_vote_tree" id="menu_action_comparison_vote_tree" parent="menu_comparison"/>
+        <record id="action_comparison_votes" model="ir.actions.act_window">
+            <field name="name">Votes</field>
+            <field name="res_model">comparison.vote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,vote</field>
+            <field name="view_id" ref="view_comparison_vote_tree"/>
+        </record>
+        
+        <menuitem id="menu_comparison_votes" parent="menu_comparison" action="action_comparison_votes"/>
+        <menuitem action="action_comparison_vote_form" id="menu_action_comparison_vote_form" parent="menu_comparison_votes"/>
+        
+        <!-- Suggest for Ponderations-->
+        
+        <record id="view_suggest_ponderation_form" model="ir.ui.view">
+            <field name="name">comparison.ponderation.suggestion.form</field>
+            <field name="model">comparison.ponderation.suggestion</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Suggest Ponderations">
+					<field name="factor_id" select="1"/>
+                    <field name="user_id" />
+                    <field name="ponderation" select="1"/>
+                   	<newline/>
+					<field colspan="4" name="note" />
+					<field name="state" select="2"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_suggest_ponderation_tree" model="ir.ui.view">
+            <field name="name">comparison.ponderation.suggestion.tree</field>
+            <field name="model">comparison.ponderation.suggestion</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Suggested Ponderations">
+					<field name="factor_id" select="1"/>
+                    <field name="user_id" />
+                    <field name="ponderation" select="1"/>
+                   	<field name="state" select="2"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_suggest_ponderation_form" model="ir.actions.act_window">
+            <field name="name">New Suggestion</field>
+            <field name="res_model">comparison.ponderation.suggestion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_suggest_ponderation_form"/>
+        </record>
+        
+        <record id="action_suggest_ponderation" model="ir.actions.act_window">
+            <field name="name">Suggestions</field>
+            <field name="res_model">comparison.ponderation.suggestion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,vote</field>
+            <field name="view_id" ref="view_suggest_ponderation_tree"/>
+        </record>
+        
+        <menuitem id="menu_comparison_suggestions" parent="menu_comparison" action="action_suggest_ponderation"/>
+        <menuitem action="action_view_suggest_ponderation_form" id="menu_action_view_suggest_ponderation_form" parent="menu_comparison_suggestions"/>
         
     </data>
 </openerp>
