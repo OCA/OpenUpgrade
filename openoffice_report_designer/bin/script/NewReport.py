@@ -3,11 +3,13 @@ import uno
 import string
 import unohelper
 import xmlrpclib
+
 from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
     from lib.error import ErrorDialog
     from lib.functions import *
+    from lib.logreport import *
     from LoginTest import *
     database="test"
     uid = 3
@@ -23,6 +25,7 @@ class NewReport(unohelper.Base, XJobExecutor):
         self.module  = "openerp_report"
         self.version = "0.1"
         LoginTest()
+        self.logobj=Logger()
         if not loginstatus and __name__=="package":
             exit(1)
         self.win=DBModalDialog(60, 50, 180, 115, "Open New Report")
@@ -43,7 +46,7 @@ class NewReport(unohelper.Base, XJobExecutor):
         res = sock.execute(database, uid, self.password, 'ir.model' , 'read', ids, fields)
         res.sort(lambda x, y: cmp(x['name'],y['name']))
 
-	for i in range(len(res)):
+        for i in range(len(res)):
             self.lstModule.addItem(res[i]['name'],self.lstModule.getItemCount())
             self.aModuleName.append(res[i]['model'])
         self.win.addButton('btnOK',-2 ,-5, 70,15,'Use Module in Report' ,actionListenerProc = self.btnOk_clicked )
@@ -55,6 +58,7 @@ class NewReport(unohelper.Base, XJobExecutor):
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
         docinfo.setUserFieldValue(3,self.aModuleName[self.lstModule.getSelectedItemPos()])
+        self.logobj.log_write('Module Name',LOG_INFO, ':Module use in creating a report %s  using database %s' % (self.aModuleName[self.lstModule.getSelectedItemPos()], database))
         self.win.endExecute()
 
     def btnCancel_clicked( self, oActionEvent ):
