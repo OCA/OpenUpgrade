@@ -57,7 +57,7 @@ class dm_ddf_plugin(osv.osv):
 #            print "---------------",d
             customers =  d.step_id.customer_id
 #            print "-----------44444----",customers
-            plugins = d.document_template_id.plugin_id
+            plugins = d.document_template_id.plugin_ids
             for plugin in plugins:
                 print "----plugin---------", plugin
         return True
@@ -94,7 +94,7 @@ class dm_ddf_plugin(osv.osv):
         return True
     
     _columns = {
-         'name' : fields.char('DDF Plugin Name', size=64),
+        'name' : fields.char('DDF Plugin Name', size=64),
         'file_id': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary"),
         'file_fname': fields.char('Filename',size=64),
         'store_fname':fields.char('Stored File Name',size=64)
@@ -106,7 +106,7 @@ class dm_document_template(osv.osv):
     _columns = {
         'name' : fields.char('Template Name', size=128),
         'dynamic_fields' : fields.many2many('ir.model.fields','dm_template_fields','template_field_id','template_id','Fields',domain=[('model','like','dm.%')]),
-        'plugin_id' : fields.many2many('dm.ddf.plugin','dm_template_plugin_rel','dm_ddf_plugin_id','dm_document_template_id', 'Plugin'),
+        'plugin_ids' : fields.many2many('dm.ddf.plugin','dm_template_plugin_rel','dm_ddf_plugin_id','dm_document_template_id', 'Plugin'),
         }
     
     def write(self, cr, uid, ids, vals, context=None):
