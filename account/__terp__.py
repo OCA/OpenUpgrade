@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -30,6 +30,8 @@
     Third party accounting
     Taxes management
     Budgets
+    Customer and Supplier Invoices
+    Bank statements
     """,
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Accounting",
@@ -59,9 +61,9 @@
         "project/project_report.xml",
         "product_view.xml",
         "account_assert_test.xml",
+        "process/statement_process.xml",
         "process/customer_invoice_process.xml",
         "process/supplier_invoice_process.xml",
-        "process/statement_process.xml",
     ],
     "translations" : {
         "fr": "i18n/french_fr.csv"

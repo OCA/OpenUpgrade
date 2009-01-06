@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -33,7 +33,7 @@ the analytic account.
 
 Lots of reporting on time and employee tracking are provided.
 
-It is completly integrated with the cost accounting module. It allows you
+It is completely integrated with the cost accounting module. It allows you
 to set up a management by affair.
     """,
     "depends" : ["account", "hr", "base", "hr_attendance", "process"],

@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,8 @@
     "website" : "http://www.openerp.com",
     "depends" : ["base", "account", "stock", "process"],
     "category" : "Generic Modules/Sales & Purchases",
-    "description": "Module for purchase management",
+    "description": """Module for purchase management
+    Request for quotation, Create Supplier Invoice, Print Order...""",
     "init_xml" : [],
     "demo_xml" : ["purchase_demo.xml", 
                   #"purchase_unit_test.xml"

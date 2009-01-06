@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
     "author" : "Tiny",
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Accounting",
-    "description": """This module allow accountants to manage analytic and crossovered budgets.
+    "description": """This module allows accountants to manage analytic and crossovered budgets.
 
 Once the Master Budgets and the Budgets defined (in Financial
 Management/Budgets/), the Project Managers can set the planned amount on each

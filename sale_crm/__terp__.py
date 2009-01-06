@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -34,9 +34,9 @@ case.
 The case is then closed and linked to the generated sale order.
 
 It also add a shortcut on one or several partners.
-This shorcut allows you to generate a CRM case for the partners.
+This shortcut allows you to generate a CRM case for the partners.
 
-We sugest you to install this module if you installed both the sale and the
+We suggest you to install this module if you installed both the sale and the
 crm_configuration modules.
     """,
     "init_xml" : [],

@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -30,13 +30,12 @@
 
     It lets you define
         *contacts unrelated to a partner,
-        *contacts working at several adresses (possibly for different partners),
+        *contacts working at several addresses (possibly for different partners),
         *contacts with possibly different functions for each of its job's addresses
 
-    It also add new menuitems located in
+    It also add new menu items located in
         Partners \ Contacts
         Partners \ Functions
-
 
     Pay attention that this module converts the existing addresses into "addresses + contacts". It means that some fields of the addresses will be missing (like the contact name), since these are supposed to be defined in an other object.
     """,

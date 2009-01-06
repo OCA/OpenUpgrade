@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
     "depends" : ["project"],
     "description": """
 This module implements all concepts defined by the Getting Things Done
-methodology. This world-wide used methodology is used for personnal
+methodology. This world-wide used methodology is used for personal
 time management improvement.
 
 Getting Things Done (commonly abbreviated as GTD) is an action management

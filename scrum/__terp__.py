@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -35,11 +35,11 @@
     * Sprint backlog
 
     It adds some concepts to the project management module:
-    * Mid-term, long-term roadmaps
-    * Customers/functionnal requests, vs technical ones
+    * Mid-term, long-term road-map
+    * Customers/functional requests VS technical ones
 
     It also create a new reporting:
-    * Burndown chart
+    * Burn-down chart
 
     The scrum projects and tasks inherits from the real projects and
     tasks, so you can continue working on normal tasks that will also

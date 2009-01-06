@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@
     "category":"Custom",
     "description": """
 Adds a reporting menu in products that computes sales, purchases, margins
-and others interresting indicators based on invoices. The wizard to launch
+and others interesting indicators based on invoices. The wizard to launch
 the report has several options to help you get the data you need.
 """,
     "depends":["base","product","account"],

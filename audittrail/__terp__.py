@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,8 @@
     "website" : "http://www.openerp.com",
     "author" : "Tiny",
     "init_xml" : [],
-    "description": "Allows the administrator to track every user operations on all objects of the system.",
+    "description": """Allows the administrator to track every user operations on all objects of the system.
+    Subscribe Rules for read, write, create and delete on objects and check logs""",
     "category" : "Generic Modules/Others",
     "update_xml" : ["audittrail_view.xml", 
                     "security/ir.model.access.csv",

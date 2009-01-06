@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -28,13 +28,13 @@
 
     This module allow you
         * to manage your events and their registrations
-        * to use emails to automaticly confirm and send acknowledgements for any registration to an event
+        * to use emails to automatically confirm and send acknowledgements for any registration to an event
         * ...
 
     Note that:
     - You can define new types of events in
                 Events \ Configuration \ Types of Events
-    - You can access pre-defined reports about number of registration per event or per event category in :
+    - You can access predefined reports about number of registration per event or per event category in :
                 Events \ Reporting
 """,
     "depends" : [

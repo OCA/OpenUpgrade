@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@
     "description":"""
 Manages product's path in locations.
 
-This module may be usefull for different purposes:
+This module may be useful for different purposes:
 * Manages the product in his whole manufacturing chain
 * Manages different default locations by products
 * Define paths within the warehouse to route products based on operations:

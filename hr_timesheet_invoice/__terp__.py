@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -27,8 +27,8 @@
     "website" : "http://www.openerp.com",
     "depends" : ["account",'hr_timesheet'],
     "description": """
-Module to generate invoices based on costs (human ressources, expenses, ...).
-You can define pricelists in analytic account, make some theorical revenue
+Module to generate invoices based on costs (human resources, expenses, ...).
+You can define price lists in analytic account, make some theoretical revenue
 reports, eso.""",
     "init_xml" : [],
     "demo_xml" : [

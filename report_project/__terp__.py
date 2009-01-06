@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,8 @@
     "website" : "http://www.openerp.com",
     "depends" : ["project", "report_task"],
     "category" : "Generic Modules/Sales & Purchases",
-    "description": "A module that adds some reports on the sales",
+    "description": """A module that adds some reports on projects.
+    Closed Tasks (By User and By Project), Finished Task (By User and By Project)""",
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [

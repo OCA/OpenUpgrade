@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -26,7 +26,8 @@
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Projects & Services",
     "depends" : ["product", "account", "hr", "process"],
-    "description": "Project management module that track multi-level projects, tasks, works done on tasks, eso. It is able to render planning, order tasks, eso.",
+    "description": """Project management module that track multi-level projects, tasks, works done on tasks, eso. It is able to render planning,
+    order tasks, delegate task, print gantt chart eso.""",
     "init_xml" : [],
     "demo_xml" : ["project_demo.xml"],
     "update_xml": [

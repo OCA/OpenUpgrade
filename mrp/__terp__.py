@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -43,7 +43,7 @@
     * Allows to browse Bill of Materials in complete structure
         that include child and phantom BoMs
     It supports complete integration and planification of stockable goods,
-    consumable of services. Services are completly integrated with the rest
+    consumable of services. Services are completely integrated with the rest
     of the software. For instance, you can set up a sub-contracting service
     in a BoM to automatically purchase on order the assembly of your production.
 

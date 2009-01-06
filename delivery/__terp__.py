@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/Sales & Purchases",
-    "description": "Allows to add delivery methods in sales order and packings. You can define your own carrier and delivery grids for prices. When creating invoices from pickings, Open ERP is able to add and compute the shipping line.",
+    "description": "Allows to add delivery methods in sales order and packing. You can define your own carrier and delivery grids for prices. When creating invoices from pickings, Open ERP is able to add and compute the shipping line.",
     "depends" : ["sale","purchase", "stock",],
     "init_xml" : ["delivery_data.xml"],
     "demo_xml" : ["delivery_demo.xml"],

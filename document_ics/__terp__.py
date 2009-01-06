@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -25,7 +25,7 @@
     "author" : "Tiny",
     "category" : "Generic Modules/Others",
     "website": "http://www.openerp.com",
-    "description": """Allows to synchronize calendars with others applications.""",
+    "description": """Allows to synchronise calendars with others applications.""",
     "depends" : ["document","crm_configuration"],
     "init_xml" : ["document_data.xml"],
     "update_xml" : [

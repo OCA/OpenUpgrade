@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -32,18 +32,18 @@
 
     Products support variants, different pricing methods, suppliers
     information, make to stock/order, different unit of measures,
-    packagins and properties.
+    packagings and properties.
 
     Pricelists supports:
     * Multiple-level of discount (by product, category, quantities)
-    * Compute price based on different criterions:
+    * Compute price based on different criteria:
         * Other pricelist,
         * Cost price,
         * List price,
         * Supplier price, ...
     Pricelists preferences by product and/or partners.
 
-    Print product labels with barcodes.
+    Print product labels with barcode.
     """,
     "update_xml" : [
         "security/product_security.xml",

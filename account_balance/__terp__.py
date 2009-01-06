@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -30,9 +30,9 @@
 
     1. You can compare the balance sheet for different years.
 
-    2. You can set the cash or percentage comparision between two years.
+    2. You can set the cash or percentage comparison between two years.
 
-    3. You can set the referencial account for the percentage comparision for particular years.
+    3. You can set the referential account for the percentage comparison for particular years.
 
     4. You can select periods as an actual date or periods as creation date.
 
