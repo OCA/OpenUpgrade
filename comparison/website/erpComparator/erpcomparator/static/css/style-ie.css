@@ -1,0 +1,47 @@
+td.label,
+td.item {
+    padding: 0px 2px;
+}
+
+td.label {
+    padding: 0px 4px;
+}
+
+img.imgSelect {
+    margin-left: 2px;
+}
+
+table.tree-grid th,
+table.tree-grid td {
+    padding: 0px 5px;
+}
+
+div.box2 button {
+    margin: 0px 2px;
+}
+
+/* range widgets */
+#search_view_notebook input.datetime,
+#search_view_notebook input.date,
+#search_view_notebook input.time,
+#search_view_notebook input.integer,
+#search_view_notebook input.float{
+    width: 98%;
+}
+
+.grid-row.editors .grid-cell {
+    padding: 4px;
+}
+
+.grid-cell.selector {
+    padding: 0px 4px;
+}
+
+/* http://dean.edwards.name/my/base64-sordid.html */
+img{behavior:expression((this.runtimeStyle.behavior="none")&&(/^data:.*;base64/i.test(this.src))&&(this.src="/image/b64?"+this.src.slice(5)));}
+
+
+/**
+ * vim: sts=4 st=4 et 
+ *
+ */
