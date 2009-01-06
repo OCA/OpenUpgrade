@@ -28,6 +28,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "product_variant_multi.xml"
     ],
     "active": False,

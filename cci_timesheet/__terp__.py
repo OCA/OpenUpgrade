@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -31,7 +31,7 @@
     "depends" : ["base","cci_partner","cci_crm","cci_base_contact"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["cci_timesheet_view.xml", "cci_timesheet_wizard.xml"],
+    "update_xml" : ["cci_timesheet_view.xml", "cci_timesheet_wizard.xml",'security/security.xml','security/ir.model.access.csv'],
     "active": False,
     "installable": True
 }

@@ -25,8 +25,8 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Partners">
-				<field name="name" select="1" colsapn="2"/>
-				<field name="last_name" select="2" colsapn="2"/>
+				<field name="name" select="1" colspan="2"/>
+				<field name="last_name" select="2" colspan="2"/>
 				<field name="lang" select="2"/>
 				<field name="company_name" select="2"></field>
 				<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">

@@ -28,7 +28,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "description": "A module that add manufacturers and attributes on the product form",
-    "update_xml" : ["product_electronic_view.xml"],
+    "update_xml" : ["security/ir.model.access.csv","product_electronic_view.xml"],
     "active": False,
     "installable": True
 }

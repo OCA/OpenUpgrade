@@ -38,7 +38,9 @@
     "init_xml" : [],
     "demo_xml" : [
     ],
-    "update_xml" : ['hotel_view.xml',
+    "update_xml" : ["security/hotel_security.xml",
+                    "security/ir.model.access.csv",
+                    'hotel_view.xml',
                     "hotel_data.xml",
                     "hotel_folio_workflow.xml",
                     "hotel_report.xml",

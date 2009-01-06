@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<!-- Set accesses to menu -->
+	<record model="ir.ui.menu" id="menu_cci_country">
+		<field name="groups_id" eval="[(6,0, [ref('base.group_system')])]"/>
+	</record>
+
+</data>
+</openerp>
+

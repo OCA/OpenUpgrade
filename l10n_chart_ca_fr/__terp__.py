@@ -24,6 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Localisation/Account Charts",
+    "description": "This is the module to manage the accounting chart for Canada for French Profile in Open ERP.",
     "depends" : ["account_chart"],
     "demo_xml" : [],
     "update_xml" : ['account_tax_code.xml',"account_chart.xml",

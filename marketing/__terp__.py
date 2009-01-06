@@ -29,7 +29,7 @@
     "description": "Marketing management module",
     "init_xml" : [],
     "demo_xml" : ["campaign/campaign_demo.xml"],
-    "update_xml" : ["campaign/campaign_view.xml", "campaign/campaign_wizard.xml"],
+    "update_xml" : ["security/ir.model.access.csv","campaign/campaign_view.xml", "campaign/campaign_wizard.xml"],
     "active": False,
     "installable": True
 }

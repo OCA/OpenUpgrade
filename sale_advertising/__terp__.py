@@ -30,7 +30,7 @@
     "depends" : ["sale"],
     "init_xml" : [],
     "demo_xml" : ["sale_advertising_demo.xml"],
-    "update_xml" : ["sale_advertising_view.xml",],
+    "update_xml" : ["security/ir.model.access.csv","sale_advertising_view.xml",],
     "active": False,
     "installable": True
 }

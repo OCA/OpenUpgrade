@@ -29,7 +29,7 @@
     "depends":["base_vat","base_iban","account_payment"],
     "demo_xml":[],
     "init_xml":[],
-    "update_xml" : ["payment_export_wizard.xml","payment_export_view.xml","payment_export_data.xml"],
+    "update_xml" : ["security/ir.model.access.csv","payment_export_wizard.xml","payment_export_view.xml","payment_export_data.xml"],
     "active":False,
     "description": """
      This module will export payment order

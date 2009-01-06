@@ -30,6 +30,7 @@
     "depends" : ["account","product","crm"],
     "init_xml" : [],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "account_analytic_package_view.xml"
     ],
     "demo_xml" : [],

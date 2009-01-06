@@ -24,6 +24,7 @@
     "version" : "1.0",
     "author" : "SISatlas",
     "category" : "Localisation/Account Charts",
+    "description": "This is the module to manage the accounting chart for Morocco in Open ERP.",
     "website": "http://comptabilite.erp-libre.info",
     "depends" : ["base", "account"],
     "init_xml" : [],

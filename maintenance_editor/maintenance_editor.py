@@ -33,6 +33,7 @@ import pooler
 import time
 import math
 import uuid
+import addons
 
 from tools import config
 import mx.DateTime
@@ -52,12 +53,24 @@ class maintenance_maintenance(osv.osv):
 
     def _contract_date(self, cr, uid, ids):
         for contract in self.browse(cr, uid, ids):
-            cr.execute('SELECT id \
-                    FROM maintenance_maintenance \
-                    WHERE (date_from < %s and %s < date_to) \
-                        AND id <> %d', (contract.date_to, contract.date_from,
-                            contract.id))
-            if cr.fetchall():
+            cr.execute("""
+                        SELECT count(1) 
+                          FROM maintenance_maintenance 
+                        WHERE (    (%(date_from)s BETWEEN date_from AND date_to)
+                                OR (%(date_to)s BETWEEN date_from AND date_to)
+                                OR (%(date_from)s < date_from AND %(date_to)s > date_to)
+                               )
+                           AND partner_id = %(partner)s 
+                           AND id <> %(id)s
+                           AND state = %(state)s
+                        """, { 
+                         "date_from": contract.date_from,
+                         "date_to": contract.date_to,
+                         "partner": contract.partner_id.id,
+                         "id": contract.id,
+                         "state": "open"
+                        })
+            if cr.fetchone()[0]:
                 return False
         return True
 
@@ -79,6 +92,9 @@ class maintenance_maintenance(osv.osv):
         'state': lambda *a: 'draft',
     }
 
+    _sql_constraints = [
+        ("check_dates", "CHECK (date_from < date_to)", 'The "from" date must not be after the "to" date.'),
+    ]
     _constraints = [
         (_contract_date, 'You can not have 2 contracts that overlaps !', ['date_from','date_to']),
     ]
@@ -102,6 +118,7 @@ class maintenance_maintenance(osv.osv):
                 if (module['name'],module['installed_version']) not in contract_module_list:
                     external_modules.append(module['name'])
         return { 
+            'id': (maintenance_ids and maintenance_ids[0] or 0),
             'status': (maintenance_ids and ('full', 'partial')[bool(external_modules)] or 'none'),
             'external_modules': external_modules,
             'modules_with_contract' : contract_module_list,
@@ -124,6 +141,21 @@ class maintenance_maintenance(osv.osv):
                 'date_to' : (mx.DateTime.strptime(date_from, '%Y-%m-%d') + mx.DateTime.RelativeDate(years=1)).strftime("%Y-%m-%d") 
             }
         }
+    
+    def retrieve_updates(self, cr, uid, ids):
+        res = {}
+        toload = ids
+        if isinstance(ids, (int, long)):
+            toload = [ids]
+        for c in self.browse(cr, uid, toload):
+            res[str(c.id)] = {}
+            for m in c.module_ids:
+                res[str(c.id)][m.name] = addons.get_module_as_zip(m.name, b64enc=True)
+
+        if isinstance(ids, (int, long)):
+            return res[str(ids)]
+        return res
+
 maintenance_maintenance()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

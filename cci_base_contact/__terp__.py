@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -32,7 +32,7 @@
     "depends" : ["base", "base_contact","project"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ['cci_base_contact_view.xml'],
+    "update_xml" : ['cci_base_contact_view.xml','security/ir.model.access.csv'],
     "active": False,
     "installable": True
 }

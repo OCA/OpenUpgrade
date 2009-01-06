@@ -30,6 +30,7 @@
     "init_xml" : [ ],
     "demo_xml" : [ ],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "productivity_analysis_view.xml",
         "productivity_analysis_wizard.xml",
         "productivity_analysis_report.xml",

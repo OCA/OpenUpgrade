@@ -40,6 +40,7 @@
     'active': False,
     'demo_xml': [],
     'update_xml':[
+        'security/ir.model.access.csv',
         'misc_data.xml',
         'account_bob_import_config.xml',
     ],

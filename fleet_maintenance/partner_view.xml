@@ -9,7 +9,14 @@
       <field name="arch" type="xml">
 	        <notebook position="inside">
 	        	<page string="Fleets">
-	        		<field name="fleets"/>
+							<field colspan="4" mode="tree" context="{'fleet_type':'sub_fleet'}" name="sub_fleets" nolabel="1">
+								<tree string="Sub Fleets" colors="red:is_expired;blue:fleet_type=='fleet'">
+									<field name="indented_name" />
+									<field name="is_expired" />
+									<field name="time_to_expire" />
+									<field name="expire_time" />
+								</tree>
+							</field>
 	        	</page>
 	        </notebook>
 	    </field>

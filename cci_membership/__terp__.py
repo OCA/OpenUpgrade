@@ -32,7 +32,7 @@
     "depends" : ["base","membership","cci_event"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["cci_membership_view.xml","cci_membership_report.xml","cci_membership_wizard.xml"],
+    "update_xml" : ["cci_membership_view.xml","cci_membership_report.xml","cci_membership_wizard.xml",'security/security.xml','security/ir.model.access.csv'],
     "active": False,
     "installable": True
 }

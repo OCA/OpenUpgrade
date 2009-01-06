@@ -34,7 +34,7 @@ called Master Procurement Schedule instead of the classic Master Production
 Schedule therminology.
 """,
     "demo_xml":[],
-    "update_xml":["stock_planning_view.xml"],
+    "update_xml":["security/ir.model.access.csv","stock_planning_view.xml"],
     "active": False,
     "installable": True,
 }

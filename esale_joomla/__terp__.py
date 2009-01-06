@@ -36,7 +36,12 @@ categories of products, taxes and languages.
 If you product has an image attched, it send the image to the Joomla website.""",
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ['esale_joomla_wizard.xml', "esale_joomla_view.xml"],
+    "update_xml" : [
+            "security/esale_joomla_security.xml",
+            "security/ir.model.access.csv",
+            "esale_joomla_wizard.xml",
+            "esale_joomla_view.xml"
+    ],
     "active": False,
     "installable": True
 }
