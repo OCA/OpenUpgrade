@@ -31,7 +31,7 @@
 This module implements a system to popup the partner form based on phone calls.
 This is still a proof of concept, that have been made during Tiny ERP's
 technical training session.""",
-    "update_xml" : ["asterisk_view.xml","asterisk_wizard.xml"],
+    "update_xml" : ["security/ir.model.access.csv","asterisk_view.xml","asterisk_wizard.xml"],
     "active": False,
     "installable": True
 }

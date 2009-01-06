@@ -32,6 +32,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "security/ir.model.access.csv",
         "account_asset_wizard.xml",
         "account_asset_view.xml",
         "account_asset_invoice_view.xml"

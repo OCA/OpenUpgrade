@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -32,7 +32,7 @@
     "depends" : ["base","crm_configuration","event","cci_partner"],
     "init_xml" : ["cci_crm_data.xml"],
     "demo_xml" : ["cci_crm_demo.xml"],
-    "update_xml" : ["cci_crm_view.xml"],
+    "update_xml" : ["cci_crm_view.xml",'security/ir.model.access.csv','security/security.xml'],
     "active": False,
     "installable": True
 }

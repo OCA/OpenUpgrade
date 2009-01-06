@@ -33,7 +33,7 @@ This modules is an improvement of the basic planning module and offers additiona
     "category" : "Generic Modules/Human Resources",
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml":["report_analytic_planning_long_term_view.xml"],
+    "update_xml":["security/ir.model.access.csv","report_analytic_planning_long_term_view.xml"],
     "active": False,
     "installable": True
 }

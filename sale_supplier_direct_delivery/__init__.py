@@ -3,4 +3,4 @@ import sale
 import purchase
 import mrp
 import stock
-import report
+import partner

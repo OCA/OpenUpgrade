@@ -30,7 +30,7 @@
             <field name="name">account.budget.post.form</field>
             <field name="model">account.budget.post</field>
             <field name="type">form</field>
-            <field name="inherit_id" ref="account.view_budget_post_form"/>
+            <field name="inherit_id" ref="account_budget.view_budget_post_form"/>
             <field name="arch" type="xml">
                 <field name="sens" position="after">
                     <field name="company_id"/>

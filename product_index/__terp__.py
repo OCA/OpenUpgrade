@@ -28,7 +28,7 @@
     "depends" : ["product"],
     "demo_xml" : ['product.index.csv'],
     "init_xml" : [],
-    "update_xml" : ['product_data.xml', "product_index_view.xml", "product_view.xml"],
+    "update_xml" : ['security/ir.model.access.csv','product_data.xml', "product_index_view.xml", "product_view.xml"],
     "active": False,
     "installable": True
 }

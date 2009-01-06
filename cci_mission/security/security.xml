@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate="0">
+
+<!--
+ Users Groups
+-->
+    <record model="res.groups" id="group_cci_mission_user">
+        <field name="name">CCI Missions User</field>
+    </record>
+    
+    <record model="res.groups" id="group_cci_mission_manager">
+        <field name="name">CCI Missions Access Rights</field>
+    </record>
+    
+    <record model="res.groups" id="group_cci_mission_supervisor">
+        <field name="name">CCI Missions Supervisor</field>
+    </record>
+
+	<!-- Set accesses to menu -->
+	<record model="ir.ui.menu" id="menu_mission">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_manager'), ref('group_cci_mission_supervisor')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_cci_missions_dossier_type">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_action_cci_missions_site">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_action_cci_missions_dossier">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_manager'), ref('group_cci_mission_supervisor')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_action_cci_missions_embassy_folder">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_manager'), ref('group_cci_mission_supervisor')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_action_cci_missions_embassy_folder_line">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_manager'), ref('group_cci_mission_supervisor')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_action_action_cci_missions_custom_code">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_action_cci_missions_legalization">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_manager'), ref('group_cci_mission_supervisor')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_action_cci_missions_certificate">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_manager'), ref('group_cci_mission_supervisor')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_action_cci_missions_ata_usage">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_action_cci_missions_letters_log">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_supervisor')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_action_cci_missions_ata_carnet">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_manager'), ref('group_cci_mission_supervisor')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_incompleted_certificates">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_user'), ref('group_cci_mission_supervisor')])]"/>
+	</record>
+
+	<!-- Definition of the accesses to the new menus in the cci_event module -->
+<!--to see with Philmer: needed?
+	<record model="ir.ui.menu" id="menu_event_group">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_manager')])]"/>
+	</record>
+-->
+</data>
+</openerp>
+

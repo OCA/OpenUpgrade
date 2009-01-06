@@ -204,15 +204,16 @@
 
 	<!-- Users -->
 
-
 	<record model="res.users" id="user_user">
 		<field name="login">user</field>
 		<field name="password">user</field>
 		<field name="name">Utilisateur standard</field>
 		<field name="signature">Utilisateur standard</field>
+		<field name="menu_id" ref="base.action_menu_admin"/>
 		<field name="action_id" ref="base.action_menu_admin"/>
 	 	<field name="address_id" ref="base.main_address"/>
 		<field name="company_id" ref="base.main_company"/>
+		<field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
 	</record>
 
 <!-- Journaux de caisse -->

@@ -33,6 +33,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+                    "security/ir.model.access.csv",
                     "webmail_view.xml",
                     "webmail_wizard.xml",
                     ],

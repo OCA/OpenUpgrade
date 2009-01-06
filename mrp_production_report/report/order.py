@@ -51,6 +51,6 @@ class order(report_sxw.rml_parse):
         return move_id
 
 
-report_sxw.report_sxw('report.mrp.production.order','mrp.production','addons/mrp_production_report/report/order.rml',parser=order)
+report_sxw.report_sxw('report.mrp.production.orders','mrp.production','addons/mrp_production_report/report/order.rml',parser=order)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

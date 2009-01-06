@@ -28,7 +28,7 @@
     "depends" : ["stock","purchase"],
     "demo_xml" : ['purchase_journal_demo.xml'],
     "init_xml" : ['purchase_journal_data.xml'],
-    "update_xml" : ["purchase_journal_view.xml"],
+    "update_xml" : ["security/ir.model.access.csv","purchase_journal_view.xml"],
     "active": False,
     "installable": True
 }

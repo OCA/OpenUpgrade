@@ -24,6 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Localisation/Europe",
+    "description": "This is the module to manage the accounting chart for Europe in Open ERP.",
     "depends" : ["account_chart"],
     "init_xml" : [],
     "demo_xml" : ["account_demo.xml",

@@ -102,10 +102,14 @@ report_xml()
 
 def mygetObjects(self, cr, uid, ids, context):
     table = self.table
+    pool = pooler.get_pool(cr.dbname)
+    ir_actions_report_xml_obj = pool.get('ir.actions.report.xml')
     if self.table=='dm.offer.document':
         report_xml_ids = ir_actions_report_xml_obj.search(cr, uid,
                 [('report_name', '=', self.name[7:])], context=context)        
         if report_xml_ids:
+            report_xml = ir_actions_report_xml_obj.browse(cr, uid, report_xml_ids[0],
+                    context=context)
             table=report_xml.actual_model
         ids = pooler.get_pool(cr.dbname).get(table).search(cr,uid,[])
     res = pooler.get_pool(cr.dbname).get(table).browse(cr, uid, ids, list_class=browse_record_list, context=context, fields_process=_fields_process)

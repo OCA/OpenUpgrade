@@ -5,14 +5,14 @@
 	<record model="ir.actions.server" id="window_close">
 		<field name="name">Close Window</field>
 		<field name="model_id" search="[('model','=','test.temporal')]"/>
-		<field name="state">python</field>
+		<field name="state">code</field>
 		<field name="code">action = { 'type':'ir.actions.act_window_close' }</field>
 	</record>
 
 	<record model="ir.actions.server" id="view_action_form2">
 		<field name="name">Test Run</field>
 		<field name="model_id" search="[('model','=','test.temporal')]"/>
-		<field name="state">python</field>
+		<field name="state">code</field>
 		<field name="code">
 obj = self.browse(cr, uid, context['active_id'])
 self.pool.get('res.partner').write(cr, uid, [obj.partner_id.id], {'name':obj.name})
@@ -22,7 +22,7 @@ self.pool.get('res.partner').write(cr, uid, [obj.partner_id.id], {'name':obj.nam
 	<record model="ir.actions.server" id="view_action_form3">
 		<field name="name">Test Run</field>
 		<field name="model_id" search="[('model','=','test.temporal')]"/>
-		<field name="state">python</field>
+		<field name="state">code</field>
 		<field name="code">
 action = {
 	'domain': "[('partner_id','=',2)]",
@@ -40,7 +40,7 @@ action = {
 	<record model="ir.actions.server" id="view_action_form">
 		<field name="name">Test Run</field>
 		<field name="model_id" search="[('model','=','test.temporal')]"/>
-		<field name="state">python</field>
+		<field name="state">code</field>
 		<field name="code">
 name = self.browse(cr, uid, context['active_id']).name
 self.pool.get('res.partner').write(cr, uid, [context['action_id']], {'name':name})

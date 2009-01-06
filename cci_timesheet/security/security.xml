@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<!-- Users groups -->
+	<record model="res.groups" id="group_cci_timesheet_user">
+		<field name="name">CCI TimeSheet User</field>
+	</record>
+	<record model="res.groups" id="group_cci_timesheet_manager">
+		<field name="name">CCI TimeSheet Manager</field>
+	</record>
+	
+	<!-- Set accesses to menu -->
+	<record model="ir.ui.menu" id="menu_hr_root">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_timesheet_user'),ref('group_cci_timesheet_manager')])]"/>
+	</record>
+	<record model="ir.ui.menu" id="menu_time_configuration">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_timesheet_manager')])]"/>
+	</record>
+
+</data>
+</openerp>
+

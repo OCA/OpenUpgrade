@@ -1,0 +1,55 @@
+
+.mattblacktabs {
+	width: 1004px;
+	overflow: hidden;
+	background-color: #414141;
+}
+
+.mattblacktabs ul {
+	margin: 0;
+	padding: 0;
+	font: bold 12px Verdana;
+	list-style-type: none;
+}
+
+.mattblacktabs li {
+	display: inline;
+	margin: 0;
+}
+
+.mattblacktabs li a {
+	float: left;
+	display: block;
+	text-decoration: none;
+	margin: 0;
+	padding: 7px 8px; 
+	/*border-right: 1px solid white; */
+	color: white;
+	background: #414141; 
+}
+
+.mattblacktabs li a:visited {
+	color: white;
+}
+
+.mattblacktabs li a:hover, .mattblacktabs li.selected a {
+	background: #0099cc; 
+	color: black;
+}
+
+.content {
+	width: 1004px;
+	height: 500px;
+	background-color: white;
+	background-repeat: repeat;
+}
+
+DIV.tabs LI#current A {
+   	background-position: 100% -150px;
+   	border-width: 0px;
+}
+
+DIV.tabs LI#current SPAN {
+   	background-position: 0% -150px;
+   	padding-bottom: 6px;
+}

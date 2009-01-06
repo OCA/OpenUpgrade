@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    
+	<!-- Set accesses to menu -->
+	<record model="ir.ui.menu" id="menu_meeting_confidential_info">
+		<field name="groups_id" eval="[(6,0, [ref('crm.group_crm_user')])]"/>
+	</record>
+
+</data>
+</openerp>
+

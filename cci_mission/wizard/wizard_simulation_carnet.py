@@ -36,6 +36,7 @@ fields = {
          }
 
 def _createInvoices(self, cr, uid, data, context):
+    pool_obj = pooler.get_pool(cr.dbname)
     obj_carnet = pool_obj.get('cci_missions.ata_carnet')
     data_carnet = obj_carnet.browse(cr,uid,data['ids'])
     obj_lines=pool_obj.get('account.invoice.line')
@@ -50,7 +51,6 @@ def _createInvoices(self, cr, uid, data, context):
         create_ids = []
 
         total = 0
-        pool_obj = pooler.get_pool(cr.dbname)
         cur_obj=pool_obj.get('res.currency')
 
         list.append(carnet.type_id.original_product_id.id)
