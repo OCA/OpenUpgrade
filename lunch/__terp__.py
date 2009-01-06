@@ -23,8 +23,8 @@
     "name": "Lunch Module",
     "author": "Tiny",
     "version": "0.1",
+    "depends": ["base"],
     "category" : "Generic Modules/Others",
-    "depends": ["base", "process", "hr"],
     "init_xml": [],
     "update_xml": ['security/ir.model.access.csv', 'lunch_wizard.xml', 'lunch_view.xml', 'lunch_report.xml',
                    'process/lunch_process.xml'

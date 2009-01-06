@@ -303,7 +303,7 @@
         <field name="view_id" ref="view_order_tree"/>
         <field name="domain">[('date_order','=', time.strftime('%Y-%m-%d') )]</field>
     </record>
-    <menuitem name="Sales Management/Orders of the day" action="action_order_today_tree" sequence="2"/>
+    <menuitem name="Orders of the day" action="action_order_today_tree" id="sale_order_day" parent="sale.menu_sale_root" sequence="2"/>
 
     <record model="ir.actions.act_window" id="action_order_today_user_tree">
         <field name="name">sale.order</field>
@@ -315,7 +315,7 @@
         <field name="domain">[('user_id','=', uid ),('date_order','=', time.strftime('%Y-%m-%d'))]</field>
     </record>
 
-    <menuitem name="Sales Management/Orders of the day/My orders of the day" action="action_order_today_user_tree" id="order_today_user_Menuitem" />
+    <menuitem name="My orders of the day" action="action_order_today_user_tree" id="order_today_user_Menuitem" parent="sale_order_day"/>
 
 
 
@@ -430,7 +430,7 @@
         <field name="view_type">form</field>
     </record>
 
-    <menuitem name="Partners/Editor - Suppliers Relations" id="menu_editor_supplier" action="action_editor_supplier" />
+    <menuitem name="Editor - Suppliers Relations" id="menu_editor_supplier" action="action_editor_supplier" parent="base.menu_base_partner"/>
 
 
     <record model="ir.ui.view" id="mrp_procurement_form_view">
