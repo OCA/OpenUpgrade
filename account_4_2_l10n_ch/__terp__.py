@@ -32,7 +32,7 @@
         'account_move_line.xml',
         'account_invoice.xml',
     ],
-    'certificate': '1194839257312869021'    
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
