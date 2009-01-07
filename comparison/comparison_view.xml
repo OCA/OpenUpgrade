@@ -187,6 +187,7 @@
                     <field name="factor_id" select="1"/>
                     <field name="item_id" select="1"/>
                     <field name="result" select="2"/>
+                    <field name="votes"/>
                 </tree>
             </field>
         </record>
@@ -302,7 +303,11 @@
                     <field name="ponderation" select="1"/>
                    	<newline/>
 					<field colspan="4" name="note" />
-					<field name="state" select="2"/>
+					<field name="state" colspan="2" select="2"/>
+					<group col="2" colspan="2">
+					<button name="accept_suggestion" states="draft" string="Accept" type="object"/>
+					<button name="cancel_suggestion" states="draft" string="Reject" type="object"/>
+					</group>
                 </form>
             </field>
         </record>
