@@ -35,7 +35,7 @@
      This module will export payment order
      """,
     "installable":True,
-    "certificate": "828240848925559181"
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

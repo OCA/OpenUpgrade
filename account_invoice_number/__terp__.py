@@ -37,7 +37,7 @@
     ],
     "active": False,
     "installable": True,
-    "certificate": "1072639787809567213"
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

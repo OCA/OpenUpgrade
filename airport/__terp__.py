@@ -30,7 +30,7 @@
     "category" : "Enterprise Specific Modules/Travel Agencies",
     "active": False,
     "installable": False,
-    "certificate": "923284880715335837"
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

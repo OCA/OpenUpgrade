@@ -32,5 +32,5 @@
     "update_xml" : ["account_in_report.xml","account_in_wizard.xml"],
     "active": False,
     "installable": True,
-    "certificate": "1004751193646242301"
+
 }
