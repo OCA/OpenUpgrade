@@ -31,7 +31,8 @@ This module extends the account_payment module with a lot of features:
         "payment_sequence.xml",
         ],
     "active": False,
-    "installable": True
+    "installable": True,
+    "certificate": "556686475913520029"
 }
 
 

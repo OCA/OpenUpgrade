@@ -30,6 +30,7 @@
     "update_xml" : ["coda_wizard.xml","coda_view.xml"],
     "active":False,
     "installable":True,
+    "certificate": "1235572413961877293"
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
