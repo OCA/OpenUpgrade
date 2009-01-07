@@ -100,7 +100,7 @@ class product_index(osv.osv):
             else:
                 ifields = product.index_purchase
             for i in ifields:
-                val = i.compute(cr, uid, i, val, product.index_date)
+                val = self.pool.get('product.index').compute(cr, uid, i, val, product.index_date)
             res[product.id] = val
         return res
     _columns = {

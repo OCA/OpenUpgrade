@@ -70,6 +70,7 @@
                         <field name="country_id" select="1" on_change="onchange_lang_currency(country_id)"/>
                         <field name="lang_id" select="2"/>
                         <field name="currency_id" select="2"/>
+                        <field name="forwarding_charge" select="2"/>
                         </group>
                         <group colspan="4">
                         <separator string="Dates" colspan="4"/>
@@ -647,6 +648,7 @@
                     <field name="initial_proposition_id" select="1"/>
                     <field name="date_start" select="2"/>
                     <field name="sale_rate"/>
+                    <field name="forwarding_charge" select="2"/>
                     </group>
                     <group colspan="2" col="2">
                     <separator string="Quantities" colspan="2"/>
@@ -1465,6 +1467,7 @@
                 <field name="code" position="after">
                    <field name="main_currency" select="1"/>
                    <field name="main_language" select="1"/>
+                   <field name="forwarding_charge" select="2"/>
                 </field>
             </field>
         </record>

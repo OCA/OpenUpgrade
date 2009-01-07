@@ -46,11 +46,14 @@
     ],
     "demo_xml":[],
     "description": """
-    This is a Business Game which consists of Two Phases
-    1. Phase One
-    2. Phase Two
-    how to play and other information regarding the game
-    will be available soon.
+    This business game will help you to discover Open ERP and it's enterprise management processes.
+The game is based on a company called 'GoodSound' selling audio and video hardware and organising sonorisation events.
+
+The game is structured into two phases:
+   1. You will discover the Open ERP interface through a complete sale flow: from the quotation to the invoice,
+   2. The goal of the next phase is to make some strategic choices in the system to increase company's profitability
+      within a few turns of one year each.
+
     """,
     "update_xml":[
         "wizard_game_phase2.xml",

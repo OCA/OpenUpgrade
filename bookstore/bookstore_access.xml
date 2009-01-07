@@ -52,26 +52,26 @@
         <record model="res.groups" id="stock_admin">
                 <field name="name">Acces stock admin</field>
         </record>
-		<menuitem id="stock.menu_action_picking_form" groups="base.group_system,stock_admin,stock_base"  name="Inventory Control/Packing Lists"/>
-
-		<menuitem name="Inventory Control" id="stock.menu_stock_root" groups="base.group_system,stock_admin"/>
-		<menuitem name="Inventory Control/Configuration" groups="base.group_system,stock_admin"  id="stock.stock_config"/>
-		<menuitem name="Inventory Control/Physical Inventory"
-				  id="stock.menu_action_inventory_form"  groups="base.group_system,stock_admin"/>
-		<menuitem name="Inventory Control/Traceability" id="stock.stock_traceability"
-				  groups="base.group_system,stock_admin"/>
-		<menuitem name="Inventory Control/Locations Structure" id="stock.menu_action_location_tree"
-				  groups="base.group_system,stock_admin"/>
-		<menuitem name="Inventory Control/Delivery Order" id="stock.menu_action_move_form" groups="base.group_system,stock_admin"/>
-
-		<menuitem name="Administration" groups="base.group_system" icon="terp-administration" id="menu_admin_compta"/>
-
+        
+<!--		<menuitem id="stock.menu_action_picking_form" groups="base.group_system,stock_admin,stock_base"  name="Inventory Control/Packing Lists"/>-->
+<!---->
+<!--		<menuitem name="Inventory Control" id="stock.menu_stock_root" groups="base.group_system,stock_admin"/>-->
+<!--		<menuitem name="Inventory Control/Configuration" groups="base.group_system,stock_admin"  id="stock.stock_config"/>-->
+<!--		<menuitem name="Inventory Control/Physical Inventory"-->
+<!--				  id="stock.menu_action_inventory_form"  groups="base.group_system,stock_admin"/>-->
+<!--		<menuitem name="Inventory Control/Traceability" id="stock.stock_traceability"-->
+<!--				  groups="base.group_system,stock_admin"/>-->
+<!--		<menuitem name="Inventory Control/Locations Structure" id="stock.menu_action_location_tree"-->
+<!--				  groups="base.group_system,stock_admin"/>-->
+<!--		<menuitem name="Inventory Control/Delivery Order" id="stock.menu_action_move_form" groups="base.group_system,stock_admin"/>-->
+<!---->
+<!--		<menuitem name="Administration" groups="base.group_system" icon="terp-administration" id="menu_admin_compta"/>-->
 
 
         <record model="res.groups" id="purchase_base">
                 <field name="name">Acces commandes fournisseur</field>
         </record>
-		<menuitem name="Purchase Management" id="purchase.menu_purchase_root" groups="base.group_system,purchase_base"/>
+<!--		<menuitem name="Purchase Management" id="purchase.menu_purchase_root" groups="base.group_system,purchase_base"/>-->
 
 
 
@@ -81,13 +81,12 @@
         <record model="res.groups" id="sale_admin">
                 <field name="name">Acces commande client admin</field>
         </record>
-		<menuitem name="Sales Management"  id="sale.menu_sale_root" groups="base.group_system,sale_base,sale_admin"/>
-		<menuitem name="Sales Management/Configuration" groups="base.group_system,sale_admin" id="sale.sale_config"/>
+        
+<!--		<menuitem name="Sales Management"  id="sale.menu_sale_root" groups="base.group_system,sale_base,sale_admin"/>-->
+<!--		<menuitem name="Sales Management/Configuration" groups="base.group_system,sale_admin" id="sale.sale_config"/>-->
 
-
-
-  		<menuitem name="Human Resources" groups="grempty" sequence="1" id="hr.menu_hr_root"/>
- 		<menuitem name="Production" groups="grempty" sequence="1" id="mrp.menu_mrp_root"/>
+<!--  		<menuitem name="Human Resources" groups="grempty" sequence="1" id="hr.menu_hr_root"/>-->
+<!-- 		<menuitem name="Production" groups="grempty" sequence="1" id="mrp.menu_mrp_root"/>-->
 
 </data>
 </openerp>

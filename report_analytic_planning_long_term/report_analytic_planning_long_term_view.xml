@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
 	<data>
 
@@ -46,15 +46,13 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="stat_account_ids" position="after">
-					<page string="Time by Post / Product">
-						<field name="stat_product_ids" colspan="4" nolabel="1">
-							<tree string="Quantities by Post / Product">
-								<field name="product_id"/>
-								<field name="quantity" sum="Total Planned"/>
-								<field name="sum_amount_real" sum="Total Timesheet"/>
-							</tree>
-						</field>
-					</page>
+					<field name="stat_product_ids" colspan="4" nolabel="1">
+						<tree string="Quantities by Post / Product">
+							<field name="product_id"/>
+							<field name="quantity" sum="Total Planned"/>
+							<field name="sum_amount_real" sum="Total Timesheet"/>
+						</tree>
+					</field>
 				</field>
 			</field>
 		</record>
