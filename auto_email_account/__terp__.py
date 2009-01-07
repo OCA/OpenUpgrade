@@ -36,7 +36,8 @@ the selected invoices attached by Email
         "account_workflow.xml"
     ],
     "active": False,
-    "installable": True
+    "installable": True,
+    "certificate": "746774535915804909"
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -295,6 +295,10 @@
                         	<button name="items_state_inprogress_set" string="Set to In Progress" attrs="{'invisible':[('items_state','!=','done')]}" type="object"/>
                         </group>
                     </page>
+                    <page string="Advanced">
+                    	<separator string="Payment Methods" colspan="4"/>
+                   		<field name="payment_methods" colspan="4" nolabel="1"/>
+                    </page>
                     <page string="Notes">
                         <separator string="Notes" colspan="4"/>
                         <field name="notes" colspan="4" nolabel="1"/>
@@ -1468,6 +1472,8 @@
                    <field name="main_currency" select="1"/>
                    <field name="main_language" select="1"/>
                    <field name="forwarding_charge" select="2"/>
+                   <separator string="Payment Methods" colspan="4"/>
+                   <field name="payment_methods" colspan="4" nolabel="1"/>
                 </field>
             </field>
         </record>

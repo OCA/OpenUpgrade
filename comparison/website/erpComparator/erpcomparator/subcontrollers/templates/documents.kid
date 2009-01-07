@@ -6,7 +6,6 @@
     <title>Comparison</title>
 </head>
 <body>
-	<br/>
     <div class="mattblacktabs">
 		<ul>
 	    	<li>

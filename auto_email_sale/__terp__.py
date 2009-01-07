@@ -33,7 +33,8 @@ the selected sale orders attached by Email
     "demo_xml" : [],
     "update_xml" : ["account_sale_wizard.xml"],
     "active": False,
-    "installable": True
+    "installable": True,
+    "certificate": "638152785229446789"
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
