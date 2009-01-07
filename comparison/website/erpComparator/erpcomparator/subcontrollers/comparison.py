@@ -188,7 +188,7 @@ class Comparison(controllers.Controller):
             for i, j in item.items():
                 for r in res1:
                     if j == r.get('factor_id')[1]:
-                        item[r.get('item_id')[1]] = r.get('result') 
+                        item[r.get('item_id')[1]] = str(r.get('result')) + '%' 
 
             record['id'] = item.pop('id')
 #            record['action'] = tg_url('/tree/open', model=model, id=record['id'])

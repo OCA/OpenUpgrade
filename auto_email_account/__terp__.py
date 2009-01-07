@@ -37,7 +37,7 @@ the selected invoices attached by Email
     ],
     "active": False,
     "installable": True,
-    "certificate": "746774535915804909"
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

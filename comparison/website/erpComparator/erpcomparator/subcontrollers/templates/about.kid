@@ -33,6 +33,11 @@
 	    			<span>Graph</span>
 	    		</a>
 	    	</li>
+	    	<li>
+	    		<a href="#" onclick="window.location.href='/login'">
+	    			<span>Login</span>
+	    		</a>
+	    	</li>
 	  	</ul>
 	</div>
 	${msg}

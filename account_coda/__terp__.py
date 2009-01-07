@@ -32,7 +32,7 @@
     "update_xml" : ["security/ir.model.access.csv","coda_wizard.xml","coda_view.xml"],
     "active":False,
     "installable":True,
-    "certificate": "556686472245994261"
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

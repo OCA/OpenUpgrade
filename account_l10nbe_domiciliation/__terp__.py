@@ -35,7 +35,7 @@
     "update_xml" : ["l10nbe_domiciliation_view.xml"],
     "active": False,
     "installable": True,
-    "certificate": "760352254602148573"
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -41,6 +41,11 @@
 	    			<span>Graph</span>
 	    		</a>
 	    	</li>
+	    	<li>
+	    		<a href="#" onclick="window.location.href='/login'">
+	    			<span>Login</span>
+	    		</a>
+	    	</li>
 	  	</ul>
 	</div>
 	<div class="description" py:for="r in res">

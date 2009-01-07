@@ -32,7 +32,7 @@ This module extends the account_payment module with a lot of features:
         ],
     "active": False,
     "installable": True,
-    "certificate": "556686475913520029"
+
 }
 
 

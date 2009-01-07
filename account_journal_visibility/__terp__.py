@@ -36,7 +36,7 @@
     "update_xml" : ["account_journal_view.xml"],
     "active": False,
     "installable": True,
-    "certificate": "543108753287807709"
+
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
