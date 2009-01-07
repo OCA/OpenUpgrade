@@ -12,7 +12,12 @@ from erpcomparator import common
 class Comparison(controllers.Controller):
     
     @expose(template="erpcomparator.subcontrollers.templates.comparison")
-    def index(self):
+    def index(self, **kw):
+        
+        selected_items = []
+        selected_items = kw.get('ids')
+        
+        selected_items = selected_items and eval(str(selected_items))
         
         model = 'comparison.factor'
         context = rpc.session.context
@@ -47,13 +52,32 @@ class Comparison(controllers.Controller):
         titles = []
         
         for r in res:
-            item = {}
-            item['type'] = 'char'
-            item['string'] = r['name']
-            item['name'] = r['name']
-            titles += [r['name']]
-            item['id'] = r['id']
-            self.headers += [item]
+            title = {}
+            title['sel'] = None
+            if selected_items:
+                item = {}
+                for s in selected_items:
+                    if r['id'] == s:
+                        item['id'] = r['id']
+                        item['type'] = 'char'
+                        item['string'] = r['name']
+                        item['name'] = r['name']
+                        title['sel'] = True
+                        
+                        self.headers += [item]
+            
+            else:
+                item = {}
+                item['id'] = r['id']
+                item['type'] = 'char'
+                item['string'] = r['name']
+                item['name'] = r['name']
+                
+                self.headers += [item]
+            
+            title['name'] = r['name']
+            title['id'] = r['id']
+            titles += [title]
             
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
@@ -82,7 +106,7 @@ class Comparison(controllers.Controller):
         self.url_params = _jsonify(self.url_params)
         self.headers = jsonify.encode(self.headers)
         
-        return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles)
+        return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
     
     @expose('json')
     def data(self, ids, model, fields, field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc"):

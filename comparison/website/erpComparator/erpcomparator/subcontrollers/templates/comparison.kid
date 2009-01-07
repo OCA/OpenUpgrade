@@ -5,31 +5,14 @@
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Comparison</title>
     
-    <script type="text/javascript">
-	    
-	    function selection(id) {
-	    	var elem = document.getElementById(id);
-	        elem.style.display = '';
-		}
-		
-		function open_comparison(id) {
-	    	var elem = document.getElementById(id);
-	        elem.style.display = elem.style.display == 'none' ? '' : 'none';
-		}
-		
-		function close_comparison(id) {
-	    	var elem = document.getElementById(id);
-	        elem.style.display = 'none';
-		}
-		
-	</script>
+    <script type="text/javascript" src="/static/javascript/comparison.js"></script>
     
 </head>
 <body>
     <div class="mattblacktabs">
 		<ul>
 	    	<li id="current">
-	    		<a href="#" onclick="open_comparison('selection'); close_comparison('open_comp');">
+	    		<a href="#" onclick="window.location.href='/comparison'">
 	    			<span>Comparison</span>
 	    		</a>
 	    	</li>
@@ -61,15 +44,25 @@
 				<td class="label">
 					You can compare among following Products : 
 				</td>
+			</tr>
+		</table>
+		<table name="item_list" id="item_list">
+			<tr py:if="selected_items">
 				<td py:for="label in titles">
-					<input type="checkbox">${label}</input>
+					<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}</input>
+				</td>
+			</tr>
+			<tr py:if="not selected_items">
+				<td py:for="label in titles">
+					<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
 				</td>
 			</tr>
 		</table>
 		<br/>
-		<button type='button' onclick="close_comparison('selection'); open_comparison('open_comp');">Compare</button>
-	</div>
-	<div id="open_comp" style="display:none">
+		
+		<button type='button' onclick="getRecords()">Compare</button>
+	</div><br/>
+	<div id="open_comp">
 		<span id="comparison_tree"/>
 		<script type="text/javascript">
         	var comparison_tree = new TreeGrid('comparison_tree');
