@@ -150,15 +150,6 @@ class comparison_vote(osv.osv):
 #    def create(self, cr, uid, vals, context={}):
 #        result = super(comparison_vote, self).create(cr, uid, vals, context)
 #        
-#        print "vals",vals
-#        
-#        obj_result = self.pool.get('comparison.factor.result')
-#        flag = False
-#        result_ids = obj_result.search(cr, uid, [('factor_id','=',vals['factor_id']),('item_id','=',vals['item_id'])])
-#               
-#        for score in  obj_result.browse(cr, uid, result_ids):
-#            obj_result.write(cr, uid, [score.id],{'votes':score.votes + 1})
-#            
 #        return result
 #    
 #    def write(self, cr, uid, ids, vals, context=None):
@@ -166,13 +157,6 @@ class comparison_vote(osv.osv):
 #            context={}
 #        result = super(comparison_vote, self).write(cr, uid, ids, vals, context=context)
 #        
-#        obj_result = self.pool.get('comparison.factor.result')
-#        flag = False
-#        result_ids = obj_result.search(cr, uid, [('factor_id','=',vals['factor_id']),('item_id','=',vals['item_id'])])
-#               
-#        for score in  obj_result.browse(cr, uid, result_ids):
-#            obj_result.write(cr, uid, [score.id],{'votes':score.votes + 1})
-#            
 #        return result
         
     
@@ -187,7 +171,7 @@ class comparison_factor_result(osv.osv):
     def _compute_score(self, cr, uid, ids, name, args, context):
         if not ids: return {}
         result = {}
-
+        
         for obj_factor_result in self.browse(cr, uid, ids):
 #            consider maximum vote factor = 5.0
             pond_div = 5.00
@@ -291,6 +275,11 @@ class comparison_ponderation_suggestion(osv.osv):
         'ponderation': lambda *a: 1.0,
         'state': lambda *a: 'draft',
     }
+    
+    _sql_constraints = [
+        ('user_id', 'unique(factor_id,user_id)', 'User can contribute to this factor only Once!!!' )
+    ]
+
     # TODO: overwrite create/write
 comparison_ponderation_suggestion()
 
