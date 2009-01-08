@@ -30,7 +30,7 @@
             * contacts,
             * accounting entries
 
-        Once the module is installed, all you have to do is run the configuration wizard and provide OpenERP the location of the Bob directory where are your data.
+        Once the module is installed, all you have to do is run the configuration wizard and provide OpenERP the location of the Bob directory where is your data.
 """,
     'category': 'Data Module',
     'init_xml':[],

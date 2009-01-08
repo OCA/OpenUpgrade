@@ -32,7 +32,7 @@
     "update_xml" : ["security/ir.model.access.csv","payment_export_wizard.xml","payment_export_view.xml","payment_export_data.xml"],
     "active":False,
     "description": """
-     This module will export payment order
+     This module allows to export payment orders.
      """,
     "installable":True,
 
