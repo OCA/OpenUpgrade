@@ -140,7 +140,7 @@ class Comparison(controllers.Controller):
         result = proxy.read(ids, fields, ctx)
         
         prx = rpc.RPCProxy('comparison.factor.result')
-        rids = prx.search([])        
+        rids = prx.search([('factor_id', 'in', ids)])            
         res1 = prx.read(rids)
         
         if sort_by:
