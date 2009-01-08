@@ -306,7 +306,7 @@
 					<field name="state" colspan="2" select="2"/>
 					<group col="2" colspan="2">
 					<button name="accept_suggestion" states="draft" string="Accept" type="object"/>
-					<button name="cancel_suggestion" states="draft" string="Reject" type="object"/>
+					<button name="cancel_suggestion" states="draft,done" string="Reject" type="object"/>
 					</group>
                 </form>
             </field>
