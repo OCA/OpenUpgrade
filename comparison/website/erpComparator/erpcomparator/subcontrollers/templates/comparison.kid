@@ -41,6 +41,11 @@
 	    			<span>Login</span>
 	    		</a>
 	    	</li>
+	    	<li>
+	    		<a href="#" onclick="window.location.href='/login/logout'">
+	    			<span>Logout</span>
+	    		</a>
+	    	</li>
 	  	</ul>
 	</div><br/>
 	<div id="selection">
@@ -72,6 +77,7 @@
 		<script type="text/javascript">
         	var comparison_tree = new TreeGrid('comparison_tree');
         	
+        	comparison_tree.options.onbuttonclick = on_button_click;
         	comparison_tree.setHeaders(${ustr(headers)});
         	comparison_tree.setRecords('${url}', ${ustr(url_params)});
         	

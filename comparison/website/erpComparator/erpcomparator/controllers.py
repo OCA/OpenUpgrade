@@ -23,8 +23,11 @@ rpc.session = rpc.RPCSession(host, port, protocol, storage=cherrypy.session)
 class Root(controllers.RootController):
     @expose(template="erpcomparator.templates.index")
     def index(self):
+        
         res = rpc.session.login(database, user_name, password)
-        return dict()
+        userinfo = cherrypy.session.get('user_info', '')
+        
+        return dict(userinfo=userinfo)
 
     comparison = subcontrollers.comparison.Comparison()
     softwares = subcontrollers.softwares.Softwares()

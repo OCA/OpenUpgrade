@@ -34,6 +34,9 @@ function getSelectedItems() {
         	return box.id;
        	}
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
-	
+}
+
+function on_button_click() {
+	openWindow('/login/');
 	
 }

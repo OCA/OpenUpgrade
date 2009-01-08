@@ -35,13 +35,16 @@
 	    			<span>Graph</span>
 	    		</a>
 	    	</li>
-	    	<li/><li/><li/><li/>
 	    	<li>
 	    		<a href="#" onclick="window.location.href='/login'">
 	    			<span>Login</span>
 	    		</a>
 	    	</li>
-	    	
+	    	<li py:if="userinfo">
+	    		<a href="#" onclick="window.location.href='/login/logout'">
+	    			<span>Logout</span>
+	    		</a>
+	    	</li>
 	  	</ul>
 	</div>
 </body>

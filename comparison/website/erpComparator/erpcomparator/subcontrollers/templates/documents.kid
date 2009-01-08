@@ -38,6 +38,11 @@
 	    			<span>Login</span>
 	    		</a>
 	    	</li>
+	    	<li>
+	    		<a href="#" onclick="window.location.href='/login/logout'">
+	    			<span>Logout</span>
+	    		</a>
+	    	</li>
 	  	</ul>
 	</div>
 	${msg}
