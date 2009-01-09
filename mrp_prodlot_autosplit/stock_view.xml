@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <openerp>
-<!-- TODO extends other picking forms too? -->
 	<data>
 		<record model="ir.ui.view" id="view_picking_in_form_unique_production_number">
 			<field name="name">view.picking.in.form.unique_production_number</field>
@@ -15,7 +14,7 @@
                <field name="product_uom"/>
                <field name="location_dest_id"/>
                <field name="new_prodlot_code"/>
-               <field name="prodlot_id"/>
+               <field context="{'location_id':location_id, 'product_id':product_id}" domain="[('product_id','=',product_id)]" name="prodlot_id" on_change="onchange_lot_id(prodlot_id,product_qty, location_id)"/>
                <field name="state"/>
            </tree>
 				</xpath>
