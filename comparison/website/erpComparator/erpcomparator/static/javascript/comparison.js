@@ -36,7 +36,6 @@ function getSelectedItems() {
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
 }
 
-function on_button_click() {
-	openWindow('/login/');
-	
+function on_button_click(evt, node) {
+	openWindow(getURL('/comparison/voting', {id: node.name}), {width: 500, height: 350});
 }

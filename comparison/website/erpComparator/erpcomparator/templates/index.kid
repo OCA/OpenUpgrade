@@ -40,7 +40,7 @@
 	    			<span>Login</span>
 	    		</a>
 	    	</li>
-	    	<li py:if="userinfo">
+	    	<li>
 	    		<a href="#" onclick="window.location.href='/login/logout'">
 	    			<span>Logout</span>
 	    		</a>

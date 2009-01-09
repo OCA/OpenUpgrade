@@ -117,7 +117,47 @@ class Comparison(controllers.Controller):
         self.url_params = _jsonify(self.url_params)
         self.headers = jsonify.encode(self.headers)
 
-        return dict(userinfo=userinfo, headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
+        return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
+    
+    @expose(template="erpcomparator.subcontrollers.templates.voting")
+    def voting(self, **kw):
+        
+        id = kw.get('id')
+        
+        model = "comparison.factor"
+        proxy = rpc.RPCProxy(model)
+        res = proxy.read([id], ['name', 'ponderation'])
+        name = res[0]['name']
+        pond = res[0]['ponderation']
+        
+        count = range(0, 21)
+        count = [c/float(10) for c in count]
+        
+        return dict(res=None, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
+        
+    @expose(template="erpcomparator.subcontrollers.templates.voting")
+    def update_voting(self, **kw):
+        
+        id = kw.get('id')
+        name = kw.get('name')
+        user_id = kw.get('user')
+        pond = kw.get('pond_value')
+        note = kw.get('suggestion')
+        
+        smodel = "comparison.ponderation.suggestion"
+        sproxy = rpc.RPCProxy(smodel)
+        
+        res = None
+        
+        count = range(0, 21)
+        count = [c/float(10) for c in count]
+        
+        try:
+            res = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond, 'note': note})
+        except Exception, e:
+            return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error=str(e))
+        
+        return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
     
     @expose('json')
     def data(self, ids, model, fields, field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc"):
