@@ -6,19 +6,44 @@
 			<field name="model">stock.picking</field>
 			<field name="inherit_id" ref="stock.view_picking_in_form" />
 			<field name="type">form</field>
-      <field name="arch" type="xml">
+			<field name="arch" type="xml">
 				<xpath expr="/form/notebook/page/field/tree" position="replace">
-           <tree string="Stock Moves" editable="bottom">
-               <field name="product_id"/>
-               <field name="product_qty"/>
-               <field name="product_uom"/>
-               <field name="location_dest_id"/>
-               <field name="new_prodlot_code"/>
-               <field context="{'location_id':location_id, 'product_id':product_id}" domain="[('product_id','=',product_id)]" name="prodlot_id" on_change="onchange_lot_id(prodlot_id,product_qty, location_id)"/>
-               <field name="state"/>
-           </tree>
+					<tree string="Stock Moves" editable="bottom">
+						<field name="product_id" />
+						<field name="product_qty" />
+						<field name="product_uom" />
+						<field name="location_id" />
+						<field name="location_dest_id" />
+						<field name="new_prodlot_code" />
+						<field context="{'location_id':location_id, 'product_id':product_id}" domain="[('product_id','=',product_id)]"
+							name="prodlot_id" on_change="onchange_lot_id(prodlot_id,product_qty, location_id)" />
+						<field name="state" />
+					</tree>
 				</xpath>
-	    </field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_picking_out_form_unique_production_number">
+			<field name="name">view.picking.out.form.unique_production_number
+			</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_out_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook/page/field" position="inside">
+					<tree string="Stock Moves" editable="bottom">
+						<field name="product_id" />
+						<field name="product_qty" />
+						<field name="product_uom" />
+						<field name="location_id" />
+						<field name="location_dest_id" />
+						<field name="new_prodlot_code" />
+						<field context="{'location_id':location_id, 'product_id':product_id}" domain="[('product_id','=',product_id)]"
+							name="prodlot_id" on_change="onchange_lot_id(prodlot_id,product_qty, location_id)" />
+						<field name="state" />
+					</tree>
+				</xpath>
+			</field>
 		</record>
 	</data>
 </openerp>
