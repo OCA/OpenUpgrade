@@ -21,11 +21,12 @@
 ##############################################################################
 import pooler
 import os
+import osv
 from tools import config
 
 class abstract_quality_check(object):
     '''
-        This Class provide...
+        This Class provides...
     '''
 
     def __init__(self):
@@ -39,6 +40,9 @@ class abstract_quality_check(object):
 
         #This char have to store the name of the test.
         self.name = ""
+
+        #This char have to store the aim of the test and eventually a note.
+        self.note = ""
 
         #This char have to store the result.
         #Used to display the result of the test.
@@ -59,7 +63,7 @@ class abstract_quality_check(object):
         #Specify test got an error on module
         self.error = False
 
-        #The tests have to subscribe itselfs in this list, that contains all the test that have to be performed. 
+        #The tests have to subscribe itselfs in this list, that contains all the test that have to be performed.
         self.tests = []
         self.list_folders = os.listdir(config['addons_path']+'/base_module_quality/')
         for item in self.list_folders:
@@ -77,7 +81,8 @@ class abstract_quality_check(object):
         '''
         this method should do the test and fill the score, result and result_details var
         '''
-        raise 'Not Implemented'
+
+        raise osv.except_osv(_('Programming Error'), _('Test Is Not Implemented'))
 
     def get_objects(self, cr, uid, module):
         # This function returns all object of the given module..
@@ -103,16 +108,13 @@ class abstract_quality_check(object):
 
     def format_table(self, header=[], data_list=[]):
         detail = ""
-        if header[0]=='method':
-            detail += ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-16s \n! %-20s \n! %-16s ') % (header[1].ljust(40), header[2].ljust(16), header[3].ljust(20), header[4].ljust(16))
-            for res in data_list[0]:
-                detail += ('\n|-\n| %s \n| %s \n| %s \n| %s ') % (res, data_list[0][res][0], data_list[0][res][1], data_list[0][res][2])
-            detail = detail + '\n|}'
-        elif header[0]=='speed':
-            detail += ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n! %-10s \n! %-10s \n! %-10s \n! %-20s') % (header[1].ljust(40), header[2].ljust(10), header[3].ljust(10), header[4].ljust(10), header[5].ljust(10), header[6].ljust(20))
-            for data in data_list[0]:
-                detail +=  ('\n|-\n| %s \n| %s \n| %s \n| %s \n| %s \n| %s ') % (data[0], data[1], data[2], data[3], data[4], data[5])
-                detail = detail  + '\n|}\n'
+        detail += (header[0]) % tuple(header[1])
+        frow = '\n|-'
+        for i in header[1]:
+            frow += '\n| %s'
+        for key, value in data_list.items():
+            detail += (frow) % tuple(value)
+        detail = detail + '\n|}'
         return detail
 
     def add_quatation(self, x, y):
