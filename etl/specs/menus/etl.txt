@@ -1,0 +1,41 @@
+ETL/
+    Configuration/
+        Jobs Definitions/
+            Jobs
+            Activities/
+                Loggers/
+                    Data Logger
+                    Data Logger (Bloc)
+                    Performance Logger
+                    Summary Logger
+                Output/
+                    CSV File
+                    SQL Connector
+                    Open ERP Web-Service
+                Input/
+                    CSV File
+                    SQL Connector
+                    Open ERP Web-Service
+                Transformations/
+                    Sorting Data
+                    Mapping Fields
+                    Filter Data
+                    Deduplication Search
+            Transitions/
+    Traceability/
+        Loggers
+        Jobs Events
+        Process Log
+    Process
+        Draft Process
+        Running Process
+
+
+Main Concept
+------------
+
+A job is the definition of the job (like a workflow)
+
+A process is a running job (like an instance of workflow)
+
+
