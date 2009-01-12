@@ -24,7 +24,7 @@
     'version': '0.1',
     'depends': ['account'],
     'author': 'Tiny',
-    'description': 'Add payment term lines on invoice',
+    'description': 'Module to Add payment term lines on invoice report.',
     'category': 'Generic Modules/Accounting',
     'update_xml': ['report.xml'],
 

@@ -26,7 +26,9 @@
     "website" : "http://tinyerp.com",
     "category" : "Generic Modules/Account l10nbe Domiciliation",
     "description": """
-        related with l10n_be module
+        Related with l10n_be module.
+        Adds Domiciled and Domiciled send date fields on invoice.
+        Domiciliation and Domiciliation Number fields on partner.
     """,
     "depends" : ["base","account"],
     "init_xml" : [],

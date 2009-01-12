@@ -4,6 +4,8 @@ import xml.dom.minidom
 from turbojson import jsonify
 from turbogears import expose
 from turbogears import controllers
+from turbogears import url as tg_url
+import cherrypy
 
 from erpcomparator import rpc
 from erpcomparator import tools
@@ -13,6 +15,8 @@ class Comparison(controllers.Controller):
     
     @expose(template="erpcomparator.subcontrollers.templates.comparison")
     def index(self, **kw):
+        
+        userinfo = cherrypy.session.get('user_info', '')
         
         selected_items = []
         selected_items = kw.get('ids')
@@ -50,6 +54,13 @@ class Comparison(controllers.Controller):
         
         res = proxy_item.read(item_ids, ['name'])
         titles = []
+        
+        change_pond = {}
+       
+        change_pond['name'] = "icon"
+        change_pond['type'] = "image"
+        change_pond['action'] = tg_url('/softwares')
+        self.headers += [change_pond]
         
         for r in res:
             title = {}
@@ -105,8 +116,48 @@ class Comparison(controllers.Controller):
         
         self.url_params = _jsonify(self.url_params)
         self.headers = jsonify.encode(self.headers)
-        
+
         return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
+    
+    @expose(template="erpcomparator.subcontrollers.templates.voting")
+    def voting(self, **kw):
+        
+        id = kw.get('id')
+        
+        model = "comparison.factor"
+        proxy = rpc.RPCProxy(model)
+        res = proxy.read([id], ['name', 'ponderation'])
+        name = res[0]['name']
+        pond = res[0]['ponderation']
+        
+        count = range(0, 21)
+        count = [c/float(10) for c in count]
+        
+        return dict(res=None, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
+        
+    @expose(template="erpcomparator.subcontrollers.templates.voting")
+    def update_voting(self, **kw):
+        
+        id = kw.get('id')
+        name = kw.get('name')
+        user_id = kw.get('user')
+        pond = kw.get('pond_value')
+        note = kw.get('suggestion')
+        
+        smodel = "comparison.ponderation.suggestion"
+        sproxy = rpc.RPCProxy(smodel)
+        
+        res = None
+        
+        count = range(0, 21)
+        count = [c/float(10) for c in count]
+        
+        try:
+            res = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond, 'note': note})
+        except Exception, e:
+            return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error=str(e))
+        
+        return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
     
     @expose('json')
     def data(self, ids, model, fields, field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc"):
@@ -140,7 +191,7 @@ class Comparison(controllers.Controller):
         result = proxy.read(ids, fields, ctx)
         
         prx = rpc.RPCProxy('comparison.factor.result')
-        rids = prx.search([])        
+        rids = prx.search([('factor_id', 'in', ids)])            
         res1 = prx.read(rids)
         
         if sort_by:
@@ -188,13 +239,13 @@ class Comparison(controllers.Controller):
             for i, j in item.items():
                 for r in res1:
                     if j == r.get('factor_id')[1]:
-                        item[r.get('item_id')[1]] = str(r.get('result')) + '%' 
+                        item[r.get('item_id')[1]] = str(r.get('result')) + '%'
+                    else:
+                        item['icon'] = "/static/images/treegrid/gtk-edit.png"
 
             record['id'] = item.pop('id')
 #            record['action'] = tg_url('/tree/open', model=model, id=record['id'])
             record['target'] = None
-
-            record['icon'] = None
 
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)
@@ -214,7 +265,6 @@ class Comparison(controllers.Controller):
         return dict(records=records)
     
     def parse(self, root, fields=None):
-
         for node in root.childNodes:
 
             if not node.nodeType==node.ELEMENT_NODE:
@@ -227,3 +277,4 @@ class Comparison(controllers.Controller):
             
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 self.headers += [field]
+        

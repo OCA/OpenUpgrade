@@ -150,15 +150,6 @@ class comparison_vote(osv.osv):
 #    def create(self, cr, uid, vals, context={}):
 #        result = super(comparison_vote, self).create(cr, uid, vals, context)
 #        
-#        print "vals",vals
-#        
-#        obj_result = self.pool.get('comparison.factor.result')
-#        flag = False
-#        result_ids = obj_result.search(cr, uid, [('factor_id','=',vals['factor_id']),('item_id','=',vals['item_id'])])
-#               
-#        for score in  obj_result.browse(cr, uid, result_ids):
-#            obj_result.write(cr, uid, [score.id],{'votes':score.votes + 1})
-#            
 #        return result
 #    
 #    def write(self, cr, uid, ids, vals, context=None):
@@ -166,13 +157,6 @@ class comparison_vote(osv.osv):
 #            context={}
 #        result = super(comparison_vote, self).write(cr, uid, ids, vals, context=context)
 #        
-#        obj_result = self.pool.get('comparison.factor.result')
-#        flag = False
-#        result_ids = obj_result.search(cr, uid, [('factor_id','=',vals['factor_id']),('item_id','=',vals['item_id'])])
-#               
-#        for score in  obj_result.browse(cr, uid, result_ids):
-#            obj_result.write(cr, uid, [score.id],{'votes':score.votes + 1})
-#            
 #        return result
         
     
@@ -187,7 +171,7 @@ class comparison_factor_result(osv.osv):
     def _compute_score(self, cr, uid, ids, name, args, context):
         if not ids: return {}
         result = {}
-
+        
         for obj_factor_result in self.browse(cr, uid, ids):
 #            consider maximum vote factor = 5.0
             pond_div = 5.00
@@ -261,18 +245,29 @@ class comparison_ponderation_suggestion(osv.osv):
         pool_factor = self.pool.get('comparison.factor')
         obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
         obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
-        factor_id = pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':obj_sugg.ponderation,'note':''})
+        new_pond = (obj_factor.ponderation * obj_sugg.ponderation)
+        note = obj_factor.note or ''
+        factor_id = pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond, 'note':str(note) + '\n' +'Ponderation Change Suggested by ' + str(obj_user.name) + '(' + obj_user.email + '). Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
         self.write(cr, uid, ids, {'state':'done'})
         return True
     
     def cancel_suggestion(self, cr, uid, ids, context={}):
+        obj_sugg = self.browse(cr, uid, ids)[0]
+        if obj_sugg.state == 'done':
+            pool_factor = self.pool.get('comparison.factor')
+            obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
+            obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
+            suggestion = obj_sugg.ponderation or 1.0 # to avoid 0 division
+            new_pond = (obj_factor.ponderation / suggestion)
+            note = obj_factor.note or ''
+            factor_id = pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond,'note':str(note) + '\n' +'Ponderation Revoked by Website Administrator. Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
         self.write(cr, uid, ids, {'state':'cancel'})
         return True
     
     _columns = {
         'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade'),
-        'ponderation': fields.float('Ponderation'),
+        'ponderation': fields.float('Ponderation',required=True),
         'state': fields.selection([('draft','Draft'),('done','Done'),('cancel','Cancel')],'State',readonly=True),
         'note': fields.text('Suggestion')
     }
@@ -280,6 +275,11 @@ class comparison_ponderation_suggestion(osv.osv):
         'ponderation': lambda *a: 1.0,
         'state': lambda *a: 'draft',
     }
+    
+    _sql_constraints = [
+        ('user_id', 'unique(factor_id,user_id)', 'User can contribute to this factor only Once!!!' )
+    ]
+
     # TODO: overwrite create/write
 comparison_ponderation_suggestion()
 

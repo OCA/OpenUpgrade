@@ -26,7 +26,10 @@
     "website" : "http://tinyerp.com",
     "depends" : ['account','account_chart'],
     "category" : "Generic Modules/Accounting",
-    "description": "A module that adds new reports format based on the Indian account module.",
+    "description": """A module that adds new report formats based on the Indian accounting module.
+    Following Reports will be added.
+    *Balance sheet.
+    *Profit & loss Account sheet.""",
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["account_in_report.xml","account_in_wizard.xml"],

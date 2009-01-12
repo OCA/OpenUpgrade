@@ -293,13 +293,15 @@ class ecommerce_partner(osv.osv):
         from email import Encoders
         
         try:
-            mail_from= 'priteshmodi.eiffel@yahoo.co.in'
-            
-            s = smtplib.SMTP()
-          
-            s.debuglevel = 5
-            s.connect('smtp.mail.yahoo.co.in','587')
-            s.login('priteshmodi.eiffel', '123456')
+            mail_from= 'mansuri.sananaz@gmail.com'
+
+            s = smtplib.SMTP('smtp.gmail.com', 587)
+            s.set_debuglevel(1)
+            s.ehlo()
+            s.starttls()
+            s.ehlo()
+            s.login('mansuri.sananaz@gmail.com', 'sananaz29101204')
+            EMAIL_USE_TLS = True 
             outer = MIMEMultipart()
             outer['Subject'] = 'Invoice:'
             outer['To'] = mail_to

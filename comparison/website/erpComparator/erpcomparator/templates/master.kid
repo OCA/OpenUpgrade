@@ -41,10 +41,9 @@
 <body py:match="item.tag=='{http://www.w3.org/1999/xhtml}body'" py:attrs="item.items()">
 
 	<table id="container" border="0" cellpadding="0" cellspacing="0">
-    	<tr>
+    	<tr py:if="value_of('show_header_footer', True)">
         	<td>
 				<div class="headerdesign"></div>
-				
 			</td>
 		</tr>
 		<tr>

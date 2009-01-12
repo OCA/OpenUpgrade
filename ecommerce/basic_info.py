@@ -25,24 +25,43 @@ import time
 import netsvc
 import ir
 
+class payment_method(osv.osv):
+    
+        _name = "payment.method"
+        _description = "payment method"
+        _columns = {
+            'name': fields.char('Name', size=64, required=False),
+	    'scut': fields.char('Shortcut', size=64, required=False),
+             }
+        
+payment_method()
 
 class ecommerce_payment(osv.osv):
     
         _name = "ecommerce.payment"
-        _description = "ecommerce payment configuration"
+        _description = "ecommerce payment"
+
+	def _get_method(self, cursor, user, context=None):
+		ids_method = self.pool.get('payment.method').search(cursor, user, [])
+		data_method = self.pool.get('payment.method').read(cursor, user, ids_method, ['scut','name'], context)
+		return [(r['scut'], r['name']) for r in data_method]
+
         _columns = {
-            'name': fields.char('Cheque Payable to', size=256, required=True),
-            'street': fields.char('Street', size=128, required=True),
-            'street2': fields.char('Street2', size=128, required=True),
-            'zip': fields.char('Zip', change_default=True, size=24, required=True),
-            'city': fields.char('City', size=128, required=True),
-            'state_id': fields.many2one("res.country.state", 'State', required=True),
-            'country_id': fields.many2one('res.country', 'Country', required=True),
-	    	'biz_account': fields.char('Your Business E-mail Id', required=True, size=128),
-            'return_url' : fields.char('Return URL', required=True, size=128),
-            'cancel_url' : fields.char('Cancel URL', required=True, size=128),
-  			'transaction_detail' : fields.one2many('ecommerce.payment.received','paypal_acc', 'Transaction History')
+            'name': fields.selection(_get_method, 'Method', size=64, required=True),
+	    'chequepay_to': fields.char('Street', size=128, required=False),
+            'street': fields.char('Street', size=128, required=False),
+            'street2': fields.char('Street2', size=128, required=False),
+            'zip': fields.char('Zip', change_default=True, size=24, required=False),
+            'city': fields.char('City', size=128, required=False),
+            'state_id': fields.many2one("res.country.state", 'State', required=False),
+            'country_id': fields.many2one('res.country', 'Country', required=False),
+	    'biz_account': fields.char('Your Business E-mail Id', required=False, size=128, help="Paypal Business Account Id."),
+            'return_url' : fields.char('Return URL', required=False, size=128, help="Return url which is set at the paypal account."),
+            'cancel_url' : fields.char('Cancel URL', required=False, size=128, help="Cancel url which is set at the paypal account."),
+            'transaction_detail' : fields.one2many('ecommerce.payment.received','paypal_acc', 'Transaction History', help="Transaction detail with the uniq transaction id.")
+	  
              }
+        
 ecommerce_payment()
 
 class ecommerce_payment_received(osv.osv):
@@ -69,61 +88,35 @@ class ecommerce_shop(osv.osv):
     _name = "ecommerce.shop"
     _description = "ecommerce shop"
     _columns = {
-        'name': fields.char('Name', size=256, required=True),
+        'name': fields.char('Name', size=256, required=True, help="Name of the Shop which u want to configure for website."),
         'company_id': fields.many2one('res.company', 'Company'),
         'shop_id': fields.many2one('sale.shop', 'Sale Shop', required=True),
-        'chequepay_to':fields.many2one('ecommerce.payment', 'Cheque Payable to', required=True),
-        'category_ids': fields.one2many('ecommerce.category', 'web_id','Categories', translate=True),
-        'products':fields.many2many('product.product','ecommerce_new_product_rel','product','ecommerce_product','Products',readonly=True),
-        'currency_ids': fields.many2many('res.currency','currency_rel', 'currency', 'ecommerce_currency', 'Currency'),
-        'language_ids': fields.many2many('res.lang', 'lang_rel', 'language','ecommerce_lang', 'Language'),
-        'delivery_ids': fields.many2many('delivery.grid', 'delivery_rel', 'delivery', 'ecommrce_delivery', 'Delivery')
-        }   
+ 	'payment_method':fields.many2many('ecommerce.payment', 'shop_payment', 'shop_id', 'payment_id', 'Payable method', required=False),
+        'category_ids': fields.one2many('ecommerce.category', 'web_id','Categories', translate=True, help="Add the product categories which you want to displayed on the website."),
+        'currency_ids': fields.many2many('res.currency','currency_rel', 'currency', 'ecommerce_currency', 'Currency', help="Add the currency options for the online customers."),
+        'language_ids': fields.many2many('res.lang', 'lang_rel', 'language','ecommerce_lang', 'Language', help="Add the Launguage options for the online customers."),
+        'row_configuration': fields.integer('No. of Row', help="Add No. of row for products which u want to configure at website"),
+        'column_configuration': fields.integer('No. of Columns', help="Add No. of columns for products which u want to configure at website"),
+        'delivery_ids': fields.many2many('delivery.grid', 'delivery_rel', 'delivery', 'ecommrce_delivery', 'Delivery', help="Add the carriers which we use for the shipping.")
+        } 
+
+    _defaults = {
+                 'row_configuration': lambda *a: 3,
+                 'column_configuration': lambda *a: 3
+                 }  
 ecommerce_shop()
 
 class ecommerce_category(osv.osv):
-       def create(self,cr,uid,vals,context=None):
-           
-            w_id = vals['web_id']
-            if 'category_id' in vals and vals['category_id']:
-                cat_id = vals['category_id']
-                    
-                obj = self.pool.get('product.product').search(cr, uid, [('categ_id','=',cat_id)])
-                obj_prd = self.pool.get('product.product').read(cr,uid,obj,[], context={})
-                temp=[]
-                for i in obj_prd:
-                    temp+=[i['id']]
-                    
-                rec = self.pool.get('ecommerce.shop').write(cr,uid,w_id,{'products':[(6,0,temp)]})
-            result = super(osv.osv, self).create(cr, uid, vals, context)
-            return result
-       
-       def write(self,cr,uid,ids,vals,context=None):
-            
-            obj=self.browse(cr,uid,ids[0])
-            curr_id =self.pool.get('ecommerce.shop').browse(cr, uid, ids,context=context)
-            web_id = obj.web_id.id
-         
-            if web_id:
-                if 'category_id' in vals and vals['category_id']:
-                        cat_id = vals['category_id']
-                        obj = self.pool.get('product.product').search(cr, uid, [('categ_id','=',cat_id)])
-                        obj_prd = self.pool.get('product.product').read(cr,uid,obj,[], context={})
-                        temp=[]
-                        for i in obj_prd:
-                            temp+=[i['id']]
-                        rec = self.pool.get('ecommerce.shop').write(cr,uid,[web_id],{'products':[(6,0,temp)]})
-                
-            return super(ecommerce_category,self).write(cr,uid,ids,vals,context)
-  
+   
        _name = "ecommerce.category"
        _description = "ecommerce category"
        _columns = {
-            'name': fields.char('E-commerce Category', size=64, required=True),
+            'name': fields.char('E-commerce Category', size=64, required=True, help="Add the Category name which you want to display on the website."),
             'web_id': fields.many2one('ecommerce.shop', 'Webshop'),
-            'category_id': fields.many2one('product.category', 'Tiny Category'),
+            'category_id': fields.many2one('product.category', 'Tiny Category', help="It display the product which are under the tiny category."),
             'parent_category_id':fields.many2one('ecommerce.category','Parent Category'),
-            'child_id': fields.one2many('ecommerce.category', 'parent_category_id', string='Childs Categories'),        
+            'child_id': fields.one2many('ecommerce.category', 'parent_category_id', string='Child Categories'), 
+       
     }
        
 ecommerce_category() 

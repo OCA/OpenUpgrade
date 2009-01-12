@@ -24,7 +24,12 @@
     "version" : "1.0",
     "depends" : ["account", "account_simulation"],
     "author" : "Tiny",
-    "description": """Financial and accounting asset management.""",
+    "description": """Financial and accounting asset management.
+    Allows to define
+    * Asset category. 
+    * Assets.
+    *Asset usage period and property.
+    """,
     "website" : "http://tinyerp.com/module_account.html",
     "category" : "Generic Modules/Accounting",
     "init_xml" : [

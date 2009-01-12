@@ -1,24 +1,40 @@
 <?xml version="1.0" ?>
-<openerp>
+<openerp>	
 	<!-- Ecommerce Shop 0 -->
 <data>
-
-		<record id="ecommerce_payment_tinysprl0" model="ecommerce.payment">
-			<field eval="&quot;&quot;&quot;washington&quot;&quot;&quot;" name="city"/>
-			<field eval="&quot;&quot;&quot;Tiny SPRL&quot;&quot;&quot;" name="name"/>
-			<field eval="&quot;&quot;&quot;3490913&quot;&quot;&quot;" name="zip"/>
-			<field eval="&quot;&quot;&quot;street2&quot;&quot;&quot;" name="street2"/>
+			
+		<record id="ecommerce_method" model="payment.method">
+			<field eval="&quot;&quot;&quot;cheque&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;cheque&quot;&quot;&quot;" name="scut"/>
+		</record> 
+		<record id="ecommerce_method1" model="payment.method">
+			<field eval="&quot;&quot;&quot;paypal&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;paypal&quot;&quot;&quot;" name="scut"/>
+		</record> 
+		
+		<record id="ecommerce_payment" model="ecommerce.payment">
+			<field eval="&quot;&quot;&quot;Bruxelles&quot;&quot;&quot;" name="city"/>
+			<field eval="&quot;&quot;&quot;cheque&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Tinysprl Pvt ltd.&quot;&quot;&quot;" name="chequepay_to"/>
+			<field eval="&quot;&quot;&quot;1030&quot;&quot;&quot;" name="zip"/>
+			<field eval="&quot;&quot;&quot;Rue des Palais 44&quot;&quot;&quot;" name="street2"/>
 			<field name="country_id" ref="base.us"/>
-			<field eval="&quot;&quot;&quot;oppo Townhall&quot;&quot;&quot;" name="street"/>
+			<field eval="&quot;&quot;&quot;bte 33&quot;&quot;&quot;" name="street"/>
 			<field name="state_id" ref="base.us-co"/>
+			
+		</record> 
+
+		<record id="ecommerce_payment1" model="ecommerce.payment">
 			<field eval="&quot;&quot;&quot;mansur_1219385380_biz@gmail.com&quot;&quot;&quot;" name="biz_account"/>
 			<field eval="&quot;&quot;&quot;http://192.168.0.102:8080/eshop/cancel_msg&quot;&quot;&quot;" name="cancel_url"/>
-			<field eval="&quot;&quot;&quot;http://192.168.0.102:8080/eshop/get_data&quot;&quot;&quot;" name="return_url"/>
+			<field eval="&quot;&quot;&quot;http://192.168.0.102:8080/eshop/get_data&quot;&quot;&quot;" name="return_url"/>	
+			<field eval="&quot;&quot;&quot;paypal&quot;&quot;&quot;" name="name"/>
 		</record>
-
+		
+		
 		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
 			<field eval="[(6,0,[])]" name="delivery_ids"/>
-			<field name="chequepay_to" ref="ecommerce_payment_tinysprl0"/>
+			<!-- <field name="chequepay_to" ref="ecommerce_payment"/> -->
 			<field eval="&quot;&quot;&quot;tinyerp&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="language_ids"/>
 			<field name="company_id" ref="base.main_company"/>
@@ -69,7 +85,7 @@
 		<!-- Ecommerce Category with parent child relation -->
 
   		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
-  			<field name="chequepay_to" ref="ecommerce_payment_tinysprl0"/>
+  			<!--<field name="chequepay_to" ref="ecommerce_payment"/>-->
 			<field name="shop_id" ref="sale.shop"/>
 			<field name="company_id" ref="base.main_company"/>
 		</record>

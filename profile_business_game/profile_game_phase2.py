@@ -183,7 +183,6 @@ class profile_game_phase_two(osv.osv):
             curryear = fiscal_obj.browse(cr,uid,curr_fy)[0]
         if (prev_fy or False):
             year_list.append(prev_fy[0])
-        print "field_names",field_names
         phase2_obj = self.browse(cr, uid, ids, context=context)[0]
         res[phase2_obj.id] = {}
         last_total_sale = sale_forcast = margin_forcast = last_turnover = 0.0
@@ -319,7 +318,6 @@ class profile_game_phase_two(osv.osv):
                         sum2 += forecast.product_qty * forecast.product_id.standard_price
                     cost_purchase_forcast = sum1 + sum2
                     res[phase2_obj.id][field] = cost_purchase_forcast
-                    print "cost_purchase_forcast",cost_purchase_forcast
                 else:
                     res[phase2_obj.id][field] = 0.0
         return res
@@ -366,8 +364,8 @@ class profile_game_phase_two(osv.osv):
     }
 
     def pay_supplier_invoice(self, cr, uid, ids, context):
-        od = self.get_date(cr, uid,context)
         print "pay_supplier_invoice"
+        od = self.get_date(cr, uid,context)
         acc_obj = self.pool.get('account.account')
         acc_type_obj = self.pool.get('account.account.type')
         cash_acc_id = acc_type_obj.search(cr,uid,[('name','=','Cash')])
@@ -466,21 +464,19 @@ class profile_game_phase_two(osv.osv):
         return True
 
     def receive_deliver_products(self, cr, uid, ids, context):
-        print "receive_deliver products"
+        print "receive_deliver_products"
         picking_obj = self.pool.get('stock.picking')
         for type in ('in','out'):
             conf_pick = picking_obj.search(cr,uid,[('state','=','confirmed'),('type','=',type)])
-            print "conf_pick",conf_pick
             if len(conf_pick):
                 picking_obj.force_assign(cr, uid, conf_pick, context)
             picking_ids = picking_obj.search(cr,uid,[('state','=','assigned'),('type','=',type)])
-            print "picking_ids",picking_ids
             pick_br = picking_obj.browse(cr,uid,picking_ids)
             self.process_pickings(cr, uid, ids, pick_br, context)
         return True
 
     def confirm_draft_invoices(self, cr, uid, ids, type, context):
-        print "confirm_draft_customer_invoice"
+        print "confirm_draft_invoices"
         try:
             wf_service = netsvc.LocalService('workflow')
             inv_obj = self.pool.get('account.invoice')
@@ -496,8 +492,8 @@ class profile_game_phase_two(osv.osv):
         return True
 
     def pay_all_customer_invoice(self, cr, uid, ids, context):
-        od = self.get_date(cr, uid,context)
         print "pay_all_customer_invoice"
+        od = self.get_date(cr, uid,context)
         inv_obj = self.pool.get('account.invoice')
         journal = self.pool.get('account.journal').search(cr,uid,[('type','=','cash')])
         jour_br = self.pool.get('account.journal').browse(cr,uid,journal[0])
@@ -531,8 +527,9 @@ class profile_game_phase_two(osv.osv):
         return fiscal_id
 
     def close_fiscalyear(self, cr, uid, ids, close_fy, new_fy, context):
-        print "close_fiscalyear",close_fy,new_fy
-        data = data['form'] = {}
+        print "close_fiscalyear"
+        data = {}
+        data['form'] = {}
         from account.wizard import wizard_fiscalyear_close
         data['form']['report_new'] = True
         data['form']['report_name'] = 'End of Fiscal Year Entry'
@@ -562,7 +559,6 @@ class profile_game_phase_two(osv.osv):
 
     def create_sale_forecast_stock_planning_data(self, cr, uid, ids, syear, context):
         print "create_sale_forecast_stock_planning_data"
-
         user_id = self.pool.get('res.users').search(cr, uid, [('login','ilike','sale')])[0]
         period = self.pool.get('stock.period').search(cr, uid, [('name', '=', syear)])[0]
         prod_ids = self.pool.get('product.product').search(cr, uid, [])
@@ -618,6 +614,7 @@ class profile_game_phase_two(osv.osv):
         return True
 
     def update_messages(self, cr, uid, ids, msg, context):
+        print "update_messages"
         prev_msg = self.read(cr, uid, ids[0],['warn_error'])
         prev_msg['warn_error'] = prev_msg['warn_error'] or  ""
         prev_msg['warn_error']  += '\n' + '*' + msg
@@ -625,6 +622,7 @@ class profile_game_phase_two(osv.osv):
         return True
 
     def adjust_loan_account(self, cr, uid, ids, year, period, date, context):
+         print "adjust_loan_account"
          acc_obj = self.pool.get('account.account')
          loan_obj = self.pool.get('bank.loan')
          loan_ids = loan_obj.search(cr, uid, [('months_left','>',0)])
@@ -650,6 +648,7 @@ class profile_game_phase_two(osv.osv):
          return
 
     def get_traceback(self, cr, uid, ids, year, context):
+        print "get_traceback"
         start_date = year.date_start
         stop_date = year.date_stop
         sale_order = purchase_order = cust_inv = supp_inv = goods_in = goods_out = 0
@@ -724,6 +723,7 @@ class profile_game_phase_two(osv.osv):
         return
 
     def continue_next_year(self, cr, uid, ids, context):
+        print "continue_next_year"
         fiscal_year_id = self.pool.get('account.fiscalyear').search(cr, uid, [('state','=','draft')])
         fy = self.pool.get('account.fiscalyear').browse(cr, uid, fiscal_year_id)[0]
         partner_ids = self.pool.get('res.partner').search(cr,uid,[])
@@ -760,6 +760,7 @@ class profile_game_phase_two(osv.osv):
                     self.pool.get('sale.order.line').create(cr, uid, value)
                 wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
             cnt += 1
+            print "period:::::::",period.code
             self.procure_incomming_left(cr, uid, ids, cnt, context)
             self.confirm_draft_po(cr, uid, ids, context)
             self.confirm_draft_invoices(cr, uid, ids, 'in_invoice', context)
@@ -798,8 +799,8 @@ class profile_game_config_wizard(osv.osv_memory):
         'state':fields.selection([('3','3'),('4','4')],'Number of Players',required=True),
         'finance_name':fields.char('Name of Financial Manager',size='64', required=True),
         'finance_email':fields.char('Email of Financial Manager',size='64'),
-        'hr_name':fields.char('Name of Hurman Ressources Manager',size='64', readonly=True,required=False,states={'4':[('readonly',False),('required',True)]}),
-        'hr_email':fields.char('Email of Hurman Ressources Manager',size='64',readonly=True,required=False,states={'4':[('readonly',False),('required',False)]}),
+        'hr_name':fields.char('Name of Human Resource Manager',size='64', readonly=True,required=False,states={'4':[('readonly',False),('required',True)]}),
+        'hr_email':fields.char('Email of Human Resource Manager',size='64',readonly=True,required=False,states={'4':[('readonly',False),('required',False)]}),
         'logistic_name':fields.char('Name of Logistic Manager',size='64', required=True),
         'logistic_email':fields.char('Email of Logistic Manager',size='64'),
         'sale_name':fields.char('Name of Sales Manager',size='64', required=True),
