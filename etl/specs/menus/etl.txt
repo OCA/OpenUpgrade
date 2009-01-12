@@ -2,7 +2,7 @@ ETL/
     Configuration/
         Jobs Definitions/
             Jobs
-            Activities/
+            Components/
                 Loggers/
                     Data Logger
                     Data Logger (Bloc)
@@ -31,11 +31,15 @@ ETL/
         Running Process
 
 
-Main Concept
-------------
+Terminology
+-----------
 
 A job is the definition of the job (like a workflow)
 
 A process is a running job (like an instance of workflow)
 
+A channel is a name on a transition. Components write data to channels.
+
+A connector is the definition of the access on a database, file, ...
+    A input/output component can use a connector.
 
