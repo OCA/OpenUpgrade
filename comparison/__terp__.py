@@ -38,7 +38,8 @@
             'data/comparison.item.csv',
             'data/comparison.user.csv',
             'data/comparison.vote.values.csv',
-#            "security/ir.model.access.csv",
+            'security/comparison_security.xml',
+            'security/ir.model.access.csv',
             ],
         "active" : False,
         "installable": True
