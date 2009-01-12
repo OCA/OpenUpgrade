@@ -62,6 +62,18 @@ take some place in memory. Is it better to use a list of lists ? We should
 evaluate the difference in memory occupation. If it's less than 50%, we keep
 list of dict.
 
+* I didn't thought about code generation to build a processor that will convert
+the data. Is this really usefull ? Why is Talend providing this ? I think code
+generation is stupid. A static engine that uses a data file explaining how to
+parse data is more interresting.
+If needed, we can isolate the ETL processor so that it works outside Open ERP
+for the process. And, if we need a gui, then we use Open ERP. May be the easiest
+is this: develop a standalone ETL application (like this proto), use Open ERP
+to automatically instanciate objects for this ETL. Open ERP is able to store
+in pickle the instanciated objects so that another engine just have to load
+these objects and use the standalone lib to process data, being Open ERP
+independant.
+
 Time Line
 ~~~~~~~~~
 
