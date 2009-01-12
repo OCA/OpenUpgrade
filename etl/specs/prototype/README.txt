@@ -107,6 +107,18 @@ Implement what's missing to integrate these usecases as modules.
 
 Project Manager: hmo
 
+Standalone ETL Application
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+We should do two teams:
+1. Standalone ETL application
+2. GUI using Open ERP web client
+
+The first one dedicates to create a standalone ETL application using Python.
+This should be similar to the provided prototype which is standalone.
+
+The second one creates a Gui that uses this lib to define and instanciate jobs.
+
 The Process
 ~~~~~~~~~~~
 
