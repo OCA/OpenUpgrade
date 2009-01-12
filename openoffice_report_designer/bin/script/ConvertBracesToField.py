@@ -9,8 +9,7 @@ from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
-    from logreport import *
-
+    from lib.logreport import *
     database="test"
     uid = 1
     passwd='admin'
@@ -74,7 +73,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     for reg in regexes:
-                        res=re.findall(reg[0],oPar.Items[1].replace(' ',""))
+                        res=re.findall(reg[0],oPar.Items[1])
                         if len(res) <> 0:
                             if res[0][0] == "objects":
                                 sTemp = docinfo.getUserFieldValue(3)
@@ -118,14 +117,16 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                                     oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
                                                     oPar.update()
                                                 except:
+                                                    oPar.Items=(str(sExpr) ,oPar.Items[1])
+                                                    oPar.update()
                                                     import traceback,sys
                                                     info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
                                                     self.logobj.log_write('ConvertBracesToField', LOG_ERROR, info)
-                                                    oPar.Items=(str(sExpr) ,oPar.Items[1])
-                                                    oPar.update()
+
                                         else:
+                                            sExpr=r[0][res[0][res[0].rfind(".")+1:]]
                                             try:
-                                                sExpr=r[0][res[0][res[0].rfind(".")+1:]]
+
                                                 if sExpr:
                                                     oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
                                                     oPar.update()
@@ -133,11 +134,12 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                                      oPar.Items=(u"/",oPar.Items[1])
                                                      oPar.update()
                                             except:
+                                                oPar.Items=(str(sExpr) ,oPar.Items[1])
+                                                oPar.update()
                                                 import traceback,sys
                                                 info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
                                                 self.logobj.log_write('ConvertBracesToField', LOG_ERROR,info)
-                                                oPar.Items=(str(sExpr) ,oPar.Items[1])
-                                                oPar.update()
+
                                     else:
                                         oPar.Items=(u""+r,oPar.Items[1])
                                         oPar.update()
