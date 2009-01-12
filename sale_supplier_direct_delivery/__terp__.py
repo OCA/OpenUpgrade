@@ -25,7 +25,11 @@
     "author":"Smile.fr for Loyalty Expert",
     "category":"Custom",
     "description": """
-Warning:
+Enable to send goods directly form supplier to customer taking special care of:
+- making only one picking from supplier location to customer location and using that picking in the sale_order workflow
+- copying the sale order shipping address to the generate purchase order line (so merging purchase orders later on will still work)
+
+Also take note of the following points:
 1) We set automatically a Sale Order line to direct delivery if there isn't enough product in the stock.
 2) We don't try to split such a line, but we set it entirely to direct delivery even if some products are available
 3) In a sale order, some lines can be set to direct while some others are on stock at the same time
@@ -34,7 +38,7 @@ we don't try to anticipate if there will be enough virtual stock is the future i
     """,
     "depends":["base", "product", "sale", "purchase"],
     "demo_xml":[],
-    "update_xml":["product_view.xml", "sale_view.xml", "purchase_view.xml", "stock_view.xml"],
+    "update_xml":["product_view.xml", "sale_view.xml", "purchase_view.xml", "stock_view.xml", "supplier_export_data.xml"],
     "active": False,
     "installable": True,
 }

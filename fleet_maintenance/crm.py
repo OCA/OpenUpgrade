@@ -31,7 +31,7 @@ class crm_case(osv.osv):
         'date': default_incident_date,
         }
     
-    #def copy(self, cr, uid, id, default=None,context={}):
+    #def copy(self, cr, uid, id, default=None,context={}):#TODO
     
     
     def onchange_prodlot_id(self, cr, uid, ids, prodlot_id):

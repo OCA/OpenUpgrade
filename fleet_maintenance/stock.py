@@ -56,15 +56,7 @@ class stock_location(osv.osv):
     
     #dummy; what matters is onchange_parent_fleet_id
     def _set_parent_fleet_id(self, cr, uid, ids, name, value, arg, context):
-        if not value: return False
-        
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-            
-        for location in self.browse(cr, uid, ids):
-            print "2222222"
-            print location
-            print value
+        pass
             
     def _indented_name(self, cr, uid, ids, field_name, arg, context={}):
         res = {}
@@ -99,7 +91,6 @@ class stock_location(osv.osv):
         'is_expired': fields.function(_is_expired, method=True, type='boolean', string="Expired ?"),
         'time_to_expire': fields.function(_time_to_expire, method=True, type='integer', string="Days before expiry"),
         'intrinsic_anniversary_time':fields.date('Intrinsic Time', required = False),
-        #TODO anniversary_time -> fields related?
         'anniversary_time':fields.function(_anniversary_time, method=True, type='date', string="Anniversary Time"), #TODO no year!
         'expire_time':fields.function(_expire_time, method=True, type='date', string="Maintenance Expire Time"),
     }

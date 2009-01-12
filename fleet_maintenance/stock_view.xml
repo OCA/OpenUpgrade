@@ -14,7 +14,7 @@
 
 		<!-- Fleet -->
 
-		<record model="ir.ui.view" id="stock.view_location_form">
+		<record model="ir.ui.view" id="stock.view_location_form2">
 			<field name="name">stock.location.fleet.form.fleet_maintenance</field>
 			<field name="model">stock.location</field>
 			<field name="type">form</field>
@@ -283,7 +283,7 @@
 		<record id="ir_actions_act_window_view_fleet_new" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="action_fleet_extension_new" />
 			<field eval="1" name="multi" />
-			<field name="view_id" ref="stock.view_location_form" />
+			<field name="view_id" ref="stock.view_location_form2" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
 		</record>
 
