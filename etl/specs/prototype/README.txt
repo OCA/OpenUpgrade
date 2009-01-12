@@ -27,12 +27,13 @@ that should schedule the node function calls. And not the node itself.
 default: start, stop, end, error. Others can be user defined.
 
 * Add different kinds of transitions. We implemented the data transition, we
-will have to add the event/signal transition.
+will have to add the event/signal transition. Transition that are triggered
+when receiving a particular event from original node.
 
 * Use a class to store the data, not a simple dict. We should be able to put
-meta information on this class, so that information change from one node to
-another. The class should also store the metadata of the current information.
-(the list of fields and their type)
+meta information on this class, so that information is transfered from one node
+to another. The class should also store the metadata of the current
+information.  (the list of fields and their type)
 
 * Currently, I am passing the same data structure to all channels. It's efficient,
 but when we split from one node to two, we have two pointers to the same data.
@@ -50,6 +51,7 @@ nodes. So that we have a system to manage loops and recursivity.
 
 * I implemented a push mechanism, we should also add a pull mechanism: a node
 can request information to another node, and then receive the requested result.
+This is not existent in most common ETL's so we have to design something smart.
 
 
 Questions
@@ -63,24 +65,35 @@ list of dict.
 Time Line
 ~~~~~~~~~
 
-1. Finnish requirements
+1. Finnish requirements (Deadline: 15/01) - assigned to hmo
  * Prototype (done)
  * All menus
  * All screens
  * List of components to develop
+ * Review by third-party
 
-2. Development
- * Implement all objects/menus/views in Open eRP
+2. Development (Deadline: 29/01) - assigned to trainee
+ * Implement all objects/menus/views in Open ERP
  * Improve the current prototype, integrating the above notes
 
-3. Development of the Open ERP interface
+3. Development of the Open ERP interface (Deadline: 22/02)
  * eTiny: generalisation of the workflow editor to create a new type of view
+     (assigned to noz, sana or ame)
  * etl addons: Integrate prototype logic on Open ERP objects
+     (assigned to trainee)
 
-4. Develop real use cases
+4. Develop real use cases (Deadline: 15/03)
+     (assigned to trainee)
  * Sage -> Open ERP
  * Tally -> Open ERP
  * SugarCRM -> Open ERP
+Implement what's missing to integrate these usecases as modules.
+
+5. Full integrator documentation, 200 pages (Deadline: 31/03)
+     (assigned to trainee)
+ * In english
+
+Project Manager: hmo
 
 The Process
 ~~~~~~~~~~~
