@@ -115,9 +115,17 @@ We should do two teams:
 2. GUI using Open ERP web client
 
 The first one dedicates to create a standalone ETL application using Python.
-This should be similar to the provided prototype which is standalone.
+This should be similar to the provided prototype which is already standalone.
+This should be a python library.
 
 The second one creates a Gui that uses this lib to define and instanciate jobs.
+It instanciates the objects in memory based on Open ERP datas in the database.
+
+So that we can use the ETL as a standalone application or as a part of Open ERP.
+We should find a way to connect the ETL's results to Open ERP applications.
+
+The Open ERP application should be able to save in a pickle a full project.
+So that it can be run latter by the standalone application.
 
 The Process
 ~~~~~~~~~~~
