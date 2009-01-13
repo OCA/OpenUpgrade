@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
-
-
+	
 		<record model="ir.ui.view" id="view_crm_case_form_fleet_maintenance">
 			<field name="name">crm.case.form.fleet_maintenance</field>
 			<field name="model">crm.case</field>
@@ -23,9 +22,12 @@
 					</group>
 					<separator string="Moves" />
 					<group col="6" colspan="4">
-						<field name="incoming_move_id" mode="form" string="Incoming picking" domain="[('product_id','=',product_id),('location_id','=',fleet_id),('prodlot_id','=',prodlot_id)]" context="{'product_id':product_id, 'location_id':fleet_id, 'name':'customer_to_RMA', 'prodlot_id':prodlot_id}"/>
-						<field name="picking_id" string="Repair picking" domain="[('type','=','internal')]" context="{'partner_id':partner_id, 'type':'internal'}" />
-						<field name="outgoing_move_id" string="Outgoing picking" domain="[('product_id','=',product_id),('location_dest_id','=',fleet_id),('prodlot_id','=',prodlot_id)]" context="{'product_id':product_id, 'location_dest_id':fleet_id, 'name':'RMA_to_customer', 'prodlot_id':prodlot_id}" />
+						<field name="incoming_move_id" mode="form" string="Incoming picking"
+							domain="[('product_id','=',product_id),('location_id','=',fleet_id),('prodlot_id','=',prodlot_id)]" context="{'product_id':product_id, 'location_id':fleet_id, 'name':'customer_to_RMA', 'prodlot_id':prodlot_id}" />
+						<field name="picking_id" string="Repair picking" domain="[('type','=','internal')]" context="{'partner_id':partner_id, 'type':'internal', 'view':'incident'}" />
+						<field name="outgoing_move_id" string="Outgoing picking"
+							domain="[('product_id','=',product_id),('location_dest_id','=',fleet_id),('prodlot_id','=',prodlot_id)]"
+							context="{'product_id':product_id, 'location_dest_id':fleet_id, 'name':'RMA_to_customer', 'prodlot_id':prodlot_id}" />
 					</group>
 					<separator string="Qualification" />
 					<group col="6" colspan="4">
