@@ -31,10 +31,19 @@ class payment_method(osv.osv):
         _description = "payment method"
         _columns = {
             'name': fields.char('Name', size=64, required=False),
-	    'scut': fields.char('Shortcut', size=64, required=False),
+            'shortcut': fields.char('Shortcut', size=64, required=False),
              }
         
 payment_method()
+
+class ecommerce_creditcard(osv.osv):
+    _name= "ecommerce.creditcard"
+    _description = "Credit Cards"
+    _columns = {
+        'name': fields.char('Credit Card Name', size=64),
+        'code': fields.char('Credit Card Code', size=28)
+    }
+ecommerce_creditcard()
 
 class ecommerce_payment(osv.osv):
     
@@ -43,23 +52,23 @@ class ecommerce_payment(osv.osv):
 
 	def _get_method(self, cursor, user, context=None):
 		ids_method = self.pool.get('payment.method').search(cursor, user, [])
-		data_method = self.pool.get('payment.method').read(cursor, user, ids_method, ['scut','name'], context)
-		return [(r['scut'], r['name']) for r in data_method]
+		data_method = self.pool.get('payment.method').read(cursor, user, ids_method, ['shortcut','name'], context)
+		return [(r['shortcut'], r['name']) for r in data_method]
 
         _columns = {
             'name': fields.selection(_get_method, 'Method', size=64, required=True),
-	    'chequepay_to': fields.char('Street', size=128, required=False),
+	        'chequepay_to': fields.char('Street', size=128, required=False),
             'street': fields.char('Street', size=128, required=False),
             'street2': fields.char('Street2', size=128, required=False),
             'zip': fields.char('Zip', change_default=True, size=24, required=False),
             'city': fields.char('City', size=128, required=False),
             'state_id': fields.many2one("res.country.state", 'State', required=False),
             'country_id': fields.many2one('res.country', 'Country', required=False),
-	    'biz_account': fields.char('Your Business E-mail Id', required=False, size=128, help="Paypal Business Account Id."),
+	        'biz_account': fields.char('Your Business E-mail Id', required=False, size=128, help="Paypal Business Account Id."),
             'return_url' : fields.char('Return URL', required=False, size=128, help="Return url which is set at the paypal account."),
             'cancel_url' : fields.char('Cancel URL', required=False, size=128, help="Cancel url which is set at the paypal account."),
-            'transaction_detail' : fields.one2many('ecommerce.payment.received','paypal_acc', 'Transaction History', help="Transaction detail with the uniq transaction id.")
-	  
+            'transaction_detail' : fields.one2many('ecommerce.payment.received','paypal_acc', 'Transaction History', help="Transaction detail with the uniq transaction id."),
+	        'creditcards': fields.many2many('ecommerce.creditcard', 'creditcard_method', 'creditcards', 'ecommerce_creditcard', 'Credit Cards')
              }
         
 ecommerce_payment()
@@ -97,12 +106,16 @@ class ecommerce_shop(osv.osv):
         'language_ids': fields.many2many('res.lang', 'lang_rel', 'language','ecommerce_lang', 'Language', help="Add the Launguage options for the online customers."),
         'row_configuration': fields.integer('No. of Row', help="Add No. of row for products which u want to configure at website"),
         'column_configuration': fields.integer('No. of Columns', help="Add No. of columns for products which u want to configure at website"),
+        'image_height': fields.integer('Height in Pixel', help="Add product image height in pixels."),
+        'image_width': fields.integer('Width in Pixel', help="Add product image width in pixels."),
         'delivery_ids': fields.many2many('delivery.grid', 'delivery_rel', 'delivery', 'ecommrce_delivery', 'Delivery', help="Add the carriers which we use for the shipping.")
         } 
 
     _defaults = {
-                 'row_configuration': lambda *a: 3,
-                 'column_configuration': lambda *a: 3
+                    'row_configuration': lambda *a: 3,
+                    'column_configuration': lambda *a: 3,
+                    'image_height': lambda *a: 30,
+                    'image_width': lambda *a:30
                  }  
 ecommerce_shop()
 
@@ -116,7 +129,6 @@ class ecommerce_category(osv.osv):
             'category_id': fields.many2one('product.category', 'Tiny Category', help="It display the product which are under the tiny category."),
             'parent_category_id':fields.many2one('ecommerce.category','Parent Category'),
             'child_id': fields.one2many('ecommerce.category', 'parent_category_id', string='Child Categories'), 
-       
     }
        
 ecommerce_category() 

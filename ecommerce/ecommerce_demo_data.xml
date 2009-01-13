@@ -5,11 +5,11 @@
 			
 		<record id="ecommerce_method" model="payment.method">
 			<field eval="&quot;&quot;&quot;cheque&quot;&quot;&quot;" name="name"/>
-			<field eval="&quot;&quot;&quot;cheque&quot;&quot;&quot;" name="scut"/>
+			<field eval="&quot;&quot;&quot;cheque&quot;&quot;&quot;" name="shortcut"/>
 		</record> 
 		<record id="ecommerce_method1" model="payment.method">
 			<field eval="&quot;&quot;&quot;paypal&quot;&quot;&quot;" name="name"/>
-			<field eval="&quot;&quot;&quot;paypal&quot;&quot;&quot;" name="scut"/>
+			<field eval="&quot;&quot;&quot;paypal&quot;&quot;&quot;" name="shortcut"/>
 		</record> 
 		
 		<record id="ecommerce_payment" model="ecommerce.payment">
