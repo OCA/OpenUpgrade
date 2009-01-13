@@ -55,12 +55,11 @@ class Comparison(controllers.Controller):
         res = proxy_item.read(item_ids, ['name'])
         titles = []
         
-        change_pond = {}
-       
-        change_pond['name'] = "icon"
-        change_pond['type'] = "image"
-        change_pond['action'] = tg_url('/softwares')
-        self.headers += [change_pond]
+#        change_pond = {}
+#       
+#        change_pond['name'] = "icon"
+#        change_pond['type'] = "image"
+#        self.headers += [change_pond]
         
         for r in res:
             title = {}
@@ -70,7 +69,7 @@ class Comparison(controllers.Controller):
                 for s in selected_items:
                     if r['id'] == s:
                         item['id'] = r['id']
-                        item['type'] = 'char'
+                        item['type'] = 'url'
                         item['string'] = r['name']
                         item['name'] = r['name']
                         title['sel'] = True
@@ -80,7 +79,7 @@ class Comparison(controllers.Controller):
             else:
                 item = {}
                 item['id'] = r['id']
-                item['type'] = 'char'
+                item['type'] = 'url'
                 item['string'] = r['name']
                 item['name'] = r['name']
                 
@@ -93,7 +92,7 @@ class Comparison(controllers.Controller):
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 fields += [field['name']]
-        
+                
         fields = jsonify.encode(fields)
         
         icon_name = self.headers[0].get('icon')
@@ -158,6 +157,54 @@ class Comparison(controllers.Controller):
             return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error=str(e))
         
         return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
+    
+    @expose(template="erpcomparator.subcontrollers.templates.item_voting")
+    def item_voting(self, **kw):
+        
+        id = kw.get('id')
+        
+        fmodel = "comparison.factor"
+        proxy = rpc.RPCProxy(fmodel)
+        fres = proxy.read([id])
+        
+        item_id = kw.get('header')
+        factor_id = fres[0]['name']
+        
+        vproxy = rpc.RPCProxy('comparison.vote.values')
+        val = vproxy.search([])
+        value_name = vproxy.read(val, ['name'])
+        
+        return dict(res=None, item_id=item_id, value_name=value_name, factor_id=factor_id, id=id, show_header_footer=False, error="")
+    
+    @expose(template="erpcomparator.subcontrollers.templates.item_voting")
+    def update_item_voting(self, **kw):
+        
+        id = kw.get('id')
+        note = kw.get('note')
+        factor_id = kw.get('factor_id')
+        
+        item_id = kw.get('item_id')
+        iproxy = rpc.RPCProxy('comparison.item')
+        item = iproxy.search([('name', '=', item_id)])[0]
+        
+        score_id = kw.get('score_id')
+        vproxy = rpc.RPCProxy('comparison.vote.values')
+        score = vproxy.search([('name', '=', score_id)])[0]
+        
+        val = vproxy.search([])
+        value_name = vproxy.read(val, ['name'])
+        
+        smodel = "comparison.vote"
+        sproxy = rpc.RPCProxy(smodel)
+        
+        res = None
+        
+        try:
+            res = sproxy.create({'item_id': item, 'user_id': 1, 'factor_id': id, 'score_id': score, 'note': note})
+        except Exception, e:
+            return dict(res=None, item_id=item_id, value_name=value_name, factor_id=factor_id, id=id, show_header_footer=False, error=str(e))
+        
+        return dict(res=res, item_id=item_id, value_name=value_name, factor_id=factor_id, id=id, show_header_footer=False, error="")
     
     @expose('json')
     def data(self, ids, model, fields, field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc"):
@@ -239,13 +286,16 @@ class Comparison(controllers.Controller):
             for i, j in item.items():
                 for r in res1:
                     if j == r.get('factor_id')[1]:
-                        item[r.get('item_id')[1]] = str(r.get('result')) + '%'
-                    else:
-                        item['icon'] = "/static/images/treegrid/gtk-edit.png"
-
+                        item[r.get('item_id')[1]] = str(r.get('result')) + '%' + '|' + "javascript:item_vote(id=%s, header='%s')" % (r.get('factor_id')[0], r.get('item_id')[1])
+                        
+#                    else:
+#                        item['icon'] = "/static/images/treegrid/gtk-edit.png"
+            
             record['id'] = item.pop('id')
-#            record['action'] = tg_url('/tree/open', model=model, id=record['id'])
             record['target'] = None
+
+            if item['ponderation']:
+                item['ponderation'] = item['ponderation'] + '|' + "javascript:change_vote(id=%s)" % (record['id'])
 
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)
@@ -276,5 +326,8 @@ class Comparison(controllers.Controller):
             field.update(attrs)
             
             if field['name'] == 'name' or field['name'] == 'ponderation':
+                if field['name'] == 'ponderation':
+                    field['type'] = 'url'
+                    
                 self.headers += [field]
         
