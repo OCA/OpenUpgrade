@@ -39,10 +39,13 @@ information.  (the list of fields and their type)
 but when we split from one node to two, we have two pointers to the same data.
 So if one node change data, it's also changed in the splitted branch. On the
 transition, we should be allowed to decide if we copy() or not the data.
+After Remark: we keep like that but we implement a fork() node that copy data
+into several different outgoing transition.
 
 * Change the run execution on jobs and nodes so that it process one element at
 a time and not the complete flow of elements. So that the job execution can decide
 to stop running, run one element at a time to trace, or run until it's finnished.
+I think using 'yield' function in python could be a good idea.
 
 * If you send an empty data to output, it does not go to input of the relateds
 nodes. So that we have a system to manage loops and recursivity.
@@ -52,6 +55,7 @@ nodes. So that we have a system to manage loops and recursivity.
 * I implemented a push mechanism, we should also add a pull mechanism: a node
 can request information to another node, and then receive the requested result.
 This is not existent in most common ETL's so we have to design something smart.
+To be detailed...
 
 
 Questions
@@ -79,7 +83,7 @@ Time Line
 
 1. Finnish requirements (Deadline: 15/01) - assigned to hmo
  * Prototype (done)
- * All menus
+ * All menus (done)
  * All screens
  * List of components to develop
  * Review by third-party
@@ -96,9 +100,8 @@ Time Line
 
 4. Develop real use cases (Deadline: 15/03)
      (assigned to trainee)
- * Sage -> Open ERP
- * Tally -> Open ERP
  * SugarCRM -> Open ERP
+ * Outlook -> Open ERP
 Implement what's missing to integrate these usecases as modules.
 
 5. Full integrator documentation, 200 pages (Deadline: 31/03)
