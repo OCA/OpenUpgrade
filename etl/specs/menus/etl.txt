@@ -26,6 +26,59 @@ ETL/
         Jobs Definitions/
             Jobs
             Components/
+				Input Component :
+				    CSVFile Data Input Component 
+                    ExcelFile Data Input Component (*)
+                    XMLFile Data Input Component (*)
+                    Open ERP module (*)
+                    Open ERP MDX Cube Query (*)
+                    Open ERP web-service
+                    SQL Data
+
+               Output Component :
+                    CSVFile Data component
+   -> ExcelFile Data Component (*)
+   -> XMLFile Data Component (*)
+   -> Open ERP module
+   -> Open ERP web-service
+   -> SQL Data
+
+3) Object Data (Business Object):
+
+   -> I don't think these are components to develop, it will be an Open eRP
+      module that defines a job and several processes, on which you can connect
+      using sub-process.
+
+4) Process ETL Component :
+    -> Sort process 
+    -> Reverse Order process 
+    -> Field Mapping Process (like tMap of Talend)
+    -> Filtering Row Process
+    -> Filtering Column process
+    -> Diff (see prototype)
+    -> Merge (see prototype)
+    -> Search/Replace (from info in the component)
+    -> Search/Replace (from another flow)
+    -> Uniq Checks Process
+    -> Apply/Validate Structure (using a meta data definition)
+        -> Add fields (default value)
+        -> Check fields (contraints, not null, ...)
+    -> Python Code
+    -> Fork Flow (duplicate the flow instead of passing 2 pointers)
+    -> Split Flow (Conditional, send to different channels based on if)
+
+5) Aggregate component 
+    -> Aggregate (sum,avg aggredate function related)
+
+6) Logger ETL Component :
+    -> Data Log component (see prototype)
+    -> Data Log bloc (log all at once, at the end, keep in memory) (see prototype)
+
+7) Analysis Components (to be connected to a logger or other)
+    -> Speed Tests (return a flow with speed results)
+    -> Statistics on processed data
+
+
                 Loggers/
                     Data Logger
                     Data Logger (Bloc)
