@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="ir_exports_supplierexport0" model="ir.exports">
+			<field eval="&quot;&quot;&quot;purchase.order&quot;&quot;&quot;" name="resource"/>
+			<field eval="&quot;&quot;&quot;supplier_export&quot;&quot;&quot;" name="name"/>
+		</record>
+		<record id="ir_exports_line_name0" model="ir.exports.line">
+			<field name="export_id" ref="ir_exports_supplierexport0"/>
+			<field eval="&quot;&quot;&quot;name&quot;&quot;&quot;" name="name"/>
+		</record>
+		<record id="ir_exports_line_dateorder0" model="ir.exports.line">
+			<field name="export_id" ref="ir_exports_supplierexport0"/>
+			<field eval="&quot;&quot;&quot;date_order&quot;&quot;&quot;" name="name"/>
+		</record>
+		<record id="ir_exports_line_partneridname0" model="ir.exports.line">
+			<field name="export_id" ref="ir_exports_supplierexport0"/>
+			<field eval="&quot;&quot;&quot;partner_id/name&quot;&quot;&quot;" name="name"/>
+		</record>
+		<record id="ir_exports_line_hassupplierdirectdelivery0" model="ir.exports.line">
+			<field name="export_id" ref="ir_exports_supplierexport0"/>
+			<field eval="&quot;&quot;&quot;has_supplier_direct_delivery&quot;&quot;&quot;" name="name"/>
+		</record>
+		<record id="ir_exports_line_orderlineproductidname0" model="ir.exports.line">
+			<field name="export_id" ref="ir_exports_supplierexport0"/>
+			<field eval="&quot;&quot;&quot;order_line/product_id/name&quot;&quot;&quot;" name="name"/>
+		</record>
+		<record id="ir_exports_line_orderlineproductqty0" model="ir.exports.line">
+			<field name="export_id" ref="ir_exports_supplierexport0"/>
+			<field eval="&quot;&quot;&quot;order_line/product_qty&quot;&quot;&quot;" name="name"/>
+		</record>
+		<record id="ir_exports_line_orderlinepartneraddressidname0" model="ir.exports.line">
+			<field name="export_id" ref="ir_exports_supplierexport0"/>
+			<field eval="&quot;&quot;&quot;order_line/partner_address_id/name&quot;&quot;&quot;" name="name"/>
+		</record>
+		<record id="ir_exports_line_orderlinepartneraddressidcompleteaddress0" model="ir.exports.line">
+			<field name="export_id" ref="ir_exports_supplierexport0"/>
+			<field eval="&quot;&quot;&quot;order_line/partner_address_id/complete_address&quot;&quot;&quot;" name="name"/>
+		</record>
+	</data>
+</openerp>

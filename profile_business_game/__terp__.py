@@ -67,6 +67,8 @@ The game is structured into two phases:
     ],
     "active":False,
     "installable":True,
+    "certificate": '9274472924045',
+
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
