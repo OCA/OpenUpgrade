@@ -8,28 +8,22 @@ ETL/
             Log Channel /
                 All Log Channel
                 New Log Channel
-            Transition Channel /
-                All Transition Channel
-                New Transition Channel
+            Transition Channels
         Schema Defination /
             All Schemas
             New Schema
         Connector/
-            SQL Connector /
-                 Tested Connector
-                 All Connectors
-                 New Connector
-            File Access Control /
+            SQL Connector
                  Tested Connector
                  New Connector
-                 All 
-            Open Object Connector /
+            File Access Control
                  Tested Connector
                  New Connector
-                 All 
+            Open Object Connector
+                 Tested Connector
+                 New Connector
         Components Types/
             All Componet Types
-            New Component Type
         Jobs Definitions/
             Jobs /
                 All Jobs
@@ -78,22 +72,22 @@ ETL/
                     Search/Replace (from info in the component)
                     Search/Replace (from another flow)
                     Uniq Checks Process
-                    Schema Defination Structure (using a meta data definition)
+                    Schema Validation
                     Python Code
                     Fork Flow 
                     Split Flow 
                     Sub-Job
                     Aggregate component /
-                            Aggregate component  with sort
-                            Aggregate component without sort
+                        Aggregate unsorted lists
+                        Aggregate sorted lists
 
                 Logger ETL Component  /
                     Data Logger component
                     Data Log bloc (log all at once, at the end, keep in memory) (see prototype)
 
-                Analysis Components 
+                Analysis Components
                     Speed Tests (return a flow with speed results)
-                    Statistics on processed data                
+                    Statistics on processed data
             Transitions/
                 Data Transitions
                 Trigger Transitions
