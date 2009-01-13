@@ -12,6 +12,8 @@
 	     			<field name="fleet_id" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
 	     			<field name="maintenance_start_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
 	     			<field name="maintenance_end_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
+	     			<separator string="Analytice Accounting" />
+	     			<field colspan="4" name="account_analytic_lines" attrs="{'readonly':[('is_maintenance','=',False)]}" nolabel="1"/>
 	     		</page>
 				</notebook>
 	    </field>

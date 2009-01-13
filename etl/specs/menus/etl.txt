@@ -4,6 +4,13 @@ ETL/
             All Projects
             Current Projects
             New Project
+        Channel Defination /
+            Log Channel /
+                All Log Channel
+                New Log Channel
+            Transition Channel /
+                All Transition Channel
+                New Transition Channel
         Schema Defination /
             All Schemas
             New Schema
@@ -75,8 +82,7 @@ ETL/
                     Python Code
                     Fork Flow 
                     Split Flow 
-
-                Aggregate component /
+                    Sub-Job
                     Aggregate component
 
                 Logger ETL Component  /
@@ -109,4 +115,7 @@ A channel is a name on a transition. Components write data to channels.
 
 A connector is the definition of the access on a database, file, ...
     A input/output component can use a connector.
+
+etl.log.channel : different objects to receive some logging data
+etl.transition.channel : to select transition to efficiently route different data flow
 

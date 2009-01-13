@@ -18,7 +18,8 @@ class sale_order_line(osv.osv):
     _columns = {
         'maintenance_month_qty': fields.integer('Maintenance Month Quantity', required=False),
         'maintenance_product_qty': fields.integer('Maintenance Product Quantity', required=False),              
-        'fleet_id': fields.many2one('stock.location', 'Fleet'), #TODO call that sub_fleet_id ?
+        'fleet_id': fields.many2one('stock.location', 'Sub Fleet'),
+        'parent_fleet_id': fields.related('fleet_id', 'location_id', type='many2one', relation='stock.location', string='Fleet', store=True),
         'maintenance_start_date':fields.date('Maintenance Start Date', required=False),
         'maintenance_end_date':fields.date('Maintenance End Date', required=False),
         'order_fleet_id': fields.related('order_id', 'fleet_id', type='many2one', relation='stock.location', string='Default Sale Order Sub Fleet'),
@@ -28,18 +29,14 @@ class sale_order_line(osv.osv):
     
     def maintenance_qty_change(self, cr, uid, ids, maintenance_product_qty=False, maintenance_month_qty=False, maintenance_start_date=False, maintenance_end_date=False, is_maintenance=False):
         result = {}
-        print is_maintenance
         if not is_maintenance:
             return result
         
         result['value'] = {}
         warning_messages = ""
-        print "entering maintenance_qty_change"
         
         if maintenance_start_date:
             start = DateTime.strptime(maintenance_start_date, '%Y-%m-%d')
-            print "maintenance_qty_change; start_date:"
-            print start
             if start.day != fixed_month_init_day: 
                 warning_messages += "- Start date should should ideally start at day %s of the month; corrected to day %s\n" % (fixed_month_init_day, fixed_month_init_day)
                 start = DateTime.DateTime(start.year, start.month, fixed_month_init_day)
@@ -51,9 +48,6 @@ class sale_order_line(osv.osv):
         if maintenance_end_date:
             end = DateTime.strptime(maintenance_end_date, '%Y-%m-%d')
             en_date_check = end + DateTime.RelativeDateTime(days=fixed_days_before_month_end + 1)
-            print "maintenance_qty_change; end_date:"
-            print result
-            print end
             
             if end.month == en_date_check.month or en_date_check.day != 1:
                 warning_messages += "- End date should should ideally end %s days before the end of the month\n" % fixed_days_before_month_end
@@ -61,18 +55,12 @@ class sale_order_line(osv.osv):
 
         
         if maintenance_start_date and maintenance_end_date:
-            print "other callback:"
-            print maintenance_start_date
-            print maintenance_end_date
             
             if end < start:
                 result['value'].update({'maintenance_end_date': start.strftime('%Y-%m-%d')}) #TODO not good with end days!
                 warning_messages += "- End date should be AFTER Start date!\n"
                 #return result
 
-            print "qty checking"
-            print start
-            print end
             maintenance_month_qty = self._get_maintenance_month_qty_from_start_end(cr, uid, start, end)
             result['value'].update({'maintenance_month_qty': maintenance_month_qty})
             if maintenance_month_qty < min_maintenance_months:
@@ -89,7 +77,6 @@ class sale_order_line(osv.osv):
             
         if len(warning_messages) > 1:
             result['warning'] = {'title': 'Maintenance Dates Warning', 'message': warning_messages}
-        print result
         return result
     
     
@@ -107,8 +94,6 @@ class sale_order_line(osv.osv):
         maintenance_month_qty = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start_date).months
         if maintenance_month_qty < min_maintenance_months:
             end = DateTime.DateTime(year + 1, month, day, 0, 0, 0.0)
-        print "end date from start:"
-        print end
         return end
     
     
@@ -124,15 +109,9 @@ class sale_order_line(osv.osv):
             fleet = self.pool.get('stock.location').browse(cr, uid, fleet_id)
             if fleet.expire_time and not fleet.is_expired:
                 start_date = DateTime.strptime(fleet.expire_time, '%Y-%m-%d') + RelativeDateTime(days=fixed_days_before_month_end + 1)
-                print 'non expired: start date:'
-                print start_date
             else:
-                print 'else'
                 start_date = maintenance_start_date and DateTime.strptime(maintenance_start_date, '%Y-%m-%d') or DateTime.strptime(self.default_maintenance_start_date(cr, uid, {}), '%Y-%m-%d')
-                print start_date
             end_date = self._get_end_date_from_start_date(cr, uid, start_date, fleet)
-            print 'end date:'
-            print end_date
             
             result['value'].update({'fleet_id': fleet_id})
         
@@ -152,7 +131,8 @@ class sale_order_line(osv.osv):
     
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True, date_order=False, packaging=False):
+            lang=False, update_tax=True, date_order=False, packaging=False,
+            is_maintenance=False, maintenance_product_qty=False, maintenance_month_qty=False):
 
         result = super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
             uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging)
@@ -164,6 +144,10 @@ class sale_order_line(osv.osv):
             else:
                 result['value'].update({'is_maintenance': False})
             #result['value'].update({'product_type': product_obj.type})
+            if is_maintenance and maintenance_product_qty and maintenance_month_qty:
+                result['value'].update({'product_uom_qty': maintenance_product_qty * maintenance_month_qty})
+                result['value'].update({'product_uos_qty': maintenance_product_qty * maintenance_month_qty}) # TODO * product_obj.uos_coeff
+                result['warning'] = {'title': 'Maintenance Quantity Warning', 'message': "For maintenance products, you should use instead the maintenance quantity from the other tab to compute this field"}
         return result
     
     
