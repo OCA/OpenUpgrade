@@ -27,6 +27,7 @@
     'description': 'Add payment term lines on invoice',
     'category': 'Generic Modules/Accounting',
     'update_xml': ['report.xml'],
+    'certificate': '1099795225405547765'
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

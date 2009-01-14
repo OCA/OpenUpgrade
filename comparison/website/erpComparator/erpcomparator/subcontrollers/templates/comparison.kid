@@ -4,9 +4,11 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Comparison</title>
+    
+    <script type="text/javascript" src="/static/javascript/comparison.js"></script>
+    
 </head>
 <body>
-	<br/>
     <div class="mattblacktabs">
 		<ul>
 	    	<li id="current">
@@ -34,13 +36,46 @@
 	    			<span>Graph</span>
 	    		</a>
 	    	</li>
+	    	<li>
+	    		<a href="#" onclick="window.location.href='/login'">
+	    			<span>Login</span>
+	    		</a>
+	    	</li>
 	  	</ul>
-	</div>
-	<div>${msg}
-		<span id="comparision_tree"/>
+	</div><br/>
+	<div id="selection">
+		<table>
+			<tr>
+				<td class="label">
+					You can compare among following Products : 
+				</td>
+			</tr>
+		</table>
+		<table name="item_list" id="item_list">
+			<tr py:if="selected_items">
+				<td py:for="label in titles">
+					<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}</input>
+				</td>
+			</tr>
+			<tr py:if="not selected_items">
+				<td py:for="label in titles">
+					<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
+				</td>
+			</tr>
+		</table>
+		<br/>
+		
+		<button type='button' onclick="getRecords()">Compare</button>
+	</div><br/>
+	<div id="open_comp">
+		<span id="comparison_tree"/>
 		<script type="text/javascript">
         	var comparison_tree = new TreeGrid('comparison_tree');
         	
+        	comparison_tree.setHeaders(${ustr(headers)});
+        	comparison_tree.setRecords('${url}', ${ustr(url_params)});
+        	
+        	comparison_tree.render();
         </script>
 		
 	</div>

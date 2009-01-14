@@ -6,7 +6,6 @@
     <title>Comparison</title>
 </head>
 <body>
-	<br/>
     <div class="mattblacktabs">
 		<ul>
 	    	<li>
@@ -32,6 +31,11 @@
 	    	<li>
 	    		<a href="#" onclick="window.location.href='/about'">
 	    			<span>Graph</span>
+	    		</a>
+	    	</li>
+	    	<li>
+	    		<a href="#" onclick="window.location.href='/login'">
+	    			<span>Login</span>
 	    		</a>
 	    	</li>
 	  	</ul>

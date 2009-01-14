@@ -36,6 +36,7 @@
             "product_lot_foundary/product_lot_foundary.xml",
           ],
     "installable":True,
+    "certificate": "475220159090247229"
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

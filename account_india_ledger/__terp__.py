@@ -40,5 +40,6 @@
         "account_ledger_wizard.xml"
     ],
     "active": False,
-    "installable": True
+    "installable": True,
+    "certificate": "1072639787806624621"
 }

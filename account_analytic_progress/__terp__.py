@@ -36,7 +36,8 @@ development projects on the Tiny ERP website.""",
     ],
     "demo_xml" : [],
     "active": False,
-    "installable": True
+    "installable": True,
+    "certificate": "1099795225409507693"
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
