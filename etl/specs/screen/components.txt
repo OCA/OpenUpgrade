@@ -38,3 +38,19 @@ Input Flows: 0-x
 * .*: the main data flow
 Output Flows: 0-y
 * .*: the returned data flow, in the same channel name than input
+
+etl.component.subjob
+--------------------
+
+When entering in this component, it trigger the beginning of a new job, linked
+in this component. This allows you to create complex jobs that are composed of
+different subjobs. Use it with trigger transitions.
+
+Type: Job Component
+Computing Performance: /
+Input Flows: 0-x
+* .*: do nothing
+Output Flows: 0-x
+* .*: output no data, just trigger signals
+
+

@@ -324,11 +324,6 @@
 "Factor_322","Factor_319","Fund Raising","criterion",1
 "Factor_323","Factor_318","Public","view",1
 "Factor_324","Factor_318","Network Management","view",1
-"Factor_325","Factor_429","Business Intelligence","view",1
-"Factor_326","Factor_325","Olap Database","view",1
-"Factor_327","Factor_325","Cube Designer","view",1
-"Factor_328","Factor_325","Data Browser","view",1
-"Factor_329","Factor_325","Data Mining","view",1
 "Factor_330","Factor_429","Customer & Supplier Portal","view",1
 "Factor_332","Factor_429","Ergonomy","view",1
 "Factor_333","Factor_332","Web Interface on all features","view",1
@@ -410,7 +405,7 @@
 "Factor_409","Factor_407","Ability to add fields anywhere on any screen","criterion",1
 "Factor_410","Factor_407","Ability to modify the layout of any screen","criterion",1
 "Factor_411","Factor_407","Ability to add HTML in views","criterion",1
-"Factor_413","Factor_400","Presentation Report Designer","view",1
+"Factor_413","Factor_400","Report Designer","view",1
 "Factor_414","Factor_400","Statistics Report Designer","view",1
 "Factor_415","Factor_400","Business Intelligence","view",1
 "Factor_416","Factor_400","Objects Designer","view",1
@@ -494,8 +489,8 @@
 "Factor_502","Factor_400","Customisations without development","view",1
 "Factor_503","Factor_482","Screen Definition","view",1
 "Factor_505","Factor_482","Workflows Management","view",1
-"Factor_507","Factor_482","Report Editor for layouts of documents","view",1
-"Factor_508","Factor_482","Statistics Report Editor","view",1
+"Factor_507","Factor_482","Report Engines","view",1
+"Factor_508","Factor_482","Statistics Report Engines","view",1
 "Factor_509","Factor_451","Maintenance Costs","view",10
 "Factor_510","Factor_509","Availability of a fixed price maintenance contract","view",1
 "Factor_511","Factor_509","Unlimited bugfixes guarantee in the maintenance contract","view",1
@@ -610,3 +605,160 @@
 "Factor_623","Factor_619","Ability to include scripts whithin views for custom behaviours","criterion",1
 "Factor_624","Factor_619","Ability to include AJAX within views","criterion",1
 "Factor_625","Factor_453","The open source licence is OSI compliant","criterion",1
+"Factor_626","Factor_274","Analytic Structure","view",1
+"Factor_627","Factor_626","Support for multiple analytic plans","criterion",1
+"Factor_628","Factor_626","Each analytic plan can be hierarchised (tree structure)","criterion",1
+"Factor_629","Factor_626","Support for an unlimited number of plans and hierarchy levels","criterion",1
+"Factor_630","Factor_626","Each analytic account can work with multiple currencies","criterion",1
+"Factor_631","Factor_274","Automatic integration with others components","view",1
+"Factor_632","Factor_631","Supplier and customer invoices generates analytic entries","criterion",1
+"Factor_633","Factor_631","Manufacturing orders can create analytic entries costs","criterion",1
+"Factor_634","Factor_631","Costs of employee generates analytic entries through timesheets","criterion",1
+"Factor_635","Factor_631","Assets are integrated with analytic accounting","criterion",1
+"Factor_636","Factor_631","Employees leaves/hollidays can generate analytic costs","criterion",1
+"Factor_637","Factor_631","Time spent on a task can generate analytic entries","criterion",1
+"Factor_638","Factor_274","Entries encoding","view",1
+"Factor_639","Factor_638","Support for manually encoding of analytic entries","criterion",1
+"Factor_640","Factor_638","Support for analytic entries without financial entries counter-part","criterion",1
+"Factor_641","Factor_638","Fast encoding in a grid view (ala Excel)","criterion",1
+"Factor_642","Factor_638","Support for model of analytic distributions","criterion",1
+"Factor_643","Factor_638","One financial entry can be splitted in several analytic lines","criterion",1
+"Factor_644","Factor_274","Features","view",1
+"Factor_645","Factor_644","Ability to automatically reinvoice costs","criterion",1
+"Factor_646","Factor_645","Automatically propose the account based on user, product, date, etc.","criterion",1
+"Factor_647","Factor_645","Integrated with project management (planning, costs of tasks, etc.)","criterion",1
+"Factor_648","Factor_645","Ability to link users to different products based on contract/account","criterion",1
+"Factor_649","Factor_645","Support for multi-company environment","criterion",1
+"Factor_650","Factor_645","Ability to consolidates accounts from multiple companies","criterion",1
+"Factor_652","Factor_274","Reporting","criterion",1
+"Factor_653","Factor_652","Support for cross-reports between analytic and financial accounts","criterion",1
+"Factor_654","Factor_652","Support for cross-reports between several analytic plans","criterion",1
+"Factor_655","Factor_652","Availability of graphical dashboards and indicators","criterion",1
+"Factor_656","Factor_652","Ability to compute the theorical revenue based on costs and pricelists","criterion",1
+"Factor_657","Factor_240","Quotations","criterion",1
+"Factor_658","Factor_638","Ability to create a quotation from a business opportunity (CRM)","criterion",1
+"Factor_659","Factor_638","Ability to convert a quotation into a sale order","criterion",1
+"Factor_660","Factor_638","Support for sales by lots (tenders)","criterion",1
+"Factor_661","Factor_638","Only 2 fields to fill in to encode a quotation (partner, product)","criterion",1
+"Factor_662","Factor_638","Support for versions of quotations","criterion",1
+"Factor_663","Factor_638","Integration with document management system to store propositions","criterion",1
+"Factor_664","Factor_638","Support for attachment of files on quotations","criterion",1
+"Factor_666","Factor_638","Logistic","criterion",1
+"Factor_667","Factor_638","Ability to mix services, products and consumables in one sale order","criterion",1
+"Factor_668","Factor_638","Ability to select 'make to stock'/'make to order' logistics on sale order lines","criterion",1
+"Factor_669","Factor_638","Ability to select the lot or tracking number on sale order line","criterion",1
+"Factor_670","Factor_638","Support for payment before delivery","criterion",1
+"Factor_671","Factor_638","Support for automatic invoice after delivery","criterion",1
+"Factor_672","Factor_638","Choose between invoice based on delivered or ordered quantities","criterion",1
+"Factor_673","Factor_638","Support for advances invoices","criterion",1
+"Factor_675","Factor_638","Information availability from quotations","criterion",1
+"Factor_676","Factor_638","History of sales for the related customer","criterion",1
+"Factor_677","Factor_638","Zoom into the customer form in one click","criterion",1
+"Factor_678","Factor_638","Futur stock forecasts for selected product(s)","criterion",1
+"Factor_679","Factor_638","Cost computation of the product based on quantities","criterion",1
+"Factor_680","Factor_638","Theorical planning for manufacturing orders","criterion",1
+"Factor_681","Factor_638","History of purchases for the selected product","criterion",1
+"Factor_682","Factor_638","Automatic Invoicing","view",1
+"Factor_683","Factor_638","Ability to automatically generate draft or confirmed invoice","criterion",1
+"Factor_684","Factor_638","Ability to generate invoices based on sales order","criterion",1
+"Factor_685","Factor_638","Ability to generate invoices based on costs on project","criterion",1
+"Factor_686","Factor_638","Ability to generate invoices based on deliveries","criterion",1
+"Factor_687","Factor_638","Ability to generate invoices based on tasks","criterion",1
+"Factor_688","Factor_638","Ability to generate invoices based on manufacturing orders","criterion",1
+"Factor_689","Factor_638","Prices and contracts","criterion",1
+"Factor_690","Factor_689","Pricelists","view",1
+"Factor_691","Factor_690","Unlimited number of pricelists","criterion",1
+"Factor_692","Factor_690","Support for a pricelist system based on rules","criterion",1
+"Factor_693","Factor_690","Price computation using factors or sums","criterion",1
+"Factor_694","Factor_690","Price can be computed based on others pricelist","criterion",1
+"Factor_695","Factor_690","Customer prices can be computed based on supplier prices","criterion",1
+"Factor_696","Factor_690","Customer prices can be computed based cost of the product","criterion",1
+"Factor_697","Factor_690","A pricelist can have an unlimitted number of versions","criterion",1
+"Factor_698","Factor_689","Prices","criterion",1
+"Factor_699","Factor_698","Prices can be based on any field of the product form","criterion",1
+"Factor_700","Factor_698","Support for average price costing method","criterion",1
+"Factor_701","Factor_698","Support for standard price costing method","criterion",1
+"Factor_702","Factor_698","Support for LIFO costing method","criterion",1
+"Factor_703","Factor_698","Support for FIFO costing method","criterion",1
+"Factor_704","Factor_698","Multi-currencies support and automatic conversions","criterion",1
+"Factor_705","Factor_638","Discounts","criterion",1
+"Factor_706","Factor_705","Ability to set a discount per sale order line","criterion",1
+"Factor_707","Factor_705","Support for end-of-year discounts","criterion",1
+"Factor_708","Factor_705","Support for end-of-campaign discounts","criterion",1
+"Factor_709","Factor_705","Support for promotions pricelists","criterion",1
+"Factor_710","Factor_330","Customer Portal","criterion",1
+"Factor_711","Factor_710","Portal Management","criterion",1
+"Factor_712","Factor_711","Ability to create and send new accounts based on a selection of customers","criterion",1
+"Factor_713","Factor_712","Ability to reorganise menus of the portal","criterion",1
+"Factor_714","Factor_712","Ability to export any kind of document in the portal","criterion",1
+"Factor_715","Factor_712","Different access rights possible per customer","criterion",1
+"Factor_716","Factor_712","Support for unlimited number of portals (resellers, customers, etc)","criterion",1
+"Factor_717","Factor_710","Available Features","criterion",1
+"Factor_718","Factor_717","Customers can access his own sales orders and quotations","criterion",1
+"Factor_719","Factor_717","Customers can access and reprint his own invoices","criterion",1
+"Factor_720","Factor_717","Customers can work on their own projects and tasks","criterion",1
+"Factor_721","Factor_717","Customers can access his after-sales services and support","criterion",1
+"Factor_722","Factor_717","Customers can have a restricted visibility on stock availabilities","criterion",1
+"Factor_723","Factor_710","Portal User Interface","criterion",1
+"Factor_724","Factor_723","Customers can access using an application to install","criterion",1
+"Factor_725","Factor_723","Customers can access using a web interface","criterion",1
+"Factor_726","Factor_723","Customers can access documents using a FTP access","criterion",1
+"Factor_727","Factor_723","Customers can access documents using a WebDav access","criterion",1
+"Factor_728","Factor_723","Customers can access their own documents using web-services","criterion",1
+"Factor_729","Factor_330","Supplier Portal","criterion",1
+"Factor_730","Factor_729","Portal Management","criterion",1
+"Factor_731","Factor_730","Ability to create and send new accounts based on a selection of suppliers","criterion",1
+"Factor_732","Factor_730","Ability to reorganise menus of the portal","criterion",1
+"Factor_733","Factor_730","Ability to export any kind of document in the portal","criterion",1
+"Factor_734","Factor_730","Different access rights possible per supplier","criterion",1
+"Factor_735","Factor_730","Ability to manage different users for the same supplier","criterion",1
+"Factor_736","Factor_729","Supplier Portal Features","criterion",1
+"Factor_737","Factor_736","Suppliers can access and complete requests for quotations","criterion",1
+"Factor_739","Factor_736","Suppliers can work on their own projects and tasks","criterion",1
+"Factor_741","Factor_736","Suppliers can have a restricted visibility on stock availabilities","criterion",1
+"Factor_742","Factor_729","Portal User Interface","criterion",1
+"Factor_743","Factor_742","Suppliers can access using an application to install","criterion",1
+"Factor_744","Factor_742","Suppliers can access using a web interface","criterion",1
+"Factor_745","Factor_742","Suppliers can access documents using a FTP access","criterion",1
+"Factor_746","Factor_742","Suppliers can access documents using a WebDav access","criterion",1
+"Factor_747","Factor_742","Suppliers can access their own documents using web-services","criterion",1
+"Factor_748","Factor_507","Availability of a report engine that produces PDF","criterion",1
+"Factor_749","Factor_507","Availability of a report engine that produces HTML documents","criterion",1
+"Factor_750","Factor_507","Availability of a report engine that produces Open Office","criterion",1
+"Factor_751","Factor_507","Availability of a report engine that produces Microsoft Office docuements","criterion",1
+"Factor_752","Factor_507","You can change on reports if it opens as PDF of editable document","criterion",1
+"Factor_753","Factor_508","Availability of reports based on SQL queries","criterion",1
+"Factor_754","Factor_508","Availability of a end-user SQL expression builder","criterion",1
+"Factor_755","Factor_415","Olap Database","view",1
+"Factor_756","Factor_415","Cube Designer","view",1
+"Factor_757","Factor_415","Data Browser","view",1
+"Factor_758","Factor_415","Data Mining","view",1
+"Factor_759","Factor_415","Pre-Configurations","view",1
+"Factor_760","Factor_755","Support for basic MDX queries","criterion",1
+"Factor_761","Factor_755","Support for all kind of MDX queries","criterion",1
+"Factor_762","Factor_755","Access through web-services","criterion",1
+"Factor_763","Factor_755","Unlimitted levels hierarcies, dimensions and levels","criterion",1
+"Factor_764","Factor_755","MOLAP Database (Memory Olap)","criterion",1
+"Factor_765","Factor_755","ROLAP Database (Relationnal Olap)","criterion",1
+"Factor_766","Factor_755","HOLAP Database (Hybrid Olap)","criterion",1
+"Factor_767","Factor_756","Availability of a end-user cube designer","criterion",1
+"Factor_768","Factor_756","Users can build schema and cubes without any SQL knowledge","criterion",1
+"Factor_769","Factor_756","Users can build cubes without knowledge of db structure","criterion",1
+"Factor_770","Factor_756","Cube builts through the interface are directly useable","criterion",1
+"Factor_771","Factor_756","You can create menus in the application that opens cubes directly","criterion",1
+"Factor_772","Factor_756","Cube designer support drag & drop","criterion",1
+"Factor_773","Factor_757","Support for drill-up/drill-down navigation","criterion",1
+"Factor_774","Factor_757","Support for drill-accross navigation","criterion",1
+"Factor_775","Factor_757","Support for slicer and filters","criterion",1
+"Factor_776","Factor_757","Data can be displayed as dynamic grids","criterion",1
+"Factor_777","Factor_757","Data can be displayed as bar charts","criterion",1
+"Factor_778","Factor_757","Data can be displayed as pie charts","criterion",1
+"Factor_779","Factor_757","Data can be displayed as 3D charts","criterion",1
+"Factor_780","Factor_757","Drag & Drop user interface","criterion",1
+"Factor_781","Factor_757","You can modify and write MDX queries your self","criterion",1
+"Factor_782","Factor_758","Extract, transform, and load transaction data onto the data warehouse system","criterion",1
+"Factor_783","Factor_758","Support for artificial neural networks","criterion",1
+"Factor_784","Factor_758","Support for decision trees","criterion",1
+"Factor_785","Factor_758","Support for nearest neighbor method","criterion",1
+"Factor_786","Factor_758","Support for rule induction","criterion",1
+"Factor_787","Factor_476","Availability of an integrated ETL system","criterion",4
