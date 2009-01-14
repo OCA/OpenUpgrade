@@ -154,7 +154,7 @@ class account_account(osv.osv):
                 args[pos] = ('id','in',ids1)
             pos+=1
 
-        if context and context.has_key('consolidate_childs'): #add concolidated childs of accounts
+        if context and context.has_key('consolidate_childs'): #add consolidated childs of accounts
             ids = super(account_account,self).search(cr, uid, args, offset, limit,
                 order, context=context, count=count)
             for consolidate_child in self.browse(cr, uid, context['account_id']).child_consol_ids:
@@ -166,15 +166,14 @@ class account_account(osv.osv):
 
     def _get_children_and_consol(self, cr, uid, ids, context={}):
         #this function search for all the children and all consolidated children (recursively) of the given account ids
-        res = self.search(cr, uid, [('parent_id', 'child_of', ids)])
-        for id in res:
-            this = self.browse(cr, uid, id, context)
-            for child in this.child_consol_ids:
-                if child.id not in res:
-                    res.append(child.id)
-        if len(res) != len(ids):
-            return self._get_children_and_consol(cr, uid, res, context)
-        return res
+        ids2 = self.search(cr, uid, [('parent_id', 'child_of', ids)], context=context)
+        ids3 = []
+        for rec in self.browse(cr, uid, ids2, context=context):
+            for child in rec.child_consol_ids:
+                ids3.append(child.id)
+        if ids3:
+            ids3 = self._get_children_and_consol(cr, uid, ids3, context)
+        return ids2+ids3
 
     def __compute(self, cr, uid, ids, field_names, arg, context={}, query=''):
         #compute the balance/debit/credit accordingly to the value of field_name for the given account ids
@@ -1224,15 +1223,15 @@ class account_tax(osv.osv):
         #
         'base_code_id': fields.many2one('account.tax.code', 'Base Code', help="Use this code for the VAT declaration."),
         'tax_code_id': fields.many2one('account.tax.code', 'Tax Code', help="Use this code for the VAT declaration."),
-        'base_sign': fields.float('Base Code Sign', help="Usualy 1 or -1."),
-        'tax_sign': fields.float('Tax Code Sign', help="Usualy 1 or -1."),
+        'base_sign': fields.float('Base Code Sign', help="Usually 1 or -1."),
+        'tax_sign': fields.float('Tax Code Sign', help="Usually 1 or -1."),
 
         # Same fields for refund invoices
 
         'ref_base_code_id': fields.many2one('account.tax.code', 'Refund Base Code', help="Use this code for the VAT declaration."),
         'ref_tax_code_id': fields.many2one('account.tax.code', 'Refund Tax Code', help="Use this code for the VAT declaration."),
-        'ref_base_sign': fields.float('Base Code Sign', help="Usualy 1 or -1."),
-        'ref_tax_sign': fields.float('Tax Code Sign', help="Usualy 1 or -1."),
+        'ref_base_sign': fields.float('Base Code Sign', help="Usually 1 or -1."),
+        'ref_tax_sign': fields.float('Tax Code Sign', help="Usually 1 or -1."),
         'include_base_amount': fields.boolean('Include in base amount', help="Indicate if the amount of tax must be included in the base amount for the computation of the next taxes"),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'description': fields.char('Internal Name',size=32),
@@ -1869,6 +1868,45 @@ class account_tax_template(osv.osv):
 
 account_tax_template()
 
+# Fiscal Position Templates
+
+class account_fiscal_position_template(osv.osv):
+    _name = 'account.fiscal.position.template'
+    _description = 'Template for Fiscal Position'
+    
+    _columns = {
+        'name': fields.char('Fiscal Position Template', size=64, translate=True, required=True),
+        'account_ids': fields.one2many('account.fiscal.position.account.template', 'position_id', 'Accounts Mapping'),
+        'tax_ids': fields.one2many('account.fiscal.position.tax.template', 'position_id', 'Taxes Mapping')
+    }
+    
+account_fiscal_position_template()
+
+class account_fiscal_position_tax_template(osv.osv):
+    _name = 'account.fiscal.position.tax.template'
+    _description = 'Fiscal Position Template Taxes Mapping'
+    _rec_name = 'position_id'
+
+    _columns = {
+        'position_id': fields.many2one('account.fiscal.position.template', 'Fiscal Position', required=True, ondelete='cascade'),
+        'tax_src_id': fields.many2one('account.tax.template', 'Tax Source', required=True),
+        'tax_dest_id': fields.many2one('account.tax.template', 'Replacement Tax')
+    }
+
+account_fiscal_position_tax_template()
+
+class account_fiscal_position_account_template(osv.osv):
+    _name = 'account.fiscal.position.account.template'
+    _description = 'Fiscal Position Template Accounts Mapping'
+    _rec_name = 'position_id'
+    _columns = {
+        'position_id': fields.many2one('account.fiscal.position.template', 'Fiscal Position', required=True, ondelete='cascade'),
+        'account_src_id': fields.many2one('account.account.template', 'Account Source', required=True),
+        'account_dest_id': fields.many2one('account.account.template', 'Account Destination', required=True)
+    }
+
+account_fiscal_position_account_template() 
+
     # Multi charts of Accounts wizard
 
 class wizard_multi_charts_accounts(osv.osv_memory):
@@ -1910,6 +1948,8 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         obj_acc_tax = self.pool.get('account.tax')
         obj_journal = self.pool.get('account.journal')
         obj_acc_template = self.pool.get('account.account.template')
+        obj_fiscal_position_template = self.pool.get('account.fiscal.position.template')
+        obj_fiscal_position = self.pool.get('account.fiscal.position')
 
         # Creating Account
         obj_acc_root = obj_multi.chart_template_id.account_root_id
@@ -2115,6 +2155,36 @@ class wizard_multi_charts_accounts(osv.osv_memory):
                 #create the property
                 property_obj.create(cr, uid, vals)
 
+        fp_ids = obj_fiscal_position_template.search(cr, uid,[])
+        
+        if fp_ids:
+            for position in obj_fiscal_position_template.browse(cr, uid, fp_ids):
+                
+                vals_fp = {
+                           'company_id' : company_id,
+                           'name' : position.name,
+                           }
+                new_fp = obj_fiscal_position.create(cr, uid, vals_fp)
+                
+                obj_tax_fp = self.pool.get('account.fiscal.position.tax')
+                obj_ac_fp = self.pool.get('account.fiscal.position.account')
+                
+                for tax in position.tax_ids:
+                    vals_tax = {
+                                'tax_src_id' : tax_template_ref[tax.tax_src_id.id],
+                                'tax_dest_id' : tax_template_ref[tax.tax_dest_id.id],
+                                'position_id' : new_fp,
+                                }
+                    obj_tax_fp.create(cr, uid, vals_tax)
+                
+                for acc in position.account_ids:
+                    vals_acc = {
+                                'account_src_id' : acc_template_ref[acc.account_src_id.id],
+                                'account_dest_id' : acc_template_ref[acc.account_dest_id.id],
+                                'position_id' : new_fp,
+                                }
+                    obj_ac_fp.create(cr, uid, vals_acc)
+        
         return {
                 'view_type': 'form',
                 "view_mode": 'form',
