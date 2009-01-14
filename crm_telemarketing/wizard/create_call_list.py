@@ -23,6 +23,11 @@
 import wizard
 import pooler
 
+from tools.translate import _
+
+#
+# First Form
+#
 call_list_form = """<?xml version="1.0"?>
 <form string="Search form">
     <separator string="Criteria" colspan="4" />
@@ -30,7 +35,8 @@ call_list_form = """<?xml version="1.0"?>
     <field name="categ_id" colspan="4" />
     <separator string="Call case" colspan="4" />
     <field name="section_id" colspan="4" />
-    <field name="category_id" colspan="4" />
+    <field name="category_id" colspan="4" domain="[('section_id','=',section_id)]"/>
+    <field name="date_call" colspan="4" />
 </form>"""
 
 call_list_fields = {
@@ -56,15 +62,52 @@ call_list_fields = {
         'type': 'many2one',
         'relation': 'crm.case.categ',
         'required': True,
-    }
+    },
+    'date_call': {
+        'string': 'Plan call date',
+        'type': 'date',
+    },
 }
 
+#
+# Second Form
+#
+result_form = """<?xml version="1.0"?>
+<form string="Result">
+<field name="message" nolabel="1" colspan="4" width="600"/>
+</form>"""
+
+result_fields = {
+    'message': {
+        'string': 'message',
+        'type': 'char',
+        'size': 128,
+        'readonly': True,
+    },
+}
 
 class make_call_list(wizard.interface):
 
     def _make_list(self, cr, uid, data, context):
-        print 'OK'
-        return {}
+        form = data['form']
+
+        query = """SELECT DISTINCT add.partner_id FROM
+        (SELECT partner_id FROM res_partner_category_rel WHERE category_id=%s) cat,
+        res_partner_address add
+        WHERE add.partner_id=cat.partner_id""" % form['categ_id']
+
+        if form['city']:
+            query += " AND city ilike '%s%%'" % form['city']
+
+        print 'QUERY: %s' % query
+        # Search all match record
+        cr.execute(query)
+
+        for r in cr.fetchall():
+            print 'r: %s' %str(r)
+
+        print 'DATA: %s' % str(data)
+        return {'message':'ok c est cool'}
 
     states = {
         'init': {
@@ -80,11 +123,14 @@ class make_call_list(wizard.interface):
             }
         },
         'confirm': {
-            'actions': [],
+            'actions': [_make_list],
             'result': {
-                'type': 'action', 
-                'action': _make_list, 
-                'state': 'end'
+                'type': 'form', 
+                'arch': result_form,
+                'fields': result_fields,
+                'state': [
+                    ('end', 'OK', 'gtk-ok', True),
+                ]
             }
         }
     }
