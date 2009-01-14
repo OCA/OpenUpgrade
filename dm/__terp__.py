@@ -65,9 +65,11 @@
                     "dm_data.xml",
                     "dm_workflow.xml",
                     "dm_document_view.xml",
+                    "document_data.xml",
                     ],
     "active": False,
-    "installable": True
+    "installable": True,
+#    'certificate': '76807797184'    
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -430,6 +430,8 @@ class dm_campaign(osv.osv):
                                                         domain=[('product_category','=','Customers List')], context={'product_category':'Customers List'}),
         'item_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Items Purchase Lines",
                                                         domain=[('product_category','=','Items')], context={'product_category':'Items'}),
+        'forwarding_charge' : fields.float('Forwarding Charge', digits=(16,2)),
+        'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','campaign_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
     }
 
     _defaults = {
@@ -552,6 +554,15 @@ class dm_campaign(osv.osv):
         if not self.check_forbidden_country(cr, uid, camp.offer_id.id,camp.country_id.id):
             raise osv.except_osv("Error!!","You cannot use this offer in this country")        
 
+        # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
+        if not camp.forwarding_charge:
+            if camp.country_id.forwarding_charge:
+                self.write(cr, uid, camp.id, {'forwarding_charge':camp.country_id.forwarding_charge})
+        
+        if camp.country_id.payment_methods:
+            payment_methods = [payment_methods.id for payment_methods in camp.country_id.payment_methods]
+            self.write(cr, uid, camp.id, {'payment_methods':[[6,0,payment_methods]]})
+            
         # Set campaign end date at one year after start date if end date does not exist
         if ('date_start' in vals) and not ('date' in vals):
             time_format = "%Y-%m-%d"
@@ -599,6 +610,15 @@ class dm_campaign(osv.osv):
         data_cam = self.browse(cr, uid, id_camp)
         if not self.check_forbidden_country(cr, uid, data_cam.offer_id.id,data_cam.country_id.id):
             raise osv.except_osv("Error!!","You cannot use this offer in this country")
+        
+        # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
+        if not data_cam.forwarding_charge:
+            if data_cam.country_id.forwarding_charge:
+                super(dm_campaign, self).write(cr, uid, id_camp, {'forwarding_charge':data_cam.country_id.forwarding_charge})
+    
+        if data_cam.country_id.payment_methods:
+            payment_methods = [payment_methods.id for payment_methods in data_cam.country_id.payment_methods]
+            super(dm_campaign, self).write(cr, uid, id_camp, {'payment_methods':[[6,0,payment_methods]]})
             
         # Set campaign end date at one year after start date if end date does not exist
         if (data_cam.date_start) and (not data_cam.date):
@@ -696,6 +716,12 @@ class dm_campaign_proposition(osv.osv):
         if not vals['date_start']:
             if id.date_start:
                 vals['date_start']=id.date_start
+        if 'forwarding_charge' not in vals:
+            if id.country_id.forwarding_charge:
+                vals['forwarding_charge']=id.country_id.forwarding_charge
+        if id.payment_methods:
+            payment_methods = [payment_methods.id for payment_methods in id.payment_methods]
+            vals['payment_methods'] = [[6,0,payment_methods]]
         return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
     
     def copy(self, cr, uid, id, default=None, context={}):
@@ -860,13 +886,14 @@ class dm_campaign_proposition(osv.osv):
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'item_ids' : fields.one2many('dm.campaign.proposition.item', 'proposition_id', 'Catalogue'),
-        'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
+        'payment_methods' : fields.many2many('account.journal','proposition_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
         'keep_segments' : fields.boolean('Keep Segments'),
         'keep_prices' : fields.boolean('Keep Prices At Duplication'),
         'force_sm_price' : fields.boolean('Force Starting Mail Price'),
         'sm_price' : fields.float('Starting Mail Price', digits=(16,2)),
 #        'prices_prog_id' : fields.many2one('dm.campaign.proposition.prices_progression', 'Prices Progression'),
         'manufacturing_costs': fields.float('Manufacturing Costs',digits=(16,2)),
+        'forwarding_charge' : fields.float('Forwarding Charge', digits=(16,2)),
     }
 
     _defaults = {
@@ -1861,6 +1888,8 @@ class Country(osv.osv):
     _columns = {
                 'main_language' : fields.many2one('res.lang','Main Language',ondelete='cascade',),
                 'main_currency' : fields.many2one('res.currency','Main Currency',ondelete='cascade'),
+                'forwarding_charge' : fields.float('Forwarding Charge', digits=(16,2)),
+                'payment_methods' : fields.many2many('account.journal','country_payment_method_rel','country_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
     }
 Country()
 

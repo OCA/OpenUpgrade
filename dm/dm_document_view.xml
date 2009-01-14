@@ -9,27 +9,27 @@
     -->
 
     <record model="ir.ui.view" id="view_dm_document_template_form">
-        <field name="name">dm.dm_document_template.form</field>
+        <field name="name">dm.document.template.form</field>
         <field name="model">dm.document.template</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Document Tempalte">
-                <field name="name" select="1" colspan="4"/>
-                <field name="plugin_id" colspan="2"/>
+            <form string="Document Template">
+                <field name="name" select="1"/>
+                <separator string="Plugins" colspan="4"/>
+                <field name="plugin_ids" colspan="4" nolabel="1"/>
                 <separator string="Dynamic Fields" colspan="4"/>
-                <field name="dynamic_fields" select="2"/>
+                <field name="dynamic_fields" select="2" nolabel="1" colspan="4"/>
             </form>
         </field>
     </record>
 
     <record model="ir.ui.view" id="view_dm_document_template_tree">
-        <field name="name">dm.dm_document_template.tree</field>
+        <field name="name">dm.document.template.tree</field>
         <field name="model">dm.document.template</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="Document Tempalte">
+            <tree string="Document Template">
                 <field name="name" select="1"/>
-                <field name="plugin_id" colspan="2"/>
             </tree>
         </field>
     </record>
@@ -51,23 +51,24 @@
     -->
 
     <record model="ir.ui.view" id="view_dm_ddf_plugin_form">
-        <field name="name">dm.dm_ddf_plugin.form</field>
+        <field name="name">dm.ddf.plugin.form</field>
         <field name="model">dm.ddf.plugin</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Plugin">
                 <field name="name" select="1" colspan="4"/>
-                <field name="file_id" colspan="4"/>
-            </form>
+                <field name="file_id" colspan="4" filename="file_fname"/>
+                <field name="file_fname"/>
+			</form>
         </field>
     </record>
 
     <record model="ir.ui.view" id="view_dm_ddf_plugin_tree">
-        <field name="name">dm.dm_document_template.tree</field>
-        <field name="model">dm.document.template</field>
+        <field name="name">dm.ddf.plugin.tree</field>
+        <field name="model">dm.ddf.plugin</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="Document Template">
+            <tree string="Plugins">
                 <field name="name" select="1"/>
                 <field name="file_id"/>
             </tree>
@@ -83,5 +84,50 @@
     </record>
 
     <menuitem id="menu_action_dm_ddf_plugin" parent="dm.menu_action_offer_doc" action="action_dm_ddf_plugin" sequence="3" />    
+
+    <!--
+    =======================================================
+    Customer - Plugin - Value
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_customer_plugin_form">
+        <field name="name">dm.customer.plugin.form</field>
+        <field name="model">dm.customer.plugin</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Customer's Plugin">
+                <field name="customer_id" select="1"/>
+                <field name="plugin_id" select="2"/>
+                <field name="value" select="2"/>
+                <field name="date" select="2"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_customer_plugin_tree">
+        <field name="name">dm.customer.plugin.tree</field>
+        <field name="model">dm.customer.plugin</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Customer's Plugin">
+                <field name="customer_id" select="1"/>
+                <field name="plugin_id" select="2"/>
+                <field name="value" select="2"/>
+                <field name="date" select="2"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_customer_plugin">
+        <field name="name">All Customers' Plugins</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.customer.plugin</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_customer_plugin_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_customer_plugin" parent="dm.menu_dm_config_customer" action="action_dm_customer_plugin" sequence="4" />
+
 </data>
 </openerp>    

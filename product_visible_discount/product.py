@@ -56,22 +56,21 @@ class sale_order_line(osv.osv):
         if product:
             price=result['price_unit']
 
-
-        product = product_obj.browse(cr, uid, product, context)
-        product_tmpl_id = product.product_tmpl_id.id
-        pricetype_id = pricelist_obj.browse(cr, uid, pricelist).version_id[0].items_id[0].base
-        field_name = self.pool.get('product.price.type').browse(cr, uid, pricetype_id).field
-        product_read = self.pool.get('product.template').read(cr, uid, product_tmpl_id, [field_name], context)
-        list_price = product_read[field_name]
-
-
-        pricelists=pricelist_obj.read(cr,uid,[pricelist],['visible_discount'])
-        if(len(pricelists)>0 and pricelists[0]['visible_discount'] and list_price != 0):
-            discount=(list_price-price) / list_price * 100
-            result['price_unit']=list_price
-            result['discount']=discount
-        else:
-            result['discount']=0.0
+            product = product_obj.browse(cr, uid, product, context)
+            product_tmpl_id = product.product_tmpl_id.id
+            pricetype_id = pricelist_obj.browse(cr, uid, pricelist).version_id[0].items_id[0].base
+            field_name = self.pool.get('product.price.type').browse(cr, uid, pricetype_id).field
+            product_read = self.pool.get('product.template').read(cr, uid, product_tmpl_id, [field_name], context)
+            list_price = product_read[field_name]
+    
+    
+            pricelists=pricelist_obj.read(cr,uid,[pricelist],['visible_discount'])
+            if(len(pricelists)>0 and pricelists[0]['visible_discount'] and list_price != 0):
+                discount=(list_price-price) / list_price * 100
+                result['price_unit']=list_price
+                result['discount']=discount
+            else:
+                result['discount']=0.0
         return res
 
 
@@ -86,12 +85,12 @@ class account_invoice_line(osv.osv):
         res=super(account_invoice_line, self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, price_unit, address_invoice_id, context)
 
 
-    def get_real_price(pricelist_id, product_id):
-        product_tmpl_id = self.pool.get('product.product').browse(cr, uid, product_id, context).product_tmpl_id.id
-        pricetype_id = self.pool.get('product.pricelist').browse(cr, uid, pricelist_id).version_id[0].items_id[0].base
-        field_name = self.pool.get('product.price.type').browse(cr, uid, pricetype_id).field
-        product_read = self.pool.get('product.template').read(cr, uid, product_tmpl_id, [field_name], context)
-        return product_read[field_name]
+        def get_real_price(pricelist_id, product_id):
+            product_tmpl_id = self.pool.get('product.product').browse(cr, uid, product_id, context).product_tmpl_id.id
+            pricetype_id = self.pool.get('product.pricelist').browse(cr, uid, pricelist_id).version_id[0].items_id[0].base
+            field_name = self.pool.get('product.price.type').browse(cr, uid, pricetype_id).field
+            product_read = self.pool.get('product.template').read(cr, uid, product_tmpl_id, [field_name], context)
+            return product_read[field_name]
 
 
         if product:

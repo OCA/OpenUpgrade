@@ -15,8 +15,7 @@ class sale_order(osv.osv):
         return res
     
     _columns = {
-        'has_supplier_direct_delivery': fields.function(_has_supplier_direct_delivery, method=True, type='boolean', string="Has Supplier Direct Delivery", store=True, select=1),
-#        'composite_global_state': fields.function(_composite_global_state, method=True, type='char', size=64, string="Composite Global State"),#TODO
+        'has_supplier_direct_delivery': fields.function(_has_supplier_direct_delivery, method=True, type='boolean', string="Has Supplier Direct Delivery", store=True, select=1),#        'composite_global_state': fields.function(_composite_global_state, method=True, type='char', size=64, string="Composite Global State"),#TODO
     }
 
     
@@ -61,7 +60,6 @@ sale_order()
 
 class sale_order_line(osv.osv):
     _inherit = "sale.order.line"
-
     
     def _is_supplier_direct_delivery_advised(self, cr, uid, ids, name, arg, context={}):
         res = {}
@@ -100,8 +98,5 @@ class sale_order_line(osv.osv):
             if product_obj.is_direct_delivery_from_product:
                 result['value'].update({'type': 'make_to_order', 'is_supplier_direct_delivery': True})
         return result
-        
-    
-    #TODO implement is_supplier_direct_delivery_change to enable canceling the direct delivery manually
     
 sale_order_line()

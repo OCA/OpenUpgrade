@@ -32,7 +32,7 @@ class product_product(osv.osv):
     _inherit = "product.product"
     _columns = {
                 'product_logo': fields.binary('Product Logo'),
-                'shop_ids': fields.many2many('ecommerce.shop','ecommerce_new_product_rel','ecommerce_product','product','Web shop'),
+                'url': fields.char('Image URL', size=56, help="Add Product Image URL.")
 }
 product_product()
 

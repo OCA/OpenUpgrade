@@ -102,6 +102,7 @@ class hr_holidays(osv.osv):
         'name' : fields.char('Description', required=True, readonly=True, size=64, states={'draft':[('readonly',False)],'draft1':[('readonly',False)]}),
         'state': fields.selection([('draft1', 'draft'),('draft', 'draft'), ('confirm', 'Requested'), ('refuse', 'Refused'), ('validate', 'Validate'), ('cancel', 'Cancel')], 'State', readonly=True),
         'date_from' : fields.datetime('Vacation start day'),
+        'date_to' : fields.datetime('Vacation end day'),
         'date_from1' : fields.date('From', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_to1' : fields.date('To', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'employee_id' : fields.many2one('hr.employee', 'Employee', select=True, readonly=True, required=True),
@@ -113,6 +114,8 @@ class hr_holidays(osv.osv):
         'total_half':fields.integer("Total Half Leave", readonly=True),
         'total_full':fields.integer("Total Full Leave", readonly=True),
         'total_hour':fields.integer("Total Hours", readonly=True),
+        'number_of_days': fields.float('Number of Days in this Holiday Request'),
+        'holiday_status' : fields.many2one("hr.holidays.status", "Holiday's Status"),
           }
     _defaults = {
         'manager_id' : _manager_get,

@@ -1,0 +1,56 @@
+Legend on performance:
+* Streamline: when one record is in input, then it goes directly to output
+* Semi-Streamline: some inputs elements are stored and the output is returned
+  when an element is computed
+* Bloc: all inputs elements are stored and the output is return at the end
+  of the complete process
+
+
+
+etl.component.diff
+------------------
+
+Takes 2 flows in input and detect a difference between these two flows
+using computed keys (based on data records) to compare elements that may not
+have to be in the same order.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 2
+* main: The main flow
+* .*: the second flow
+Output Flows: 0-x
+* .*: return all elements that are the same in both input flows
+* updated: return all updated elements
+* removed: return all elements that where in main and not in the second flow
+* added: return all elements from the second flow that are not in main channel
+
+etl.component.reverse
+---------------------
+
+Receive a flow in input and return the same flow in output, in the same channel
+name but in reverse orders. The first elements from input becomes the latests
+elements sent in output.
+
+Type: Data Component
+Computing Performance: Bloc
+Input Flows: 0-x
+* .*: the main data flow
+Output Flows: 0-y
+* .*: the returned data flow, in the same channel name than input
+
+etl.component.subjob
+--------------------
+
+When entering in this component, it trigger the beginning of a new job, linked
+in this component. This allows you to create complex jobs that are composed of
+different subjobs. Use it with trigger transitions.
+
+Type: Job Component
+Computing Performance: /
+Input Flows: 0-x
+* .*: do nothing
+Output Flows: 0-x
+* .*: output no data, just trigger signals
+
+

@@ -24,9 +24,10 @@
     'version': '0.1',
     'depends': ['account'],
     'author': 'Tiny',
-    'description': 'Add payment term lines on invoice',
+    'description': 'Module to Add payment term lines on invoice report.',
     'category': 'Generic Modules/Accounting',
     'update_xml': ['report.xml'],
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

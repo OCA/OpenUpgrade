@@ -29,7 +29,8 @@
     "update_xml" : ["custom_view.xml", "custom_report.xml"],
     "category" : "Enterprise Specific Modules/Travel Agencies",
     "active": False,
-    "installable": False
+    "installable": False,
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

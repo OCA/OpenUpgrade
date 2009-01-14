@@ -29,7 +29,7 @@
     #and makes it properly add extra invoice line fields to the invoice line, even if invoiced on delivery. 
     "demo_xml":[],
     #"update_xml":[],
-    "update_xml":["product_view.xml", "sale_view.xml", "invoice_view.xml", "stock_view.xml", "partner_view.xml", "crm_view.xml", "crm_sequence.xml"],
+    "update_xml":["product_view.xml", "sale_view.xml", "invoice_view.xml", "stock_view.xml", "partner_view.xml", "account_view.xml", "crm_view.xml", "crm_sequence.xml"],
     "active": False,
     "installable": True,
 }

@@ -71,7 +71,7 @@
 						<button name="state_validate_set" string="Validate" states="draft"/>
 					</group>
 				</page>
-				<page string="Document Fields">
+<!-- 				<page string="Document Fields">
 				<group colspan="2" col="2">
 					<separator string="Customer Fields" colspan="2"/>
 					<field name="customer_field_ids" nolabel="1" colspan="2">
@@ -85,7 +85,7 @@
 						</tree>
 					</field>
 				</group>
-<!--				<group colspan="2" col="2">
+				<group colspan="2" col="2">
 					<separator string="Customer Order Fields" colspan="4"/>
 					<field name="customer_order_field_ids" nolabel="1" colspan="4">
 						<form string="Customer Order Field">
@@ -97,12 +97,14 @@
 							<field name="field_description"/>
 						</tree>
 					</field>
-				</group>-->
-				</page>
+				</group>
+				</page> -->
 				<page string="Dynamic Fields">
-					<field name="document_template_id" select="1" colspan="4"/>
+					<field name="document_template_id" select="1"/>
+					<separator string="Template Plugins" colspan="4"/>
+					<field name="document_template_plugin_ids" colspan="4" nolabel="1" context="{'template_id':document_template_id}"/>
 					<separator string="Template Fields" colspan="4"/>
-					<field name="document_template_field_ids" colspan="4" nolabel="1" context="{'document_template_id':document_template_id}"/>
+					<field name="document_template_field_ids" colspan="4" nolabel="1" context="{'template_id':document_template_id}"/>
 				</page>				
 				</notebook>
 			</form>

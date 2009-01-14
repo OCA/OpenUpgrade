@@ -21,7 +21,8 @@
 ##############################################################################
 {
     "name" : "account_analytic_package",
-    "description": """Analytic Packages.""",
+    "description": """The Module allows to configure analytic account for product packages.
+    Views for total and monthly product packages weight, Amount analysis.""",
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/Accounting",
@@ -35,7 +36,8 @@
     ],
     "demo_xml" : [],
     "active": False,
-    "installable": True
+    "installable": True,
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

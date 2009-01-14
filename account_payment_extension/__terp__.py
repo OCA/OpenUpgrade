@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
 {
-    "name" : "Account payment extension",
+    "name" : "Account Payment Extension",
     "version" : "1.1",
     "author" : "Zikzakmedia SL y Pablo Rocandio",
     "category" : "Generic Modules/Accounting",
+    "website" : "http://www.zikzakmedia.com",
     "description": """Account payment extension.
 
 This module extends the account_payment module with a lot of features:
@@ -30,7 +31,8 @@ This module extends the account_payment module with a lot of features:
         "payment_sequence.xml",
         ],
     "active": False,
-    "installable": True
+    "installable": True,
+
 }
 
 

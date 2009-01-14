@@ -1,0 +1,34 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_profile_game_phase2","profile.game.phase2","model_profile_game_phase2",,1,1,1,1
+"access_profile_game_config_wizard","profile.game.config.wizard","model_profile_game_config_wizard",,1,1,1,1
+"access_profile_game_phase1","profile.game.phase1","model_profile_game_phase1",,1,1,1,1
+"access_account_period","account.period","account.model_account_period",,1,1,1,1
+"access_stock_location","stock.location","stock.model_stock_location","sale.group_sale_manager",1,0,0,0
+"access_partner_event","res.partner.event","base.model_res_partner_event","sale.group_sale_manager",1,1,1,0
+"access_stock_warehouse_orderpoint","stock.warehouse.orderpoint","mrp.model_stock_warehouse_orderpoint","sale.group_sale_manager",1,1,0,0
+"access_mrp_procurement","mrp.procurement","mrp.model_mrp_procurement","sale.group_sale_manager",1,1,1,1
+"access_mrp_bom","mrp.bom","mrp.model_mrp_bom","sale.group_sale_manager",1,1,1,1
+"access_product_product","product.product","product.model_product_product","sale.group_sale_manager",1,1,1,1
+"access_stock_warehouse","stock.warehouse","stock.model_stock_warehouse","sale.group_sale_manager",1,1,1,0
+"access_res_request","res.request","base.model_res_request","sale.group_sale_manager",1,1,1,1
+"access_stock_planning_period","stock.planning.period","stock_planning.model_stock_planning_period","sale.group_sale_manager",1,1,1,0
+"access_stock_period","stock.period ","stock_planning.model_stock_period","sale.group_sale_manager",1,1,1,0
+"access_planning_sale_prevision","stock.planning.sale.prevision","stock_planning.model_stock_planning_sale_prevision","sale.group_sale_manager",1,1,1,0
+"access_purchase_order","purchase.order","purchase.model_purchase_order","sale.group_sale_manager",1,1,1,1
+"access_purchase_order_line","purchase.order.line","purchase.model_purchase_order_line","sale.group_sale_manager",1,1,1,1
+"access_lm_stock_location","stock.location","stock.model_stock_location","stock.group_stock_manager",1,0,0,0
+"access_lm_stock_warehouse_orderpoint","stock.warehouse.orderpoint","mrp.model_stock_warehouse_orderpoint","stock.group_stock_manager",1,1,0,0
+"access_lm_mrp_procurement","mrp.procurement","mrp.model_mrp_procurement","stock.group_stock_manager",1,1,1,1
+"access_lm_product_product","product.product","product.model_product_product","stock.group_stock_manager",1,1,1,1
+"access_lm_stock_warehouse","stock.warehouse","stock.model_stock_warehouse","stock.group_stock_manager",1,1,1,0
+"access_lm_res_request","res.request","base.model_res_request","stock.group_stock_manager",1,1,1,1
+"access_lm_stock_planning_period","stock.planning.period","stock_planning.model_stock_planning_period","stock.group_stock_manager",1,1,1,0
+"access_lm_stock_period","stock.period ","stock_planning.model_stock_period","stock.group_stock_manager",1,1,1,0
+"access_lm_planning_sale_prevision","stock.planning.sale.prevision","stock_planning.model_stock_planning_sale_prevision","stock.group_stock_manager",1,1,1,0
+"access_lm_purchase_order","purchase.order","purchase.model_purchase_order","stock.group_stock_manager",1,1,1,1
+"access_lm_purchase_order_line","purchase.order.line","purchase.model_purchase_order_line","stock.group_stock_manager",1,1,1,1
+"access_am_account_invoice","account.invoice","account.model_account_invoice","account.group_account_manager",1,1,1,0
+"access_am_account_invoice_line","account.invoice.line","account.model_account_invoice_line","account.group_account_manager",1,1,1,0
+"access_am_account_move","account.move","account.model_account_move","account.group_account_manager",1,1,1,0
+"access_am_account_move_line","account.move.line","account.model_account_move_line","account.group_account_manager",1,1,1,0
+"access_bank_loan","bank.loan","model_bank_loan",,1,1,1,1
