@@ -13,5 +13,6 @@
 		"security/ir.model.access.csv"
 	],
 	"active": False,
-	"installable": True
+	"installable": True,
+    "certificate": "1181261538633695597"
 }

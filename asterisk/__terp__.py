@@ -33,7 +33,8 @@ This is still a proof of concept, that have been made during Tiny ERP's
 technical training session.""",
     "update_xml" : ["security/ir.model.access.csv","asterisk_view.xml","asterisk_wizard.xml"],
     "active": False,
-    "installable": True
+    "installable": True,
+    "certificate": "855396286542743933"
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -10,5 +10,6 @@
 		"account_wizard.xml"
 	],
 	"active": False,
-	"installable": True
+	"installable": True,
+    "certificate": "1140528382090757213"
 }

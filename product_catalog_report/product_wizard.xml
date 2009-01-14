@@ -1,6 +1,10 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
 	<data>
-		<wizard string="Print Product Catalog" model="res.partner" name="res.partner.product_catalog" keyword="client_print_multi"/>
+		<wizard string="Print Product Catalog" 
+				model="res.partner" 
+				name="res.partner.product_catalog" 
+				keyword="client_print_multi"
+				id="wizard_print_catalog_report"/>
 	</data>
 </openerp>

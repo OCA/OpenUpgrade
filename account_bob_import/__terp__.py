@@ -44,7 +44,8 @@
         'misc_data.xml',
         'account_bob_import_config.xml',
     ],
-     'installable': True
+    'installable': True,
+    'certificate': '828240848813088845'
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

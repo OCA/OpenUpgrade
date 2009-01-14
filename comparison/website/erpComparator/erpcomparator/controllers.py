@@ -30,4 +30,5 @@ class Root(controllers.RootController):
     softwares = subcontrollers.softwares.Softwares()
     documents = subcontrollers.documents.Documents()
     about = subcontrollers.about.About()
+    login = subcontrollers.login.Login()
     

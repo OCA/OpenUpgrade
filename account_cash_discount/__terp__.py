@@ -43,7 +43,8 @@
         "account_cash_discount_view.xml",
     ],
     "active": False,
-    "installable": True
+    "installable": True,
+    "certificate": "814663129982322269"
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

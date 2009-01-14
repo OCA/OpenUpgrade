@@ -18,7 +18,7 @@
 	    			<span>Software</span>
 	    		</a>
 	    	</li>
-	    	<li id="current">
+	    	<li>
 	    		<a href="#" onclick="window.location.href='/documents'">
 	    			<span>Documents</span>
 	    		</a>
@@ -33,13 +33,35 @@
 	    			<span>Graph</span>
 	    		</a>
 	    	</li>
-	    	<li>
+	    	<li id="current">
 	    		<a href="#" onclick="window.location.href='/login'">
 	    			<span>Login</span>
 	    		</a>
 	    	</li>
 	  	</ul>
 	</div>
-	${msg}
+	<br/><br/><br/>
+	<div class="box2">
+	    <table align="center" cellspacing="2px" border="0">
+	        <tr>
+	            <td class="label">User :</td>
+	            <td><input type="text" id="user" name="user" style="width: 300px;" value=""/></td>
+	        </tr>
+	        
+	        <tr>
+	            <td class="label">Password :</td>
+	            <td><input type="password" value="" id="password" name="password" style="width: 300px;"/></td>
+	        </tr>
+	        <tr>
+	            <td></td>
+	            <td align="right">
+	            	<button type="button" style="width: 80px; white-space: nowrap">Registration</button>
+	                <button type="button" style="width: 80px; white-space: nowrap">Login</button>
+	            </td>
+	        </tr>
+	    </table>                
+	</div>
+	
+	
 </body>
 </html>
