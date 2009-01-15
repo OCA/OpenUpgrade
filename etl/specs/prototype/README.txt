@@ -68,6 +68,12 @@ generated:
    - continue : when the component restart after a pause
    - end : When the component finnished is process
 
+* All components should inherit from a etl.statitic class. This class computes
+  basic statistics ans return them at the end of the process like data in a
+  channel called "statistics":
+    Input Channel | # of Records | Time To Process | Time/Record | Memory Usage
+    main          | 1244         | 123 sec         | 0.1 sec     | 1Mb
+    other         | 144          | 12 sec          | 0.1 sec     | 1Mb
 
 Questions
 ~~~~~~~~~
