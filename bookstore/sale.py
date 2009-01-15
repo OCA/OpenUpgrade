@@ -34,12 +34,12 @@ class sale_order_line(osv.osv):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True, date_order=False):
+            lang=False, update_tax=True, date_order=False, packaging=False):
 
 
         result = super(sale_order_line, self).product_id_change(cr, uid, ids,
             pricelist, product, qty, uom, qty_uos, uos, name, partner_id,lang,
-            update_tax,date_order)
+            update_tax, date_order, packaging)
 
         if not product:
             return {'value': {'price_unit': 0.0, 'notes':'', 'weight' : 0}, 'domain':{'product_uom':[]}}

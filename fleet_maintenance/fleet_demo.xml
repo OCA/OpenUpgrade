@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="product_category_maintenance0" model="product.category">
+			<field name="property_stock_journal" ref="stock.stock_journal"/>
+			<field eval="&quot;&quot;&quot;Maintenance&quot;&quot;&quot;" name="name"/>
+		</record>
+
+		<record id="product_product_monthlymaintenancepc0" model="product.product">
+			<field eval="&quot;&quot;&quot;Monthly Maintenance PC2&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;service&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;MAINT_PC2&quot;&quot;&quot;" name="default_code"/>
+			<field name="categ_id" ref="product_category_maintenance0"/>
+			<field eval="20.0" name="list_price"/>
+			<field eval="1" name="is_maintenance"/>
+		</record>
+		
+		
+		<record id="stock_location_parc0" model="stock.location">
+			<field eval="&quot;&quot;&quot;fifo&quot;&quot;&quot;" name="allocation_method"/>
+			<field eval="1" name="active"/>
+			<field name="location_id" ref="stock.stock_location_customers"/>
+			<field name="partner_id" ref="base.res_partner_3"/>
+			<field eval="&quot;&quot;&quot;parc1&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;2009-12-01&quot;&quot;&quot;" name="intrinsic_anniversary_time"/>
+			<field eval="&quot;&quot;&quot;fleet&quot;&quot;&quot;" name="fleet_type"/>
+			<field eval="&quot;&quot;&quot;customer&quot;&quot;&quot;" name="usage"/>
+		</record>
+
+		<record id="stock_location_parc0" model="stock.location"/>
+		<record id="stock_location_extension0" model="stock.location">
+			<field eval="&quot;&quot;&quot;extension1&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;customer&quot;&quot;&quot;" name="usage"/>
+			<field eval="&quot;&quot;&quot;2009-12-01&quot;&quot;&quot;" name="intrinsic_anniversary_time"/>
+			<field eval="&quot;&quot;&quot;sub_fleet&quot;&quot;&quot;" name="fleet_type"/>
+			<field eval="1" name="active"/>
+			<field name="location_id" ref="stock_location_parc0"/>
+		</record>
+		
+		
+		<record id="crm_case_section_maintenanceincident0" model="crm.case.section">
+			<field name="user_id" ref="base.user_root"/>
+			<field eval="&quot;&quot;&quot;Maintenance incident&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="active"/>
+		</record>
+		
+		
+		<record id="account_analytic_account_custochinaexport0" model="account.analytic.account">
+			<field eval="1" name="active"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field eval="&quot;&quot;&quot;custo_ChinaExport&quot;&quot;&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
+		</record>
+
+		<record id="account_analytic_account_hardware0" model="account.analytic.account">
+			<field eval="&quot;&quot;&quot;2708 - 001&quot;&quot;&quot;" name="code"/>
+			<field eval="1" name="active"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field eval="&quot;&quot;&quot;hardware&quot;&quot;&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="parent_id" ref="account_analytic_account_custochinaexport0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
+		</record>
+
+		<record id="account_analytic_account_maintenance0" model="account.analytic.account">
+			<field eval="1" name="active"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field eval="&quot;&quot;&quot;maintenance&quot;&quot;&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="parent_id" ref="account_analytic_account_custochinaexport0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
+		</record>
+	</data>
+</openerp>
