@@ -1,9 +1,14 @@
 Legend on performance:
-* Streamline: when one record is in input, then it goes directly to output
+* Streamline: when one (or a few) records is in input, then it goes directly to
+  output. This is a very fast and low-memory consumming component. Putting
+  only streamine elements on the main flow is really fast and allow to compute
+  on Gbs.
 * Semi-Streamline: some inputs elements are stored and the output is returned
-  when an element is computed
+  when an element is computed. It's less efficient than streamline but it never
+  stores all elements in memory, so it's acceptable in most cases.
 * Bloc: all inputs elements are stored and the output is return at the end
-  of the complete process
+  of the complete process. This component consumme more memory and can trigger
+  problems with very big amount of data to process.
 
 Note:
 All components will store these processing information on themselves and route
