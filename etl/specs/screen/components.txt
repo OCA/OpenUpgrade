@@ -220,8 +220,87 @@ Computing Performance: Semi-Streamline
 Input Flows: 1
 * .* : the main data flow with input data
 Output Flows: 0-x
-* .* : return the main flow 
+* .* : return the main flow with result of schema validation
 
+etl.component.merge
+----------------------------
+This component use to merge different inputs data into one output base on schema
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-y
+* .* : return the main flow with merged data
+
+etl.component.openobject_in
+----------------------------
+This component use to read data from openobject like read partner datas from res.partner model
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-x
+* .* : return the main flow with data of openobject
+
+etl.component.openobject_out
+----------------------------
+This component use to create,write,unlink data of openobject 
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .* : main flow with input data
+Output Flows: 0-1
+* .* : return the main flow
+
+etl.component.find_replace_with_info
+----------------------------
+This component use to do find and replace operation in the input columns defined.
+This component has keys with find and replace information.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : main flow with input data
+Output Flows: 0-x
+* .* : return the main flow with replaced data
+
+etl.component.find_replace_without_info
+--------------------------------------------
+This component use to find value from source data and replace with new value which exits in another source data in the input columns defined. This component has only keys without find and replace information.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 2
+* .* : main flow with source data
+* .* : second flow with replace  data
+Output Flows: 0-x
+* .* : return the main flow with replaced data
+
+
+etl.component.unique_check
+--------------------------------------------
+This component use to check unique key values.
+
+Type: Data Component
+Computing Performance: Bloc
+Input Flows: 1
+* .* : main flow with input data
+Output Flows: 0-x
+* .* : return the main flow with result of unique check
+
+etl.component.python_code
+--------------------------------------------
+This component use to excute python code
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 0-x
+* .* : main flow with input data
+Output Flows: 0-y
+* .* : return the main flow with result of python code
 
 
 
