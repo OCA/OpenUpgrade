@@ -5,6 +5,10 @@ Legend on performance:
 * Bloc: all inputs elements are stored and the output is return at the end
   of the complete process
 
+Note:
+All components will store these processing information on themselves and route
+the the channel called 'Main Log':
+* time, number input, number output, start date, end date, time/record
 
 
 etl.component.diff
@@ -64,5 +68,81 @@ Input Flows: 0-x
 * .*: receive data
 Output Flows: 0-y
 * .*: output nothing
+
+
+etl.component.aggregate_sorted
+------------------------------
+
+This component is used to give aggregate result from sorted input. Records
+having the same key columns will be aggregated in one record, others are columns
+are computed (sums, average, count, ...) Use this component if records are
+sorted accorded to keys, because it is much more faster than the
+etl.component.aggregate_unsorted as it works in streamline. If several channels
+are provided in input, it return one aggregated flow in output per input channel,
+with the same name.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-y
+* main: The main flow
+Output Flows: 0-x
+* .*: return aggregated result with channel of same name than input
+
+
+etl.component.aggregate_unsorted
+--------------------------------
+
+This component is used to give aggregate result from sorted input. Records
+having the same key columns will be aggregated in one record, others are columns
+are computed (sums, average, count, ...) Use this component if records are
+unsorted. It output all the results at the end of the input process of a channel.
+
+Type: Data Component
+Computing Performance: Bloc
+Input Flows: 0-y
+* main: The main flow
+Output Flows: 0-x
+* .*: return the main flow with aggregated result
+
+etl.component.csv_input
+-----------------------
+
+This component is used to read csv file data.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-x
+* .* : return the main flow with data from csv file
+
+etl.component.csv_output
+------------------------
+
+This component use to store data into csv file
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-1
+* main : return all data
+
+etl.component.row_filter (etl.component.simple_filter)
+------------------------
+
+This component use to filter records from given input
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : the main data flow with input data
+Output Flows: 0-x
+* .* : return the main flow with filtering result
+
+
+
+
+
 
 
