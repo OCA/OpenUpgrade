@@ -325,7 +325,8 @@ Computing Performance: Semi-Streamline
 Input Flows: 1
 * .* : main flow with input data
 Output Flows: 0-x
-* .* : return the main flow with unique rows
+* unique : return  unique rows
+* duplicate : return duplicate rows
 
 etl.component.speedtest
 --------------------------------------------
