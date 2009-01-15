@@ -169,13 +169,13 @@ Output Flows: 0-y
 
 etl.component.map
 ----------------------------
-This component use for field mapping
+This component use for field mapping.
 
 Type: Data Component
 Computing Performance: Semi-Streamline
-Input Flows: 1
+Input Flows: 0-x
 * .* : the main data flow with input data
-Output Flows: 0-x
+Output Flows: 0-y
 * .* : return the main flow with mapping result
 
 etl.component.sort
