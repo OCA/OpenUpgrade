@@ -52,11 +52,12 @@
 					<field name="currency_ids" colspan="4" nolabel='1'/>
 					<field name="language_ids" colspan="4" nolabel='1'/>
 					<newline/>
-					<separator string="Add Row" colspan="2"/>
-					<separator string="Add Column" colspan="2"/>
-					<newline/>
+					<separator string="Add Product Row,Column" colspan="4"/>
 					<field name="row_configuration"/>
 					<field name="column_configuration"/>
+					<separator string="Add Image Size" colspan="4"/>
+					<field name="image_height"/>
+					<field name="image_width"/>
 					</page>
 					<page string="Delivery">
 					<separator string="Delivery" colspan="4"/>
@@ -125,9 +126,6 @@
 		<field name="arch" type="xml">
 			<tree string="Payment Address">
 				<field name="name"/>
-				<field name="state_id"/>
-				<field name="country_id"/>
-				<field name="biz_account"/>
 			</tree>
 		</field>
 	</record>
@@ -138,23 +136,30 @@
 		<field name="arch" type="xml">
 			<form string="Payment">
 				<separator string="Payment Methods" colspan="4"/>
+				<newline/>
+				<field name="name" select="1" colspan="2"/>
+				<newline/> 
+				<notebook colspan="4">
+				<page string="Cheque Address." attrs="{'invisible':[('name','!=','cheque')]}" >
+					<field name="chequepay_to" select="2" colspan="2" />
+					<field name="street" select="2" colspan="2"  />
+					<field name="street2" select="2" />
+					<field name="zip" select="2" ></field>
+					<field name="city" />
+					<field name="state_id" />
+					<field name="country_id" />
+				</page>
+				<page string="Paypal Account Detail." attrs="{'invisible':[('name','!=','paypal')]}">
+					<field name="biz_account" select="2" />
 					<newline/>
-					<field name="name" select="1" colspan="2"/>
-					<newline/>
-					<field name="chequepay_to" select="2" colspan="2" attrs="{'readonly':[('name','==','paypal')]}" />
-					<field name="street" select="2" colspan="2" attrs="{'readonly':[('name','==','paypal')]}" />
-					<field name="street2" select="2" attrs="{'readonly':[('name','==','paypal')]}"/>
-					<field name="zip" select="2" attrs="{'readonly':[('name','==','paypal')]}"></field>
-					<field name="city" attrs="{'readonly':[('name','==','paypal')]}"/>
-					<field name="state_id" attrs="{'readonly':[('name','==','paypal')]}"/>
-					<field name="country_id" attrs="{'readonly':[('name','==','paypal')]}"/>
-					<field name="biz_account" select="2" attrs="{'readonly':[('name','==','cheque')]}"/>
-					<newline/>
-					<field name="return_url" select="2" attrs="{'readonly':[('name','==','cheque')]}"/>
-					<field name="cancel_url" select="2" attrs="{'readonly':[('name','==','cheque')]}"/>
-					
-					<field name="transaction_detail" colspan="4" nolabel="1" attrs="{'readonly':[('name','==','cheque')]}"/>
-
+					<field name="return_url" select="2" />
+					<field name="cancel_url" select="2" />
+					<field name="transaction_detail" colspan="4" nolabel="1" />
+				</page>
+				<page string="Credit Cards Accepted." attrs="{'invisible':[('name','!=','creditcard')]}">
+					<field name="creditcards"/>
+				</page>
+				</notebook>
 			</form>
 		</field>
 	</record>
@@ -187,7 +192,7 @@
 			<field name="arch" type="xml">
 				<form string="Payment method">
 					<field name="name" select="1" colspan="2"/>
-					<field name="scut"/>
+					<field name="shortcut"/>
 				</form>
 			</field>
 		</record>
@@ -240,7 +245,43 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_payment_received"/>
 		</record>
-		<menuitem name="Payment Received" parent="menu_ecommerce_payment" action="action_payment_received_form" id="menu_payment_received_form"/>	
+		<menuitem name="Payment Received" parent="menu_ecommerce_payment" action="action_payment_received_form" id="menu_payment_received_form"/>
+		
+		
+<!-- Payment  By Credit Card -->
+		
+
+		<record model="ir.ui.view" id="view_ecommerce_creditcard">
+			<field name="name">ecommerce.creditcard.tree</field>
+			<field name="model">ecommerce.creditcard</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Credit Card List">
+					<field name="name"/>
+					<field name="code"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_ecommerce_creditcard_form">
+			<field name="name">ecommerce.creditcard.form</field>
+			<field name="model">ecommerce.creditcard</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Credit Card Types">
+					<field name="name"/>
+					<field name="code"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_ecommerce_creditcard_form">
+			<field name="name">Credit Card</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ecommerce.creditcard</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_ecommerce_creditcard"/>
+		</record>
+		<menuitem name="Credit Cards" parent="menu_ecommerce_payment" action="action_ecommerce_creditcard_form" id="menu_ecommerce_creditcard_form"/>		
 </data>
 </openerp>
 

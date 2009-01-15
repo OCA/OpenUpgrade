@@ -36,6 +36,10 @@ function getSelectedItems() {
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
 }
 
-function on_button_click(evt, node) {
-	openWindow(getURL('/comparison/voting', {id: node.name}), {width: 500, height: 350});
+function change_vote(id) {
+	openWindow(getURL('/comparison/voting', {id: id}), {width: 500, height: 350});
+}
+
+function item_vote(id, header) {
+	openWindow(getURL('/comparison/item_voting', {id: id, header: header}), {width: 500, height: 350});
 }

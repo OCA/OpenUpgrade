@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-    	
-    	<menuitem icon="terp-administration" id="menu_comparison" name="ERP Comparison" sequence="10"/>
+        
+        <menuitem icon="terp-administration" id="menu_comparison" name="ERP Comparison" sequence="10"/>
         <menuitem id="menu_config_comparison" name="Configuration" parent="menu_comparison" sequence="1"/>
         
         <!-- Configure User -->
@@ -12,8 +12,8 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Comaparison User">
-					<field name="name" select="1"/>
-					<field name="password" password="True"/>
+                    <field name="name" select="1"/>
+                    <field name="password" password="True"/>
                     <field name="email" widget="email" select="1"/>
                     <field name="active"/>
                 </form>
@@ -50,8 +50,8 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Comaparison Item">
-					<field name="name" select="1"/>
-					<field name="version"/>
+                    <field name="name" select="1"/>
+                    <field name="version"/>
                     <field name="user_id" select="1"/>
                     <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
                     <newline/>
@@ -92,7 +92,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Affecting Factors for Comparison">
-					<notebook>
+                    <notebook>
                         <page string="General">
                             <field name="name" select="1"/>
                             <field name="parent_id" select="2"/>
@@ -103,7 +103,8 @@
                             <field name="pond_computed" />
                             <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
                             <newline/>
-                    		<field name="state" select="2"/>
+                            <field name="state" select="2"/>
+                            <button name="export_csv" string="Export to CSV" type="object"/>
                         </page>
                         <page string="Notes">
                             <field colspan="4" name="note" nolabel="1"/>
@@ -171,7 +172,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Result of the Comparisons">
-					<field name="factor_id"/>
+                    <field name="factor_id"/>
                     <field name="item_id"/>
                     <field name="result"/>
                 </form>
@@ -211,7 +212,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Vote Criterias">
-					<field name="name" select="1"/>
+                    <field name="name" select="1"/>
                     <field name="factor" select="1"/>
                 </form>
             </field>
@@ -247,12 +248,12 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Vote">
-					<field name="item_id" select="1"/>
+                    <field name="item_id" select="1"/>
                     <field name="user_id" select="2"/>
                     <field name="factor_id" select="1"/>
                     <field name="score_id" select="1"/>
 <!--                    <field name="ponderation" select="2"/>-->
-					<field colspan="4" name="note" />
+                    <field colspan="4" name="note" />
                 </form>
             </field>
         </record>
@@ -298,16 +299,16 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Suggest Ponderations">
-					<field name="factor_id" select="1"/>
+                    <field name="factor_id" select="1"/>
                     <field name="user_id" />
                     <field name="ponderation" select="1"/>
-                   	<newline/>
-					<field colspan="4" name="note" />
-					<field name="state" colspan="2" select="2"/>
-					<group col="2" colspan="2">
-					<button name="accept_suggestion" states="draft" string="Accept" type="object"/>
-					<button name="cancel_suggestion" states="draft,done" string="Reject" type="object"/>
-					</group>
+                       <newline/>
+                    <field colspan="4" name="note" />
+                    <field name="state" colspan="2" select="2"/>
+                    <group col="2" colspan="2">
+                    <button name="accept_suggestion" states="draft" string="Accept" type="object"/>
+                    <button name="cancel_suggestion" states="draft,done" string="Reject" type="object"/>
+                    </group>
                 </form>
             </field>
         </record>
@@ -318,10 +319,10 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Suggested Ponderations">
-					<field name="factor_id" select="1"/>
+                    <field name="factor_id" select="1"/>
                     <field name="user_id" />
                     <field name="ponderation" select="1"/>
-                   	<field name="state" select="2"/>
+                       <field name="state" select="2"/>
                 </tree>
             </field>
         </record>

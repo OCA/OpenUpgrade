@@ -312,7 +312,10 @@ TreeNode.prototype = {
             if (i > 0) {
                 
                 if (header.type == 'url' && value) {
-                    value = MochiKit.DOM.A({href: record.action || value, target: record.target || '_blank'}, value);    
+                	var vals = value.split('|');
+                	value = vals[0];
+                	record.action = vals[1];
+                    value = MochiKit.DOM.A({href: record.action || value}, value);    
                 }
                 
                 if (header.type == 'email' && value) {

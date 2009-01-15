@@ -13,134 +13,195 @@
 
 
 		<!-- Fleet -->
-
-		<record model="ir.ui.view" id="stock.view_location_form2">
+		<record model="ir.ui.view" id="view_location_fleet_form">
 			<field name="name">stock.location.fleet.form.fleet_maintenance</field>
 			<field name="model">stock.location</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 
 				<form string="Fleet">
-					<!-- We have to factor those fields because else forms won't validate -->
-					<group col="2" colspan="2">
-						<field name="name" select="1" string="Name" />
-					</group>
+					<field name="fleet_type" invisible="1" />
+					<field name="name" select="1" string="Name" />
+					<field name="partner_id" attrs="{'required':[('fleet_type','=','fleet')]}" domain="[('customer','=', True)]" />
+					<field context="{'context_display':'partner'}" name="address_id" />
+					<field name="active" select="2" />
+					<separator string="Maintenance Dates" colspan="4" />
+					<field name="intrinsic_anniversary_time" string="Anniversary Time"
+						on_change="intrinsic_anniversary_time_change(intrinsic_anniversary_time)" />
+											
 
-
-
-					<!-- Original stock view -->
-					<group col="6" colspan="4" attrs="{'invisible':[('fleet_type','!=','none')]}">
-						<field name="active" select="2" />
-						<field name="usage" select="1" />
-						<field name="account_id" select="1" />
-						<field name="location_id" />
-
-						<field context="{'context_display':'partner'}" name="address_id" />
-						<field name="icon" />
-						<newline />
-						<group col="2" colspan="2">
-							<separator colspan="2" string="Chained Locations" />
-							<field name="chained_location_type" />
-							<field name="chained_location_id" />
-							<field name="chained_auto_packing" />
-							<field name="chained_delay" />
-						</group>
-						<group col="2" colspan="2">
-							<separator colspan="2" string="Localisation" />
-							<field name="posx" />
-							<field name="posy" />
-							<field name="posz" />
-						</group>
-						<separator colspan="4" string="Additional Information" />
-						<field colspan="4" name="comment" nolabel="1" />
-					</group>
-
-
-					<!-- Fleet Form View -->
-					<group col="6" colspan="4" attrs="{'invisible':[('fleet_type','!=','fleet')]}">
-						<field name="fleet_type" invisible="1" />
-						<field name="partner_id" attrs="{'required':[('fleet_type','=','fleet')]}" domain="[('customer','=', True)]" />
-						<field context="{'context_display':'partner'}" name="address_id" />
-						<field name="active" select="2" />
-						<separator string="Maintenance Dates" colspan="4" />
-						<group col="6" colspan="4">
-							<field name="intrinsic_anniversary_time" string="Anniversary Time"
-								on_change="intrinsic_anniversary_time_change(intrinsic_anniversary_time)" />
-						</group>
-						<separator string="Fleet Extensions" colspan="4" />
-						<group col="6" colspan="4">
-
-							<field colspan="4" mode="tree" context="{'fleet_type':'sub_fleet'}" name="child_ids" nolabel="1">
+					<notebook colspan="4">
+						<page string="Fleet Extensions">
+							<field colspan="4" mode="tree, form" context="{'fleet_type':'sub_fleet'}" name="child_ids" nolabel="1">
 								<tree string="Sub Fleets">
 									<field name="name" />
 									<field name="is_expired" />
 									<field name="time_to_expire" />
 									<field name="expire_time" />
 								</tree>
-							</field>
-						</group>
-					</group>
-
-
-					<!-- Sub Fleets -->
-					<group col="6" colspan="4" attrs="{'invisible':[('fleet_type','!=','sub_fleet')]}">
-						<field name="fleet_type" invisible="1" />
-						<field name="parent_fleet_id" context="{'fleet_type':'sub_fleet', 'partner_id':context.get('partner_id', False)}"
-							on_change="onchange_parent_fleet_id(parent_fleet_id)" domain="[('fleet_type','=','fleet')]" attrs="{'required':[('fleet_type','=','sub_fleet')]}" />
-						<field name="address_id" context="{'context_display':'partner'}" />
-						<field name="active" select="2" />
-						<separator string="Maintenance Dates" colspan="4" />
-						<group col="4" colspan="4">
-							<field name="is_expired" />
-							<field name="time_to_expire" />
-							<field name="expire_time" />
-							<newline />
-							<field name="anniversary_time" />
-						</group>
-
-						<newline />
-
-						<group col="2" colspan="2">
-							<field colspan="2" nolabel="1" mode="tree,form,calendar" name="account_invoice_lines">
+							
+								<!-- FIXME: the following form is supposed to be exactly the stock.location.fleet.form.sub_fleet_maintenance arch
+									but due to an OpenERP v5 GTK client limitation where the context is not passed in one2many widgets,
+									we couldn't let the server appropriately select the right view so we just wrapped it here to make it work anyway -->
+								<form string="Sub Fleet">
+									<field name="fleet_type" invisible="1" />
+									<field name="name" select="1" string="Name" />
+									<field name="address_id" context="{'context_display':'partner'}" />
+									<field name="active" select="2" />
+									<separator string="Maintenance Dates" colspan="4" />
+									<field name="is_expired" />
+									<field name="time_to_expire" />
+									<field name="expire_time" />
+									<field name="anniversary_time" />
+									<newline />
+									<notebook colspan="4">
+										<page string="Invoice Lines">
+											<field nolabel="1" mode="tree,form,calendar" name="account_invoice_lines">
+												<tree string="Invoice Lines">
+													<field name="invoice_id" />
+													<field name="quantity" />
+													<field name="maintenance_start_date" string="Start" />
+													<field name="maintenance_end_date" string="End" />
+													<field name="price_subtotal" />
+												</tree>
+											</field>
+										</page>
+										<page string="Orders Lines">
+											<field nolabel="1" name="sale_order_lines">
+												<tree string="Sale Order Lines">
+													<field name="order_id" />
+													<field name="product_uos_qty" />
+													<field name="maintenance_start_date" string="Start" />
+													<field name="maintenance_end_date" string="End" />
+													<field name="price_subtotal" />
+												</tree>
+											</field>
+										</page>
+										<page string="Events">
+											<field nolabel="1" name="crm_cases">
+												<tree string="Incidents">
+													<field name="incident_ref" />
+													<field name="prodlot_id" />
+													<field name="section_id" />
+													<field name="state" />
+													<field name="name" />
+												</tree>
+											</field>
+										</page>
+									</notebook>
+								</form>
+							
+							</field>		
+						</page>
+						
+						
+					
+						<!-- Almost like for sub-fleets but at the fleet level -->
+						<page string="Fleet Invoice Lines">
+							<field nolabel="1" mode="tree,form,calendar" name="fleet_account_invoice_lines">
 								<tree string="Invoice Lines">
+									<field name="invoice_id" />
 									<field name="quantity" />
 									<field name="maintenance_start_date" string="Start" />
 									<field name="maintenance_end_date" string="End" />
 									<field name="price_subtotal" />
 								</tree>
 							</field>
-						</group>
-
-						<group col="2" colspan="2">
-							<field colspan="2" nolabel="1" name="sale_order_lines">
+						</page>
+						<page string="Fleet Orders Lines">
+							<field nolabel="1" name="fleet_sale_order_lines">
 								<tree string="Sale Order Lines">
+									<field name="order_id" />
 									<field name="product_uos_qty" />
 									<field name="maintenance_start_date" string="Start" />
 									<field name="maintenance_end_date" string="End" />
 									<field name="price_subtotal" />
 								</tree>
 							</field>
-						</group>
-
-
-
-						<newline />
-						<field colspan="4" nolabel="1" name="crm_cases">
-							<tree string="Incidents">
-								<field name="incident_ref" />
-								<field name="prodlot_id" />
-								<field name="section_id" />
-								<field name="state" />
-								<field name="name" />
-							</tree>
-						</field>
-
-					</group>
-
+						</page>
+						<page string="Fleet Events">
+							<field nolabel="1" name="fleet_crm_cases">
+								<tree string="Incidents">
+									<field name="incident_ref" />
+									<field name="prodlot_id" />
+									<field name="section_id" />
+									<field name="state" />
+									<field name="name" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
 
 				</form>
 			</field>
 		</record>
+
+
+
+
+
+		<!-- Sub Fleet -->
+		<record model="ir.ui.view" id="view_location_sub_fleet_form">
+			<field name="name">stock.location.fleet.form.sub_fleet_maintenance</field>
+			<field name="model">stock.location</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<form string="Sub Fleet">
+					<field name="fleet_type" invisible="1" />
+					<field name="name" select="1" string="Name" />
+					<field name="location_id" context="{'fleet_type':'fleet', 'partner_id':context.get('partner_id', False)}"
+									domain="[('fleet_type','=','fleet')]" required="1" />
+					<field name="address_id" context="{'context_display':'partner'}" />
+					<field name="active" select="2" />
+					<separator string="Maintenance Dates" colspan="4" />
+					<field name="is_expired" />
+					<field name="time_to_expire" />
+					<field name="expire_time" />
+					<field name="anniversary_time" />
+					<newline />
+					<notebook colspan="4">
+						<page string="Invoice Lines">
+							<field nolabel="1" mode="tree,form,calendar" name="account_invoice_lines">
+								<tree string="Invoice Lines">
+									<field name="invoice_id" />
+									<field name="quantity" />
+									<field name="maintenance_start_date" string="Start" />
+									<field name="maintenance_end_date" string="End" />
+									<field name="price_subtotal" />
+								</tree>
+							</field>
+						</page>
+						<page string="Orders Lines">
+							<field nolabel="1" name="sale_order_lines">
+								<tree string="Sale Order Lines">
+									<field name="order_id" />
+									<field name="product_uos_qty" />
+									<field name="maintenance_start_date" string="Start" />
+									<field name="maintenance_end_date" string="End" />
+									<field name="price_subtotal" />
+								</tree>
+							</field>
+						</page>
+						<page string="Events">
+							<field nolabel="1" name="crm_cases">
+								<tree string="Incidents">
+									<field name="incident_ref" />
+									<field name="prodlot_id" />
+									<field name="section_id" />
+									<field name="state" />
+									<field name="name" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+
+
+
 
 
 		<record id="fleet_maintenance.view_location_tree_fleet" model="ir.ui.view">
@@ -180,7 +241,7 @@
 			<field name="act_window_id" ref="fleet_maintenance.fleet_normal_action" />
 			<field eval="0" name="multi" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
-			<field name="view_id" ref="stock.view_location_form" />
+			<field name="view_id" ref="view_location_fleet_form" />
 			<field eval="1" name="sequence" />
 		</record>
 
@@ -200,7 +261,7 @@
 			<field name="act_window_id" ref="fleet_maintenance.action_fleet_new" />
 			<field eval="0" name="multi" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
-			<field name="view_id" ref="stock.view_location_form" />
+			<field name="view_id" ref="view_location_fleet_form" />
 		</record>
 
 
@@ -263,7 +324,7 @@
 			<field name="act_window_id" ref="fleet_maintenance.sub_fleet_normal_action" />
 			<field eval="0" name="multi" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
-			<field name="view_id" ref="stock.view_location_form" />
+			<field name="view_id" ref="view_location_sub_fleet_form" />
 			<field eval="1" name="sequence" />
 		</record>
 
@@ -283,7 +344,7 @@
 		<record id="ir_actions_act_window_view_fleet_new" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="action_fleet_extension_new" />
 			<field eval="1" name="multi" />
-			<field name="view_id" ref="stock.view_location_form2" />
+			<field name="view_id" ref="view_location_fleet_form" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
 		</record>
 
@@ -291,25 +352,8 @@
 
 
 
-
-
-
-
-
-
 		<!-- Fleet Maintenance orders -->
 
-
-		<!--
-			act_window id="act_stock_location_2_sale_order" name="Fleet Extensions Order" res_model="sale.order"
-			src_model="stock.location" /> <record id="ir_actions_act_window_view_new_maintenance_form"
-			model="ir.actions.act_window.view"> <field name="act_window_id" ref="act_stock_location_2_sale_order" /> <field
-			eval="1" name="multi" /> <field name="view_id" ref="fleet_maintenance.view_location_form_fleet_maintenance" /> <field
-			eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" /> </record> <record
-			id="ir_actions_act_window_view_new_maintenance_tree" model="ir.actions.act_window.view"> <field name="act_window_id"
-			ref="act_stock_location_2_sale_order" /> <field eval="0" name="multi" /> <field
-			eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" /> </record
-		-->
 
 
 
@@ -340,14 +384,10 @@
 		</record>
 
 
-
-
-
 		<!-- Incident Picking (CRM) -->
-
 		<record id="view_picking_incident_form" model="ir.ui.view">
 			<field name="name">stock.picking.incident.form</field>
-			<field name="model">stock.picking.incident</field>
+			<field name="model">stock.picking</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Packing list">
@@ -395,12 +435,9 @@
 						<button name="button_cancel" states="assigned,confirmed,draft" string="Cancel" />
 					</group>
 
-
 				</form>
 			</field>
 		</record>
-
-
 
 	</data>
 </openerp>
