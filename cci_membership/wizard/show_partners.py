@@ -51,7 +51,7 @@ lines_fields = {
     'date_from': {'string':'Start of period', 'type':'date', 'required':True},
     'date_to': {'string':'End of period', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-%m-%d')},
     'amount': {'string':'Amount', 'type':'float', 'required':True, 'default': lambda *a: 0.0},
-    'member_state':{'string':'Current Membership state','type':'selection','selection':[('none', 'Non Member'),('canceled','Canceled Member'),('old','Old Member'),('waiting','Waiting Member'),('invoiced','Invoiced Member'),('associated','Associated Member'),('free','Free Member'),('paid','Paid Member')],'required':True, 'help':'The wizard will only pay attention to partners in this membership state'},
+    'member_state':{'string':'Current Membership state','type':'selection','selection':[('none', 'Non Member'),('canceled','Canceled Member'),('old','Old Member'),('waiting','Waiting Member'),('invoiced','Invoiced Member'),('free','Free Member'),('paid','Paid Member')],'required':True, 'help':'The wizard will only pay attention to partners in this membership state'},
     'removing_from_list': {'string':'Keep only fetching partners', 'type':'boolean', 'help': """The result will be a list of partner:
 \n* Either only the fetching partners, if this box is checked.
 \n* Otherwise, all the partners minus the ones that fetch the criteria."""},
