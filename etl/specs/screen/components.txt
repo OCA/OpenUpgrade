@@ -136,7 +136,7 @@ Output Flows: 0-1
 etl.component.row_filter (etl.component.simple_filter)
 ------------------------
 
-This component use to filter records from given input
+This component use to filter records from given input.
 
 Type: Data Component
 Computing Performance: Semi-Streamline
@@ -144,6 +144,83 @@ Input Flows: 1
 * .* : the main data flow with input data
 Output Flows: 0-x
 * .* : return the main flow with filtering result
+
+etl.component.log_bloc
+----------------------------
+This component use to display output in block
+
+Type: Data Component
+Computing Performance: Bloc
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-y
+* .* : return the main flow 
+
+etl.component.logger
+----------------------------
+This component use to display output in streamline
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-y
+* .* : return the main flow 
+
+etl.component.map
+----------------------------
+This component use for field mapping
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : the main data flow with input data
+Output Flows: 0-x
+* .* : return the main flow with mapping result
+
+etl.component.sort
+----------------------------
+This component use for sort process.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : the main data flow with input data
+Output Flows: 0-x
+* .* : return the main flow with sort result
+
+etl.component.sql_in
+----------------------------
+This component use to read data from sql table.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-x
+* .* : return the main flow with sql data
+
+etl.component.sql_out
+----------------------------
+This component use to insert,update,delete data from sql table.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-1
+* .* : return the main flow 
+
+etl.component.schema_validation
+----------------------------
+This component use to validate input records with given schema.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : the main data flow with input data
+Output Flows: 0-x
+* .* : return the main flow 
 
 
 
