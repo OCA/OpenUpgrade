@@ -54,3 +54,67 @@ Output Flows: 0-x
 * .*: output no data, just trigger signals
 
 
+etl.component.aggregate_sorted
+------------------
+This component use to give aggregate result from sorted input.
+Pass sorted row as a input. This component aggregate list of records for each keys and group by keys
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* main: The main flow
+Output Flows: 0-x
+* .*: return the main flow with aggregate result
+
+etl.component.aggregate_unsorted
+------------------
+This component use to give aggregate result from unsorted input.
+Pass upsorted row as a input. This component sort list of records than aggregate sorted records for each keys and group by keys
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* main: The main flow
+Output Flows: 0-x
+* .*: return the main flow with aggregate result
+
+etl.component.csv_input
+----------------------
+This component use to read csv file data
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-x
+* .* : return the main flow with data from csv file
+
+etl.component.csv_output
+----------------------
+This component use to store data into csv file
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-y
+* .* : return the main flow with status of store
+
+
+etl.component.row_filter (etl.component.simple_filter)
+----------------------------
+This component use to filter records from given input
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : the main data flow with input data
+Output Flows: 0-x
+* .* : return the main flow with filtering result
+
+
+
+
+
+
+
