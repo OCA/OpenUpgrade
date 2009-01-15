@@ -20,7 +20,7 @@ Input Flows: 2
 * main: The main flow
 * .*: the second flow
 Output Flows: 0-x
-* .*: return all elements that are the same in both input flows
+* same: return all elements that are the same in both input flows
 * updated: return all updated elements
 * removed: return all elements that where in main and not in the second flow
 * added: return all elements from the second flow that are not in main channel
@@ -52,5 +52,17 @@ Input Flows: 0-x
 * .*: do nothing
 Output Flows: 0-x
 * .*: output no data, just trigger signals
+
+etl.component.dummy
+-------------------
+
+A component that do nothing.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .*: receive data
+Output Flows: 0-y
+* .*: output nothing
 
 
