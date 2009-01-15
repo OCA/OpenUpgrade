@@ -255,7 +255,7 @@ Input Flows: 0-x
 Output Flows: 0-1
 * .* : return the main flow
 
-etl.component.find_replace_with_info
+etl.component.find_replace
 ----------------------------
 This component use to do find and replace operation in the input columns defined.
 This component has keys with find and replace information.
@@ -267,7 +267,7 @@ Input Flows: 1
 Output Flows: 0-x
 * .* : return the main flow with replaced data
 
-etl.component.find_replace_without_info
+etl.component.find_replace_list
 --------------------------------------------
 This component use to find value from source data and replace with new value which exits in another source data in the input columns defined. This component has only keys without find and replace information.
 
