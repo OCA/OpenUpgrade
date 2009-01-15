@@ -303,6 +303,56 @@ Output Flows: 0-y
 * .* : return the main flow with result of python code
 
 
+etl.component.fork
+--------------------------------------------
+This component use to make fork flow (replica flow)
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 1
+* .* : main flow with input data
+Output Flows: 0-2
+* .* : return the main flow 
+* .* : return second flow which is fork flow of main flow 
+
+
+etl.component.unique_data
+--------------------------------------------
+This component use to give unique data row means remove duplicate data.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : main flow with input data
+Output Flows: 0-x
+* unique : return  unique rows
+* duplicate : return duplicate rows
+
+etl.component.speedtest
+--------------------------------------------
+This component use to give data transfer speed of job.
+
+Type: Job Component
+Computing Performance: /
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-1
+* .* : return the speed data 
+
+
+etl.component.statistics
+--------------------------------------------
+This component use to give statistical result of job process. like user,current process,source component, destination component, start date of process, end date of process, messages.
+
+Type: Job Component
+Computing Performance: /
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-1
+* .* : return the statistical data 
+  
+
+
 
 
 
