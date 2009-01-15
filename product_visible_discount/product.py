@@ -59,7 +59,7 @@ class sale_order_line(osv.osv):
             product = product_obj.browse(cr, uid, product, context)
             product_tmpl_id = product.product_tmpl_id.id
             pricetype_id = pricelist_obj.browse(cr, uid, pricelist).version_id[0].items_id[0].base
-            field_name = self.pool.get('product.price.type').browse(cr, uid, pricetype_id).field
+            field_name = 'list_price'
             product_read = self.pool.get('product.template').read(cr, uid, product_tmpl_id, [field_name], context)
             list_price = product_read[field_name]
     

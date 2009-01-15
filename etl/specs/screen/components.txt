@@ -143,7 +143,8 @@ Computing Performance: Semi-Streamline
 Input Flows: 1
 * .* : the main data flow with input data
 Output Flows: 0-x
-* .* : return the main flow with filtering result
+* main : return the main flow with data that matches the test
+* invalid : the flow
 
 etl.component.log_bloc
 ----------------------------
@@ -220,8 +221,157 @@ Computing Performance: Semi-Streamline
 Input Flows: 1
 * .* : the main data flow with input data
 Output Flows: 0-x
-* .* : return the main flow 
+* .* : return the main flow with result of schema validation
 
+etl.component.merge
+----------------------------
+This component use to merge different inputs data into one output base on schema
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-y
+* .* : return the main flow with merged data
+
+etl.component.openobject_in
+----------------------------
+
+This component is used to read data from openobject like read partner datas
+from res.partner model with a specific domain to select the records.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-x
+* .* : return the main flow with data of openobject
+
+etl.component.openobject_out
+----------------------------
+
+This component is used to create,write,unlink data on openobject 
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .* : main flow with input data
+Output Flows: 0-1
+* .* : return the main flow
+
+etl.component.find_replace
+--------------------------
+
+This component use to do find and replace operation in the input columns defined.
+This component has keys with find and replace information. It uses regex to do
+the replacement.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : main flow with input data
+Output Flows: 0-x
+* .* : return the main flow with replaced data
+
+etl.component.find_replace_list
+-------------------------------
+
+This component is used to find value from source data and replace with new value
+which exits in another source data in the input columns defined. This component
+has only keys without find and replace information.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 2
+* .* : main flow with source data
+* .* : second flow with replace  data
+Output Flows: 0-x
+* .* : return the main flow with replaced data
+
+
+etl.component.python_code
+-------------------------
+
+This component is used to execute python code. The python code process
+an input stream and return an output result.
+
+Type: Data Component
+Computing Performance: Depends on the code
+Input Flows: 0-x
+* .* : main flow with input data
+Output Flows: 0-y
+* .* : return the main flow with result of python code
+
+
+etl.component.fork
+------------------
+
+This component use to make fork flow (replica flow)
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 1
+* .* : main flow with input data
+Output Flows: 0-2
+* main : return the main flow 
+* fork : return second flow which is fork flow of main flow 
+
+
+etl.component.uniq
+------------------
+
+This component id used to check and process uniq constraints on records.
+It sends all uniq records to one channel (uniq) and all duplicates records
+to another channel (duplicate)
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : main flow with input data
+Output Flows: 0-x
+* uniq : return  uniq rows
+* duplicate : return duplicate rows
+
+etl.component.wait
+------------------
+
+This component is used to slow the data transfer. It mark a pause of
+X second at each inputed row.
+
+Type: Job Component
+Computing Performance: Streamline
+Input Flows: 0
+* .* : do nothing
+Output Flows: 0-1
+* .* : return the same flow
+
+etl.component.speedtest
+-----------------------
+
+This component is used to log data transfer speed of job.
+
+Type: Log Component
+Computing Performance: /
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-1
+* .* : return the speed data 
+
+
+etl.component.statistics
+------------------------
+
+This component is used to log statistical result of job process. like
+user,current process,source component, destination component, start date of
+process, end date of process, messages.
+
+Type: Log Component
+Computing Performance: /
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-1
+* .* : return the statistical data 
+  
 
 
 
