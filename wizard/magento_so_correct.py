@@ -45,16 +45,11 @@ def _do_correct(self, cr, uid, data, context):
     self.pool = pooler.get_pool(cr.dbname)
     logger = netsvc.Logger()
 
-    #===============================================================================
-    #  Server communication
-    #===============================================================================
-    magento_web_id=self.pool.get('magento.web').search(cr,uid,[('magento_id','=',1)])
-    try:
-        magento_web=self.pool.get('magento.web').browse(cr,uid,magento_web_id[0])
-        server = xmlrpclib.ServerProxy("%sapp/code/local/Smile/OpenERPSync/openerp-synchro.php" % magento_web.magento_url)# % website.url)
-    except:
-        raise wizard.except_wizard("UserError", "You must have a declared website with a valid URL! provided URL: %s/openerp-synchro.php" % magento_web.magento_url)
-    
+
+    mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+    mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
+    server = mw.connect_custom_api()
+
     #===============================================================================
     #    Sale Order Processing
     #===============================================================================
@@ -67,14 +62,13 @@ def _do_correct(self, cr, uid, data, context):
     for so_id in has_error_so_array:
         error_so=self.pool.get('sale.order').browse(cr, uid, so_id)
         
+
         try:
-            try:
-                mag_so=server.get_sale_order(error_so.magento_id)
-            except ExpatError, error:
-                logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders correct, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
-                raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders correct, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % magento_web.magento_url)
-        except :
-            raise wizard.except_wizard("ConnectionError", "Couldn't connect to Magento with URL %sindex.php/api/xmlrpc" % magento_web.magento_url)
+            mag_so=server.get_sale_order(error_so.magento_id)
+        except ExpatError, error:
+            logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders correct, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
+            raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders correct, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % mw.magento_url)
+
 
         error_counter = 0
         

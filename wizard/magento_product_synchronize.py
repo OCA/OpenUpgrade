@@ -31,7 +31,6 @@ import wizard
 import pooler
 import xmlrpclib
 import netsvc
-import server_common
 
 
 def do_export(self, cr, uid, data, context):
@@ -57,7 +56,7 @@ def do_export(self, cr, uid, data, context):
     #===============================================================================
 
     if data['model'] == 'ir.ui.menu':
-        prod_ids = product_pool.search(cr, uid, [('exportable', '=', True),('updated', '=', False)])
+        prod_ids = product_pool.search(cr, uid, [('exportable', '=', True)])#,('updated', '=', False)])
     else:
         prod_ids = []
         prod_not = []

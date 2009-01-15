@@ -40,14 +40,9 @@ def _do_update(self, cr, uid, data, context):
     self.pool = pooler.get_pool(cr.dbname)
     logger = netsvc.Logger()
 
-    # Server communication
-    magento_web_id=self.pool.get('magento.web').search(cr,uid,[('magento_id','=',1)])
-    try:
-        magento_web=self.pool.get('magento.web').browse(cr,uid,magento_web_id[0])
-        server = xmlrpclib.ServerProxy("%sapp/code/local/Smile/OpenERPSync/openerp-synchro.php" % magento_web.magento_url)# % website.url)
-    except:
-        raise wizard.except_wizard("UserError", "You must have a declared website with a valid URL! provided URL: %s/openerp-synchro.php" % magento_web.magento_url)
-       
+    mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+    mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
+    server = mw.connect_custom_api()
 
     #===============================================================================
     #    Sale Order Error Processing
@@ -63,14 +58,13 @@ def _do_update(self, cr, uid, data, context):
                 'status': update_so.state or int(0),
         }
         #Update
+
         try:
-            try:
-                updated_id=server.update_sale_order([web_so])
-            except ExpatError, error:
-                logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders update, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
-                raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders update, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % magento_web.magento_url)
-        except :
-            raise wizard.except_wizard("ConnectionError", "Couldn't connect to Magento with URL %sindex.php/api/xmlrpc" % magento_web.magento_url)
+            updated_id=server.update_sale_order([web_so])
+        except ExpatError, error:
+            logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders update, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
+            raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders update, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % mw.magento_url)
+
 
         #Report
         if int(updated_id) != int(update_so.magento_id) :

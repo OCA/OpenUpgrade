@@ -140,7 +140,7 @@ class sale_shop(osv.osv):
     _name = 'sale.shop'
     _inherit = 'sale.shop'
     _columns = {
-        'magento_flag': fields.boolean('Magento websho'),
+        'magento_flag': fields.boolean('Magento webshop'),
     }
     _defaults = {
         'magento_flag': lambda *a: False,
@@ -195,7 +195,7 @@ class magento_web(osv.osv):
         try:
             magento_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
             if len(magento_id) > 1 :
-                raise osv.except_osv('UserError', 'You must only one shop with Magento flag On')
+                raise osv.except_osv('UserError', 'You must have only one shop with Magento flag turned on')
             else :
                 magento_web = self.pool.get('magento.web').browse(cr, uid, magento_id[0])
                 server = xmlrpclib.ServerProxy("%sindex.php/api/xmlrpc" % magento_web.magento_url)
@@ -213,5 +213,26 @@ class magento_web(osv.osv):
             raise osv.except_osv("ConnectionError", "Couldn't connect to Magento with URL %sindex.php/api/xmlrpc" % magento_web.magento_url)    
 
         return server, session
+
+    
+    #TODO Refactor with connect method
+    def connect_custom_api(self, cr, uid, ids, datas = {}, context = {}):
+        import xmlrpclib
+        import netsvc
+        connect_logger = netsvc.Logger()
+        
+        try:
+            magento_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+            if len(magento_id) > 1 :
+                raise osv.except_osv('UserError', 'You must have only one shop with Magento flag turned on')
+            else :
+                magento_web = self.pool.get('magento.web').browse(cr, uid, magento_id[0])
+                server = xmlrpclib.ServerProxy("%sapp/code/local/Smile/OpenERPSync/openerp-synchro.php" % magento_web.magento_url)
+            
+        except Exception, error:
+            raise osv.except_osv("UserError", "You must have a declared website with a valid URL, a Magento username and password")   
+            connect_logger.notifyChannel("Magento Connect", netsvc.LOG_ERROR, "Error : %s" % error) 
+
+        return server
 
 magento_web()

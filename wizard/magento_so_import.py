@@ -32,7 +32,6 @@ import xmlrpclib
 import pooler
 import wizard
 from xml.parsers.expat import ExpatError
-import server_common
 
 #===============================================================================
 #    Payment mapping constants; change them if you need
@@ -53,16 +52,11 @@ def _do_import(self, cr, uid, data, context):
     self.pool = pooler.get_pool(cr.dbname)
     logger = netsvc.Logger()
     
-    # Magento server communication
-    magento_web_id=self.pool.get('magento.web').search(cr, uid, [('magento_id', '=', 1)])
-    try:
-        magento_web=self.pool.get('magento.web').browse(cr, uid, magento_web_id[0])
-        server = xmlrpclib.ServerProxy("%sapp/code/local/Smile/OpenERPSync/openerp-synchro.php" % magento_web.magento_url)# % website.url)
+    mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+    mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
+    server = mw.connect_custom_api()
 
-    except:
-        raise wizard.except_wizard("UserError", "You must have a declared website with a valid URL! provided URL: %s/openerp-synchro.php" % magento_web.magento_url)
-             
-    
+
     #===============================================================================
     #    Sale order sync processing
     #===============================================================================
@@ -76,14 +70,13 @@ def _do_import(self, cr, uid, data, context):
     
     # attempt to retrieve the sale order
     sale_order_array=[]
+
     try:
-        try:
-            sale_order_array = server.sale_orders_sync(last_order_id)
-        except ExpatError, error:
-            logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
-            raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % magento_web.magento_url)
-    except :
-        raise wizard.except_wizard("ConnectionError", "Couldn't connect to Magento with URL %sindex.php/api/xmlrpc" % magento_web.magento_url)
+        sale_order_array = server.sale_orders_sync(last_order_id)
+    except ExpatError, error:
+        logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
+        raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % mw.magento_url)
+
     
     # order Processing
     for so in sale_order_array:
@@ -170,7 +163,7 @@ def _do_import(self, cr, uid, data, context):
                 
         
         # retrieves Magento Shop in OpenERP
-        shop_id=self.pool.get('sale.shop').search(cr, uid, [('magento_id', '>', 0)])
+        shop_id=self.pool.get('sale.shop').search(cr, uid, [('magento_flag', '=', True)])
         if shop_id and len(shop_id) >= 1:
             shop=self.pool.get('sale.shop').browse(cr, uid, shop_id[0])
         else:

@@ -31,7 +31,6 @@ import wizard
 import pooler
 import xmlrpclib
 import netsvc
-import server_common
 
 
 def do_export(self, cr, uid, data, context):
