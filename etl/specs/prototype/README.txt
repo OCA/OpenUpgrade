@@ -57,6 +57,17 @@ can request information to another node, and then receive the requested result.
 This is not existent in most common ETL's so we have to design something smart.
 To be detailed...
 
+* Each component can send signals. Trigger Transitions can listen to these signals
+and launch new components of type input (sub-jobs, csv.in). Signals are automatically
+generated:
+   - start : When the component starts
+   - start_input : At the first row received by the component
+   - start_output : At the first row send by the component
+   - no_input : At the end of the process, if no data received
+   - stop : when the component is set as pause
+   - continue : when the component restart after a pause
+   - end : When the component finnished is process
+
 
 Questions
 ~~~~~~~~~
