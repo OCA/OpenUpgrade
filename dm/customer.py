@@ -292,10 +292,11 @@ class dm_customer_segmentation(osv.osv):
                 model_name = str(read_id['model_id'][1]).replace('.','_')
                 criteria.append("%s %s '%s'"%(str(read_id['name']), i[2]['operator'], i[2]['value']))
                 
-        vals['sql_query'] =  """select id \nfrom %swhere %s""" % (model_name+"\n",' and '.join(criteria))
+        if criteria:
+            vals['sql_query'] =  """select id \nfrom dm_customer \nwhere %s""" % (' and '.join(criteria))
         return super(dm_customer_segmentation,self).create(cr,uid,vals,context)
-    
-    
+
+
 dm_customer_segmentation()
 
 
