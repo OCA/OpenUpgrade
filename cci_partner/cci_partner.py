@@ -396,6 +396,8 @@ class res_partner_address(osv.osv):
             vals['city'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id']).city
         return super(res_partner_address,self).write(cr, uid, ids,vals, *args, **kwargs)
 
+    def get_city(self, cr, uid, id):
+        return self.browse(cr, uid, id).zip_id.city
 #que faire du name?
 
 #    def _get_name(self, cr, uid, ids, name, arg, context={}):
