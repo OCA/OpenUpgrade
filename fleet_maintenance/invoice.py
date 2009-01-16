@@ -6,6 +6,23 @@ from mx.DateTime import RelativeDateTime, DateTime, localtime, RelativeDateTimeD
 import time
 from mx import DateTime
 
+
+class account_invoice(osv.osv):
+   _inherit = "account.invoice"
+
+   def _refund_cleanup_lines(self, lines):
+       for line in lines:
+           if 'fleet_id' in line:
+               line['fleet_id'] = line.get('fleet_id', False) and line['fleet_id'][0]
+           if 'account_analytic_lines' in line:
+               line['account_analytic_lines'] = line.get('account_analytic_lines', False) and line['account_analytic_lines'][0]
+           if 'sale_order_lines' in line:
+               line['sale_order_lines'] = [(6,0, line.get('sale_order_lines', [])) ]
+       return super(account_invoice, self)._refund_cleanup_lines(lines)
+
+account_invoice()
+
+
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
     
