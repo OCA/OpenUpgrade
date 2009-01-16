@@ -247,6 +247,56 @@ class dm_customer_segmentation(osv.osv):
         'order_boolean_criteria_ids' : fields.one2many('dm.customer.order.boolean_criteria', 'segmentation_id', 'Customers Order Boolean Criteria'),
         'order_date_criteria_ids' : fields.one2many('dm.customer.order.date_criteria', 'segmentation_id', 'Customers Order Date Criteria'),
     }
+
+    def create(self,cr,uid,vals,context={}):
+        field_values = []
+        criteria=[]
+#        if vals['customer_text_criteria_ids']:
+#            field_values.extend(vals['customer_text_criteria_ids'])
+#        if vals['customer_numeric_criteria_ids']:
+#            field_values.extend(vals['customer_numeric_criteria_ids'])
+#        if vals['customer_boolean_criteria_ids']:
+#            field_values.extend(vals['customer_boolean_criteria_ids'])
+#        if vals['customer_date_criteria_ids']:                 
+#            field_values.extend(vals['customer_date_criteria_ids'])
+#        if field_values:
+#            criteria=[]
+#            for i in field_values:
+#                read_id = self.pool.get('ir.model.fields').read(cr, uid, i[2]['field'], ['name', 'model_id'])
+#                model_name = str(read_id['model_id'][1]).replace('.','_')
+#                criteria.append("%s %s '%s'"%(str(read_id['name']), i[2]['operator'], "%"+i[2]['value']+"%"))
+##            vals['sql_query'].append("""\nselect id \nfrom %swhere %s""" % (model_name+"\n",' and '.join(criteria)))
+#            print "---------", vals['sql_query']
+     
+        if vals['customer_text_criteria_ids']:
+            for i in vals['customer_text_criteria_ids']:
+                read_id = self.pool.get('ir.model.fields').read(cr, uid, i[2]['field'], ['name', 'model_id'])
+                model_name = str(read_id['model_id'][1]).replace('.','_')
+                criteria.append("%s %s '%s'"%(str(read_id['name']), i[2]['operator'], "%"+i[2]['value']+"%"))
+   
+        if vals['customer_numeric_criteria_ids']:
+            for i in vals['customer_numeric_criteria_ids']:
+                read_id = self.pool.get('ir.model.fields').read(cr, uid, i[2]['field'], ['name', 'model_id'])
+                model_name = str(read_id['model_id'][1]).replace('.','_')
+                criteria.append("%s %s %f"%(str(read_id['name']), i[2]['operator'], i[2]['value']))
+            
+        if vals['customer_boolean_criteria_ids']:
+            for i in vals['customer_boolean_criteria_ids']:
+                read_id = self.pool.get('ir.model.fields').read(cr, uid, i[2]['field'], ['name', 'model_id'])
+                model_name = str(read_id['model_id'][1]).replace('.','_')
+                criteria.append("%s %s %s"%(str(read_id['name']), i[2]['operator'], i[2]['value']))
+
+        if vals['customer_date_criteria_ids']:
+            for i in vals['customer_date_criteria_ids']:
+                read_id = self.pool.get('ir.model.fields').read(cr, uid, i[2]['field'], ['name', 'model_id'])
+                model_name = str(read_id['model_id'][1]).replace('.','_')
+                criteria.append("%s %s '%s'"%(str(read_id['name']), i[2]['operator'], i[2]['value']))
+                
+        if criteria:
+            vals['sql_query'] =  """select id \nfrom dm_customer \nwhere %s""" % (' and '.join(criteria))
+        return super(dm_customer_segmentation,self).create(cr,uid,vals,context)
+
+
 dm_customer_segmentation()
 
 

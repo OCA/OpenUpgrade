@@ -33,10 +33,10 @@ class dm_ddf_plugin(osv.osv):
     _name = "dm.ddf.plugin"
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None,context=None, count=False):
-        if 'template_id' in context:
-            if not context['template_id']:
+        if 'dm_template_id' in context:
+            if not context['dm_template_id']:
                 return []
-            res = self.pool.get('dm.document.template').browse(cr,uid,context['template_id'])
+            res = self.pool.get('dm.document.template').browse(cr,uid,context['dm_template_id'])
             plugin_ids = map(lambda x : x.id,res.plugin_ids)
             return plugin_ids
         return super(dm_ddf_plugin,self).search(cr,uid,args,offset,limit,order,context,count)
@@ -174,12 +174,13 @@ dm_offer_document_category()
 class ir_model_fields(osv.osv):
     _inherit='ir.model.fields'
     def search(self, cr, uid, args, offset=0, limit=None, order=None,context=None, count=False):
-        if 'template_id' in context:
-            if not context['template_id']:
-                return []
-            res = self.pool.get('dm.document.template').browse(cr,uid,context['template_id'])
-            field_id = map(lambda x : x.id,res.dynamic_fields)
-            return field_id
+        if context:
+            if 'dm_template_id' in context:
+                if not context['dm_template_id']:
+                    return []
+                res = self.pool.get('dm.document.template').browse(cr,uid,context['dm_template_id'])
+                field_id = map(lambda x : x.id,res.dynamic_fields)
+                return field_id
         return super(ir_model_fields,self).search(cr,uid,args,offset,limit,order,context,count)
     
 ir_model_fields()
