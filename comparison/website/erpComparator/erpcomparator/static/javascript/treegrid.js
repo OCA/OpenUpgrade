@@ -315,7 +315,7 @@ TreeNode.prototype = {
                 	var vals = value.split('|');
                 	value = vals[0];
                 	record.action = vals[1];
-                    value = MochiKit.DOM.A({href: record.action || value}, value);    
+                    value = MochiKit.DOM.A({href: 'javascript: void(0);', onclick: record.action || null}, value);    
                 }
                 
                 if (header.type == 'email' && value) {
@@ -387,6 +387,10 @@ TreeNode.prototype = {
                 if (header.type == 'url') {
 
                     var a = MochiKit.DOM.getElementsByTagAndClassName('a', null, td)[0];
+                    
+                    var vals = value.split('|');
+                	value = vals[0];
+                	record.action = vals[1];
                     
                     MochiKit.DOM.setNodeAttribute(a, 'href', value);
                     MochiKit.DOM.setNodeAttribute(a, 'target', record.target || '_blank');
@@ -636,6 +640,29 @@ TreeNode.prototype = {
         }
         
     },
+    
+    update: function() {
+    	var self = this;
+    	var params = {};
+        MochiKit.Base.update(params, this.tree.ajax_params || {});
+		MochiKit.Base.update(params, this.record.params || {});
+		
+		params['ids'] = this.record['id'];
+        var req = Ajax.JSON.post(this.tree.ajax_url, params);
+        
+        this.tree._ajax_counter += 1;
+           
+        this.setState('loading');
+        
+        req.addCallback(function(obj){
+        	self.updateDOM(obj.records[0]);
+        });
+       
+        req.addBoth(function(obj){
+            self.tree._ajax_counter -= 1;
+            self.setState(self.expanded ? 'collapse' : 'expand');
+        });
+   },
     
     expand : function(/* optional */all) {
         

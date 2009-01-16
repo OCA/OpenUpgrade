@@ -57,13 +57,13 @@ class dm_ddf_plugin(osv.osv):
             customer_id = map(lambda x:x.customer_id.id,order)
             plugins = d.document_template_id.plugin_ids
             for plugin in plugins:
-                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
+                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins")
                 plugin_name = plugin.file_fname.split('.')[0]
                 import sys
                 sys.path.append(path)
                 X =  __import__(plugin_name)
                 plugin_func = getattr(X,plugin_name)
-                plugin_value = map(lambda x : (x,plugin_func(x),plugin.id),customer_id)
+                plugin_value = map(lambda x : (x,plugin_func(cr,uid,x),plugin.id),customer_id)
                 map(lambda x :dm_customer_plugin.create(cr,uid,
                             {'date':time.strftime('%d/%m/%Y'),
                              'customer_id':x[0],
@@ -79,7 +79,7 @@ class dm_ddf_plugin(osv.osv):
         
         for id ,r in cr.fetchall():            
             try:
-                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
+                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins")
                 value = file(os.path.join(path,r), 'rb').read()
                 result[id] = base64.encodestring(value)
             except:
@@ -93,7 +93,7 @@ class dm_ddf_plugin(osv.osv):
         cr.execute(sql) 
         res = cr.fetchone()
 
-        path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
+        path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins")
         if not os.path.isdir(path):
             os.makedirs(path)
         filename = res[0]
@@ -179,6 +179,7 @@ class ir_model_fields(osv.osv):
                 if not context['dm_template_id']:
                     return []
                 res = self.pool.get('dm.document.template').browse(cr,uid,context['dm_template_id'])
+
                 field_id = map(lambda x : x.id,res.dynamic_fields)
                 return field_id
         return super(ir_model_fields,self).search(cr,uid,args,offset,limit,order,context,count)

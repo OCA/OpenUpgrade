@@ -26,7 +26,7 @@
 	    		</a>
 	    	</li>
 	    	<li>
-	    		<a href="#" onclick="window.location.href='/about'">
+	    		<a href="#" onclick="window.location.href='/graph'">
 	    			<span>Graph</span>
 	    		</a>
 	    	</li>

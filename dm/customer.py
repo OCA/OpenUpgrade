@@ -248,54 +248,38 @@ class dm_customer_segmentation(osv.osv):
         'order_date_criteria_ids' : fields.one2many('dm.customer.order.date_criteria', 'segmentation_id', 'Customers Order Date Criteria'),
     }
 
-    def create(self,cr,uid,vals,context={}):
-        field_values = []
+    def set_customer_criteria(self, cr, uid, id, context={}):
         criteria=[]
-#        if vals['customer_text_criteria_ids']:
-#            field_values.extend(vals['customer_text_criteria_ids'])
-#        if vals['customer_numeric_criteria_ids']:
-#            field_values.extend(vals['customer_numeric_criteria_ids'])
-#        if vals['customer_boolean_criteria_ids']:
-#            field_values.extend(vals['customer_boolean_criteria_ids'])
-#        if vals['customer_date_criteria_ids']:                 
-#            field_values.extend(vals['customer_date_criteria_ids'])
-#        if field_values:
-#            criteria=[]
-#            for i in field_values:
-#                read_id = self.pool.get('ir.model.fields').read(cr, uid, i[2]['field'], ['name', 'model_id'])
-#                model_name = str(read_id['model_id'][1]).replace('.','_')
-#                criteria.append("%s %s '%s'"%(str(read_id['name']), i[2]['operator'], "%"+i[2]['value']+"%"))
-##            vals['sql_query'].append("""\nselect id \nfrom %swhere %s""" % (model_name+"\n",' and '.join(criteria)))
-#            print "---------", vals['sql_query']
-     
-        if vals['customer_text_criteria_ids']:
-            for i in vals['customer_text_criteria_ids']:
-                read_id = self.pool.get('ir.model.fields').read(cr, uid, i[2]['field'], ['name', 'model_id'])
-                model_name = str(read_id['model_id'][1]).replace('.','_')
-                criteria.append("%s %s '%s'"%(str(read_id['name']), i[2]['operator'], "%"+i[2]['value']+"%"))
-   
-        if vals['customer_numeric_criteria_ids']:
-            for i in vals['customer_numeric_criteria_ids']:
-                read_id = self.pool.get('ir.model.fields').read(cr, uid, i[2]['field'], ['name', 'model_id'])
-                model_name = str(read_id['model_id'][1]).replace('.','_')
-                criteria.append("%s %s %f"%(str(read_id['name']), i[2]['operator'], i[2]['value']))
-            
-        if vals['customer_boolean_criteria_ids']:
-            for i in vals['customer_boolean_criteria_ids']:
-                read_id = self.pool.get('ir.model.fields').read(cr, uid, i[2]['field'], ['name', 'model_id'])
-                model_name = str(read_id['model_id'][1]).replace('.','_')
-                criteria.append("%s %s %s"%(str(read_id['name']), i[2]['operator'], i[2]['value']))
-
-        if vals['customer_date_criteria_ids']:
-            for i in vals['customer_date_criteria_ids']:
-                read_id = self.pool.get('ir.model.fields').read(cr, uid, i[2]['field'], ['name', 'model_id'])
-                model_name = str(read_id['model_id'][1]).replace('.','_')
-                criteria.append("%s %s '%s'"%(str(read_id['name']), i[2]['operator'], i[2]['value']))
-                
+        browse_id = self.browse(cr, uid, id)
+        if browse_id.customer_text_criteria_ids:
+            for i in browse_id.customer_text_criteria_ids:
+                criteria.append("%s %s '%s'"%(i.field.name, i.operator, "%"+i.value+"%"))
+        if browse_id.customer_numeric_criteria_ids:
+            for i in browse_id.customer_numeric_criteria_ids:
+                criteria.append("%s %s %f"%(i.field.name, i.operator, i.value))
+        if browse_id.customer_boolean_criteria_ids:
+            for i in browse_id.customer_boolean_criteria_ids:
+                criteria.append("%s %s %s"%(i.field.name, i.operator, i.value))
+        if browse_id.customer_date_criteria_ids:
+            for i in browse_id.customer_date_criteria_ids:
+                criteria.append("%s %s '%s'"%(i.field.name, i.operator, i.value))
+        
         if criteria:
-            vals['sql_query'] =  """select id \nfrom dm_customer \nwhere %s""" % (' and '.join(criteria))
-        return super(dm_customer_segmentation,self).create(cr,uid,vals,context)
+            sql_query = ("""select id \nfrom dm_customer \nwhere %s""" % (' and '.join(criteria))).replace('isnot','is not')
+        else:
+            sql_query = """select id \nfrom dm_customer"""
+        return super(dm_customer_segmentation,self).write(cr, uid, id, {'sql_query':sql_query})
 
+    def create(self,cr,uid,vals,context={}):
+        id = super(dm_customer_segmentation,self).create(cr,uid,vals,context)
+        self.set_customer_criteria(cr, uid, id)
+        return id
+
+    def write(self, cr, uid, ids, vals, context=None):
+        id = super(dm_customer_segmentation,self).write(cr, uid, ids, vals, context)
+        for i in ids:
+            self.set_customer_criteria(cr, uid, i)
+        return id
 
 dm_customer_segmentation()
 
