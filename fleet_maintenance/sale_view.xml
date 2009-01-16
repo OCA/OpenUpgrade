@@ -23,10 +23,9 @@
 				<xpath expr="/form/notebook/page/field/form/notebook" position="inside">
 						<page string="Maintenance">
 							<separator string="Fleet" col="4" colspan="4"/>
-							<!--field name="product_type" invisible="1"/> TODO put an or there -->
 		     			<field name="fleet_id" string="Sub Fleet" context="{'fleet_type':'sub_fleet'}" attrs="{'required':[('is_maintenance','=',True)], 'readonly':[('product_id','=',False)]}" domain="[('fleet_type','=','sub_fleet'), ('parent_partner_id','=',parent.partner_id)]" on_change="fleet_id_change(parent.fleet_id, fleet_id, product_id, maintenance_start_date, maintenance_product_qty)"/>
 		     			<separator string="Maintenance Dates" col="4" colspan="4"/>
-		     			<field name="maintenance_month_qty" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance)" />
+		     			<field name="maintenance_month_qty" readonly="1" />
 		    			<field name="maintenance_product_qty" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance)" />
 		     			<field name="maintenance_start_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance)"/>
 		    			<field name="maintenance_end_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance)" />

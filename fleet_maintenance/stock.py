@@ -110,7 +110,7 @@ class stock_location(osv.osv):
     
     def _default_location_id(self, cr, uid, context={}):
         if context.get('fleet_type', 'none') == 'fleet':
-            return 8 #FIXME, not very solid, rather use somthing like property_stock_customer
+            return 8 #FIXME, not very solid, rather use something like property_stock_customer
         return False
     
     
@@ -148,7 +148,6 @@ class stock_picking(osv.osv):
                         if order_line.product_id and order_line.product_id.is_maintenance:
                             self.pool.get('account.invoice.line').write(cr, uid, invoice_line.id, {'maintenance_start_date':order_line.maintenance_start_date, \
                                                                                                    'maintenance_end_date':order_line.maintenance_end_date, \
-                                                                                                   'maintenance_month_qty':order_line.maintenance_month_qty, \
                                                                                                    'maintenance_product_qty':order_line.maintenance_product_qty, \
                                                                                                    })
                         if order_line.fleet_id: #product sent to fleet but not maintenance -> we copy the information too
