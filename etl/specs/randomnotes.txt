@@ -1,0 +1,143 @@
+> Why developping an ETL from scratch instead of developping connectors for an
+> existing open source ETL ?
+
+Our biggest motivation about an ETL development is to be able to capitalize
+every integration with another application made on Open ERP. (for example,
+as an easy reuseable and out-of-the-box module). So that, once we made
+an application, we can reuse simply by installing a module.  To do so, we need
+a system that is used by all Open ERP partners.
+
+I don't think Talend will fit because:
+
+* We can not ask partners to learn a new technology for importing data. Some
+will follow, others not. It costs a lot to invest on a new technology. And I
+think Talend is complex. If we want efficient results and contributions, we
+should provide a system that everyone follows. We have several integrations per
+month: connectors will be developped quite quickly.
+
+* My first goal is packaging for end-users and re-useability. Having something
+as Open ERP module is perfect for this. A user just have to install the
+outlook_import plugin and run a simple wizard.
+
+More over, on the technical part:
+
+* I think we will take less time to redevelop a full ETL than to develop
+OpenObject connectors for Talend. Mostly because we just have to develop the
+ETL kernel and components (20 is enough for most jobs) and the rest is already
+available from the ERP kernel: access rights, web-service interface, job editor,
+forms and lists, migration of jobs, etc. The estimated time for the first
+useable version of the ETL (without the interface) is between 2 and 3 weeks.
+
+* The maintenance (evolution of Open ERP's version) will be hard with Talend
+and nearly 0 per new version with Open ERP.
+
+* I read the way Talend is developped and it seems like a "usine à gaz".
+I think we will have much better results, either after a few weeks. Having a
+script language, non typed and object is very good for an ETL. We have big
+changes in mind that will simplify the way you design jobs:
+  - don't describe the interface, just describe the changes
+      -> MUCH MORE flexible.
+      -> MUCH LESS work for integration
+      -> AVOID to describe connectors for every object/table
+      -> COMPATIBLE with the modularity and flexibility of Open ERP
+         (objects may be very different based on the modules you install)
+  - ability to easily reuse. (like you pointed, db connections)
+  - use introspection everywhere (to detect Open ERP connectors on the fly based
+    on SQL introspection, Open ERP fields-view_get, CSV headers, ...) And don't
+    store and describe schema, unless you explictly need a validation. In this case
+    you describe only the part you want to validate.
+
+* I think that developping a component, in a good etl, should not take more than
+a few hours. It's not the case with current Open Source ERP.
+
+* ETL is like BI, having an integrated ETL offers a new dimension of possibility
+for the ERP: for example, we decided that, for our direct marketing module, a
+segmentation of customers for a campaign is defined by an ETL job.
+
+But, we don't plan to try to compete with Talend:
+* We will not implement high-end-user interfaces. For example, we do not plan
+to develop a SQL query designer. Users will have to write their SQL queries by
+themselves. (at least at the beginning)
+
+> PULL instead of PUSH
+
+An ETL component read flows of data in input, process and push this flow of data
+to outputs. But sometimes it's more interresting to pull data instead of pushing
+it. (an inverted flow or part of a flow) In this situation, a flow request specific
+data (invert the processing direction) instead of waiting data to process.
+Most of the time, if you want to join two flows of data, it's easier and more efficient
+to use PUSH on the main flow and pull on secondary flows so that it can request only
+waht he needs.
+
+I will try to write some usecases.
+
+> For Open Object, we should provide business connectors (Partners V4.2, products V5...)
+
+I don't think we will need this. I put an introspection button on the Open Object
+connector that loads the schema and constraints automatically. Based on the note above
+(we don't describe all data, only the changes we want to apply), it will be very
+flexible most connectors will easily work together without performing operations.
+
+Having said that, in most of the case, this flow will work with the same
+connectors for OutlookToOpenERP, and Open ERP.
+	Outlook 2003 -> OutlookTOOpenERP -> Open ERP
+	Outlook 2007 -> OutlookTOOpenERP -> Open ERP
+So we just have to provide different connectors if needed.
+
+Of course, if needed for complex objects that changed too much between versions, we
+will provide connectors.
+
+But if such components are needed, it's not component to develop, it's just a
+parametrization (of components or part of jobs) saved as a module. So anybody
+could easily change it.
+
+> File & DB access.
+
+For files, we will use URL lib that support most protocols: webdav, ftp, http, etc.
+For DB Access, we will use SQLAlchemy that support most relationnal DB.
+
+So, with only 2 components, we will manage most input connectors. Python libraries
+exists for lots of format of files (DBF, XLS, ...) so it will be quite easy to develop
+these connectors: from 5 to 20 lines of Python :)
+
+Note that we plan to dissociate server connection connectors and file input connections.
+So that you can use the server connection connector to retrieve a file through any
+protocol (HTTP, FTP, ...) and connect a file input process on this one after (DBF, CSV).
+
+> Everything as object
+
+I agree with you. Every data should be an object and every field also. For example,
+dates will be mx.DateTime objects (that already support all kind of operations)
+and string will be unicode objects.
+
+> Toolbox
+
+I don't have a clear vision of what you call Toolbox. May be we should discuss on this.
+But, in my opinion, Python is a toolbox in itself. Really easy scripting language and
+lots of available functions or libraries. Managing transformations in Python is really
+easy.
+
+> Naming convention
+
+Yes, we should not use terms like Talend. Any proposition for a better term for
+'component' ?
+
+> Dependency with Open ERP
+
+There will be not dependency with Open ERP ! We plan to develop a fully independant
+python library called etl. So that, any python application can use it. This library
+manages all components and jobs processes but has no gui.
+Then, we will develop an etl module on ERP that provides the GUI to easily define
+components and jobs. Means you can use it from the GUI or directly in Python.
+The Open ERP module will save the defined jobs/components (like pickle that includes
+all etl object). So that you can use the system with only the etl library, without
+having to install Open ERP.
+I don't like code generation tools at all. This approach is much more efficient and
+request less effort.
+
+So you have:
+* Development/Testing environment: Open ERP
+* Deployment on Production: fully independant, only need to install a python etl lib
+
+
+
