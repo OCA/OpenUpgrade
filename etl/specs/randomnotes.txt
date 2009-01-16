@@ -48,7 +48,7 @@ changes in mind that will simplify the way you design jobs:
     you describe only the part you want to validate.
 
 * I think that developping a component, in a good etl, should not take more than
-a few hours. It's not the case with current Open Source ERP.
+a few hours. It's not the case with current Open Source ETL.
 
 * ETL is like BI, having an integrated ETL offers a new dimension of possibility
 for the ERP: for example, we decided that, for our direct marketing module, a
@@ -67,7 +67,8 @@ it. (an inverted flow or part of a flow) In this situation, a flow request speci
 data (invert the processing direction) instead of waiting data to process.
 Most of the time, if you want to join two flows of data, it's easier and more efficient
 to use PUSH on the main flow and pull on secondary flows so that it can request only
-waht he needs.
+waht he needs. That's what most developpers do when they develop migration scripts
+by themselves.
 
 I will try to write some usecases.
 
@@ -113,9 +114,9 @@ and string will be unicode objects.
 > Toolbox
 
 I don't have a clear vision of what you call Toolbox. May be we should discuss on this.
-But, in my opinion, Python is a toolbox in itself. Really easy scripting language and
-lots of available functions or libraries. Managing transformations in Python is really
-easy.
+But, in my opinion, Python is a very good toolbox in itself. Really easy
+scripting language and lots of available functions or libraries. Managing
+transformations in Python is really easy.
 
 > Naming convention
 
@@ -124,16 +125,20 @@ Yes, we should not use terms like Talend. Any proposition for a better term for
 
 > Dependency with Open ERP
 
-There will be not dependency with Open ERP ! We plan to develop a fully independant
-python library called etl. So that, any python application can use it. This library
-manages all components and jobs processes but has no gui.
-Then, we will develop an etl module on ERP that provides the GUI to easily define
-components and jobs. Means you can use it from the GUI or directly in Python.
-The Open ERP module will save the defined jobs/components (like pickle that includes
-all etl object). So that you can use the system with only the etl library, without
-having to install Open ERP.
+There will be not dependency with Open ERP !
+
+We plan to develop a fully independant python library called etl. So that, any
+python application can use it. This library manages all components and jobs
+processes but has no gui.
+
+Then, we will develop an etl module on Open ERP that provides the GUI to easily
+define components and jobs. Means you can use it from the GUI or directly in
+Python. The Open ERP module will save the defined jobs/components (like pickle
+that includes all etl object). So that you can use the system with only the etl
+library, without having to install Open ERP.
+
 I don't like code generation tools at all. This approach is much more efficient and
-request less effort.
+request less effort in the development of components.
 
 So you have:
 * Development/Testing environment: Open ERP
