@@ -292,7 +292,8 @@
                     </page>
                     <page string="SQL">
                         <separator string="SQL Query" colspan="4"/>
-                        <field name="sql_query" nolabel="1" select="2"/>
+                        <field name="sql_query" nolabel="1" select="2" colspan="4"/>
+                        <button string="Compute Sql Query" name="compute_sql_query" type="action"/>
                     </page>
                 </notebook>
             </form>
