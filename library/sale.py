@@ -37,19 +37,22 @@ class sale_order_line(osv.osv):
         }
 
     def button_confirm(self, cr, uid, ids, context={}):
-
         lines = self.pool.get('sale.order.line').browse(cr,uid,ids)
         l_id= 0
         for line in lines:
-            if line.production_lot_id : continue
+            if line.production_lot_id:
+                continue
             l_id += 1
-            production_lot_id = self.pool.get('stock.production.lot').create(cr,uid,{
-                'name': line.order_id and (str(line.order_id.name)+('/%02d'%(l_id,))) or False
-                })
+            production_lot_dico = {
+                'name': line.order_id and (str(line.order_id.name)+('/%02d'%(l_id,))) or False,
+                'product_id': line.product_id.id
+            }
+            production_lot_id = self.pool.get('stock.production.lot').create(cr, uid, production_lot_dico)
             self.pool.get('sale.order.line').write(cr,uid,[line.id],{'production_lot_id':production_lot_id})
 
         super(sale_order_line,self).button_confirm(cr,uid,ids,context)
         return
+
     def copy(self, cr, uid, id, default=None,context={}):
         if not default:
             default = {}

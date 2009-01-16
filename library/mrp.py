@@ -48,7 +48,7 @@ class mrp_procurement(osv.osv):
 
             price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id], procurement.product_id.id, qty, False, {'uom': uom_id})[pricelist_id]
 
-            newdate = DateTime.strptime(procurement.date_planned, '%Y-%m-%d') - DateTime.RelativeDateTime(days=procurement.product_id.product_tmpl_id.seller_delay or 0.0)
+            newdate = DateTime.ISO.ParseAny(procurement.date_planned) - DateTime.RelativeDateTime(days=procurement.product_id.product_tmpl_id.seller_delay or 0.0)
             line = {
                 'name': procurement.product_id.name[:50],
                 'product_qty': qty,
