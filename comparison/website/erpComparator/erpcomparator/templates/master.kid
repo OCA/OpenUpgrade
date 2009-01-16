@@ -35,6 +35,7 @@
     <script type="text/javascript" src="/static/javascript/master.js"></script>
     <script type="text/javascript" src="/static/javascript/treegrid.js"></script>
     <script type="text/javascript" src="/static/javascript/ajax.js"></script>
+    <script type="text/javascript" src="/static/javascript/comparison.js"></script>
 
 </head>
 

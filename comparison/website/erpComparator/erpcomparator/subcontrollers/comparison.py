@@ -176,9 +176,9 @@ class Comparison(controllers.Controller):
         
         return dict(res=None, item_id=item_id, value_name=value_name, factor_id=factor_id, id=id, show_header_footer=False, error="")
     
-    @expose(template="erpcomparator.subcontrollers.templates.item_voting")
+    @expose('json')
     def update_item_voting(self, **kw):
-        
+        print "=================", kw
         id = kw.get('id')
         note = kw.get('note')
         factor_id = kw.get('factor_id')
@@ -202,7 +202,7 @@ class Comparison(controllers.Controller):
         try:
             res = sproxy.create({'item_id': item, 'user_id': 1, 'factor_id': id, 'score_id': score, 'note': note})
         except Exception, e:
-            return dict(res=None, item_id=item_id, value_name=value_name, factor_id=factor_id, id=id, show_header_footer=False, error=str(e))
+            return dict(error=str(e))
         
         return dict(res=res, item_id=item_id, value_name=value_name, factor_id=factor_id, id=id, show_header_footer=False, error="")
     
@@ -286,9 +286,9 @@ class Comparison(controllers.Controller):
             for i, j in item.items():
                 for r in res1:
                     if j == r.get('factor_id')[1]:
-                        item[r.get('item_id')[1]] = str(r.get('result')) + '%' + '|' + "javascript:item_vote(id=%s, header='%s')" % (r.get('factor_id')[0], r.get('item_id')[1])
-                        
-#                    else:
+                        item[r.get('item_id')[1]] = str(r.get('result')) + '%' + '|' + "openWindow(getURL('/comparison/item_voting', {id: %s, header: '%s'}), {width: 500, height: 350}); return false;" % (r.get('factor_id')[0], r.get('item_id')[1])
+
+#                   else:
 #                        item['icon'] = "/static/images/treegrid/gtk-edit.png"
             
             record['id'] = item.pop('id')
@@ -311,7 +311,7 @@ class Comparison(controllers.Controller):
                 
             record['items'] = item
             records += [record]
-            
+        print "================================ records.....", records
         return dict(records=records)
     
     def parse(self, root, fields=None):

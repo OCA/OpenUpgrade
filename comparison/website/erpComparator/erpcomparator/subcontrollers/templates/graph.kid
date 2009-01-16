@@ -4,14 +4,6 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Comparison</title>
-    
-    <script type="text/javascript">
-	    function view_detail(id) {
-	    	var elem = document.getElementById(id);
-	        elem.style.display = elem.style.display == 'none' ? '' : 'none';
-		}
-	</script>
-    
 </head>
 <body>
     <div class="mattblacktabs">
@@ -21,7 +13,7 @@
 	    			<span>Comparison</span>
 	    		</a>
 	    	</li>
-	    	<li id="current">
+	    	<li>
 	    		<a href="#" onclick="window.location.href='/softwares'">
 	    			<span>Software</span>
 	    		</a>
@@ -31,7 +23,7 @@
 	    			<span>About</span>
 	    		</a>
 	    	</li>
-	    	<li>
+	    	<li class="current">
 	    		<a href="#" onclick="window.location.href='/graph'">
 	    			<span>Graph</span>
 	    		</a>
@@ -47,28 +39,10 @@
 	    		</a>
 	    	</li>
 	  	</ul>
-	</div>
-	<div class="width_border" py:for="r in res">
-		<table>
-			<tr>
-				<td>
-					<b><u>
-						${r['name']} :
-					</u></b>
-					<span py:if="r['note']" onclick="view_detail('${r['name']}')" style="cursor: pointer;">
-						&nbsp;&nbsp;&nbsp;<i>...Description</i>
-					</span>
-					<span py:if="not r['note']">
-						<i>...No Description</i>
-					</span>					
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<div id="${r['name']}" style="display: none; width: 1000px;">${r['note'] or ''}</div>
-				</td>
-			</tr>
-		</table>
+	</div><br/>
+	<div class="width_border">
+		${mess}
 	</div>
 </body>
 </html>
+	
