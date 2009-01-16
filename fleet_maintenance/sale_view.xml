@@ -30,7 +30,7 @@
 		    			<field name="maintenance_product_qty" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance)" />
 		     			<field name="maintenance_start_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance)"/>
 		    			<field name="maintenance_end_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" on_change="maintenance_qty_change(maintenance_product_qty, maintenance_month_qty, maintenance_start_date, maintenance_end_date, is_maintenance)" />
-							<field name="is_maintenance" invisible="1"/>
+							<field name="is_maintenance" invisible="1" readonly="1"/>
 						</page>
 				</xpath>
 	    </field>
