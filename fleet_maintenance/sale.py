@@ -92,7 +92,7 @@ class sale_order_line(osv.osv):
         day = anniversary_time.days_in_month - fixed_days_before_month_end
         end = DateTime.DateTime(year, month, day, 0, 0, 0.0)
         delta = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start_date)
-        maintenance_month_qty = delta.months + delta * 12
+        maintenance_month_qty = delta.months + delta.years * 12
         if maintenance_month_qty < min_maintenance_months:
             end = DateTime.DateTime(year + 1, month, day, 0, 0, 0.0)
         return end
