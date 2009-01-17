@@ -52,8 +52,8 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Authors">
-				<field name="name" select="1"/>
-				<field name="first_name" select="1"/> 
+        <field name="name" select="1"/>
+        <field name="first_name" select="1"/> 
             </tree>
         </field>
     </record>
@@ -64,9 +64,9 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Authors">
-				<field name="name" select="1"/>
-				<field name="code" select="1"/> 
-				<field name="active" select="1"/> 
+        <field name="name" select="1"/>
+        <field name="code" select="1"/> 
+        <field name="active" select="1"/> 
             </form>
         </field>
     </record>
@@ -209,7 +209,7 @@
                             <properties/>
                         </page>
                     </notebook>
-	       </form>
+         </form>
        </field>
     </record>
 
@@ -406,20 +406,24 @@
                 <field name="name" select="1" />
                 <newline/>
                 <field name="supplier_id" select="1"/>
+                <newline/>
+                <field name="sequence" />
             </form>
         </field>
     </record>
 
     <record model="ir.ui.view" id="library_editor_supplier_tree">
-        <field name="name">Editor - supplier realtions</field>
-        <field name="model">library.editor.supplier</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Editor and suppliers relations">
-                <field name="name"/>
-                <field name="supplier_id"/>
-            </tree>
-        </field>
+      <field name="name">Editor - supplier realtions</field>
+      <field name="model">library.editor.supplier</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+        <tree string="Editor and suppliers relations">
+          <field name="name"/>
+          <field name="supplier_id"/>
+          <field name="sequence"/>
+          <field name="junk"/>
+        </tree>
+      </field>
     </record>
 
     <record model="ir.actions.act_window" id="action_editor_supplier">

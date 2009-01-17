@@ -82,7 +82,7 @@ class sale_order_line(osv.osv):
     
     def _get_maintenance_month_qty_from_start_end(self, cr, uid, start, end):
         delta = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start)
-        return delta.months + delta .years * 12
+        return delta.months + delta.years * 12
     
     
     def _get_end_date_from_start_date(self, cr, uid, start_date, sub_fleet):
@@ -91,7 +91,8 @@ class sale_order_line(osv.osv):
         month = anniversary_time.month
         day = anniversary_time.days_in_month - fixed_days_before_month_end
         end = DateTime.DateTime(year, month, day, 0, 0, 0.0)
-        maintenance_month_qty = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start_date).months
+        delta = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start_date)
+        maintenance_month_qty = delta.months + delta * 12
         if maintenance_month_qty < min_maintenance_months:
             end = DateTime.DateTime(year + 1, month, day, 0, 0, 0.0)
         return end
