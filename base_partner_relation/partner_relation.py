@@ -71,26 +71,3 @@ class res_partner(osv.osv):
 
 res_partner()
 
-
-#class PartnerAddress(osv.osv):
-#    _inherit = 'res.partner.address'
-#    def _where_calc(self, cursor, user, args, active_test=True, context=None):
-#        if not args:
-#            args=[]
-#        partner_obj = self.pool.get('res.partner')
-#        args = args[:]
-#        i = 0
-#        while i < len(args):
-#            if type(args[i])==tuple:
-#                continue
-#            if args[i][0] == 'partner_id' and args[i][1] == '=':
-#                partner = partner_obj.browse(cursor, user, args[i][2],
-#                        context=context)
-#                args[i] = ('partner_id', 'in', [args[i][2]] + [x.relation_id.id \
-#                        for x in partner.relation_ids])
-#            i += 1
-#        return super(PartnerAddress, self)._where_calc(cursor, user, args,
-#                active_test=active_test, context=context)
-#PartnerAddress()
-## vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
