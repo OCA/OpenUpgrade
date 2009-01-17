@@ -12,19 +12,30 @@ min_maintenance_months = 6 #TODO make this a parameter!
 
 
 class sale_order_line(osv.osv):
-    _inherit = "sale.order.line" 
+    _inherit = "sale.order.line"
     
+    def _get_maintenance_month_qty_from_start_end(self, cr, uid, start, end):
+        delta = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start)
+        return delta.months + delta.years * 12
+    
+    def _maintenance_month_qty(self, cr, uid, ids, prop, unknow_none, context={}):
+        result = {}
+        for line in self.browse(cr, uid, ids, context=context):
+            if line.maintenance_start_date and line.maintenance_end_date:
+                result[line.id] = self._get_maintenance_month_qty_from_start_end(cr, uid, DateTime.strptime(line.maintenance_start_date, '%Y-%m-%d'), DateTime.strptime(line.maintenance_end_date, '%Y-%m-%d'))
+            else:
+                result[line.id] = False
+        return result
     
     _columns = {
-        'maintenance_month_qty': fields.integer('Maintenance Month Quantity', required=False),
-        'maintenance_product_qty': fields.integer('Maintenance Product Quantity', required=False),              
+        'maintenance_product_qty': fields.integer('Maintenance Product Quantity', required=False),
+        'maintenance_month_qty': fields.function(_maintenance_month_qty, method=True, string="Maintenance Month Quantity", type='integer', store=True),          
         'fleet_id': fields.many2one('stock.location', 'Sub Fleet'),
         'parent_fleet_id': fields.related('fleet_id', 'location_id', type='many2one', relation='stock.location', string='Fleet', store=True),
         'maintenance_start_date':fields.date('Maintenance Start Date', required=False),
         'maintenance_end_date':fields.date('Maintenance End Date', required=False),
         'order_fleet_id': fields.related('order_id', 'fleet_id', type='many2one', relation='stock.location', string='Default Sale Order Sub Fleet'),
         'is_maintenance': fields.related('product_id', 'is_maintenance', type='boolean', string='Is Maintenance'),
-        #'product_type': fields.related('product_id', 'type', type='selection', string='Product Type')
     }
     
     def maintenance_qty_change(self, cr, uid, ids, maintenance_product_qty=False, maintenance_month_qty=False, maintenance_start_date=False, maintenance_end_date=False, is_maintenance=False):
@@ -55,7 +66,6 @@ class sale_order_line(osv.osv):
 
         
         if maintenance_start_date and maintenance_end_date:
-            
             if end < start:
                 result['value'].update({'maintenance_end_date': start.strftime('%Y-%m-%d')}) #TODO not good with end days!
                 warning_messages += "- End date should be AFTER Start date!\n"
@@ -65,11 +75,7 @@ class sale_order_line(osv.osv):
             result['value'].update({'maintenance_month_qty': maintenance_month_qty})
             if maintenance_month_qty < min_maintenance_months:
                 warning_messages += "- we usually try to sell %s months at least!\n" % min_maintenance_months
-
-        
-#        if maintenance_start_date and maintenance_month_qty:
-#            date = (DateTime.strptime(maintenance_start_date, '%Y-%m-%d') + DateTime.RelativeDateTime(months=maintenance_month_qty)).strftime('%Y-%m-%d')
-#            result['value'] = {'maintenance_end_date': date}
+                
 
         if maintenance_product_qty and maintenance_month_qty: #only set the default fleet at init
             result['value'].update({'product_uom_qty': maintenance_product_qty * maintenance_month_qty})
@@ -80,11 +86,6 @@ class sale_order_line(osv.osv):
         return result
     
     
-    def _get_maintenance_month_qty_from_start_end(self, cr, uid, start, end):
-        delta = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start)
-        return delta.months + delta.years * 12
-    
-    
     def _get_end_date_from_start_date(self, cr, uid, start_date, sub_fleet):
         year = start_date.year
         anniversary_time = DateTime.strptime(sub_fleet.anniversary_time, '%Y-%m-%d')
@@ -92,7 +93,7 @@ class sale_order_line(osv.osv):
         day = anniversary_time.days_in_month - fixed_days_before_month_end
         end = DateTime.DateTime(year, month, day, 0, 0, 0.0)
         delta = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start_date)
-        maintenance_month_qty = delta.months + delta * 12
+        maintenance_month_qty = delta.months + delta.years * 12
         if maintenance_month_qty < min_maintenance_months:
             end = DateTime.DateTime(year + 1, month, day, 0, 0, 0.0)
         return end
@@ -105,8 +106,6 @@ class sale_order_line(osv.osv):
         fleet_id = order_fleet_id or fleet_id
         
         if fleet_id:
-            #retrieve the maintenance anniversary from fleet
-            #TODO only for maintenance product?
             fleet = self.pool.get('stock.location').browse(cr, uid, fleet_id)
             if fleet.expire_time and not fleet.is_expired:
                 start_date = DateTime.strptime(fleet.expire_time, '%Y-%m-%d') + RelativeDateTime(days=fixed_days_before_month_end + 1)
@@ -144,7 +143,6 @@ class sale_order_line(osv.osv):
                 result['value'].update({'is_maintenance': True})
             else:
                 result['value'].update({'is_maintenance': False})
-            #result['value'].update({'product_type': product_obj.type})
             if is_maintenance and maintenance_product_qty and maintenance_month_qty:
                 result['value'].update({'product_uom_qty': maintenance_product_qty * maintenance_month_qty})
                 result['value'].update({'product_uos_qty': maintenance_product_qty * maintenance_month_qty}) # TODO * product_obj.uos_coeff
@@ -159,7 +157,6 @@ class sale_order_line(osv.osv):
         for line in self.browse(cr, uid, ids, context):
             self.pool.get('account.invoice.line').write(cr, uid, [create_ids[i]], {'maintenance_start_date':line.maintenance_start_date, \
                                                                                    'maintenance_end_date':line.maintenance_end_date, \
-                                                                                   'maintenance_month_qty':line.maintenance_month_qty, \
                                                                                    'maintenance_product_qty':line.maintenance_product_qty, \
                                                                                    })
             if line.fleet_id:

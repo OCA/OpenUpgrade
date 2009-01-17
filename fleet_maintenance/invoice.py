@@ -7,6 +7,11 @@ import time
 from mx import DateTime
 
 
+fixed_month_init_day = 1 # TODO make this a parameter!
+fixed_days_before_month_end = 0 #TODO make this a parameter!
+min_maintenance_months = 6 #TODO make this a parameter!
+
+
 class account_invoice(osv.osv):
    _inherit = "account.invoice"
 
@@ -15,9 +20,7 @@ class account_invoice(osv.osv):
            if 'fleet_id' in line:
                line['fleet_id'] = line.get('fleet_id', False) and line['fleet_id'][0]
            if 'account_analytic_lines' in line:
-               line['account_analytic_lines'] = line.get('account_analytic_lines', False) and line['account_analytic_lines'][0]
-           if 'sale_order_lines' in line:
-               line['sale_order_lines'] = [(6,0, line.get('sale_order_lines', [])) ]
+               line['account_analytic_lines'] = [(6,0, line.get('account_analytic_lines', [])) ]
        return super(account_invoice, self)._refund_cleanup_lines(lines)
 
 account_invoice()
@@ -32,9 +35,22 @@ class account_invoice_line(osv.osv):
         default['account_analytic_lines'] = False
         return super(account_invoice_line, self).copy(cr, uid, id, default, context=context)
 
+    def _get_maintenance_month_qty_from_start_end(self, cr, uid, start, end):
+        delta = DateTime.RelativeDateDiff(end + RelativeDateTime(days=fixed_days_before_month_end + 1), start)
+        return delta.months + delta.years * 12
+    
+    def _maintenance_month_qty(self, cr, uid, ids, prop, unknow_none, context={}):
+        result = {}
+        for line in self.browse(cr, uid, ids, context=context):
+            if line.maintenance_start_date and line.maintenance_end_date:
+                result[line.id] = self._get_maintenance_month_qty_from_start_end(cr, uid, DateTime.strptime(line.maintenance_start_date, '%Y-%m-%d'), DateTime.strptime(line.maintenance_end_date, '%Y-%m-%d'))
+            else:
+                result[line.id] = False
+        return result
+
 
     _columns = {
-        'maintenance_month_qty': fields.float('Maintenance Month Quantity', required=False),
+        'maintenance_month_qty': fields.function(_maintenance_month_qty, method=True, string="Maintenance Month Quantity", type='integer', store=True),
         'maintenance_product_qty': fields.float('Maintenance Product Quantity', required=False), 
         'fleet_id': fields.many2one('stock.location', 'Fleet'),
         'parent_fleet_id': fields.related('fleet_id', 'location_id', type='many2one', relation='stock.location', string='Fleet', store=True),
@@ -80,10 +96,6 @@ class account_move_line(osv.osv):
                 if move_line.invoice:
                     for invoice_line in move_line.invoice.invoice_line:
                         if invoice_line.product_id and invoice_line.product_id.is_maintenance:
-                            #TODO
-        
-                        
-                            #TODO ca ne tient pas compte du maintenance_qty, or tres important
                             month_qty = int(invoice_line.maintenance_month_qty)
                             splitted_amount =  invoice_line.quantity / invoice_line.maintenance_month_qty
                             print "product_qty:"
