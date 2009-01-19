@@ -16,6 +16,9 @@ class component(object):
         data=self.output(input_data)
         return data
 
+	def input(self, rows, transition=None):
+        return self.output(rows)
+
     def output(self, rows, channel=None):
         for trans in self.trans_out:
             if (not channel) or (trans.channel_source==channel) or (not trans.channel_source):
