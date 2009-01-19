@@ -14,49 +14,31 @@
 	
 	<input type="hidden" name="id" value="${id}"/>
 	<input type="hidden" name="item_id" value="${item_id}"/>
-	<input type="hidden" name="factor_id" value="${factor_id}"/>
 	
-	<table id="voting" width="100%">
+	<table id="voting" style="width: 800; border: 1px solid #999999;">
 		<tr>
-			<td class="label">
-				Item :
-			</td>
-			<td>
-				<input type="text" style="width: 290px; background: #CCCCCC" name="item_name" value="${item_id}" disabled='true'></input>
-			</td>
+			<th class="label" style="text-align: left; border: 1px solid #999999">Factor Name</th>
+			<th class="label" style="text-align: left; border: 1px solid #999999">Item</th>
+			<th class="label" style="text-align: left; border: 1px solid #999999">Goodness</th>
 		</tr>
-		<tr>
-			<td class="label">
-				Factor :
+		<tr py:for="ch in child" id="${ch['id']}_row" class="factor_row">
+			<td id="${ch['id']}_col" class="factor_col">
+				${ch['name']}
 			</td>
 			<td>
-				<input type="text" style="width: 290px; background: #CCCCCC" name="factor_name" value="${factor_id}" disabled='true'></input>
-			</td>
-		</tr>
-		<tr>
-			<td class="label">
-				Value :
+				<input type="text" style="width: 290px; background: #CCCCCC" id="${ch['id']}_item_name" name="${ch['id']}_item_name" value="${item_id}" disabled='true'></input>			
 			</td>
 			<td>
-				<select style="width: 290px;" name="score_id" id="score_id">
+				<select style="width: 290px;" name="${ch['id']}_score_id" id="${ch['id']}_score_id">
                     <option py:for="s in value_name" py:content="s['name']"></option>
                 </select>
-			</td>
-		</tr>
-		<tr>
-			<td class="label">
-				Note :
-			</td>
-			<td>
-				<textarea id="note" name="note" cols="35" rows="8">
-				</textarea>
 			</td>
 		</tr>
 	</table>
 	
 	<div class="box2" style="text-align: right;">
 		<button type="button" onclick="window.close()">Close</button>
-		<button type="button" onclick="item_vote(${id}, '${item_id}', '${factor_id}')">Save</button>
+		<button type="button" onclick="item_vote(${id}, '${item_id}')">Save</button>
 	</div><br/>
 	
 	<div py:if="error" align="right">

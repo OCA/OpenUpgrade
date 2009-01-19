@@ -207,7 +207,6 @@ class profile_game_phase_two(osv.osv):
                 for loan in bank_obj.browse(cr, uid, total_year):
                     total += loan.loan_amount
                 res[phase2_obj.id][field] = total
-
             if field == 'total_reimburse' or field == 'current_treasury':
                 if curr_fy or False:
                     context = {'fiscalyear': curr_fy[0] or False,'target_move':'all'}
@@ -222,7 +221,6 @@ class profile_game_phase_two(osv.osv):
                     res[phase2_obj.id][field] = total
                 else:
                     res[phase2_obj.id][field] = 0.0
-
             if field == 'last_total_sale':
                 if curr_fy or False:
                     account_ids = account_obj.search(cr,uid,[('code','ilike','Classe_7')])
@@ -302,7 +300,6 @@ class profile_game_phase_two(osv.osv):
                 else:
                     res[phase2_obj.id][field] = 0.0
                     res[phase2_obj.id]['benefits_growth'] = 0.0
-
 
             if field == 'cost_purchase_forcast':
                 if curr_fy or False:
@@ -518,25 +515,26 @@ class profile_game_phase_two(osv.osv):
                     {'name':'%d'%(new_fy),'code': '%d'%(new_fy),'date_start': start_date,
                     'date_stop': stop_date})
         self.pool.get('account.fiscalyear').create_period(cr, uid, [fiscal_id])
-        closing_journal = self.pool.get('account.journal').search(cr, uid, [('code','ilike','JC')])[0]
-        period_id = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id', '=', fiscal_id)])[0]
-        name = 'journalperiod' + str(new_fy)
-        journal_period = self.pool.get('account.journal.period').create(cr, uid, {'name':name,'journal_id':closing_journal,
-                                                                 'period_id':period_id})
-        self.pool.get('account.fiscalyear').write(cr, uid,fiscal_id,{'start_journal_period_id':journal_period})
         return fiscal_id
 
     def close_fiscalyear(self, cr, uid, ids, close_fy, new_fy, context):
         print "close_fiscalyear"
-        data = {}
+        data = data1 = {}
         data['form'] = {}
-        from account.wizard import wizard_fiscalyear_close
-        data['form']['report_new'] = True
+        data1['form'] = {}
+        closing_journal = self.pool.get('account.journal').search(cr, uid, [('code','ilike','JC')])[0]
+        period_id = self.pool.get('account.period').search(cr, uid, [('fiscalyear_id', '=', new_fy)])[0]
+        from account.wizard import wizard_fiscalyear_close,wizard_fiscalyear_close_state
+        data['form']['period_id'] = period_id
         data['form']['report_name'] = 'End of Fiscal Year Entry'
+        data['form']['journal_id'] = closing_journal
         data['form']['fy_id'] = close_fy
         data['form']['fy2_id'] = new_fy
         data['form']['sure'] = True
+        data1['form']['fy_id'] = close_fy
+        data1['form']['sure'] = True
         wizard_fiscalyear_close._data_save(self, cr, uid, data, context)
+        wizard_fiscalyear_close_state._data_save(self, cr, uid, data1, context)
         return True
 
     def create_sale_periods(self, cr, uid, ids, context):
