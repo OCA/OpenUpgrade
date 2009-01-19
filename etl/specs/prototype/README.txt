@@ -81,7 +81,7 @@ Questions
 * What's the best solution to store the data ? a list of dict is easy but may
 take some place in memory. Is it better to use a list of lists ? We should
 evaluate the difference in memory occupation. If it's less than 50%, we keep
-list of dict.
+list of dict. For now on, let's start with a list of dict.
 
 * I didn't thought about code generation to build a processor that will convert
 the data. Is this really usefull ? Why is Talend providing this ? I think code
@@ -106,14 +106,14 @@ Time Line
  * Review by third-party
 
 2. Development (Deadline: 29/01) - assigned to trainee
- * Implement all objects/menus/views in Open ERP
  * Improve the current prototype, integrating the above notes
 
 3. Development of the Open ERP interface (Deadline: 22/02)
+ * Implement all objects/menus/views in Open ERP
+ * etl addons: Once all views are designed, implement the logic, using etl
+     module (assigned to trainee)
  * eTiny: generalisation of the workflow editor to create a new type of view
      (assigned to noz, sana or ame)
- * etl addons: Integrate prototype logic on Open ERP objects
-     (assigned to trainee)
 
 4. Develop real use cases (Deadline: 15/03)
      (assigned to trainee)
@@ -369,13 +369,13 @@ transformations in Python is really easy.
 Naming convention
 -----------------
 
-Yes, we should not use terms like Talend. Any proposition for a better term for
+Yes, we should NOT use terms like Talend. Any proposition for a better term for
 'component' ?
 
 Dependency with Open ERP
 ------------------------
 
-There will be not dependency with Open ERP !
+There will be no dependency with Open ERP !
 
 We plan to develop a fully independant python library called etl. So that, any
 python application can use it. This library manages all components and jobs
