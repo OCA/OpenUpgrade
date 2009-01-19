@@ -312,10 +312,15 @@ TreeNode.prototype = {
             if (i > 0) {
                 
                 if (header.type == 'url' && value) {
-                	var vals = value.split('|');
-                	value = vals[0];
-                	record.action = vals[1];
-                    value = MochiKit.DOM.A({href: 'javascript: void(0);', onclick: record.action || null}, value);    
+                	if (value.indexOf('|') != -1) {
+	                	var vals = value.split('|');
+	                	value = vals[0];
+	                	record.action = vals[1];
+	                    value = MochiKit.DOM.A({href: 'javascript: void(0);', onclick: record.action || null}, value);
+                	}
+                	else {
+                		value = MochiKit.DOM.A({href: 'javascript: void(0);', style: 'color: black; cursor: normal; text-decoration: none;'}, value);
+                	}    
                 }
                 
                 if (header.type == 'email' && value) {
@@ -385,7 +390,6 @@ TreeNode.prototype = {
             if (i > 0) {
                 
                 if (header.type == 'url') {
-
                     var a = MochiKit.DOM.getElementsByTagAndClassName('a', null, td)[0];
                     
                     var vals = value.split('|');
@@ -395,7 +399,7 @@ TreeNode.prototype = {
                     MochiKit.DOM.setNodeAttribute(a, 'href', value);
                     MochiKit.DOM.setNodeAttribute(a, 'target', record.target || '_blank');
                     
-                    a.innerHTML = MochiKit.DOM.escapeHTML(value);    
+                    a.innerHTML = MochiKit.DOM.escapeHTML(value);
                 }
                 
                 if (header.type == 'email') {

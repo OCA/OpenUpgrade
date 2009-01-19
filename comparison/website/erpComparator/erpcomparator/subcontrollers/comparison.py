@@ -169,19 +169,27 @@ class Comparison(controllers.Controller):
         
         item_id = kw.get('header')
         factor_id = fres[0]['name']
+        child_ids =  fres[0]['child_ids']
+        
+        child = []
+        for ch in child_ids:
+            chid = {}
+            chd = proxy.read([ch])
+            chid['name'] = chd[0]['name']
+            chid['id'] = ch
+            child += [chid]
         
         vproxy = rpc.RPCProxy('comparison.vote.values')
         val = vproxy.search([])
         value_name = vproxy.read(val, ['name'])
         
-        return dict(res=None, item_id=item_id, value_name=value_name, factor_id=factor_id, id=id, show_header_footer=False, error="")
+        return dict(res=None, item_id=item_id, child=child, value_name=value_name, id=id, show_header_footer=False, error="")
     
     @expose('json')
     def update_item_voting(self, **kw):
-        print "=================", kw
+        
         id = kw.get('id')
-        note = kw.get('note')
-        factor_id = kw.get('factor_id')
+        note = kw.get('note', '')
         
         item_id = kw.get('item_id')
         iproxy = rpc.RPCProxy('comparison.item')
@@ -204,7 +212,7 @@ class Comparison(controllers.Controller):
         except Exception, e:
             return dict(error=str(e))
         
-        return dict(res=res, item_id=item_id, value_name=value_name, factor_id=factor_id, id=id, show_header_footer=False, error="")
+        return dict(res=res, item_id=item_id, value_name=value_name, id=id, show_header_footer=False, error="")
     
     @expose('json')
     def data(self, ids, model, fields, field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc"):
@@ -239,7 +247,11 @@ class Comparison(controllers.Controller):
         
         prx = rpc.RPCProxy('comparison.factor.result')
         rids = prx.search([('factor_id', 'in', ids)])            
-        res1 = prx.read(rids)
+        factor_res = prx.read(rids)
+        
+        fact_proxy = rpc.RPCProxy('comparison.factor')
+        fact_ids = fact_proxy.search([('type', '!=', 'view'), ('parent_id', 'in', ids)])
+        parent_ids = fact_proxy.read(fact_ids, ['id', 'parent_id'])
         
         if sort_by:
             result.sort(lambda a,b: self.sort_callback(a, b, sort_by, sort_order))
@@ -280,13 +292,16 @@ class Comparison(controllers.Controller):
             for k, v in item.items():
                 if v==None or (v==False and type(v)==bool):
                     item[k] = ''
-
+                    
             record = {}
             
             for i, j in item.items():
-                for r in res1:
+                for r in factor_res:
                     if j == r.get('factor_id')[1]:
-                        item[r.get('item_id')[1]] = str(r.get('result')) + '%' + '|' + "openWindow(getURL('/comparison/item_voting', {id: %s, header: '%s'}), {width: 500, height: 350}); return false;" % (r.get('factor_id')[0], r.get('item_id')[1])
+                        if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
+                            item[r.get('item_id')[1]] = str(r.get('result')) + '%' + '|' + "openWindow(getURL('/comparison/item_voting', {id: %s, header: '%s'})); return false;" % (r.get('factor_id')[0], r.get('item_id')[1])
+                        else:
+                            item[r.get('item_id')[1]] = str(r.get('result')) + '%'
 
 #                   else:
 #                        item['icon'] = "/static/images/treegrid/gtk-edit.png"
@@ -311,7 +326,7 @@ class Comparison(controllers.Controller):
                 
             record['items'] = item
             records += [record]
-        print "================================ records.....", records
+            
         return dict(records=records)
     
     def parse(self, root, fields=None):

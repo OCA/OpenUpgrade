@@ -40,30 +40,37 @@ function change_vote(id) {
 	openWindow(getURL('/comparison/voting', {id: id}), {width: 500, height: 350});
 }
 
-function item_vote(id, item_id, factor_id) {
+function item_vote(id, item_id) {
 	
 	treenode = window.opener.comparison_tree.selection_last;
 	params = [];
+	child_ids = [];
 	
-	params['id'] = id;
-	params['item_id'] = item_id;
-	params['factor_id'] = factor_id;
-	params['score_id'] = $('score_id').value;
-	params['note'] = $('note').value;
+	trs = getElementsByTagAndClassName('tr', 'factor_row');
+	for (var i=0; i<trs.length; i++) {
+		child_ids[i] = trs[i].id.split('_')[0];
+	}
+	
+	child_ids = child_ids;
+	
+	forEach(child_ids, function(x){
+		params['id'] = x;
+		params['score_id'] = $(x + '_score_id').value;
+		params['item_id'] = $(x + '_item_name').value;
 		
-	var req = Ajax.JSON.post('/comparison/update_item_voting', params);
-    req.addCallback(function(obj){
-    	if(obj.res) {
-    		window.close();
-    		treenode.update();
-    	}
-    	if (obj.error) {
-            return alert(obj.error);
-        }
-    });
-	
-	
-	
-	
-	//openWindow(getURL('/comparison/item_voting', {id: id, header: header}), {width: 500, height: 350});
+		var req = Ajax.JSON.post('/comparison/update_item_voting', params);
+	    req.addCallback(function(obj){
+	    	if(obj.res) {
+	    		window.close();
+	    		forEach(treenode.childNodes, function(y){
+	    			y.update();
+	    		});
+	    		treenode.update();
+	    		
+	    	}
+	    	if (obj.error) {
+	            return alert(obj.error);
+	        }
+	    });
+	});
 }
