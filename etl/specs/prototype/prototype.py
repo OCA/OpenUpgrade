@@ -8,33 +8,44 @@ class component(object):
         self.job=argv.get('job',False)
         self.trans_out = []
         self.trans_in = []
+
+    def event(self,name):
+        return self.output(event=name)
     def start(self):
+        self.event('component_start')
         return True
     def stop(self):
+        self.event('component_end')
         return True
     def run(self,input_data=[]):
+        self.event('component_run')
         data=self.output(input_data)
         return data
 
-	def input(self, rows, transition=None):
+    def input(self, rows, transition=None):
+        self.event('component_inputflow')
         return self.output(rows)
 
-    def output(self, rows, channel=None):
+    def output(self, rows=None, channel=None,event=None):
+        self.event('component_outputflow')
         for trans in self.trans_out:
             if (not channel) or (trans.channel_source==channel) or (not trans.channel_source):
-                yield rows, trans.destination
+                if trans.type=='data_transition' or (trans.type=='trigger_transition' and event==trans.listen_event):
+                    yield rows, trans.destination
+                else:
+                    yield rows,None
 
 class csv_in(component):
     def __init__(self, filename, *args, **argv):
         super(csv_in, self).__init__(*args, **argv)
         self.filename = filename
 
-    def run(self,data=[]):
+    def run(self,data=[]):        
         fp = csv.DictReader(file(self.filename))
         data=[]
         for row in fp:
             data.append(row)
-        return self.output(data)
+        return super(csv_in, self).run(data)
 
 class csv_out(component):
     def __init__(self, filename, *args, **argv):
@@ -51,7 +62,7 @@ class csv_out(component):
         fp = csv.DictWriter(self.fp, fieldnames)
         fp.writerow(dict(map(lambda x: (x,x), fieldnames)))
         fp.writerows(rows)        
-        return self.output(rows)
+        return super(csv_out, self).input(rows)
 
 class sort(component):
     def __init__(self, fieldname, *args, **argv):
@@ -61,7 +72,7 @@ class sort(component):
     def run(self,rows=[], transition=None):
         self.data=rows
         self.data.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
-        return self.output(self.data)     
+        return super(sort, self).run(self.data)     
 
     
 
@@ -75,10 +86,11 @@ class logger(component):
         for row in data:
             print row
             res.append(row)
-        return self.output(res)
+        return super(logger, self).run(data)
 
 class transition(object):
-    def __init__(self, source, destination, status='open', channel_source=None, channel_destination=None):
+    def __init__(self, source, destination,type='data_transition', status='open', channel_source=None, channel_destination=None):
+        self.type=type
         self.source = source
         self.source.trans_out.append(self)
         self.destination = destination
