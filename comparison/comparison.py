@@ -266,26 +266,26 @@ class comparison_ponderation_suggestion(osv.osv):
     _desc = 'Users can suggest new ponderations on criterions'
     
     def accept_suggestion(self, cr, uid, ids, context={}):
-        obj_sugg = self.browse(cr, uid, ids)[0]
-        pool_factor = self.pool.get('comparison.factor')
-        obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
-        obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
-        new_pond = (obj_factor.ponderation * obj_sugg.ponderation)
-        note = obj_factor.note or ''
-        factor_id = pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond, 'note':str(note) + '\n' +'Ponderation Change Suggested by ' + str(obj_user.name) + '(' + obj_user.email + '). Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
+#        obj_sugg = self.browse(cr, uid, ids)[0]
+#        pool_factor = self.pool.get('comparison.factor')
+#        obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
+#        obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
+#        new_pond = (obj_factor.ponderation * obj_sugg.ponderation)
+#        note = obj_factor.note or ''
+#        factor_id = pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond, 'note':str(note) + '\n' +'Ponderation Change Suggested by ' + str(obj_user.name) + '(' + obj_user.email + '). Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
         self.write(cr, uid, ids, {'state':'done'})
         return True
     
     def cancel_suggestion(self, cr, uid, ids, context={}):
         obj_sugg = self.browse(cr, uid, ids)[0]
-        if obj_sugg.state == 'done':
-            pool_factor = self.pool.get('comparison.factor')
-            obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
-            obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
-            suggestion = obj_sugg.ponderation or 1.0 # to avoid 0 division
-            new_pond = (obj_factor.ponderation / suggestion)
-            note = obj_factor.note or ''
-            factor_id = pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond,'note':str(note) + '\n' +'Ponderation Revoked by Website Administrator. Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
+        pool_factor = self.pool.get('comparison.factor')
+        obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
+        obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
+        suggestion = obj_sugg.ponderation or 1.0 # to avoid 0 division
+        print "suggestion",obj_factor.ponderation, suggestion
+        new_pond = (obj_factor.ponderation / suggestion)
+        note = obj_factor.note or ''
+        factor_id = pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond,'note':str(note) + '\n' +'Ponderation Revoked by Website Administrator. Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
         self.write(cr, uid, ids, {'state':'cancel'})
         return True
     
@@ -304,8 +304,37 @@ class comparison_ponderation_suggestion(osv.osv):
     _sql_constraints = [
         ('user_id', 'unique(factor_id,user_id)', 'User can contribute to this factor only Once!!!' )
     ]
+    
+    def create(self, cr, uid, vals, context={}):
+        result = super(comparison_ponderation_suggestion, self).create(cr, uid, vals, context)
+        pool_factor = self.pool.get('comparison.factor')
+        for obj_sugg in self.browse(cr, uid, [result]):
+            obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
+            obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
+            new_pond = (obj_factor.ponderation * obj_sugg.ponderation)
+            note = obj_factor.note or ''
+            pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond, 'note':str(note) + '\n' +'Ponderation Change Suggested by ' + str(obj_user.name) + '(' + obj_user.email + '). Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
+        return result
+    
+    # Do we need write?user can vote only once(sql constraint). if needed its ready. 
+#    def write(self, cr, uid, ids, vals, context=None):
+#        if not context:
+#            context={}
+#        old_ponderation = 1.0    
+#        if 'ponderation' in vals:
+#            new_ponderation = vals['ponderation']
+#            old_ponderation = self.browse(cr, uid, ids)[0].ponderation
+#        result = super(comparison_vote, self).write(cr, uid, ids, vals, context=context)
+#        pool_factor = self.pool.get('comparison.factor')
+#        for obj_sugg in self.browse(cr, uid, ids):
+#            obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
+#            obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
+#            new_pond = (obj_factor.ponderation * obj_sugg.ponderation)/float(old_ponderation)
+#            note = obj_factor.note or ''
+#            pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond, 'note':str(note) + '\n' +'Ponderation Change Suggested by ' + str(obj_user.name) + '(' + obj_user.email + '). Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
+#            
+#        return result
 
-    # TODO: overwrite create/write
 comparison_ponderation_suggestion()
 
 
