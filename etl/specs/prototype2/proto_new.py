@@ -38,12 +38,6 @@ class component(object):
     def process(self):
         pass
 
-    def run(self, t):
-        gen = self.channel_get(self.is_end)
-        for a in gen:
-            if t:
-                time.sleep(t)
-
 class csv_in(component):
     def __init__(self, filename, *args, **argv):
         super(csv_in, self).__init__(*args, **argv)
@@ -100,7 +94,10 @@ class job(object):
 
     def run(self, t):
         for c in self.outputs:
-            c.run(t)
+            gen = c.channel_get(c.is_end)
+            for a in gen:
+                if t:
+                    time.sleep(t)
 
 csv_in1= csv_in('partner.csv')
 log1=logger(name='After Sort')
