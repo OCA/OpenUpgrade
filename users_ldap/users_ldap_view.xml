@@ -10,18 +10,21 @@
 				<field name="currency_id" position="after">
 					<field name="ldaps" colspan="4">
 						<form string="LDAP Parameters">
-							<field name="ldap_server"/>
-							<field name="sequence"/>
+                            <field name="ldap_server"/>
+                            <field name="ldap_server_port"/>
 							<field name="ldap_binddn"/>
 							<field name="ldap_password"/>
 							<field name="ldap_base"/>
 							<field name="ldap_filter"/>
 							<field name="create_user"/>
-							<field name="user"/>
+                            <field name="user"/>
+                            <newline/>
+                            <field name="sequence"/>
 						</form>
 						<tree string="LDAP Parameters">
 							<field name="sequence"/>
-							<field name="ldap_server"/>
+                            <field name="ldap_server"/>
+                            <field name="ldap_server_port"/>
 							<field name="ldap_base"/>
 						</tree>
 					</field>
