@@ -4,11 +4,11 @@ import sys
 import time
 
 class component(object):
+    is_end = False
     def __init__(self,*args, **argv):
         self.trans_in = {}
         self.is_output = False
         self.data = {}
-        self.is_end = False
         self.generator = None
 
     def generator_get(self, channel):
@@ -35,14 +35,14 @@ class component(object):
                 self.data.setdefault(chan, [])
                 self.data[chan].append( data )
 
-    def process(self): 
+    def process(self):
         pass
 
-    def run(self):
+    def run(self, t):
         gen = self.channel_get(self.is_end)
         for a in gen:
-            time.sleep(1)
-            pass
+            if t:
+                time.sleep(t)
 
 class csv_in(component):
     def __init__(self, filename, *args, **argv):
@@ -52,7 +52,6 @@ class csv_in(component):
     def process(self):
         fp = csv.DictReader(file(self.filename))
         for row in fp:
-            print 'READ',row['name']
             yield row, 'main'
 
 
@@ -83,7 +82,6 @@ class logger(component):
         for channel,iterator in self.trans_in.items():
             for data in iterator:
                 self.output.write('\tLog '+self.name+str(data)+'\n')
-                print 'Yield', data, 'log'
                 yield data, 'main'
 
 class transition(object):
@@ -100,17 +98,17 @@ class job(object):
     def __init__(self,outputs=[]):
         self.outputs=outputs
 
-    def run(self):
+    def run(self, t):
         for c in self.outputs:
-            c.run()
+            c.run(t)
 
 csv_in1= csv_in('partner.csv')
 log1=logger(name='After Sort')
-#sort1=sort('name')
+sort1=sort('name')
 
-tran=transition(csv_in1,log1)
-#tran=transition(sort1,log1)
+tran=transition(csv_in1,sort1)
+tran=transition(sort1,log1)
 
 job1=job([log1])
-job1.run()
+job1.run(1)
 
