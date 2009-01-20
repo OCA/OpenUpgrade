@@ -60,9 +60,12 @@
 					<field name="image_width"/>
 					</page>
 					<page string="Delivery">
-					<separator string="Delivery" colspan="4"/>
 					<separator string="Add Carriers" colspan="4"/>
 					<field name="delivery_ids" colspan="4" nolabel="1"/>
+					</page>
+					<page string="Search">
+					<separator string="Add Search Parameters" colspan="4"/>
+					<field name="search_ids"  colspan="4" nolabel="1"/>
 					</page>
 				</notebook>
 			</form>
@@ -248,8 +251,7 @@
 		<menuitem name="Payment Received" parent="menu_ecommerce_payment" action="action_payment_received_form" id="menu_payment_received_form"/>
 		
 		
-<!-- Payment  By Credit Card -->
-		
+<!-- Payment  By Credit Card -->		
 
 		<record model="ir.ui.view" id="view_ecommerce_creditcard">
 			<field name="name">ecommerce.creditcard.tree</field>
@@ -281,7 +283,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_ecommerce_creditcard"/>
 		</record>
-		<menuitem name="Credit Cards" parent="menu_ecommerce_payment" action="action_ecommerce_creditcard_form" id="menu_ecommerce_creditcard_form"/>		
+		<menuitem name="Credit Cards" parent="menu_ecommerce_payment" action="action_ecommerce_creditcard_form" id="menu_ecommerce_creditcard_form"/>
 </data>
 </openerp>
 

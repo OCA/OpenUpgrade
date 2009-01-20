@@ -44,6 +44,38 @@ class specail_offer(osv.osv):
 
 specail_offer()
 
+class ecommerce_search(osv.osv):
+        _name = "ecommerce.search"
+        _description = "search parameters"
+        _columns = {
+                'name': fields.char('Search Parameter Name', size=56),
+                'code': fields.char('Search Parameter Code', size=28)
+                    }
+        
+        def searchProduct_ids(self, cr, uid, search_code):
+            prd_ids =[]
+            final_list = []
+            obj = self.pool.get('product.product')
+          
+            for i in search_code.items():
+                args = []
+                if(i[1] != ''):
+                    if(i[0] == 'name'):
+                        final_list = (i[0],'ilike',str(i[1]))
+                        args.append(final_list)
+                        ids = obj.search(cr, uid, args)
+                        prd_ids.extend(ids)
+                       
+                    else:
+                        final_list = (i[0],'=',str(i[1]))
+                        args.append(final_list)
+                        ids = obj.search(cr, uid, args)
+                        prd_ids.extend(ids)
+                        
+            return prd_ids
+       
+ecommerce_search()
+
 class reviews(osv.osv):
     _name="ecommerce.product.reviews"
     _rec_name="product"
