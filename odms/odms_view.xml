@@ -507,16 +507,16 @@
                 <separator string="Actions" colspan="1"/>
                 <field name="vserv_server_id"  domain="[('has_vserv','=',True)]"/>
                 <field name="vserv_server_state" nolabel="1" colspan="1"/>
-                <button name="create_vserv" string="Create VServer" type="object" col="3"/>
+                <button name="create_vserv" string="Create VServer" type="object" colspan="3"/>
                 <field name="vserver_id"/>
                 <field name="vserver_state" nolabel="1" colspan="1"/>
                 <button name="startstop_vserv" string="Start/Stop Vserver" type="object"/>
                 <field name="web_server_id"  domain="[('has_web','=',True)]"/>
                 <field name="web_server_state" nolabel="1" colspan="1"/>
-                <button name="create_web" string="Create Web" type="object" col="3"/>
+                <button name="create_web" string="Create Web" type="object" colspan="3"/>
                 <field name="bckup_server_id"  domain="[('has_bckup','=',True)]"/>
                 <field name="bckup_server_state" nolabel="1" colspan="1"/>
-                <button name="create_bckup" string="Create backup" type="object" col="3"/>
+                <button name="create_bckup" string="Create backup" type="object" colspan="3"/>
                 <group colspan="4" col="7">
                     <field name="state" select="1"/>
                     <button name="create_subs" string="Create Subscritption" states="draft,trial" type="object"/>
