@@ -14,6 +14,7 @@ class component(object):
         if self.generator:
             return self.generator
         self.generator = self.process()
+        return self.generator
 
     def channel_get(self, channel):
         self.data.setdefault(channel, [])
