@@ -299,9 +299,9 @@ class Comparison(controllers.Controller):
                 for r in factor_res:
                     if j == r.get('factor_id')[1]:
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
-                            item[r.get('item_id')[1]] = str(r.get('result')) + '%' + '|' + "openWindow(getURL('/comparison/item_voting', {id: %s, header: '%s'})); return false;" % (r.get('factor_id')[0], r.get('item_id')[1])
+                            item[r.get('item_id')[1]] = str(r.get('result')) + '%' + ' (' + str(r.get('votes')) + ')' + '|' + "openWindow(getURL('/comparison/item_voting', {id: %s, header: '%s'}), {height: 400}); return false;" % (r.get('factor_id')[0], r.get('item_id')[1])
                         else:
-                            item[r.get('item_id')[1]] = str(r.get('result')) + '%'
+                            item[r.get('item_id')[1]] = str(r.get('result')) + '%' + ' (' + str(r.get('votes')) + ')'
 
 #                   else:
 #                        item['icon'] = "/static/images/treegrid/gtk-edit.png"

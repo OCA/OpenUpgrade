@@ -78,8 +78,8 @@
         	
         	comparison_tree.render();
         </script>
-		
 	</div>
+	<div style="text-align: right; color: #993300;"><i>Note: ( ) value shows number of vote(s).</i></div>
 </body>
 </html>
 

@@ -50,8 +50,7 @@
 					Suggestion :
 				</td>
 				<td>
-					<textarea name="suggestion" cols="35" rows="8">
-					</textarea>
+					<textarea name="suggestion" cols="35" rows="8"/>
 				</td>
 			</tr>
 		</table>
