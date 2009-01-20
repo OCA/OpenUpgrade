@@ -17,7 +17,7 @@ class component(object):
 
     def channel_get(self, channel):
         self.data.setdefault(channel, [])
-        gen = self.generator_get() or []
+        gen = self.generator_get(channel) or []
         for data, chan in gen:
             if data is None:
                 self.data[chan] = None
