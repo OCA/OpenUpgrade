@@ -1946,7 +1946,7 @@
     </record>
 
     <record id="pcg_237" model="account.account.template">
-      <field name="name">Avances et acomptes versés sur immobilisations incorporelles</field>
+      <field name="name">Avances et acomptes versés sur commandes d'immobilisations incorporelles</field>
       <field name="code">237</field>
       <field name="type">other</field>
       <field name="user_type" ref="account_type_immobilisations"/>
@@ -2770,7 +2770,7 @@
     </record>
 
     <record id="pcg_31" model="account.account.template">
-      <field name="name">Matières premières (et fourniture</field>
+      <field name="name">Matières premières (et fourniture)</field>
       <field name="code">31</field>
       <field name="type">view</field>
       <field name="user_type" ref="account_type_view"/>
@@ -4183,7 +4183,7 @@
 
       <field name="parent_id" ref="pcg_44566"/>
       <field name="reconcile" eval="True"/>
-    </record>
+    </record> 
 
     <record id="pcg_44567" model="account.account.template">
       <field name="name">Crédit de TVA à reporter</field>

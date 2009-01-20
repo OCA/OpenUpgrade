@@ -39,7 +39,7 @@
     ],
     "update_xml" : [
         "l10n_fr_pcg_report.xml",
-                "l10n_fr_pcg_wizard.xml",
+         "l10n_fr_pcg_wizard.xml",
         "l10n_fr_pcg_view.xml",
         "l10n_fr_pcg_taxes.xml"
     ],
