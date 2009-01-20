@@ -8,10 +8,16 @@ class component(object):
         self.is_output = False
         self.data = {}
         self.is_end = False
+        self.generator = None
+
+    def generator_get(self, channel):
+        if self.generator:
+            return self.generator
+        self.generator = self.process()
 
     def channel_get(self, channel):
         self.data.setdefault(channel, [])
-        gen = self.process() or []
+        gen = self.generator_get() or []
         for data, chan in gen:
             if data is None:
                 self.data[chan] = None
@@ -24,6 +30,9 @@ class component(object):
             else:
                 self.data.setdefault(chan, [])
                 self.data[chan].append( data )
+
+    def process(self): 
+        pass
 
     def run(self):
         gen = self.channel_get(self.is_end)
