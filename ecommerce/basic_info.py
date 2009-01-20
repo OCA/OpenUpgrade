@@ -100,7 +100,7 @@ class ecommerce_shop(osv.osv):
         'name': fields.char('Name', size=256, required=True, help="Name of the Shop which u want to configure for website."),
         'company_id': fields.many2one('res.company', 'Company'),
         'shop_id': fields.many2one('sale.shop', 'Sale Shop', required=True),
- 	'payment_method':fields.many2many('ecommerce.payment', 'shop_payment', 'shop_id', 'payment_id', 'Payable method', required=False),
+ 	    'payment_method':fields.many2many('ecommerce.payment', 'shop_payment', 'shop_id', 'payment_id', 'Payable method', required=False),
         'category_ids': fields.one2many('ecommerce.category', 'web_id','Categories', translate=True, help="Add the product categories which you want to displayed on the website."),
         'currency_ids': fields.many2many('res.currency','currency_rel', 'currency', 'ecommerce_currency', 'Currency', help="Add the currency options for the online customers."),
         'language_ids': fields.many2many('res.lang', 'lang_rel', 'language','ecommerce_lang', 'Language', help="Add the Launguage options for the online customers."),
@@ -108,7 +108,8 @@ class ecommerce_shop(osv.osv):
         'column_configuration': fields.integer('No. of Columns', help="Add No. of columns for products which u want to configure at website"),
         'image_height': fields.integer('Height in Pixel', help="Add product image height in pixels."),
         'image_width': fields.integer('Width in Pixel', help="Add product image width in pixels."),
-        'delivery_ids': fields.many2many('delivery.grid', 'delivery_rel', 'delivery', 'ecommrce_delivery', 'Delivery', help="Add the carriers which we use for the shipping.")
+        'delivery_ids': fields.many2many('delivery.grid', 'delivery_rel', 'delivery', 'ecommrce_delivery', 'Delivery', help="Add the carriers which we use for the shipping."),
+        'search_ids': fields.many2many('ecommerce.search', 'search_rel', 'search', 'ecommrce_search_parameter', 'Search On', help="Add the Search Parameters which you are allow from the website." )
         } 
 
     _defaults = {
@@ -132,5 +133,6 @@ class ecommerce_category(osv.osv):
     }
        
 ecommerce_category() 
+
        
 

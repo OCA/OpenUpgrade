@@ -20,10 +20,10 @@
 #
 ##############################################################################
 import tools
-import basic_info
 import partner
 import catalog
+import basic_info
 import sale_order
-#import report 
+import report 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
