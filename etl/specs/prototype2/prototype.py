@@ -65,17 +65,22 @@ class csv_out(component):
         fp.writerows(rows)        
         return super(csv_out, self).input(rows)
 
+# This component do sort and merge at the same time
 class sort(component):
     def __init__(self, fieldname, *args, **argv):
         self.fieldname = fieldname
-        super(sort, self).__init__(*args, **argv)    
+        super(sort, self).__init__(*args, **argv)
 
-    def run(self,rows=[], transition=None):
-        self.data=rows
-        self.data.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
-        return super(sort, self).run(self.data)     
-
-    
+    def process_main(self):
+        datas = []
+        # read all input channels
+        for channel,iterator in self.trans_in:
+            for data in iterator:
+                datas.append(data)
+        datas.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
+        while datas:
+            yield datas.pop(0)
+        return True
 
 class logger(component):
     def __init__(self, name, *args, **argv):
