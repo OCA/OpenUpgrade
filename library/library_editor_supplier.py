@@ -21,6 +21,7 @@
 ##############################################################################
 
 from osv import osv, fields
+import tools
 
 # class library_editor_supplier(osv.osv):
 #   _name = "library.editor.supplier"
@@ -45,23 +46,26 @@ class library_editor_supplier(osv.osv):
     _columns = {
         'name': fields.many2one('res.partner', 'Editor'),
         'supplier_id' : fields.many2one('res.partner', 'Supplier'),
+        'sequence': fields.integer('Sequence'),
+        'junk': fields.function(lambda self, cr, uid, ids, name, attr, context: dict([(idn, '') for idn in ids]),
+                method=True, string=" ", type="text"),
     }
 
     def init(self, cr):
+        tools.sql.drop_view_if_exists(cr, self._table)
         cr.execute("""
-
-            create or replace view library_editor_supplier as (
+            create view library_editor_supplier as (
                 select
-                 case when min(ps.id) is null then - min(pp.id) else min(ps.id) end as id,
-                 case when pp.editor is null then 0 else pp.editor end as name,
-                 case when ps.name is null then 0 else ps.name end as supplier_id
+                    case when min(ps.id) is null then - min(pp.id) else min(ps.id) end as id,
+                    case when pp.editor is null then 0 else pp.editor end as name,
+                    case when ps.name is null then 0 else ps.name end as supplier_id,
+                    case when ps.sequence is null then 0 else ps.sequence end as sequence
                 from
-                 product_supplierinfo ps full outer join product_product pp on (ps.product_id = pp.product_tmpl_id)
+                    product_supplierinfo ps full outer join product_product pp on (ps.product_id = pp.product_tmpl_id)
                 where
-                 ((pp.editor is not null) or (ps.name is not null))
-                group by pp.editor, ps.name
-                 )""")
-
+                    ((pp.editor is not null) or (ps.name is not null))
+                group by pp.editor, ps.name, ps.sequence
+            )""")
 
     def create(self, cr, user, vals, context={}):
         if not (vals['name'] and vals['supplier_id']) : raise osv.except_osv("Error","Please provide ..")

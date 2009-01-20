@@ -53,3 +53,7 @@ future, we will have at least 7 different views on each object !
 
 We need a palet of different objects on the left that all inherits from the
 same node object. So that we can mix between objects in one diagram.
+
+On the left, the available components should be presented as a list or
+a tree of available objects. (instead of icons like presented in the
+screenshot)

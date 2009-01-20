@@ -80,7 +80,7 @@ class comparison_factor(osv.osv):
         return result
     
     _columns = {
-        'name': fields.char('Factor Name', size=64, required=True),
+        'name': fields.char('Factor Name', size=128, required=True),
         'parent_id': fields.many2one('comparison.factor','Parent Factor', ondelete='set null'),
         'user_id': fields.many2one('comparison.user','User'),
         'child_ids': fields.one2many('comparison.factor','parent_id','Child Factors'),
@@ -99,7 +99,7 @@ class comparison_factor(osv.osv):
         'ponderation': lambda *args: 1.0,
         'sequence': lambda *args: 1,
     }
-    
+
     def _check_recursion(self, cr, uid, ids):
         level = 100
         while len(ids):
@@ -109,7 +109,32 @@ class comparison_factor(osv.osv):
                 return False
             level -= 1
         return True
-    
+
+    def export_csv(self, cr, uid, ids, context={}):
+        import csv
+        fp = csv.writer(file('/tmp/factors.csv','wb+'))
+        val = self.pool.get('comparison.vote.values')
+        val_ids = val.search(cr, uid, [])
+        fp.writerow(['','Legend',''])
+        for v in val.browse(cr, uid, val_ids, context):
+            fp.writerow(['',str(v.factor)+' : '+v.name,''])
+        fp.writerow(['','',''])
+        fp.writerow(['ID','Criterion','Type'])
+        def export_line(fp, line):
+            md = self.pool.get('ir.model.data')
+            ids = md.search(cr, uid, [('module','=','comparison'),('res_id','=',line.id),('model','=','comparison.factor')])
+            lid = md.browse(cr, uid, ids[0], context).name
+            fp.writerow([lid, line.name, (line.type=='view' or line.child_ids) and 'category' or ''])
+            for o in line.child_ids:
+                export_line(fp, o)
+
+        ids = self.search(cr, uid, [('parent_id','=',False)])
+        for obj in self.browse(cr, uid, ids, context):
+            export_line(fp, obj)
+
+        raise osv.except_osv(_('Error !'), _('Your .CSV file has been saved'))
+        return True
+
     _constraints = [
         (_check_recursion, 'Error ! You cannot create recursive Factors.', ['parent_id'])
     ]

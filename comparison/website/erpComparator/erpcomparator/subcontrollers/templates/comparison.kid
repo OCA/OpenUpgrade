@@ -22,17 +22,12 @@
 	    		</a>
 	    	</li>
 	    	<li>
-	    		<a href="#" onclick="window.location.href='/documents'">
-	    			<span>Documents</span>
-	    		</a>
-	    	</li>
-	    	<li>
 	    		<a href="#" onclick="window.location.href='/about'">
 	    			<span>About</span>
 	    		</a>
 	    	</li>
 	    	<li>
-	    		<a href="#" onclick="window.location.href='/about'">
+	    		<a href="#" onclick="window.location.href='/graph'">
 	    			<span>Graph</span>
 	    		</a>
 	    	</li>
@@ -77,7 +72,7 @@
 		<script type="text/javascript">
         	var comparison_tree = new TreeGrid('comparison_tree');
         	
-        	comparison_tree.options.onbuttonclick = on_button_click;
+        	//comparison_tree.options.onbuttonclick = on_button_click;
         	comparison_tree.setHeaders(${ustr(headers)});
         	comparison_tree.setRecords('${url}', ${ustr(url_params)});
         	

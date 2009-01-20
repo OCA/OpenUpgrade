@@ -27,17 +27,12 @@
 	    		</a>
 	    	</li>
 	    	<li>
-	    		<a href="#" onclick="window.location.href='/documents'">
-	    			<span>Documents</span>
-	    		</a>
-	    	</li>
-	    	<li>
 	    		<a href="#" onclick="window.location.href='/about'">
 	    			<span>About</span>
 	    		</a>
 	    	</li>
 	    	<li>
-	    		<a href="#" onclick="window.location.href='/about'">
+	    		<a href="#" onclick="window.location.href='/graph'">
 	    			<span>Graph</span>
 	    		</a>
 	    	</li>
@@ -53,7 +48,7 @@
 	    	</li>
 	  	</ul>
 	</div>
-	<div class="description" py:for="r in res">
+	<div class="width_border" py:for="r in res">
 		<table>
 			<tr>
 				<td>

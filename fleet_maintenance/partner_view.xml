@@ -9,13 +9,68 @@
       <field name="arch" type="xml">
 	        <notebook position="inside">
 	        	<page string="Fleets">
-							<field colspan="4" mode="tree" context="{'fleet_type':'sub_fleet'}" name="sub_fleets" nolabel="1">
+							<field colspan="4" mode="tree, form" context="{'fleet_type':'sub_fleet'}" name="sub_fleets" nolabel="1">
 								<tree string="Sub Fleets" colors="red:is_expired;blue:fleet_type=='fleet'">
-									<field name="indented_name" />
+									<field name="location_id" string="Fleet"/>
+									<field name="name" string="Sub Fleet"/>
 									<field name="is_expired" />
 									<field name="time_to_expire" />
 									<field name="expire_time" />
 								</tree>
+
+								<!-- FIXME: the following form is supposed to be exactly the stock.location.fleet.form.sub_fleet_maintenance arch
+								but due to an OpenERP v5 GTK client limitation where the context is not passed in one2many widgets,
+								we couldn't let the server appropriately select the right view so we just wrapped it here to make it work anyway -->
+								<form string="Sub Fleet">
+									<field name="fleet_type" invisible="1" />
+									<field name="name" select="1" string="Name" />
+									<field name="location_id" context="{'fleet_type':'fleet', 'partner_id':context.get('partner_id', False)}"
+													domain="[('fleet_type','=','fleet')]" required="1" />
+									<field name="address_id" context="{'context_display':'partner'}" />
+									<field name="active" select="2" />
+									<separator string="Maintenance Dates" colspan="4" />
+									<field name="is_expired" />
+									<field name="time_to_expire" />
+									<field name="expire_time" />
+									<field name="anniversary_time" />
+									<newline />
+									<notebook colspan="4">
+										<page string="Invoice Lines">
+											<field nolabel="1" mode="tree,form,calendar" name="account_invoice_lines">
+												<tree string="Invoice Lines">
+													<field name="invoice_id" />
+													<field name="quantity" />
+													<field name="maintenance_start_date" string="Start" />
+													<field name="maintenance_end_date" string="End" />
+													<field name="price_subtotal" />
+												</tree>
+											</field>
+										</page>
+										<page string="Orders Lines">
+											<field nolabel="1" name="sale_order_lines">
+												<tree string="Sale Order Lines">
+													<field name="order_id" />
+													<field name="product_uos_qty" />
+													<field name="maintenance_start_date" string="Start" />
+													<field name="maintenance_end_date" string="End" />
+													<field name="price_subtotal" />
+												</tree>
+											</field>
+										</page>
+										<page string="Events">
+											<field nolabel="1" name="crm_cases">
+												<tree string="Incidents">
+													<field name="incident_ref" />
+													<field name="prodlot_id" />
+													<field name="section_id" />
+													<field name="state" />
+													<field name="name" />
+												</tree>
+											</field>
+										</page>
+									</notebook>
+								</form>
+
 							</field>
 	        	</page>
 	        </notebook>

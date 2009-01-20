@@ -31,7 +31,7 @@ class Root(controllers.RootController):
 
     comparison = subcontrollers.comparison.Comparison()
     softwares = subcontrollers.softwares.Softwares()
-    documents = subcontrollers.documents.Documents()
     about = subcontrollers.about.About()
     login = subcontrollers.login.Login()
+    graph = subcontrollers.graph.Graph()
     

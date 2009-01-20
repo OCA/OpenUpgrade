@@ -36,6 +36,41 @@ function getSelectedItems() {
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
 }
 
-function on_button_click(evt, node) {
-	openWindow(getURL('/comparison/voting', {id: node.name}), {width: 500, height: 350});
+function change_vote(id) {
+	openWindow(getURL('/comparison/voting', {id: id}), {width: 500, height: 350});
+}
+
+function item_vote(id, item_id) {
+	
+	treenode = window.opener.comparison_tree.selection_last;
+	params = [];
+	child_ids = [];
+	
+	trs = getElementsByTagAndClassName('tr', 'factor_row');
+	for (var i=0; i<trs.length; i++) {
+		child_ids[i] = trs[i].id.split('_')[0];
+	}
+	
+	child_ids = child_ids;
+	
+	forEach(child_ids, function(x){
+		params['id'] = x;
+		params['score_id'] = $(x + '_score_id').value;
+		params['item_id'] = $(x + '_item_name').value;
+		
+		var req = Ajax.JSON.post('/comparison/update_item_voting', params);
+	    req.addCallback(function(obj){
+	    	if(obj.res) {
+	    		window.close();
+	    		forEach(treenode.childNodes, function(y){
+	    			y.update();
+	    		});
+	    		treenode.update();
+	    		
+	    	}
+	    	if (obj.error) {
+	            return alert(obj.error);
+	        }
+	    });
+	});
 }

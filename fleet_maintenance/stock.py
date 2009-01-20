@@ -11,6 +11,19 @@ fixed_default_anniversary_month = 12
 class stock_location(osv.osv):
     _inherit = "stock.location"
     
+    
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
+        if view_type == 'form' and context.get('fleet_type', False) == 'sub_fleet':
+            view_id = self.pool.get('ir.ui.view').search(cr,uid,[('name','=','stock.location.fleet.form.sub_fleet_maintenance')])[0]
+        elif view_type == 'form' and context.get('fleet_type', False) == 'fleet':
+            view_id = self.pool.get('ir.ui.view').search(cr,uid,[('name','=','stock.location.fleet.form.fleet_maintenance')])[0]
+        #elif view_type == 'tree' and context.get('fleet_type', False) == 'sub_fleet':
+        #    pass
+        #elif view_type == 'tree' and context.get('fleet_type', False) == 'fleet':
+        #    pass
+        return  super(stock_location, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
+    
+    
     def _is_expired(self, cr, uid, ids, field_name, arg, context={}):
         res = {}
         now = DateTime.now()
@@ -47,47 +60,18 @@ class stock_location(osv.osv):
         for fleet in self.browse(cr, uid, ids, context):
             res[fleet.id] = fleet.location_id and fleet.location_id.intrinsic_anniversary_time or fleet.intrinsic_anniversary_time
         return res
-    
-    def _get_parent_fleet_id(self, cr, uid, ids, field_name, arg, context={}):
-        res = {}
-        for location in self.browse(cr, uid, ids):
-            res[location.id] = location.location_id.id
-        return res
-    
-    #dummy; what matters is onchange_parent_fleet_id
-    def _set_parent_fleet_id(self, cr, uid, ids, name, value, arg, context):
-        pass
-            
-    def _indented_name(self, cr, uid, ids, field_name, arg, context={}):
-        res = {}
-        for location in self.browse(cr, uid, ids):
-            if location.fleet_type == 'fleet':
-                res[location.id] = location.name
-            else:
-                res[location.id] = "     " + location.name
-            
-        return res
-            
-    def onchange_parent_fleet_id(self, cr, uid, ids, location_id):
-        result = {}
-        result['value'] = {}
-        if not location_id:
-            return result
-        
-        result['value'].update({'location_id': location_id})
-        return result
-        
 
 
     _columns = {
-        'indented_name':fields.function(_indented_name, method=True, type='char', string="Name"),
         'fleet_type': fields.selection([('none','Not a Fleet'),('fleet','Fleet'),('sub_fleet','Sub Fleet')], 'Fleet type', required=False),
         'partner_id': fields.many2one('res.partner', 'Customer', required = False, ondelete = 'cascade', select = True),
-        'parent_partner_id': fields.related('location_id', 'partner_id', type='many2one', relation='res.partner', string='Customer'),
+        'parent_partner_id': fields.related('location_id', 'partner_id', type='many2one', relation='res.partner', string='Customer', store=True),
         'sale_order_lines': fields.one2many('sale.order.line', 'fleet_id', 'Sale Order Lines'),
+        'fleet_sale_order_lines': fields.one2many('sale.order.line', 'parent_fleet_id', 'Sale Order Lines'),
         'account_invoice_lines': fields.one2many('account.invoice.line', 'fleet_id', 'Invoice Lines'),
+        'fleet_account_invoice_lines': fields.one2many('account.invoice.line', 'parent_fleet_id', 'Invoice Lines'),
         'crm_cases': fields.one2many('crm.case', 'fleet_id', 'Events'),
-        'parent_fleet_id': fields.function(_get_parent_fleet_id, fnct_inv=_set_parent_fleet_id, method=True, type='many2one', relation='stock.location', string='Parent Fleet'),
+        'fleet_crm_cases': fields.one2many('crm.case', 'parent_fleet_id', 'Events'),
         'is_expired': fields.function(_is_expired, method=True, type='boolean', string="Expired ?"),
         'time_to_expire': fields.function(_time_to_expire, method=True, type='integer', string="Days before expiry"),
         'intrinsic_anniversary_time':fields.date('Intrinsic Time', required = False),
@@ -126,7 +110,7 @@ class stock_location(osv.osv):
     
     def _default_location_id(self, cr, uid, context={}):
         if context.get('fleet_type', 'none') == 'fleet':
-            return 8 #FIXME, not very solid, rather use somthing like property_stock_customer
+            return 8 #FIXME, not very solid, rather use something like property_stock_customer
         return False
     
     
@@ -144,6 +128,11 @@ stock_location()
 class stock_picking(osv.osv):
     _inherit = "stock.picking"
     
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
+        if view_type == 'form' and context.get('view', False) == 'incident':
+            view_id = self.pool.get('ir.ui.view').search(cr,uid,[('name','=','stock.picking.incident.form')])[0]
+        return  super(stock_picking, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
+    
     #copy extra invoice line info when invoicing on delivery, if the "delivery" module is installed, it should be a dependence of this module for this to
     #work properly! 
     def action_invoice_create(self, cr, uid, ids, journal_id=False,
@@ -159,7 +148,6 @@ class stock_picking(osv.osv):
                         if order_line.product_id and order_line.product_id.is_maintenance:
                             self.pool.get('account.invoice.line').write(cr, uid, invoice_line.id, {'maintenance_start_date':order_line.maintenance_start_date, \
                                                                                                    'maintenance_end_date':order_line.maintenance_end_date, \
-                                                                                                   'maintenance_month_qty':order_line.maintenance_month_qty, \
                                                                                                    'maintenance_product_qty':order_line.maintenance_product_qty, \
                                                                                                    })
                         if order_line.fleet_id: #product sent to fleet but not maintenance -> we copy the information too
@@ -169,20 +157,4 @@ class stock_picking(osv.osv):
         return create_ids
     
 stock_picking()
-
-#defined just in order to work around picking view definitions
-class stock_picking_incident(osv.osv):
-    _inherit = "stock.picking"
-    _name = "stock.picking.incident"
-    _table = "stock_picking"
-    
-    def _default_type(self, cr, uid, context={}):
-        return context.get('type', False)
-    
-    
-    _defaults = {
-        'type': _default_type,
-    }
-    
-stock_picking_incident()
     

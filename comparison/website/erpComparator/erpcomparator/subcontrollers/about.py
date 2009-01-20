@@ -9,8 +9,6 @@ class About(controllers.Controller):
     
     @expose(template="erpcomparator.subcontrollers.templates.about")
     def index(self):
-        msg = "This is About....."
-        
         userinfo = cherrypy.session.get('user_info', '')
         
-        return dict(msg=msg, userinfo=userinfo)
+        return dict(userinfo=userinfo)
