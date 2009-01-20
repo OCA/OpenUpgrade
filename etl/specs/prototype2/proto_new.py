@@ -51,7 +51,7 @@ class csv_in(component):
         self.filename = filename
 
     def process(self):
-        fp = csv.DictReader(file(self.filename))            
+        fp = csv.DictReader(file(self.filename))
         for row in fp:
             yield row, 'main'
 
@@ -59,21 +59,20 @@ class csv_out(component):
     def __init__(self, filename, *args, **argv):
         super(csv_out, self).__init__(*args, **argv)
         self.filename=filename
-        self.fp=None        
 
     def process(self):
+        fp2=None
         datas = []
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
-                    datas.append(d)
-        self.fp=file(self.filename, 'wb+') 
-        fieldnames = datas[0].keys()
-        fp = csv.DictWriter(self.fp, fieldnames)
-        fp.writerow(dict(map(lambda x: (x,x), fieldnames)))
-        fp.writerows(datas)
-        for d in datas:
-            yield d, 'main'
+                    if not fp2:
+                        fp2 = file(self.filename, 'wb+')
+                        fieldnames = d.keys()
+                        fp = csv.DictWriter(fp2, fieldnames)
+                        fp.writerow(dict(map(lambda x: (x,x), fieldnames)))
+                    fp.writerow(d)
+                    yield d, 'main'
 
 class sort(component):
     def __init__(self, fieldname, *args, **argv):
@@ -82,12 +81,12 @@ class sort(component):
 
     # Read all input channels, sort and write to 'main' channel
     def process(self):
-        datas = []                
+        datas = []
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     datas.append(d)
-        
+
         datas.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
         for d in datas:
             yield d, 'main'
@@ -97,9 +96,9 @@ class logger_bloc(component):
         self.name = name
         self.output = output
         self.is_end = 'main'
-        super(logger, self).__init__(*args, **argv) 
+        super(logger, self).__init__(*args, **argv)
 
-    def process(self): 
+    def process(self):
         datas=[]
         for channel,trans in self.input_get().items():
             for iterator in trans:
@@ -113,9 +112,9 @@ class logger_bloc(component):
 class sleep(component):
     def __init__(self, delay=1, *args, **argv):
         self.delay = delay
-        super(sleep, self).__init__(*args, **argv) 
+        super(sleep, self).__init__(*args, **argv)
 
-    def process(self): 
+    def process(self):
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
@@ -127,9 +126,9 @@ class logger(component):
         self.name = name
         self.output = output
         self.is_end = 'main'
-        super(logger, self).__init__(*args, **argv) 
+        super(logger, self).__init__(*args, **argv)
 
-    def process(self): 
+    def process(self):
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
@@ -175,6 +174,6 @@ job1.run()
 
 # this is not work, log2 can not get data
 
-#job2=job([log1,sort1,csv_out1,log2]) 
+#job2=job([log1,sort1,csv_out1,log2])
 #job2.run(0)
 
