@@ -43,7 +43,8 @@ class csv_in(component):
         self.fp = csv.DictReader(file(self.filename))
         return super(csv_in, self).start()
     
-    def input(self,data=[]):        
+    def input(self,rows=[]):   
+        data=[]     
         for row in self.fp:
             data.append(row)
         return super(csv_in, self).input(data)
@@ -114,10 +115,11 @@ class job(object):
             res=component.start()        
             if not res:
                 raise Exception('not started component')
-            try:                
-                res_input=component.input(data)
-                res_process=component.run(res_input)                 
-                res_output=component.output(res_process)               
+            try:          
+                res_process=component.run(data)      
+                res_input=component.input(res_process)
+                                 
+                res_output=component.output(res_input)               
                 for out_data,out_component in res_output:                    
                     _run(out_data,out_component)
             except Exception,e:
@@ -147,7 +149,6 @@ tran5=transition(sort1,log2)
 job1=job([csv_in1,csv_in2,log1,sort1,log2])
 
 job1.run()
-
 
 # csv_in1  -> log1
 # csv_in2  -> log1
