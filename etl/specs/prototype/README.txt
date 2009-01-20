@@ -22,6 +22,7 @@ Summary of improvements to apply
 
 * Don't put the logic in the node but in the job execution. That's the job
 that should schedule the node function calls. And not the node itself.
+OK - DONE
 
 * Add a system of triggering/listening events. Some events can be raised by
 default: start, stop, end, error. Others can be user defined.
@@ -34,6 +35,7 @@ when receiving a particular event from original node.
 meta information on this class, so that information is transfered from one node
 to another. The class should also store the metadata of the current
 information.  (the list of fields and their type)
+OK - SHOULD NOT BE DONE !
 
 * Currently, I am passing the same data structure to all channels. It's efficient,
 but when we split from one node to two, we have two pointers to the same data.
@@ -46,9 +48,11 @@ into several different outgoing transition.
 a time and not the complete flow of elements. So that the job execution can decide
 to stop running, run one element at a time to trace, or run until it's finnished.
 I think using 'yield' function in python could be a good idea.
+OK - DONE
 
 * If you send an empty data to output, it does not go to input of the relateds
 nodes. So that we have a system to manage loops and recursivity.
+OK - DONE
 
 * Create a new node type which is sub-job or sub-process. It calls a new process.
 
@@ -82,6 +86,7 @@ Questions
 take some place in memory. Is it better to use a list of lists ? We should
 evaluate the difference in memory occupation. If it's less than 50%, we keep
 list of dict. For now on, let's start with a list of dict.
+OK - DONE We don't maintain list of dicts, we maintain iterators of dict
 
 * I didn't thought about code generation to build a processor that will convert
 the data. Is this really usefull ? Why is Talend providing this ? I think code
