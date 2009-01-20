@@ -3,31 +3,30 @@ import csv
 
 class component(object):
     def __init__(self,*args, **argv):
-        is_start=True
+        self.is_start=argv.get('is_start', False)
         self.data=[]
-        self.job=argv.get('job',False)
+        self.job=None
         self.trans_out = []
         self.trans_in = []
 
-    def event(self,name):
-        return self.output(event=name)
+    def event(self,name,channel=None):
+        return self.output(channel=channel,event=name)
     def start(self):
         self.event('component_start')
         return True
     def stop(self):
         self.event('component_end')
         return True
-    def run(self,input_data=[]):
-        self.event('component_run')
-        data=self.output(input_data)
+    def run(self,data=[]):
+        self.event('component_run')        
         return data
 
-    def input(self, rows, transition=None):
-        self.event('component_inputflow')
-        return self.output(rows)
+    def input(self, rows=None,channel=None, transition=None):
+        self.event('component_inputflow',channel)
+        return rows
 
     def output(self, rows=None, channel=None,event=None):
-        self.event('component_outputflow')
+        self.event('component_outputflow',channel)
         for trans in self.trans_out:
             if (not channel) or (trans.channel_source==channel) or (not trans.channel_source):
                 if trans.type=='data_transition' or (trans.type=='trigger_transition' and event==trans.listen_event):
@@ -39,13 +38,15 @@ class csv_in(component):
     def __init__(self, filename, *args, **argv):
         super(csv_in, self).__init__(*args, **argv)
         self.filename = filename
-
-    def run(self,data=[]):        
-        fp = csv.DictReader(file(self.filename))
-        data=[]
-        for row in fp:
+        self.fp=None
+    def start(self):
+        self.fp = csv.DictReader(file(self.filename))
+        return super(csv_in, self).start()
+    
+    def input(self,data=[]):        
+        for row in self.fp:
             data.append(row)
-        return super(csv_in, self).run(data)
+        return super(csv_in, self).input(data)
 
 class csv_out(component):
     def __init__(self, filename, *args, **argv):
@@ -53,9 +54,9 @@ class csv_out(component):
         self.filename=filename
         self.fp=None
 
-    def run(self,rows=[]):
+    def start(self):
         self.fp = file(self.filename, 'wb+')
-        return self.input(rows)
+        return super(csv_out, self).start()
 
     def input(self,rows=[]):
         fieldnames = rows[0].keys()
@@ -100,47 +101,59 @@ class transition(object):
         self.channel_destination = channel_destination
 
 class job(object):
-    def __init__(self,start_component,components=[]):
-        self.components=components
-        self.start_component=start_component
+    def __init__(self,components=[]):
+        self.components=components        
         for component in components:
             component.job=self
 
     def run(self):
-        data=None
-        start_component=self.start_component        
+        data=None           
         def _run(data,component):            
             if not component:
                 return            
             res=component.start()        
             if not res:
                 raise Exception('not started component')
-            try:
-                res_list=component.run(data)                
-                for out_data,out_component in res_list:                    
+            try:                
+                res_input=component.input(data)
+                res_process=component.run(res_input)                 
+                res_output=component.output(res_process)               
+                for out_data,out_component in res_output:                    
                     _run(out_data,out_component)
             except Exception,e:
                 raise e
             finally:
                 component.stop() 
-        _run(data,start_component)    
+        for component in self.components:
+            if component.is_start:
+                _run(data,component)    
             
 
 
-csv_in1= csv_in('partner.csv')
+csv_in1= csv_in('partner.csv',is_start=True)
+csv_in2= csv_in('partner1.csv',is_start=True)
 csv_out1= csv_out('partner2.csv')
 sort1=sort('name')
 log1=logger(name='Read Partner File')
 log2=logger(name='After Sort')
 
-tran1=transition(csv_in1,log1)
+tran=transition(csv_in1,log1)
+tran1=transition(csv_in2,log1)
 tran2=transition(csv_in1,sort1)
-tran3=transition(sort1,csv_out1)
-tran3=transition(sort1,log2)
+tran3=transition(csv_in2,sort1)
+tran4=transition(sort1,csv_out1)
+tran5=transition(sort1,log2)
 
-job1=job(csv_in1,[csv_in1,log1])
+job1=job([csv_in1,csv_in2,log1,sort1,log2])
 
 job1.run()
+
+
+# csv_in1  -> log1
+# csv_in2  -> log1
+# csv_in1  -> sort1 
+# csv_in2  -> sort1 -> csv_out1
+#                   -> log2
 
 
 
