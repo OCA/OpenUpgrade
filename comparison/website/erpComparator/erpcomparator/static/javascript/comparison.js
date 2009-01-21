@@ -40,28 +40,61 @@ function change_vote(id) {
 	openWindow(getURL('/comparison/voting', {id: id}), {width: 500, height: 350});
 }
 
-function item_vote(id, item_id) {
+function open_item_vote(id, header) {
 	
-	treenode = window.opener.comparison_tree.selection_last;
 	params = [];
-	child_ids = [];
+	params['id'] = id;
+	params['header'] = header;
 	
+	var req = Ajax.post('/comparison/item_voting', params);
+	
+	req.addCallback(function(xmlHttp){
+		var d = window.mbox.content;
+		d.innerHTML = xmlHttp.responseText;
+		
+		window.mbox.width = 500;
+        window.mbox.height = 340;
+        
+        window.mbox.onUpdate = item_vote;
+		window.mbox.show();
+	});
+}
+
+var onUpdate = function(){
+    window.mbox.onUpdate();
+}
+
+MochiKit.DOM.addLoadEvent(function(evt){
+
+    window.mbox = new ModalBox({
+        title: 'Voting...',
+        buttons: [
+            {text: 'Save', onclick: onUpdate},
+        ]
+    });
+
+});
+
+function item_vote() {
+	
+	treenode = comparison_tree.selection_last;
+	params = [];
+	 
+	child_ids = [];
 	trs = getElementsByTagAndClassName('tr', 'factor_row');
 	for (var i=0; i<trs.length; i++) {
 		child_ids[i] = trs[i].id.split('_')[0];
 	}
 	
-	child_ids = child_ids;
-	
 	forEach(child_ids, function(x){
 		params['id'] = x;
 		params['score_id'] = $(x + '_score_id').value;
-		params['item_id'] = $(x + '_item_name').value;
+		params['item_id'] = $('item_id').value;
 		
 		var req = Ajax.JSON.post('/comparison/update_item_voting', params);
 	    req.addCallback(function(obj){
 	    	if(obj.res) {
-	    		window.close();
+	    		window.mbox.hide();
 	    		forEach(treenode.childNodes, function(y){
 	    			y.update();
 	    		});
@@ -72,5 +105,26 @@ function item_vote(id, item_id) {
 	            return alert(obj.error);
 	        }
 	    });
-	});
+	}); 
+	
+	/*
+	params['id'] = $('id').value;
+	params['score_id'] = $('score_id').value;
+	params['item_id'] = $('item_id').value;
+	params['note'] = $('note').value;
+	
+	var req = Ajax.JSON.post('/comparison/update_item_voting', params);
+    req.addCallback(function(obj){
+    	if(obj.res) {
+    		window.mbox.hide();
+    		treenode.update();
+    		
+    	}
+    	if (obj.error) {
+            return alert(obj.error);
+        }
+    });
+	
+	
+	*/
 }

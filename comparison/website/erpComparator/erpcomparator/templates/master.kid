@@ -6,9 +6,17 @@
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <meta py:replace="item[:]"/>
     
+    <script type="text/javascript" src="/static/javascript/MochiKit/MochiKit.js"></script>
+    <script type="text/javascript" src="/static/javascript/master.js"></script>
+    <script type="text/javascript" src="/static/javascript/treegrid.js"></script>
+    <script type="text/javascript" src="/static/javascript/ajax.js"></script>
+    <script type="text/javascript" src="/static/javascript/comparison.js"></script>
+    <script type="text/javascript" src="/static/javascript/modalbox.js"></script>
+    
     <link href="/static/css/tabs.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/treegrid.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/new_style.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/modalbox.css" rel="stylesheet" type="text/css"/>
 
     <!--[if lt IE 7]>
         <link href="/static/css/iepngfix.css" rel="stylesheet" type="text/css"/>
@@ -32,11 +40,7 @@
     <![endif]-->
         
     <title py:replace="''">Your title goes here</title>
-    <script type="text/javascript" src="/static/javascript/master.js"></script>
-    <script type="text/javascript" src="/static/javascript/treegrid.js"></script>
-    <script type="text/javascript" src="/static/javascript/ajax.js"></script>
-    <script type="text/javascript" src="/static/javascript/comparison.js"></script>
-
+    
 </head>
 
 <body py:match="item.tag=='{http://www.w3.org/1999/xhtml}body'" py:attrs="item.items()">
