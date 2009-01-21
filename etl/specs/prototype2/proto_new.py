@@ -244,8 +244,16 @@ transition(diff1, log2, channel_source="add")
 transition(diff1, csv_out1, channel_source="add")
 transition(diff1, log4, channel_source="update")
 
-job = job([log_1,log_2,diff1,log1,log2,log3,log4,csv_out1])
-job.run()
+job = job([log1,log2,log3,log4,csv_out1])
+#job.run()
+
+class a(object):
+    def test(self, hello):
+        print hello
+b=a()
+
+import pickle
+pickle.dump(b,file('result.pickle','wb+'))
 
 
 
