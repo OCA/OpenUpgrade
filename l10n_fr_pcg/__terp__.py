@@ -34,14 +34,16 @@
     "description": "This is the module to manage the accounting chart for France in Open ERP.",
     "depends" : ['base', 'account', 'account_chart', 'base_vat'],
     "init_xml" : [
-        "report.xml",
-        "pcg.xml"
     ],
     "update_xml" : [
+        "report.xml",
+        "pcg.xml",
+        "l10n_fr_pcg_taxes.xml",
+        "tax.xml",
+        "fiscal_templates_fr.xml",
         "l10n_fr_pcg_report.xml",
          "l10n_fr_pcg_wizard.xml",
-        "l10n_fr_pcg_view.xml",
-        "l10n_fr_pcg_taxes.xml"
+        "l10n_fr_pcg_view.xml"
     ],
     "demo_xml" : [],
     "active": False,
