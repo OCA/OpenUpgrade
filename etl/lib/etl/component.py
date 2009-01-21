@@ -21,7 +21,7 @@
 ##############################################################################
 """ ETL Component.
 
-    The module provides ETL components.   
+    This file should be spread in different files in component's subdirs.
 
 """
 

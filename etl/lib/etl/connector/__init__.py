@@ -21,10 +21,8 @@
 ##############################################################################
 
 """
-This package use for ETL system
+ETL Connectors:
+* File Access
+* DB Connection
+* Open Object Interfaces
 """
-
-from etl import *
-import component
-import connector
-

@@ -80,8 +80,6 @@ class component(object):
         return result
 
 
-
-
 class transition(object):
     """
        Base class of ETL transition.
