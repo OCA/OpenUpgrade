@@ -183,7 +183,7 @@ class Comparison(controllers.Controller):
         val = vproxy.search([])
         value_name = vproxy.read(val, ['name'])
         
-        return dict(res=None, item_id=item_id, child=child, value_name=value_name, id=id, show_header_footer=False, error="")
+        return dict(item_id=item_id, child=child, factor_id=factor_id, value_name=value_name, id=id, error="")
     
     @expose('json')
     def update_item_voting(self, **kw):
@@ -250,8 +250,10 @@ class Comparison(controllers.Controller):
         factor_res = prx.read(rids)
         
         fact_proxy = rpc.RPCProxy('comparison.factor')
-        fact_ids = fact_proxy.search([('type', '!=', 'view'), ('parent_id', 'in', ids)])
-        parent_ids = fact_proxy.read(fact_ids, ['id', 'parent_id'])
+        c_ids = fact_proxy.search([('type', '!=', 'view'), ('id', 'in', ids)])
+        p_ids = fact_proxy.search([('type', '!=', 'view'), ('parent_id', 'in', ids)])
+        parent_ids = fact_proxy.read(p_ids, ['parent_id'])
+        child_ids = fact_proxy.read(c_ids, ['id'])
         
         if sort_by:
             result.sort(lambda a,b: self.sort_callback(a, b, sort_by, sort_order))
@@ -298,10 +300,13 @@ class Comparison(controllers.Controller):
             for i, j in item.items():
                 for r in factor_res:
                     if j == r.get('factor_id')[1]:
+                        
+                        item[r.get('item_id')[1]] = str(r.get('result')) + '%'
+                        
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
-                            item[r.get('item_id')[1]] = str(r.get('result')) + '%' + ' (' + str(r.get('votes')) + ')' + '|' + "openWindow(getURL('/comparison/item_voting', {id: %s, header: '%s'}), {height: 400}); return false;" % (r.get('factor_id')[0], r.get('item_id')[1])
-                        else:
-                            item[r.get('item_id')[1]] = str(r.get('result')) + '%' + ' (' + str(r.get('votes')) + ')'
+                            item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1])
+                        if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
+                            item[r.get('item_id')[1]] += '-' + "bold"
 
 #                   else:
 #                        item['icon'] = "/static/images/treegrid/gtk-edit.png"
@@ -310,7 +315,7 @@ class Comparison(controllers.Controller):
             record['target'] = None
 
             if item['ponderation']:
-                item['ponderation'] = item['ponderation'] + '|' + "javascript:change_vote(id=%s)" % (record['id'])
+                item['ponderation'] = item['ponderation'] # + '|' + "javascript:change_vote(id=%s)" % (record['id'])
 
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)

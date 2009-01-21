@@ -268,7 +268,7 @@ TreeNode.prototype = {
                 
                 var arrow = SPAN({'class': this.hasChildren ? 'expand' : 'indent'});
                 this.element_b = arrow;
-
+                
                 arrow.onclick = MochiKit.Base.bind(function(){
                     this.toggle();
                 }, this);
@@ -280,15 +280,20 @@ TreeNode.prototype = {
                     tds.push(this.element_i);
                 }
     
-                value = A({'href': 'javascript: void(0)'}, value);
-                this.element_a = value;
+                if (arrow.className != 'indent') {
+	                value = A({'href': 'javascript: void(0)'}, value);
+    	            this.element_a = value;
+                }
+                else {
+                	value = SPAN({'style': 'color: black; cursor: normal;'}, value);
+    	            this.element_a = value;
+                }
                 
                 this.eventOnKeyDown = MochiKit.Signal.connect(value, 'onkeydown', this, this.onKeyDown);
     
                 if (record.action) {
                     MochiKit.DOM.setNodeAttribute(value, 'href', record.action);
                 } else {
-                    
                     value.onclick = MochiKit.Base.bind(function(){
                         this.toggle();
                     }, this);
@@ -301,8 +306,12 @@ TreeNode.prototype = {
                 if(record.required) {
                     MochiKit.DOM.setNodeAttribute(value, 'class', 'requiredfield');
                 }
-    
+                    
                 tds.push(value);
+                
+                //new_factor = IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right;', 'width' : 16, 'height' : 16});
+                //tds.push(new_factor);
+                
                 tds = map(function(x){return TD(null, x)}, tds);
     
                 value = TABLE({'class': 'tree-field', 'cellpadding': 0, 'cellspacing': 0}, 
@@ -312,14 +321,29 @@ TreeNode.prototype = {
             if (i > 0) {
                 
                 if (header.type == 'url' && value) {
+                	if (header.name == 'ponderation') {
+                		title = "Suggest ponderation for this factor";
+                	}
+                	else {
+                		title = "Vote for " +header.name + " for this factor."
+                	}
+                	
                 	if (value.indexOf('|') != -1) {
 	                	var vals = value.split('|');
 	                	value = vals[0];
 	                	record.action = vals[1];
-	                    value = MochiKit.DOM.A({href: 'javascript: void(0);', onclick: record.action || null}, value);
+	                    value = [MochiKit.DOM.A({title: title, 'style': 'color: black'}, value)];
+	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': record.action, 'width' : 16, 'height' : 16}));
+	                    
+                	}
+                	else if (value.indexOf('-') != -1) {
+                		var vals = value.split('-');
+	                	value = vals[0];
+	                	record.action = vals[1];
+	                	value = MochiKit.DOM.DIV({style: 'font-weight: bold'}, value);
                 	}
                 	else {
-                		value = MochiKit.DOM.A({href: 'javascript: void(0);', style: 'color: black; cursor: normal; text-decoration: none;'}, value);
+                		value = value;
                 	}    
                 }
                 
@@ -390,16 +414,29 @@ TreeNode.prototype = {
             if (i > 0) {
                 
                 if (header.type == 'url') {
-                    var a = MochiKit.DOM.getElementsByTagAndClassName('a', null, td)[0];
                     
-                    var vals = value.split('|');
-                	value = vals[0];
-                	record.action = vals[1];
-                    
-                    MochiKit.DOM.setNodeAttribute(a, 'href', value);
-                    MochiKit.DOM.setNodeAttribute(a, 'target', record.target || '_blank');
-                    
-                    a.innerHTML = MochiKit.DOM.escapeHTML(value);
+                    if (value.indexOf('|') != -1) {
+                    	var a = MochiKit.DOM.getElementsByTagAndClassName('a', null, td)[0];
+                    	
+	                	var vals = value.split('|');
+	                	value = vals[0];
+    	            	record.action = vals[1];
+        		        	
+                	    MochiKit.DOM.setNodeAttribute(a, 'href', 'javascript: void(0);');
+	                    MochiKit.DOM.setNodeAttribute(a, 'onclick', record.action);
+        	            
+            	        a.innerHTML = MochiKit.DOM.escapeHTML(value);
+	                	
+                	}
+                	else if (value.indexOf('-') != -1) {
+                		var div = MochiKit.DOM.getElementsByTagAndClassName('div', null, td)[0];
+                		
+                		var vals = value.split('-');
+	                	value = vals[0];
+	                	record.action = vals[1];
+	                	
+	                	div.innerHTML = MochiKit.DOM.escapeHTML(value);
+                	}
                 }
                 
                 if (header.type == 'email') {
