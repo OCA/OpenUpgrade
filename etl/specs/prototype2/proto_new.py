@@ -74,6 +74,18 @@ class csv_out(component):
                     fp.writerow(d)
                     yield d, 'main'
 
+class control_count(component):
+    def process(self):
+        datas = {}
+        for channel,trans in self.input_get().items():
+            for iterator in trans:
+                for d in iterator:
+                    datas.setdefault(channel, 0)
+                    datas[channel] += 1
+
+        for d in datas:
+            yield {'channel': d, 'count': datas[d]}, 'main'
+
 class sort(component):
     def __init__(self, fieldname, *args, **argv):
         super(sort, self).__init__(*args, **argv)
@@ -219,6 +231,8 @@ tran5=transition(sort1,csv_out1)
 
 in1 = csv_in('partner.csv')
 in2 = csv_in('partner2.csv')
+in3 = csv_in('partner3.csv')
+in4 = csv_in('add.csv')
 diff1 = diff(['id'])
 
 log_1 = logger_bloc(name="Original Data")
@@ -232,28 +246,44 @@ log4 = logger(name="Log Update")
 
 csv_out1 = csv_out('add.csv')
 
-transition(in1, log_1)
-transition(in2, log_2)
-
-transition(in1, diff1, channel_destination='original')
-transition(in2, diff1, channel_destination='modified')
-
-transition(diff1, log1, channel_source="same")
-transition(diff1, log3, channel_source="remove")
-transition(diff1, log2, channel_source="add")
-transition(diff1, csv_out1, channel_source="add")
-transition(diff1, log4, channel_source="update")
-
-job = job([log1,log2,log3,log4,csv_out1])
+#transition(in1, log_1)
+#transition(in2, log_2)
+#
+#transition(in1, diff1, channel_destination='original')
+#transition(in2, diff1, channel_destination='modified')
+#
+#transition(diff1, log1, channel_source="same")
+#transition(diff1, log3, channel_source="remove")
+#transition(diff1, log2, channel_source="add")
+#transition(diff1, csv_out1, channel_source="add")
+#transition(diff1, log4, channel_source="update")
+#
+#job = job([log1,log2,log3,log4,csv_out1])
 #job.run()
 
-class a(object):
-    def test(self, hello):
-        print hello
-b=a()
+transition(in3, log1)
+transition(in4, log1)
 
-import pickle
-pickle.dump(b,file('result.pickle','wb+'))
+c1 = control_count()
+transition(in3, c1)
+transition(in4, c1)
+transition(log1, c1, channel_destination='end')
+
+log10=logger(name='Count')
+transition(c1, log10)
+
+job = job([log10])
+job.run()
+
+
+
+#class a(object):
+#    def test(self, hello):
+#        print hello
+#b=a()
+#
+#import pickle
+#pickle.dump(b,file('result.pickle','wb+'))
 
 
 
