@@ -67,24 +67,25 @@ dm_order()
 
 class dm_customer(osv.osv):
     _name = "dm.customer"
-    _rec_name = "firstname"
+    _inherit = "res.partner"
+#    _rec_name = "firstname"
     _columns = {
-        'code' : fields.char('Code',size=64),
-        'language_id' : fields.many2one('res.lang','Main Language'),
+#        'code' : fields.char('Code',size=64),
+#        'language_id' : fields.many2one('res.lang','Main Language'),
         'language_ids' : fields.many2many('res.lang','dm_customer_langs','lang_id','customer_id','Other Languages'),
         'prospect_media_ids' : fields.many2many('dm.media','dm_customer_prospect_media','prospect_media_id','customer_id','Prospect for Media'),
         'client_media_ids' : fields.many2many('dm.media','dm_customer_client_media','client_media_id','customer_id','Client for Media'),
         'title' : fields.char('Title',size=32),
-        'firstname' : fields.char('First Name', size=64),
+#        'firstname' : fields.char('First Name', size=64),
         'lastname' : fields.char('Last Name', size=64),
-        'add1' : fields.char('Address1', size=64),
-        'add2' : fields.char('Address2', size=64),
-        'add3' : fields.char('Address3', size=64),
-        'add4' : fields.char('Address4', size=64),
-        'country_id' : fields.many2one('res.country','Country'),
-        'zip' : fields.char('Zip Code', size=16),
-        'zip_summary' : fields.char('Zip Summary', size=64),
-        'distribution_office' : fields.char('Distribution Office', size=64),
+#        'add1' : fields.char('Address1', size=64),
+#        'add2' : fields.char('Address2', size=64),
+#        'add3' : fields.char('Address3', size=64),
+#        'add4' : fields.char('Address4', size=64),
+#        'country_id' : fields.many2one('res.country','Country'),
+#        'zip' : fields.char('Zip Code', size=16),
+#        'zip_summary' : fields.char('Zip Summary', size=64),
+#        'distribution_office' : fields.char('Distribution Office', size=64),
         'decoy_address' : fields.boolean('Decoy Address', help='A decoy address is an address used to identify unleagal uses of a customers file'),
         'decoy_owner' : fields.many2one('res.partner','Decoy Address Owner', help='The partner this decoy address belongs to'),
         'decoy_external_ref' : fields.char('External Reference', size=64, help='The reference of the decoy address for the owner'),
