@@ -21,7 +21,7 @@
 ##############################################################################
 """ ETL Process.
 
-    The module provides process of ETL.   
+    The module provides process of ETL.
 
 """
 
@@ -30,7 +30,7 @@ class component(object):
        Base class of ETL Component.
     """
     is_end = False
-    def __init__(self,*args, **argv):        
+    def __init__(self,*args, **argv):
         self.trans_in = []
         self.trans_out = []
         self.is_output = False
@@ -38,7 +38,7 @@ class component(object):
         self.generator = None
 
     def generator_get(self, transition):
-        """ Get generator list of transition            
+        """ Get generator list of transition
         """
         if self.generator:
             return self.generator
@@ -46,16 +46,16 @@ class component(object):
         return self.generator
 
     def channel_get(self, trans=None):
-        """ Get channel list of transition            
+        """ Get channel list of transition
         """
-        self.data.setdefault(trans, [])        
+        self.data.setdefault(trans, [])
         gen = self.generator_get(trans) or []
         while True:
             if self.data[trans]:
                 yield self.data[trans].pop(0)
                 continue
             elif self.data[trans] is None:
-                raise StopIteration            
+                raise StopIteration
             data, chan = gen.next()
             if data is None:
                 raise StopIteration
@@ -65,13 +65,13 @@ class component(object):
                     self.data[t2].append(data)
 
     def process(self):
-        """ process method of ETL component            
+        """ process method of ETL component
         """
         raise 'Should be override'
-        
+
 
     def input_get(self):
-        """ Get input iterator of ETL component            
+        """ Get input iterator of ETL component
         """
         result = {}
         for channel,trans in self.trans_in:
@@ -84,13 +84,13 @@ class transition(object):
     """
        Base class of ETL transition.
     """
-    def __init__(self, source, destination,type='data_transition', status='open', channel_source='main', channel_destination='main'):
-        self.type=type
+    def __init__(self, source, destination, channel_source='main', channel_destination='main', type='data'):
+        self.type = type
         self.source = source
         self.destination = destination
         self.channel_source = channel_source
         self.channel_destination = channel_destination
-        self.destination.trans_in.append((channel_destination,self)) 
+        self.destination.trans_in.append((channel_destination,self))
         self.source.trans_out.append((channel_source,self))
 
 class job(object):
