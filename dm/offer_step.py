@@ -174,11 +174,19 @@ class dm_offer_step(osv.osv):
 
 dm_offer_step()
 
+class dm_offer_step_transition_trigger(osv.osv):
+    _name = "dm.offer.step.transition.trigger"
+    _columns = {
+        'name' : fields.char('Trigger Name',size=64,required=True),
+        'code' : fields.char('Code' ,size=64,required=True),
+    }
+dm_offer_step_transition_trigger()
+
 class dm_offer_step_transition(osv.osv):
     _name = "dm.offer.step.transition"
     _rec_name = 'condition'
     _columns = {
-        'condition' : fields.selection([('automatic','Automatic'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition',required=True),
+        'condition' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
         'delay' : fields.integer('Offer Delay' ,required=True),
         'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
@@ -189,7 +197,7 @@ class dm_offer_step_transition(osv.osv):
         if context.has_key('type'):
 #            if not context['step_id']:
 #                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
-            data['condition']='automatic'
+#            data['condition']='automatic'
             data['delay']='0'
             data[context['type']] = context['step_id']
         return data
