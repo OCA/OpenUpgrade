@@ -4,16 +4,16 @@
     
     
     <!--
-	Définition des taux de TVA et des Tax Codes
-	Version du fichier : 12-04-2008
+        Définition des taux de TVA et des Tax Codes
+        Version du fichier : 12-04-2008
       -->
 
     <!--
-	Tax Code Configuration (version générique)
+        Tax Code Configuration (version générique)
       -->
-	
-	<record id="vat_code_chart_root" model="account.tax.code.template">
-		<field name="name">Plan de Taxes France</field>
+        
+        <record id="vat_code_chart_root" model="account.tax.code.template">
+                <field name="name">Plan de Taxes France</field>
     </record>
         
     <record model="account.tax.code.template" id="tax_col_ht">
@@ -362,7 +362,7 @@
             <field name="name">France PCMN</field>
             <field name="account_root_id" ref="l10n_fr_pcg.pcg_0"/>
             <field name="tax_code_root_id" ref="vat_code_chart_root"/>
-          	<field name="bank_account_view_id" ref="l10n_fr_pcg.fr_pcg_cash"/>
+                <field name="bank_account_view_id" ref="l10n_fr_pcg.fr_pcg_cash"/>
             <field name="property_account_receivable" ref="l10n_fr_pcg.fr_pcg_recv"/>
             <field name="property_account_payable" ref="l10n_fr_pcg.fr_pcg_pay"/>
             <field name="property_account_expense_categ" ref="l10n_fr_pcg.fr_pcg_expense"/>
@@ -370,11 +370,11 @@
         </record>
        
       <!--
-	TVA
+        TVA
       -->
 
     <record model="account.tax.template" id="tva_normale">
-      <field name="chart_template_id" ref="l10n_fr_pcg_chart_template"/>		    	
+      <field name="chart_template_id" ref="l10n_fr_pcg_chart_template"/>                        
       
       <field name="name">TVA collectée (vente) 19,6%</field>
       <field name="amount" eval="0.196"/>
@@ -570,7 +570,7 @@
     </record>
 
     <record model="account.tax.template" id="tva_intra_specifique">
-      <field name="chart_template_id" ref="l10n_fr_pcg_chart_template"/> 	
+      <field name="chart_template_id" ref="l10n_fr_pcg_chart_template"/>        
       
       <field name="name">TVA due intracommunautaire 8,5%</field>
       <field name="amount" eval="-0.085"/>
@@ -710,7 +710,7 @@
       <field name="ref_base_sign" eval="-1"/>
     </record>
 
-	<record id="pcg_601" model="account.account.template">
+        <record id="pcg_601" model="account.account.template">
       <field name="tax_ids" eval="[(6,0,[ref('l10n_fr_pcg.tva_acq_normale')])]"/>
     </record>
 

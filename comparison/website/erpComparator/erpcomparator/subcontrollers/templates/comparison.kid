@@ -5,8 +5,6 @@
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Comparison</title>
     
-    <script type="text/javascript" src="/static/javascript/comparison.js"></script>
-    
 </head>
 <body>
     <div class="mattblacktabs">
@@ -43,6 +41,7 @@
 	    	</li>
 	  	</ul>
 	</div><br/>
+	
 	<div id="selection">
 		<table>
 			<tr>
@@ -67,6 +66,7 @@
 		
 		<button type='button' onclick="getRecords()">Compare</button>
 	</div><br/>
+	
 	<div id="open_comp">
 		<span id="comparison_tree"/>
 		<script type="text/javascript">
@@ -79,7 +79,6 @@
         	comparison_tree.render();
         </script>
 	</div>
-	<div style="text-align: right; color: #993300;"><i>Note: ( ) value shows number of vote(s).</i></div>
 </body>
 </html>
 
