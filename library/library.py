@@ -46,11 +46,11 @@ class library_rack(osv.osv):
         'name': fields.char('Name', size=64, required=True),
         'code': fields.char('Code', size=16,),
         'active': fields.boolean('Active'),
-        }
+    }
 
     _defaults = {
         'active': lambda *a: True
-        }
+    }
 
 library_rack()
 
@@ -61,7 +61,7 @@ class library_collection(osv.osv):
     _columns = {
         'name': fields.char('Name', size=64, required=True),
         'code': fields.char('Code', size=16,),
-        }
+    }
 
 library_collection()
 
