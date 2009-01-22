@@ -24,7 +24,7 @@
     "version" : "1.0",
     "depends" : ["account", "base"],
     "author" : "Tiny",
-    "description": """Modules to make analytic account field required in sale.invoice.line""",
+    "description": """Module to make analytic account field required in sale.invoice.line.""",
     "website" : "http://tinyerp.com/module_account.html",
     "category" : "Generic Modules/Accounting",
     "init_xml" : [
@@ -33,7 +33,7 @@
     ],
     "active": False,
     "installable": True,
-    "certificate": "624575070597517661"
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

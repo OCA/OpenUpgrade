@@ -24,13 +24,16 @@
     "version":"1.0.1",
     "author":"Open ERP",
     "category":"Account CODA",
+    "description":"""Module provides functionality to import
+    bank statements from .csv file.
+    Import coda file wizard is used to import bank statements.""",
     "depends":["base", "account","account_report","base_iban"],
     "demo_xml":["coda_demo.xml"],
     "init_xml":[],
     "update_xml" : ["coda_wizard.xml","coda_view.xml"],
     "active":False,
     "installable":True,
-    "certificate": "1235572413961877293"
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

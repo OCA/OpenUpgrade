@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-	<menuitem name="Manager" id="menu_auction_reporting_manager" parent="auction.menu_auction_reporting" groups="base.group_admin"/>
+	<menuitem name="Manager" id="menu_auction_reporting_manager" parent="auction.auction_report_menu"/>
 
 =============================
 Auction adjudication
 ==============================
 
-	<record model="ir.ui.view" id="view_report_auction_adjudication_tree">
+	<record model="ir.ui.view" id="view_report_auction_adjudication_tree1">
 		<field name="name">Auction adjudication</field>
-		<field name="model">report.auction.adjudication</field>
+		<field name="model">report.auction.adjudication1</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Total adjudication">
@@ -17,28 +17,27 @@ Auction adjudication
 				<field name="auction1" select="1"/>
 				<field name="auction2" select="1"/>
 				<field name="adj_total" select="1"/>
-				<state name="state" select="1"/>
-
+<!--				<state name="state" select="1"/>-->
 			</tree>
 		</field>
 	</record>
 
-	<record model="ir.ui.view" id="view_report_auction_adjudication_form">
+	<record model="ir.ui.view" id="view_report_auction_adjudication_form1">
 		<field name="name">Auction adjudication</field>
-		<field name="model">report.auction.adjudication</field>
+		<field name="model">report.auction.adjudication1</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Customer/Supplier">
 				<field name="name" select="1"/>
 				<field name="adj_total"  select="1"/>
-				<field name="state"  select="1"/>
+<!--				<field name="state"  select="1"/>-->
 			</form>
 		</field>
 	</record>
 
-	<record model="ir.ui.view" id="view_report_auction_adjudication_graph">
-		<field name="name">report.auction.adjudication.graph</field>
-		<field name="model">report.auction.adjudication</field>
+	<record model="ir.ui.view" id="view_report_auction_adjudication_graph1">
+		<field name="name">report.auction.adjudication.graph1</field>
+		<field name="model">report.auction.adjudication1</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="Total adjudication" type="bar">
@@ -50,20 +49,20 @@ Auction adjudication
 	</record>
 
 
-	<record model="ir.actions.act_window" id="action_report_auction_adjudication_tree">
+	<record model="ir.actions.act_window" id="action_report_auction_adjudication_tree1">
 		<field name="res_model">report.auction.adjudication</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<!--<field name="domain">[('paid','Paid'),('invoiced','Invoiced')]</field>-->
 	</record>
 	
-	<menuitem name="Auction Adjudication" id="menu_auction_reporting_manager_adjustification" parent="menu_auction_reporting_manager" action="action_report_auction_adjudication_tree"/>
+	<menuitem name="Auction Adjudication" id="menu_auction_reporting_manager_adjustification" parent="menu_auction_reporting_manager" action="action_report_auction_adjudication_tree1"/>
 	
-	<menuitem name="Member" id="menu_auction_reporting_member" parent="auction.menu_auction_reporting"/>
+	<menuitem name="Member" id="menu_auction_reporting_member" parent="auction.auction_report_menu"/>
 	
-	<menuitem name="Auction Adjudication" id="menu_report_auction_adjudication_tree1" parent="menu_auction_reporting_member" action="action_report_auction_adjudication_tree"/>
+	<menuitem name="Auction Adjudication" id="menu_report_auction_adjudication_tree1" parent="menu_auction_reporting_member" action="action_report_auction_adjudication_tree1"/>
 	
-	<menuitem name="Auction Adjudication" id="menu_report_auction_adjudication_tree_member" parent="menu_auction_reporting_member" action="action_report_auction_adjudication_tree"/>
+	<menuitem name="Auction Adjudication" id="menu_report_auction_adjudication_tree_member" parent="menu_auction_reporting_member" action="action_report_auction_adjudication_tree1"/>
 
 =============================
 Customer/Supplier
@@ -77,10 +76,10 @@ Customer/Supplier
 			<tree string="Customer/Supplier">
 				<field name="name" select="1"/>
 				<field name="no_of_buyer" select="1"/>
-
 			</tree>
 		</field>
 	</record>
+	
 	<record model="ir.ui.view" id="view_per_seller_customer_form">
 		<field name="name">Seller/customer</field>
 		<field name="model">report.per.seller.customer</field>
@@ -89,7 +88,6 @@ Customer/Supplier
 			<form string="Customer/Supplier">
 				<field name="name" select="1"/>
 				<field name="partner_id" select="1"/>
-
 			</form>
 		</field>
 	</record>
@@ -104,15 +102,14 @@ Customer/Supplier
 				<field name="no_of_buyer"  />
 			</graph>
 		</field>
-
 	</record>
-
 
 	<record model="ir.actions.act_window" id="action_per_seller_customer_tree">
 		<field name="res_model">report.per.seller.customer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 	</record>
+	
 	<menuitem name="Customer Per Seller" id="menu_auction_reporting_manager_customer" parent="menu_auction_reporting_manager" action="action_per_seller_customer_tree"/>	
 
 =============================
@@ -133,6 +130,7 @@ My Latest 10 Deposit
 			</form>
 		</field>
 	</record>
+	
 	<record model="ir.ui.view" id="view_latest_deposit_tree">
 		<field name="name">Latest deposit</field>
 		<field name="model">report.latest.deposit</field>
@@ -147,7 +145,6 @@ My Latest 10 Deposit
 			</tree>
 		</field>
 	</record>
-
 
 	<record model="ir.actions.act_window" id="action_report_latest_doposit_tree">
 		<field name="res_model">report.latest.deposit</field>
@@ -178,8 +175,7 @@ My Latest 10 Objects
 		</field>
 	</record>
 
-
-		<record model="ir.ui.view" id="view_latest_objects_form">
+	<record model="ir.ui.view" id="view_latest_objects_form">
 		<field name="name">Latest objects</field>
 		<field name="model">report.latest.objects</field>
 		<field name="type">form</field>
@@ -208,9 +204,9 @@ My Latest 10 Objects
 Objects per Day
 ==============================
 
-	<record model="ir.ui.view" id="view_report_auction_object_date_tree">
+	<record model="ir.ui.view" id="view_report_auction_object_date_tree1">
 		<field name="name">Object date</field>
-		<field name="model">report.auction.object.date</field>
+		<field name="model">report.auction.object.date1</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Objects per Day">
@@ -220,9 +216,9 @@ Objects per Day
 		</field>
 	</record>
 
-	<record model="ir.ui.view" id="view_report_auction_object_date_form">
+	<record model="ir.ui.view" id="view_report_auction_object_date_form1">
 		<field name="name">Object date</field>
-		<field name="model">report.auction.object.date</field>
+		<field name="model">report.auction.object.date1</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Customer/Supplier">
@@ -234,10 +230,9 @@ Objects per Day
 		</field>
 	</record>
 
-
-	<record model="ir.ui.view" id="view_report_auction_object_date_graph">
-		<field name="name">report.auction.object.date.graph</field>
-		<field name="model">report.auction.object.date</field>
+	<record model="ir.ui.view" id="view_report_auction_object_date_graph1">
+		<field name="name">report.auction.object.date.graph1</field>
+		<field name="model">report.auction.object.date1</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="Object By day"  type="bar">
@@ -245,26 +240,25 @@ Objects per Day
 				<field name="obj_num" operator="+"/>
 			</graph>
 		</field>
-
 	</record>
 
-
-	<record model="ir.actions.act_window" id="action_report_auction_object_date_tree">
-		<field name="res_model">report.auction.object.date</field>
+	<record model="ir.actions.act_window" id="action_report_auction_object_date_tree1">
+		<field name="res_model">report.auction.object.date1</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="domain">[('state','=','draft')]</field>
 	</record>
-	<menuitem name="Object Per Day" id="menu_report_auction_object_date_tree" parent="menu_auction_reporting_member" action="action_report_auction_object_date_tree"/>
-	<menuitem name="Object Per Day" id="menu_report_auction_object_date_tree1" parent="menu_auction_reporting_manager" action="action_report_auction_object_date_tree"/>
+	
+	<menuitem name="Object Per Day" id="menu_report_auction_object_date_tree" parent="menu_auction_reporting_member" action="action_report_auction_object_date_tree1"/>
+	<menuitem name="Object Per Day" id="menu_report_auction_object_date_tree1" parent="menu_auction_reporting_manager" action="action_report_auction_object_date_tree1"/>
 	
 =============================
 estimation.adj.category
 ==============================
 
-	<record model="ir.ui.view" id="view_report_auction_estimation_adj_category_tree">
-		<field name="name">report.auction.estimation.adj.category.tree</field>
-		<field name="model">report.auction.estimation.adj.category</field>
+	<record model="ir.ui.view" id="view_report_auction_estimation_adj_category_tree1">
+		<field name="name">report.auction.estimation.adj.category.tree1</field>
+		<field name="model">report.auction.estimation.adj.category1</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="estimation/adjudication">
@@ -277,9 +271,9 @@ estimation.adj.category
 		</field>
 	</record>
 
-	<record model="ir.ui.view" id="view_report_auction_estimation_adj_category_graph">
-		<field name="name">report.auction.estimation.adj.category.graph</field>
-		<field name="model">report.auction.estimation.adj.category</field>
+	<record model="ir.ui.view" id="view_report_auction_estimation_adj_category_graph1">
+		<field name="name">report.auction.estimation.adj.category.graph1</field>
+		<field name="model">report.auction.estimation.adj.category1</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="estimation/adjudication" orientation="vertical" type="bar">
@@ -289,12 +283,10 @@ estimation.adj.category
 				<field name="adj_total" operator="+"/>
 			</graph>
 		</field>
-
 	</record>
 
-
-	<record model="ir.actions.act_window" id="action_report_auction_estimation_adj_category_tree">
-		<field name="res_model">report.auction.estimation.adj.category</field>
+	<record model="ir.actions.act_window" id="action_report_auction_estimation_adj_category_tree1">
+		<field name="res_model">report.auction.estimation.adj.category1</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="domain">[('date','=',time.strftime('%Y-%m-01'))]</field>
@@ -302,11 +294,11 @@ estimation.adj.category
 	
 	<menuitem name="This Month" id="menu_report_auction_this_month" parent="menu_auction_reporting_member"/>
 	<menuitem name="Estimation" id="menu_report_auction_this_month_estimation" parent="menu_report_auction_this_month"/>
-	<menuitem name="Adjudication" id="menu_report_auction_this_month_adjustication" parent="menu_report_auction_this_month_estimation" action="action_report_auction_estimation_adj_category_tree"/>
+	<menuitem name="Adjudication" id="menu_report_auction_this_month_adjustication" parent="menu_report_auction_this_month_estimation" action="action_report_auction_estimation_adj_category_tree1"/>
 
 	<menuitem name="This Month" id="menu_report_auction_manager_this" parent="menu_auction_reporting_manager"/>
 	<menuitem name="Estimation" id="menu_report_auction_manager_this_estimation" parent="menu_report_auction_manager_this"/>
-	<menuitem name="Adjudication" id="menu_report_auction_manager_this_adjustication" parent="menu_report_auction_manager_this_estimation" action="action_report_auction_estimation_adj_category_tree"/>
+	<menuitem name="Adjudication" id="menu_report_auction_manager_this_adjustication" parent="menu_report_auction_manager_this_estimation" action="action_report_auction_estimation_adj_category_tree1"/>
 
 =============================
 sign in sign out report by user
@@ -314,7 +306,7 @@ sign in sign out report by user
 
 	<record model="ir.ui.view" id="view_report_auction_sign_in_out_tree">
 		<field name="name">report.auction.user.pointing.tree</field>
-		<field name="model">report.auction.user.pointing</field>
+		<field name="model">report.auction.user.pointing1</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Summary pointing by user ">
@@ -326,31 +318,29 @@ sign in sign out report by user
 
 	<record model="ir.ui.view" id="view_report_auction_sign_in_out_graph">
 		<field name="name">report.auction.user.pointing.graph</field>
-		<field name="model">report.auction.user.pointing</field>
+		<field name="model">report.auction.user.pointing1</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
-
 			<graph string="Summary pointing by user " orientation="vertical" type="bar">
 				<field name="user_id" select="1"/>
 				<field name="total_timesheet" />
 			</graph>
-
 		</field>
-
 	</record>
 
-
 	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_member_tree">
-		<field name="res_model">report.auction.user.pointing</field>
+		<field name="res_model">report.auction.user.pointing1</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
 		<field name="domain">[('user_id','=',uid)]</field>
 	</record>
+	
 	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_manager_tree">
-		<field name="res_model">report.auction.user.pointing</field>
+		<field name="res_model">report.auction.user.pointing1</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
 	</record>
+	
 	<menuitem name="Summury of Sign_in Sign_out" id="menu_report_auction_sign_in_out_member_tree" parent="menu_auction_reporting_member" action="action_report_auction_sign_in_out_member_tree"/>
 	<menuitem name="Summury of Sign_in Sign_out" id="menu_report_auction_sign_in_out_manager_tree" parent="menu_auction_reporting_manager" action="action_report_auction_sign_in_out_manager_tree"/>
 

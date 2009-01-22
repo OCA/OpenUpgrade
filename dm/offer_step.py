@@ -112,7 +112,8 @@ class dm_offer_step(osv.osv):
         'document_ids' : fields.one2many('dm.offer.document', 'step_id', 'DTP Documents'),
         'flow_start' : fields.boolean('Flow Start'),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
-        'item_ids' : fields.one2many('dm.offer.step.item', 'offer_step_id', 'Items'),
+#        'item_ids' : fields.one2many('dm.offer.step.item', 'offer_step_id', 'Items'),
+        'item_ids' : fields.many2many('product.product','dm_offer_step_product_rel','product_id','offer_step_id','Items'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',readonly=True),
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
@@ -174,11 +175,19 @@ class dm_offer_step(osv.osv):
 
 dm_offer_step()
 
+class dm_offer_step_transition_trigger(osv.osv):
+    _name = "dm.offer.step.transition.trigger"
+    _columns = {
+        'name' : fields.char('Trigger Name',size=64,required=True),
+        'code' : fields.char('Code' ,size=64,required=True),
+    }
+dm_offer_step_transition_trigger()
+
 class dm_offer_step_transition(osv.osv):
     _name = "dm.offer.step.transition"
     _rec_name = 'condition'
     _columns = {
-        'condition' : fields.selection([('automatic','Automatic'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition',required=True),
+        'condition' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
         'delay' : fields.integer('Offer Delay' ,required=True),
         'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
@@ -189,7 +198,7 @@ class dm_offer_step_transition(osv.osv):
         if context.has_key('type'):
 #            if not context['step_id']:
 #                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
-            data['condition']='automatic'
+#            data['condition']='automatic'
             data['delay']='0'
             data[context['type']] = context['step_id']
         return data

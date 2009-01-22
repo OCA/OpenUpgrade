@@ -25,7 +25,7 @@
     "depends" : ["account", "sale", "purchase"],
     "author" : "Tiny",
     "description": """Module to change defination of the name field of invoice
-    using this module you can change the invoice numbet when it is in draft state.
+    using this module you can change the invoice number when it is in draft state.
     """,
     "website" : "http://tinyerp.com/module_account.html",
     "category" : "Generic Modules/Accounting",
@@ -37,7 +37,7 @@
     ],
     "active": False,
     "installable": True,
-    "certificate": "1072639787809567213"
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

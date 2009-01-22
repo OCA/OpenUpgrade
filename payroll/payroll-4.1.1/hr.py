@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -106,8 +106,8 @@ class hr_employee_position(osv.osv):
 hr_employee_position()
 
 class hr_employee(osv.osv):
-        def _get_basic_salary(self, cr, uid, ids, prop, unknow_none, unknow_dict):
-                id_set=",".join(map(str,ids))
+    def _get_basic_salary(self, cr, uid, ids, prop, unknow_none, unknow_dict):
+        id_set=",".join(map(str,ids))
         cr.execute("SELECT s.id,COALESCE(SUM(s.basic),0)::decimal(16,2) AS basic FROM hr_employee s WHERE s.id IN ("+id_set+") GROUP BY s.id ")
         res=dict(cr.fetchall())
         return res
@@ -121,24 +121,24 @@ class hr_employee(osv.osv):
                         res[id] = basic.get(id,0.0) + allowance.get(id,0.0)
         return res
     def _get_net_deduction(self, cr, uid, ids, prop, unknow_none, unknow_dict):
-                id_set=",".join(map(str,ids))
+        id_set=",".join(map(str,ids))
         cr.execute("SELECT s.id,COALESCE(SUM(l.value),0)::decimal(16,2) AS n_deduction FROM hr_employee s LEFT OUTER JOIN hr_employee_salary_deduction l ON (s.id=l.deduction_id) WHERE s.id IN ("+id_set+") GROUP BY s.id ")
         res=dict(cr.fetchall())
         return res
     def _get_net_salary(self, cr, uid, ids, prop, unknow_none, unknow_dict):
-                gross = self._get_gross_salary(cr, uid, ids, prop, unknow_none, unknow_dict)
-                net_deduct = self._get_net_deduction(cr, uid, ids, prop, unknow_none, unknow_dict)
+        gross = self._get_gross_salary(cr, uid, ids, prop, unknow_none, unknow_dict)
+        net_deduct = self._get_net_deduction(cr, uid, ids, prop, unknow_none, unknow_dict)
         res = {}
         for id in ids:
                         res[id] = gross.get(id,0.0) - net_deduct.get(id,0.0)
         return res
 
     def _get_employee_department(self, cr, uid, ids, prop, unknow_none, unknow_dict):
-                id_set=",".join(map(str,ids))
+        id_set=",".join(map(str,ids))
         cr.execute("SELECT s.id,COALESCE(SUM(l.value),0)::decimal(16,2) AS n_deduction FROM hr_employee s LEFT OUTER JOIN hr_employee_salary_deduction l ON (s.id=l.deduction_id) WHERE s.id IN ("+id_set+") GROUP BY s.id ")
         res=dict(cr.fetchall())
         return res
-        
+
     _name = "hr.employee"
     _description = "Employee"
     _columns = {
@@ -250,7 +250,7 @@ class hr_employee(osv.osv):
             for emp_pay in emp_pays:
                 self.compute_value(cr, uid, emp_pay, emp_payelements, payelements)
         return True
-    
+
 hr_employee()
 
 class hr_timesheet(osv.osv):
@@ -298,7 +298,7 @@ class hr_attendance(osv.osv):
         'name' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         'employee_id' : _employee_get,
     }
-    
+
     def _altern_si_so(self, cr, uid, ids):
         for id in ids:
             sql = '''
@@ -315,7 +315,7 @@ class hr_attendance(osv.osv):
             if not ((len(atts)==1 and atts[0][0] == 'sign_in') or (atts[0][0] != atts[1][0] and atts[0][1] != atts[1][1])):
                 return False
         return True
-    
+
     _constraints = [(_altern_si_so, 'Error: Sign in (resp. Sign out) must follow Sign out (resp. Sign in)', ['action'])]
     _order = 'name desc'
 hr_attendance()

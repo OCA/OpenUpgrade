@@ -5,8 +5,6 @@
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Comparison</title>
     
-    <script type="text/javascript" src="/static/javascript/comparison.js"></script>
-    
 </head>
 <body>
     <div class="mattblacktabs">
@@ -22,17 +20,12 @@
 	    		</a>
 	    	</li>
 	    	<li>
-	    		<a href="#" onclick="window.location.href='/documents'">
-	    			<span>Documents</span>
-	    		</a>
-	    	</li>
-	    	<li>
 	    		<a href="#" onclick="window.location.href='/about'">
 	    			<span>About</span>
 	    		</a>
 	    	</li>
 	    	<li>
-	    		<a href="#" onclick="window.location.href='/about'">
+	    		<a href="#" onclick="window.location.href='/graph'">
 	    			<span>Graph</span>
 	    		</a>
 	    	</li>
@@ -41,8 +34,14 @@
 	    			<span>Login</span>
 	    		</a>
 	    	</li>
+	    	<li>
+	    		<a href="#" onclick="window.location.href='/login/logout'">
+	    			<span>Logout</span>
+	    		</a>
+	    	</li>
 	  	</ul>
 	</div><br/>
+	
 	<div id="selection">
 		<table>
 			<tr>
@@ -67,17 +66,18 @@
 		
 		<button type='button' onclick="getRecords()">Compare</button>
 	</div><br/>
+	
 	<div id="open_comp">
 		<span id="comparison_tree"/>
 		<script type="text/javascript">
         	var comparison_tree = new TreeGrid('comparison_tree');
         	
+        	//comparison_tree.options.onbuttonclick = on_button_click;
         	comparison_tree.setHeaders(${ustr(headers)});
         	comparison_tree.setRecords('${url}', ${ustr(url_params)});
         	
         	comparison_tree.render();
         </script>
-		
 	</div>
 </body>
 </html>

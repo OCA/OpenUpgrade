@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
+
     <menuitem id="menu_finance_config_Assets" name="Assets" parent="account.menu_finance_configuration"/>
     <record model="ir.ui.view" id="view_account_asset_category_form">
         <field name="name">account.asset.category.form</field>
@@ -71,7 +72,8 @@
                     <field name="property_ids" colspan="4" nolabel="1" mode="form,tree">
                         <form string="Depreciation methods">
                             <field name="name" select="1" colspan="4"/>
-                            <notebook tabpos="up" colspan="4">
+                            <separator string="Methods" colspan="4"/>
+                            <notebook>
                             <page string="Depreciation">
                                 <separator string="Accounts information" colspan="4"/>
                                 <field name="account_asset_id"/>
@@ -269,7 +271,6 @@
         parent="menu_action_account_asset_asset_list"
         id="menu_action_account_asset_asset_list_normal"
         action="action_account_asset_asset_list_normal"/>
-
 
 
 

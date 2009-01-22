@@ -1,24 +1,80 @@
-<?xml version="1.0" ?>
-<openerp>
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>	
 	<!-- Ecommerce Shop 0 -->
 <data>
-
-		<record id="ecommerce_payment_tinysprl0" model="ecommerce.payment">
-			<field eval="&quot;&quot;&quot;washington&quot;&quot;&quot;" name="city"/>
-			<field eval="&quot;&quot;&quot;Tiny SPRL&quot;&quot;&quot;" name="name"/>
-			<field eval="&quot;&quot;&quot;3490913&quot;&quot;&quot;" name="zip"/>
-			<field eval="&quot;&quot;&quot;street2&quot;&quot;&quot;" name="street2"/>
-			<field name="country_id" ref="base.us"/>
-			<field eval="&quot;&quot;&quot;oppo Townhall&quot;&quot;&quot;" name="street"/>
-			<field name="state_id" ref="base.us-co"/>
-			<field eval="&quot;&quot;&quot;mansur_1219385380_biz@gmail.com&quot;&quot;&quot;" name="biz_account"/>
-			<field eval="&quot;&quot;&quot;http://192.168.0.102:8080/eshop/cancel_msg&quot;&quot;&quot;" name="cancel_url"/>
-			<field eval="&quot;&quot;&quot;http://192.168.0.102:8080/eshop/get_data&quot;&quot;&quot;" name="return_url"/>
+		
+		<!-- Credit Card Demo Data -->
+		
+		<record id="ecommerce_creditcard_mastercard0" model="ecommerce.creditcard">
+			<field name="code">MC</field>
+			<field name="name">Master Card</field>
+		</record>
+	
+		<record id="ecommerce_creditcard_visacard0" model="ecommerce.creditcard">
+			<field name="code">Visa</field>
+			<field name="name">Visa Card</field>
 		</record>
 
+		<record id="ecommerce_creditcard_discoverycard0" model="ecommerce.creditcard">
+			<field name="code">Disc</field>
+			<field name="name">Discovery Card</field>
+		</record>
+	
+		<record id="ecommerce_creditcard_americanexpresscard0" model="ecommerce.creditcard">
+			<field name="code">AmEx</field>
+			<field name="name">American Express Card</field>
+		</record>
+
+		<record id="ecommerce_creditcard_dinerscard0" model="ecommerce.creditcard">
+			<field name="code">Diners</field>
+			<field name="name">Diners Card</field>
+		</record>
+		
+		<!-- Ecommerce Payment Methods -->
+			
+		<record id="ecommerce_method" model="payment.method">
+			<field name="name">cheque</field>
+			<field name="shortcut">cheque</field>
+		</record> 
+		
+		<record id="ecommerce_method1" model="payment.method">
+			<field name="name">paypal</field>
+			<field name="shortcut">paypal</field>
+		</record>
+		 
+		<record id="ecommerce_method2" model="payment.method">
+			<field name="name">creditcard</field>
+			<field name="shortcut">creditcard</field>
+		</record>
+		
+		<record id="ecommerce_method3" model="payment.method">
+			<field name="name">banktrans</field>
+			<field name="shortcut">banwt</field>
+		</record> 
+		
+		
+		<!--Payment Methods Data -->
+		
+		<record id="ecommerce_payment" model="ecommerce.payment">
+			<field name="city">Bruxelles</field>
+			<field name="chequepay_to">Tinysprl Pvt ltd.</field>
+			<field name="zip">1030</field>
+			<field name="street2">Rue des Palais 44</field>
+			<field name="country_id" ref="base.us"/>
+			<field name="street">bte 33</field>
+			<field name="state_id" ref="base.us-co"/>
+			<field name="name">cheque</field>
+		</record> 
+
+		<record id="ecommerce_payment1" model="ecommerce.payment">
+			<field name="biz_account">mansur_1219385380_biz@gmail.com</field>
+			<field name="cancel_url">http://192.168.0.102:8080/eshop/cancel_msg</field>
+			<field name="return_url"> http://192.168.0.102:8080/eshop/get_data</field>	
+			<field name="name">paypal</field>
+		</record>
+		
 		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
 			<field eval="[(6,0,[])]" name="delivery_ids"/>
-			<field name="chequepay_to" ref="ecommerce_payment_tinysprl0"/>
 			<field eval="&quot;&quot;&quot;tinyerp&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="language_ids"/>
 			<field name="company_id" ref="base.main_company"/>
@@ -44,11 +100,11 @@
 		</record>
 
 		<record id="product_category_accesories" model="product.category">
-			<field eval="&quot;Acessories&quot;" name="name"/>
+			<field name="name">Acessories</field>
 		</record>
 
 		<record id="product_category_peripherals" model="product.category">
-			<field eval="&quot;Computer Peripherals&quot;" name="name"/>
+			<field name="name">Computer Peripherals</field>
 		</record>
 
 		<record id="product_category_ram" model="product.category">
@@ -69,69 +125,68 @@
 		<!-- Ecommerce Category with parent child relation -->
 
   		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
-  			<field name="chequepay_to" ref="ecommerce_payment_tinysprl0"/>
-			<field name="shop_id" ref="sale.shop"/>
+  			<field name="shop_id" ref="sale.shop"/>
 			<field name="company_id" ref="base.main_company"/>
 		</record>
 
 		<record id="ecommerce_category_tinycomputers0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
-			<field eval="&quot;Tiny Computers&quot;" name="name"/>
+			<field name="name">Tiny Computers</field>
 		</record>
 
 		<record id="ecommerce_category_basiccomputers0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="product.product_category_pc"/>
-			<field eval="&quot;Basic Computers&quot;" name="name"/>
+			<field name="name">Basic Computers</field>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
 
 		<record id="ecommerce_category_newlaptop0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_laptop0"/>
-			<field eval="&quot;Laptop&quot;" name="name"/>
+			<field name="name">Laptop</field>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
 
 		<record id="ecommerce_category_compaq0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_compaq"/>
-			<field eval="&quot;Compaq&quot;" name="name"/>
+			<field name="name">Compaq</field>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_newlaptop0"/>
 		</record>
 
 		<record id="ecommerce_category_acer0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_acer"/>
-			<field eval="&quot;Acer&quot;" name="name"/>
+			<field name="name">Acer</field>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_newlaptop0"/>
 		</record>
 
 		<record id="ecommerce_category_accesories0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_accesories"/>
-			<field eval="&quot;All Acessories&quot;" name="name"/>
+			<field name="name">All Acessories</field>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
 
 		<record id="ecommerce_category_ram1" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_ram"/>
-			<field eval="&quot;RAM &quot;" name="name"/>
+			<field name="name">RAM</field>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_accesories0"/>
 		</record>
 
 		<record id="ecommerce_category_hdisk" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_hdd"/>
-			<field eval="&quot;Hard Disk &quot;" name="name"/>
+			<field name="name">Hard Disk</field>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_accesories0"/>
 		</record>
 
 		<record id="ecommerce_category_peripheral" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="product.product_category_10"/>
-			<field eval="&quot;Computer Peripherals&quot;" name="name"/>
+			<field name="name">Computer Peripherals</field>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
 
@@ -549,6 +604,11 @@
 			<field name="country_id" ref="base.au"/>
 			<field eval="&quot;Sydny&quot;" name="name"/>
 		</record>
+		<record model="res.country.state" id="cn-sag">
+			<field name="name">Shanghai</field>
+			<field name="code">shn</field>
+			<field name="country_id" model="res.country" ref="base.cn"/>
+		</record>
 
 		<!-- GUEST PARTNER CATEGORY -->
 		<record model="res.partner.category" id="guest">
@@ -558,171 +618,174 @@
 	<!-- Ecommerce Partner 1 -->
 
 		<record id="ecommerce_partner_name1" model="ecommerce.partner">
-			<field eval="&quot;en_US&quot;" name="lang"/>
-			<field eval="&quot;vaibhav&quot;" name="last_name"/>
-			<field eval="&quot;Vaibhav darji&quot;" name="name"/>
+			<field name="lang">en_US</field>
+			<field name="last_name">Fedric</field>
+			<field name="name">Fedric Johnsans</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
-			<field eval="&quot;eTiny&quot;" name="company_name"/>
+			<field name="company_name">Apociojdn ltd</field>
 			<field eval="1" name="active"/>
 		</record>
 		<record id="ecommerce_partner_address_0" model="ecommerce.partner.address">
-			<field eval="&quot;vaibhav&quot;" name="username"/>
-			<field eval="&quot;Ahmedabad&quot;" name="city"/>
-			<field eval="&quot;25350039&quot;" name="fax"/>
-			<field eval="&quot;380007&quot;" name="zip"/>
-			<field eval="&quot;989218291&quot;" name="mobile"/>
-			<field name="country_id" ref="base.in"/>
-			<field eval="&quot;25350039&quot;" name="phone"/>
-			<field eval="&quot;vadaj&quot;" name="street"/>
-			<field name="state_id" ref="in-gu"/>
-			<field name="partner_id" ref="ecommerce_partner_name1"/>
-			<field eval="&quot;vda@tiny.com&quot;" name="email"/>
+			<field name="username">Thomas Passot</field>
+			<field name="city">Louvain-la-Neuve</field>
+			<field name="fax">4312345</field>
+			<field name="zip">1348</field>
+			<field name="mobile">8986555555</field>
+			<field name="country_id" ref="base.fr"/>
+			<field name="state_id" ref="fr-bo"/>
+			<field name="phone">(+32).10.45.17.73</field>
+			<field name="street">Rue de l'Angelique, 1</field>
+			<field name="partner_id" ref="ecommerce_partner_name1"></field>
+			<field name="email">info@mediapole.net</field>
 		</record>
 
 	<!-- Ecommerce Partner 2 -->
 
 		<record id="ecommerce_partner_name2" model="ecommerce.partner">
-			<field eval="&quot;en_US&quot;" name="lang"/>
-			<field eval="&quot;sana&quot;" name="last_name"/>
-			<field eval="&quot;Sananaz Mansuri&quot;" name="name"/>
+			<field name="lang">en_US</field>
+			<field  name="last_name">Pathric</field>
+			<field  name="name">Laser Vinnie</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
-			<field eval="&quot;Tinyindia&quot;" name="company_name"/>
+			<field name="company_name">DHL Express</field>
 			<field eval="1" name="active"/>
 		</record>
 		<record id="ecommerce_partner_address_1" model="ecommerce.partner.address">
-			<field eval="&quot;sana&quot;" name="username"/>
-			<field eval="&quot;Ahmedabad&quot;" name="city"/>
-			<field eval="&quot;23300323&quot;" name="fax"/>
-			<field eval="&quot;380001&quot;" name="zip"/>
-			<field eval="&quot;989891828&quot;" name="mobile"/>
-			<field eval="&quot;bahai center&quot;" name="street2"/>
-			<field name="country_id" ref="base.in"/>
-			<field eval="&quot;38983493&quot;" name="phone"/>
-			<field eval="&quot;2/bsatyam soci&quot;" name="street"/>
-			<field name="state_id" ref="in-gu"/>
+			<field name="username">Laurent Jacot</field>
+			<field  name="city">Avignon CEDEX 09</field>
+			<field  name="fax">435345465</field>
+			<field name="zip">84911</field>
+			<field name="mobile">9898353333</field>
+			<field  name="street2">85 rue du traite de Rome</field>
+			<field name="country_id" ref="base.fr"/>
+			<field  name="phone">(+33)4.32.74.10.57</field>
+			<field name="street">85 rue du traite de Rome</field>
+			<field name="state_id" ref="fr-pa"/>
 			<field name="partner_id" ref="ecommerce_partner_name2"/>
-			<field eval="&quot;default&quot;" name="type"/>
-			<field eval="&quot;sma@tiny.com&quot;" name="email"/>
+			<field name="type">default</field>
+			<field name="email">contact@tecsas.fr</field>
 		</record>
+		
 		<record id="ecommerce_partner_address_22" model="ecommerce.partner.address">
-			<field eval="&quot;sarita&quot;" name="username"/>
-			<field eval="&quot;Jamuua&quot;" name="city"/>
-			<field eval="&quot;89832737&quot;" name="fax"/>
-			<field eval="&quot;380004&quot;" name="zip"/>
-			<field eval="&quot;99945266&quot;" name="mobile"/>
+			<field name="username">James Laith</field>
+			<field name="city">Champs sur Marne</field>
+			<field name="fax">43453456</field>
+			<field name="zip">77420</field>
+			<field name="mobile">74783847655</field>
 			<field name="partner_id" ref="ecommerce_partner_name2"/>
-			<field eval="&quot;sg road&quot;" name="street2"/>
+			<field name="street2">opp town hall</field>
 			<field name="country_id" ref="base.au"/>
-			<field eval="&quot;78992399&quot;" name="phone"/>
-			<field eval="&quot;crystal flate&quot;" name="street"/>
 			<field name="state_id" ref="res_country_state_sydny0"/>
-			<field eval="&quot;invoice&quot;" name="type"/>
-			<field eval="&quot;sari@yahoo.co.in&quot;" name="email"/>
+			<field name="phone">+33 1 64 61 04 01</field>
+			<field name="street">12 rue Albert Einstein</field>
+			<field name="type">invoice</field>
+			<field name="email">info@axelor.com</field>
 		</record>
 
 	<!-- Ecommerce Partner 3 -->
 
 		<record id="ecommerce_partner_name3" model="ecommerce.partner">
-			<field eval="&quot;en_US&quot;" name="lang"/>
-			<field eval="&quot;shanta&quot;" name="last_name"/>
-			<field eval="&quot;Shanta kabra&quot;" name="name"/>
+			<field name="lang">en_US</field>
+			<field name="last_name">Passot</field>
+			<field name="name">Thomas Passot</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
-			<field eval="&quot;Tinyindia&quot;" name="company_name"/>
+			<field name="company_name">Service Company</field>
 			<field eval="1" name="active"/>
 		</record>
 
 		<record id="ecommerce_partner_address_2" model="ecommerce.partner.address">
-			<field eval="&quot;shanta&quot;" name="username"/>
-			<field eval="&quot;Ahmedabad&quot;" name="city"/>
-			<field eval="&quot;255034387&quot;" name="fax"/>
-			<field eval="&quot;380009&quot;" name="zip"/>
-			<field eval="&quot;98989832732&quot;" name="mobile"/>
-			<field name="country_id" ref="base.in"/>
-			<field eval="&quot;27676237263&quot;" name="phone"/>
-			<field eval="&quot;bapunagar&quot;" name="street"/>
-			<field name="state_id" ref="res_country_state_bhavnagar0"/>
+			<field  name="username">Magazin BML 1</field>
+			<field  name="city">Taiwan</field>
+			<field  name="fax">4343566</field>
+			<field  name="zip">23410</field>
+			<field  name="mobile">9787867565</field>
+			<field name="country_id" ref="base.cn"/>
+			<field  name="phone">54+56357658</field>
+			<field  name="street">31 Hong Kong street</field>
+			<field name="state_id" ref="cn-sag"/>
 			<field name="partner_id" ref="ecommerce_partner_name3"/>
-			<field eval="&quot;default&quot;" name="type"/>
-			<field eval="&quot;ksh@tiny.com&quot;" name="email"/>
+			<field  name="type">default</field>
+			<field name="email">contact@syleam.fr</field>
 		</record>
-
+		
 	<!-- Ecommerce Partner 4 -->
 
 		<record id="ecommerce_partner_name4" model="ecommerce.partner">
-			<field eval="&quot;en_US&quot;" name="lang"/>
-			<field eval="&quot;Rangwala&quot;" name="last_name"/>
-			<field eval="&quot;Jiten&quot;" name="name"/>
+			<field name="lang">en_US</field>
+			<field name="last_name">jacot</field>
+			<field name="name">Laurent Oaurent</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
+			<field name="company_name">jacobandtare</field>
 			<field eval="1" name="active"/>
 		</record>
 		<record id="ecommerce_partner_address_11" model="ecommerce.partner.address">
-			<field eval="&quot;Jitu&quot;" name="username"/>
-			<field eval="&quot;Ahmedabad&quot;" name="city"/>
-			<field eval="&quot;380005&quot;" name="zip"/>
-			<field eval="&quot;9992013888&quot;" name="mobile"/>
+			<field name="username">Karine Lesbrouffe</field>
+			<field name="city">Liege</field>
+			<field name="zip">6985</field>
+			<field name="mobile">2214555467</field>
 			<field name="partner_id" ref="ecommerce_partner_name4"/>
-			<field eval="&quot;Mithakhal&quot;" name="street2"/>
-			<field name="country_id" ref="base.in"/>
-			<field eval="&quot;2559094930&quot;" name="phone"/>
-			<field eval="&quot;rangwala flats&quot;" name="street"/>
-			<field name="state_id" ref="ecommerce.in-gu"/>
-			<field eval="&quot;invoice&quot;" name="type"/>
+			<field name="street2">2 Impasse de la Soif</field>
+			<field name="country_id" ref="base.be"/>
+			<field name="phone">4785552</field>
+			<field name="street">Nr la dimass</field>
+			<field name="state_id" ref="fr-re"/>
+			<field name="type">invoice</field>
 		</record>
+	
 		<record id="ecommerce_partner_address_12" model="ecommerce.partner.address">
-			<field eval="&quot;rangwala&quot;" name="username"/>
-			<field eval="&quot;Ahmedabad&quot;" name="city"/>
-			<field eval="&quot;380002&quot;" name="zip"/>
-			<field eval="&quot;9920999388&quot;" name="mobile"/>
+			<field name="username">Arthur Grosbonnet</field>
+			<field name="city">Paris</field>
+			<field name="zip">75016</field>
+			<field name="mobile">432326466</field>
 			<field name="partner_id" ref="ecommerce_partner_name4"/>
-			<field eval="&quot;near Appi&quot;" name="street2"/>
-			<field name="country_id" ref="base.in"/>
-			<field eval="&quot;277878723&quot;" name="phone"/>
-			<field eval="&quot;2/b Wall street&quot;" name="street"/>
-			<field name="state_id" ref="ecommerce.in-gu"/>
-			<field eval="&quot;delivery&quot;" name="type"/>
-			<field eval="&quot;jitu@gmail.com&quot;" name="email"/>
+			<field name="street2">1 rue Rockfeller</field>
+			<field name="country_id" ref="base.be"/>
+			<field name="phone">1234534546</field>
+			<field name="street">Rockfeller</field>
+			<field name="state_id" ref="fr-st"/>
+			<field name="type">delivery</field>
+			<field name="email">info@mediapole.net</field>
 		</record>
+	
 		<record id="ecommerce_partner_address_13" model="ecommerce.partner.address">
-			<field eval="&quot;Mr Mohan&quot;" name="username"/>
-			<field eval="&quot;Bhavnagar&quot;" name="city"/>
-			<field eval="&quot;380007&quot;" name="zip"/>
-			<field eval="&quot;9898988788&quot;" name="mobile"/>
+			<field name="username">Wong</field>
+			<field name="city">Hong Kong</field>
+			<field name="zip">23540</field>
+			<field name="mobile">23435777777</field>
 			<field name="partner_id" ref="ecommerce_partner_name4"/>
-			<field name="country_id" ref="base.in"/>
-			<field eval="&quot;3700001&quot;" name="phone"/>
-			<field eval="&quot;skl bhavan&quot;" name="street"/>
-			<field name="state_id" ref="ecommerce.in-gu"/>
-			<field eval="&quot;default&quot;" name="type"/>
-			<field eval="&quot;mohan@belgium.com&quot;" name="email"/>
+			<field name="country_id" ref="base.cn"/>
+			<field name="phone"></field>
+			<field name="street">56 Beijing street</field>
+			<field name="state_id" ref="cn-sag"/>
+			<field name="type">default</field>
+			<field name="email">wongmrt@wisp.au</field>
 		</record>
 
 	<!-- Sale Order 1-->
 
 		<record id="ecommerce_saleorder_so0" model="ecommerce.saleorder">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
-			<field eval="&quot;SO/005&quot;" name="name"/>
+			<field name="name">SO/005</field>
 			<field name="epartner_shipping_id" ref="ecommerce.ecommerce_partner_address_1"/>
 			<field name="epartner_add_id" ref="ecommerce.ecommerce_partner_address_1"/>
 			<field name="epartner_id" ref="ecommerce.ecommerce_partner_name2"/>
 			<field name="pricelist_id" ref="purchase.list0"/>
-			<field eval="&quot;2008-05-31&quot;" name="date_order"/>
 			<field name="epartner_invoice_id" ref="ecommerce.ecommerce_partner_address_22"/>
 		</record>
 		<record id="ecommerce_order_line_pc0" model="ecommerce.order.line">
 			<field name="product_id" ref="product.product_product_pc2"/>
 			<field name="order_id" ref="ecommerce_saleorder_so0"/>
 			<field name="product_uom_id" ref="product.product_uom_unit"/>
-			<field eval="50000.0" name="price_unit"/>
+			<field name="price_unit">50000.0</field>
 			<field eval="3.0" name="product_qty"/>
-			<field eval="&quot;PC &quot;" name="name"/>
+			<field name="name">PC</field>
 		</record>
 		<record id="ecommerce_order_line_mouse0" model="ecommerce.order.line">
 			<field name="product_id" ref="product.product_product_25"/>
 			<field name="order_id" ref="ecommerce_saleorder_so0"/>
 			<field name="product_uom_id" ref="product.product_uom_unit"/>
-			<field eval="10000.0" name="price_unit"/>
-			<field eval="70.0" name="product_qty"/>
-			<field eval="&quot;Mouse&quot;" name="name"/>
+			<field name="price_unit">10000.0</field>
+			<field name="product_qty">70.0</field>
+			<field name="name">Mouse</field>
 		</record>
 
 		<workflow action="signal_call" model="ecommerce.saleorder" ref="ecommerce_saleorder_so0"/>
@@ -731,21 +794,20 @@
 
 		<record id="ecommerce_saleorder_so1" model="ecommerce.saleorder">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
-			<field eval="&quot;SO/007&quot;" name="name"/>
+			<field name="name">SO/007</field>
 			<field name="epartner_shipping_id" ref="ecommerce.ecommerce_partner_address_12"/>
 			<field name="epartner_add_id" ref="ecommerce.ecommerce_partner_address_13"/>
 			<field name="epartner_id" ref="ecommerce.ecommerce_partner_name4"/>
 			<field name="pricelist_id" ref="purchase.list0"/>
-			<field eval="&quot;2008-05-31&quot;" name="date_order"/>
 			<field name="epartner_invoice_id" ref="ecommerce.ecommerce_partner_address_11"/>
 		</record>
 		<record id="ecommerce_order_line_processor0" model="ecommerce.order.line">
 			<field name="product_id" ref="product.product_product_cpu_gen"/>
 			<field name="order_id" ref="ecommerce_saleorder_so1"/>
 			<field name="product_uom_id" ref="product.product_uom_unit"/>
-			<field eval="12000.0" name="price_unit"/>
-			<field eval="16.0" name="product_qty"/>
-			<field eval="&quot;Processor&quot;" name="name"/>
+			<field name="price_unit">12000.0</field>
+			<field name="product_qty">16.0</field>
+			<field name="name">Processor</field>
 		</record>
 
 		<workflow action="signal_call" model="ecommerce.saleorder" ref="ecommerce_saleorder_so1"/>
@@ -753,23 +815,38 @@
 	<!--Currency Rate-->
 
 		<record id="res_currency_aud0" model="res.currency">
-			<field eval="&quot;au&quot;" name="code"/>
-			<field eval="&quot;AUD&quot;" name="name"/>
-			<field eval="1.0" name="rounding"/>
+			<field name="code">au</field>
+			<field name="name">AUD</field>
+			<field name="rounding">1.0</field>
 			<field eval="1" name="active"/>
 			<field eval="1" name="accuracy"/>
 		</record>
+		
 		<record id="res_currency_rate_0" model="res.currency.rate">
 			<field name="currency_id" ref="res_currency_aud0"/>
-			<field eval="35.0" name="rate"/>
-			<field eval="&quot;2008-05-31&quot;" name="name"/>
+			<field name="rate">35.0</field>
 		</record>
-
 
 		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
 			<field eval="[(6,0,[ref('base.EUR'),ref('ecommerce.res_currency_aud0'),ref('base.EUR'),ref('base.CAD'),ref('base.USD')])]" name="currency_ids"/>
 			<field eval="[(6,0,[ref('base.lang_en')])]" name="language_ids"/>
 			<field eval="[(6,0,[ref('delivery.delivery_grid')])]" name="delivery_ids"/>
+		</record>
+		
+		<!-- Search Parameters -->
+		<record id="ecommerce_search_productname0" model="ecommerce.search">
+			<field name="code">name</field>
+			<field name="name">Product Name</field>
+		</record>
+
+		<record id="ecommerce_search_productcolor0" model="ecommerce.search">
+			<field name="code">variants</field>
+			<field name="name">Product Color</field>
+		</record>
+	
+		<record id="ecommerce_search_productprice0" model="ecommerce.search">
+			<field name="code">list_price</field>
+			<field name="name">Product Price</field>
 		</record>
 
 </data>

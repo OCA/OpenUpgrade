@@ -6,6 +6,13 @@ import pooler
 
 class stock_move(osv.osv):
     _inherit = "stock.move"
+    
+    def copy(self, cr, uid, id, default=None, context={}):
+        if not default:
+            default = {}
+        default['new_prodlot_code'] = False
+        return super(stock_move, self).copy(cr, uid, id, default, context=context)
+    
      
     def _get_prodlot_code(self, cr, uid, ids, field_name, arg, context={}):
         res = {}

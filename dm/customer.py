@@ -67,24 +67,25 @@ dm_order()
 
 class dm_customer(osv.osv):
     _name = "dm.customer"
-    _rec_name = "firstname"
+    _inherit = "res.partner"
+#    _rec_name = "firstname"
     _columns = {
-        'code' : fields.char('Code',size=64),
-        'language_id' : fields.many2one('res.lang','Main Language'),
+#        'code' : fields.char('Code',size=64),
+#        'language_id' : fields.many2one('res.lang','Main Language'),
         'language_ids' : fields.many2many('res.lang','dm_customer_langs','lang_id','customer_id','Other Languages'),
         'prospect_media_ids' : fields.many2many('dm.media','dm_customer_prospect_media','prospect_media_id','customer_id','Prospect for Media'),
         'client_media_ids' : fields.many2many('dm.media','dm_customer_client_media','client_media_id','customer_id','Client for Media'),
         'title' : fields.char('Title',size=32),
-        'firstname' : fields.char('First Name', size=64),
+#        'firstname' : fields.char('First Name', size=64),
         'lastname' : fields.char('Last Name', size=64),
-        'add1' : fields.char('Address1', size=64),
-        'add2' : fields.char('Address2', size=64),
-        'add3' : fields.char('Address3', size=64),
-        'add4' : fields.char('Address4', size=64),
-        'country_id' : fields.many2one('res.country','Country'),
-        'zip' : fields.char('Zip Code', size=16),
-        'zip_summary' : fields.char('Zip Summary', size=64),
-        'distribution_office' : fields.char('Distribution Office', size=64),
+#        'add1' : fields.char('Address1', size=64),
+#        'add2' : fields.char('Address2', size=64),
+#        'add3' : fields.char('Address3', size=64),
+#        'add4' : fields.char('Address4', size=64),
+#        'country_id' : fields.many2one('res.country','Country'),
+#        'zip' : fields.char('Zip Code', size=16),
+#        'zip_summary' : fields.char('Zip Summary', size=64),
+#        'distribution_office' : fields.char('Distribution Office', size=64),
         'decoy_address' : fields.boolean('Decoy Address', help='A decoy address is an address used to identify unleagal uses of a customers file'),
         'decoy_owner' : fields.many2one('res.partner','Decoy Address Owner', help='The partner this decoy address belongs to'),
         'decoy_external_ref' : fields.char('External Reference', size=64, help='The reference of the decoy address for the owner'),
@@ -228,6 +229,198 @@ class dm_workitem(osv.osv):
 
 dm_workitem()
 """
+
+class dm_customer_segmentation(osv.osv):
+    _name = "dm.customer.segmentation"
+    _description = "Segmentation"
+
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=32, required=True),
+        'notes' : fields.text('Description'),
+        'sql_query' : fields.text('SQL Query'),
+        'customer_text_criteria_ids' : fields.one2many('dm.customer.text_criteria', 'segmentation_id', 'Customers Textual Criteria'),
+        'customer_numeric_criteria_ids' : fields.one2many('dm.customer.numeric_criteria', 'segmentation_id', 'Customers Numeric Criteria'),
+        'customer_boolean_criteria_ids' : fields.one2many('dm.customer.boolean_criteria', 'segmentation_id', 'Customers Boolean Criteria'),
+        'customer_date_criteria_ids' : fields.one2many('dm.customer.date_criteria', 'segmentation_id', 'Customers Date Criteria'),
+        'order_text_criteria_ids' : fields.one2many('dm.customer.order.text_criteria', 'segmentation_id', 'Customers Order Textual Criteria'),
+        'order_numeric_criteria_ids' : fields.one2many('dm.customer.order.numeric_criteria', 'segmentation_id', 'Customers Order Numeric Criteria'),
+        'order_boolean_criteria_ids' : fields.one2many('dm.customer.order.boolean_criteria', 'segmentation_id', 'Customers Order Boolean Criteria'),
+        'order_date_criteria_ids' : fields.one2many('dm.customer.order.date_criteria', 'segmentation_id', 'Customers Order Date Criteria'),
+    }
+
+    def set_customer_criteria(self, cr, uid, id, context={}):
+        criteria=[]
+        browse_id = self.browse(cr, uid, id)
+        if browse_id.customer_text_criteria_ids:
+            for i in browse_id.customer_text_criteria_ids:
+                criteria.append("%s %s '%s'"%(i.field.name, i.operator, "%"+i.value+"%"))
+        if browse_id.customer_numeric_criteria_ids:
+            for i in browse_id.customer_numeric_criteria_ids:
+                criteria.append("%s %s %f"%(i.field.name, i.operator, i.value))
+        if browse_id.customer_boolean_criteria_ids:
+            for i in browse_id.customer_boolean_criteria_ids:
+                criteria.append("%s %s %s"%(i.field.name, i.operator, i.value))
+        if browse_id.customer_date_criteria_ids:
+            for i in browse_id.customer_date_criteria_ids:
+                criteria.append("%s %s '%s'"%(i.field.name, i.operator, i.value))
+        
+        if criteria:
+            sql_query = ("""select id \nfrom dm_customer \nwhere %s""" % (' and '.join(criteria))).replace('isnot','is not')
+        else:
+            sql_query = """select id \nfrom dm_customer"""
+        return super(dm_customer_segmentation,self).write(cr, uid, id, {'sql_query':sql_query})
+
+    def create(self,cr,uid,vals,context={}):
+        id = super(dm_customer_segmentation,self).create(cr,uid,vals,context)
+        self.set_customer_criteria(cr, uid, id)
+        return id
+
+    def write(self, cr, uid, ids, vals, context=None):
+        id = super(dm_customer_segmentation,self).write(cr, uid, ids, vals, context)
+        for i in ids:
+            self.set_customer_criteria(cr, uid, i)
+        return id
+
+dm_customer_segmentation()
+
+
+TEXT_OPERATORS = [
+    ('like','like'),
+    ('ilike','ilike'),
+]
+
+NUMERIC_OPERATORS = [
+    ('=','equals'),
+    ('<','smaller then'),
+    ('>','bigger then'),
+]
+
+BOOL_OPERATORS = [
+    ('is','is'),
+    ('isnot','is not'),
+]
+
+DATE_OPERATORS = [
+    ('=','equals'),
+    ('<','before'),
+    ('>','after'),
+]
+
+class dm_customer_text_criteria(osv.osv):
+    _name = "dm.customer.text_criteria"
+    _description = "Customer Segmentation Textual Criteria"
+    _rec_name = "segmentation_id"
+
+    _columns = {
+        'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+        'field' : fields.many2one('ir.model.fields','Customers Field',
+               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+               '!',('model_id','like','dm.customers_list'),
+               '!',('model_id','like','dm.customer.plugin'),
+               ('ttype','like','char')],
+               context={'model':'dm.customer'}),
+        'operator' : fields.selection(TEXT_OPERATORS, 'Operator', size=32),
+        'value' : fields.char('Value', size=128),
+    }
+dm_customer_text_criteria()
+
+class dm_customer_numeric_criteria(osv.osv):
+    _name = "dm.customer.numeric_criteria"
+    _description = "Customer Segmentation Numeric Criteria"
+    _rec_name = "segmentation_id"
+
+    _columns = {
+        'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+        'field' : fields.many2one('ir.model.fields','Customers Field',
+               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+               ('ttype','like','integer'),
+               ('ttype','like','float'),
+               '!',('model_id','like','dm.customers_list'),
+               '!',('model_id','like','dm.customer.plugin')],
+               context={'model':'dm.customer'}),
+        'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
+        'value' : fields.float('Value', digits=(16,2)),
+    }
+dm_customer_numeric_criteria()
+
+class dm_customer_boolean_criteria(osv.osv):
+    _name = "dm.customer.boolean_criteria"
+    _description = "Customer Segmentation Boolean Criteria"
+    _rec_name = "segmentation_id"
+
+    _columns = {
+        'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+        'field' : fields.many2one('ir.model.fields','Customers Field',
+               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+               '!',('model_id','like','dm.customers_list'),
+               '!',('model_id','like','dm.customer.plugin'),
+               ('ttype','like','boolean')],
+               context={'model':'dm.customer'}),
+        'operator' : fields.selection(BOOL_OPERATORS, 'Operator', size=32),
+        'value' : fields.selection([('true','True'),('false','False')],'Value'),
+    }
+dm_customer_boolean_criteria()
+
+class dm_customer_date_criteria(osv.osv):
+    _name = "dm.customer.date_criteria"
+    _description = "Customer Segmentation Date Criteria"
+    _rec_name = "segmentation_id"
+
+    _columns = {
+        'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+        'field' : fields.many2one('ir.model.fields','Customers Field',
+               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+               ('ttype','like','date'),
+               '!',('model_id','like','dm.customers_list'),
+               '!',('model_id','like','dm.customer.plugin')],
+               context={'model':'dm.customer'}),
+        'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),
+        'from_value' : fields.datetime('From'),
+        'to_value' : fields.datetime('To'),
+    }
+dm_customer_date_criteria()
+
+class dm_customer_order_text_criteria(osv.osv):
+    _name = "dm.customer.order.text_criteria"
+    _description = "Customer Order Segmentation Textual Criteria"
+    _rec_name = "segmentation_id"
+
+    _columns = {
+        'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+        'field' : fields.many2one('ir.model.fields','Customers Field',
+               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),'!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
+        'operator' : fields.selection(TEXT_OPERATORS, 'Operator', size=32),
+        'value' : fields.char('Value', size=128),
+    }
+dm_customer_order_text_criteria()
+
+class dm_customer_order_numeric_criteria(osv.osv):
+    _name = "dm.customer.order.numeric_criteria"
+    _description = "Customer Order Segmentation Numeric Criteria"
+    _rec_name = "segmentation_id"
+
+    _columns = {
+        'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+        'field' : fields.many2one('ir.model.fields','Customers Field'),
+        'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
+        'value' : fields.float('Value', digits=(16,2)),
+    }
+dm_customer_order_numeric_criteria()
+
+class dm_customer_order_date_criteria(osv.osv):
+    _name = "dm.customer.order.date_criteria"
+    _description = "Customer Order Segmentation Date Criteria"
+    _rec_name = "segmentation_id"
+
+    _columns = {
+        'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+        'field' : fields.many2one('ir.model.fields','Customers Field'),
+        'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),
+        'from_value' : fields.datetime('From'),
+        'to_value' : fields.datetime('To'),
+    }
+dm_customer_order_date_criteria()
 
 class dm_offer_history(osv.osv):
     _name = "dm.offer.history"
