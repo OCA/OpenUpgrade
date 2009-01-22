@@ -1,0 +1,91 @@
+Phase I : the framework
+-----------------------
+
+Develop 4 very robust components:
+	. csv.in, csv.out, sort, logger (send to a connector, not a screen)
+	. subjob and event/trigger system
+
+Implement 1 input connectors:
+	. Local File
+
+Implement 2 output connectors:
+	. Local File
+	. Stdout
+
+Component must be robusts:
+	. manage errors
+	. manage encodings types
+	. send signals
+	. support different formats (separator, delimiters, ...)
+
+Automatic generation of documentation
+	. On whole sotware
+	. Good display of components
+
+Manage all internal data as a uniform style:
+	. unicode for strings
+	. date object for datas and datetime
+	. float, ...
+
+Schema validation on components (optionnal)
+
+We must be able to save a job in a file
+	if possible, use pickle ?
+    otherwise, we should implement a __rep__ on each component
+
+We must have a function to instanciate a job from a saved file.
+
+Components must have basic statistics functions:
+	Records managed by channel
+	Statistics
+	Latest record
+	statistics are sent to a statistic channel at end of processing or at pause
+
+Do some automated tests in a directory with a Makefile
+* Test1: csv.in -> logger
+* Test2: csv.in -> sort -> logger -> csv.out
+* Test3: 2 subjobs, the second one is triggered after the first one
+
+* Manage the interfaces of components: input/output channel names.
+  If a transition as a source or destination channel that do not fit
+  with the component, it should raise an exception
+
+* Implement __str__ on jobs, components and transitions to have a way to print
+  a job on the screen.
+
+* Integrate profiler in the job code: cProfile
+
+* Change so that etl.py can be used as a python library or as a standalone executable
+  application by doing a if __name__=="__main__". Write command line arguments:
+    --job=job.pickle (load a job and process it)
+    --profile        Do and print a profiling in the job process
+    --list-components
+    --list-connectors
+    --list transitions
+
+* do a unittest system and implement unit tests on components file (using if
+   __name__=='__main__'). Example, a unit test of a component should be defined
+   like this (this is just a proposition, may be there are existing test framework
+   or we can do better):
+   if __name__=='__main__':
+       c = sort(...)
+       test = unit_test(c)
+       test.input('main', [{...},{...}])
+       oldt = None
+       for t in test.output('main'):
+          if oldt and oldt['name']>t['name']:
+            raise unit_test('Validation Error')
+          oldt = t
+       return True
+
+* We need a system to log data opperations and consolidate this logs in the job
+execution.
+
+* We should implement the job execution functions: run, step(1), pause, stop,
+  restart, ...
+
+* We should be able to copy() a job (have two instances of the same job)
+
+* We should be able to desactivate some transitions (status on transitions)
+
+

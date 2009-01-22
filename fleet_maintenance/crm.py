@@ -10,8 +10,9 @@ class crm_case(osv.osv):
         'incident_ref': fields.char('Incident Ref', size=64, required=True, select=1),
         'external_ref': fields.char('Ticket Code', size=64, select=1),
         'fleet_id': fields.many2one('stock.location', 'Fleet', required = False, select = 1),
+        'parent_fleet_id': fields.related('fleet_id', 'location_id', type='many2one', relation='stock.location', string='Fleet', store=True),
         'is_fleet_expired': fields.related('fleet_id', 'is_expired', type='boolean', string='Is Fleet Expired?'),
-        'picking_id': fields.many2one('stock.picking.incident', 'Repair Picking', required = False, select = True),
+        'picking_id': fields.many2one('stock.picking', 'Repair Picking', required = False, select = True),
         'incoming_move_id': fields.many2one('stock.move', 'Incoming Move', required = False, select = 1),
         'outgoing_move_id': fields.many2one('stock.move', 'Outgoing Move', required = False, select = True),
         'in_supplier_move_id': fields.many2one('stock.move', 'Return To Supplier Move', required = False, select = True),
@@ -31,7 +32,7 @@ class crm_case(osv.osv):
         'date': default_incident_date,
         }
     
-    #def copy(self, cr, uid, id, default=None,context={}):
+    #def copy(self, cr, uid, id, default=None,context={}):#TODO
     
     
     def onchange_prodlot_id(self, cr, uid, ids, prodlot_id):

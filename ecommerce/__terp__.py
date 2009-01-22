@@ -28,14 +28,16 @@
     "category" : "Generic Modules/E-Commerce Shop",
     "init_xml" : [],
     "demo_xml" : ["ecommerce_demo_data.xml"],
-    "description": """
-    """,
+    "description": """eCommerce Users can order on the website, orders are automatically imported in TinyERP.
+                      You can configure products, categories of products, language, currency, carrier, payment
+                      and also configure row,column,images.""",
+
     "update_xml" : [
                     "tools/ecom_product_view.xml",
                     "basic_info_view.xml",
+                    "partner/partner_new_view.xml",
                     "catalog/catalog_view.xml",
                     "tools/tools_wizard.xml",
-                    "partner/partner_new_view.xml",
                     "sale_order/sale_order_view.xml",
                     "sale_order/sale_order_sequence.xml",
                     "report_shipping.xml", 

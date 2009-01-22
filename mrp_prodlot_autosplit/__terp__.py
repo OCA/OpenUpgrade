@@ -30,7 +30,12 @@
     3) automagically splits up picking list movements into one movement per product instance
     4) turns incoming pickings into an editable grid where you can directly type the code
     of a new production number/code to create and associate to the move (it also checks it
-    doesn't exist yet)""",
+    doesn't exist yet)
+    
+    Notice: this module doesn't split product nomemclatures in MRP since they don't use pickings
+    A good workaround is too define several lines of individual products in nomemclatures
+    and produce 1 by 1 (if possible) to make it easier to encore unique prodlot in production orders too.  
+    """,
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["product_view.xml", "stock_view.xml"],

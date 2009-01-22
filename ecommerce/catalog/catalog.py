@@ -32,7 +32,7 @@ class product_product(osv.osv):
     _inherit = "product.product"
     _columns = {
                 'product_logo': fields.binary('Product Logo'),
-                'shop_ids': fields.many2many('ecommerce.shop','ecommerce_new_product_rel','ecommerce_product','product','Web shop'),
+                'url': fields.char('Image URL', size=56, help="Add Product Image URL.")
 }
 product_product()
 
@@ -43,6 +43,38 @@ class specail_offer(osv.osv):
 	}
 
 specail_offer()
+
+class ecommerce_search(osv.osv):
+        _name = "ecommerce.search"
+        _description = "search parameters"
+        _columns = {
+                'name': fields.char('Search Parameter Name', size=56),
+                'code': fields.char('Search Parameter Code', size=28)
+                    }
+        
+        def searchProduct_ids(self, cr, uid, search_code):
+            prd_ids =[]
+            final_list = []
+            obj = self.pool.get('product.product')
+          
+            for i in search_code.items():
+                args = []
+                if(i[1] != ''):
+                    if(i[0] == 'name'):
+                        final_list = (i[0],'ilike',str(i[1]))
+                        args.append(final_list)
+                        ids = obj.search(cr, uid, args)
+                        prd_ids.extend(ids)
+                       
+                    else:
+                        final_list = (i[0],'=',str(i[1]))
+                        args.append(final_list)
+                        ids = obj.search(cr, uid, args)
+                        prd_ids.extend(ids)
+       
+            return prd_ids
+       
+ecommerce_search()
 
 class reviews(osv.osv):
     _name="ecommerce.product.reviews"

@@ -26,13 +26,16 @@
     "version":"1.0",
     "author":"Tiny",
     "category":"Account CODA",
+    "description":"""Module provides functionality to import
+    bank statements from .csv file.
+    Import coda file wizard is used to import bank statements.""",
     "depends":["base", "account","account_report","base_iban"],
     "demo_xml":["coda_demo.xml"],
     "init_xml":[],
     "update_xml" : ["security/ir.model.access.csv","coda_wizard.xml","coda_view.xml"],
     "active":False,
     "installable":True,
-    "certificate": "556686472245994261"
+
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

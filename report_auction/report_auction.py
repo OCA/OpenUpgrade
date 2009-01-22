@@ -23,8 +23,8 @@ from osv import fields,osv
 from mx import DateTime
 
 
-class report_auction_adjudication(osv.osv):
-    _name = "report.auction.adjudication"
+class report_auction_adjudication1(osv.osv):
+    _name = "report.auction.adjudication1"
     _description = "report_auction_adjudication"
     _auto = False
     def _adjudication_get(self, cr, uid, ids, prop, unknow_none,unknow_dict):
@@ -43,11 +43,11 @@ class report_auction_adjudication(osv.osv):
                 'buyer_costs': fields.many2many('account.tax', 'auction_buyer_taxes_rel', 'auction_id', 'tax_id', 'Buyer Costs'),
                 'seller_costs': fields.many2many('account.tax', 'auction_seller_taxes_rel', 'auction_id', 'tax_id', 'Seller Costs'),
                 'adj_total': fields.float('Total Adjudication',select=True),
-                'state': fields.selection((('draft','Draft'),('close','Closed')),'State', select=True),
+#                'state': fields.selection((('draft','Draft'),('close','Closed')),'State', select=True),
     }
     def init(self, cr):
         cr.execute("""
-            create or replace view report_auction_adjudication as (
+            create or replace view report_auction_adjudication1 as (
                 select
                     l.id as id,
                     l.name as name,
@@ -62,7 +62,7 @@ class report_auction_adjudication(osv.osv):
 
             )
         """)
-report_auction_adjudication()
+report_auction_adjudication1()
 
 class report_per_seller_customer(osv.osv):
         _name = "report.per.seller.customer"
@@ -71,6 +71,7 @@ class report_per_seller_customer(osv.osv):
         _columns = {
                     'name': fields.char('Seller', size=64, required=True,select=True),
                     'no_of_buyer': fields.integer('Buyer'),
+                    'partner_id' : fields.many2one('res.partner', 'Partner')
         }
         def init(self, cr):
             cr.execute("""
@@ -168,8 +169,8 @@ report_latest_objects()
 def _type_get(self, cr, uid,ids):
     cr.execute('select name, name from auction_lot_category order by name')
     return cr.fetchall()
-class report_auction_object_date(osv.osv):
-    _name = "report.auction.object.date"
+class report_auction_object_date1(osv.osv):
+    _name = "report.auction.object.date1"
     _description = "Objects per day"
     _auto = False
     _columns = {
@@ -189,7 +190,7 @@ class report_auction_object_date(osv.osv):
 
     def init(self, cr):
         cr.execute("""
-            create or replace view report_auction_object_date as (
+            create or replace view report_auction_object_date1 as (
                 select
                    min(l.id) as id,
                    to_char(l.create_date, 'YYYY-MM-DD') as date,
@@ -201,10 +202,10 @@ class report_auction_object_date(osv.osv):
                     to_char(l.create_date, 'YYYY-MM-DD'),l.id,l.state
             )
         """)
-report_auction_object_date()
+report_auction_object_date1()
 
-class report_auction_estimation_adj_category(osv.osv):
-    _name = "report.auction.estimation.adj.category"
+class report_auction_estimation_adj_category1(osv.osv):
+    _name = "report.auction.estimation.adj.category1"
     _description = "comparison estimate/adjudication "
     _auto = False
     _columns = {
@@ -228,7 +229,7 @@ class report_auction_estimation_adj_category(osv.osv):
 
     def init(self, cr):
         cr.execute("""
-            create or replace view report_auction_estimation_adj_category as (
+            create or replace view report_auction_estimation_adj_category1 as (
                 select
                     min(l.id) as id,
                    to_char(l.create_date, 'YYYY-MM-01') as date,
@@ -244,9 +245,10 @@ class report_auction_estimation_adj_category(osv.osv):
                     to_char(l.create_date, 'YYYY-MM-01'),l.state,lot_type
             )
         """)
-report_auction_estimation_adj_category()
-class report_auction_user_pointing(osv.osv):
-    _name = "report.auction.user.pointing"
+report_auction_estimation_adj_category1()
+
+class report_auction_user_pointing1(osv.osv):
+    _name = "report.auction.user.pointing1"
     _description = "user pointing "
     _auto = False
     _columns = {
@@ -258,7 +260,7 @@ class report_auction_user_pointing(osv.osv):
 
     def init(self, cr):
         cr.execute("""
-            create or replace view report_auction_user_pointing as (
+            create or replace view report_auction_user_pointing1 as (
                 select r.name as user_id,
                         l.id as id,
                         l.total_timesheet as total_timesheet
@@ -274,7 +276,7 @@ class report_auction_user_pointing(osv.osv):
 
             )
         """)
-report_auction_user_pointing()
+report_auction_user_pointing1()
 
 # Report for Seller and Buyer Reporting Menu
 

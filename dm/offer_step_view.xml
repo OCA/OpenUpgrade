@@ -102,9 +102,9 @@
 				<page string="Dynamic Fields">
 					<field name="document_template_id" select="1"/>
 					<separator string="Template Plugins" colspan="4"/>
-					<field name="document_template_plugin_ids" colspan="4" nolabel="1" context="{'template_id':document_template_id}"/>
+					<field name="document_template_plugin_ids" colspan="4" nolabel="1" context="{'dm_template_id':document_template_id}"/>
 					<separator string="Template Fields" colspan="4"/>
-					<field name="document_template_field_ids" colspan="4" nolabel="1" context="{'template_id':document_template_id}"/>
+					<field name="document_template_field_ids" colspan="4" nolabel="1" context="{'dm_template_id':document_template_id}"/>
 				</page>				
 				</notebook>
 			</form>
@@ -241,14 +241,14 @@
 							<form string="Transition">
 								<field name="step_from" domain="[('offer_id','=',parent.offer_id)]"/>
 								<field name="step_to" readonly="1"/>
-								<field name="condition" select="1"/>
+								<field name="condition" select="1" widget="selection"/>
 								<field name="delay" string="Delay(In Days)" select="2"/>
 								<field name="media_id"/>
 							</form>
 							<tree string="Incoming Transitions">
 								<field name="step_from"/>
 								<field name="step_to"/>
-								<field name="condition"/>
+								<field name="condition" widget="selection"/>
 								<field name="media_id"/>
 								<field name="delay" string="Delay(In Days)"/>
 							</tree>
@@ -257,7 +257,7 @@
 							<form string="Transition">
 								<field name="step_from" readonly="1"/>
 								<field name="step_to" domain="[('offer_id','=',parent.offer_id)]"/>
-								<field name="condition" select="1"/>
+								<field name="condition" select="1" widget="selection"/>
 								<field name="delay" string="Delay(In Days)" select="2"/>
 <!--								<field name="media_id" context="{'step_media_ids':parent.media_ids}"/>-->
 								<field name="media_id" />
@@ -265,28 +265,15 @@
 							<tree string="Outgoing Transitions">
 								<field name="step_from"/>
 								<field name="step_to"/>
-								<field name="condition"/>
+								<field name="condition" widget="selection"/>
 								<field name="media_id"/>
 								<field name="delay" string="Delay(In Days)"/>
 							</tree>
 						</field>
 					</page>
 					<page string="Items">
-						<field name="item_ids" colspan="4" nolabel="1" readonly="0" select="2">
-							<form string="Item">
-								<field name="name"/>
-								<field name="item_type"/>
-								<separator string="Products" colspan="4"/>
-								<field name="product_ids" colspan="4" nolabel="1"/>
-								<separator string="Notes" colspan="4"/>
-								<field name="notes" colspan="4" nolabel="1"/>
-							</form>
-							<tree string="Items">
-								<field name="name"/>
-								<field name="item_type"/>
-								<field name="notes" />
-							</tree>
-						</field>
+						<separator colspan="4"/>
+						<field name="item_ids" colspan="4" nolabel="1" readonly="0" select="2"/>
 					</page>
 					<page string="Advises">
 						<field name="mailing_at_dates" select="2"/>
@@ -343,11 +330,51 @@
 	<menuitem id="menu_action_offer_step_form" parent="dm.menu_dm_config_offer_steps" action="action_offer_step_form"/>
 
     <!--
+
+        =======================================================
+        OFFER STEP TRANSITION TRIGGER VIEWS
+        =======================================================
+
+        -->
+        <record model="ir.ui.view" id="view_offer_step_transition_trigger_form">
+                <field name="name">dm.offer.step.transition.trigger.form</field>
+                <field name="model">dm.offer.step.transition.tigger</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                        <form string="Transition Trigger">
+                                <field name="name"/>
+                                <field name="code"/>
+                        </form>
+                </field>
+        </record>
+        <record model="ir.ui.view" id="view_offer_step_transition_trigger_tree">
+                <field name="name">dm.offer.step.transition.trigger.tree</field>
+                <field name="model">dm.offer.step.transition.trigger</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                        <tree string="Transition Trigger">
+                                <field name="name"/>
+                                <field name="code"/>
+                        </tree>
+                </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_offer_step_transition_trigger">
+		<field name="name">Transition Trigger</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">dm.offer.step.transition.trigger</field>
+                <field name="view_type">form</field>
+                <field name="view_id" ref="view_offer_step_transition_trigger_tree"/>
+        </record>
+        <menuitem parent="dm.menu_dm_config_offer_steps" id="menu_offer_step_transition_trigger" action="action_offer_step_transition_trigger"/>
+
+
+    <!--
+
 	=======================================================
 	OFFER STEP TRANSITION VIEWS
 	=======================================================
-	-->
 
+	-->
 	<!--<record model="ir.ui.view" id="view_offer_step_transition_form">
 		<field name="name">dm.offer.step.transition.form</field>
 		<field name="model">dm.offer.step.transition</field>
