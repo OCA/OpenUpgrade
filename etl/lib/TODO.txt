@@ -44,3 +44,7 @@ Do some automated tests in a directory with a Makefile
 * Test1: csv.in -> logger
 * Test2: csv.in -> sort -> logger -> csv.out
 * Test3: 2 subjobs, the second one is triggered after the first one
+
+* Manage the interfaces of components: input/output channel names.
+  If a transition as a source or destination channel that do not fit
+  with the component, it should raise an exception
