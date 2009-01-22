@@ -40,52 +40,41 @@ FIELDS = {
 
 START_FIELD = {
     'date': {'string': 'Date payment', 'type': 'date','required':True, 'default': lambda *a: time.strftime('%Y-%m-%d')},
-        
+    'journal_id': {'string': 'Journal', 'type': 'many2many', 'relation': 'account.journal', 'domain': '[("type","in",["sale","purchase","cash"])]', 'help': 'This field allow you to choose the accounting journals you want for filtering the invoices. If you left this field empty, it will search on all sale, purchase and cash journals.'},
 }
+
 START_FORM = '''<?xml version="1.0"?>
 <form string="Import invoices in statement">
-    <label string="Choose invoice type and payment date" colspan="4"/>
+    <label string="Choose Journal and Payment Date" colspan="4"/>
     <field name="date"/>
+    <field name="journal_id" colspan="4"/>
 </form>'''
 
-def _search_customer_invoices(obj, cursor, user, data, context):
-    pool = pooler.get_pool(cursor.dbname)
+def _search_invoices(obj, cr, uid, data, context):
+    pool = pooler.get_pool(cr.dbname)
     line_obj = pool.get('account.move.line')
     statement_obj = pool.get('account.bank.statement')
+    journal_obj = pool.get('account.journal')
 
-    statement = statement_obj.browse(cursor, user, data['id'], context=context)
-    line_ids = line_obj.search(cursor, user, [
+    statement = statement_obj.browse(cr, uid, data['id'], context=context)
+    journal_ids = data['form']['journal_id'][0][2]
+
+    if journal_ids == []:
+        journal_ids = journal_obj.search(cr, uid, [('type', 'in', ('sale','cash','purchase'))], context=context)
+
+    line_ids = line_obj.search(cr, uid, [
         ('reconcile_id', '=', False),
-        ('account_id.type', '=', 'receivable')],
+        ('journal_id', 'in', journal_ids),
+        ('account_id.reconcile', '=', True)],
         #order='date DESC, id DESC', #doesn't work
         context=context)
-
+        
     FORM.string = '''<?xml version="1.0"?>
 <form string="Import entries from customer invoice">
     <field name="lines" colspan="4" height="300" width="800" nolabel="1"
         domain="[('id', 'in', [%s])]"/>
 </form>''' % (','.join([str(x) for x in line_ids]))
-    return {'type':'customer'}
-    # return {'lines': line_ids,'type':'customer'}
-
-def _search_supplier_invoices(obj, cursor, user, data, context):
-    pool = pooler.get_pool(cursor.dbname)
-    line_obj = pool.get('account.move.line')
-    statement_obj = pool.get('account.bank.statement')
-    statement = statement_obj.browse(cursor, user, data['id'], context=context)
-    line_ids = line_obj.search(cursor, user, [
-        ('reconcile_id', '=', False),
-        ('account_id.type', '=', 'payable')
-    ], context=context)
-    #    order='date DESC, id DESC', context=context) #doesn't work
-    FORM.string = '''<?xml version="1.0"?>
-<form string="Import entries from supplier invoice">
-    <field name="lines" colspan="4" height="300" width="800" nolabel="1"
-        domain="[('id', 'in', [%s])]"/>
-</form>''' % (','.join([str(x) for x in line_ids]))
-    return {'type':'supplier'}
-    # return {'lines': line_ids,'type':'supplier'}
-    
+    return {}
 
 def _populate_statement(obj, cursor, user, data, context):
     line_ids = data['form']['lines'][0][2]
@@ -120,10 +109,17 @@ def _populate_statement(obj, cursor, user, data, context):
         reconcile_id = statement_reconcile_obj.create(cursor, user, {
             'line_ids': [(6, 0, [line.id])]
             }, context=context)
+        if line.journal_id.type == 'sale':
+            type = 'customer'
+        elif line.journal_id.type == 'purchase':
+            type = 'supplier'
+        else:
+            type = 'general'
+        
         statement_line_obj.create(cursor, user, {
             'name': line.name or '?',
             'amount': amount,
-            'type': data['form']['type'],
+            'type': type,
             'partner_id': line.partner_id.id,
             'account_id': line.account_id.id,
             'statement_id': statement.id,
@@ -147,13 +143,12 @@ class PopulateStatementFromInv(wizard.interface):
                 'fields':START_FIELD,
                 'state': [
                     ('end', '_Cancel'),
-                    ('customer', '_Customer invoices', '', True),
-                    ('supplier', '_Supplier invoices', '', True)
+                    ('go', '_Go', '', True),
                 ]
             },
         },
-        'customer': {
-            'actions': [_search_customer_invoices],
+        'go': {
+            'actions': [_search_invoices],
             'result': {
                 'type': 'form',
                 'arch': FORM,
@@ -164,18 +159,7 @@ class PopulateStatementFromInv(wizard.interface):
                 ]
             },
         },
-        'supplier': {
-            'actions': [_search_supplier_invoices],
-            'result': {
-                'type': 'form',
-                'arch': FORM,
-                'fields': FIELDS,
-                'state': [
-                    ('end', '_Cancel','', True),
-                    ('finish', 'O_k','', True)
-                ]
-            },
-        },
+
         'finish': {
         'actions': [],
         'result': {

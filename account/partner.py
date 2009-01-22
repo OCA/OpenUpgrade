@@ -32,14 +32,15 @@ class account_fiscal_position(osv.osv):
         'account_ids': fields.one2many('account.fiscal.position.account', 'position_id', 'Accounts Mapping'),
         'tax_ids': fields.one2many('account.fiscal.position.tax', 'position_id', 'Taxes Mapping')
     }
-    def map_tax(self, cr, uid, partner, taxes, context={}):
-        if (not partner) or (not partner.property_account_position) :
+
+    def map_tax(self, cr, uid, fposition_id, taxes, context={}):
+        if not fposition_id:
             return map(lambda x: x.id, taxes)
         result = []
         for t in taxes:
             ok = False
-            for tax in partner.property_account_position.tax_ids:
-                if tax.tax_src_id.id==t.id:
+            for tax in fposition_id.tax_ids:
+                if tax.tax_src_id.id == t.id:
                     if tax.tax_dest_id:
                         result.append(tax.tax_dest_id.id)
                     ok=True
@@ -47,10 +48,10 @@ class account_fiscal_position(osv.osv):
                 result.append(t.id)
         return result
 
-    def map_account(self, cr, uid, partner, account_id, context={}):
-        if (not partner) or (not partner.property_account_position) :
+    def map_account(self, cr, uid, fposition_id, account_id, context={}):
+        if not fposition_id :
             return account_id
-        for pos in partner.property_account_position.account_ids:
+        for pos in fposition_id.account_ids:
             if pos.account_src_id.id==account_id:
                 account_id = pos.account_dest_id.id
                 break
@@ -76,8 +77,8 @@ class account_fiscal_position_account(osv.osv):
     _rec_name = 'position_id'
     _columns = {
         'position_id': fields.many2one('account.fiscal.position', 'Fiscal Position', required=True, ondelete='cascade'),
-        'account_src_id': fields.many2one('account.account', 'Account Source', required=True),
-        'account_dest_id': fields.many2one('account.account', 'Account Destination', required=True)
+        'account_src_id': fields.many2one('account.account', 'Account Source', domain=[('type','<>','view')], required=True),
+        'account_dest_id': fields.many2one('account.account', 'Account Destination', domain=[('type','<>','view')], required=True)
     }
 account_fiscal_position_account()
 
@@ -110,7 +111,7 @@ class res_partner(osv.osv):
         for id in ids:
             res[id] = {}.fromkeys(field_names, 0)
         for pid,type,val in cr.fetchall():
-            res[pid][maps[type]] = val
+            res[pid][maps[type]] = (type=='receivable') and val or -val
         return res
 
     def _credit_search(self, cr, uid, obj, name, args):

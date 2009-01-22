@@ -82,6 +82,7 @@
                                 <separator string="Invoice Control" colspan="2"/>
                                 <field name="invoice_method"/>
                                 <field name="invoice_id" readonly="1"/>
+                                <field name="fiscal_position" groups="base.group_extended"/>
                             </group>
                             <newline/>
                             <separator string="Purchase Control" colspan="4"/>
@@ -171,7 +172,7 @@
                 <form string="Purchase Order Line">
                     <notebook>
                         <page string="Order Line">
-                            <field colspan="4" context="partner_id=parent.partner_id,quantity=product_qty,pricelist=parent.pricelist_id,uom=product_uom,warehouse=parent.warehouse_id" name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order)"/>
+                            <field colspan="4" context="partner_id=parent.partner_id,quantity=product_qty,pricelist=parent.pricelist_id,uom=product_uom,warehouse=parent.warehouse_id" name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order, parent.fiscal_position)"/>
                             <field name="product_qty"/>
                             <field name="product_uom" on_change="product_uom_change(parent.pricelist_id,product_id,product_qty,product_uom,parent.partner_id, parent.date_order)"/>
                             <field colspan="4" name="name"/>
@@ -179,7 +180,7 @@
                             <field name="price_unit"/>
                             <field name="account_analytic_id"/>
                             <field name="price_subtotal" readonly="1"/>
-                            <field colspan="4" name="taxes_id" domain="[('parent_id','=',False)]"/>
+                            <field colspan="4" name="taxes_id" domain="[('parent_id','=',False),('type_tax_use','=','purchase')]"/>
                         </page>
                         <page string="Notes">
                             <field colspan="4" name="notes" nolabel="1"/>
@@ -206,11 +207,11 @@
         </record>
 
         <act_window
-            context="{'partner_id': active_id}" 
-            domain="[('partner_id', '=', active_id)]" 
-            id="act_res_partner_2_purchase_order" 
-            name="Purchase orders" 
-            res_model="purchase.order" 
+            context="{'partner_id': active_id}"
+            domain="[('partner_id', '=', active_id)]"
+            id="act_res_partner_2_purchase_order"
+            name="Purchase orders"
+            res_model="purchase.order"
             src_model="res.partner"/>
     </data>
 </openerp>

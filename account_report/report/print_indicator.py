@@ -92,60 +92,66 @@ class accounting_report_indicator(report_sxw.rml_parse):
             'getarray':self.getarray,
             'gettree':self.gettree,
         })
-        self.count=0
-        self.treecount=0
-        self.list=[]
-        self.header_name=self.header_val=[]
-        self.main_dict={}
-
-    def repeatIn(self, lst, name, nodes_parent=False,td=False,width=[],value=[],type=[]):
+        self.count = 0
+        self.treecount = 0
+        self.list = []
+        self.header_name = []
+        self.header_val = []
+        self.main_dict = {}
+        
+    def repeatIn(self, lst, name, nodes_parent=False,td=False,width=[],value=[],type=[],data=''):
         self._node.data = ''
         node = self._find_parent(self._node, nodes_parent or parents)
         ns = node.nextSibling
 #start
-        if not name=='array':
+        if (not name in ['array','array_header']):
             return super(accounting_report_indicator,self).repeatIn(lst, name, nodes_parent=False)
-
-        value=['Data']
+        
+        array_header = eval(data,{'year':'Fiscal Year','periods':'Periods'})
+#        value = [array_header]
+        value = []
         value.extend(self.header_name)
-        type=['string'].extend(['float']*len(self.header_name))
-        width=[40]*(len(self.header_name)+1)
 
+        if name=='array':
+            type = ['float']*len(self.header_name)
+        else:
+            type = ['lable'] * (len(self.header_name))
+        
+        width = [438/float(len(value))]*(len(value))
+        
         if not lst:
             lst.append(1)
         for ns in node.childNodes :
             if ns and ns.nodeName!='#text' and ns.tagName=='blockTable' and td :
                 width_str = ns._attrs['colWidths'].nodeValue
                 ns.removeAttribute('colWidths')
-                total_td = td * len(value)
-
+#                total_td = td * len(value)
+                
                 if not width:
                     for v in value:
                         width.append(30)
-                for v in range(len(value)):
+                for v in range(len(width)):
                     width_str +=',%d'%width[v]
-
+                
                 ns.setAttribute('colWidths',width_str)
 
                 child_list =  ns.childNodes
-                check=0
                 for child in child_list:
                     if child.nodeName=='tr':
                         lc = child.childNodes[1]
-#                        for t in range(td):
                         i=0
                         for v in value:
                             newnode = lc.cloneNode(1)
-                            if check==1:
-                                t1="[[ %s['%s'] ]]"%(name,v)
-                            else:
+                            if type[i] == 'float':
+                                t1="[[ '%.2f' % " + "%s['%s'] ]]"%(name,v)
+                            if type[i] == 'lable':
                                 t1="%s"%(v)
-                            newnode.childNodes[1].lastChild.data = t1
+                            else:
+                                t1="[[ %s['%s'] ]]"%(name,v)   
+                            newnode.childNodes[1].lastChild.data = t1    
                             child.appendChild(newnode)
                             newnode=False
                             i+=1
-                        check=1
-
         return super(accounting_report_indicator,self).repeatIn(lst, name, nodes_parent=False)
 
     def lines(self,data):
@@ -164,6 +170,7 @@ class accounting_report_indicator(report_sxw.rml_parse):
 #        find_child(obj_inds)
 
         for obj_ind in obj_inds:
+            level = 0
             res = {
                 'id':obj_ind.id,
                 'name':obj_ind.name,
@@ -172,19 +179,29 @@ class accounting_report_indicator(report_sxw.rml_parse):
                 'disp_graph':obj_ind.disp_graph,
                 'disp_tree':obj_ind.disp_tree,
                 'note':obj_ind.note,
+                'level' : obj_ind.parent_id or 0,
                 'type':obj_ind.type,
+                'array_table' : False,
                 }
+            if obj_ind.parent_id:
+                for record in result:
+                    if record['id'] == obj_ind.parent_id.id:
+                        res['level'] = record['level'] + 1
+                        break
+            if len(obj_ind.expression)>=2:
+                res['array_table'] = True
             result.append(res)
         return result
 
-    def getarray(self,data,object):
+    def getarray(self,data,object,array_header=''):
         res={}
         result=[]
         self.getgraph(data,object,intercall=True)
         self.header_val=[str(x) for x in self.header_val]
         temp_dict=zip(self.header_name,self.header_val)
         res=dict(temp_dict)
-        res['Data']='Value'
+        array_header = eval(array_header,{'year':'Fiscal Year','periods':'Periods'})
+        res[array_header]=object['name']
         result.append(res)
         return result
 

@@ -258,15 +258,17 @@ class mrp_bom(osv.osv):
             factor = bom.product_rounding
         result = []
         result2 = []
+        phantom=False
         if bom.type=='phantom' and not bom.bom_lines:
             newbom = self._bom_find(cr, uid, bom.product_id.id, bom.product_uom.id, properties)
             if newbom:
                 res = self._bom_explode(cr, uid, self.browse(cr, uid, [newbom])[0], factor*bom.product_qty, properties, addthis=True, level=level+10)
                 result = result + res[0]
                 result2 = result2 + res[1]
+                phantom=True
             else:
-                return [],[]
-        else:
+                phantom=False
+        if not phantom:
             if addthis and not bom.bom_lines:
                 result.append(
                 {
@@ -435,7 +437,7 @@ class mrp_production(osv.osv):
         'name': lambda x,y,z,c: x.pool.get('ir.sequence').get(y,z,'mrp.production') or '/',
     }
     _order = 'date_planned asc, priority desc';
-    def unlink(self, cr, uid, ids):
+    def unlink(self, cr, uid, ids, context=None):
         productions = self.read(cr, uid, ids, ['state'])
         unlink_ids = []
         for s in productions:
@@ -443,7 +445,15 @@ class mrp_production(osv.osv):
                 unlink_ids.append(s['id'])
             else:
                 raise osv.except_osv(_('Invalid action !'), _('Cannot delete Production Order(s) which are in %s State!' % s['state']))
-        return osv.osv.unlink(self, cr, uid, unlink_ids)
+        return osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
+
+    def copy(self, cr, uid, id, default=None,context={}):
+        if not default:
+            default = {}
+        default.update({            
+            'name': self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
+        })
+        return super(mrp_production, self).copy(cr, uid, id, default, context)
 
     def location_id_change(self, cr, uid, ids, src, dest, context={}):
         if dest:
@@ -793,8 +803,8 @@ class mrp_procurement(osv.osv):
         'close_move': lambda *a: 0,
         'procure_method': lambda *a: 'make_to_order',
     }
-     
-    def unlink(self, cr, uid, ids):
+
+    def unlink(self, cr, uid, ids, context=None):
         procurements = self.read(cr, uid, ids, ['state'])
         unlink_ids = []
         for s in procurements:
@@ -802,8 +812,8 @@ class mrp_procurement(osv.osv):
                 unlink_ids.append(s['id'])
             else:
                 raise osv.except_osv(_('Invalid action !'), _('Cannot delete Procurement Order(s) which are in %s State!' % s['state']))
-        return osv.osv.unlink(self, cr, uid, unlink_ids)        
-    
+        return osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
+
     def onchange_product_id(self, cr, uid, ids, product_id, context={}):
         if product_id:
             w=self.pool.get('product.product').browse(cr,uid,product_id, context)
@@ -1049,7 +1059,7 @@ class mrp_procurement(osv.osv):
             }
 
             taxes_ids = procurement.product_id.product_tmpl_id.supplier_taxes_id
-            self.pool.get('account.fiscal.position').map_tax(cr, uid, partner, taxes_ids)
+            self.pool.get('account.fiscal.position').map_tax(cr, uid, partner.property_account_position, taxes_ids)
             line.update({
                 'taxes_id':[(6,0,taxes_ids)]
             })

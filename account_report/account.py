@@ -89,8 +89,11 @@ class account_report(osv.osv):
             if not context['fiscalyear']:
                 del context['fiscalyear']
             acc = self.pool.get('account.account')
-            acc_id = acc.search(cr, uid, [('code','in',code)])
-            return reduce(lambda y,x=0: x.balance+y, acc.browse(cr, uid, acc_id, context),0.0)
+            account_ids = []
+            for c in code:
+                for i in c.split('-'):
+                    account_ids += acc.search(cr, uid, [('code', 'ilike', i)])
+            return reduce(lambda y,x=0: x.balance+y, acc.browse(cr, uid, account_ids, context),0.0)
 
         def _calc_report(*code):
             acc = self.pool.get('account.report.report')
@@ -159,7 +162,6 @@ class account_report(osv.osv):
             ('other','Others')],
             'Type', required=True),
         'expression': fields.char('Expression', size=240, required=True),
-#        'expression_status': fields.char('Status expression', size=240, required=True),
         'badness_limit' :fields.float('Badness Indicator Limit', digits=(16,2),help='This Value depicts the limit of badness.'),
         'goodness_limit' :fields.float('Goodness Indicator Limit', digits=(16,2),help='This Value depicts the limit of goodness.'),
         'parent_id': fields.many2one('account.report.report', 'Parent'),
@@ -204,10 +206,7 @@ class account_report(osv.osv):
         return self.name_get(cr, user, ids, context=context)
 
     _constraints = [
-    #TODO Put an expression to valid expression and expression_status
-    ]
-    _sql_constraints = [
-        ('code_uniq', 'unique (code)', 'The code of the report entry must be unique !')
+    #TODO Put an expression to valid expression 
     ]
 
 account_report()
@@ -240,7 +239,7 @@ class account_report_history(osv.osv):
         cr.execute('''create or replace view account_report as (select ar.id as tmp,((pr.id*100000)+ar.id) as id,ar.id as name,pr.id as period_id,pr.fiscalyear_id as fiscalyear_id from account_report_report as ar cross join account_period as pr group by ar.id,pr.id,pr.fiscalyear_id)''')
 
     def unlink(self, cr, uid, ids, context={}):
-        raise osv.except_osv(_('Error !'), _('You can not delete an indicator history record. You may have to delete the concerned Indicator!'))
+        raise osv.except_osv(_('Error !'), _('You cannot delete an indicator history record. You may have to delete the concerned Indicator!'))
 
 account_report_history()
 

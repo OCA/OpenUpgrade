@@ -54,7 +54,7 @@ class stock_location(osv.osv):
     _description = "Location"
     _parent_name = "location_id"
     _parent_store = True
-    _parent_order = 'name'
+    _parent_order = 'id'
     _order = 'parent_left'
 
     def _complete_name(self, cr, uid, ids, name, args, context):
@@ -84,7 +84,33 @@ class stock_location(osv.osv):
             if 'stock_virtual' in field_names:
                 res[loc]['stock_virtual'] = prod.virtual_available
         return res
-
+    
+    
+    def product_detail(self, cr, uid, id, field):
+        res = {}
+        res[id] = {}
+        final_value = 0.0
+        field_to_read = 'virtual_available'
+        if field == 'stock_real_value':
+            field_to_read = 'qty_available'
+        cr.execute('select distinct product_id from stock_move where location_id=%s',(id,))
+        result = cr.dictfetchall()
+        if result:
+            for r in result:
+                product = self.pool.get('product.product').read(cr, uid, r['product_id'], [field_to_read,'standard_price','name'])
+                final_value += (product[field_to_read] * product['standard_price'])
+        return final_value
+    
+    def _product_value(self, cr, uid, ids, field_names, arg, context={}):
+        result = {}
+        for id in ids:
+            result[id] = {}.fromkeys(field_names, 0.0)
+        for field_name in field_names:
+            for loc in ids:
+                ret_dict = self.product_detail(cr,uid,loc,field=field_name)
+                result[loc][field_name] = ret_dict
+        return result
+    
     _columns = {
         'name': fields.char('Location Name', size=64, required=True, translate=True),
         'active': fields.boolean('Active'),
@@ -123,6 +149,8 @@ class stock_location(osv.osv):
 
         'parent_left': fields.integer('Left Parent', select=1),
         'parent_right': fields.integer('Right Parent', select=1),
+        'stock_real_value': fields.function(_product_value, method=True, type='float', string='Real Stock Value', multi="stock"),
+        'stock_virtual_value': fields.function(_product_value, method=True, type='float', string='Virtual Stock Value', multi="stock"),
     }
     _defaults = {
         'active': lambda *a: 1,
@@ -307,7 +335,7 @@ class stock_tracking(osv.osv):
         res = [(r['id'], r['name']+' ['+(r['serial'] or '')+']') for r in self.read(cr, uid, ids, ['name','serial'], context)]
         return res
 
-    def unlink(self, cr ,uid, ids):
+    def unlink(self, cr ,uid, ids, context=None):
         raise osv.except_osv(_('Error'), _('You can not remove a lot line !'))
 stock_tracking()
 
@@ -366,6 +394,7 @@ class stock_picking(osv.osv):
             res[pick]['min_date'] = dt1
             res[pick]['max_date'] = dt2
         return res
+
 
     _columns = {
         'name': fields.char('Reference', size=64, required=True, select=True),
@@ -586,7 +615,7 @@ class stock_picking(osv.osv):
             return self.pool.get('account.fiscal.position').map_tax(
                 cursor,
                 user,
-                move_line.picking_id.address_id.partner_id,
+                move_line.picking_id.address_id.partner_id.property_account_position,
                 taxes
             )
         else:
@@ -629,15 +658,15 @@ class stock_picking(osv.osv):
             address_contact_id, address_invoice_id = \
                     self._get_address_invoice(cursor, user, picking).values()
 
-            comment = self._get_comment_invoice(cursor, user, picking)            
+            comment = self._get_comment_invoice(cursor, user, picking)
             if group and partner.id in invoices_group:
                 invoice_id = invoices_group[partner.id]
-                invoice=invoice_obj.browse(cursor, user,invoice_id)      
+                invoice=invoice_obj.browse(cursor, user,invoice_id)
                 invoice_vals = {
                     'name': invoice.name +', '+picking.name,
-                    'origin': invoice.origin+', '+picking.name+(picking.origin and (':' + picking.origin) or ''),    
+                    'origin': invoice.origin+', '+picking.name+(picking.origin and (':' + picking.origin) or ''),
                     'comment':(comment and (invoice.comment and invoice.comment+"\n"+comment or comment)) or (invoice.comment and invoice.comment or ''),
-                }                 
+                }
                 invoice_obj.write(cursor, user, [invoice_id],invoice_vals,context=context)
             else:
                 invoice_vals = {
@@ -689,7 +718,7 @@ class stock_picking(osv.osv):
                 account_analytic_id = self._get_account_analytic_invoice(cursor,
                         user, picking, move_line)
 
-                account_id = self.pool.get('account.fiscal.position').map_account(cursor, user, partner, account_id)
+                account_id = self.pool.get('account.fiscal.position').map_account(cursor, user, partner.property_account_position, account_id)
                 invoice_line_id = invoice_line_obj.create(cursor, user, {
                     'name': name,
                     'origin':origin,
@@ -1070,8 +1099,8 @@ class stock_move(osv.osv):
         self.write(cr, uid, ids, {'state':'cancel', 'move_dest_id': False})
 
         for pick in self.pool.get('stock.picking').browse(cr,uid,pickings.keys()):
-            if all(move.state == 'cancle' for move in pick.move_lines):
-                self.pool.get('stock.picking').write(cr,uid,[pick.id],{'state':'cancel'}) 
+            if all(move.state == 'cancel' for move in pick.move_lines):
+                self.pool.get('stock.picking').write(cr,uid,[pick.id],{'state':'cancel'})
 
         wf_service = netsvc.LocalService("workflow")
         for id in ids:

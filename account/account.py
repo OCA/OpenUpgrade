@@ -21,6 +21,7 @@
 ##############################################################################
 import time
 import netsvc
+
 from osv import fields, osv
 
 from tools.misc import currency
@@ -34,7 +35,7 @@ class account_payment_term(osv.osv):
     _name = "account.payment.term"
     _description = "Payment Term"
     _columns = {
-        'name': fields.char('Payment Term', size=32, translate=True, required=True),
+        'name': fields.char('Payment Term', size=64, translate=True, required=True),
         'active': fields.boolean('Active'),
         'note': fields.text('Description', translate=True),
         'line_ids': fields.one2many('account.payment.term.line', 'payment_id', 'Terms'),
@@ -77,7 +78,8 @@ class account_payment_term_line(osv.osv):
         'sequence': fields.integer('Sequence', required=True, help="The sequence field is used to order the payment term lines from the lowest sequences to the higher ones"),
         'value': fields.selection([('procent','Percent'),('balance','Balance'),('fixed','Fixed Amount')], 'Value',required=True),
         'value_amount': fields.float('Value Amount'),
-        'days': fields.integer('Number of Days',required=True, help="Number of days to add before computation of the day of month."),
+        'days': fields.integer('Number of Days',required=True, help="Number of days to add before computation of the day of month." \
+            "If Date=15/01, Number of Days=22, Day of Month=-1, then the due date is 28/02."),
         'days2': fields.integer('Day of the Month',required=True, help="Day of the month, set -1 for the last day of the current month. If it's positive, it gives the day of the next month. Set 0 for net days (otherwise it's based on the beginning of the month)."),
         'payment_id': fields.many2one('account.payment.term','Payment Term', required=True, select=True),
     }
@@ -129,6 +131,7 @@ class account_account(osv.osv):
     _name = "account.account"
     _description = "Account"
     _parent_store = True
+    _parent_order = 'length(code),code'
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
@@ -289,8 +292,6 @@ class account_account(osv.osv):
         'check_history': fields.boolean('Display History',
             help="Check this box if you want to print all entries when printing the General Ledger, "\
             "otherwise it will only print its balance."),
-         'merge_invoice': fields.boolean('Merge Invoice Entries',help="Check this box if you want that all lines of "\
-            "a customer or supplier invoice using this account are created in one line only"),
     }
 
     def _default_company(self, cr, uid, context={}):
@@ -448,8 +449,8 @@ class account_journal(osv.osv):
 
         'active': fields.boolean('Active'),
         'view_id': fields.many2one('account.journal.view', 'View', required=True, help="Gives the view used when writing or browsing entries in this journal. The view tell Open ERP which fields should be visible, required or readonly and in which order. You can create your own view for a faster encoding in each journal."),
-        'default_credit_account_id': fields.many2one('account.account', 'Default Credit Account'),
-        'default_debit_account_id': fields.many2one('account.account', 'Default Debit Account'),
+        'default_credit_account_id': fields.many2one('account.account', 'Default Credit Account', domain="[('type','!=','view')]"),
+        'default_debit_account_id': fields.many2one('account.account', 'Default Debit Account', domain="[('type','!=','view')]"),
         'centralisation': fields.boolean('Centralised counterpart', help="Check this box if you want that each entry doesn't create a counterpart but share the same counterpart for each entry of this journal. This is used in fiscal year closing."),
         'update_posted': fields.boolean('Allow Cancelling Entries'),
         'group_invoice_lines': fields.boolean('Group invoice lines', help="If this box is cheked, the system will try to group the accouting lines when generating them from invoices."),
@@ -459,6 +460,7 @@ class account_journal(osv.osv):
         'currency': fields.many2one('res.currency', 'Currency', help='The currency used to enter statement'),
         'entry_posted': fields.boolean('Skip \'Draft\' State for Created Entries', help='Check this box if you don\'t want that new account moves pass through the \'draft\' state and goes direclty to the \'posted state\' without any manual validation.'),
         'company_id': fields.related('default_credit_account_id','company_id',type='many2one', relation="res.company", string="Company"),
+        'fy_seq_id': fields.one2many('fiscalyear.seq', 'journal_id', 'Sequences'),
     }
 
     _defaults = {
@@ -496,6 +498,8 @@ class account_fiscalyear(osv.osv):
     _columns = {
         'name': fields.char('Fiscal Year', size=64, required=True),
         'code': fields.char('Code', size=6, required=True),
+        'company_id': fields.many2one('res.company', 'Company',
+            help="Keep empty if the fiscal year belongs to several companies."),
         'date_start': fields.date('Start date', required=True),
         'date_stop': fields.date('End date', required=True),
         'period_ids': fields.one2many('account.period', 'fiscalyear_id', 'Periods'),
@@ -558,6 +562,8 @@ class account_period(osv.osv):
     _columns = {
         'name': fields.char('Period Name', size=64, required=True),
         'code': fields.char('Code', size=12),
+        'special': fields.boolean('Opening/Closing Period', size=12,
+            help="These periods can overlap."),
         'date_start': fields.date('Start of period', required=True, states={'done':[('readonly',True)]}),
         'date_stop': fields.date('End of period', required=True, states={'done':[('readonly',True)]}),
         'fiscalyear_id': fields.many2one('account.fiscalyear', 'Fiscal Year', required=True, states={'done':[('readonly',True)]}, select=True),
@@ -568,21 +574,28 @@ class account_period(osv.osv):
     }
     _order = "date_start"
 
-    def _check_duration(self,cr,uid,ids):
+    def _check_duration(self,cr,uid,ids,context={}):
         obj_period=self.browse(cr,uid,ids[0])
         if obj_period.date_stop < obj_period.date_start:
             return False
         return True
 
-    def _check_year_limit(self,cr,uid,ids):
-        obj_period=self.browse(cr,uid,ids[0])
-        if obj_period.fiscalyear_id.date_stop < obj_period.date_stop or obj_period.fiscalyear_id.date_stop < obj_period.date_start or obj_period.fiscalyear_id.date_start > obj_period.date_start or obj_period.fiscalyear_id.date_start > obj_period.date_stop:
-            return False
+    def _check_year_limit(self,cr,uid,ids,context={}):
+        for obj_period in self.browse(cr,uid,ids):
+            if obj_period.special:
+                continue
+            if obj_period.fiscalyear_id.date_stop < obj_period.date_stop or obj_period.fiscalyear_id.date_stop < obj_period.date_start or obj_period.fiscalyear_id.date_start > obj_period.date_start or obj_period.fiscalyear_id.date_start > obj_period.date_stop:
+                return False
+
+            pids = self.search(cr, uid, [('date_stop','>=',obj_period.date_start),('date_start','<=',obj_period.date_stop),('special','=',False),('id','<>',obj_period.id)])
+            for period in self.browse(cr, uid, pids):
+                if period.fiscalyear_id.company_id.id==obj_period.fiscalyear_id.company_id.id:
+                    return False
         return True
 
     _constraints = [
         (_check_duration, 'Error ! The date duration of the Period(s) is invalid. ', ['date_stop']),
-        (_check_year_limit, 'Error ! The date duration of the Period(s) should be within the limit of the Fiscal year. ', ['date_stop'])
+        (_check_year_limit, 'Invalid period ! Some periods overlap or the date duration is not in the limit of the fiscal year. ', ['date_stop'])
     ]
 
     def next(self, cr, uid, period, step, context={}):
@@ -670,7 +683,6 @@ class account_fiscalyear(osv.osv):
     _inherit = "account.fiscalyear"
     _description = "Fiscal Year"
     _columns = {
-        'start_journal_period_id':fields.many2one('account.journal.period','New Entries Journal'),
         'end_journal_period_id':fields.many2one('account.journal.period','End of Year Entries Journal', readonly=True),
     }
 
@@ -856,6 +868,7 @@ class account_move(osv.osv):
             context['journal_id'] = move.journal_id.id
             context['period_id'] = move.period_id.id
             self.pool.get('account.move.line')._update_check(cr, uid, line_ids, context)
+            self.pool.get('account.move.line').unlink(cr, uid, line_ids, context=context)
             toremove.append(move.id)
         result = super(account_move, self).unlink(cr, uid, toremove, context)
         return result
@@ -924,7 +937,7 @@ class account_move(osv.osv):
         for move in self.browse(cr, uid, ids, context):
             #unlink analytic lines on move_lines
             for obj_line in move.line_id:
-                for obj in obj_line.analytic_lines: 
+                for obj in obj_line.analytic_lines:
                     self.pool.get('account.analytic.line').unlink(cr,uid,obj.id)
 
             journal = move.journal_id
@@ -1125,6 +1138,19 @@ class account_tax_code(osv.osv):
             res[record.id] = round(_rec_get(record), 2)
         return res
 
+    def _sum_year(self, cr, uid, ids, name, args, context):
+        if 'fiscalyear_id' in context and context['fiscalyear_id']:
+            fiscalyear_id = context['fiscalyear_id']
+        else:
+            fiscalyear_id = self.pool.get('account.fiscalyear').find(cr, uid, exception=False)
+        where = ''
+        if fiscalyear_id:
+             pids = map(lambda x: str(x.id), self.pool.get('account.fiscalyear').browse(cr, uid, fiscalyear_id).period_ids)
+             if pids:
+                 where = ' and period_id in (' + (','.join(pids))+')'
+        return self._sum(cr, uid, ids, name, args, context,
+                where=where)
+
     def _sum_period(self, cr, uid, ids, name, args, context):
         if 'period_id' in context and context['period_id']:
             period_id = context['period_id']
@@ -1143,14 +1169,16 @@ class account_tax_code(osv.osv):
         'name': fields.char('Tax Case Name', size=64, required=True),
         'code': fields.char('Case Code', size=64),
         'info': fields.text('Description'),
-        'sum': fields.function(_sum, method=True, string="Year Sum"),
+        'sum': fields.function(_sum_year, method=True, string="Year Sum"),
         'sum_period': fields.function(_sum_period, method=True, string="Period Sum"),
         'parent_id': fields.many2one('account.tax.code', 'Parent Code', select=True),
         'child_ids': fields.one2many('account.tax.code', 'parent_id', 'Childs Codes'),
         'line_ids': fields.one2many('account.move.line', 'tax_code_id', 'Lines'),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'sign': fields.float('Sign for parent', required=True),
+        'notprintable':fields.boolean("Not Printable in Invoice", help="Check this box if you don't want that any vat related to this Tax Code appears on invoices"),
     }
+
 
     def name_get(self, cr, uid, ids, context=None):
         if not len(ids):
@@ -1169,6 +1197,7 @@ class account_tax_code(osv.osv):
     _defaults = {
         'company_id': _default_company,
         'sign': lambda *args: 1.0,
+        'notprintable': lambda *a: False,
     }
     def _check_recursion(self, cr, uid, ids):
         level = 100
@@ -1201,12 +1230,14 @@ class account_tax(osv.osv):
     _name = 'account.tax'
     _description = 'Tax'
     _columns = {
-        'name': fields.char('Tax Name', size=64, required=True, help="This name will be used to be displayed on reports"),
+        'name': fields.char('Tax Name', size=64, required=True, translate=True, help="This name will be used to be displayed on reports"),
         'sequence': fields.integer('Sequence', required=True, help="The sequence field is used to order the taxes lines from the lowest sequences to the higher ones. The order is important if you have a tax that have several tax childs. In this case, the evaluation order is important."),
         'amount': fields.float('Amount', required=True, digits=(14,4)),
         'active': fields.boolean('Active'),
-        'type': fields.selection( [('percent','Percent'), ('fixed','Fixed'), ('none','None'), ('code','Python Code')], 'Tax Type', required=True),
-        'applicable_type': fields.selection( [('true','True'), ('code','Python Code')], 'Applicable Type', required=True),
+        'type': fields.selection( [('percent','Percent'), ('fixed','Fixed'), ('none','None'), ('code','Python Code'),('balance','Balance')], 'Tax Type', required=True,
+            help="The computation method for the tax amount."),
+        'applicable_type': fields.selection( [('true','True'), ('code','Python Code')], 'Applicable Type', required=True,
+            help="If not applicable (computed through a Python code), the tax do not appears on the invoice."),
         'domain':fields.char('Domain', size=32, help="This field is only used if you develop your own module allowing developpers to create specific taxes in a custom domain."),
         'account_collected_id':fields.many2one('account.account', 'Invoice Tax Account'),
         'account_paid_id':fields.many2one('account.account', 'Refund Tax Account'),
@@ -1234,9 +1265,19 @@ class account_tax(osv.osv):
         'ref_tax_sign': fields.float('Tax Code Sign', help="Usually 1 or -1."),
         'include_base_amount': fields.boolean('Include in base amount', help="Indicate if the amount of tax must be included in the base amount for the computation of the next taxes"),
         'company_id': fields.many2one('res.company', 'Company', required=True),
-        'description': fields.char('Internal Name',size=32),
-        'price_include': fields.boolean('Tax Included in Price', help="Check this is the price you use on the product and invoices is including this tax.")
+        'description': fields.char('Tax Code',size=32),
+        'price_include': fields.boolean('Tax Included in Price', help="Check this is the price you use on the product and invoices is including this tax."),
+        'type_tax_use': fields.selection([('sale','Sale'),('purchase','Purchase')], 'Tax Use in')
+
     }
+    def search(self, cr, uid, args, offset=0, limit=None, order=None,
+            context=None, count=False):
+        if context and context.has_key('type'):
+            if context['type'] in ('out_invoice','out_refund'):
+                args.append(('type_tax_use','=','sale'))
+            elif context['type'] in ('in_invoice','in_refund'):
+                args.append(('type_tax_use','=','purchase'))
+        return super(account_tax, self).search(cr, uid, args, offset, limit, order, context, count)
 
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
@@ -1319,13 +1360,31 @@ class account_tax(osv.osv):
                 exec tax.python_compute in localdict
                 amount = localdict['result']
                 data['amount'] = amount
+            elif tax.type=='balance':
+                data['amount'] = cur_price_unit - reduce(lambda x,y: y.get('amount',0.0)+x, res, 0.0)
+                data['balance'] = cur_price_unit
+
             amount2 = data['amount']
             if len(tax.child_ids):
                 if tax.child_depend:
-                    del res[-1]
+                    latest = res.pop()
                 amount = amount2
                 child_tax = self._unit_compute(cr, uid, tax.child_ids, amount, address_id, product, partner)
                 res.extend(child_tax)
+                if tax.child_depend:
+                    for r in res:
+                        for name in ('base','ref_base'):
+                            if latest[name+'_code_id'] and latest[name+'_sign'] and not r[name+'_code_id']:
+                                r[name+'_code_id'] = latest[name+'_code_id']
+                                r[name+'_sign'] = latest[name+'_sign']
+                                r['price_unit'] = latest['price_unit']
+                                latest[name+'_code_id'] = False
+                        for name in ('tax','ref_tax'):
+                            if latest[name+'_code_id'] and latest[name+'_sign'] and not r[name+'_code_id']:
+                                r[name+'_code_id'] = latest[name+'_code_id']
+                                r[name+'_sign'] = latest[name+'_sign']
+                                r['amount'] = data['amount']
+                                latest[name+'_code_id'] = False
             if tax.include_base_amount:
                 cur_price_unit+=amount2
         return res
@@ -1341,8 +1400,14 @@ class account_tax(osv.osv):
             one tax for each tax id in IDS and their childs
         """
         res = self._unit_compute(cr, uid, taxes, price_unit, address_id, product, partner)
+        total = 0.0
         for r in res:
-            r['amount'] *= quantity
+            if r.get('balance',False):
+                r['amount'] = round(r['balance'] * quantity, 2) - total
+            else:
+                r['amount'] = round(r['amount'] * quantity, 2)
+                total += r['amount']
+
         return res
 
     def _unit_compute_inv(self, cr, uid, taxes, price_unit, address_id=None, product=None, partner=None):
@@ -1372,6 +1437,10 @@ class account_tax(osv.osv):
                 localdict = {'price_unit':cur_price_unit, 'address':address, 'product':product, 'partner':partner}
                 exec tax.python_compute_inv in localdict
                 amount = localdict['result']
+            elif tax.type=='balance':
+                data['amount'] = cur_price_unit - reduce(lambda x,y: y.get('amount',0.0)+x, res, 0.0)
+                data['balance'] = cur_price_unit
+
 
             if tax.include_base_amount:
                 cur_price_unit -= amount
@@ -1424,8 +1493,13 @@ class account_tax(osv.osv):
             one tax for each tax id in IDS and their childs
         """
         res = self._unit_compute_inv(cr, uid, taxes, price_unit, address_id, product, partner=None)
+        total = 0.0
         for r in res:
-            r['amount'] *= quantity
+            if r.get('balance',False):
+                r['amount'] = round(r['balance'] * quantity, 2) - total
+            else:
+                r['amount'] = round(r['amount'] * quantity, 2)
+                total += r['amount']
         return res
 account_tax()
 
@@ -1446,8 +1520,46 @@ class account_model(osv.osv):
 
     _defaults = {
         'legend': lambda self, cr, uid, context:_('You can specify year, month and date in the name of the model using the following labels:\n\n%(year)s : To Specify Year \n%(month)s : To Specify Month \n%(date)s : Current Date\n\ne.g. My model on %(date)s'),
-
     }
+    def generate(self, cr, uid, ids, datas={}, context={}):
+        move_ids = []
+        for model in self.browse(cr, uid, ids, context):
+            period_id = self.pool.get('account.period').find(cr,uid, context=context)
+            if not period_id:
+                raise osv.except_osv('No period found !', 'Unable to find a valid period !')
+            period_id = period_id[0]
+            name = model.name
+            if model.journal_id.sequence_id:
+                name = self.pool.get('ir.sequence').get_id(cr, uid, model.journal_id.sequence_id.id)
+            move_id = self.pool.get('account.move').create(cr, uid, {
+                'name': name,
+                'ref': model.ref,
+                'period_id': period_id,
+                'journal_id': model.journal_id.id,
+            })
+            move_ids.append(move_id)
+            for line in model.lines_id:
+                val = {
+                    'move_id': move_id,
+                    'journal_id': model.journal_id.id,
+                    'period_id': period_id
+                }
+                val.update({
+                    'name': line.name,
+                    'quantity': line.quantity,
+                    'debit': line.debit,
+                    'credit': line.credit,
+                    'account_id': line.account_id.id,
+                    'move_id': move_id,
+                    'ref': line.ref,
+                    'partner_id': line.partner_id.id,
+                    'date': time.strftime('%Y-%m-%d'),
+                    'date_maturity': time.strftime('%Y-%m-%d')
+                })
+                c = context.copy()
+                c.update({'journal_id': model.journal_id.id,'period_id': period_id})
+                self.pool.get('account.move.line').create(cr, uid, val, context=c)
+        return move_ids    
 
 account_model()
 
@@ -1742,10 +1854,12 @@ class account_tax_code_template(osv.osv):
         'parent_id': fields.many2one('account.tax.code.template', 'Parent Code', select=True),
         'child_ids': fields.one2many('account.tax.code.template', 'parent_id', 'Childs Codes'),
         'sign': fields.float('Sign for parent', required=True),
+        'notprintable':fields.boolean("Not Printable in Invoice", help="Check this box if you don't want that any vat related to this Tax Code appears on invoices"),
     }
 
     _defaults = {
         'sign': lambda *args: 1.0,
+        'notprintable': lambda *a: False,
     }
 
     def name_get(self, cr, uid, ids, context=None):
@@ -1832,6 +1946,7 @@ class account_tax_template(osv.osv):
         'ref_tax_sign': fields.float('Tax Code Sign', help="Usually 1 or -1."),
         'include_base_amount': fields.boolean('Include in base amount', help="Indicate if the amount of tax must be included in the base amount for the computation of the next taxes."),
         'description': fields.char('Internal Name', size=32),
+        'type_tax_use': fields.selection([('sale','Sale'),('purchase','Purchase')], 'Tax Use in')
     }
 
     def name_get(self, cr, uid, ids, context={}):
@@ -1873,13 +1988,14 @@ account_tax_template()
 class account_fiscal_position_template(osv.osv):
     _name = 'account.fiscal.position.template'
     _description = 'Template for Fiscal Position'
-    
+
     _columns = {
         'name': fields.char('Fiscal Position Template', size=64, translate=True, required=True),
+        'chart_template_id': fields.many2one('account.chart.template', 'Chart Template', required=True),
         'account_ids': fields.one2many('account.fiscal.position.account.template', 'position_id', 'Accounts Mapping'),
         'tax_ids': fields.one2many('account.fiscal.position.tax.template', 'position_id', 'Taxes Mapping')
     }
-    
+
 account_fiscal_position_template()
 
 class account_fiscal_position_tax_template(osv.osv):
@@ -1901,11 +2017,11 @@ class account_fiscal_position_account_template(osv.osv):
     _rec_name = 'position_id'
     _columns = {
         'position_id': fields.many2one('account.fiscal.position.template', 'Fiscal Position', required=True, ondelete='cascade'),
-        'account_src_id': fields.many2one('account.account.template', 'Account Source', required=True),
-        'account_dest_id': fields.many2one('account.account.template', 'Account Destination', required=True)
+        'account_src_id': fields.many2one('account.account.template', 'Account Source', domain=[('type','<>','view')], required=True),
+        'account_dest_id': fields.many2one('account.account.template', 'Account Destination', domain=[('type','<>','view')], required=True)
     }
 
-account_fiscal_position_account_template() 
+account_fiscal_position_account_template()
 
     # Multi charts of Accounts wizard
 
@@ -1929,6 +2045,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         'chart_template_id': fields.many2one('account.chart.template','Chart Template',required=True),
         'bank_accounts_id': fields.one2many('account.bank.accounts.wizard', 'bank_account_id', 'Bank Accounts',required=True),
         'code_digits':fields.integer('# of Digits',required=True,help="No. of Digits to use for account code"),
+        'seq_journal':fields.boolean('Separated Journal Sequences',help="Check this box if you want to use a different sequence for each created journal. Otherwise, all will use the same sequence."),
     }
 
     def _get_chart(self, cr, uid, context={}):
@@ -1947,6 +2064,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         obj_acc = self.pool.get('account.account')
         obj_acc_tax = self.pool.get('account.tax')
         obj_journal = self.pool.get('account.journal')
+        obj_sequence = self.pool.get('ir.sequence')
         obj_acc_template = self.pool.get('account.account.template')
         obj_fiscal_position_template = self.pool.get('account.fiscal.position.template')
         obj_fiscal_position = self.pool.get('account.fiscal.position')
@@ -2004,6 +2122,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
                 'include_base_amount': tax.include_base_amount,
                 'description':tax.description,
                 'company_id': company_id,
+                'type_tax_use': tax.type_tax_use
             }
             new_tax = obj_acc_tax.create(cr,uid,vals_tax)
             #as the accounts have not been created yet, we have to wait before filling these fields
@@ -2059,31 +2178,38 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         # Creating Journals
         vals_journal={}
         view_id = self.pool.get('account.journal.view').search(cr,uid,[('name','=','Journal View')])[0]
-        seq_id = self.pool.get('ir.sequence').search(cr,uid,[('code','=','account.journal')])[0]
-        seq_code = self.pool.get('ir.sequence').get(cr, uid, 'account.journal')
+        seq_id = obj_sequence.search(cr,uid,[('name','=','Account Journal')])[0]
+        
+        if obj_multi.seq_journal:
+            seq_id_sale = obj_sequence.search(cr,uid,[('name','=','Sale Journal')])[0]
+            seq_id_purchase = obj_sequence.search(cr,uid,[('name','=','Purchase Journal')])[0]
+        else:
+            seq_id_sale = seq_id
+            seq_id_purchase = seq_id
 
-        vals_journal['view_id']=view_id
-        vals_journal['sequence_id']=seq_id
+        vals_journal['view_id'] = view_id
 
         #Sales Journal
         vals_journal['name'] = _('Sales Journal')
         vals_journal['type'] = 'sale'
         vals_journal['code'] = _('SAJ')
+        vals_journal['sequence_id'] = seq_id_sale
 
         if obj_multi.chart_template_id.property_account_receivable:
-            vals_journal['default_credit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_receivable.id]
-            vals_journal['default_debit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_receivable.id]
+            vals_journal['default_credit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_income_categ.id]
+            vals_journal['default_debit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_income_categ.id]
 
         obj_journal.create(cr,uid,vals_journal)
 
         # Purchase Journal
-        vals_journal['name']=_('Purchase Journal')
-        vals_journal['type']='purchase'
-        vals_journal['code']=_('EXJ')
+        vals_journal['name'] = _('Purchase Journal')
+        vals_journal['type'] = 'purchase'
+        vals_journal['code'] = _('EXJ')
+        vals_journal['sequence_id'] = seq_id_purchase
 
         if obj_multi.chart_template_id.property_account_payable:
-            vals_journal['default_credit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_payable.id]
-            vals_journal['default_debit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_payable.id]
+            vals_journal['default_credit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_expense_categ.id]
+            vals_journal['default_debit_account_id'] = acc_template_ref[obj_multi.chart_template_id.property_account_expense_categ.id]
 
         obj_journal.create(cr,uid,vals_journal)
 
@@ -2097,7 +2223,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
             #create the account_account for this bank journal
             tmp = self.pool.get('res.partner.bank').name_get(cr, uid, [line.acc_no.id])[0][1]
             dig = obj_multi.code_digits
-            vals={
+            vals = {
                 'name': line.acc_no.bank and line.acc_no.bank.name+' '+tmp or tmp,
                 'currency_id': line.currency_id and line.currency_id.id or False,
                 'code': str(ref_acc_bank.code.ljust(dig,'0') + str(current_num)),
@@ -2108,6 +2234,13 @@ class wizard_multi_charts_accounts(osv.osv_memory):
                 'company_id': company_id,
             }
             acc_cash_id  = obj_acc.create(cr,uid,vals)
+
+            if obj_multi.seq_journal:
+                vals_seq={
+                        'name': _('Bank Journal ') + vals['name'],
+                        'code': 'account.journal',
+                }
+                seq_id = obj_sequence.create(cr,uid,vals_seq)
 
             #create the bank journal
             vals_journal['name']= vals['name']
@@ -2120,7 +2253,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
             else:
                 vals_journal['view_id'] = view_id_cash
             vals_journal['default_credit_account_id'] = acc_cash_id
-            vals_journal['default_debit_account_id']= acc_cash_id
+            vals_journal['default_debit_account_id'] = acc_cash_id
             obj_journal.create(cr,uid,vals_journal)
 
             current_num += 1
@@ -2155,20 +2288,20 @@ class wizard_multi_charts_accounts(osv.osv_memory):
                 #create the property
                 property_obj.create(cr, uid, vals)
 
-        fp_ids = obj_fiscal_position_template.search(cr, uid,[])
-        
+        fp_ids = obj_fiscal_position_template.search(cr, uid,[('chart_template_id', '=', obj_multi.chart_template_id.id)])
+
         if fp_ids:
             for position in obj_fiscal_position_template.browse(cr, uid, fp_ids):
-                
+
                 vals_fp = {
                            'company_id' : company_id,
                            'name' : position.name,
                            }
                 new_fp = obj_fiscal_position.create(cr, uid, vals_fp)
-                
+
                 obj_tax_fp = self.pool.get('account.fiscal.position.tax')
                 obj_ac_fp = self.pool.get('account.fiscal.position.account')
-                
+
                 for tax in position.tax_ids:
                     vals_tax = {
                                 'tax_src_id' : tax_template_ref[tax.tax_src_id.id],
@@ -2176,7 +2309,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
                                 'position_id' : new_fp,
                                 }
                     obj_tax_fp.create(cr, uid, vals_tax)
-                
+
                 for acc in position.account_ids:
                     vals_acc = {
                                 'account_src_id' : acc_template_ref[acc.account_src_id.id],
@@ -2184,7 +2317,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
                                 'position_id' : new_fp,
                                 }
                     obj_ac_fp.create(cr, uid, vals_acc)
-        
+
         return {
                 'view_type': 'form',
                 "view_mode": 'form',

@@ -250,6 +250,7 @@ class sale_order(osv.osv):
 
         'invoice_quantity': fields.selection([('order','Ordered Quantities'),('procurement','Shipped Quantities')], 'Invoice on', help="The sale order will automatically create the invoice proposition (draft invoice). Ordered and delivered quantities may not be the same. You have to choose if you invoice based on ordered or shipped quantities. If the product is a service, shipped quantities means hours spent on the associated tasks.",required=True),
         'payment_term' : fields.many2one('account.payment.term', 'Payment Term'),
+        'fiscal_position': fields.many2one('account.fiscal.position', 'Fiscal Position')
     }
     _defaults = {
         'picking_policy': lambda *a: 'direct',
@@ -267,7 +268,7 @@ class sale_order(osv.osv):
     _order = 'name desc'
 
     # Form filling
-    def unlink(self, cr, uid, ids):
+    def unlink(self, cr, uid, ids, context=None):
         sale_orders = self.read(cr, uid, ids, ['state'])
         unlink_ids = []
         for s in sale_orders:
@@ -275,7 +276,7 @@ class sale_order(osv.osv):
                 unlink_ids.append(s['id'])
             else:
                 raise osv.except_osv(_('Invalid action !'), _('Cannot delete Sale Order(s) which are already confirmed !'))
-        return osv.osv.unlink(self, cr, uid, unlink_ids)
+        return osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
 
 
     def onchange_shop_id(self, cr, uid, ids, shop_id):
@@ -303,12 +304,13 @@ class sale_order(osv.osv):
 
     def onchange_partner_id(self, cr, uid, ids, part):
         if not part:
-            return {'value':{'partner_invoice_id': False, 'partner_shipping_id':False, 'partner_order_id':False, 'payment_term' : False}}
+            return {'value':{'partner_invoice_id': False, 'partner_shipping_id':False, 'partner_order_id':False, 'payment_term' : False, 'fiscal_position': False}}
         addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['delivery','invoice','contact'])
         part = self.pool.get('res.partner').browse(cr, uid, part)
         pricelist = part.property_product_pricelist and part.property_product_pricelist.id or False
         payment_term = part.property_payment_term and part.property_payment_term.id or False
-        return {'value':{'partner_invoice_id': addr['invoice'], 'partner_order_id':addr['contact'], 'partner_shipping_id':addr['delivery'], 'pricelist_id': pricelist, 'payment_term' : payment_term}}
+        fiscal_position = part.property_account_position and part.property_account_position.id or False
+        return {'value':{'partner_invoice_id': addr['invoice'], 'partner_order_id':addr['contact'], 'partner_shipping_id':addr['delivery'], 'pricelist_id': pricelist, 'payment_term' : payment_term, 'fiscal_position': fiscal_position}}
 
     def shipping_policy_change(self, cr, uid, ids, policy, context={}):
         if not policy:
@@ -783,7 +785,8 @@ class sale_order_line(osv.osv):
                 if uosqty:
                     pu = round(line.price_unit * line.product_uom_qty / uosqty,
                             int(config['price_accuracy']))
-                a = self.pool.get('account.fiscal.position').map_account(cr, uid, line.order_id.partner_id, a)
+                fpos = line.order_id.fiscal_position or False
+                a = self.pool.get('account.fiscal.position').map_account(cr, uid, fpos, a)
                 inv_id = self.pool.get('account.invoice.line').create(cr, uid, {
                     'name': line.name,
                     'origin':line.order_id.name,
@@ -847,7 +850,7 @@ class sale_order_line(osv.osv):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True, date_order=False, packaging=False):
+            lang=False, update_tax=True, date_order=False, packaging=False, fiscal_position=False):
         warning={}
         product_uom_obj = self.pool.get('product.uom')
         partner_obj = self.pool.get('res.partner')
@@ -866,6 +869,10 @@ class sale_order_line(osv.osv):
 
         result = {}
         product_obj = product_obj.browse(cr, uid, product, context=context)
+        if not packaging and product_obj.packaging:
+            packaging = product_obj.packaging[0].id
+            result['product_packaging'] = packaging
+
         if packaging:
             default_uom = product_obj.uom_id and product_obj.uom_id.id
             pack = self.pool.get('product.packaging').browse(cr, uid, packaging, context)
@@ -899,11 +906,11 @@ class sale_order_line(osv.osv):
         result .update({'type': product_obj.procure_method})
         if product_obj.description_sale:
             result['notes'] = product_obj.description_sale
-
+        fpos = fiscal_position and self.pool.get('account.fiscal.position').browse(cr, uid, fiscal_position) or False
         if update_tax: #The quantity only have changed
             result['delay'] = (product_obj.sale_delay or 0.0)
             partner = partner_obj.browse(cr, uid, partner_id)
-            result['tax_id'] = self.pool.get('account.fiscal.position').map_tax(cr, uid, partner, product_obj.taxes_id)
+            result['tax_id'] = self.pool.get('account.fiscal.position').map_tax(cr, uid, fpos, product_obj.taxes_id)
 
         result['name'] = product_obj.partner_ref
         domain = {}

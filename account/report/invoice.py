@@ -35,4 +35,3 @@ report_sxw.report_sxw(
     'addons/account/report/invoice.rml',
     parser=account_invoice
 )
-

@@ -118,19 +118,19 @@
                                             <field colspan="4"
                                                 context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
                                                 name="product_id"
-                                                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], True, parent.date_order, product_packaging)"
+                                                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], True, parent.date_order, product_packaging, parent.fiscal_position)"
                                                 select="1"/>
                                             <field
                                                 context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
                                                 name="product_uom_qty"
-                                                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order, product_packaging)"
+                                                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order, product_packaging, parent.fiscal_position)"
                                                 select="1"/>
                                             <field name="product_uom"
                                                 on_change="product_uom_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order)"/>
                                             <field
                                                 name="product_packaging"
                                                 context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
-                                                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order, product_packaging)"
+                                                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order, product_packaging, parent.fiscal_position)"
                                                 domain="[('product_id','=',product_id)]"
                                                 groups="base.group_extended"/>
                                             <separator colspan="4" string="Manual Description"/>
@@ -140,7 +140,7 @@
                                             <field name="type"/>
                                             <field name="delay" select="2"/>
                                             <newline/>
-                                            <field colspan="4" name="tax_id" domain="[('parent_id','=',False)]"/>
+                                            <field colspan="4" name="tax_id" domain="[('parent_id','=',False),('type_tax_use','=','sale')]"/>
                                             <separator colspan="4" string="States"/>
                                             <field name="state" select="2"/>
                                             <group col="3" colspan="2">
@@ -206,6 +206,7 @@
                             <field groups="base.group_extended" name="origin"/>
                             <field groups="base.group_extended" name="invoice_quantity" attrs="{'readonly':[('order_policy','=','prepaid'),('order_policy','=','picking')]}"/>
                             <field name="payment_term"/>
+                            <field name="fiscal_position" groups="base.group_extended"/>
                             <separator colspan="4" string="Notes"/>
                             <field colspan="4" name="note" nolabel="1"/>
                         </page>
@@ -264,7 +265,7 @@
             <field name="res_model">sale.order</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar,graph</field>
-            <field name="domain">[('state','in',('shipping_except','invoice_except')]</field>
+            <field name="domain">[('state','in',('shipping_except','invoice_except'))]</field>
         </record>
         <menuitem action="action_order_tree2" id="menu_action_order_tree2" parent="menu_action_order_tree_all"/>
 
@@ -397,7 +398,7 @@
                             <field name="type"/>
                             <field name="delay" select="2"/>
                             <field name="price_subtotal"/>
-                            <field colspan="4" name="tax_id" domain="[('parent_id','=',False)]"/>
+                            <field colspan="4" name="tax_id" domain="[('parent_id','=',False),('type_tax_use','=','sale')]"/>
                             <separator colspan="4" string="States"/>
                             <field name="state" select="2"/>
                             <group col="2" colspan="2">
