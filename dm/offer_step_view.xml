@@ -272,21 +272,8 @@
 						</field>
 					</page>
 					<page string="Items">
-						<field name="item_ids" colspan="4" nolabel="1" readonly="0" select="2">
-							<form string="Item">
-								<field name="name"/>
-								<field name="item_type"/>
-								<separator string="Products" colspan="4"/>
-								<field name="product_ids" colspan="4" nolabel="1"/>
-								<separator string="Notes" colspan="4"/>
-								<field name="notes" colspan="4" nolabel="1"/>
-							</form>
-							<tree string="Items">
-								<field name="name"/>
-								<field name="item_type"/>
-								<field name="notes" />
-							</tree>
-						</field>
+						<separator colspan="4"/>
+						<field name="item_ids" colspan="4" nolabel="1" readonly="0" select="2"/>
 					</page>
 					<page string="Advises">
 						<field name="mailing_at_dates" select="2"/>

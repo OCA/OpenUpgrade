@@ -38,7 +38,6 @@
 						</field>
 					</page>
 					<page string="Categories">
-					<separator string="Category" colspan="4"/>
 					<field colspan="4" name="category_ids" nolabel="1" >
 						<tree  string="Categories" editable="bottom">
 							<field name="name"/>
@@ -48,8 +47,9 @@
 					</field>
 					</page>
 					<page string="Setting">
-					<separator string="Setting" colspan="4"/>
+					<separator string="Add Currency" colspan="4"/>
 					<field name="currency_ids" colspan="4" nolabel='1'/>
+					<separator string="Add Languages" colspan="4"/>
 					<field name="language_ids" colspan="4" nolabel='1'/>
 					<newline/>
 					<separator string="Add Product Row,Column" colspan="4"/>
@@ -83,7 +83,7 @@
 	<menuitem id="menu_ecommerce_configuration" name="Configuration" parent="menu_ecommerce"/>
 	<menuitem name="Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form" parent="menu_ecommerce_configuration"/>
 	
-	<!-- TREE VIEW OF THE CATEGORY -->
+	<!-- Tree view of the category -->
 
 		<record model="ir.ui.view" id="product_category_form_view">
 			<field name="name">ecommerce.product.category.form</field>
@@ -119,7 +119,7 @@
 		<menuitem id="menu_ecommerce_products" name="Products" parent="menu_ecommerce"/>
 		<menuitem name="Products by Category" id="menu_ecommerce_product_category_action" parent="menu_ecommerce_products" action="ecommerce_product_category_action"/>
 		
-<!--		Payment -->
+	<!--Payment -->
 		
 	<record model="ir.ui.view" id="view_payment_address">
 		<field name="name">ecommerce.payment.tree</field>
@@ -143,25 +143,32 @@
 				<field name="name" select="1" colspan="2"/>
 				<newline/> 
 				<notebook colspan="4">
-				<page string="Cheque Address." attrs="{'invisible':[('name','!=','cheque')]}" >
-					<field name="chequepay_to" select="2" colspan="2" />
-					<field name="street" select="2" colspan="2"  />
-					<field name="street2" select="2" />
-					<field name="zip" select="2" ></field>
-					<field name="city" />
-					<field name="state_id" />
-					<field name="country_id" />
-				</page>
-				<page string="Paypal Account Detail." attrs="{'invisible':[('name','!=','paypal')]}">
-					<field name="biz_account" select="2" />
-					<newline/>
-					<field name="return_url" select="2" />
-					<field name="cancel_url" select="2" />
-					<field name="transaction_detail" colspan="4" nolabel="1" />
-				</page>
-				<page string="Credit Cards Accepted." attrs="{'invisible':[('name','!=','creditcard')]}">
-					<field name="creditcards"/>
-				</page>
+					<page string="Payment Address." attrs="{'invisible':[('name','!=','cheque'),('name','!=','banwt')]}" >
+						<field name="chequepay_to" select="2" colspan="2" />
+						<field name="street" select="2" colspan="2"  />
+						<field name="street2" select="2" />
+						<field name="zip" select="2" ></field>
+						<field name="city" />
+						<field name="state_id" />
+						<field name="country_id" />
+					</page>
+					
+					<page string="Paypal Account Detail." attrs="{'invisible':[('name','!=','paypal')]}">
+						<field name="biz_account" select="2" />
+						<newline/>
+						<field name="return_url" select="2" />
+						<field name="cancel_url" select="2" />
+						<field name="transaction_detail" colspan="4" nolabel="1" />
+					</page>
+					<page string="Credit Cards Accepted." attrs="{'invisible':[('name','!=','creditcard')]}">
+						<field name="creditcards"/>
+					</page>
+					<page string="Bank Wired Transaction." attrs="{'invisible':[('name','!=','banwt')]}">
+						<field name="bank_name"/>
+						<field name="acc_number"/>
+						<field name="iban"/>
+						<field name="bic"/>				
+					</page>
 				</notebook>
 			</form>
 		</field>

@@ -1,0 +1,46 @@
+Phase I : the framework
+-----------------------
+
+Develop 4 very robust components:
+	. csv.in, csv.out, sort, logger (send to a connector, not a screen)
+	. subjob and event/trigger system
+
+Implement 1 input connectors:
+	. Local File
+
+Implement 2 output connectors:
+	. Local File
+	. Stdout
+
+Component must be robusts:
+	. manage errors
+	. manage encodings types
+	. send signals
+	. support different formats (separator, delimiters, ...)
+
+Automatic generation of documentation
+	. On whole sotware
+	. Good display of components
+
+Manage all internal data as a uniform style:
+	. unicode for strings
+	. date object for datas and datetime
+	. float, ...
+
+Schema validation on components (optionnal)
+
+We must be able to save a job in a file
+	pickle ?
+
+We must have a function to instanciate a job from a saved file.
+
+Components must have basic statistics functions:
+	Records managed by channel
+	Statistics
+	Latest record
+	statistics are sent to a statistic channel at end of processing or at pause
+
+Do some automated tests in a directory with a Makefile
+* Test1: csv.in -> logger
+* Test2: csv.in -> sort -> logger -> csv.out
+* Test3: 2 subjobs, the second one is triggered after the first one

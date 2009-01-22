@@ -71,7 +71,7 @@ class ecommerce_search(osv.osv):
                         args.append(final_list)
                         ids = obj.search(cr, uid, args)
                         prd_ids.extend(ids)
-                        
+       
             return prd_ids
        
 ecommerce_search()
