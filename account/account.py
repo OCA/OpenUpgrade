@@ -610,7 +610,7 @@ class account_period(osv.osv):
 #CHECKME: shouldn't we check the state of the period?
         ids = self.search(cr, uid, [('date_start','<=',dt),('date_stop','>=',dt)])
         if not ids:
-            raise osv.except_osv(_('Error !'), _('No period defined for this date !\nPlease create a fiscal year.'))
+            raise osv.except_osv(_('Error !'), _('No period defined for this date: %s !\nPlease create a fiscal year.')%dt)
         return ids
 
     def action_draft(self, cr, uid, ids, *args):
