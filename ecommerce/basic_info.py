@@ -57,7 +57,7 @@ class ecommerce_payment(osv.osv):
 
         _columns = {
             'name': fields.selection(_get_method, 'Method', size=64, required=True),
-	        'chequepay_to': fields.char('Street', size=128, required=False),
+	        'chequepay_to': fields.char('Account Name', size=128, required=False),
             'street': fields.char('Street', size=128, required=False),
             'street2': fields.char('Street2', size=128, required=False),
             'zip': fields.char('Zip', change_default=True, size=24, required=False),
@@ -68,7 +68,12 @@ class ecommerce_payment(osv.osv):
             'return_url' : fields.char('Return URL', required=False, size=128, help="Return url which is set at the paypal account."),
             'cancel_url' : fields.char('Cancel URL', required=False, size=128, help="Cancel url which is set at the paypal account."),
             'transaction_detail' : fields.one2many('ecommerce.payment.received','paypal_acc', 'Transaction History', help="Transaction detail with the uniq transaction id."),
-	        'creditcards': fields.many2many('ecommerce.creditcard', 'creditcard_method', 'creditcards', 'ecommerce_creditcard', 'Credit Cards')
+	        'creditcards': fields.many2many('ecommerce.creditcard', 'creditcard_method', 'creditcards', 'ecommerce_creditcard', 'Credit Cards'),
+            'acc_number': fields.char('Account Number', size=64, help="Bank account number"),
+            'iban': fields.char('IBAN', size=64, help="for international bank transfers"),
+            'bic': fields.char('BIC number or SWIFT', size=64),
+            'bank_name': fields.char('Bank Name', size=128)
+            
              }
         
 ecommerce_payment()
