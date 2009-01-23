@@ -39,10 +39,40 @@
 	    		</a>
 	    	</li>
 	  	</ul>
-	</div><br/>
-	<div class="width_border">
-		${mess}
-	</div>
+	</div><br/><br/>
+	
+	<table>
+		<tr>
+			<td class="label">
+				Analysis axis :
+			</td>
+			<td>
+				<select style="width: 300px;" name="factors" id="factors">				
+		        	<option py:for="s in root_factor" py:content="s['name']">${s['name']}</option>
+		        </select>
+			</td>
+		</tr>
+	</table><br/>
+	<table name="item_list" id="graph_item_list">
+		<tr>
+			<td class="label">
+				List of ERP :
+			</td>
+			<td py:for="label in titles">
+				<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button type="button" class="button" onclick="radarData()">Show Graph</button>
+			</td>
+		</tr>
+	</table><br/>	
+	<div id="radar_chart"></div>
 </body>
 </html>
 	

@@ -1,18 +1,19 @@
-//function selection(id) {
-//	var elem = document.getElementById(id);
-//    elem.style.display = '';
-//}
-//
-//function open_comparison(id) {
-//	var elem = document.getElementById(id);
-//    elem.style.display = elem.style.display == 'none' ? '' : 'none';
-//}
-//
-//function close_comparison(id) {
-//	var elem = document.getElementById(id);
-//    elem.style.display = 'none';
-//}
 
+function radarData() {
+	ids = getSelectedItems();
+	ids = map(function(r){return r.id;}, ids);
+	ids = '[' + ids.join(', ') + ']';
+	load_radar(ids);
+}
+
+function getSelectedItems() {
+	tbl = document.getElementById('graph_item_list');
+	return filter(function(box){
+		if (box.checked) {
+        	return box.id;
+       	}
+	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
+}
 
 function getRecords() {
 	ids = getSelectedItems();
@@ -40,6 +41,73 @@ function change_vote(id) {
 	openWindow(getURL('/comparison/voting', {id: id}), {width: 500, height: 350});
 }
 
+function add_factor(id) {
+	params = [];
+	
+	params['id'] = id;
+	var req = Ajax.post('/comparison/add_factor', params);
+	req.addCallback(function(xmlHttp) {
+		
+		var d = window.mbox.content;
+		d.innerHTML = xmlHttp.responseText;
+		
+		window.mbox.width = 450;
+        window.mbox.height = 300;
+        
+        window.mbox.onUpdate = add_new_factor;
+		window.mbox.show();
+	});
+	
+}
+
+function add_new_factor() {
+	treenode = comparison_tree.selection_last;
+	params = [];
+	
+	params['id'] = $('id').value;
+	params['model'] = 'comparison.factor';
+	params['factor_id'] = $('factor_id').value;
+	params['parent_name'] = $('parent_name').value;
+	params['parent_id'] = $('parent_id').value;
+	params['ponderation'] = $('ponderation').value;
+	params['type'] = $('type').value;
+	
+	params['ids'] = [];
+	params['fields'] = [];
+	
+	var req = Ajax.JSON.post('/comparison/data', params);
+    req.addCallback(function(obj){
+    	log(obj.record);
+//    	if(obj.res) {
+//    		window.mbox.hide();
+//    		forEach(treenode.childNodes, function(y){
+//    			y.update();
+//    		});
+//    		treenode.update();
+//    		
+//    	}
+    	if (obj.error) {
+            return alert(obj.error);
+        }
+    });
+	
+}
+
+var onUpdate = function(){
+    window.mbox.onUpdate();
+}
+
+MochiKit.DOM.addLoadEvent(function(evt){
+
+    window.mbox = new ModalBox({
+        title: 'Evaluation Matrix...',
+        buttons: [
+            {text: 'Save', onclick: onUpdate},
+        ]
+    });
+
+});
+
 function open_item_vote(id, header) {
 	
 	params = [];
@@ -52,28 +120,13 @@ function open_item_vote(id, header) {
 		var d = window.mbox.content;
 		d.innerHTML = xmlHttp.responseText;
 		
-		window.mbox.width = 500;
-        window.mbox.height = 340;
+		window.mbox.width = 600;
+        window.mbox.height = 400;
         
         window.mbox.onUpdate = item_vote;
 		window.mbox.show();
 	});
 }
-
-var onUpdate = function(){
-    window.mbox.onUpdate();
-}
-
-MochiKit.DOM.addLoadEvent(function(evt){
-
-    window.mbox = new ModalBox({
-        title: 'Voting...',
-        buttons: [
-            {text: 'Save', onclick: onUpdate},
-        ]
-    });
-
-});
 
 function item_vote() {
 	
@@ -128,3 +181,17 @@ function item_vote() {
 	
 	*/
 }
+
+function load_radar(ids) {
+	
+	factor_name= $('factors').value;
+	factor_name = factor_name.replace(/&/, "@");
+	
+	list = urlEncode('/graph/radar?ids='+ids+'&factor_name='+factor_name);
+	
+	swfobject.embedSWF("/static/open-flash-chart.swf", "radar_chart", "700", "700",
+						"9.0.0", "expressInstall.swf", {'data-file': list});
+}
+
+
+
