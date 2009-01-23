@@ -21,7 +21,7 @@
 ##############################################################################
 
 
-import etl
+from etl import etl
 
 class control_count(etl.component):
     """
