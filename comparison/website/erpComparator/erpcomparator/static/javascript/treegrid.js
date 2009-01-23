@@ -261,6 +261,9 @@ TreeNode.prototype = {
             if (i == 0) { // first column
     
                 var tds = [];
+                
+                //new_factor = IMG({'src': '/static/images/treegrid/gtk-edit.png', 'onclick': 'javascript: add_factor(' + record.id + ')', 'style': 'text-align: right; cursor: pointer;', 'width' : 16, 'height' : 16});
+                //tds.push(new_factor);
     
                 for(var i = 0; i < indent; i++){
                     tds.push(SPAN({'class' : 'indent'}));
@@ -308,9 +311,6 @@ TreeNode.prototype = {
                 }
                     
                 tds.push(value);
-                
-                //new_factor = IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right;', 'width' : 16, 'height' : 16});
-                //tds.push(new_factor);
                 
                 tds = map(function(x){return TD(null, x)}, tds);
     
