@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-import etl
+from etl import etl
 import time
 
 class sleep(etl.component):

@@ -21,7 +21,7 @@
 ##############################################################################
 
 
-import etl
+from etl import etl
 import csv
 
 class csv_in(etl.component):

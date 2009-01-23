@@ -21,8 +21,8 @@
 ##############################################################################
 
 
-import etl
-
+from etl import etl
+import sys
 class logger(etl.component):
     """
         This is an ETL Component that use to display log detail in streamline.
