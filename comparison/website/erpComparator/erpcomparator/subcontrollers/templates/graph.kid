@@ -48,7 +48,7 @@
 			</td>
 			<td>
 				<select style="width: 300px;" name="factors" id="factors">				
-		        	<option py:for="s in root_factor" py:content="s['name']">${s['name']}</option>
+		        	<option py:for="s in root_factor" py:content="s['name']" selected="${tg.selector(s['name']==selected_fact)}">${s['name']}</option>
 		        </select>
 			</td>
 		</tr>

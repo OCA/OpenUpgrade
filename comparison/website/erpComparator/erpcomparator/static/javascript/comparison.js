@@ -193,5 +193,11 @@ function load_radar(ids) {
 						"9.0.0", "expressInstall.swf", {'data-file': list});
 }
 
-
+function on_radar_click(index){
+	
+	factor_name= $('factors').value;
+	factor_name = factor_name.replace(/&/, "@");
+	
+	window.location.href = '/graph?factor_index='+index+'&parent_name='+factor_name;
+}
 
