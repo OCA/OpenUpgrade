@@ -21,7 +21,7 @@
 ##############################################################################
 
 
-import etl
+from etl import etl
 
 class diff(etl.component):
     """

@@ -7,10 +7,15 @@
 		<b>${item_id}</b>
 	</div>
 	
-	<table id="voting">
+	<table id="voting" align="center">
 		<tr style="border: 1px solid #999999">
 			<th class="label" style="text-align: left;">Factor Name</th>
 			<th class="label" style="text-align: left;">Goodness</th>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<hr/>
+			</td>
 		</tr>
 		<tr py:for="ch in child" id="${ch['id']}_row" class="factor_row">
 			<td id="${ch['id']}_col" class="factor_col">

@@ -21,8 +21,8 @@
 ##############################################################################
 
 
-import etl
-
+from etl import etl
+import sys
 class logger_bloc(etl.component):
     """
         This is an ETL Component that use to display log detail in end of process.

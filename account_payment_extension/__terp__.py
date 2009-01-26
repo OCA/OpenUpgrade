@@ -2,7 +2,7 @@
 {
     "name" : "Account Payment Extension",
     "version" : "1.1",
-    "author" : "Zikzakmedia SL y Pablo Rocandio",
+    "author" : "Zikzakmedia SL",
     "category" : "Generic Modules/Accounting",
     "website" : "http://www.zikzakmedia.com",
     "description": """Account payment extension.
@@ -17,6 +17,7 @@ This module extends the account_payment module with a lot of features:
     * Two types of payment orders: Payable payment orders (from supplier invoices) and receivable payment orders (from client invoices). So we can make payment orders to receive the payments of our client invoices. Each payment order type has its own sequence.
     * The payment orders allow negative payment amounts. So we can have payment orders for supplier invoices (pay money) and refund supplier invoices (return or receive money). Or for client invoices (receive money) and refund client invoices (return or pay money).
     * Payment orders: Selected invoices are filtered by payment type, the second message communication can be set at the same time for several invoices.
+Based on previous work of Pablo Rocandio & Zikzakmedia (version for 4.2).
 """,
     "depends" : [
         "base",
@@ -32,7 +33,5 @@ This module extends the account_payment module with a lot of features:
         ],
     "active": False,
     "installable": True,
-
 }
-
 

@@ -21,15 +21,13 @@
 ##############################################################################
 
 """
-ETL Transform Components:
-* sort : sort operation 
-* diff : find diff between source component data and destionation component data
-* logger_bloc : write log detail in output stream in block
-* logger : write log detail in outout stream in streamline
-
+ETL Components:
+* diff
+* sort
+* logger_bloc
+* logger
 """
-import sort
 import diff
+import sort
 import logger_bloc
 import logger
-
