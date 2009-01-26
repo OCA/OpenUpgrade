@@ -321,14 +321,14 @@ class wizard_import_gnucash(wizard.interface):
         # now we determine the file format
         fileobj.seek(0)
         try:
-		gch=GCHandler(cr,uid)
-		gch.def_book=form['account']
-		handler = gnccontent.GCContent(gch);
-		sax.parse(fileobj,handler)
-	except sax._exceptions.SAXParseException as exc:
-		raise Exception("Parse exception: %s at %d,%d\n" % (exc.getMessage(), exc.getLineNumber(),exc.getColumnNumber()))
-	finally:
-		fileobj.close()
+            gch=GCHandler(cr,uid)
+            gch.def_book=form['account']
+            handler = gnccontent.GCContent(gch);
+            sax.parse(fileobj,handler)
+        except sax._exceptions.SAXParseException, exc:
+            raise Exception("Parse exception: %s at %d,%d\n" % (exc.getMessage(), exc.getLineNumber(),exc.getColumnNumber()))
+        finally:
+            fileobj.close()
         return {}
 
     states={
