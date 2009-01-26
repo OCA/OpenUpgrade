@@ -25,7 +25,11 @@
     "version" : "1.0",
     "depends" : ["base","product"],
     "init_xml" : [],
-    "update_xml" : ["security/ir.model.access.csv", "custom_view.xml", "custom_report.xml"],
+    "update_xml" : [
+        #"security/ir.model.access.csv",
+        "custom_view.xml",
+        "custom_report.xml",
+    ],
     "category" : "Enterprise Specific Modules/Travel Agencies",
     "active": False,
     "installable": True
