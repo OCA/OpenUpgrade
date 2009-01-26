@@ -79,7 +79,7 @@ ModalBox.prototype = {
     show : function() {
 
         //setElementDimensions(this.overlay, elementDimensions(document.body));
-        MochiKit.DOM.setElementDimensions(this.overlay, {'w': document.body.clientWidth, 'h': document.body.clientHeight});//MochiKit.DOM.getViewportDimensions());
+        MochiKit.DOM.setElementDimensions(this.overlay, {'w': document.body.clientWidth, 'h': document.body.clientHeight});
 
         var w = this.width || 0;
         var h = this.height || 0;

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <!--****************************** SALE ORDER ****************************-->
+
+    <record model="ir.ui.view" id="view_sale_paytype_sale_order_form_tp">
+        <field name="name">sale.order.form.sale_paytype</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+                <field name="fiscal_position" position="after">
+                    <field name="payment_type" on_change="onchange_paytype_id(payment_type, partner_id)" select="2"/>
+                    <field name="partner_bank" domain="[('partner_id','=',partner_id)]"/>
+                </field>
+        </field>
+    </record>
+
+</data>
+</openerp>

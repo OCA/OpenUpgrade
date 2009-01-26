@@ -55,12 +55,6 @@ class Comparison(controllers.Controller):
         res = proxy_item.read(item_ids, ['name'])
         titles = []
         
-#        change_pond = {}
-#       
-#        change_pond['name'] = "icon"
-#        change_pond['type'] = "image"
-#        self.headers += [change_pond]
-        
         for r in res:
             title = {}
             title['sel'] = None
@@ -118,6 +112,28 @@ class Comparison(controllers.Controller):
 
         return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
     
+    @expose(template="erpcomparator.subcontrollers.templates.new_factor")
+    def add_factor(self, **kw):
+        
+        id = kw.get('id')
+        error = ''
+        p_name = 'No Parent'
+        
+        model = "comparison.factor"
+        proxy = rpc.RPCProxy(model)
+        res = proxy.read([id], ['id', 'parent_id'])
+        parent = res[0].get('parent_id')
+        
+        p_id = res[0]['id']
+        
+        if parent:
+            p_name = parent[1]
+            
+        count = range(0, 21)
+        count = [c/float(10) for c in count]
+        
+        return dict(error=error, count=count, parent_id=p_id, parent_name=p_name)
+    
     @expose(template="erpcomparator.subcontrollers.templates.voting")
     def voting(self, **kw):
         
@@ -162,12 +178,12 @@ class Comparison(controllers.Controller):
     def item_voting(self, **kw):
         
         id = kw.get('id')
+        item_id = kw.get('header')
         
         fmodel = "comparison.factor"
         proxy = rpc.RPCProxy(fmodel)
         fres = proxy.read([id])
         
-        item_id = kw.get('header')
         factor_id = fres[0]['name']
         child_ids =  fres[0]['child_ids']
         
@@ -215,10 +231,21 @@ class Comparison(controllers.Controller):
         return dict(res=res, item_id=item_id, value_name=value_name, id=id, show_header_footer=False, error="")
     
     @expose('json')
-    def data(self, ids, model, fields, field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc"):
+    def data(self, model, ids=[], fields=[], field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc",
+             id=None, factor_id=None, ponderation=None, parent_id=None, parent_name=None, type=''):
 
         ids = ids or []
         
+        if id:
+            res = None            
+            new_fact_proxy = rpc.RPCProxy(model)
+            
+            try:
+                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': 1, 
+                                         'ponderation': ponderation, 'type': type})
+            except Exception, e:
+                return dict(error=str(e))
+            
         if isinstance(ids, basestring):
             ids = [int(id) for id in ids.split(',')]
 
@@ -311,11 +338,11 @@ class Comparison(controllers.Controller):
 #                   else:
 #                        item['icon'] = "/static/images/treegrid/gtk-edit.png"
             
-            record['id'] = item.pop('id')
+            record['id'] = item.pop('id') or id
             record['target'] = None
 
             if item['ponderation']:
-                item['ponderation'] = item['ponderation'] # + '|' + "javascript:change_vote(id=%s)" % (record['id'])
+                item['ponderation'] = item['ponderation'] or ponderation# + '|' + "javascript:change_vote(id=%s)" % (record['id'])
 
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)
