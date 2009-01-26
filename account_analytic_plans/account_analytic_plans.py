@@ -163,7 +163,7 @@ class account_analytic_plan_instance(osv.osv):
                     i+=1
                 res['arch'] += "</form>"
                 doc = dom.minidom.parseString(res['arch'])
-                xarch, xfields = self._view_look_dom_arch(cr, uid, doc, context=context)
+                xarch, xfields = self._view_look_dom_arch(cr, uid, doc, view_id, context=context)
                 res['arch'] = xarch
                 res['fields'] = xfields
             return res
@@ -258,8 +258,8 @@ class account_invoice_line(osv.osv):
         res ['analytics_id']=line.analytics_id and line.analytics_id.id or False
         return res
 
-    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, price_unit=False, address_invoice_id=False, context={}):
-        res_prod = super(account_invoice_line,self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, price_unit, address_invoice_id, context)
+    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False, context={}):
+        res_prod = super(account_invoice_line,self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, fposition, price_unit, address_invoice_id, context)
         rec = self.pool.get('account.analytic.default').account_get(cr, uid, product, partner_id, uid, time.strftime('%Y-%m-%d'), context)
         if rec and rec.analytics_id:
             res_prod['value'].update({'analytics_id':rec.analytics_id.id})

@@ -23,7 +23,7 @@ from osv import fields, osv
 import time
 import datetime
 import pooler
-from tools import ustr
+import tools
 
 class project_work(osv.osv):
     _inherit = "project.task.work"
@@ -55,7 +55,7 @@ class project_work(osv.osv):
         vals_line['general_account_id'] = a
         vals_line['journal_id'] = emp.journal_id.id
 
-        vals_line['name'] = '%s: %s' % (obj_task.name, ustr(vals['name']) or '/')
+        vals_line['name'] = '%s: %s' % (tools.ustr(obj_task.name), tools.ustr(vals['name']) or '/')
         vals_line['user_id'] = vals['user_id']
         vals_line['date'] = vals['date'][:10]
         vals_line['unit_amount'] = vals['hours']
@@ -78,7 +78,7 @@ class project_work(osv.osv):
         if line_id in list_avail_ids:
             obj = self.pool.get('hr.analytic.timesheet')
             if 'name' in vals:
-                vals_line['name'] = '%s: %s' % (task.name, ustr(vals['name']) or '/')
+                vals_line['name'] = '%s: %s' % (task.name, tools.ustr(vals['name']) or '/')
             if 'user_id' in vals:
                 vals_line['user_id'] = vals['user_id']
             if 'date' in vals:
