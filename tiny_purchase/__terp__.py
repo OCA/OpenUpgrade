@@ -27,7 +27,12 @@
     "depends": ['base',],
     "category": "Generic Modules/Tiny Purchase",
     "init_xml": [],
-    "update_xml": ["security/ir.model.access.csv","tiny_purchase_view.xml","tiny_purchase_workflow.xml","tiny_purchase_report.xml",],
+    "update_xml": [
+        #"security/ir.model.access.csv",
+        "tiny_purchase_view.xml",
+        "tiny_purchase_workflow.xml",
+        "tiny_purchase_report.xml",
+    ],
     "demo_xml": ["tiny_purchase_demo.xml",],
     "active": False,
     "installable": True,
