@@ -68,23 +68,27 @@ function add_new_factor() {
 	treenode = comparison_tree.selection_last;
 	params = [];
 	
-	params['new_id'] = $('id').value;
 	params['model'] = 'comparison.factor';
 	params['factor_id'] = $('factor_id').value;
 	params['parent_name'] = $('parent_name').value;
 	params['parent_id'] = $('parent_id').value;
 	params['ponderation'] = $('ponderation').value;
-	params['type'] = $('type').value;
+	params['ftype'] = $('type').value;
 	
 	params['ids'] = [];
 	params['fields'] = [];
 	
 	var req = Ajax.JSON.post('/comparison/data', params);
     req.addCallback(function(obj){
-    	log("obj..rec.."+obj.records)
     	if(obj.records) {
     		window.mbox.hide();
-			//comparison_tree.reload();
+    		try {
+    			var node = comparison_tree.createNode(obj.records[0]);
+        		treenode.appendChild(node);
+    		}
+        	catch(e) {
+        		alert(e);
+        	}
     	}
     	if (obj.error) {
             return alert(obj.error);

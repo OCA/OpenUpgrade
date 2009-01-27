@@ -265,8 +265,8 @@ TreeNode.prototype = {
 				show_graph = IMG({'src': '/static/images/treegrid/graph.png', 'onclick': 'javascript: view_graph(' + record.id + ')', 'style': 'text-align: right; cursor: pointer;', 'width' : 16, 'height' : 16});
                 tds.push(show_graph);
 				                
-                //new_factor = IMG({'src': '/static/images/treegrid/gtk-edit.png', 'onclick': 'javascript: add_factor(' + record.id + ')', 'style': 'text-align: right; cursor: pointer;', 'width' : 16, 'height' : 16});
-                //tds.push(new_factor);
+                new_factor = IMG({'src': '/static/images/treegrid/gtk-edit.png', 'onclick': 'javascript: add_factor(' + record.id + ')', 'style': 'text-align: right; cursor: pointer;', 'width' : 16, 'height' : 16});
+                tds.push(new_factor);
     
                 for(var i = 0; i < indent; i++){
                     tds.push(SPAN({'class' : 'indent'}));
