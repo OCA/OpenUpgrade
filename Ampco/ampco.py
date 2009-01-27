@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -103,15 +103,16 @@ class sale_order_line(osv.osv):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
             uom=False,weight=0, qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True):
+            lang=False, update_tax=True,fiscal_position=False):
 
-        datas = super(sale_order_line,self).product_id_change(cr, uid, ids, pricelist, product, qty=0,uom=False,qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True)
+        datas = super(sale_order_line,self).product_id_change(cr, uid, ids, pricelist, product, qty=qty, uom=uom, qty_uos=qty_uos, uos=uos, name=name, partner_id=partner_id,
+            lang=lang, update_tax=update_tax, fiscal_position=fiscal_position)
         if qty:
             datas['value']['th_weight'] = weight * qty
         else:
             datas['value']['th_weight'] = weight * qty_uos
         return datas
+
 sale_order_line()
 
 
