@@ -124,9 +124,8 @@ class Comparison(controllers.Controller):
         res = proxy.read([id], ['id', 'parent_id'])
         parent = res[0].get('parent_id')
         
-        p_id = res[0]['id']
-        
         if parent:
+            p_id = parent[0]
             p_name = parent[1]
             
         count = range(0, 21)
@@ -193,7 +192,9 @@ class Comparison(controllers.Controller):
             chd = proxy.read([ch])
             chid['name'] = chd[0]['name']
             chid['id'] = ch
-            child += [chid]
+            chid['type'] = chd[0]['type']
+            if chid['type'] == 'criterion':
+                child += [chid]
         
         vproxy = rpc.RPCProxy('comparison.vote.values')
         val = vproxy.search([])
@@ -232,14 +233,13 @@ class Comparison(controllers.Controller):
     
     @expose('json')
     def data(self, model, ids=[], fields=[], field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc",
-             id=None, factor_id=None, ponderation=None, parent_id=None, parent_name=None, type=''):
+             new_id=None, factor_id=None, ponderation=None, parent_id=None, parent_name=None, type=''):
 
         ids = ids or []
+        res = None
         
-        if id:
-            res = None            
+        if new_id: 
             new_fact_proxy = rpc.RPCProxy(model)
-            
             try:
                 res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': 1, 
                                          'ponderation': ponderation, 'type': type})
@@ -334,11 +334,12 @@ class Comparison(controllers.Controller):
                             item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1])
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
                             item[r.get('item_id')[1]] += '-' + "bold"
-
-#                   else:
-#                        item['icon'] = "/static/images/treegrid/gtk-edit.png"
             
-            record['id'] = item.pop('id') or id
+            if res:
+                record['id'] = res
+            else:
+                record['id'] = item.pop('id') or id
+            
             record['target'] = None
 
             if item['ponderation']:
