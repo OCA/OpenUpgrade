@@ -23,7 +23,23 @@
 """
 ETL Connectors:
 * File Access
-* DB Connection
-* Open Object Interfaces
 """
-import file_connector
+from etl import etl
+
+class file_connector(etl.connector):
+    def __init__(self,host,port,uid,pwd,connection_type,path,*args, **argv):
+        super(file_connector, self).__init__(*args, **argv)
+        self.connection_type=connection_type
+        self.path=path      
+        self.connection_string=connection_type+'://'+uid+':'+pwd+'@'+host+':'+port+'/'+path  
+        self.file=False
+    def __init__(self,connection_string,*args, **argv):
+        super(file_connector, self).__init__(*args, **argv)
+        self.connection_string=connection_string
+    def open(self,mode='r'):
+        super(file_connector, self).open(mode)
+        self.file=open(self.connection_string,mode)    
+        return self.file
+    def close(self):
+        super(file_connector, self).close()
+        self.file.close()    

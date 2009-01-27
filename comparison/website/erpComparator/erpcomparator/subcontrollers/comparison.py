@@ -88,7 +88,6 @@ class Comparison(controllers.Controller):
                 fields += [field['name']]
                 
         fields = jsonify.encode(fields)
-        
         icon_name = self.headers[0].get('icon')
         
         self.url = '/comparison/data'
@@ -123,9 +122,10 @@ class Comparison(controllers.Controller):
         proxy = rpc.RPCProxy(model)
         res = proxy.read([id], ['id', 'parent_id'])
         parent = res[0].get('parent_id')
+        p_id = id
         
         if parent:
-            p_id = parent[0]
+#            p_id = parent[0]
             p_name = parent[1]
             
         count = range(0, 21)
@@ -233,21 +233,25 @@ class Comparison(controllers.Controller):
     
     @expose('json')
     def data(self, model, ids=[], fields=[], field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc",
-             new_id=None, factor_id=None, ponderation=None, parent_id=None, parent_name=None, type=''):
+             factor_id=None, ponderation=None, parent_id=None, parent_name=None, ftype=''):
 
         ids = ids or []
-        res = None
-        
-        if new_id: 
-            new_fact_proxy = rpc.RPCProxy(model)
-            try:
-                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': 1, 
-                                         'ponderation': ponderation, 'type': type})
-            except Exception, e:
-                return dict(error=str(e))
             
         if isinstance(ids, basestring):
             ids = [int(id) for id in ids.split(',')]
+            
+        res = None
+        
+        if parent_id:
+            
+            new_fact_proxy = rpc.RPCProxy(model)
+            try:
+                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': 1, 
+                                         'ponderation': ponderation, 'type': ftype})
+                ids = [res]
+            
+            except Exception, e:
+                return dict(error=str(e))
 
         if isinstance(fields, basestring):
             fields = eval(fields)
@@ -268,7 +272,10 @@ class Comparison(controllers.Controller):
 
         if icon_name:
             fields.append(icon_name)
-
+        
+        if not fields:
+            fields = ['name', 'ponderation', 'child_ids']
+        
         fields_info = proxy.fields_get(fields, ctx)
         result = proxy.read(ids, fields, ctx)
         
@@ -339,7 +346,7 @@ class Comparison(controllers.Controller):
                 record['id'] = res
             else:
                 record['id'] = item.pop('id') or id
-            
+                
             record['target'] = None
 
             if item['ponderation']:
@@ -353,13 +360,16 @@ class Comparison(controllers.Controller):
                     record['action'] = None
 
             record['children'] = []
+            
+            if item['child_ids']:
+                record['children'] = item.pop('child_ids') or None
 
             if field_parent and field_parent in item:
                 record['children'] = item.pop(field_parent) or None
-                
+            
             record['items'] = item
             records += [record]
-            
+        
         return dict(records=records)
     
     def parse(self, root, fields=None):
