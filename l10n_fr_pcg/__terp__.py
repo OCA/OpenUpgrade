@@ -31,9 +31,10 @@
     "author" : "Simon JAILLET - CrysaLEAD",
     "website": "http://www.crysalead.com",
     "category" : "Localisation/Account Charts",
-    "description": """This is the module to manage the accounting chart for France in Open ERP.
+    "description": """This module is deprecated... Please use l10n_fr from the addons instead.
 
-Credits: Sistheo Zeekom CrysaLEAD
+Thanks.
+
 """,
     "depends" : ['base', 'account', 'account_chart', 'base_vat'],
     "init_xml" : [
@@ -50,7 +51,7 @@ Credits: Sistheo Zeekom CrysaLEAD
     ],
     "demo_xml" : [],
     "active": False,
-    "installable": True
+    "installable": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
