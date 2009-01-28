@@ -41,6 +41,10 @@ function change_vote(id) {
 	openWindow(getURL('/comparison/voting', {id: id}), {width: 500, height: 350});
 }
 
+function view_graph(id) {
+	window.location.href = '/graph?id=' + id;
+}
+
 function add_factor(id) {
 	params = [];
 	
@@ -64,28 +68,28 @@ function add_new_factor() {
 	treenode = comparison_tree.selection_last;
 	params = [];
 	
-	params['id'] = $('id').value;
 	params['model'] = 'comparison.factor';
 	params['factor_id'] = $('factor_id').value;
 	params['parent_name'] = $('parent_name').value;
 	params['parent_id'] = $('parent_id').value;
 	params['ponderation'] = $('ponderation').value;
-	params['type'] = $('type').value;
+	params['ftype'] = $('type').value;
 	
 	params['ids'] = [];
 	params['fields'] = [];
 	
 	var req = Ajax.JSON.post('/comparison/data', params);
     req.addCallback(function(obj){
-    	log(obj.record);
-//    	if(obj.res) {
-//    		window.mbox.hide();
-//    		forEach(treenode.childNodes, function(y){
-//    			y.update();
-//    		});
-//    		treenode.update();
-//    		
-//    	}
+    	if(obj.records) {
+    		window.mbox.hide();
+    		try {
+    			var node = comparison_tree.createNode(obj.records[0]);
+        		treenode.appendChild(node);
+    		}
+        	catch(e) {
+        		alert(e);
+        	}
+    	}
     	if (obj.error) {
             return alert(obj.error);
         }

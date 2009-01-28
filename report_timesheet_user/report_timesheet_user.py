@@ -21,6 +21,8 @@
 ##############################################################################
 
 from osv import fields,osv
+import tools.sql
+
 
 class  report_timesheet_user_user(osv.osv):
     _name = "report.timesheet.user.user"
@@ -35,6 +37,7 @@ class  report_timesheet_user_user(osv.osv):
         'user_id':fields.many2one('res.users','User',readonly=True)
     }
     def init(self, cr):
+        tools.sql.drop_view_if_exists(cr, 'report_timesheet_user')
         cr.execute("""
         create or replace view report_timesheet_user_user as (
             select

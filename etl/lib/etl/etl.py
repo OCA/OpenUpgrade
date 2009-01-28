@@ -37,6 +37,9 @@ class component(object):
         self.data = {}
         self.generator = None
 
+    def __str__(self):
+        return self.data
+
     def generator_get(self, transition):
         """ Get generator list of transition
         """
@@ -99,10 +102,46 @@ class job(object):
     """
     def __init__(self,outputs=[]):
         self.outputs=outputs
+    def __str__(self):
+		pass
 
     def run(self):
         for c in self.outputs:
             for a in c.channel_get():
                 pass
+
+class connector(object):
+    """
+        Base class of ETL Connector.
+    """
+    def __init__(self,*args,**argv):
+        self.host=argv.get('host',False)
+        self.port=argv.get('port',False)
+        self.uid=argv.get('uid',False)
+        self.pwd=argv.get('pwd',False)
+        self.connection_string=argv.get('connection_string',False)
+        self.connection_type=argv.get('connection_type',False)
+    def open(self,mode=False):
+        return True
+    def __str__(self):        
+        return self.connection_string
+    def close(self):
+        return True
+
+
+#def test1(file_path):
+#    csv_in1= etl.component.input.csv_in.csv_in(file_path)
+#    log1=etl.component.transform.logger.logger(name='Read File')
+#    tran=etl.etl.transition(csv_in1,log1)
+#    job1=etl.etl.job([log1])
+#    job1.run()
+
+
+#if __name__ == '__main__':
+#    test1()
+
+
+
+
 
 
