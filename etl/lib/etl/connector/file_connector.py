@@ -36,9 +36,10 @@ class file_connector(etl.connector):
     def __init__(self,connection_string,*args, **argv):
         super(file_connector, self).__init__(*args, **argv)
         self.connection_string=connection_string
-    def open(self,mode='r'):
+    def open(self,mode='r',bufsize=-1,encoding='utf-8'):
         super(file_connector, self).open(mode)
-        self.file=open(self.connection_string,mode)    
+        self.file=open(self.connection_string,mode,bufsize)    
+        #self.file.encoding=encoding
         return self.file
     def close(self):
         super(file_connector, self).close()

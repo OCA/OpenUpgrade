@@ -299,6 +299,174 @@ td.item .radio {
 }
 
 
+/* ================================================ */
+
+#site {
+	background: transparent url(/static/images/white_shadow_bg.gif) repeat-y scroll left top;
+	margin: 0 auto;
+	padding: 0 18px;
+	/*text-align: left;*/
+	width: 930px;
+}
+
+#header {
+	background: transparent url(/static/images/headerimage.jpg) repeat-y scroll left top;) repeat-y scroll 0 0;
+	height:108px;
+	position:relative;
+	width:890px;
+}
+
+#header_bar {
+	/*height:40px;*/
+	position:relative;
+	width:890px;
+	height:39px;
+	background-attachment: scroll;
+	background-color: transparent;
+	background-image: url(/static/images/loginbg.gif);
+	background-repeat: no-repeat;
+	background-position: left top;
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 11px;
+	color: #00C1C0;
+	text-align: left;
+	vertical-align: bottom;
+}
+
+#body_color {
+	height:483px;
+	position:relative;
+	width:830px;
+	background-attachment: scroll;
+	background-image: url(/static/images/bgcolorimage.gif);
+	background-repeat: repeat-y;
+	visibility: inherit;	
+}
+
+#bodybackground {
+	background-attachment: scroll;
+	background-image: url(/static/images/bodybg.gif);
+	width:890px;
+	height:auto;
+	/*padding-left:20px;
+	padding-right:20px;*/
+}
+	
+#bodytextbg {
+	background-attachment: scroll;
+	height:30px;
+	background-repeat: no-repeat;
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-weight:normal;
+	font-size: 11px;
+	padding-top:20px;
+	padding-left:20px;
+	color:#353433;
+	width:830px;
+	background-image: url(/static/images/bluebgimage.png);
+}
+
+#footerbg {
+	background-image: url(/static/images/footerbg.gif);
+	width:890px;
+	height:26;
+}
+
+#newtext {
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 11px;
+	padding-top:5px;
+	padding-left:20px;
+}
+
+#checkboxtext {
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-size: 11px;
+	padding-left:20px;
+	padding-bottom:10px;
+	padding-top:10px;
+}
+
+#loginbg {
+	background-image:url(/static/images/bk_loginimage.png);
+	background-repeat:no-repeat;
+	float:right;
+	height:39px;
+	padding-right:10px;
+	width:420px;
+}
+	
+#s {
+	background:#FFFFFF none repeat scroll 0 0;
+	border:1px solid #EEAA22;
+	font-size:11px;
+	margin:3px;
+	padding:2px;
+	width:50px;
+}
+
+#bluebg {
+	background-image:url(/static/images/bluebgimage.png) no-repeat;
+	background-attachment: scroll;
+}
+
+/*#textInput1 {
+	background:#555555 none repeat scroll 0 0;
+	border:1px solid #FF0000;
+	color:#FFFFFF;
+	font-size:8px;
+	margin-left:60px;
+	width: 50px;
+}*/
+
+.rollover :hover {
+	background:url(/static/images/graphs_03.jpg);
+}
+
+.textInput {
+	border: 1px solid #d1d1d1;
+	background: #ffffff;
+	width:100px;
+	color: #ffffff;
+	font-size: 1.1em;
+}
+
+#bottom_shadow {
+	background:transparent url(/static/images/bottom_shadow2.png) no-repeat scroll left top;
+	height:23px;
+	margin:0 auto;
+	width:926px;
+}
+
+#footertext {
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color:#524f4f;
+	font-size: 11px;
+	text-align:centre;
+}
+
+#footertext a:hover {
+	text-decoration:underline;
+}
+
+#footertext a, #footer a:visited {
+	color:#990000;
+	font-style:bold;
+	font-size:12px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	text-decoration:none;
+} 
+
+
 /**
  * vim: sts=4 st=4 et 
  *

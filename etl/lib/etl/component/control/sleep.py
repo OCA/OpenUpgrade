@@ -19,7 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+"""
+   This is ETL Component to put job process in sleep.
+"""
 from etl import etl
 import time
 
