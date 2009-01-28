@@ -129,16 +129,17 @@ class connector(object):
         return True
 
 
-#def test1(file_path):
-#    csv_in1= etl.component.input.csv_in.csv_in(file_path)
-#    log1=etl.component.transform.logger.logger(name='Read File')
-#    tran=etl.etl.transition(csv_in1,log1)
-#    job1=etl.etl.job([log1])
-#    job1.run()
+def test1():
+    fileconnector=etl.connector.file_connector.file_connector('demo/data/partner.csv')
+    csv_in1= etl.component.input.csv_in.csv_in(fileconnector=fileconnector)
+    log1=etl.component.transform.logger.logger(name='Read Partner File')
+    tran=etl.etl.transition(csv_in1,log1)
+    job1=etl.etl.job([log1])
+    job1.run()
 
 
-#if __name__ == '__main__':
-#    test1()
+if __name__ == '__main__':
+    test1()
 
 
 
