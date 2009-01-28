@@ -50,24 +50,29 @@ class dm_ddf_plugin(osv.osv):
         
         document_ids = dm_document.search(cr,uid,[])
         documents = dm_document.browse(cr,uid,document_ids,['document_template_id','step_id'])
-
         for d in documents:
             order_id = dm_customer_order.search(cr,uid,[('offer_step_id','=',d.step_id.id)])
             order = dm_customer_order.browse(cr,uid,order_id)
-            customer_id = map(lambda x:x.customer_id.id,order)
+            customer_ids = map(lambda x:x.customer_id.id,order)
             plugins = d.document_template_id.plugin_ids
             for plugin in plugins:
                 path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins")
                 plugin_name = plugin.file_fname.split('.')[0]
+                arguments = plugin.argument_ids
+                args={}
+                for a in arguments:
+                    args[str(a.name)]=str(a.value)
                 import sys
                 sys.path.append(path)
                 X =  __import__(plugin_name)
                 plugin_func = getattr(X,plugin_name)
-                plugin_value = map(lambda x : (x,plugin_func(cr,uid,x),plugin.id),customer_id)
+                plugin_value = plugin_func(cr,uid,customer_ids,**args)
+#                plugin_value = map(lambda x : (x,plugin_func(cr,uid,x),plugin.id),customer_id)
+
                 map(lambda x :dm_customer_plugin.create(cr,uid,
-                            {'date':time.strftime('%d/%m/%Y'),
+                            {'date':time.strftime('%Y-%m-%d'),
                              'customer_id':x[0],
-                             'plugin_id':x[2],
+                             'plugin_id':plugin.id,
                              'value' : x[1]}),
                             plugin_value
                             )
@@ -107,8 +112,20 @@ class dm_ddf_plugin(osv.osv):
         'name' : fields.char('DDF Plugin Name', size=64),
         'file_id': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary"),
         'file_fname': fields.char('Filename',size=64),
+        'argument_ids' : fields.one2many('dm.plugin.argument', 'plugin_id', 'Argument List'),        
      }
 dm_ddf_plugin()
+
+class dm_plugin_argument(osv.osv):
+    _name = "dm.plugin.argument"
+    _description = "Argument List"
+#    _rec_name = "name"
+    _columns = {
+        'name' : fields.char('Argument Name', size=64,required=True),
+        'value' : fields.char('Argument Value', size=64),
+        'plugin_id' : fields.many2one('dm.ddf.plugin','Plugin')
+        }
+dm_plugin_argument()
 
 class dm_document_template(osv.osv):
     _name = "dm.document.template"
