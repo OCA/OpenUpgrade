@@ -4,11 +4,10 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Comparison</title>
-    
 </head>
 <body>
     <div id="site">
-		<div style="height: 46px; width: 890px; float: left;">
+	    <div style="height: 46px; width: 890px; float: left;">
 			<div style="float:left;width:9;">
 				<img src="/static/images/whitebg.gif" alt="" width="9" height="46"/>
 			</div>
@@ -17,7 +16,6 @@
 		    		<img src="/static/images/comparison.jpg" name="comparison_image" alt="" border="0" width="172" height="46"/>
 		    	</a>
 		    </div>
-		    
 		    <div style="float:left; width:175; height:46;">
 		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.jpg'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
 		    		<img src="/static/images/graphs.jpg" name="graph_image" alt="" border="0" width="175" height="46"/>
@@ -43,48 +41,17 @@
 		    </div>          
 		</div>
 		<div>
-			<div>
-				<img src="/static/images/bluebgimage.png"/>
-			</div>
-			<div id="checkboxtext">
-				<img src="/static/images/iconarrow.gif" align="absbottom" width="15" height="17"/> 
-					You can compare among following products :
-			</div>
-			<div id="checkboxtext">
-				<table name="item_list" id="item_list">
-					<tr py:if="selected_items">
-						<td py:for="label in titles">
-							<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}</input>
-						</td>
-					</tr>
-					<tr py:if="not selected_items">
-						<td py:for="label in titles">
-							<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div id="button">
-				<img src="/static/images/reload.jpg" style="cursor: pointer" onclick="getRecords()"/>
-			</div><br/>
-	    	
-		    <div id="open_comp" style="width:890px; overflow-x:scroll">
-				<span id="comparison_tree"/>
-				<script type="text/javascript">
-		        	var comparison_tree = new TreeGrid('comparison_tree');
-		        	
-		        	//comparison_tree.options.onbuttonclick = on_button_click;
-		        	comparison_tree.setHeaders(${ustr(headers)});
-		        	comparison_tree.setRecords('${url}', ${ustr(url_params)});
-		        	
-		        	comparison_tree.render();
-		        </script>
-			</div>
+			<img src="/static/images/bluebgimage.png"/>
 		</div>
+		<br/><br/>
+		
+		<table>
+			<tr>
+				<td>
+					${mess}
+				</td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>
-
-
-
-

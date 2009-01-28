@@ -45,16 +45,53 @@
 </head>
 
 <body py:match="item.tag=='{http://www.w3.org/1999/xhtml}body'" py:attrs="item.items()">
-
 	<table id="container" border="0" cellpadding="0" cellspacing="0">
     	<tr py:if="value_of('show_header_footer', True)">
         	<td>
-				<div class="headerdesign"></div>
+				<div id="site">
+					<div id="header"></div>
+					<div id="header_bar"> 
+						<div style="padding: 12px 20px; width: 35%; float: left;">
+							Based on<font color="#FF3300"><b>865</b></font>
+							criterions,<font color="#FF3300"><b> 2000 </b></font>
+							user's feedback
+						</div>
+						<div id="loginbg"> 
+					    	<div style="padding-top:5px;padding-left:10px;">
+					    			Login : 
+					      		<input type="text" class="textInput"/>
+					      			Password : 
+						      	<input type="text" class="textInput"/>
+					      		<input type="button" class="button" name="continue" value="Continue"/>
+					    	</div>
+						</div>
+					</div>
+				</div>
 			</td>
 		</tr>
 		<tr>
 			<td>
 				<div py:replace="[item.text]+item[:]"></div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div id="site">
+				<br/><br/>
+				<div align="center" id="footertext">
+					(c) 2008-TODAY - Copyright Evaluation-Matrix.com -
+					<font color="#990000">
+						<a href="mailto:info@evaluation-matrix.com" class ="a">
+							Contact us
+						</a>
+					</font> for more information.
+				</div>
+				
+				<div id="footerbg"></div>
+				<div>
+					<img src="/static/images/bottom_shadow2.png"/>
+				</div>
+				</div>
 			</td>
 		</tr>
 	</table>
