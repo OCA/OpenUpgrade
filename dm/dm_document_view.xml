@@ -59,6 +59,22 @@
                 <field name="name" select="1" colspan="4"/>
                 <field name="file_id" colspan="4" filename="file_fname"/>
                 <field name="file_fname"/>
+                <newline/>
+				<separator string="Argument List" colspan="4"/>
+				<field name="argument_ids" nolabel="1" colspan="4">
+					<form string="Argument List">
+		                <field name="name" select="1"/>
+		                <field name="value"/>
+					</form>
+					<form string="Argument List">
+		                <field name="name" select="1"/>
+		                <field name="value"/>
+					</form>
+					<tree string="Argument List">
+		                <field name="name" select="1"/>
+		                <field name="value"/>
+					</tree>					
+				</field>
 			</form>
         </field>
     </record>
