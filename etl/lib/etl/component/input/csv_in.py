@@ -22,24 +22,61 @@
 
 
 from etl import etl
+from etl.connector import file_connector
 import csv
 
 class csv_in(etl.component):
     """
         This is an ETL Component that use to read data from csv file.
        
-		Type: Data Component
-		Computing Performance: Streamline
-		Input Flows: 0
-		* .* : nothing
-		Output Flows: 0-x
-		* .* : return the main flow with data from csv file
+        Type: Data Component
+        Computing Performance: Streamline
+        Input Flows: 0
+        * .* : nothing
+        Output Flows: 0-x
+        * .* : return the main flow with data from csv file
     """
-    def __init__(self, filename, *args, **argv):
+    def __init__(self,connection_string, encoding='utf-8', column_separator=',', row_separator='\n', header_rows=1, footer_rows=0, row_limit=0,block_size=-1, *args, **argv):
         super(csv_in, self).__init__(*args, **argv)
-        self.filename = filename
+        self.fileconnector = file_connector.file_connector(connection_string)
+        self.column_separator=column_separator
+        self.row_separator=row_separator      
+        self.header_rows=header_rows
+        self.footer_rows=footer_rows
+        self.row_limit=row_limit 
+        self.row_count=0
+        self.encoding=encoding
+        self.block_size=block_size
+        self.fieldnames=[]          
 
+    
     def process(self):
-        fp = csv.DictReader(file(self.filename))
-        for row in fp:
-            yield row, 'main'
+        self.fp=self.fileconnector.open()        
+        row=[]
+        column=[] 
+        d={}                    
+        for data in self.fp.read(self.block_size): 
+            try:                        
+                if data==self.column_separator:                                
+                   row.append(''.join(column))
+                   column=[]
+                   continue                        
+                if data==self.row_separator: 
+                   row.append(''.join(column))
+                   self.row_count+=1
+                   if self.row_count <= self.header_rows :
+                       self.fieldnames=row
+                   if self.row_count > self.header_rows and (self.row_limit and self.row_count<=self.row_limit or True):
+                       row.reverse()
+                       for field in self.fieldnames:
+                           d[field]=row.pop()
+                       yield d,'main'             
+                   row=[]   
+                   column=[]        
+                   continue 
+                column.append(data) 
+            except Exception,e:                
+                yield e,'error'             
+               
+        self.fileconnector.close()
+

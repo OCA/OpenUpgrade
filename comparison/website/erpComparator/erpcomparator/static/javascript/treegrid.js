@@ -115,7 +115,7 @@ TreeGrid.prototype = {
     },
     
     createNode : function(record) {
-        return new TreeNode(this, record);  
+        return new TreeNode(this, record);
     },
     
     _makeHeader : function(){
@@ -261,9 +261,12 @@ TreeNode.prototype = {
             if (i == 0) { // first column
     
                 var tds = [];
-                
-                //new_factor = IMG({'src': '/static/images/treegrid/gtk-edit.png', 'onclick': 'javascript: add_factor(' + record.id + ')', 'style': 'text-align: right; cursor: pointer;', 'width' : 16, 'height' : 16});
-                //tds.push(new_factor);
+				
+				show_graph = IMG({'src': '/static/images/treegrid/graph.png', 'onclick': 'javascript: view_graph(' + record.id + ')', 'style': 'text-align: right; cursor: pointer;', 'width' : 16, 'height' : 16});
+                tds.push(show_graph);
+				                
+                new_factor = IMG({'src': '/static/images/treegrid/gtk-edit.png', 'onclick': 'javascript: add_factor(' + record.id + ')', 'style': 'text-align: right; cursor: pointer;', 'width' : 16, 'height' : 16});
+                tds.push(new_factor);
     
                 for(var i = 0; i < indent; i++){
                     tds.push(SPAN({'class' : 'indent'}));
