@@ -51,6 +51,7 @@
             <field name="arch" type="xml">
                 <form string="Comaparison Item">
                     <field name="name" select="1"/>
+                    <field name="code" select="1"/>
                     <field name="version"/>
                     <field name="user_id" select="1"/>
                     <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>

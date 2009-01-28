@@ -43,6 +43,7 @@ class comparison_item(osv.osv):
     _name = "comparison.item"
     _columns = {
         'name': fields.char('Software', size=64, required=True),
+        'code': fields.char('Code', size=4, required=True),
         'version': fields.char('Version', size=64, required=True),
         'note': fields.text('Description'),
         'user_id': fields.many2one('comparison.user','User'),
