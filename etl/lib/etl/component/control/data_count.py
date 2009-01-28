@@ -19,7 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+"""
+    ETL Data Count Control Component:
+    * calculate total of tranfering data
 
+"""
 
 from etl import etl
 

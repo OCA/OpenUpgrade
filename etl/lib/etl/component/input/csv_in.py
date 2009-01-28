@@ -19,7 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+"""
+This is an ETL Component that use to read data from csv file.
+"""
 
 from etl import etl
 from etl.connector import file_connector
@@ -36,7 +38,7 @@ class csv_in(etl.component):
         Output Flows: 0-x
         * .* : return the main flow with data from csv file
     """
-    def __init__(self,fileconnector=None, dialect='excel', row_limit=0,bufsize=-1,encoding='utf-8', *args, **argv):
+    def __init__(self,fileconnector, dialect='excel', row_limit=0,bufsize=-1,encoding='utf-8', *args, **argv):
         super(csv_in, self).__init__(*args, **argv)        
         self.fileconnector = fileconnector 
         self.dialect=dialect

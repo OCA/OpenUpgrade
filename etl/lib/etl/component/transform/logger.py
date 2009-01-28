@@ -19,7 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+"""
+   This is an ETL Component that use to display log detail in streamline.
+"""
 
 from etl import etl
 import sys
