@@ -46,7 +46,7 @@
             - Manage copywriters, brokers, dealers, addresses deduplicators and cleaners
 
             """,
-    "depends" : ["project_retro_planning","purchase","purchase_tender","base_language","document"],
+    "depends" : ["project_retro_planning","purchase","purchase_tender","base_language","document","sale"],
     "init_xml" : [ ],
     "demo_xml" : [
                     "dm_demo.xml"
