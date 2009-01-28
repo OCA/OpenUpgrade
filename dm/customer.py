@@ -68,6 +68,7 @@ dm_order()
 class dm_customer(osv.osv):
     _name = "dm.customer"
     _inherit = "res.partner"
+    _table = "res_partner"
 #    _rec_name = "firstname"
     _columns = {
 #        'code' : fields.char('Code',size=64),
