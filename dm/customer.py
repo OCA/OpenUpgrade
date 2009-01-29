@@ -284,7 +284,7 @@ class dm_customer_segmentation(osv.osv):
         if criteria:
             sql_query = ("""select distinct p.name \nfrom res_partner p, sale_order s\nwhere p.id = s.customer_id and %s\n""" % (' and '.join(criteria))).replace('isnot','is not')
         else:
-            sql_query = """select id \nfrom dm_customer\n"""
+            sql_query = """select distinct p.name \nfrom res_partner p, sale_order s\nwhere p.id = s.customer_id"""
         return super(dm_customer_segmentation,self).write(cr, uid, id, {'sql_query':sql_query})
 
     def create(self,cr,uid,vals,context={}):
