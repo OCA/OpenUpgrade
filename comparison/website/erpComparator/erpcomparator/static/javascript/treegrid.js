@@ -125,19 +125,21 @@ TreeGrid.prototype = {
         for(var i in this.headers){
             
             var header = this.headers[i];
+            
+            
             if (header.string == 'Factor Name' || header.name == 'ponderation') {
             	var th = MochiKit.DOM.TH(null, header.string);
-            	if (header.name == 'ponderation') {
-            		MochiKit.DOM.setNodeAttribute(th, 'width', '15px');	
-            	}
-            	else{
-            		MochiKit.DOM.setNodeAttribute(th, 'width', header.width);
-            	}
             }
             else {
             	var th = MochiKit.DOM.TH(null, header.code);
             	if (header.type == 'image') {
-            		MochiKit.DOM.setNodeAttribute(th, 'width', '10px');
+            		MochiKit.DOM.setNodeAttribute(th, 'width', '5px');
+            	}
+            	else if (header.name == 'ponderation') {
+            		MochiKit.DOM.setNodeAttribute(th, 'width', '5px');
+            	}
+            	else if (header.name == 'name') {
+            		MochiKit.DOM.setNodeAttribute(th, 'width', '5px');
             	}
             	else {
             		MochiKit.DOM.setNodeAttribute(th, 'width', '55px');
@@ -147,6 +149,12 @@ TreeGrid.prototype = {
             MochiKit.DOM.setNodeAttribute(th, 'title', header.help ? header.help : '');
             MochiKit.DOM.setNodeAttribute(th, 'class', header.type);
             MochiKit.DOM.setNodeAttribute(th, 'align', header.align);
+            if (header.colspan != -1) {
+            	MochiKit.DOM.setNodeAttribute(th, 'colspan', header.colspan);
+            }
+            if (header.colspan == -1) {
+            	MochiKit.DOM.setNodeAttribute(th, 'style', 'display: none');
+            }
             
             if (this.options.onheaderclick){
                th.onclick = MochiKit.Base.bind(MochiKit.Base.partial(this._onHeaderClick, header), this);
@@ -274,7 +282,7 @@ TreeNode.prototype = {
             var key = header.name;
             var value = this.record.items[key];
             
-            var td = MochiKit.DOM.TD({'class': header.type || null, 'width' : header.width || null});
+            var td = MochiKit.DOM.TD({'class': header.type || null});
             
             if (i == 0) { // first column
     
@@ -361,16 +369,8 @@ TreeNode.prototype = {
 	                	t = vals[1];
 	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold'}, value);
                 	}
-                	else if (value.indexOf('@') != -1) {
-                		var vals = value.split('@');
-	                	value = vals[0];
-	                	
-	                    value = [MochiKit.DOM.A({title: title, 'style': 'color: black'}, value)];
-	                    value = [value.concat(MochiKit.DOM.IMG({'src': '/static/images/increase.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': "javascript: change_vote(" + record.id + ", 'incr')", 'width' : 20, 'height' : 20}))];
-	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/decrease.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': "javascript: change_vote(" + record.id + ", 'decr')", 'width' : 20, 'height' : 20}));
-                	}
                 	else {
-                		value = value;
+                		value = MochiKit.DOM.DIV({title: title}, value);
                 	}    
                 }
                 
@@ -418,6 +418,11 @@ TreeNode.prototype = {
             
             if (i == 0) { // first column                
                 
+                if (value.length > 20) {
+            		title = value;
+            		value = value.substring(0, 20) + '...'
+            	}
+            	
                 if (record.icon && this.element_i) {
                     this.element_i.src = record.icon;
                 }
@@ -453,7 +458,6 @@ TreeNode.prototype = {
 	                    MochiKit.DOM.setNodeAttribute(a, 'onclick', record.action);
         	            
             	        a.innerHTML = MochiKit.DOM.escapeHTML(value);
-	                	
                 	}
                 	else if (value.indexOf('-') != -1) {
                 		var div = MochiKit.DOM.getElementsByTagAndClassName('div', null, td)[0];
@@ -463,12 +467,9 @@ TreeNode.prototype = {
 	                	
 	                	div.innerHTML = MochiKit.DOM.escapeHTML(value);
                 	}
-                	else if (value.indexOf('@') != -1) {
-                		var a = MochiKit.DOM.getElementsByTagAndClassName('a', null, td)[0];
-                		
-                		var vals = value.split('@');
-	                	value = vals[0];
-	                    a.innerHTML = MochiKit.DOM.escapeHTML(value);
+                	else {
+                		var div = MochiKit.DOM.getElementsByTagAndClassName('div', null, td)[0];
+                		div.innerHTML = MochiKit.DOM.escapeHTML(value);
                 	}
                 }
                 
