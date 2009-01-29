@@ -46,7 +46,7 @@ class make_sale(wizard.interface):
             'name': data['form']['name'],
             'partner': data['form']['partner_id'],
         })
-        cr.execute('update sandwich_order_line set order_id=%d where order_id is null', (oid,))
+        cr.execute('update sandwich_order_line set order_id=%s where order_id is null', (oid,))
         value = {
             'domain': "[('id','in',["+str(oid)+"])]",
             'name': 'Create Sandwich Orders',

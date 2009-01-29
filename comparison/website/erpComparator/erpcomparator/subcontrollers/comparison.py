@@ -42,8 +42,41 @@ class Comparison(controllers.Controller):
         root = dom.childNodes[0]
         attrs = tools.node_attributes(root)
         
-        self.headers = []
+        self.head = []
         self.parse(root, fields)
+        
+        self.headers = []
+        
+        add_factor = {}
+        add_factor['name'] = "add_factor"
+        add_factor['type'] = "image"
+        add_factor['string'] = ''
+        add_factor['colspan'] = 2
+        
+        sh_graph = {}
+        sh_graph['name'] = 'show_graph'
+        sh_graph['type'] = 'image'
+        sh_graph['string'] = ''
+        sh_graph['colspan'] = -1
+        
+        incr = {}
+        incr['name'] = 'incr'
+        incr['type'] = 'image'
+        incr['string'] = ''
+        incr['colspan'] = -1
+        
+        decr = {}
+        decr['name'] = 'decr'
+        decr['type'] = 'image'
+        decr['string'] = ''
+        decr['colspan'] = -1
+        
+        self.headers += [self.head[0]]
+        self.headers += [add_factor]
+        self.headers += [sh_graph]
+        self.headers += [self.head[1]]
+        self.headers += [incr]
+        self.headers += [decr]
         
         fields = []
         
@@ -69,7 +102,6 @@ class Comparison(controllers.Controller):
                         item['name'] = r['name']
                         item['code'] = r['code']
                         title['sel'] = True
-                        
                         self.headers += [item]
             
             else:
@@ -79,7 +111,6 @@ class Comparison(controllers.Controller):
                 item['string'] = r['name']
                 item['name'] = r['name']
                 item['code'] = r['code']
-                
                 self.headers += [item]
             
             title['name'] = r['name']
@@ -89,7 +120,7 @@ class Comparison(controllers.Controller):
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 fields += [field['name']]
-                
+        
         fields = jsonify.encode(fields)
         icon_name = self.headers[0].get('icon')
         
@@ -140,8 +171,10 @@ class Comparison(controllers.Controller):
     def voting(self, **kw):
         
         id = kw.get('id')
-        event = kw.get('event')
+        pond_val = kw.get('pond_val')
         user_id = kw.get('user')
+        
+        value = None
         
         model = "comparison.factor"
         proxy = rpc.RPCProxy(model)
@@ -152,7 +185,7 @@ class Comparison(controllers.Controller):
         smodel = "comparison.ponderation.suggestion"
         sproxy = rpc.RPCProxy(smodel)
         
-        if event == 'incr':
+        if pond_val == 'incr':
             if pond > 0.0:
                 pond = pond + 0.1
         else:
@@ -160,11 +193,11 @@ class Comparison(controllers.Controller):
                 pond = pond - 0.1
                 
         try:
-            res = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond})
+            value = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond})
         except Exception, e:
-            return dict(res=res, error=str(e))
+            return dict(value=value, error=str(e))
         
-        return dict(res=res, error="")
+        return dict(value=value, error="")
         
     @expose(template="erpcomparator.subcontrollers.templates.item_voting")
     def item_voting(self, **kw):
@@ -334,7 +367,13 @@ class Comparison(controllers.Controller):
                             item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
                             item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
+                        
+                    item['add_factor'] = '/static/images/treegrid/gtk-edit.png'
+                    item['show_graph'] = '/static/images/treegrid/graph.png'
             
+                    item['incr'] = '/static/images/increase.png'
+                    item['decr'] = '/static/images/decrease.png'
+                    
             if res:
                 record['id'] = res
             else:
@@ -343,7 +382,7 @@ class Comparison(controllers.Controller):
             record['target'] = None
 
             if item['ponderation']:
-                item['ponderation'] = (item['ponderation'] or ponderation) + '@'
+                item['ponderation'] = item['ponderation'] or ponderation
                 
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)
@@ -379,6 +418,7 @@ class Comparison(controllers.Controller):
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 if field['name'] == 'ponderation':
                     field['type'] = 'url'
+                    field['colspan'] = 3
                     
-                self.headers += [field]
+                self.head += [field]
         

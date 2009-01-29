@@ -37,14 +37,16 @@ function getSelectedItems() {
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
 }
 
-function change_vote(id, event) {
+function change_vote(node, pond_val) {
 	
-	treenode = comparison_tree.selection_last;
+	params = {}
+	params['id'] = node.name;
+	params['pond_val'] = pond_val;
 	
-	var req = Ajax.JSON.post('/comparison/voting', {id: id, event: event});
+	var req = Ajax.JSON.post('/comparison/voting', params);
 	req.addCallback(function(obj){
-		if(obj.res) {
-			treenode.update();
+		if (obj.value) {
+			node.update();
 		}
 		if (obj.error) {
             return alert(obj.error);
@@ -57,7 +59,7 @@ function view_graph(id) {
 }
 
 function add_factor(id) {
-	params = [];
+	params = {};
 	
 	params['id'] = id;
 	var req = Ajax.post('/comparison/add_factor', params);
@@ -76,7 +78,7 @@ function add_factor(id) {
 
 function add_new_factor() {
 	treenode = comparison_tree.selection_last;
-	params = [];
+	params = {};
 	
 	params['model'] = 'comparison.factor';
 	params['factor_id'] = $('factor_id').value;
@@ -104,7 +106,6 @@ function add_new_factor() {
             return alert(obj.error);
         }
     });
-	
 }
 
 var onUpdate = function(){
@@ -119,12 +120,11 @@ MochiKit.DOM.addLoadEvent(function(evt){
             {text: 'Save', onclick: onUpdate},
         ]
     });
-
 });
 
 function open_item_vote(id, header) {
 	
-	params = [];
+	params = {};
 	params['id'] = id;
 	params['header'] = header;
 	
@@ -145,7 +145,7 @@ function open_item_vote(id, header) {
 function item_vote() {
 	
 	treenode = comparison_tree.selection_last;
-	params = [];
+	params = {};
 	 
 	child_ids = [];
 	trs = getElementsByTagAndClassName('tr', 'factor_row');
@@ -172,28 +172,7 @@ function item_vote() {
 	            return alert(obj.error);
 	        }
 	    });
-	}); 
-	
-	/*
-	params['id'] = $('id').value;
-	params['score_id'] = $('score_id').value;
-	params['item_id'] = $('item_id').value;
-	params['note'] = $('note').value;
-	
-	var req = Ajax.JSON.post('/comparison/update_item_voting', params);
-    req.addCallback(function(obj){
-    	if(obj.res) {
-    		window.mbox.hide();
-    		treenode.update();
-    		
-    	}
-    	if (obj.error) {
-            return alert(obj.error);
-        }
-    });
-	
-	
-	*/
+	});
 }
 
 function load_radar(ids) {
@@ -213,5 +192,21 @@ function on_radar_click(index){
 	factor_name = factor_name.replace(/&/, "@");
 	
 	window.location.href = '/graph?factor_index='+index+'&parent_name='+factor_name;
+}
+
+function on_button_click(evt, node) {
+	if (evt.src().name == 'show_graph') {
+		view_graph(node.name);
+	}
+	else if (evt.src().name == 'add_factor') {
+		add_factor(node.name);
+	}
+	else if (evt.src().name == 'incr') {
+		change_vote(node, 'incr');
+	}
+	else if (evt.src().name == 'decr') {
+		change_vote(node, 'decr');
+	}
+	
 }
 
