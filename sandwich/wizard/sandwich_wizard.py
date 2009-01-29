@@ -31,7 +31,7 @@ class sandwich_order_wizard(wizard.interface):
     def _sandwich_order_wizard_order(self, cr, uid, data, context):
         if not len(data['ids']):
             return {}
-        cr.execute('update sandwich_order_line set order_id=%d where order_id is null', (data['ids'][0],))
+        cr.execute('update sandwich_order_line set order_id=%s where order_id is null', (data['ids'][0],))
         for order in pooler.get_pool(cr.dbname).get('sandwich.order').browse(cr, uid, data['ids']):
             for user_id in data['form']['user_id'][0][2]:
                 for producttype in data['form']['product_type_id'][0][2]:

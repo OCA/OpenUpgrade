@@ -91,7 +91,7 @@ class sandwich_order_line(osv.osv):
         # print id, user_id, product_type_id, context
         if (not user_id) or (not product_type_id):
             return {}
-        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%d AND product_type_id=%d ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
+        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%s AND product_type_id=%s ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
         res = cr.dictfetchone()
         if res:
             return {'value': res}
@@ -101,7 +101,7 @@ class sandwich_order_line(osv.osv):
     def onchange_product_type_id(self, cr, uid, id, user_id, product_type_id, context={}):
         if (not product_type_id) or (not user_id):
             return {}
-        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%d AND product_type_id=%d ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
+        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%s AND product_type_id=%s ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
         res = cr.dictfetchone()
         if res:
             return {'value': res}
