@@ -109,9 +109,10 @@ class sandwich_order_line(osv.osv):
         return {'value': {'product_id': False, 'name': '', 'quantity': 1}}
 
     def onchange_product_id(self, cr, uid, id, product_id, context={}):
+        res = {}
         if not product_id:
             return {}
-        res = pooler.get_pool(cr.dbname).get('sandwich.product').read(cr, uid, [ product_id ], ['name','product_type_id'])
+        res = pooler.get_pool(cr.dbname).get('sandwich.product').read(cr, uid, [ product_id ], ['name','product_type_id'])[0]
         return {'value': res}
         #return {'value': {'name': name or product_id.name, 'product_type_id': product_id.product_type_id}}
 
