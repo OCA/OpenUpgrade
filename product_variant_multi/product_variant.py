@@ -32,6 +32,8 @@ class product_variant_dimension_type(osv.osv):
         'name' : fields.char('Dimension', size=64),
         'sequence' : fields.integer('Sequence'),
         'value_ids' : fields.one2many('product.variant.dimension.value', 'dimension_id', 'Dimension Values'),
+        'product_tmpl_id': fields.many2one('product.template', 'Product Template', required=True),#TODO many2many?
+        'allow_custom_value': fields.boolean('Allow Custom Value', help="If true, custom values can be entered in the product configurator"),
     }
     _order = "sequence, name"
 product_variant_dimension_type()
@@ -42,9 +44,9 @@ class product_variant_dimension_value(osv.osv):
     _columns = {
         'name' : fields.char('Dimension Value', size=64),
         'sequence' : fields.integer('Sequence'),
-        'price_extra' : fields.float('Dimension Values', size=64),
-        'price_margin' : fields.float('Dimension Values', size=64),
-        'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension', required=True),
+        'price_extra' : fields.float('Price Extra', size=64),
+        'price_margin' : fields.float('Price Margin', size=64),
+        'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', required=True),
     }
     _order = "sequence, name"
 product_variant_dimension_value()
@@ -72,7 +74,7 @@ class product_product(osv.osv):
         # 'price_extra': fields.function('Price Extra'),
         # 'price_margin': fields.function('Price Margin'),
         #
-        #'variants': fields.function(_variant_name_get, method=True, type='char', string='Variants'),
+        'variants': fields.function(_variant_name_get, method=True, type='char', size=64, string='Variants'),
     }
 product_product()
 

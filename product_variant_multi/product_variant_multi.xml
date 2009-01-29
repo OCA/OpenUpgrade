@@ -41,6 +41,71 @@
             parent="product.menu_products"/>
 
 
+	<record model="ir.actions.act_window" id="action_dimension_type_form">
+       	<field name="name">Types</field>
+       	<field name="res_model">product.variant.dimension.type</field>
+       	<field name="view_mode">form,tree</field>
+    	</record>
+	<record model="ir.actions.act_window" id="action_dimension_value_form">
+       	<field name="name">Values</field>
+       	<field name="res_model">product.variant.dimension.value</field>
+       	<field name="view_mode">form,tree</field>
+    	</record>
+
+	<menuitem name="Variant Dimensions"
+              id="menu_variant_dimension"
+              parent="product.menu_config_product"/>
+	<menuitem name="Dimension Types"
+              id="menu_variant_dimension_types"
+              parent="menu_variant_dimension"
+              action="action_dimension_type_form"/>
+	<menuitem name="Dimension Values"
+              id="menu_variant_dimension_values"
+              parent="menu_variant_dimension"
+              action="action_dimension_value_form"/>
+            
+
+        <record id="product_variant_multi.variant_value_tree_view" model="ir.ui.view">
+            <field name="name">product_variant_multi.variant_value.tree</field>
+            <field name="model">product.variant.dimension.value</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Variant Value">
+                    <field name="dimension_id"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="product_variant_multi.variant_type_tree_view" model="ir.ui.view">
+            <field name="name">product_variant_multi.variant_type.tree</field>
+            <field name="model">product.variant.dimension.type</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Variant Type">
+                    <field name="product_tmpl_id"/>
+                    <field name="name"/>
+                    <field name="value_ids"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="product_variant_multi.product_product_form_view" model="ir.ui.view">
+            <field name="name">product_variant_multi.product.product.form</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_variant_form_view"/>
+            <field name="priority">26</field>
+            <field name="arch" type="xml">
+                <field name="variants" position="after">
+                    <field name="dimension_ids"/>
+                </field>
+            </field>
+        </record>
+
+
+
     </data>
 </openerp>
 
