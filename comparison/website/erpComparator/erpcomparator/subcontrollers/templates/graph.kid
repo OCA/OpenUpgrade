@@ -18,28 +18,25 @@
 			        </select>
 				</td>
 			</tr>
-		</table><br/>
+		</table>
 		<div id="checkboxtext">
 			<table name="item_list" id="graph_item_list">
 				<tr>
-					<td class="label">
-						List of ERP :
-					</td>
 					<td py:for="label in titles">
 						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
 					</td>
-				</tr>
-				<tr>
 					<td>&nbsp;
-					</td>
-				</tr>
-				<tr>
-					<td>
 						<button type="button" class="button" onclick="radarData()">Show Graph</button>
 					</td>
 				</tr>
-			</table><br/>	
-			<div id="radar_chart"></div>
+			</table><br/>
+			<table id="checkboxtext">
+				<tr>
+					<td>
+						<div id="radar_chart"></div>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </body>

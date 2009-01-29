@@ -42,8 +42,26 @@ class Comparison(controllers.Controller):
         root = dom.childNodes[0]
         attrs = tools.node_attributes(root)
         
-        self.headers = []
+        self.head = []
         self.parse(root, fields)
+        
+        self.headers = []
+        
+        add_factor = {}
+        add_factor['name'] = "add_factor"
+        add_factor['type'] = "image"
+        add_factor['string'] = ''
+        
+        sh_graph = {}
+        
+        sh_graph['name'] = 'show_graph'
+        sh_graph['type'] = 'image'
+        sh_graph['string'] = ''
+        
+        self.headers += [self.head[0]]
+        self.headers += [add_factor]
+        self.headers += [sh_graph]
+        self.headers += [self.head[1]]
         
         fields = []
         
@@ -69,7 +87,6 @@ class Comparison(controllers.Controller):
                         item['name'] = r['name']
                         item['code'] = r['code']
                         title['sel'] = True
-                        
                         self.headers += [item]
             
             else:
@@ -79,7 +96,6 @@ class Comparison(controllers.Controller):
                 item['string'] = r['name']
                 item['name'] = r['name']
                 item['code'] = r['code']
-                
                 self.headers += [item]
             
             title['name'] = r['name']
@@ -89,7 +105,7 @@ class Comparison(controllers.Controller):
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 fields += [field['name']]
-                
+        
         fields = jsonify.encode(fields)
         icon_name = self.headers[0].get('icon')
         
@@ -334,6 +350,9 @@ class Comparison(controllers.Controller):
                             item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
                             item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
+                        
+                    item['add_factor'] = '/static/images/treegrid/gtk-edit.png'
+                    item['show_graph'] = '/static/images/treegrid/graph.png'
             
             if res:
                 record['id'] = res
@@ -343,7 +362,7 @@ class Comparison(controllers.Controller):
             record['target'] = None
 
             if item['ponderation']:
-                item['ponderation'] = (item['ponderation'] or ponderation) + '@'
+                item['ponderation'] = (item['ponderation'] or ponderation) + '@' + 'pond'
                 
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)
@@ -378,7 +397,8 @@ class Comparison(controllers.Controller):
             
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 if field['name'] == 'ponderation':
+                    field['string'] = 'Pond.'
                     field['type'] = 'url'
                     
-                self.headers += [field]
+                self.head += [field]
         

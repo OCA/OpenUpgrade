@@ -150,7 +150,7 @@ class Graph(controllers.Controller):
                                                    }
                                   }
        
-        elements["tooltip"] = {"mouse": 1}
+#        elements["tooltip"] = {"mouse": 1}
         elements["bgcolor"] = "#ffffff"
         
         return elements

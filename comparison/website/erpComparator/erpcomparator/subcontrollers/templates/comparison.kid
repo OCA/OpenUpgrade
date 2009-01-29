@@ -9,13 +9,6 @@
 <body>
 	<div id="bodybackground">
 		<div id="checkboxtext">
-			<img height="14" width="14" align="absbottom" style="padding-left: 5px;" src="/static/images/iconarrow.gif">
-				<span style="font-family: Verdana, Geneva, sans-serif; font-style: normal; font-size: 12px;">
-					You can compare among following products :
-				</span>
-			</img>
-		</div>
-		<div id="checkboxtext">
 			<table name="item_list" id="item_list">
 				<tr py:if="selected_items">
 					<td py:for="label in titles">
@@ -26,9 +19,11 @@
 					<td py:for="label in titles">
 						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
 					</td>
+					<td>
+						<img src="/static/images/load.jpg" style="cursor: pointer" onclick="getRecords()"/>
+					</td>
 				</tr>
 			</table>
-			<img src="/static/images/load.jpg" style="cursor: pointer" onclick="getRecords()"/>
 		</div>
     	
 	    <div style="padding: 4px; margin: auto; width: 840px;">
@@ -36,7 +31,7 @@
 			<script type="text/javascript">
 	        	var comparison_tree = new TreeGrid('comparison_tree');
 	        	
-	        	//comparison_tree.options.onbuttonclick = on_button_click;
+	        	comparison_tree.options.onbuttonclick = on_button_click;
 	        	comparison_tree.setHeaders(${ustr(headers)});
 	        	comparison_tree.setRecords('${url}', ${ustr(url_params)});
 	        	

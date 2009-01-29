@@ -40,16 +40,17 @@ function getSelectedItems() {
 function change_vote(id, event) {
 	
 	treenode = comparison_tree.selection_last;
-	
-	var req = Ajax.JSON.post('/comparison/voting', {id: id, event: event});
-	req.addCallback(function(obj){
-		if(obj.res) {
-			treenode.update();
-		}
-		if (obj.error) {
-            return alert(obj.error);
-        }
-	});
+	if (treenode) {
+		var req = Ajax.JSON.post('/comparison/voting', {id: id, event: event});
+		req.addCallback(function(obj){
+			if(obj.res) {
+				treenode.update();
+			}
+			if (obj.error) {
+	            return alert(obj.error);
+	        }
+		});
+	}
 }
 
 function view_graph(id) {
@@ -172,28 +173,7 @@ function item_vote() {
 	            return alert(obj.error);
 	        }
 	    });
-	}); 
-	
-	/*
-	params['id'] = $('id').value;
-	params['score_id'] = $('score_id').value;
-	params['item_id'] = $('item_id').value;
-	params['note'] = $('note').value;
-	
-	var req = Ajax.JSON.post('/comparison/update_item_voting', params);
-    req.addCallback(function(obj){
-    	if(obj.res) {
-    		window.mbox.hide();
-    		treenode.update();
-    		
-    	}
-    	if (obj.error) {
-            return alert(obj.error);
-        }
-    });
-	
-	
-	*/
+	});
 }
 
 function load_radar(ids) {
@@ -213,5 +193,14 @@ function on_radar_click(index){
 	factor_name = factor_name.replace(/&/, "@");
 	
 	window.location.href = '/graph?factor_index='+index+'&parent_name='+factor_name;
+}
+
+function on_button_click(evt, node) {
+	if (evt.src().name == 'show_graph') {
+		view_graph(node.name);
+	}
+	if (evt.src().name == 'add_factor') {
+		add_factor(node.name);
+	}
 }
 
