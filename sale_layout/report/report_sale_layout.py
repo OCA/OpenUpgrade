@@ -41,14 +41,15 @@ class sale_order_1(report_sxw.rml_parse):
         self.context = context
 
     def repeat_In(self, lst, name, nodes_parent=False,td=False,width=[],value=[],type=[]):
+        print 'rrrrrrrrrrrrrrrrrrrrrrrrrepeat_In', lst
         self._node.data = ''
         node = self._find_parent(self._node, nodes_parent or parents)
         ns = node.nextSibling
 
-        value=['taxes','product_uom_qty','product_uom','price_unit','discount','price_subtotal','currency']
-        type=['string','string','string','string','string','string','string']
-        width=[99.0,40.0,24.0,59.0,43.0,40.0,25.0]
-        td=7
+        value=['tax_id','product_uom_qty','product_uom','price_unit','discount','price_subtotal']
+        type=['string','string','string','string','string','string']
+        width=[66,46,24,66,55,54]
+        td=6
 
         tableFlag=0
 
@@ -61,6 +62,7 @@ class sale_order_1(report_sxw.rml_parse):
                 tableFlag=1
 
                 width_str = ns._attrs['colWidths'].nodeValue
+                print 'WWWWWWWWWWWWWWWWWWWw',width_str
                 ns.removeAttribute('colWidths')
                 total_td = td * len(value)
 
@@ -68,6 +70,7 @@ class sale_order_1(report_sxw.rml_parse):
                     for v in value:
                         width.append(30)
                 for v in range(len(value)):
+                    print 'v,value,width,width_str',v,value,width,width_str
                     width_str +=',%d'%width[v]
 
                 ns.setAttribute('colWidths',width_str)
@@ -82,7 +85,7 @@ class sale_order_1(report_sxw.rml_parse):
                         for v in value:
                             t2="[[%s['layout_type']=='text' and removeParentNode('tr')]]"%(name)
                             t1= "[[ %s['%s'] ]]"%(name,v)
-                            t3="[[ %s['layout_type']=='subtotal' and ( setTag('para','para',{'fontName':'Times-bold'})) ]]"%name
+                            t3="[[ %s['layout_type']=='subtotal' and ( setTag('para','para',{'fontName':'Helvetica-Bold'})) ]]"%name
                             newnode = lc.cloneNode(1)
 
                             newnode.childNodes[1].lastChild.data = t1 + t2 +t3
@@ -91,11 +94,9 @@ class sale_order_1(report_sxw.rml_parse):
                             newnode=False
                             i+=1
 
-
         return super(sale_order_1,self).repeatIn(lst, name, nodes_parent=False)
 
     def sale_order_lines(self,sale_order):
-        print 'sale_order_lines'
         result =[]
         sub_total={}
         info=[]
@@ -117,6 +118,7 @@ class sale_order_1(report_sxw.rml_parse):
             res={}
 
             if entry.layout_type=='article':
+                print '$$$$$$$$$$$$$$$$$$$$$44',entry.tax_id
                 res['taxes']=', '.join(map(lambda x: x.name, entry.tax_id)) or ''
                 res['name']=entry.name
                 res['product_uom_qty']="%.2f"%(entry.product_uos and entry.product_uos_qty or entry.product_uom_qty  or 0.00)

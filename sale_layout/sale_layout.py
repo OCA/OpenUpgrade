@@ -62,17 +62,33 @@ class sale_order_line(osv.osv):
 #            print '=============',res
 #        return res
 
-    def _onchange_sale_order_line_view(self, cr, uid, id, layout_type, context={}, *args):
-        print '=SALE LAYYYYYYYYOUUUUTTTTTTT_onchange_sale_order_line_view',layout_type
-#        temp =temp['value']= {}
-#        if layout_type == 'line':
-#            temp['value']['name'] = ' '
-#        if layout_type == 'break':
-#            temp['value']['name'] = ' '
-#        if layout_type == 'subtotal':
-#            temp['value']['name'] = 'Sub Total'
-#            return temp
-        return {}
+    def _onchange_sale_order_line_view(self, cr, uid, id, type, context={}, *args):
+            print '=SALE LAYYYYYYYYOUUUUTTTTTTT_onchange_sale_order_line_view',type
+            temp ={}
+            temp['value']= {}
+            if (not type):
+                return {}
+            if type != 'article':
+                temp = {'value': {
+                        'product_id': False,
+                        'uos_id': False,
+                        'account_id': False,
+                        'price_unit': False,
+                        'price_subtotal': False,
+                        'quantity': 0,
+                        'discount': False,
+                        'invoice_line_tax_id': False,
+                        'account_analytic_id': False,
+                        },
+                    }
+                if type == 'line':
+                    temp['value']['name'] = ' '
+                if type == 'break':
+                    temp['value']['name'] = ' '
+                if type == 'subtotal':
+                    temp['value']['name'] = 'Sub Total'
+                return temp
+            return {}
 
     def create(self, cr, user, vals, context=None):
         if vals.has_key('layout_type'):
