@@ -47,6 +47,7 @@ class product_variant_dimension_value(osv.osv):
         'price_extra' : fields.float('Price Extra', size=64),
         'price_margin' : fields.float('Price Margin', size=64),
         'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', required=True),
+        'product_tmpl_id': fields.related('dimension_id', 'product_tmpl_id', type="many2one", relation="product.template", string="Product Template", store=True),
     }
     _order = "sequence, name"
 product_variant_dimension_value()
@@ -75,7 +76,7 @@ class product_product(osv.osv):
         return res
 
     _columns = {
-        'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions'),
+        'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions', domain="[('product_tmpl_id','=',product_tmpl_id)]"),
         'dimension_type_ids': fields.related('product_tmpl_id', 'dimension_type_ids', type="one2many", relation="product.variant.dimension.type", string="Product Template Dimension Types"),
         #
         # TODO: compute price_extra and _margin based on variants
