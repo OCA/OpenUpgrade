@@ -52,7 +52,8 @@ class Comparison(controllers.Controller):
         proxy_item = rpc.RPCProxy(item_model)
         item_ids = proxy_item.search([])
         
-        res = proxy_item.read(item_ids, ['name'])
+        res = proxy_item.read(item_ids, ['name', 'code'])
+        
         titles = []
         
         for r in res:
@@ -66,6 +67,7 @@ class Comparison(controllers.Controller):
                         item['type'] = 'url'
                         item['string'] = r['name']
                         item['name'] = r['name']
+                        item['code'] = r['code']
                         title['sel'] = True
                         
                         self.headers += [item]
@@ -76,6 +78,7 @@ class Comparison(controllers.Controller):
                 item['type'] = 'url'
                 item['string'] = r['name']
                 item['name'] = r['name']
+                item['code'] = r['code']
                 
                 self.headers += [item]
             
@@ -108,7 +111,7 @@ class Comparison(controllers.Controller):
         
         self.url_params = _jsonify(self.url_params)
         self.headers = jsonify.encode(self.headers)
-
+        
         return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
     
     @expose(template="erpcomparator.subcontrollers.templates.new_factor")
@@ -133,10 +136,12 @@ class Comparison(controllers.Controller):
         
         return dict(error=error, count=count, parent_id=p_id, parent_name=p_name)
     
-    @expose(template="erpcomparator.subcontrollers.templates.voting")
+    @expose('json')
     def voting(self, **kw):
         
         id = kw.get('id')
+        event = kw.get('event')
+        user_id = kw.get('user')
         
         model = "comparison.factor"
         proxy = rpc.RPCProxy(model)
@@ -144,35 +149,23 @@ class Comparison(controllers.Controller):
         name = res[0]['name']
         pond = res[0]['ponderation']
         
-        count = range(0, 21)
-        count = [c/float(10) for c in count]
-        
-        return dict(res=None, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
-        
-    @expose(template="erpcomparator.subcontrollers.templates.voting")
-    def update_voting(self, **kw):
-        
-        id = kw.get('id')
-        name = kw.get('name')
-        user_id = kw.get('user')
-        pond = kw.get('pond_value')
-        note = kw.get('suggestion')
-        
         smodel = "comparison.ponderation.suggestion"
         sproxy = rpc.RPCProxy(smodel)
         
-        res = None
-        
-        count = range(0, 21)
-        count = [c/float(10) for c in count]
-        
+        if event == 'incr':
+            if pond > 0.0:
+                pond = pond + 0.1
+        else:
+            if pond > 0.0:
+                pond = pond - 0.1
+                
         try:
-            res = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond, 'note': note})
+            res = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond})
         except Exception, e:
-            return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error=str(e))
+            return dict(res=res, error=str(e))
         
-        return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
-    
+        return dict(res=res, error="")
+        
     @expose(template="erpcomparator.subcontrollers.templates.item_voting")
     def item_voting(self, **kw):
         
@@ -338,9 +331,9 @@ class Comparison(controllers.Controller):
                         item[r.get('item_id')[1]] = str(r.get('result')) + '%'
                         
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
-                            item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1])
+                            item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
-                            item[r.get('item_id')[1]] += '-' + "bold"
+                            item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
             
             if res:
                 record['id'] = res
@@ -350,8 +343,8 @@ class Comparison(controllers.Controller):
             record['target'] = None
 
             if item['ponderation']:
-                item['ponderation'] = item['ponderation'] or ponderation# + '|' + "javascript:change_vote(id=%s)" % (record['id'])
-
+                item['ponderation'] = (item['ponderation'] or ponderation) + '@'
+                
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)
                 record['icon'] = icons.get_icon(icon)

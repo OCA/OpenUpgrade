@@ -6,40 +6,6 @@
     <title>Comparison</title>
 </head>
 <body>
-    <div class="mattblacktabs">
-		<ul>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/comparison'">
-	    			<span>Comparison</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/softwares'">
-	    			<span>Software</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/about'">
-	    			<span>About</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/graph'">
-	    			<span>Graph</span>
-	    		</a>
-	    	</li>
-	    	<li id="current">
-	    		<a href="#" onclick="window.location.href='/login'">
-	    			<span>Login</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/login/logout'">
-	    			<span>Logout</span>
-	    		</a>
-	    	</li>
-	  	</ul>
-	</div>
 	<br/><br/><br/>
 	<div class="box2">
 		<form action="/login/do_login/" method="post">
