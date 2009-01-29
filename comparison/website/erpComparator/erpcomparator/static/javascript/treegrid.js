@@ -288,9 +288,9 @@ TreeNode.prototype = {
     
                 var tds = [];
                 
-                if (value.length > 20) {
+                if (value.length > 15) {
             		title = value;
-            		value = value.substring(0, 20) + '...'
+            		value = value.substring(0, 15) + '...'
             	}
     
                 for(var i = 0; i < indent; i++){
@@ -421,9 +421,9 @@ TreeNode.prototype = {
             
             if (i == 0) { // first column                
                 
-                if (value.length > 20) {
+                if (value.length > 15) {
             		title = value;
-            		value = value.substring(0, 20) + '...'
+            		value = value.substring(0, 15) + '...'
             	}
             	
                 if (record.icon && this.element_i) {
