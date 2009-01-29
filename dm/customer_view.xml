@@ -335,8 +335,6 @@
                                 <field name="value"/>
                             </tree>
                         </field>
-                        <separator string="SQL Query" colspan="4"/>
-                        <field name="customer_sql_query" nolabel="1" select="2" colspan="4"/>
                     </page>
                     <page string="Customer Orders">
                         <field name="order_text_criteria_ids" colspan="2" nolabel="1" select="2">
@@ -387,14 +385,12 @@
                                 <field name="value"/>
                             </tree>
                         </field>
-                        <separator string="SQL Query" colspan="4"/>
-                        <field name="order_sql_query" nolabel="1" select="2" colspan="4"/>
                     </page>
-<!--                    <page string="SQL">-->
-<!--                        <separator string="SQL Query" colspan="4"/>-->
-<!--                        <field name="sql_query" nolabel="1" select="2" colspan="4"/>-->
-<!--                        <button string="Compute Sql Query" name="compute_sql_query" type="action"/>-->
-<!--                    </page>-->
+                    <page string="SQL">
+                        <separator string="SQL Query" colspan="4"/>
+                        <field name="sql_query" nolabel="1" select="2" colspan="4"/>
+                        <button string="Compute Sql Query" name="compute_sql_query" type="action"/>
+                    </page>
                 </notebook>
             </form>
         </field>
