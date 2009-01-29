@@ -1,0 +1,82 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_fr_account_generation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-01-29 21:19:05+0000\n"
+"PO-Revision-Date: 2009-01-29 21:19:05+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_fr_account_generation
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "XML non valide pour l'architecture de la vue"
+
+#. module: l10n_fr_account_generation
+#: field:account.generation.config,supplier:0
+msgid "Global Supplier"
+msgstr "Collectif client"
+
+#. module: l10n_fr_account_generation
+#: field:account.generation.config,name:0
+msgid "Configuration Name"
+msgstr "Nom de la configuration"
+
+#. module: l10n_fr_account_generation
+#: field:account.generation.config,nbcar:0
+msgid "Char size"
+msgstr "Nombre de caractère"
+
+#. module: l10n_fr_account_generation
+#: view:account.generation.config:0
+#: model:ir.actions.act_window,name:l10n_fr_account_generation.action_account_generation_config_form
+#: model:ir.ui.menu,name:l10n_fr_account_generation.menu_action_account_generation_config_form
+msgid "Account generation config"
+msgstr "Génération des comptes"
+
+#. module: l10n_fr_account_generation
+#: model:ir.model,name:l10n_fr_account_generation.model_account_generation_config
+msgid "Account Generation Configuration"
+msgstr "Configuration de la génération des comptes"
+
+#. module: l10n_fr_account_generation
+#: field:account.generation.config,customer:0
+msgid "Global Customer"
+msgstr "Collectif fournisseur"
+
+#. module: l10n_fr_account_generation
+#: help:account.generation.config,nbcar:0
+msgid "Number of character for the creation of accounts"
+msgstr "Nombre de caracteres pris en compte pour la création du compte"
+
+#. module: l10n_fr_account_generation
+#: model:ir.module.module,shortdesc:l10n_fr_account_generation.module_meta_information
+msgid "France - Generation de compte comptable tiers"
+msgstr ""
+
+#. module: l10n_fr_account_generation
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "Le nom de l'objet doit commencer avec x_ et ne pas contenir de charactères spéciaux !"
+
+#. module: l10n_fr_account_generation
+#: model:ir.module.module,description:l10n_fr_account_generation.module_meta_information
+msgid "Add a button in partners form for creating the payable and receive accounts in general account.\n"
+"\n"
+"Credits: Sistheo Zeekom\n"
+""
+msgstr ""
+
+#. module: l10n_fr_account_generation
+#: view:res.partner:0
+msgid "Account generate"
+msgstr "Générer les comptes"
+
