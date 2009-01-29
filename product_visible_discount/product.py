@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -43,11 +43,10 @@ class sale_order_line(osv.osv):
 
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-            lang=False, update_tax=True,date_order=False,packaging=False):
-
+            lang=False, update_tax=True,date_order=False,packaging=False,fp=False):
         res=super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
             uom, qty_uos, uos, name, partner_id,
-            lang, update_tax,date_order)
+            lang, update_tax,date_order,fiscal_position=fp)
 
         context = {'lang': lang, 'partner_id': partner_id}
         result=res['value']
@@ -62,8 +61,8 @@ class sale_order_line(osv.osv):
             field_name = 'list_price'
             product_read = self.pool.get('product.template').read(cr, uid, product_tmpl_id, [field_name], context)
             list_price = product_read[field_name]
-    
-    
+
+
             pricelists=pricelist_obj.read(cr,uid,[pricelist],['visible_discount'])
             if(len(pricelists)>0 and pricelists[0]['visible_discount'] and list_price != 0):
                 discount=(list_price-price) / list_price * 100
@@ -81,8 +80,8 @@ class account_invoice_line(osv.osv):
     _name = "account.invoice.line"
     _inherit = "account.invoice.line"
 
-    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, price_unit=False, address_invoice_id=False, context={}):
-        res=super(account_invoice_line, self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, price_unit, address_invoice_id, context)
+    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fp=False, price_unit=False, address_invoice_id=False, context={}):
+        res=super(account_invoice_line, self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, fp, price_unit, address_invoice_id, context)
 
 
         def get_real_price(pricelist_id, product_id):

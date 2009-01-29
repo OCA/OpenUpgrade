@@ -19,7 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+"""
+This is an ETL Component that use to write data to csv file.
+"""
 
 from etl import etl
 import csv

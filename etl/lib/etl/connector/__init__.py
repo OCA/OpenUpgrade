@@ -26,3 +26,4 @@ ETL Connectors:
 * DB Connection
 * Open Object Interfaces
 """
+import file_connector

@@ -1,6 +1,5 @@
 
 <div id="box" class="new_box" xmlns:py="http://purl.org/kid/ns#">
-	<input type="hidden" id="id" name="id" value="${id}"/>
 	<input type="hidden" id="parent_id" name="parent_id" value="${parent_id}"/>
 	
 	<div class="header">

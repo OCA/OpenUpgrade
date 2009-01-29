@@ -6,73 +6,39 @@
     <title>Comparison</title>
 </head>
 <body>
-    <div class="mattblacktabs">
-		<ul>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/comparison'">
-	    			<span>Comparison</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/softwares'">
-	    			<span>Software</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/about'">
-	    			<span>About</span>
-	    		</a>
-	    	</li>
-	    	<li class="current">
-	    		<a href="#" onclick="window.location.href='/graph'">
-	    			<span>Graph</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/login'">
-	    			<span>Login</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/login/logout'">
-	    			<span>Logout</span>
-	    		</a>
-	    	</li>
-	  	</ul>
-	</div><br/><br/>
-	
-	<table>
-		<tr>
-			<td class="label">
-				Analysis axis :
-			</td>
-			<td>
-				<select style="width: 300px;" name="factors" id="factors">				
-		        	<option py:for="s in root_factor" py:content="s['name']" selected="${tg.selector(s['name']==selected_fact)}">${s['name']}</option>
-		        </select>
-			</td>
-		</tr>
-	</table><br/>
-	<table name="item_list" id="graph_item_list">
-		<tr>
-			<td class="label">
-				List of ERP :
-			</td>
-			<td py:for="label in titles">
-				<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
-			</td>
-		</tr>
-		<tr>
-			<td>&nbsp;
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<button type="button" class="button" onclick="radarData()">Show Graph</button>
-			</td>
-		</tr>
-	</table><br/>	
-	<div id="radar_chart"></div>
+	<div id="bodybackground">
+		<table id="checkboxtext">
+			<tr>
+				<td class="label">
+					Analysis axis :
+				</td>
+				<td>
+					<select style="width: 300px;" name="factors" id="factors">				
+			        	<option py:for="s in root_factor" py:content="s['name']" selected="${tg.selector(s['name']==selected_fact)}">${s['name']}</option>
+			        </select>
+				</td>
+			</tr>
+		</table>
+		<div id="checkboxtext">
+			<table name="item_list" id="graph_item_list">
+				<tr>
+					<td py:for="label in titles">
+						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
+					</td>
+					<td>&nbsp;
+						<button type="button" class="button" onclick="radarData()">Show Graph</button>
+					</td>
+				</tr>
+			</table><br/>
+			<table id="checkboxtext">
+				<tr>
+					<td>
+						<div id="radar_chart"></div>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </body>
 </html>
 	

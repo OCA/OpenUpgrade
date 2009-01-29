@@ -42,8 +42,26 @@ class Comparison(controllers.Controller):
         root = dom.childNodes[0]
         attrs = tools.node_attributes(root)
         
-        self.headers = []
+        self.head = []
         self.parse(root, fields)
+        
+        self.headers = []
+        
+        add_factor = {}
+        add_factor['name'] = "add_factor"
+        add_factor['type'] = "image"
+        add_factor['string'] = ''
+        
+        sh_graph = {}
+        
+        sh_graph['name'] = 'show_graph'
+        sh_graph['type'] = 'image'
+        sh_graph['string'] = ''
+        
+        self.headers += [self.head[0]]
+        self.headers += [add_factor]
+        self.headers += [sh_graph]
+        self.headers += [self.head[1]]
         
         fields = []
         
@@ -52,7 +70,8 @@ class Comparison(controllers.Controller):
         proxy_item = rpc.RPCProxy(item_model)
         item_ids = proxy_item.search([])
         
-        res = proxy_item.read(item_ids, ['name'])
+        res = proxy_item.read(item_ids, ['name', 'code'])
+        
         titles = []
         
         for r in res:
@@ -66,8 +85,8 @@ class Comparison(controllers.Controller):
                         item['type'] = 'url'
                         item['string'] = r['name']
                         item['name'] = r['name']
+                        item['code'] = r['code']
                         title['sel'] = True
-                        
                         self.headers += [item]
             
             else:
@@ -76,7 +95,7 @@ class Comparison(controllers.Controller):
                 item['type'] = 'url'
                 item['string'] = r['name']
                 item['name'] = r['name']
-                
+                item['code'] = r['code']
                 self.headers += [item]
             
             title['name'] = r['name']
@@ -86,9 +105,8 @@ class Comparison(controllers.Controller):
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 fields += [field['name']]
-                
-        fields = jsonify.encode(fields)
         
+        fields = jsonify.encode(fields)
         icon_name = self.headers[0].get('icon')
         
         self.url = '/comparison/data'
@@ -109,7 +127,7 @@ class Comparison(controllers.Controller):
         
         self.url_params = _jsonify(self.url_params)
         self.headers = jsonify.encode(self.headers)
-
+        
         return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
     
     @expose(template="erpcomparator.subcontrollers.templates.new_factor")
@@ -123,10 +141,10 @@ class Comparison(controllers.Controller):
         proxy = rpc.RPCProxy(model)
         res = proxy.read([id], ['id', 'parent_id'])
         parent = res[0].get('parent_id')
-        
-        p_id = res[0]['id']
+        p_id = id
         
         if parent:
+#            p_id = parent[0]
             p_name = parent[1]
             
         count = range(0, 21)
@@ -134,10 +152,12 @@ class Comparison(controllers.Controller):
         
         return dict(error=error, count=count, parent_id=p_id, parent_name=p_name)
     
-    @expose(template="erpcomparator.subcontrollers.templates.voting")
+    @expose('json')
     def voting(self, **kw):
         
         id = kw.get('id')
+        event = kw.get('event')
+        user_id = kw.get('user')
         
         model = "comparison.factor"
         proxy = rpc.RPCProxy(model)
@@ -145,35 +165,23 @@ class Comparison(controllers.Controller):
         name = res[0]['name']
         pond = res[0]['ponderation']
         
-        count = range(0, 21)
-        count = [c/float(10) for c in count]
-        
-        return dict(res=None, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
-        
-    @expose(template="erpcomparator.subcontrollers.templates.voting")
-    def update_voting(self, **kw):
-        
-        id = kw.get('id')
-        name = kw.get('name')
-        user_id = kw.get('user')
-        pond = kw.get('pond_value')
-        note = kw.get('suggestion')
-        
         smodel = "comparison.ponderation.suggestion"
         sproxy = rpc.RPCProxy(smodel)
         
-        res = None
-        
-        count = range(0, 21)
-        count = [c/float(10) for c in count]
-        
+        if event == 'incr':
+            if pond > 0.0:
+                pond = pond + 0.1
+        else:
+            if pond > 0.0:
+                pond = pond - 0.1
+                
         try:
-            res = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond, 'note': note})
+            res = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond})
         except Exception, e:
-            return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error=str(e))
+            return dict(res=res, error=str(e))
         
-        return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
-    
+        return dict(res=res, error="")
+        
     @expose(template="erpcomparator.subcontrollers.templates.item_voting")
     def item_voting(self, **kw):
         
@@ -193,7 +201,9 @@ class Comparison(controllers.Controller):
             chd = proxy.read([ch])
             chid['name'] = chd[0]['name']
             chid['id'] = ch
-            child += [chid]
+            chid['type'] = chd[0]['type']
+            if chid['type'] == 'criterion':
+                child += [chid]
         
         vproxy = rpc.RPCProxy('comparison.vote.values')
         val = vproxy.search([])
@@ -232,22 +242,25 @@ class Comparison(controllers.Controller):
     
     @expose('json')
     def data(self, model, ids=[], fields=[], field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc",
-             id=None, factor_id=None, ponderation=None, parent_id=None, parent_name=None, type=''):
+             factor_id=None, ponderation=None, parent_id=None, parent_name=None, ftype=''):
 
         ids = ids or []
-        
-        if id:
-            res = None            
-            new_fact_proxy = rpc.RPCProxy(model)
-            
-            try:
-                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': 1, 
-                                         'ponderation': ponderation, 'type': type})
-            except Exception, e:
-                return dict(error=str(e))
             
         if isinstance(ids, basestring):
             ids = [int(id) for id in ids.split(',')]
+            
+        res = None
+        
+        if parent_id:
+            
+            new_fact_proxy = rpc.RPCProxy(model)
+            try:
+                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': 1, 
+                                         'ponderation': ponderation, 'type': ftype})
+                ids = [res]
+            
+            except Exception, e:
+                return dict(error=str(e))
 
         if isinstance(fields, basestring):
             fields = eval(fields)
@@ -268,7 +281,10 @@ class Comparison(controllers.Controller):
 
         if icon_name:
             fields.append(icon_name)
-
+        
+        if not fields:
+            fields = ['name', 'ponderation', 'child_ids']
+        
         fields_info = proxy.fields_get(fields, ctx)
         result = proxy.read(ids, fields, ctx)
         
@@ -331,19 +347,23 @@ class Comparison(controllers.Controller):
                         item[r.get('item_id')[1]] = str(r.get('result')) + '%'
                         
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
-                            item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1])
+                            item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
-                            item[r.get('item_id')[1]] += '-' + "bold"
-
-#                   else:
-#                        item['icon'] = "/static/images/treegrid/gtk-edit.png"
+                            item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
+                        
+                    item['add_factor'] = '/static/images/treegrid/gtk-edit.png'
+                    item['show_graph'] = '/static/images/treegrid/graph.png'
             
-            record['id'] = item.pop('id') or id
+            if res:
+                record['id'] = res
+            else:
+                record['id'] = item.pop('id') or id
+                
             record['target'] = None
 
             if item['ponderation']:
-                item['ponderation'] = item['ponderation'] or ponderation# + '|' + "javascript:change_vote(id=%s)" % (record['id'])
-
+                item['ponderation'] = (item['ponderation'] or ponderation) + '@' + 'pond'
+                
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)
                 record['icon'] = icons.get_icon(icon)
@@ -352,13 +372,16 @@ class Comparison(controllers.Controller):
                     record['action'] = None
 
             record['children'] = []
+            
+            if item['child_ids']:
+                record['children'] = item.pop('child_ids') or None
 
             if field_parent and field_parent in item:
                 record['children'] = item.pop(field_parent) or None
-                
+            
             record['items'] = item
             records += [record]
-            
+        
         return dict(records=records)
     
     def parse(self, root, fields=None):
@@ -374,7 +397,8 @@ class Comparison(controllers.Controller):
             
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 if field['name'] == 'ponderation':
+                    field['string'] = 'Pond.'
                     field['type'] = 'url'
                     
-                self.headers += [field]
+                self.head += [field]
         

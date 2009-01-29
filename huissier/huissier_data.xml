@@ -3,8 +3,10 @@
 <data>
 
 	<!-- SEQUENCES -->	
-	<delete model="ir.sequence.type" search="[('code','like','huissier.invoice')]"/>
-	<delete model="ir.sequence" search="[('code','like','huissier.invoice')]"/>
+	<!-- XXX delete is not a supported tag:
+	  <delete model="ir.sequence.type" search="[('code','like','huissier.invoice')]"/>
+	  <delete model="ir.sequence" search="[('code','like','huissier.invoice')]"/>
+	-->
 	
 	<record model="ir.sequence.type">
 		<field name="name">Factures de garde</field>

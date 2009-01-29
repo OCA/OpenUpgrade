@@ -15,14 +15,14 @@ class Graph(controllers.Controller):
         
         proxy_factor = rpc.RPCProxy('comparison.factor')
         
-        factor_index = kw.get('factor_index', '')
+        view_factor_id = kw.get('id', [])
+        factor_index = kw.get('factor_index', 0)
         parent_name = kw.get('parent_name')
         
         if factor_index:
             factor_index = int(factor_index)
-            
-        sel_factor_id = []
         
+        sel_factor_id = []
         if parent_name:
             parent_name = parent_name.replace('@', '&')
             sel_factor_id = proxy_factor.search([('name', '=', parent_name)])
@@ -32,6 +32,7 @@ class Graph(controllers.Controller):
         
         res = proxy_item.read(item_ids, ['name'])
         titles = []
+        factors = []
         
         for r in res:
             title = {}
@@ -39,10 +40,14 @@ class Graph(controllers.Controller):
             title['id'] = r['id']
             titles += [title]
         
-        selected_fact = ''
-        if sel_factor_id:
-            factors = proxy_factor.search([('parent_id', '=', sel_factor_id)])
-            selected_fact = factors[factor_index]
+        selected_fact = None
+        
+        if sel_factor_id or view_factor_id:
+            if view_factor_id:
+                factors = proxy_factor.search([('id', '=', [view_factor_id])])
+            else:
+                factors = proxy_factor.search([('parent_id', '=', sel_factor_id)])
+                selected_fact = factors[factor_index]
         else:
             factors = proxy_factor.search([('parent_id', '=', False)])
             
@@ -112,7 +117,6 @@ class Graph(controllers.Controller):
                              "width": 1,
                              "dot-size": 2,
                              "colour": ChartColors[n],
-                             "tip": "",
                              "text": str(j['name']),
                              "font-size": 12,
                              'on-click': "on_radar_click",
@@ -124,7 +128,6 @@ class Graph(controllers.Controller):
                               "width": 1,
                               "dot-size": 2,
                               "colour": ChartColors[n],
-                              "tip": '',
                               "text": str(j['name']),
                               "font-size": 12,
                               'on-click': "on_radar_click",
@@ -147,7 +150,7 @@ class Graph(controllers.Controller):
                                                    }
                                   }
        
-        elements["tooltip"] = {"mouse": 1}
+#        elements["tooltip"] = {"mouse": 1}
         elements["bgcolor"] = "#ffffff"
         
         return elements

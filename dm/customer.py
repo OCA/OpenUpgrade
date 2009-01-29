@@ -68,6 +68,7 @@ dm_order()
 class dm_customer(osv.osv):
     _name = "dm.customer"
     _inherit = "res.partner"
+    _table = "res_partner"
 #    _rec_name = "firstname"
     _columns = {
 #        'code' : fields.char('Code',size=64),
@@ -98,15 +99,18 @@ dm_customer()
 
 class dm_customer_order(osv.osv):
     _name = "dm.customer.order"
+    _inherit = "sale.order"
+    _table = "sale_order"
     _columns ={
         'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete='cascade'),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
-        'note' : fields.text('Notes'),
+#        'note' : fields.text('Notes'),
         'state' : fields.selection([('draft','Draft'),('done','Done')], 'Status', readonly=True),
     }
     _defaults = {
-        'state': lambda *a: 'draft',
+        'picking_policy': lambda *a: 'one',
+#        'state': lambda *a: 'draft',
     }
 
     """
@@ -254,21 +258,33 @@ class dm_customer_segmentation(osv.osv):
         browse_id = self.browse(cr, uid, id)
         if browse_id.customer_text_criteria_ids:
             for i in browse_id.customer_text_criteria_ids:
-                criteria.append("%s %s '%s'"%(i.field.name, i.operator, "%"+i.value+"%"))
+                criteria.append("p.%s %s '%s'"%(i.field.name, i.operator, "%"+i.value+"%"))
         if browse_id.customer_numeric_criteria_ids:
             for i in browse_id.customer_numeric_criteria_ids:
-                criteria.append("%s %s %f"%(i.field.name, i.operator, i.value))
+                criteria.append("p.%s %s %f"%(i.field.name, i.operator, i.value))
         if browse_id.customer_boolean_criteria_ids:
             for i in browse_id.customer_boolean_criteria_ids:
-                criteria.append("%s %s %s"%(i.field.name, i.operator, i.value))
+                criteria.append("p.%s %s %s"%(i.field.name, i.operator, i.value))
         if browse_id.customer_date_criteria_ids:
             for i in browse_id.customer_date_criteria_ids:
-                criteria.append("%s %s '%s'"%(i.field.name, i.operator, i.value))
-        
+                criteria.append("p.%s %s '%s'"%(i.field.name, i.operator, i.value))
+        if browse_id.order_text_criteria_ids:
+            for i in browse_id.order_text_criteria_ids:
+                criteria.append("s.%s %s '%s'"%(i.field.name, i.operator, "%"+i.value+"%"))
+        if browse_id.order_numeric_criteria_ids:
+            for i in browse_id.order_numeric_criteria_ids:
+                criteria.append("s.%s %s %f"%(i.field.name, i.operator, i.value))
+        if browse_id.order_boolean_criteria_ids:
+            for i in browse_id.order_boolean_criteria_ids:
+                criteria.append("s.%s %s %s"%(i.field.name, i.operator, i.value))
+        if browse_id.order_date_criteria_ids:
+            for i in browse_id.order_date_criteria_ids:
+                criteria.append("s.%s %s '%s'"%(i.field.name, i.operator, i.value))
+                
         if criteria:
-            sql_query = ("""select id \nfrom dm_customer \nwhere %s""" % (' and '.join(criteria))).replace('isnot','is not')
+            sql_query = ("""select distinct p.name \nfrom res_partner p, sale_order s\nwhere p.id = s.customer_id and %s\n""" % (' and '.join(criteria))).replace('isnot','is not')
         else:
-            sql_query = """select id \nfrom dm_customer"""
+            sql_query = """select distinct p.name \nfrom res_partner p, sale_order s\nwhere p.id = s.customer_id"""
         return super(dm_customer_segmentation,self).write(cr, uid, id, {'sql_query':sql_query})
 
     def create(self,cr,uid,vals,context={}):
@@ -314,10 +330,14 @@ class dm_customer_text_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+#        'field' : fields.many2one('ir.model.fields','Customers Field',
+#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+#               '!',('model_id','like','dm.customers_list'),
+#               '!',('model_id','like','dm.customer.plugin'),
+#               ('ttype','like','char')],
+#               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-               '!',('model_id','like','dm.customers_list'),
-               '!',('model_id','like','dm.customer.plugin'),
+               domain=[('model_id.model','=','dm.customer'),
                ('ttype','like','char')],
                context={'model':'dm.customer'}),
         'operator' : fields.selection(TEXT_OPERATORS, 'Operator', size=32),
@@ -332,12 +352,16 @@ class dm_customer_numeric_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+#        'field' : fields.many2one('ir.model.fields','Customers Field',
+#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+#               ('ttype','like','integer'),
+#               ('ttype','like','float'),
+#               '!',('model_id','like','dm.customers_list'),
+#               '!',('model_id','like','dm.customer.plugin')],
+#               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-               ('ttype','like','integer'),
-               ('ttype','like','float'),
-               '!',('model_id','like','dm.customers_list'),
-               '!',('model_id','like','dm.customer.plugin')],
+               domain=[('model_id.model','=','dm.customer'),
+               (('ttype','like','integer') or ('ttype','like','float'))],
                context={'model':'dm.customer'}),
         'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
         'value' : fields.float('Value', digits=(16,2)),
@@ -351,10 +375,14 @@ class dm_customer_boolean_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+#        'field' : fields.many2one('ir.model.fields','Customers Field',
+#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+#               '!',('model_id','like','dm.customers_list'),
+#               '!',('model_id','like','dm.customer.plugin'),
+#               ('ttype','like','boolean')],
+#               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-               '!',('model_id','like','dm.customers_list'),
-               '!',('model_id','like','dm.customer.plugin'),
+               domain=[('model_id.model','=','dm.customer'),
                ('ttype','like','boolean')],
                context={'model':'dm.customer'}),
         'operator' : fields.selection(BOOL_OPERATORS, 'Operator', size=32),
@@ -369,15 +397,18 @@ class dm_customer_date_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+#        'field' : fields.many2one('ir.model.fields','Customers Field',
+#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+#               ('ttype','like','date'),
+#               '!',('model_id','like','dm.customers_list'),
+#               '!',('model_id','like','dm.customer.plugin')],
+#               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-               ('ttype','like','date'),
-               '!',('model_id','like','dm.customers_list'),
-               '!',('model_id','like','dm.customer.plugin')],
+               domain=[('model_id.model','=','dm.customer'),
+               (('ttype','like','date') or ('ttype','like','datetime'))],
                context={'model':'dm.customer'}),
         'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),
-        'from_value' : fields.datetime('From'),
-        'to_value' : fields.datetime('To'),
+        'value' : fields.date('Date'),
     }
 dm_customer_date_criteria()
 
@@ -388,8 +419,14 @@ class dm_customer_order_text_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+#        'field' : fields.many2one('ir.model.fields','Customers Field',
+#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
+#               '!',('model_id','like','dm.customers_list')],
+#               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),'!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
+               domain=[('model_id.model','=','dm.customer.order'),
+               ('ttype','like','char')],
+               context={'model':'dm.customer.order'}),
         'operator' : fields.selection(TEXT_OPERATORS, 'Operator', size=32),
         'value' : fields.char('Value', size=128),
     }
@@ -402,11 +439,31 @@ class dm_customer_order_numeric_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-        'field' : fields.many2one('ir.model.fields','Customers Field'),
+#         'field' : fields.many2one('ir.model.fields','Customers Field'),
+        'field' : fields.many2one('ir.model.fields','Customers Field',
+               domain=[('model_id.model','=','dm.customer.order'),
+               (('ttype','like','integer') or ('ttype','like','float'))],
+               context={'model':'dm.customer.order'}),
         'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
         'value' : fields.float('Value', digits=(16,2)),
     }
 dm_customer_order_numeric_criteria()
+
+class dm_customer_order_boolean_criteria(osv.osv):
+    _name = "dm.customer.order.boolean_criteria"
+    _description = "Customer Order Segmentation Boolean Criteria"
+    _rec_name = "segmentation_id"
+
+    _columns = {
+        'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
+        'field' : fields.many2one('ir.model.fields','Customers Field',
+               domain=[('model_id.model','=','dm.customer.order'),
+               ('ttype','like','boolean')],
+               context={'model':'dm.customer.order'}),
+        'operator' : fields.selection(BOOL_OPERATORS, 'Operator', size=32),
+        'value' : fields.selection([('true','True'),('false','False')],'Value'),
+    }
+dm_customer_order_boolean_criteria()
 
 class dm_customer_order_date_criteria(osv.osv):
     _name = "dm.customer.order.date_criteria"
@@ -415,10 +472,13 @@ class dm_customer_order_date_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-        'field' : fields.many2one('ir.model.fields','Customers Field'),
+#        'field' : fields.many2one('ir.model.fields','Customers Field'),
+        'field' : fields.many2one('ir.model.fields','Customers Field',
+               domain=[('model_id.model','=','dm.customer.order'),
+               (('ttype','like','date') or ('ttype','like','datetime'))],
+               context={'model':'dm.customer.order'}),
         'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),
-        'from_value' : fields.datetime('From'),
-        'to_value' : fields.datetime('To'),
+        'value' : fields.date('Date'),
     }
 dm_customer_order_date_criteria()
 

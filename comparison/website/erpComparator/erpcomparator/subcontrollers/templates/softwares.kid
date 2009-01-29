@@ -14,42 +14,8 @@
     
 </head>
 <body>
-    <div class="mattblacktabs">
-		<ul>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/comparison'">
-	    			<span>Comparison</span>
-	    		</a>
-	    	</li>
-	    	<li id="current">
-	    		<a href="#" onclick="window.location.href='/softwares'">
-	    			<span>Software</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/about'">
-	    			<span>About</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/graph'">
-	    			<span>Graph</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/login'">
-	    			<span>Login</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/login/logout'">
-	    			<span>Logout</span>
-	    		</a>
-	    	</li>
-	  	</ul>
-	</div>
-	<div class="width_border" py:for="r in res">
-		<table>
+	<div id="bodybackground" style="text-align: justify; padding: 5px; width: 890px;" py:for="r in res">
+		<table id="checkboxtext">
 			<tr>
 				<td>
 					<b><u>
