@@ -89,6 +89,27 @@
                 </tree>
             </field>
         </record>
+        
+       
+        <record id="product_variant_multi.product_template_form_view" model="ir.ui.view">
+            <field name="name">product_variant_multi.product.template.form</field>
+            <field name="model">product.template</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+       					<xpath expr="/form/notebook" position="inside">
+		                <page string="Variants">
+		                    <field name="dimension_type_ids" widget="one2many_list">
+          									<tree string="Communication history" editable="bottom">
+																<field name="name"/>
+																<field name="allow_custom_value"/>
+														</tree>
+		                    </field>
+		                    <field name="variants"/>
+		                </page>
+                </xpath>
+            </field>
+        </record>
 
 
         <record id="product_variant_multi.product_product_form_view" model="ir.ui.view">
@@ -96,7 +117,6 @@
             <field name="model">product.product</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="product.product_variant_form_view"/>
-            <field name="priority">26</field>
             <field name="arch" type="xml">
                 <field name="variants" position="after">
                     <field name="dimension_value_ids"/>

@@ -51,12 +51,20 @@ class product_variant_dimension_value(osv.osv):
     _order = "sequence, name"
 product_variant_dimension_value()
 
-#
-# Dimensions Definition
-#
+
+
+class product_template(osv.osv):
+    _inherit = "product.template"
+    
+    _columns = {
+        'dimension_type_ids':fields.one2many('product.variant.dimension.type', 'product_tmpl_id', 'Dimension Types'),
+        'variants':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
+    }
+    
+product_template()
+
 
 class product_product(osv.osv):
-    _name = "product.product"
     _inherit = "product.product"
 
     def _variant_name_get(self, cr, uid, ids, name, arg, context={}):
@@ -68,6 +76,7 @@ class product_product(osv.osv):
 
     _columns = {
         'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions'),
+        'dimension_type_ids': fields.related('product_tmpl_id', 'dimension_type_ids', type="one2many", relation="product.variant.dimension.type", string="Product Template Dimension Types"),
         #
         # TODO: compute price_extra and _margin based on variants
         #
