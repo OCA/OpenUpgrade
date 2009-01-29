@@ -9,7 +9,7 @@
 <body>
 	<div id="bodybackground">
 		<div id="checkboxtext">
-			<img style="padding-left: 5px;" src="/static/images/iconarrow.gif" align="absbottom" width="15" height="17"> 
+			<img height="14" width="14" align="absbottom" style="padding-left: 5px;" src="/static/images/iconarrow.gif">
 				<span style="font-family: Verdana, Geneva, sans-serif; font-style: normal; font-size: 12px;">
 					You can compare among following products :
 				</span>
