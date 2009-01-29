@@ -62,12 +62,12 @@ class product_product(osv.osv):
     def _variant_name_get(self, cr, uid, ids, name, arg, context={}):
         res = {}
         for p in self.browse(cr, uid, ids, context):
-            r = map(lambda dim: (dim.dimension_id.name or '')+'/'+(dim.name or '-'), p.dimension_ids)
+            r = map(lambda dim: (dim.dimension_id.name or '')+'/'+(dim.name or '-'), p.dimension_value_ids)
             res[p.id] = ','.join(r)
         return res
 
     _columns = {
-        'dimension_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions'),
+        'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions'),
         #
         # TODO: compute price_extra and _margin based on variants
         #
