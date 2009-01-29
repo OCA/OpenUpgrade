@@ -391,6 +391,9 @@ TreeNode.prototype = {
             }
 
             MochiKit.DOM.appendChildNodes(td, value);
+            if (header.type == "image" || header.type == 'url') {
+            	MochiKit.DOM.setNodeAttribute(td, 'width', '5px');
+            }
             MochiKit.DOM.appendChildNodes(this.element, td);
         }
         
@@ -493,6 +496,10 @@ TreeNode.prototype = {
                     a.innerHTML = MochiKit.DOM.escapeHTML(value);
                 }
             }
+        }
+        
+        if (header.type == "image" || header.type == 'url') {
+        	MochiKit.DOM.setNodeAttribute(td, 'width', '5px');
         }
         
         return this.element;
