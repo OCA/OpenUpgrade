@@ -37,8 +37,19 @@ function getSelectedItems() {
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
 }
 
-function change_vote(id) {
-	openWindow(getURL('/comparison/voting', {id: id}), {width: 500, height: 350});
+function change_vote(id, event) {
+	
+	treenode = comparison_tree.selection_last;
+	
+	var req = Ajax.JSON.post('/comparison/voting', {id: id, event: event});
+	req.addCallback(function(obj){
+		if(obj.res) {
+			treenode.update();
+		}
+		if (obj.error) {
+            return alert(obj.error);
+        }
+	});
 }
 
 function view_graph(id) {
@@ -61,7 +72,6 @@ function add_factor(id) {
         window.mbox.onUpdate = add_new_factor;
 		window.mbox.show();
 	});
-	
 }
 
 function add_new_factor() {

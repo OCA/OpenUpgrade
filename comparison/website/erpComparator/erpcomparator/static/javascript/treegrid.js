@@ -125,11 +125,22 @@ TreeGrid.prototype = {
         for(var i in this.headers){
             
             var header = this.headers[i];
-            var th = MochiKit.DOM.TH(null, header.string);
+            if (header.string == 'Factor Name' || header.string == 'Ponderation') {
+            	var th = MochiKit.DOM.TH(null, header.string);
+            	if (header.string == 'Ponderation') {
+            		MochiKit.DOM.setNodeAttribute(th, 'width', '10px');	
+            	}
+            	else{
+            		MochiKit.DOM.setNodeAttribute(th, 'width', header.width);
+            	}
+            }
+            else {
+            	var th = MochiKit.DOM.TH(null, header.code);
+            	MochiKit.DOM.setNodeAttribute(th, 'width', '5px');
+            }
     
             MochiKit.DOM.setNodeAttribute(th, 'title', header.help ? header.help : '');
             MochiKit.DOM.setNodeAttribute(th, 'class', header.type);
-            MochiKit.DOM.setNodeAttribute(th, 'width', header.width);
             MochiKit.DOM.setNodeAttribute(th, 'align', header.align);
             
             if (this.options.onheaderclick){
@@ -246,6 +257,8 @@ TreeNode.prototype = {
         this.element = MochiKit.DOM.TR({'class' : 'row'});
         this.element.style.display = this.parentNode ? (this.parentNode.expanded ? "" : "none") : "";
         
+        ctree = this.tree;
+        
         var record = this.record;
         var indent = this.getPath().length - 1;
 
@@ -322,28 +335,35 @@ TreeNode.prototype = {
             }
             
             if (i > 0) {
-                
                 if (header.type == 'url' && value) {
                 	if (header.name == 'ponderation') {
-                		title = "Suggest ponderation for this factor";
+                		title = "Suggest ponderation";
                 	}
                 	else {
-                		title = "Vote for " +header.name + " for this factor."
+                		title = "Vote for Item: " +header.name + ", Factor: ";
                 	}
                 	
                 	if (value.indexOf('|') != -1) {
 	                	var vals = value.split('|');
 	                	value = vals[0];
 	                	record.action = vals[1];
-	                    value = [MochiKit.DOM.A({title: title, 'style': 'color: black'}, value)];
+	                	t = vals[2];
+	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black'}, value)];
 	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': record.action, 'width' : 16, 'height' : 16}));
-	                    
                 	}
                 	else if (value.indexOf('-') != -1) {
                 		var vals = value.split('-');
 	                	value = vals[0];
+	                	t = vals[1];
+	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold'}, value);
+                	}
+                	else if (value.indexOf('@') != -1) {
+                		var vals = value.split('@');
+	                	value = vals[0];
 	                	record.action = vals[1];
-	                	value = MochiKit.DOM.DIV({style: 'font-weight: bold'}, value);
+	                    value = [MochiKit.DOM.A({title: title, 'style': 'color: black'}, value)];
+	                    value = [value.concat(MochiKit.DOM.IMG({'src': '/static/images/increase.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': "javascript: change_vote(" + record.id + ", 'incr')", 'width' : 20, 'height' : 20}))];
+	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/decrease.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': "javascript: change_vote(" + record.id + ", 'decr')", 'width' : 20, 'height' : 20}));
                 	}
                 	else {
                 		value = value;

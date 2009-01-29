@@ -6,45 +6,8 @@
     <title>Comparison</title>
 </head>
 <body>
-	<div id="site">
-	    <div style="height: 46px; width: 890px; float: left;">
-			<div style="float:left;width:9;">
-				<img src="/static/images/whitebg.gif" alt="" width="9" height="46"/>
-			</div>
-		    <div style="float:left;width:172;">
-		    	<a href="#" onclick="window.location.href='/comparison'" onmouseover="document.comparison_image.src='/static/images/comparison_hover.jpg'" onmouseout="document.comparison_image.src='/static/images/comparison.jpg'">
-		    		<img src="/static/images/comparison.jpg" name="comparison_image" alt="" border="0" width="172" height="46"/>
-		    	</a>
-		    </div>
-		    <div style="float:left; width:175; height:46;">
-		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.jpg'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
-		    		<img src="/static/images/graphs.jpg" name="graph_image" alt="" border="0" width="175" height="46"/>
-		    	</a>
-		    </div>
-		    <div style="float:left;width:176;">
-		    	<a href="#" onclick="window.location.href='/softwares'" onmouseover="document.software_image.src='/static/images/software_hover.jpg'" onmouseout="document.software_image.src='/static/images/software.jpg'">
-		    		<img src="/static/images/software.jpg" name="software_image" alt="" border="0" width="176" height="46"/>
-		    	</a>
-		    </div>
-		    <div style="float:left;width:176;">
-		    	<a href="#" onclick="window.location.href='/document'" onmouseover="document.document_image.src='/static/images/document_hover.jpg'" onmouseout="document.document_image.src='/static/images/document.jpg'">
-		    		<img src="/static/images/document.jpg" name="document_image" alt="" border="0" width="176" height="46"/>
-		    	</a>
-		    </div>
-		    <div style="float:left;width:173;">
-		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.jpg'" onmouseout="document.about_image.src='/static/images/about.jpg'">
-		    		<img src="/static/images/about.jpg" name="about_image" alt="" border="0" width="173" height="46"/>
-		    	</a>
-		    </div>
-		    <div style="float:left;width:9;">
-		    	<img src="/static/images/rightwhitebg.gif" alt="" width="9" height="46"/>
-		    </div>          
-		</div>
-		<br/><br/>
-		<div>
-			<img src="/static/images/bluebgimage.png"/>
-		</div>
-		<table>
+	<div id="bodybackground">
+		<table id="checkboxtext">
 			<tr>
 				<td class="label">
 					Analysis axis :
@@ -56,26 +19,28 @@
 				</td>
 			</tr>
 		</table><br/>
-		<table name="item_list" id="graph_item_list">
-			<tr>
-				<td class="label">
-					List of ERP :
-				</td>
-				<td py:for="label in titles">
-					<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
-				</td>
-			</tr>
-			<tr>
-				<td>&nbsp;
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<button type="button" class="button" onclick="radarData()">Show Graph</button>
-				</td>
-			</tr>
-		</table><br/>	
-		<div id="radar_chart"></div>
+		<div id="checkboxtext">
+			<table name="item_list" id="graph_item_list">
+				<tr>
+					<td class="label">
+						List of ERP :
+					</td>
+					<td py:for="label in titles">
+						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button type="button" class="button" onclick="radarData()">Show Graph</button>
+					</td>
+				</tr>
+			</table><br/>	
+			<div id="radar_chart"></div>
+		</div>
 	</div>
 </body>
 </html>
