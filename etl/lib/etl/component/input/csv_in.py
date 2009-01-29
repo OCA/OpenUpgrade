@@ -77,7 +77,7 @@ class csv_in(etl.component):
                 if self.fileconnector:
                     self.fp=self.fileconnector.open('r',bufsize=self.bufsize)        
                 else:
-                    self.fp=open(self.name,'r',bufsize=self.bufsize)
+                    self.fp=open(self.name,'r',self.bufsize)
                 self.reader=csv.DictReader(self.fp,dialect=self.dialect, **self.arg_values)                
                 self.reader.fieldnames             
             for data in self.reader:
@@ -86,10 +86,10 @@ class csv_in(etl.component):
                      raise StopIteration
                 if self.transformer:
                     self.transformer.transform(data,encoding=self.encoding)
-                yield data,'main'             
-            self.fileconnector.close()
-        except Exception,e: 
-            print e                        
+                yield data,'main'   
+            if self.fileconnector:          
+                self.fileconnector.close()
+        except Exception,e:                                 
             yield e,'error'             
                
         
