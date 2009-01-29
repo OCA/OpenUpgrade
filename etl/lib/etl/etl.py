@@ -24,18 +24,115 @@
     The module provides process of ETL.
 
 """
+from mx import DateTime
 
-class component(object):
+class signal(object):
+    """
+    ETL Signal.
+    Each component can send signals. Trigger Transitions can listen to these signals.
+    Signals are automatically generated:
+       - start : When the component starts
+       - start_input : At the first row received by the component
+       - start_output : At the first row send by the component
+       - no_input : At the end of the process, if no data received
+       - stop : when the component is set as pause
+       - continue : when the component restart after a pause
+       - end : When the component finnished is process
+    """
+    def __init__(self,*args, **argv):
+        self.__connects={}  
+    
+    def signal(self, signal, signal_data=None):
+        for fnct,data,key in self.__connects.get(signal, []):
+            fnct(self, signal_data, *data)
+        return True
+
+    def signal_connect(self, key, signal, fnct, *data):
+        self.__connects.setdefault(signal, [])
+        if (fnct, data, key) not in self.__connects[signal]:
+            self.__connects[signal].append((fnct, data, key))
+        return True
+
+    def signal_unconnect(self, key, signal=None):
+        if not signal:
+            signal = self.__connects.keys()
+        else:
+            signal = [signal]
+        for sig in signal:
+            i=0
+            while i<len(self.__connects[sig]):
+                if self.__connects[sig][i][2]==key:
+                    del self.__connects[sig][i]
+                else:
+                    i+=1
+        return True
+    
+class transformer(object):
+    """
+        transfer data into different type.
+        pass description like :
+          - INTEGER  : convert string to Integer object
+          - FLOAT : convert string to float object
+          - LONG  : convert string to long integer object
+          - COMPLEX : convert string to complex number
+          - STRING : convert string to string
+          - DATE   : convert string to date object
+          - DATETIME : convert string to datetime object
+          - BOOLEAN : convert string to boolean object
+        example :
+           datas = [{'id':'1','name':'abc','invoice_date':'2009-10-20','invoice_amount':'200.00','is_paid':'1'}]
+           description= {'id':etl.transformer.LONG,'name':etl.transformer.STRING,'invoice_date':etl.transformer.DATE,'invoice_amount':etl.transformer.FLOAT,'is_paid':etl.transformer.BOOLEAN}
+           return = [{'id':1,'name':'abc','invoice_date':<mx.DateTime.DateTime object -2009-10-20>,'invoice_amount':200.00,'is_paid':True}]
+    """
+    INTEGER='int'
+    STRING='str'
+    DATE='date'
+    DATETIME='datetime'
+    FLOAT='float'
+    LONG='long'
+    COMPLEX='complex'
+    BOOLEAN='bool'
+
+    DATE_FORMAT='%Y-%m-%d'
+    DATETIME_FORMAT='%Y-%m-%d %H:%M:%S'
+
+    _transform_method={
+        'int':lambda x:int(x),
+        'str':lambda x:str(x),
+        'date':lambda x:DateTime.strptime(x,transformer.DATE_FORMAT),
+        'datetime':lambda x:DateTime.strptime(x,transformer.DATETIME_FORMAT),
+        'float':lambda x:float(x),
+        'long':lambda x:long(x),
+        'complex':lambda x:complex(x),
+        'bool':lambda x:bool(x) 
+    }
+
+    def __init__(self,description,*args,**argv):
+        self.description=description             
+    
+    def transform(self,datas,encoding='utf-8'):                
+        # TODO : TO check : data and description should have same keys.
+        if type(datas)!=list:
+           datas=[datas]
+        for row in datas:            
+            for column in row:
+                transform_method=self._transform_method[self.description[column]]
+                row[column]=transform_method(row[column].decode(encoding))        
+
+class component(signal):
     """
        Base class of ETL Component.
     """
     is_end = False
     def __init__(self,*args, **argv):
+        super(component, self).__init__(*args, **argv) 
         self.trans_in = []
         self.trans_out = []
         self.is_output = False
         self.data = {}
         self.generator = None
+        self.transformer=None
+        
 
     def __str__(self):
         return self.data
@@ -70,7 +167,7 @@ class component(object):
     def process(self):
         """ process method of ETL component
         """
-        raise 'Should be override'
+        pass
 
 
     def input_get(self):
@@ -103,7 +200,7 @@ class job(object):
     def __init__(self,outputs=[]):
         self.outputs=outputs
     def __str__(self):
-		pass
+        pass
 
     def run(self):
         for c in self.outputs:
@@ -129,17 +226,25 @@ class connector(object):
         return True
 
 
-def test1():
-    fileconnector=etl.connector.file_connector.file_connector('demo/data/partner.csv')
-    csv_in1= etl.component.input.csv_in.csv_in(fileconnector=fileconnector)
-    log1=etl.component.transform.logger.logger(name='Read Partner File')
+                        
+        
+        
+
+
+def test1():    
+    fileconnector=etl.connector.file_connector.file_connector('demo/data/invoice.csv')
+    transformer.description= {'id':etl.transformer.LONG,'name':etl.transformer.STRING,'invoice_date':etl.transformer.DATE,'invoice_amount':etl.transformer.FLOAT,'is_paid':etl.transformer.BOOLEAN}    
+    transformer=etl.transformer(transformer.description)
+    csv_in1= etl.component.input.csv_in.csv_in(fileconnector=fileconnector,transformer=transformer)
+    log1=etl.component.transform.logger.logger(name='Read Invoice File')
     tran=etl.etl.transition(csv_in1,log1)
     job1=etl.etl.job([log1])
     job1.run()
 
 
 if __name__ == '__main__':
-    test1()
+    pass
+    #test1()
 
 
 

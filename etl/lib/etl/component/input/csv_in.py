@@ -38,9 +38,11 @@ class csv_in(etl.component):
         Output Flows: 0-x
         * .* : return the main flow with data from csv file
     """
-    def __init__(self,fileconnector, dialect='excel', row_limit=0,bufsize=-1,encoding='utf-8', *args, **argv):
-        super(csv_in, self).__init__(*args, **argv)        
+    def __init__(self,name,fileconnector=None,transformer=None, dialect='excel', row_limit=0,bufsize=-1,encoding='utf-8', *args, **argv):
+        super(csv_in, self).__init__(*args, **argv)  
+        self.name=name      
         self.fileconnector = fileconnector 
+        self.transformer=transformer
         self.dialect=dialect
         self.arg_values={}
         if argv.get('delimiter',False):
@@ -72,15 +74,22 @@ class csv_in(etl.component):
     def process(self):
         try:
             if not self.reader:
-                self.fp=self.fileconnector.open('r',bufsize=self.bufsize)        
-                self.reader=csv.DictReader(self.fp,dialect=self.dialect, **self.arg_values)             
+                if self.fileconnector:
+                    self.fp=self.fileconnector.open('r',bufsize=self.bufsize)        
+                else:
+                    self.fp=open(self.name,'r',bufsize=self.bufsize)
+                self.reader=csv.DictReader(self.fp,dialect=self.dialect, **self.arg_values)                
+                self.reader.fieldnames             
             for data in self.reader:
                 self.row_count+=1
                 if self.row_limit and self.row_count > self.row_limit:
                      raise StopIteration
+                if self.transformer:
+                    self.transformer.transform(data,encoding=self.encoding)
                 yield data,'main'             
             self.fileconnector.close()
-        except Exception,e:                         
+        except Exception,e: 
+            print e                        
             yield e,'error'             
                
         
