@@ -59,9 +59,6 @@ class csv_in(etl.component):
             self.arg_values['lineterminator']=argv['lineterminator']
         if argv.get('quoting',False):
             self.arg_values['quoting']=argv['quoting']
-         
-             
-        
 
         self.row_limit=row_limit 
         self.row_count=0

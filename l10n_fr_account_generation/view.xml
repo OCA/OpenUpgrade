@@ -1,0 +1,36 @@
+﻿<?xml version="1.0"?>
+<openerp>
+  <data>
+   <record model="ir.ui.view" id="view_partner_form_inherit">
+           <field name="name">res.partner.form</field>
+           <field name="model">res.partner</field>
+           <field name="inherit_id" ref="base.view_partner_form"/>
+           <field name="type">form</field>
+           <field name="arch" type="xml">
+                 <field name="property_account_payable" position="after">
+                            <button name="generate_account" string="Account generate" type="object" colspan="2"/>
+                 </field>
+           </field>
+   </record>
+   <record model="ir.ui.view" id="view_account_generation_config_form">
+           <field name="name">account.generation.config.form</field>
+           <field name="model">account.generation.config</field>
+           <field name="type">form</field>
+           <field name="arch" type="xml">
+             <form string="Account generation config" >
+                 <field name="name" />
+                 <field name="customer" />
+                 <field name="supplier" />
+                 <field name="nbcar" />
+            </form>
+           </field>
+   </record>
+  <record id="action_account_generation_config_form" model="ir.actions.act_window">
+              <field name="name">Account generation config</field>
+              <field name="res_model">account.generation.config</field>
+              <field name="view_type">form</field>
+              <field name="view_mode">tree,form</field>
+  </record>
+  <menuitem action="action_account_generation_config_form" id="menu_action_account_generation_config_form" parent="account.menu_finance_configuration"/>
+  </data>
+</openerp>
