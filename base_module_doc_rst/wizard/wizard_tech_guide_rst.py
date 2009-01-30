@@ -82,6 +82,11 @@ class RstDoc(object):
 
         sl = [
             "",
+            ".. module:: %(name)s",
+            "    :synopsis: %(shortdesc)s",
+            "    :noindex:",
+            ".. ",
+            "",
             "%(title)s",
             "%(title_underline)s",
             ":Module: %(name)s",
@@ -195,7 +200,8 @@ class RstDoc(object):
         if self.objects:
             for obj in self.objects:
                 obj_name = obj['object'].name
-                title = "Object: %s" % (obj_name)
+                obj_model = obj['object'].model
+                title = "Object: %s (%s)" % (obj_name, obj_model)
                 slo = [
                        "",
                        title,
