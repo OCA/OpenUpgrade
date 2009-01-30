@@ -51,6 +51,9 @@
 					<td py:for="label in titles">
 						<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}</input>
 					</td>
+					<td>
+						<img src="/static/images/load.jpg" style="cursor: pointer" onclick="getRecords()"/>
+					</td>
 				</tr>
 				<tr py:if="not selected_items">
 					<td py:for="label in titles">

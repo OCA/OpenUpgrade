@@ -1,12 +1,12 @@
 
 function radarData() {
-	ids = getSelectedItems();
+	ids = getSelectedItems_graph();
 	ids = map(function(r){return r.id;}, ids);
 	ids = '[' + ids.join(', ') + ']';
 	load_radar(ids);
 }
 
-function getSelectedItems() {
+function getSelectedItems_graph() {
 	tbl = document.getElementById('graph_item_list');
 	return filter(function(box){
 		if (box.checked) {
@@ -55,7 +55,7 @@ function change_vote(node, pond_val) {
 }
 
 function view_graph(id) {
-	window.location.href = '/graph?id=' + id;
+	window.location.href = '/graph?view_id=' + id;
 }
 
 function add_factor(id) {
@@ -166,32 +166,27 @@ function item_vote() {
 	    			y.update();
 	    		});
 	    		treenode.update();
-	    		
-	    	}
+			}
 	    	if (obj.error) {
 	            return alert(obj.error);
 	        }
 	    });
 	});
+//	while (treenode && treenode.parentNode) {
+//		treenode.update();
+//		treenode = treenode.parentNode;
+//	}
 }
 
 function load_radar(ids) {
 	
 	factor_name= $('factors').value;
-	factor_name = factor_name.replace(/&/, "@");
+	factor_name = factor_name.replace(/&/g, "@");
 	
 	list = urlEncode('/graph/radar?ids='+ids+'&factor_name='+factor_name);
 	
 	swfobject.embedSWF("/static/open-flash-chart.swf", "radar_chart", "700", "700",
 						"9.0.0", "expressInstall.swf", {'data-file': list});
-}
-
-function on_radar_click(index){
-	
-	factor_name= $('factors').value;
-	factor_name = factor_name.replace(/&/, "@");
-	
-	window.location.href = '/graph?factor_index='+index+'&parent_name='+factor_name;
 }
 
 function on_button_click(evt, node) {

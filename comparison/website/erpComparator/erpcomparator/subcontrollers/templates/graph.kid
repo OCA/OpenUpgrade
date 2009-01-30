@@ -45,12 +45,14 @@
 		</div>
 		<table id="checkboxtext">
 			<tr>
-				<td class="label">
+				<td style="font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;">
 					Analysis axis :
 				</td>
 				<td>
-					<select style="width: 300px;" name="factors" id="factors">				
-			        	<option py:for="s in root_factor" py:content="s['name']" selected="${tg.selector(s['name']==selected_fact)}">${s['name']}</option>
+					<select style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors">
+						<option>Summary</option>
+			        	<option py:for="s in parents" py:content="s['name']">${s['name']}</option>
+			        	<option py:for="c in all_child" py:content="c['name']">${c['name']}</option>
 			        </select>
 				</td>
 			</tr>
