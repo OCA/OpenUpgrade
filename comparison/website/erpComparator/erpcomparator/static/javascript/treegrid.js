@@ -287,11 +287,12 @@ TreeNode.prototype = {
             if (i == 0) { // first column
     
                 var tds = [];
-                
-                if (value.length > 15) {
+                log(value);
+                title = value;
+                /*if (value.length > 15) {
             		title = value;
             		value = value.substring(0, 15) + '...'
-            	}
+            	}*/
     
                 for(var i = 0; i < indent; i++){
                     tds.push(SPAN({'class' : 'indent'}));
@@ -316,7 +317,7 @@ TreeNode.prototype = {
     	            this.element_a = value;
                 }
                 else {
-                	value = SPAN({'style': 'color: black; cursor: normal;', 'title': title}, value);
+                	value = SPAN({'style': 'color: black; display: block; max-width: 250px; white-space: normal; cursor: normal;', 'title': title}, value);
     	            this.element_a = value;
                 }
                 
@@ -421,10 +422,12 @@ TreeNode.prototype = {
             
             if (i == 0) { // first column                
                 
-                if (value.length > 15) {
+                /*if (value.length > 15) {
             		title = value;
             		value = value.substring(0, 15) + '...'
-            	}
+            	}*/
+            	
+            	title = value;
             	
                 if (record.icon && this.element_i) {
                     this.element_i.src = record.icon;
