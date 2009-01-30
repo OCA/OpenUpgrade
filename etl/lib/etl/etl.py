@@ -107,7 +107,7 @@ class transformer(object):
         'bool':lambda x:bool(x) 
     }
 
-    def __init__(self,description,*args,**argv):
+    def __init__(self,description={}):
         self.description=description             
     
     def transform(self,datas,encoding='utf-8'):                
@@ -224,11 +224,6 @@ class connector(object):
         return self.connection_string
     def close(self):
         return True
-
-
-                        
-        
-        
 
 
 def test1():    
