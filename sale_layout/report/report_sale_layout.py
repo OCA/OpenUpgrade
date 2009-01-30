@@ -41,7 +41,6 @@ class sale_order_1(report_sxw.rml_parse):
         self.context = context
 
     def repeat_In(self, lst, name, nodes_parent=False,td=False,width=[],value=[],type=[]):
-        print 'rrrrrrrrrrrrrrrrrrrrrrrrrepeat_In', lst
         self._node.data = ''
         node = self._find_parent(self._node, nodes_parent or parents)
         ns = node.nextSibling
@@ -62,7 +61,6 @@ class sale_order_1(report_sxw.rml_parse):
                 tableFlag=1
 
                 width_str = ns._attrs['colWidths'].nodeValue
-                print 'WWWWWWWWWWWWWWWWWWWw',width_str
                 ns.removeAttribute('colWidths')
                 total_td = td * len(value)
 
@@ -70,7 +68,6 @@ class sale_order_1(report_sxw.rml_parse):
                     for v in value:
                         width.append(30)
                 for v in range(len(value)):
-                    print 'v,value,width,width_str',v,value,width,width_str
                     width_str +=',%d'%width[v]
 
                 ns.setAttribute('colWidths',width_str)
@@ -89,7 +86,6 @@ class sale_order_1(report_sxw.rml_parse):
                             newnode = lc.cloneNode(1)
 
                             newnode.childNodes[1].lastChild.data = t1 + t2 +t3
-#                           newnode.childNodes[1].lastChild.data=[[ a['status']==1 and ( setTag('para','para',{'fontName':'Times-bold'})) ]]
                             child.appendChild(newnode)
                             newnode=False
                             i+=1
@@ -118,8 +114,7 @@ class sale_order_1(report_sxw.rml_parse):
             res={}
 
             if entry.layout_type=='article':
-                print '$$$$$$$$$$$$$$$$$$$$$44',entry.tax_id
-                res['taxes']=', '.join(map(lambda x: x.name, entry.tax_id)) or ''
+                res['tax_id']=', '.join(map(lambda x: x.name, entry.tax_id)) or ''
                 res['name']=entry.name
                 res['product_uom_qty']="%.2f"%(entry.product_uos and entry.product_uos_qty or entry.product_uom_qty  or 0.00)
                 res['product_uom']=entry.product_uos and entry.product_uos.name or entry.product_uom.name 
@@ -137,7 +132,7 @@ class sale_order_1(report_sxw.rml_parse):
                 res['product_uom_qty']=''
                 res['price_unit']=''
                 res['discount']=''
-                res['taxes']=''
+                res['tax_id']=''
                 res['layout_type']=entry.layout_type
                 res['note']=entry.notes
                 res['product_uom']=''
@@ -161,7 +156,7 @@ class sale_order_1(report_sxw.rml_parse):
                     res['quantity']=''
                     res['price_unit']=''
                     res['discount']=''
-                    res['taxes']=''
+                    res['tax_id']=''
                     res['product_uom']=''
                 elif entry.layout_type=='title':
                     res['name']=entry.name
@@ -175,7 +170,7 @@ class sale_order_1(report_sxw.rml_parse):
                     res['product_uom_qty']='____________'
                     res['price_unit']='______________'
                     res['discount']='____________'
-                    res['taxes']='_________________'
+                    res['tax_id']='_________________'
                     res['product_uom']='_____'
                     res['name']='________________________________________'
                     res['price_subtotal']='_______________________'
