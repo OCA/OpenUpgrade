@@ -21,6 +21,6 @@ Based on previous work of Readylan (version for 4.2).
     "update_xml" : [
         "sale_payment_view.xml",
         ],
-    "active": True,
+    "active": False,
     "installable": True
 }

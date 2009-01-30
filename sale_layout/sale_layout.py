@@ -30,40 +30,7 @@ class sale_order_line(osv.osv):
                 new_ids.append(line.id)
         return super(sale_order_line, self).invoice_line_create(cr, uid, new_ids, context)
 
-#    def fields_get(self, cr, uid, fields=None, context=None):
-##        print 'sale layout...........................fields_get',fields
-##        article = {
-##            'article': [('readonly', False), ('invisible', False)],
-##            'text': [('readonly', True), ('invisible', True), ('required', False)],
-##            'subtotal': [('readonly', True), ('invisible', True), ('required', False)],
-##            'title': [('readonly', True), ('invisible', True), ('required', False)],
-##            'break': [('readonly', True), ('invisible', True), ('required', False)],
-##            'line': [('readonly', True), ('invisible', True), ('required', False)],
-##        }
-##        states_layout = {
-##            'name': {
-##                'break': [('readonly', True),('required', False),('invisible', True)],
-##                'line': [('readonly', True),('required', False),('invisible', True)],
-##                },
-##            'product_id': article,
-##            'product_uom_qty': article,
-##            'product_uom': article,
-##            'product_uos_qty': article,
-##            'product_uos': article,
-##            'price_unit': article,
-##            'discount': article,
-##            'tax_id': article,
-##            'type' : article,
-##        }
-#        res = super(sale_order_line, self).fields_get(cr, uid, fields, context)
-#        print res
-#        if 'name' in res:
-#            res['name']['defaults']= 'Sub Total'
-#            print '=============',res
-#        return res
-
     def _onchange_sale_order_line_view(self, cr, uid, id, type, context={}, *args):
-            print '=SALE LAYYYYYYYYOUUUUTTTTTTT_onchange_sale_order_line_view',type
             temp ={}
             temp['value']= {}
             if (not type):
@@ -102,16 +69,6 @@ class sale_order_line(osv.osv):
 
     def write(self, cr, user, ids, vals, context=None):
         if vals.has_key('layout_type'):
-#            if vals['layout_type'] != 'article':
-#                vals['product_id']= False
-#                vals['product_uom_qty']= False,
-#                vals['product_uom']= False,
-#                vals['product_uos_qty']= False,
-#                vals['product_uos']= False,
-#                vals['price_unit']= False,
-#                vals['discount']= False,
-#                vals['tax_id']= False,
-#                vals['type']= 'make_to_stock',
             if vals['layout_type'] == 'line':
                 vals['name'] = ' '
             if vals['layout_type'] == 'break':
