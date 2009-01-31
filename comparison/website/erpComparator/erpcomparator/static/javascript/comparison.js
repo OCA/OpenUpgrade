@@ -1,12 +1,12 @@
 
 function radarData() {
-	ids = getSelectedItems();
+	ids = getSelectedItems_graph();
 	ids = map(function(r){return r.id;}, ids);
 	ids = '[' + ids.join(', ') + ']';
 	load_radar(ids);
 }
 
-function getSelectedItems() {
+function getSelectedItems_graph() {
 	tbl = document.getElementById('graph_item_list');
 	return filter(function(box){
 		if (box.checked) {
@@ -37,16 +37,29 @@ function getSelectedItems() {
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
 }
 
-function change_vote(id) {
-	openWindow(getURL('/comparison/voting', {id: id}), {width: 500, height: 350});
+function change_vote(node, pond_val) {
+	
+	params = {}
+	params['id'] = node.name;
+	params['pond_val'] = pond_val;
+	
+	var req = Ajax.JSON.post('/comparison/voting', params);
+	req.addCallback(function(obj){
+		if (obj.value) {
+			node.update();
+		}
+		if (obj.error) {
+            return alert(obj.error);
+        }
+	});
 }
 
 function view_graph(id) {
-	window.location.href = '/graph?id=' + id;
+	window.location.href = '/graph?view_id=' + id;
 }
 
 function add_factor(id) {
-	params = [];
+	params = {};
 	
 	params['id'] = id;
 	var req = Ajax.post('/comparison/add_factor', params);
@@ -61,12 +74,11 @@ function add_factor(id) {
         window.mbox.onUpdate = add_new_factor;
 		window.mbox.show();
 	});
-	
 }
 
 function add_new_factor() {
 	treenode = comparison_tree.selection_last;
-	params = [];
+	params = {};
 	
 	params['model'] = 'comparison.factor';
 	params['factor_id'] = $('factor_id').value;
@@ -94,7 +106,6 @@ function add_new_factor() {
             return alert(obj.error);
         }
     });
-	
 }
 
 var onUpdate = function(){
@@ -109,12 +120,11 @@ MochiKit.DOM.addLoadEvent(function(evt){
             {text: 'Save', onclick: onUpdate},
         ]
     });
-
 });
 
 function open_item_vote(id, header) {
 	
-	params = [];
+	params = {};
 	params['id'] = id;
 	params['header'] = header;
 	
@@ -135,7 +145,7 @@ function open_item_vote(id, header) {
 function item_vote() {
 	
 	treenode = comparison_tree.selection_last;
-	params = [];
+	params = {};
 	 
 	child_ids = [];
 	trs = getElementsByTagAndClassName('tr', 'factor_row');
@@ -156,40 +166,22 @@ function item_vote() {
 	    			y.update();
 	    		});
 	    		treenode.update();
-	    		
-	    	}
+			}
 	    	if (obj.error) {
 	            return alert(obj.error);
 	        }
 	    });
-	}); 
-	
-	/*
-	params['id'] = $('id').value;
-	params['score_id'] = $('score_id').value;
-	params['item_id'] = $('item_id').value;
-	params['note'] = $('note').value;
-	
-	var req = Ajax.JSON.post('/comparison/update_item_voting', params);
-    req.addCallback(function(obj){
-    	if(obj.res) {
-    		window.mbox.hide();
-    		treenode.update();
-    		
-    	}
-    	if (obj.error) {
-            return alert(obj.error);
-        }
-    });
-	
-	
-	*/
+	});
+//	while (treenode && treenode.parentNode) {
+//		treenode.update();
+//		treenode = treenode.parentNode;
+//	}
 }
 
 function load_radar(ids) {
 	
 	factor_name= $('factors').value;
-	factor_name = factor_name.replace(/&/, "@");
+	factor_name = factor_name.replace(/&/g, "@");
 	
 	list = urlEncode('/graph/radar?ids='+ids+'&factor_name='+factor_name);
 	
@@ -197,11 +189,19 @@ function load_radar(ids) {
 						"9.0.0", "expressInstall.swf", {'data-file': list});
 }
 
-function on_radar_click(index){
+function on_button_click(evt, node) {
+	if (evt.src().name == 'show_graph') {
+		view_graph(node.name);
+	}
+	else if (evt.src().name == 'add_factor') {
+		add_factor(node.name);
+	}
+	else if (evt.src().name == 'incr') {
+		change_vote(node, 'incr');
+	}
+	else if (evt.src().name == 'decr') {
+		change_vote(node, 'decr');
+	}
 	
-	factor_name= $('factors').value;
-	factor_name = factor_name.replace(/&/, "@");
-	
-	window.location.href = '/graph?factor_index='+index+'&parent_name='+factor_name;
 }
 

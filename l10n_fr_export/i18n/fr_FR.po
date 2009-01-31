@@ -1,0 +1,66 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_fr_export
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-01-29 22:49:41+0000\n"
+"PO-Revision-Date: 2009-01-29 22:49:41+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_fr_export
+#: wizard_view:l10n.fr.export.export,init:0
+msgid "Select year"
+msgstr "Sélectionner l'année"
+
+#. module: l10n_fr_export
+#: model:ir.ui.menu,name:l10n_fr_export.menu_account_line_export
+msgid "Export Fiscal Year"
+msgstr "Exportation de l'année fiscale"
+
+#. module: l10n_fr_export
+#: help:l10n.fr.export.export,init,directory:0
+msgid "Storage Directory on server"
+msgstr "Répertoire de stockage sur le serveur"
+
+#. module: l10n_fr_export
+#: model:ir.module.module,shortdesc:l10n_fr_export.module_meta_information
+msgid "France - Export ecritures"
+msgstr ""
+
+#. module: l10n_fr_export
+#: wizard_field:l10n.fr.export.export,init,fiscalyear:0
+msgid "Fiscal year"
+msgstr "Année fiscale"
+
+#. module: l10n_fr_export
+#: model:ir.actions.wizard,name:l10n_fr_export.wizard_l10n_fr_export
+#: wizard_button:l10n.fr.export.export,init,export:0
+msgid "Export"
+msgstr "Exporter"
+
+#. module: l10n_fr_export
+#: wizard_button:l10n.fr.export.export,init,end:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: l10n_fr_export
+#: wizard_field:l10n.fr.export.export,init,directory:0
+msgid "Directory "
+msgstr "Répertoire"
+
+#. module: l10n_fr_export
+#: model:ir.module.module,description:l10n_fr_export.module_meta_information
+msgid "This is the module to export entries lines for one fiscal year.\n"
+"\n"
+"Credits: Sistheo Zeekom\n"
+""
+msgstr ""
+

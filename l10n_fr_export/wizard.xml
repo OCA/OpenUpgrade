@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+	     
+    <wizard  id="wizard_l10n_fr_export"
+	     string="Export" 
+	     model="account.move.line"
+	     name="l10n.fr.export.export"
+	     />
+
+     <menuitem action="wizard_l10n_fr_export" type="wizard" name="Export Fiscal Year"  parent="account.menu_finance_accounting" id="menu_account_line_export"/>
+
+  </data>
+</openerp>

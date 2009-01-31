@@ -1,6 +1,6 @@
 
 import turbogears as tg
-from turbogears import controllers, expose
+from turbogears import controllers, expose, redirect
 from turbogears import config
 
 import cherrypy
@@ -27,11 +27,12 @@ class Root(controllers.RootController):
         res = rpc.session.login(database, user_name, password)
         userinfo = cherrypy.session.get('user_info', '')
         
-        return dict(userinfo=userinfo)
-
+        raise redirect('/comparison')
+        
     comparison = subcontrollers.comparison.Comparison()
     softwares = subcontrollers.softwares.Softwares()
     about = subcontrollers.about.About()
     login = subcontrollers.login.Login()
     graph = subcontrollers.graph.Graph()
+    document = subcontrollers.document.Document()
     

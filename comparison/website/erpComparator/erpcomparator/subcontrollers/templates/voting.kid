@@ -1,24 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#" py:extends="../../templates/master.kid">
 
-<head>
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-    <title>Comparison</title>
-    
-    <script type="text/javascript">
-    
-    	var submit_form = function(form) {
-    		form.submit()
-    	}
-    	
-    	addLoadEvent(function(evt){            
-            if($('result') &amp;&amp; $('result').value)
-                window.close();
-        });
-    </script>
-    
-</head>
-<body>
+<div id=" pond_vote" xmlns:py="http://purl.org/kid/ns#">
 	<div class="header">
 		<b>Ponderation Suggestion</b>
 	</div>
@@ -54,16 +35,10 @@
 				</td>
 			</tr>
 		</table>
-		<div class="box2" style="text-align: right;">
-			<button type="button" onclick="window.close()">Close</button>
-			<button type="button" onclick="submit_form(form)">Save</button>
-		</div>
 	</form><br/>
 	<div py:if="error" align="right">
 		<div class="box2 message">
 			${error}
 		</div>
-		<button type="button" onclick="window.close()">Close</button>
 	</div>
-</body>
-</html>
+</div>

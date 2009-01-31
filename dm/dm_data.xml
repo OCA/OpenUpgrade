@@ -670,5 +670,14 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         </record>
     </data>
 
+	<!-- Default Shop in Customer Order -->
+	
+	<data noupdate="1">
+		<record id="shop1" model="sale.shop">
+            <field model="res.company" name="name" search="[]" use="name"/>
+            <field model="account.payment.term" name="payment_default_id" search="[]"/>
+        </record>
+		<function eval="('default',False,'shop_id', [('dm.customer.order', False)], shop1, True, False, False, False, True)" id="shop_default_set" model="ir.values" name="set"/>
+	</data>
 
 </openerp>

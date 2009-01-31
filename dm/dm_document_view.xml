@@ -16,9 +16,7 @@
             <form string="Document Template">
                 <field name="name" select="1"/>
                 <separator string="Plugins" colspan="4"/>
-                <field name="plugin_ids" colspan="4" nolabel="1"/>
-                <separator string="Dynamic Fields" colspan="4"/>
-                <field name="dynamic_fields" select="2" nolabel="1" colspan="4"/>
+                <field name="plugin_ids" colspan="4" nolabel="1" />
             </form>
         </field>
     </record>
@@ -56,9 +54,29 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Plugin">
-                <field name="name" select="1" colspan="4"/>
-                <field name="file_id" colspan="4" filename="file_fname"/>
-                <field name="file_fname"/>
+            	<group  colspan="4">
+	                <field name="name" select="1" colspan="4"/>
+	                <field name="file_id" colspan="4" filename="file_fname"/>
+	                <field name="file_fname"/>
+                </group>
+                <newline/>
+				<separator string="Argument List" colspan="4"/>
+				<field name="argument_ids" nolabel="1" colspan="4">
+					<form string="Argument List">
+            			<group  colspan="4">
+			                <field name="name" select="1"/>
+			                <field name="value"/>
+						</group>			                
+						<separator  colspan="4"/> 
+						<field name="note" nolabel="1" colspan="4"/>
+					</form>
+					<tree string="Argument List">
+		                <field name="name" select="1"/>
+		                <field name="value"/>
+					</tree>					
+				</field>
+				<separator string="Description" colspan="4"/>
+				<field name="note" nolabel="1" colspan="4"/>
 			</form>
         </field>
     </record>

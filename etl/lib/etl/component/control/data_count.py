@@ -19,7 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+"""
+    ETL Data Count Control Component:
+    * calculate total of tranfering data
 
+"""
 
 from etl import etl
 
@@ -29,6 +33,10 @@ class control_count(etl.component):
     * calculate total of tranfering data
 
     """
+    _name='etl.component.control.data_count'  
+    _description='calculate total of tranfering data.'   
+    _author='tiny'
+
     def process(self):
         datas = {}
         for channel,trans in self.input_get().items():
