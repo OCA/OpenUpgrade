@@ -63,7 +63,7 @@ def _do_update(self, cr, uid, data, context):
             updated_id=server.update_sale_order([web_so])
         except ExpatError, error:
             logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders update, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
-            raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders update, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % mw.magento_url)
+            raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders update, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!")
 
 
         #Report
