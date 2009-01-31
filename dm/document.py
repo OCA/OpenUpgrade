@@ -43,31 +43,34 @@ class dm_ddf_plugin(osv.osv):
     
     def _check_plugin(self, cr, uid, ids=False, context={}):
         dm_document = self.pool.get('dm.offer.document')
-#        offer_step = self.pool.get('dm.offer.step')
         dm_customer_plugin = self.pool.get('dm.customer.plugin')
         ddf_plugin = self.pool.get('dm.ddf.plugin')
         dm_customer_order = self.pool.get('dm.customer.order')
         
         document_ids = dm_document.search(cr,uid,[])
         documents = dm_document.browse(cr,uid,document_ids,['document_template_id','step_id'])
-
         for d in documents:
             order_id = dm_customer_order.search(cr,uid,[('offer_step_id','=',d.step_id.id)])
             order = dm_customer_order.browse(cr,uid,order_id)
-            customer_id = map(lambda x:x.customer_id.id,order)
+            customer_ids = map(lambda x:x.customer_id.id,order)
             plugins = d.document_template_id.plugin_ids
             for plugin in plugins:
-                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins")
+                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
                 plugin_name = plugin.file_fname.split('.')[0]
+                arguments = plugin.argument_ids
+                args={}
+                for a in arguments:
+                    args[str(a.name)]=str(a.value)
                 import sys
                 sys.path.append(path)
                 X =  __import__(plugin_name)
                 plugin_func = getattr(X,plugin_name)
-                plugin_value = map(lambda x : (x,plugin_func(cr,uid,x),plugin.id),customer_id)
+                plugin_value = plugin_func(cr,uid,customer_ids,**args)
+
                 map(lambda x :dm_customer_plugin.create(cr,uid,
-                            {'date':time.strftime('%d/%m/%Y'),
+                            {'date':time.strftime('%Y-%m-%d'),
                              'customer_id':x[0],
-                             'plugin_id':x[2],
+                             'plugin_id':plugin.id,
                              'value' : x[1]}),
                             plugin_value
                             )
@@ -76,24 +79,23 @@ class dm_ddf_plugin(osv.osv):
     def _data_get(self, cr, uid, ids, name, arg, context):
         result = {}
         cr.execute('select id,file_fname from dm_ddf_plugin where id in ('+','.join(map(str,ids))+')')
-        
         for id ,r in cr.fetchall():            
             try:
-                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins")
+                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
                 value = file(os.path.join(path,r), 'rb').read()
                 result[id] = base64.encodestring(value)
             except:
                 result[id]=''
         return result
 
-    def _data_set(self, cr, obj, id, name, value, uid=None, context={}):
+    def _data_set(self, cr, uid, id, name, value, arg, context=None):
         if not value:
             return True
         sql = "select file_fname from dm_ddf_plugin where id = %d"%id
         cr.execute(sql) 
         res = cr.fetchone()
 
-        path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins")
+        path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
         if not os.path.isdir(path):
             os.makedirs(path)
         filename = res[0]
@@ -101,36 +103,62 @@ class dm_ddf_plugin(osv.osv):
         fp = file(fname,'wb')
         v = base64.decodestring(value)
         fp.write(v)
+        fp.close()
+        import sys
+        sys.path.append(path)
+        X =  __import__(filename.split('.')[0])
+        args=[]
+        if '__args__' in dir(X):
+            args = X.__args__
+        for arg in args:
+            desc = 'Value of the field must be of type %s or plugin may be crashed'%arg[1] 
+            vals = {'name':arg[0],'note':desc,'plugin_id':id,'value':' '}
+            new_id = self.pool.get('dm.plugin.argument').create(cr,uid,vals)
+        print uid
+        if '__description__' in dir(X):
+            self.write(cr,uid,id,{'note':X.__description__})
         return True
     
     _columns = {
         'name' : fields.char('DDF Plugin Name', size=64),
         'file_id': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary"),
         'file_fname': fields.char('Filename',size=64),
+        'argument_ids' : fields.one2many('dm.plugin.argument', 'plugin_id', 'Argument List'),
+        'note' : fields.text('Description')        
      }
 dm_ddf_plugin()
+
+class dm_plugin_argument(osv.osv):
+    _name = "dm.plugin.argument"
+    _description = "Argument List"
+    _columns = {
+        'name' : fields.char('Argument Name', size=64,required=True,readonly=True),
+        'value' : fields.char('Argument Value', size=64,required=True),
+        'plugin_id' : fields.many2one('dm.ddf.plugin','Plugin'),
+        'note' : fields.text('Description',readonly=True)
+        }
+dm_plugin_argument()
 
 class dm_document_template(osv.osv):
     _name = "dm.document.template"
     _columns = {
         'name' : fields.char('Template Name', size=128),
-        'dynamic_fields' : fields.many2many('ir.model.fields','dm_template_fields','template_field_id','template_id','Fields',domain=[('model','like','dm.%')]),
         'plugin_ids' : fields.many2many('dm.ddf.plugin','dm_template_plugin_rel','dm_ddf_plugin_id','dm_document_template_id', 'Plugin'),
         }
     
-    def write(self, cr, uid, ids, vals, context=None):
-        res = super(dm_document_template,self).write(cr, uid, ids, vals, context)
-        document_template =self.read(cr,uid,ids)[0]
-        list1 = document_template['dynamic_fields']
-        dm_offer_document = self.pool.get('dm.offer.document')
-        document_ids = dm_offer_document.search(cr,uid,[('document_template_id','=',ids[0])])
-        documents = dm_offer_document.read(cr,uid,document_ids)
-        for doc in documents:
-            list2 = doc['document_template_field_ids'] 
-            diff = list(set(list2).difference(set(list1)))
-            map(lambda x : list2.remove(x) ,diff)
-            dm_offer_document.write(cr,uid,doc['id'],{'document_template_field_ids':[[6, 0,list2]]})
-        return res                 
+#    def write(self, cr, uid, ids, vals, context=None):
+#        res = super(dm_document_template,self).write(cr, uid, ids, vals, context)
+#        document_template =self.read(cr,uid,ids)[0]
+#        list1 = document_template['dynamic_fields']
+#        dm_offer_document = self.pool.get('dm.offer.document')
+#        document_ids = dm_offer_document.search(cr,uid,[('document_template_id','=',ids[0])])
+#        documents = dm_offer_document.read(cr,uid,document_ids)
+#        for doc in documents:
+#            list2 = doc['document_template_field_ids'] 
+#            diff = list(set(list2).difference(set(list1)))
+#            map(lambda x : list2.remove(x) ,diff)
+#            dm_offer_document.write(cr,uid,doc['id'],{'document_template_field_ids':[[6, 0,list2]]})
+#        return res                 
 dm_document_template()
 
 class dm_customer_plugin(osv.osv):
@@ -171,20 +199,19 @@ class dm_offer_document_category(osv.osv):
 
 dm_offer_document_category()
 
-class ir_model_fields(osv.osv):
-    _inherit='ir.model.fields'
-    def search(self, cr, uid, args, offset=0, limit=None, order=None,context=None, count=False):
-        if context:
-            if 'dm_template_id' in context:
-                if not context['dm_template_id']:
-                    return []
-                res = self.pool.get('dm.document.template').browse(cr,uid,context['dm_template_id'])
-
-                field_id = map(lambda x : x.id,res.dynamic_fields)
-                return field_id
-        return super(ir_model_fields,self).search(cr,uid,args,offset,limit,order,context,count)
-    
-ir_model_fields()
+#class ir_model_fields(osv.osv):
+#    _inherit='ir.model.fields'
+#    def search(self, cr, uid, args, offset=0, limit=None, order=None,context=None, count=False):
+#        if context:
+#            if 'dm_template_id' in context:
+#                if not context['dm_template_id']:
+#                    return []
+#                res = self.pool.get('dm.document.template').browse(cr,uid,context['dm_template_id'])
+#                field_id = map(lambda x : x.id,res.dynamic_fields)
+#                return field_id
+#        return super(ir_model_fields,self).search(cr,uid,args,offset,limit,order,context,count)
+#    
+#ir_model_fields()
 
 class dm_offer_document(osv.osv):
     _name = "dm.offer.document"
@@ -199,6 +226,12 @@ class dm_offer_document(osv.osv):
             else :  
                 res[id]=False
         return res
+    def onchange_plugin(self, cr, uid, ids,document_template_id):
+        res={'value':{}}
+        if document_template_id:
+            template = self.pool.get('dm.document.template').read(cr, uid, [document_template_id])[0]
+            res['value']={'document_template_plugin_ids':template['plugin_ids']}
+        return res    
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
@@ -207,18 +240,9 @@ class dm_offer_document(osv.osv):
         'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
-#        'customer_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_field_rel',
-#              'document_id','customer_field_id','Customer Fields',
-#               domain=[('model_id','like','dm.customer')],context={'model':'dm.customer'}),
-#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),'!',('model_id','like','dm.customers_list')],context={'model':'dm.customer'}),
-#        'customer_order_field_ids': fields.many2many('ir.model.fields','dm_doc_customer_order_field_rel',
-#              'document_id','customer_order_field_id','Customer Order Fields',
-#               domain=[('model_id','like','dm.customer.order')],context={'model':'dm.customer.order'}),
         'document_template_id' : fields.many2one('dm.document.template', 'Document Template',),
         'document_template_plugin_ids' : fields.many2many('dm.ddf.plugin','dm_doc_template_plugin_rel',
               'document_id','document_template_plugin_id','Dynamic Plugins',),
-        'document_template_field_ids' : fields.many2many('ir.model.fields','dm_doc_template_field_rel',
-              'document_id','document_template_field_id','Dynamic Fields',),        
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
     }
     _defaults = {

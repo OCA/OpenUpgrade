@@ -91,7 +91,7 @@ class sandwich_order_line(osv.osv):
         # print id, user_id, product_type_id, context
         if (not user_id) or (not product_type_id):
             return {}
-        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%d AND product_type_id=%d ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
+        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%s AND product_type_id=%s ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
         res = cr.dictfetchone()
         if res:
             return {'value': res}
@@ -101,7 +101,7 @@ class sandwich_order_line(osv.osv):
     def onchange_product_type_id(self, cr, uid, id, user_id, product_type_id, context={}):
         if (not product_type_id) or (not user_id):
             return {}
-        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%d AND product_type_id=%d ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
+        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%s AND product_type_id=%s ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
         res = cr.dictfetchone()
         if res:
             return {'value': res}
@@ -109,9 +109,10 @@ class sandwich_order_line(osv.osv):
         return {'value': {'product_id': False, 'name': '', 'quantity': 1}}
 
     def onchange_product_id(self, cr, uid, id, product_id, context={}):
+        res = {}
         if not product_id:
             return {}
-        res = pooler.get_pool(cr.dbname).get('sandwich.product').read(cr, uid, [ product_id ], ['name','product_type_id'])
+        res = pooler.get_pool(cr.dbname).get('sandwich.product').read(cr, uid, [ product_id ], ['name','product_type_id'])[0]
         return {'value': res}
         #return {'value': {'name': name or product_id.name, 'product_type_id': product_id.product_type_id}}
 

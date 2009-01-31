@@ -43,8 +43,8 @@ class Klass :
         self.operations.append((name,(type, visibility, params, inheritance_type, comment, class_scope)))
     def SetComment(self, s) :
         self.comment = s
-    def AddParrent(self, parrent):
-        self.parents.append(parrent)
+    def AddParent(self, parent):
+        self.parents.append(parent)
     def AddTemplate(self, template):
         self.templates.append(template)
     def SetInheritance_type(self, inheritance_type):
@@ -114,7 +114,7 @@ class ObjRenderer :
                         par_name = par.properties["name"].value
                         chi_name = chi.properties["name"].value
                         if n.type.name == "UML - Generalization":
-                            self.klasses[chi_name].AddParrent(par_name)
+                            self.klasses[chi_name].AddParent(par_name)
                         else: self.klasses[chi_name].AddTemplate(par_name)
                     
     def end_render(self) :

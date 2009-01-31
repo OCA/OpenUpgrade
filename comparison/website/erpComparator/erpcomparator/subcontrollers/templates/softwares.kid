@@ -14,42 +14,44 @@
     
 </head>
 <body>
-    <div class="mattblacktabs">
-		<ul>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/comparison'">
-	    			<span>Comparison</span>
-	    		</a>
-	    	</li>
-	    	<li id="current">
-	    		<a href="#" onclick="window.location.href='/softwares'">
-	    			<span>Software</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/about'">
-	    			<span>About</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/graph'">
-	    			<span>Graph</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/login'">
-	    			<span>Login</span>
-	    		</a>
-	    	</li>
-	    	<li>
-	    		<a href="#" onclick="window.location.href='/login/logout'">
-	    			<span>Logout</span>
-	    		</a>
-	    	</li>
-	  	</ul>
-	</div>
-	<div class="width_border" py:for="r in res">
-		<table>
+	<div id="bodybackground">
+		<div style="height: 46px; width: 890px; float: left;">
+			<div style="float:left;width:9;">
+				<img src="/static/images/whitebg.gif" alt="" width="9" height="46"/>
+			</div>
+		    <div style="float:left;width:172;">
+		    	<a href="#" onclick="window.location.href='/comparison'" onmouseover="document.comparison_image.src='/static/images/comparison_hover.jpg'" onmouseout="document.comparison_image.src='/static/images/comparison.jpg'">
+		    		<img src="/static/images/comparison.jpg" name="comparison_image" alt="" border="0" width="172" height="46"/>
+		    	</a>
+		    </div>
+		    <div style="float:left; width:175; height:46;">
+		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.jpg'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
+		    		<img src="/static/images/graphs.jpg" name="graph_image" alt="" border="0" width="175" height="46"/>
+		    	</a>
+		    </div>
+		    <div style="float:left;width:176;">
+		    	<a href="#" onclick="window.location.href='/softwares'">
+		    		<img src="/static/images/software_hover.jpg" name="software_image" alt="" border="0" width="176" height="46"/>
+		    	</a>
+		    </div>
+		    <div style="float:left;width:176;">
+		    	<a href="#" onclick="window.location.href='/document'" onmouseover="document.document_image.src='/static/images/document_hover.jpg'" onmouseout="document.document_image.src='/static/images/document.jpg'">
+		    		<img src="/static/images/document.jpg" name="document_image" alt="" border="0" width="176" height="46"/>
+		    	</a>
+		    </div>
+		    <div style="float:left;width:173;">
+		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.jpg'" onmouseout="document.about_image.src='/static/images/about.jpg'">
+		    		<img src="/static/images/about.jpg" name="about_image" alt="" border="0" width="173" height="46"/>
+		    	</a>
+		    </div>
+		    <div style="float:left;width:9;">
+		    	<img src="/static/images/rightwhitebg.gif" alt="" width="9" height="46"/>
+		    </div>          
+		</div>
+		<div>
+			<img src="/static/images/bluebgimage.png"/>
+		</div>
+		<table id="checkboxtext" py:for="r in res">
 			<tr>
 				<td>
 					<b><u>

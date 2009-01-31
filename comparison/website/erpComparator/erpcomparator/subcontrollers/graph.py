@@ -15,12 +15,8 @@ class Graph(controllers.Controller):
         
         proxy_factor = rpc.RPCProxy('comparison.factor')
         
-        view_factor_id = kw.get('id', [])
-        factor_index = kw.get('factor_index', 0)
+        view_factor_id = kw.get('view_id', [])
         parent_name = kw.get('parent_name')
-        
-        if factor_index:
-            factor_index = int(factor_index)
         
         sel_factor_id = []
         if parent_name:
@@ -34,6 +30,9 @@ class Graph(controllers.Controller):
         titles = []
         factors = []
         
+        summary = {}
+        parent_child = []
+        
         for r in res:
             title = {}
             title['name'] = r['name']
@@ -42,22 +41,30 @@ class Graph(controllers.Controller):
         
         selected_fact = None
         
-        if sel_factor_id or view_factor_id:
-            if view_factor_id:
-                factors = proxy_factor.search([('id', '=', [view_factor_id])])
-            else:
-                factors = proxy_factor.search([('parent_id', '=', sel_factor_id)])
-                selected_fact = factors[factor_index]
+        if view_factor_id:
+            factors = proxy_factor.search([('id', '=', [view_factor_id])])
         else:
             factors = proxy_factor.search([('parent_id', '=', False)])
-            
-        root_factors = proxy_factor.read(factors, ['id', 'name'])
         
-        for r in root_factors:
-            if selected_fact == r.get('id'):
-                selected_fact = r.get('name')
+        parents = proxy_factor.read(factors, ['id', 'name'])
+        
+        for pch in parents:
+            fact = proxy_factor.search([('id', '=', [pch['id']])])
+            parent_child += proxy_factor.read(fact, ['child_ids'])
+        
+        all_child = []
+        
+        for ch in parent_child:
+            pname = proxy_factor.read(ch['id'], ['name'])
+            if ch.get('child_ids'):
+                for c in ch['child_ids']:
+                    child = {}
+                    level2 = proxy_factor.read(c, ['name'])
+                    child['name'] = pname.get('name') + '/' + level2.get('name')
+                    child['id'] = level2.get('id')
+                    all_child += [child]
                 
-        return dict(titles=titles, root_factor=root_factors, selected_fact=selected_fact)
+        return dict(titles=titles, parents=parents, all_child=all_child, selected_fact=selected_fact)
 
     @expose('json')
     def radar(self, **kw):
@@ -69,19 +76,34 @@ class Graph(controllers.Controller):
         parent_name = parent_name.replace('@', '&')
         
         proxy_factor = rpc.RPCProxy('comparison.factor')
-        parent_list = proxy_factor.search([('name', '=', parent_name)])
-        child_ids = proxy_factor.read(parent_list, ['child_ids'])
-        
-        child_ids = child_ids[0].get('child_ids')
-        child_list = proxy_factor.read(child_ids, ['name'])
         
         child_name = []
-        for ch in child_list:
-            child = {}
-            child['name'] = ch['name']
-            child['id'] = ch['id']
-            child_name += [child]
-
+        child_ids = []
+        
+        if parent_name == 'Summary':
+            list = proxy_factor.search([('parent_id', '=', False)])
+            ch_ids = proxy_factor.read(list, ['name'])
+            
+            for ch in ch_ids:
+                cname = {}
+                cname['name'] = ch['name']
+                                
+                child_ids += [ch['id']]
+                child_name += [cname]
+        else :
+            if '/' in parent_name:
+                parent_name = parent_name.rsplit('/')[1]
+            parent_list = proxy_factor.search([('name', '=', parent_name)])
+            
+            child_ids = proxy_factor.read(parent_list, ['child_ids'])
+            child_ids = child_ids[0].get('child_ids')
+            child_list = proxy_factor.read(child_ids, ['name'])
+            
+            for ch in child_list:
+                cname = {}
+                cname['name'] = ch['name']
+                child_name += [cname]
+        
         elem = []
         elements = {}
         elements["elements"] = [] #Required
@@ -117,10 +139,8 @@ class Graph(controllers.Controller):
                              "width": 1,
                              "dot-size": 2,
                              "colour": ChartColors[n],
-                             "tip": str(j['name']),
                              "text": str(j['name']),
                              "font-size": 12,
-                             'on-click': "on_radar_click",
                              "loop": True})
             else:
                 elem.append({"type": "line_dot",
@@ -129,15 +149,13 @@ class Graph(controllers.Controller):
                               "width": 1,
                               "dot-size": 2,
                               "colour": ChartColors[n],
-                              "tip": str(j['name']),
                               "text": str(j['name']),
                               "font-size": 12,
-                              'on-click': "on_radar_click",
                               "loop": True})
                 
             elements["elements"] = elem
         
-        elements["title"] = {"text":"Comparison Chart","style": "{font-size: 15px; color: #50284A; text-align: center;}"}
+        elements["title"] = {"text": parent_name, "style": "{font-size: 15px; color: #50284A; text-align: left; font-weight: bold;}"}
         elements["radar_axis"] = {
                                   "max":10,
                                   "colour": "#DAD5E0",
@@ -152,7 +170,7 @@ class Graph(controllers.Controller):
                                                    }
                                   }
        
-        elements["tooltip"] = {"mouse": 1}
+#        elements["tooltip"] = {"mouse": 1}
         elements["bgcolor"] = "#ffffff"
         
         return elements

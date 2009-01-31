@@ -19,7 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+"""
+This is an ETL Component that use to write data to csv file.
+"""
 
 from etl import etl
 import csv
@@ -35,6 +37,10 @@ class csv_out(etl.component):
 		Output Flows: 0-1
 		* main : return all data
     """
+    _name='etl.component.output.csv_out'  
+    _description='This is an ETL Component that use to write data to csv file.'   
+    _author='tiny'
+
     def __init__(self, filename, *args, **argv):
         super(csv_out, self).__init__(*args, **argv)
         self.filename=filename

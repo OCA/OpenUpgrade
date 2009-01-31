@@ -19,7 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+"""
+   This is ETL Component to put job process in sleep.
+"""
 from etl import etl
 import time
 
@@ -27,6 +29,10 @@ class sleep(etl.component):
     """
        put job process in sleep.
     """
+    _name='etl.component.control.sleep'  
+    _description='This is ETL Component to put job process in sleep.'   
+    _author='tiny'
+
     def __init__(self, delay=1, *args, **argv):
         self.delay = delay
         super(sleep, self).__init__(*args, **argv)
@@ -37,4 +43,8 @@ class sleep(etl.component):
                 for d in iterator:
                     time.sleep(self.delay)
                     yield d, 'main'
+            for stat in self.statitics.values():                
+                yield stat,'statistics'  
+	        for error in self.errors:                
+	            yield error,'error'
 

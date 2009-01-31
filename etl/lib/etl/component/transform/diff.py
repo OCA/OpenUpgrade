@@ -19,7 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+"""
+This is an ETL Component that use to find diff.
+"""
 
 from etl import etl
 
@@ -41,6 +43,10 @@ class diff(etl.component):
         * removed: return all elements that where in main and not in the second flow
         * added: return all elements from the second flow that are not in main channel
     """
+
+    _name='etl.component.process.diff'  
+    _description='This is an ETL Component that use to find diff.'   
+    _author='tiny'
     def __init__(self, keys, *args, **argv):
         self.keys = keys
         self.row = {}

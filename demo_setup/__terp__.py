@@ -30,7 +30,7 @@
         "init_xml" : [ ],
         "demo_xml" : [ ],
         "update_xml" : ["demo_setup_data.xml"],
-        "active": True,
+        "active": False,
         "installable": True
 } 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -45,10 +45,10 @@ class sale_order_1(report_sxw.rml_parse):
         node = self._find_parent(self._node, nodes_parent or parents)
         ns = node.nextSibling
 
-        value=['taxes','product_uom_qty','product_uom','price_unit','discount','price_subtotal','currency']
-        type=['string','string','string','string','string','string','string']
-        width=[99.0,40.0,24.0,59.0,43.0,40.0,25.0]
-        td=7
+        value=['tax_id','product_uom_qty','product_uom','price_unit','discount','price_subtotal']
+        type=['string','string','string','string','string','string']
+        width=[66,46,24,66,55,54]
+        td=6
 
         tableFlag=0
 
@@ -82,20 +82,17 @@ class sale_order_1(report_sxw.rml_parse):
                         for v in value:
                             t2="[[%s['layout_type']=='text' and removeParentNode('tr')]]"%(name)
                             t1= "[[ %s['%s'] ]]"%(name,v)
-                            t3="[[ %s['layout_type']=='subtotal' and ( setTag('para','para',{'fontName':'Times-bold'})) ]]"%name
+                            t3="[[ %s['layout_type']=='subtotal' and ( setTag('para','para',{'fontName':'Helvetica-Bold'})) ]]"%name
                             newnode = lc.cloneNode(1)
 
                             newnode.childNodes[1].lastChild.data = t1 + t2 +t3
-#                           newnode.childNodes[1].lastChild.data=[[ a['status']==1 and ( setTag('para','para',{'fontName':'Times-bold'})) ]]
                             child.appendChild(newnode)
                             newnode=False
                             i+=1
 
-
         return super(sale_order_1,self).repeatIn(lst, name, nodes_parent=False)
 
     def sale_order_lines(self,sale_order):
-        print 'sale_order_lines'
         result =[]
         sub_total={}
         info=[]
@@ -117,7 +114,7 @@ class sale_order_1(report_sxw.rml_parse):
             res={}
 
             if entry.layout_type=='article':
-                res['taxes']=', '.join(map(lambda x: x.name, entry.tax_id)) or ''
+                res['tax_id']=', '.join(map(lambda x: x.name, entry.tax_id)) or ''
                 res['name']=entry.name
                 res['product_uom_qty']="%.2f"%(entry.product_uos and entry.product_uos_qty or entry.product_uom_qty  or 0.00)
                 res['product_uom']=entry.product_uos and entry.product_uos.name or entry.product_uom.name 
@@ -135,7 +132,7 @@ class sale_order_1(report_sxw.rml_parse):
                 res['product_uom_qty']=''
                 res['price_unit']=''
                 res['discount']=''
-                res['taxes']=''
+                res['tax_id']=''
                 res['layout_type']=entry.layout_type
                 res['note']=entry.notes
                 res['product_uom']=''
@@ -159,7 +156,7 @@ class sale_order_1(report_sxw.rml_parse):
                     res['quantity']=''
                     res['price_unit']=''
                     res['discount']=''
-                    res['taxes']=''
+                    res['tax_id']=''
                     res['product_uom']=''
                 elif entry.layout_type=='title':
                     res['name']=entry.name
@@ -173,7 +170,7 @@ class sale_order_1(report_sxw.rml_parse):
                     res['product_uom_qty']='____________'
                     res['price_unit']='______________'
                     res['discount']='____________'
-                    res['taxes']='_________________'
+                    res['tax_id']='_________________'
                     res['product_uom']='_____'
                     res['name']='________________________________________'
                     res['price_subtotal']='_______________________'

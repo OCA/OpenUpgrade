@@ -19,7 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+"""
+This is an ETL Component that use to display log detail in end of process.
+"""
 
 from etl import etl
 import sys
@@ -34,6 +36,10 @@ class logger_bloc(etl.component):
 		Output Flows: 0-y
 		* .* : return the main flow 
     """
+
+    _name='etl.component.process.logger_bloc'  
+    _description='This is an ETL Component that use to display log detail in end of process.'   
+    _author='tiny'
     def __init__(self, name, output=sys.stdout, *args, **argv):
         self.name = name
         self.output = output

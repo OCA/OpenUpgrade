@@ -42,8 +42,41 @@ class Comparison(controllers.Controller):
         root = dom.childNodes[0]
         attrs = tools.node_attributes(root)
         
-        self.headers = []
+        self.head = []
         self.parse(root, fields)
+        
+        self.headers = []
+        
+        add_factor = {}
+        add_factor['name'] = "add_factor"
+        add_factor['type'] = "image"
+        add_factor['string'] = ''
+        add_factor['colspan'] = 2
+        
+        sh_graph = {}
+        sh_graph['name'] = 'show_graph'
+        sh_graph['type'] = 'image'
+        sh_graph['string'] = ''
+        sh_graph['colspan'] = -1
+        
+        incr = {}
+        incr['name'] = 'incr'
+        incr['type'] = 'image'
+        incr['string'] = ''
+        incr['colspan'] = -1
+        
+        decr = {}
+        decr['name'] = 'decr'
+        decr['type'] = 'image'
+        decr['string'] = ''
+        decr['colspan'] = -1
+        
+        self.headers += [self.head[0]]
+        self.headers += [add_factor]
+        self.headers += [sh_graph]
+        self.headers += [self.head[1]]
+        self.headers += [incr]
+        self.headers += [decr]
         
         fields = []
         
@@ -52,7 +85,8 @@ class Comparison(controllers.Controller):
         proxy_item = rpc.RPCProxy(item_model)
         item_ids = proxy_item.search([])
         
-        res = proxy_item.read(item_ids, ['name'])
+        res = proxy_item.read(item_ids, ['name', 'code'])
+        
         titles = []
         
         for r in res:
@@ -66,8 +100,8 @@ class Comparison(controllers.Controller):
                         item['type'] = 'url'
                         item['string'] = r['name']
                         item['name'] = r['name']
+                        item['code'] = r['code']
                         title['sel'] = True
-                        
                         self.headers += [item]
             
             else:
@@ -76,7 +110,7 @@ class Comparison(controllers.Controller):
                 item['type'] = 'url'
                 item['string'] = r['name']
                 item['name'] = r['name']
-                
+                item['code'] = r['code']
                 self.headers += [item]
             
             title['name'] = r['name']
@@ -86,7 +120,7 @@ class Comparison(controllers.Controller):
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 fields += [field['name']]
-                
+        
         fields = jsonify.encode(fields)
         icon_name = self.headers[0].get('icon')
         
@@ -108,7 +142,7 @@ class Comparison(controllers.Controller):
         
         self.url_params = _jsonify(self.url_params)
         self.headers = jsonify.encode(self.headers)
-
+        
         return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
     
     @expose(template="erpcomparator.subcontrollers.templates.new_factor")
@@ -133,10 +167,14 @@ class Comparison(controllers.Controller):
         
         return dict(error=error, count=count, parent_id=p_id, parent_name=p_name)
     
-    @expose(template="erpcomparator.subcontrollers.templates.voting")
+    @expose('json')
     def voting(self, **kw):
         
         id = kw.get('id')
+        pond_val = kw.get('pond_val')
+        user_id = kw.get('user')
+        
+        value = None
         
         model = "comparison.factor"
         proxy = rpc.RPCProxy(model)
@@ -144,35 +182,23 @@ class Comparison(controllers.Controller):
         name = res[0]['name']
         pond = res[0]['ponderation']
         
-        count = range(0, 21)
-        count = [c/float(10) for c in count]
-        
-        return dict(res=None, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
-        
-    @expose(template="erpcomparator.subcontrollers.templates.voting")
-    def update_voting(self, **kw):
-        
-        id = kw.get('id')
-        name = kw.get('name')
-        user_id = kw.get('user')
-        pond = kw.get('pond_value')
-        note = kw.get('suggestion')
-        
         smodel = "comparison.ponderation.suggestion"
         sproxy = rpc.RPCProxy(smodel)
         
-        res = None
-        
-        count = range(0, 21)
-        count = [c/float(10) for c in count]
-        
+        if pond_val == 'incr':
+            if pond > 0.0:
+                pond = pond + 0.1
+        else:
+            if pond > 0.0:
+                pond = pond - 0.1
+                
         try:
-            res = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond, 'note': note})
+            value = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond})
         except Exception, e:
-            return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error=str(e))
+            return dict(value=value, error=str(e))
         
-        return dict(res=res, id=id, count=count, name=name, pond=pond, show_header_footer=False, error="")
-    
+        return dict(value=value, error="")
+        
     @expose(template="erpcomparator.subcontrollers.templates.item_voting")
     def item_voting(self, **kw):
         
@@ -338,10 +364,16 @@ class Comparison(controllers.Controller):
                         item[r.get('item_id')[1]] = str(r.get('result')) + '%'
                         
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
-                            item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1])
+                            item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
-                            item[r.get('item_id')[1]] += '-' + "bold"
+                            item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
+                        
+                    item['add_factor'] = '/static/images/treegrid/gtk-edit.png'
+                    item['show_graph'] = '/static/images/treegrid/graph.png'
             
+                    item['incr'] = '/static/images/increase.png'
+                    item['decr'] = '/static/images/decrease.png'
+                    
             if res:
                 record['id'] = res
             else:
@@ -350,8 +382,8 @@ class Comparison(controllers.Controller):
             record['target'] = None
 
             if item['ponderation']:
-                item['ponderation'] = item['ponderation'] or ponderation# + '|' + "javascript:change_vote(id=%s)" % (record['id'])
-
+                item['ponderation'] = item['ponderation'] or ponderation
+                
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)
                 record['icon'] = icons.get_icon(icon)
@@ -386,6 +418,7 @@ class Comparison(controllers.Controller):
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 if field['name'] == 'ponderation':
                     field['type'] = 'url'
+                    field['colspan'] = 3
                     
-                self.headers += [field]
+                self.head += [field]
         
