@@ -36,6 +36,11 @@ class sort(etl.component):
 		Output Flows: 0-x
 		* .* : return the main flow with sort result
     """
+
+    _name='etl.component.process.sort'  
+    _description='This is an ETL Component that use to perform sort operation.'   
+    _author='tiny'
+
     def __init__(self, fieldname, *args, **argv):
         super(sort, self).__init__(*args, **argv)
         self.fieldname = fieldname

@@ -27,20 +27,23 @@ ETL Connectors:
 from etl import etl
 
 class file_connector(etl.connector):
-    def __init__(self,host,port,uid,pwd,connection_type,path,*args, **argv):
+    def __init__(self,host,port,uid,pwd,connection_type,path,encoding='utf-8'):
         super(file_connector, self).__init__(*args, **argv)
         self.connection_type=connection_type
         self.path=path      
         self.connection_string=connection_type+'://'+uid+':'+pwd+'@'+host+':'+port+'/'+path  
+        self.encoding=encoding
         self.file=False
-    def __init__(self,connection_string,*args, **argv):
-        super(file_connector, self).__init__(*args, **argv)
+    def __init__(self,connection_string):
+        super(file_connector, self).__init__(connection_string=connection_string)
         self.connection_string=connection_string
-    def open(self,mode='r',bufsize=-1,encoding='utf-8'):
+    def open(self,mode='r',bufsize=-1):
+        # TODO : pass encoding in file
         super(file_connector, self).open(mode)
         self.file=open(self.connection_string,mode,bufsize)    
-        #self.file.encoding=encoding
+        #self.file.encoding=self.encoding
         return self.file
+
     def close(self):
         super(file_connector, self).close()
         self.file.close()    

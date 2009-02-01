@@ -58,6 +58,7 @@ class RstDoc(object):
             'menu_list': self._handle_list_items(module.menus_by_module),
             'view_list': self._handle_list_items(module.views_by_module),
             'depends': module.dependencies_id,
+            'certified': bool(module.certificate) and 'yes' or 'no',
         }
         self.objects = objects
         self.module = module
@@ -94,6 +95,7 @@ class RstDoc(object):
             ":Version: %(latest_version)s",
             ":Directory: %(name)s",
             ":Web: %(website)s",
+            ":Is certified: %(certified)s",
             "",
             "Description",
             "-----------",
