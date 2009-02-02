@@ -144,40 +144,34 @@ function open_item_vote(id, header) {
 
 function item_vote() {
 	
-	treenode = comparison_tree.selection_last;
-	params = {};
-	 
-	child_ids = [];
-	trs = getElementsByTagAndClassName('tr', 'factor_row');
-	for (var i=0; i<trs.length; i++) {
-		child_ids[i] = trs[i].id.split('_')[0];
-	}
+	var treenode = comparison_tree.selection_last;
+		
+	window.mbox.hide();
 	
-	forEach(child_ids, function(x){
-		params['id'] = x;
-		params['score_id'] = $(x + '_score_id').value;
+	forEach(treenode.childNodes, function(node){
+		
+		var name = node.record.id;
+		var params = {};
+		params['id'] = name;
+		params['score_id'] = $(name + '_score_id').value;
 		params['item_id'] = $('item_id').value;
 		
 		var req = Ajax.JSON.post('/comparison/update_item_voting', params);
 	    req.addCallback(function(obj){
 	    	if(obj.res) {
-	    		window.mbox.hide();
-	    		forEach(treenode.childNodes, function(y){
-	    			y.update();
-	    		});
-	    		treenode.update();
+	    		node.update();
 			}
 	    	if (obj.error) {
 	            return alert(obj.error);
 	        }
 	    });
 	});
-//	while (treenode && treenode.parentNode) {
-//		treenode.update();
-//		treenode = treenode.parentNode;
-//	}
+	
+	while (treenode && treenode.parentNode) {
+		treenode.update();
+		treenode = treenode.parentNode;
+	}
 }
-
 function load_radar(ids) {
 	
 	factor_name= $('factors').value;

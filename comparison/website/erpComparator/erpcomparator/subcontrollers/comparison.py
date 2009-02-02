@@ -154,18 +154,14 @@ class Comparison(controllers.Controller):
         
         model = "comparison.factor"
         proxy = rpc.RPCProxy(model)
-        res = proxy.read([id], ['id', 'parent_id'])
-        parent = res[0].get('parent_id')
+        res = proxy.read([id], ['name', 'parent_id'])
+        parent = res[0].get('name')
         p_id = id
         
-        if parent:
-#            p_id = parent[0]
-            p_name = parent[1]
-            
         count = range(0, 21)
         count = [c/float(10) for c in count]
         
-        return dict(error=error, count=count, parent_id=p_id, parent_name=p_name)
+        return dict(error=error, count=count, parent_id=p_id, parent_name=parent)
     
     @expose('json')
     def voting(self, **kw):
