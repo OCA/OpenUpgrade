@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -70,10 +70,10 @@ class make_sale(wizard.interface):
                 'date_order': now(),
             }
             new_id = sale_obj.create(cr, uid, vals)
-
+            fpos = user.company_id.partner_id.property_account_position and user.company_id.partner_id.property_account_position.id or False
             for line in purchase.order_line:
                 value = sale_line_obj.product_id_change(cr, uid, [], default_pricelist,
-                        line.product_id.id, qty=line.product_qty, partner_id=partner_id)['value']
+                        line.product_id.id, qty=line.product_qty, partner_id=partner_id, fiscal_position=fpos)['value']
                 value['price_unit'] = line.price_unit
                 value['product_id'] = line.product_id.id
                 value['product_uos'] = value.get('product_uos', [False,False])[0]
