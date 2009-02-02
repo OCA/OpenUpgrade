@@ -20,30 +20,7 @@
 #
 ##############################################################################
 
-{
-        "name" : "ERP Comparisons",
-        "version" : "0.1",
-        "author" : "Tiny",
-        "website" : "http://www.openerp.com",
-        "category" : "Tools",
-        "description": """
-        This module lets you compare famous ERP systems and lets you vote their respective facilities(e.g. accounting, BOM Support, etc.) provided by them.
-        """, 
-        "depends" : ['base'],
-        "init_xml" : [ ],
-        "demo_xml" : [ ],
-        "update_xml" : [
-            'comparison_view.xml',
-            'data/comparison.factor.csv',
-            'data/comparison.item.csv',
-            'data/comparison.user.csv',
-            'data/comparison.vote.values.csv',
-            'data/comparison.factor.result.csv',
-            'security/comparison_security.xml',
-            'security/ir.model.access.csv',
-            ],
-        "active" : False,
-        "installable": True
-}
+
+import partner_informations
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
