@@ -357,13 +357,14 @@ class Comparison(controllers.Controller):
                 for r in factor_res:
                     if j == r.get('factor_id')[1]:
                         
-                        item[r.get('item_id')[1]] = str(r.get('result')) + '%'
+                        item[r.get('item_id')[1]] = str(round(r.get('result'), 2)) + '%'
                         
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
                             item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
+                        
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
                             item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
-                        
+                    
                     item['add_factor'] = '/static/images/treegrid/gtk-edit.png'
                     item['show_graph'] = '/static/images/treegrid/graph.png'
             
