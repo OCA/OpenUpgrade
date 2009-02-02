@@ -42,9 +42,5 @@ class sleep(etl.component):
             for iterator in trans:
                 for d in iterator:
                     time.sleep(self.delay)
-                    yield d, 'main'
-            for stat in self.statitics.values():                
-                yield stat,'statistics'  
-	        for error in self.errors:                
-	            yield error,'error'
+                    yield d, 'main'                      
 

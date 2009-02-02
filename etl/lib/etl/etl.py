@@ -29,7 +29,7 @@ import datetime
 
 
 
-class statitic(object):
+class statistic(object):
     """
     This class computes basic statistics and return them at the end of the process like data in a channel called "statistics":
     Input Channel | # of Records | Time To Process | Time/Record | Memory Usage
@@ -37,11 +37,11 @@ class statitic(object):
     other         | 144          | 12 sec          | 0.1 sec     | 1Mb
     """
     
-    statitics={}
-    def statitic(self,source_component,destination_component,source_channel,destination_channel,total_record,stat_time):
+    statistics={}
+    def statistic(self,source_component,destination_component,source_channel,destination_channel,total_record,stat_time):
         input_channel=(source_component,destination_component,source_channel,destination_channel)
-        if input_channel not in self.statitics:
-            self.statitics.setdefault(input_channel,{                   
+        if input_channel not in self.statistics:
+            self.statistics.setdefault(input_channel,{                   
                        'input_channel':input_channel,
                        'total_records':0,
                        'total_time':0,
@@ -49,7 +49,7 @@ class statitic(object):
                        'memory':0,
                        'start':stat_time
             })
-        stat=self.statitics[input_channel]        
+        stat=self.statistics[input_channel]        
         stat['end']=stat_time
         stat['total_time']=stat['end']-stat['start']
         if total_record:      
@@ -133,36 +133,30 @@ class transformer(object):
     DATETIME_FORMAT='%Y-%m-%d %H:%M:%S'
 
     _transform_method={
-        'int':lambda x:int(x),
-        'str':lambda x:str(x),
+        'int':int,
+        'str':str.decode,
         'date':lambda x:datetime.datetime.strptime(x,transformer.DATE_FORMAT).date(),
         'time':lambda x:datetime.datetime.strptime(x,transformer.TIME_FORMAT).time(),
         'datetime':lambda x:datetime.datetime.strptime(x,transformer.DATETIME_FORMAT),
-        'float':lambda x:float(x),
-        'long':lambda x:long(x),
-        'complex':lambda x:complex(x),
-        'bool':lambda x:bool(x) 
+        'float':float,
+        'long':long,
+        'complex':complex,
+        'bool':bool 
     }
 
     def __init__(self,description):
         self.description=description             
     
-    def transform(self,datas):                
-        # TODO : TO check : data and description should have same keys.
-        if type(datas)!=list:
-           datas=[datas]
-        for row in datas:            
-            for column in row:
-                transform_method=self._transform_method[self.description[column]]
-                row[column]=transform_method(row[column])        
+    def transform(self,row):                
+        # TODO : TO check : data and description should have same keys.                    
+        for column in row:
+            transform_method=self._transform_method[self.description[column]]
+            row[column]=transform_method(row[column].decode())        
 
-class component(signal,statitic):
+class component(signal,statistic):
     """
        Base class of ETL Component.
-    """
-    _name='etl.component'  
-    _description='This is an ETL Component'   
-    _author='tiny'
+    """    
 
     is_end = False    
     _start_input={}
@@ -172,7 +166,7 @@ class component(signal,statitic):
     def action_start(self,key,singal_data={},data={}):
          trans=singal_data.get('trans',None)     
          stat_date=singal_data.get('start_date',None)             
-         self.statitic( \
+         self.statistic( \
              str(key), \
              trans and str(trans.destination) or None, \
              trans and str(trans.channel_source) or None, \
@@ -199,7 +193,7 @@ class component(signal,statitic):
     def action_end(self,key,singal_data={},data={}):         
          trans=singal_data.get('trans',None)         
          stat_date=singal_data.get('end_date',None)         
-         self.statitic( \
+         self.statistic( \
              str(key), \
              trans and str(trans.destination) or None, \
              trans and str(trans.channel_source) or None, \
@@ -218,8 +212,9 @@ class component(signal,statitic):
          self.errors.append(error_value)     
          return True
 
-    def __init__(self,transformer=None,*args, **argv):
-        super(component, self).__init__(*args, **argv)         
+    def __init__(self,name='',transformer=None,*args, **argv):
+        super(component, self).__init__(*args, **argv)    
+        self.name=name     
         self.trans_in = []
         self.trans_out = []
         self.is_output = False
@@ -239,7 +234,7 @@ class component(signal,statitic):
         
 
     def __str__(self):
-        return '<Component : '+self._name+'>'
+        return '<Component : '+self.name+'>'
 
     def generator_get(self, transition):
         """ Get generator list of transition
@@ -315,8 +310,10 @@ class job(object):
     """
     def __init__(self,outputs=[]):
         self.outputs=outputs
-    def __str__(self):
+    def __str__(self):     
+        #TODO : return complete print of the job (all components and transitions)
         pass
+
 
     def run(self):
         for c in self.outputs:
@@ -327,18 +324,14 @@ class connector(object):
     """
         Base class of ETL Connector.
     """
-    def __init__(self,*args,**argv):
-        self.host=argv.get('host',False)
-        self.port=argv.get('port',False)
-        self.uid=argv.get('uid',False)
-        self.pwd=argv.get('pwd',False)
-        self.connection_string=argv.get('connection_string',False)
-        self.connection_type=argv.get('connection_type',False)
-        self.encoding=argv.get('encoding',False)
+    def __init__(self,uri,bufsize=-1,encoding=False):        
+        self.uri=uri
+        self.bufsize=bufsize
+        self.encoding=encoding
     def open(self,mode=False):
         return True
     def __str__(self):        
-        return self.connection_string
+        return self.uri
     def close(self):
         return True
 

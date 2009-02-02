@@ -1,7 +1,10 @@
 import etl
 
-csv_in1= etl.component.input.csv_in.csv_in('data/partner.csv')
-csv_in2= etl.component.input.csv_in.csv_in('data/partner1.csv')
+fileconnector_partner=etl.connector.file_connector.file_connector('data/partner.csv')
+fileconnector_partner1=etl.connector.file_connector.file_connector('data/partner1.csv')
+fileconnector_partner3=etl.connector.file_connector.file_connector('data/partner3.csv')
+csv_in1= etl.component.input.csv_in.csv_in('Partner Data',fileconnector_partner)
+csv_in2= etl.component.input.csv_in.csv_in('Partner Data1',fileconnector_partner1)
 csv_out1= etl.component.output.csv_out.csv_out('data/partner3.csv')
 sort1=etl.component.transform.sort.sort('name')
 log1=etl.component.transform.logger.logger(name='Read Partner File')

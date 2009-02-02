@@ -38,33 +38,23 @@ class csv_in(etl.component):
         * .* : nothing
         Output Flows: 0-x
         * .* : return the main flow with data from csv file
-    """
-    _name='etl.component.input.csv_in'  
-    _description='This is an ETL Component that use to read data from csv file.'   
-    _author='tiny'
+    """    
 
-    def __init__(self,filename=None,fileconnector=None,transformer=None,row_limit=0,bufsize=-1, csv_params={}):
+    def __init__(self,name,fileconnector,transformer=None,row_limit=0, csv_params={}):
         super(csv_in, self).__init__(transformer=transformer)      
           
-        self.fileconnector = fileconnector
-        self.filename = filename
+        self.fileconnector = fileconnector 
+        self.csv_params=csv_params       
         self.row_limit=row_limit 
-        self.row_count=0        
-        self.bufsize=bufsize        
-        self.csv_params=csv_params
+        self.row_count=0                                
         self.fp=None
         self.reader=None
 
     def action_start(self,key,singal_data={},data={}):
         try:
-            super(csv_in, self).action_start(key,singal_data,data)
-            if not self.reader:
-                if self.fileconnector:
-                    self.fp=self.fileconnector.open('r',bufsize=self.bufsize)        
-                else:
-                    self.fp=open(self.filename,'r',self.bufsize)
-                self.reader=csv.DictReader(self.fp,**self.csv_params)                
-                self.reader.fieldnames
+            super(csv_in, self).action_start(key,singal_data,data)                
+            self.fp=self.fileconnector.open('r')                
+            self.reader=csv.DictReader(self.fp,**self.csv_params)                            
         except Exception,e:                                                                    
             self.signal('error',{'error_msg': 'Error from start signal :'+str(e),'error_date':datetime.datetime.today()})
 
@@ -79,8 +69,14 @@ class csv_in(etl.component):
             self.signal('error',{'error_msg': 'Error from end signal :'+str(e),'error_date':datetime.datetime.today()})
 
     def process(self):
-        try:                         
+        try:
+            if not self.fileconnector:
+                yield {'error_msg':'Error : Connector should be specified.','error_date':datetime.datetime.today()},'error'
+            if not self.reader:
+                yield {'error_msg':'Error : Reader should be specified.','error_date':datetime.datetime.today()},'error'
             for data in self.reader:
+                for d in data.values():
+                    d=d.decode()                
                 self.row_count+=1
                 if self.row_limit and self.row_count > self.row_limit:
                      raise StopIteration
@@ -88,15 +84,11 @@ class csv_in(etl.component):
                     if self.transformer:
                         self.transformer.transform(data)
                 except Exception,e:                                                                    
-                    self.signal('error',{'error_msg':'Error from transform process :'+str(e),'error_date':datetime.datetime.today()})              
-                yield data,'main'
-            for stat in self.statitics.values():                
-                yield stat,'statistics'  
-            for error in self.errors:                
-                yield error,'error'             
+                    yield {'error_msg':'Error from transform process :'+str(e),'error_date':datetime.datetime.today()},'error'
+                yield data,'main'                                     
                                
-        except Exception,e:                                                                    
-            self.signal('error',{'error_msg':'Error from process :'+str(e),'error_date':datetime.datetime.today()})              
+        except Exception,e:                                                                                
+            yield {'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()},'error'
                
         
 
