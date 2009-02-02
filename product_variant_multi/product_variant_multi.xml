@@ -76,6 +76,21 @@
                 </tree>
             </field>
         </record>
+        
+        <record id="product_variant_multi.variant_value_form_view" model="ir.ui.view">
+            <field name="name">product_variant_multi.variant_value.form</field>
+            <field name="model">product.variant.dimension.value</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Variant Value">
+                    <field name="dimension_id"/>
+                    <field name="name"/>
+                    <field name="sequence"/>
+                    <field name="price_extra"/>
+                    <field name="price_margin"/>
+                </form>
+            </field>
+        </record>
 
         <record id="product_variant_multi.variant_type_tree_view" model="ir.ui.view">
             <field name="name">product_variant_multi.variant_type.tree</field>
@@ -87,6 +102,34 @@
                     <field name="name"/>
                     <field name="value_ids"/>
                 </tree>
+            </field>
+        </record>
+        
+        <record id="product_variant_multi.variant_type_form_view" model="ir.ui.view">
+            <field name="name">product_variant_multi.variant_type.form</field>
+            <field name="model">product.variant.dimension.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Variant Type">
+                    <field name="product_tmpl_id"/>
+                    <field name="name"/>
+                    <field name="sequence"/>
+                     <field name="allow_custom_value"/>
+                    <field name="value_ids">
+   		                <tree string="Variant Value" editable="bottom">
+			                    <field name="name"/>
+			                    <field name="sequence"/>
+			                    <field name="price_extra"/>
+			                    <field name="price_margin"/>
+			                </tree>
+   		                <form string="Variant Value">
+			                    <field name="name"/>
+			                    <field name="sequence"/>
+			                    <field name="price_extra"/>
+			                    <field name="price_margin"/>
+			                </form>
+                    </field>
+                </form>
             </field>
         </record>
         
@@ -105,7 +148,7 @@
 																<field name="allow_custom_value"/>
 														</tree>
 		                    </field>
-		                    <field name="variants"/>
+		                    <field name="variants" string="Variants"/>
 		                </page>
                 </xpath>
             </field>
