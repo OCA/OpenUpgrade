@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -57,7 +57,6 @@ def _do_import(self, cr, uid, data, context):
         saleorders = server.get_saleorders(0)
 
     for saleorder in saleorders:
-        print str(saleorder)
         value={ 'esale_osc_web' : website.id,
                 'esale_osc_id'  : saleorder['id'],
                 'shop_id'       : website.shop_id.id,
@@ -87,9 +86,9 @@ def _do_import(self, cr, uid, data, context):
                 if address[0]=='address':
                     insert['email']=saleorder['address']['email']
                 id=addresses_pool.create(cr, uid, insert)
-                
+
             value.update({'partner_%s_id' % address[1]: id})
-                
+
         order_id=saleorder_pool.create(cr, uid, value)
         for orderline in saleorder['lines']:
             ids=self.pool.get('esale_osc.product').search(cr, uid, [('esale_osc_id', '=', orderline['product_id']), ('web_id', '=', website.id)])
@@ -100,7 +99,9 @@ def _do_import(self, cr, uid, data, context):
                         'product_uom_qty'   : orderline['product_qty'],
                         'order_id'      : order_id
                 }
-                linevalue.update(self.pool.get('sale.order.line').product_id_change(cr, uid, [], value['pricelist_id'], linevalue['product_id'], linevalue['product_uom_qty'])['value'])
+                # fpos = get the fiscal position  to map account/tax ....should be check...
+                fpos = website.partner_anonymous_id.property_account_position and website.partner_anonymous_id.property_account_position.id or False
+                linevalue.update(self.pool.get('sale.order.line').product_id_change(cr, uid, [], value['pricelist_id'], linevalue['product_id'], linevalue['product_uom_qty'])['value'], partner_id=order.partner_id.id, fiscal_position=fpos)
                 linevalue.update(self.pool.get('sale.order.line').default_get(cr, uid, ['sequence', 'invoiced', 'state', 'product_packaging']))
                 del linevalue['weight']
                 linevalue["product_uos"]= linevalue['product_uos'][0]

@@ -35,9 +35,10 @@ class sort(etl.component):
 		* .* : the main data flow with input data
 		Output Flows: 0-x
 		* .* : return the main flow with sort result
-    """
-    def __init__(self, fieldname, *args, **argv):
-        super(sort, self).__init__(*args, **argv)
+    """    
+
+    def __init__(self, name,fieldname):
+        super(sort, self).__init__('(etl.component.process.sort) '+name )
         self.fieldname = fieldname
 
     # Read all input channels, sort and write to 'main' channel

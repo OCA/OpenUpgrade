@@ -28,15 +28,16 @@ import time
 class sleep(etl.component):
     """
        put job process in sleep.
-    """
-    def __init__(self, delay=1, *args, **argv):
+    """    
+
+    def __init__(self, name,delay=1):
         self.delay = delay
-        super(sleep, self).__init__(*args, **argv)
+        super(sleep, self).__init__('(etl.component.control.sleep) '+name)
 
     def process(self):
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     time.sleep(self.delay)
-                    yield d, 'main'
+                    yield d, 'main'                      
 

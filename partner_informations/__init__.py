@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    ETL system- Extract Transfer Load system
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,22 +20,7 @@
 #
 ##############################################################################
 
-"""
-ETL Connectors:
-* File Access
-"""
-from etl import etl
 
-class file_connector(etl.connector):
-    def __init__(self,uri,bufsize=-1,encoding='utf-8'):
-        super(file_connector, self).__init__(uri,bufsize,encoding)               
-        self.file=False
-    def open(self,mode='r'):
-        # TODO : pass encoding in file
-        super(file_connector, self).open(mode)
-        self.file=open(self.uri,mode,self.bufsize)    
-        #self.file.encoding=self.encoding
-        return self.file
-    def close(self):
-        super(file_connector, self).close()
-        self.file.close()    
+import partner_informations
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

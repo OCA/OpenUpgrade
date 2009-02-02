@@ -35,12 +35,11 @@ class logger(etl.component):
 		* .* : the main data flow with input data
 		Output Flows: 0-y
 		* .* : return the main flow 
-    """
-    def __init__(self, name, output=sys.stdout, *args, **argv):
-        self.name = name
+    """    
+    def __init__(self, name, output=sys.stdout):        
         self.output = output
         self.is_end = 'main'
-        super(logger, self).__init__(*args, **argv)
+        super(logger, self).__init__('(etl.component.process.logger) '+name)
 
     def process(self):
         for channel,trans in self.input_get().items():
@@ -48,4 +47,5 @@ class logger(etl.component):
                 for d in iterator:                    
                     self.output.write('\tLog '+self.name+str(d)+'\n')
                     yield d, 'main'
+        super(logger, self).process()
 
