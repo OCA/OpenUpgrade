@@ -24,6 +24,7 @@
     The module provides process of ETL.
 
 """
+# TODO : make separate py file for all classes
 import datetime
 import logging
 import logging.handlers
@@ -96,6 +97,10 @@ class statistic(object):
             stat['total_records']+=total_record
             stat['record_time']=stat['total_time']/stat['total_records']
             stat['memory']+=0 # TODO : Calculate size of data
+
+    def statistics_get(self):
+        for stat in self.statistics:
+            yield stat,'statistics'
 
 
 class signal(object):
@@ -231,11 +236,12 @@ class component(signal,statistic):
          return True
 
     def action_no_input(self,key,signal_data={},data={}):      
-         self.logger.notifyChannel("component", etl.LOG_WARNING, 
+         self.logger.notifyChannel("component", LOG_WARNING, 
                      'the '+str(self)+' has no input data...')        
          return True
 
     def action_stop(self,key,signal_data={},data={}):    
+         # TODO : stop all IN_trans and OUT_trans  related this component
          self.logger.notifyChannel("component", LOG_INFO, 
                      'the '+str(self)+' is stop now...')                
          return True
@@ -264,8 +270,8 @@ class component(signal,statistic):
               'error_date':signal_data.get('error_date')
          }       
          self.errors.append(error_value)     
-         self.logger.notifyChannel("component", etl.LOG_ERROR, 
-                     str(self)+' : ' + error_value['error_from'] + ','+error_value['error_msg'])
+         self.logger.notifyChannel("component", LOG_ERROR, 
+                     str(self)+' : FROM ' + error_value['error_from'] + ', '+error_value['error_msg'])
          return True
 
     def __init__(self,name='',transformer=None,*args, **argv):
@@ -334,14 +340,16 @@ class component(signal,statistic):
                 if (t == chan) or (not t) or (not chan):
                     self.data.setdefault(t2, [])
                     self.data[t2].append(data)   
+        # TOCHECK : why not send 'stop' signal of trans and 'end' signal of component after end of process
         if trans:
             trans.signal('stop')     
-        self.signal('end',{'trans':trans,'channel_source':chan,'end_date':datetime.datetime.today()})
+        self.signal('end',{'trans':trans,'end_date':datetime.datetime.today()})
 
     def process(self):
         """ process method of ETL component
         """
-        pass
+        # TO IMPROVE : it is not good and also not working
+        self.statistics_get()
 
 
     def input_get(self):
@@ -412,14 +420,14 @@ class job(signal):
         self.status='pause'
         self.logger.notifyChannel("job", LOG_INFO, 
                      'the '+str(self)+' is pause now...')
-        #TODO : pause job process
+        #TODO : pause job process and also call pause action of components and trans.
         return True
 
     def action_stop(self,key,signal_data={},data={}):
         self.status='stop'
         self.logger.notifyChannel("job", LOG_INFO, 
                      'the '+str(self)+' is stop now...')
-        #TODO : stop job process
+        #TODO : stop job process and also call stop action of components and trans.
         return True
 
     def action_copy(self,key,signal_data={},data={}):

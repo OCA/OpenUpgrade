@@ -47,4 +47,5 @@ class logger(etl.component):
                 for d in iterator:                    
                     self.output.write('\tLog '+self.name+str(d)+'\n')
                     yield d, 'main'
+        super(logger, self).process()
 
