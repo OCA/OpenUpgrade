@@ -28,14 +28,11 @@ import time
 class sleep(etl.component):
     """
        put job process in sleep.
-    """
-    _name='etl.component.control.sleep'  
-    _description='This is ETL Component to put job process in sleep.'   
-    _author='tiny'
+    """    
 
-    def __init__(self, delay=1, *args, **argv):
+    def __init__(self, name,delay=1):
         self.delay = delay
-        super(sleep, self).__init__(*args, **argv)
+        super(sleep, self).__init__('(etl.component.control.sleep) '+name)
 
     def process(self):
         for channel,trans in self.input_get().items():

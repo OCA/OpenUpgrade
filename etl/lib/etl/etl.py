@@ -25,7 +25,47 @@
 
 """
 import datetime
+import logging
+import logging.handlers
+import sys
+import os
 
+LOG_INFO = 'info'
+LOG_WARNING = 'warn'
+LOG_ERROR = 'error'
+
+
+def init_logger():
+    logger = logging.getLogger()
+    # create a format for log messages and dates
+    formatter = logging.Formatter('[%(asctime)s] %(levelname)s:%(name)s:%(message)s', '%a %b %d %Y %H:%M:%S')
+    # Normal Handler on standard output
+    handler = logging.StreamHandler(sys.stdout)
+    # tell the handler to use this format
+    handler.setFormatter(formatter)
+    # add the handler to the root logger
+    logger.addHandler(handler)
+    logger.setLevel(logging.INFO)   
+
+
+class Logger(object):
+    def notifyChannel(self, name, level, msg):        
+        log = logging.getLogger(name)
+        level_method = getattr(log, level)        
+        msg = unicode(msg)
+
+        result = msg.strip().split('\n')
+        if len(result)>1:
+            for idx, s in enumerate(result):
+                level_method('[%02d]: %s' % (idx+1, s,))
+        elif result:
+            level_method(result[0])
+
+    def shutdown(self):
+        logging.shutdown()
+
+
+init_logger()
 
 
 
@@ -134,7 +174,7 @@ class transformer(object):
 
     _transform_method={
         'int':int,
-        'str':str.decode,
+        'str':unicode,
         'date':lambda x:datetime.datetime.strptime(x,transformer.DATE_FORMAT).date(),
         'time':lambda x:datetime.datetime.strptime(x,transformer.TIME_FORMAT).time(),
         'datetime':lambda x:datetime.datetime.strptime(x,transformer.DATETIME_FORMAT),
@@ -151,7 +191,10 @@ class transformer(object):
         # TODO : TO check : data and description should have same keys.                    
         for column in row:
             transform_method=self._transform_method[self.description[column]]
-            row[column]=transform_method(row[column].decode())        
+            row[column]=transform_method(row[column])        
+
+
+
 
 class component(signal,statistic):
     """
@@ -163,9 +206,45 @@ class component(signal,statistic):
     _start_output={} 
     
         
-    def action_start(self,key,singal_data={},data={}):
-         trans=singal_data.get('trans',None)     
-         stat_date=singal_data.get('start_date',None)             
+    def action_start(self,key,signal_data={},data={}):
+         trans=signal_data.get('trans',None)     
+         stat_date=signal_data.get('start_date',None)             
+         self.statistic( \
+             str(key), \
+             trans and str(trans.destination) or None, \
+             trans and str(trans.channel_source) or None, \
+             trans and str(trans.channel_destination) or None, \
+             len(self.data[trans]), \
+             stat_date)         
+         self.logger.notifyChannel("component", LOG_INFO, 
+                     'the '+str(self)+' is start now...')
+         return True
+
+    def action_start_input(self,key,signal_data={},data={}):
+         self.logger.notifyChannel("component", LOG_INFO, 
+                     'the '+str(self)+' is start to taken input...')
+         return True
+
+    def action_start_output(self,key,signal_data={},data={}):
+         self.logger.notifyChannel("component", LOG_INFO, 
+                     'the '+str(self)+' is start to give output...')
+         return True
+
+    def action_no_input(self,key,signal_data={},data={}):      
+         self.logger.notifyChannel("component", etl.LOG_WARNING, 
+                     'the '+str(self)+' has no input data...')        
+         return True
+
+    def action_stop(self,key,signal_data={},data={}):    
+         self.logger.notifyChannel("component", LOG_INFO, 
+                     'the '+str(self)+' is stop now...')                
+         return True
+
+    
+
+    def action_end(self,key,signal_data={},data={}):         
+         trans=signal_data.get('trans',None)         
+         stat_date=signal_data.get('end_date',None)         
          self.statistic( \
              str(key), \
              trans and str(trans.destination) or None, \
@@ -173,43 +252,20 @@ class component(signal,statistic):
              trans and str(trans.channel_destination) or None, \
              len(self.data[trans]), \
              stat_date)
-         return True
-
-    def action_start_input(self,key,singal_data={},data={}):
-         return True
-
-    def action_start_output(self,key,singal_data={},data={}):
-         return True
-
-    def action_no_input(self,key,singal_data={},data={}):              
-         return True
-
-    def action_stop(self,key,singal_data={},data={}):                   
-         return True
-
-    def action_continue(self,key,singal_data={},data={}):                   
-         return True
-
-    def action_end(self,key,singal_data={},data={}):         
-         trans=singal_data.get('trans',None)         
-         stat_date=singal_data.get('end_date',None)         
-         self.statistic( \
-             str(key), \
-             trans and str(trans.destination) or None, \
-             trans and str(trans.channel_source) or None, \
-             trans and str(trans.channel_destination) or None, \
-             len(self.data[trans]), \
-             stat_date)
+         self.logger.notifyChannel("component", LOG_INFO, 
+                     'the '+str(self)+' is end now...')
          return True 
          
 
-    def action_error(self,key,singal_data={},data={}):   
+    def action_error(self,key,signal_data={},data={}):   
          error_value={
               'error_from':str(key),
-              'error_msg':singal_data.get('error_msg'),
-              'error_date':singal_data.get('error_date')
+              'error_msg':signal_data.get('error_msg'),
+              'error_date':signal_data.get('error_date')
          }       
          self.errors.append(error_value)     
+         self.logger.notifyChannel("component", etl.LOG_ERROR, 
+                     str(self)+' : ' + error_value['error_from'] + ','+error_value['error_msg'])
          return True
 
     def __init__(self,name='',transformer=None,*args, **argv):
@@ -222,15 +278,16 @@ class component(signal,statistic):
         self.errors=[]
         self.generator = None
         self.transformer=transformer
+        self.logger = Logger()
 
         self.signal_connect(self,'start',self.action_start)
         self.signal_connect(self,'start_input',self.action_start_input)
         self.signal_connect(self,'start_output',self.action_start_output)
         self.signal_connect(self,'no_input',self.action_no_input)
-        self.signal_connect(self,'stop',self.action_stop)
-        self.signal_connect(self,'continue',self.action_continue)
+        self.signal_connect(self,'stop',self.action_stop)        
         self.signal_connect(self,'end',self.action_end)
         self.signal_connect(self,'error',self.action_error)
+
         
 
     def __str__(self):
@@ -246,13 +303,17 @@ class component(signal,statistic):
 
     def channel_get(self, trans=None):
         """ Get channel list of transition
-        """
+        """        
+        if trans and trans.status=='close':
+            return
         self.data.setdefault(trans, [])
         self._start_output.setdefault(trans,False)
         self._start_input.setdefault(trans,False)
-        gen = self.generator_get(trans) or []   
+        gen = self.generator_get(trans) or [] 
+        if trans:
+            trans.signal('start')      
         self.signal('start',{'trans':trans,'start_date':datetime.datetime.today()})     
-        while True:
+        while True:            
             if self.data[trans]:                
                 if not self._start_output[trans]:
                     self._start_output[trans]=datetime.datetime.today()                               
@@ -272,7 +333,9 @@ class component(signal,statistic):
             for t,t2 in self.trans_out:
                 if (t == chan) or (not t) or (not chan):
                     self.data.setdefault(t2, [])
-                    self.data[t2].append(data)        
+                    self.data[t2].append(data)   
+        if trans:
+            trans.signal('stop')     
         self.signal('end',{'trans':trans,'channel_source':chan,'end_date':datetime.datetime.today()})
 
     def process(self):
@@ -291,11 +354,35 @@ class component(signal,statistic):
         return result
 
 
-class transition(object):
+class transition(signal):
     """
        Base class of ETL transition.
     """
+    
+
+    def action_start(self,key,signal_data={},data={}):
+        self.status='start'
+        self.logger.notifyChannel("transition", LOG_INFO, 
+                     'the '+str(self)+' is start now...')
+        return True 
+
+    def action_pause(self,key,signal_data={},data={}):
+        self.status='pause'
+        self.logger.notifyChannel("transition", LOG_INFO, 
+                     'the '+str(self)+' is pause now...')
+        return True 
+
+    def action_stop(self,key,signal_data={},data={}):
+        self.status='stop'
+        self.logger.notifyChannel("transition", LOG_INFO, 
+                     'the '+str(self)+' is stop now...')
+        return True    
+
+    def __str__(self):
+        return str(self.source)+' to '+str(self.destination)
+
     def __init__(self, source, destination, channel_source='main', channel_destination='main', type='data'):
+        super(transition, self).__init__() 
         self.type = type
         self.source = source
         self.destination = destination
@@ -303,22 +390,75 @@ class transition(object):
         self.channel_destination = channel_destination
         self.destination.trans_in.append((channel_destination,self))
         self.source.trans_out.append((channel_source,self))
+        self.status='open' # open,start,pause,stop,close 
+                           # open : active, start : in running, pause : pause, stop: stop, close : inactive
 
-class job(object):
+        self.logger = Logger()
+        self.signal_connect(self,'start',self.action_start)
+        self.signal_connect(self,'pause',self.action_pause)
+        self.signal_connect(self,'stop',self.action_stop)
+
+class job(signal):
     """
        Base class of ETL job.
     """
-    def __init__(self,outputs=[]):
+    def action_start(self,key,signal_data={},data={}):
+        self.status='start'        
+        self.logger.notifyChannel("job", LOG_INFO, 
+                     'the '+str(self)+' is start now...')
+        return True
+
+    def action_pause(self,key,signal_data={},data={}):
+        self.status='pause'
+        self.logger.notifyChannel("job", LOG_INFO, 
+                     'the '+str(self)+' is pause now...')
+        #TODO : pause job process
+        return True
+
+    def action_stop(self,key,signal_data={},data={}):
+        self.status='stop'
+        self.logger.notifyChannel("job", LOG_INFO, 
+                     'the '+str(self)+' is stop now...')
+        #TODO : stop job process
+        return True
+
+    def action_copy(self,key,signal_data={},data={}):
+        #TODO : copy job process
+        self.logger.notifyChannel("job", LOG_INFO, 
+                     'the '+str(self)+' is coping now...')
+        return True
+
+ 
+    def __init__(self,name,outputs=[]):
+        super(job, self).__init__()
+        self.name=name
         self.outputs=outputs
+        self.status='open' # open,start,pause,stop,close
+        
+        self.signal_connect(self,'start',self.action_start)
+        self.signal_connect(self,'pause',self.action_pause)
+        self.signal_connect(self,'stop',self.action_stop)
+        self.signal_connect(self,'copy',self.action_copy)
+        self.logger = Logger()
     def __str__(self):     
         #TODO : return complete print of the job (all components and transitions)
+        return self.name   
+    
+    
+    def import_job(self,connector):
+        #TODO : read job instance from file
+        pass
+    def export_job(self,connector):
+        #TODO : write job instance in file
         pass
 
-
     def run(self):
+        # run job process
+        self.signal('start')
         for c in self.outputs:
             for a in c.channel_get():
                 pass
+        self.signal('stop')
 
 class connector(object):
     """

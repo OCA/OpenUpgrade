@@ -41,7 +41,7 @@ class csv_in(etl.component):
     """    
 
     def __init__(self,name,fileconnector,transformer=None,row_limit=0, csv_params={}):
-        super(csv_in, self).__init__(transformer=transformer)      
+        super(csv_in, self).__init__('(etl.component.input.csv_in) '+name,transformer=transformer)      
           
         self.fileconnector = fileconnector 
         self.csv_params=csv_params       
@@ -68,15 +68,15 @@ class csv_in(etl.component):
         except Exception,e:                                                                    
             self.signal('error',{'error_msg': 'Error from end signal :'+str(e),'error_date':datetime.datetime.today()})
 
-    def process(self):
-        try:
-            if not self.fileconnector:
-                yield {'error_msg':'Error : Connector should be specified.','error_date':datetime.datetime.today()},'error'
-            if not self.reader:
-                yield {'error_msg':'Error : Reader should be specified.','error_date':datetime.datetime.today()},'error'
-            for data in self.reader:
+    def process(self):        
+        if not self.fileconnector:
+            yield {'error_msg':'Error : Connector should be specified.','error_date':datetime.datetime.today()},'error'
+        if not self.reader:
+            yield {'error_msg':'Error : Reader should be specified.','error_date':datetime.datetime.today()},'error'
+        for data in self.reader:
+            try:
                 for d in data.values():
-                    d=d.decode()                
+                    d=unicode(d)                
                 self.row_count+=1
                 if self.row_limit and self.row_count > self.row_limit:
                      raise StopIteration
@@ -86,9 +86,9 @@ class csv_in(etl.component):
                 except Exception,e:                                                                    
                     yield {'error_msg':'Error from transform process :'+str(e),'error_date':datetime.datetime.today()},'error'
                 yield data,'main'                                     
-                               
-        except Exception,e:                                                                                
-            yield {'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()},'error'
+                           
+            except Exception,e:                                                                                
+                yield {'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()},'error'
                
         
 

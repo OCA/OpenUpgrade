@@ -35,15 +35,11 @@ class logger(etl.component):
 		* .* : the main data flow with input data
 		Output Flows: 0-y
 		* .* : return the main flow 
-    """
-    _name='etl.component.process.logger'  
-    _description='This is an ETL Component that use to display log detail in streamline.'   
-    _author='tiny'
-    def __init__(self, name, output=sys.stdout, *args, **argv):
-        self.name = name
+    """    
+    def __init__(self, name, output=sys.stdout):        
         self.output = output
         self.is_end = 'main'
-        super(logger, self).__init__(*args, **argv)
+        super(logger, self).__init__('(etl.component.process.logger) '+name)
 
     def process(self):
         for channel,trans in self.input_get().items():
