@@ -88,6 +88,10 @@ class RstDoc(object):
             "    :noindex:",
             ".. ",
             "",
+            ".. raw:: html",
+            "",
+            """    <link rel="stylesheet" href="../_static/hide_objects_in_sidebar.css" type="text/css" />""",
+            "",
             "%(title)s",
             "%(title_underline)s",
             ":Module: %(name)s",
@@ -162,7 +166,7 @@ class RstDoc(object):
         depends = self.dico['depends']
         if depends:
             for dependency in depends:
-                sl.append(" * %s - %s" % (dependency.name, dependency.state))
+                sl.append(" * :mod:`%s`" % (dependency.name))
         else:
             sl.extend(["", "None", ""])
         sl.append("")

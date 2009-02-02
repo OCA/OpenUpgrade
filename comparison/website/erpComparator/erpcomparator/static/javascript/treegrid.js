@@ -287,8 +287,7 @@ TreeNode.prototype = {
             if (i == 0) { // first column
     
                 var tds = [];
-                log(value);
-                title = value;
+                
                 /*if (value.length > 15) {
             		title = value;
             		value = value.substring(0, 15) + '...'
@@ -313,11 +312,11 @@ TreeNode.prototype = {
                 }
     
                 if (arrow.className != 'indent') {
-	                value = A({'href': 'javascript: void(0)', 'title': title}, value);
+	                value = A({'href': 'javascript: void(0)'}, value);
     	            this.element_a = value;
                 }
                 else {
-                	value = SPAN({'style': 'color: black; display: block; max-width: 250px; white-space: normal; cursor: normal;', 'title': title}, value);
+                	value = A({'style': 'color: black; display: block; max-width: 250px; white-space: normal; cursor: normal;', 'title': title}, value);
     	            this.element_a = value;
                 }
                 
@@ -349,6 +348,7 @@ TreeNode.prototype = {
             
             if (i > 0) {
                 if (header.type == 'url' && value) {
+                	title = '';
                 	if (header.name == 'ponderation') {
                 		title = "Suggest ponderation";
                 	}
@@ -371,7 +371,7 @@ TreeNode.prototype = {
 	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold'}, value);
                 	}
                 	else {
-                		value = MochiKit.DOM.DIV({title: title}, value);
+                		value = MochiKit.DOM.DIV(value);
                 	}    
                 }
                 
@@ -426,8 +426,6 @@ TreeNode.prototype = {
             		title = value;
             		value = value.substring(0, 15) + '...'
             	}*/
-            	
-            	title = value;
             	
                 if (record.icon && this.element_i) {
                     this.element_i.src = record.icon;

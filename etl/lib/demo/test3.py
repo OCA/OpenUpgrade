@@ -5,7 +5,7 @@ transformer_description= {'id':etl.transformer.LONG,'name':etl.transformer.STRIN
 transformer=etl.transformer(transformer_description)
 csv_in1= etl.component.input.csv_in.csv_in('Invoice File',fileconnector=fileconnector,transformer=transformer)
 log1=etl.component.transform.logger.logger(name='Read Invoice File')
-tran=etl.etl.transition(csv_in1,log1,channel_source="statistics")
-job1=etl.etl.job([log1])
+tran=etl.etl.transition(csv_in1,log1)
+job1=etl.etl.job('job of test3',[log1])
 job1.run()
 

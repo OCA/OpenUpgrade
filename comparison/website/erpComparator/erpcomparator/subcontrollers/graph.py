@@ -85,8 +85,8 @@ class Graph(controllers.Controller):
             ch_ids = proxy_factor.read(list, ['name'])
             
             for ch in ch_ids:
-                cname = {}
-                cname['name'] = ch['name']
+                cname = {}                
+                cname['name'] = ch['name'][:18]
                                 
                 child_ids += [ch['id']]
                 child_name += [cname]
@@ -101,7 +101,7 @@ class Graph(controllers.Controller):
             
             for ch in child_list:
                 cname = {}
-                cname['name'] = ch['name']
+                cname['name'] = ch['name'][:18]
                 child_name += [cname]
         
         elem = []
