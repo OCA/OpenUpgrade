@@ -24,8 +24,14 @@
     The module provides process of ETL.
 
 """
-# TODO : make separate py file for all classes
+# TODO : 
+#     - make separate py file for all Classes
+#     - make good documentation and test with doctest
+#     - Integrate profiler in the job code: cProfile
+#     - do a unittest system and implement unit tests on components file
+
 import datetime
+
 import logging
 import logging.handlers
 import sys
@@ -80,6 +86,7 @@ class statistic(object):
     
     statistics={}
     def statistic(self,source_component,destination_component,source_channel,destination_channel,total_record,stat_time):
+        #TODO : improvement
         input_channel=(source_component,destination_component,source_channel,destination_channel)
         if input_channel not in self.statistics:
             self.statistics.setdefault(input_channel,{                   
@@ -490,6 +497,7 @@ class connector(object):
 
 
 def test1():    
+    #TODO : avoid using .CSV files, povide stringIO with string directly in the __main__
     fileconnector=etl.connector.file_connector.file_connector('demo/data/invoice.csv')
     transformer.description= {'id':etl.transformer.LONG,'name':etl.transformer.STRING,'invoice_date':etl.transformer.DATE,'invoice_amount':etl.transformer.FLOAT,'is_paid':etl.transformer.BOOLEAN}    
     transformer=etl.transformer(transformer.description)
@@ -501,6 +509,7 @@ def test1():
 
 
 if __name__ == '__main__':
+    #TODO : make perfect testing method
     pass
     #test1()
 
