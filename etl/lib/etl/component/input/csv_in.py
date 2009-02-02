@@ -70,25 +70,28 @@ class csv_in(etl.component):
 
     def process(self):        
         if not self.fileconnector:
-            yield {'error_msg':'Error : Connector should be specified.','error_date':datetime.datetime.today()},'error'
+            self.signal('error',{'error_msg':'Error : Connector should be specified.','error_date':datetime.datetime.today()})
         if not self.reader:
-            yield {'error_msg':'Error : Reader should be specified.','error_date':datetime.datetime.today()},'error'
-        for data in self.reader:
-            try:
-                for d in data.values():
-                    d=unicode(d)                
-                self.row_count+=1
-                if self.row_limit and self.row_count > self.row_limit:
-                     raise StopIteration
+            self.signal('error',{'error_msg':'Error : Reader should be specified.','error_date':datetime.datetime.today()})
+        try:
+            for data in self.reader:
                 try:
-                    if self.transformer:
-                        self.transformer.transform(data)
-                except Exception,e:                                                                    
-                    yield {'error_msg':'Error from transform process :'+str(e),'error_date':datetime.datetime.today()},'error'
-                yield data,'main'                                     
-                           
-            except Exception,e:                                                                                
-                yield {'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()},'error'
+                    for d in data.values():
+                        d=unicode(d)                
+                    self.row_count+=1
+                    if self.row_limit and self.row_count > self.row_limit:
+                         raise StopIteration
+                    try:
+                        if self.transformer:
+                            self.transformer.transform(data)
+                    except Exception,e:                                                                    
+                        yield {'error_msg':'Error from transform process :'+str(e),'error_date':datetime.datetime.today()},'error'
+                    yield data,'main'                                     
+                               
+                except Exception,e:                                                                                
+                    yield {'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()},'error'
+        except Exception,e:                                                                                
+            self.signal('error',{'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()})
                
         
 
