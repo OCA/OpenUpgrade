@@ -445,4 +445,4 @@ class comparison_ponderation_suggestion(osv.osv):
 
 comparison_ponderation_suggestion()
 
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
