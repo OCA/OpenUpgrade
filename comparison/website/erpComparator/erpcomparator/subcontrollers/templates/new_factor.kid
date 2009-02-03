@@ -4,7 +4,7 @@
 	<input type="hidden" id="ponderation" name="ponderation" value="1.0"/>
 	
 	<div class="header">
-		<b>Propose New Factor</b>
+		<b>Propose a New Criterion</b>
 	</div>
 	
 	<table id="voting">
