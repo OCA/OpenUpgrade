@@ -27,7 +27,8 @@
         "website" : "http://www.openerp.com",
         "category" : "Tools",
         "description": """
-        This module lets you compare famous ERP systems and lets you vote their respective facilities(e.g. accounting, BOM Support, etc.) provided by them.
+This module manages the backend of a collaborative comparison website amongst
+different products.
         """, 
         "depends" : ['base'],
         "init_xml" : [ ],

@@ -28,8 +28,7 @@ import time
 class sleep(etl.component):
     """
        put job process in sleep.
-    """    
-
+    """
     def __init__(self, name,delay=1):
         self.delay = delay
         super(sleep, self).__init__('(etl.component.control.sleep) '+name)
@@ -39,5 +38,5 @@ class sleep(etl.component):
             for iterator in trans:
                 for d in iterator:
                     time.sleep(self.delay)
-                    yield d, 'main'                      
+                    yield d, 'main'
 

@@ -56,11 +56,6 @@ OK - DONE
 
 * Create a new node type which is sub-job or sub-process. It calls a new process.
 
-* I implemented a push mechanism, we should also add a pull mechanism: a node
-can request information to another node, and then receive the requested result.
-This is not existent in most common ETL's so we have to design something smart.
-To be detailed...
-
 * Each component can send signals. Trigger Transitions can listen to these signals
 and launch new components of type input (sub-jobs, csv.in). Signals are automatically
 generated:
@@ -113,18 +108,18 @@ Time Line
 2. Development (Deadline: 29/01) - assigned to trainee
  * Improve the current prototype, integrating the above notes
 
-3. Development of the Open ERP interface (Deadline: 22/02)
+3. Develop real use cases (Deadline: 15/03)
+     (assigned to trainee)
+ * SugarCRM -> Open ERP
+ * Outlook -> Open ERP
+Implement what's missing to integrate these usecases as modules.
+
+4. Development of the Open ERP interface (Deadline: 22/02)
  * Implement all objects/menus/views in Open ERP
  * etl addons: Once all views are designed, implement the logic, using etl
      module (assigned to trainee)
  * eTiny: generalisation of the workflow editor to create a new type of view
      (assigned to noz, sana or ame)
-
-4. Develop real use cases (Deadline: 15/03)
-     (assigned to trainee)
- * SugarCRM -> Open ERP
- * Outlook -> Open ERP
-Implement what's missing to integrate these usecases as modules.
 
 5. Full integrator documentation, 200 pages (Deadline: 31/03)
      (assigned to trainee)
@@ -398,3 +393,5 @@ request less effort in the development of components.
 So you have:
 * Development/Testing environment: Open ERP
 * Deployment on Production: fully independant, only need to install a python etl lib
+
+
