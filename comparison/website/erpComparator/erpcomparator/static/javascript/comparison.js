@@ -37,6 +37,14 @@ function getSelectedItems() {
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
 }
 
+function do_login() {
+	user_name = $('user_name').value;
+	password = $('password').value;
+	
+	login_list = '/comparison?user_name='+user_name+'&password='+password;
+	window.location.href = login_list;
+}
+
 function change_vote(node, pond_val) {
 	
 	params = {}

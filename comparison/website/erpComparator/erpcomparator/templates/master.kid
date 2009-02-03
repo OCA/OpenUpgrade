@@ -45,23 +45,41 @@
 </head>
 
 <body margin="0" py:match="item.tag=='{http://www.w3.org/1999/xhtml}body'" py:attrs="item.items()">
+
+<?python
+# put in try block to prevent improper redirection on connection refuse error
+try:
+    criterions, feedbacks, user_info = tg.root.comparison.check_data()
+except:
+	criterions = None
+	feedbacks = None
+	user_info = None
+?>
+
 	<table id="container" border="0" cellpadding="0" cellspacing="0">
     	<tr py:if="value_of('show_header_footer', True)">
         	<td>
 				<div id="site">
 					<div id="header"></div>
+					
 					<div id="header_bar"> 
 						<div style="padding: 12px 20px; width: 35%; float: left;">
-							Based on<font color="#FF3300"><b> 865 </b></font>
-							criterions,<font color="#FF3300"><b> 2000 </b></font>
+							Based on<font color="#FF3300"><b> ${criterions} </b></font>
+							criterions,<font color="#FF3300"><b> ${feedbacks} </b></font>
 							users' feedback
 						</div>
-						<div id="loginbg"> 
+						
+						<div id="loginbg" py:if="not user_info"> 
 					    	<div style="padding-top:5px;padding-left:10px;">
-					    			Login : <input type="text" class="textInput"/> 
-					    			Password : <input type="text" class="textInput"/>
-					      		<button type="button" class="button" name="continue">Continue</button>
+					    			Login : <input type="text" name="user_name" id="user_name" class="textInput"/> 
+					    			Password : <input type="password" name="password" id="password" class="textInput"/>
+					      		<button type="button" class="button" onclick="do_login()" name="continue">Continue</button>
 					    	</div>
+						</div>
+						<div  id="loginbg" py:if="user_info">
+							<div style="padding-top: 10px; padding-right: 20px; font-size: 12px; font-weight: bold; text-align: right;">
+								Welcome ${user_info}
+							</div>
 						</div>
 					</div>
 					

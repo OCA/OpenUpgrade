@@ -106,7 +106,7 @@ class comparison_factor(osv.osv):
         'child_ids': fields.one2many('comparison.factor','parent_id','Child Factors'),
         'note': fields.text('Note'),
         'sequence': fields.integer('Sequence'),
-        'type': fields.selection([('view','View'),('criterion','criterion')], 'Type'),
+        'type': fields.selection([('view','Category'),('criterion','Criterion')], 'Type'),
 #        'result': fields.function(_result_compute, method=True, type='float', string="Result"),
         'result_ids': fields.one2many('comparison.factor.result', 'factor_id', "Results",),
         'ponderation': fields.float('Ponderation'),
@@ -119,7 +119,6 @@ class comparison_factor(osv.osv):
         'ponderation': lambda *args: 1.0,
         'sequence': lambda *args: 1,
     }
-
     
     def create(self, cr, uid, vals, context={}):
         result = super(comparison_factor, self).create(cr, uid, vals, context)
@@ -192,11 +191,6 @@ comparison_vote_values()
 
 class comparison_vote(osv.osv):
     
-#    def __init__(self, pool, cr=None):
-#        super(comparison_vote, self).__init__(pool,cr)
-#        self.score_new = 0.0
-#        self.pond_new = 0.0
-    
     _name = 'comparison.vote'
     _columns = {
         'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
@@ -206,15 +200,11 @@ class comparison_vote(osv.osv):
 #        'ponderation': fields.float('Ponderation'), do we need it here?
         'note': fields.text('Note'),
     }
-#    _defaults = {
-#        'ponderation': lambda *a: 1.0,
-#    }
 
     def vote_create_async(self, cr, uid, args):
         # this will accept the votes in bunch and will calculate parent's score at one call.
         if args:
             for vote in args:
-                vote.update({'user_id':1}) # temporarily set to 1
                 self.create(cr,uid, vote)
             factor_id = int(args[0]['factor_id'])
             factor = self.pool.get('comparison.factor').browse(cr, uid, factor_id) 
@@ -455,5 +445,15 @@ class comparison_ponderation_suggestion(osv.osv):
 #        return result
 
 comparison_ponderation_suggestion()
+
+class evaluation_pack(osv.osv):
+    _name = 'evaluation.pack'
+    _description = 'Evaluation Pack for Easy Comparison'
+    
+    _columns = {
+        'name': fields.char('Name', size=64, required=True),
+        'item_ids':fields.many2many('comparison.item','pack_items_rel','pack_id','item_id','Items',requierd=True)
+    }
+evaluation_pack()    
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

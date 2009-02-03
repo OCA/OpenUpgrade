@@ -4,11 +4,10 @@ import cherrypy
 
 from erpcomparator import rpc
 from erpcomparator import common
+from erpcomparator.tinyres import TinyResource
 
-class About(controllers.Controller):
+class About(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.about")
     def index(self):
-        userinfo = cherrypy.session.get('user_info', '')
-        
-        return dict(userinfo=userinfo)
+        return dict()

@@ -4,11 +4,11 @@ import cherrypy
 
 from erpcomparator import rpc
 from erpcomparator import common
+from erpcomparator.tinyres import TinyResource
 
-class News(controllers.Controller):
+class News(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.news")
     def index(self):
-        userinfo = cherrypy.session.get('user_info', '')
         
-        return dict(mess = "under progress...")
+        return dict(mess = " under progress...")

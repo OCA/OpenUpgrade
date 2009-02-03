@@ -6,7 +6,7 @@
     <title>Comparison</title>
 </head>
 <body>
-	<div id="bodybackground">	
+	<div id="bodybackground">
 		<div style="height: 46px; width: 890px; float: left;">
 			<div style="float:left; width:9;">
 				<img src="/static/images/whitebg.gif" alt="" width="9" height="46"/>

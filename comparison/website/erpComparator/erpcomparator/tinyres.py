@@ -43,7 +43,7 @@ import cherrypy
 import rpc
 import pkg_resources
 
-@expose(template="openerp.templates.login")
+@expose(template="erpcomparator.subcontrollers.templates.comparison")
 def _login(target, dblist=None, db= None, user=None, action=None, message=None, origArgs={}):
     """Login page, exposed without any controller, will be used by _check_method wrapper
     """
@@ -103,6 +103,10 @@ def secured(fn):
                 user = cherrypy.request.simple_cookie['terp_user'].value
             except:
                 pass
+            
+            db = config.get('database', path="admin")
+            user = config.get('user_name', path="admin")
+            password = config.get('password', path="admin")
 
             db = kw.get('db', db)
             user = kw.get('user', user)
