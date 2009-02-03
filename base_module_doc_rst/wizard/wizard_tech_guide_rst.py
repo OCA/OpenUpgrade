@@ -66,6 +66,7 @@ class RstDoc(object):
         self.module = module
 
     def _quality_certified_label(self, module):
+        """"""
         return bool(module.certificate) and '(Quality Certified)' or ''
 
     def _handle_list_items(self, list_item_as_string):
@@ -91,18 +92,11 @@ class RstDoc(object):
             ".. module:: %(name)s",
             "    :synopsis: %(shortdesc)s %(quality_certified_label)s",
             "    :noindex:",
-            #"    :platform: %(quality_certified_label)s",
             ".. ",
             "",
             ".. raw:: html",
             "",
             """    <link rel="stylesheet" href="../_static/hide_objects_in_sidebar.css" type="text/css" />""",
-            "",
-            "    <style>",
-            "      div.body p#module-%(name)s {",
-            "        display: none;",
-            "      }",
-            "    </style>",
             "",
             "%(title)s",
             "%(title_underline)s",
