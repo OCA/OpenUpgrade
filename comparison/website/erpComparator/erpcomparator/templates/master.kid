@@ -54,7 +54,7 @@
 						<div style="padding: 12px 20px; width: 35%; float: left;">
 							Based on<font color="#FF3300"><b> 865 </b></font>
 							criterions,<font color="#FF3300"><b> 2000 </b></font>
-							user's feedback
+							users' feedback
 						</div>
 						<div id="loginbg"> 
 					    	<div style="padding-top:5px;padding-left:10px;">

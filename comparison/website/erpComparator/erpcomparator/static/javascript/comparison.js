@@ -134,8 +134,8 @@ function open_item_vote(id, header) {
 		var d = window.mbox.content;
 		d.innerHTML = xmlHttp.responseText;
 		
-		window.mbox.width = 600;
-        window.mbox.height = 400;
+		window.mbox.width = 650;
+        window.mbox.height = 500;
         
         window.mbox.onUpdate = item_vote;
 		window.mbox.show();
@@ -147,25 +147,41 @@ function item_vote() {
 	var treenode = comparison_tree.selection_last;
 		
 	window.mbox.hide();
+	var final_params = []
+	var i = 1;
+	var val = '';
 	
 	forEach(treenode.childNodes, function(node){
-		
 		var name = node.record.id;
 		var params = {};
 		params['id'] = name;
 		params['score_id'] = $(name + '_score_id').value;
 		params['item_id'] = $('item_id').value;
+		params['note'] = $('note').value;
 		
-		var req = Ajax.JSON.post('/comparison/update_item_voting', params);
-	    req.addCallback(function(obj){
-	    	if(obj.res) {
-	    		node.update();
-			}
-	    	if (obj.error) {
-	            return alert(obj.error);
-	        }
-	    });
+		values = "id,"+name+"|score_id,"+$(name + '_score_id').value+"|item_id,"+$('item_id').value+"|note,"+$('note').value;
+		
+		if (i != treenode.childNodes.length) {
+			val += values + '!';
+			i++;
+		}
+		else {
+			val += values;
+		}
+		
 	});
+	
+	var req = Ajax.JSON.post('/comparison/update_item_voting?_terp_values='+val);
+    req.addCallback(function(obj){
+    	if(obj.res) {
+    		forEach(treenode.childNodes, function(node){
+    			node.update();
+    		});
+		}
+    	if (obj.error) {
+            return alert(obj.error);
+        }
+    });
 	
 	while (treenode && treenode.parentNode) {
 		treenode.update();

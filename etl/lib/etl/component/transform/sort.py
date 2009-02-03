@@ -23,9 +23,9 @@
 This is an ETL Component that use to perform sort operation.
 """
 
-from etl import etl
+from etl.component import component
 
-class sort(etl.component):
+class sort(component.component):
     """
         This is an ETL Component that use to perform sort operation.
  

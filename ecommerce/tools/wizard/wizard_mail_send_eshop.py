@@ -47,7 +47,7 @@ mail_send_form = '''<?xml version="1.0"?>
 </form>'''
 
 mail_send_fields = {
-    'partner_id': {'string':'Customer','type': 'many2many', 'relation': 'res.partner','domain':"[('category_id','in',[1])]"},
+    'partner_id': {'string':'Customer','type': 'many2many', 'relation': 'ecommerce.partner'},
     'subject': {'string':'Subject', 'type':'char', 'size':64, 'required':True},
     'message': {'string':'Message', 'type':'text', 'required':True},
     'attachment':{'string' : 'Attachment','type':'many2one','relation':'ir.attachment'}
@@ -74,16 +74,17 @@ class wiz_send_email_eshop(wizard.interface):
          
             flag_success = True
             if partner:
-                res = pooler.get_pool(cr.dbname).get('res.partner').browse(cr,uid,partner)
+                res = pooler.get_pool(cr.dbname).get('ecommerce.partner').browse(cr,uid,partner)
                 for partner in res:
+                   
                     if partner.address and not partner.address[0].email:
                             not_sent.append(partner.name)
                     for adr in partner.address:
-                      
+                        
                         if adr.email:
                            
                             sent_dict[partner.name]=adr.email
-                            name = adr.name or partner.name
+                            name = adr.username or partner.name
                             to = '%s <%s>' % (name, adr.email)
                             mail_from= 'priteshmodi.eiffel@yahoo.co.in'
                            
@@ -95,7 +96,7 @@ class wiz_send_email_eshop(wizard.interface):
                                         attach_ids, ['datas_fname','datas'])
                             res_atc = map(lambda x: (x['datas_fname'],
                                     base64.decodestring(x['datas'])), res_atc)
-                            tools.email_send_attach(mail_from, [to], data['form']['subject'], data['form']['message'],attach=res_atc)
+                            tools.email_send(mail_from, [to], data['form']['subject'], data['form']['message'],attach=res_atc)
                     
             return 'finished';
 

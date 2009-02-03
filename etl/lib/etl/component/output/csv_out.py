@@ -23,11 +23,11 @@
 This is an ETL Component that use to write data to csv file.
 """
 
-from etl import etl
+from etl.component import component
 import csv
 import datetime
 
-class csv_out(etl.component):
+class csv_out(component.component):
     """
         This is an ETL Component that use to write data to csv file.
 
@@ -49,17 +49,15 @@ class csv_out(etl.component):
         self.fp=None
         self.writer=None   
 
-    def action_end(self,key,singal_data={},data={}):
-        try:
-            super(csv_out, self).action_end(key,singal_data,data)
-            if self.fp:     
-                 self.fp.close() 
-            if self.fileconnector:    
-                 self.fileconnector.close() 
-        except Exception,e:                                                                    
-            self.signal('error',{'error_msg': 'Error from end signal :'+str(e),'error_date':datetime.datetime.today()})
+    def action_end(self,key,singal_data={},data={}):        
+        super(csv_out, self).action_end(key,singal_data,data)
+        if self.fp:     
+             self.fp.close() 
+        if self.fileconnector:    
+             self.fileconnector.close()        
 
-    def process(self):        
+    def process(self):  
+        #TODO : proper handle exception. not use generic Exception class      
         datas = []        
         for channel,trans in self.input_get().items():
             for iterator in trans:
