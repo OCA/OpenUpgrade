@@ -70,5 +70,5 @@ class csv_out(component.component):
                             self.writer.writerow(dict(map(lambda x: (x,x), fieldnames)))
                         self.writer.writerow(d)
                         yield d, 'main'
-                    except Exception,e:  
-                        yield {'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()},'error'
+                    except IOError,e:  
+                        self.action_error(e)

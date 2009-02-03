@@ -39,8 +39,10 @@ def init_logger():
     logger = logging.getLogger()
     # create a format for log messages and dates
     formatter = logging.Formatter('[%(asctime)s] %(levelname)s:%(name)s:%(message)s', '%a %b %d %Y %H:%M:%S')
-    # Normal Handler on standard output
-    handler = logging.StreamHandler(sys.stdout) # TODO : to be specify output stream
+    
+    logf='/tmp/etl_log.out' 
+    handler = logging.handlers.TimedRotatingFileHandler(logf,'D',1,30)
+     
     # tell the handler to use this format
     handler.setFormatter(formatter)
     # add the handler to the root logger

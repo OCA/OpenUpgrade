@@ -91,16 +91,10 @@ class component(signal.signal,statistic.statistic):
          return True 
          
 
-    def action_error(self,key,signal_data={},data={}):   
-         error_value={
-              'error_from':str(key),
-              'error_msg':signal_data.get('error_msg'),
-              'error_date':signal_data.get('error_date')
-         }       
-         self.errors.append(error_value)     
+    def action_error(self,e):                
          self.logger.notifyChannel("component", logger.LOG_ERROR, 
-                     str(self)+' : FROM ' + error_value['error_from'] + ', '+error_value['error_msg'])
-         return True
+                     str(self)+' : '+str(e))
+         yield {'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()},'error'         
 
     def __init__(self,name='',transformer=None,*args, **argv):
         super(component, self).__init__(*args, **argv)    
@@ -120,7 +114,7 @@ class component(signal.signal,statistic.statistic):
         self.signal_connect(self,'no_input',self.action_no_input)
         self.signal_connect(self,'stop',self.action_stop)        
         self.signal_connect(self,'end',self.action_end)
-        self.signal_connect(self,'error',self.action_error)
+        
 
         
 
