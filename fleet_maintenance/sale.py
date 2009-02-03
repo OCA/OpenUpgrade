@@ -103,9 +103,6 @@ class sale_order_line(osv.osv):
     def fleet_id_change(self, cr, uid, ids, order_fleet_id=False, fleet_id=False, product_id=False, maintenance_start_date=False, maintenance_product_qty=False):
         result = {}
         
-        print "************"
-        print order_fleet_id
-        
         result['value'] = {}
         fleet_id = order_fleet_id or fleet_id
         
