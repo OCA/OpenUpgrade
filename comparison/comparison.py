@@ -212,16 +212,17 @@ class comparison_vote(osv.osv):
 
     def vote_create_async(self, cr, uid, args):
         # this will accept the votes in bunch and will calculate parent's score at one call.
-        for vote in args:
-            vote.update({'user_id':1}) # temporarily set to 1
-            self.create(cr,uid, vote)
-        factor_id = int(args[0]['factor_id'])
-        factor = self.pool.get('comparison.factor').browse(cr, uid, factor_id) 
-        item_obj = self.pool.get('comparison.item').browse(cr, uid, int(args[0]['item_id']))
-        # calculating parents until found top level
-        while (factor and  factor.parent_id):
-            self.compute_parents(cr, uid, factor, item_obj)
-            factor = factor.parent_id
+        if args:
+            for vote in args:
+                vote.update({'user_id':1}) # temporarily set to 1
+                self.create(cr,uid, vote)
+            factor_id = int(args[0]['factor_id'])
+            factor = self.pool.get('comparison.factor').browse(cr, uid, factor_id) 
+            item_obj = self.pool.get('comparison.item').browse(cr, uid, int(args[0]['item_id']))
+            # calculating parents until found top level
+            while (factor and  factor.parent_id):
+                self.compute_parents(cr, uid, factor, item_obj)
+                factor = factor.parent_id
         
         return True
 
