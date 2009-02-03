@@ -110,7 +110,7 @@ class comparison_factor(osv.osv):
 #        'result': fields.function(_result_compute, method=True, type='float', string="Result"),
         'result_ids': fields.one2many('comparison.factor.result', 'factor_id', "Results",),
         'ponderation': fields.float('Ponderation'),
-        'pond_computed': fields.function(_ponderation_compute, store=True, method=True, type='float', string="Computed Ponderation"),
+        'pond_computed': fields.function(_ponderation_compute, digits=(16,3), method=True, type='float', string="Computed Ponderation"),
         'state': fields.selection([('draft','Draft'),('open','Open'),('cancel','Cancel')], 'Status', required=True),
 #        'results': fields.one2many('comparison.factor.result', 'factor_id', 'Computed Results', readonly=1)
     }
@@ -210,7 +210,19 @@ class comparison_vote(osv.osv):
 #        'ponderation': lambda *a: 1.0,
 #    }
 
-    def create_async(self, *args, **kw):
+    def vote_create_async(self, cr, uid, args):
+        # this will accept the votes in bunch and will calculate parent's score at one call.
+        for vote in args:
+            vote.update({'user_id':1}) # temporarily set to 1
+            self.create(cr,uid, vote)
+        factor_id = int(args[0]['factor_id'])
+        factor = self.pool.get('comparison.factor').browse(cr, uid, factor_id) 
+        item_obj = self.pool.get('comparison.item').browse(cr, uid, int(args[0]['item_id']))
+        # calculating parents until found top level
+        while (factor and  factor.parent_id):
+            self.compute_parents(cr, uid, factor, item_obj)
+            factor = factor.parent_id
+        
         return True
 
     def compute_parents(self, cr, uid, factor, item):
@@ -221,11 +233,16 @@ class comparison_vote(osv.osv):
 
             factor_clause = (','.join([str(x.id) for x in factor.parent_id.child_ids]))
 
+            cr.execute('select sum(cf.ponderation) from comparison_factor as cf where cf.id in (%s)'%(factor_clause))
+            tot_pond = cr.fetchall()
+            
             cr.execute('select sum(cfr.result),sum(cf.ponderation) from comparison_factor_result as cfr,comparison_factor as cf where cfr.item_id=%s and cfr.votes > 0.0 and cfr.factor_id = cf.id and cf.id in (%s)'%(item.id,factor_clause))
             res1 = cr.fetchall()
             final_score = 0.0
+            
             if res1[0][1] > 0.0:
-                final_score  = (res1[0][0] / res1[0][1])
+                pond_div = res1[0][1] / tot_pond[0][0]
+                final_score  = (res1[0][0] * pond_div)
 #            for child in factor.parent_id.child_ids:
 #                scoring_child = obj_factor_result.search(cr, uid, [('factor_id','=',child.id),('item_id','=',item.id),('votes','>',0.0)])
 ##                
@@ -238,37 +255,28 @@ class comparison_vote(osv.osv):
             parent_result_id = obj_factor_result.search(cr, uid, [('factor_id','=',factor.parent_id.id),('item_id','=',item.id)])
             obj_parent = obj_factor_result.read(cr, uid, parent_result_id,['votes'])
             obj_factor_result.write(cr, uid, parent_result_id[0],{'votes':(obj_parent[0]['votes'] + 1),'result':final_score})
-            score = final_score
         
-        return score
+        return True
         
     def create(self, cr, uid, vals, context={}):
         result = super(comparison_vote, self).create(cr, uid, vals, context)
-        
         obj_factor = self.pool.get('comparison.factor')
         obj_factor = self.pool.get('comparison.item')
         obj_factor_result = self.pool.get('comparison.factor.result')
         obj_vote_values = self.pool.get('comparison.vote.values')
-        
+        vo = self.browse(cr, uid, result)
         pond_div = 5.0 # ponderation division factor
         
         for obj_vote in self.browse(cr, uid, [result]):
             
             result_id = obj_factor_result.search(cr, uid, [('factor_id','=',obj_vote.factor_id.id),('item_id','=',obj_vote.item_id.id)])
-            obj_result = obj_factor_result.browse(cr, uid, result_id[0])
+            obj_result = obj_factor_result.read(cr, uid, result_id, ['votes','result'])
             # finding previous score and votes
-            votes_old = obj_result.votes         
+            votes_old = obj_result[0]['votes']         
             score = (obj_vote.score_id.factor / float(pond_div) ) * 100
-            score = obj_result.result and ((score + obj_result.result) /2) or score                            
-            obj_factor_result.write(cr, uid, result_id, {'votes':(votes_old + 1),'result':score})
-            cr.commit()
-            # helping the relative parents to compute the scores
-            factor = obj_vote.factor_id
+            score = obj_result[0]['result'] and ((score + obj_result[0]['result']) /2) or score                            
+            e = obj_factor_result.write(cr, uid, result_id, {'votes':(votes_old + 1),'result':score})
 
-            while (factor and  factor.parent_id):
-                self.compute_parents(cr, uid, factor, obj_vote.item_id)
-                factor = factor.parent_id
-                
         return result
 #    
 #    def write(self, cr, uid, ids, vals, context=None):
@@ -354,7 +362,7 @@ class comparison_factor_result(osv.osv):
         'item_id': fields.many2one('comparison.item','Item', ondelete='set null', required=1, readonly=1),
 #        'result': fields.function(_compute_score, method=True, digits=(16,2), type="float", string='Goodness(%)', readonly=1,),
         'votes': fields.float('Votes', readonly=1),
-        'result': fields.float('Goodness(%)', readonly=1),
+        'result': fields.float('Goodness(%)', readonly=1, digits=(16,3)),
         # This field must be recomputed each time we add a vote
     }
     
