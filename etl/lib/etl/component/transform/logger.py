@@ -39,9 +39,10 @@ class logger(etl.component):
     def __init__(self, name, output=sys.stdout):        
         self.output = output
         self.is_end = 'main'
-        super(logger, self).__init__('(etl.component.process.logger) '+name)
+        super(logger, self).__init__('(etl.component.output.logger) '+name)
 
     def process(self):
+        #TODO : proper handle exception
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:                    
