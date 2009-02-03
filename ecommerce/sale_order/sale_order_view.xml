@@ -21,7 +21,7 @@
 							<field name="pricelist_id"/>
 							<field name="order_lines" widget="one2many_list" colspan="4" nolabel="1"/>
 					</page>
-					<page string="Others data">
+					<page string="Other data">
 						<field name="order_id" colspan="3"/>
 						<field name="note" colspan="3"/>
 					</page>
@@ -46,8 +46,8 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="sale_order_tree"/>
 	</record>
-	<menuitem id="menu_ecommerce_saleorder" name="Sales Orders" parent="ecommerce.menu_ecommerce"/>	
-	<menuitem name="Sale order" id="menu_sale_order_form" parent="menu_ecommerce_saleorder" action="action_sale_order_form"/>  
+	<menuitem id="menu_ecommerce_saleorder" name="Ecommerce Sales Orders" parent="ecommerce.menu_ecommerce"/>	
+	<menuitem name="Sales orders" id="menu_sale_order_form" parent="menu_ecommerce_saleorder" action="action_sale_order_form"/>  
 	
 	<!-- Sale Order Line -->	
 	  

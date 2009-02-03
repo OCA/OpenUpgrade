@@ -1,6 +1,11 @@
+#!/usr/bin/python
+
+import sys
+sys.path.append('..')
+
 import etl
 
-fileconnector=etl.connector.file_connector.file_connector('data/invoice.csv')
+fileconnector=etl.connector.file_connector.file_connector('input/invoice.csv')
 transformer_description= {'id':etl.transformer.LONG,'name':etl.transformer.STRING,'invoice_date':etl.transformer.DATE,'invoice_amount':etl.transformer.FLOAT,'is_paid':etl.transformer.BOOLEAN}    
 transformer=etl.transformer(transformer_description)
 csv_in1= etl.component.input.csv_in.csv_in('Invoice File',fileconnector=fileconnector,transformer=transformer)

@@ -31,9 +31,10 @@
 						<field name="company_id" select="1"/>
 						<field name="shop_id" select="1"></field>
 						<newline/>
-						<field name="payment_method">
+						<separator string="Payment Methods" colspan="4"/>
+						<field name="payment_method" colspan="4" nolabel='1'>
 							<tree  string="Payment">
-								<field name="name"/>
+								<field name="name" select="1"/>
 							</tree>
 						</field>
 					</page>
@@ -117,7 +118,7 @@
 			<field name="view_id" ref="ecommerce_product_category_tree_view"/>
 		</record>
 		<menuitem id="menu_ecommerce_products" name="Products" parent="menu_ecommerce"/>
-		<menuitem name="Products by Category" id="menu_ecommerce_product_category_action" parent="menu_ecommerce_products" action="ecommerce_product_category_action"/>
+		<menuitem name="Ecommerce Products by Category" id="menu_ecommerce_product_category_action" parent="menu_ecommerce_products" action="ecommerce_product_category_action"/>
 		
 	<!--Payment -->
 		
@@ -143,7 +144,7 @@
 				<field name="name" select="1" colspan="2"/>
 				<newline/> 
 				<notebook colspan="4">
-					<page string="Payment Address." attrs="{'invisible':[('name','!=','cheque'),('name','!=','banwt')]}" >
+					<page string="Payment Address" attrs="{'invisible':[('name','!=','cheque'),('name','!=','banwt')]}" >
 						<field name="chequepay_to" select="2" colspan="2" />
 						<field name="street" select="2" colspan="2"  />
 						<field name="street2" select="2" />
@@ -153,17 +154,17 @@
 						<field name="country_id" />
 					</page>
 					
-					<page string="Paypal Account Detail." attrs="{'invisible':[('name','!=','paypal')]}">
+					<page string="Paypal Account Detail" attrs="{'invisible':[('name','!=','paypal')]}">
 						<field name="biz_account" select="2" />
 						<newline/>
 						<field name="return_url" select="2" />
 						<field name="cancel_url" select="2" />
 						<field name="transaction_detail" colspan="4" nolabel="1" />
 					</page>
-					<page string="Credit Cards Accepted." attrs="{'invisible':[('name','!=','creditcard')]}">
+					<page string="Credit Cards Accepted" attrs="{'invisible':[('name','!=','creditcard')]}">
 						<field name="creditcards"/>
 					</page>
-					<page string="Bank Wired Transaction." attrs="{'invisible':[('name','!=','banwt')]}">
+					<page string="Bank Wired Transaction" attrs="{'invisible':[('name','!=','banwt')]}">
 						<field name="bank_name"/>
 						<field name="acc_number"/>
 						<field name="iban"/>
@@ -190,7 +191,7 @@
 				<field name="model">payment.method</field>
 				<field name="type">tree</field>
 				<field name="arch" type="xml">
-					<tree string="Payment Method">
+					<tree string="Payment Methods">
 						<field name="name" select="1"/>
 					</tree>
 				</field>
@@ -202,7 +203,7 @@
 			<field name="arch" type="xml">
 				<form string="Payment method">
 					<field name="name" select="1" colspan="2"/>
-					<field name="shortcut"/>
+					<field name="shortcut" select="1"/>
 				</form>
 			</field>
 		</record>
@@ -266,8 +267,8 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Credit Card List">
-					<field name="name"/>
-					<field name="code"/>
+					<field name="name" select="1"/>
+					<field name="code" select="1"/>
 				</tree>
 			</field>
 		</record>
@@ -277,8 +278,8 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Credit Card Types">
-					<field name="name"/>
-					<field name="code"/>
+					<field name="name" select="1"/>
+					<field name="code" select="1"/>
 				</form>
 			</field>
 		</record>

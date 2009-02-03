@@ -48,8 +48,8 @@ class ecommerce_search(osv.osv):
         _name = "ecommerce.search"
         _description = "search parameters"
         _columns = {
-                'name': fields.char('Search Parameter Name', size=56),
-                'code': fields.char('Search Parameter Code', size=28)
+                'name': fields.char('Search Parameter Name', size=56, required= True),
+                'code': fields.char('Search Parameter Code', size=28, required=True)
                     }
         
         def searchProduct_ids(self, cr, uid, search_code):

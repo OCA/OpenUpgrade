@@ -36,6 +36,7 @@ class file_connector(etl.connector):
         self.file=open(self.uri,mode,self.bufsize)    
         #self.file.encoding=self.encoding
         return self.file
+
     def close(self):
         super(file_connector, self).close()
         self.file.close()    

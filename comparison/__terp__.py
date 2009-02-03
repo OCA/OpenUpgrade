@@ -38,7 +38,7 @@
             'data/comparison.item.csv',
             'data/comparison.user.csv',
             'data/comparison.vote.values.csv',
-            'data/comparison.factor.result.csv',
+#            'data/comparison.factor.result.csv',
             'security/comparison_security.xml',
             'security/ir.model.access.csv',
             ],

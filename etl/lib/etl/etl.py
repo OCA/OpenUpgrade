@@ -199,13 +199,23 @@ class transformer(object):
     def __init__(self,description):
         self.description=description             
     
-    def transform(self,row):                
-        # TODO : TO check : data and description should have same keys.                    
-        for column in row:
-            transform_method=self._transform_method[self.description[column]]
-            row[column]=transform_method(row[column])        
-
-
+    def transform(self,data,chan):                
+        # TODO : TO check : data and description should have same keys.        
+        try:                    
+            for column in data:
+                if column in self.description:
+                    transform_method=self._transform_method[self.description[column]]
+                    data[column]=transform_method(data[column])    
+            return data,chan
+        except UnicodeEncodeError,e:
+            error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}
+            return error_d,'error'
+        except TypeError,e:
+            error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}
+            return error_d,'error'
+        except ValueError,e:
+            error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}
+            return error_d,'error'
 
 
 class component(signal,statistic):
@@ -511,7 +521,6 @@ def test1():
 if __name__ == '__main__':
     #TODO : make perfect testing method
     pass
-    #test1()
 
 
 

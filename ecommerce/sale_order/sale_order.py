@@ -160,7 +160,10 @@ class ecommerce_sale_order(osv.osv):
                 'pricelist_id': order.pricelist_id.id,
                 'order_line':order_lines,
                 'order_policy': 'manual'
-            })
+
+            })   
+            self.write(cr, uid, ids, {'order_id':order_id})   
+
             get_ids.extend(ids)
             get_ids.append(int(order_id))
 
@@ -199,14 +202,13 @@ class ecommerce_sale_order(osv.osv):
         create_wf = self.order_create_function(cr, uid, ids, context={})
         ecom_soid = create_wf[0]
         sale_orderid = create_wf[1]
-
         wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'order_confirm', cr)
         wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'manual_invoice', cr)
         cr.commit()
         get_data = self.pool.get('sale.order').browse(cr,uid,sale_orderid)
+        if(get_data.invoice_ids):              
 
-        if(get_data.invoice_ids):
-            invoice_id = get_data.invoice_ids[0].id
+           invoice_id = get_data.invoice_ids[0].id
         else:
             raise osv.except_osv('Error','Yet Not Create Invoice!');
 

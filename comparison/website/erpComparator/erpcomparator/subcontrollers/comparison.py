@@ -115,6 +115,7 @@ class Comparison(controllers.Controller):
             
             title['name'] = r['name']
             title['id'] = r['id']
+            title['code'] = r['code']
             titles += [title]
             
         for field in self.headers:
@@ -151,10 +152,17 @@ class Comparison(controllers.Controller):
         id = kw.get('id')
         error = ''
         p_name = 'No Parent'
-        
+        child_type = 'view'
         model = "comparison.factor"
+        
         proxy = rpc.RPCProxy(model)
-        res = proxy.read([id], ['name', 'parent_id'])
+        res = proxy.read([id], ['name', 'parent_id', 'child_ids'])
+        
+#        if res[0].get('child_ids'):
+#            child_id = res[0].get('child_ids')[0]
+#            child_type = proxy.read([child_id], ['type'])
+#            child_type = str(child_type[0].get('type'))
+            
         parent = res[0].get('name')
         p_id = id
         
@@ -199,7 +207,10 @@ class Comparison(controllers.Controller):
     def item_voting(self, **kw):
         
         id = kw.get('id')
-        item_id = kw.get('header')
+        item = kw.get('header')
+        
+        iproxy = rpc.RPCProxy('comparison.item')
+        item_id = iproxy.search([('name', '=', item)])[0]
         
         fmodel = "comparison.factor"
         proxy = rpc.RPCProxy(fmodel)
@@ -222,32 +233,40 @@ class Comparison(controllers.Controller):
         val = vproxy.search([])
         value_name = vproxy.read(val, ['name'])
         
-        return dict(item_id=item_id, child=child, factor_id=factor_id, value_name=value_name, id=id, error="")
+        return dict(item_id=item_id, item=item, child=child, factor_id=factor_id, value_name=value_name, id=id, error="")
     
     @expose('json')
     def update_item_voting(self, **kw):
         
-        id = kw.get('id')
-        note = kw.get('note', '')
+        vals = kw.get('_terp_values', '')
+        vals = vals.split('!')
+        vals = [v.split('|') for v in vals]
+        vals = [(x.split(','), y.split(','), z.split(','), w.split(',')) for x, y, z, w in vals]
+        vals = [dict(v) for v in vals]
         
-        item_id = kw.get('item_id')
-        iproxy = rpc.RPCProxy('comparison.item')
-        item = iproxy.search([('name', '=', item_id)])[0]
+        list = []
         
-        score_id = kw.get('score_id')
+        for v in vals:
+            items = {}
+            if v.get('score_id') != '0':
+                items['score_id'] = str(v.get('score_id'))
+                items['factor_id'] = str(v.get('id'))
+                items['item_id'] = str(v.get('item_id'))
+                items['note'] = str(v.get('note'))
+            
+                list += [items]
         vproxy = rpc.RPCProxy('comparison.vote.values')
-        score = vproxy.search([('name', '=', score_id)])[0]
         
-        val = vproxy.search([])
-        value_name = vproxy.read(val, ['name'])
-        
+        vid = vproxy.search([])
+        value_name = vproxy.read(vid, ['name'])
+                
         smodel = "comparison.vote"
         sproxy = rpc.RPCProxy(smodel)
         
         res = None
         
         try:
-            res = sproxy.create({'item_id': item, 'user_id': 1, 'factor_id': id, 'score_id': score, 'note': note})
+            res = sproxy.vote_create_async(list)
         except Exception, e:
             return dict(error=str(e))
         

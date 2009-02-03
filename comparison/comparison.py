@@ -49,10 +49,12 @@ class comparison_item(osv.osv):
         'user_id': fields.many2one('comparison.user','User'),
         'result_ids': fields.one2many('comparison.factor.result', 'item_id', "Results"),
         'state': fields.selection([('draft','Draft'),('open','Open')], 'Status', required=True),
+        'load_default' : fields.boolean('Load by Default',help="This option if checked, will let the Item display on Evaluation Matrix, by default."),
     }
     _defaults = {
         'state': lambda *args: 'draft',
 #        'ponderation': lambda *args: 1.0,
+        'load_default': lambda *args: 0,
     }
     _sql_constraints = [
         ('name', 'unique(name)', 'The name of the item must be unique!' )
@@ -61,7 +63,6 @@ class comparison_item(osv.osv):
 
     def create(self, cr, uid, vals, context={}):
         result = super(comparison_item, self).create(cr, uid, vals, context)
-        
         obj_factor = self.pool.get('comparison.factor')
         obj_factor_result = self.pool.get('comparison.factor.result')
         
@@ -190,6 +191,12 @@ class comparison_vote_values(osv.osv):
 comparison_vote_values()
 
 class comparison_vote(osv.osv):
+    
+#    def __init__(self, pool, cr=None):
+#        super(comparison_vote, self).__init__(pool,cr)
+#        self.score_new = 0.0
+#        self.pond_new = 0.0
+    
     _name = 'comparison.vote'
     _columns = {
         'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
@@ -203,29 +210,37 @@ class comparison_vote(osv.osv):
 #        'ponderation': lambda *a: 1.0,
 #    }
 
-    def compute_parents(self, cr, uid, factor, item, score):
-        
+    def create_async(self, *args, **kw):
+        return True
+
+    def compute_parents(self, cr, uid, factor, item):
+
         if factor.parent_id:
             obj_factor_result = self.pool.get('comparison.factor.result')
-            score_new = 0.0
-            pond_new = 0.0
-            final_score=0.0
-            for child in factor.parent_id.child_ids:
-                scoring_child = obj_factor_result.search(cr, uid, [('factor_id','=',child.id),('item_id','=',item.id),('votes','>',0.0)])
-                if scoring_child:
-                    obj_final_result = obj_factor_result.browse(cr,uid,scoring_child[0])
-                    score_new += obj_final_result.result
-                    pond_new += obj_final_result.factor_id.ponderation
-            final_score = pond_new and (score_new/pond_new) or score_new
-            
+            final_score = 0.0
+
+            factor_clause = (','.join([str(x.id) for x in factor.parent_id.child_ids]))
+
+            cr.execute('select sum(cfr.result),sum(cf.ponderation) from comparison_factor_result as cfr,comparison_factor as cf where cfr.item_id=%s and cfr.votes > 0.0 and cfr.factor_id = cf.id and cf.id in (%s)'%(item.id,factor_clause))
+            res1 = cr.fetchall()
+            final_score = 0.0
+            if res1[0][1] > 0.0:
+                final_score  = (res1[0][0] / res1[0][1])
+#            for child in factor.parent_id.child_ids:
+#                scoring_child = obj_factor_result.search(cr, uid, [('factor_id','=',child.id),('item_id','=',item.id),('votes','>',0.0)])
+##                
+#                if scoring_child:
+#                    obj_final_result = obj_factor_result.browse(cr,uid,scoring_child[0])
+#                    pond = obj_final_result.factor_id.ponderation
+#                    sc = obj_final_result.result
+#                    score_new += sc
+#                    pond_new += pond
             parent_result_id = obj_factor_result.search(cr, uid, [('factor_id','=',factor.parent_id.id),('item_id','=',item.id)])
-            obj_parent = obj_factor_result.browse(cr, uid, parent_result_id[0])
-                        
-            obj_factor_result.write(cr, uid, parent_result_id[0],{'votes':obj_parent.votes + 1,'result':final_score})
-#            
-            self.compute_parents(cr, uid, factor.parent_id, item , final_score)
+            obj_parent = obj_factor_result.read(cr, uid, parent_result_id,['votes'])
+            obj_factor_result.write(cr, uid, parent_result_id[0],{'votes':(obj_parent[0]['votes'] + 1),'result':final_score})
+            score = final_score
         
-        return True
+        return score
         
     def create(self, cr, uid, vals, context={}):
         result = super(comparison_vote, self).create(cr, uid, vals, context)
@@ -237,7 +252,6 @@ class comparison_vote(osv.osv):
         
         pond_div = 5.0 # ponderation division factor
         
-#        print "vote",result
         for obj_vote in self.browse(cr, uid, [result]):
             
             result_id = obj_factor_result.search(cr, uid, [('factor_id','=',obj_vote.factor_id.id),('item_id','=',obj_vote.item_id.id)])
@@ -246,13 +260,15 @@ class comparison_vote(osv.osv):
             votes_old = obj_result.votes         
             score = (obj_vote.score_id.factor / float(pond_div) ) * 100
             score = obj_result.result and ((score + obj_result.result) /2) or score                            
-            obj_factor_result.write(cr, uid, result_id, {'votes':votes_old + 1,'result':score})
-            
-#            print "parent computation called",score
+            obj_factor_result.write(cr, uid, result_id, {'votes':(votes_old + 1),'result':score})
+            cr.commit()
             # helping the relative parents to compute the scores
-            self.compute_parents(cr, uid, obj_vote.factor_id, obj_vote.item_id, score)
-            
-        
+            factor = obj_vote.factor_id
+
+            while (factor and  factor.parent_id):
+                self.compute_parents(cr, uid, factor, obj_vote.item_id)
+                factor = factor.parent_id
+                
         return result
 #    
 #    def write(self, cr, uid, ids, vals, context=None):
@@ -431,4 +447,4 @@ class comparison_ponderation_suggestion(osv.osv):
 
 comparison_ponderation_suggestion()
 
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
