@@ -103,6 +103,9 @@ class sale_order_line(osv.osv):
     def fleet_id_change(self, cr, uid, ids, order_fleet_id=False, fleet_id=False, product_id=False, maintenance_start_date=False, maintenance_product_qty=False):
         result = {}
         
+        print "************"
+        print order_fleet_id
+        
         result['value'] = {}
         fleet_id = order_fleet_id or fleet_id
         
@@ -129,11 +132,11 @@ class sale_order_line(osv.osv):
                     
         return result
     
-    
+    #TODO adapt signature to new fiscal_position parameter
     def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
             uom=False, qty_uos=0, uos=False, name='', partner_id=False,
             lang=False, update_tax=True, date_order=False, packaging=False,
-            is_maintenance=False, maintenance_product_qty=False, maintenance_month_qty=False):
+            is_maintenance=False, maintenance_product_qty=False, maintenance_month_qty=False,order_fleet_id=False):
 
         result = super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
             uom, qty_uos, uos, name, partner_id, lang, update_tax, date_order, packaging)
@@ -148,6 +151,11 @@ class sale_order_line(osv.osv):
                 result['value'].update({'product_uom_qty': maintenance_product_qty * maintenance_month_qty})
                 result['value'].update({'product_uos_qty': maintenance_product_qty * maintenance_month_qty}) # TODO * product_obj.uos_coeff
                 result['warning'] = {'title': 'Maintenance Quantity Warning', 'message': "For maintenance products, you should use instead the maintenance quantity from the other tab to compute this field"}
+
+
+        fleet_result = self.fleet_id_change(cr, uid, ids, order_fleet_id, False, product, False, maintenance_product_qty)
+        result['value'].update(fleet_result['value'])
+        
         return result
     
     
@@ -159,7 +167,8 @@ class sale_order_line(osv.osv):
             self.pool.get('account.invoice.line').write(cr, uid, [create_ids[i]], {'maintenance_start_date':line.maintenance_start_date, \
                                                                                    'maintenance_end_date':line.maintenance_end_date, \
                                                                                    'maintenance_product_qty':line.maintenance_product_qty, \
-                                                                                   })
+                                                                                   'account_analytic_id':line.product_id.maintenance_analytic_id.id \
+                                                                                   })#TODO, we could use product categories to retrieve the maintenance_analytic_id
             if line.fleet_id:
                 self.pool.get('account.invoice.line').write(cr, uid, [create_ids[i]], {'fleet_id':line.fleet_id.id})
             i = i + 1
@@ -194,12 +203,11 @@ class sale_order_line(osv.osv):
         now = DateTime.now()
         date = DateTime.DateTime(now.year, now.month, fixed_month_init_day, 0, 0, 0.0) + DateTime.RelativeDateTime(months=3)
         return date.strftime('%Y-%m-%d')
-    
+
     
     _defaults = {
         'maintenance_product_qty': lambda *a: 1,
-        #'maintenance_start_date': default_maintenance_start_date
-        }
+    }
 
 
 sale_order_line()

@@ -5,6 +5,7 @@ class product_product(osv.osv):
     
     _columns = {
         "is_maintenance" : fields.boolean('Is Maintenance?'),
+        "maintenance_analytic_id" : fields.many2one('account.analytic.account', 'Maintenance Analytic Account'),
     }
     
 product_product()
