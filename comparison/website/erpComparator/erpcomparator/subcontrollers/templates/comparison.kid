@@ -49,7 +49,7 @@
 			<table name="item_list" id="item_list">
 				<tr py:if="selected_items">
 					<td py:for="label in titles">
-						<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}</input>
+						<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}(${label['code']})</input>
 					</td>
 					<td>
 						<img src="/static/images/load.jpg" style="cursor: pointer" onclick="getRecords()"/>
@@ -57,7 +57,7 @@
 				</tr>
 				<tr py:if="not selected_items">
 					<td py:for="label in titles">
-						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
+						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}(${label['code']})</input>
 					</td>
 					<td>
 						<img src="/static/images/load.jpg" style="cursor: pointer" onclick="getRecords()"/>
