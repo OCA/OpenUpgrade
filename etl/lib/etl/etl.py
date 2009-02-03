@@ -24,8 +24,7 @@
     The module provides process of ETL.
 
 """
-# TODO : 
-#     - make separate py file for all Classes
+# TODO :      
 #     - make good documentation and test with doctest
 #     - Integrate profiler in the job code: cProfile
 #     - do a unittest system and implement unit tests on components file
