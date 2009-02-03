@@ -49,10 +49,12 @@ class comparison_item(osv.osv):
         'user_id': fields.many2one('comparison.user','User'),
         'result_ids': fields.one2many('comparison.factor.result', 'item_id', "Results"),
         'state': fields.selection([('draft','Draft'),('open','Open')], 'Status', required=True),
+        'load_default' : fields.boolean('Load by Default',help="This option if checked, will let the Item display on Evaluation Matrix, by default."),
     }
     _defaults = {
         'state': lambda *args: 'draft',
 #        'ponderation': lambda *args: 1.0,
+        'load_default': lambda *args: 0,
     }
     _sql_constraints = [
         ('name', 'unique(name)', 'The name of the item must be unique!' )
