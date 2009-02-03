@@ -62,6 +62,6 @@ The game is structured into two phases:
     'demo_xml': [],
     'installable': True,
     'active': False,
-    'certificate': '0114653692884405',
+    'certificate': '019274472924045',
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
