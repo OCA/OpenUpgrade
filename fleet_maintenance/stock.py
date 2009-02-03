@@ -1,7 +1,4 @@
 from osv import fields,osv
-import tools
-import ir
-import pooler
 from mx import DateTime
 
 #TODO make this configurable parameters:

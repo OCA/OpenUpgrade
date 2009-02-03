@@ -24,9 +24,9 @@
 ETL Connectors:
 * File Access
 """
-from etl import etl
+from etl.connector import connector
 
-class file_connector(etl.connector):
+class file_connector(connector.connector):
     def __init__(self,uri,bufsize=-1,encoding='utf-8'):
         super(file_connector, self).__init__(uri,bufsize,encoding)               
         self.file=False
