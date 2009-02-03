@@ -24,18 +24,18 @@ log4 = etl.component.transform.logger.logger(name="Log Update")
 fileconnector_output=etl.connector.file_connector.file_connector('output/test2_add.csv')
 csv_out1 = etl.component.output.csv_out.csv_out('Output',fileconnector_output)
 
-etl.etl.transition(in1, log_1)
-etl.etl.transition(in2, log_2)
+etl.transition.transition(in1, log_1)
+etl.transition.transition(in2, log_2)
 
-etl.etl.transition(in1, diff1, channel_destination='original')
-etl.etl.transition(in2, diff1, channel_destination='modified')
+etl.transition.transition(in1, diff1, channel_destination='original')
+etl.transition.transition(in2, diff1, channel_destination='modified')
 
-etl.etl.transition(diff1, log1, channel_source="same")
-etl.etl.transition(diff1, log3, channel_source="remove")
-etl.etl.transition(diff1, log2, channel_source="add")
-etl.etl.transition(diff1, csv_out1, channel_source="add")
-etl.etl.transition(diff1, log4, channel_source="update")
+etl.transition.transition(diff1, log1, channel_source="same")
+etl.transition.transition(diff1, log3, channel_source="remove")
+etl.transition.transition(diff1, log2, channel_source="add")
+etl.transition.transition(diff1, csv_out1, channel_source="add")
+etl.transition.transition(diff1, log4, channel_source="update")
 
-job = etl.etl.job('job2',[log_1,log_2,diff1,log1,log2,log3,log4,csv_out1])
+job = etl.job.job('job2',[log_1,log_2,diff1,log1,log2,log3,log4,csv_out1])
 job.run()
 

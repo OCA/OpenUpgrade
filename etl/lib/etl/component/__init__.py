@@ -1,4 +1,3 @@
-<<<<<<< TREE
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
@@ -28,42 +27,8 @@ ETL Components:
 * Transform Components
 * Control Components
 """
-import input
-import output
-import Transform
-import control
-=======
-# -*- encoding: utf-8 -*-
-##############################################################################
-#
-#    ETL system- Extract Transfer Load system
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
-"""
-ETL Components:
-* Input Components
-* Output Components
-* Transform Components
-* Control Components
-"""
-import input
-import output
-import transform
-import control
->>>>>>> MERGE-SOURCE
+from etl.component import component
+from etl.component import input
+from etl.component import output
+from etl.component import transform
+from etl.component import control

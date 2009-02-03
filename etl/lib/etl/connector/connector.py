@@ -20,33 +20,19 @@
 #
 ##############################################################################
 """
-   This is an ETL Component that use to display log detail in streamline.
+        Base class of ETL Connector.
 """
-
-from etl.component import component
-import sys
-class logger(component.component):
+class connector(object):
     """
-        This is an ETL Component that use to display log detail in streamline.
- 
-	    Type: Data Component
-		Computing Performance: Streamline
-		Input Flows: 0-x
-		* .* : the main data flow with input data
-		Output Flows: 0-y
-		* .* : return the main flow 
-    """    
-    def __init__(self, name, output=sys.stdout):        
-        self.output = output
-        self.is_end = 'main'
-        super(logger, self).__init__('(etl.component.output.logger) '+name)
-
-    def process(self):
-        #TODO : proper handle exception
-        for channel,trans in self.input_get().items():
-            for iterator in trans:
-                for d in iterator:                    
-                    self.output.write('\tLog '+self.name+str(d)+'\n')
-                    yield d, 'main'
-        super(logger, self).process()
-
+        Base class of ETL Connector.
+    """
+    def __init__(self,uri,bufsize=-1,encoding=False):        
+        self.uri=uri
+        self.bufsize=bufsize
+        self.encoding=encoding
+    def open(self,mode=False):
+        return True
+    def __str__(self):        
+        return self.uri
+    def close(self):
+        return True
