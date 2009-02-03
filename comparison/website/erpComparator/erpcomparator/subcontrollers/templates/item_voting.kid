@@ -23,7 +23,7 @@
 			</td>
 			<td>
 				<select style="width: 150px;" name="${ch['id']}_score_id" id="${ch['id']}_score_id">
-					<option name="none" value="0">None</option>				
+					<option name="none" value="0"> </option>				
                 	<option py:for="s in value_name" value="${s['id']}">${s['name']}</option>
                 </select>
             </td>

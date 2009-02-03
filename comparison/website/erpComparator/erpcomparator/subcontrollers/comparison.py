@@ -188,6 +188,8 @@ class Comparison(controllers.Controller, TinyResource):
     @expose(template="erpcomparator.subcontrollers.templates.new_factor")
     def add_factor(self, **kw):
         
+        user_info = cherrypy.session.get('login_info', '')
+        
         id = kw.get('id')
         error = ''
         p_name = 'No Parent'
@@ -208,7 +210,10 @@ class Comparison(controllers.Controller, TinyResource):
         count = range(0, 21)
         count = [c/float(10) for c in count]
         
-        return dict(error=error, count=count, parent_id=p_id, parent_name=parent)
+        if not user_info:
+            return dict(error="You are not logged in...", count=count, parent_id=p_id, parent_name=parent)
+        else:
+            return dict(error=error, count=count, parent_id=p_id, parent_name=parent)
     
     @expose('json')
     def voting(self, **kw):
@@ -218,6 +223,11 @@ class Comparison(controllers.Controller, TinyResource):
         user_id = kw.get('user')
         
         value = None
+        
+        user_info = cherrypy.session.get('login_info', '')
+        
+        if not user_info:
+            return dict(value=value, error="You are not logged in...")
         
         model = "comparison.factor"
         proxy = rpc.RPCProxy(model)
@@ -235,10 +245,6 @@ class Comparison(controllers.Controller, TinyResource):
             if pond > 0.0:
                 pond = pond - 0.1
         
-        user_info = cherrypy.session.get('login_info', '')
-        if not user_info:
-            return dict(value=value, error="You are not logged in...")
-        
         try:
             value = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond})
         except Exception, e:
@@ -248,6 +254,8 @@ class Comparison(controllers.Controller, TinyResource):
         
     @expose(template="erpcomparator.subcontrollers.templates.item_voting")
     def item_voting(self, **kw):
+        
+        user_info = cherrypy.session.get('login_info', '')
         
         id = kw.get('id')
         item = kw.get('header')
@@ -276,10 +284,18 @@ class Comparison(controllers.Controller, TinyResource):
         val = vproxy.search([])
         value_name = vproxy.read(val, ['name'])
         
-        return dict(item_id=item_id, item=item, child=child, factor_id=factor_id, value_name=value_name, id=id, error="")
+        if not user_info:
+            return dict(item_id=item_id, item=item, child=child, factor_id=factor_id, value_name=value_name, id=id, error="You are not logged in...")
+        else:
+            return dict(item_id=item_id, item=item, child=child, factor_id=factor_id, value_name=value_name, id=id, error="")
     
     @expose('json')
     def update_item_voting(self, **kw):
+        
+        user_info = cherrypy.session.get('login_info', '')
+        
+        if not user_info:
+            return dict(error="You are not logged in...")
         
         vals = kw.get('_terp_values', '')
         vals = vals.split('!')
@@ -288,8 +304,6 @@ class Comparison(controllers.Controller, TinyResource):
         vals = [dict(v) for v in vals]
         
         list = []
-        
-        user_info = cherrypy.session.get('login_info', '')
         
         user_proxy = rpc.RPCProxy('comparison.user')
         user_id = user_proxy.search([('name', '=', user_info)])
@@ -315,10 +329,6 @@ class Comparison(controllers.Controller, TinyResource):
         
         res = None
         
-        if not user_info:
-            return dict(res=res, item_id=item_id, value_name=value_name, id=id, 
-                        show_header_footer=False, error="You are not logged in...")
-        
         try:
             res = sproxy.vote_create_async(list)
         except Exception, e:
@@ -336,8 +346,12 @@ class Comparison(controllers.Controller, TinyResource):
             ids = [int(id) for id in ids.split(',')]
             
         res = None
+        user_info = cherrypy.session.get('login_info', '')
         
         if parent_id:
+            
+            if not user_info:
+                return dict(error="You are not logged in...")
             
             new_fact_proxy = rpc.RPCProxy(model)
             try:
