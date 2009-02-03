@@ -57,7 +57,7 @@ class sort(component.component):
 if __name__ == '__main__':
     from etl_test import etl_test
     test=etl_test.etl_component_test(sort('sort','name'))
-    test.check_input([{'id':1, 'name':'OpenERP'},{'id':2,'name':'Fabien'}])
-    test.check_output([{'id':1, 'name':'Fabien'},{'id':2,'name':'OpenERP'}])
+    test.check_input({'main':[{'id':1, 'name':'OpenERP'},{'id':2,'name':'Fabien'}]})
+    test.check_output([{'id':2, 'name':'OpenERP'},{'id':1,'name':'Fabien'}],'main')
     res=test.output()
     
