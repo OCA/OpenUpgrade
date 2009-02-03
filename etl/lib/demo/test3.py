@@ -1,3 +1,8 @@
+#!/usr/bin/python
+
+import sys
+sys.path.append('..')
+
 import etl
 
 fileconnector=etl.connector.file_connector.file_connector('data/invoice.csv')

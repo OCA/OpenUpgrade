@@ -1,4 +1,8 @@
-import etl
+#!/usr/bin/python
+
+import sys
+sys.path.append('..')
+
 from etl import etl
 from etl import component
 
@@ -16,7 +20,7 @@ log3 = component.logger(name="Log Remove")
 log4 = component.logger(name="Log Update")
 
 
-csv_out1 = component.csv_out('data/add.csv')
+csv_out1 = component.csv_out('output/test2_add.csv')
 
 etl.transition(in1, log_1)
 etl.transition(in2, log_2)
