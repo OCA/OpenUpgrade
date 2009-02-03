@@ -37,6 +37,6 @@
     'update_xml': ['base_module_quality_wizard.xml', 'security/ir.model.access.csv'],
     'installable': True,
     'active': False,
-    'certificate': '75119475677',
+    'certificate': '0116149077582717',
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
