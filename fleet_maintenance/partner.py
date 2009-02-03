@@ -1,7 +1,4 @@
 from osv import fields,osv
-import tools
-import ir
-import pooler
 
 class res_partner(osv.osv):
     _inherit = "res.partner"

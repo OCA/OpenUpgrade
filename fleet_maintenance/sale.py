@@ -1,8 +1,5 @@
 from osv import fields, osv
-import ir
-import pooler
-from mx.DateTime import RelativeDateTime, DateTime, localtime, RelativeDateTimeDiff
-import time
+from mx.DateTime import RelativeDateTime, DateTime
 from mx import DateTime
 
 
@@ -61,15 +58,19 @@ class sale_order_line(osv.osv):
             en_date_check = end + DateTime.RelativeDateTime(days=fixed_days_before_month_end + 1)
             
             if end.month == en_date_check.month or en_date_check.day != 1:
-                warning_messages += "- End date should should ideally end %s days before the end of the month\n" % fixed_days_before_month_end
-                #TODO correct end day eventually
+                warning_messages += "- End date should should end %s days before the end of the month! It has been reset to the correct value.\n" % fixed_days_before_month_end
+                day = end.days_in_month - fixed_days_before_month_end
+                end = DateTime.DateTime(end.year, end.month, day, 0, 0, 0.0)
+                result['value'].update({'maintenance_end_date': end.strftime('%Y-%m-%d')})
 
         
         if maintenance_start_date and maintenance_end_date:
             if end < start:
-                result['value'].update({'maintenance_end_date': start.strftime('%Y-%m-%d')}) #TODO not good with end days!
                 warning_messages += "- End date should be AFTER Start date!\n"
-                #return result
+                day = start.days_in_month - fixed_days_before_month_end #then we set the minimal end date 
+                end = DateTime.DateTime(start.year, start.month, day, 0, 0, 0.0)
+                result['value'].update({'maintenance_end_date': end.strftime('%Y-%m-%d')})
+                
 
             maintenance_month_qty = self._get_maintenance_month_qty_from_start_end(cr, uid, start, end)
             result['value'].update({'maintenance_month_qty': maintenance_month_qty})
