@@ -115,6 +115,7 @@ class Comparison(controllers.Controller):
             
             title['name'] = r['name']
             title['id'] = r['id']
+            title['code'] = r['code']
             titles += [title]
             
         for field in self.headers:
