@@ -54,6 +54,7 @@
                     <field name="code" select="1"/>
                     <field name="version"/>
                     <field name="user_id" select="1"/>
+                    <field name="load_default" />
                     <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
                     <newline/>
                     <field name="note" colspan="4"/>
@@ -71,6 +72,8 @@
                 <tree string="Comaparison Items">
                     <field name="name"/>
                     <field name="version"/>
+                    <field name="code"/>
+                    <field name="load_default"/>
                 </tree>
             </field>
         </record>
@@ -189,7 +192,7 @@
                     <field name="factor_id" select="1"/>
                     <field name="item_id" select="1"/>
                     <field name="result" select="2"/>
-                    <field name="votes"/>
+                    <field name="votes" select="2"/>
                 </tree>
             </field>
         </record>
