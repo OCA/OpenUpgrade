@@ -7,8 +7,9 @@ import urllib
 
 from erpcomparator import rpc
 from erpcomparator import common
+from erpcomparator.tinyres import TinyResource
 
-class Graph(controllers.Controller):
+class Graph(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.graph")
     def index(self, **kw):

@@ -26,21 +26,13 @@
 		</tr>
 		<tr>
 			<td class="label">
-				Ponderation :
-			</td>
-			<td>
-				<input type="text" style="width: 290px; background: #CCCCCC" id="ponderation" name="ponderation" value="1.0" disabled='true'/>
-			</td>
-		</tr>
-		<tr>
-			<td class="label">
 				Type :
 			</td>
 			<td>
 				<select style="width: 290px;" name="type" id="type">
 					<option id="type" selected="true" value=""></option>
-                    <option id="view" value="view">View</option>
-                    <option id="criterion" value="criterion">Criterion</option>
+                    <option id="view" value="view">Catogery</option>
+                    <option id="criterion" value="criterion" selected="true">Criterion</option>
                 </select>
 			</td>
 		</tr>

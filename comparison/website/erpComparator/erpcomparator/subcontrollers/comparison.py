@@ -5,22 +5,43 @@ from turbojson import jsonify
 from turbogears import expose
 from turbogears import controllers
 from turbogears import url as tg_url
+from turbogears import config
 import cherrypy
 
 from erpcomparator import rpc
 from erpcomparator import tools
 from erpcomparator import common
+from erpcomparator.tinyres import TinyResource
 
-class Comparison(controllers.Controller):
+class Comparison(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.comparison")
     def index(self, **kw):
         
-        userinfo = cherrypy.session.get('user_info', '')
-        
         selected_items = []
-        selected_items = kw.get('ids')
         
+        user_name = kw.get('user_name')
+        password = kw.get('password')
+        
+        user_info = cherrypy.session.get('login_info', '')
+        
+        if not user_info:
+            if user_name and password:
+                model = 'comparison.user'
+        
+                proxy = rpc.RPCProxy(model)
+                uids = proxy.search([])
+                ures = proxy.read(uids, ['name', 'password'])
+                
+                for r in ures:
+                    if r['name'] == user_name and r['password'] == password:
+                        login_info = {}
+                        login_info['name'] = user_name
+                        login_info['password'] = password
+                        
+                        cherrypy.session['login_info'] = user_name
+        
+        selected_items = kw.get('ids')
         selected_items = selected_items and eval(str(selected_items))
         
         model = 'comparison.factor'
@@ -146,6 +167,24 @@ class Comparison(controllers.Controller):
         
         return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
     
+    def check_data(self):
+        criterions = None
+        feedbacks = None
+        
+        model = 'comparison.factor'
+        proxy = rpc.RPCProxy(model)
+        criterions = proxy.search([])
+        
+        criterions = len(criterions)
+                
+        vproxy = rpc.RPCProxy('comparison.vote')
+        feedbacks = vproxy.search([])
+        feedbacks = len(feedbacks)
+        
+        user_info = cherrypy.session.get('login_info', '')
+        
+        return criterions, feedbacks, user_info
+    
     @expose(template="erpcomparator.subcontrollers.templates.new_factor")
     def add_factor(self, **kw):
         
@@ -195,7 +234,11 @@ class Comparison(controllers.Controller):
         else:
             if pond > 0.0:
                 pond = pond - 0.1
-                
+        
+        user_info = cherrypy.session.get('login_info', '')
+        if not user_info:
+            return dict(value=value, error="You are not logged in...")
+        
         try:
             value = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond})
         except Exception, e:
@@ -246,15 +289,22 @@ class Comparison(controllers.Controller):
         
         list = []
         
+        user_info = cherrypy.session.get('login_info', '')
+        
+        user_proxy = rpc.RPCProxy('comparison.user')
+        user_id = user_proxy.search([('name', '=', user_info)])
+        
         for v in vals:
             items = {}
-            if v.get('score_id') != '0':
-                items['score_id'] = str(v.get('score_id'))
-                items['factor_id'] = str(v.get('id'))
-                items['item_id'] = str(v.get('item_id'))
+            if v.get('score_id') != '0' and user_id:
+                items['score_id'] = v.get('score_id')
+                items['factor_id'] = v.get('id')
+                items['item_id'] = v.get('item_id')
                 items['note'] = str(v.get('note'))
+                items['user_id'] = user_id[0]
             
                 list += [items]
+                
         vproxy = rpc.RPCProxy('comparison.vote.values')
         
         vid = vproxy.search([])
@@ -264,6 +314,10 @@ class Comparison(controllers.Controller):
         sproxy = rpc.RPCProxy(smodel)
         
         res = None
+        
+        if not user_info:
+            return dict(res=res, item_id=item_id, value_name=value_name, id=id, 
+                        show_header_footer=False, error="You are not logged in...")
         
         try:
             res = sproxy.vote_create_async(list)
