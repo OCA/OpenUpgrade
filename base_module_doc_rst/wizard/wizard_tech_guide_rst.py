@@ -58,7 +58,8 @@ class RstDoc(object):
             'menu_list': self._handle_list_items(module.menus_by_module),
             'view_list': self._handle_list_items(module.views_by_module),
             'depends': module.dependencies_id,
-            'certified': bool(module.certificate) and 'yes' or 'no',
+            'quality_certified': bool(module.certificate) and 'yes' or 'no',
+            'official_module': str(module.certificate)[:2] == '00' and 'yes' or 'no',
             'author': module.author,
             'quality_certified_label': self._quality_certified_label(module),
         }
@@ -67,7 +68,17 @@ class RstDoc(object):
 
     def _quality_certified_label(self, module):
         """"""
-        return bool(module.certificate) and '(Quality Certified)' or ''
+        label = ""
+        certificate = module.certificate
+        if certificate and len(certificate) > 1:
+            if certificate[:2] == '00':
+                # addons
+                label = "(Official, Quality Certified)"
+            elif certificate[:2] == '01':
+                # extra addons
+                label = "(Quality Certified)"
+
+        return label
 
     def _handle_list_items(self, list_item_as_string):
         list_item_as_string = list_item_as_string.strip()
@@ -106,7 +117,8 @@ class RstDoc(object):
             ":Author: %(author)s",
             ":Directory: %(name)s",
             ":Web: %(website)s",
-            ":Is certified: %(certified)s",
+            ":Official module: %(official_module)s",
+            ":Quality certified: %(quality_certified)s",
             "",
             "Description",
             "-----------",
