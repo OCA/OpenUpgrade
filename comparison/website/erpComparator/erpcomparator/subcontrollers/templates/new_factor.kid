@@ -1,6 +1,7 @@
 
 <div id="box" class="new_box" xmlns:py="http://purl.org/kid/ns#">
 	<input type="hidden" id="parent_id" name="parent_id" value="${parent_id}"/>
+	<input type="hidden" id="ponderation" name="ponderation" value="1.0"/>
 	
 	<div class="header">
 		<b>Propose New Factor</b>
@@ -28,9 +29,7 @@
 				Ponderation :
 			</td>
 			<td>
-				<select style="width: 290px;" name="ponderation" id="ponderation">
-                    <option py:for="f in count" value="${f}">${f}</option>
-                </select>
+				<input type="text" style="width: 290px; background: #CCCCCC" id="ponderation" name="ponderation" value="1.0" disabled='true'/>
 			</td>
 		</tr>
 		<tr>
