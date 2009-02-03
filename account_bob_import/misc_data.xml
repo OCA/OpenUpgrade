@@ -42,27 +42,27 @@
             <field name="close_method">balance</field>
         </record>
         <record id="account_type_liability" model="account.account.type">
-            <field name="name">Liability</field> 
+            <field name="name">Liability</field>
             <field name="code">liability</field>
             <field name="close_method">balance</field>
         </record>
         <record id="account_type_cash_equity" model="account.account.type">
-            <field name="name">Equity</field> 
+            <field name="name">Equity</field>
             <field name="code">equity</field>
             <field name="close_method">balance</field>
         </record>
         <record id="account_type_income" model="account.account.type">
-            <field name="name">Income</field> 
+            <field name="name">Income</field>
             <field name="code">income</field>
             <field name="close_method">unreconciled</field>
         </record>
         <record id="account_type_expense" model="account.account.type">
-            <field name="name">Expense</field> 
+            <field name="name">Expense</field>
             <field name="code">expense</field>
             <field name="close_method">unreconciled</field>
         </record>
         <record id="account_type_cash_moves" model="account.account.type">
-            <field name="name">Cash</field> 
+            <field name="name">Cash</field>
             <field name="code">cash</field>
             <field name="close_method">balance</field>
         </record>
@@ -95,6 +95,7 @@
 	<!-- function missing -->
 	<record id="res_partner_function_bob" model="res.partner.function">
 		<field eval="&quot;Unknown Function&quot;" name="name"/>
+		<field eval="&quot;UF&quot;" name="code"/>
 	</record>
 
 </data>
