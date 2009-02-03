@@ -23,9 +23,9 @@
 This is an ETL Component that use to find diff.
 """
 
-from etl import etl
+from etl.component import component
 
-class diff(etl.component):
+class diff(component.component):
     """
         This is an ETL Component that use to find diff.
         Takes 2 flows in input and detect a difference between these two flows

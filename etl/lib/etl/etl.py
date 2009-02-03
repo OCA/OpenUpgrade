@@ -151,7 +151,7 @@ class signal(object):
                 else:
                     i+=1
         
-
+    
 class transformer(object):
     """
         transfer data into different type.
@@ -226,8 +226,8 @@ class component(signal,statistic):
     is_end = False    
     _start_input={}
     _start_output={} 
-
-
+    
+        
     def action_start(self,key,signal_data={},data={}):
          trans=signal_data.get('trans',None)     
          stat_date=signal_data.get('start_date',None)             
@@ -310,6 +310,8 @@ class component(signal,statistic):
         self.signal_connect(self,'stop',self.action_stop)        
         self.signal_connect(self,'end',self.action_end)
         self.signal_connect(self,'error',self.action_error)
+
+        
 
     def __str__(self):
         return '<Component : '+self.name+'>'

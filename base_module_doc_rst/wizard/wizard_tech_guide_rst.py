@@ -59,9 +59,14 @@ class RstDoc(object):
             'view_list': self._handle_list_items(module.views_by_module),
             'depends': module.dependencies_id,
             'certified': bool(module.certificate) and 'yes' or 'no',
+            'author': module.author,
+            'quality_certified_label': self._quality_certified_label(module),
         }
         self.objects = objects
         self.module = module
+
+    def _quality_certified_label(self, module):
+        return bool(module.certificate) and '(Quality Certified)' or ''
 
     def _handle_list_items(self, list_item_as_string):
         list_item_as_string = list_item_as_string.strip()
@@ -84,19 +89,27 @@ class RstDoc(object):
         sl = [
             "",
             ".. module:: %(name)s",
-            "    :synopsis: %(shortdesc)s",
+            "    :synopsis: %(shortdesc)s %(quality_certified_label)s",
             "    :noindex:",
+            #"    :platform: %(quality_certified_label)s",
             ".. ",
             "",
             ".. raw:: html",
             "",
             """    <link rel="stylesheet" href="../_static/hide_objects_in_sidebar.css" type="text/css" />""",
             "",
+            "    <style>",
+            "      div.body p#module-%(name)s {",
+            "        display: none;",
+            "      }",
+            "    </style>",
+            "",
             "%(title)s",
             "%(title_underline)s",
             ":Module: %(name)s",
             ":Name: %(shortdesc)s",
             ":Version: %(latest_version)s",
+            ":Author: %(author)s",
             ":Directory: %(name)s",
             ":Web: %(website)s",
             ":Is certified: %(certified)s",
@@ -271,6 +284,7 @@ class wizard_tech_guide_rst(wizard.interface):
                 module_index.append(index_dict)
 
                 objects = self._get_objects(cr, uid, module)
+                module.test_views = self._get_views(cr, uid, module.id, context=context)
                 rstdoc = RstDoc(module, objects)
                 out = rstdoc.write()
 
@@ -308,6 +322,45 @@ class wizard_tech_guide_rst(wizard.interface):
             'rst_file': base64.encodestring(out),
             'name': 'modules_technical_guide_rst.tgz'
         }
+
+    def _get_views(self, cr, uid, module_id, context={}):
+        pool = pooler.get_pool(cr.dbname)
+        module_module_obj = pool.get('ir.module.module')
+        res = {}
+        model_data_obj = pool.get('ir.model.data')
+        view_obj = pool.get('ir.ui.view')
+        report_obj = pool.get('ir.actions.report.xml')
+        menu_obj = pool.get('ir.ui.menu')
+        mlist = module_module_obj.browse(cr, uid, [module_id], context=context)
+        mnames = {}
+        for m in mlist:
+            mnames[m.name] = m.id
+            res[m.id] = {
+                'menus_by_module': [],
+                'reports_by_module': [],
+                'views_by_module':  []
+            }
+        view_id = model_data_obj.search(cr, uid, [('module', 'in', mnames.keys()),
+            ('model', 'in', ('ir.ui.view', 'ir.actions.report.xml', 'ir.ui.menu'))])
+        for data_id in model_data_obj.browse(cr, uid, view_id, context):
+            # We use try except, because views or menus may not exist
+            try:
+                key = data_id['model']
+                if key=='ir.ui.view':
+                    v = view_obj.browse(cr,uid,data_id.res_id)
+                    v_dict = {
+                        'name': v.name,
+                        'inherit': v.inherit_id,
+                        'type': v.type}
+                    res[mnames[data_id.module]]['views_by_module'].append(v_dict)
+                elif key=='ir.actions.report.xml':
+                    res[mnames[data_id.module]]['reports_by_module'].append(report_obj.browse(cr,uid,data_id.res_id).name)
+                elif key=='ir.ui.menu':
+                    res[mnames[data_id.module]]['menus_by_module'].append(menu_obj.browse(cr,uid,data_id.res_id).complete_name)
+            except KeyError, e:
+                pass
+        #import pydb; pydb.debugger()
+        return res
 
     def _create_index(self, module_index):
         sl = ["",

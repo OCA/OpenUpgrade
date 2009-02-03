@@ -50,65 +50,44 @@ class csv_in(etl.component):
         self.fp=None
         self.reader=None
 
-    def action_start(self,key,singal_data={},data={}):
-        try:
-            super(csv_in, self).action_start(key,singal_data,data)                
-            self.fp=self.fileconnector.open('r')                
-            self.reader=csv.DictReader(self.fp,**self.csv_params)                            
-        except Exception,e:                                                                    
-            self.signal('error',{'error_msg': 'Error from start signal :'+str(e),'error_date':datetime.datetime.today()})
+    def action_start(self,key,singal_data={},data={}):        
+        super(csv_in, self).action_start(key,singal_data,data)                
+        self.fp=self.fileconnector.open('r')                
+        self.reader=csv.DictReader(self.fp,**self.csv_params)                                    
 
-    def action_end(self,key,singal_data={},data={}):
-        try:
-            super(csv_in, self).action_end(key,singal_data,data)
-            if self.fp:     
-                 self.fp.close() 
-            if self.fileconnector:    
-                 self.fileconnector.close() 
-        except Exception,e:                                                                    
-            self.signal('error',{'error_msg': 'Error from end signal :'+str(e),'error_date':datetime.datetime.today()})
+    def action_end(self,key,singal_data={},data={}):        
+        super(csv_in, self).action_end(key,singal_data,data)
+        if self.fp:     
+             self.fp.close() 
+        if self.fileconnector:    
+             self.fileconnector.close()         
 
     def process(self):        
-        if not self.fileconnector:
-            error_d={'error_msg':'Error : Connector should be specified.','error_date':datetime.datetime.today()}
-            self.signal('error',error_d)
-            yield error_d,'error'
-            raise StopIteration
-        if not self.reader:
-            error_d={'error_msg':'Error : Reader should be specified.','error_date':datetime.datetime.today()}
-            self.signal('error',error_d)
-            yield error_d,'error'
-            raise StopIteration
         try:
             for data in self.reader:
                 try:
+                    chan='main'
                     for d in data.values():
                         d=unicode(d)                
                     self.row_count+=1
                     if self.row_limit and self.row_count > self.row_limit:
-                         raise StopIteration
-                    try:
-                        if self.transformer:
-                            self.transformer.transform(data)
-                    except Exception,e:   
-                        error_d ={'error_msg':'Error from transform process :'+str(e),'error_date':datetime.datetime.today()}
-                        self.signal('error',error_d)                                                               
-                        yield error_d,'error'
-                        raise StopIteration
-                    yield data,'main'                                     
+                         raise StopIteration                                        
+                    if self.transformer:
+                        data,chan=self.transformer.transform(data,chan)
+                    yield data,chan                                     
                                
-                except Exception,e:    
-                    error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}
-                    self.signal('error',error_d)                                                                            
-                    yield error_d,'error'
-                    raise StopIteration
+                except UnicodeEncodeError,e:    
+                    error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}                                                                                                
+                    yield error_d,'error'                    
 
             # TODO : call statistical iterator
-        except Exception,e:
-            error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}
-            self.signal('error',error_d)                                                                                  
+        except TypeError,e:
+            error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}                                                                                             
             yield error_d,'error'
-            raise StopIteration
+        except IOError,e:
+            error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}                                                                                             
+            yield error_d,'error'
+            
                
         
 

@@ -23,9 +23,9 @@
    This is an ETL Component that use to display log detail in streamline.
 """
 
-from etl import etl
+from etl.component import component
 import sys
-class logger(etl.component):
+class logger(component.component):
     """
         This is an ETL Component that use to display log detail in streamline.
  

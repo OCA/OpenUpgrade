@@ -23,11 +23,11 @@
 This is an ETL Component that use to write data to csv file.
 """
 
-from etl import etl
+from etl.component import component
 import csv
 import datetime
 
-class csv_out(etl.component):
+class csv_out(component.component):
     """
         This is an ETL Component that use to write data to csv file.
 
@@ -70,5 +70,5 @@ class csv_out(etl.component):
                             self.writer.writerow(dict(map(lambda x: (x,x), fieldnames)))
                         self.writer.writerow(d)
                         yield d, 'main'
-                    except Exception,e:  
-                        yield {'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()},'error'
+                    except IOError,e:  
+                        self.action_error(e)

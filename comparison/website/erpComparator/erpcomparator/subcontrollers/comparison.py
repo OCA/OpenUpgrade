@@ -152,10 +152,17 @@ class Comparison(controllers.Controller):
         id = kw.get('id')
         error = ''
         p_name = 'No Parent'
-        
+        child_type = 'view'
         model = "comparison.factor"
+        
         proxy = rpc.RPCProxy(model)
-        res = proxy.read([id], ['name', 'parent_id'])
+        res = proxy.read([id], ['name', 'parent_id', 'child_ids'])
+        
+#        if res[0].get('child_ids'):
+#            child_id = res[0].get('child_ids')[0]
+#            child_type = proxy.read([child_id], ['type'])
+#            child_type = str(child_type[0].get('type'))
+            
         parent = res[0].get('name')
         p_id = id
         
@@ -248,7 +255,6 @@ class Comparison(controllers.Controller):
                 items['note'] = str(v.get('note'))
             
                 list += [items]
-        print "=================", list
         vproxy = rpc.RPCProxy('comparison.vote.values')
         
         vid = vproxy.search([])

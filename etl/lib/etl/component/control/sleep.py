@@ -22,10 +22,10 @@
 """
    This is ETL Component to put job process in sleep.
 """
-from etl import etl
+from etl.component import component
 import time
 
-class sleep(etl.component):
+class sleep(component.component):
     """
        put job process in sleep.
     """

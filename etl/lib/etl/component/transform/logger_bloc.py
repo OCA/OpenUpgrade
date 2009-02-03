@@ -23,9 +23,9 @@
 This is an ETL Component that use to display log detail in end of process.
 """
 
-from etl import etl
+from etl.component import component
 import sys
-class logger_bloc(etl.component):
+class logger_bloc(component.component):
     """
         This is an ETL Component that use to display log detail in end of process.
        
