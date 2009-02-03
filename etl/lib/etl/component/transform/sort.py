@@ -29,12 +29,12 @@ class sort(component.component):
     """
         This is an ETL Component that use to perform sort operation.
  
-		Type: Data Component
-		Computing Performance: Semi-Streamline
-		Input Flows: 1
-		* .* : the main data flow with input data
-		Output Flows: 0-x
-		* .* : return the main flow with sort result
+        Type: Data Component
+        Computing Performance: Semi-Streamline
+        Input Flows: 1
+        * .* : the main data flow with input data
+        Output Flows: 0-x
+        * .* : return the main flow with sort result
     """    
 
     def __init__(self, name,fieldname):
@@ -52,3 +52,12 @@ class sort(component.component):
         datas.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
         for d in datas:
             yield d, 'main'
+
+
+if __name__ == '__main__':
+    from etl_test import etl_test
+    test=etl_test.etl_component_test(sort('sort','name'))
+    test.check_input([{'id':1, 'name':'OpenERP'},{'id':2,'name':'Fabien'}])
+    test.check_output([{'id':1, 'name':'Fabien'},{'id':2,'name':'OpenERP'}])
+    res=test.output()
+    
