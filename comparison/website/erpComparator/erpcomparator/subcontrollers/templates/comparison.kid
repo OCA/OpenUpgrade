@@ -28,8 +28,8 @@
 		    	</a>
 		    </div>
 		    <div style="float:left;width:176;">
-		    	<a href="#" onclick="window.location.href='/document'" onmouseover="document.document_image.src='/static/images/document_hover.jpg'" onmouseout="document.document_image.src='/static/images/document.jpg'">
-		    		<img src="/static/images/document.jpg" name="document_image" alt="" border="0" width="176" height="46"/>
+		    	<a href="#" onclick="window.location.href='/news'" onmouseover="document.news_image.src='/static/images/news_hover.jpg'" onmouseout="document.news_image.src='/static/images/news.jpg'">
+		    		<img src="/static/images/news.jpg" name="news_image" alt="" border="0" width="176" height="46"/>
 		    	</a>
 		    </div>
 		    <div style="float:left;width:173;">

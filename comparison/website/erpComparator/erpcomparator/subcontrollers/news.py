@@ -5,9 +5,9 @@ import cherrypy
 from erpcomparator import rpc
 from erpcomparator import common
 
-class Document(controllers.Controller):
+class News(controllers.Controller):
     
-    @expose(template="erpcomparator.subcontrollers.templates.document")
+    @expose(template="erpcomparator.subcontrollers.templates.news")
     def index(self):
         userinfo = cherrypy.session.get('user_info', '')
         
