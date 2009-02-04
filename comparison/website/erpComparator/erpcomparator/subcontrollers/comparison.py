@@ -181,7 +181,7 @@ class Comparison(controllers.Controller, TinyResource):
         feedbacks = vproxy.search([])
         feedbacks = len(feedbacks)
         
-        user_info = cherrypy.session.get('login_info', '')
+        user_info = cherrypy.session.get('login_info', None)
         
         return criterions, feedbacks, user_info
     
@@ -198,11 +198,6 @@ class Comparison(controllers.Controller, TinyResource):
         
         proxy = rpc.RPCProxy(model)
         res = proxy.read([id], ['name', 'parent_id', 'child_ids'])
-        
-#        if res[0].get('child_ids'):
-#            child_id = res[0].get('child_ids')[0]
-#            child_type = proxy.read([child_id], ['type'])
-#            child_type = str(child_type[0].get('type'))
             
         parent = res[0].get('name')
         p_id = id
@@ -337,7 +332,7 @@ class Comparison(controllers.Controller, TinyResource):
         except Exception, e:
             return dict(error=str(e))
         
-        return dict(res=res, item_id=item_id, value_name=value_name, id=id, show_header_footer=False, error="")
+        return dict(res=res, show_header_footer=False, error="")
     
     @expose('json')
     def data(self, model, ids=[], fields=[], field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc",
