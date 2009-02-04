@@ -3,7 +3,7 @@ function radarData() {
 	ids = getSelectedItems_graph();
 	ids = map(function(r){return r.id;}, ids);
 	ids = '[' + ids.join(', ') + ']';
-	load_radar(ids);
+	return ids
 }
 
 function getSelectedItems_graph() {
@@ -43,6 +43,31 @@ function do_login() {
 	
 	login_list = '/comparison?user_name='+user_name+'&password='+password;
 	window.location.href = login_list;
+}
+
+function register() {
+	params = {}
+	var req = Ajax.post('/login', params);
+	req.addCallback(function(xmlHttp) {
+		
+		var d = window.mbox.content;
+		d.innerHTML = xmlHttp.responseText;
+		
+		window.mbox.width = 400;
+        window.mbox.height = 250;
+        
+        window.mbox.onUpdate = add_new_user;
+		window.mbox.show();
+	});
+}
+
+function add_new_user() {
+	
+	user_name = $('name_user').value;
+	password = $('passwd').value;
+	email = $('email').value;
+	
+	window.location.href = '/login/do_login?user_name='+user_name+'&password='+password+'&email='+email;
 }
 
 function change_vote(node, pond_val) {
@@ -196,7 +221,9 @@ function item_vote() {
 		treenode = treenode.parentNode;
 	}
 }
-function load_radar(ids) {
+function load_radar() {
+	
+	ids = radarData();
 	
 	factor_name= $('factors').value;
 	factor_name = factor_name.replace(/&/g, "@");

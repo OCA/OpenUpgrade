@@ -191,6 +191,10 @@ comparison_vote_values()
 
 class comparison_vote(osv.osv):
     
+    def __init__(self, pool, cr=None):
+        super(comparison_vote, self).__init__(pool,cr)
+        self.reload_ids = []
+        
     _name = 'comparison.vote'
     _columns = {
         'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
@@ -203,6 +207,7 @@ class comparison_vote(osv.osv):
 
     def vote_create_async(self, cr, uid, args):
         # this will accept the votes in bunch and will calculate parent's score at one call.
+        self.reload_ids = []
         if args:
             for vote in args:
                 self.create(cr,uid, vote)
@@ -213,8 +218,7 @@ class comparison_vote(osv.osv):
             while (factor and  factor.parent_id):
                 self.compute_parents(cr, uid, factor, item_obj)
                 factor = factor.parent_id
-        
-        return True
+        return self.reload_ids
 
     def compute_parents(self, cr, uid, factor, item):
 
@@ -248,7 +252,7 @@ class comparison_vote(osv.osv):
             parent_result_id = obj_factor_result.search(cr, uid, [('factor_id','=',factor.parent_id.id),('item_id','=',item.id)])
             obj_parent = obj_factor_result.read(cr, uid, parent_result_id,['votes'])
             obj_factor_result.write(cr, uid, parent_result_id[0],{'votes':(obj_parent[0]['votes'] + 1),'result':final_score})
-        
+            self.reload_ids.append(parent_result_id[0])
         return True
         
     def create(self, cr, uid, vals, context={}):
@@ -268,8 +272,8 @@ class comparison_vote(osv.osv):
             votes_old = obj_result[0]['votes']         
             score = (obj_vote.score_id.factor / float(pond_div) ) * 100
             score = obj_result[0]['result'] and ((score + obj_result[0]['result']) /2) or score                            
-            e = obj_factor_result.write(cr, uid, result_id, {'votes':(votes_old + 1),'result':score})
-
+            obj_factor_result.write(cr, uid, result_id, {'votes':(votes_old + 1),'result':score})
+            self.reload_ids.append(result_id[0])
         return result
 #    
 #    def write(self, cr, uid, ids, vals, context=None):

@@ -31,15 +31,17 @@
 	</table><hr/>
 	<table align="center">
 		<tr>
-			<td class="label">
-				Note for ${item} :
+			<td style="font-weight: bold;">
+				Provide a justification or details about your suggestion :
 			</td>
-			<td>
-				<textarea name="note" id="note" rows="6" cols="25"/>
+		</tr>
+		<tr>
+			<td width="430px">
+				<textarea align="center" style="width: 100%;" name="note" id="note" rows="8"/>
 			</td>
 		</tr>
 	</table>
-		
+	<br/>
 	<div py:if="error" align="right">
 		<div class="box2 message">
 			${error}

@@ -41,7 +41,7 @@ class Comparison(controllers.Controller, TinyResource):
                         
                         cherrypy.session['login_info'] = user_name
         
-        selected_items = kw.get('ids')
+        selected_items = kw.get('ids', [])
         selected_items = selected_items and eval(str(selected_items))
         
         model = 'comparison.factor'
@@ -106,7 +106,7 @@ class Comparison(controllers.Controller, TinyResource):
         proxy_item = rpc.RPCProxy(item_model)
         item_ids = proxy_item.search([])
         
-        res = proxy_item.read(item_ids, ['name', 'code'])
+        res = proxy_item.read(item_ids, ['name', 'code', 'load_default'])
         
         titles = []
         
@@ -122,10 +122,13 @@ class Comparison(controllers.Controller, TinyResource):
                         item['string'] = r['name']
                         item['name'] = r['name']
                         item['code'] = r['code']
+                        
                         title['sel'] = True
+                        title['load'] = r['load_default']
+                        
                         self.headers += [item]
             
-            else:
+            elif r['load_default']:
                 item = {}
                 item['id'] = r['id']
                 item['type'] = 'url'
@@ -137,6 +140,7 @@ class Comparison(controllers.Controller, TinyResource):
             title['name'] = r['name']
             title['id'] = r['id']
             title['code'] = r['code']
+            title['load'] = r['load_default']
             titles += [title]
             
         for field in self.headers:
@@ -181,7 +185,7 @@ class Comparison(controllers.Controller, TinyResource):
         feedbacks = vproxy.search([])
         feedbacks = len(feedbacks)
         
-        user_info = cherrypy.session.get('login_info', '')
+        user_info = cherrypy.session.get('login_info', None)
         
         return criterions, feedbacks, user_info
     
@@ -198,11 +202,6 @@ class Comparison(controllers.Controller, TinyResource):
         
         proxy = rpc.RPCProxy(model)
         res = proxy.read([id], ['name', 'parent_id', 'child_ids'])
-        
-#        if res[0].get('child_ids'):
-#            child_id = res[0].get('child_ids')[0]
-#            child_type = proxy.read([child_id], ['type'])
-#            child_type = str(child_type[0].get('type'))
             
         parent = res[0].get('name')
         p_id = id
@@ -220,7 +219,6 @@ class Comparison(controllers.Controller, TinyResource):
         
         id = kw.get('id')
         pond_val = kw.get('pond_val')
-        user_id = kw.get('user')
         
         value = None
         
@@ -235,7 +233,7 @@ class Comparison(controllers.Controller, TinyResource):
         name = res[0]['name']
         pond = res[0]['ponderation']
         
-        smodel = "comparison.ponderation.suggestion"
+        smodel = "comparison.ponderation.suggestion" 
         sproxy = rpc.RPCProxy(smodel)
         
         if pond_val == 'incr':
@@ -245,8 +243,12 @@ class Comparison(controllers.Controller, TinyResource):
             if pond > 0.0:
                 pond = pond - 0.1
         
+        user_proxy = rpc.RPCProxy('comparison.user')
+        user_id = user_proxy.search([('name', '=', user_info)])
+        user_id = user_id[0]
+        
         try:
-            value = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond})
+            value = sproxy.create({'factor_id': id, 'user_id': user_id, 'ponderation': pond})
         except Exception, e:
             return dict(value=value, error=str(e))
         
@@ -334,7 +336,7 @@ class Comparison(controllers.Controller, TinyResource):
         except Exception, e:
             return dict(error=str(e))
         
-        return dict(res=res, item_id=item_id, value_name=value_name, id=id, show_header_footer=False, error="")
+        return dict(res=res, show_header_footer=False, error="")
     
     @expose('json')
     def data(self, model, ids=[], fields=[], field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc",
@@ -353,9 +355,12 @@ class Comparison(controllers.Controller, TinyResource):
             if not user_info:
                 return dict(error="You are not logged in...")
             
+            user_proxy = rpc.RPCProxy('comparison.user')
+            user_id = user_proxy.search([('name', '=', user_info)])
+            
             new_fact_proxy = rpc.RPCProxy(model)
             try:
-                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': 1, 
+                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': user_id[0], 
                                          'ponderation': ponderation, 'type': ftype})
                 ids = [res]
             
