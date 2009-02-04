@@ -106,7 +106,7 @@ class Comparison(controllers.Controller, TinyResource):
         proxy_item = rpc.RPCProxy(item_model)
         item_ids = proxy_item.search([])
         
-        res = proxy_item.read(item_ids, ['name', 'code'])
+        res = proxy_item.read(item_ids, ['name', 'code', 'load_default'])
         
         titles = []
         
@@ -122,7 +122,10 @@ class Comparison(controllers.Controller, TinyResource):
                         item['string'] = r['name']
                         item['name'] = r['name']
                         item['code'] = r['code']
+                        
                         title['sel'] = True
+                        title['load'] = r['load_default']
+                        
                         self.headers += [item]
             
             else:
@@ -137,8 +140,9 @@ class Comparison(controllers.Controller, TinyResource):
             title['name'] = r['name']
             title['id'] = r['id']
             title['code'] = r['code']
+            title['load'] = r['load_default']
             titles += [title]
-            
+        print "============== title...", titles
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 fields += [field['name']]
