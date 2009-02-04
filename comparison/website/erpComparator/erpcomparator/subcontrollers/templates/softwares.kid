@@ -54,20 +54,16 @@
 		<table id="checkboxtext" py:for="r in res">
 			<tr>
 				<td>
-					<b><u>
-						${r['name']} :
-					</u></b>
-					<span py:if="r['note']" onclick="view_detail('${r['name']}')" style="cursor: pointer;">
-						&nbsp;&nbsp;&nbsp;<i>...Description</i>
-					</span>
-					<span py:if="not r['note']">
-						<i>...No Description</i>
-					</span>					
+					<b style="color: #021677;">
+						${r['name']} : 
+					</b>		
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<div id="${r['name']}" style="display: none; width: 1000px;">${r['note'] or ''}</div>
+					<div id="${r['name']}" style="overflow: hidden; overflow-x: auto; width: 800px;">
+						<pre style="white-space: default;">${r['note'] or ''}</pre>
+					</div>
 				</td>
 			</tr>
 		</table>
