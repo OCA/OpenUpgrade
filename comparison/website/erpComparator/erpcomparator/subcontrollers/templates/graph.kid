@@ -4,6 +4,12 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Comparison</title>
+    
+    <script type="text/javascript">
+    	MochiKit.DOM.addLoadEvent(function(evt){
+    		load_radar();
+    	});
+	</script>
 </head>
 <body>
 	<div id="bodybackground">
@@ -49,7 +55,12 @@
 					Analysis axis :
 				</td>
 				<td>
-					<select style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors">
+					<select py:if="view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors">
+						<option>Summary</option>
+			        	<option py:for="s in parents" py:content="s['name']">${s['name']}</option>
+			        	<option py:for="c in all_child" selected="${tg.selector(view_name==c['name'])}">${c['name']}</option>
+			        </select>
+			        <select py:if="not view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors">
 						<option>Summary</option>
 			        	<option py:for="s in parents" py:content="s['name']">${s['name']}</option>
 			        	<option py:for="c in all_child" py:content="c['name']">${c['name']}</option>
@@ -64,7 +75,7 @@
 						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
 					</td>
 					<td>&nbsp;
-						<button type="button" class="button" onclick="radarData()">Show Graph</button>
+						<button type="button" class="button" onclick="load_radar()">Show Graph</button>
 					</td>
 				</tr>
 			</table><br/>

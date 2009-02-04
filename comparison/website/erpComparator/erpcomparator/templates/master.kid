@@ -4,7 +4,6 @@
 
 <head py:match="item.tag=='{http://www.w3.org/1999/xhtml}head'" py:attrs="item.items()">
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-    <meta py:replace="item[:]"/>
     
     <script type="text/javascript" src="/static/javascript/MochiKit/MochiKit.js"></script>
     <script type="text/javascript" src="/static/javascript/master.js"></script>
@@ -18,7 +17,7 @@
     <link href="/static/css/treegrid.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/new_style.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/modalbox.css" rel="stylesheet" type="text/css"/>
-
+	<meta py:replace="item[:]"/>
     <!--[if lt IE 7]>
         <link href="/static/css/iepngfix.css" rel="stylesheet" type="text/css"/>
     <![endif]-->

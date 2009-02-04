@@ -3,7 +3,7 @@ function radarData() {
 	ids = getSelectedItems_graph();
 	ids = map(function(r){return r.id;}, ids);
 	ids = '[' + ids.join(', ') + ']';
-	load_radar(ids);
+	return ids
 }
 
 function getSelectedItems_graph() {
@@ -221,7 +221,9 @@ function item_vote() {
 		treenode = treenode.parentNode;
 	}
 }
-function load_radar(ids) {
+function load_radar() {
+	
+	ids = radarData();
 	
 	factor_name= $('factors').value;
 	factor_name = factor_name.replace(/&/g, "@");
