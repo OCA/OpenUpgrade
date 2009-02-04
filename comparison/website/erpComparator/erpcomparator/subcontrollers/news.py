@@ -10,5 +10,4 @@ class News(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.news")
     def index(self):
-        
-        return dict(mess = " under progress...")
+        return dict()

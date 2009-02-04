@@ -234,6 +234,16 @@ function load_radar() {
 						"9.0.0", "expressInstall.swf", {'data-file': list});
 }
 
+function load_planet() {
+	params = {}
+	var req = Ajax.post('/static/planet/planet_comparison/me-meta/output/index.html', params);
+	
+	req.addCallback(function(xmlHttp){
+		div = $('load_planet');
+		div.innerHTML = xmlHttp.responseText;
+	});
+}
+
 function on_button_click(evt, node) {
 	if (evt.src().name == 'show_graph') {
 		view_graph(node.name);
