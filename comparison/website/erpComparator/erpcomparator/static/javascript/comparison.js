@@ -67,7 +67,12 @@ function add_new_user() {
 	password = $('passwd').value;
 	email = $('email').value;
 	
-	window.location.href = '/login/do_login?user_name='+user_name+'&password='+password+'&email='+email;
+	if (!user_name || !password || !email) {
+		return alert("Fields marked with * are mandatory...");
+	}
+	else {
+		window.location.href = '/login/do_login?user_name='+user_name+'&password='+password+'&email='+email;
+	}
 }
 
 function change_vote(node, pond_val) {
@@ -123,22 +128,27 @@ function add_new_factor() {
 	params['ids'] = [];
 	params['fields'] = [];
 	
-	var req = Ajax.JSON.post('/comparison/data', params);
-    req.addCallback(function(obj){
-    	if(obj.records) {
-    		window.mbox.hide();
-    		try {
-    			var node = comparison_tree.createNode(obj.records[0]);
-        		treenode.appendChild(node);
-    		}
-        	catch(e) {
-        		alert(e);
-        	}
-    	}
-    	if (obj.error) {
-            return alert(obj.error);
-        }
-    });
+	if (!params['factor_id']) {
+		return alert("Fields marked with * are mandatory...");
+	}
+	else {
+		var req = Ajax.JSON.post('/comparison/data', params);
+	    req.addCallback(function(obj){
+	    	if(obj.records) {
+	    		window.mbox.hide();
+	    		try {
+	    			var node = comparison_tree.createNode(obj.records[0]);
+	        		treenode.appendChild(node);
+	    		}
+	        	catch(e) {
+	        		alert(e);
+	        	}
+	    	}
+	    	if (obj.error) {
+	            return alert(obj.error);
+	        }
+	    });
+	}
 }
 
 var onUpdate = function(){

@@ -14,6 +14,7 @@
 			</td>
 			<td>
 				<input type="text" style="width: 290px;" id="factor_id" name="factor_id"/>
+				<b style="color: red;">*</b>
 			</td>					
 		</tr>
 		<tr>
@@ -36,7 +37,10 @@
                 </select>
 			</td>
 		</tr>
-	</table>
+	</table><br/>
+	<div style="text-align: right;">
+		<i style="color: red;">* Indicates required fields.</i>
+	</div>
 	
 	<div py:if="error" align="right">
 		<div class="box2 message">
