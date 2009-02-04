@@ -41,7 +41,7 @@ class Comparison(controllers.Controller, TinyResource):
                         
                         cherrypy.session['login_info'] = user_name
         
-        selected_items = kw.get('ids')
+        selected_items = kw.get('ids', [])
         selected_items = selected_items and eval(str(selected_items))
         
         model = 'comparison.factor'
@@ -220,7 +220,6 @@ class Comparison(controllers.Controller, TinyResource):
         
         id = kw.get('id')
         pond_val = kw.get('pond_val')
-        user_id = kw.get('user')
         
         value = None
         
@@ -235,7 +234,7 @@ class Comparison(controllers.Controller, TinyResource):
         name = res[0]['name']
         pond = res[0]['ponderation']
         
-        smodel = "comparison.ponderation.suggestion"
+        smodel = "comparison.ponderation.suggestion" 
         sproxy = rpc.RPCProxy(smodel)
         
         if pond_val == 'incr':
@@ -245,8 +244,12 @@ class Comparison(controllers.Controller, TinyResource):
             if pond > 0.0:
                 pond = pond - 0.1
         
+        user_proxy = rpc.RPCProxy('comparison.user')
+        user_id = user_proxy.search([('name', '=', user_info)])
+        user_id = user_id[0]
+        
         try:
-            value = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond})
+            value = sproxy.create({'factor_id': id, 'user_id': user_id, 'ponderation': pond})
         except Exception, e:
             return dict(value=value, error=str(e))
         
@@ -353,9 +356,12 @@ class Comparison(controllers.Controller, TinyResource):
             if not user_info:
                 return dict(error="You are not logged in...")
             
+            user_proxy = rpc.RPCProxy('comparison.user')
+            user_id = user_proxy.search([('name', '=', user_info)])
+            
             new_fact_proxy = rpc.RPCProxy(model)
             try:
-                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': 1, 
+                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': user_id[0], 
                                          'ponderation': ponderation, 'type': ftype})
                 ids = [res]
             

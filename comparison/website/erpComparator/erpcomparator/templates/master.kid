@@ -74,6 +74,7 @@ except:
 					    			Login : <input type="text" name="user_name" id="user_name" class="textInput"/> 
 					    			Password : <input type="password" name="password" id="password" class="textInput"/>
 					      		<button type="button" class="button" onclick="do_login()" name="continue">Continue</button>
+					      		<button type="button" class="button" onclick="register()" name="registration">Registration</button>
 					    	</div>
 						</div>
 						<div  id="loginbg" py:if="user_info">

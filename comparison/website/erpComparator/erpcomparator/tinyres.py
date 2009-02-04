@@ -43,15 +43,18 @@ import cherrypy
 import rpc
 import pkg_resources
 
-@expose(template="erpcomparator.subcontrollers.templates.comparison")
+@expose()
 def _login(target, dblist=None, db= None, user=None, action=None, message=None, origArgs={}):
     """Login page, exposed without any controller, will be used by _check_method wrapper
     """
     url = rpc.session.get_url()
     url = str(url[:-1])
+    
+    raise redirect('/comparison')
 
-    return dict(target=target, url=url, dblist=dblist, user=user, password=None, 
-            db=db, action=action, message=message, origArgs=origArgs)
+#    return dict(target=target, url=url, dblist=dblist, user=user, password=None, 
+#            db=db, action=action, message=message, origArgs=origArgs, selected_items=[], 
+#            titles=[], headers=[], url_params=[])
 
 def secured(fn):
     """A Decorator to make a TinyResource controller method secured.
