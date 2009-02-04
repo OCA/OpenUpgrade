@@ -188,6 +188,7 @@ function open_item_vote(id, header) {
 function item_vote() {
 	
 	var treenode = comparison_tree.selection_last;
+	var childnodes = treenode.childNodes; 
 		
 	window.mbox.hide();
 	var final_params = []
@@ -211,13 +212,15 @@ function item_vote() {
 		else {
 			val += values;
 		}
-		
 	});
 	
 	var req = Ajax.JSON.post('/comparison/update_item_voting?_terp_values='+val);
     req.addCallback(function(obj){
     	if(obj.res) {
-    		forEach(treenode.childNodes, function(node){
+    		forEach(childnodes, function(node){
+				log("name.."+node.name);
+			});
+    		forEach(childnodes, function(node){
     			node.update();
     		});
 		}

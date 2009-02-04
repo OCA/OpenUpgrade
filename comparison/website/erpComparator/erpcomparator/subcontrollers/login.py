@@ -29,7 +29,10 @@ class Login(controllers.Controller):
         except Exception, e:
             return dict(error=str(e))
         
-        raise redirect('/comparison?error=%s' % (error))
+        if res:
+            raise redirect('/comparison?user_name=%s&password=%s' % (name, password))
+        else:
+            raise redirect('/comparison?error=%s' % (error))
         
     @expose()
     def logout(self):
