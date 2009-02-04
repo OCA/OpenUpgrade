@@ -236,7 +236,7 @@ function load_radar() {
 
 function load_planet() {
 	params = {}
-	var req = Ajax.post('/static/planet/planet_comparison/me-meta/output/index.html', params);
+	var req = Ajax.post('/static/planet_comparison/me-meta/output/index.html', params);
 	
 	req.addCallback(function(xmlHttp){
 		div = $('load_planet');
