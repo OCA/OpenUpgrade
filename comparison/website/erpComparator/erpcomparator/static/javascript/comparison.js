@@ -218,21 +218,18 @@ function item_vote() {
     req.addCallback(function(obj){
     	if(obj.res) {
     		forEach(childnodes, function(node){
-				log("name.."+node.name);
-			});
-    		forEach(childnodes, function(node){
     			node.update();
     		});
+    		while (treenode && treenode.parentNode) {
+				treenode.update();
+				treenode = treenode.parentNode;
+			}
 		}
     	if (obj.error) {
             return alert(obj.error);
         }
     });
 	
-	while (treenode && treenode.parentNode) {
-		treenode.update();
-		treenode = treenode.parentNode;
-	}
 }
 function load_radar() {
 	
