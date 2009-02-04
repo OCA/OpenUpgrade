@@ -128,7 +128,7 @@ class Comparison(controllers.Controller, TinyResource):
                         
                         self.headers += [item]
             
-            else:
+            elif r['load_default']:
                 item = {}
                 item['id'] = r['id']
                 item['type'] = 'url'
@@ -142,7 +142,7 @@ class Comparison(controllers.Controller, TinyResource):
             title['code'] = r['code']
             title['load'] = r['load_default']
             titles += [title]
-        print "============== title...", titles
+            
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 fields += [field['name']]
