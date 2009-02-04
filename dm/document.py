@@ -165,7 +165,7 @@ dm_document_template()
 class dm_plugins_value(osv.osv):
     _name = "dm.plugins.value"
     _columns = {
-        'customer_id' : fields.many2one('dm.customer', 'Customer Name'),
+        'customer_id' : fields.many2one('res.partner', 'Customer Name', ondelete="cascade"),
         'plugin_id' : fields.many2one('dm.ddf.plugin', 'Plugin'),
         'value' : fields.char('Value', size=64),
         'date' : fields.date('Date'),

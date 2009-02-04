@@ -65,10 +65,9 @@ class dm_order(osv.osv):
 dm_order()
 
 
-class dm_customer(osv.osv):
-    _name = "dm.customer"
+class res_partner(osv.osv):
     _inherit = "res.partner"
-    _table = "res_partner"
+#    _table = "res_partner"
 #    _rec_name = "firstname"
     _columns = {
 #        'code' : fields.char('Code',size=64),
@@ -76,7 +75,7 @@ class dm_customer(osv.osv):
         'language_ids' : fields.many2many('res.lang','dm_customer_langs','lang_id','customer_id','Other Languages'),
         'prospect_media_ids' : fields.many2many('dm.media','dm_customer_prospect_media','prospect_media_id','customer_id','Prospect for Media'),
         'client_media_ids' : fields.many2many('dm.media','dm_customer_client_media','client_media_id','customer_id','Client for Media'),
-        'title' : fields.char('Title',size=32),
+#        'title' : fields.char('Title',size=32),
 #        'firstname' : fields.char('First Name', size=64),
         'lastname' : fields.char('Last Name', size=64),
 #        'add1' : fields.char('Address1', size=64),
@@ -94,7 +93,7 @@ class dm_customer(osv.osv):
         'decoy_for_campaign': fields.boolean('Used for Campaigns', help='Define if this decoy address can be used with campaigns'),
         'decoy_for_renting': fields.boolean('Used for File Renting', help='Define if this decoy address can be used with used with customers files renting'),
     }
-dm_customer()
+res_partner()
 
 
 class dm_customer_order(osv.osv):
@@ -102,7 +101,7 @@ class dm_customer_order(osv.osv):
     _inherit = "sale.order"
     _table = "sale_order"
     _columns ={
-        'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete='cascade'),
+        'customer_id' : fields.many2one('res.partner', 'Customer', ondelete='cascade'),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
 #        'note' : fields.text('Notes'),
@@ -337,9 +336,9 @@ class dm_customer_text_criteria(osv.osv):
 #               ('ttype','like','char')],
 #               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id.model','=','dm.customer'),
+               domain=[('model_id','=','Partner'),
                ('ttype','like','char')],
-               context={'model':'dm.customer'}),
+               context={'model':'res.partner'}),
         'operator' : fields.selection(TEXT_OPERATORS, 'Operator', size=32),
         'value' : fields.char('Value', size=128),
     }
@@ -360,9 +359,9 @@ class dm_customer_numeric_criteria(osv.osv):
 #               '!',('model_id','like','dm.plugins.value')],
 #               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id.model','=','dm.customer'),
+               domain=[('model_id','=','Partner'),
                (('ttype','like','integer') or ('ttype','like','float'))],
-               context={'model':'dm.customer'}),
+               context={'model':'res.partner'}),
         'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
         'value' : fields.float('Value', digits=(16,2)),
     }
@@ -382,9 +381,9 @@ class dm_customer_boolean_criteria(osv.osv):
 #               ('ttype','like','boolean')],
 #               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id.model','=','dm.customer'),
+               domain=[('model_id','=','Partner'),
                ('ttype','like','boolean')],
-               context={'model':'dm.customer'}),
+               context={'model':'res.partner'}),
         'operator' : fields.selection(BOOL_OPERATORS, 'Operator', size=32),
         'value' : fields.selection([('true','True'),('false','False')],'Value'),
     }
@@ -404,9 +403,9 @@ class dm_customer_date_criteria(osv.osv):
 #               '!',('model_id','like','dm.plugins.value')],
 #               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id.model','=','dm.customer'),
+               domain=[('model_id','=','Partner'),
                (('ttype','like','date') or ('ttype','like','datetime'))],
-               context={'model':'dm.customer'}),
+               context={'model':'res.partner'}),
         'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),
         'value' : fields.date('Date'),
     }
