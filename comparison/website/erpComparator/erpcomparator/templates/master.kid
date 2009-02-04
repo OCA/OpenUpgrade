@@ -66,7 +66,7 @@ except:
 						<div style="padding: 12px 20px; width: 35%; float: left;">
 							Based on<font color="#FF3300"><b> ${criterions} </b></font>
 							criterions,<font color="#FF3300"><b> ${feedbacks} </b></font>
-							users' feedback
+							users' feedbacks
 						</div>
 						
 						<div id="loginbg" py:if="not user_info"> 
@@ -77,10 +77,17 @@ except:
 					      		<button type="button" class="button" onclick="register()" name="registration">Registration</button>
 					    	</div>
 						</div>
-						<div  id="loginbg" py:if="user_info">
-							<div style="padding-top: 10px; padding-right: 20px; font-size: 12px; font-weight: bold; text-align: right;">
-								Welcome ${user_info}
-							</div>
+						<div id="loginbg" py:if="user_info">
+							<table width="100%">
+								<tr>
+									<td style="width: 92%; align: left; padding-top: 8px; padding-left: 5px; padding-right: 20px; font-size: 12px; font-weight: bold;">
+										Welcome ${user_info}
+									</td>
+									<td style="width: 8%; align: right; padding-top: 6px;">
+										<button type="button" style="text-align: right" class="button" onclick="window.location.href='/login/logout'" name="logout">Logout</button>
+									</td>
+								</tr>
+							</table>
 						</div>
 					</div>
 					

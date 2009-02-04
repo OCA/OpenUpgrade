@@ -39,7 +39,7 @@
 			</td>
 		</tr>
 	</table>
-		
+	<br/>
 	<div py:if="error" align="right">
 		<div class="box2 message">
 			${error}
