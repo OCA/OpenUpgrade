@@ -6,33 +6,35 @@ import cherrypy
 from erpcomparator import rpc
 from erpcomparator import tools
 from erpcomparator import common
+from erpcomparator.tinyres import TinyResource
 
-class Login(controllers.Controller):
+class Login(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.login")
     def index(self):
         return dict()
-    
-    @expose()
+   
+    @expose('json')
     def do_login(self, **kw):
+        
         name = kw.get('user_name')
         password = kw.get('password')
         email = kw.get('email')
         
-        user_proxy = rpc.RPCProxy('comparison.user')
+        model = 'comparison.user'
         
+        user_proxy = rpc.RPCProxy(model)
+                
         res = None
         error = ''
         
         try:
             res = user_proxy.create({'name': name, 'password': password, 'email': email})
         except Exception, e:
-            return dict(error=str(e))
+            return dict(res=res, error=str(e))
         
         if res:
-            raise redirect('/comparison?user_name=%s&password=%s' % (name, password))
-        else:
-            raise redirect('/comparison?error=%s' % (error))
+            return dict(res=res, error=error)
         
     @expose()
     def logout(self):
