@@ -459,9 +459,9 @@ class Comparison(controllers.Controller, TinyResource):
                         
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
                             item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
-                    
-                    item['add_factor'] = '/static/images/treegrid/gtk-edit.png'
-                    item['show_graph'] = '/static/images/treegrid/graph.png'
+                        else:
+                            item['add_factor'] = '/static/images/treegrid/gtk-edit.png'
+                            item['show_graph'] = '/static/images/treegrid/graph.png'
             
                     item['incr'] = '/static/images/increase.png'
                     item['decr'] = '/static/images/decrease.png'
