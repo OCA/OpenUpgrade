@@ -34,7 +34,7 @@ class comparison_user(osv.osv):
         'active': lambda *args: 1,
     }
     _sql_constraints = [
-        ('email', 'unique(email)', 'The email of the User must be unique.' )
+        ('email', 'unique(email,name)', 'The email of the User must be unique.' )
     ]
     
 comparison_user()
@@ -230,16 +230,22 @@ class comparison_vote(osv.osv):
 
             cr.execute('select sum(cf.ponderation) from comparison_factor as cf where cf.id in (%s)'%(factor_clause))
             tot_pond = cr.fetchall()
-            cr.execute('select sum(cfr.result),sum(cf.ponderation) from comparison_factor_result as cfr,comparison_factor as cf where cfr.item_id=%s and cfr.votes > 0.0 and cfr.factor_id = cf.id and cf.id in (%s)'%(item.id,factor_clause))
-            res1 = cr.fetchall()
+            
+            cr.execute('select cfr.result,cf.ponderation from comparison_factor_result as cfr,comparison_factor as cf where cfr.item_id=%s and cfr.votes > 0.0 and cfr.factor_id = cf.id and cf.id in (%s)'%(item.id,factor_clause))
+            res = cr.fetchall()
+            
             final_score = 0.0
-            if res1[0][1] > 0.0:
-                if res1[0][1] == tot_pond[0][0]:
-                    pond_div = res1[0][1]
-                    final_score  = (res1[0][0] / pond_div)
-                else:
-                    pond_div = res1[0][1] / tot_pond[0][0]
-                    final_score  = (res1[0][0] * pond_div)
+            for record in res:
+                final_score += (record[0] * record[1])
+
+            final_score = final_score / tot_pond[0][0]   
+#            if res1[0][1] > 0.0:
+#                if res1[0][1] == tot_pond[0][0]:
+#                    pond_div = res1[0][1]
+#                    final_score  = (res1[0][0] / pond_div)
+#                else:
+#                    pond_div = res1[0][1] / tot_pond[0][0]
+#                    final_score  = (res1[0][0] * pond_div)
 #            for child in factor.parent_id.child_ids:
 #                scoring_child = obj_factor_result.search(cr, uid, [('factor_id','=',child.id),('item_id','=',item.id),('votes','>',0.0)])
 ##                

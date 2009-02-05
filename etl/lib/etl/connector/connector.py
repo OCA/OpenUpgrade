@@ -26,13 +26,15 @@ class connector(object):
     """
         Base class of ETL Connector.
     """
-    def __init__(self,uri,bufsize=-1,encoding=False):        
-        self.uri=uri
-        self.bufsize=bufsize
-        self.encoding=encoding
-    def open(self,mode=False):
-        return True
+    def __init__(self,uri):        
+        self.uri=uri  
+        self.connector=None      
+    def open(self):
+        pass
+    def close(self):
+        pass 
+    def execute(self):
+        pass   
     def __str__(self):        
         return self.uri
-    def close(self):
-        return True
+    

@@ -63,16 +63,24 @@ function register() {
 
 function add_new_user() {
 	
-	user_name = $('name_user').value;
-	password = $('passwd').value;
-	email = $('email').value;
+	params = {}
+	params['user_name'] = $('name_user').value;
+	params['password'] = $('passwd').value;
+	params['email'] = $('email').value;
 	
-	if (!user_name || !password || !email) {
+	if (!params['user_name'] || !params['password'] || !params['email']) {
 		return alert("Fields marked with * are mandatory...");
 	}
-	else {
-		window.location.href = '/login/do_login?user_name='+user_name+'&password='+password+'&email='+email;
-	}
+	
+	var req = Ajax.JSON.post('/login/do_login', params);
+	req.addCallback(function(obj){
+		if (obj.res) {
+			window.location.href = '/comparison?user_name='+user_name+'&password='+password;
+		}
+		if (obj.error) {
+			return alert(obj.error);
+		}
+	});
 }
 
 function change_vote(node, pond_val) {

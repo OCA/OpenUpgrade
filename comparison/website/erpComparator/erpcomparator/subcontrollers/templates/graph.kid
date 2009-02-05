@@ -24,7 +24,7 @@
 		    </div>
 		    <div style="float:left; width:175; height:46;">
 		    	<a href="#" onclick="window.location.href='/graph'">
-		    		<img src="/static/images/graphs_hover.jpg" name="graph_image" alt="" border="0" width="175" height="46"/>
+		    		<img src="/static/images/graphs_hover.png" name="graph_image" alt="" border="0" width="175" height="46"/>
 		    	</a>
 		    </div>
 		    <div style="float:left;width:176;">
@@ -38,7 +38,7 @@
 		    	</a>
 		    </div>
 		    <div style="float:left;width:173;">
-		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.jpg'" onmouseout="document.about_image.src='/static/images/about.jpg'">
+		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.png'" onmouseout="document.about_image.src='/static/images/about.jpg'">
 		    		<img src="/static/images/about.jpg" name="about_image" alt="" border="0" width="173" height="46"/>
 		    	</a>
 		    </div>

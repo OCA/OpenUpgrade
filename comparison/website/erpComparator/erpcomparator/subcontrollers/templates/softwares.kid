@@ -10,6 +10,21 @@
 	    	var elem = document.getElementById(id);
 	        elem.style.display = elem.style.display == 'none' ? '' : 'none';
 		}
+		function view_erp_detail(id,p_id) {
+			var ids = p_id.split(',');
+			for(i in ids)
+			{
+				if(id == ids[i]) {
+					getElement(ids[i]).style.display='';
+					
+				}
+				else {
+					getElement(ids[i]).style.display='none';
+					
+				}
+			}
+					
+		}
 	</script>
     
 </head>
@@ -25,7 +40,7 @@
 		    	</a>
 		    </div>
 		    <div style="float:left; width:175; height:46;">
-		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.jpg'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
+		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.png'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
 		    		<img src="/static/images/graphs.jpg" name="graph_image" alt="" border="0" width="175" height="46"/>
 		    	</a>
 		    </div>
@@ -40,7 +55,7 @@
 		    	</a>
 		    </div>
 		    <div style="float:left;width:173;">
-		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.jpg'" onmouseout="document.about_image.src='/static/images/about.jpg'">
+		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.png'" onmouseout="document.about_image.src='/static/images/about.jpg'">
 		    		<img src="/static/images/about.jpg" name="about_image" alt="" border="0" width="173" height="46"/>
 		    	</a>
 		    </div>
@@ -51,18 +66,27 @@
 		<div>
 			<img src="/static/images/bluebgimage.png"/>
 		</div>
-		<table id="checkboxtext" py:for="r in res">
-			<tr>
-				<td>
-					<b style="color: #021677;">
-						${r['name']} : 
+		<table id="checkboxtext" width="850px" align="center">
+			<?python
+			    id = ''
+				for i in range(len(res)):
+					if id == '':
+						id=str(res[i]['id'])
+					else:
+						id=id+','+str(res[i]['id'])
+						
+			?>
+			<tr id="${id}" width="100%" class="toolbar">
+				<td py:for="r in res" id="'${r['id']}'" onclick="view_erp_detail(${r['id']},this.parentNode.id)" align="center" style="color: #021677; border: 1px solid gray; padding: 2px; white-space:nowrap; font-family: Verdana, Geneva, sans-serif; float: center; width: fixed; cursor: pointer; font-size: 12px;"> 
+					<b>
+						${r['name']} 
 					</b>		
 				</td>
 			</tr>
-			<tr>
-				<td>
-					<div id="${r['name']}" style="overflow: hidden; overflow-x: auto; width: 800px;">
-						<pre style="white-space: default;">${r['note'] or ''}</pre>
+			<tr py:for="r in res" id="${r['id']}" style="display:none;">
+				<td colspan="${len(res)}">
+					<div id="${r['name']}" style="color: #252a28; padding-left: 5px; overflow-y: hidden; overflow-x: auto; width: 830px;">
+						<pre style="white-space: default;">${r['note'] or 'No Description...'}</pre>
 					</div>
 				</td>
 			</tr>

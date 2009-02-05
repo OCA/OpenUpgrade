@@ -1408,11 +1408,12 @@ class bi_auto_configure_wizard(osv.osv_memory):
             id_tables=dbtab_obj.search(cr,uid,[('fact_database_id','=',ids.database_id.id)])
             tables_main=dbtab_obj.read(cr,uid,id_tables,context={'wizard':True})
             for tables in tables_main:
-                end_user_name = {'name':(" ").join( map(lambda x:x.capitalize(),tables['table_db_name'].split("_")))}
-                table_new = dbtab_obj.write(cr,uid,tables['id'], end_user_name)
+
                 if not(tables['table_db_name'].startswith('ir') or tables['table_db_name'].startswith('wkf') or tables['table_db_name'].startswith('res_groups') or tables['table_db_name'].startswith('res_role')) and tables['table_db_name'] not in ['inherit','user_rule_group_rel','group_rule_group_rel']:
+                    end_user_name = {'name':(" ").join( map(lambda x:x.capitalize(),tables['table_db_name'].split("_")))}
+                    table_new = dbtab_obj.write(cr,uid,tables['id'], end_user_name)
+
                     vals={}
-                    
                     if len(apptab_ids)==0 and (tables['table_db_name'] not in apptab_name):
                         vals['table_name']=tables['table_db_name']
                         vals['name']=(" ").join(map(lambda x:x.capitalize(),tables['name'].split("_")))
@@ -1479,6 +1480,7 @@ class bi_auto_configure_wizard(osv.osv_memory):
                 val={}
                 vals['hide']=True
                 vals['active']=False
+                vals['name'] = (" ").join(map(lambda x:x.capitalize(),col['name'].split("_")))
                 database_columns.write(cr,uid,col['id'],vals)
                 
             

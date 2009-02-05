@@ -898,7 +898,7 @@ class dm_campaign_proposition(osv.osv):
 
     _defaults = {
         'proposition_type' : lambda *a : 'init',
-        'date_start' : _default_camp_date,
+#        'date_start' : _default_camp_date,
         'keep_segments' : lambda *a : True,
         'keep_prices' : lambda *a : True
     }

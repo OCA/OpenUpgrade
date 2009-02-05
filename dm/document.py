@@ -55,10 +55,13 @@ class dm_ddf_plugin(osv.osv):
             customer_ids = map(lambda x:x.customer_id.id,order)
             plugins = d.document_template_id.plugin_ids
             for plugin in plugins:
+                args={}
+                if plugin.field.name:
+                    args['field_name']=str(plugin.field.name)
+                    args['field_type']=str(plugin.field.ttype)
                 path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
                 plugin_name = plugin.file_fname.split('.')[0]
                 arguments = plugin.argument_ids
-                args={}
                 for a in arguments:
                     args[str(a.name)]=str(a.value)
                 import sys
@@ -124,7 +127,10 @@ class dm_ddf_plugin(osv.osv):
         'file_id': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary"),
         'file_fname': fields.char('Filename',size=64),
         'argument_ids' : fields.one2many('dm.plugin.argument', 'plugin_id', 'Argument List'),
-        'note' : fields.text('Description')        
+        'note' : fields.text('Description'),
+        'field' : fields.many2one('ir.model.fields','Customers Field',
+               domain=[('model_id','=','Partner')],
+               context={'model':'res.partner'}),      
      }
 dm_ddf_plugin()
 

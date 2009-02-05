@@ -17,6 +17,8 @@
     <link href="/static/css/treegrid.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/new_style.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/modalbox.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/planet.css" rel="stylesheet" type="text/css"/>
+    
 	<meta py:replace="item[:]"/>
     <!--[if lt IE 7]>
         <link href="/static/css/iepngfix.css" rel="stylesheet" type="text/css"/>

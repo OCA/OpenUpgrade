@@ -120,7 +120,7 @@ class Graph(controllers.Controller, TinyResource):
         elements["elements"] = [] #Required
         elements["title"] = {}   #Optional
         elements["radar_axis"] = {} #Required
-        elements["tooltip"] = {} #Depend On Choice
+        elements["tooltip"] = {"mouse": 2, "stroke": 1, "colour": "#000000", "background": "#ffffff"} #Depend On Choice
         elements["bg_colour"] = "#ffffff" #Optional
         
         ChartColors = ['#c4a000', '#ce5c00', '#8f5902', '#4e9a06', '#204a87', '#5c3566', '#a40000', '#babdb6', '#2e3436'];

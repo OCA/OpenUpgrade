@@ -113,7 +113,7 @@ cube table and cube table line
 		<field name="active">True</field>
 		
 	</record>
-	<record model="olap.database.columns" id="columns_sale_order_line_product_id">
+<!--	<record model="olap.database.columns" id="columns_sale_order_line_product_id">
 		<field name="name">product_id</field>
 		<field name="column_db_name">id</field>
 		<field name="type">int4</field>
@@ -121,7 +121,7 @@ cube table and cube table line
 		<field name="active">True</field>
 		<field name="related_to" ref="table_product_product"/>
 	</record>
-	<record model="olap.database.columns" id="columns_product_template_id">
+-->	<record model="olap.database.columns" id="columns_product_template_id">
 		<field name="name">id</field>
 		<field name="column_db_name">id</field>
 		<field name="type">varchar</field>
@@ -267,7 +267,7 @@ cube table and cube table line
 		
 	</record>
 
-	<record model="olap.database.columns" id="columns_sale_order_line_product_id">
+<!--	<record model="olap.database.columns" id="columns_sale_order_line_product_id">
 		<field name="name">product_id</field>
 		<field name="column_db_name">product_id</field>
 		<field name="type">int4</field>
@@ -276,7 +276,7 @@ cube table and cube table line
 		<field name="active">True</field>
 		
 	</record>
-
+-->
 	<record model="olap.database.columns" id="columns_sale_order_line_order_id">
 		<field name="name">order_id</field>
 		<field name="column_db_name">order_id</field>
@@ -402,7 +402,7 @@ cube table and cube table line
 		
 	</record>
 
-	<record model="olap.database.columns" id="columns_sale_order_line_product_id">
+<!--	<record model="olap.database.columns" id="columns_sale_order_line_product_id">
 		<field name="name">product_id</field>
 		<field name="column_db_name">product_id</field>
 		<field name="type">int4</field>
@@ -411,7 +411,7 @@ cube table and cube table line
 		<field name="active">True</field>
 		
 	</record>
-
+-->
 	<record model="olap.database.columns" id="columns_sale_order_line_product_uom_qty">
 		<field name="name">product_uom_qty</field>
 		<field name="column_db_name">product_uom_qty</field>
@@ -454,7 +454,7 @@ Making of the olap.cube.table and olap.cube.table.lines
 	<record model="olap.cube.table" id="cube_table_product_category">
 		<field name="name">Product Category</field>
         <field name='schema_id' ref='schema_main_sales'/>
-        <field name='column_link_id' ref='columns_product_id_sale_order_line'/>
+        <field name='column_link_id' ref="columns_product_id_sale_order_line"/>
 	</record>
 	<record model="olap.cube.table.line" id="line_prodcut_category_line_21">
 		<field name="field_id" ref="columns_product_product_product_tmpl_id"/>
