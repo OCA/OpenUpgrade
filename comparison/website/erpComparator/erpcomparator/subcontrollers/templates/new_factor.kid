@@ -4,7 +4,7 @@
 	<input type="hidden" id="ponderation" name="ponderation" value="1.0"/>
 	
 	<div class="header">
-		<b>Propose New Factor</b>
+		<b>Propose a New Criterion</b>
 	</div>
 	
 	<table id="voting">
@@ -14,6 +14,7 @@
 			</td>
 			<td>
 				<input type="text" style="width: 290px;" id="factor_id" name="factor_id"/>
+				<b style="color: red;">*</b>
 			</td>					
 		</tr>
 		<tr>
@@ -26,25 +27,20 @@
 		</tr>
 		<tr>
 			<td class="label">
-				Ponderation :
-			</td>
-			<td>
-				<input type="text" style="width: 290px; background: #CCCCCC" id="ponderation" name="ponderation" value="1.0" disabled='true'/>
-			</td>
-		</tr>
-		<tr>
-			<td class="label">
 				Type :
 			</td>
 			<td>
 				<select style="width: 290px;" name="type" id="type">
 					<option id="type" selected="true" value=""></option>
-                    <option id="view" value="view">View</option>
-                    <option id="criterion" value="criterion">Criterion</option>
+                    <option id="view" value="view">Catogery</option>
+                    <option id="criterion" value="criterion" selected="true">Criterion</option>
                 </select>
 			</td>
 		</tr>
-	</table>
+	</table><br/>
+	<div style="text-align: right;">
+		<i style="color: red;">* Indicates required fields.</i>
+	</div>
 	
 	<div py:if="error" align="right">
 		<div class="box2 message">

@@ -3,7 +3,7 @@ function radarData() {
 	ids = getSelectedItems_graph();
 	ids = map(function(r){return r.id;}, ids);
 	ids = '[' + ids.join(', ') + ']';
-	load_radar(ids);
+	return ids
 }
 
 function getSelectedItems_graph() {
@@ -35,6 +35,44 @@ function getSelectedItems() {
         	return box.id;
        	}
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
+}
+
+function do_login() {
+	user_name = $('user_name').value;
+	password = $('password').value;
+	
+	login_list = '/comparison?user_name='+user_name+'&password='+password;
+	window.location.href = login_list;
+}
+
+function register() {
+	params = {}
+	var req = Ajax.post('/login', params);
+	req.addCallback(function(xmlHttp) {
+		
+		var d = window.mbox.content;
+		d.innerHTML = xmlHttp.responseText;
+		
+		window.mbox.width = 400;
+        window.mbox.height = 250;
+        
+        window.mbox.onUpdate = add_new_user;
+		window.mbox.show();
+	});
+}
+
+function add_new_user() {
+	
+	user_name = $('name_user').value;
+	password = $('passwd').value;
+	email = $('email').value;
+	
+	if (!user_name || !password || !email) {
+		return alert("Fields marked with * are mandatory...");
+	}
+	else {
+		window.location.href = '/login/do_login?user_name='+user_name+'&password='+password+'&email='+email;
+	}
 }
 
 function change_vote(node, pond_val) {
@@ -90,22 +128,27 @@ function add_new_factor() {
 	params['ids'] = [];
 	params['fields'] = [];
 	
-	var req = Ajax.JSON.post('/comparison/data', params);
-    req.addCallback(function(obj){
-    	if(obj.records) {
-    		window.mbox.hide();
-    		try {
-    			var node = comparison_tree.createNode(obj.records[0]);
-        		treenode.appendChild(node);
-    		}
-        	catch(e) {
-        		alert(e);
-        	}
-    	}
-    	if (obj.error) {
-            return alert(obj.error);
-        }
-    });
+	if (!params['factor_id']) {
+		return alert("Fields marked with * are mandatory...");
+	}
+	else {
+		var req = Ajax.JSON.post('/comparison/data', params);
+	    req.addCallback(function(obj){
+	    	if(obj.records) {
+	    		window.mbox.hide();
+	    		try {
+	    			var node = comparison_tree.createNode(obj.records[0]);
+	        		treenode.appendChild(node);
+	    		}
+	        	catch(e) {
+	        		alert(e);
+	        	}
+	    	}
+	    	if (obj.error) {
+	            return alert(obj.error);
+	        }
+	    });
+	}
 }
 
 var onUpdate = function(){
@@ -145,6 +188,7 @@ function open_item_vote(id, header) {
 function item_vote() {
 	
 	var treenode = comparison_tree.selection_last;
+	var childnodes = treenode.childNodes; 
 		
 	window.mbox.hide();
 	var final_params = []
@@ -168,27 +212,28 @@ function item_vote() {
 		else {
 			val += values;
 		}
-		
 	});
 	
 	var req = Ajax.JSON.post('/comparison/update_item_voting?_terp_values='+val);
     req.addCallback(function(obj){
     	if(obj.res) {
-    		forEach(treenode.childNodes, function(node){
+    		forEach(childnodes, function(node){
     			node.update();
     		});
+    		while (treenode && treenode.parentNode) {
+				treenode.update();
+				treenode = treenode.parentNode;
+			}
 		}
     	if (obj.error) {
             return alert(obj.error);
         }
     });
 	
-	while (treenode && treenode.parentNode) {
-		treenode.update();
-		treenode = treenode.parentNode;
-	}
 }
-function load_radar(ids) {
+function load_radar() {
+	
+	ids = radarData();
 	
 	factor_name= $('factors').value;
 	factor_name = factor_name.replace(/&/g, "@");
@@ -197,6 +242,16 @@ function load_radar(ids) {
 	
 	swfobject.embedSWF("/static/open-flash-chart.swf", "radar_chart", "700", "700",
 						"9.0.0", "expressInstall.swf", {'data-file': list});
+}
+
+function load_planet() {
+	params = {}
+	var req = Ajax.post('/static/planet_comparison/me-meta/output/index.html', params);
+	
+	req.addCallback(function(xmlHttp){
+		div = $('load_planet');
+		div.innerHTML = xmlHttp.responseText;
+	});
 }
 
 function on_button_click(evt, node) {

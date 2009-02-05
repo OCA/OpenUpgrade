@@ -4,16 +4,15 @@ import cherrypy
 
 from erpcomparator import rpc
 from erpcomparator import common
+from erpcomparator.tinyres import TinyResource
 
-class Softwares(controllers.Controller):
+class Softwares(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.softwares")
     def index(self):
-        
-        userinfo = cherrypy.session.get('user_info', '')
         proxy = rpc.RPCProxy('comparison.item')
         
         ids = proxy.search([])        
         res = proxy.read(ids, ['name', 'note'])
             
-        return dict(res=res, userinfo=userinfo)
+        return dict(res=res)

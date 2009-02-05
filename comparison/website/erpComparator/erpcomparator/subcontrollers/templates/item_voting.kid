@@ -23,7 +23,7 @@
 			</td>
 			<td>
 				<select style="width: 150px;" name="${ch['id']}_score_id" id="${ch['id']}_score_id">
-					<option name="none" value="0">None</option>				
+					<option name="none" value="0"> </option>				
                 	<option py:for="s in value_name" value="${s['id']}">${s['name']}</option>
                 </select>
             </td>
@@ -31,15 +31,17 @@
 	</table><hr/>
 	<table align="center">
 		<tr>
-			<td class="label">
-				Note for ${item} :
+			<td style="font-weight: bold;">
+				Provide a justification or details about your suggestion :
 			</td>
-			<td>
-				<textarea name="note" id="note" rows="6" cols="25"/>
+		</tr>
+		<tr>
+			<td width="430px">
+				<textarea align="center" style="width: 100%;" name="note" id="note" rows="8"/>
 			</td>
 		</tr>
 	</table>
-		
+	<br/>
 	<div py:if="error" align="right">
 		<div class="box2 message">
 			${error}

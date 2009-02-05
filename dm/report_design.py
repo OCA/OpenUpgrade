@@ -22,7 +22,7 @@ class offer_document(rml_parse):
         self.context = context        
     def document(self):
         dm_customer_order = pooler.get_pool(self.cr.dbname).get('dm.customer.order')        
-        dm_customer_plugin = pooler.get_pool(self.cr.dbname).get('dm.customer.plugin')
+        dm_plugins_value = pooler.get_pool(self.cr.dbname).get('dm.plugins.value')
         order_id = dm_customer_order.search(self.cr,self.uid,[('offer_step_id','=',self.ids)])
         order = dm_customer_order.browse(self.cr,self.uid,order_id)
         customer_id = map(lambda x:x.customer_id.id,order)
@@ -30,8 +30,8 @@ class offer_document(rml_parse):
         for cust in customer_id:
             vals={}
             vals['cust_id'] = cust
-            plugin_ids = dm_customer_plugin.search(self.cr,self.uid,[('customer_id','=',cust)])
-            plugin_values = dm_customer_plugin.read(self.cr,self.uid,plugin_ids,['plugin_id','value'])
+            plugin_ids = dm_plugins_value.search(self.cr,self.uid,[('customer_id','=',cust)])
+            plugin_values = dm_plugins_value.read(self.cr,self.uid,plugin_ids,['plugin_id','value'])
             for plugin in plugin_values:
                 vals[str(plugin['plugin_id'][0])]=plugin['value']
             res.append(vals)

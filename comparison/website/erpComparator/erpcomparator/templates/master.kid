@@ -4,7 +4,6 @@
 
 <head py:match="item.tag=='{http://www.w3.org/1999/xhtml}head'" py:attrs="item.items()">
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-    <meta py:replace="item[:]"/>
     
     <script type="text/javascript" src="/static/javascript/MochiKit/MochiKit.js"></script>
     <script type="text/javascript" src="/static/javascript/master.js"></script>
@@ -18,7 +17,7 @@
     <link href="/static/css/treegrid.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/new_style.css" rel="stylesheet" type="text/css"/>
     <link href="/static/css/modalbox.css" rel="stylesheet" type="text/css"/>
-
+	<meta py:replace="item[:]"/>
     <!--[if lt IE 7]>
         <link href="/static/css/iepngfix.css" rel="stylesheet" type="text/css"/>
     <![endif]-->
@@ -45,23 +44,49 @@
 </head>
 
 <body margin="0" py:match="item.tag=='{http://www.w3.org/1999/xhtml}body'" py:attrs="item.items()">
+
+<?python
+# put in try block to prevent improper redirection on connection refuse error
+try:
+    criterions, feedbacks, user_info = tg.root.comparison.check_data()
+except:
+	criterions = None
+	feedbacks = None
+	user_info = None
+?>
+
 	<table id="container" border="0" cellpadding="0" cellspacing="0">
     	<tr py:if="value_of('show_header_footer', True)">
         	<td>
 				<div id="site">
 					<div id="header"></div>
+					
 					<div id="header_bar"> 
 						<div style="padding: 12px 20px; width: 35%; float: left;">
-							Based on<font color="#FF3300"><b> 865 </b></font>
-							criterions,<font color="#FF3300"><b> 2000 </b></font>
-							users' feedback
+							Based on<font color="#FF3300"><b> ${criterions} </b></font>
+							criterions,<font color="#FF3300"><b> ${feedbacks} </b></font>
+							users' feedbacks
 						</div>
-						<div id="loginbg"> 
-					    	<div style="padding-top:5px;padding-left:10px;">
-					    			Login : <input type="text" class="textInput"/> 
-					    			Password : <input type="text" class="textInput"/>
-					      		<button type="button" class="button" name="continue">Continue</button>
+						
+						<div id="loginbg" py:if="not user_info"> 
+					    	<div style="padding-top:5px; padding-left:10px; width: 100%;">
+					    			Login : <input type="text" name="user_name" id="user_name" class="textInput"/> 
+					    			Password : <input type="password" name="password" id="password" class="textInput"/>
+					      		<button type="button" class="button" onclick="do_login()" name="continue">Continue</button>
+					      		<button type="button" class="button" onclick="register()" name="registration">Registration</button>
 					    	</div>
+						</div>
+						<div id="loginbg" py:if="user_info">
+							<table width="100%">
+								<tr>
+									<td style="width: 92%; align: left; padding-top: 8px; padding-left: 5px; padding-right: 20px; font-size: 12px; font-weight: bold;">
+										Welcome ${user_info}
+									</td>
+									<td style="width: 8%; align: right; padding-top: 6px;">
+										<button type="button" style="text-align: right" class="button" onclick="window.location.href='/login/logout'" name="logout">Logout</button>
+									</td>
+								</tr>
+							</table>
 						</div>
 					</div>
 					

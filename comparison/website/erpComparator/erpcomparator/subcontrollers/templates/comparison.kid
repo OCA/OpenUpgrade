@@ -57,7 +57,8 @@
 				</tr>
 				<tr py:if="not selected_items">
 					<td py:for="label in titles">
-						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}(${label['code']})</input>
+						<input py:if="label['load'] is True" id="${label['id']}" checked="true" type="checkbox" class="grid-record-selector">${label['name']}(${label['code']})</input>
+						<input py:if="label['load'] is False" id="${label['id']}" type="checkbox" class="grid-record-selector">${label['name']}(${label['code']})</input>
 					</td>
 					<td>
 						<img src="/static/images/load.jpg" style="cursor: pointer" onclick="getRecords()"/>

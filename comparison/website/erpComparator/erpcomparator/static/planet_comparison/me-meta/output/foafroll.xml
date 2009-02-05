@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:rss="http://purl.org/rss/1.0/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+>
+<foaf:Group>
+	<foaf:name>ERP Comparator Palnet</foaf:name>
+	<foaf:homepage>http://www.evaluationmatrix.com/</foaf:homepage>
+	<rdfs:seeAlso rdf:resource="http://www.evaluationmatrix.com/foafroll.xml" />
+
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>Edd Dumbill</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="http://times.usefulinc.com/">
+					<dc:title>Edd Dumbill's Weblog: Behind the Times</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://times.usefulinc.com/rss" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>Jeff Waugh</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="http://bethesignal.org">
+					<dc:title>Be the signal</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://bethesignal.org/feed/" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>Scott James Remnant</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="http://www.netsplit.com">
+					<dc:title>Scott James Remnant</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://www.netsplit.com/feed/" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>Thom May</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="">
+					<dc:title></dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://blog.clearairturbulence.org/?flav=rss" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+
+</foaf:Group>
+</rdf:RDF>

@@ -5,23 +5,49 @@ from turbojson import jsonify
 from turbogears import expose
 from turbogears import controllers
 from turbogears import url as tg_url
+from turbogears import config
 import cherrypy
+import math
 
 from erpcomparator import rpc
 from erpcomparator import tools
 from erpcomparator import common
+from erpcomparator.tinyres import TinyResource
 
-class Comparison(controllers.Controller):
+class Comparison(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.comparison")
-    def index(self, **kw):
+    def default(self, args=None, **kw):
         
-        userinfo = cherrypy.session.get('user_info', '')
-        
-        selected_items = []
-        selected_items = kw.get('ids')
-        
+        selected_items = kw.get('ids', [])
         selected_items = selected_items and eval(str(selected_items))
+        
+        if args and not selected_items:
+            pack_proxy = rpc.RPCProxy('evaluation.pack')
+            packs = pack_proxy.search([('name', '=', args)])
+            item_ids = pack_proxy.read(packs, ['item_ids'])
+            selected_items = item_ids[0].get('item_ids')
+        
+        user_name = kw.get('user_name')
+        password = kw.get('password')
+        
+        user_info = cherrypy.session.get('login_info', '')
+        
+        if not user_info:
+            if user_name and password:
+                model = 'comparison.user'
+        
+                proxy = rpc.RPCProxy(model)
+                uids = proxy.search([])
+                ures = proxy.read(uids, ['name', 'password'])
+                
+                for r in ures:
+                    if r['name'] == user_name and r['password'] == password:
+                        login_info = {}
+                        login_info['name'] = user_name
+                        login_info['password'] = password
+                        
+                        cherrypy.session['login_info'] = user_name
         
         model = 'comparison.factor'
         context = rpc.session.context
@@ -85,7 +111,7 @@ class Comparison(controllers.Controller):
         proxy_item = rpc.RPCProxy(item_model)
         item_ids = proxy_item.search([])
         
-        res = proxy_item.read(item_ids, ['name', 'code'])
+        res = proxy_item.read(item_ids, ['name', 'code', 'load_default'])
         
         titles = []
         
@@ -101,10 +127,13 @@ class Comparison(controllers.Controller):
                         item['string'] = r['name']
                         item['name'] = r['name']
                         item['code'] = r['code']
+                        
                         title['sel'] = True
+                        title['load'] = r['load_default']
+                        
                         self.headers += [item]
             
-            else:
+            elif r['load_default']:
                 item = {}
                 item['id'] = r['id']
                 item['type'] = 'url'
@@ -116,6 +145,7 @@ class Comparison(controllers.Controller):
             title['name'] = r['name']
             title['id'] = r['id']
             title['code'] = r['code']
+            title['load'] = r['load_default']
             titles += [title]
             
         for field in self.headers:
@@ -146,8 +176,28 @@ class Comparison(controllers.Controller):
         
         return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
     
+    def check_data(self):
+        criterions = None
+        feedbacks = None
+        
+        model = 'comparison.factor'
+        proxy = rpc.RPCProxy(model)
+        criterions = proxy.search([])
+        
+        criterions = len(criterions)
+                
+        vproxy = rpc.RPCProxy('comparison.vote')
+        feedbacks = vproxy.search([])
+        feedbacks = len(feedbacks)
+        
+        user_info = cherrypy.session.get('login_info', None)
+        
+        return criterions, feedbacks, user_info
+    
     @expose(template="erpcomparator.subcontrollers.templates.new_factor")
     def add_factor(self, **kw):
+        
+        user_info = cherrypy.session.get('login_info', '')
         
         id = kw.get('id')
         error = ''
@@ -157,11 +207,6 @@ class Comparison(controllers.Controller):
         
         proxy = rpc.RPCProxy(model)
         res = proxy.read([id], ['name', 'parent_id', 'child_ids'])
-        
-#        if res[0].get('child_ids'):
-#            child_id = res[0].get('child_ids')[0]
-#            child_type = proxy.read([child_id], ['type'])
-#            child_type = str(child_type[0].get('type'))
             
         parent = res[0].get('name')
         p_id = id
@@ -169,16 +214,23 @@ class Comparison(controllers.Controller):
         count = range(0, 21)
         count = [c/float(10) for c in count]
         
-        return dict(error=error, count=count, parent_id=p_id, parent_name=parent)
+        if not user_info:
+            return dict(error="You are not logged in...", count=count, parent_id=p_id, parent_name=parent)
+        else:
+            return dict(error=error, count=count, parent_id=p_id, parent_name=parent)
     
     @expose('json')
     def voting(self, **kw):
         
         id = kw.get('id')
         pond_val = kw.get('pond_val')
-        user_id = kw.get('user')
         
         value = None
+        
+        user_info = cherrypy.session.get('login_info', '')
+        
+        if not user_info:
+            return dict(value=value, error="You are not logged in...")
         
         model = "comparison.factor"
         proxy = rpc.RPCProxy(model)
@@ -186,7 +238,7 @@ class Comparison(controllers.Controller):
         name = res[0]['name']
         pond = res[0]['ponderation']
         
-        smodel = "comparison.ponderation.suggestion"
+        smodel = "comparison.ponderation.suggestion" 
         sproxy = rpc.RPCProxy(smodel)
         
         if pond_val == 'incr':
@@ -195,9 +247,13 @@ class Comparison(controllers.Controller):
         else:
             if pond > 0.0:
                 pond = pond - 0.1
-                
+        
+        user_proxy = rpc.RPCProxy('comparison.user')
+        user_id = user_proxy.search([('name', '=', user_info)])
+        user_id = user_id[0]
+        
         try:
-            value = sproxy.create({'factor_id': id, 'user_id': 1, 'ponderation': pond})
+            value = sproxy.create({'factor_id': id, 'user_id': user_id, 'ponderation': pond})
         except Exception, e:
             return dict(value=value, error=str(e))
         
@@ -205,6 +261,8 @@ class Comparison(controllers.Controller):
         
     @expose(template="erpcomparator.subcontrollers.templates.item_voting")
     def item_voting(self, **kw):
+        
+        user_info = cherrypy.session.get('login_info', '')
         
         id = kw.get('id')
         item = kw.get('header')
@@ -233,10 +291,18 @@ class Comparison(controllers.Controller):
         val = vproxy.search([])
         value_name = vproxy.read(val, ['name'])
         
-        return dict(item_id=item_id, item=item, child=child, factor_id=factor_id, value_name=value_name, id=id, error="")
+        if not user_info:
+            return dict(item_id=item_id, item=item, child=child, factor_id=factor_id, value_name=value_name, id=id, error="You are not logged in...")
+        else:
+            return dict(item_id=item_id, item=item, child=child, factor_id=factor_id, value_name=value_name, id=id, error="")
     
     @expose('json')
     def update_item_voting(self, **kw):
+        
+        user_info = cherrypy.session.get('login_info', '')
+        
+        if not user_info:
+            return dict(error="You are not logged in...")
         
         vals = kw.get('_terp_values', '')
         vals = vals.split('!')
@@ -246,15 +312,20 @@ class Comparison(controllers.Controller):
         
         list = []
         
+        user_proxy = rpc.RPCProxy('comparison.user')
+        user_id = user_proxy.search([('name', '=', user_info)])
+        
         for v in vals:
             items = {}
-            if v.get('score_id') != '0':
-                items['score_id'] = str(v.get('score_id'))
-                items['factor_id'] = str(v.get('id'))
-                items['item_id'] = str(v.get('item_id'))
+            if v.get('score_id') != '0' and user_id:
+                items['score_id'] = v.get('score_id')
+                items['factor_id'] = v.get('id')
+                items['item_id'] = v.get('item_id')
                 items['note'] = str(v.get('note'))
+                items['user_id'] = user_id[0]
             
                 list += [items]
+                
         vproxy = rpc.RPCProxy('comparison.vote.values')
         
         vid = vproxy.search([])
@@ -270,7 +341,7 @@ class Comparison(controllers.Controller):
         except Exception, e:
             return dict(error=str(e))
         
-        return dict(res=res, item_id=item_id, value_name=value_name, id=id, show_header_footer=False, error="")
+        return dict(res=res, show_header_footer=False, error="")
     
     @expose('json')
     def data(self, model, ids=[], fields=[], field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc",
@@ -282,12 +353,19 @@ class Comparison(controllers.Controller):
             ids = [int(id) for id in ids.split(',')]
             
         res = None
+        user_info = cherrypy.session.get('login_info', '')
         
         if parent_id:
             
+            if not user_info:
+                return dict(error="You are not logged in...")
+            
+            user_proxy = rpc.RPCProxy('comparison.user')
+            user_id = user_proxy.search([('name', '=', user_info)])
+            
             new_fact_proxy = rpc.RPCProxy(model)
             try:
-                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': 1, 
+                res = new_fact_proxy.create({'name': factor_id, 'parent_id': parent_id, 'user_id': user_id[0], 
                                          'ponderation': ponderation, 'type': ftype})
                 ids = [res]
             
@@ -375,9 +453,7 @@ class Comparison(controllers.Controller):
             for i, j in item.items():
                 for r in factor_res:
                     if j == r.get('factor_id')[1]:
-                        
-                        item[r.get('item_id')[1]] = str(round(r.get('result'), 2)) + '%'
-                        
+                        item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
                             item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
                         

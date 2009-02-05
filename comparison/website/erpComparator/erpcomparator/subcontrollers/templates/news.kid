@@ -4,6 +4,13 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     <title>Comparison</title>
+    
+    <script type="text/javascript">
+    	MochiKit.DOM.addLoadEvent(function(evt){
+    		load_planet();
+    	});
+	</script>
+    
 </head>
 <body>
 	<div id="bodybackground">
@@ -46,7 +53,8 @@
     	<table id="checkboxtext">
 			<tr>
 				<td>
-					${mess}
+					<div id="load_planet">
+					</div>
 				</td>
 			</tr>
 		</table>
