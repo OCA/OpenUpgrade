@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <menuitem name="Mail Service" id="menu_dm_config_mail_service" parent="dm.menu_dm_config" sequence="7"/>
+
+
+    <!--
+    ======================
+    Mail Service
+    ======================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_mail_service_form">
+        <field name="name">dm.mail.service.form</field>
+        <field name="model">dm.mail.service</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Mail Service">
+                <field name="name" select="1"/>
+                <field name="partner_id" select="1" />
+                <field name="media_id" select="1"/>
+				<field name="action_id" select="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_mail_service_tree">
+        <field name="name">dm.mail.service.tree</field>
+        <field name="model">dm_mail_service</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Customers">
+                <field name="name" select="1" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_mail_service_form">
+        <field name="name">All Mail Service</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.mail.service</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_dm_mail_service_tree"/>        
+    </record>
+
+    <menuitem id="menu_dm_mail_service_form" parent="dm.menu_dm_config_mail_service" action="action_dm_mail_service_form" sequence="1" />
+</data>
+</openerp>    

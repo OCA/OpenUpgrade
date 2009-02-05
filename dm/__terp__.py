@@ -66,6 +66,7 @@
                     "dm_workflow.xml",
                     "dm_document_view.xml",
                     "document_data.xml",
+                    "mail_service_view.xml",
                     ],
     "active": False,
     "installable": True,

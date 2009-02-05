@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,17 +19,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import time
 
-import trademark
-import offer
-import offer_step
-import campaign
-import customer
-import document
-import reportdm
-import wizard
-import dm_print_offer_graph
-import report_design
-import mail_service
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+from osv import fields
+from osv import osv
+import pooler
 
+class dm_mail_service(osv.osv):
+    _name = "dm.mail.service"
+    def _default_name(self, cr, uid, ids, name, args, context={}):
+        res={}
+        for rec in self.browse(cr, uid, ids):
+             res[rec.id] = (rec.partner_id and rec.partner_id.name or '') + ' for ' + (rec.media_id and rec.media_id.name or '')
+        return res 
+    
+    _columns = {
+        'name' : fields.function(_default_name, method=True, string='Name',store=True ,type='char' ,size=128),
+        'partner_id' : fields.many2one('res.partner','Partner',domain=[('category_id','=','Mail Service')]),
+        'media_id' : fields.many2one('dm.media','Media'),
+        'action_id' : fields.many2one('ir.actions.server','Action')
+    }
+
+
+dm_mail_service()
