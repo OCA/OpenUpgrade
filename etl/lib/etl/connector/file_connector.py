@@ -28,15 +28,18 @@ from etl.connector import connector
 
 class file_connector(connector.connector):
     def __init__(self,uri,bufsize=-1,encoding='utf-8'):
-        super(file_connector, self).__init__(uri,bufsize,encoding)               
-        self.file=False
+        super(file_connector, self).__init__(uri)               
+        self.bufsize=bufsize
+        self.encoding=encoding
+        
     def open(self,mode='r'):
         # TODO : pass encoding in file
-        super(file_connector, self).open(mode)
-        self.file=open(self.uri,mode,self.bufsize)    
+        super(file_connector, self).open()
+        self.connector=open(self.uri,mode,self.bufsize)    
         #self.file.encoding=self.encoding
-        return self.file
+        return self.connector
+        
 
     def close(self):
         super(file_connector, self).close()
-        self.file.close()    
+        self.connector.close()    

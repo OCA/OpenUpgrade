@@ -167,11 +167,15 @@ class component(signal.signal,statistic.statistic):
             trans.signal('stop')     
         self.signal('end',{'trans':trans,'end_date':datetime.datetime.today()})
 
+    def stats_get():
+        return statistic.statistic.statistics_get
+        
+
+    #@stats_get()
     def process(self):
         """ process method of ETL component
         """
-        # TO IMPROVE : it is not good and also not working
-        self.statistics_get()
+        pass
 
 
     def input_get(self):

@@ -28,3 +28,5 @@ ETL Connectors:
 """
 import connector
 import file_connector
+import sql_connector
+import openobject_connector
