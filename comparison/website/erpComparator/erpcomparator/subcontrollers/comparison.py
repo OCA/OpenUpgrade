@@ -453,7 +453,10 @@ class Comparison(controllers.Controller, TinyResource):
             for i, j in item.items():
                 for r in factor_res:
                     if j == r.get('factor_id')[1]:
-                        item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
+                        if r.get('result') > 0.0:
+                            item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
+                        else:
+                            item[r.get('item_id')[1]] = "No Vote"
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
                             item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
                         

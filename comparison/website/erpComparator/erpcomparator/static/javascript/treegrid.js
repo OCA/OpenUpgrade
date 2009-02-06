@@ -361,6 +361,9 @@ TreeNode.prototype = {
 							
 				            var k = h.name;
 							var v = this.record.items[k];
+							if (v=='No Vote') {
+								v='0%';
+							}
 							v = v.split('%')[0];
 							fields[j-6] = v;
 							min_fact = Math.min(min_fact, v);
