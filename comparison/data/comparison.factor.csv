@@ -32,6 +32,19 @@
 "F30","F26","Support of substition of bill of materials","criterion",1
 "F31","F26","Support for products of substitution","criterion",1
 "F32","F26","Stock forecasts","criterion",1
+"F949","F25","Batch Process","view",1
+"F950","F949","Free batch format","criterion",1
+"F951","F949","Define substitutes for parts of process","criterion",1
+"F952","F949","Batch analysis for economical production","criterion",1
+"F953","F949","Adjustment batches for region / country","criterion",1
+"F954","F949","Batch Size and underlying ingredients can be adjusted","criterion",1
+"F955","F949","Defining Down anticipated life","criterion",1
+"F956","F25","Plant Maintance ","view",1
+"F957","F956","create Maintainance order","criterion",1
+"F958","F956","Preventive and breakdown maintainance","criterion",1
+"F959","F25","Quality","view",1
+"F960","F959","Management of defective material","criterion",1
+"F961","F959","Quality in point per record in process","criterion",1
 "F33","F25","MRP II Features","view",1
 "F34","F33","Master Production Schedule","criterion",1
 "F35","F33","Support for simulations of procurements","criterion",1
@@ -115,12 +128,16 @@
 "F113","F111","Open Purchase orders","criterion",1
 "F114","F111","Ability to define alerts on products purchase","criterion",1
 "F115","F111","Ability to define alerts on supplier purchase","criterion",1
+"F946","F111","Contracts","criterion",1
+"F947","F111","Quote Management per Item","criterion",1
+"F948","F111","Repeat Purchases","criterion",1
 "F116","F104","Best-Practices","view",1
 "F117","F116","Just-in-Time Support","criterion",1
 "F118","F116","ISO9001 Suppliers evaluation","criterion",1
 "F119","F104","Purchases negotiation","view",1
 "F120","F119","Auction with suppliers","criterion",1
 "F121","F119","Purchase Tenders","criterion",1
+"F945","F119","Product description by suppliers","criterion",1
 "F122","F119","Public offers","criterion",1
 "F123","F104","Reporting","view",1
 "F124","F123","Visibility in the RfQ: stocks, latests prices, supplier quality","criterion",1
@@ -239,6 +256,26 @@
 "F237","F232","Tracebility up to the customer or supplier locations","criterion",1
 "F238","F1","Point of Sale","view",11
 "F239","F238","Touchscreen interface","criterion",1
+"F962","F238","centralize access of data","criterion",1
+"F963","F238","Integration with main module","criterion",1
+"F964","F238","integrate with third party peripherals","criterion",1
+"F965","F238","Easy to use interface","criterion",1
+"F966","F238","Autometic generation of account entreis","criterion",1
+"F967","F238","Tax facility","criterion",1
+"F968","F238","Multiple payment option","criterion",1
+"F969","F238","capable to print receipts","criterion",1
+"F970","F238","Updated physical inventory details","criterion",1
+"F971","F238","sale order creation","criterion",1
+"F972","F238","Product image available","criterion",1
+"F973","F238","Able to send email and sms to customer","criterion",1
+"F974","F238","Reports ","view",1
+"F975","F974","able to print receipts","criterion",1
+"F976","F974","Graphical view of sales ","criterion",1
+"F977","F974","Able to print summary reports","criterion",1
+"F978","F238","Point of Sale Security","view",1
+"F979","F978","Secure the access of POS","criterion",1
+"F980","F978","Manage users and profile","criterion",1
+"F981","F978","Only authenticate user can access information","criterion",1
 "F240","F1","Sales Management","view",2
 "F241","F1","Direct Marketing","view",12
 "F242","F241","Offers management","view",1
@@ -465,6 +502,14 @@
 "F478","F476","Ability to import .XML files from the client side","criterion",1
 "F479","F476","Ability to manages ID from original software to re-create relation","criterion",1
 "F482",,"Technical Quality","view",4
+"F985","F482","Technical","view",1
+"F986","F985","coding are done from client side so no load on server side","criterion",1
+"F987","F985","Table creation done using GUI wizard","criterion",1
+"F988","F985","Form creation done using GUI wizard","criterion",1
+"F989","F985","Codeunit are defined seprately so can be resuable","criterion",1
+"F990","F985","Different Menusuites can defined for same system","criterion",2
+"F991","F985","Version of each object defined","criterion",3
+"F992","F985","Uses CAL Programming language","criterion",4
 "F483","F482","Database flexibility","view",1
 "F484","F483","Support for an Open Source database","criterion",1
 "F485","F483","Multi-Database support","criterion",1
@@ -642,6 +687,8 @@
 "F662","F657","Support for versions of quotations","criterion",1
 "F663","F657","Integration with document management system to store propositions","criterion",1
 "F664","F657","Support for attachment of files on quotations","criterion",1
+"F943","F657","Drop Shipment Facility","criterion",1
+"F944","F657","While Creating orders, Inventory for each item available. ","criterion",1
 "F666","F240","Logistic","view",1
 "F667","F666","Ability to mix services, products and consumables in one sale order","criterion",1
 "F668","F666","Ability to select 'make to stock'/'make to order' logistics on sale order lines","criterion",1
@@ -795,6 +842,9 @@
 "F819","F413","Report designer based on Open Ofjice","criterion",1
 "F820","F413","Report designer based on Jasper Report","criterion",1
 "F821","F413","Support for all kind of formating elements: bold, alignment, etc.","criterion",1
+"F982","F413","Graphic displays decision tree relationship","criterion",2
+"F983","F413","Reporting and analysis in groups","criterion",3
+"F984","F413","Dimensions","criterion",2
 "F822","F414","Availability of a end-user statistic report designer","criterion",1
 "F823","F414","You can create statistic reports without any DB knowledge","criterion",1
 "F824","F414","Statistics can be displayed as a bar chart graph","criterion",1
@@ -918,3 +968,37 @@
 "F940","F297","Thunderbird plugin to push important emails in the software","criterion",1
 "F941","F297","Evolution plugin to push important emails in the software","criterion",1
 "F942","F297","Availability of a mail gateway to connect on mail server to integrate with application","criterion",1
+"F993","F482","Back up","view",8
+"F994","F993","Back can be taken of each individual object. E.g. Table,Form,Report,Code units","criterion",1
+"F995","F993","Backup restore at client side easily ","criterion",2
+"F996","F993","No need to restart system or create database again","criterion",3
+"F997","F993","Whole database backup","criterion",4
+"F998","F482","Sequence Generation","view",9
+"F999","F998","Define to generate autometic numbers. ","criterion",1
+"F1000","F998","Define from which start date to end date use no. series","criterion",2
+"F1001","F998","All sequence or number series are defined at one place","criterion",3
+"F1002","F998","Crtiteria on sequence","criterion",4
+"F1003","F482","Posting Groups","view",10
+"F1004","F1003","Relation with accounting","criterion",1
+"F1005","F1003","Different Posting groups for Customer, Vendor,Bank Accounts, Inventory Fixed Assets","criterion",2
+"F1006","F482","Debugger","view",11
+"F1007","F1006","Navision debugger at client side","criterion",1
+"F1008","F1006","Debug whole code of process flow","criterion",2
+"F1009","F482","Biz Talk server","view",12
+"F1010","F1009","Integration with Biz Talk server","criterion",1
+"F1011","F482","Import/Export","view",13
+"F1012","F1011","Import and Export of Objects","criterion",1
+"F1013","F1011","Import and Export of XML,CSV files","criterion",2
+"F1014","F482","Data Filtering Facility","view",14
+"F1015","F1014","Table filter","criterion",1
+"F1016","F1014","Field Filter","criterion",2
+"F1017","F1014","Flow Filter ","criterion",3
+"F1018","F482","Analysis ","view",15
+"F1019","F1018","Dimension are used for analysis and reporting","criterion",1
+"F1020","F1018","Two dimension are defined Global and shortcut dimension","criterion",2
+"F1021","F1018","Global dimension are exist with all table","criterion",3
+"F1022","F1018","User can define his own dimension","criterion",4
+"F1023","F482","Miscellaneous ","view",16
+"F1024","F1023","To enter current date type 't'","criterion",1
+"F1025","F1023","For Date range startdate..enddate","criterion",2
+"F1026","F1023","Can set work date for ERP","criterion",3

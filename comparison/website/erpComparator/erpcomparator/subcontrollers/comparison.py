@@ -19,6 +19,9 @@ class Comparison(controllers.Controller, TinyResource):
     @expose(template="erpcomparator.subcontrollers.templates.comparison")
     def default(self, args=None, **kw):
         
+        user_name = kw.get('user_name')
+        password = kw.get('password')
+        
         selected_items = kw.get('ids', [])
         selected_items = selected_items and eval(str(selected_items))
         
@@ -27,9 +30,6 @@ class Comparison(controllers.Controller, TinyResource):
             packs = pack_proxy.search([('name', '=', args)])
             item_ids = pack_proxy.read(packs, ['item_ids'])
             selected_items = item_ids[0].get('item_ids')
-        
-        user_name = kw.get('user_name')
-        password = kw.get('password')
         
         user_info = cherrypy.session.get('login_info', '')
         
@@ -453,7 +453,10 @@ class Comparison(controllers.Controller, TinyResource):
             for i, j in item.items():
                 for r in factor_res:
                     if j == r.get('factor_id')[1]:
-                        item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
+                        if r.get('result') > 0.0:
+                            item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
+                        else:
+                            item[r.get('item_id')[1]] = "No Vote"
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
                             item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
                         
@@ -474,7 +477,7 @@ class Comparison(controllers.Controller, TinyResource):
             record['target'] = None
 
             if item['ponderation']:
-                item['ponderation'] = item['ponderation'] or ponderation
+                item['ponderation'] = (item['ponderation'] or ponderation) + '@'
                 
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)

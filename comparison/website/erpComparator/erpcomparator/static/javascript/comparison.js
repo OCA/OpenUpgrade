@@ -75,7 +75,8 @@ function add_new_user() {
 	var req = Ajax.JSON.post('/login/do_login', params);
 	req.addCallback(function(obj){
 		if (obj.res) {
-			window.location.href = '/comparison?user_name='+user_name+'&password='+password;
+			window.mbox.hide();
+			window.location.href = '/comparison?user_name='+params['user_name']+'&password='+params['password'];
 		}
 		if (obj.error) {
 			return alert(obj.error);
@@ -199,7 +200,6 @@ function item_vote() {
 	var childnodes = treenode.childNodes; 
 		
 	window.mbox.hide();
-	var final_params = []
 	var i = 1;
 	var val = '';
 	
