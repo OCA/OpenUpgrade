@@ -19,6 +19,9 @@ class Comparison(controllers.Controller, TinyResource):
     @expose(template="erpcomparator.subcontrollers.templates.comparison")
     def default(self, args=None, **kw):
         
+        user_name = kw.get('user_name')
+        password = kw.get('password')
+        
         selected_items = kw.get('ids', [])
         selected_items = selected_items and eval(str(selected_items))
         
@@ -27,9 +30,6 @@ class Comparison(controllers.Controller, TinyResource):
             packs = pack_proxy.search([('name', '=', args)])
             item_ids = pack_proxy.read(packs, ['item_ids'])
             selected_items = item_ids[0].get('item_ids')
-        
-        user_name = kw.get('user_name')
-        password = kw.get('password')
         
         user_info = cherrypy.session.get('login_info', '')
         
