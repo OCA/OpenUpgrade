@@ -10,9 +10,10 @@ if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
     from lib.logreport import *
+    from lib.rpc import *
     database="test"
     uid = 1
-    passwd='admin'
+
 
 
 class ConvertBracesToField( unohelper.Base, XJobExecutor ):
@@ -29,7 +30,8 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
 
         global passwd
         self.password = passwd
-
+        global url
+        self.sock=RPCSession(url)
         self.aReportSyntex=[]
         self.getBraces(self.aReportSyntex)
 
@@ -81,21 +83,21 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                 oPar.Items=(sTemp.encode("utf-8"),oPar.Items[1].replace(' ',""))
                                 oPar.update()
                             elif type(res[0]) <> type(u''):
-                                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
-                                sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0][res[0][0].find(".")+1:].replace(".","/"))
-                                r = sock.execute(database, uid, self.password, docinfo.getUserFieldValue(3) , 'fields_get')
+
+                                sObject = self.getRes(self.sock, docinfo.getUserFieldValue(3), res[0][0][res[0][0].find(".")+1:].replace(".","/"))
+                                r = self.sock.execute(database, uid, self.password, docinfo.getUserFieldValue(3) , 'fields_get')
                                 sExpr="|-." + r[res[0][0][res[0][0].rfind(".")+1:]]["string"] + ".-|"
                                 oPar.Items=(sExpr.encode("utf-8"),oPar.Items[1].replace(' ',""))
                                 oPar.update()
                             else:
-                                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
+
                                 obj = None
                                 for rl in saRepeatInList:
                                     if rl[0] == res[0][:res[0].find(".")]:
                                         obj=rl[1]
                                 try:
                                     sObject = self.getRes(sock, obj, res[0][res[0].find(".")+1:].replace(".","/"))
-                                    r = sock.execute(database, uid, self.password, sObject , 'read',[1])
+                                    r = self.sock.execute(database, uid, self.password, sObject , 'read',[1])
                                 except Exception,e:
                                     r = "TTT"
                                     self.logobj.log_write('ConvertBracesToField', LOG_ERROR, str(e))
