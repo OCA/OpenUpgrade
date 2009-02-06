@@ -34,7 +34,8 @@ class comparison_user(osv.osv):
         'active': lambda *args: 1,
     }
     _sql_constraints = [
-        ('email', 'unique(email,name)', 'The email of the User must be unique.' )
+        ('email', 'unique(email)', 'The Email is Already Registered!.' ),
+        ('name', 'unique(name)', 'The Username Already Exists!.' ),
     ]
     
 comparison_user()
@@ -210,7 +211,7 @@ class comparison_vote(osv.osv):
         self.reload_ids = []
         if args:
             for vote in args:
-                self.create(cr,uid, vote)
+                self.create(cr,uid, vote, client_call=True)
             factor_id = int(args[0]['factor_id'])
             factor = self.pool.get('comparison.factor').browse(cr, uid, factor_id) 
             item_obj = self.pool.get('comparison.item').browse(cr, uid, int(args[0]['item_id']))
@@ -261,7 +262,7 @@ class comparison_vote(osv.osv):
             self.reload_ids.append(parent_result_id[0])
         return True
         
-    def create(self, cr, uid, vals, context={}):
+    def create(self, cr, uid, vals, context={}, client_call=False):
         result = super(comparison_vote, self).create(cr, uid, vals, context)
         obj_factor = self.pool.get('comparison.factor')
         obj_factor = self.pool.get('comparison.item')
@@ -277,9 +278,20 @@ class comparison_vote(osv.osv):
             # finding previous score and votes
             votes_old = obj_result[0]['votes']         
             score = (obj_vote.score_id.factor / float(pond_div) ) * 100
-            score = obj_result[0]['result'] and ((score + obj_result[0]['result']) /2) or score                            
+            
+            if votes_old:
+                score = (score + obj_result[0]['result']) /2
+                                            
             obj_factor_result.write(cr, uid, result_id, {'votes':(votes_old + 1),'result':score})
             self.reload_ids.append(result_id[0])
+            
+            if not client_call:
+                factor = obj_vote.factor_id
+                item_obj = obj_vote.item_id
+                while (factor and  factor.parent_id):
+                    self.compute_parents(cr, uid, factor, item_obj)
+                    factor = factor.parent_id
+                
         return result
 #    
 #    def write(self, cr, uid, ids, vals, context=None):
