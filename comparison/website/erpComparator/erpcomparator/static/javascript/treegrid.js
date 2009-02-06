@@ -346,6 +346,28 @@ TreeNode.prototype = {
             
             if (i > 0) {
                 if (header.type == 'url' && value) {
+                	
+                	// For min and max values...
+                	var j = i;
+                	var min_fact = 101;
+		        	var max_fact = -1;
+                	
+		        	if (j >= 6) {
+		        		var min_fact = 101;
+		        		var max_fact = -1;
+		            	var fields = new Array();
+						for (j=6; j<this.tree.headers.length; j++){
+							var h = this.tree.headers[j];
+							
+				            var k = h.name;
+							var v = this.record.items[k];
+							v = v.split('%')[0];
+							fields[j-6] = v;
+							min_fact = Math.min(min_fact, v);
+							max_fact = Math.max(max_fact, v);
+						}
+		        	}
+                	
                 	title = '';
                 	if (header.name == 'ponderation') {
                 		title = "Suggest Ponderation";
@@ -357,16 +379,44 @@ TreeNode.prototype = {
                 	if (value.indexOf('|') != -1) {
 	                	var vals = value.split('|');
 	                	value = vals[0];
+	                	
+	                	var background = '';
+	                	if (min_fact || max_fact) {
+	                		if ((value.split('%')[0])==min_fact.toString()){
+		                		background = '#e7c2bc';
+		                	}
+	    	            	if ((value.split('%')[0])==max_fact.toString()){
+	        	        		background = '#c3eabc';
+	            	    	}
+	                		if (min_fact == max_fact) {
+                				background = '';
+                			}
+	                	}
+	                	
 	                	record.action = vals[1];
 	                	t = vals[2];
-	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black'}, value)];
+	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black; background:'+background}, value)];
 	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': record.action, 'width' : 16, 'height' : 16}));
                 	}
                 	else if (value.indexOf('-') != -1) {
                 		var vals = value.split('-');
 	                	value = vals[0];
+	                	
+	                	var background = '';
+	                	if (min_fact || max_fact) {
+	                		if ((value.split('%')[0])==min_fact.toString()){
+		                		background = '#e7c2bc';
+		                	}
+	    	            	if ((value.split('%')[0])==max_fact.toString()){
+	        	        		background = '#c3eabc';
+	            	    	}
+	                		if (min_fact == max_fact) {
+                				background = '';
+                			}
+	                	}
+	                	
 	                	t = vals[1];
-	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold'}, value);
+	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold; background:'+background}, value);
                 	}
                 	else if (value.indexOf('@') != -1){
                 		var vals = value.split('@');
@@ -374,7 +424,19 @@ TreeNode.prototype = {
                 		value = MochiKit.DOM.DIV(value);
                  	}
                 	else {
-                		value = MochiKit.DOM.DIV(value);
+                		var background = '';
+	                	if (min_fact || max_fact) {
+	                		if ((value.split('%')[0])==min_fact.toString()){
+		                		background = '#e7c2bc';
+		                	}
+	    	            	if ((value.split('%')[0])==max_fact.toString()){
+	        	        		background = '#c3eabc';
+	            	    	}
+	                		if (min_fact == max_fact) {
+                				background = '';
+                			}
+	                	}
+                		value = MochiKit.DOM.DIV({style: 'background:'+background}, value);
                 	}    
                 }
                 
