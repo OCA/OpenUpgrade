@@ -450,8 +450,6 @@ class Comparison(controllers.Controller, TinyResource):
                     
             record = {}
             
-            for r in factor_res:
-                print r
             for i, j in item.items():
                 for r in factor_res:
                     if j == r.get('factor_id')[1]:
