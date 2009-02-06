@@ -10,17 +10,20 @@
 	    	var elem = document.getElementById(id);
 	        elem.style.display = elem.style.display == 'none' ? '' : 'none';
 		}
-		function view_erp_detail(id,p_id) {
+		function view_erp_detail(id,parent) {
+		    var p_id = parent.id;
 			var ids = p_id.split(',');
 			for(i in ids)
 			{
 				if(id == ids[i]) {
 					getElement(ids[i]).style.display='';
-					
+					var elem = MochiKit.DOM.getElementsByTagAndClassName('td', null, parent)[i]
+					elem.style.color = "#990033";
 				}
 				else {
 					getElement(ids[i]).style.display='none';
-					
+					var elem = MochiKit.DOM.getElementsByTagAndClassName('td', null, parent)[i]
+					elem.style.color = "#021677";
 				}
 			}
 					
@@ -77,7 +80,7 @@
 						
 			?>
 			<tr id="${id}" width="100%" class="toolbar">
-				<td py:for="r in res" id="'${r['id']}'" onclick="view_erp_detail(${r['id']},this.parentNode.id)" align="center" style="color: #021677; border: 1px solid gray; padding: 2px; white-space:nowrap; font-family: Verdana, Geneva, sans-serif; float: center; width: fixed; cursor: pointer; font-size: 12px;"> 
+				<td py:for="r in res" id="'${r['id']}'" onclick="view_erp_detail(${r['id']},this.parentNode)" align="center" style="color: #021677; border: 1px solid gray; padding: 2px; white-space:nowrap; font-family: Verdana, Geneva, sans-serif; float: center; width: fixed; cursor: pointer; font-size: 12px;"> 
 					<b>
 						${r['name']} 
 					</b>		
