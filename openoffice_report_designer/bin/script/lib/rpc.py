@@ -158,8 +158,8 @@ class NETRPCGateway(RPCGateway):
         sock = mysocket()
         try:
             sock.connect(self.host, self.port)
-            t1=(('object', 'execute',obj,method,)+args)
-            sock.mysend(t1)
+            data=(('object', 'execute',obj,method,)+args)
+            sock.mysend(data)
             res=sock.myreceive()
             sock.disconnect()
             return res
