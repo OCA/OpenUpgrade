@@ -15,7 +15,8 @@ if __name__<>'package':
     from lib.logreport import *
     from lib.tools import *
     from LoginTest import *
-    database="dm"
+    from lib.rpc import *
+    database="report"
     uid = 3
 
 #
@@ -38,12 +39,13 @@ class SendtoServer(unohelper.Base, XJobExecutor):
 
         global passwd
         self.password = passwd
-
+        global url
+        self.sock=RPCSession(url)
         desktop=getDesktop()
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
-        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        self.ids = sock.execute(database, uid, self.password, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
+
+        self.ids = self.sock.execute(database, uid, self.password, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
         if not len(self.ids):
             ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
             exit(1)
@@ -53,7 +55,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         if docinfo.getUserFieldValue(2)<>"" :
             try:
                 fields=['name','report_name']
-                self.res_other = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
+                self.res_other = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
                 name = self.res_other[0]['name']
                 report_name = self.res_other[0]['report_name']
             except:
@@ -104,12 +106,12 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             fp_name = tempfile.mktemp('.'+"sxw")
             if not oDoc2.hasLocation():
                 oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
-            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+
             if docinfo.getUserFieldValue(2)=="":
                 name=self.win.getEditText("txtName"),
                 name_id={}
                 try:
-                    name_id = sock.execute(database, uid, self.password, 'ir.actions.report.xml' , 'search',[('name','=',name)])
+                    name_id = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml' , 'search',[('name','=',name)])
                     if not name_id:
                         id=self.getID()
                         docinfo.setUserFieldValue(2,id)
@@ -121,7 +123,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                                 'key2': 'client_print_multi',
                                 'object': True
                             }
-                        res = sock.execute(database, uid, self.password, 'ir.values' , 'create',rec )
+                        res = self.sock.execute(database, uid, self.password, 'ir.values' , 'create',rec )
                     else :
                         ErrorDialog(" Report Name is all ready given !!!\n\n\n Please specify other Name","","Report Name")
                         self.logobj.log_write('SendToServer',LOG_WARNING, ':Report name all ready given DB %s' % (database))
@@ -133,16 +135,16 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             else:
 
                 id = docinfo.getUserFieldValue(2)
-                vId = sock.execute(database, uid, self.password, 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
+                vId = self.sock.execute(database, uid, self.password, 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
                 rec = { 'name': self.win.getEditText("txtReportName") }
-                res = sock.execute(database, uid, self.password, 'ir.values' , 'write',vId,rec)
+                res = self.sock.execute(database, uid, self.password, 'ir.values' , 'write',vId,rec)
             oDoc2.store()
             data = read_data_from_file( get_absolute_file_path( oDoc2.getURL()[7:] ) )
             self.getInverseFieldsRecord(0)
             #sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 
             file_type = oDoc2.getURL()[7:].split(".")[-1]
-            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),file_type,{})
+            res = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),file_type,{})
             params = {
                 'name': self.win.getEditText("txtName"),
                 'model': docinfo.getUserFieldValue(3),
@@ -152,7 +154,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             }
             if self.win.getListBoxSelectedItem("lstResourceType")=='OpenOffice':
                 params['report_type']=file_type
-            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
+            res = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
             self.logobj.log_write('SendToServer',LOG_INFO, ':Report %s successfully send using %s'%(params['name'],database))
             self.win.endExecute()
         else:
@@ -170,8 +172,8 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             'report_name': self.win.getEditText('txtReportName')
         }
 
-        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        id=sock.execute(database, uid, self.password, 'ir.actions.report.xml' ,'create', params)
+
+        id=self.sock.execute(database, uid, self.password, 'ir.actions.report.xml' ,'create', params)
         return id
 
     def getInverseFieldsRecord(self,nVal):
