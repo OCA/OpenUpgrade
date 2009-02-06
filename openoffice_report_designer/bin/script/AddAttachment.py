@@ -7,8 +7,9 @@ from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
     from lib.error import ErrorDialog
-    from lib.tools import * 
+    from lib.tools import *
     from LoginTest import *
+    from lib.rpc import *
     database="test"
     uid = 3
 
@@ -32,7 +33,8 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
         global passwd
         self.password = passwd
-
+        global url
+        self.sock=RPCSession(url)
         if docinfo.getUserFieldValue(2) <> "" and docinfo.getUserFieldValue(3) <> "":
             self.win = DBModalDialog(60, 50, 180, 70, "Add Attachment to Server")
             self.win.addFixedText("lblResourceType", 2 , 5, 100, 10, "Select Appropriate Resource Type:")
@@ -47,18 +49,17 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
             # Open a new connexion to the server
 
-            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            ids = sock.execute(database, uid, self.password, 'ir.module.module', 'search', [('name','=','base_report_model'),('state', '=', 'installed')])
+            ids = self.sock.execute(database, uid, self.password, 'ir.module.module', 'search', [('name','=','base_report_model'),('state', '=', 'installed')])
             if not len(ids):
                 # If the module 'base_report_model' is not installed, use the default model
                 self.dModel = {
                     "Partner":'res.partner',
                 }
             else:
-                sock = xmlrpclib.ServerProxy( docinfo.getUserFieldValue(0) + '/xmlrpc/object' )
-                ids = sock.execute(database, uid, self.password, 'base.report.model' , 'search', [])
-                res = sock.execute(database, uid, self.password, 'base.report.model' , 'read', ids, ['name','model_id'])
-                models = sock.execute(database, uid, self.password, 'ir.model' , 'read', map(lambda x:x['model_id'][0], res), ['model'])
+
+                ids =self.sock.execute(database, uid, self.password, 'base.report.model' , 'search', [])
+                res = self.sock.execute(database, uid, self.password, 'base.report.model' , 'read', ids, ['name','model_id'])
+                models = self.sock.execute(database, uid, self.password, 'ir.model' , 'read', map(lambda x:x['model_id'][0], res), ['model'])
                 models = dict(map(lambda x:(x['id'],x['model']), models))
                 self.dModel = dict(map(lambda x: (x['name'],models[x['model_id'][0]]), res))
 
@@ -79,7 +80,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             self.win.addButton('btnOkWithInformation', -2 , -5, 25 , 15,'OK' ,actionListenerProc = self.btnOkWithInformation_clicked )
 
         self.lstResourceType = self.win.getControl( "lstResourceType" )
-        for kind in self.Kind.keys(): 
+        for kind in self.Kind.keys():
             self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
 
         self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel' ,actionListenerProc = self.btnCancel_clicked )
@@ -94,8 +95,8 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
 
-        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        self.aSearchResult = sock.execute( database, uid, self.password, self.dModel[modelSelectedItem], 'name_search', self.win.getEditText("txtSearchName"))
+
+        self.aSearchResult =self.sock.execute( database, uid, self.password, self.dModel[modelSelectedItem], 'name_search', self.win.getEditText("txtSearchName"))
         self.win.removeListBoxItems("lstResource", 0, self.win.getListBoxItemCount("lstResource"))
         if self.aSearchResult == []:
             ErrorDialog("No search result found !!!", "", "Search ERROR" )
@@ -108,16 +109,16 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
         desktop = getDesktop()
         oDoc2 = desktop.getCurrentComponent()
         docinfo = oDoc2.getDocumentInfo()
-        sock = xmlrpclib.ServerProxy( docinfo.getUserFieldValue(0) + '/xmlrpc/object' )
+
         params = {
-            'name': name, 
-            'datas': base64.encodestring( data ), 
+            'name': name,
+            'datas': base64.encodestring( data ),
             'datas_fname': name,
-            'res_model' : res_model, 
+            'res_model' : res_model,
             'res_id' : int(res_id),
         }
 
-        return sock.execute( database, uid, self.password, 'ir.attachment', 'create', params )
+        return self.sock.execute( database, uid, self.password, 'ir.attachment', 'create', params )
 
     def send_attachment( self, model, resource_id ):
         desktop = getDesktop()
@@ -126,7 +127,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
         if oDoc2.getURL() == "":
             ErrorDialog("Please save your file", "", "Saving ERROR" )
-            return None 
+            return None
 
         url = oDoc2.getURL()
         if self.Kind[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
@@ -134,7 +135,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
         if url == None:
             ErrorDialog( "Ploblem in creating PDF", "", "PDF Error" )
-            return None 
+            return None
 
         url = url[7:]
         data = read_data_from_file( get_absolute_file_path( url ) )
@@ -147,7 +148,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
         if self.win.getListBoxSelectedItem("lstResourceType") == "":
             ErrorDialog("Please select resource type", "", "Selection ERROR" )
-            return 
+            return
 
         res = self.send_attachment( docinfo.getUserFieldValue(3), docinfo.getUserFieldValue(2) )
         self.win.endExecute()
@@ -155,11 +156,11 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
     def btnOkWithInformation_clicked(self,oActionEvent):
         if self.win.getListBoxSelectedItem("lstResourceType") == "":
             ErrorDialog( "Please select resource type", "", "Selection ERROR" )
-            return 
+            return
 
         if self.win.getListBoxSelectedItem("lstResource") == "" or self.win.getListBoxSelectedItem("lstmodel") == "":
             ErrorDialog("Please select Model and Resource","","Selection ERROR")
-            return 
+            return
 
         resourceid = None
         for s in self.aSearchResult:
@@ -169,7 +170,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
         if resourceid == None:
             ErrorDialog("No resource selected !!!", "", "Resource ERROR" )
-            return 
+            return
 
         res = self.send_attachment( self.dModel[self.win.getListBoxSelectedItem('lstmodel')], resourceid )
         self.win.endExecute()
