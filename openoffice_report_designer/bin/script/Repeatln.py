@@ -9,7 +9,9 @@ if __name__<>"package":
     from lib.functions import *
     from ServerParameter import *
     from lib.logreport import *
+    from lib.rpc import *
     from LoginTest import *
+
     database="test_db1"
     uid = 3
 
@@ -44,7 +46,8 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 
         global passwd
         self.password = passwd
-
+        global url
+        self.sock=RPCSession(url)
         # Variable Declaration
         self.sValue=None
         self.sObj=None
@@ -135,13 +138,13 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
 
             for var in self.aVariableList:
-                sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+
 		if var[:8] <> 'List of ':
-		    self.model_ids = sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
+		    self.model_ids = self.sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
                 else:
-		    self.model_ids = sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=',var[8:])])
+		    self.model_ids = self.sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=',var[8:])])
                 fields=['name','model']
-                self.model_res = sock.execute(database, uid, self.password, 'ir.model', 'read', self.model_ids,fields)
+                self.model_res = self.sock.execute(database, uid, self.password, 'ir.model', 'read', self.model_ids,fields)
                 if self.model_res <> []:
 		    if var[:8]<>'List of ':
                         self.insVariable.addItem(var[:var.find("(")+1] + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
@@ -169,7 +172,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
     def cmbVariable_selected(self,oItemEvent):
 
         if self.count > 0 :
-            sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+
             desktop=getDesktop()
             doc =desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
