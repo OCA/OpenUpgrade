@@ -8,6 +8,7 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from lib.functions import *
     from lib.logreport import *
+    from lib.rpc import *
     from Change import *
     database="test"
 
@@ -49,7 +50,10 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel' ,actionListenerProc = self.btnCancel_clicked )
         sValue=""
         if docinfo.getUserFieldValue(0)<>"":
-            res=getConnectionStatus(docinfo.getUserFieldValue(0))
+            global url
+            url=docinfo.getUserFieldValue(0)
+            self.sock=RPCSession(url)
+            res=self.sock.listdb()
             if res == -1:
                 sValue="Could not connect to the server!"
                 self.lstDatabase.addItem("Could not connect to the server!",0)
@@ -67,19 +71,19 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         #self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
 
     def btnOk_clicked(self,oActionEvent):
-        sock = xmlrpclib.ServerProxy(self.win.getEditText("txtHost")+'/xmlrpc/common')
+
         sDatabase=self.win.getListBoxSelectedItem("lstDatabase")
         sLogin=self.win.getEditText("txtLoginName")
         sPassword=self.win.getEditText("txtPassword")
-        UID = sock.login(sDatabase,sLogin,sPassword)
+        UID = self.sock.login(sDatabase,sLogin,sPassword)
         if not UID :
             ErrorDialog("Connection Refuse...","Please enter valid Login/Password")
             self.win.endExecute()
         try:
-            sock_g = xmlrpclib.ServerProxy(self.win.getEditText("txtHost") +'/xmlrpc/object')
-            ids  = sock_g.execute(sDatabase,UID,sPassword, 'res.groups' ,  'search', [('name','=','OpenOfficeReportDesigner')])
-            ids_module = sock_g.execute(sDatabase, UID, sPassword, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
-            dict_groups = sock_g.execute(sDatabase, UID,sPassword, 'res.groups' , 'read',ids,['users'])
+
+            ids  = self.sock.execute(sDatabase,UID,sPassword, 'res.groups' ,  'search', [('name','=','OpenOfficeReportDesigner')])
+            ids_module =self.sock.execute(sDatabase, UID, sPassword, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
+            dict_groups =self.sock.execute(sDatabase, UID,sPassword, 'res.groups' , 'read',ids,['users'])
         except :
             import traceback,sys
             info = reduce(lambda x, y: x+y, traceback.format_exception(sys.exc_type, sys.exc_value, sys.exc_traceback))
