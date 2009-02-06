@@ -15,6 +15,7 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     from lib.logreport import *
+    from lib.rpc import *
     database="test"
     uid = 3
 
@@ -40,25 +41,27 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         self.hostname = docinfo.getUserFieldValue(0)
         global passwd
         self.password = passwd
+        global url
+        self.sock=RPCSession(url)
         # Open a new connexion to the server
-        sock = xmlrpclib.ServerProxy( self.hostname +'/xmlrpc/object')
 
-        ids = sock.execute(database, uid, self.password, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
+
+        ids = self.sock.execute(database, uid, self.password, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
         if not len(ids):
             ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
             exit(1)
 
-        ids = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'search', [('report_xsl', '=', False),('report_xml', '=', False)])
+        ids = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'search', [('report_xsl', '=', False),('report_xml', '=', False)])
 
         fields=['id', 'name','report_name','model']
 
-        self.reports = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'read', ids, fields)
+        self.reports = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'read', ids, fields)
         self.report_with_id = []
 
         for report in self.reports:
             if report['name']<>"":
-                model_ids = sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=', report['model'])])
-                model_res_other = sock.execute(database, uid, self.password, 'ir.model', 'read', model_ids, [ 'name', 'model' ] )
+                model_ids = self.sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=', report['model'])])
+                model_res_other =self.sock.execute(database, uid, self.password, 'ir.model', 'read', model_ids, [ 'name', 'model' ] )
                 if model_res_other <> []:
                     name = model_res_other[0]['name'] + " - " + report['name']
                 else:
@@ -80,11 +83,11 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
-            sock = xmlrpclib.ServerProxy( self.hostname +'/xmlrpc/object')
+
             selectedItemPos = self.win.getListBoxSelectedItemPos( "lstReport" )
             id = self.report_with_id[ selectedItemPos ][0]
 
-            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'report_get', id)
+            res = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'report_get', id)
 
             if res['file_type'] in ['sxw','odt'] :
                file_type = res['file_type']
@@ -137,15 +140,15 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
          desktop=getDesktop()
          doc = desktop.getCurrentComponent()
          docinfo=doc.getDocumentInfo()
-         sock = xmlrpclib.ServerProxy( self.hostname +'/xmlrpc/object')
+
          selectedItemPos = self.win.getListBoxSelectedItemPos( "lstReport" )
          name=self.win.getListBoxSelectedItem ("lstReport")
          id = self.report_with_id[ selectedItemPos ][0]
-         temp = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'unlink', id,)
+         temp = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'unlink', id,)
          str_value='ir.actions.report.xml,'+str(id)
-         ids = sock.execute(database, uid, self.password, 'ir.values' ,  'search',[('value','=',str_value)])
+         ids = self.sock.execute(database, uid, self.password, 'ir.values' ,  'search',[('value','=',str_value)])
          if ids:
-              rec = sock.execute(database, uid, self.password, 'ir.values', 'unlink', ids,)
+              rec = self.sock.execute(database, uid, self.password, 'ir.values', 'unlink', ids,)
          else :
             pass
          if temp:
