@@ -15,6 +15,7 @@ if __name__<>"package":
     from lib.error import *
     from lib.tools import *
     from lib.logreport import *
+    from lib.rpc import *
     database="test"
     uid = 3
 
@@ -31,6 +32,8 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
+        global url
+        self.sock=RPCSession(url)
 
         # Read Data from sxw file
         tmpsxw = tempfile.mktemp('.'+"sxw")
@@ -49,8 +52,8 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         global passwd
         self.password = passwd
         try:
-            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data),file_type)
+
+            res = self.sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data),file_type)
             if res['report_rml_content']:
                 write_data_to_file( get_absolute_file_path( filename[7:] ), res['report_rml_content'] )
         except Exception,e:
