@@ -25,6 +25,8 @@ This is an ETL Component that use to read data from open object model.
 
 from etl.component import component
 from etl.connector import openobject_connector
+import socket
+import xmlrpclib
 import datetime
 
 class openobject_in(component.component):
@@ -52,31 +54,29 @@ class openobject_in(component.component):
 
     def action_start(self,key,singal_data={},data={}):        
         super(openobject_in, self).action_start(key,singal_data,data)                
-        self.connector=self.sqlconnector.open()                
+        self.connector=self.openobject_connector.open()  
+        self.openobject_connector.login()              
                                          
 
     def action_end(self,key,singal_data={},data={}):        
         super(openobject_in, self).action_end(key,singal_data,data)       
-        if self.openobject_connector:    
+        if self.openobject_connector:  
+             self.openobject_connector.logout()  
              self.openobject_connector.close()         
 
     def process(self):        
-        try:
-            ids = self.openobject_connector.execute('/object', 'execute',
-                        self.model, 'search', self.domain,limit=self.row_limit ,context=self.context)
-            rows = self.openobject_connector.execute('/object', 'execute',
-                        self.model, 'export_data', ids,self.fields, self.context)
-            for row in rows:                                
-                self.row_count+=1
-                if self.row_limit and self.row_count > self.row_limit:
-                     raise StopIteration                                        
+        try:                        
+            ids = self.openobject_connector.execute('execute',self.model,'search',self.domain, 0, self.row_limit, False, self.context,False)                                    
+            rows = self.openobject_connector.execute('execute',self.model, 'read', ids,self.fields, self.context)                        
+            for row in rows:                           
                 if self.transformer:
                     row=self.transformer.transform(row)
                 if row:
-                    yield row,'main'                                                                                   
-        except TypeError,e:
+                    yield row,'main'                                                                            
+        
+        except socket.error,e:            
             self.action_error(e)
-        except IOError,e:
+        except xmlrpclib.ProtocolError,e:            
             self.action_error(e)
             
                
