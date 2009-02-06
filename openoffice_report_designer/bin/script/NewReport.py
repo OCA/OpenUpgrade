@@ -11,6 +11,7 @@ if __name__<>"package":
     from lib.functions import *
     from lib.logreport import *
     from LoginTest import *
+    from rpc import *
     database="test"
     uid = 3
 #
@@ -36,14 +37,14 @@ class NewReport(unohelper.Base, XJobExecutor):
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 
         global passwd
         self.password = passwd
-
-        ids = sock.execute(database, uid, self.password, 'ir.model' , 'search',[])
+        global url
+        self.sock=RPCSession(url)
+        ids = self.sock.execute(database, uid, self.password, 'ir.model' , 'search',[])
         fields = [ 'model','name']
-        res = sock.execute(database, uid, self.password, 'ir.model' , 'read', ids, fields)
+        res = self.sock.execute(database, uid, self.password, 'ir.model' , 'read', ids, fields)
         res.sort(lambda x, y: cmp(x['name'],y['name']))
 
         for i in range(len(res)):
