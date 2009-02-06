@@ -270,8 +270,6 @@ TreeNode.prototype = {
         this.element = MochiKit.DOM.TR({'class' : 'row'});
         this.element.style.display = this.parentNode ? (this.parentNode.expanded ? "" : "none") : "";
         
-        ctree = this.tree;
-        
         var record = this.record;
         var indent = this.getPath().length - 1;
 
@@ -316,7 +314,7 @@ TreeNode.prototype = {
     	            this.element_a = value;
                 }
                 else {
-                	value = A({'style': 'color: black; display: block; max-width: 250px; white-space: normal; cursor: normal;', 'title': title}, value);
+                	value = DIV({'href': '#', 'style': 'color: black; display: block; text-decoration: none; max-width: 250px; white-space: normal; cursor: normal;'}, value);
     	            this.element_a = value;
                 }
                 
@@ -350,7 +348,7 @@ TreeNode.prototype = {
                 if (header.type == 'url' && value) {
                 	title = '';
                 	if (header.name == 'ponderation') {
-                		title = "Suggest ponderation";
+                		title = "Suggest Ponderation";
                 	}
                 	else {
                 		title = "Vote for Item: " +header.name + ", Factor: ";
@@ -370,6 +368,11 @@ TreeNode.prototype = {
 	                	t = vals[1];
 	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold'}, value);
                 	}
+                	else if (value.indexOf('@') != -1){
+                		var vals = value.split('@');
+	                	value = vals[0];
+                		value = MochiKit.DOM.DIV(value);
+                 	}
                 	else {
                 		value = MochiKit.DOM.DIV(value);
                 	}    
@@ -470,6 +473,11 @@ TreeNode.prototype = {
 	                	value = vals[0];
 	                	
 	                	div.innerHTML = MochiKit.DOM.escapeHTML(value);
+                	}
+                	else if (value.indexOf('@') != -1){
+                		var vals = value.split('@');
+	                	value = vals[0];
+                		value = MochiKit.DOM.DIV(value);
                 	}
                 	else {
                 		var div = MochiKit.DOM.getElementsByTagAndClassName('div', null, td)[0];

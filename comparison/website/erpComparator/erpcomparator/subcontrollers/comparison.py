@@ -474,7 +474,7 @@ class Comparison(controllers.Controller, TinyResource):
             record['target'] = None
 
             if item['ponderation']:
-                item['ponderation'] = item['ponderation'] or ponderation
+                item['ponderation'] = (item['ponderation'] or ponderation) + '@'
                 
             if icon_name and item.get(icon_name):
                 icon = item.pop(icon_name)

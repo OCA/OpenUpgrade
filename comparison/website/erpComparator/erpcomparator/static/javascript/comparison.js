@@ -199,7 +199,6 @@ function item_vote() {
 	var childnodes = treenode.childNodes; 
 		
 	window.mbox.hide();
-	var final_params = []
 	var i = 1;
 	var val = '';
 	
