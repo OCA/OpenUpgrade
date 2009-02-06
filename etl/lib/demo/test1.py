@@ -15,7 +15,7 @@ csv_out1= etl.component.output.csv_out.csv_out('Partner OUT Data1',fileconnector
 sort1=etl.component.transform.sort.sort('sort1','name')
 log1=etl.component.transform.logger.logger(name='Read Partner File')
 log2=etl.component.transform.logger.logger(name='After Sort')
-sleep1=etl.component.transform.sleep.sleep()
+sleep1=etl.component.control.sleep.sleep('sleep1')
 
 tran=etl.transition.transition(csv_in1,sort1)
 tran1=etl.transition.transition(csv_in2,sort1)
