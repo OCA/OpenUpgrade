@@ -12,7 +12,8 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from LoginTest import *
     from lib.logreport import *
-    database="db_test002"
+    from lib.rpc import *
+    database="report"
     uid = 3
 
 
@@ -40,6 +41,8 @@ class Fields(unohelper.Base, XJobExecutor ):
 
         global passwd
         self.password = passwd
+        global url
+        self.sock=RPCSession(url)
 
         self.sValue=None
         self.sObj=None
@@ -114,10 +117,10 @@ class Fields(unohelper.Base, XJobExecutor ):
                 )
                 self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
             for var in self.aVariableList:
-                    sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-                    self.model_ids = sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
+
+                    self.model_ids =self.sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
                     fields=['name','model']
-                    self.model_res = sock.execute(database, uid, self.password, 'ir.model', 'read', self.model_ids,fields)
+                    self.model_res = self.sock.execute(database, uid, self.password, 'ir.model', 'read', self.model_ids,fields)
                     if self.model_res <> []:
                         self.insVariable.addItem(var[:var.find("(")+1] + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
                     else:
@@ -130,7 +133,7 @@ class Fields(unohelper.Base, XJobExecutor ):
 
     def lstbox_selected(self,oItemEvent):
         try:
-            sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+
             desktop=getDesktop()
             doc =desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
@@ -139,9 +142,9 @@ class Fields(unohelper.Base, XJobExecutor ):
                 if var[:var.find("(")+1]==sItem[:sItem.find("(")+1]:
                     sItem = var
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
-            sObject=self.getRes(sock,sItem[sItem.find("(")+1:-1],sMain[1:])
-            ids = sock.execute(database, uid, self.password, sObject ,  'search', [])
-            res = sock.execute(database, uid, self.password, sObject , 'read',[ids[0]])
+            sObject=self.getRes(self.sock,sItem[sItem.find("(")+1:-1],sMain[1:])
+            ids = self.sock.execute(database, uid, self.password, sObject ,  'search', [])
+            res = self.sock.execute(database, uid, self.password, sObject , 'read',[ids[0]])
             self.win.setEditText("txtUName",res[0][sMain[sMain.rfind("/")+1:]])
         except:
             import traceback,sys
