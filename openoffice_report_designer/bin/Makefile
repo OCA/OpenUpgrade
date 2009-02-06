@@ -10,6 +10,8 @@ create:
 	    script/lib/gui.py \
 	    script/lib/tools.py \
 	    script/lib/logreport.py\
+	    script/lib/rpc.py\
+	    script/lib/tiny_socket.py\
 	    script/Repeatln.py \
 	    script/Fields.py \
 	    script/Expression.py \
