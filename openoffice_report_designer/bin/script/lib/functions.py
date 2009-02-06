@@ -8,12 +8,14 @@ import tempfile
 if __name__<>"package":
     from gui import *
     from logreport import *
+    from rpc import *
     database="test"
-    uid = 3
+    uid = 1
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
-        sock = xmlrpclib.ServerProxy(host+'/xmlrpc/object')
+        global url
+        sock=RPCSession(url)
         global passwd
         res = sock.execute(database, uid, passwd, object , 'fields_get')
         key = res.keys()
@@ -80,7 +82,8 @@ def getList(aObjectList,host,count):
         aObjectList.append("List of " + docinfo.getUserFieldValue(3))
 
 def getRelation(sRelName, sItem, sObjName, aObjectList, host ):
-        sock = xmlrpclib.ServerProxy(host+'/xmlrpc/object')
+        global url
+        sock=RPCSession(url)
         global passwd
         res = sock.execute(database, uid, passwd, sRelName , 'fields_get')
         key = res.keys()
