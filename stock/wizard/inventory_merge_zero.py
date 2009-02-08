@@ -28,9 +28,19 @@ import pooler
 _form = """<?xml version="1.0"?>
 <form string="Set Stock to Zero">
     <separator colspan="4" string="Set Stocks to Zero" />
-    <label string="Do you want to set stocks to zero ?"/>
+    <field name="location_id"/>
+    <newline/>
+    <label colspan="4" string="Do you want to set stocks to zero ?"/>
 </form>
 """
+_inventory_fields = {
+    'location_id' : {
+        'string':'Location',
+        'type':'many2one',
+        'relation':'stock.location',
+        'required':True
+        }
+}
 
 
 def do_merge(self, cr, uid, data, context):
@@ -42,30 +52,22 @@ def do_merge(self, cr, uid, data, context):
         raise wizard.except_wizard("Warning",
                                    "Please select one and only one inventory !")
 
-    cr.execute('select distinct location_id from stock_inventory_line where inventory_id=%s', (data['ids'][0],))
-    loc_ids = map(lambda x: x[0], cr.fetchall())
-    locs = ','.join(map(lambda x: str(x), loc_ids))
+    loc = str(data['form']['location_id'])
 
     cr.execute('select distinct location_id,product_id from stock_inventory_line where inventory_id=%s', (data['ids'][0],))
     inv = cr.fetchall()
-
-    if not inv:
-        raise wizard.except_wizard("Warning",
-                                   "Please select at least one inventory location !")
-    else:
-        cr.execute('select distinct product_id from stock_move where (location_dest_id in ('+locs+')) or (location_id in ('+locs+'))')
-        stock = cr.fetchall()
-        for s in stock:
-            for loc in loc_ids:
-                if (loc,s[0]) not in inv:
-                    p = prod_obj.browse(cr, uid, s[0])
-                    invent_line_obj.create(cr, uid, {
-                        'inventory_id': data['ids'][0],
-                        'location_id': loc,
-                        'product_id': s[0],
-                        'product_uom': p.uom_id.id,
-                        'product_qty': 0.0,
-                        })
+    cr.execute('select distinct product_id from stock_move where (location_dest_id='+loc+') or (location_id='+loc+')')
+    stock = cr.fetchall()
+    for s in stock:
+        if (loc,s[0]) not in inv:
+            p = prod_obj.browse(cr, uid, s[0])
+            invent_line_obj.create(cr, uid, {
+                'inventory_id': data['ids'][0],
+                'location_id': loc,
+                'product_id': s[0],
+                'product_uom': p.uom_id.id,
+                'product_qty': 0.0,
+                })
     return {}
 
 
@@ -75,7 +77,7 @@ class merge_inventory(wizard.interface):
             'actions' : [],
             'result' : {'type' : 'form',
                     'arch' : _form,
-                    'fields' : {},
+                    'fields' : _inventory_fields,
                     'state' : [('end', 'Cancel'),
                                ('merge', 'Set to Zero') ]}
         },

@@ -249,6 +249,7 @@ class mrp_bom(osv.osv):
                     prop+=1
             if (prop>max_prop) or ((max_prop==0) and not result):
                 result = bom.id
+                max_prop = prop
         return result
 
     def _bom_explode(self, cr, uid, bom, factor, properties, addthis=False, level=0):
@@ -854,7 +855,8 @@ class mrp_procurement(osv.osv):
     #
     def _quantity_compute_get(self, cr, uid, proc, context={}):
         if proc.product_id.type=='product':
-            return proc.move_id.product_uos_qty
+            if proc.move_id.product_uos:
+                return proc.move_id.product_uos_qty
         return False
 
     def _uom_compute_get(self, cr, uid, proc, context={}):
@@ -1044,7 +1046,7 @@ class mrp_procurement(osv.osv):
 
             price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id], procurement.product_id.id, qty, False, {'uom': uom_id})[pricelist_id]
 
-            newdate = DateTime.strptime(procurement.date_planned, '%Y-%m-%d %H:%M:%S') - DateTime.RelativeDateTime(days=procurement.product_id.product_tmpl_id.seller_delay or 0.0)
+            newdate = DateTime.strptime(procurement.date_planned, '%Y-%m-%d %H:%M:%S')
             newdate = newdate - DateTime.RelativeDateTime(days=company.po_lead)
             context.update({'lang':partner.lang})
             product=self.pool.get('product.product').browse(cr,uid,procurement.product_id.id,context=context)
