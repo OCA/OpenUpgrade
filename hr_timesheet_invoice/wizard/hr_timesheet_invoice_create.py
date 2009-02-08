@@ -128,7 +128,7 @@ class invoice_create(wizard.interface):
                 #
                 # Compute for lines
                 #
-                cr.execute("SELECT * FROM account_analytic_line WHERE account_id = %s and id IN (%s) AND product_id=%s and to_invoice=%s", (account.id, ','.join(map(str,data['ids'])), product_id, factor_id))
+                cr.execute("SELECT * FROM account_analytic_line WHERE account_id = %s and id = ANY (%s) AND product_id=%s and to_invoice=%s", (account.id, data['ids'], product_id, factor_id))
                 line_ids = cr.dictfetchall()
                 note = []
                 for line in line_ids:
