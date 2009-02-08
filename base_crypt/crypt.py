@@ -219,7 +219,8 @@ class users(osv.osv):
     # Add handlers for 'input_pw' field.
 
     def set_pw( self, cr, uid, id, name, value, args, context ):
-        self.write( cr, uid, id, { 'password' : encrypt_md5( value, gen_salt() ) } )
+	if (value):
+        	self.write( cr, uid, id, { 'password' : encrypt_md5( value, gen_salt() ) } )
         del value
 
     def get_pw( self, cr, uid, ids, name, args, context ):
