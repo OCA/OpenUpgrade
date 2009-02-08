@@ -134,7 +134,7 @@ class make_call_list(wizard.interface):
                 case['date'] = form['date_call']
 
             case_id = case_obj.create(cr, uid, case, context)
-            if not case_id:
+            #if not case_id:
 
         result = '%i appel(s) crée(s)' % x
         return {'message': result}
