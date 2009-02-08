@@ -6,23 +6,44 @@
     <title>Comparison</title>
     
     <script type="text/javascript">
+    	
+    	MochiKit.DOM.addLoadEvent(function(evt){
+    		key = true;
+    		view_erp_detail('',key,'')
+    	});
+    
 	    function view_detail(id) {
 	    	var elem = document.getElementById(id);
 	        elem.style.display = elem.style.display == 'none' ? '' : 'none';
 		}
-		function view_erp_detail(id,p_id) {
+		
+		function view_erp_detail(id, key, parent) {
+		 if(key) {
+		 	var table = getElement('checkboxtext');
+		 	var tr = table.rows[0];
+		 	var td = MochiKit.DOM.getElementsByTagAndClassName('td', null, tr)[0];
+		 	td.style.color = "#990033";
+		 	table.rows[1].style.display = '';
+		 	
+		 }
+		 else {
+		    var p_id = parent.id;
 			var ids = p_id.split(',');
 			for(i in ids)
 			{
 				if(id == ids[i]) {
-					getElement(ids[i]).style.display='';
 					
+					getElement(ids[i]).style.display='';
+					var elem = MochiKit.DOM.getElementsByTagAndClassName('td', null, parent)[i];
+					elem.style.color = "#990033";
 				}
 				else {
 					getElement(ids[i]).style.display='none';
-					
+					var elem = MochiKit.DOM.getElementsByTagAndClassName('td', null, parent)[i]
+					elem.style.color = "#021677";
 				}
 			}
+		 }
 					
 		}
 	</script>
@@ -66,7 +87,7 @@
 		<div>
 			<img src="/static/images/bluebgimage.png"/>
 		</div>
-		<table id="checkboxtext" width="850px" align="center">
+		<table id="checkboxtext" width="850px" align="center" cellspacing="0">
 			<?python
 			    id = ''
 				for i in range(len(res)):
@@ -77,7 +98,7 @@
 						
 			?>
 			<tr id="${id}" width="100%" class="toolbar">
-				<td py:for="r in res" id="'${r['id']}'" onclick="view_erp_detail(${r['id']},this.parentNode.id)" align="center" style="color: #021677; border: 1px solid gray; padding: 2px; white-space:nowrap; font-family: Verdana, Geneva, sans-serif; float: center; width: fixed; cursor: pointer; font-size: 12px;"> 
+				<td py:for="r in res" id="'${r['id']}'" onclick="view_erp_detail(${r['id']},false,this.parentNode)" align="center" style="color: #021677; border: 1px solid gray; padding: 2px; white-space:nowrap; font-family: Verdana, Geneva, sans-serif; float: center; width: fixed; cursor: pointer; font-size: 12px;"> 
 					<b>
 						${r['name']} 
 					</b>		

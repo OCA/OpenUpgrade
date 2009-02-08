@@ -23,12 +23,12 @@
 This is an ETL Component that use to read data from csv file.
 """
 
-from etl import etl
-from etl.connector import file_connector
-import csv
-import datetime
 
-class csv_in(etl.component):
+from etl.component import component
+import csv
+
+
+class csv_in(component.component):
     """
         This is an ETL Component that use to read data from csv file.
        
@@ -64,29 +64,20 @@ class csv_in(etl.component):
 
     def process(self):        
         try:
-            for data in self.reader:
-                try:
-                    chan='main'
-                    for d in data.values():
-                        d=unicode(d)                
-                    self.row_count+=1
-                    if self.row_limit and self.row_count > self.row_limit:
-                         raise StopIteration                                        
-                    if self.transformer:
-                        data,chan=self.transformer.transform(data,chan)
-                    yield data,chan                                     
-                               
-                except UnicodeEncodeError,e:    
-                    error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}                                                                                                
-                    yield error_d,'error'                    
+            for data in self.reader:                               
+                self.row_count+=1
+                if self.row_limit and self.row_count > self.row_limit:
+                     raise StopIteration                                        
+                if self.transformer:
+                    data=self.transformer.transform(data)
+                if data:
+                    yield data,'main'
 
-            # TODO : call statistical iterator
+            
         except TypeError,e:
-            error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}                                                                                             
-            yield error_d,'error'
+            self.action_error(e)
         except IOError,e:
-            error_d={'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()}                                                                                             
-            yield error_d,'error'
+            self.action_error(e)
             
                
         

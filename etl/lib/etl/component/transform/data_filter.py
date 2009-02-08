@@ -31,9 +31,9 @@ class data_filter(component.component):
         Data filter component
     """   
 
-    def __init__(self,name,where_criteria,transformer=None):
+    def __init__(self,name,filter_criteria,transformer=None):
         super(data_filter, self).__init__('(etl.component.transfer.data_filter) '+name,transformer=transformer)         
-        self.where_criteria = where_criteria          
+        self.filter_criteria = filter_criteria          
 
     def process(self):  
         #TODO : proper handle exception. not use generic Exception class      
@@ -45,13 +45,19 @@ class data_filter(component.component):
                     try:
                         if self.transformer:
                             d=self.transformer.transform(d)
-                        where=''
-                        for where_data in self.where_criteria:
-                             where += ' %s %s % %s' % (d[where_data['field']],where_data['operator'],eval(where_data['operand']),where_data['condition'])
-                        if eval(where):                        
+                        filter=''
+                        for filter_data in self.filter_criteria: 
+                             val = d[filter_data['name']]                                                                                                             
+                             _filter = filter_data.get('filter',False)                             
+                             if val and _filter:
+                                 val=eval((_filter) % d)                                
+                             filter += " %s %s %s %s" % (repr(val),filter_data['operator'],filter_data['operand'],filter_data.get('condition',''))
+                        
+                        if self.transformer:
+                            d=self.transformer.transform(d)
+                        if eval(filter):                        
                            yield d, 'main'
                         else:
                            yield d, 'invalid'
-                    except Exception,e:  
-                        print e
+                    except NameError,e:                          
                         self.action_error(e)

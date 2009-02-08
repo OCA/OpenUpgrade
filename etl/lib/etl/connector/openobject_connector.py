@@ -30,25 +30,41 @@ from etl.connector import connector
 
 
 class openobject_connector(connector.connector):    
-    def __init__(self, url, db, uid, passwd, obj='/object',con_type='xmlrpc'):
+    def __init__(self, uri, db, login, passwd, obj='/object',con_type='xmlrpc'):
         super(openobject_connector, self).__init__(uri)        
         self.db = db
-        self.uid = uid
+        self.user_login = login
         self.obj = obj
         self.passwd = passwd
         self.con_type=con_type
-        
+        self.uid = False
 
     def open(self):
         super(openobject_connector, self).open()
         if self.con_type=='xmlrpc':
-            self.connector= xmlrpclib.ServerProxy(url+obj) 
+            self.connector= xmlrpclib.ServerProxy(self.uri+self.obj) 
         elif self.con_type=='socket':
             self.connector= etl_socket.etl_socket()
-            self.obj = obj[1:]
+            self.obj = self.obj[1:]
         else:
-            raise Exception('Not Supported') 
+            raise Exception('Not Supported')        
         return self.connector
+
+    def login(self):
+        internal_connector=openobject_connector(self.uri,self.db,self.user_login,self.passwd,obj='/common')
+        internal_connector.open()
+        self.uid=internal_connector.execute_without_login('login',self.user_login,self.passwd)
+        internal_connector.close()
+        return self.uid
+
+    def logout(self):
+        internal_connector=openobject_connector(self.uri,self.db,self.user_login,self.passwd,obj='/common')
+        internal_connector.open()
+        res=internal_connector.execute_without_login('logout',self.user_login,self.passwd)
+        if res :
+           self.uid=False
+        internal_connector.close()
+        return res 
 
     def __convert(self, result):
         if type(result)==type(u''):
@@ -62,15 +78,31 @@ class openobject_connector(connector.connector):
             return newres
         else:
             return result 
-      
-    def execute(self,method, *args):
+    
+    def execute_without_login(self,method, *args):             
         super(openobject_connector, self).execute()
         if self.con_type=='xmlrpc':
             result = getattr(self.connector,method)(self.db, *args)
             return self.__convert(result)
-        elif self.con_type=='socket':
-            self.connector.connect(self.url)     
+        elif self.con_type=='socket':            
+            self.connector.connect(self.uri)                 
             self.connector.mysend((self.obj, method, self.db)+args)
+            res = self.connector.myreceive()  
+            self.connector.disconnect()       
+            return res
+        else:
+            raise Exception('Not Supported')
+  
+    def execute(self,method, *args):     
+        if not self.uid:
+            raise Exception('Not login')
+        super(openobject_connector, self).execute()
+        if self.con_type=='xmlrpc':
+            result = getattr(self.connector,method)(self.db,self.uid,self.passwd, *args)
+            return self.__convert(result)
+        elif self.con_type=='socket':            
+            self.connector.connect(self.uri)                 
+            self.connector.mysend((self.obj, method, self.db,self.uid,self.passwd)+args)
             res = self.connector.myreceive()  
             self.connector.disconnect()       
             return res
