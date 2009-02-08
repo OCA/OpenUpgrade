@@ -92,21 +92,7 @@ class ecommerce_partner(osv.osv):
                        
             up_data = res_users.read(cr, uid, ecommerce_user.id, [], context)
         return up_data
-    
-    def email_encrypt_code(self, cr, uid, email, context={}):
       
-        cr.execute("select id from res_users where login = %s",(str(email),))
-        result = cr.fetchone()
-        if(result):
-            id = result[0]
-            res_users = self.pool.get('res.users')
-            ecommerce_user = res_users.browse(cr, uid, id)
-            get_data = res_users.read(cr, uid, ecommerce_user.id, [], context)
-            key = hashlib.md5(time.strftime('%Y-%m-%d %H:%M:%S') + email).hexdigest();
-            if(get_data['user_code']==False):
-                res_users.write(cr, uid, get_data['id'], {'user_code': key})
-        return key
-    
     def copy(self, cr, uid, id, default=None, context={}):
         
         name = self.read(cr, uid, [id], ['name'])[0]['name']
@@ -343,8 +329,8 @@ class ecommerce_partner_address(osv.osv):
     _rec_name = "username"
     _name="ecommerce.partner.address"
     _columns={
-        'username':fields.char('Contact Name',size=128,select=True,required=True),
-        'partner_id': fields.many2one('ecommerce.partner', 'Partner', required=True, ondelete='cascade', select=True),
+        'username':fields.char('Contact Name',size=128,select=True),
+        'partner_id': fields.many2one('ecommerce.partner', 'Partner', ondelete='cascade', select=True),
         'type': fields.selection( [ ('default','Default'),('invoice','Invoice'), ('delivery','Delivery'), ('contact','Contact'), ('other','Other') ],'Address Type'),
         'street': fields.char('Street', size=128),
         'street2': fields.char('Street2', size=128),

@@ -6,7 +6,7 @@
     <title>Comparison</title>
 </head>
 <body>
-	<div id="bodybackground">	
+	<div id="bodybackground">
 		<div style="height: 46px; width: 890px; float: left;">
 			<div style="float:left; width:9;">
 				<img src="/static/images/whitebg.gif" alt="" width="9" height="46"/>
@@ -17,7 +17,7 @@
 		    	</a>
 		    </div>
 		    <div style="float:left; width:175; height:46;">
-		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.jpg'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
+		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.png'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
 		    		<img src="/static/images/graphs.jpg" name="graph_image" alt="" border="0" width="175" height="46"/>
 		    	</a>
 		    </div>
@@ -27,13 +27,13 @@
 		    	</a>
 		    </div>
 		    <div style="float:left; width:176;">
-		    	<a href="#" onclick="window.location.href='/document'" onmouseover="document.document_image.src='/static/images/document_hover.jpg'" onmouseout="document.document_image.src='/static/images/document.jpg'">
-		    		<img src="/static/images/document.jpg" name="document_image" alt="" border="0" width="176" height="46"/>
+		    	<a href="#" onclick="window.location.href='/news'" onmouseover="document.news_image.src='/static/images/news_hover.jpg'" onmouseout="document.news_image.src='/static/images/news.jpg'">
+		    		<img src="/static/images/news.jpg" name="news_image" alt="" border="0" width="176" height="46"/>
 		    	</a>
 		    </div>
 		    <div style="float:left; width:173;">
 		    	<a href="#" onclick="window.location.href='/about'">
-		    		<img src="/static/images/about_hover.jpg" name="about_image" alt="" border="0" width="173" height="46"/>
+		    		<img src="/static/images/about_hover.png" name="about_image" alt="" border="0" width="173" height="46"/>
 		    	</a>
 		    </div>
 		    <div style="float:left; width:9;">
@@ -45,109 +45,111 @@
 		</div>
 	
 		<div id="checkboxtext" style="margin: auto; width: 850px; font-family: Verdana, Geneva, sans-serif; font-style: normal; font-size: 12px;">
-			<b>Introduction</b><br/>
+			<b style="color: #021677;">Introduction</b><br/>
 			
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				Evaluation-Matrix is a collaborative platform dedicated to evaluate current
 				best enterprise management softwares. We focus on a pragmatic approach based
 				on reliable and quantifiable criterions.
 			</p>
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				Evaluation-Matrix follows two different objectives:<br/>
 				* Building a rated features list reflecting users most common needs and,<br/>
 				* Having a way to evaluate available softwares on the market.
 			</p>
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				Our first goal is to precisely define the list of criterions most requested on
 				the market. This list is hierarchised based on users most common needs. A
 				ponderation is defined on each criterion to reflect the demand on each
 				particular feature. The highest the ponderation is, the most requested the
 				feature is.
 			</p>
-			<p style="text-align: justify;">	
+			<p style="text-align: justify; color: #252a28;">	
 				Based on this list of criterions, our second goal is to evaluate the
 				functionnal and technical coverage of the most used softwares. This allows
 				us to display the result as an evaluation matrix, comparing the different
 				solutions.
 			</p>
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				As to maintain and constantly improve the criterions and features list,
 				Evaluation-Matrix is based on a collaborative approach. Each user can propose
 				new criterions, vote for the pondderation of a criterion or help to evaluate
 				a particular software.
 			</p>
 			
-			<b>Methodology</b><br/>
+			<b style="color: #021677;">Methodology</b><br/>
 			
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				Evaluating a software is not an easy task as much of the features are present
 				in several softwares in different forms: from the simplest and easiest one to
 				the complete but complex ones. As to avoid subjectivness of contributors, we
 				decided to base our evaluation criterions based on factual data.
 			</p>
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				For example, we do not try to judge or vote on the quality of a feature because
 				it depends too much on the need of a user. So, we perfer computing the quality
 				of a feature based on the availability or not of sub-features.
 			</p>
 			<p style="text-align: justify;">
-				<ul><i>Bad criterions :</i>
-				<li>Has the software a good multi-warehouse stock management system ? <br/>
+				<ul><u><i style="color: #062a1e;">Bad criterions :</i></u>
+				<li style="color: #252a28;">Has the software a good multi-warehouse stock management system ? <br/>
 					- Adjectives like 'good' are too subjective, you should only focus on the
 					  existance or not of some features.</li>
-				<li>Does the software has an analytic accounting module ?<br/>
+				<li style="color: #252a28;">Does the software has an analytic accounting module ?<br/>
 					- This question is not precise. All accouting software have analytic
 					  accounting features. So this should be a features with several children
 					  criterions to compute the quality of the analytic accounting solution.</li>
-				<li>Ability to create a product form ?<br/>
+				<li style="color: #252a28;">Ability to create a product form ?<br/>
 					- This question is not usefull as all software will fit this criterion.</li></ul>
-				<ul><i>Good criterions :</i>
-				<li>Can you define an unlimitted number of warehouses for stock management ?</li></ul>
+				<ul><u><i style="color: #062a1e;">Good criterions :</i></u>
+				<li style="color: #252a28;">Can you define an unlimitted number of warehouses for stock management ?</li></ul>
 			</p>
 					
-			<b>How to propose a new application ?</b><br/>
-			<p style="text-align: justify;">
+			<b style="color: #021677;">How to propose a new application ?</b><br/>
+			<p style="text-align: justify; color: #252a28;">
 				We plan to extend the platform to evaluate any kind of enterprise management
 				application. From the complete ERP to the smallest application dedicated to a
 				very specific need.
 			</p>
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				&lt;Contact us&gt; if you want to suggest new applications to be included in the
 				list. Send us a description of the application, the links to the editor website
 				and the &lt;following file&gt; where you have completed the second column. Keep empty
 				the cells for which you don't know the exact answer.
 			</p>
-			<p style="text-align: justify;">
-				To contact us, send an email to contact@evaluation-matrix.com.
+			<p style="text-align: justify; color: #252a28;">
+				To contact us, send an email to 
+				<a href="mailto:info@evaluation-matrix.com" class="a"> contact@evaluation-matrix.com.
+				</a>
 			</p>
-			<p style="text-align: justify;">
-				<b>NOTE :</b> following file, must be a link to a .csv file with :<br/>
+			<p style="text-align: justify; color: #252a28;">
+				<b style="color: #021677;">NOTE :</b> following file, must be a link to a .csv file with :<br/>
 	  			id<br/>
 	  			criterion_name<br/>
 	  			evaluation (empty column)<br/>
 			</p>
 	
-			<b>About Us</b><br/>
+			<b style="color: #021677;">About Us</b><br/>
 	
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				Evaluation-Matrix has been made by a group of people sharing the same
 				interrests in enterprise management softwares. We often have to compare
 				different softwares or find the software that fits best the customer need.
 				As to avoid redoing each time the same study or comparisons, we decided to
 				setup this platform.
 			</p>
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				In january 2009, we launched evaluation-matrix starting with the current 5 most
 				important ERP softwares in the world: SAP, Microsoft Navision, Sage L100, Open
 				ERP and Open Bravo.
 			</p>
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				To start with a complete content, we sub-contracted evaluations for the softwares
 				we did not had any specific knowledge. It allowed us to launch evaluation-matrix
 				with about 800 criterions and the evaluation of these criterions for the
 				selected softwares.
 			</p>
-			<p style="text-align: justify;">
+			<p style="text-align: justify; color: #252a28;">
 				We plan to extend the evaluation matrix to new applications. Feel free to contact
 				us to send us a suggestion.
 			</p>

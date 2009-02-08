@@ -287,8 +287,9 @@ class esale_joomla_order(osv.osv):
                     'product_uom': line.product_uom_id.id,
                     'price_unit': line.price_unit,
                 }
+                fpos = order.partner_id.property_account_position and order.partner_id.property_account_position.id or False
                 val_new = self.pool.get('sale.order.line').product_id_change(cr, uid, None, pricelist_id, line.product_id.id, line.product_qty,
-                                                                             line.product_uom_id.id, name=line.name)['value']
+                                                                             line.product_uom_id.id, name=line.name, partner_id=order.partner_id.id, fiscal_position=fpos)['value']
                 del val_new['price_unit']
                 #del val_new['weight']
                 del val_new['th_weight']

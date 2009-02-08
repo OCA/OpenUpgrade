@@ -54,6 +54,7 @@
                     <field name="code" select="1"/>
                     <field name="version"/>
                     <field name="user_id" select="1"/>
+                    <field name="load_default" />
                     <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
                     <newline/>
                     <field name="note" colspan="4"/>
@@ -71,6 +72,8 @@
                 <tree string="Comaparison Items">
                     <field name="name"/>
                     <field name="version"/>
+                    <field name="code"/>
+                    <field name="load_default"/>
                 </tree>
             </field>
         </record>
@@ -189,7 +192,7 @@
                     <field name="factor_id" select="1"/>
                     <field name="item_id" select="1"/>
                     <field name="result" select="2"/>
-                    <field name="votes"/>
+                    <field name="votes" select="2"/>
                 </tree>
             </field>
         </record>
@@ -346,6 +349,39 @@
         
         <menuitem id="menu_comparison_suggestions" parent="menu_comparison" action="action_suggest_ponderation"/>
         <menuitem action="action_view_suggest_ponderation_form" id="menu_action_view_suggest_ponderation_form" parent="menu_comparison_suggestions"/>
+        
+        <record id="view_evaluation_pack_form" model="ir.ui.view">
+            <field name="name">evaluation.pack.form</field>
+            <field name="model">evaluation.pack</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Evaluation Pack">
+                    <field name="name" select="1"/>
+                    <newline/>
+                    <field name="item_ids"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_evaluation_pack_tree" model="ir.ui.view">
+            <field name="name">evaluation.pack.tree</field>
+            <field name="model">evaluation.pack</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Evaluation Pack">
+                    <field name="name" select="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_evaluation_pack_tree" model="ir.actions.act_window">
+            <field name="name">Item Packs</field>
+            <field name="res_model">evaluation.pack</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem action="action_evaluation_pack_tree" id="menu_action_evaluation_pack_tree" parent="menu_config_comparison"/>
         
     </data>
 </openerp>

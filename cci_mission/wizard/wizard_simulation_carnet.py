@@ -61,9 +61,9 @@ def _createInvoices(self, cr, uid, data, context):
             message_total += "ID: "+str(carnet.id)+ " , " +'Total Amount to Pay: ' + str(carnet.invoice_id.amount_total) + "\n"
             continue
         context.update({'date':carnet.creation_date})
-
+        fpos = carnet.partner_id.property_account_position and carnet.partner_id.property_account_position.id or False
         for product_line in carnet.product_ids:#extra Products
-            val = obj_lines.product_id_change(cr, uid, [], product_line.product_id.id,uom =False, partner_id=carnet.partner_id.id)
+            val = obj_lines.product_id_change(cr, uid, [], product_line.product_id.id,uom =False, partner_id=carnet.partner_id.id, fposition_id=fpos)
             val['value'].update({'product_id' : product_line.product_id.id })
             val['value'].update({'quantity' : product_line.quantity })
             val['value'].update({'price_unit':product_line.price_unit})

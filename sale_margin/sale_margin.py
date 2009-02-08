@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -34,6 +34,7 @@ class sale_order_line(osv.osv):
             res[line.id] = 0
             if line.product_id:
                 res[line.id] = round((line.price_unit*line.product_uos_qty*(100.0-line.discount)/100.0) -(line.product_id.standard_price*line.product_uos_qty),2)
+                print res
         return res
 
     _columns = {
@@ -47,12 +48,15 @@ class sale_order(osv.osv):
 
     def _product_margin(self, cr, uid, ids, field_name, arg, context):
         # need to check with new requirement
-        id_set = ",".join(map(str, ids))        
+        id_set = ",".join(map(str, ids))
         cr.execute("""
             SELECT
                 s.id,
-                COALESCE(SUM(l.price_unit*l.product_uos_qty*(100-l.discount)/100.0 - t.standard_price * l.product_uos_qty) - i.amount_untaxed,0)::decimal(16,2) AS amount
-            FROM
+        COALESCE(SUM((l.price_unit*l.product_uos_qty*(100-l.discount)/100.0)- (t.standard_price * l.product_uos_qty))
+         - CASE
+         WHEN i.amount_untaxed IS NULL THEN 0
+         ELSE i.amount_untaxed END) ::decimal(16,2) AS amount
+             FROM
                 sale_order s
             LEFT OUTER JOIN sale_order_line l ON (s.id=l.order_id)
             LEFT JOIN product_product p ON (p.id=l.product_id)
@@ -72,11 +76,11 @@ sale_order()
 
 class stock_picking(osv.osv):
     _inherit = 'stock.picking'
-    
+
     _columns = {
         'invoice_ids': fields.many2many('account.invoice', 'picking_invoice_rel', 'picking_id', 'invoice_id', 'Invoices', domain=[('type','=','in_invoice')]),
     }
-    
+
     def create_invoice(self, cr, uid, ids, *args):
         # need to carify with new requirement
         res = False
@@ -86,7 +90,7 @@ class stock_picking(osv.osv):
         picking_obj.write(cr, uid, ids, {'invoice_state' : '2binvoiced'})
         res = picking_obj.action_invoice_create(cr, uid, ids, type='out_invoice', context={})
         invoice_ids = res.values()
-        picking_obj.write(cr, uid, ids,{'invoice_ids':[[6,0,invoice_ids]]})        
+        picking_obj.write(cr, uid, ids,{'invoice_ids':[[6,0,invoice_ids]]})
         return True
 stock_picking()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -27,6 +27,7 @@ Based on previous work of Pablo Rocandio & Zikzakmedia (version for 4.2).
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+        'security/ir.model.access.csv',
         "payment_wizard.xml",
         "payment_view.xml",
         "payment_sequence.xml",

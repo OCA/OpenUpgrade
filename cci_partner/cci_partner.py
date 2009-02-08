@@ -28,6 +28,19 @@ class res_company(osv.osv):
     _inherit = 'res.company'
     _description = 'res.company'
 
+    def _get_default_ad(self, addresses):
+        city = post_code = address = False
+        for ads in addresses:
+            if ads.type == 'default':
+                if ads.zip_id:
+                    city = ads.zip_id.city
+                    post_code = ads.zip_id.name
+                if ads.street:
+                    address = ads.street
+                if ads.street2:
+                    address += ads.street2
+        return city, post_code, address
+
     _columns = {
         'federation_key' : fields.char('ID for the Federation',size=50,help="ID key for the sending of data to the belgian CCI's Federation"),
     }

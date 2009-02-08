@@ -23,26 +23,22 @@
 This is an ETL Component that use to perform sort operation.
 """
 
-from etl import etl
+from etl.component import component
 
-class sort(etl.component):
+class sort(component.component):
     """
         This is an ETL Component that use to perform sort operation.
  
-		Type: Data Component
-		Computing Performance: Semi-Streamline
-		Input Flows: 1
-		* .* : the main data flow with input data
-		Output Flows: 0-x
-		* .* : return the main flow with sort result
-    """
+        Type: Data Component
+        Computing Performance: Semi-Streamline
+        Input Flows: 1
+        * .* : the main data flow with input data
+        Output Flows: 0-x
+        * .* : return the main flow with sort result
+    """    
 
-    _name='etl.component.process.sort'  
-    _description='This is an ETL Component that use to perform sort operation.'   
-    _author='tiny'
-
-    def __init__(self, fieldname, *args, **argv):
-        super(sort, self).__init__(*args, **argv)
+    def __init__(self, name,fieldname):
+        super(sort, self).__init__('(etl.component.process.sort) '+name )
         self.fieldname = fieldname
 
     # Read all input channels, sort and write to 'main' channel
@@ -56,3 +52,12 @@ class sort(etl.component):
         datas.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
         for d in datas:
             yield d, 'main'
+
+
+if __name__ == '__main__':
+    from etl_test import etl_test
+    test=etl_test.etl_component_test(sort('sort','name'))
+    test.check_input({'main':[{'id':1, 'name':'OpenERP'},{'id':2,'name':'Fabien'}]})
+    test.check_output([{'id':2, 'name':'OpenERP'},{'id':1,'name':'Fabien'}],'main')
+    res=test.output()
+    

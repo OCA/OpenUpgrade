@@ -23,9 +23,9 @@
 This is an ETL Component that use to display log detail in end of process.
 """
 
-from etl import etl
+from etl.component import component
 import sys
-class logger_bloc(etl.component):
+class logger_bloc(component.component):
     """
         This is an ETL Component that use to display log detail in end of process.
        
@@ -35,18 +35,15 @@ class logger_bloc(etl.component):
 		* .* : the main data flow with input data
 		Output Flows: 0-y
 		* .* : return the main flow 
-    """
-
-    _name='etl.component.process.logger_bloc'  
-    _description='This is an ETL Component that use to display log detail in end of process.'   
-    _author='tiny'
-    def __init__(self, name, output=sys.stdout, *args, **argv):
+    """    
+    def __init__(self, name, output=sys.stdout):
         self.name = name
         self.output = output
         self.is_end = 'main'
-        super(logger_bloc, self).__init__(*args, **argv)
+        super(logger_bloc, self).__init__('(etl.component.output.logger_bloc) '+name)
 
     def process(self):
+        #TODO : proper handle exception
         datas=[]
         for channel,trans in self.input_get().items():
             for iterator in trans:

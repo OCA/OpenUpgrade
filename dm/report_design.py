@@ -22,7 +22,7 @@ class offer_document(rml_parse):
         self.context = context        
     def document(self):
         dm_customer_order = pooler.get_pool(self.cr.dbname).get('dm.customer.order')        
-        dm_customer_plugin = pooler.get_pool(self.cr.dbname).get('dm.customer.plugin')
+        dm_plugins_value = pooler.get_pool(self.cr.dbname).get('dm.plugins.value')
         order_id = dm_customer_order.search(self.cr,self.uid,[('offer_step_id','=',self.ids)])
         order = dm_customer_order.browse(self.cr,self.uid,order_id)
         customer_id = map(lambda x:x.customer_id.id,order)
@@ -30,8 +30,8 @@ class offer_document(rml_parse):
         for cust in customer_id:
             vals={}
             vals['cust_id'] = cust
-            plugin_ids = dm_customer_plugin.search(self.cr,self.uid,[('customer_id','=',cust)])
-            plugin_values = dm_customer_plugin.read(self.cr,self.uid,plugin_ids,['plugin_id','value'])
+            plugin_ids = dm_plugins_value.search(self.cr,self.uid,[('customer_id','=',cust)])
+            plugin_values = dm_plugins_value.read(self.cr,self.uid,plugin_ids,['plugin_id','value'])
             for plugin in plugin_values:
                 vals[str(plugin['plugin_id'][0])]=plugin['value']
             res.append(vals)
@@ -42,31 +42,28 @@ from report.report_sxw import report_sxw
 def my_register_all(db,report=False):
     opj = os.path.join
     cr = db.cursor()
+    result=''
     cr.execute("SELECT * FROM ir_act_report_xml WHERE model=%s ORDER BY id", ('dm.offer.document',))
     result = cr.dictfetchall()
-    if result :
-        cr.close()
-        for r in result:
-            if netsvc.service_exist('report.'+r['report_name']):
-                continue
-            if r['report_rml'] or r['report_rml_content_data']:
-                report_sxw('report.'+r['report_name'], r['model'],
-                        opj('addons',r['report_rml'] or '/'), header=r['header'],parser=offer_document)
-    else :
-        cr.execute("SELECT * FROM ir_act_report_xml WHERE auto=%s ORDER BY id", (True,))
-        result = cr.dictfetchall()
-        cr.close()
-        for r in result:
-            if netsvc.service_exist('report.'+r['report_name']):
-                continue
-            if r['report_rml'] or r['report_rml_content_data']:
-                print opj('addons',r['report_rml'] or '/')
-                report_sxw('report.'+r['report_name'], r['model'],
-                        opj('addons',r['report_rml'] or '/'), header=r['header'])
-            if r['report_xsl']:
-                interface.report_rml('report.'+r['report_name'], r['model'],
-                        opj('addons',r['report_xml']),
-                        r['report_xsl'] and opj('addons',r['report_xsl']))
+    for r in result:
+        if netsvc.service_exist('report.'+r['report_name']):
+            continue
+        if r['report_rml'] or r['report_rml_content_data']:
+            report_sxw('report.'+r['report_name'], r['model'],
+                    opj('addons',r['report_rml'] or '/'), header=r['header'],parser=offer_document)
+    cr.execute("SELECT * FROM ir_act_report_xml WHERE auto=%s ORDER BY id", (True,))
+    result = cr.dictfetchall()
+    cr.close()
+    for r in result:
+        if netsvc.service_exist('report.'+r['report_name']):
+            continue
+        if r['report_rml'] or r['report_rml_content_data']:
+            report_sxw('report.'+r['report_name'], r['model'],
+                    opj('addons',r['report_rml'] or '/'), header=r['header'])
+        if r['report_xsl']:
+            interface.report_rml('report.'+r['report_name'], r['model'],
+                    opj('addons',r['report_xml']),
+                    r['report_xsl'] and opj('addons',r['report_xsl']))
 interface.register_all =  my_register_all
 
 class report_xml(osv.osv):

@@ -30,8 +30,8 @@ class payment_method(osv.osv):
         _name = "payment.method"
         _description = "payment method"
         _columns = {
-            'name': fields.char('Name', size=64, required=False),
-            'shortcut': fields.char('Shortcut', size=64, required=False),
+            'name': fields.char('Name', size=64, required=True),
+            'shortcut': fields.char('Shortcut', size=64, required=True),
              }
         
 payment_method()
@@ -40,8 +40,8 @@ class ecommerce_creditcard(osv.osv):
     _name= "ecommerce.creditcard"
     _description = "Credit Cards"
     _columns = {
-        'name': fields.char('Credit Card Name', size=64),
-        'code': fields.char('Credit Card Code', size=28)
+        'name': fields.char('Credit Card Name', size=64, required=True),
+        'code': fields.char('Credit Card Code', size=28, required=True)
     }
 ecommerce_creditcard()
 
@@ -83,9 +83,9 @@ class ecommerce_payment_received(osv.osv):
         _name = "ecommerce.payment.received"
         _description = "ecommerce payment received"
         _columns = {
-            'transaction_id': fields.char('Uniq Transaction Id', size=128, required=True),
-            'saleorder_id' : fields.many2one('sale.order', 'Sale Order', required=True),
-            'invoice_id' : fields.many2one('account.invoice', 'Invoice', required=True),
+            'transaction_id': fields.char('Uniq Transaction Id', size=128, readonly=True),
+            'saleorder_id' : fields.many2one('sale.order', 'Sale Order'),
+            'invoice_id' : fields.many2one('account.invoice', 'Invoice'),
             'transaction_date' : fields.date('Date', required=True),
             'partner' : fields.many2one('res.partner', 'Partner', required=True),
             'paypal_acc' : fields.many2one('ecommerce.payment', 'Paypal Account', required=True)

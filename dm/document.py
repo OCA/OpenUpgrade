@@ -43,7 +43,7 @@ class dm_ddf_plugin(osv.osv):
     
     def _check_plugin(self, cr, uid, ids=False, context={}):
         dm_document = self.pool.get('dm.offer.document')
-        dm_customer_plugin = self.pool.get('dm.customer.plugin')
+        dm_plugins_value = self.pool.get('dm.plugins.value')
         ddf_plugin = self.pool.get('dm.ddf.plugin')
         dm_customer_order = self.pool.get('dm.customer.order')
         
@@ -55,10 +55,13 @@ class dm_ddf_plugin(osv.osv):
             customer_ids = map(lambda x:x.customer_id.id,order)
             plugins = d.document_template_id.plugin_ids
             for plugin in plugins:
+                args={}
+                if plugin.field.name:
+                    args['field_name']=str(plugin.field.name)
+                    args['field_type']=str(plugin.field.ttype)
                 path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
                 plugin_name = plugin.file_fname.split('.')[0]
                 arguments = plugin.argument_ids
-                args={}
                 for a in arguments:
                     args[str(a.name)]=str(a.value)
                 import sys
@@ -67,7 +70,7 @@ class dm_ddf_plugin(osv.osv):
                 plugin_func = getattr(X,plugin_name)
                 plugin_value = plugin_func(cr,uid,customer_ids,**args)
 
-                map(lambda x :dm_customer_plugin.create(cr,uid,
+                map(lambda x :dm_plugins_value.create(cr,uid,
                             {'date':time.strftime('%Y-%m-%d'),
                              'customer_id':x[0],
                              'plugin_id':plugin.id,
@@ -124,7 +127,10 @@ class dm_ddf_plugin(osv.osv):
         'file_id': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary"),
         'file_fname': fields.char('Filename',size=64),
         'argument_ids' : fields.one2many('dm.plugin.argument', 'plugin_id', 'Argument List'),
-        'note' : fields.text('Description')        
+        'note' : fields.text('Description'),
+        'field' : fields.many2one('ir.model.fields','Customers Field',
+               domain=[('model_id','=','Partner')],
+               context={'model':'res.partner'}),      
      }
 dm_ddf_plugin()
 
@@ -144,6 +150,7 @@ class dm_document_template(osv.osv):
     _columns = {
         'name' : fields.char('Template Name', size=128),
         'plugin_ids' : fields.many2many('dm.ddf.plugin','dm_template_plugin_rel','dm_ddf_plugin_id','dm_document_template_id', 'Plugin'),
+        'note' : fields.text('Description')
         }
     
 #    def write(self, cr, uid, ids, vals, context=None):
@@ -161,16 +168,16 @@ class dm_document_template(osv.osv):
 #        return res                 
 dm_document_template()
 
-class dm_customer_plugin(osv.osv):
-    _name = "dm.customer.plugin"
+class dm_plugins_value(osv.osv):
+    _name = "dm.plugins.value"
     _columns = {
-        'customer_id' : fields.many2one('dm.customer', 'Customer Name'),
+        'customer_id' : fields.many2one('res.partner', 'Customer Name', ondelete="cascade"),
         'plugin_id' : fields.many2one('dm.ddf.plugin', 'Plugin'),
         'value' : fields.char('Value', size=64),
         'date' : fields.date('Date'),
     }
     
-dm_customer_plugin()
+dm_plugins_value()
 
 class dm_offer_document_category(osv.osv):
     _name = "dm.offer.document.category"
@@ -244,6 +251,7 @@ class dm_offer_document(osv.osv):
         'document_template_plugin_ids' : fields.many2many('dm.ddf.plugin','dm_doc_template_plugin_rel',
               'document_id','document_template_plugin_id','Dynamic Plugins',),
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
+        'note' : fields.text('Description')        
     }
     _defaults = {
         'state': lambda *a: 'draft',

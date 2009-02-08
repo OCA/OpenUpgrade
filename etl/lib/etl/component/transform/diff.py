@@ -23,9 +23,9 @@
 This is an ETL Component that use to find diff.
 """
 
-from etl import etl
+from etl.component import component
 
-class diff(etl.component):
+class diff(component.component):
     """
         This is an ETL Component that use to find diff.
         Takes 2 flows in input and detect a difference between these two flows
@@ -43,16 +43,12 @@ class diff(etl.component):
         * removed: return all elements that where in main and not in the second flow
         * added: return all elements from the second flow that are not in main channel
     """
-
-    _name='etl.component.process.diff'  
-    _description='This is an ETL Component that use to find diff.'   
-    _author='tiny'
-    def __init__(self, keys, *args, **argv):
+    def __init__(self, name,keys):
         self.keys = keys
         self.row = {}
         self.diff = []
         self.same = []
-        super(diff, self).__init__(*args, **argv)
+        super(diff, self).__init__('(etl.component.process.diff) '+name)
 
     # Return the key of a row
     def key_get(self, row):
@@ -61,29 +57,30 @@ class diff(etl.component):
             result.append(row[k])
         return tuple(result)
 
-    def process(self):  
-        self.row = {}      
-        for channel,transition in self.input_get().items():            
+    def process(self):
+        #TODO : put try..except block
+        self.row = {}
+        for channel,transition in self.input_get().items():
             if channel not in self.row:
                 self.row[channel] = {}
-            other = None            
+            other = None
             for key in self.row.keys():
                 if key<>channel:
                     other = key
                     break
             for iterator in transition:
-                for r in iterator: 
+                for r in iterator:
                     key = self.key_get(r)
                     if other and (key in self.row[other]):
                         if self.row[other][key] == r:
-                            yield r, 'same'                            
+                            yield r, 'same'
                         else:
-                            yield r, 'update' 
+                            yield r, 'update'
                         del self.row[other][key]
                     else:
-                        self.row[channel][key] = r         
+                        self.row[channel][key] = r
         todo = ['add','remove']
-        for k in self.row:     
-            channel= todo.pop()                   
+        for k in self.row:
+            channel= todo.pop()
             for v in self.row[k].values():
-                yield v,channel               
+                yield v,channel

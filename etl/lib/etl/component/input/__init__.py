@@ -29,4 +29,6 @@ ETL Input Components:
 
 """
 import csv_in
+import sql_in
+import openobject_in
 

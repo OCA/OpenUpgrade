@@ -23,38 +23,52 @@
 This is an ETL Component that use to write data to csv file.
 """
 
-from etl import etl
+from etl.component import component
 import csv
+import datetime
 
-class csv_out(etl.component):
+class csv_out(component.component):
     """
         This is an ETL Component that use to write data to csv file.
 
-		Type: Data Component
-		Computing Performance: Streamline
-		Input Flows: 0-x
-		* .* : the main data flow with input data
-		Output Flows: 0-1
-		* main : return all data
-    """
-    _name='etl.component.output.csv_out'  
-    _description='This is an ETL Component that use to write data to csv file.'   
-    _author='tiny'
+        Type: Data Component
+        Computing Performance: Streamline
+        Input Flows: 0-x
+        * .* : the main data flow with input data
+        Output Flows: 0-1
+        * main : return all data
+    """   
 
-    def __init__(self, filename, *args, **argv):
-        super(csv_out, self).__init__(*args, **argv)
-        self.filename=filename
+    def __init__(self,name,fileconnector,transformer=None,row_limit=0, csv_params={}):
+        super(csv_out, self).__init__('(etl.component.output.csv_out) '+name,transformer=transformer)      
+          
+        self.fileconnector = fileconnector 
+        self.csv_params=csv_params       
+        self.row_limit=row_limit 
+        self.row_count=0                                
+        self.fp=None
+        self.writer=None   
 
-    def process(self):
-        fp2=None
-        datas = []
+    def action_end(self,key,singal_data={},data={}):        
+        super(csv_out, self).action_end(key,singal_data,data)
+        if self.fp:     
+             self.fp.close() 
+        if self.fileconnector:    
+             self.fileconnector.close()        
+
+    def process(self):  
+        #TODO : proper handle exception. not use generic Exception class      
+        datas = []        
         for channel,trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:                    
-                    if not fp2:
-                        fp2 = file(self.filename, 'wb+')
-                        fieldnames = d.keys()
-                        fp = csv.DictWriter(fp2, fieldnames)
-                        fp.writerow(dict(map(lambda x: (x,x), fieldnames)))
-                    fp.writerow(d)
-                    yield d, 'main'
+                for d in iterator:
+                    try:                    
+                        if not self.fp:
+                            self.fp=self.fileconnector.open('wb+')
+                            fieldnames = d.keys()
+                            self.writer = csv.DictWriter(self.fp, fieldnames)
+                            self.writer.writerow(dict(map(lambda x: (x,x), fieldnames)))
+                        self.writer.writerow(d)
+                        yield d, 'main'
+                    except IOError,e:  
+                        self.action_error(e)

@@ -3,7 +3,7 @@ function radarData() {
 	ids = getSelectedItems_graph();
 	ids = map(function(r){return r.id;}, ids);
 	ids = '[' + ids.join(', ') + ']';
-	load_radar(ids);
+	return ids
 }
 
 function getSelectedItems_graph() {
@@ -35,6 +35,53 @@ function getSelectedItems() {
         	return box.id;
        	}
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
+}
+
+function do_login() {
+	user_name = $('user_name').value;
+	password = $('password').value;
+	
+	login_list = '/comparison?user_name='+user_name+'&password='+password;
+	window.location.href = login_list;
+}
+
+function register() {
+	params = {}
+	var req = Ajax.post('/login', params);
+	req.addCallback(function(xmlHttp) {
+		
+		var d = window.mbox.content;
+		d.innerHTML = xmlHttp.responseText;
+		
+		window.mbox.width = 400;
+        window.mbox.height = 250;
+        
+        window.mbox.onUpdate = add_new_user;
+		window.mbox.show();
+	});
+}
+
+function add_new_user() {
+	
+	params = {}
+	params['user_name'] = $('name_user').value;
+	params['password'] = $('passwd').value;
+	params['email'] = $('email').value;
+	
+	if (!params['user_name'] || !params['password'] || !params['email']) {
+		return alert("Fields marked with * are mandatory...");
+	}
+	
+	var req = Ajax.JSON.post('/login/do_login', params);
+	req.addCallback(function(obj){
+		if (obj.res) {
+			window.mbox.hide();
+			window.location.href = '/comparison?user_name='+params['user_name']+'&password='+params['password'];
+		}
+		if (obj.error) {
+			return alert(obj.error);
+		}
+	});
 }
 
 function change_vote(node, pond_val) {
@@ -90,22 +137,27 @@ function add_new_factor() {
 	params['ids'] = [];
 	params['fields'] = [];
 	
-	var req = Ajax.JSON.post('/comparison/data', params);
-    req.addCallback(function(obj){
-    	if(obj.records) {
-    		window.mbox.hide();
-    		try {
-    			var node = comparison_tree.createNode(obj.records[0]);
-        		treenode.appendChild(node);
-    		}
-        	catch(e) {
-        		alert(e);
-        	}
-    	}
-    	if (obj.error) {
-            return alert(obj.error);
-        }
-    });
+	if (!params['factor_id']) {
+		return alert("Fields marked with * are mandatory...");
+	}
+	else {
+		var req = Ajax.JSON.post('/comparison/data', params);
+	    req.addCallback(function(obj){
+	    	if(obj.records) {
+	    		window.mbox.hide();
+	    		try {
+	    			var node = comparison_tree.createNode(obj.records[0]);
+	        		treenode.appendChild(node);
+	    		}
+	        	catch(e) {
+	        		alert(e);
+	        	}
+	    	}
+	    	if (obj.error) {
+	            return alert(obj.error);
+	        }
+	    });
+	}
 }
 
 var onUpdate = function(){
@@ -134,8 +186,8 @@ function open_item_vote(id, header) {
 		var d = window.mbox.content;
 		d.innerHTML = xmlHttp.responseText;
 		
-		window.mbox.width = 600;
-        window.mbox.height = 400;
+		window.mbox.width = 650;
+        window.mbox.height = 500;
         
         window.mbox.onUpdate = item_vote;
 		window.mbox.show();
@@ -144,41 +196,52 @@ function open_item_vote(id, header) {
 
 function item_vote() {
 	
-	treenode = comparison_tree.selection_last;
-	params = {};
-	 
-	child_ids = [];
-	trs = getElementsByTagAndClassName('tr', 'factor_row');
-	for (var i=0; i<trs.length; i++) {
-		child_ids[i] = trs[i].id.split('_')[0];
-	}
-	
-	forEach(child_ids, function(x){
-		params['id'] = x;
-		params['score_id'] = $(x + '_score_id').value;
-		params['item_id'] = $('item_id').value;
+	var treenode = comparison_tree.selection_last;
+	var childnodes = treenode.childNodes; 
 		
-		var req = Ajax.JSON.post('/comparison/update_item_voting', params);
-	    req.addCallback(function(obj){
-	    	if(obj.res) {
-	    		window.mbox.hide();
-	    		forEach(treenode.childNodes, function(y){
-	    			y.update();
-	    		});
-	    		treenode.update();
-			}
-	    	if (obj.error) {
-	            return alert(obj.error);
-	        }
-	    });
+	window.mbox.hide();
+	var i = 1;
+	var val = '';
+	
+	forEach(treenode.childNodes, function(node){
+		var name = node.record.id;
+		var params = {};
+		params['id'] = name;
+		params['score_id'] = $(name + '_score_id').value;
+		params['item_id'] = $('item_id').value;
+		params['note'] = $('note').value;
+		
+		values = "id,"+name+"|score_id,"+$(name + '_score_id').value+"|item_id,"+$('item_id').value+"|note,"+$('note').value;
+		
+		if (i != treenode.childNodes.length) {
+			val += values + '!';
+			i++;
+		}
+		else {
+			val += values;
+		}
 	});
-//	while (treenode && treenode.parentNode) {
-//		treenode.update();
-//		treenode = treenode.parentNode;
-//	}
+	
+	var req = Ajax.JSON.post('/comparison/update_item_voting?_terp_values='+val);
+    req.addCallback(function(obj){
+    	if(obj.res) {
+    		forEach(childnodes, function(node){
+    			node.update();
+    		});
+    		while (treenode && treenode.parentNode) {
+				treenode.update();
+				treenode = treenode.parentNode;
+			}
+		}
+    	if (obj.error) {
+            return alert(obj.error);
+        }
+    });
+	
 }
-
-function load_radar(ids) {
+function load_radar() {
+	
+	ids = radarData();
 	
 	factor_name= $('factors').value;
 	factor_name = factor_name.replace(/&/g, "@");
@@ -187,6 +250,16 @@ function load_radar(ids) {
 	
 	swfobject.embedSWF("/static/open-flash-chart.swf", "radar_chart", "700", "700",
 						"9.0.0", "expressInstall.swf", {'data-file': list});
+}
+
+function load_planet() {
+	params = {}
+	var req = Ajax.post('/static/planet_comparison/me-meta/output/index.html', params);
+	
+	req.addCallback(function(xmlHttp){
+		div = $('load_planet');
+		div.innerHTML = xmlHttp.responseText;
+	});
 }
 
 function on_button_click(evt, node) {

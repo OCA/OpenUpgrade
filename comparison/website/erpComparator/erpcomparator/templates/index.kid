@@ -20,7 +20,7 @@
 		    </div>
 		    
 		    <div style="float:left; width:175; height:46;">
-		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.jpg'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
+		    	<a href="#" onclick="window.location.href='/graph'" onmouseover="document.graph_image.src='/static/images/graphs_hover.png'" onmouseout="document.graph_image.src='/static/images/graphs.jpg'">
 		    		<img src="/static/images/graphs.jpg" name="graph_image" alt="" border="0" width="175" height="46"/>
 		    	</a>
 		    </div>
@@ -30,12 +30,12 @@
 		    	</a>
 		    </div>
 		    <div style="float:left;width:176;">
-		    	<a href="#" onclick="window.location.href='/document'" onmouseover="document.document_image.src='/static/images/document_hover.jpg'" onmouseout="document.document_image.src='/static/images/document.jpg'">
-		    		<img src="/static/images/document.jpg" name="document_image" alt="" border="0" width="176" height="46"/>
+		    	<a href="#" onclick="window.location.href='/news'" onmouseover="document.document_image.src='/static/images/news_hover.jpg'" onmouseout="document.document_image.src='/static/images/document.jpg'">
+		    		<img src="/static/images/news.jpg" name="document_image" alt="" border="0" width="176" height="46"/>
 		    	</a>
 		    </div>
 		    <div style="float:left;width:173;">
-		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.jpg'" onmouseout="document.about_image.src='/static/images/about.jpg'">
+		    	<a href="#" onclick="window.location.href='/about'" onmouseover="document.about_image.src='/static/images/about_hover.png'" onmouseout="document.about_image.src='/static/images/about.jpg'">
 		    		<img src="/static/images/about.jpg" name="about_image" alt="" border="0" width="173" height="46"/>
 		    	</a>
 		    </div>

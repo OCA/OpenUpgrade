@@ -12,8 +12,8 @@
 		<field name="arch" type="xml">
 			<tree string="Partners">
 				<field name="name"/>
-				<field name="last_name"></field>
-				<field name="company_name"></field>
+				<field name="last_name"/>
+				<field name="company_name"/>
 				<field name="lang"/>
 				<field name="category_ids"/>
 			</tree>
@@ -25,10 +25,10 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Partners">
-				<field name="name" select="1" colspan="2"/>
-				<field name="last_name" select="2" colspan="2"/>
-				<field name="lang" select="2"/>
+				<field name="name" select="1" />
+				<field name="last_name" select="2" />
 				<field name="company_name" select="2"></field>
+				<field name="lang" select="2"/>
 				<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
 						<form string="Partner contacts">
 							<field name="username" select="2"/>
@@ -61,7 +61,7 @@
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_partner_ecommerce_form">
-		<field name="name">Partner</field>
+		<field name="name">Partners</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">ecommerce.partner</field>
 		<field name="view_type">form</field>
@@ -92,7 +92,7 @@
 		<field name="model">ecommerce.partner.address</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Partners Contacts">
+			<form string="Partner Contacts">
 				<field name="partner_id" colspan="4" select="1"/>
 				<newline/>
 				<field name="username" select="1"/>
@@ -116,7 +116,7 @@
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_partner_ecommerce_address_form">
-		<field name="name">Partner</field>
+		<field name="name">Partner Contacts</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">ecommerce.partner.address</field>
 		<field name="view_type">form</field>

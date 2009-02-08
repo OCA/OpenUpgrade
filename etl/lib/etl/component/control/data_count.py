@@ -25,9 +25,9 @@
 
 """
 
-from etl import etl
+from etl.component import component
 
-class control_count(etl.component):
+class control_count(component.component):
     """
     ETL Data Count Control Component:
     * calculate total of tranfering data

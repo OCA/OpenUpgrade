@@ -1,7 +1,4 @@
 from osv import fields,osv
-import tools
-import ir
-import pooler
 from mx import DateTime
 
 #TODO make this configurable parameters:
@@ -149,7 +146,8 @@ class stock_picking(osv.osv):
                             self.pool.get('account.invoice.line').write(cr, uid, invoice_line.id, {'maintenance_start_date':order_line.maintenance_start_date, \
                                                                                                    'maintenance_end_date':order_line.maintenance_end_date, \
                                                                                                    'maintenance_product_qty':order_line.maintenance_product_qty, \
-                                                                                                   })
+                                                                                                   'account_analytic_id':order_line.product_id.maintenance_analytic_id.id \
+                                                                                                   }) #TODO, we could use product categories to retrieve the maintenance_analytic_id
                         if order_line.fleet_id: #product sent to fleet but not maintenance -> we copy the information too
                             self.pool.get('account.invoice.line').write(cr, uid, invoice_line.id, {'fleet_id':order_line.fleet_id.id})
                     

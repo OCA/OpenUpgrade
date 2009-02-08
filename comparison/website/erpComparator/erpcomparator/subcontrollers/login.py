@@ -6,53 +6,40 @@ import cherrypy
 from erpcomparator import rpc
 from erpcomparator import tools
 from erpcomparator import common
+from erpcomparator.tinyres import TinyResource
 
-class Login(controllers.Controller):
+class Login(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.login")
     def index(self):
-        
-        userinfo = cherrypy.session.get('user_info', '')
-        message = None
-        user_name = None
-        password = None
-        
-        return dict(message=message, userinfo=userinfo)
-    
-    @expose(template="erpcomparator.subcontrollers.templates.login")
+        return dict()
+   
+    @expose('json')
     def do_login(self, **kw):
         
-        userinfo = None
-        message = None
-        user_name = kw.get('user')
+        name = kw.get('user_name')
         password = kw.get('password')
+        email = kw.get('email')
         
         model = 'comparison.user'
         
-        proxy = rpc.RPCProxy(model)
-        ids = proxy.search([])
-        res = proxy.read(ids, ['name', 'password'])
-        
-        for r in res:
-            if r['name'] == user_name and r['password'] == password:
-                login_info = {}
-                login_info['name'] = user_name
-                login_info['password'] = password
+        user_proxy = rpc.RPCProxy(model)
                 
-                cherrypy.session['login_info'] = login_info
+        res = None
+        error = ''
         
-        if cherrypy.session.get('login_info'):
-            raise redirect('/index/')
-        else:
-            message = "Username or password is invalid."
-            return dict(userinfo=userinfo, message=message)
-    
-    @expose(template="erpcomparator.templates.index")
+        try:
+            res = user_proxy.create({'name': name, 'password': password, 'email': email})
+        except Exception, e:
+            return dict(res=res, error=str(e))
+        
+        if res:
+            return dict(res=res, error=error)
+        
+    @expose()
     def logout(self):
-        if cherrypy.session.get('login_info'):
-            cherrypy.session['login_info'] = None
-            
-        return dict()
+        cherrypy.session['login_info'] = None
+        raise redirect('/comparison')
     
     
     

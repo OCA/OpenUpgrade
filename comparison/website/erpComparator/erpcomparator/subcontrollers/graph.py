@@ -7,8 +7,9 @@ import urllib
 
 from erpcomparator import rpc
 from erpcomparator import common
+from erpcomparator.tinyres import TinyResource
 
-class Graph(controllers.Controller):
+class Graph(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.graph")
     def index(self, **kw):
@@ -41,10 +42,10 @@ class Graph(controllers.Controller):
         
         selected_fact = None
         
-        if view_factor_id:
-            factors = proxy_factor.search([('id', '=', [view_factor_id])])
-        else:
-            factors = proxy_factor.search([('parent_id', '=', False)])
+#        if view_factor_id:
+#            view_factors = proxy_factor.search([('id', '=', [view_factor_id])])
+#        else:
+        factors = proxy_factor.search([('parent_id', '=', False)])
         
         parents = proxy_factor.read(factors, ['id', 'name'])
         
@@ -63,8 +64,18 @@ class Graph(controllers.Controller):
                     child['name'] = pname.get('name') + '/' + level2.get('name')
                     child['id'] = level2.get('id')
                     all_child += [child]
-                
-        return dict(titles=titles, parents=parents, all_child=all_child, selected_fact=selected_fact)
+        
+        view_name = None
+        
+        if view_factor_id:
+            view = {}
+            view_id = proxy_factor.read([view_factor_id], ['name'])
+            view_name = view_id[0].get('name')
+            view['id'] = view_id[0].get('id')
+            view['name'] = view_name
+            all_child += [view]
+            
+        return dict(titles=titles, parents=parents, view_name=view_name, all_child=all_child, selected_fact=selected_fact)
 
     @expose('json')
     def radar(self, **kw):
@@ -85,8 +96,8 @@ class Graph(controllers.Controller):
             ch_ids = proxy_factor.read(list, ['name'])
             
             for ch in ch_ids:
-                cname = {}
-                cname['name'] = ch['name']
+                cname = {}                
+                cname['name'] = ch['name'][:18]
                                 
                 child_ids += [ch['id']]
                 child_name += [cname]
@@ -101,7 +112,7 @@ class Graph(controllers.Controller):
             
             for ch in child_list:
                 cname = {}
-                cname['name'] = ch['name']
+                cname['name'] = ch['name'][:18]
                 child_name += [cname]
         
         elem = []
@@ -109,7 +120,7 @@ class Graph(controllers.Controller):
         elements["elements"] = [] #Required
         elements["title"] = {}   #Optional
         elements["radar_axis"] = {} #Required
-        elements["tooltip"] = {} #Depend On Choice
+        elements["tooltip"] = {"mouse": 2, "stroke": 1, "colour": "#000000", "background": "#ffffff"} #Depend On Choice
         elements["bg_colour"] = "#ffffff" #Optional
         
         ChartColors = ['#c4a000', '#ce5c00', '#8f5902', '#4e9a06', '#204a87', '#5c3566', '#a40000', '#babdb6', '#2e3436'];
