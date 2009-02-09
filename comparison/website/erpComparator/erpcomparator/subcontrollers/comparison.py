@@ -453,7 +453,7 @@ class Comparison(controllers.Controller, TinyResource):
             for i, j in item.items():
                 for r in factor_res:
                     if j == r.get('factor_id')[1]:
-                        if r.get('result') > 0.0:
+                        if r.get('votes') > 0.0:
                             item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
                         else:
                             item[r.get('item_id')[1]] = "No Vote"
