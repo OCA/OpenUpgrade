@@ -54,7 +54,7 @@
 			</p>
 			<p style="text-align: justify; color: #252a28;">
 				Evaluation-Matrix follows two different objectives:<br/>
-				* Building a rated features list reflecting users most common needs and,<br/>
+				* Building a rated features list reflecting users' most common needs and,<br/>
 				* Having a way to evaluate available softwares on the market.
 			</p>
 			<p style="text-align: justify; color: #252a28;">
@@ -66,14 +66,14 @@
 			</p>
 			<p style="text-align: justify; color: #252a28;">	
 				Based on this list of criterions, our second goal is to evaluate the
-				functionnal and technical coverage of the most used softwares. This allows
+				functional and technical coverage of the most used softwares. This allows
 				us to display the result as an evaluation matrix, comparing the different
 				solutions.
 			</p>
 			<p style="text-align: justify; color: #252a28;">
 				As to maintain and constantly improve the criterions and features list,
 				Evaluation-Matrix is based on a collaborative approach. Each user can propose
-				new criterions, vote for the pondderation of a criterion or help to evaluate
+				new criterions, vote for the ponderation of a criterion or help to evaluate
 				a particular software.
 			</p>
 			
@@ -87,20 +87,20 @@
 			</p>
 			<p style="text-align: justify; color: #252a28;">
 				For example, we do not try to judge or vote on the quality of a feature because
-				it depends too much on the need of a user. So, we perfer computing the quality
-				of a feature based on the availability or not of sub-features.
+				it depends too much on the need of a user. So, we perfer to compute the quality
+				of a feature based on the availability of sub-features, whether they appear or not.
 			</p>
 			<p style="text-align: justify;">
 				<ul><u><i style="color: #062a1e;">Bad criterions :</i></u>
-				<li style="color: #252a28;">Has the software a good multi-warehouse stock management system ? <br/>
+				<li style="color: #252a28;">Does the software have a good multi-warehouse stock management system ? <br/>
 					- Adjectives like 'good' are too subjective, you should only focus on the
-					  existance or not of some features.</li>
-				<li style="color: #252a28;">Does the software has an analytic accounting module ?<br/>
-					- This question is not precise. All accouting software have analytic
-					  accounting features. So this should be a features with several children
+					  existance of some features whether they exist or not.</li>
+				<li style="color: #252a28;">Does the software have an analytic accounting module ?<br/>
+					- This question is not precise. All accouting softwares have analytic
+					  accounting features. So this should be features with several children
 					  criterions to compute the quality of the analytic accounting solution.</li>
 				<li style="color: #252a28;">Ability to create a product form ?<br/>
-					- This question is not usefull as all software will fit this criterion.</li></ul>
+					- This question is not useful as all softwares will fit this criterion.</li></ul>
 				<ul><u><i style="color: #062a1e;">Good criterions :</i></u>
 				<li style="color: #252a28;">Can you define an unlimitted number of warehouses for stock management ?</li></ul>
 			</p>
@@ -108,7 +108,7 @@
 			<b style="color: #021677;">How to propose a new application ?</b><br/>
 			<p style="text-align: justify; color: #252a28;">
 				We plan to extend the platform to evaluate any kind of enterprise management
-				application. From the complete ERP to the smallest application dedicated to a
+				application, from the complete ERP to the smallest application dedicated to a
 				very specific need.
 			</p>
 			<p style="text-align: justify; color: #252a28;">
@@ -119,7 +119,7 @@
 			</p>
 			<p style="text-align: justify; color: #252a28;">
 				To contact us, send an email to 
-				<a href="mailto:info@evaluation-matrix.com" class="a"> contact@evaluation-matrix.com.
+				<a href="mailto:info@evaluation-matrix.com" class="a">info@evaluation-matrix.com.
 				</a>
 			</p>
 			<p style="text-align: justify; color: #252a28;">
@@ -133,20 +133,20 @@
 	
 			<p style="text-align: justify; color: #252a28;">
 				Evaluation-Matrix has been made by a group of people sharing the same
-				interrests in enterprise management softwares. We often have to compare
-				different softwares or find the software that fits best the customer need.
+				interests in enterprise management softwares. We often have to compare
+				different softwares or to find the software that fits best to the customer need.
 				As to avoid redoing each time the same study or comparisons, we decided to
 				setup this platform.
 			</p>
 			<p style="text-align: justify; color: #252a28;">
-				In january 2009, we launched evaluation-matrix starting with the current 5 most
+				In January 2009, we launched evaluation-matrix starting with the current 5 most
 				important ERP softwares in the world: SAP, Microsoft Navision, Sage L100, Open
 				ERP and Open Bravo.
 			</p>
 			<p style="text-align: justify; color: #252a28;">
 				To start with a complete content, we sub-contracted evaluations for the softwares
-				we did not had any specific knowledge. It allowed us to launch evaluation-matrix
-				with about 800 criterions and the evaluation of these criterions for the
+				we did not have any specific knowledge. It allowed us to launch evaluation-matrix
+				with about 950 criterions and the evaluation of these criterions for the
 				selected softwares.
 			</p>
 			<p style="text-align: justify; color: #252a28;">
