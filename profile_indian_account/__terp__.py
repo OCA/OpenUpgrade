@@ -5,9 +5,10 @@
     "author":"Tiny",
     "category":"Profile",
     "depends":[
+        "account_base",
         "l10n_chart_in",
         "account_india_ledger",
-        "account_indian_report"
+        "account_invoice",
         "account_voucher"
         
     ],
