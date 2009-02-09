@@ -12,8 +12,8 @@
     -->
 
     <record model="ir.ui.view" id="view_dm_mail_service_form">
-        <field name="name">dm.mail.service.form</field>
-        <field name="model">dm.mail.service</field>
+        <field name="name">dm.mail_service.form</field>
+        <field name="model">dm.mail_service</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Mail Service">
@@ -21,13 +21,16 @@
                 <field name="partner_id" select="1" />
                 <field name="media_id" select="1"/>
 				<field name="action_id" select="1"/>
+				<field name="action_interval" />
+				<field name="unit_interval" />
+				<field name="default_for_media" on_change="_check_unique_mail_service(media_id,default_for_media)"/>				
             </form>
         </field>
     </record>
 
     <record model="ir.ui.view" id="view_dm_mail_service_tree">
-        <field name="name">dm.mail.service.tree</field>
-        <field name="model">dm_mail_service</field>
+        <field name="name">dm.mail_service.tree</field>
+        <field name="model">dm.mail_service</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Customers">
@@ -39,7 +42,7 @@
     <record model="ir.actions.act_window" id="action_dm_mail_service_form">
         <field name="name">All Mail Service</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.mail.service</field>
+        <field name="res_model">dm.mail_service</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_dm_mail_service_tree"/>        

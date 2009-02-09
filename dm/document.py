@@ -59,6 +59,7 @@ class dm_ddf_plugin(osv.osv):
                 if plugin.field.name:
                     args['field_name']=str(plugin.field.name)
                     args['field_type']=str(plugin.field.ttype)
+                    args['field_relation']=str(plugin.field.relation)
                 path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
                 plugin_name = plugin.file_fname.split('.')[0]
                 arguments = plugin.argument_ids
