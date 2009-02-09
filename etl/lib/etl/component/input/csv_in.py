@@ -56,9 +56,7 @@ class csv_in(component.component):
         self.reader=csv.DictReader(self.fp,**self.csv_params)                                    
 
     def action_end(self,key,singal_data={},data={}):        
-        super(csv_in, self).action_end(key,singal_data,data)
-        if self.fp:     
-             self.fp.close() 
+        super(csv_in, self).action_end(key,singal_data,data)        
         if self.fileconnector:    
              self.fileconnector.close()         
 

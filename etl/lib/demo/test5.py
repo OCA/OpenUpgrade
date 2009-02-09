@@ -8,7 +8,7 @@ from etl import transformer
 
 openobject_partner=etl.connector.openobject_connector.openobject_connector('http://localhost:8069', 'dms_20090205', 'admin', 'admin',con_type='xmlrpc')
 
-transformer_description= {'title':transformer.transformer.STRING,'name':transformer.transformer.STRING,'street':transformer.transformer.STRING,'street2':transformer.transformer.STRING,'birthdate':transformer.transformer.DATE}    
+transformer_description= {'title':transformer.STRING,'name':transformer.STRING,'street':transformer.STRING,'street2':transformer.STRING,'birthdate':transformer.DATE}    
 transformer=transformer.transformer(transformer_description)
 
 openobject_in1= etl.component.input.openobject_in.openobject_in('Partner Data',
