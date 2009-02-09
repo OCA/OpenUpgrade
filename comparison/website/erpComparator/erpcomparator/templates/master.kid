@@ -66,7 +66,7 @@ except:
 					<div id="header_bar"> 
 						<div style="padding: 12px 20px; width: 35%; float: left;">
 							Based on<font color="#FF3300"><b> ${criterions} </b></font>
-							criterions,<font color="#FF3300"><b> ${feedbacks} </b></font>
+							criteria,<font color="#FF3300"><b> ${feedbacks} </b></font>
 							users' feedbacks
 						</div>
 						
