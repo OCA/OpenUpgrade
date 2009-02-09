@@ -382,7 +382,7 @@ TreeNode.prototype = {
 	                	var vals = value.split('|');
 	                	value = vals[0];
 	                	
-	                	var background = '';
+	                	var background = '#FFFFFF';
 	                	if (min_fact || max_fact) {
 	                		if ((value.split('%')[0])==min_fact.toString()){
 		                		background = '#f3dfd9';
@@ -391,7 +391,7 @@ TreeNode.prototype = {
 	        	        		background = '#def3d9';
 	            	    	}
 	                		if (min_fact == max_fact) {
-                				background = '';
+                				background = '#FFFFFF';
                 			}
 	                	}
 	                	
@@ -405,7 +405,7 @@ TreeNode.prototype = {
                 		var vals = value.split('-');
 	                	value = vals[0];
 	                	
-	                	var background = '';
+	                	var background = '#FFFFFF';
 	                	if (min_fact || max_fact) {
 	                		if ((value.split('%')[0])==min_fact.toString()){
 		                		background = '#f3dfd9';
@@ -414,7 +414,7 @@ TreeNode.prototype = {
 	        	        		background = '#def3d9';
 	            	    	}
 	                		if (min_fact == max_fact) {
-                				background = '';
+                				background = '#FFFFFF';
                 			}
 	                	}
 	                	
@@ -428,7 +428,7 @@ TreeNode.prototype = {
                 		value = MochiKit.DOM.DIV(value);
                  	}
                 	else {
-                		var background = '';
+                		var background = '#FFFFFF';
 	                	if (min_fact || max_fact) {
 	                		if ((value.split('%')[0])==min_fact.toString()){
 		                		background = '#f3dfd9';
@@ -437,10 +437,10 @@ TreeNode.prototype = {
 	        	        		background = '#def3d9';
 	            	    	}
 	                		if (min_fact == max_fact) {
-                				background = '';
+                				background = '#FFFFFF';
                 			}
 	                	}
-                		value = MochiKit.DOM.DIV({style: ''}, value);
+                		value = MochiKit.DOM.DIV(value);
                 		td.style.background = background;
                 	}    
                 }
