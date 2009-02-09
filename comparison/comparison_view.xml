@@ -498,5 +498,8 @@
         </record>
         <menuitem action="action_ponderation_cancel" id="menu_action_ponderation_cancel" parent="menu_periodical_suggestions"/>
         
+        <wizard id="wizard_recompute_evaluations" menu="False" name="recompute.evaluations" string="Recompute All Evaluations"/>
+        <menuitem action="wizard_recompute_evaluations" id="menu_wizard_recompute_evaluations" parent="menu_periodical" type="wizard"/>
+        
     </data>
 </openerp>

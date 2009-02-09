@@ -32,7 +32,6 @@ class comparison_user(osv.osv):
         'vote_ids': fields.one2many('comparison.vote', 'user_id', "Votes"),
         'factor_ids': fields.one2many('comparison.factor', 'user_id', "Factors",),
         'suggestion_ids': fields.one2many('comparison.ponderation.suggestion', 'user_id', "Ponderation Suggestions",),
-        
     }
     _defaults = {
         'active': lambda *args: 1,
@@ -286,7 +285,6 @@ class comparison_vote(osv.osv):
     def create(self, cr, uid, vals, context={}, client_call=False):
         result = super(comparison_vote, self).create(cr, uid, vals, context)
         obj_factor = self.pool.get('comparison.factor')
-        obj_factor = self.pool.get('comparison.item')
         obj_factor_result = self.pool.get('comparison.factor.result')
         obj_vote_values = self.pool.get('comparison.vote.values')
         vo = self.browse(cr, uid, result)
@@ -394,8 +392,8 @@ class comparison_factor_result(osv.osv):
 #    
       
     _columns = {
-        'factor_id': fields.many2one('comparison.factor','Factor', ondelete='set null', required=1, readonly=1,),
-        'item_id': fields.many2one('comparison.item','Item', ondelete='set null', required=1, readonly=1),
+        'factor_id': fields.many2one('comparison.factor','Factor', ondelete='cascade', required=1, readonly=1,),
+        'item_id': fields.many2one('comparison.item','Item', ondelete='cascade', required=1, readonly=1),
 #        'result': fields.function(_compute_score, method=True, digits=(16,2), type="float", string='Goodness(%)', readonly=1,),
         'votes': fields.float('Votes', readonly=1),
         'result': fields.float('Goodness(%)', readonly=1, digits=(16,3)),
@@ -444,7 +442,7 @@ class comparison_ponderation_suggestion(osv.osv):
         return True
     
     _columns = {
-        'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
+        'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='set null'),
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade'),
         'ponderation': fields.float('Ponderation',required=True),
         'state': fields.selection([('draft','Draft'),('done','Done'),('cancel','Cancel')],'State',readonly=True),
