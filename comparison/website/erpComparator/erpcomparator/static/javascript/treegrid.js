@@ -346,7 +346,6 @@ TreeNode.prototype = {
             
             if (i > 0) {
                 if (header.type == 'url' && value) {
-                	
                 	// For min and max values...
                 	var j = i;
                 	var min_fact = 101;
@@ -386,10 +385,10 @@ TreeNode.prototype = {
 	                	var background = '';
 	                	if (min_fact || max_fact) {
 	                		if ((value.split('%')[0])==min_fact.toString()){
-		                		background = '#e7c2bc';
+		                		background = '#f3dfd9';
 		                	}
 	    	            	if ((value.split('%')[0])==max_fact.toString()){
-	        	        		background = '#c3eabc';
+	        	        		background = '#def3d9';
 	            	    	}
 	                		if (min_fact == max_fact) {
                 				background = '';
@@ -398,8 +397,9 @@ TreeNode.prototype = {
 	                	
 	                	record.action = vals[1];
 	                	t = vals[2];
-	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black; background:'+background}, value)];
+	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black;'}, value)];
 	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': record.action, 'width' : 16, 'height' : 16}));
+	                    td.style.background = background;
                 	}
                 	else if (value.indexOf('-') != -1) {
                 		var vals = value.split('-');
@@ -408,10 +408,10 @@ TreeNode.prototype = {
 	                	var background = '';
 	                	if (min_fact || max_fact) {
 	                		if ((value.split('%')[0])==min_fact.toString()){
-		                		background = '#e7c2bc';
+		                		background = '#f3dfd9';
 		                	}
 	    	            	if ((value.split('%')[0])==max_fact.toString()){
-	        	        		background = '#c3eabc';
+	        	        		background = '#def3d9';
 	            	    	}
 	                		if (min_fact == max_fact) {
                 				background = '';
@@ -419,7 +419,8 @@ TreeNode.prototype = {
 	                	}
 	                	
 	                	t = vals[1];
-	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold; background:'+background}, value);
+	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold;'}, value);
+	                	td.style.background = background;
                 	}
                 	else if (value.indexOf('@') != -1){
                 		var vals = value.split('@');
@@ -430,19 +431,20 @@ TreeNode.prototype = {
                 		var background = '';
 	                	if (min_fact || max_fact) {
 	                		if ((value.split('%')[0])==min_fact.toString()){
-		                		background = '#e7c2bc';
+		                		background = '#f3dfd9';
 		                	}
 	    	            	if ((value.split('%')[0])==max_fact.toString()){
-	        	        		background = '#c3eabc';
+	        	        		background = '#def3d9';
 	            	    	}
 	                		if (min_fact == max_fact) {
                 				background = '';
                 			}
 	                	}
-                		value = MochiKit.DOM.DIV({style: 'background:'+background}, value);
+                		value = MochiKit.DOM.DIV({style: ''}, value);
+                		td.style.background = background;
                 	}    
                 }
-                
+              
                 if (header.type == 'email' && value) {
                     value = MochiKit.DOM.A({href: 'mailto:' + (record.action || value), target: record.target || '_blank'}, value);    
                 }
@@ -455,10 +457,9 @@ TreeNode.prototype = {
                 if (header.type == 'button' && value) {
                     value = MochiKit.DOM.BUTTON({name: header.name, style: 'cursor: pointer'}, value);
                     value.onclick = MochiKit.Base.bind(this.onButtonClick, this);
-                }
-                
+                } 
             }
-
+			
             MochiKit.DOM.appendChildNodes(td, value);
             if (header.type == "image" || header.type == 'url') {
             	MochiKit.DOM.setNodeAttribute(td, 'width', '5px');
