@@ -376,6 +376,10 @@ class Comparison(controllers.Controller, TinyResource):
         if not fields:
             fields = ['name', 'ponderation', 'child_ids']
         
+        fact_proxy = rpc.RPCProxy('comparison.factor')
+#        For state = open ids only... 
+#        ids = fact_proxy.search([('id', 'in', ids), ('state', '=', 'open')])
+        
         fields_info = proxy.fields_get(fields, ctx)
         result = proxy.read(ids, fields, ctx)
         
@@ -383,7 +387,6 @@ class Comparison(controllers.Controller, TinyResource):
         rids = prx.search([('factor_id', 'in', ids)])            
         factor_res = prx.read(rids)
         
-        fact_proxy = rpc.RPCProxy('comparison.factor')
         c_ids = fact_proxy.search([('type', '!=', 'view'), ('id', 'in', ids)])
         p_ids = fact_proxy.search([('type', '!=', 'view'), ('parent_id', 'in', ids)])
         parent_ids = fact_proxy.read(p_ids, ['parent_id'])
@@ -438,9 +441,9 @@ class Comparison(controllers.Controller, TinyResource):
                             item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
                         else:
                             item[r.get('item_id')[1]] = "No Vote"
+                            
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
                             item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
-                        
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
                             item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
                         else:
