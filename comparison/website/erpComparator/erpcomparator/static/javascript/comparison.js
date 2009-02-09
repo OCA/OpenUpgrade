@@ -38,11 +38,19 @@ function getSelectedItems() {
 }
 
 function do_login() {
-	user_name = $('user_name').value;
-	password = $('password').value;
+	params = {}
+	params['user_name'] = $('user_name').value;
+	params['password'] = $('password').value;
 	
-	login_list = '/comparison?user_name='+user_name+'&password='+password;
-	window.location.href = login_list;
+	var req = Ajax.JSON.post('/login/check_login', params);
+	req.addCallback(function(obj){
+		if (obj.user_info) {
+			window.location.href = '/comparison?user_name='+params['user_name']+'&password='+params['password'];
+		}
+		if (obj.error) {
+			return alert(obj.error);
+		}
+	});
 }
 
 function register() {

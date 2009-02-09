@@ -314,7 +314,7 @@ TreeNode.prototype = {
     	            this.element_a = value;
                 }
                 else {
-                	value = DIV({'href': '#', 'style': 'color: black; display: block; text-decoration: none; max-width: 250px; white-space: normal; cursor: normal;'}, value);
+                	value = DIV({'href': '#', 'style': 'color: black; display: block; text-decoration: none; max-width: 300px; white-space: normal; cursor: normal;'}, value);
     	            this.element_a = value;
                 }
                 

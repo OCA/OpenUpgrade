@@ -19,9 +19,6 @@ class Comparison(controllers.Controller, TinyResource):
     @expose(template="erpcomparator.subcontrollers.templates.comparison")
     def default(self, args=None, **kw):
         
-        user_name = kw.get('user_name')
-        password = kw.get('password')
-        
         selected_items = kw.get('ids', [])
         selected_items = selected_items and eval(str(selected_items))
         
@@ -32,22 +29,6 @@ class Comparison(controllers.Controller, TinyResource):
             selected_items = item_ids[0].get('item_ids')
         
         user_info = cherrypy.session.get('login_info', '')
-        
-        if not user_info:
-            if user_name and password:
-                model = 'comparison.user'
-        
-                proxy = rpc.RPCProxy(model)
-                uids = proxy.search([])
-                ures = proxy.read(uids, ['name', 'password'])
-                
-                for r in ures:
-                    if r['name'] == user_name and r['password'] == password:
-                        login_info = {}
-                        login_info['name'] = user_name
-                        login_info['password'] = password
-                        
-                        cherrypy.session['login_info'] = user_name
         
         model = 'comparison.factor'
         context = rpc.session.context
