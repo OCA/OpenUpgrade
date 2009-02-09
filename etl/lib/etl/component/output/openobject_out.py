@@ -45,11 +45,12 @@ class openobject_out(component.component):
         self.model=model    
         self.row_limit=row_limit 
         self.row_count=0                                
-         
+        self.connector=False 
 
     def action_end(self,key,singal_data={},data={}):        
         super(openobject_out, self).action_end(key,singal_data,data)        
-        if self.openobject_connector:    
+        if self.openobject_connector:  
+             self.openobject_connector.logout()  
              self.openobject_connector.close()        
 
     def process(self):  
@@ -61,12 +62,22 @@ class openobject_out(component.component):
                     try:                    
                         if not self.connector:
                             self.connector=self.openobject_connector.open()
+                            self.openobject_connector.login()
                         if self.transformer:
-                            d=self.transformer.transform(d)
-
-                        res = self.openobject_connector.execute('/object', 'execute', self.model, 'import_data', d.keys(), d)                 
+                            d=self.transformer.transform(d)                        
+                        self.openobject_connector.execute('execute', self.model, 'import_data', d.keys(), [d.values()])                 
                         
                         yield d, 'main'
                     except Exception,e:  
                         print e
                         self.action_error(e)
+
+
+if __name__ == '__main__':    
+    from etl_test import etl_test
+    import etl
+    openobject_conn=etl.connector.openobject_connector.openobject_connector('http://localhost:8069', 'dms_20090204', 'admin', 'admin',con_type='xmlrpc')
+    test=etl_test.etl_component_test(openobject_out('test',openobject_conn,'res.partner'))
+    test.check_input({'main':[{'name':'OpenERP1'},{'name':'Fabien1'}]})
+    test.check_output([{'name':'OpenERP1'},{'name':'Fabien1'}],'main')
+    res=test.output()

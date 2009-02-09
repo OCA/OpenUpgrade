@@ -26,6 +26,12 @@ import socket
 import cPickle
 import marshal
 
+class etl_socket_exception(Exception):
+    def __init__(self, faultCode, faultString):
+        self.faultCode = faultCode
+        self.faultString = faultString
+        self.args = (faultCode, faultString)
+
 DNS_CACHE = {}
 class etl_socket:
     def __init__(self, sock=None):
@@ -41,7 +47,7 @@ class etl_socket:
             protocol, buf = host.split('//')
             host, port = buf.split(':')
         if host in DNS_CACHE:
-            host = DNS_CACHE[host]
+            host = DNS_CACHE[host]        
         self.sock.connect((host, int(port)))
         DNS_CACHE[host], port = self.sock.getpeername()
 
@@ -70,7 +76,7 @@ class etl_socket:
 
         if isinstance(res[0],Exception):
             if exception:
-                raise Myexception(str(res[0]), str(res[1]))
+                raise etl_socket_exception(str(res[0]), str(res[1]))
             raise res[0]
         else:
             return res[0]

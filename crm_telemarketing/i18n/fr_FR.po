@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
-# This file containt the translation of the following modules:
+# This file contains the translation of the following modules:
 #	* crm_telemarketing
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0_rc2\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-01-01 12:18:22+0000\n"
-"PO-Revision-Date: 2009-01-01 13:23+0100\n"
+"POT-Creation-Date: 2009-02-08 23:55:17+0000\n"
+"PO-Revision-Date: 2009-02-09 00:59+0100\n"
 "Last-Translator: Christophe Chauvet <christophe.chauvet@syleam.fr>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: crm_telemarketing
+#: wizard_field:market.meeting,init,categ_id:0
 #: wizard_field:partner.call_list,init,category_id:0
 msgid "Category"
 msgstr "Catégorie"
@@ -26,24 +27,14 @@ msgid "City"
 msgstr "Ville"
 
 #. module: crm_telemarketing
-#: model:ir.actions.wizard,name:crm_telemarketing.wizard_call_list_menu
-msgid "Create phone call list"
-msgstr "Créer une liste d'appel"
+#: wizard_button:crm.direct_poll,message,end:0
+msgid "End"
+msgstr "Terminé"
 
 #. module: crm_telemarketing
-#: wizard_field:partner.call_list,init,section_id:0
-msgid "Section"
-msgstr "Section"
-
-#. module: crm_telemarketing
-#: wizard_view:partner.call_list,init:0
-msgid "Call case"
-msgstr "Classement des appels"
-
-#. module: crm_telemarketing
-#: wizard_field:partner.call_list,init,categ_id:0
-msgid "Partner category"
-msgstr "Catégorie de partenaire"
+#: wizard_field:market.meeting,init,date:0
+msgid "Meeting date"
+msgstr "Date de rendez vous"
 
 #. module: crm_telemarketing
 #: wizard_button:partner.call_list,init,confirm:0
@@ -51,17 +42,159 @@ msgid "Create"
 msgstr "Créer"
 
 #. module: crm_telemarketing
+#: wizard_field:crm.direct_poll,message,message:0
+msgid "Question"
+msgstr "Question"
+
+#. module: crm_telemarketing
+#: wizard_button:crm.direct_poll,init,first:0
+msgid "Open Questionnaire"
+msgstr "Ouvrir questionnaire"
+
+#. module: crm_telemarketing
+#: model:ir.actions.wizard,name:crm_telemarketing.wizard_market_meeting_menu
+msgid "New meeting"
+msgstr "Rendez vous"
+
+#. module: crm_telemarketing
+#: wizard_button:crm.direct_poll,first,check:0
+#: wizard_button:crm.direct_poll,next,check:0
+msgid "Next"
+msgstr "Suivante"
+
+#. module: crm_telemarketing
+#: wizard_button:market.meeting,init,order:0
+msgid "Set Meeting"
+msgstr "Mettre rendez vous"
+
+#. module: crm_telemarketing
+#: code:addons/crm_telemarketing/wizard/direct_poll.py:0
+#, python-format
+msgid "An error unknown"
+msgstr "Une erreur inconnue"
+
+#. module: crm_telemarketing
 #: wizard_view:partner.call_list,init:0
 msgid "Criteria"
 msgstr "Critère"
 
 #. module: crm_telemarketing
-#: wizard_button:partner.call_list,init,end:0
-msgid "Cancel"
-msgstr "Annuler"
+#: wizard_field:partner.call_list,confirm,message:0
+msgid "message"
+msgstr "Message"
+
+#. module: crm_telemarketing
+#: field:crm_profiling.answer,next:0
+msgid "Next question"
+msgstr "Prochaine question"
+
+#. module: crm_telemarketing
+#: code:addons/crm_telemarketing/wizard/direct_poll.py:0
+#, python-format
+msgid "The questionnaire is finished"
+msgstr "Le questionnaire est terminé"
+
+#. module: crm_telemarketing
+#: model:ir.actions.wizard,name:crm_telemarketing.wizard_call_list_menu
+msgid "Create phone call list"
+msgstr "Créer une liste d'appel"
+
+#. module: crm_telemarketing
+#: code:addons/crm_telemarketing/wizard/direct_poll.py:0
+#, python-format
+msgid "Attention"
+msgstr "Attention"
+
+#. module: crm_telemarketing
+#: wizard_field:partner.call_list,init,date_call:0
+msgid "Plan call date"
+msgstr "Planifier une date"
+
+#. module: crm_telemarketing
+#: wizard_field:partner.call_list,init,categ_id:0
+msgid "Partner category"
+msgstr "Catégorie de partenaire"
+
+#. module: crm_telemarketing
+#: wizard_field:crm.direct_poll,init,questionnaire_name:0
+msgid "Questionnaire name"
+msgstr "Nom du questionnaire"
+
+#. module: crm_telemarketing
+#: wizard_view:market.meeting,init:0
+msgid "Planify Meeting"
+msgstr "Rendez vous planifié"
+
+#. module: crm_telemarketing
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "XML non valide pour l'architecture de la vue"
+
+#. module: crm_telemarketing
+#: code:addons/crm_telemarketing/wizard/direct_poll.py:0
+#, python-format
+msgid "Error"
+msgstr "Erreur"
+
+#. module: crm_telemarketing
+#: field:crm_profiling.questionnaire,first:0
+msgid "First question"
+msgstr "Première question"
+
+#. module: crm_telemarketing
+#: wizard_view:partner.call_list,init:0
+msgid "Call case"
+msgstr "Classement des appels"
+
+#. module: crm_telemarketing
+#: wizard_button:partner.call_list,confirm,end:0
+msgid "OK"
+msgstr "OK"
 
 #. module: crm_telemarketing
 #: wizard_view:partner.call_list,init:0
 msgid "Search form"
 msgstr "Formulaire de recherche"
+
+#. module: crm_telemarketing
+#: wizard_field:market.meeting,init,duration:0
+msgid "Duration (Hours)"
+msgstr "Durée (Heure)"
+
+#. module: crm_telemarketing
+#: wizard_view:partner.call_list,confirm:0
+msgid "Result"
+msgstr "Résultat"
+
+#. module: crm_telemarketing
+#: wizard_view:crm.direct_poll,message:0
+msgid "Ended questionnaire"
+msgstr "Fin de questionnaire"
+
+#. module: crm_telemarketing
+#: wizard_button:crm.direct_poll,first,end:0
+#: wizard_button:crm.direct_poll,init,end:0
+#: wizard_button:crm.direct_poll,next,end:0
+#: wizard_button:market.meeting,init,end:0
+#: wizard_button:partner.call_list,init,end:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: crm_telemarketing
+#: wizard_view:crm.direct_poll,init:0
+#: model:ir.actions.wizard,name:crm_telemarketing.wizard_direct_poll_menu
+msgid "Questionnaire"
+msgstr "Questionnaire"
+
+#. module: crm_telemarketing
+#: wizard_field:market.meeting,init,section_id:0
+#: wizard_field:partner.call_list,init,section_id:0
+msgid "Section"
+msgstr "Section"
+
+#. module: crm_telemarketing
+#: code:addons/crm_telemarketing/wizard/direct_poll.py:0
+#, python-format
+msgid "No first question defined on a questionnaire"
+msgstr "Pas de première question définit sur le questionnaire"
 

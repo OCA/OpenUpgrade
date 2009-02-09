@@ -75,8 +75,8 @@
 			<field eval="&quot;&quot;&quot;VPC - Vente en ligne&quot;&quot;&quot;" name="comment"/>
 			<field eval="1" name="active"/>
 			<field name="property_product_pricelist" ref="product.list0"/>
-			 <field name="property_account_receivable" ref="l10n_fr.a_recv"/>
-			<field name="property_account_payable" ref="l10n_fr.a_pay"/>
+			<field name="property_account_receivable" ref="l10n_fr.fr_pcg_recv"/>
+			<field name="property_account_payable" ref="l10n_fr.fr_pcg_pay"/>
 			<field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
 			<field eval="&quot;&quot;&quot;S7&quot;&quot;&quot;" name="ref"/>
 			<field eval="&quot;&quot;&quot;http://www.sound7.be&quot;&quot;&quot;" name="website"/>
@@ -111,8 +111,8 @@
 		<record id="res_partner_musicstore0" model="res.partner">
 			<field eval="1" name="active"/>
 			<field name="property_product_pricelist" ref="product.list0"/>
-			<field name="property_account_receivable" ref="l10n_fr.a_recv"/>
-			<field name="property_account_payable" ref="l10n_fr.a_pay"/>
+			<field name="property_account_receivable" ref="l10n_fr.fr_pcg_recv"/>
+			<field name="property_account_payable" ref="l10n_fr.fr_pcg_pay"/>
 			<field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
 			<field eval="&quot;&quot;&quot;MS&quot;&quot;&quot;" name="ref"/>
 			<field eval="1" name="supplier"/>
@@ -142,8 +142,8 @@ Ils sont également clients pour le matériel de Sono.&quot;&quot;&quot;" name="
 			<field eval="1" name="active"/>
 			<field name="property_product_pricelist" ref="product.list0"/>
 			<field name="user_id" ref="stock.user_logistic"/>
-			 <field name="property_account_receivable" ref="l10n_fr.a_recv"/>
-			<field name="property_account_payable" ref="l10n_fr.a_pay"/>
+			<field name="property_account_receivable" ref="l10n_fr.fr_pcg_recv"/>
+			<field name="property_account_payable" ref="l10n_fr.fr_pcg_pay"/>
 			<field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
 			<field eval="&quot;&quot;&quot;SC&quot;&quot;&quot;" name="ref"/>
 			<field eval="1" name="supplier"/>

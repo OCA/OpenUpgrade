@@ -314,7 +314,7 @@ TreeNode.prototype = {
     	            this.element_a = value;
                 }
                 else {
-                	value = DIV({'href': '#', 'style': 'color: black; display: block; text-decoration: none; max-width: 250px; white-space: normal; cursor: normal;'}, value);
+                	value = DIV({'href': '#', 'style': 'color: black; display: block; text-decoration: none; max-width: 300px; white-space: normal; cursor: normal;'}, value);
     	            this.element_a = value;
                 }
                 
@@ -346,7 +346,6 @@ TreeNode.prototype = {
             
             if (i > 0) {
                 if (header.type == 'url' && value) {
-                	
                 	// For min and max values...
                 	var j = i;
                 	var min_fact = 101;
@@ -383,43 +382,45 @@ TreeNode.prototype = {
 	                	var vals = value.split('|');
 	                	value = vals[0];
 	                	
-	                	var background = '';
+	                	var background = '#FFFFFF';
 	                	if (min_fact || max_fact) {
 	                		if ((value.split('%')[0])==min_fact.toString()){
-		                		background = '#e7c2bc';
+		                		background = '#f3dfd9';
 		                	}
 	    	            	if ((value.split('%')[0])==max_fact.toString()){
-	        	        		background = '#c3eabc';
+	        	        		background = '#def3d9';
 	            	    	}
 	                		if (min_fact == max_fact) {
-                				background = '';
+                				background = '#FFFFFF';
                 			}
 	                	}
 	                	
 	                	record.action = vals[1];
 	                	t = vals[2];
-	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black; background:'+background}, value)];
+	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black;'}, value)];
 	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': record.action, 'width' : 16, 'height' : 16}));
+	                    td.style.background = background;
                 	}
                 	else if (value.indexOf('-') != -1) {
                 		var vals = value.split('-');
 	                	value = vals[0];
 	                	
-	                	var background = '';
+	                	var background = '#FFFFFF';
 	                	if (min_fact || max_fact) {
 	                		if ((value.split('%')[0])==min_fact.toString()){
-		                		background = '#e7c2bc';
+		                		background = '#f3dfd9';
 		                	}
 	    	            	if ((value.split('%')[0])==max_fact.toString()){
-	        	        		background = '#c3eabc';
+	        	        		background = '#def3d9';
 	            	    	}
 	                		if (min_fact == max_fact) {
-                				background = '';
+                				background = '#FFFFFF';
                 			}
 	                	}
 	                	
 	                	t = vals[1];
-	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold; background:'+background}, value);
+	                	value = MochiKit.DOM.DIV({title: title + t}, value); // style: 'font-weight: bold;'
+	                	td.style.background = background;
                 	}
                 	else if (value.indexOf('@') != -1){
                 		var vals = value.split('@');
@@ -427,22 +428,23 @@ TreeNode.prototype = {
                 		value = MochiKit.DOM.DIV(value);
                  	}
                 	else {
-                		var background = '';
+                		var background = '#FFFFFF';
 	                	if (min_fact || max_fact) {
 	                		if ((value.split('%')[0])==min_fact.toString()){
-		                		background = '#e7c2bc';
+		                		background = '#f3dfd9';
 		                	}
 	    	            	if ((value.split('%')[0])==max_fact.toString()){
-	        	        		background = '#c3eabc';
+	        	        		background = '#def3d9';
 	            	    	}
 	                		if (min_fact == max_fact) {
-                				background = '';
+                				background = '#FFFFFF';
                 			}
 	                	}
-                		value = MochiKit.DOM.DIV({style: 'background:'+background}, value);
+                		value = MochiKit.DOM.DIV(value);
+                		td.style.background = background;
                 	}    
                 }
-                
+              
                 if (header.type == 'email' && value) {
                     value = MochiKit.DOM.A({href: 'mailto:' + (record.action || value), target: record.target || '_blank'}, value);    
                 }
@@ -455,10 +457,9 @@ TreeNode.prototype = {
                 if (header.type == 'button' && value) {
                     value = MochiKit.DOM.BUTTON({name: header.name, style: 'cursor: pointer'}, value);
                     value.onclick = MochiKit.Base.bind(this.onButtonClick, this);
-                }
-                
+                } 
             }
-
+			
             MochiKit.DOM.appendChildNodes(td, value);
             if (header.type == "image" || header.type == 'url') {
             	MochiKit.DOM.setNodeAttribute(td, 'width', '5px');
@@ -540,9 +541,10 @@ TreeNode.prototype = {
 	                	div.innerHTML = MochiKit.DOM.escapeHTML(value);
                 	}
                 	else if (value.indexOf('@') != -1){
+                		var div = MochiKit.DOM.getElementsByTagAndClassName('div', null, td)[0];
                 		var vals = value.split('@');
 	                	value = vals[0];
-                		value = MochiKit.DOM.DIV(value);
+	                	div.innerHTML = MochiKit.DOM.escapeHTML(value);
                 	}
                 	else {
                 		var div = MochiKit.DOM.getElementsByTagAndClassName('div', null, td)[0];

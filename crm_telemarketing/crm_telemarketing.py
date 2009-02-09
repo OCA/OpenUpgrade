@@ -2,8 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2008-2009 Syleam Info Services (<http://syleam.fr>). 
-#                  All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -19,7 +19,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import crm_telemarketing
-import report
-import wizard
+from osv import fields,osv
 
+class questionnaire(osv.osv):
+    _inherit = 'crm_profiling.questionnaire'
+    _columns = {
+        'first': fields.many2one('crm_profiling.question', 'First question'),
+    }
+
+questionnaire()
+
+class answer(osv.osv):
+    _inherit = 'crm_profiling.answer'
+    _columns = {
+        'next': fields.many2one('crm_profiling.question','Next question'),
+    }
+answer()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

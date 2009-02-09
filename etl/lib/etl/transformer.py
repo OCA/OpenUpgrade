@@ -76,19 +76,23 @@ class transformer(object):
         self.logger = logger.logger()
 
     def action_error(self,e):
+        print e
         self.logger.notifyChannel("transformer", logger.LOG_ERROR, 
                      str(self)+' : '+str(e))
-        yield {'error_msg':'Error  :'+str(e),'error_date':datetime.datetime.today()},'error'        
+        return None
 
     def transform(self,data):                
         # TODO : TO check : data and description should have same keys.        
         try:                    
-            for column in data:
+            for column in data:                
                 if column in self.description:
-                    transform_method=self._transform_method[self.description[column]]
-                    data[column]=transform_method(data[column])    
+                    transform_method=self.description[column] and self._transform_method[self.description[column]]                    
+                    data[column]=data[column] and transform_method(data[column]) or data[column]                   
+            
             return data
         except UnicodeEncodeError,e:
+            return self.action_error(e)
+        except UnicodeDecodeError,e:
             return self.action_error(e)            
         except TypeError,e:
             return self.action_error(e)

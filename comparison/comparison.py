@@ -29,12 +29,17 @@ class comparison_user(osv.osv):
         'email': fields.char('Email', size=64, required=True),
         'password': fields.char('Password', size=64, required=True),
         'active': fields.boolean('Active'),
+        'vote_ids': fields.one2many('comparison.vote', 'user_id', "Votes"),
+        'factor_ids': fields.one2many('comparison.factor', 'user_id', "Factors",),
+        'suggestion_ids': fields.one2many('comparison.ponderation.suggestion', 'user_id', "Ponderation Suggestions",),
+        
     }
     _defaults = {
         'active': lambda *args: 1,
     }
     _sql_constraints = [
-        ('email', 'unique(email,name)', 'The email of the User must be unique.' )
+        ('email', 'unique(email)', 'The Email is Already Registered!.' ),
+        ('name', 'unique(name)', 'The Username Already Exists!.' ),
     ]
     
 comparison_user()
@@ -50,14 +55,15 @@ class comparison_item(osv.osv):
         'result_ids': fields.one2many('comparison.factor.result', 'item_id', "Results"),
         'state': fields.selection([('draft','Draft'),('open','Open')], 'Status', required=True),
         'load_default' : fields.boolean('Load by Default',help="This option if checked, will let the Item display on Evaluation Matrix, by default."),
+        'sequence': fields.integer('Sequence'),
     }
     _defaults = {
         'state': lambda *args: 'draft',
-#        'ponderation': lambda *args: 1.0,
+        'sequence': lambda *args: 1,
         'load_default': lambda *args: 0,
     }
     _sql_constraints = [
-        ('name', 'unique(name)', 'The name of the item must be unique!' )
+        ('name', 'unique(name)', 'The Item with the same name is already in the List!' )
     ]
 #    _order = 'parent_id,name asc'
 
@@ -106,7 +112,7 @@ class comparison_factor(osv.osv):
         'child_ids': fields.one2many('comparison.factor','parent_id','Child Factors'),
         'note': fields.text('Note'),
         'sequence': fields.integer('Sequence'),
-        'type': fields.selection([('view','Category'),('criterion','Criterion')], 'Type'),
+        'type': fields.selection([('view','Category'),('criterion','Criteria')], 'Type', required=True),
 #        'result': fields.function(_result_compute, method=True, type='float', string="Result"),
         'result_ids': fields.one2many('comparison.factor.result', 'factor_id', "Results",),
         'ponderation': fields.float('Ponderation'),
@@ -118,6 +124,7 @@ class comparison_factor(osv.osv):
         'state': lambda *args: 'draft',
         'ponderation': lambda *args: 1.0,
         'sequence': lambda *args: 1,
+        'type' : lambda *args: 'criterion',
     }
     
     def create(self, cr, uid, vals, context={}):
@@ -197,7 +204,7 @@ class comparison_vote(osv.osv):
         
     _name = 'comparison.vote'
     _columns = {
-        'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
+        'user_id': fields.many2one('comparison.user', 'User', ondelete='set null'),
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade', domain=[('type','<>','view')]),
         'item_id': fields.many2one('comparison.item', 'Item', required=True, ondelete='cascade'),
         'score_id': fields.many2one('comparison.vote.values', 'Value', required=True),
@@ -210,7 +217,7 @@ class comparison_vote(osv.osv):
         self.reload_ids = []
         if args:
             for vote in args:
-                self.create(cr,uid, vote)
+                self.create(cr,uid, vote, client_call=True)
             factor_id = int(args[0]['factor_id'])
             factor = self.pool.get('comparison.factor').browse(cr, uid, factor_id) 
             item_obj = self.pool.get('comparison.item').browse(cr, uid, int(args[0]['item_id']))
@@ -261,7 +268,7 @@ class comparison_vote(osv.osv):
             self.reload_ids.append(parent_result_id[0])
         return True
         
-    def create(self, cr, uid, vals, context={}):
+    def create(self, cr, uid, vals, context={}, client_call=False):
         result = super(comparison_vote, self).create(cr, uid, vals, context)
         obj_factor = self.pool.get('comparison.factor')
         obj_factor = self.pool.get('comparison.item')
@@ -277,9 +284,20 @@ class comparison_vote(osv.osv):
             # finding previous score and votes
             votes_old = obj_result[0]['votes']         
             score = (obj_vote.score_id.factor / float(pond_div) ) * 100
-            score = obj_result[0]['result'] and ((score + obj_result[0]['result']) /2) or score                            
+            
+            if votes_old:
+                score = (score + obj_result[0]['result']) /2
+                                            
             obj_factor_result.write(cr, uid, result_id, {'votes':(votes_old + 1),'result':score})
             self.reload_ids.append(result_id[0])
+            
+            if not client_call:
+                factor = obj_vote.factor_id
+                item_obj = obj_vote.item_id
+                while (factor and  factor.parent_id):
+                    self.compute_parents(cr, uid, factor, item_obj)
+                    factor = factor.parent_id
+                
         return result
 #    
 #    def write(self, cr, uid, ids, vals, context=None):
@@ -385,7 +403,7 @@ comparison_factor_result()
 
 class comparison_ponderation_suggestion(osv.osv):
     _name = 'comparison.ponderation.suggestion'
-    _desc = 'Users can suggest new ponderations on criterions'
+    _desc = 'Users can suggest new ponderations on criterias'
     
     def accept_suggestion(self, cr, uid, ids, context={}):
 #        obj_sugg = self.browse(cr, uid, ids)[0]

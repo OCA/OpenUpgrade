@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <wizard 
+            id="wizard_call_list_menu" 
+            model="res.partner" 
+            name="partner.call_list" 
+            string="Create phone call list"/>
+
+        <wizard
+            id="wizard_direct_poll_menu"
+            model="crm.case"
+            name="crm.direct_poll"
+            string="Questionnaire"/>
+
+        <wizard
+            id="wizard_market_meeting_menu"
+            model="crm.case"
+            name="market.meeting"
+            string="New meeting"/>
+    </data>
+</openerp>
