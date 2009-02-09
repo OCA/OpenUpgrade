@@ -112,7 +112,7 @@ class comparison_factor(osv.osv):
         'child_ids': fields.one2many('comparison.factor','parent_id','Child Factors'),
         'note': fields.text('Note'),
         'sequence': fields.integer('Sequence'),
-        'type': fields.selection([('view','Category'),('criterion','Criterion')], 'Type', required=True),
+        'type': fields.selection([('view','Category'),('criterion','Criteria')], 'Type', required=True),
 #        'result': fields.function(_result_compute, method=True, type='float', string="Result"),
         'result_ids': fields.one2many('comparison.factor.result', 'factor_id', "Results",),
         'ponderation': fields.float('Ponderation'),
@@ -403,7 +403,7 @@ comparison_factor_result()
 
 class comparison_ponderation_suggestion(osv.osv):
     _name = 'comparison.ponderation.suggestion'
-    _desc = 'Users can suggest new ponderations on criterions'
+    _desc = 'Users can suggest new ponderations on criterias'
     
     def accept_suggestion(self, cr, uid, ids, context={}):
 #        obj_sugg = self.browse(cr, uid, ids)[0]

@@ -184,7 +184,7 @@
             <field name="field_parent">child_ids</field>
             <field name="priority">100</field>
             <field name="arch" type="xml">
-                <tree string="Criterions' Structure">
+                <tree string="Criterias' Structure">
                     <field name="name"/>
                     <field name="ponderation"/>
                     <field name="state"/>
@@ -193,7 +193,7 @@
         </record>
 
         <record id="action_comparison_factor_list" model="ir.actions.act_window">
-            <field name="name">Criterions</field>
+            <field name="name">Criterias</field>
             <field name="res_model">comparison.factor</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -203,7 +203,7 @@
 
 
         <record id="action_comparison_factor_tree" model="ir.actions.act_window">
-            <field name="name">Criterions Structure</field>
+            <field name="name">Criterias Structure</field>
             <field name="res_model">comparison.factor</field>
             <field name="view_type">tree</field>
             <field name="view_id" ref="view_comparison_factor_tree"/>
