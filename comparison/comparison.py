@@ -29,6 +29,10 @@ class comparison_user(osv.osv):
         'email': fields.char('Email', size=64, required=True),
         'password': fields.char('Password', size=64, required=True),
         'active': fields.boolean('Active'),
+        'vote_ids': fields.one2many('comparison.vote', 'user_id', "Votes"),
+        'factor_ids': fields.one2many('comparison.factor', 'user_id', "Factors",),
+        'suggestion_ids': fields.one2many('comparison.ponderation.suggestion', 'user_id', "Ponderation Suggestions",),
+        
     }
     _defaults = {
         'active': lambda *args: 1,
@@ -59,7 +63,7 @@ class comparison_item(osv.osv):
         'load_default': lambda *args: 0,
     }
     _sql_constraints = [
-        ('name', 'unique(name)', 'The name of the item must be unique!' )
+        ('name', 'unique(name)', 'The Item with the same name is already in the List!' )
     ]
 #    _order = 'parent_id,name asc'
 

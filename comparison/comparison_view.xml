@@ -16,6 +16,28 @@
                     <field name="password" password="True"/>
                     <field name="email" widget="email" select="1"/>
                     <field name="active"/>
+                    <field name="factor_ids" colspan="4" widget="one2many_list">
+                    	<tree string="Factors">
+	                    	<field name="name"/>
+		                    <field name="parent_id"/>
+		                    <field name="ponderation"/>
+		                    <field name="state"/>
+	                    </tree>
+	                    <form string="Factors">
+	                    	<field name="name"/>
+		                    <field name="parent_id"/>
+		                    <field name="ponderation"/>
+		                    <field name="state"/>
+	                    </form>
+                    </field>
+                    <field name="suggestion_ids" colspan="4" widget="one2many_list">
+                    	<tree string="Suggested Ponderations">
+		                    <field name="factor_id" select="1"/>
+		                    <field name="ponderation" select="1"/>
+		                    <field name="state" select="2"/>
+	                	</tree>
+	               	</field> 	
+                    <field name="vote_ids" colspan="4"/>
                 </form>
             </field>
         </record>
@@ -349,7 +371,7 @@
                     <field name="factor_id" select="1"/>
                     <field name="user_id" />
                     <field name="ponderation" select="1"/>
-                       <field name="state" select="2"/>
+                    <field name="state" select="2"/>
                 </tree>
             </field>
         </record>
