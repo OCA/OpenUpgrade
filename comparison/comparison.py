@@ -107,7 +107,7 @@ class comparison_factor(osv.osv):
         'child_ids': fields.one2many('comparison.factor','parent_id','Child Factors'),
         'note': fields.text('Note'),
         'sequence': fields.integer('Sequence'),
-        'type': fields.selection([('view','Category'),('criterion','Criterion')], 'Type'),
+        'type': fields.selection([('view','Category'),('criterion','Criterion')], 'Type', required=True),
 #        'result': fields.function(_result_compute, method=True, type='float', string="Result"),
         'result_ids': fields.one2many('comparison.factor.result', 'factor_id', "Results",),
         'ponderation': fields.float('Ponderation'),
@@ -119,6 +119,7 @@ class comparison_factor(osv.osv):
         'state': lambda *args: 'draft',
         'ponderation': lambda *args: 1.0,
         'sequence': lambda *args: 1,
+        'type' : lambda *args: 'criterion',
     }
     
     def create(self, cr, uid, vals, context={}):
@@ -198,7 +199,7 @@ class comparison_vote(osv.osv):
         
     _name = 'comparison.vote'
     _columns = {
-        'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
+        'user_id': fields.many2one('comparison.user', 'User', ondelete='set null'),
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade', domain=[('type','<>','view')]),
         'item_id': fields.many2one('comparison.item', 'Item', required=True, ondelete='cascade'),
         'score_id': fields.many2one('comparison.vote.values', 'Value', required=True),

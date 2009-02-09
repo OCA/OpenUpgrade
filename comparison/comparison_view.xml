@@ -55,7 +55,18 @@
                     <field name="version"/>
                     <field name="user_id" select="1"/>
                     <field name="load_default" />
-                    <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
+                    <field name="result_ids" colspan="4" widget="one2many_list" >
+                    	<tree string="Results">
+                    		<field name="factor_id"/>
+                    		<field name="result"/>
+                    		<field name="votes"/>
+                    	</tree>
+                    	<form string="Results">
+                    		<field name="factor_id"/>
+                    		<field name="result"/>
+                    		<field name="votes"/>
+                    	</form>
+                    </field>
                     <newline/>
                     <field name="note" colspan="4"/>
                     <newline/>
@@ -105,7 +116,18 @@
                             <field name="ponderation" select="2"/>
                             <field name="type" select="1"/>
                             <field name="pond_computed" />
-                            <field name="result_ids" colspan="4" widget="one2many_list" readonly="1"/>
+                            <field name="result_ids" colspan="4" widget="one2many_list" >
+                            	<tree string="Results">
+		                    		<field name="item_id"/>
+		                    		<field name="result"/>
+		                    		<field name="votes"/>
+                    			</tree>
+		                    	<form string="Results">
+		                    		<field name="item_id"/>
+		                    		<field name="result"/>
+		                    		<field name="votes"/>
+		                    	</form>
+                            </field>
                             <newline/>
                             <field name="state" select="2"/>
                             <button name="export_csv" string="Export to CSV" type="object"/>
@@ -154,6 +176,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
+        
         <menuitem action="action_comparison_factor_list" id="menu_action_comparison_factor_list" parent="menu_config_comparison"/>
 
 
