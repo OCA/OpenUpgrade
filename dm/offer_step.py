@@ -93,7 +93,7 @@ class dm_offer_step(osv.osv):
         'legal_state' : fields.char('Legal State', size=32),
         'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,readonly=True),
         'quotation' : fields.char('Quotation', size=16),
-        'media_id' : fields.many2one('dm.media', 'Medias'),
+        'media_id' : fields.many2one('dm.media', 'Media', ondelete="cascade"),
         'type' : fields.many2one('dm.offer.step.type','Type',required=True),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
         'desc' : fields.text('Description'),
