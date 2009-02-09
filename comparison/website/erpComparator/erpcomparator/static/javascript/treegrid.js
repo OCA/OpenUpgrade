@@ -400,6 +400,7 @@ TreeNode.prototype = {
 	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black;'}, value)];
 	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': record.action, 'width' : 16, 'height' : 16}));
 	                    td.style.background = background;
+	                    
                 	}
                 	else if (value.indexOf('-') != -1) {
                 		var vals = value.split('-');
@@ -461,9 +462,9 @@ TreeNode.prototype = {
             }
 			
             MochiKit.DOM.appendChildNodes(td, value);
-            if (header.type == "image" || header.type == 'url') {
-            	MochiKit.DOM.setNodeAttribute(td, 'width', '5px');
-            }
+//            if (header.type == "image" || header.type == 'url') {
+//            	MochiKit.DOM.setNodeAttribute(td, 'width', '5px');
+//            }
             MochiKit.DOM.appendChildNodes(this.element, td);
         }
         

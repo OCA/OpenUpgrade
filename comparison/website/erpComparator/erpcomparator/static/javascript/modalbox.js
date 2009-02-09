@@ -10,9 +10,9 @@ ModalBox.prototype = {
         this.options = MochiKit.Base.update({
             title: 'Modalbox',  // title
             content: null,      // content
-            buttons: [],        // buttons
+            buttons: []        // buttons
         }, options || {});
-
+		
         if (MochiKit.DOM.getElement('modalbox_overlay')){
             throw "Only one Modalbox instance is allowed per page.";
         }
@@ -55,21 +55,20 @@ ModalBox.prototype = {
 
         var w = this.width || 0;
         var h = this.height || 0;
-
+		
         MochiKit.DOM.setElementDimensions(this.box, {w: w, h: h});
 
-        var vdh = window.innerHeight;
-        var vdw = window.innerWidth;
+        var vdh = window.innerHeight || window.screen.availHeight;
+        var vdw = window.innerWidth || window.screen.availWidth;
         
         var md = this.box.clientHeight;
         var x = (vdw / 2) - (w / 2);
         var y = (vdh / 2) - (h / 2);
-
+        
         x = Math.max(0, x);
         y = Math.max(0, y);
         
         y = y + document.documentElement.scrollTop;
-        
         setElementPosition(this.box, {x: x, y: y});
 
         showElement(this.overlay);
