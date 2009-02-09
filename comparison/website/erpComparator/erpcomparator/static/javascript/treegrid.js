@@ -419,7 +419,7 @@ TreeNode.prototype = {
 	                	}
 	                	
 	                	t = vals[1];
-	                	value = MochiKit.DOM.DIV({title: title + t, style: 'font-weight: bold;'}, value);
+	                	value = MochiKit.DOM.DIV({title: title + t}, value); // style: 'font-weight: bold;'
 	                	td.style.background = background;
                 	}
                 	else if (value.indexOf('@') != -1){
@@ -541,9 +541,10 @@ TreeNode.prototype = {
 	                	div.innerHTML = MochiKit.DOM.escapeHTML(value);
                 	}
                 	else if (value.indexOf('@') != -1){
+                		var div = MochiKit.DOM.getElementsByTagAndClassName('div', null, td)[0];
                 		var vals = value.split('@');
 	                	value = vals[0];
-                		value = MochiKit.DOM.DIV(value);
+	                	div.innerHTML = MochiKit.DOM.escapeHTML(value);
                 	}
                 	else {
                 		var div = MochiKit.DOM.getElementsByTagAndClassName('div', null, td)[0];
