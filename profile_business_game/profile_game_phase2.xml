@@ -18,7 +18,7 @@
             <field name="name">Sale Forecast</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">stock.planning.sale.prevision</field>
-            <field name="domain">[('user_id','=',uid)</field>
+            <field name="domain">[('user_id','=',uid)]</field>
            <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="stock_planning.view_stock_planning_prevision_tree"/>
