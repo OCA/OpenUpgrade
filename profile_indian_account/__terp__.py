@@ -9,7 +9,10 @@
         "l10n_chart_in",
         "account_india_ledger",
         "account_invoice",
-        "account_voucher"
+        "account_voucher",
+        "account_stock",
+        "sale_number",
+        "purchase_number"
         
     ],
     "demo_xml":[],
