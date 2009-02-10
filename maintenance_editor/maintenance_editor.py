@@ -150,7 +150,8 @@ class maintenance_maintenance(osv.osv):
         for c in self.browse(cr, uid, toload):
             res[str(c.id)] = {}
             for m in c.module_ids:
-                res[str(c.id)][m.name] = addons.get_module_as_zip(m.name, b64enc=True)
+                path = os.join.path(tools.config['root_path'], 'maintenance', 'addons', m.name, m.version)
+                res[str(c.id)][m.name] = addons.get_module_as_zip_from_module_directory(path, b64enc=True, src=False)
 
         if isinstance(ids, (int, long)):
             return res[str(ids)]
