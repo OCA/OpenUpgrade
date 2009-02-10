@@ -385,7 +385,7 @@ class Comparison(controllers.Controller, TinyResource):
         
         fact_proxy = rpc.RPCProxy('comparison.factor')
 #        For state = open ids only... 
-#        ids = fact_proxy.search([('id', 'in', ids), ('state', '=', 'open')])
+        ids = fact_proxy.search([('id', 'in', ids), ('state', '=', 'open')])
         
         fields_info = proxy.fields_get(fields, ctx)
         result = proxy.read(ids, fields, ctx)
