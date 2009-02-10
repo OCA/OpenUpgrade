@@ -32,27 +32,24 @@ fields = {}
 
 class wizard_recompute_votes(wizard.interface):
     
-#    def _compute(self, cr, uid, factor, obj):
-    
     def _recompute(self, cr, uid, data, context):
         # This method re-calculates all the VOTED evaluations
         pool = pooler.get_pool(cr.dbname)        
         obj_factor = pool.get('comparison.factor')
         obj_item = pool.get('comparison.item')
         obj_factor_result = pool.get('comparison.factor.result')
-        obj_vote_values = pool.get('comparison.vote.values')
         
         #Itemwise calculation based on available votes will be easier
         item_ids = obj_item.search(cr, uid, [])
-        
+        #Setting all results and votes to 0.
         cr.execute('update comparison_factor_result set result=0.0,votes=0.0')
         
         for item in obj_item.browse(cr, uid, item_ids, context):
             parent_ids = []
-            cr.execute(" select cf.id,cf.parent_id,cf.name,sum(cvl.factor),count(cvl.factor) from comparison_vote as cv, \
+            cr.execute(" select cf.id,cf.parent_id,sum(cvl.factor),count(cvl.factor) from comparison_vote as cv, \
                             comparison_factor cf,comparison_vote_values as cvl,comparison_item as ci where cv.state!='cancel' \
                             and cv.factor_id=cf.id and cf.state = 'open' and cv.item_id=ci.id and ci.id= %s and cv.score_id=cvl.id \
-                            group by cf.name,cf.id,cf.parent_id"%(item.id))
+                            group by cf.id,cf.parent_id"%(item.id))
             res = cr.fetchall()
             # res : factor_id,parent_id, factor_name,sum(votes),no.of votes
             for record in res:
@@ -60,8 +57,8 @@ class wizard_recompute_votes(wizard.interface):
                 if record[1] not in parent_ids:
                     parent_ids.append(record[1])
                 
-                score = (record[3] * 100)/ (float(record[4]) * 5.0)  # New score = total votes' score/no. of votes
-                votes = record[4]
+                score = (record[2] * 100)/ (float(record[3]) * 5.0)  # New score = total votes' score/no. of votes
+                votes = record[3]
                 result_id = obj_factor_result.search(cr, uid, [('factor_id','=',record[0]),('item_id','=',item.id)])
                 if result_id:
                     obj_factor_result.write(cr, uid, result_id, {'result':score,'votes':votes})                  
@@ -74,12 +71,14 @@ class wizard_recompute_votes(wizard.interface):
                     cr.execute("select sum(cf.ponderation) from comparison_factor as cf where cf.parent_id=%s and cf.state!='cancel'"%(factor.id))
                     tot_pond = cr.fetchall()
                     
-                    cr.execute("select cfr.result,cf.ponderation,cf.parent_id,cfr.votes from comparison_factor_result as cfr,comparison_factor as cf where cfr.item_id=%s and cfr.votes > 0.0 and cfr.factor_id = cf.id and cf.parent_id=%s and cf.state!='cancel'"%(item.id,factor.id))
+                    cr.execute("select cfr.result,cf.ponderation,cfr.votes from comparison_factor_result as cfr,comparison_factor as cf where cfr.item_id=%s and cfr.votes > 0.0 and cfr.factor_id = cf.id and cf.parent_id=%s and cf.state!='cancel'"%(item.id,factor.id))
                     res1 = cr.fetchall()
-        
                     final_score = 0.0
+                    
+                    votes = 1.0
                     if res1:
                         for record in res1:
+                            votes = votes > record[2] and votes or record[2]
                             final_score += (record[0] * record[1])
             
                         final_score = final_score / tot_pond[0][0]   
@@ -97,4 +96,5 @@ class wizard_recompute_votes(wizard.interface):
         },
     }
 wizard_recompute_votes("recompute.evaluations")
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
