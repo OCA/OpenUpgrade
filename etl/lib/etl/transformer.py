@@ -64,9 +64,9 @@ class transformer(object):
     _transform_method={
         'int':int,
         'str':unicode,
-        'date':lambda x:datetime.datetime.strptime(x,transformer.DATE_FORMAT).date(),
-        'time':lambda x:datetime.datetime.strptime(x,transformer.TIME_FORMAT).time(),
-        'datetime':lambda x:datetime.datetime.strptime(x,transformer.DATETIME_FORMAT),
+        'date':lambda x:datetime.datetime.strptime(x,DATE_FORMAT).date(),
+        'time':lambda x:datetime.datetime.strptime(x,TIME_FORMAT).time(),
+        'datetime':lambda x:datetime.datetime.strptime(x,DATETIME_FORMAT),
         'float':float,
         'long':long,
         'complex':complex,
