@@ -32,7 +32,6 @@ class comparison_user(osv.osv):
         'vote_ids': fields.one2many('comparison.vote', 'user_id', "Votes"),
         'factor_ids': fields.one2many('comparison.factor', 'user_id', "Factors",),
         'suggestion_ids': fields.one2many('comparison.ponderation.suggestion', 'user_id', "Ponderation Suggestions",),
-        
     }
     _defaults = {
         'active': lambda *args: 1,
@@ -209,15 +208,22 @@ class comparison_vote(osv.osv):
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade', domain=[('type','<>','view')]),
         'item_id': fields.many2one('comparison.item', 'Item', required=True, ondelete='cascade'),
         'score_id': fields.many2one('comparison.vote.values', 'Value', required=True),
-#        'ponderation': fields.float('Ponderation'), do we need it here?
         'note': fields.text('Note'),
-        'state': fields.selection([('draft','Draft'),('valid','Valid'),('cancel','Cancel')], 'Status', required=True),
+        'state': fields.selection([('draft','Draft'),('valid','Valid'),('cancel','Cancel')], 'Status', required=True, readonly=True),
     }
     
     _defaults = {
         'state': lambda *args: 'draft',
     }
-
+    
+    def accept_vote(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'valid'})
+        return True
+    
+    def cancel_vote(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'cancel'})
+        return True
+    
     def vote_create_async(self, cr, uid, args):
         # this will accept the votes in bunch and will calculate parent's score at one call.
         self.reload_ids = []
@@ -241,43 +247,29 @@ class comparison_vote(osv.osv):
 
             factor_clause = (','.join([str(x.id) for x in factor.parent_id.child_ids]))
 
-            cr.execute('select sum(cf.ponderation) from comparison_factor as cf where cf.id in (%s)'%(factor_clause))
+            cr.execute("select sum(cf.ponderation) from comparison_factor as cf where cf.id in (%s) and cf.state!='cancel'"%(factor_clause))
             tot_pond = cr.fetchall()
             
-            cr.execute('select cfr.result,cf.ponderation from comparison_factor_result as cfr,comparison_factor as cf where cfr.item_id=%s and cfr.votes > 0.0 and cfr.factor_id = cf.id and cf.id in (%s)'%(item.id,factor_clause))
+            cr.execute("select cfr.result,cf.ponderation from comparison_factor_result as cfr,comparison_factor as cf where cfr.item_id=%s and cfr.votes > 0.0 and cfr.factor_id = cf.id and cf.id in (%s) and cf.state!='cancel'"%(item.id,factor_clause))
             res = cr.fetchall()
-            
-            final_score = 0.0
-            for record in res:
-                final_score += (record[0] * record[1])
 
-            final_score = final_score / tot_pond[0][0]   
-#            if res1[0][1] > 0.0:
-#                if res1[0][1] == tot_pond[0][0]:
-#                    pond_div = res1[0][1]
-#                    final_score  = (res1[0][0] / pond_div)
-#                else:
-#                    pond_div = res1[0][1] / tot_pond[0][0]
-#                    final_score  = (res1[0][0] * pond_div)
-#            for child in factor.parent_id.child_ids:
-#                scoring_child = obj_factor_result.search(cr, uid, [('factor_id','=',child.id),('item_id','=',item.id),('votes','>',0.0)])
-##                
-#                if scoring_child:
-#                    obj_final_result = obj_factor_result.browse(cr,uid,scoring_child[0])
-#                    pond = obj_final_result.factor_id.ponderation
-#                    sc = obj_final_result.result
-#                    score_new += sc
-#                    pond_new += pond
-            parent_result_id = obj_factor_result.search(cr, uid, [('factor_id','=',factor.parent_id.id),('item_id','=',item.id)])
-            obj_parent = obj_factor_result.read(cr, uid, parent_result_id,['votes'])
-            obj_factor_result.write(cr, uid, parent_result_id[0],{'votes':(obj_parent[0]['votes'] + 1),'result':final_score})
-            self.reload_ids.append(parent_result_id[0])
+            final_score = 0.0
+            
+            if res:
+                for record in res:
+                    final_score += (record[0] * record[1])
+    
+                final_score = final_score / tot_pond[0][0]   
+
+                parent_result_id = obj_factor_result.search(cr, uid, [('factor_id','=',factor.parent_id.id),('item_id','=',item.id)])
+                obj_parent = obj_factor_result.read(cr, uid, parent_result_id,['votes'])
+                obj_factor_result.write(cr, uid, parent_result_id[0],{'votes':(obj_parent[0]['votes'] + 1),'result':final_score})
+                self.reload_ids.append(parent_result_id[0])
         return True
         
     def create(self, cr, uid, vals, context={}, client_call=False):
         result = super(comparison_vote, self).create(cr, uid, vals, context)
         obj_factor = self.pool.get('comparison.factor')
-        obj_factor = self.pool.get('comparison.item')
         obj_factor_result = self.pool.get('comparison.factor.result')
         obj_vote_values = self.pool.get('comparison.vote.values')
         vo = self.browse(cr, uid, result)
@@ -385,8 +377,8 @@ class comparison_factor_result(osv.osv):
 #    
       
     _columns = {
-        'factor_id': fields.many2one('comparison.factor','Factor', ondelete='set null', required=1, readonly=1),
-        'item_id': fields.many2one('comparison.item','Item', ondelete='set null', required=1, readonly=1),
+        'factor_id': fields.many2one('comparison.factor','Factor', ondelete='cascade', required=1, readonly=1,),
+        'item_id': fields.many2one('comparison.item','Item', ondelete='cascade', required=1, readonly=1),
 #        'result': fields.function(_compute_score, method=True, digits=(16,2), type="float", string='Goodness(%)', readonly=1,),
         'votes': fields.float('Votes', readonly=1),
         'result': fields.float('Goodness(%)', readonly=1, digits=(16,3)),
@@ -435,7 +427,7 @@ class comparison_ponderation_suggestion(osv.osv):
         return True
     
     _columns = {
-        'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='cascade'),
+        'user_id': fields.many2one('comparison.user', 'User', required=True, ondelete='set null'),
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade'),
         'ponderation': fields.float('Ponderation',required=True),
         'state': fields.selection([('draft','Draft'),('done','Done'),('cancel','Cancel')],'State',readonly=True),

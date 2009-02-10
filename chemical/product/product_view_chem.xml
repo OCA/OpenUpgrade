@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+	<menuitem name= "Chimie" id="menu_product_Chimie" parent="product.menu_config_product"/>
+
+<!--Addition of three tabs in the notebook's existing product sheet for risk / safety / hazards -->
+
+	<record model="ir.ui.view" id="product_normal_form_view_security">
+		<field name="name">product.normal.form</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Risques">
+					<separator string="Risques" colspan="3"/>
+					<field name="risque_ids" colspan="4" select="1" nolabel="1"/>
+				</page>
+				<page string="Securite">
+					<separator string="Securite" colspan="3"/>
+					<field name="securite_ids" colspan="4" select="1" nolabel="1"/>
+				</page>
+				<page string="Dangers">
+					<separator string="Dangers" colspan="3"/>
+					<field name="danger_ids" colspan="4" select="1" nolabel="1"/>
+				</page>
+			</notebook>
+		</field>
+	</record>
+
+<!-- views for the risks -->
+
+	<record model="ir.ui.view" id="product_risque_tree_view">
+		<field name="name">product.risque.tree</field>
+		<field name="model">product.risque</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Risques Produits">
+				<field name="name"/>
+				<field name="libelle"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="product_risque_form_view">
+		<field name="name">product.risque.form</field>
+		<field name="model">product.risque</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Risques Produits">
+				<field name="name" colspan="3" select="1"/>
+				<field name="libelle" colspan="3" select="1"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="product_risque_action">
+		<field name="name">product risque</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">product.risque</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="product_risque_form_view"/>
+	</record>
+	<menuitem parent="menu_product_Chimie" id="menu_product_risque" action="product_risque_action"/>
+
+<!-- views for securites -->
+
+	<record model="ir.ui.view" id="product_securite_tree_view">
+		<field name="name">product.securite.tree</field>
+		<field name="model">product.securite</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Securite Produits">
+				<field name="name"/>
+				<field name="libelle"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="product_securite_form_view">
+		<field name="name">product.securite.form</field>
+		<field name="model">product.securite</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Securite Produits">
+				<field name="name" colspan="3" select="1"/>
+				<field name="libelle" colspan="3" select="1"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="product_securite_action">
+		<field name="name">product securite</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">product.securite</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="product_securite_form_view"/>
+	</record>
+	<menuitem parent="menu_product_Chimie" id="menu_product_securite" action="product_securite_action"/>
+
+<!-- views for the dangers -->
+
+	<record model="ir.ui.view" id="product_danger_tree_view">
+		<field name="name">product.danger.tree</field>
+		<field name="model">product.danger</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Dangers Produits">
+				<field name="name"/>
+				<field name="libelle"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="product_danger_form_view">
+		<field name="name">product.danger.form</field>
+		<field name="model">product.danger</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Dangers Produits">
+				<field name="name" colspan="3" select="1"/>
+				<field name="libelle" colspan="3" select="1"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="product_danger_action">
+		<field name="name">product danger</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">product.danger</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="product_danger_form_view"/>
+	</record>
+	<menuitem action="product_danger_action" id="menu_product_danger" parent="menu_product_Chimie"/>
+
+</data>
+</openerp>

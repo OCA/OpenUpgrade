@@ -303,6 +303,15 @@
                         <separator string="Notes" colspan="4"/>
                         <field name="notes" colspan="4" nolabel="1"/>
                     </page>
+                    <page string="Mail Service">
+	                    <field name="mail_service_ids" nolabel="1" colspan="4" mode="tree">
+	                        <tree string="Mail Service" editable="bottom">
+	                            <field name="offer_step_id"/>
+	                            <field name="mail_service_id"/>
+	                            <field name="action_id"/>
+	                        </tree>
+						</field>
+                    </page>                     
                 </notebook>
             </form>
         </field>

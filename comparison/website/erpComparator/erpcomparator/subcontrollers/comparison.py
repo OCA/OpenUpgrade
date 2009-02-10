@@ -98,7 +98,7 @@ class Comparison(controllers.Controller, TinyResource):
         
         for r in res:
             title = {}
-            title['sel'] = None
+            title['sel'] = False
             if selected_items:
                 item = {}
                 for s in selected_items:
@@ -129,6 +129,13 @@ class Comparison(controllers.Controller, TinyResource):
             title['load'] = r['load_default']
             titles += [title]
             
+        sel_ids=[]
+        for t in titles:
+            if t['load'] or t['sel']:
+                sel_ids += [t['id']]
+        
+        cherrypy.response.simple_cookie['selected_items'] = sel_ids
+        
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 fields += [field['name']]
@@ -329,7 +336,7 @@ class Comparison(controllers.Controller, TinyResource):
              factor_id=None, ponderation=None, parent_id=None, parent_name=None, ftype=''):
 
         ids = ids or []
-            
+        
         if isinstance(ids, basestring):
             ids = [int(id) for id in ids.split(',')]
             
@@ -376,6 +383,10 @@ class Comparison(controllers.Controller, TinyResource):
         if not fields:
             fields = ['name', 'ponderation', 'child_ids']
         
+        fact_proxy = rpc.RPCProxy('comparison.factor')
+#        For state = open ids only... 
+        ids = fact_proxy.search([('id', 'in', ids), ('state', '=', 'open')])
+        
         fields_info = proxy.fields_get(fields, ctx)
         result = proxy.read(ids, fields, ctx)
         
@@ -383,7 +394,6 @@ class Comparison(controllers.Controller, TinyResource):
         rids = prx.search([('factor_id', 'in', ids)])            
         factor_res = prx.read(rids)
         
-        fact_proxy = rpc.RPCProxy('comparison.factor')
         c_ids = fact_proxy.search([('type', '!=', 'view'), ('id', 'in', ids)])
         p_ids = fact_proxy.search([('type', '!=', 'view'), ('parent_id', 'in', ids)])
         parent_ids = fact_proxy.read(p_ids, ['parent_id'])
@@ -438,9 +448,9 @@ class Comparison(controllers.Controller, TinyResource):
                             item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
                         else:
                             item[r.get('item_id')[1]] = "No Vote"
+                            
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
                             item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
-                        
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
                             item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
                         else:

@@ -432,6 +432,7 @@ class dm_campaign(osv.osv):
                                                         domain=[('product_category','=','Items')], context={'product_category':'Items'}),
         'forwarding_charge' : fields.float('Forwarding Charge', digits=(16,2)),
         'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','campaign_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
+        'mail_service_ids': fields.one2many('dm.campaign.mail_service','campaign_id','Mailing Service'),        
     }
 
     _defaults = {
@@ -603,57 +604,76 @@ class dm_campaign(osv.osv):
         return res
     
     def create(self,cr,uid,vals,context={}):
+
         type_id = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','model')])[0]
         if context.has_key('campaign_type') and context['campaign_type']=='model':
             vals['campaign_type']=type_id
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
         data_cam = self.browse(cr, uid, id_camp)
         if not self.check_forbidden_country(cr, uid, data_cam.offer_id.id,data_cam.country_id.id):
-            raise osv.except_osv("Error!!","You cannot use this offer in this country")
-        
+            raise osv.except_osv("Error!!","You cannot use this offer in this country")        
+        ''' create campaign mail service '''
+
+#        mail_service_id = for each step in the offer the system should :
+#            - check the media of the step,
+#            - find the default mail service for that media
+#            - assign it to mail_service_id
+#        action_id = the action_id of the mail service
+        mail_service_obj = self.pool.get('dm.mail_service')
+        for step_id in data_cam.offer_id.step_ids :
+            mail_service_id = mail_service_obj.search(cr,uid,[('media_id','=',step_id.media_id.id),('default_for_media','=',True)])
+            mail_service = mail_service_obj.browse(cr,uid,mail_service_id)[0]
+            mail_vals = {
+                         'campaign_id'      : id_camp,
+                         'offer_step_id'    : step_id.id,
+                         'mail_service_id'  : mail_service.id,
+                         'action_id'        : mail_service.action_id.id
+                         }        
+            self.pool.get('dm.campaign.mail_service').create(cr,uid,mail_vals)           
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
+        write_vals = {}
         if not data_cam.forwarding_charge:
             if data_cam.country_id.forwarding_charge:
-                super(dm_campaign, self).write(cr, uid, id_camp, {'forwarding_charge':data_cam.country_id.forwarding_charge})
-    
+                write_vals['forwarding_charge'] = data_cam.country_id.forwarding_charge
+                    
         if data_cam.country_id.payment_methods:
             payment_methods = [payment_methods.id for payment_methods in data_cam.country_id.payment_methods]
-            super(dm_campaign, self).write(cr, uid, id_camp, {'payment_methods':[[6,0,payment_methods]]})
+            write_vals['payment_methods']=[[6,0,payment_methods]]
             
         # Set campaign end date at one year after start date if end date does not exist
         if (data_cam.date_start) and (not data_cam.date):
-            time_format = "%Y-%m-%d"
-            d = time.strptime(data_cam.date_start,time_format)
+            d = time.strptime(data_cam.date_start,"%Y-%m-%d")
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
-            super(dm_campaign,self).write(cr, uid, id_camp, {'date':date_end})
+            write_vals['date']=date_end
                 
         # Set trademark to offer's trademark only if trademark is null
         if vals['campaign_type'] != type_id:
             if vals['offer_id'] and (not vals['trademark_id']):
                 offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
-                super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
+                write_vals['trademark_id'] = offer_id.recommended_trademark.id
+        if write_vals :
+            super(dm_campaign,self).write(cr, uid, id_camp, write_vals)
 
         # check if an overlay exists else create it
         data_cam1 = self.browse(cr, uid, id_camp)
         overlay_country_ids = []
         if data_cam1.trademark_id and data_cam1.dealer_id and data_cam1.country_id:
-            overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',data_cam1.trademark_id.id), ('dealer_id','=',data_cam1.dealer_id.id)])
-            for o_id in overlay:
-                browse_overlay = self.pool.get('dm.overlay').browse(cr, uid, o_id)
+            overlay_obj = self.pool.get('dm.overlay')
+            overlay_id = overlay_obj.search(cr, uid, [('trademark_id','=',data_cam1.trademark_id.id), ('dealer_id','=',data_cam1.dealer_id.id)])
+            new_write_vals ={}
+            if overlay_id :
+                browse_overlay = overlay_obj.browse(cr, uid, overlay_id)[0]
                 overlay_country_ids = [country_ids.id for country_ids in browse_overlay.country_ids]
-            if overlay and (data_cam1.country_id.id in overlay_country_ids):
-                super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay[0]}, context)  
-            elif overlay and not (data_cam1.country_id.id in overlay_country_ids):
-                overlay_country_ids.append(data_cam1.country_id.id)
-                self.pool.get('dm.overlay').write(cr, uid, browse_overlay.id, {'country_ids':[[6,0,overlay_country_ids]]}, context)
-                super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay[0]}, context)
+                new_write_vals['overlay_id']=overlay_id[0]
+                if not (data_cam1.country_id.id in overlay_country_ids):
+                    overlay_country_ids.append(data_cam1.country_id.id)
+                    overlay_obj.write(cr, uid, browse_overlay.id, {'country_ids':[[6,0,overlay_country_ids]]}, context)
             else:
-                overlay_country_ids.append(data_cam1.country_id.id)
-                overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_ids':[[6,0,overlay_country_ids]]}, context)
-                super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay_ids1}, context)
-                
-        return id_camp
+                overlay_ids1 = overlay_obj.create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_ids':[[6,0,[data_cam1.country_id.id]]]}, context)
+                new_write_vals['overlay_id'] = overlay_ids1
+            super(osv.osv, self).write(cr, uid, data_cam1.id, new_write_vals, context)  
+        return id_camp            
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
         result = super(dm_campaign,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)

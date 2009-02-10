@@ -69,6 +69,10 @@
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
 
+		<record model="res.partner.category" id="cat_mail_service">
+            <field name="name" eval="&quot;Mail Service&quot;"/>
+            <field name="parent_id" ref="res_partner_category_directmarketing0" />
+        </record>
 
         <!-- Media -->
 

@@ -239,7 +239,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Payment Received Details">
-					<field name="transaction_id" select="1" colspan="2"/>
+					<field name="transaction_id" select="2" colspan="2"/>
 					<field name="saleorder_id" select="2" colspan="2"/>
 					<field name="invoice_id" select="2"/>
 					<field name="transaction_date" select="2"/>

@@ -826,12 +826,6 @@
 			<field name="currency_id" ref="res_currency_aud0"/>
 			<field name="rate">35.0</field>
 		</record>
-
-		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
-			<field eval="[(6,0,[ref('base.EUR'),ref('ecommerce.res_currency_aud0'),ref('base.EUR'),ref('base.CAD'),ref('base.USD')])]" name="currency_ids"/>
-			<field eval="[(6,0,[ref('base.lang_en')])]" name="language_ids"/>
-			<field eval="[(6,0,[ref('delivery.delivery_grid')])]" name="delivery_ids"/>
-		</record>
 		
 		<!-- Search Parameters -->
 		<record id="ecommerce_search_productname0" model="ecommerce.search">
@@ -847,6 +841,14 @@
 		<record id="ecommerce_search_productprice0" model="ecommerce.search">
 			<field name="code">list_price</field>
 			<field name="name">Product Price</field>
+		</record>
+		
+		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
+			<field eval="[(6,0,[ref('base.EUR'),ref('res_currency_aud0'),ref('base.EUR'),ref('base.CAD'),ref('base.USD')])]" name="currency_ids"/>
+			<field eval="[(6,0,[ref('ecommerce_payment'),ref('ecommerce_payment1')])]" name="payment_method"/>
+			<field eval="[(6,0,[ref('base.lang_en')])]" name="language_ids"/>
+			<field eval="[(6,0,[ref('ecommerce_search_productname0'),ref('ecommerce_search_productcolor0'),ref('ecommerce_search_productprice0')])]" name="search_ids"/>
+			<field eval="[(6,0,[ref('delivery.delivery_grid')])]" name="delivery_ids"/>
 		</record>
 
 </data>

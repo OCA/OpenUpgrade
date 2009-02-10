@@ -70,7 +70,15 @@
 		</table>
 		<div id="checkboxtext">
 			<table name="item_list" id="graph_item_list">
-				<tr>
+				<tr py:if="selected_items">
+					<td py:for="label in titles">
+						<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}</input>
+					</td>
+					<td>&nbsp;
+						<button type="button" class="button" onclick="load_radar()">Show Graph</button>
+					</td>
+				</tr>
+				<tr py:if="not selected_items">
 					<td py:for="label in titles">
 						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
 					</td>

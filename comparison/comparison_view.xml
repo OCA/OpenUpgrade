@@ -301,8 +301,12 @@
                     <field name="user_id" select="2"/>
                     <field name="factor_id" select="1"/>
                     <field name="score_id" select="1"/>
-<!--                    <field name="ponderation" select="2"/>-->
                     <field colspan="4" name="note" />
+                     <field name="state" colspan="2" select="2"/>
+                    <group col="2" colspan="2">
+                    <button name="accept_vote" states="draft" string="Accept" type="object"/>
+                    <button name="cancel_vote" states="draft,valid" string="Reject" type="object"/>
+                    </group>
                 </form>
             </field>
         </record>
@@ -316,6 +320,7 @@
                     <field name="item_id"/>
                     <field name="factor_id"/>
                     <field name="score_id"/>
+                    <field name="state"/>
 <!--                    <field name="ponderation"/>-->
                 </tree>
             </field>
@@ -427,6 +432,74 @@
         </record>
         
         <menuitem action="action_evaluation_pack_tree" id="menu_action_evaluation_pack_tree" parent="menu_config_comparison"/>
+        
+        <menuitem id="menu_periodical" name="Periodical Processing" parent="menu_comparison" sequence="2"/>
+        <menuitem id="menu_periodical_criterias" name="Criterias" parent="menu_periodical" sequence="1"/>
+        <menuitem id="menu_periodical_votes" name="Votes" parent="menu_periodical" sequence="3"/>
+        <menuitem id="menu_periodical_suggestions" name="Ponderation Suggestions" parent="menu_periodical" sequence="2"/>
+        
+        <!-- Criterias -->
+        
+        <record id="action_criterias_draft" model="ir.actions.act_window">
+            <field name="name">Draft Criterias</field>
+            <field name="res_model">comparison.factor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+        </record>
+        <menuitem action="action_criterias_draft" id="menu_action_criterias_draft" parent="menu_periodical_criterias"/>
+        
+        <record id="action_criterias_cancel" model="ir.actions.act_window">
+            <field name="name">Cancelled Criterias</field>
+            <field name="res_model">comparison.factor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','cancel')]</field>
+        </record>
+        <menuitem action="action_criterias_cancel" id="menu_action_criterias_cancel" parent="menu_periodical_criterias"/>
+        
+        <!-- Votes -->
+        
+        <record id="action_votes_draft" model="ir.actions.act_window">
+            <field name="name">Draft Votes</field>
+            <field name="res_model">comparison.vote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+        </record>
+        <menuitem action="action_votes_draft" id="menu_action_votes_draft" parent="menu_periodical_votes"/>
+        
+        <record id="action_votes_cancel" model="ir.actions.act_window">
+            <field name="name">Cancelled Votes</field>
+            <field name="res_model">comparison.vote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','cancel')]</field>
+        </record>
+        <menuitem action="action_votes_cancel" id="menu_action_votes_cancel" parent="menu_periodical_votes"/>
+        
+        <!-- Ponderation Suggestions -->
+        
+        <record id="action_ponderation_draft" model="ir.actions.act_window">
+            <field name="name">Draft Suggestions</field>
+            <field name="res_model">comparison.ponderation.suggestion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+        </record>
+        <menuitem action="action_ponderation_draft" id="menu_action_ponderation_draft" parent="menu_periodical_suggestions"/>
+        
+        <record id="action_ponderation_cancel" model="ir.actions.act_window">
+            <field name="name">Cancelled Suggestions</field>
+            <field name="res_model">comparison.ponderation.suggestion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','cancel')]</field>
+        </record>
+        <menuitem action="action_ponderation_cancel" id="menu_action_ponderation_cancel" parent="menu_periodical_suggestions"/>
+        
+        <wizard id="wizard_recompute_evaluations" menu="False" name="recompute.evaluations" string="Recompute All Evaluations"/>
+        <menuitem action="wizard_recompute_evaluations" id="menu_wizard_recompute_evaluations" parent="menu_periodical" type="wizard"/>
         
     </data>
 </openerp>

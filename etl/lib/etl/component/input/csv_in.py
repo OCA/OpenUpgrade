@@ -42,7 +42,6 @@ class csv_in(component.component):
 
     def __init__(self,name,fileconnector,transformer=None,row_limit=0, csv_params={}):
         super(csv_in, self).__init__('(etl.component.input.csv_in) '+name,transformer=transformer)
-
         self.fileconnector = fileconnector
         self.csv_params=csv_params
         self.row_limit=row_limit
