@@ -8,9 +8,35 @@
 >
 <foaf:Group>
 	<foaf:name>ERP Comparator News</foaf:name>
-	<foaf:homepage>http://www.evaluationmatrix.com/</foaf:homepage>
-	<rdfs:seeAlso rdf:resource="http://www.evaluationmatrix.com/foafroll.xml" />
+	<foaf:homepage>http://www.evaluation-matrix.com/</foaf:homepage>
+	<rdfs:seeAlso rdf:resource="http://www.evaluation-matrix.com/foafroll.xml" />
 
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>OpenERP</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="http://www.openerp.com/planet/">
+					<dc:title>Planet Open ERP</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://www.openerp.com/planet/atom.xml" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>OpenObject</foaf:name>
+			<foaf:weblog>
+				<foaf:Document rdf:about="http://www.openobject.com/planet/">
+					<dc:title>Planet Open Object</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://www.openobject.com/planet/atom.xml" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
 	<foaf:member>
 		<foaf:Agent>
 			<foaf:name>Openbravo</foaf:name>
