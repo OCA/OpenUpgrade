@@ -105,7 +105,29 @@ class Account(osv.osv):
 
     }
         
-    
+        def create(self, cr, uid, vals, context={}):
+            obj=self.pool.get('account.account.type').browse(cr,uid,vals['user_type'])
+            if obj.code in ('cash','asset','expense'):
+                vals['type1'] = 'dr'
+            elif obj.code in ('equity','income','liability') : 
+                 vals['type1'] = 'cr'
+            else:
+                 vals['type1'] = 'none'
+            account_id = super(Account, self).create(cr, uid, vals, context)
+            return account_id
+        
+        def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
+            if vals.has_key('user_type'):
+                obj=self.pool.get('account.account.type').browse(cr,uid,vals['user_type'])
+                if obj.code in ('cash','asset','expense'):
+                    vals['type1'] = 'dr'
+                elif obj.code in ('equity','income','liability') : 
+                     vals['type1'] = 'cr'
+                else:
+                     vals['type1'] = 'none'
+            super(Account, self).write(cr, uid,ids, vals, context)
+            return True
+
         def onchange_type(self, cr, uid, ids,user_type,type1):
             obj=self.pool.get('account.account.type').browse(cr,uid,user_type)
             account_type=obj.code
@@ -123,3 +145,11 @@ class Account(osv.osv):
         }
 
 Account()
+
+class account_account_template(osv.osv):
+        _inherit = "account.account.template"
+        
+        _columns = {
+        'type1':fields.selection([('dr','Debit'),('cr','Credit'),('none','None')], 'Dr/Cr',store=True),         
+    }
+account_account_template()

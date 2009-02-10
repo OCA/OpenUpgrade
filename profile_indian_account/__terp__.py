@@ -6,7 +6,6 @@
     "category":"Profile",
     "depends":[
         "account_base",
-        "l10n_chart_in",
         "account_india_ledger",
         "account_invoice",
         "account_voucher",
@@ -14,7 +13,8 @@
         "account_report_india",
         "account_stock",
         "sale_numbers",
-        "purchase_number"
+        "purchase_number",
+        "l10n_chart_in",
         
     ],
     "demo_xml":[],
