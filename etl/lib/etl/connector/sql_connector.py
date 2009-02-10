@@ -56,8 +56,6 @@ class sql_connector(connector.connector):
             raise Exception('Not Supported')           
         return self.connector
 
-    
-
     def close(self):        
         self.connector.close()
 
