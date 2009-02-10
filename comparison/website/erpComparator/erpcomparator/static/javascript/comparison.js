@@ -193,7 +193,7 @@ MochiKit.DOM.addLoadEvent(function(evt){
     window.mbox = new ModalBox({
         title: 'Evaluation Matrix...',
         buttons: [
-            {text: 'Submit', onclick: onUpdate},
+            {text: 'Submit', onclick: onUpdate}
         ]
     });
 });
@@ -264,11 +264,26 @@ function item_vote() {
 	
 }
 function load_radar() {
-	
+	var browserName = navigator.appName;
+	var browserVersion = parseInt(navigator.appVersion);
 	ids = radarData();
 	
-	factor_name= $('factors').value;
-	factor_name = factor_name.replace(/&/g, "@");
+	if(browserName.indexOf('Netscape')!=-1 && browserVersion >= 4) {
+		factor_name= $('factors').value;
+		factor_name = factor_name.replace(/&/g, "@") ;
+	}
+	
+	else if(browserName.indexOf('Microsoft Internet Explorer')!=-1 && browserVersion>=3) {
+		MochiKit.DOM.getElementsByTagAndClassName('select','factors', null)[0].parentNode.parentNode.cells[0].style.padding = '10px';
+		var index = MochiKit.DOM.getElementsByTagAndClassName('select','factors', null)[0].selectedIndex;
+		var factor = MochiKit.DOM.getElementsByTagAndClassName('select','factors', null)[0][index].innerHTML;
+		factor_name= factor;
+		factor_name = factor_name.replace(/&amp;/g, "@") ;
+	}
+	
+	else if(browserName.indexOf('Opera')!=-1) {
+		log("Opera")
+	}
 	
 	list = urlEncode('/graph/radar?ids='+ids+'&factor_name='+factor_name);
 	
