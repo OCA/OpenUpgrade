@@ -32,18 +32,64 @@ fields = {}
 
 class wizard_recompute_votes(wizard.interface):
     
+#    def _compute(self, cr, uid, factor, obj):
+    
     def _recompute(self, cr, uid, data, context):
+        # This method re-calculates all the VOTED evaluations
         pool = pooler.get_pool(cr.dbname)        
         obj_factor = pool.get('comparison.factor')
         obj_item = pool.get('comparison.item')
         obj_factor_result = pool.get('comparison.factor.result')
         obj_vote_values = pool.get('comparison.vote.values')
         
-        top_level_ids = obj_factor.search(cr, uid, [('parent_id','=',False)])
+        #Itemwise calculation based on available votes will be easier
+        item_ids = obj_item.search(cr, uid, [])
         
-        for top_records in obj_factor.browse(cr, uid, top_level_ids, context):
-            #TODO : Calculate from bottom to top.
-            pass
+        cr.execute('update comparison_factor_result set result=0.0,votes=0.0')
+        
+        for item in obj_item.browse(cr, uid, item_ids, context):
+            parent_ids = []
+            cr.execute(" select cf.id,cf.parent_id,cf.name,sum(cvl.factor),count(cvl.factor) from comparison_vote as cv, \
+                            comparison_factor cf,comparison_vote_values as cvl,comparison_item as ci where cv.state!='cancel' \
+                            and cv.factor_id=cf.id and cf.state = 'open' and cv.item_id=ci.id and ci.id= %s and cv.score_id=cvl.id \
+                            group by cf.name,cf.id,cf.parent_id"%(item.id))
+            res = cr.fetchall()
+            # res : factor_id,parent_id, factor_name,sum(votes),no.of votes
+            for record in res:
+                #Re-compute all criterias
+                print "RESSSSS",record[2]
+                if record[1] not in parent_ids:
+                    parent_ids.append(record[1])
+                
+                score = (record[3] * 100)/ (float(record[4]) * 5.0)  # New score = total votes' score/no. of votes
+                votes = record[4]
+                print "SCORE",score
+                result_id = obj_factor_result.search(cr, uid, [('factor_id','=',record[0]),('item_id','=',item.id)])
+                if result_id:
+                    obj_factor_result.write(cr, uid, result_id, {'result':score,'votes':votes})                  
+            
+            #re-compute upto top level
+            for fact_id in parent_ids:
+                factor = obj_factor.browse(cr, uid, fact_id) 
+                
+                while factor:
+                    cr.execute("select sum(cf.ponderation) from comparison_factor as cf where cf.parent_id=%s and cf.state!='cancel'"%(factor.id))
+                    tot_pond = cr.fetchall()
+                    
+                    cr.execute("select cfr.result,cf.ponderation,cf.parent_id,cfr.votes from comparison_factor_result as cfr,comparison_factor as cf where cfr.item_id=%s and cfr.votes > 0.0 and cfr.factor_id = cf.id and cf.parent_id=%s and cf.state!='cancel'"%(item.id,factor.id))
+                    res1 = cr.fetchall()
+        
+                    final_score = 0.0
+                    if res1:
+                        for record in res1:
+                            final_score += (record[0] * record[1])
+            
+                        final_score = final_score / tot_pond[0][0]   
+                        print "FINAL",final_score
+                        parent_result_id = obj_factor_result.search(cr, uid, [('factor_id','=',factor.id),('item_id','=',item.id)])
+                        obj_factor_result.write(cr, uid, parent_result_id[0],{'votes':votes,'result':final_score})
+                            
+                    factor = factor.parent_id or False
         
         return {}
 
