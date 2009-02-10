@@ -178,7 +178,8 @@ function add_new_factor() {
 	        	}
 	    	}
 	    	if (obj.error) {
-	            return alert(obj.error);
+//	            return alert(obj.error);
+	            register()
 	        }
 	    });
 	}
@@ -258,7 +259,8 @@ function item_vote() {
 			}
 		}
     	if (obj.error) {
-            return alert(obj.error);
+//            return alert(obj.error);
+				register()
         }
     });
 	
