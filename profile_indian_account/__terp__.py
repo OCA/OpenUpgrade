@@ -11,6 +11,7 @@
         "account_invoice",
         "account_voucher",
         "account_india",
+        "account_report_india",
         "account_stock",
         "sale_number",
         "purchase_number"
