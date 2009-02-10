@@ -13,7 +13,7 @@
         "account_india",
         "account_report_india",
         "account_stock",
-        "sale_number",
+        "sale_numbers",
         "purchase_number"
         
     ],
