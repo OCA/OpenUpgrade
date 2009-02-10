@@ -37,11 +37,16 @@ function getSelectedItems() {
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
 }
 
-function do_login() {
-	params = {}
-	params['user_name'] = $('user_name').value;
-	params['password'] = $('password').value;
-	
+function do_login(user_name, password) {
+	params = {};
+	if('undefined' == typeof user_name && 'undefined' == typeof password) {
+		params['user_name'] = $('user_name').value;
+		params['password'] = $('password').value;
+	}
+	else {
+		params['user_name'] = user_name;
+		params['password'] = password;
+	}
 	var req = Ajax.JSON.post('/login/check_login', params);
 	req.addCallback(function(obj){
 		if (obj.user_info) {
@@ -54,6 +59,7 @@ function do_login() {
 }
 
 function register() {
+	
 	params = {}
 	var req = Ajax.post('/login', params);
 	req.addCallback(function(xmlHttp) {
@@ -70,7 +76,10 @@ function register() {
 }
 
 function add_new_user() {
-	
+	if($('registered_user') && $('registered_user').checked) {
+		do_login($('usr_name').value, $('usr_password').value)
+	}
+	else {
 	params = {}
 	params['user_name'] = $('name_user').value;
 	params['password'] = $('passwd').value;
@@ -90,6 +99,7 @@ function add_new_user() {
 			return alert(obj.error);
 		}
 	});
+	}
 }
 
 function change_vote(node, pond_val) {
@@ -177,7 +187,7 @@ MochiKit.DOM.addLoadEvent(function(evt){
     window.mbox = new ModalBox({
         title: 'Evaluation Matrix...',
         buttons: [
-            {text: 'Save', onclick: onUpdate},
+            {text: 'Submit', onclick: onUpdate},
         ]
     });
 });
