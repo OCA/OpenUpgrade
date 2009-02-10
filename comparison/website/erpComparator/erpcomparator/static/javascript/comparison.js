@@ -47,10 +47,11 @@ function do_login(user_name, password) {
 		params['user_name'] = user_name;
 		params['password'] = password;
 	}
+
 	var req = Ajax.JSON.post('/login/check_login', params);
 	req.addCallback(function(obj){
 		if (obj.user_info) {
-			window.location.href = '/comparison?user_name='+params['user_name']+'&password='+params['password'];
+			window.location.href = '/comparison';
 		}
 		if (obj.error) {
 			return alert(obj.error);
@@ -85,6 +86,11 @@ function add_new_user() {
 	params['password'] = $('passwd').value;
 	params['email'] = $('email').value;
 	
+	name = params['user_name'].match(/^[A-Za-z0-9_]+$/);
+	if (! name) {
+		return alert("Username accepts only Digit, Later, _ sign...");	
+	}
+	
 	if (!params['user_name'] || !params['password'] || !params['email']) {
 		return alert("Fields marked with * are mandatory...");
 	}
@@ -93,7 +99,7 @@ function add_new_user() {
 	req.addCallback(function(obj){
 		if (obj.res) {
 			window.mbox.hide();
-			window.location.href = '/comparison?user_name='+params['user_name']+'&password='+params['password'];
+			window.location.href = '/comparison';
 		}
 		if (obj.error) {
 			return alert(obj.error);

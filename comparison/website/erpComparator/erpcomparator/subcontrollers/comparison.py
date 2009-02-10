@@ -98,7 +98,7 @@ class Comparison(controllers.Controller, TinyResource):
         
         for r in res:
             title = {}
-            title['sel'] = None
+            title['sel'] = False
             if selected_items:
                 item = {}
                 for s in selected_items:
@@ -129,6 +129,13 @@ class Comparison(controllers.Controller, TinyResource):
             title['load'] = r['load_default']
             titles += [title]
             
+        sel_ids=[]
+        for t in titles:
+            if t['load'] or t['sel']:
+                sel_ids += [t['id']]
+        
+        cherrypy.response.simple_cookie['selected_items'] = sel_ids
+        
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
                 fields += [field['name']]
@@ -329,7 +336,7 @@ class Comparison(controllers.Controller, TinyResource):
              factor_id=None, ponderation=None, parent_id=None, parent_name=None, ftype=''):
 
         ids = ids or []
-            
+        
         if isinstance(ids, basestring):
             ids = [int(id) for id in ids.split(',')]
             
@@ -378,7 +385,7 @@ class Comparison(controllers.Controller, TinyResource):
         
         fact_proxy = rpc.RPCProxy('comparison.factor')
 #        For state = open ids only... 
-        ids = fact_proxy.search([('id', 'in', ids), ('state', '=', 'open')])
+#        ids = fact_proxy.search([('id', 'in', ids), ('state', '=', 'open')])
         
         fields_info = proxy.fields_get(fields, ctx)
         result = proxy.read(ids, fields, ctx)
