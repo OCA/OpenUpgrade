@@ -57,13 +57,11 @@ class wizard_recompute_votes(wizard.interface):
             # res : factor_id,parent_id, factor_name,sum(votes),no.of votes
             for record in res:
                 #Re-compute all criterias
-                print "RESSSSS",record[2]
                 if record[1] not in parent_ids:
                     parent_ids.append(record[1])
                 
                 score = (record[3] * 100)/ (float(record[4]) * 5.0)  # New score = total votes' score/no. of votes
                 votes = record[4]
-                print "SCORE",score
                 result_id = obj_factor_result.search(cr, uid, [('factor_id','=',record[0]),('item_id','=',item.id)])
                 if result_id:
                     obj_factor_result.write(cr, uid, result_id, {'result':score,'votes':votes})                  
@@ -85,7 +83,6 @@ class wizard_recompute_votes(wizard.interface):
                             final_score += (record[0] * record[1])
             
                         final_score = final_score / tot_pond[0][0]   
-                        print "FINAL",final_score
                         parent_result_id = obj_factor_result.search(cr, uid, [('factor_id','=',factor.id),('item_id','=',item.id)])
                         obj_factor_result.write(cr, uid, parent_result_id[0],{'votes':votes,'result':final_score})
                             
