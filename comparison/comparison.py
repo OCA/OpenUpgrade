@@ -65,7 +65,8 @@ class comparison_item(osv.osv):
     _sql_constraints = [
         ('name', 'unique(name)', 'The Item with the same name is already in the List!' )
     ]
-#    _order = 'parent_id,name asc'
+
+    _order = 'sequence,id'
 
     def create(self, cr, uid, vals, context={}):
         result = super(comparison_item, self).create(cr, uid, vals, context)
@@ -181,7 +182,7 @@ class comparison_factor(osv.osv):
         ('name', 'unique(parent_id,name)', 'The name of the Comparison Factor must be unique!' )
     ]
     
-    _order = 'parent_id,sequence'
+    _order = 'parent_id,sequence,id'
 comparison_factor()
 
 class comparison_vote_values(osv.osv):
@@ -210,6 +211,11 @@ class comparison_vote(osv.osv):
         'score_id': fields.many2one('comparison.vote.values', 'Value', required=True),
 #        'ponderation': fields.float('Ponderation'), do we need it here?
         'note': fields.text('Note'),
+        'state': fields.selection([('draft','Draft'),('valid','Valid'),('cancel','Cancel')], 'Status', required=True),
+    }
+    
+    _defaults = {
+        'state': lambda *args: 'draft',
     }
 
     def vote_create_async(self, cr, uid, args):
