@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+
+		<!-- Categrorie Etats Pathologiques -->
+
+		<record id="categ.1" model="health.pathoscategetats">
+			<field name="name">AFFECTIONS CARDIO-VASCULAIRES</field>
+		</record>
+		<record id="categ.2" model="health.pathoscategetats">
+			<field name="name">AFFECTIONS NEURO-PSYCHIATRIQUES</field>
+		</record>
+		<record id="categ.3" model="health.pathoscategetats">
+			<field name="name">AFFECTIONS BRONCHO-PULMONAIRES</field>
+		</record>
+		<record id="categ.4" model="health.pathoscategetats">
+			<field name="name">PATHOLOGIES INFECTIEUSES</field>
+		</record>
+		<record id="categ.5" model="health.pathoscategetats">
+			<field name="name">AFFECTIONS DERMATOLOGIQUES</field>
+		</record>
+		<record id="categ.6" model="health.pathoscategetats">
+			<field name="name">AFFECTIONS OSTÉO-ARTICULAIRES</field>
+		</record>
+		<record id="categ.7" model="health.pathoscategetats">
+			<field name="name">AFFECTIONS GASTRO-ENTÉROLOGIQUES</field>
+		</record>
+		<record id="categ.8" model="health.pathoscategetats">
+			<field name="name">AFFECTIONS ENDOCRINIENNES</field>
+		</record>
+		<record id="categ.9" model="health.pathoscategetats">
+			<field name="name">AFFECTIONS URO-NÉPHROLOGIQUES</field>
+		</record>
+		<record id="categ.10" model="health.pathoscategetats">
+			<field name="name">AUTRES DOMAINES PATHOLOGIQUES</field>
+		</record>
+
+
+		<!-- Profils Pathos -->
+		<record id="T1" model="health.pathosprofils">
+		<field name="name">T1</field>
+		<field name="description">pronostic vital en jeu au quotidien.</field>
+		<field name="definition">Ce profil concerne tout état pathologique grave à risque vital.
+		L’état pathologique T1 génère à lui seul des soins techniques
+		importants et multiples, il implique une surveillance médicale
+		quotidienne, une permanence infirmière 24 heures sur 24,
+		des examens complémentaires, des perfusions… quelle
+		qu’en soit la durée, les facteurs de risques vitaux
+		pouvant être aigus (le plus souvent) ou chroniques.
+
+		Exemples :
+		     Etat végétatif chronique avec trouble de la déglutition, encombrement respiratoire, perfusions,
+		     ventilation, oxygène, aspiration, surveillance rapprochée du pouls et TA.
+
+		     Malade en détresse cardio-respiratoire aiguë post embolie pulmonaire avec héparinothérapie,
+		     oxygène et surveillance très étroite.
+		</field>
+		</record>
+		<record id="T2" model="health.pathosprofils">
+		<field name="name">T2</field>
+		<field name="description">équilibration thérapeutique, surveillance rapprochée</field>
+		<field name="definition">
+		Il s'agit, en présence d’un état pathologique sérieux mais n’engageant pas de risque vital immédiat, de
+		tous les soins médicaux et techniques importants concernant un patient sous traitement continu. Il
+		peut s’agir d’une pathologie aiguë, d’un état précaire ou encore précaire après un stade T1, ou
+		d'une surveillance rapprochée au long cours et d'adaptations thérapeutiques d’états pathologiques
+		instables à risque de rechutes fréquentes risquant d’induire des hospitalisations itératives, telles
+		que l’on peut en rencontrer dans les graves insuffisances cardiaques, respiratoires, rénales…ces
+		états instables pouvant être assez bien stabilisés au prix d'une telle surveillance rapprochée.
+		           Exemples :
+		              Equilibration d'un diabétique insulino-dépendant, broncho-pneumopathie aiguë sans risque
+		              vital ou à rechutes fréquentes, insuffisance cardiaque sévère à fort risque de décompensation
+		              stabilisée au prix d'une surveillance rapprochée et d'adaptations thérapeutiques …
+
+		 L’une des difficultés de PATHOS se rencontre, lors de certaines situations cliniques, dans le
+		 choix entre le profil T2 imposant une surveillance rapprochée et le profil S1 correspondant à
+		 une simple surveillance épisodique programmée. Se poser toujours la question : l’état observé
+		 impose-t-il une surveillance médicale pluri-hebdomadaire ET une permanence infirmière.
+		 Ainsi, un patient relevant d’une oxygénothérapie au long cours sera codé T2 ou S1 selon le
+		 contexte clinique. T2 correspond à un patient dont l’état général altéré impose une surveillance
+		 rapprochée. L’insuffisance respiratoire chronique non compliquée nécessitant un traitement, y compris
+		 l’oxygène, et une surveillance programmée sera codée en S1.
+		 Les patients porteurs chroniquement d’une stomie (colostomie, gastrostomie, urétérostomie) ou
+		 d’une trachéotomie seront codés T2 et S1 selon le contexte également. Le profil T2 correspond à
+		 des situations cliniques graves avec altération de l’état général imposant une surveillance rapprochée,
+		 le patient est en outre incapable d’effectuer seul ses soins et ses changements de poche.
+		 De même pour les perfusions sous cutanées itératives. Le simple complément hydrique chez une
+		 personne buvant peu, mais conservant un état général satisfaisant sera codée en profil S1. Par
+		 contre, si l’acte technique n’est pas lourd en lui-même, la nécessité d’une perfusion sous cutanée
+		 témoignant d’un état clinique grave, requérant une surveillance rapprochée si l’on veut éviter une
+		 aggravation de la situation à moyen terme, relève du profil T2.
+		</field>
+		</record>
+		<record id="P1" model="health.pathosprofils">
+		<field name="name">P1</field>
+		<field name="description">prise en charge psychiatrique de crise</field>
+		<field name="definition">
+		Niveau de soins psychiatriques et psychothérapiques individuels importants requis pour prendre en
+		charge quotidiennement des situations neuro-psychiatriques graves, qu’elles soient aiguës ou à haut
+		risque de rechutes. Ce profil mobilise fortement le psychiatre et l’équipe soignante.
+		        Exemples :
+		        Etat dépressif avec tentative de suicide
+		        Psychose hallucinatoire chronique en phase productive
+
+		P1 peut également se rencontrer dans des états psychiatriques non encore étiquetés. A ce stade, le
+		patient peut nécessiter des investigations médicales psychiatriques et paracliniques afin de
+		déterminer ou non l'organicité d’une pathologie (état confusionnel). Dans ce cas, on se trouve dans
+		une ambiance « chaude » et les examens complémentaires peuvent être lourds et coûteux (scanner,
+		examens biologiques).
+		</field>
+		</record>
+		<record id="P2" model="health.pathosprofils">
+		<field name="name">P2</field>
+		<field name="description">prise en charge psychothérapique de soutien</field>
+		<field name="definition">
+		Niveau de soins psychiatriques et psychothérapiques programmés, le plus souvent collectifs, requis
+		pour prendre en charge, surveiller et traiter des troubles neuro-psychiatriques diagnostiqués et stabili-
+		sés, mobilisant surtout les paramédicaux, qu’ils aient ou non le « label psy ». Dans ce cadre, entre
+		notamment les « ateliers mémoires ».
+		        Exemples :
+		        Etat anxio-dépressif sous traitement récent, non encore notablement amélioré
+		        Troubles du comportement multiples et perturbants chez un dément en unité Alzheimer
+
+		Remarque : la psychothérapie ordonnancée, entrant dans le cadre du profil P2, n’est pas exclusive
+		des psychologues, mais concerne l’ensemble de l’équipe soignante qui doit être formée à ce type
+		de soutien (dans les unités dites « Alzheimer »par exemple).
+		Par ailleurs rappelons ici que les soins psychiatriques englobent non seulement la prise en
+		charge spécifique du patient, mais également le soutien de la famille et de l’équipe soignante.
+		</field>
+		</record>
+		<record id="R1" model="health.pathosprofils">
+		<field name="name">R1</field>
+		<field name="description">RRF intensive individuelle</field>
+		<field name="definition">
+		Il s'agit ici d'une rééducation fonctionnelle intensive impliquant le médecin rééducateur fonctionnel
+		pour l'analyse de la situation, l'établissement du projet de soins, la surveillance de l’évolution, le kiné-
+		sithérapeute, l’ergothérapeute, l’orthophoniste, pour des actions prolongées, le plus souvent
+		biquotidiennes.
+		Cette rééducation ne peut généralement être entreprise qu’après cicatrisation s'il y a eu un geste chi-
+		rurgical (c'est le cas des amputés, ou d'une prothèse totale de hanche par exemple). La rééducation
+		neurologique lourde s’effectue également à distance de l'épisode aigu.
+		Le profil R1 suppose en outre que la personne âgée présente un état général et une situation clinique
+		lui permettant de supporter une telle rééducation intensive de plus d’une demi-heure tous les jours au
+		cours d’une semaine.
+		          Exemples :
+		          Rééducation active et lourde d'une hémiplégie, après la phase aiguë au cours de laquelle on
+		          s'est contenté d'un simple positionnement.
+		          Rééducation d'une prothèse totale du genou avec kinésithérapie biquotidienne
+
+		On inclut également ici la revalidation des personnes âgées qui, au décours d'une pathologie
+		aiguë ou subaiguë, doivent être reverticalisées et revalidées.
+		</field>
+		</record>
+		<record id="R2" model="health.pathosprofils">
+		<field name="name">R2</field>
+		<field name="description">RRF allégée</field>
+		<field name="definition">
+		Rééducation d’entretien, le plus souvent collective, ou rééducation discontinue et
+		allégée chez un patient ne pouvant supporter une rééducation intensive
+
+		Il s'agit ici de la phase d'entretien qui peut succéder à une période de rééducation intensive avec des
+		actions plus brèves, et/ou plus espacées des kinésithérapeutes et des ergothérapeutes, ou d'une
+		rééducation plus légère chez les personnes âgées ne pouvant physiquement supporter de trop
+		longues, ou de trop fréquentes séances.
+
+		La simple activation à la marche fait également partie de cette rubrique.
+
+		La rééducation du lymphoedème, la kinésithéraphie respiratoire et la rééducation de l’inconti-
+		nence urinaire sont incluses dans ce profil R1 en raison du caractère individuel obligatoire de
+		ce type d’intervention. Dans ces cas, il n’y a pas d’alternative entre rééducation lourde intensive et
+		rééducation d’entretien ou allégée (R2 ci dessous) : la rééducation s’impose ou ne s’impose pas (la
+		valeur en points de R1 pour une incontinence sera très différente de celle d’un AVC, car c’est bien le
+		couple état pathologique – profil qui détermine les niveaux de soins nécessaires).
+
+		La mobilisation passive des patients alités pour une affection aiguë ou sub-aiguë (T1 et T2), des
+		patients bénéficiant de pansements lourds (CH) et des patients en phase terminale (M1 et M2), est
+		incluse dans les profils concernés.
+		</field>
+		</record>
+		<record id="CH" model="health.pathosprofils">
+		<field name="name">CH</field>
+		<field name="description">plaies, soins locaux complexes et longs</field>
+		<field name="definition">
+		Il s'agit de tous les soins locaux nécessités par un opéré récent : drain, ablation de fils, pansements.
+		Les soins d'escarres, d'ulcères, de gangrène et de tout autre type de lésion cutanée importante
+		nécessitant des soins locaux lourds et prolongés sont compris dans ce niveau de soins.
+
+		Le profil CH suppose que l’infirmière est mobilisée au moins 20 minutes tous les jours ou tous
+		les deux jours. Les situations relevant de CH témoignent souvent (escarres notamment) d’un état
+		clinique grave imposant un environnement technique, avec surveillance rapprochée pour la renutrition,
+		la rééquilibration des constantes vitales si l’on veut éviter une aggravation de la situation à moyen
+		terme (imposant notamment une permanence infirmière).
+
+		Les pansements « légers » (ulcères variqueux simples par exemple) relèvent du profil S1.
+		</field>
+		</record>
+		<record id="DG" model="health.pathosprofils">
+		<field name="name">DG</field>
+		<field name="description">investigations pour un état non diagnostiqué</field>
+		<field name="definition">
+		Cette rubrique concerne le travail généré, avant tout traitement, par la prise de contact et l’examen
+		initial pour l'état pathologique signalé ainsi que toutes les explorations nécessaires pour faire le
+		diagnostic positif. Ce profil concerne des situations cliniques « froides » en dehors des problèmes
+		de diagnostic posés dans des situations aiguës et dans un contexte de gravité, inclus déjà
+		dans les profils T1, T2, P1 et R1.
+
+		      Exemples :
+
+			 Explorations requises par une fièvre inexpliquée au long cours, une VS accélérée, le typage
+		         d’une démence, la découverte fortuite d’une anémie ou d’une insuffisance rénale biologique,
+		         toutes situations se caractérisant par l’ampleur des examens complémentaires…
+
+			 Suspicion d'une embolie pulmonaire chez un malade chez lequel est apparue une polypnée
+		         isolée sans signes de gravité.
+
+			 Noter que dans tous ces cas, on n'est pas dans l'ambiance de soins multiples et complexes, ni
+		         de soins techniques importants : il s'agit d'une recherche de diagnostic dans une ambiance
+		         cliniquement "froide".
+		         La charge de travail imposée par les problèmes diagnostiques survenant dans des
+		         ambiances « chaudes » de soins techniques lourds est incluse dans les moyens requis
+		         pour ces niveaux techniques (T1, T2, P1 et R1).
+		</field>
+		</record>
+		<record id="M1" model="health.pathosprofils">
+		<field name="name">M1</field>
+		<field name="description"> mourant lucide : soins d'accompagnements psychothérapiques et techniques</field>
+		<field name="definition">
+		Il s'agit ici des soins importants d’accompagnement de fins de vie chez des patients lucides,
+		conséquences de l’évolution d’une ou plusieurs pathologies (éventuellement lente), nécessitant une
+		importante mobilisation de soins tant relationnels et de soutien psychologique, qu'éven-
+		tuellement techniques, pour contrôler des douleurs (morphiniques en perfusion sous cutanée avec
+		seringue à débit constant ou administration par voie orale) et soins visant à contrôler les troubles
+		fonctionnels gênant le confort (vomissements, hoquet, constipation, encombrement respiratoire...)
+
+		Nous sommes ici typiquement dans la situation des soins palliatifs, nécessitant une formation
+		spécifique de l’ensemble du personnel.
+		</field>
+		</record>
+		<record id="M2" model="health.pathosprofils">
+		<field name="name">M2</field>
+		<field name="description">état crépusculaire: simples soins palliatifs de confort</field>
+		<field name="definition">
+		Il s'agit ici d'un patient inconscient ou n'ayant plus de relation avec l'entourage, ne posant pas de
+		problème de soins techniques particulier, nécessitant juste des soins de base et de confort, une
+		hydratation buccale régulière, un contrôle de l'encombrement bronchique et l'administration
+		éventuelle d'antalgiques non morphiniques par voie orale.
+
+		Les profils M1 et M2 concernent l’état pathologique « état terminal » qui ne sera codé que lorsque
+		toute thérapeutique curative (hormis les soins imposés par les escarres CH) est exclue et que l’équipe
+		médicale a formulé, ou aurait dû formuler, le passage aux soins palliatifs ou aux soins de confort. Si
+		d’autres états pathologiques sont mentionnés avec « état terminal » (hors escarres CH), le seul profil
+		à prendre en compte ici sera S1 (la mobilisation et la psychothérapie de soutien sont inclus dans les
+		profils M1 et M2).
+
+		La prise en charge de la fin de vie est une réalité particulièrement présente en gériatrie, certainement
+		insuffisamment prise en compte. L’humanisme tient dans ce domaine une place aussi importante
+		que la technique médicale.
+		</field>
+		</record>
+		<record id="S1" model="health.pathosprofils">
+		<field name="name">S1</field>
+		<field name="description">préventions surveillance, simple dispensiation médicamenteuse</field>
+		<field name="definition">
+		Il s'agit ici du niveau de soins médicaux et techniques requis par un patient prenant au long cours une
+		thérapeutique pour une pathologie identifiée. C’est notamment le patient à domicile ou en maison de
+		retraite présentant une poly-pathologie, vu tous les quinze jours ou tous les mois par son médecin
+		traitant. Des bilans programmés toutes les semaines ou tous les deux mois peuvent avoir été prévus
+		pour de tels patients. Il s'agit en particulier ici de tous les traitements dits "de fond", ou les simples
+		surveillances épisodiques pour des situations particulières sans traitement médicamenteux.
+
+		Ce niveau est notamment requis lorsque l'infirmière doit simplement préparer les médicaments, en
+		vérifier l'administration et effectuer les surveillances cliniques et biologiques prévues.
+		</field>
+		</record>
+		<record id="S0" model="health.pathosprofils">
+		<field name="name">S0</field>
+		<field name="description">absence significative de prévention , de surveillance ,de soins</field>
+		<field name="definition">
+		Cette rubrique concerne tous les états pathologiques stabilisés ou séquellaires qui peuvent générer,
+		et expliquer, une perte d'autonomie mais ne requièrent aucun soin technique, ni aucune surveillance
+		particulière. On peut être en perte d'autonomie et ne plus être "malade". L’éventualité d'une personne
+		âgée sans pathologie "pertinente", c'est à dire sans consommation de soins, n'a rien d'exceptionnel.
+
+		Ce profil peut aussi s’appliquer aux pathologies pour lesquelles il n’existe aucun traitement ou pour
+		lesquelles les traitements ne sont plus efficaces ou ne paraissent pas prioritaires.
+		</field>
+		</record>
+
+		<!-- Etats Pathologiques -->
+		<record id="1" model="health.pathosetatspatho">
+		<field name="name">1</field>
+		<field name="description">Insuffisance cardiaque</field>
+		<field name="definition">
+		Cette rubrique regroupe :
+		l’insuffisance cardiaque droite, gauche ou globale, quelle qu'en soit l'étiologie (hypertensive,
+		post-infarctus ,valvulopathie opérée ou non, CMO etc...), en poussées (T1 et T2) ou équilibrée
+		par un traitement de fond (S1).
+
+		Profils retenus : T1, T2, DG, S1
+		</field>
+		<field name="profils" eval="[(6, 0, [ref('T1'),ref('T2'),ref('DG'),ref('S1')])]" />
+		<field name="categorie" ref="categ.1" />
+		</record>
+	</data>
+</openerp>
