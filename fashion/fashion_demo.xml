@@ -1,22 +1,27 @@
 <?xml version="1.0"?>
 <openerp>
 	<data noupdate="1">
-		#
-		# 
-		#
-
-	<record id="fashion_demo1" model="mrp.characteristic_group">
+	
+	<!--
+		Charactrsitic Group
+	-->
+	
+	<record id="fashion_demo1" model="mrp.characteristic.group">
 		<field name="name">color</field>
 		<field name="axis">Y</field>
 	</record>
-	<record id="fashion_demo2" model="mrp.characteristic_group">
+	<record id="fashion_demo2" model="mrp.characteristic.group">
 		<field name="name">size</field>
 		<field name="axis">X</field>
 	</record>
-	<record id="fashion_demo3" model="mrp.characteristic_group">
+	<record id="fashion_demo3" model="mrp.characteristic.group">
 		<field name="name">diameter</field>
 		<field name="axis">X</field>
 	</record>
+	
+	<!--
+		Charactrsitic 
+	-->
 	
 	<record id="fashion_demo4" model="mrp.characteristic">
 		<field name="name">red</field>
@@ -51,9 +56,10 @@
 		# to do
 		#
 
-		<record id="fashion_demo11" model="product.product">
-		<field name="uom_id" ref="product_uom_unit"/>
-		<field name="uom_po_id" ref="product_uom_unit"/>
+	<record id="fashion_demo11" model="product.product">
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="categ_id" ref="product.product_category_7"/>
 		<field name="name">shirt</field>
 	</record>
 

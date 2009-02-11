@@ -30,6 +30,7 @@
 	"description": "Product charactristics",
 	"depends" : ["base","product",'mrp'],
 	"init_xml" : [],
+	"demo_xml" : ['fashion_demo.xml'],
 	"update_xml" : ['custom_view.xml', 'fashion_wizard.xml',
 				    'security/ir.model.access.csv',
 				    ],
