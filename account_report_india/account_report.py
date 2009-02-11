@@ -69,7 +69,7 @@ class account_report_india(osv.osv):
         list_obj=self.pool.get('account.account').browse(cr, uid, acc_id)
         for aobj in list_obj:
             total_bal=0.0
-            if aobj.type in type_list:
+            if aobj.user_type.code in type_list:
                 res={}
                 move_id = self.pool.get('account.move.line').search(cr, uid, [('account_id','=', aobj.id)])
                 move = self.pool.get('account.move.line').browse(cr, uid, move_id)
