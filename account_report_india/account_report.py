@@ -130,7 +130,7 @@ class account_report_india(osv.osv):
         for acc_c in acc_child:
             res1={}
             res1['name']=acc_c.name
-            res1['type']=acc_c.type
+            res1['type']=acc_c.user_type.code
             move_id = self.pool.get('account.move.line').search(cr, uid, [('account_id','=', acc_c.id)])
             move = self.pool.get('account.move.line').browse(cr, uid, move_id)
             list_acc_child=self.dict_account_detail(move,year_start_date,year_end_date,vals['start_date'],vals['end_date'])
@@ -179,7 +179,7 @@ class account_report_india(osv.osv):
                 total_bal=0.0
                 total_bal1=0.0
                 res['name']=aobj.name
-                res['type']=aobj.type
+                res['type']=aobj.user_type.code
                 move_id = self.pool.get('account.move.line').search(cr, uid, [('account_id','=', aobj.id)])
                 move = self.pool.get('account.move.line').browse(cr, uid, move_id)
                 list_res=self.dict_account_detail(move,year_start_date,year_end_date,vals['start_date'],vals['end_date'])

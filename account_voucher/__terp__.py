@@ -26,6 +26,7 @@
         "account_voucher_sequence.xml",
         "account_view.xml",
         "account_report.xml",
+        "account_voucher_workflow.xml",
         "account_voucher_wizard.xml",
         "voucher_view.xml",
     ],

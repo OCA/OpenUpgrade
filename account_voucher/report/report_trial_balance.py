@@ -79,7 +79,6 @@ class report_trial_balance(report_sxw.rml_parse):
         res['credit']=self.sum_cl_bal_cr
         return res
     
-    
     def sum_op_bal(self,move,move_other,form,year_start_date,year_end_date):
         res={} 
         op_debit=0.0
