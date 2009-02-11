@@ -232,16 +232,14 @@
 
 		<record id="ir_actions_act_window_view_0" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_maintenance.fleet_normal_action" />
-			<field eval="0" name="multi" />
 			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
 			<field name="view_id" ref="fleet_maintenance.view_location_tree_fleet" />
 			<field eval="0" name="sequence" />
 		</record>
 		<record id="ir_actions_act_window_view_1" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_maintenance.fleet_normal_action" />
-			<field eval="0" name="multi" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
-			<field name="view_id" ref="view_location_fleet_form" />
+			<field name="view_id" ref="fleet_maintenance.view_location_fleet_form" />
 			<field eval="1" name="sequence" />
 		</record>
 
@@ -259,7 +257,6 @@
 
 		<record id="ir_actions_act_window_view_4" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_maintenance.action_fleet_new" />
-			<field eval="0" name="multi" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
 			<field name="view_id" ref="view_location_fleet_form" />
 		</record>
@@ -406,6 +403,7 @@
 								on_change="onchange_product_id(product_id, location_id, location_dest_id)" select="1" />
 							<field name="product_qty" select="1" />
 							<field name="product_uom" select="1" />
+							<field name="name" invisible="1" />
 							<field groups="product.group_uos" name="product_uos" />
 							<field groups="product.group_uos" name="product_uos_qty" />
 							<field colspan="4" invisible="1" name="name" select="1" />

@@ -153,22 +153,23 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">crm.case</field>
 			<field name="view_type">form</field>
+			<field name="domain">[('prodlot_id','!=',False)]</field>
 			<field name="view_mode">tree,form,calendar</field>
 		</record>
 
 		<menuitem icon="terp-crm" id="menu_fleet_incidents" name="Fleet Incidents" parent="menu_main_fleets" />
-		<menuitem action="fleet_incident_action" id="all_fleet_incidents" name="All Fleet Incidents" parent="menu_fleet_incidents" />
+		<menuitem icon="STOCK_JUSTIFY_FILL" action="fleet_incident_action" id="all_fleet_incidents" name="All Fleet Incidents" parent="menu_fleet_incidents" />
 
 		<record id="ir_actions_act_window_view_crm_incident_form" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_incident_action" />
-			<field eval="1" name="multi" />
+			<field eval="1" name="sequence" />
 			<field name="view_id" ref="fleet_maintenance.view_crm_case_form_fleet_maintenance" />
 			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
 		</record>
 
 		<record id="ir_actions_act_window_view_crm_incident_tree" model="ir.actions.act_window.view">
 			<field name="act_window_id" ref="fleet_incident_action" />
-			<field eval="1" name="multi" />
+			<field eval="0" name="sequence" />
 			<field name="view_id" ref="fleet_maintenance.view_crm_case_tree_fleet_maintenance" />
 			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
 		</record>

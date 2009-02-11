@@ -174,12 +174,16 @@ class stock_move(osv.osv):
     def _default_location_dest_id(self, cr, uid, context={}):
         return context.get('location_dest_id', False) or super(stock_move, self)._default_location_destination(cr, uid, context)
     
+    def _default_name(self, cr, uid, context={}):
+        return "RMA_move"
+    
     
     _defaults = {
         'product_id': _default_product_id,
         'prodlot_id': _default_prodlot_id,
         'location_id': _default_location_id,
         'location_dest_id': _default_location_dest_id,
+        'name': _default_name,
     }
 
 stock_move()
