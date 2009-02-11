@@ -21,6 +21,8 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <field name="name" select="1" position="after">
+<!-- Remove field : question_id -->
+        			<field name="question_id" select="0" invisible="hide form search box"/>
                     <field name="next"/>
                 </field>
             </field>
@@ -33,6 +35,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <field name="name" select="1" position="after">
+        			<field name="question_id" select="0" invisible="hide form search box"/>
                     <field name="next"/>
                 </field>
             </field>
