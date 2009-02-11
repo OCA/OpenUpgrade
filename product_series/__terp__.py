@@ -32,7 +32,9 @@
 	"description": """It relates partners to product series.
 
 This module adds a new object and a field on the product view. """,
-	"update_xml" : ["product_series_view.xml"],
+	"update_xml" : ['security/ir.model.access.csv',"product_series_view.xml"],
 	"active": False,
-	"installable": True
+	"installable": True,
+	"certificate": '0012565031125949',
+
 }

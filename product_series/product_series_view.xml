@@ -35,7 +35,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">product.series</field>
             <field name="view_type">form</field>
-            <field name="view_mode">form,tree</field>
+            <field name="view_mode">tree,form</field>
         </record>
 
         <menuitem action="product_series_action_form" id="menu_product_series_action_form" parent="product.menu_config_product"/>

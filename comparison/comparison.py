@@ -260,22 +260,7 @@ class comparison_vote(osv.osv):
                     final_score += (record[0] * record[1])
     
                 final_score = final_score / tot_pond[0][0]   
-#            if res1[0][1] > 0.0:
-#                if res1[0][1] == tot_pond[0][0]:
-#                    pond_div = res1[0][1]
-#                    final_score  = (res1[0][0] / pond_div)
-#                else:
-#                    pond_div = res1[0][1] / tot_pond[0][0]
-#                    final_score  = (res1[0][0] * pond_div)
-#            for child in factor.parent_id.child_ids:
-#                scoring_child = obj_factor_result.search(cr, uid, [('factor_id','=',child.id),('item_id','=',item.id),('votes','>',0.0)])
-##                
-#                if scoring_child:
-#                    obj_final_result = obj_factor_result.browse(cr,uid,scoring_child[0])
-#                    pond = obj_final_result.factor_id.ponderation
-#                    sc = obj_final_result.result
-#                    score_new += sc
-#                    pond_new += pond
+
                 parent_result_id = obj_factor_result.search(cr, uid, [('factor_id','=',factor.parent_id.id),('item_id','=',item.id)])
                 obj_parent = obj_factor_result.read(cr, uid, parent_result_id,['votes'])
                 obj_factor_result.write(cr, uid, parent_result_id[0],{'votes':(obj_parent[0]['votes'] + 1),'result':final_score})

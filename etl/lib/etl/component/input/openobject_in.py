@@ -67,7 +67,8 @@ class openobject_in(component.component):
     def process(self):        
         try:                        
             ids = self.openobject_connector.execute('execute',self.model,'search',self.domain, 0, self.row_limit, False, self.context,False)                                    
-            rows = self.openobject_connector.execute('execute',self.model, 'read', ids,self.fields, self.context)                        
+            rows = self.openobject_connector.execute('execute',self.model, 'read', ids,self.fields, self.context) 
+                                   
             for row in rows:                           
                 if self.transformer:
                     row=self.transformer.transform(row)

@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+(c) 2008 Sednacom <http://www.sednacom.fr>
+
+ authors :
+  - Brice < brice@sednacom.fr >
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+-->
+<terp>
+<data>
+
+    <record model="ir.ui.view" id="sednacom_email_form">
+        <field name="name">sednacom.email.form</field>
+        <field name="model">sednacom.email</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Email">
+                <field name="exp" colspan="4" select="1" />
+                <field name="to" colspan="4" select="1" />
+                <field name="recipients" colspan="4" select="1" />
+                <field name="name" colspan="4" select="1"/>
+                <field name="datetime" select="2" />
+                <field name="state" select="2" />
+                <field name="crm_case" colspan="4" />
+                <separator label="message" colspan="4" />
+                <field name="body" nolabel="1" colspan="4" widget="html_tag" />
+                <group col="2" colspan="2" >
+                    <button name="sendmail" string="Send" type="object" states="draft" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sednacom_email_tree">
+        <field name="name">sednacom.email.tree</field>
+        <field name="model">sednacom.email</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Emails">
+                <field name="name"  />
+                <field name="to" />
+                <field name="exp" />
+                <field name="datetime" />
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_sednacom_email_tree">
+        <field name="name">Emails</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sednacom.email</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="sednacom_email_tree"/>
+    </record>
+
+    <menuitem name="Tools/Emails" action="action_sednacom_email_tree" id="menu_sednacom_email" />
+
+
+</data>
+</terp>
+

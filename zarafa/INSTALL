@@ -1,0 +1,27 @@
+INSTALLING SEDNACOM EXTRAS
+==========================
+
+Zarafa side
+===========
+
+Install content of php subdirectory in the top-level directory of Zarafa web-access.
+
+List of files: 
+    appointment.php
+    contact.php
+    delete_appointment.php
+    get_emails.php
+    liste_email.php
+    sednamail.php
+
+OpenERP side
+============
+
+Install this directory as a regular OpenERP module.
+
+Configure OpenERP users: in the "Zarafa" tab, fill up fields as following:
+ - server : the url to reach zarafa web-access (eg http://zarafa.mycompany.com/webaccess)
+ - login : zarafa login of the user
+ - password : zarafa password of the user
+ - email : email address of the user 
+

@@ -1,0 +1,80 @@
+type,name,res_id,src,value
+model,"ir.actions.act_window,name",personal_base.action_account_entry_form_form,New Account Entry,Naujas sąskaitos įrašas
+model,"ir.actions.act_window,name",personal_base.action_account_entries_list,Account Entries,Sąskaitų įrašai
+model,"ir.actions.act_window,name",personal_base.action_confirmed_account_entries_list,Confirmed Account Entries,Patvirtinti sąskaitų įrašai
+model,"ir.actions.act_window,name",personal_base.action_draft_account_entries_list,Draft Account Entries,Sąskaitų įrašų juodraščiai
+model,"ir.actions.act_window,name",personal_base.action_confirmed_account_lines_list,Confirmed Account Lines,Patvirtintos sąskaitų eilutės
+model,"ir.actions.act_window,name",personal_base.action_account_form,Accounts,Sąskaitos
+model,"ir.actions.act_window,name",personal_base.action_account_tree,Chart of Accounts,Sąskaitų planas
+model,"ir.actions.act_window,name",personal_base.action_account_type_form,Account Types,Sąskaitų tipai
+model,"ir.actions.act_window,name",personal_base.action_personal_base_action_login_list,Actions After Login,Įvykiai po prisijungimo
+model,"ir.actions.wizard,name",personal_base.wizard_open_line_entry_id,Open Line Entry,Atviros sąskaitų eilutės
+model,"ir.actions.wizard,name",personal_base.wizard_open_line_entry,Open Line Entry,Atviros sąskaitų eilutės
+model,"ir.actions.wizard,name",personal_base.wizard_create_account_types,Create Account Types,Sukurti sąskaitų tipus
+model,"ir.ui.menu,name",personal_base.personal_financial_management_configuration_menu,Configuration,Nustatymai
+model,"ir.ui.menu,name",personal_base.menu_action_account_entry_form_form,New Account Entry,Naujas sąskaitos įrašas
+model,"ir.ui.menu,name",personal_base.menu_action_account_entries_list,Account Entries,Sąskaitų įrašai
+model,"ir.ui.menu,name",personal_base.menu_action_confirmed_account_entries_list,Confirmed Account Entries,Patvirtinti sąskaitų įrašai
+model,"ir.ui.menu,name",personal_base.menu_action_draft_account_entries_list,Draft Account Entries,Sąskaitų įrašų juodraščiai
+model,"ir.ui.menu,name",personal_base.menu_action_confirmed_account_lineslist,Confirmed Account Lines,Patvirtintos sąskaitų eilutės
+model,"ir.ui.menu,name",personal_base.menu_action_account_form,Accounts Definition,Sąskaitų apibrėžimai
+model,"ir.ui.menu,name",personal_base.menu_action_account_tree,Chart of Accounts,Sąskaitų planas
+model,"ir.ui.menu,name",personal_base.menu_action_account_type_form,Account Types,Sąskaitų tipai
+model,"ir.ui.menu,name",personal_base.personal_administration_menu,Personal,Personal
+model,"ir.ui.menu,name",personal_base.menu_wizard_create_account_types,Create Account Types,Sukurti sąskaitų tipus
+model,"ir.ui.menu,name",personal_base.menu_action_personal_base_action_login_list,Actions After Login,Įvykiai po prisijungimo
+field,"personal.base.account,note",0,Note,Pastabos
+field,"personal.base.account,user_id",0,User,Vartotojas
+field,"personal.base.account,name",0,Name,Vardas
+field,"personal.base.account,type_id",0,Account Type,Sąskaitos tipas
+field,"personal.base.account,child_ids",0,Childs Codes,Vaikinės sąskaitos
+field,"personal.base.account,currency_id",0,Currency,Valiuta
+field,"personal.base.account,parent_id",0,Parent Code,Tėvinė sąskaita
+field,"personal.base.account,balance",0,Balance,Balansas
+field,"personal.base.account.entry,note",0,Note,Pastabos
+field,"personal.base.account.entry,created_in_model_id",0,Created in Model,Sukurta modelyje
+field,"personal.base.account.entry,user_id",0,User,Vartotojas
+field,"personal.base.account.entry,name",0,Description,Aprašymas
+field,"personal.base.account.entry,currency_id",0,Currency,Valiuta
+field,"personal.base.account.entry,state",0,State,Būklė
+field,"personal.base.account.entry,date",0,Date,Data
+field,"personal.base.account.entry,line_ids",0,Entries,Įrašai
+field,"personal.base.account.entry.line,user_id",0,User,Vartotojas
+field,"personal.base.account.entry.line,name",0,Description,Aprašymas
+field,"personal.base.account.entry.line,debit_amount",0,Debit Amount,Debetinė suma (+)
+field,"personal.base.account.entry.line,credit_amount",0,Credit Amount,Kreditinė suma (-)
+field,"personal.base.account.entry.line,amount_base",0,Amount Base,Sumos pagrindas
+field,"personal.base.account.entry.line,currency_id",0,Currency,Valiuta
+field,"personal.base.account.entry.line,parent_id",0,Entry,Įrašas
+field,"personal.base.account.entry.line,state",0,State,Būklė
+field,"personal.base.account.entry.line,currency_rate",0,Currency Rate,Valiutos kursas
+field,"personal.base.account.entry.line,date",0,Date,Data
+field,"personal.base.account.entry.line,balance",0,Balance,Balansas
+field,"personal.base.account.entry.line,amount_base_with_sign",0,Amount,Suma
+field,"personal.base.account.entry.line,account_id",0,Account,Sąskaita
+field,"personal.base.account.type,name",0,Acc. Type Name,Sąskaitos tipo pavadinimas
+field,"personal.base.account.type,sign",0,Sign,Ženklas
+field,"personal.base.action.login,name",0,Name,Pavadinimas
+field,"personal.base.action.login,action_id",0,Action,Įvykis
+selection,"personal.base.account.entry,state",0,Draft,Juodraštis
+selection,"personal.base.account.entry,state",0,Confirmed,Patvirtinta
+selection,"personal.base.account.entry.line,state",0,Draft,Juodraštis
+selection,"personal.base.account.entry.line,state",0,Confirmed,Patvirtinta
+selection,"personal.base.account.type,sign",0,Negative,Neigiamas
+selection,"personal.base.account.type,sign",0,Positive,Teigiamas
+view,personal.base.account.entry,0,Account Entries,Sąskaitų įrašai
+view,personal.base.account.entry,0,Account Entry,Sąskaitų įrašas
+view,personal.base.account.entry,0,General Information,Pagrindinė informacija
+view,personal.base.account.entry,0,Confirm,Patvirtinti
+view,personal.base.account.entry,0,Return,Grąžinti
+view,personal.base.account.entry,0,Notes,Pastabos
+view,personal.base.account.entry.line,0,Account Entry Lines,Sąskaitų įrašų eilutės
+view,personal.base.account.entry.line,0,Account Entry Line,Sąskaitos įrašo eilutė
+view,personal.base.account,0,Account,Sąskaita
+view,personal.base.account,0,General Information,Pagrindinė informacija
+view,personal.base.account,0,Notes,Pastabos
+view,personal.base.account,0,Chart of Accounts,Sąskaitų planas
+view,personal.base.account,0,Chart of Accounts,Sąskaitų planas
+view,personal.base.account.type,0,Account Type,Sąskaitos tipas
+view,personal.base.account.type,0,Account Type,Sąskaitos tipas
+view,personal.base.account.entry.line,0,Account Entry Lines,Sąskaitų įrašų eilutės
