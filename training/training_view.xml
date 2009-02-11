@@ -1038,13 +1038,13 @@
         <menuitem id="training_mi" name="Trainings" />
         <menuitem id="training_config_mi" parent="training_mi" name="Configuration" sequence="1"/>
         <menuitem id="training_config_library_mi" parent="training_config_mi" name="Library" />
-        <menuitem id="training_config_library_course_type_mi" parent="training_config_library_mi" name="Course Type" action="training_course_type_all_act" />
-        <menuitem id="training_config_library_product_line_mi" parent="training_config_library_mi" name="Product Lines" action="training_course_category_all_act" />
+        <menuitem id="training_config_library_course_type_mi" parent="training_config_library_mi" action="training_course_type_all_act" />
+        <menuitem id="training_config_library_product_line_mi" parent="training_config_library_mi" action="training_course_category_all_act" />
         <menuitem id="training_config_locations_mi" parent="training_config_mi" name="Locations" />
 
         <menuitem id="training_library_mi" parent="training_mi" name="Library" sequence="2" />
         <menuitem id="training_library_course_mi" parent="training_library_mi" name="Courses" />
-        <menuitem id="training_library_course_course_mi" parent="training_library_course_mi" name="Courses" action="training_course_all_act" />
+        <menuitem id="training_library_course_course_mi" parent="training_library_course_mi" action="training_course_all_act" />
         <menuitem id="training_library_course_course_current_mi" parent="training_library_course_course_mi" action="training_course_current_all_act" />
         <menuitem id="training_library_course_course_draft_mi" parent="training_library_course_course_mi" action="training_course_draft_all_act" />
         <menuitem id="training_library_course_course_mature_mi" parent="training_library_course_course_mi" action="training_course_mature_all_act" />
@@ -1060,7 +1060,7 @@
 
         <menuitem id="training_offer_mi" parent="training_mi" name="Offers" />
         <menuitem id="training_offer_open_mi" parent="training_offer_mi" action="training_offer_open_act" />
-        <menuitem id="training_offer_new_mi" parent="training_offer_mi" name="New Offer" action="training_offer_new_act" />
+        <menuitem id="training_offer_new_mi" parent="training_offer_mi" action="training_offer_new_act" />
         <menuitem id="training_offer_catalog_all_mi" parent="training_offer_mi" action="training_catalog_all_act" />
         <menuitem id="training_offer_catalog_old_mi" parent="training_offer_catalog_all_mi" action="training_catalog_old_act" /> 
         <menuitem id="training_offer_catalog_current_mi" parent="training_offer_catalog_all_mi" action="training_catalog_current_act" />

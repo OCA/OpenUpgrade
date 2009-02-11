@@ -1,5 +1,25 @@
-# -*- coding: UTF-8 -*-
-# training/training.py
+# -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
 from osv import osv, fields
 import time
 
@@ -13,11 +33,8 @@ class training_course_category(osv.osv):
         res = {}
         for object in self.browse(cr, uid, ids):
             child_ids = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', '=', object.analytic_account_id.id)])
-            print "object.id: %s" % repr(object.id)
-            print "child_ids: %s" % repr(child_ids)
             res[object.id] = self.search(cr, uid, [('analytic_account_id', 'in', child_ids)])
 
-        print "res: %s" % repr(res)
         return res
 
     _columns = {
@@ -434,11 +451,12 @@ class training_subscription(osv.osv):
         # Pour le group ID, discuter pour savoir si on doit utiliser le seuil pédagogique du groupe pour savoir si on crée un nouveau group ou non
         'invoice_id' : fields.many2one( 'account.invoice', 'Invoice' ),
         'group_id' : fields.many2one( 'training.group', 'Group'),
-        'state' : fields.selection([('draft', 'Draft'),
-                                    ('confirm','Confirm'),
-                                    ('cancel','Cancel'),
-                                    ('done', 'Done')
-                                   ], 'State', required=True ),
+        'state' : fields.selection(
+            [('draft', 'Draft'),
+             ('confirm','Confirm'),
+             ('cancel','Cancel'),
+             ('done', 'Done')
+            ], 'State', required=True ),
         'price' : fields.float('Price', digits=(16,2), required=True),
         'paid' : fields.boolean('Paid'),
     }
@@ -471,3 +489,4 @@ class training_participation(osv.osv):
 
 training_participation()
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
