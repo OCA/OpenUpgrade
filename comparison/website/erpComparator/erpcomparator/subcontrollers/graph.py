@@ -36,10 +36,9 @@ class Graph(controllers.Controller, TinyResource):
         
         selected_items = []
         
-        if cherrypy.request.simple_cookie.has_key('selected_items'):
-            selected_items = cherrypy.request.simple_cookie['selected_items'].value or []
+        if cherrypy.session.has_key('selected_items'):
+            selected_items = cherrypy.session['selected_items']
             selected_items = selected_items and eval(str(selected_items))
-        
         for r in res:
             title = {}
             title['sel'] = False
