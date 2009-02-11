@@ -232,14 +232,30 @@ class health_facturation(osv.osv):
         """ Création des factures """
         obj_facture=self.pool.get('account.invoice')
         obj_produit=self.pool.get('product.product')
-        prd_tm = obj_produit.search(cr, uid, [('default_code','=','tm')])[0]
-        prd_apa = obj_produit.search(cr, uid, [('default_code','=','apa')])[0]
-        prd_dep = obj_produit.search(cr, uid, [('default_code','=','dep')])[0]
-        prd_as = obj_produit.search(cr, uid, [('default_code','=','as')])[0]
-        prd_al = obj_produit.search(cr, uid, [('default_code','=','al')])[0]
-        prd_heb = obj_produit.search(cr, uid, [('default_code','=','heb')])[0]
-        prd_abp = obj_produit.search(cr, uid, [('default_code','=','abp')])[0]
-        prd_abh = obj_produit.search(cr, uid, [('default_code','=','abh')])[0]
+        prd_tm = obj_produit.search(cr, uid, [('default_code','=','tm')])
+        if prd_tm:
+            prd_tm = prd_tm[0]
+        prd_apa = obj_produit.search(cr, uid, [('default_code','=','apa')])
+        if prd_apa:
+            prd_apa = prd_apa[0]
+        prd_dep = obj_produit.search(cr, uid, [('default_code','=','dep')])
+        if prd_dep:
+            prd_dep = prd_dep[0]
+        prd_as = obj_produit.search(cr, uid, [('default_code','=','as')])
+        if prd_as:
+            prd_as = prd_as[0]
+        prd_al = obj_produit.search(cr, uid, [('default_code','=','al')])
+        if prd_al:
+            prd_al = prd_al[0]
+        prd_heb = obj_produit.search(cr, uid, [('default_code','=','heb')])
+        if prd_heb:
+            prd_heb = prd_heb[0]
+        prd_abp = obj_produit.search(cr, uid, [('default_code','=','abp')])
+        if prd_abp:
+            prd_abp = prd_abp[0]
+        prd_abh = obj_produit.search(cr, uid, [('default_code','=','abh')])
+        if prd_abh:
+            prd_abh = prd_abh[0]
         obj_ligne_facture=self.pool.get('account.invoice.line')
         facturations=self.browse(cr,uid,ids)
         for donnee in self.browse(cr, uid, ids, context):
@@ -248,9 +264,14 @@ class health_facturation(osv.osv):
             res = self.pool.get('res.partner').address_get(cr, uid, [partner_id], ['contact', 'invoice'])
             contact_addr_id = res['contact']
             invoice_addr_id = res['invoice']
-            p = self.pool.get('health.patient').browse(cr, uid, partner_id)
+            if not invoice_addr_id:
+                raise osv.except_osv(_('Caution!'), _('Partner Invoice Address Missing! Please create One '))
+            p = self.pool.get('res.partner').browse(cr, uid, partner_id)
             payment_term = p.property_payment_term and p.property_payment_term.id or False
-            acc_id = p.property_account_receivable.id
+            acc_id = p.property_account_receivable.id or False
+            print "pPPPPPP",p,acc_id
+            if not acc_id:
+               raise osv.except_osv(_('Caution!'), _('Partner Account Missing! Please create One '))
             comment=donnee['commentaire']
             nbjour=donnee['decomptes']
             if donnee['apa']:
@@ -300,7 +321,7 @@ class health_facturation(osv.osv):
             return False
 
     _columns = {
-            'name':fields.many2one('health.patient', 'Resident',  domain="[('category_id','=','Résident')]",required=True),
+            'name':fields.many2one('health.patient', 'Resident',required=True),
             'period_id':fields.many2one('account.period','Billing period',required=True),
             'chambre': fields.many2one('health.room', 'Rooms'),
             'hebergement': fields.float('Accommodation Rates'),
@@ -333,42 +354,41 @@ class health_aggir(osv.osv):
     _description = 'Aggir'
     _table = 'health_aggir'
     _columns = {
-        'name': fields.many2one('res.partner', 'Resident',
-            domain="[('category_id','=','Résident')]"),
+        'name': fields.many2one('res.partner', 'Resident'),
         'coherence':fields.selection([('A','a'),('B','b'),('C','c')],
             'Coherence', readonly=False), # Utiliser pour le calcul de gir
         'orientation':fields.selection([('A','a'),('B','b'),('C','c')],
             'Orientation', readonly=False), # Utiliser pour le calcul de gir
         'toilette':fields.selection([('A','a'),('B','b'),('C','c')],
-            'Toilette', readonly=False),# Utiliser pour le calcul de gir
+            'Toilet', readonly=False),# Utiliser pour le calcul de gir
         'habillage':fields.selection([('A','a'),('B','b'),('C','c')],
-            'Habillage', readonly=False),# Utiliser pour le calcul de gir
+            'Dressing', readonly=False),# Utiliser pour le calcul de gir
         'alimentation':fields.selection([('A','a'),('B','b'),('C','c')],
-            'Alimentation', readonly=False),# Utiliser pour le calcul de gir
+            'Food', readonly=False),# Utiliser pour le calcul de gir
         'elimination':fields.selection([('A','a'),('B','b'),('C','c')],
             'Elimination', readonly=False),# Utiliser pour le calcul de gir
         'transferts':fields.selection([('A','a'),('B','b'),('C','c')],
-            'Transferts', readonly=False),# Utiliser pour le calcul de gir
+            'Transfers', readonly=False),# Utiliser pour le calcul de gir
         'moveint':fields.selection([('A','a'),('B','b'),('C','c')]
-            ,'Deplacement Interieur', readonly=False),# pour le calcul de gir
+            ,'Internal displacement', readonly=False),# pour le calcul de gir
         'deplacementexterieur':fields.selection([('A','a'),('B','b'),('C','c')]
-            ,'Deplacement Exterieur', readonly=False),
+            ,'Deplacement External', readonly=False),
         'communication':fields.selection([('A','a'),('B','b'),('C','c')]
-            ,'Communiquer pour alerter', readonly=False),
+            ,'Communication to alert', readonly=False),
         'gestion':fields.selection([('A','a'),('B','b'),('C','c')]
-            ,'Gestion', readonly=False),
+            ,'Management', readonly=False),
         'cuisine':fields.selection([('A','a'),('B','b'),('C','c')]
-            ,'Cuisine', readonly=False),
+            ,'Kitchen', readonly=False),
         'menage':fields.selection([('A','a'),('B','b'),('C','c')]
             ,'Menage', readonly=False),
         'transports':fields.selection([('A','a'),('B','b'),('C','c')]
-            ,'transports', readonly=False),
-        'achats':fields.selection([('A','a'),('B','b'),('C','c')],'achats'
+            ,'Transport', readonly=False),
+        'achats':fields.selection([('A','a'),('B','b'),('C','c')],'Procurement'
             , readonly=False),
         'traitement':fields.selection([('A','a'),('B','b'),('C','c')]
-            ,'suivi de traitement', readonly=False),
+            ,'monitoring treatment', readonly=False),
         'activite':fields.selection([('A','a'),('B','b'),('C','c')]
-            ,'Activites de temps libre', readonly=False),
+            ,'Free time', readonly=False),
         'resultat':fields.char('AG-GIR',size=250),
         'gir':fields.char('GIR',size=1),
     }
@@ -682,16 +702,16 @@ class health_drug(osv.osv):
     _table = 'health_drug'
     _columns = {
          'name': fields.char('name', size=256, required=True),
-        'famille': fields.many2one('health.drugfamilly','familly'),
+        'famille': fields.many2one('health.drugfamilly','family'),
         'cip': fields.char('CIP', size=8),
         'ucd': fields.char('UCD', size=8),
         'atc': fields.char('ATC', size=8),
         'vidal': fields.boolean('vidal'),
         'volume': fields.float('Volume'),
         'categ_id': fields.many2one('product.category','Category',required=True, change_default=True),
-        'forme': fields.many2one('health.drugform', 'Forme'),
+        'forme': fields.many2one('health.drugform', 'Shape'),
         'description': fields.text('Description', translate=True),
-        'uom_id': fields.many2one('product.uom', 'Unite', required=True),
+        'uom_id': fields.many2one('product.uom', 'Unit', required=True),
         'commentaire':fields.text('Comments'),
     }
 health_drug()
@@ -799,7 +819,7 @@ class health_prescription(osv.osv):
         'du': fields.date("from"),
         'au': fields.date("to"),
         'heure': fields.char("Time",size=5),
-        'prescripteur': fields.many2one('res.partner', 'Doctor',domain="[('category_id','=','MEDECINS')]"),
+        'prescripteur': fields.many2one('res.partner', 'Doctor'),
         'medicament':fields.many2one('health.drug','Medicaments'),
         'commentaire':fields.text('Comments'),
         'nbrprise':fields.char('Number per dose',size=8),
@@ -883,7 +903,7 @@ class health_absences(osv.osv):
         'categorie':fields.selection([('1','Hospitalization'),('2','Personal Suitability'),('3','Other')],'Category', readonly=False),
         'commentaire':fields.text('Comments'),
         'user_id': fields.many2one('res.users', 'For seizure'),
-        'partner_id': fields.many2one('res.partner', 'Resident',  domain="[('category_id','=','Résident')]"),
+        'partner_id': fields.many2one('res.partner', 'Resident'),
         'nbrjour':fields.function(_compte_jour, method=True, string='Number of days',type='float'),
         'facture':fields.boolean('Billed'),
 
@@ -940,7 +960,7 @@ class health_patient(osv.osv):
         'ncpaiement': fields.char('Number Payment Center',size=256),
         'religion':fields.many2one('health.religion', 'Religion'),
         'situation':fields.many2one('health.situation', 'Family situation'),
-        'medecin':fields.many2one('res.partner', 'Doctor',domain="[('category_id','=','MEDECINS')]"),
+        'medecin':fields.many2one('res.partner', 'Doctor'),
         'prescriptions':fields.one2many('health.prescription','partner_id', 'prescriptions'),
         'absences':fields.one2many('health.absences','partner_id','Absences'),
         'care':fields.many2many('health.care','health_care_rel','name','soins','Care'),
@@ -948,24 +968,16 @@ class health_patient(osv.osv):
         'cmu':fields.boolean('CMU'),
         'livretremis':fields.boolean('Booklet Remis'),
         'note': fields.text('notes'),
-        'pharmacie':fields.many2one('res.partner', 'Pharmacy',\
-            domain="[('category_id','=','PHARMACIES')]"),
-        'kine':fields.many2one('res.partner', 'Kine',\
-            domain="[('category_id','=','KINESITHERAPEUTES')]"),
-        'psy':fields.many2one('res.partner', 'psy',\
-            domain="[('category_id','=','PSYCHOLOGUES')]"),
-        'ergo':fields.many2one('res.partner', 'Ergonomist',\
-            domain="[('category_id','=','ERGONOMES')]"),
+        'pharmacie':fields.many2one('res.partner', 'Pharmacy'),
+        'kine':fields.many2one('res.partner', 'Kine'),
+        'psy':fields.many2one('res.partner', 'psy'),
+        'ergo':fields.many2one('res.partner', 'Ergonomist'),
         'provenance':fields.char( 'Provenance',size=256),
-        'laboratoire':fields.many2one('res.partner', 'Laboratory',\
-            domain="[('category_id','=','LABORATOIRES')]"),
-        'hopital':fields.many2one('res.partner', 'Hopital',\
-            domain="[('category_id','=','HOPITAUX')]"),
+        'laboratoire':fields.many2one('res.partner', 'Laboratory'),
+        'hopital':fields.many2one('res.partner', 'Hopital'),
         'hospitalisation':fields.boolean('In Hospitalization'),
-        'hopitalant':fields.many2one('res.partner', 'Hopital Ant.',\
-            domain="[('category_id','=','HOPITAUX')]"),
-        'ambulance':fields.many2one('res.partner', 'Ambulance',\
-            domain="[('category_id','=','AMBULANCES')]"),
+        'hopitalant':fields.many2one('res.partner', 'Hopital Ant.'),
+        'ambulance':fields.many2one('res.partner', 'Ambulance'),
         'assure':fields.many2one('res.partner', 'Assuree'),
         'obseque':fields.char('Obseques',size=256),
         'obsinformations':fields.char('Informations', size=256),
@@ -979,34 +991,34 @@ class health_patient(osv.osv):
         'respcivil':fields.char('Civil Liability',size=256),
         'respdu': fields.date('from',size=32),
         'respau': fields.date('to',size=32),
-        'caisse':fields.many2one('res.partner', 'Fund',domain="[('category_id','=','CAISSE PRIMAIRES')]"),
+        'caisse':fields.many2one('res.partner', 'Fund'),
         'caissedu': fields.date('from',size=32),
         'caisseau': fields.date('to',size=32),
         'aldtaux':fields.float('RATE A.L.D'),
         'alddu': fields.date('from',size=32),
         'aldau': fields.date('to',size=32),
-        'mutuelle':fields.many2one('res.partner', 'Mutual',domain="[('category_id','=','MUTUELLES')]"),
+        'mutuelle':fields.many2one('res.partner', 'Mutual'),
         'mutndossier':fields.char('Nr File',size=64),
         'mutdu': fields.date('from',size=32),
         'mutau': fields.date('to',size=32),
-        'cmu':fields.many2one('res.partner', 'C.M.U', domain="[('category_id','=','C.M.U.')]"),
+        'cmu':fields.many2one('res.partner', 'C.M.U'),
         'cmundossier':fields.char('Nr File',size=64),
         'cmudu': fields.date('from',size=32),
         'cmuau': fields.date('to',size=32),
-        'aidesociale':fields.many2one('res.partner', 'Social Assistance', domain="[('category_id','=','AIDES SOCIALES')]"),
+        'aidesociale':fields.many2one('res.partner', 'Social Assistance'),
         'aidesocialendossier':fields.char('No Dossier',size=64),
         'aidesocialemontant': fields.float('amount'),
         'aidesocialedestinataire': fields.selection([('1','ehpad'),('2','Resident')],'Addressee'),
         'aidesocialedu': fields.date("from"),
         'regime':fields.many2one('health.regime', 'Regime'),
         'aidesocialeau': fields.date("to"),
-        'apa':fields.many2one('res.partner', 'APA', domain="[('category_id','=','APA DEPARTEMENTS')]"),
+        'apa':fields.many2one('res.partner', 'APA'),
         'apandossier':fields.char('Nr File',size=64),
         'apamontant': fields.float('amount'),
         'apadestinataire': fields.selection([('1','ehpad'),('2','Resident')],'Addressee'),
         'apadu': fields.date("from"),
         'apaau': fields.date("to"),
-        'aidelogement':fields.many2one('res.partner', 'Housing assistance', domain="[('category_id','=','AIDES LOGEMENT')]"),
+        'aidelogement':fields.many2one('res.partner', 'Housing assistance'),
         'aidelogementndossier':fields.char('File No.',size=64),
         'aidelogementmontant': fields.float('amount'),
         'aidelogementdestinataire': fields.selection([('1','ehpad'),('2','Resident')],'Addressee'),
@@ -1030,13 +1042,13 @@ class health_patient(osv.osv):
             if not vals.has_key('nom') and patient['nom']:
                 nom=patient['nom']
             else:
-                nom=vals['nom']
+                nom=vals.get('nom','')
 
             if not vals.has_key('prenom') and patient['prenom']:
                 prenom=patient['prenom']
             else:
                 if not vals.has_key('prenom'):
-                    prenom="Prénom"
+                    prenom="Prenom"
                 else:
                     prenom=vals['prenom']
             if not vals.has_key('nomusage') and patient['nomusage']:

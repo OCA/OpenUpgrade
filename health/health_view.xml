@@ -477,7 +477,7 @@
 			</field>
 		</record>
 
--	<record model="ir.ui.view" id="view_health_aide_tree">
+-	<!--<record model="ir.ui.view" id="view_health_aide_tree">
 			<field name="name">health.aide.tree</field>
 			<field name="model">health.aide</field>
 			<field name="type">tree</field>
@@ -518,7 +518,7 @@
 			<field name="res_model">health.aide</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-		</record>
+		</record>-->
 
 
 		<record model="ir.ui.view" id="view_health_religion_tree">
@@ -828,7 +828,7 @@
 					<field name="donorganes"/>
 					<newline/>
                                         <separator colspan="4"/>
-					<field name="Disability"/>
+					<field name="invalidite"/>
 					<newline/>
 				        <field  name="invadu" />
 				        <field  name="invaau" />
@@ -839,12 +839,12 @@
 				         <field  name="respau" />
 
 					<newline/>
-					<separator colspan="4" string="Assuré(e)"/>
+					<separator colspan="4" string="Insured (e)"/>
 				       <field colspan="4" name="assure" />
                    <properties />
 					<newline/>
 				</page>
-				<page string="Souhaits">
+				<page string="Wish">
 					<field name="medecin" select="1"/>
 					<field name="pharmacie" />
 					<field name="kine"/>
@@ -855,7 +855,7 @@
 					<field name="ambulance" />
 					<field name="livretremis" />
 				</page>
-				<page string="Caisses">
+				<page string="Boxes">
 						<field  name="regime" />
 						<newline/>
 						<field  name="caisse" />
@@ -868,7 +868,7 @@
                         <field  name="alddu" />
 						<field  name="aldau" />
 						<newline/>
-						<separator colspan="4" string="Mutuelle"/>
+						<separator colspan="4" string="Mutual"/>
 						<field name="mutuelle"/>
 						<field name="mutndossier"/>
 						<newline/>
@@ -881,7 +881,7 @@
 						<newline/>
 						<field  name="cmudu" />
 						<field  name="cmuau" />
-						<separator colspan="4" string="Aide Sociale"/>
+						<separator colspan="4" string="Social Assistance"/>
                         			<field name="aidesociale" />
                                                 <field name="aidesocialedestinataire" />
                                                 <newline/>
@@ -913,17 +913,17 @@
 				 <page string="Absences">
 				<field colspan="4" name="absences" nolabel="1"  widget="one2many_list"/>
 				</page>
-				 <page string="Dossier de Prescription">
+				 <page string="Prescription Kit">
 				<field colspan="4" name="prescriptions" nolabel="1"  widget="one2many_list"/>
 				</page>
 				<!--<page string="Dossier Medical"/> -->
-				<page string="Plan de Soins">
+				<page string="Care Plan">
 					<field colspan="4" name="care" nolabel="1" select="1"/>
 				</page>
-				<page string="Evenements">
+				<page string="Events">
                                     <field name="evenements" string=""   widget="one2many_list"/>
 				</page>
-				<page string="commentaire">
+				<page string="Comment">
 					<field name="note" nolabel="1" colspan="4"/>
                     <field name="category_id"/>
 				</page>
@@ -934,7 +934,7 @@
 			</field>
 		</record>
 		<record model="ir.actions.act_window" id="action_health_patient">
-			<field name="name">Résidents</field>
+			<field name="name">Residents</field>
 			<field name="res_model">health.patient</field>
 			<field name="domain">[('category_id','=', id_resident())]</field>
 			<field name="view_type">form</field>
@@ -942,7 +942,7 @@
             <field name="limit">500</field>
 		</record>
 		<record model="ir.actions.act_window" id="action_health_postulant">
-			<field name="name">Postulants</field>
+			<field name="name">Applicants</field>
 			<field name="res_model">health.patient</field>
 			<field name="domain">[('category_id','=',id_postulant())]</field>
 			<field name="view_type">form</field>
@@ -954,7 +954,7 @@
 			<field name="model">health.room.tarif</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Tarif Chambres">
+				<tree string="Rooms Rate">
 				    <field name="name" select="1"/>
 				    <field name="ref" select="1"/>
 				    <field name="type" select="1"/>
@@ -969,7 +969,7 @@
 			<field name="model">health.room.tarif</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Tarif Chambres">
+				<form string="Rooms Rate">
 					<notebook>
 						<page string="General Informations">
 							<field name="name" select="1"/>
@@ -1032,7 +1032,7 @@
 			<field name="model">health.room</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Chambres">
+				<tree string="Rooms">
 				    <field name="name" select="1"/>
 				    <field name="localisation" select="1"/>
                                     <field name="type" select="1"/>
@@ -1059,7 +1059,7 @@
 			</field>
 		</record>
 		<record model="ir.actions.act_window" id="action_health_room">
-			<field name="name">Chambres</field>
+			<field name="name">Rooms</field>
 			<field name="res_model">health.room</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
@@ -1071,7 +1071,7 @@
 			<field name="model">health.pathosprofils</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Profils Pathos">
+				<tree string="Pathos Profiles">
 				    <field name="name" select="1"/>
 				    <field name="description" />
 				</tree>
@@ -1083,7 +1083,7 @@
 			<field name="model">health.pathosprofils</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Profils Pathos">
+				<form string="Pathos Profiles">
 					<notebook>
 						<page string="General Informations">
 							<field name="name" select="1"/>
@@ -1095,7 +1095,7 @@
 			</field>
 		</record>
 		<record model="ir.actions.act_window" id="action_health_pathosprofils">
-			<field name="name">Profils Pathos</field>
+			<field name="name">Pathos Profiles</field>
 			<field name="res_model">health.pathosprofils</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
@@ -1108,7 +1108,7 @@
 			<field name="model">health.pathosetatspatho</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Etat Pathologique Pathos">
+				<tree string="State Pathological Pathos">
 							<field name="name" select="1"/>
 							<field name="description" />
 							<field name="categorie"  />
@@ -1122,7 +1122,7 @@
 			<field name="model">health.pathosetatspatho</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Etat Pathologique Pathos">
+				<form string="State Pathological Pathos">
 					<notebook>
 						<page string="General Informations">
 							<field name="name" select="1"/>
@@ -1140,7 +1140,7 @@
 			</field>
 		</record>
 		<record model="ir.actions.act_window" id="action_health_pathosetatspatho">
-			<field name="name">Etat Pathologique Pathos</field>
+			<field name="name">State Pathological Pathos</field>
 			<field name="res_model">health.pathosetatspatho</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
@@ -1151,7 +1151,7 @@
 			<field name="model">health.pathoscategetats</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Categorie Etat Pathologique Pathos">
+				<tree string="Category condition Pathos">
 							<field name="name" select="1"/>
 				</tree>
 			</field>
@@ -1161,13 +1161,13 @@
 			<field name="model">health.pathoscategetats</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Categorie Etat Pathologique Pathos">
+				<form string="Category condition Pathos">
 							<field name="name" select="1"/>
 				</form>
 			</field>
 		</record>
 		<record model="ir.actions.act_window" id="action_health_pathoscategetats">
-			<field name="name">Etat Pathologique Pathos</field>
+			<field name="name">State Pathological Pathos</field>
 			<field name="res_model">health.pathoscategetats</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
@@ -1177,7 +1177,7 @@
 			<field name="model">health.tarif.absences</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Tarif Absences">
+				<tree string="Absences Rate">
 						<field name="name"/>
 						<field name="montant"/>
 				</tree>
@@ -1195,7 +1195,7 @@
 				</field>
 		</record>
 		<record model="ir.actions.act_window" id="action_health_tarif_absences_form">
-			<field name="name">Tarif Absences</field>
+			<field name="name">Absences Rate</field>
 			<field name="res_model">health.tarif.absences</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
@@ -1237,7 +1237,7 @@
 				</field>
 		</record>
 		 <record model="ir.actions.act_window" id="action_regime">
-			<field name="name">Regime Caisse</field>
+			<field name="name">Fund Regime</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">health.regime</field>
 			<field name="view_type">tree</field>
@@ -1265,15 +1265,9 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem
-        name="EHPAD/Regime Caisse"
-        sequence="1"
-        action="action_regime"
-        id="menu_regime_main"/>
-
-
 		<menuitem name="EHPAD" sequence="0" icon="terp-partner" id="menu_ehpad"/>
 		<menuitem name="Configuration" sequence="0" id="menu_config_health" parent="menu_ehpad" />
+		<menuitem name="Fund Regime" sequence="1" action="action_regime"  id="menu_regime_main" parent="menu_ehpad"/>
 		<menuitem name="Residents" id="menu_patient" sequence="1" action="action_health_patient" parent="menu_ehpad"/>
 
 		<menuitem name="Applicants" id="menu_postulant" sequence="1" action="action_health_postulant" parent="menu_ehpad"/>
@@ -1294,7 +1288,7 @@
 		<menuitem name="Rate Dependance" id="menu_dependance"  action="action_health_coutdependance" parent="menu_config_health"/>
 		<menuitem name="Situations" id="menu_situation" action="action_health_situation" parent="menu_config_health"/>
 		<menuitem name="Religions" id="menu_religion" action="action_health_religion" parent="menu_config_health"/>
-		<menuitem name="Aid" id="menu_aides" action="action_health_aide" parent="menu_config_health"/>
+		<!--<menuitem name="Aid" id="menu_aides" action="action_health_aide" parent="menu_config_health"/>-->
 		<menuitem name="Events type"  id="menu_type_event" action="action_health_evenement_type" parent="menu_config_health"/>
 		<menuitem name="Pathos" id="menu_pathos" parent="menu_config_health"/>
 		<menuitem name="States Pathologique" id="menu_pathos_etats" action="action_health_pathosetatspatho" parent="menu_pathos"/>

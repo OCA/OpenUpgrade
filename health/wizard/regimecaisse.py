@@ -30,12 +30,12 @@ import wizard
 import pooler
 
 dates_form = '''<?xml version="1.0"?>
-<form string="Select period">
+<form string="Select Date">
     <field name="date" colspan="4"/>
 </form>'''
 
 dates_fields = {
-    'date': {'string': 'Début', 'type': 'date', 'required': True},
+    'date': {'string': 'Start', 'type': 'date', 'required': True},
 }
 
 class wizard_report(wizard.interface):

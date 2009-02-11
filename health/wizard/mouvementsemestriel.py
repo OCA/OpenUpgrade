@@ -30,12 +30,12 @@ import wizard
 import pooler
 
 dates_form = '''<?xml version="1.0"?>
-<form string="Select semestre">
+<form string="Select Semester">
     <field name="semestre" colspan="4"/>
 </form>'''
 
 dates_fields = {
-    'semestre': {'string': 'semestre', 'type': 'many2one','relation':'health.semestre', 'required': True},
+    'semestre': {'string': 'Semester', 'type': 'many2one','relation':'health.semestre', 'required': True},
 }
 
 class wizard_report(wizard.interface):

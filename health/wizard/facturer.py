@@ -32,12 +32,12 @@ import pooler
 import datetime
 import time
 facturer_form = '''<?xml version="1.0"?>
-<form string="Facturer">
+<form string="Charge">
     <field name="period_id"/>
     </form>'''
 
 facturer_fields = {
-        'period_id':  {'string':'Periode', 'type':'many2one', 'relation': 'account.period', 'required':True},
+        'period_id':  {'string':'Period', 'type':'many2one', 'relation': 'account.period', 'required':True},
 }
 
 
@@ -47,7 +47,7 @@ def _init(self, cr, uid, data, context):
     data['form']['period_id'] = period_obj.find(cr, uid)[0]
     return data['form']
 
-    
+
 def _facturer(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
     resident = pooler.get_pool(cr.dbname).get('health.facturation')
@@ -64,7 +64,7 @@ class wizard_facturer(wizard.interface):
         'facturer': {
             'actions': [_facturer],
             'result': {'type' : 'state', 'state': 'end'}
-             
+
             }
     }
 wizard_facturer('facturation')

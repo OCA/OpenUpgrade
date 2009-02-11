@@ -34,22 +34,22 @@ import time
 from osv import fields
 from osv import osv
 facturer_form = '''<?xml version="1.0"?>
-<form string="Facturer">
+<form string="Charge">
     <field name="period_id"/>
 </form>'''
 
 facturer_fields = {
-        'period_id':  {'string':'Periode', 'type':'many2one', 'relation': 'account.period', 'required':True},
+        'period_id':  {'string':'Period', 'type':'many2one', 'relation': 'account.period', 'required':True},
 }
 
 facturer_select_form = '''<?xml version="1.0"?>
-<form string="Résidents à facturer">
+<form string="Residents to be charged">
     <separator string="Residents" colspan="4"/>
     <field name="residents_ids"  nolabel="1"/>
 </form>'''
 
 facturer_select_fields = {
-    'residents_ids': {'string': 'Résidents', 'type':'one2many', 'relation':'res.partner'},
+    'residents_ids': {'string': 'Residents', 'type':'one2many', 'relation':'res.partner'},
 }
 
 
@@ -95,7 +95,7 @@ def _facturer(self, cr, uid, data, context):
             dep = pool.get('health.tarif.dependance').read(cr, uid,dep_id)['montant']
         else:
             dep=0.0
-       
+
         hospitalisation = 0
         duree_absences = 0
         absences = pool.get('health.absences').search(cr, uid, [('partner_id','=',resident_id)])
@@ -146,7 +146,7 @@ def _facturer(self, cr, uid, data, context):
         if resident['admission_date']:
             if _date(resident['admission_date'])> deb_per and _date(resident['admission_date'])<= fin_per:
                 deb_per =  _date(resident['admission_date'])
-       
+
         if resident['date_liberation']:
             if _date(resident['date_liberation'])>= deb_per and _date(resident['date_liberation'])< fin_per:
                 fin_per =  _date(resident['date_liberation'])
@@ -162,7 +162,7 @@ def _facturer(self, cr, uid, data, context):
         if  resident['aidelogement']:
             al=resident['aidelogementmontant']
         facturation_id=pool.get('health.facturation').create(cr, uid,{'hebergement':heb,'decomptes':nbrjour,'name':resident_id,'chambre':resident['room_id'][0],'period_id':data['form']['period_id'],'ticketmoderateur':tm,'dependance':dep,'aidesociale':aso,'allocation':al,'apa':apa,'absences':duree_absences,'hospitalisation':hospitalisation,'commentaire':commentaire})
-        
+
     return{}
 
 
@@ -175,7 +175,7 @@ class wizard_facturer(wizard.interface):
         'facturer': {
             'actions': [_facturer],
             'result': {'type' : 'state', 'state': 'end'}
-             
+
             }
     }
 wizard_facturer('facturer')

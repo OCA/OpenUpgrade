@@ -36,8 +36,8 @@ dates_form = '''<?xml version="1.0"?>
 </form>'''
 
 dates_fields = {
-    'datedebut': {'string': 'Début', 'type': 'date', 'required': True},
-    'datefin': {'string': 'Fin', 'type': 'date', 'required':True}
+    'datedebut': {'string': 'Start', 'type': 'date', 'required': True},
+    'datefin': {'string': 'End', 'type': 'date', 'required':True}
 }
 
 class wizard_report(wizard.interface):
