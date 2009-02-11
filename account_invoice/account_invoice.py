@@ -20,31 +20,27 @@ account_invoice_line()
 
 class account_invoice(osv.osv):
     _inherit = "account.invoice"
+    
     def _amount_untaxed(self, cr, uid, ids, name, args, context={}):
-
         id_set=",".join(map(str,ids))
         cr.execute("SELECT s.id,COALESCE(SUM(l.price_unit*l.quantity*(100-l.discount))/100.0,0)::decimal(16,2) AS amount FROM account_invoice s LEFT OUTER JOIN account_invoice_line l ON (s.id=l.invoice_id) WHERE s.id IN ("+id_set+") GROUP BY s.id ")
         res=dict(cr.fetchall())
         return res
 
     def _amount_tax(self, cr, uid, ids, name, args, context={}):
-
         id_set=",".join(map(str,ids))
         cr.execute("SELECT s.id,COALESCE(SUM(l.amount),0)::decimal(16,2) AS amount FROM account_invoice s LEFT OUTER JOIN account_invoice_tax l ON (s.id=l.invoice_id) WHERE s.id IN ("+id_set+") GROUP BY s.id ")
         res=dict(cr.fetchall())
         excise_amount=self._excise_amount(cr, uid, ids, name, args, context)
         res[ids[0]]=res[ids[0]]-excise_amount.get(ids[0],0.0)
-
         return res
     
     def _excise_amount(self, cr, uid, ids, name, args, context={}):
-
         res={}
         total=0
         child_total=0
         final_total=0
         for id in ids:
-
             for line in self.browse(cr,uid,id).invoice_line:
                 exice=[]
                 for tax in line.invoice_line_tax_id:
@@ -57,10 +53,8 @@ class account_invoice(osv.osv):
                 for tax in self.pool.get('account.tax').compute(cr, uid, exice, (line.price_unit* (1-(line.discount or 0.0)/100.0)), line.quantity, read_data.get('address_invoice_id',False)[0], line.product_id, read_data.get('partner_id',False)[0]):
                     total+= tax and tax.get('amount',0.0)
             res[id] = total
-
         return res
 
-    
     def _get_type(self, cr, uid, context={}):
         type = context.get('retail_tax', 'tax')
         return type
@@ -74,7 +68,7 @@ class account_invoice(osv.osv):
         for id in ids:
             res[id] = untax.get(id,0.0) + tax.get(id,0.0) + excise.get(id,0.0) + others
         return res
-
+    
     _columns = {
         'retail_tax': fields.selection([
             ('retail','Retail'),
@@ -83,12 +77,11 @@ class account_invoice(osv.osv):
             ('service','Service'),
             ],'Invoice', select=True, readonly=True, states={'draft':[('readonly',False)]}),
         'latest_date':fields.datetime('Latest Date'),
-        'amount_untaxed': fields.function(_amount_untaxed, method=True, digits=(16,2),string='Untaxed'),
+        'amount_untaxed': fields.function(_amount_untaxed, method=True, digits=(16,2),string='Untaxed', store=True),
         'amount_tax': fields.function(_amount_tax, method=True, string='Tax', store=True),
         'amount_total': fields.function(_amount_total, method=True, string='Total', store=True),
         'excise_amount': fields.function(_excise_amount, method=True,store=True, digits=(16,2),string='Excise'),
         'other_amount' : fields.float('Others', digits=(16,2)),
-        
     }
     _defaults = {
         'retail_tax': _get_type,
@@ -173,11 +166,7 @@ class account_invoice(osv.osv):
                             'AND account_analytic_line.move_id = account_move_line.id',
                             (ref, move_id))
         return True
-
 account_invoice()
-
-
-
 
 
 class account_tax(osv.osv):
@@ -195,18 +184,15 @@ account_tax()
 class account_invoice_tax(osv.osv):
     _inherit = "account.invoice.tax"
 
-    def compute(self, cr, uid, invoice_id):
-
+    def compute(self, cr, uid, invoice_id,context={}):
         tax_grouped = {}
         tax_obj = self.pool.get('account.tax')
         cur_obj = self.pool.get('res.currency')
         inv = self.pool.get('account.invoice').browse(cr, uid, invoice_id)
         cur = inv.currency_id
         company_currency = inv.company_id.currency_id.id
-
         temp=[]
         for line in inv.invoice_line:
-
             flg=0
             final_total=0.0
             exice_ids=[]
@@ -239,7 +225,6 @@ class account_invoice_tax(osv.osv):
                         val['base_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['base'] * tax['ref_base_sign'], context={'date': inv.date_invoice})
                         val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['ref_tax_sign'], context={'date': inv.date_invoice})
                         val['account_id'] = tax['account_paid_id'] or line.account_id.id
-
                     key = (val['tax_code_id'], val['base_code_id'], val['account_id'])
                     if not key in tax_grouped:
                         tax_grouped[key] = val
@@ -259,7 +244,6 @@ class account_invoice_tax(osv.osv):
                 else:
                     price_unit =   (line.price_unit* (1-(line.discount or 0.0)/100.0))
                 for tax in tax_obj.compute(cr, uid, other_ids, price_unit, line.quantity, inv.address_invoice_id.id, line.product_id, inv.partner_id):
-
                     val={}
                     val['invoice_id'] = inv.id
                     val['name'] = tax['name']
@@ -288,7 +272,6 @@ class account_invoice_tax(osv.osv):
                         tax_grouped[key]['base'] += val['base']
                         tax_grouped[key]['base_amount'] += val['base_amount']
                         tax_grouped[key]['tax_amount'] += val['tax_amount']
-
         return tax_grouped
 account_invoice_tax()
 
