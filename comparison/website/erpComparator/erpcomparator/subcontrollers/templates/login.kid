@@ -1,8 +1,8 @@
 
 <div id="box" class="new_box" xmlns:py="http://purl.org/kid/ns#">
 	<div align="center">
-		<input type="radio" name="login" id="registered_user" class="textInput" onclick="if(getElement('registered').style.display == 'none') {getElement('registered').style.display = 'block'} else {getElement('registered').style.display = 'none'} if(getElement('new_registration').style.display == 'block' || getElement('new_registration').style.display == '') {getElement('new_registration').style.display = 'none'}"/> Already Registered  
-		<input type="radio" name="login" id="new_user" class="textInput" onclick="if(getElement('new_registration').style.display == 'none') {getElement('new_registration').style.display = 'block'} else {getElement('new_registration').style.display = 'none'} if(getElement('registered').style.display == 'block' || getElement('registered').style.display == '') {getElement('registered').style.display = 'none'}"/> New Registration
+		<input type="radio" name="login" id="registered_user" onclick="if(getElement('registered').style.display == 'none') {getElement('registered').style.display = 'block'} else {getElement('registered').style.display = 'none'} if(getElement('new_registration').style.display == 'block' || getElement('new_registration').style.display == '') {getElement('new_registration').style.display = 'none'}"/> Already Registered  
+		<input type="radio" name="login" id="new_user" onclick="if(getElement('new_registration').style.display == 'none') {getElement('new_registration').style.display = 'block'} else {getElement('new_registration').style.display = 'none'} if(getElement('registered').style.display == 'block' || getElement('registered').style.display == '') {getElement('registered').style.display = 'none'}"/> New Registration
 	</div>
 	<div id="registered" style="display:none;">
 		<div class="header">
