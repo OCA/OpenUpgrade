@@ -2,8 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2008-2009 Sylëam Info Services (<http://syleam.fr>). All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -101,18 +100,31 @@ class direct_poll(wizard.interface):
         _POLL_FIELDS.__init__(x_fields)
         return {'answer':None}
 
+    def build_selection(self, cr, uid, question, context):
+        res = []
+        select_form = []
+        answer_obj = pooler.get_pool(cr.dbname).get('crm_profiling.answer')
+        answer_args = [('question_id','=', question)]
+        answer_ids = answer_obj.search(cr, uid, answer_args)
+        #print 'ANSWER_IDS: %s' % str(answer_ids)
+        for id in answer_ids:
+            answer = answer_obj.read(cr, uid, [id], ['name'], context=context)[0]
+            #print 'ANSWER: %s:%s' % (str(id), str(answer))
+            select_form.append((id, answer['name']))
+        #print 'SELECT_FORM: % s' % str(select_form)
+        return select_form
 
     def build_form(self, cr, uid, question, context):
         _form = """<?xml version="1.0"?>
 <form string="%s">
- <label string="%s" colspan="4" width="300"/>
- <field name="answer" colspan="4" domain="[('question_id','=',%s)]"/>
-</form>""" % (question[1], question[1], str(question[0]))
+ <label string="%s" colspan="4" width="450"/>
+ <field name="answer" colspan="4" />
+</form>""" % (question[1], question[1],)
 
         _fields = {'answer': {
                 'string':'Answer',
-                'type': 'many2one',
-                'relation': 'crm_profiling.answer',
+                'type': 'selection',
+                'selection': self.build_selection(cr, uid, question[0], context),
                 'required': True,}
         }
 
@@ -137,7 +149,7 @@ class direct_poll(wizard.interface):
                 'type': 'form', 
                 'arch': _questionnaire_choice_arch, 
                 'fields': _questionnaire_choice_fields, 
-                'state':[('end', 'Cancel'), ('first', 'Open Questionnaire')]
+                'state':[('end', 'Cancel', 'gtk-cancel'), ('first', 'Open Questionnaire', 'gtk-go-forward', True)]
             }
         },
         'first': {
@@ -146,7 +158,7 @@ class direct_poll(wizard.interface):
                 'type': 'form',
                 'arch': _POLL_FORM,
                 'fields': _POLL_FIELDS,
-                'state': [('end','Cancel', 'gtk-cancel'), ('check', 'Next', 'gtk-go-forward')]
+                'state': [('end','Cancel', 'gtk-cancel'), ('check', 'Next', 'gtk-go-forward', True)]
             },
         },
         'next': {
@@ -155,7 +167,7 @@ class direct_poll(wizard.interface):
                 'type': 'form',
                 'arch': _POLL_FORM,
                 'fields': _POLL_FIELDS,
-                'state': [('end','Cancel', 'gtk-cancel'), ('check', 'Next', 'gtk-go-forward')]
+                'state': [('end','Cancel', 'gtk-cancel'), ('check', 'Next', 'gtk-go-forward', True)]
             },
         },
         'check': {
