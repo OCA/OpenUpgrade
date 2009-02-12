@@ -43,7 +43,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         <menuitem parent="base.menu_management"	name="Maintenance Editor" id="menu_maintenance_main"/>
-        <menuitem action="action_maintenance_maintenance_form" id="menu_maintenance_configuration" name="Maintenance Configuration" parent="menu_maintenance_main"/>
+        <menuitem action="action_maintenance_maintenance_form" id="menu_maintenance_contracts" name="Maintenance Contracts" parent="menu_maintenance_main"/>
 
         <record id="maintenance_maintenance_module_tree_view" model="ir.ui.view">
             <field name="name">maintenance.maintenance.module.tree</field>
@@ -56,6 +56,8 @@
                 </tree>
             </field>
         </record>
+
+        <wizard id="maintenance_maintenance_module_refresh_wizard" model="maintenance.maintenance.module" name="maintenance.maintenance.module.refresh" string="Refresh Module List" multi='True'/>
 
         <record id="maintenance_maintenance_module_form_view" model="ir.ui.view">
             <field name="name">maintenance.maintenance.module.form</field>
