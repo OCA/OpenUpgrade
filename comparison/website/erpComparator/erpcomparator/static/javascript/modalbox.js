@@ -51,16 +51,16 @@ ModalBox.prototype = {
     show : function() {
 
         //setElementDimensions(this.overlay, elementDimensions(document.body));
-        MochiKit.DOM.setElementDimensions(this.overlay, {'w': document.body.clientWidth, 'h': document.body.clientHeight});
-
+        MochiKit.DOM.setElementDimensions(this.overlay, {'w': window.screen.availWidth, 'h': window.screen.availHeight});
+		
         var w = this.width || 0;
         var h = this.height || 0;
 		
         MochiKit.DOM.setElementDimensions(this.box, {w: w, h: h});
-
+		
         var vdh = window.innerHeight || window.screen.availHeight;
         var vdw = window.innerWidth || window.screen.availWidth;
-        
+     
         var md = this.box.clientHeight;
         var x = (vdw / 2) - (w / 2);
         var y = (vdh / 2) - (h / 2);

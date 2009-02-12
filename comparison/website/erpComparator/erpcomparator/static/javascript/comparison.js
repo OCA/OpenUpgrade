@@ -139,11 +139,17 @@ function add_factor(id) {
 		var d = window.mbox.content;
 		d.innerHTML = xmlHttp.responseText;
 		
+		if(getElement('error_box') != null) {
+        	register();
+        }
+        
+        else {
 		window.mbox.width = 450;
         window.mbox.height = 300;
         
         window.mbox.onUpdate = add_new_factor;
 		window.mbox.show();
+        }
 	});
 }
 
@@ -211,11 +217,15 @@ function open_item_vote(id, header) {
 		var d = window.mbox.content;
 		d.innerHTML = xmlHttp.responseText;
 		
-		window.mbox.width = 650;
-        window.mbox.height = 500;
-        
-        window.mbox.onUpdate = item_vote;
-		window.mbox.show();
+        if(getElement('error_box') != null) {
+        	register();
+        }
+        else {
+        	window.mbox.width = 650;
+        	window.mbox.height = 500;
+        	window.mbox.onUpdate = item_vote;
+			window.mbox.show();
+        }
 	});
 }
 

@@ -42,7 +42,7 @@
 		<i style="color: red;">* Indicates required fields.</i>
 	</div>
 	
-	<div py:if="error" align="right">
+	<div py:if="error" id="error_box" align="right">
 		<div class="box2 message">
 			${error}
 		</div>
