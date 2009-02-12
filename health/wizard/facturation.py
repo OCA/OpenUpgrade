@@ -74,28 +74,25 @@ def _date(date):
 
 def _facturer(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
-    prd_tm = pool.get('product.product').search(cr, uid, [('default_code','=','tm')])[0]
-    cong = pool.get('health.room.tarif').search(cr, uid, [('ref','=','ccong')])[0]
-    csp60 = pool.get('health.room.tarif').search(cr, uid, [('ref','=','csp60')])[0]
-    csm60 = pool.get('health.room.tarif').search(cr, uid, [('ref','=','csm60')])[0]
-    cdp60 = pool.get('health.room.tarif').search(cr, uid, [('ref','=','cdp60')])[0]
-    cdm60 = pool.get('health.room.tarif').search(cr, uid, [('ref','=','cdm60')])[0]
+    prd_tm = pool.get('product.product').search(cr, uid, [('default_code','=','tm')])
+    if prd_tm:
+        prd_tm = prd_tm[0]
+    ref = ('ccong','csp60','csm60','cdp60','cdm60')
+    cr.execute("select ref as code, id from health_room_tarif where ref in %s" %(ref,))
+    result = dict(cr.fetchall())
     for resident_id in data['ids']:
         resident = pooler.get_pool(cr.dbname).get('health.patient').read(cr,uid,resident_id)
         fact_id= pool.get('health.facturation').search(cr,uid,[('name','=',resident_id),('period_id','=',data['form']['period_id'])])
         if fact_id:
-        #    pool.get('health.facturation').unlink(cr,uid,fact_id)
-             raise osv.except_osv('Erreur !', 'Résident déjà facturé pour cette periode \n' +resident['name']+' !')
+             raise osv.except_osv('Error !', 'Residents already billed for this period \n' +resident['name']+' !')
         tm =  pool.get('product.product').read(cr,uid,prd_tm)['list_price']
         fin_per =  _date(pool.get('account.period').read(cr,uid,data['form']['period_id'])['date_stop'])
         deb_per = _date(pool.get('account.period').read(cr,uid,data['form']['period_id'])['date_start'])
-        anniversaire = _date(resident['birthdaydate'])
+        dep = 0.0
         if resident['girage']:
-            dep_id = pool.get('health.tarif.dependance').search(cr, uid, [('name','=',resident['girage'])])[0]
-            dep = pool.get('health.tarif.dependance').read(cr, uid,dep_id)['montant']
-        else:
-            dep=0.0
-
+            dep_id = pool.get('health.tarif.dependance').search(cr, uid, [('name','=',resident['girage'])])
+            if dep_id:
+                dep = pool.get('health.tarif.dependance').read(cr, uid,dep_id[0])['montant']
         hospitalisation = 0
         duree_absences = 0
         absences = pool.get('health.absences').search(cr, uid, [('partner_id','=',resident_id)])
@@ -112,57 +109,53 @@ def _facturer(self, cr, uid, data, context):
                         duree_absences = duree_absences+abs["nbrjour"]
                         commentaire=commentaire+"Absence pour Convenance personnelle du "+str(abs['du']) + " au "+str(abs['au'])+" \n"
                     widget="image"
-                    print "Duree Absences ",duree_absences
                     if duree_absences <=3:
                         duree_absences=0
-                        print "Duree Absences <=3 ",duree_absences
                     else:
                         duree_absences=duree_absences-3
-                        print "Duree Absences >3 ",duree_absences
                     if hospitalisation <=3:
                         hospitalisation=0
-                        print "Duree Absences <=3 ",hospitalisation
                     else:
                         hospitalisation=hospitalisation-3
-                        print "Duree Absences >3 ",hospitalisation
                     pool.get('health.absences').write(cr, uid, absence,{'facture':1})
 
 
-        lim60 = anniversaire.replace(year=anniversaire.year+60)
-        chambre=pool.get('health.room').read(cr,uid,resident['room_id'][0])
-        if resident['congregation']:
-            heb = pool.get('health.room.tarif').read(cr, uid,cong)['prix']
-        else:
-            if (deb_per - lim60).days < 0 :
-                if chambre['type']=='1':
-                    heb = pool.get('health.room.tarif').read(cr, uid,csm60)['prix']
-                else:
-                    heb = pool.get('health.room.tarif').read(cr, uid,cdm60)['prix']
+        if resident['room_id'] and resident['birthdaydate']:
+            anniversaire = _date(resident['birthdaydate'])
+            lim60 = anniversaire.replace(year=anniversaire.year+60)
+            chambre=pool.get('health.room').read(cr,uid,resident['room_id'][0])
+            if resident['congregation']:
+                heb = pool.get('health.room.tarif').read(cr, uid,result['ccong'])['prix']
             else:
-                if chambre['type']=='1':
-                    heb = pool.get('health.room.tarif').read(cr, uid,csp60)['prix']
+                if (deb_per - lim60).days < 0 :
+                    if chambre['type']=='1':
+                        heb = pool.get('health.room.tarif').read(cr, uid,result['csm60'])['prix']
+                    else:
+                        heb = pool.get('health.room.tarif').read(cr, uid,result['cdm60'])['prix']
                 else:
-                    heb = pool.get('health.room.tarif').read(cr, uid,cdp60)['prix']
-        if resident['admission_date']:
-            if _date(resident['admission_date'])> deb_per and _date(resident['admission_date'])<= fin_per:
-                deb_per =  _date(resident['admission_date'])
+                    if chambre['type']=='1':
+                        heb = pool.get('health.room.tarif').read(cr, uid,result['csp60'])['prix']
+                    else:
+                        heb = pool.get('health.room.tarif').read(cr, uid,result['cdp60'])['prix']
+            if resident['admission_date']:
+                if _date(resident['admission_date'])> deb_per and _date(resident['admission_date'])<= fin_per:
+                    deb_per =  _date(resident['admission_date'])
 
-        if resident['date_liberation']:
-            if _date(resident['date_liberation'])>= deb_per and _date(resident['date_liberation'])< fin_per:
-                fin_per =  _date(resident['date_liberation'])
+            if resident['date_liberation']:
+                if _date(resident['date_liberation'])>= deb_per and _date(resident['date_liberation'])< fin_per:
+                    fin_per =  _date(resident['date_liberation'])
 
-        nbrjour =(fin_per-deb_per).days+1
-        apa=0.0
-        aso=0.0
-        al=0.0
-        if  resident['apa']:
-            apa=1
-        if  resident['aidesociale']:
-            aso=resident['aidesocialemontant']
-        if  resident['aidelogement']:
-            al=resident['aidelogementmontant']
-        facturation_id=pool.get('health.facturation').create(cr, uid,{'hebergement':heb,'decomptes':nbrjour,'name':resident_id,'chambre':resident['room_id'][0],'period_id':data['form']['period_id'],'ticketmoderateur':tm,'dependance':dep,'aidesociale':aso,'allocation':al,'apa':apa,'absences':duree_absences,'hospitalisation':hospitalisation,'commentaire':commentaire})
-
+            nbrjour =(fin_per-deb_per).days+1
+            apa=0.0
+            aso=0.0
+            al=0.0
+            if  resident['apa']:
+                apa=1
+            if  resident['aidesociale']:
+                aso=resident['aidesocialemontant']
+            if  resident['aidelogement']:
+                al=resident['aidelogementmontant']
+            facturation_id=pool.get('health.facturation').create(cr, uid,{'hebergement':heb,'decomptes':nbrjour,'name':resident_id,'chambre':resident['room_id'][0],'period_id':data['form']['period_id'],'ticketmoderateur':tm,'dependance':dep,'aidesociale':aso,'allocation':al,'apa':apa,'absences':duree_absences,'hospitalisation':hospitalisation,'commentaire':commentaire})
     return{}
 
 
@@ -170,7 +163,7 @@ class wizard_facturer(wizard.interface):
     states = {
         'init': {
             'actions': [_init],
-            'result': {'type':'form', 'arch':facturer_form, 'fields':facturer_fields, 'state':[('end','Cancel'),('facturer','Facturer')]}
+            'result': {'type':'form', 'arch':facturer_form, 'fields':facturer_fields, 'state':[('end','Cancel'),('facturer','Charge')]}
         },
         'facturer': {
             'actions': [_facturer],

@@ -142,7 +142,7 @@ class ecommerce_sale_order(osv.osv):
                 val.update( val_new )
                 val['tax_id'] = 'tax_id' in val and [(6, 0, val['tax_id'])] or False
                 order_lines.append((0, 0, val))
-            
+
             obj_shop = self.pool.get('ecommerce.shop')
             search_shop_id = obj_shop.browse(cr, uid, order.web_id.id)
             order_id = self.pool.get('sale.order').create(cr, uid, {
@@ -156,9 +156,10 @@ class ecommerce_sale_order(osv.osv):
                 'partner_shipping_id':address_delivery,
                 'pricelist_id': order.pricelist_id.id,
                 'order_line':order_lines,
-                'order_policy': 'manual'
-            })   
-            self.write(cr, uid, ids, {'order_id':order_id})   
+                'order_policy': 'manual',
+                'fiscal_position': data_partner.property_account_position and data_partner.property_account_position.id or False
+            })
+            self.write(cr, uid, ids, {'order_id':order_id})
             get_ids.extend(ids)
             get_ids.append(int(order_id))
 
@@ -199,9 +200,9 @@ class ecommerce_sale_order(osv.osv):
         wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'order_confirm', cr)
         wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'manual_invoice', cr)
         cr.commit()
-        
+
         get_data = self.pool.get('sale.order').browse(cr,uid,sale_orderid)
-        if(get_data.invoice_ids):              
+        if(get_data.invoice_ids):
             invoice_id = get_data.invoice_ids[0].id
         else:
             raise osv.except_osv('Error','Yet Not Create Invoice!');

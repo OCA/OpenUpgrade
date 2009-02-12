@@ -59,7 +59,7 @@ class wizard_facturer(wizard.interface):
     states = {
         'init': {
             'actions': [_init],
-            'result': {'type':'form', 'arch':facturer_form, 'fields':facturer_fields, 'state':[('end','Cancel'),('facturer','Facturer')]}
+            'result': {'type':'form', 'arch':facturer_form, 'fields':facturer_fields, 'state':[('end','Cancel'),('facturer','Charge')]}
         },
         'facturer': {
             'actions': [_facturer],

@@ -77,6 +77,7 @@
                     <field name="version"/>
                     <field name="user_id" select="1"/>
                     <field name="load_default" />
+                    <field name="sequence" />
                     <field name="result_ids" colspan="4" widget="one2many_list" >
                     	<tree string="Results">
                     		<field name="factor_id"/>
@@ -134,10 +135,12 @@
                             <field name="name" select="1"/>
                             <field name="parent_id" select="2"/>
                             <newline/>
-                            <field name="user_id" select="1"/>
-                            <field name="ponderation" select="2"/>
+	                        <field name="user_id" select="1"/>
+	                        <field name="ponderation" select="2"/>
+                            <newline/>
                             <field name="type" select="1"/>
                             <field name="pond_computed" />
+                            <field name="sequence" />
                             <field name="result_ids" colspan="4" widget="one2many_list" >
                             	<tree string="Results">
 		                    		<field name="item_id"/>

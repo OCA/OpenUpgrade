@@ -118,6 +118,7 @@ def _createInvoices(self, cr, uid, data, context):
             'currency_id' :transfolder.partner_id.property_product_pricelist.currency_id.id,
             'comment': '',
             'payment_term':transfolder.partner_id.property_payment_term.id,
+            'fiscal_position': transfolder.partner_id.property_account_position.id
         }
 
         inv_obj = pool_obj.get('account.invoice')
