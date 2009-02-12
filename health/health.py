@@ -269,7 +269,6 @@ class health_facturation(osv.osv):
             p = self.pool.get('res.partner').browse(cr, uid, partner_id)
             payment_term = p.property_payment_term and p.property_payment_term.id or False
             acc_id = p.property_account_receivable.id or False
-            print "pPPPPPP",p,acc_id
             if not acc_id:
                raise osv.except_osv(_('Caution!'), _('Partner Account Missing! Please create One '))
             comment=donnee['commentaire']
@@ -281,6 +280,8 @@ class health_facturation(osv.osv):
             if donnee['aidesociale']:
                 comment=comment+"\n Allocator Welfare"
             facture={'payment_term':payment_term,'account_id':acc_id,'address_invoice_id':invoice_addr_id,'name':p.name+" - "+donnee.period_id.name,'type':'out_invoice','state':'draft','date_invoice':date_facture,'date_due':date_facture,'partner_id':partner_id,'comment':comment,'period_id':donnee['period_id']['id']}
+            fpos=p.property_account_position and p.property_account_position.id or False
+            facture.update({'fiscal_position':fpos})
             invoice_id=obj_facture.create(cr,uid,facture)
             tm= obj_produit.browse(cr,uid,prd_tm)
             if donnee['hebergement']:

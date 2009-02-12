@@ -82,6 +82,7 @@ class purchase_order(osv.osv):
                 'address_contact_id': o.partner_address_id.id,
                 'origin': o.name,
                 'invoice_line': il,
+                'fiscal_position': o.partner_id.property_account_position and o.partner_id.property_account_position.id or False
             }
             inv_id = self.pool.get('account.invoice').create(cr, uid, inv)
 
