@@ -11,6 +11,17 @@
 		 characteristic / characteristic Group
 		 -->
 		
+		<record model="ir.ui.view" id="mrp_characteristic_group_tree_view">
+			<field name="name">mrp.characteristic.group.tree</field>
+			<field name="model">mrp.characteristic.group</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Characteristic Groups">
+					<field name="name"/>
+					<field name="axis"/>
+				</tree>
+			</field>
+		</record>
 		<record model="ir.ui.view" id="mrp_characteristic_group_form_view">
 			<field name="name">mrp.characteristic.group.form</field>
 			<field name="model">mrp.characteristic.group</field>
@@ -29,9 +40,8 @@
 			<field name="name">Characteristic Groups</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">mrp.characteristic.group</field>
-			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-			<field name="view_id" ref="mrp_characteristic_group_form_view"/>
+			<field name="view_id" ref="mrp_characteristic_group_tree_view"/>
 		</record>
 		<menuitem  id="menu_mrp_characteristic_group_action" action="mrp_characteristic_group_action" parent="menu_production_definition_characteristics"/>
 		
