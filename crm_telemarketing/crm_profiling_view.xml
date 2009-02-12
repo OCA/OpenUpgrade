@@ -8,39 +8,11 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <field name="name" position="after">
+                    <newline/>
                     <field name="first" />
                 </field>
             </field>
         </record>
-
-
-        <record model="ir.ui.view" id="view_answer_inherit">
-            <field name="name">Answers</field>
-            <field name="model">crm_profiling.answer</field>
-            <field name="inherit_id" ref="crm_profiling.view_answer"/>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <field name="name" select="1" position="after">
-<!-- Remove field : question_id -->
-        			<field name="question_id" select="0" invisible="hide form search box"/>
-                    <field name="next"/>
-                </field>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="view_answer_form_inherit">
-            <field name="name">Answers</field>
-            <field name="model">crm_profiling.answer</field>
-            <field name="inherit_id" ref="crm_profiling.view_answer_form"/>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <field name="name" select="1" position="after">
-        			<field name="question_id" select="0" invisible="hide form search box"/>
-                    <field name="next"/>
-                </field>
-            </field>
-        </record>
-
 
         <record model="ir.ui.view" id="view_question_form_tree">
             <field name="name">Questions from inherited</field>
