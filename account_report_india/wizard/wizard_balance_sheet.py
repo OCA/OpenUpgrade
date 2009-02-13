@@ -32,22 +32,55 @@ import mx.DateTime
 
 dates_form = '''<?xml version="1.0"?>
 <form string="Select period">
+    <field name="report_type"/>
+    <field name="company_id" colspan="4"/>
+    <newline/>
+    <field name="fiscalyear" colspan="4"/>
+    <newline/>
     <field name="empty_account" colspan="2"/>
     <newline/>
     <field name="display_type"/>
+    <newline/>
+    <field name="date1"/>
+    <field name="date2"/>
 </form>'''
 
 dates_fields = {
+    'report_type': {'string':'Report Type', 'type':'selection', 'selection':[
+                    ('vertical','Vertical'),
+                    ('horizontal','Horizontal')]},
+    'company_id': {'string': 'Company', 'type': 'many2one', 'relation': 'res.company', 'required': True},
+    'fiscalyear': {'string': 'Fiscal year', 'type': 'many2one', 'relation': 'account.fiscalyear',
+        'help': 'Keep empty for all open fiscal year'},
     'empty_account':{'string':'Include Empty Account:', 'type':'boolean'},
     'display_type': {'string':'Display Type', 'type':'selection', 'selection':[
                     ('consolidated','Consolidated'),
                     ('detailed','Detailed')]},
+    'date1': {'string':'Start of Date', 'type':'date', 'required':True},
+    'date2': {'string':'End of Date', 'type':'date', 'required':True},
 }
 
 class wizard_balance_sheet_report(wizard.interface):
     def _get_defaults(self, cr, uid, data, context):
+        data['form']['report_type']='vertical'
+        fiscalyear_obj = pooler.get_pool(cr.dbname).get('account.fiscalyear')
+        data['form']['fiscalyear'] = fiscalyear_obj.find(cr, uid)
+        year_start_date = fiscalyear_obj.browse(cr, uid, data['form']['fiscalyear'] ).date_start
+        year_end_date = fiscalyear_obj.browse(cr, uid, data['form']['fiscalyear'] ).date_stop
+        data['form']['date1'] =  mx.DateTime.strptime(year_start_date,"%Y-%m-%d").strftime("%Y-%m-%d")
+        data['form']['date2'] =  mx.DateTime.strptime(year_end_date,"%Y-%m-%d").strftime("%Y-%m-%d")
+        user = pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, uid, context=context)
+        if user.company_id:
+            company_id = user.company_id.id
+        else:
+            company_id = pooler.get_pool(cr.dbname).get('res.company').search(cr, uid, [('parent_id', '=', False)])[0]
+        data['form']['company_id'] = company_id
         data['form']['display_type']='detailed'
         # to process company IDS
+        user = pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, uid, context=context)
+        company_ids = pooler.get_pool(cr.dbname).get('res.company')._get_company_children(cr, uid, user.company_id.id)
+        dates_fields['company_id']['domain'] = "[('id','in',"+str(company_ids) +")]" 
+
         return data['form']
 
     states = {

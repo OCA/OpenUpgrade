@@ -20,7 +20,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="user_type" position="after">
-					<field name="diff" select="2" />
+<!--					<field name="diff" select="2" />-->
 					<field name="balance" string="Closing Balance" select="2"/>
 					<field name="type1" select="2" />
 					<field name="open_bal" select="2"/>

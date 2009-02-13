@@ -143,31 +143,26 @@
     <blockTable colWidths="539.0" style="Table_Heading">
       <tr>
         <td>
-          <para style="terp_default_8">[[ repeatIn(objects, 'o') ]]</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="terp_header_Centre">[[ o.company_id.name ]]</para>
+          <para style="terp_header_Centre">[[ get_company(data['form']) ]]</para>
         </td>
       </tr>
     </blockTable>
     <blockTable colWidths="539.0" style="Table_Company_Name">
       <tr>
         <td>
-          <para style="terp_header_Centre">[[ o.group_type == 'balance_sheet_accounts_group' and 'Balance Sheet' or '' ]] </para>
+          <para style="terp_header_Centre">Balance Sheet</para>
         </td>
       </tr>
     </blockTable>
     <blockTable colWidths="539.0" style="Table_Date_from_To">
       <tr>
         <td>
-          <para style="terp_header_Centre">From : [[ o.start_date ]] To: [[ o.end_date ]]</para>
+          <para style="terp_header_Centre">From : [[ data['form']['date1'] ]] To: [[ data['form']['date2'] ]]</para>
         </td>
       </tr>
       <tr>
         <td>
-          <para style="terp_default_8">[[ get_data(o,data['form']) ]]</para>
+          <para style="terp_default_8">[[ get_data(data['form']) ]]</para>
         </td>
       </tr>
     </blockTable>
@@ -177,36 +172,36 @@
           <para style="terp_tblheader_Details_Centre">Liabilities</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Amount([[ o.company_id.currency_id.name ]])</para>
+          <para style="terp_tblheader_Details_Right">Amount([[ get_currency(data['form']) ]])</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Amount([[ o.company_id.currency_id.name ]])</para>
+          <para style="terp_tblheader_Details_Right">Amount([[ get_currency(data['form']) ]])</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Total Amount([[ o.company_id.currency_id.name ]])</para>
+          <para style="terp_tblheader_Details_Right">Total Amount([[ get_currency(data['form']) ]])</para>
         </td>
       </tr>
     </blockTable>
     <blockTable colWidths="207.0,119.0,113.0,102.0" style="Table5">
       <tr>
         <td>
-          <para style="terp_default_9"><font face="Times-Roman">[[ repeatIn(get_lines('liability'), 'a') ]]</font> <font color="white">[[  '. '*(a['level']) ]]</font>[[ a['level']==0 and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]][[ a['name'] ]]</para>
+          <para style="terp_default_9"><font face="Times-Roman">[[ repeatIn(get_lines('liability'), 'a') ]]</font> <font color="white">[[  '. '*(a['level']-2) ]]</font>[[ a['level']==0 and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]][[ a['name'] ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9">[[ a['outer'] == '-1' and a['balance']*-1 ]]</para>
+          <para style="terp_default_Right_9">[[ a['outer'] == '-1' and a['balance'] ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9">[[ a['outer'] == '0' and a['balance']*-1 ]]</para>
+          <para style="terp_default_Right_9">[[ a['outer'] == '0' and a['balance'] ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ a['outer'] == '1' and a['balance']*-1 ]]</para>
+          <para style="terp_default_Right_9_Bold">[[ a['outer'] == '1' and a['balance'] ]]</para>
         </td>
       </tr>
     </blockTable>
     <blockTable colWidths="207.0,119.0,113.0,100.0" style="Table_Net_Profit_Loss">
       <tr>
         <td>
-          <para style="terp_default_Bold_9">Balance:([[ o.company_id.currency_id.name ]])</para>
+          <para style="terp_default_Bold_9">Balance:([[ get_currency(data['form']) ]])</para>
         </td>
         <td>
           <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_lib1_dr() ]]</para>
@@ -219,29 +214,27 @@
         </td>
       </tr>
     </blockTable>
-    <para style="terp_default_9">
-      <font color="white"> </font>
-    </para>
+    <condPageBreak height="20cm"/>
     <blockTable colWidths="206.0,120.0,112.0,101.0" style="Table1">
       <tr>
         <td>
           <para style="terp_tblheader_Details_Centre">Assets</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Amount([[ o.company_id.currency_id.name ]])</para>
+          <para style="terp_tblheader_Details_Right">Amount([[ get_currency(data['form']) ]])</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Amount([[ o.company_id.currency_id.name ]])</para>
+          <para style="terp_tblheader_Details_Right">Amount([[ get_currency(data['form']) ]])</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Total Amount([[ o.company_id.currency_id.name ]])</para>
+          <para style="terp_tblheader_Details_Right">Total Amount([[ get_currency(data['form']) ]])</para>
         </td>
       </tr>
     </blockTable>
     <blockTable colWidths="207.0,120.0,112.0,103.0" style="Table2">
       <tr>
         <td>
-          <para style="terp_default_9"><font face="Times-Roman">[[ repeatIn(get_lines('asset'), 'a') ]]</font> <font color="white">[[  '. '*(a['level']) ]]</font>[[ a['level']==0 and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]][[ a['name'] ]]</para>
+          <para style="terp_default_9"><font face="Times-Roman">[[ repeatIn(get_lines('asset'), 'a') ]]</font> <font color="white">[[  '. '*(a['level']-2) ]]</font>[[ a['level']==0 and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]][[ a['name'] ]]</para>
         </td>
         <td>
           <para style="terp_default_Right_9">[[ a['outer'] == '-1' and a['balance'] ]]</para>
@@ -257,7 +250,7 @@
     <blockTable colWidths="206.0,120.0,112.0,101.0" style="Table3">
       <tr>
         <td>
-          <para style="terp_default_Bold_9">Balance:([[ o.company_id.currency_id.name ]])</para>
+          <para style="terp_default_Bold_9">Balance:([[ get_currency(data['form']) ]])</para>
         </td>
         <td>
           <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_ass1_cr() ]]</para>

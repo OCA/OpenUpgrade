@@ -11,34 +11,77 @@ from tools import config
 class Account(osv.osv):
     _inherit = "account.account"
 
-    def _diff(self, cr, uid, ids, field_name, arg, context={}):
-
+#    def _diff(self, cr, uid, ids, field_name, arg, context={}):
+#
+#        res={}
+#        dr_total=0.0
+#        cr_total=0.0
+#        difference=0.0
+#        for id in ids:
+#            open=self.browse(cr, uid, id, context)
+#            if open.type1 == 'dr':
+#                dr_total+=open.open_bal
+#            elif open.type1 == 'cr':
+#                cr_total+=open.open_bal
+#            else:
+#                difference=0.0
+#        difference=dr_total-cr_total
+#        for id in ids:
+#            res[id]=difference
+#        return res
+    
+    def _get_level(self, cr, uid, ids, field_name, arg, context={}):
         res={}
-        dr_total=0.0
-        cr_total=0.0
-        difference=0.0
-        for id in ids:
-            open=self.browse(cr, uid, id, context)
-            if open.type1 == 'dr':
-                dr_total+=open.open_bal
-            elif open.type1 == 'cr':
-                cr_total+=open.open_bal
-            else:
-                difference=0.0
-        difference=dr_total-cr_total
-        for id in ids:
-            res[id]=difference
+        acc_obj=self.browse(cr,uid,ids)
+        for aobj in acc_obj:
+            level = 0
+            if aobj.parent_id :
+                obj=self.browse(cr,uid,aobj.parent_id.id)
+                level= obj.level + 1
+            res[aobj.id] = level
         return res
-
-
+    
     _columns = {
 
         'journal_id':fields.many2one('account.journal', 'Journal',domain=[('type','=','situation')]),
         'open_bal' : fields.float('Opening Balance',digits=(16,2)),
-        'diff' : fields.function(_diff, digits=(16,2),method=True,string='Difference of Opening Bal.'),
+#        'diff' : fields.function(_diff, digits=(16,2),method=True,string='Difference of Opening Bal.'),
+        'level': fields.function(_get_level, string='Level', method=True, store=True, type='integer'),
         'type1':fields.selection([('dr','Debit'),('cr','Credit'),('none','None')], 'Dr/Cr',store=True),
 
     }
+    
+    def compute_total(self, cr, uid, ids, yr_st_date, yr_end_date, st_date, end_date, field_names, context={}, query=''):
+        #compute the balance/debit/credit accordingly to the value of field_name for the given account ids
+        mapping = {
+            'credit': "COALESCE(SUM(l.credit), 0) as credit ",
+            'balance': "COALESCE(SUM(l.debit),0) - COALESCE(SUM(l.credit), 0) as balance ",
+            'debit': "COALESCE(SUM(l.debit), 0) as debit ",
+        }
+        #get all the necessary accounts
+        ids2 = self._get_children_and_consol(cr, uid, ids, context)
+        acc_set = ",".join(map(str, ids2))
+        #compute for each account the balance/debit/credit from the move lines
+        if not (st_date >= yr_st_date and end_date <= yr_end_date):
+            return {}
+        accounts = {}
+        if ids2:
+            query = self.pool.get('account.move.line')._query_get(cr, uid,
+                    context=context)
+            cr.execute("SELECT l.account_id as id, "  \
+                    +  ' , '.join(map(lambda x: mapping[x], field_names.keys() ))  + \
+                    "FROM account_move_line l " \
+                    "WHERE l.account_id IN ("+ acc_set +") " \
+                        "AND " + query + " " \
+                        " AND l.date >= "+"'"+ st_date +"'"+" AND l.date <= "+"'"+ end_date +""+"'"" " \
+                    "GROUP BY l.account_id ")
+            for res in cr.dictfetchall():
+                accounts[res['id']] = res
+        #for the asked accounts, get from the dictionnary 'accounts' the value of it
+        res = {}
+        for id in ids:
+            res[id] = self._get_account_values(cr, uid, id, accounts, field_names, context)
+        return res
 
     def create(self, cr, uid, vals, context={}):
         name=self.search(cr,uid,[('name','ilike',vals['name']),('company_id','=',vals['name'])])
@@ -53,6 +96,7 @@ class Account(osv.osv):
              vals['type1'] = 'cr'
         else:
              vals['type1'] = 'none'
+        #vals = self.get_level(vals)
         account_id = super(Account, self).create(cr, uid, vals, context)
         if vals.get('type1', False) != False:
             journal_id = vals.get('journal_id',False)
@@ -109,6 +153,8 @@ class Account(osv.osv):
                  vals['type1'] = 'cr'
             else:
                  vals['type1'] = 'none'
+#        if vals.has_key('parent_id'):
+#            vals = self.get_level(vals)
         super(Account, self).write(cr, uid,ids, vals, context)
         self_obj= self.browse(cr,uid,ids)
         move_pool=self.pool.get('account.move')
@@ -216,8 +262,9 @@ class account_account_template(osv.osv):
         _inherit = "account.account.template"
         
         _columns = {
-        'type1':fields.selection([('dr','Debit'),('cr','Credit'),('none','None')], 'Dr/Cr',store=True),         
+        'type1':fields.selection([('dr','Debit'),('cr','Credit'),('none','None')], 'Dr/Cr',store=True),
     }
+
 account_account_template()
 
 

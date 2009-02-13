@@ -44,6 +44,8 @@ class report_pl_account(report_sxw.rml_parse):
         self.localcontext.update( {
             'time': time,
             'get_lines' : self.get_lines,
+            'get_company': self.get_company,
+            'get_currency': self._get_currency,
             'get_data': self.get_data,
             'sum_dr' : self.sum_dr,
             'sum_cr' : self.sum_cr,
@@ -60,95 +62,99 @@ class report_pl_account(report_sxw.rml_parse):
         return self.res_pl
     
     def sum_dr(self):
-        if self.result_sum_dr < 0.0:
-            self.result_sum_dr *= -1
         return self.result_sum_dr or 0.0
      
     def sum_cr(self):
-        if self.result_sum_cr < 0.0:
-            self.result_sum_cr *= -1
         return self.result_sum_cr or 0.0
 
     def sum_expense_dr(self):
-        if self.result_sum_expense_dr < 0.0:
-            self.result_sum_expense_dr *= -1
         return self.result_sum_expense_dr or 0.0
      
     def sum_income_cr(self):
-        if self.result_sum_income_cr < 0.0:
-            self.result_sum_income_cr *= -1
-        return self.result_sum_income_cr or 0.0
+       return self.result_sum_income_cr or 0.0
 
     def sum_expense1_dr(self):
-        if self.result_dr < 0.0:
-            self.result_dr *= -1
         return self.result_dr or 0.0
 
     def sum_income1_cr(self):
-        if self.result_cr < 0.0:
-            self.result_cr *= -1
         return self.result_cr or 0.0
 
-    def get_data(self,obj,form):
+    def get_data(self,form):
         gr_list=['expense','income']
-        if obj.group_type == 'pl_accounts_group':
-            base_list=['Opening Stock','Purchase','Direct Expenses','Indirect Expenses','Sales Account','Goods Given Account','Direct Incomes','Indirect Incomes']
-            for group in gr_list:
-                acc_objs=[]
-                final_result={}
-                result=[]
-                result_temp=[]
+        base_list=['Opening Stock','Purchase','Direct Expenses','Indirect Expenses','Sales Account','Goods Given Account','Direct Incomes','Indirect Incomes']
+        for group in gr_list:
+            if group=='expense':
+                list_acc=['Opening Stock','Purchase','Direct Expenses','Indirect Expenses']
+            if group=='income':
+                list_acc=['Sales Account','Goods Given Account','Direct Incomes','Indirect Incomes']
+            acc_objs=[]
+            final_result={}
+            balance_dict={}
+            result=[]
+            result_temp=[]
+            res={}
+            acc_ids=[]
+            context  = self.context.copy()
+            context['fiscalyear'] = context={'fiscalyear': form['fiscalyear']}
+            fiscalyear_obj =  pooler.get_pool(self.cr.dbname).get('account.fiscalyear')
+            date_obj=fiscalyear_obj.browse(self.cr, self.uid, context['fiscalyear'])
+            year_start_date = date_obj.date_start
+            year_end_date = date_obj.date_stop  
+            comp_ids=[]
+            c_child_ids=pooler.get_pool(self.cr.dbname).get('res.company')._get_company_children(self.cr, self.uid,form['company_id'])
+            if c_child_ids:
+                comp_ids = c_child_ids
+            else:
+                comp_ids.append(form['company_id'])
+            for lacc in list_acc:
+                acc_ids +=self.pool.get('account.account').search(self.cr, self.uid, [('name','=', lacc),('company_id','in',comp_ids)])
+            ids2 = self.pool.get('account.account')._get_children_and_consol(self.cr, self.uid, acc_ids, context)
+            acc_objs=self.pool.get('account.account').browse(self.cr, self.uid, ids2)
+            balance_dict=self.pool.get('account.account').compute_total(self.cr,self.uid,ids2,year_start_date,year_end_date,form['date1'],form['date2'],{'debit': 0.0,'credit': 0.0, 'balance': 0.0})
+            for aobj in acc_objs:
                 res={}
-                acc_ids=[]
-                context  = self.context.copy()
-                context['fiscalyear'] = context={'fiscalyear': obj.fiscal_year.id}
-                fiscalyear_obj =  pooler.get_pool(self.cr.dbname).get('account.fiscalyear')
-                date_obj=fiscalyear_obj.browse(self.cr, self.uid, context['fiscalyear'])
-                year_start_date = date_obj.date_start
-                year_end_date = date_obj.date_stop 
-                acc_objs=self.get_acc_obj(obj.acc_detail,group) 
-                for aobj in acc_objs:
-                    res={}
-                    res['name']=aobj.name
-                    res['balance']=aobj.balance
-                    res['type']=aobj.type
-                    res['level']=aobj.level
-                    if res['level'] > 1:
-                        res['outer']='-1'
-                        if res['type'] == 'expense':
-                             self.result_dr +=res['balance']
-                        else:
-                             self.result_cr +=res['balance']
-                             
-                    if res['level']== 1:
-                        res['outer']='0'
-                        if res['type'] == 'expense':
-                             self.result_sum_expense_dr +=res['balance']
-                        else:
-                             self.result_sum_income_cr +=res['balance']
-                        
-                    if res['level']== 0:
-                        res['outer']='1'
-                        if res['type'] == 'expense':
-                            self.result_sum_dr +=res['balance']
-                        else:
-                            self.result_sum_cr +=res['balance']
-                    if form['empty_account']==False and res['name'] not in base_list:
-                        if res['balance']:
-                         if form['display_type'] == 'consolidated':
-                            if res['name'] in base_list:
-                                result.append(res)  
-                         else:
-                            result.append(res) 
+                res['name']=aobj.name
+                res['balance']=balance_dict[aobj.id]['balance']
+                res['type']=aobj.user_type.code
+                res['level']=aobj.level
+                if res['type'] == 'income' and res['balance'] < 0.0:
+                    res['balance'] *= -1
+                if res['level'] > 4:
+                    res['outer']='-1'
+                    if res['type'] == 'expense':
+                         self.result_dr +=res['balance']
                     else:
-                        if form['display_type'] == 'consolidated':
-                            if res['name'] in base_list:
-                                result.append(res)  
-                        else:
-                            result.append(res) 
-                final_result['gr_name']=group
-                final_result['list']=result
-                self.final.append(final_result)
+                         self.result_cr +=res['balance']
+                         
+                if res['level']== 4:
+                    res['outer']='0'
+                    if res['type'] == 'expense':
+                         self.result_sum_expense_dr +=res['balance']
+                    else:
+                         self.result_sum_income_cr +=res['balance']
+                    
+                if res['level']== 3:
+                    res['outer']='1'
+                    if res['type'] == 'expense':
+                        self.result_sum_dr +=res['balance']
+                    else:
+                        self.result_sum_cr +=res['balance']
+                if form['empty_account']==False and res['name'] not in base_list:
+                    if res['balance']:
+                     if form['display_type'] == 'consolidated':
+                        if res['name'] in base_list:
+                            result.append(res)  
+                     else:
+                        result.append(res) 
+                else:
+                    if form['display_type'] == 'consolidated':
+                        if res['name'] in base_list:
+                            result.append(res)  
+                    else:
+                        result.append(res) 
+            final_result['gr_name']=group
+            final_result['list']=result
+            self.final.append(final_result)
             if self.result_sum_dr < 0.0:
                 self.result_sum_dr *= -1
             if self.result_sum_cr < 0.0:
@@ -162,13 +168,10 @@ class report_pl_account(report_sxw.rml_parse):
         return None
     
     def get_acc_obj(self,obj_list,group):
-        done=[]
         result=[]
         for obj_acc in obj_list:
-            if obj_acc.name not in done:
-                done.append(obj_acc.name)
-                if obj_acc.type == group or obj_acc.type=='asset':
-                    result.append(obj_acc)       
+            if obj_acc.type == group:
+                result.append(obj_acc)       
         return result
 
     def get_lines(self,group):
@@ -177,8 +180,15 @@ class report_pl_account(report_sxw.rml_parse):
             if list['gr_name']== group:
                 result=list['list']
         return result
+    
+    def _get_currency(self, form):
+        return pooler.get_pool(self.cr.dbname).get('res.company').browse(self.cr, self.uid, form['company_id']).currency_id.code
 
-report_sxw.report_sxw('report.pl.account', 'account.report.india',
+    def get_company(self,form):
+        comp_obj=pooler.get_pool(self.cr.dbname).get('res.company').browse(self.cr,self.uid,form['company_id'])
+        return comp_obj.name 
+
+report_sxw.report_sxw('report.pl.account', 'account.account',
     'addons/account_report_india/report/report_pl_account.rml',parser=report_pl_account,
     header=False)
 

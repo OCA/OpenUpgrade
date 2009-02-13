@@ -1,23 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <terp>
 	<data>
-		<report id="account_pl_new"
-			string="Profit And Loss Account New"
-			model="account.report.india"
-			name="pl.new"
-			rml="account_report_india/report/report_pl_new.rml"
-			auto="False"
-			menu="True"/>
-
-		<report id="account_pl"
-			string="Profit And Loss Account"
-			model="account.report.india"
-			name="pl"
-			rml="account_report_india/report/report_pl.rml"
-			auto="False"
-			menu="True"/>
-		
-		
 		<report id="account_pl_account1"
 			string="Profit And Loss Account"
 			model="account.report.india"
@@ -26,22 +9,19 @@
 			auto="False"
 			menu="False"/>
 
-		
 		<!-- profit and loss account report-related wizards -->
 		<wizard 
 			string="Profit And Loss Account"
 			model="account.report.india"
 			name="account.pl.report"
-			menu="True"
+			menu="False"
 			id="wizard_pl_report"/>
-
-		<report id="account_bs"
-			string="Balance Sheet"
-			model="account.report.india"
-			name="bs"
-			rml="account_report_india/report/report_bs.rml"
-			auto="False"
-			menu="True"/>
+			
+		<menuitem
+			name="Financial Management/Reporting/Profit And Loss Account"
+			action="wizard_pl_report"
+			type="wizard"
+			id="menu_profit_and_loss_account_report"/>
 
 		<report id="account_balancesheet"
 			string="Balance Sheet"
@@ -56,8 +36,15 @@
 			string="Balance Sheet"
 			model="account.report.india"
 			name="balancesheet.report"
-			menu="True"
+			menu="False"
 			id="wizard_balancesheet_report"/>
+			
+		<menuitem
+			name="Financial Management/Reporting/Balance Sheet"
+			action="wizard_balancesheet_report"
+			type="wizard"
+			id="menu_balance_sheet_report"/>
+
 
 	</data>
 </terp>

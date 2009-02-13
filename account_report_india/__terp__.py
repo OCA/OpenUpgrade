@@ -44,7 +44,7 @@ provides the functionalities according to the Indian Accounting
     "demo_xml" : [
                    
     ],
-    "update_xml" : ["account_report_view.xml","account_report.xml"
+    "update_xml" : [ "account_report.xml" 
     ],
     "active": False,
     "installable": True

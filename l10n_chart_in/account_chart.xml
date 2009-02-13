@@ -296,16 +296,16 @@
 			            <field name="parent_id" ref="IA_AC023"/>
 					</record>
 				
-						<record model="account.account.template" id="IA_AC02311">
-							<field name="name">Reserve &amp; Surplus Account</field>
-							<field name="code">IA_AC02311</field>
-							<field name="type">payable</field>
-							<field name="user_type" ref="account_type_liability1"/>
-							<field name="type1">cr</field>
-							<field name="reconcile" eval="False"/>
-							<field name="currency_id" ref="base.IDR"/>
-				            <field name="parent_id" ref="IA_AC0231"/>
-						</record>
+					<record model="account.account.template" id="IA_AC0232">
+						<field name="name">Reserve &amp; Surplus Account</field>
+						<field name="code">IA_AC0232</field>
+						<field name="type">payable</field>
+						<field name="user_type" ref="account_type_liability1"/>
+						<field name="type1">cr</field>
+						<field name="reconcile" eval="False"/>
+						<field name="currency_id" ref="base.IDR"/>
+			            <field name="parent_id" ref="IA_AC023"/>
+					</record>
 			
 				<record model="account.account.template" id="IA_AC024">
 					<field name="name">Loan(Liability) Account</field>
