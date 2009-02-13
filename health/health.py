@@ -1105,13 +1105,9 @@ class health_patient(osv.osv):
     def set_name(self, cr, uid, ids, nom,prenom, context={}):
         if nom:
             if prenom:
-                result = {'value': {
-                                    'name': nom.capitalize()+" "+prenom.capitalize(),}
-                    }
+                result = {'value': {'name': nom.capitalize()+" "+prenom.capitalize(),}}
             else:
-                result = {'value': {
-                                    'name': nom.capitalize(),}
-                                                }
+                result = {'value': {'name': nom.capitalize(),}}
         return result
 
 
