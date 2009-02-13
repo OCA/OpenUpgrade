@@ -119,7 +119,7 @@ class direct_poll(wizard.interface):
 <form string="%s">
  <label string="%s" colspan="4" width="450"/>
  <field name="answer" colspan="4" />
-</form>""" % (question[1], question[1],)
+</form>""" % (question[1].encode("utf-8"), question[1].encode("utf-8"),)
 
         _fields = {'answer': {
                 'string':'Answer',
