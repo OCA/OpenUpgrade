@@ -37,20 +37,18 @@ class quality_test(base_module_quality.abstract_quality_check):
         self.bool_installed_only = False
         self.no_terp = False
         self.ponderation = 2
-
         return None
 
     def run_test_terp(self, cr, uid, module_path):
         list_files = os.listdir(module_path)
-        
+
         current_module = module_path.split('/')[-1]
-        
+
         for i in list_files:
             path = os.path.join(module_path, i)
             if os.path.isdir(path):
                 for j in os.listdir(path):
                     list_files.append(os.path.join(i, j))
-
         n = 0
         score = 0.0
         feel_good_factor = 0
@@ -59,12 +57,10 @@ class quality_test(base_module_quality.abstract_quality_check):
             self.no_terp = True
             self.result += _("The module does not contain the __terp__.py file")
             return None
-
         terp_file = os.path.join(module_path,'__terp__.py')
         res = eval(tools.file_open(terp_file).read())
 
         terp_keys = ['category', 'name', 'description', 'author', 'website', 'update_xml', 'init_xml', 'depends', 'version', 'active', 'installable', 'demo_xml', 'certificate']
-
         for key in terp_keys:
             if key in res:
                 feel_good_factor += 1 # each tag should appear
@@ -72,7 +68,7 @@ class quality_test(base_module_quality.abstract_quality_check):
                     if not res[key]:
                         feel_bad_factor += 1
                     else:
-                       
+
                         if key == 'description' and res[key] and len(str(res[key])) >= 150: # no. of chars should be >=150
                             feel_good_factor += 1
                             if res['description'].count('\n') >= 4:# description contains minimum 5 lines
@@ -84,7 +80,7 @@ class quality_test(base_module_quality.abstract_quality_check):
                                 feel_good_factor += 1
                             else:
                                 feel_bad_factor += 1
-                
+
                 if isinstance(res[key],bool):
                     if key == 'active':
                         if current_module != 'base':
@@ -93,14 +89,12 @@ class quality_test(base_module_quality.abstract_quality_check):
                         else:
                             if not res[key]:
                                 feel_bad_factor += 1
-                        
+
                     if key == 'installable' and not res[key]: # installable tag is provided and False
                         feel_bad_factor +=1
             else:
                 feel_bad_factor += 1
-
         score = round((feel_good_factor) / float(feel_good_factor + feel_bad_factor),2)
-
         return [_('__terp__.py file'), score]
 
 
