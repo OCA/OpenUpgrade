@@ -79,6 +79,7 @@ class invoice_create(wizard.interface):
                 'account_id': partner.property_account_receivable.id,
                 'currency_id': account.pricelist_id.currency_id.id,
                 'date_due': date_due,
+                'fiscal_position': account.partner_id.property_account_position.id
             }
             last_invoice = pool.get('account.invoice').create(cr, uid, curr_invoice)
             invoices.append(last_invoice)
@@ -195,7 +196,7 @@ class invoice_create(wizard.interface):
     states = {
         'init' : {
             'actions' : [_get_accounts],
-            'result' : {'type':'form', 'arch':_create_form, 'fields':_create_fields, 'state': [('end','Cancel'),('create','Create invoices')]},
+            'result' : {'type':'form', 'arch':_create_form, 'fields':_create_fields, 'state': [('end','Cancel'),('create','Create Invoices')]},
         },
         'create' : {
             'actions' : [],

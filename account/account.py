@@ -1241,9 +1241,9 @@ class account_tax(osv.osv):
             context=None, count=False):
         if context and context.has_key('type'):
             if context['type'] in ('out_invoice','out_refund'):
-                args.append(('type_tax_use','=','sale'))
+                args.append(('type_tax_use','in',['sale','all']))
             elif context['type'] in ('in_invoice','in_refund'):
-                args.append(('type_tax_use','=','purchase'))
+                args.append(('type_tax_use','in',['purchase','all']))
         return super(account_tax, self).search(cr, uid, args, offset, limit, order, context, count)
 
     def name_get(self, cr, uid, ids, context={}):
@@ -2142,7 +2142,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         vals_journal={}
         view_id = self.pool.get('account.journal.view').search(cr,uid,[('name','=','Journal View')])[0]
         seq_id = obj_sequence.search(cr,uid,[('name','=','Account Journal')])[0]
-        
+
         if obj_multi.seq_journal:
             seq_id_sale = obj_sequence.search(cr,uid,[('name','=','Sale Journal')])[0]
             seq_id_purchase = obj_sequence.search(cr,uid,[('name','=','Purchase Journal')])[0]
@@ -2186,10 +2186,13 @@ class wizard_multi_charts_accounts(osv.osv_memory):
             #create the account_account for this bank journal
             tmp = self.pool.get('res.partner.bank').name_get(cr, uid, [line.acc_no.id])[0][1]
             dig = obj_multi.code_digits
+            new_code = str(current_num)
+            if ref_acc_bank.code:
+                new_code = str(ref_acc_bank.code.ljust(dig,'0') + str(current_num))
             vals = {
                 'name': line.acc_no.bank and line.acc_no.bank.name+' '+tmp or tmp,
                 'currency_id': line.currency_id and line.currency_id.id or False,
-                'code': str(ref_acc_bank.code.ljust(dig,'0') + str(current_num)),
+                'code': new_code,
                 'type': 'other',
                 'user_type': account_template.user_type and account_template.user_type.id or False,
                 'reconcile': True,
