@@ -6,6 +6,7 @@
             model="res.partner" 
             name="partner.call_list" 
             string="Create phone call list"/>
+        <menuitem action="wizard_call_list_menu" id="menu_wizard_call_list_menu" parent="base.menu_base_partner" type="wizard"/>
 
         <wizard
             id="wizard_direct_poll_menu"

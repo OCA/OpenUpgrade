@@ -34,17 +34,98 @@ import time
 import math
 import uuid
 import addons
+import os
 
 from tools import config
+from tools.parse_version import parse_version
+from tools.misc import file_open, debug
 import mx.DateTime
 
+import release
+
+
+import wizard
+import pooler
+
+class maintenance_maintenance_module_refresh_wizard(wizard.interface):
+    def init(self, cr, uid, data, context):
+        pooler.get_pool(cr.dbname).get('maintenance.maintenance.module').refresh(cr, uid)
+        return {}
+
+    states = {
+        'init': {
+            'actions': [init],
+            'result': {'type': 'state', 'state': 'end'}
+        }
+    }
+maintenance_maintenance_module_refresh_wizard("maintenance.maintenance.module.refresh")
+
+
 class maintenance_maintenance_module(osv.osv):
+    
+    __root_path = os.path.join(config['root_path'], 'maintenance', 'addons')
+
+    def _get_module_path(self, cr, uid, ids, name, args, context=None):
+        result = {}
+        for module in self.browse(cr, uid, ids, context):
+            result[module.id] = os.path.join(self.__root_path, module.name)
+        return result
+    
+    
     _name ="maintenance.maintenance.module"
     _description = "maintenance modules"
     _columns = {
-        'name' : fields.char('Name', size=128, required=True),
-        'version': fields.char('Version', size=64,),
+        'name' : fields.char('Name', size=128, required=True, readonly=True),
+        'version': fields.char('Version', size=64, readonly=True),
+        'certificate': fields.char('Certificate Code', size=42, 
+                                  required=True, readonly=True),
+        'path': fields.function(_get_module_path, method=True, string='Path',
+                                type='char', size=512, readonly=True),
     }
+    
+
+    def refresh(self, cr, uid):
+        def get_version(terp):
+            return "%s.%s" % (release.major_version, terp['version'])
+
+        def get_terp(moddir):
+            try:
+                terp = file_open(os.path.join(moddir, '__terp__.py'))
+                try:
+                    return eval(terp.read())
+                finally:
+                    terp.close()
+            except IOError:
+                return None
+
+        ids = self.search(cr, uid, [])
+        names = []
+        for module in self.browse(cr, uid, ids):
+            names.append(module.name)
+            terp = get_terp(module.path)
+            if terp:
+                module.write({'version': get_version(terp)}) # certificate is not updated
+
+        for element in os.listdir(self.__root_path):
+            if element in names:
+                continue
+            
+            element_dir = os.path.join(self.__root_path, element)
+            if not os.path.isdir(element_dir):
+                continue
+
+            terp = get_terp(element_dir)
+            if terp:
+                self.create(cr, uid, {'name': element, 
+                                      'version': get_version(terp), 
+                                      'certificate': terp['certificate']}
+                )
+
+        return True
+
+    def init(self, cr):
+        self.refresh(cr, 1)
+            
 maintenance_maintenance_module()
 
 class maintenance_maintenance(osv.osv):
@@ -56,7 +137,7 @@ class maintenance_maintenance(osv.osv):
             cr.execute("""
                         SELECT count(1) 
                           FROM maintenance_maintenance 
-                        WHERE (    (%(date_from)s BETWEEN date_from AND date_to)
+                         WHERE (   (%(date_from)s BETWEEN date_from AND date_to)
                                 OR (%(date_to)s BETWEEN date_from AND date_to)
                                 OR (%(date_from)s < date_from AND %(date_to)s > date_to)
                                )
@@ -96,7 +177,7 @@ class maintenance_maintenance(osv.osv):
         ("check_dates", "CHECK (date_from < date_to)", 'The "from" date must not be after the "to" date.'),
     ]
     _constraints = [
-        (_contract_date, 'You can not have 2 contracts that overlaps !', ['date_from','date_to']),
+        (_contract_date, 'You can not have 2 contracts (for the same partner) that overlaps !', ['partner_id', 'date_from','date_to']),
     ]
 
     def check_contract(self, cr, uid, modules, contract):
@@ -113,9 +194,9 @@ class maintenance_maintenance(osv.osv):
             maintenance_obj = self.browse(cr,uid,maintenance_ids)[0]
             date_from = maintenance_obj.date_from
             date_to = maintenance_obj.date_to
-            contract_module_list = map(lambda x:(x['name'], x['version']),maintenance_obj.module_ids)
+            contract_module_list = map(lambda x:(x['name'], x['version']), maintenance_obj.module_ids)
             for module in modules:
-                if (module['name'],module['installed_version']) not in contract_module_list:
+                if (module['name'], module['installed_version']) not in contract_module_list:
                     external_modules.append(module['name'])
         return { 
             'id': (maintenance_ids and maintenance_ids[0] or 0),
@@ -141,8 +222,8 @@ class maintenance_maintenance(osv.osv):
                 'date_to' : (mx.DateTime.strptime(date_from, '%Y-%m-%d') + mx.DateTime.RelativeDate(years=1)).strftime("%Y-%m-%d") 
             }
         }
-    
-    def retrieve_updates(self, cr, uid, ids):
+
+    def __for_each_module(self, cr, uid, ids, modules, callback):
         res = {}
         toload = ids
         if isinstance(ids, (int, long)):
@@ -150,11 +231,18 @@ class maintenance_maintenance(osv.osv):
         for c in self.browse(cr, uid, toload):
             res[str(c.id)] = {}
             for m in c.module_ids:
-                res[str(c.id)][m.name] = addons.get_module_as_zip(m.name, b64enc=True)
+                if (m.name not in modules) or parse_version(modules[m.name]) < parse_version(m.version):
+                    res[str(c.id)][m.name] = callback(m)
 
         if isinstance(ids, (int, long)):
             return res[str(ids)]
         return res
+
+    def get_available_updates(self, cr, uid, ids, modules):
+        return self.__for_each_module(cr, uid, ids, modules, lambda m: m.version)
+
+    def retrieve_updates(self, cr, uid, ids, modules):
+        return self.__for_each_module(cr, uid, ids, modules, lambda m: addons.get_module_as_zip_from_module_directory(m.path, b64enc=True))
 
 maintenance_maintenance()
 

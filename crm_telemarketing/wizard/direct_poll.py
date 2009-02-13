@@ -37,6 +37,7 @@ _mess_form = """<?xml version="1.0"?>
 <form string="Ended questionnaire">
  <field name="message" colspan="4" width="350" nolabel="1" />
 </form>"""
+#<label string="%s" colspan="4" width="350"/>
 
 _mess_fields = {
     'message': {
@@ -98,13 +99,15 @@ class direct_poll(wizard.interface):
         x_form, x_fields = self.build_form(cr, uid, next_id['next'], context)
         _POLL_FORM.__init__(x_form)
         _POLL_FIELDS.__init__(x_fields)
-        return {}
+        return {'answer':None}
+
 
     def build_form(self, cr, uid, question, context):
         _form = """<?xml version="1.0"?>
 <form string="%s">
+ <label string="%s" colspan="4" width="300"/>
  <field name="answer" colspan="4" domain="[('question_id','=',%s)]"/>
-</form>""" % (question[1], str(question[0]))
+</form>""" % (question[1], question[1], str(question[0]))
 
         _fields = {'answer': {
                 'string':'Answer',
@@ -163,7 +166,7 @@ class direct_poll(wizard.interface):
             },
         },
         'message': {
-            'actions': [],
+            'actions': [thanks],
             'result': {
                 'type': 'form', 
                 'arch': _mess_form, 

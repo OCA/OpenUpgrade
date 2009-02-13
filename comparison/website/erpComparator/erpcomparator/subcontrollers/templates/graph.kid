@@ -55,12 +55,12 @@
 					Analysis axis :
 				</td>
 				<td>
-					<select py:if="view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors">
+					<select py:if="view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors" class="factors">
 						<option>Summary</option>
 			        	<option py:for="s in parents" py:content="s['name']">${s['name']}</option>
 			        	<option py:for="c in all_child" selected="${tg.selector(view_name==c['name'])}">${c['name']}</option>
 			        </select>
-			        <select py:if="not view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors">
+			        <select py:if="not view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors" class="factors">
 						<option>Summary</option>
 			        	<option py:for="s in parents" py:content="s['name']">${s['name']}</option>
 			        	<option py:for="c in all_child" py:content="c['name']">${c['name']}</option>
@@ -70,7 +70,15 @@
 		</table>
 		<div id="checkboxtext">
 			<table name="item_list" id="graph_item_list">
-				<tr>
+				<tr py:if="selected_items">
+					<td py:for="label in titles">
+						<input id="${label['id']}" type="checkbox" checked="${tg.selector(label['sel'])}" class="grid-record-selector">${label['name']}</input>
+					</td>
+					<td>&nbsp;
+						<button type="button" class="button" onclick="load_radar()">Show Graph</button>
+					</td>
+				</tr>
+				<tr py:if="not selected_items">
 					<td py:for="label in titles">
 						<input id="${label['id']}" type="checkbox" checked="true" class="grid-record-selector">${label['name']}</input>
 					</td>

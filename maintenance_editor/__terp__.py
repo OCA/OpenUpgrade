@@ -33,7 +33,8 @@
     "category" : "Generic Modules/Base",
     "depends" : ["base"],
     "init_xml" : [],
-    "demo_xml" : ["maintenance_editor_demo.xml"],
+    "demo_xml" : [
+    ],
     "description": """
     module to manage maintenance contracts:
     """,

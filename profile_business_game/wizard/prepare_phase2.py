@@ -72,27 +72,27 @@ def assign_full_access_rights(self, cr, uid, data, context):
     return
 
 
-#def create_phase2_menu(self, cr, uid, data, context):
-#    pool = pooler.get_pool(cr.dbname)
-#    mod_obj = pool.get('ir.model.data')
-#    result = mod_obj._get_id(cr, uid, 'profile_business_game', 'business_game')
-#    parent_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
-#    result = mod_obj._get_id(cr, uid, 'profile_business_game', 'action_game_detail_form')
-#    action_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
-#    menu_id = pool.get('ir.ui.menu').create(cr, uid, {
-#            'name': 'Business Game Details',
-#            'parent_id': parent_id,
-#            'icon': 'STOCK_NEW'
-#            })
-#    value_id = pool.get('ir.values').create(cr, uid, {
-#            'name': 'Business Game Phase2',
-#            'key2': 'tree_but_open',
-#            'model': 'ir.ui.menu',
-#            'res_id': menu_id,
-#            'value': 'ir.actions.act_window,%d'%action_id,
-#            'object': True
-#            })
-#    return
+def create_phase2_menu(self, cr, uid, data, context):
+    pool = pooler.get_pool(cr.dbname)
+    mod_obj = pool.get('ir.model.data')
+    result = mod_obj._get_id(cr, uid, 'profile_business_game', 'business_game')
+    parent_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+    result = mod_obj._get_id(cr, uid, 'profile_business_game', 'action_game_detail_form')
+    action_id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
+    menu_id = pool.get('ir.ui.menu').create(cr, uid, {
+            'name': 'Business Game Details',
+            'parent_id': parent_id,
+            'icon': 'STOCK_NEW'
+            })
+    value_id = pool.get('ir.values').create(cr, uid, {
+            'name': 'Business Game Phase2',
+            'key2': 'tree_but_open',
+            'model': 'ir.ui.menu',
+            'res_id': menu_id,
+            'value': 'ir.actions.act_window,%d'%action_id,
+            'object': True
+            })
+    return
 
 def create_budgets(self, cr, uid, data, context={}):
     pool = pooler.get_pool(cr.dbname)
@@ -111,7 +111,9 @@ def create_budgets(self, cr, uid, data, context={}):
     return
 
 def get_ready_phase2(self, cr, uid, data, context):
-       # create_phase2_menu(self, cr, uid, data, context)
+        if uid != 1:
+            raise wizard.except_wizard('Permission Denied','Only Admin can start the Phase2')
+        create_phase2_menu(self, cr, uid, data, context)
         assign_full_access_rights(self, cr, uid, data, context)
         create_budgets(self,cr, uid, data, context)
         pool = pooler.get_pool(cr.dbname)

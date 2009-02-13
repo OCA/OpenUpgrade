@@ -37,15 +37,21 @@ function getSelectedItems() {
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
 }
 
-function do_login() {
-	params = {}
-	params['user_name'] = $('user_name').value;
-	params['password'] = $('password').value;
-	
+function do_login(user_name, password) {
+	params = {};
+	if('undefined' == typeof user_name && 'undefined' == typeof password) {
+		params['user_name'] = $('user_name').value;
+		params['password'] = $('password').value;
+	}
+	else {
+		params['user_name'] = user_name;
+		params['password'] = password;
+	}
+
 	var req = Ajax.JSON.post('/login/check_login', params);
 	req.addCallback(function(obj){
 		if (obj.user_info) {
-			window.location.href = '/comparison?user_name='+params['user_name']+'&password='+params['password'];
+			window.location.href = '/comparison';
 		}
 		if (obj.error) {
 			return alert(obj.error);
@@ -54,6 +60,7 @@ function do_login() {
 }
 
 function register() {
+	
 	params = {}
 	var req = Ajax.post('/login', params);
 	req.addCallback(function(xmlHttp) {
@@ -70,11 +77,19 @@ function register() {
 }
 
 function add_new_user() {
-	
+	if($('registered_user') && $('registered_user').checked) {
+		do_login($('usr_name').value, $('usr_password').value)
+	}
+	else {
 	params = {}
 	params['user_name'] = $('name_user').value;
 	params['password'] = $('passwd').value;
 	params['email'] = $('email').value;
+	
+	name = params['user_name'].match(/^[A-Za-z0-9_]+$/);
+	if (! name) {
+		return alert("Username accepts only Digit, Later, _ sign...");	
+	}
 	
 	if (!params['user_name'] || !params['password'] || !params['email']) {
 		return alert("Fields marked with * are mandatory...");
@@ -84,12 +99,13 @@ function add_new_user() {
 	req.addCallback(function(obj){
 		if (obj.res) {
 			window.mbox.hide();
-			window.location.href = '/comparison?user_name='+params['user_name']+'&password='+params['password'];
+			window.location.href = '/comparison';
 		}
 		if (obj.error) {
 			return alert(obj.error);
 		}
 	});
+	}
 }
 
 function change_vote(node, pond_val) {
@@ -162,7 +178,8 @@ function add_new_factor() {
 	        	}
 	    	}
 	    	if (obj.error) {
-	            return alert(obj.error);
+//	            return alert(obj.error);
+	            register()
 	        }
 	    });
 	}
@@ -177,7 +194,7 @@ MochiKit.DOM.addLoadEvent(function(evt){
     window.mbox = new ModalBox({
         title: 'Evaluation Matrix...',
         buttons: [
-            {text: 'Save', onclick: onUpdate},
+            {text: 'Submit', onclick: onUpdate}
         ]
     });
 });
@@ -242,17 +259,33 @@ function item_vote() {
 			}
 		}
     	if (obj.error) {
-            return alert(obj.error);
+//            return alert(obj.error);
+				register()
         }
     });
 	
 }
 function load_radar() {
-	
+	var browserName = navigator.appName;
+	var browserVersion = parseInt(navigator.appVersion);
 	ids = radarData();
 	
-	factor_name= $('factors').value;
-	factor_name = factor_name.replace(/&/g, "@");
+	if(browserName.indexOf('Netscape')!=-1 && browserVersion >= 4) {
+		factor_name= $('factors').value;
+		factor_name = factor_name.replace(/&/g, "@") ;
+	}
+	
+	else if(browserName.indexOf('Microsoft Internet Explorer')!=-1 && browserVersion>=3) {
+		MochiKit.DOM.getElementsByTagAndClassName('select','factors', null)[0].parentNode.parentNode.cells[0].style.padding = '10px';
+		var index = MochiKit.DOM.getElementsByTagAndClassName('select','factors', null)[0].selectedIndex;
+		var factor = MochiKit.DOM.getElementsByTagAndClassName('select','factors', null)[0][index].innerHTML;
+		factor_name= factor;
+		factor_name = factor_name.replace(/&amp;/g, "@") ;
+	}
+	
+	else if(browserName.indexOf('Opera')!=-1) {
+		log("Opera")
+	}
 	
 	list = urlEncode('/graph/radar?ids='+ids+'&factor_name='+factor_name);
 	

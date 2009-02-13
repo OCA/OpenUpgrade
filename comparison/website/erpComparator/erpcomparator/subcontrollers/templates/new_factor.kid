@@ -32,7 +32,7 @@
 			<td>
 				<select style="width: 290px;" name="type" id="type">
 					<option id="type" selected="true" value=""></option>
-                    <option id="view" value="view">Catogery</option>
+                    <option id="view" value="view">Category</option>
                     <option id="criterion" value="criterion" selected="true">Criterion</option>
                 </select>
 			</td>

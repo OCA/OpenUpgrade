@@ -1,0 +1,347 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="28.0" width="481" height="786"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="6.0" leading="8" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="6.0" leading="8" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="18.0" leading="22" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" fontName="Times-Roman" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="14.0" leading="17" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P11" fontName="Times-Roman" fontSize="18.0" leading="22" alignment="CENTER"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Bloc de tableau" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="6.0"/>
+  </stylesheet>
+  <story>
+    <blockTable colWidths="482.0" repeatRows="1" style="Tableau4">
+      <tr>
+        <td>
+          <para style="P9">[[ company.name ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P11">List of Changes</para>
+    <blockTable colWidths="482.0" repeatRows="1" style="Tableau2">
+      <tr>
+        <td>
+          <para style="P5">From [[ data['form']['datedebut'] ]] To [[ data['form']['datefin'] ]]</para>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <section>
+      <para style="P10">Inputs</para>
+      <blockTable colWidths="90.0,80.0,60.0,64.0,62.0,90.0,36.0" style="Tableau1">
+        <tr>
+          <td>
+            <para style="P8">Name</para>
+          </td>
+          <td>
+            <para style="P8">Room</para>
+          </td>
+          <td>
+            <para style="P12">Entry</para>
+          </td>
+          <td>
+            <para style="P8">Provenance</para>
+          </td>
+          <td>
+            <para style="P8">Release</para>
+          </td>
+          <td>
+            <para style="P8">Destination</para>
+          </td>
+          <td>
+            <para style="P8">Gir </para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P6">[[ repeatIn(_entree(data['form']),'lignes') ]]</para>
+            <para style="P6">[[ lignes['name'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['chambre'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['entree'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['provenance'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['sortie'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['destination'] ]]</para>
+          </td>
+          <td>
+            <para style="P5">[[ lignes['gir'] ]]</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P1">
+        <font color="white"> </font>
+      </para>
+      <para style="P10">Outputs</para>
+      <blockTable colWidths="90.0,80.0,60.0,64.0,62.0,90.0,36.0" style="Tableau3">
+        <tr>
+          <td>
+            <para style="P8">Name</para>
+          </td>
+          <td>
+            <para style="P8">Room</para>
+          </td>
+          <td>
+            <para style="P12">Entry</para>
+          </td>
+          <td>
+            <para style="P8">Provenance</para>
+          </td>
+          <td>
+            <para style="P8">Release</para>
+          </td>
+          <td>
+            <para style="P8">Destination</para>
+          </td>
+          <td>
+            <para style="P8">Gir </para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P6">[[ repeatIn(_sortie(data['form']),'lignes') ]]</para>
+            <para style="P6">[[ lignes['name'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['chambre'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['entree'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['provenance'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['sortie'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['destination'] ]]</para>
+          </td>
+          <td>
+            <para style="P5">[[ lignes['gir'] ]]</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P10">
+        <font color="white"> </font>
+      </para>
+      <para style="P10">Absences</para>
+      <blockTable colWidths="90.0,80.0,60.0,88.0,72.0,91.0" style="Tableau5">
+        <tr>
+          <td>
+            <para style="P8">Name</para>
+          </td>
+          <td>
+            <para style="P8">Room</para>
+          </td>
+          <td>
+            <para style="P8">Debut </para>
+          </td>
+          <td>
+            <para style="P12">Absences Reason </para>
+            <para style="P8">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P12">End</para>
+          </td>
+          <td>
+            <para style="P8">Gir </para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P6">[[ repeatIn(_absences(data['form']),'lignes') ]]</para>
+            <para style="P6">[[ lignes['name'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['chambre'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['entree'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['motif_sortie'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['sortie'] ]]</para>
+          </td>
+          <td>
+            <para style="P5">[[ lignes['gir'] ]]</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="P2">
+              <font color="white"> </font>
+            </para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P1">
+        <font color="white"> </font>
+      </para>
+    </section>
+  </story>
+</document>
+
