@@ -51,6 +51,13 @@ class product_variant_dimension_value(osv.osv):
     _name = "product.variant.dimension.value"
     _description = "Dimension Type"
     
+    def _get_dimension_values(self, cr, uid, ids, context={}):
+        result = []
+        for type in self.pool.get('product.variant.dimension.type').browse(cr, uid, ids, context=context):
+            for value in type.value_ids:
+                result.append(value.id)
+        return result
+    
     _columns = {
         'name' : fields.char('Dimension Value', size=64),
         'sequence' : fields.integer('Sequence'),
@@ -58,8 +65,12 @@ class product_variant_dimension_value(osv.osv):
         'price_margin' : fields.float('Price Margin', size=64),
         'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', required=True),
         'product_tmpl_id': fields.related('dimension_id', 'product_tmpl_id', type="many2one", relation="product.template", string="Product Template", store=True),
+        'dimension_sequence': fields.related('dimension_id', 'sequence', string="Related Dimension Sequence", 
+             store={
+                'product.variant.dimension.type': (_get_dimension_values, None, 10),
+            }),
     }
-    _order = "sequence, name"
+    _order = "dimension_sequence, sequence, name"
     
 product_variant_dimension_value()
 
