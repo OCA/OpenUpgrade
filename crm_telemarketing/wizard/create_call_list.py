@@ -120,7 +120,7 @@ class make_call_list(wizard.interface):
                 'name': partner['name'],
                 'section_id': form['section_id'],
                 'categ_id': form['category_id'],
-                'partner_id': r,
+                'partner_id': r[0],
                 'partner_phone': False,
                 'partner_mobile': False,
                 'user_id': False,
