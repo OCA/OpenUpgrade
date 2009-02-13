@@ -118,7 +118,7 @@ class create_quality_check(wizard.interface):
             'view_mode': 'tree,form',
             'res_model': 'wizard.quality.check',
             'type': 'ir.actions.act_window'
-        }
+            }
 
     states = {
         'init' : {

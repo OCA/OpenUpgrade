@@ -69,7 +69,7 @@ class ir_action_window(osv.osv):
             mystring = 'id_resident()'
             if  mystring in (r.get('domain', '[]') or ''):
                 cat_id = self.pool.get('res.partner.category').search(cr,
-                    uid,[('name','=','Résident')])
+                    uid,[('name','=','Resident')])
                 r['domain'] = r['domain'].replace(mystring, str(cat_id))
             mystring = 'id_postulant()'
             if mystring in (r.get('domain', '[]') or ''):
@@ -228,82 +228,65 @@ class health_facturation(osv.osv):
     _name = 'health.facturation'
     _description = 'Facturation'
     _table = 'health_facturation'
+
     def facturer(self, cr, uid, ids, context={}):
         """ Création des factures """
+        code = ('tm','apa','dep','as','al','heb','abp','abh')
         obj_facture=self.pool.get('account.invoice')
         obj_produit=self.pool.get('product.product')
-        prd_tm = obj_produit.search(cr, uid, [('default_code','=','tm')])
-        if prd_tm:
-            prd_tm = prd_tm[0]
-        prd_apa = obj_produit.search(cr, uid, [('default_code','=','apa')])
-        if prd_apa:
-            prd_apa = prd_apa[0]
-        prd_dep = obj_produit.search(cr, uid, [('default_code','=','dep')])
-        if prd_dep:
-            prd_dep = prd_dep[0]
-        prd_as = obj_produit.search(cr, uid, [('default_code','=','as')])
-        if prd_as:
-            prd_as = prd_as[0]
-        prd_al = obj_produit.search(cr, uid, [('default_code','=','al')])
-        if prd_al:
-            prd_al = prd_al[0]
-        prd_heb = obj_produit.search(cr, uid, [('default_code','=','heb')])
-        if prd_heb:
-            prd_heb = prd_heb[0]
-        prd_abp = obj_produit.search(cr, uid, [('default_code','=','abp')])
-        if prd_abp:
-            prd_abp = prd_abp[0]
-        prd_abh = obj_produit.search(cr, uid, [('default_code','=','abh')])
-        if prd_abh:
-            prd_abh = prd_abh[0]
+        cr.execute("select 'prd_'||default_code as code, id from product_product where default_code in %s" %(code,))
+        result = dict(cr.fetchall())
         obj_ligne_facture=self.pool.get('account.invoice.line')
         facturations=self.browse(cr,uid,ids)
         for donnee in self.browse(cr, uid, ids, context):
-            date_facture=donnee['period_id']['date_start']
-            partner_id=donnee.name.id
-            res = self.pool.get('res.partner').address_get(cr, uid, [partner_id], ['contact', 'invoice'])
+            date_facture = donnee.period_id.date_start
+           # partner_id = donnee.name.id
+            res = self.pool.get('res.partner').address_get(cr, uid, [donnee.name.id], ['contact', 'invoice'])
             contact_addr_id = res['contact']
             invoice_addr_id = res['invoice']
             if not invoice_addr_id:
                 raise osv.except_osv(_('Caution!'), _('Partner Invoice Address Missing! Please create One '))
-            p = self.pool.get('res.partner').browse(cr, uid, partner_id)
+            p = self.pool.get('res.partner').browse(cr, uid, donnee.name.id)
             payment_term = p.property_payment_term and p.property_payment_term.id or False
             acc_id = p.property_account_receivable.id or False
             if not acc_id:
                raise osv.except_osv(_('Caution!'), _('Partner Account Missing! Please create One '))
-            comment=donnee['commentaire']
-            nbjour=donnee['decomptes']
-            if donnee['apa']:
-                comment="APA paid by the General Council : "+str(nbjour)+ " * "+str(donnee['dependance'])+" = "+str(float(nbjour)*float(donnee['dependance']))
-            if donnee['allocation']:
+            comment = donnee.commentaire
+            nbjour = donnee.decomptes
+            if donnee.apa:
+                comment="APA paid by the General Council : "+str(nbjour)+ " * "+str(donnee.dependance)+" = "+str(float(nbjour)*float(donnee.dependance))
+            if donnee.allocation:
                 comment=comment+"\nAllocator Housing Assistance"
-            if donnee['aidesociale']:
+            if donnee.aidesociale:
                 comment=comment+"\n Allocator Welfare"
-            facture={'payment_term':payment_term,'account_id':acc_id,'address_invoice_id':invoice_addr_id,'name':p.name+" - "+donnee.period_id.name,'type':'out_invoice','state':'draft','date_invoice':date_facture,'date_due':date_facture,'partner_id':partner_id,'comment':comment,'period_id':donnee['period_id']['id']}
+            facture={'payment_term':payment_term,'account_id':acc_id,'address_invoice_id':invoice_addr_id,'name':p.name+" - "+donnee.period_id.name,'type':'out_invoice','state':'draft','date_invoice':date_facture,'date_due':date_facture,'partner_id':donnee.name.id,'comment':comment,'period_id':donnee.period_id.id}
             fpos=p.property_account_position and p.property_account_position.id or False
             facture.update({'fiscal_position':fpos})
             invoice_id=obj_facture.create(cr,uid,facture)
-            tm= obj_produit.browse(cr,uid,prd_tm)
-            if donnee['hebergement']:
-                ligne_facture={'price_unit':donnee['hebergement'],'name':'Accommodation','invoice_id':invoice_id,'product_id':prd_heb,'account_id':obj_produit.browse(cr,uid,prd_heb).product_tmpl_id.property_account_income.id,'quantity':nbjour}
+
+            if donnee.hebergement:
+                if result['prd_heb']:
+                    ligne_facture={'price_unit':donnee.hebergement,'name':'Accommodation','invoice_id':invoice_id,'product_id':result['prd_heb'],'account_id':obj_produit.browse(cr,uid,result['prd_heb']).product_tmpl_id.property_account_income.id,'quantity':nbjour}
+                    obj_ligne_facture.create(cr,uid,ligne_facture)
+            if donnee.dependance:
+                if result['prd_dep']:
+                    ligne_facture={'price_unit':donnee.dependance,'name':'Dependence','invoice_id':invoice_id,'product_id':result['prd_dep'],'account_id':obj_produit.browse(cr,uid,result['prd_dep']).product_tmpl_id.property_account_income.id,'quantity':nbjour}
+                    obj_ligne_facture.create(cr,uid,ligne_facture)
+            if donnee.hospitalisation:
+                if result['prd_abh']:
+                    abh=obj_produit.read(cr,uid, result['prd_abh'])
+                    ligne_facture={'price_unit':abh['list_price'],'name':'Absences for hospitalization','invoice_id':invoice_id,'product_id':result['prd_abh'],'account_id':obj_produit.browse(cr,uid,result['prd_abh']).product_tmpl_id.property_account_income.id,'quantity':int(donnee.hospitalisation)}
+                    obj_ligne_facture.create(cr,uid,ligne_facture)
+            if donnee.absences:
+                if result['prd_abp']:
+                    abp=obj_produit.read(cr,uid,result['prd_abp'])
+                    ligne_facture={'price_unit':abp['list_price'],'name':'Absences for Personal Suitability','invoice_id':invoice_id,'product_id':result['prd_abp'],'account_id':obj_produit.browse(cr,uid,result['prd_abp']).product_tmpl_id.property_account_income.id,'quantity':int(donnee.absences)}
+                    obj_ligne_facture.create(cr,uid,ligne_facture)
+            if result['prd_tm']:
+                tm= obj_produit.browse(cr,uid,result['prd_tm'])
+                ligne_facture={'price_unit':donnee.ticketmoderateur,'name':tm.name,'invoice_id':invoice_id,'product_id':result['prd_tm'],'account_id':tm.product_tmpl_id.property_account_income.id,'quantity':nbjour}
                 obj_ligne_facture.create(cr,uid,ligne_facture)
-            if donnee['dependance']:
-                ligne_facture={'price_unit':donnee['dependance'],'name':'Dependence','invoice_id':invoice_id,'product_id':prd_dep,'account_id':obj_produit.browse(cr,uid,prd_dep).product_tmpl_id.property_account_income.id,'quantity':nbjour}
-                obj_ligne_facture.create(cr,uid,ligne_facture)
-            if donnee['hospitalisation']:
-                abh=obj_produit.read(cr,uid, prd_abh)
-                ligne_facture={'price_unit':abh['list_price'],'name':'Absences for hospitalization','invoice_id':invoice_id,'product_id':prd_abh,'account_id':obj_produit.browse(cr,uid,prd_abh).product_tmpl_id.property_account_income.id,'quantity':int(donnee['hospitalisation'])}
-                obj_ligne_facture.create(cr,uid,ligne_facture)
-            if donnee['absences']:
-                abp=obj_produit.read(cr,uid, prd_abp)
-                ligne_facture={'price_unit':abp['list_price'],'name':'Absences for Personal Suitability','invoice_id':invoice_id,'product_id':prd_abp,'account_id':obj_produit.browse(cr,uid,prd_abp).product_tmpl_id.property_account_income.id,'quantity':int(donnee['absences'])}
-                obj_ligne_facture.create(cr,uid,ligne_facture)
-            ligne_facture={'price_unit':donnee['ticketmoderateur'],'name':tm.name,'invoice_id':invoice_id,'product_id':prd_tm,'account_id':tm.product_tmpl_id.property_account_income.id,'quantity':nbjour}
-            obj_ligne_facture.create(cr,uid,ligne_facture)
         return 0
-
-
-
 
 
     def on_change_resident(self, cr, uid, ids, partner_id):
@@ -322,7 +305,7 @@ class health_facturation(osv.osv):
             return False
 
     _columns = {
-            'name':fields.many2one('health.patient', 'Resident',required=True),
+            'name':fields.many2one('health.patient', 'Resident',domain="[('category_id','=','Resident')]",required=True),
             'period_id':fields.many2one('account.period','Billing period',required=True),
             'chambre': fields.many2one('health.room', 'Rooms'),
             'hebergement': fields.float('Accommodation Rates'),
@@ -355,7 +338,7 @@ class health_aggir(osv.osv):
     _description = 'Aggir'
     _table = 'health_aggir'
     _columns = {
-        'name': fields.many2one('res.partner', 'Resident'),
+        'name': fields.many2one('res.partner', 'Resident',domain="[('category_id','=','Resident')]"),
         'coherence':fields.selection([('A','a'),('B','b'),('C','c')],
             'Coherence', readonly=False), # Utiliser pour le calcul de gir
         'orientation':fields.selection([('A','a'),('B','b'),('C','c')],
@@ -820,7 +803,7 @@ class health_prescription(osv.osv):
         'du': fields.date("from"),
         'au': fields.date("to"),
         'heure': fields.char("Time",size=5),
-        'prescripteur': fields.many2one('res.partner', 'Doctor'),
+        'prescripteur': fields.many2one('res.partner', 'Doctor', domain="[('category_id','=','MEDECINS')]"),
         'medicament':fields.many2one('health.drug','Medicaments'),
         'commentaire':fields.text('Comments'),
         'nbrprise':fields.char('Number per dose',size=8),
@@ -904,7 +887,7 @@ class health_absences(osv.osv):
         'categorie':fields.selection([('1','Hospitalization'),('2','Personal Suitability'),('3','Other')],'Category', readonly=False),
         'commentaire':fields.text('Comments'),
         'user_id': fields.many2one('res.users', 'For seizure'),
-        'partner_id': fields.many2one('res.partner', 'Resident'),
+        'partner_id': fields.many2one('res.partner', 'Resident',domain="[('category_id','=','Resident')]"),
         'nbrjour':fields.function(_compte_jour, method=True, string='Number of days',type='float'),
         'facture':fields.boolean('Billed'),
 
@@ -961,7 +944,7 @@ class health_patient(osv.osv):
         'ncpaiement': fields.char('Number Payment Center',size=256),
         'religion':fields.many2one('health.religion', 'Religion'),
         'situation':fields.many2one('health.situation', 'Family situation'),
-        'medecin':fields.many2one('res.partner', 'Doctor'),
+        'medecin':fields.many2one('res.partner', 'Doctor',domain="[('category_id','=','MEDECINS')]"),
         'prescriptions':fields.one2many('health.prescription','partner_id', 'prescriptions'),
         'absences':fields.one2many('health.absences','partner_id','Absences'),
         'care':fields.many2many('health.care','health_care_rel','name','soins','Care'),
@@ -969,16 +952,16 @@ class health_patient(osv.osv):
         'cmu':fields.boolean('CMU'),
         'livretremis':fields.boolean('Booklet Remis'),
         'note': fields.text('notes'),
-        'pharmacie':fields.many2one('res.partner', 'Pharmacy'),
-        'kine':fields.many2one('res.partner', 'Kine'),
-        'psy':fields.many2one('res.partner', 'psy'),
-        'ergo':fields.many2one('res.partner', 'Ergonomist'),
+        'pharmacie':fields.many2one('res.partner', 'Pharmacy',domain="[('category_id','=','PHARMACIES')]"),
+        'kine':fields.many2one('res.partner', 'Kine',domain="[('category_id','=','KINESITHERAPEUTES')]"),
+        'psy':fields.many2one('res.partner', 'psy',domain="[('category_id','=','PSYCHOLOGUES')]"),
+        'ergo':fields.many2one('res.partner', 'Ergonomist',domain="[('category_id','=','ERGONOMES')]"),
         'provenance':fields.char( 'Provenance',size=256),
-        'laboratoire':fields.many2one('res.partner', 'Laboratory'),
-        'hopital':fields.many2one('res.partner', 'Hopital'),
+        'laboratoire':fields.many2one('res.partner', 'Laboratory',domain="[('category_id','=','LABORATOIRES')]"),
+        'hopital':fields.many2one('res.partner', 'Hopital', domain="[('category_id','=','HOPITAUX')]"),
         'hospitalisation':fields.boolean('In Hospitalization'),
-        'hopitalant':fields.many2one('res.partner', 'Hopital Ant.'),
-        'ambulance':fields.many2one('res.partner', 'Ambulance'),
+        'hopitalant':fields.many2one('res.partner', 'Hopital Ant.',domain="[('category_id','=','HOPITAUX')]"),
+        'ambulance':fields.many2one('res.partner', 'Ambulance',domain="[('category_id','=','AMBULANCES')]"),
         'assure':fields.many2one('res.partner', 'Assuree'),
         'obseque':fields.char('Obseques',size=256),
         'obsinformations':fields.char('Informations', size=256),
@@ -992,34 +975,34 @@ class health_patient(osv.osv):
         'respcivil':fields.char('Civil Liability',size=256),
         'respdu': fields.date('from',size=32),
         'respau': fields.date('to',size=32),
-        'caisse':fields.many2one('res.partner', 'Fund'),
+        'caisse':fields.many2one('res.partner', 'Fund',domain="[('category_id','=','CAISSE PRIMAIRES')]"),
         'caissedu': fields.date('from',size=32),
         'caisseau': fields.date('to',size=32),
         'aldtaux':fields.float('RATE A.L.D'),
         'alddu': fields.date('from',size=32),
         'aldau': fields.date('to',size=32),
-        'mutuelle':fields.many2one('res.partner', 'Mutual'),
+        'mutuelle':fields.many2one('res.partner', 'Mutual',domain="[('category_id','=','MUTUELLES')]"),
         'mutndossier':fields.char('Nr File',size=64),
         'mutdu': fields.date('from',size=32),
         'mutau': fields.date('to',size=32),
-        'cmu':fields.many2one('res.partner', 'C.M.U'),
+        'cmu':fields.many2one('res.partner', 'C.M.U',domain="[('category_id','=','C.M.U.')]"),
         'cmundossier':fields.char('Nr File',size=64),
         'cmudu': fields.date('from',size=32),
         'cmuau': fields.date('to',size=32),
-        'aidesociale':fields.many2one('res.partner', 'Social Assistance'),
+        'aidesociale':fields.many2one('res.partner', 'Social Assistance', domain="[('category_id','=','AIDES SOCIALES')]"),
         'aidesocialendossier':fields.char('No Dossier',size=64),
         'aidesocialemontant': fields.float('amount'),
         'aidesocialedestinataire': fields.selection([('1','ehpad'),('2','Resident')],'Addressee'),
         'aidesocialedu': fields.date("from"),
         'regime':fields.many2one('health.regime', 'Regime'),
         'aidesocialeau': fields.date("to"),
-        'apa':fields.many2one('res.partner', 'APA'),
+        'apa':fields.many2one('res.partner', 'APA',domain="[('category_id','=','APA DEPARTEMENTS')]"),
         'apandossier':fields.char('Nr File',size=64),
         'apamontant': fields.float('amount'),
         'apadestinataire': fields.selection([('1','ehpad'),('2','Resident')],'Addressee'),
         'apadu': fields.date("from"),
         'apaau': fields.date("to"),
-        'aidelogement':fields.many2one('res.partner', 'Housing assistance'),
+        'aidelogement':fields.many2one('res.partner', 'Housing assistance',domain="[('category_id','=','AIDES LOGEMENT')]"),
         'aidelogementndossier':fields.char('File No.',size=64),
         'aidelogementmontant': fields.float('amount'),
         'aidelogementdestinataire': fields.selection([('1','ehpad'),('2','Resident')],'Addressee'),
@@ -1122,13 +1105,9 @@ class health_patient(osv.osv):
     def set_name(self, cr, uid, ids, nom,prenom, context={}):
         if nom:
             if prenom:
-                result = {'value': {
-                                    'name': nom.capitalize()+" "+prenom.capitalize(),}
-                    }
+                result = {'value': {'name': nom.capitalize()+" "+prenom.capitalize(),}}
             else:
-                result = {'value': {
-                                    'name': nom.capitalize(),}
-                                                }
+                result = {'value': {'name': nom.capitalize(),}}
         return result
 
 

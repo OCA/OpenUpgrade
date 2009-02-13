@@ -43,6 +43,7 @@ class regimecaisse(report_sxw.rml_parse):
         })
         self.context = context
         return None
+
     def _lines_resident(self,form):
             res = []
             regime_obj = self.pool.get('health.regime')
@@ -56,8 +57,8 @@ class regimecaisse(report_sxw.rml_parse):
                     for id in patient_ids:
                         resident_record=patient_obj.read(self.cr, self.uid,id)
                         res.append({'regime':"",'resident':resident_record['name'],'secu':resident_record['numerosecu'],'entree':resident_record['admission_date']})
-
             return res
+
     def _total(self):
         return self.total
 
