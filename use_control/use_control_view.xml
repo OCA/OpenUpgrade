@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <menuitem
+        id="menu_use"
+        name="On Demand Control"
+        parent="base.menu_administration"
+        sequence="0"/>
+
+    <record model="ir.ui.view" id="use_control_time_user_graph">
+        <field name="name">use.control.time.month.user.graph</field>
+        <field name="model">use.control.time.month.user</field>
+        <field name="type">graph</field>
+        <field name="arch" type="xml">
+            <graph string="Hours of Use">
+                <field name="date" operator="+"/>
+                <field name="duration" operator="+"/>
+            </graph>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="use_control_time_tree">
+        <field name="name">use.control.time.month.user.tree</field>
+        <field name="model">use.control.time.month.user</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Hours of Use">
+                <field name="date"/>
+                <field name="user_id"/>
+                <field name="duration"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_control_time_user_tree" model="ir.actions.act_window">
+        <field name="name">Hours per User</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">use.control.time.month.user</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,graph</field>
+    </record>
+    <menuitem
+        action="action_control_time_user_tree"
+        id="menu_control_time_user_tree"
+        parent="menu_use"/>
+
+
+    <record model="ir.ui.view" id="use_control_time_graph">
+        <field name="name">use.control.time.month.graph</field>
+        <field name="model">use.control.time.month</field>
+        <field name="type">graph</field>
+        <field name="arch" type="xml">
+            <graph string="Hours of Use">
+                <field name="date" operator="+"/>
+                <field name="duration" operator="+"/>
+            </graph>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="use_control_time_tree">
+        <field name="name">use.control.time.month.tree</field>
+        <field name="model">use.control.time.month</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Hours of Use">
+                <field name="date" operator="+"/>
+                <field name="duration" operator="+"/>
+            </tree>
+        </field>
+    </record>
+    <record id="action_control_time_tree" model="ir.actions.act_window">
+        <field name="name">Hours per Month</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">use.control.time.month</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,graph</field>
+    </record>
+    <menuitem action="action_control_time_tree"
+        id="menu_control_time_tree"
+        parent="menu_use"/>
+
+
+</data>
+</openerp>
