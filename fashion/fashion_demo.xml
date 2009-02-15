@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate="1">
+	
+	<!--
+		Charactrsitic Group
+	-->
+	
+	<record id="fashion_demo1" model="mrp.characteristic.group">
+		<field name="name">color</field>
+		<field name="axis">Y</field>
+	</record>
+	<record id="fashion_demo2" model="mrp.characteristic.group">
+		<field name="name">size</field>
+		<field name="axis">X</field>
+	</record>
+	<record id="fashion_demo3" model="mrp.characteristic.group">
+		<field name="name">diameter</field>
+		<field name="axis">X</field>
+	</record>
+	
+	<!--
+		Charactrsitic 
+	-->
+	
+	<record id="fashion_demo4" model="mrp.characteristic">
+		<field name="name">red</field>
+		<field name="group_id" ref="fashion_demo1"/>	
+	</record>	
+	<record id="fashion_demo5" model="mrp.characteristic">
+		<field name="name">blue</field>
+		<field name="group_id" ref="fashion_demo1"/>	
+	</record>	
+	<record id="fashion_demo6" model="mrp.characteristic">
+		<field name="name">grey</field>
+		<field name="group_id" ref="fashion_demo1"/>	
+	</record>	
+	<record id="fashion_demo7" model="mrp.characteristic">
+		<field name="name">XS</field>
+		<field name="group_id" ref="fashion_demo2"/>	
+	</record>
+	<record id="fashion_demo8" model="mrp.characteristic">
+		<field name="name">XL</field>
+		<field name="group_id" ref="fashion_demo2"/>	
+	</record>	
+	<record id="fashion_demo9" model="mrp.characteristic">
+		<field name="name">20mm</field>
+		<field name="group_id" ref="fashion_demo3"/>	
+	</record>	
+	<record id="fashion_demo10" model="mrp.characteristic">
+		<field name="name">15mm</field>
+		<field name="group_id" ref="fashion_demo3"/>	
+	</record>	
+	
+		#
+		# to do
+		#
+
+	<record id="fashion_demo11" model="product.product">
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="categ_id" ref="product.product_category_7"/>
+		<field name="name">shirt</field>
+	</record>
+
+	</data>
+</openerp>

@@ -37,17 +37,28 @@ class job(signal.signal):
         return True
 
     def action_pause(self,key,signal_data={},data={}):
+        import_job(None)    
+        for output in self.outputs:
+            output.action_pause(self)      
         self.status='pause'
         self.logger.notifyChannel("job", logger.LOG_INFO, 
-                     'the '+str(self)+' is pause now...')
-        #TODO : pause job process and also call pause action of components and trans.
+                     'the '+str(self)+' is pause now...')        
         return True
 
-    def action_stop(self,key,signal_data={},data={}):
+    def action_stop(self,key,signal_data={},data={}):                    
+        export_job(None)
+        for output in self.outputs:
+            output.action_stop(self)        
         self.status='stop'
         self.logger.notifyChannel("job", logger.LOG_INFO, 
-                     'the '+str(self)+' is stop now...')
-        #TODO : stop job process and also call stop action of components and trans.
+                     'the '+str(self)+' is stop now...')    
+        return True
+
+    def action_end(self,key,signal_data={},data={}):
+        self.status='end'
+        self.logger.notifyChannel("job", logger.LOG_INFO, 
+                     'the '+str(self)+' is end now...')              
+        
         return True
 
     def action_copy(self,key,signal_data={},data={}):
@@ -66,6 +77,7 @@ class job(signal.signal):
         self.signal_connect(self,'start',self.action_start)
         self.signal_connect(self,'pause',self.action_pause)
         self.signal_connect(self,'stop',self.action_stop)
+        self.signal_connect(self,'end',self.action_end)
         self.signal_connect(self,'copy',self.action_copy)
         self.logger = logger.logger()
     def __str__(self):     
@@ -84,9 +96,9 @@ class job(signal.signal):
         # run job process
         self.signal('start')
         for c in self.outputs:
-            for a in c.channel_get():
-                pass
-        self.signal('stop')
+            for a in c.channel_get():                
+                pass 
+        self.signal('end')
 
 
 

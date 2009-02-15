@@ -32,7 +32,7 @@
 			<td>
 				<select style="width: 290px;" name="type" id="type">
 					<option id="type" selected="true" value=""></option>
-                    <option id="view" value="view">Catogery</option>
+                    <option id="view" value="view">Category</option>
                     <option id="criterion" value="criterion" selected="true">Criterion</option>
                 </select>
 			</td>
@@ -42,7 +42,7 @@
 		<i style="color: red;">* Indicates required fields.</i>
 	</div>
 	
-	<div py:if="error" align="right">
+	<div py:if="error" id="error_box" align="right">
 		<div class="box2 message">
 			${error}
 		</div>

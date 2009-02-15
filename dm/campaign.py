@@ -165,14 +165,17 @@ class dm_overlay(osv.osv):
     _rec_name = 'trademark_id'
 
     def create(self,cr,uid,vals,context={}):
-        id = super(dm_overlay,self).create(cr,uid,vals,context)
-        data = self.browse(cr, uid, id)
-        overlay_country_ids = [country_ids.id for country_ids in data.country_ids]
-        dealer_country_ids = [country_ids.id for country_ids in data.dealer_id.country_ids]
-        for i in overlay_country_ids:
+        data = self.browse(cr, uid, [])
+        overlay_id = self.search(cr, uid, [('trademark_id','=',vals['trademark_id']), ('dealer_id','=',vals['dealer_id'])])
+        if overlay_id:
+            raise  osv.except_osv('Warning', "You cannot create an overlay for this particular trademark and dealer !")
+
+        dealer_obj = self.pool.get('res.partner').browse(cr, uid, [vals['dealer_id']])[0]
+        dealer_country_ids = [country_ids.id for country_ids in dealer_obj.country_ids]
+        for i in vals['country_ids'][0][-1]:
             if not i in dealer_country_ids:
-                raise  osv.except_osv('Warning', "This country is not allowed for %s" % (data.dealer_id.name,) )
-        return id
+                raise  osv.except_osv('Warning', "This country is not allowed for %s" % (dealer_obj.name,) )
+        return super(dm_overlay,self).create(cr,uid,vals,context)
 
     def _overlay_code(self, cr, uid, ids, name, args, context={}):
         result ={}
@@ -550,7 +553,6 @@ class dm_campaign(osv.osv):
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
-        res = super(dm_campaign,self).write(cr, uid, ids, vals, context)
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
         if not self.check_forbidden_country(cr, uid, camp.offer_id.id,camp.country_id.id):
             raise osv.except_osv("Error!!","You cannot use this offer in this country")        
@@ -558,50 +560,55 @@ class dm_campaign(osv.osv):
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
         if not camp.forwarding_charge:
             if camp.country_id.forwarding_charge:
-                self.write(cr, uid, camp.id, {'forwarding_charge':camp.country_id.forwarding_charge})
+                vals['forwarding_charge'] = camp.country_id.forwarding_charge
         
         if camp.country_id.payment_methods:
             payment_methods = [payment_methods.id for payment_methods in camp.country_id.payment_methods]
-            self.write(cr, uid, camp.id, {'payment_methods':[[6,0,payment_methods]]})
+            vals['payment_methods'] = [[6,0,payment_methods]]
             
         # Set campaign end date at one year after start date if end date does not exist
-        if ('date_start' in vals) and not ('date' in vals):
+        if 'date_start' in vals and vals['date_start']:
             time_format = "%Y-%m-%d"
             d = time.strptime(vals['date_start'],time_format)
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
-            super(osv.osv,self).write(cr, uid, camp.id, {'date':date_end})
+            vals['date'] = date_end
             if camp.project_id:
                 self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
 
-            """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
-            if not camp.trademark_id:
-                super(osv.osv, self).write(cr, uid, camp.id, {'trademark_id':offers.recommended_trademark.id})
+        """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
+        if (not camp.trademark_id) and camp.offer_id.recommended_trademark:
+            vals['trademark_id'] = camp.offer_id.recommended_trademark.id
 
-        # check if an overlay exists else create it
-        overlay_country_ids=[]
-        camp1 = self.browse(cr, uid, camp.id)
-        if camp1.trademark_id and camp1.dealer_id and camp1.country_id:
-            overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',camp1.trademark_id.id), ('dealer_id','=',camp1.dealer_id.id)])
-
-            for o_id in overlay:
-                browse_overlay = self.pool.get('dm.overlay').browse(cr, uid, o_id)
-                overlay_country_ids = [country_ids.id for country_ids in browse_overlay.country_ids]
-
-            if overlay and (camp1.country_id.id in overlay_country_ids):
-                super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay[0]}, context)  
-            elif overlay and not (camp1.country_id.id in overlay_country_ids):
-                overlay_country_ids.append(camp1.country_id.id)
-                self.pool.get('dm.overlay').write(cr, uid, browse_overlay.id, {'country_ids':[[6,0,overlay_country_ids]]}, context)
-                super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay[0]}, context)
-            else:
-                overlay_country_ids.append(camp1.country_id.id)
-                overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':camp1.trademark_id.id, 'dealer_id':camp1.dealer_id.id, 'country_ids':[[6,0,overlay_country_ids]]}, context)
-                super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay_ids1}, context)
+        if 'trademark_id' in vals and vals['trademark_id']:
+            trademark_id = vals['trademark_id']
         else:
-            super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':0}, context)
+            trademark_id = camp.trademark_id.id
+        if 'dealer_id' in vals and vals['dealer_id']:
+            dealer_id = vals['dealer_id']
+        else:
+            dealer_id = camp.dealer_id.id
+        if 'country_id' in vals and vals['country_id']:
+            country_id = vals['country_id']
+        else:
+            country_id = camp.country_id.id
             
-        return res
+#        check if an overlay exists else create it
+        overlay_country_ids=[]    
+        if trademark_id and dealer_id and country_id:
+            overlay_obj = self.pool.get('dm.overlay')
+            overlay_id = overlay_obj.search(cr, uid, [('trademark_id','=',trademark_id), ('dealer_id','=',dealer_id)])
+            if overlay_id :
+                browse_overlay = overlay_obj.browse(cr, uid, overlay_id)[0]
+                overlay_country_ids = [country_ids.id for country_ids in browse_overlay.country_ids]
+                vals['overlay_id']=overlay_id[0]
+                if not (country_id in overlay_country_ids):
+                    overlay_country_ids.append(country_id)
+                    overlay_obj.write(cr, uid, browse_overlay.id, {'country_ids':[[6,0,overlay_country_ids]]}, context)
+            else:
+                overlay_ids1 = overlay_obj.create(cr, uid, {'trademark_id':trademark_id, 'dealer_id':dealer_id, 'country_ids':[[6,0,[country_id]]]}, context)
+                vals['overlay_id'] = overlay_ids1
+        return super(dm_campaign,self).write(cr, uid, ids, vals, context)
     
     def create(self,cr,uid,vals,context={}):
 
@@ -672,7 +679,7 @@ class dm_campaign(osv.osv):
             else:
                 overlay_ids1 = overlay_obj.create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_ids':[[6,0,[data_cam1.country_id.id]]]}, context)
                 new_write_vals['overlay_id'] = overlay_ids1
-            super(osv.osv, self).write(cr, uid, data_cam1.id, new_write_vals, context)  
+            super(dm_campaign, self).write(cr, uid, data_cam1.id, new_write_vals, context)  
         return id_camp            
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
@@ -723,17 +730,17 @@ class dm_campaign_proposition(osv.osv):
         return value
 
     def write(self, cr, uid, ids, vals, context=None):
-        res = super(dm_campaign_proposition,self).write(cr, uid, ids, vals, context)
-        camp = self.pool.get('dm.campaign.proposition').browse(cr,uid,ids)[0]
-        c = camp.camp_id.id
-        id = self.pool.get('dm.campaign').browse(cr, uid, c)
-        if not camp.date_start:
-            super(osv.osv, self).write(cr, uid, camp.id, {'date_start':id.date_start})
-        return res
+        if 'camp_id' in vals and vals['camp_id']:
+            campaign = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
+            if campaign.date_start:
+                vals['date_start']=campaign.date_start
+            else:
+                vals['date_start'] = 0
+        return super(dm_campaign_proposition,self).write(cr, uid, ids, vals, context)
 
     def create(self,cr,uid,vals,context={}):
         id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
-        if not vals['date_start']:
+        if 'date_start' in vals and not vals['date_start']:
             if id.date_start:
                 vals['date_start']=id.date_start
         if 'forwarding_charge' not in vals:
@@ -1168,7 +1175,12 @@ class dm_campaign_purchase_line(osv.osv):
         for pline in plines:
             if pline.state == 'pending':
                 """if in a group, obj = 1st campaign of the group, if not it's the campaing"""
+                if not (pline.campaign_group_id or pline.campaign_id):
+                    raise  osv.except_osv('Warning', "There's no campaign or campaign group defined for this purchase line .")
+                
                 if pline.campaign_group_id:
+                    if not pline.campaign_group_id.campaign_ids:
+                        raise  osv.except_osv('Warning', "There's no campaign defined for the campaign group : %s" %(pline.campaign_group_id.name))
                     obj = pline.campaign_group_id.campaign_ids[0]
                     code = pline.campaign_group_id.code
                 else:
@@ -1756,7 +1768,7 @@ class dm_campaign_purchase_line(osv.osv):
 
                 else:
                     raise osv.except_osv('Warning', "The's no Product Category defined for this Purchase Line")
-
+        self.write(cr, uid, ids, {'state':'ordered'})
         return True
 
     def _default_date(self, cr, uid, context={}):

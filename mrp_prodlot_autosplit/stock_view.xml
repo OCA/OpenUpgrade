@@ -23,7 +23,8 @@
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_picking_out_form_unique_production_number">
+		<!-- -The following out going product editable grid can be useful, but it tends to break inheritance so we prefer disabling it ->
+		<!-- record model="ir.ui.view" id="view_picking_out_form_unique_production_number">
 			<field name="name">view.picking.out.form.unique_production_number
 			</field>
 			<field name="model">stock.picking</field>
@@ -43,6 +44,6 @@
 					</tree>
 				</xpath>
 			</field>
-		</record>
+		</record -->
 	</data>
 </openerp>

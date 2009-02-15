@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+    <!-- Présents -->
+	<report id="health_presence"
+			string="Present" model="health.patient" name="health.presence"
+			rml="health/report/presence.rml"
+            auto="True"
+            menu="True"/>
+
+	<wizard  id="wizard_health_presence_report" string="Present" model="health.patient"
+			name="health.presence.report"
+			keyword="client_print_multi"/>
+
+    <!--  ENTREE SORTIE -->
+	<report id="health_entreesortie" string="Entry Exit" model="health.patient"
+          	name="health.entreesortie"
+            rml="health/report/entresortie.rml"
+            auto="True"
+            menu="True"/>
+
+	<wizard  id="wizard_health_entreesortie_report"
+			string="Entry Exit"
+			model="health.patient"
+			name="health.entreesortie.report"
+			keyword="client_print_multi"/>
+
+        <!--  Mouvement semestriel -->
+	<report id="health_mouvementsemestriel" string="Semester Movement" model="health.patient"
+          	name="health.mouvementsemestriel"
+            rml="health/report/mouvementsemestriel.rml"
+            auto="True"
+            menu="True"/>
+
+	<wizard  id="wizard_health_mouvementsemestriel_report" string="Semester Movement" model="health.patient"
+			name="health.mouvementsemestriel.report"
+			keyword="client_print_multi"/>
+
+        <!--  ANNIVERSAIRES -->
+    <report id="health_anniversaire" string="Birthday" model="health.patient"
+          	name="health.anniversaire"
+            rml="health/report/anniversaire.rml"
+            auto="True"
+            menu="True"/>
+
+	<wizard  id="wizard_health_anniversaire_report"	string="Birthday" model="health.patient"
+			name="health.anniversaire.report"
+			keyword="client_print_multi"/>
+
+	  <!--  REGIMES-->
+	 <report id="health_regime" string="Fund Regime" model="health.patient"
+          	name="health.regimecaisse"
+            rml="health/report/regimecaisse.rml"
+            auto="True"
+            menu="True"/>
+
+	<wizard  id="wizard_health_regime_report" string="Fund Regime" model="health.patient"
+			name="health.regimecaisse.report"
+			keyword="client_print_multi"/>
+	</data>
+</openerp>

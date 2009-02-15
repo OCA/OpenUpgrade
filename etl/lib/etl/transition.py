@@ -48,7 +48,15 @@ class transition(signal.signal):
         self.status='stop'
         self.logger.notifyChannel("transition", logger.LOG_INFO, 
                      'the '+str(self)+' is stop now...')
-        return True    
+        return True 
+  
+    def action_end(self,key,signal_data={},data={}):
+        self.status='end'
+        self.logger.notifyChannel("transition", logger.LOG_INFO, 
+                     'the '+str(self)+' is end now...')
+        #self.source.action_end(self)
+        #self.destination.action_end(self)
+        return True     
 
     def __str__(self):
         return str(self.source)+' to '+str(self.destination)
@@ -62,13 +70,14 @@ class transition(signal.signal):
         self.channel_destination = channel_destination
         self.destination.trans_in.append((channel_destination,self))
         self.source.trans_out.append((channel_source,self))
-        self.status='open' # open,start,pause,stop,close 
-                           # open : active, start : in running, pause : pause, stop: stop, close : inactive
+        self.status='open' # open,start,pause,stop,end,close 
+                           # open : active, start : in running, pause : pause, stop: stop,end: end close : inactive
 
         self.logger = logger.logger()
         self.signal_connect(self,'start',self.action_start)
         self.signal_connect(self,'pause',self.action_pause)
         self.signal_connect(self,'stop',self.action_stop)
+        self.signal_connect(self,'end',self.action_end)
 
 
 

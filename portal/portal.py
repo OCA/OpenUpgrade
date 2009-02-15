@@ -170,7 +170,8 @@ class portal_portal(osv.osv):
             })
         ## add the rule_group to the user
         if model.rule_group_id:
-            portal.group_id.write(cr,uid,[portal.group_id.id],{'rule_groups': [(4,model.rule_group_id.id)]})
+            group_obj = self.pool.get('res.groups')
+            group_obj.write(cr,uid,[portal.group_id.id],{'rule_groups': [(4,model.rule_group_id.id)]})
         return action_id
 
 portal_portal()

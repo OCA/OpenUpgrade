@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -257,7 +257,8 @@ def _group_invoice(self, cr, uid, data, context):
                 'comment': "",
                 'payment_term':invoice.payment_term.id,
                 'date_invoice':date_inv or today_date,
-                'period_id':force_period or False
+                'period_id':force_period or False,
+                'fiscal_position': invoice.partner_id.property_account_position.id
             }
         inv_id = obj_inv.create(cr, uid, inv)
         for item in self.invoice_info:

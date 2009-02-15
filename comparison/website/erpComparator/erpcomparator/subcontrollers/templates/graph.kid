@@ -55,12 +55,12 @@
 					Analysis axis :
 				</td>
 				<td>
-					<select py:if="view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors">
+					<select py:if="view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors" class="factors">
 						<option>Summary</option>
 			        	<option py:for="s in parents" py:content="s['name']">${s['name']}</option>
 			        	<option py:for="c in all_child" selected="${tg.selector(view_name==c['name'])}">${c['name']}</option>
 			        </select>
-			        <select py:if="not view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors">
+			        <select py:if="not view_name" style="width: 500px; font-size: 12px; font-family: Verdana, Geneva, sans-serif; font-style: normal;" name="factors" id="factors" class="factors">
 						<option>Summary</option>
 			        	<option py:for="s in parents" py:content="s['name']">${s['name']}</option>
 			        	<option py:for="c in all_child" py:content="c['name']">${c['name']}</option>

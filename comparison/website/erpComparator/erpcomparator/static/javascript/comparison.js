@@ -59,21 +59,26 @@ function do_login(user_name, password) {
 	});
 }
 
-function register() {
+function register(msg) {
 	
-	params = {}
-	var req = Ajax.post('/login', params);
+	if('undefined' != typeof msg) {
+		var params = {}
+		params["msg"] = msg;
+	}
+	else {
+		var params = {}
+	}
+	var req = Ajax.post('/login/', params)
 	req.addCallback(function(xmlHttp) {
-		
-		var d = window.mbox.content;
-		d.innerHTML = xmlHttp.responseText;
-		
-		window.mbox.width = 400;
-        window.mbox.height = 250;
-        
-        window.mbox.onUpdate = add_new_user;
-		window.mbox.show();
-	});
+			var d = window.mbox.content;
+			d.innerHTML = xmlHttp.responseText;
+			
+			window.mbox.width = 400;
+	        window.mbox.height = 250;
+	        
+	        window.mbox.onUpdate = add_new_user;
+			window.mbox.show();
+			});
 }
 
 function add_new_user() {
@@ -139,11 +144,18 @@ function add_factor(id) {
 		var d = window.mbox.content;
 		d.innerHTML = xmlHttp.responseText;
 		
+		if(getElement('error_box') != null) {
+        	var msg = "You are not logged in..."
+        	register(msg);
+        }
+        
+        else {
 		window.mbox.width = 450;
         window.mbox.height = 300;
         
         window.mbox.onUpdate = add_new_factor;
 		window.mbox.show();
+        }
 	});
 }
 
@@ -211,11 +223,16 @@ function open_item_vote(id, header) {
 		var d = window.mbox.content;
 		d.innerHTML = xmlHttp.responseText;
 		
-		window.mbox.width = 650;
-        window.mbox.height = 500;
-        
-        window.mbox.onUpdate = item_vote;
-		window.mbox.show();
+        if(getElement('error_box') != null) {
+        	var msg = "You are not logged in..."
+        	register(msg);
+        }
+        else {
+        	window.mbox.width = 650;
+        	window.mbox.height = 500;
+        	window.mbox.onUpdate = item_vote;
+			window.mbox.show();
+        }
 	});
 }
 

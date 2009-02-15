@@ -31,7 +31,6 @@ import pooler
 import netsvc
 
 def _after_login(self, cr, uid, data, context):
-    print "After"
     user_pool = pooler.get_pool(cr.dbname).get('res.users')
     action_pool = pooler.get_pool(cr.dbname).get('personal.base.action.login')
     wizard_pool = pooler.get_pool(cr.dbname).get('ir.actions.wizard')

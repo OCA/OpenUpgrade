@@ -134,6 +134,7 @@ TreeGrid.prototype = {
             	var th = MochiKit.DOM.TH(null, header.code);
             	if (header.type == 'image') {
             		MochiKit.DOM.setNodeAttribute(th, 'width', '5px');
+            		MochiKit.DOM.setNodeAttribute(th, 'style', 'border-right: 2px solid #99CCCC;');
             	}
             	else if (header.name == 'ponderation') {
             		MochiKit.DOM.setNodeAttribute(th, 'width', '5px');
@@ -279,9 +280,18 @@ TreeNode.prototype = {
             
             var key = header.name;
             var value = this.record.items[key];
-            
             var td = MochiKit.DOM.TD({'class': header.type || null});
-            
+            if(key == 'name')
+            	MochiKit.DOM.setNodeAttribute(td, 'style', 'border-right: 2px solid #99CCCC;');
+            if(td.className == 'image') {
+            	if(key == 'show_graph' || key == 'decr') {
+            		MochiKit.DOM.setNodeAttribute(td, 'style', 'border-right: 2px solid #99CCCC;');	
+            	}
+            	
+            	MochiKit.DOM.setNodeAttribute(td,'width','2px');
+            }
+            if(td.className == 'url')
+            	MochiKit.DOM.setNodeAttribute(td,'width','3px');
             if (i == 0) { // first column
     
                 var tds = [];
@@ -396,9 +406,11 @@ TreeNode.prototype = {
 	                	}
 	                	
 	                	record.action = vals[1];
+	                	
 	                	t = vals[2];
 	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black;'}, value)];
-	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick': record.action, 'width' : 16, 'height' : 16}));
+	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick':record.action,'width' : 16, 'height' : 16}));
+	                    
 	                    td.style.background = background;
 	                    
                 	}
@@ -460,7 +472,6 @@ TreeNode.prototype = {
                     value.onclick = MochiKit.Base.bind(this.onButtonClick, this);
                 } 
             }
-			
             MochiKit.DOM.appendChildNodes(td, value);
 //            if (header.type == "image" || header.type == 'url') {
 //            	MochiKit.DOM.setNodeAttribute(td, 'width', '5px');

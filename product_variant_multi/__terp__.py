@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/Inventory Control",
-    "depends" : ["product"],
+    "depends" : ["base", "product", "sale", "mrp"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [

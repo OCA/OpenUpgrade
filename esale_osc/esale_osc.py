@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -98,7 +98,7 @@ class esale_osc_web(osv.osv):
                     category_pool.write(cr, uid, existing, value)
                 else:
                     category_pool.create(cr, uid, value)
-        return True 
+        return True
 
 esale_osc_web()
 
@@ -200,7 +200,8 @@ class esale_osc_saleorder(osv.osv):
                 'partner_order_id':addr['contact'],
                 'partner_shipping_id':addr['delivery'],
                 'pricelist_id': pricelist_id,
-                'order_line': order_lines
+                'order_line': order_lines,
+                'fiscal_position': order.partner_id.property_account_position.id
             })
             self.write(cr, uid, [order.id], {'state':'done', 'order_id': order_id})
             wf_service = netsvc.LocalService("workflow")

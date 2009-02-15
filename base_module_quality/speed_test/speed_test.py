@@ -62,7 +62,6 @@ This test checks the speed of the module. Note that at least 5 demo data is need
             list2 = []
             if size:
                 list = []
-
                 #we perform the operation twice, and count the number of queries in the second run. This allows to avoid the cache effect. (like translated terms that asks for more queries)
                 pool.get(obj).read(cr, uid, [ids[0]])
                 c = cr.count
@@ -83,7 +82,7 @@ This test checks the speed of the module. Note that at least 5 demo data is need
                     list = [obj, size, code_base_complexity, code_half_complexity, code_size_complexity, _("Warning! Not enough demo data")]
                     list2 = [obj, _("No enough data")]
                 else:
-                    if code_size_complexity <= (code_base_complexity + size):
+                    if code_size_complexity<=(code_base_complexity + size):
                         complexity = _("O(1)")
                         score += 1
                         list2 = [obj, _("Efficient")]
@@ -92,7 +91,6 @@ This test checks the speed of the module. Note that at least 5 demo data is need
                         list2 = [obj, _("Not Efficient")]
 
                     list = [obj, size, code_base_complexity, code_half_complexity, code_size_complexity, complexity]
-
             else:
                 list = [obj, size, "", "", "", _("Warning! Object has no demo data")]
                 list2 = [obj, _("No data")]

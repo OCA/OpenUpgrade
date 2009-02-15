@@ -95,11 +95,12 @@ class Comparison(controllers.Controller, TinyResource):
         res = proxy_item.read(item_ids, ['name', 'code', 'load_default'])
         
         titles = []
-        
+        ses_id = []
         for r in res:
             title = {}
             title['sel'] = False
             if selected_items:
+                ses_id = selected_items
                 item = {}
                 for s in selected_items:
                     if r['id'] == s:
@@ -122,7 +123,8 @@ class Comparison(controllers.Controller, TinyResource):
                 item['name'] = r['name']
                 item['code'] = r['code']
                 self.headers += [item]
-            
+                ses_id.append(r['id'])
+            cherrypy.session['selected_items'] = ses_id
             title['name'] = r['name']
             title['id'] = r['id']
             title['code'] = r['code']
@@ -134,7 +136,7 @@ class Comparison(controllers.Controller, TinyResource):
             if t['load'] or t['sel']:
                 sel_ids += [t['id']]
         
-        cherrypy.response.simple_cookie['selected_items'] = sel_ids
+#        cherrypy.response.simple_cookie['selected_items'] = sel_ids
         
         for field in self.headers:
             if field['name'] == 'name' or field['name'] == 'ponderation':
@@ -450,7 +452,7 @@ class Comparison(controllers.Controller, TinyResource):
                             item[r.get('item_id')[1]] = "No Vote"
                             
                         if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
-                            item[r.get('item_id')[1]] += '|' + "open_item_vote(id=%s, header='%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
+                            item[r.get('item_id')[1]] += '|' + "open_item_vote(%s, '%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
                         if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
                             item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
                         else:

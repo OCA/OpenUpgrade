@@ -118,8 +118,7 @@
 				the cells for which you don't know the exact answer.
 			</p>
 			<p style="text-align: justify; color: #252a28;">
-				To contact us, send an email to 
-				<a href="mailto:info@evaluation-matrix.com" class="a">info@evaluation-matrix.com.
+				To contact us, send an email to  <a href="mailto:info@evaluation-matrix.com" class="a">info@evaluation-matrix.com.
 				</a>
 			</p>
 			<p style="text-align: justify; color: #252a28;">

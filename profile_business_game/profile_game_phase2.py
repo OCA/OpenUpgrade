@@ -748,7 +748,8 @@ class profile_game_phase_two(osv.osv):
                         'partner_order_id': partner_addr['contact'],
                         'partner_shipping_id': partner_addr['delivery'],
                         'order_policy': 'postpaid',
-                        'date_order':od
+                        'date_order':od,
+                        'fiscal_position': fpos_id
                     }
                 new_id = self.pool.get('sale.order').create(cr, uid, vals)
                 for j in range(0,random.randrange(1,5)):

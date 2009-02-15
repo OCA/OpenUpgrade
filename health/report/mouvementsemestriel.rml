@@ -1,0 +1,202 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="14.0" y1="28.0" width="567" height="786"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#e6e6e6" start="0,1" stop="0,1"/>
+      <blockBackground colorName="#e6e6e6" start="0,2" stop="0,2"/>
+      <blockBackground colorName="#e6e6e6" start="0,3" stop="0,3"/>
+      <blockBackground colorName="#e6e6e6" start="0,4" stop="0,4"/>
+      <blockBackground colorName="#e6e6e6" start="0,5" stop="0,5"/>
+      <blockBackground colorName="#e6e6e6" start="0,6" stop="0,6"/>
+      <blockBackground colorName="#e6e6e6" start="0,7" stop="0,7"/>
+      <blockBackground colorName="#e6e6e6" start="0,8" stop="0,8"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="18.0" leading="22" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" fontName="Times-Roman" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P11" fontName="Times-Roman" alignment="LEFT"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P13" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P14" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P15" fontName="Times-Roman" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P16" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P17" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P18" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P19" fontName="Times-Roman" fontSize="6.0" leading="8" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P20" fontName="Times-Roman" fontSize="14.0" leading="17" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P21" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Bloc de tableau" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="6.0"/>
+  </stylesheet>
+  <story>
+    <blockTable colWidths="567.0" repeatRows="1" style="Tableau4">
+      <tr>
+        <td>
+          <para style="P5">
+            <font face="Times-Roman">[[ company.name ]] </font>
+            <font face="Times-Roman" size="8.0">[[ def_semestre(data['form'])]]</font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P4">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="567.0" repeatRows="1" style="Tableau3">
+      <tr>
+        <td>
+          <para style="P11">Fund PIVOT : 1811 : CPAM FROM TARN </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P6">Company name : [[ company.name ]] </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P6">Category: 200 Legal Status: 61 Method of Fixing Rate: 07</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P11">Discipline benefits: Section 368 of medical treatment:</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P6">FINESS No.: 81 000 380 Key: 6</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P6">Total number of beds allowed covered by Health Insurance: 119</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P5"><font face="Times-Roman"/>section which reads in medical treatment</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P11">Amount of annual global package:</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P6">Aggregate amount of installments paid:</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">Table biannual</para>
+    <blockTable colWidths="567.0" repeatRows="1" style="Tableau2">
+      <tr>
+        <td>
+          <para style="P2">From [[ data['form']['du'] ]] To [[ data['form']['au'] ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <section>
+      <para style="P20">
+        <font color="white"> </font>
+      </para>
+      <blockTable colWidths="123.0,104.0,118.0,59.0,53.0,109.0" repeatRows="1" style="Table1">
+        <tr>
+          <td>
+            <para style="P3">Name</para>
+          </td>
+          <td>
+            <para style="P12">Registration No.</para>
+          </td>
+          <td>
+            <para style="P12">Organization name</para>
+          </td>
+          <td>
+            <para style="P12">Entry</para>
+          </td>
+          <td>
+            <para style="P12">Release</para>
+          </td>
+          <td>
+            <para style="P3">Absences</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P14">[[ repeatIn(mouvements(data['form']),'lignes') ]]</para>
+            <para style="P8">[[ lignes['name'] ]]</para>
+          </td>
+          <td>
+            <para style="P9">[[ lignes['nsecu'] ]]</para>
+          </td>
+          <td>
+            <para style="P9">[[ lignes['caisse'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['entree'] ]]</para>
+          </td>
+          <td>
+            <para style="P9">[[ lignes['sortie'] ]]</para>
+          </td>
+          <td>
+            <para style="P7">[[ lignes['absences'] ]]</para>
+            <para style="P10">
+              <font color="white"> </font>
+            </para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P19">
+        <font color="white"> </font>
+      </para>
+      <para style="P19">
+        <font color="white"> </font>
+      </para>
+    </section>
+  </story>
+</document>
+

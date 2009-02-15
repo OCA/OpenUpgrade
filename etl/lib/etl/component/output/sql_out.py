@@ -45,11 +45,11 @@ class sql_out(component.component):
         self.sqltable=sqltable    
         self.row_limit=row_limit 
         self.row_count=0                                
-         
+        self.connector=False 
 
     def action_end(self,key,singal_data={},data={}):        
         super(sql_out, self).action_end(key,singal_data,data)        
-        if self.sqlconnector:    
+        if self.sqlconnector:             
              self.sqlconnector.close()        
 
     def process(self):  
@@ -63,10 +63,18 @@ class sql_out(component.component):
                             self.connector=self.sqlconnector.open()
                         if self.transformer:
                             d=self.transformer.transform(d)
-                        insert_query=' INSERT into %s (%s) VALUES (%s)' % (self.sqltable,','.join(d.keys()),','.join(d.values()))
-                        self.connector.cursor.execute(insert_query)                      
-                        
+                        insert_query=" INSERT into %s (%s) VALUES (%s)" % (self.sqltable,','.join(d.keys()),','.join(map(lambda x:(type(x) in (int,long,float,complex)) and x or repr(str(x)),d.values())))                        
+                        cr=self.connector.cursor()
+                        cr.execute(insert_query)                     
+                        self.connector.commit()                       
                         yield d, 'main'
-                    except Exception,e:  
-                        print e
+                    except IOError,e:                          
                         self.action_error(e)
+if __name__ == '__main__':    
+    from etl_test import etl_test
+    import etl
+    sql_conn=etl.connector.sql_connector.sql_connector('localhost',5432, 'dms_20090204', 'postgres', 'postgres')
+    test=etl_test.etl_component_test(sql_out('test',sql_conn,'res_partner'))
+    test.check_input({'main':[{'name':'OpenERP11'},{'name':'Fabien11'}]})
+    test.check_output([{'name':'OpenERP11'},{'name':'Fabien11'}],'main')
+    res=test.output()
