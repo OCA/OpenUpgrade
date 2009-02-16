@@ -37,19 +37,6 @@ class use_control_time(osv.osv):
         return True
     def unlink(self, cr, uid, ids, context={}):
         return True
-    def get(self, cr, uid, date):
-        # TODO: compute real data
-        return {
-            'details': [
-                {'user':'Administrator', 'duration': 12}
-            ],
-            'modules': [
-                'base', 'sale'
-            ],
-            'latest_connection': '2009-01-01 12:30:01',
-            'space': 123,
-            'hours': 12,
-        }
 use_control_time()
 
 class use_control_time_month_user(osv.osv):
@@ -101,20 +88,4 @@ class use_control_time_month(osv.osv):
                     to_char(date, 'YYYY-MM-01')
             )""")
 use_control_time_month()
-
-def check(chk_fnct):
-    data = {}
-    def check_one(db, uid, passwd):
-        data.setdefault(db, {})
-        if (uid not in data) or (data[uid]<time.time()):
-            data[uid] = time.time() + 3600
-            cr = pooler.get_db(db).cursor()
-            cr.execute('insert into use_control_time (user_id, date, duration) values (%s,%s,%s)', (int(uid), time.strftime('%Y-%m-%d %H:%M:%S'), 1.0))
-            cr.commit()
-            cr.close()
-        return chk_fnct(db, uid, passwd)
-    return check_one
-
-from service import security
-security.check = check(security.check)
 

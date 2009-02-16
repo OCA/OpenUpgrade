@@ -27,7 +27,7 @@
             <tree string="Hours of Use">
                 <field name="date"/>
                 <field name="user_id"/>
-                <field name="duration"/>
+                <field name="duration" sum="Total Hours"/>
             </tree>
         </field>
     </record>
@@ -61,8 +61,8 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Hours of Use">
-                <field name="date" operator="+"/>
-                <field name="duration" operator="+"/>
+                <field name="date"/>
+                <field name="duration" sum="Total Hours"/>
             </tree>
         </field>
     </record>
