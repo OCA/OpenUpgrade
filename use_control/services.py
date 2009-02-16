@@ -1,5 +1,6 @@
 import pooler
 import time
+import netsvc
 
 ##############################################################################
 # Service to record use of the database

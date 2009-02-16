@@ -13,13 +13,25 @@
         <field name="model">use.control.time.month.user</field>
         <field name="type">graph</field>
         <field name="arch" type="xml">
-            <graph string="Hours of Use">
-                <field name="date" operator="+"/>
-                <field name="duration" operator="+"/>
+            <graph string="Hours of Use" type="bar">
+                <field name="user_id" operator="+"/>
+                <field name="duration" operator="+" widget="float_time"/>
             </graph>
         </field>
     </record>
-    <record model="ir.ui.view" id="use_control_time_tree">
+    <record model="ir.ui.view" id="use_control_time_user_form">
+        <field name="name">use.control.time.month.user.form</field>
+        <field name="model">use.control.time.month.user</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Hours of Use">
+                <field name="date" select="1"/>
+                <field name="user_id" select="1"/>
+                <field name="duration" widget="float_time"/>
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="use_control_time_user_tree">
         <field name="name">use.control.time.month.user.tree</field>
         <field name="model">use.control.time.month.user</field>
         <field name="type">tree</field>
@@ -27,7 +39,7 @@
             <tree string="Hours of Use">
                 <field name="date"/>
                 <field name="user_id"/>
-                <field name="duration" sum="Total Hours"/>
+                <field name="duration" sum="Total Hours" widget="float_time"/>
             </tree>
         </field>
     </record>
@@ -36,7 +48,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">use.control.time.month.user</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,graph</field>
+        <field name="view_mode">graph,tree</field>
     </record>
     <menuitem
         action="action_control_time_user_tree"
@@ -49,9 +61,9 @@
         <field name="model">use.control.time.month</field>
         <field name="type">graph</field>
         <field name="arch" type="xml">
-            <graph string="Hours of Use">
+            <graph string="Hours of Use" type="bar">
                 <field name="date" operator="+"/>
-                <field name="duration" operator="+"/>
+                <field name="duration" operator="+" widget="float_time"/>
             </graph>
         </field>
     </record>
@@ -61,8 +73,8 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Hours of Use">
-                <field name="date"/>
-                <field name="duration" sum="Total Hours"/>
+                <field name="date" select="1"/>
+                <field name="duration" sum="Total Hours" widget="float_time"/>
             </tree>
         </field>
     </record>
@@ -71,7 +83,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">use.control.time.month</field>
         <field name="view_type">form</field>
-        <field name="view_mode">tree,graph</field>
+        <field name="view_mode">graph,tree</field>
     </record>
     <menuitem action="action_control_time_tree"
         id="menu_control_time_tree"
