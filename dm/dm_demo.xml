@@ -167,6 +167,40 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
         </record>
     </data>
 
+    <data noupdate="1">
+        <record id="dm_offer_openerpondemandfreetrial2010" model="dm.offer">
+            <field eval="&quot;&quot;&quot;ODFREETRIAL10&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;OnDemand offer trial 2010&quot;&quot;&quot;" name="keywords"/>
+            <field eval="&quot;&quot;&quot;new&quot;&quot;&quot;" name="preoffer_type"/>
+            <field name="copywriter_id" ref="base.main_partner"/>
+            <field eval="[(6,0,[])]" name="forbidden_state_ids"/>
+            <field eval="[(6,0,[ref('dm_offer_category_ondemandoffer0')])]" name="category_ids"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;6.5&quot;&quot;&quot;" name="quotation"/>
+            <field eval="&quot;&quot;&quot;new&quot;&quot;&quot;" name="type"/>
+            <field eval="1" name="active"/>
+            <field eval="1.00" name="version"/>
+            <field eval="&quot;&quot;&quot;validated&quot;&quot;&quot;" name="legal_state"/>
+            <field name="offer_responsible_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;OpenERP OnDemand Free Trial 2010&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;This is a demo offer about a 1 month free trial on several OnDemand offersfor the year 2010.&quot;&quot;&quot;" name="notes"/>
+            <field eval="[(6,0,[ref('base.fj')])]" name="forbidden_country_ids"/>
+        </record>
+        <record id="dm_offer_step_smforopenerpondemandfreetrial2010" model="dm.offer.step">
+            <field eval="0" name="floating date"/>
+            <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+            <field eval="0" name="mailing_at_dates"/>
+            <field eval="&quot;&quot;&quot;Propose a 1 month free trial for an OnDemand offer 2010&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+            <field name="media_id" ref="dm.media_email"/>
+            <field eval="&quot;&quot;&quot;
+The Starting Mailing proposes to the prospect to subscribe for a 1 month free trial for an OnDemand offer2010.&quot;&quot;&quot;" name="desc"/>
+            <field name="type" ref="dm.dm_offer_step_type_startingmailing0"/>
+            <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2010"/>
+            <field eval="0" name="interactive"/>
+        </record>
+    </data>
+
     <!-- Trademark -->
 
     <data noupdate="1">
@@ -332,7 +366,7 @@ rkJggg==
         </record>
     </data>
     <data noupdate="1">
-        <record id="dm.dm_offer_openerpondemandfreetrial2009" model="dm.offer">
+        <record id="dm.dm_offer_openerpondemandfreetrial2010" model="dm.offer">
             <field name="recommended_trademark" ref="dm_trademark_openerp0"/>
         </record>
     </data>
@@ -1959,4 +1993,60 @@ rkJggg==
         </record>
 	</data>
 
+	<!-- Customer Orders -->
+	<data noupdate="1">
+		<record id="dm_customer_order_so0" model="dm.customer.order">
+			<field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2010"/>
+			<field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="order_policy"/>
+			<field eval="&quot;&quot;&quot;order&quot;&quot;&quot;" name="invoice_quantity"/>
+			<field eval="time.strftime('%Y-%m-21')" name="date_order"/>
+			<field name="partner_id" ref="dm.dm_customer_1"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field eval="&quot;&quot;&quot;one&quot;&quot;&quot;" name="picking_policy"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field name="pricelist_id" ref="product.list0"/>
+			<field name="customer_id" ref="dm.dm_customer_1"/>
+			<field name="partner_order_id" ref="dm.res_partner_address_dm_customer_1"/>
+			<field name="partner_invoice_id" ref="dm.res_partner_address_dm_customer_1"/>
+			<field eval="&quot;&quot;&quot;SO006&quot;&quot;&quot;" name="name"/>
+			<field name="partner_shipping_id" ref="dm.res_partner_address_dm_customer_1"/>
+			<field name="shop_id" ref="dm.shop1"/>
+		</record>
+
+		<record id="dm_customer_order_so1" model="dm.customer.order">
+			<field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2010"/>
+			<field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="order_policy"/>
+			<field eval="&quot;&quot;&quot;order&quot;&quot;&quot;" name="invoice_quantity"/>
+			<field eval="time.strftime('%Y-%m-12')" name="date_order"/>
+			<field name="partner_id" ref="dm.dm_customer_2"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field eval="&quot;&quot;&quot;one&quot;&quot;&quot;" name="picking_policy"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field name="pricelist_id" ref="product.list0"/>
+			<field name="customer_id" ref="dm.dm_customer_2"/>
+			<field name="partner_order_id" ref="dm.res_partner_address_dm_customer_2"/>
+			<field name="partner_invoice_id" ref="dm.res_partner_address_dm_customer_2"/>
+			<field eval="&quot;&quot;&quot;SO007&quot;&quot;&quot;" name="name"/>
+			<field name="partner_shipping_id" ref="dm.res_partner_address_dm_customer_2"/>
+			<field name="shop_id" ref="dm.shop1"/>
+		</record>
+
+		<record id="dm_customer_order_so2" model="dm.customer.order">
+			<field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2010"/>
+			<field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="order_policy"/>
+			<field eval="&quot;&quot;&quot;order&quot;&quot;&quot;" name="invoice_quantity"/>
+			<field eval="time.strftime('%Y-%m-08')" name="date_order"/>
+			<field name="partner_id" ref="dm.dm_customer_2"/>
+			<field name="user_id" ref="base.user_root"/>
+			<field eval="&quot;&quot;&quot;one&quot;&quot;&quot;" name="picking_policy"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field name="pricelist_id" ref="product.list0"/>
+			<field name="customer_id" ref="dm.dm_customer_0"/>
+			<field name="partner_order_id" ref="dm.res_partner_address_dm_customer_0"/>
+			<field name="partner_invoice_id" ref="dm.res_partner_address_dm_customer_0"/>
+			<field eval="&quot;&quot;&quot;SO008&quot;&quot;&quot;" name="name"/>
+			<field name="partner_shipping_id" ref="dm.res_partner_address_dm_customer_0"/>
+			<field name="shop_id" ref="dm.shop1"/>
+		</record>
+	</data>
 </openerp>

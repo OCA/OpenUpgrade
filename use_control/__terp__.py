@@ -20,20 +20,21 @@
 #
 ##############################################################################
 {
-    "name":"Indian Accounting",
-    "version":"1.0",
-    "author":"Tiny",
-    "category":"Profile",
-    "depends":[
-        "l10n_chart_in",
-        "account_india_ledger",
-        "account_indian_report",
-        "account_voucher"
+    "name" : "On Demand Open Object - Subscription Control",
+    "version" : "1.0",
+    "author" : "Tiny",
+    "category" : "Tools",
+    "description": """
+This module provides reports to control your on demand subscription.
+You can not uninstall or delete it.
+""",
+    "website": "http://openerp.com",
+    "depends" : ["base"],
+    "init_xml" : [],
+    "update_xml" : [
+        "use_control_view.xml",
     ],
-    "demo_xml":[],
-    "update_xml":[],
-    "active":False,
-    "installable":True,
+    "demo_xml" : [],
+    "installable": True,
+    "active" : True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
