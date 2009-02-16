@@ -74,7 +74,9 @@ class report_trial_balance(report_sxw.rml_parse):
         if ((self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['debit']+self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['debit']) - (self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['credit']+self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['credit'])) > 0:            
             self.sum_cl_bal_dr=(self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['debit']+self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['debit']) - (self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['credit']+self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['credit'])
         else:  
-            self.sum_cl_bal_cr=((self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['debit']+self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['debit']) - (self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['credit']+self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['credit']))*-1
+            self.sum_cl_bal_cr=((self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['debit']+self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['debit']) - (self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['credit']+self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['credit']))
+            if self.sum_cl_bal_cr < 0.0:
+                self.sum_cl_bal_cr *= -1
         res['debit']=self.sum_cl_bal_dr
         res['credit']=self.sum_cl_bal_cr
         return res
@@ -126,7 +128,7 @@ class report_trial_balance(report_sxw.rml_parse):
         res['credit']=op_credit1
         return res
     
-    def get_lines(self, form, ids={}, done=None, level=1):
+    def get_lines(self, form, ids={}, done=None):#, level=1):
         comp_ids=[]
         child_ids=pooler.get_pool(self.cr.dbname).get('res.company')._get_company_children(self.cr, self.uid,form['company_id'])
         if child_ids:
@@ -170,7 +172,7 @@ class report_trial_balance(report_sxw.rml_parse):
             res = {
                 'code': account.code,
                 'name': account.name,
-                'level': level,
+                'level': account.level,
                 'o_debit':  self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['debit'],
                 'o_credit': self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['credit'],
                 't_debit':  self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['debit'],
@@ -183,11 +185,11 @@ class report_trial_balance(report_sxw.rml_parse):
                 res['child']='1'
             else:
                 res['child']='0'
-            if account.parent_id:
-                for r in result:
-                    if r['name']== account.parent_id.name:
-                        res['level'] = r['level'] + 1
-                        break
+#            if account.parent_id:
+#                for r in result:
+#                    if r['name']== account.parent_id.name:
+#                        res['level'] = r['level'] + 1
+#                        break
             self.sum_debit += res['o_debit']
             self.sum_credit += res['o_credit']
             self._sum_tra_debit += res['t_debit']
