@@ -624,15 +624,17 @@
 
                     <notebook colspan="4">
                         <page string="General">
-                            <field name="limit" />
+                            <!--<field name="limit" />-->
                             <separator string="Location" colspan="4" />
                             <field name="place" />
                             <field name="room" />
                             <field name="layout" />
                             <field name="reserved" />
+                            <!--
                             <separator string="Supports" colspan="4" />
                             <field name="copies" />
                             <field name="printed" />
+                            -->
                             <separator string="Supplier Commands" colspan="4" />
                             <field name="purchase_line_ids" nolabel="1" colspan="4">
                                 <form string="Command">

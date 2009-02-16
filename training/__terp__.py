@@ -31,7 +31,7 @@
         'base_contact_team',
         'base_iban',
         'product',
-        'mrp'
+        'mrp',
     ],
     'init_xml' : [
         'training_sequence.xml'

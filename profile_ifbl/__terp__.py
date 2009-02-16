@@ -23,15 +23,25 @@
 {
     'name' : 'IFBL Profile',
     'author' : 'Tiny SPRL',
-    'version' : '0.0.1',
+    'version' : '0.0.2',
     'website' : 'http://www.openerp.com',
     'description' : 'IFBL Profile',
     'category' : 'Profile',
-    'depends' : ['training', 'crm', 'project', 'account_analytic_analysis', 'document'],
+    'depends' : [
+        'training',
+        'crm',
+        'project',
+        'account_analytic_analysis',
+        'document',
+        'portal'
+    ],
     'init_xml' : [],
-    'update_xml' : ['document_view.xml', 'base_contact_team_view.xml'],
+    'update_xml' : [
+        'document_view.xml',
+        'base_contact_team_view.xml'
+    ],
     'demo_xml' : [],
-    'installable' : True, 
+    'installable' : True,
     'active' : False,
 }
 

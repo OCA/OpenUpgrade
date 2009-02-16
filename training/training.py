@@ -47,7 +47,7 @@ training_course_category()
 
 class training_course_type(osv.osv):
     _name = 'training.course_type'
-    
+
     _columns = {
         'name' : fields.char('Name', size=32, required=True, select=1),
         'objective' : fields.text('Objective'),
@@ -55,12 +55,8 @@ class training_course_type(osv.osv):
         'min_limit' : fields.integer('Minimum Limit', required=True, select=2),
         'max_limit' : fields.integer('Maximum Limit', required=True, select=2),
     }
-    
-training_course_type()
 
-class training_offer(osv.osv):
-    _name = 'training.offer'
-training_offer()
+training_course_type()
 
 class training_course(osv.osv):
     _name = 'training.course'
@@ -75,6 +71,10 @@ class training_course_purchase_line(osv.osv):
         'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
     }
 training_course_purchase_line()
+
+class training_offer(osv.osv):
+    _name = 'training.offer'
+training_offer()
 
 class training_course(osv.osv):
     _name = 'training.course'
@@ -127,20 +127,21 @@ training_questionnaire()
 class training_offer(osv.osv):
     _name = 'training.offer'
     _columns = {
-        'name' : fields.char('Name', size=64, select=True, required=True ),
-        'product_id' : fields.many2one( 'product.product', 'Product' ),
-        'course_ids' : fields.many2many( 
-            'training.course', 'training_course_offer_rel', 
-            'offer_id', 'course_id', 
-            'Courses' 
-        ),
+        'name' : fields.char('Name', size=64, select=True, required=True),
+        'product_id' : fields.many2one('product.product', 'Product'),
+        'course_ids' : fields.many2many('training.course',
+                                        'training_course_offer_rel',
+                                        'offer_id',
+                                        'course_id',
+                                        'Courses'
+                                       ),
         'objective' : fields.text('Objective'),
         'description' : fields.text('Description'),
-        'questionnaire_ids' : fields.many2many(
-            'training.questionnaire', 'training_questionnaire_offer_rel', 
-            'offer_id', 'questionnaire_id', 
-            'Exams'
-        ),
+        'questionnaire_ids' : fields.many2many('training.questionnaire',
+                                               'training_questionnaire_offer_rel',
+                                               'offer_id',
+                                               'questionnaire_id',
+                                               'Exams'),
     }
 training_offer()
 
@@ -170,11 +171,12 @@ class training_question(osv.osv):
         'response_yesno' : fields.boolean('Response Yes/No'),
         'examen_answer_ids' : fields.one2many('training.examen_answer', 'question_id', 'Response QCM'),
         'questionnaire_ids': fields.many2many('training.questionnaire',
-                                              'training_questionnaire_question_rel', 
+                                              'training_questionnaire_question_rel',
                                               'question_id',
-                                              'questionnaire_id', 
+                                              'questionnaire_id',
                                               'Questionnaire'),
     }
+
     _defaults = {
         'kind' : lambda *a: 'normal',
         'type' : lambda *a: 'plain',
@@ -189,11 +191,14 @@ class training_questionnaire(osv.osv):
     _columns = {
         'name' : fields.char( 'Name', size=32, required=True ),
         'course_id' : fields.many2one('training.course', 'Course'),
-        'state' : fields.selection([('draft', 'Draft'),('mature', 'Mature'),('deprecated', 'Deprecated')], 'State', required=True),
+        'state' : fields.selection([('draft', 'Draft'),
+                                    ('mature', 'Mature'),
+                                    ('deprecated', 'Deprecated')], 
+                                   'State', required=True),
         'objective' : fields.text('Objective'),
         'description' : fields.text('Description'),
         'question_ids' : fields.many2many('training.question',
-                                          'training_questionnaire_question_rel', 
+                                          'training_questionnaire_question_rel',
                                           'questionnaire_id',
                                           'question_id', 'Questions'),
     }
@@ -211,7 +216,10 @@ class training_catalog(osv.osv):
         'year' : fields.integer('Year', size=4, required=True, select=True),
         'session_ids' : fields.one2many('training.session', 'catalog_id', 'Sessions'),
         'note' : fields.text('Note'),
-        'state' : fields.selection([('draft','Draft'),('in_progress', 'In Progress'),('done','Done')], 'State', required=True),
+        'state' : fields.selection([('draft','Draft'),
+                                    ('in_progress', 'In Progress'),
+                                    ('done','Done')], 
+                                   'State', required=True),
     }
 
     _defaults = {
@@ -225,39 +233,25 @@ class training_event(osv.osv):
     _name = 'training.event'
 training_event()
 
-
-class training_session(osv.osv):
-    _name = 'training.session'
-training_session()
-
-class training_session_purchase_line(osv.osv):
-    _name = 'training.session.purchase_line'
-
-    _columns = {
-        'session_id' : fields.many2one('training.session', 'Session', required=True),
-        'product_id' : fields.many2one('product.product', 'Product', required=True),
-        'quantity' : fields.integer('Quantity', required=True),
-        'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
-    }
-
-training_session_purchase_line()
-
 class training_session(osv.osv):
     _name = 'training.session'
     _columns = {
         'name' : fields.char('Name', size=64, required=True, select=True),
-        'state' : 
-            fields.selection([ 
-                ('draft', 'Draft'), 
-                ('confirm', 'Confirm'), 
-                ('cancel', 'Cancel')], 
-                'State', 
-                required=True, 
-                select=True
-            ),
+        'state' : fields.selection([('draft', 'Draft'),
+                                    ('confirm', 'Confirm'),
+                                    ('cancel', 'Cancel')],
+                                   'State',
+                                   required=True,
+                                   select=True
+                                  ),
         'offer_id' : fields.many2one('training.offer', 'Offer', select=True, required=True),
         'catalog_id' : fields.many2one('training.catalog', 'Catalog', select=True),
-        'event_ids' : fields.many2many('training.event', 'training_session_event_rel', 'session_id', 'event_id', 'Events', ondelete='cascade'),
+        'event_ids' : fields.many2many('training.event',
+                                       'training_session_event_rel',
+                                       'session_id',
+                                       'event_id',
+                                       'Events',
+                                       ondelete='cascade'),
         'date' : fields.datetime('Date', required=True),
         'purchase_line_ids' : fields.one2many('training.session.purchase_line', 'session_id', 'Supplier Commands'),
     }
@@ -277,6 +271,18 @@ class training_session(osv.osv):
     }
 
 training_session()
+
+class training_session_purchase_line(osv.osv):
+    _name = 'training.session.purchase_line'
+
+    _columns = {
+        'session_id' : fields.many2one('training.session', 'Session', required=True),
+        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'quantity' : fields.integer('Quantity', required=True),
+        'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
+    }
+
+training_session_purchase_line()
 
 class training_massive_subscription_wizard(osv.osv_memory):
     _name = 'wizard.training.massive.subscription'
@@ -372,24 +378,6 @@ class training_plannified_examen(osv.osv):
 
 training_plannified_examen()
 
-
-class training_seance(osv.osv):
-    _name = 'training.seance'
-training_seance()
-
-class training_seance_purchase_line(osv.osv):
-    _name = 'training.seance.purchase_line'
-
-    _columns = {
-        'seance_id' : fields.many2one('training.seance', 'Seance', required=True),
-        'product_id' : fields.many2one('product.product', 'Product', required=True),
-        'quantity' : fields.integer('Quantity', required=True),
-        'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
-        'procurement_id' : fields.many2one('mrp.procurement', readonly=True),
-    }
-
-training_seance_purchase_line()
-
 class training_seance(osv.osv):
     _name = 'training.seance'
     _inherits = {
@@ -439,6 +427,19 @@ class training_seance(osv.osv):
 
 training_seance()
 
+class training_seance_purchase_line(osv.osv):
+    _name = 'training.seance.purchase_line'
+
+    _columns = {
+        'seance_id' : fields.many2one('training.seance', 'Seance', required=True),
+        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'quantity' : fields.integer('Quantity', required=True),
+        'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
+        'procurement_id' : fields.many2one('mrp.procurement', readonly=True),
+    }
+
+training_seance_purchase_line()
+
 class training_subscription(osv.osv):
     _name = 'training.subscription'
     _columns = {
@@ -451,24 +452,27 @@ class training_subscription(osv.osv):
         # Pour le group ID, discuter pour savoir si on doit utiliser le seuil pédagogique du groupe pour savoir si on crée un nouveau group ou non
         'invoice_id' : fields.many2one( 'account.invoice', 'Invoice' ),
         'group_id' : fields.many2one( 'training.group', 'Group'),
-        'state' : fields.selection(
-            [('draft', 'Draft'),
-             ('confirm','Confirm'),
-             ('cancel','Cancel'),
-             ('done', 'Done')
-            ], 'State', required=True ),
+        'state' : fields.selection( [('draft', 'Draft'),
+                                     ('confirm','Confirm'),
+                                     ('cancel','Cancel'),
+                                     ('done', 'Done')
+                                    ], 'State', required=True ),
         'price' : fields.float('Price', digits=(16,2), required=True),
         'paid' : fields.boolean('Paid'),
     }
 
     def confirm_cb(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, { 'state' : 'confirm' }, context=context )
+
     def cancel_cb(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, { 'state' : 'cancel' }, context=context )
+
     def cancel_to_invoice_cb(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, { 'state' : 'cancel' }, context=context )
+
     def done_cb(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, { 'state' : 'done' }, context=context )
+
     def draft_cb(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, { 'state' : 'draft' }, context=context )
 
