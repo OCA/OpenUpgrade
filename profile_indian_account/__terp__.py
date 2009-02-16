@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -27,9 +27,8 @@
     "depends":[
         "l10n_chart_in",
         "account_india_ledger",
-        "account_indian_report"
+        "account_indian_report",
         "account_voucher"
-        
     ],
     "demo_xml":[],
     "update_xml":[],
