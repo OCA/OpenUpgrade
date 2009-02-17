@@ -2,18 +2,679 @@
 <h1>ERP Comparator News</h1>
 
 <div class="daygroup">
+<h2>February 16, 2009</h2>
+
+<div class="channelgroup">
+
+
+
+
+
+
+
+<h3><a href="http://www.openobject.com/planet/" title="Planet Open Object">OpenObject</a></h3>
+
+
+<div class="entrygroup" id="http://devteam.taktik.org/index.php?/archives/2-guid.html">
+<h4 lang="en"><a href="http://devteam.taktik.org/index.php?/archives/2-Cryptography-on-your-MacOS-X-program.html">Cryptography on your MacOS X program</a></h4>
+<div class="entry">
+<div  lang="en">
+For this first tip, I just want to help you performing basic operations like generating digests (MD5, SHA1, …) or dealing with asymetric keys in your programs. <br />
+<br />
+On the Mac OS X platform, there are basically two libraries providing these crypto capabilities : <br />
+<br />
+1 - openSSL<br />
+2 - Apple CDSA<br />
+<br />
+For the first one, just import the header(s) you need from <em>/usr/include/openssl</em> and then link your product with the <em>/usr/lib/libsecurity.dylib</em>.<br />
+With CDSA, you have to add the <em>/System/Library/Frameworks/Security.framework</em> to your Xcode project and then link your product with it.<br />
+<br />
+It seems to me that openSSL is easier to use but the choice between these two libraries may be triggered by politics.<br />
+<br />
+For the CDSA documentation, I strongly recommend you to download and read the examples provided by Apple : CryptoSample<br />
+<br /></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://devteam.taktik.org/index.php?/archives/2-Cryptography-on-your-MacOS-X-program.html">by Denis Muquardt (nospam@example.com) at February 16, 2009 11:14 AM</a>
+</p>
+</div>
+</div>
+
+
+
+
+<div class="entrygroup" id="http://devteam.taktik.org/index.php?/archives/1-guid.html">
+<h4 lang="en"><a href="http://devteam.taktik.org/index.php?/archives/1-Echo-is-released.html">Echo is released</a></h4>
+<div class="entry">
+<div  lang="en">
+<div class="serendipity_imageComment_right"><div class="serendipity_imageComment_img"><a class="serendipity_image_link" href="http://devteam.taktik.org/uploads/Echo-mainscreen1.png" target="_blank"><!-- s9ymdb:4 --><img width="110" height="68" src="http://devteam.taktik.org/uploads/Echo-mainscreen1.serendipityThumb.png" alt="" /></a></div><div class="serendipity_imageComment_txt">The echo main screen, with some explanations</div></div><br />
+This is the first beta release of the Echo application.<br />
+<br />
+Echo can be used to do automated program/interface testing.<br />
+<br />
+Echo can record mouse/keyboard activity and play them back. It can also take screen captures when recording (alt + esc keys). Screen captures act like CheckPoints that will determine if your test succeeds or fails.<br />
+<br />
+You can then define one or more zones of interest on the screen captures. When playing back, Echo will check that the zones of interest are strictly equal to the recorded zones. This allows you to check that your program behaves as expected.<br />
+<br />
+For now only absolute zones can be defined. This means that the windows/views must be exactly positioned (even a 1 pixel offset will make the test fail). You could use a debug menu in your tested application (or a hidden key combo) that would position the windows correctly. Future version will include anchor zones that will allow for relative zone comparing.<br />
+<br />
+With Echo you can :<br />
+<br />
+Define tests, which are a group of test cases. <br />
+Define and record test cases. This is the unit of testing in Echo. You then record (ctrl + esc) a serie of key/mouse events and screen captures (called checkpoints in Echo) attached to the case.<br />
+Run test cases : selecting a case and clicking on “run case” will launch the case playback.<br />
+Examine case playback results. Each case playback has its associated case result. There you can see if your case failed or succeeded.<br />
+<br />
+<br />
+Keyboard shortcuts<br />
+<br />
+Ctrl + esc : start/stop recording of a case. You must have a case selected.<br />
+Ctrl + Alt + esc : start/stop playback of a case. You must have a case selected.<br />
+Alt + esc : Create a checkpoint (For now only a screen capture).<br />
+<br />
+Known limitations/bugs<br />
+<br />
+<br />
+- Once recorded you can't modify a case, you can only delete it<br />
+- Only Absolute zone positioning/checking for now<br />
+- The only actions available are those recorded, i.e. Mouse/Keyboard events. Future versions should include Shell script actions (setUp/TearDown, etc...) and other action types.<br />
+- The only Check point available is a screen capture check. Future checks should include shell scripts, password typing, and other checkPoint types.<br />
+<br />
+<br />
+Info/Remarks<br />
+<br />
+Please send any info/remark to ab@taktik.be<br />
+<br />
+<a href="http://devteam.taktik.org/uploads/Echo0.1.dmg" title="Echo0.1.dmg" target="_blank">Echo0.1.dmg</a></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://devteam.taktik.org/index.php?/archives/1-Echo-is-released.html">by Antoine Baudoux (nospam@example.com) at February 16, 2009 11:14 AM</a>
+</p>
+</div>
+</div>
+
+
+
+
+<div class="entrygroup" id="http://devteam.taktik.org/index.php?/archives/7-guid.html">
+<h4 lang="en"><a href="http://devteam.taktik.org/index.php?/archives/7-Native-Mac-OS-X-10.5-Leopard-Open-ERP-client-v5.0.0.html">Native Mac OS X 10.5 Leopard Open ERP client v5.0.0</a></h4>
+<div class="entry">
+<div  lang="en">
+As promised,Taktik is pleased to share with the community the <a href="http://www.taktik.be/files/Open%20ERP%20Client%205.0.0.dmg">native Mac OS X 10.5 Leopard Open ERP client v5.0.0<br />
+<!-- s9ymdb:31 --><img width="876" height="701" src="http://devteam.taktik.org/uploads/OpenERP-v5.0.0.png" alt="" /><br />
+</a><br />
+It is a <strong>native</strong> Mac OS X application (does not require X11)<br />
+Keyboard shortcuts have been mapped to Apple shortcuts : cmd-q to quit cmd-o to open a connection, cmd-c/cmd-v to copy/paste.<br />
+We made a decent Mac OS X icon for the app (although, obviously, we are not graphics designers).<br />
+The application is <strong>fully functional</strong> (including NET-RPC and calendar view).<br />
+<br />
+Feel free to report bugs or comments on this blog (http://devteam.taktik.org) or at <a href="mailto:openerp-dev@taktik.be">openerp-dev@taktik.be</a>.<br /></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://devteam.taktik.org/index.php?/archives/7-Native-Mac-OS-X-10.5-Leopard-Open-ERP-client-v5.0.0.html">by Fabien Lydoire (nospam@example.com) at February 16, 2009 11:14 AM</a>
+</p>
+</div>
+</div>
+
+
+
+
+<div class="entrygroup" id="http://devteam.taktik.org/index.php?/archives/6-guid.html">
+<h4 lang="en"><a href="http://devteam.taktik.org/index.php?/archives/6-Native-Mac-OS-X-10.5-Leopard-Open-ERP-Client.html">Native Mac OS X 10.5 Leopard Open ERP Client</a></h4>
+<div class="entry">
+<div  lang="en">
+Open ERP (formerly named Tiny ERP) is an open source ERP/CRM system.<br />
+http://openerp.com/<br />
+The current stable version is v4.2.3.4 and a v5.0.0 RC3 (release<br />
+candidate 3 i.e. non stable) is also available for download on OpenERP<br />
+website. <br />
+<br />
+Taktik is currently working on the OpenERP code to provide custom<br />
+implementation of this ERP to his clients. <br />
+As we, at Taktik, are developing on Apple Mac machines, we decided to<br />
+look for a decent Mac OS X 10.5 Leopard client for Open ERP.<br />
+<br />
+On the OpenERP website, you can find an official client installer for<br />
+MS Windows, and sources. The official client is coded in python, using<br />
+GTK 2.0 and PyGTK to provide the graphical user interface.<br />
+<br />
+On Mac OS X you can run most Unix/Linux apps using an X11 server<br />
+(freely provided by Apple) and mac ports projects like<br />
+fink. Nevertheless it provides poorly integrated app, with linux<br />
+look and feel.<br />
+Once installed PyGTK with fink and a few other packages, the official<br />
+client runs fine on Mac OS X.<br />
+<br />
+Camp2camp company is providing efforts to package a GTK client<br />
+os Mac OS X, but it's not a "native" one, it runs on X11. <br />
+http://openerpcamptocamp.blogspot.com/<br />
+<br />
+Looking for a "native" client, we found on Tinyforge an outdated GTK<br />
+client using a native GTK port on Mac OS X.<br />
+http://tinyforge.org/frs/?group_id=128<br />
+<br />
+From the available software here and there on the internet, we knew it<br />
+would be possible to package the latest Open ERP client as a "native"<br />
+application on Mac OS X 10.5 Leopard, and we did it.<br />
+<br />
+<a href="http://www.taktik.be/files/Tiny%20ERP%20Client%204.2.3.4.dmg">Here is the Open ERP client 4.2.3.4 app for Mac OS X Leopard.</a><br />
+<br />
+One other option is to use Qt instead of GTK to render the graphical<br />
+interface. Qt is officially ported to Mac OS X and provided a deeper<br />
+integration with the system.<br />
+An Open ERP client using Qt is currently developed to provide integration with<br />
+the K Desktop Environment (KDE), as the GTK client is integrated with<br />
+the Gnome Desktop Environment.<br />
+The software is the KDE OpenObject Client or Koo in short.<br />
+<br />
+We already packaged the stable GTK current version, in the following posts, we will deliver <br />
+the new Open ERP v5 Client and a Koo package for those who want a flavor of Qt...<br />
+Stay tuned....<br />
+<br />
+--------------------------------------------------------------------------------<br />
+Here are the build instructions Taktik is pleased to share with the<br />
+community.<br />
+The goal is to package the sources with minimum patches, so we can<br />
+apply this recipe to further versions of the Open ERP client.<br />
+<br />
+There are a few things to install in order to compile the native app.<br />
+<br />
+First of all, you may have fink installed and you do not want it to<br />
+interfere with native version of software during compilation, so you<br />
+must remove fink from your path in your current bash.<br />
+<br />
+We assume you download stuff in ~/Downloads<br />
+Get GTK-OSX and build it (instructions strongly inspired from Imendio)<br />
+http://developer.imendio.com/projects/gtk-macosx<br />
+http://live.gnome.org/GTK%2B/OSX/BuildInstructions<br />
+<br />
+git clone git://github.com/rhult/gtk-osx-build.git<br />
+cd gtk-osx-build<br />
+<br />
+Use the <a href="http://devteam.taktik.org/uploads/gtk-osx-build-setup.sh" title="gtk-osx-build-setup.sh" target="_blank">gtk osx build script</a> from imendio and run it.<br />
+cp /Users/flydoire/Desktop/gtk-osx-build-setup.sh .<br />
+sh gtk-osx-build-setup.sh<br />
+<br />
+Edit ~/.jhbuildrc-custom and add <br />
+moduleset = os.path.expanduser("~/Downloads/GTK-OSX/gtk-osx-build/modulesets/gtk-osx.modules")<br />
+modules = ['meta-gtk-osx-bootstrap', 'meta-gtk-osx-core', 'meta-gtk-osx-freetype']<br />
+<br />
+Bootstrap the build<br />
+jhbuild bootstrap<br />
+<br />
+Paths to some resources are not correct in the downloaded scripts so<br />
+you have to download resources manually and name it like the script<br />
+expect it will be named (names could change in further commits in git<br />
+...).<br />
+<br />
+git clone git://github.com/rhult/gtk-osx-docbook.git<br />
+mv gtk-osx-docbook rhult-gtk-osx-docbook-b09115732e38f956730d6c0a23ff4e471ab0ead2<br />
+tar zcvf rhult-gtk-osx-docbook-b09115732e38f956730d6c0a23ff4e471ab0ead2.tar.gz rhult-gtk-osx-docbook-b09115732e38f956730d6c0a23ff4e471ab0ead2<br />
+mv rhult-gtk-osx-docbook-b09115732e38f956730d6c0a23ff4e471ab0ead2.tar.gz ~/gtk/source/pkgs/rhult-gtk-osx-docbook-b09115732e38f956730d6c0a23ff4e471ab0ead2.tar.gz<br />
+cd ..<br />
+git clone git://github.com/rhult/gnome-doc-utils-fake.git<br />
+mv gnome-doc-utils-fake rhult-gnome-doc-utils-fake-ee6993e33d517ff05f55d78694e5edaa4da0bbd9<br />
+tar zcvf rhult-gnome-doc-utils-fake-ee6993e33d517ff05f55d78694e5edaa4da0bbd9.tar.gz  rhult-gnome-doc-utils-fake-ee6993e33d517ff05f55d78694e5edaa4da0bbd9<br />
+mv rhult-gnome-doc-utils-fake-ee6993e33d517ff05f55d78694e5edaa4da0bbd9.tar.gz ~/gtk/source/pkgs/rhult-gnome-doc-utils-fake-ee6993e33d517ff05f55d78694e5edaa4da0bbd9.tar.gz<br />
+<br />
+Finally build GTK-OSX<br />
+<br />
+jhbuild build meta-gtk-osx-bootstrap<br />
+<br />
+Patch GTK to use CMD key instead of CTR (like a good Mac OS X app).<br />
+go to ~/gtk/source/gtk+/gdk and patch<br />
+patch -p0  patch-command-key-gtk.patch<br />
+<br />
+jhbuild build meta-gtk-osx-python<br />
+jhbuild build meta-gtk-osx-themes<br />
+<br />
+Now you have GTK-OSX, you need some more stuff for the Open ERP<br />
+Client.<br />
+<br />
+mxbase (egenix-mx-base-3.1.2.macosx-10.4-fat-py2.5_ucs2.prebuilt ) from <br />
+http://www.egenix.com/products/python/mxBase/<br />
+http://downloads.egenix.com/python/egenix-mx-base-3.1.2.macosx-10.4-fat-py2.5_ucs2.prebuilt.zip?baseurl=http%3A%2F%2Fdownloads.egenix.com%2Fpython%2F&amp;product=egenix-mx-base&amp;version=3.1.2&amp;platformpython=macosx-10.4-fat-py2.5_ucs2<br />
+<br />
+<br />
+#Fortran<br />
+http://r.research.att.com/tools/<br />
+http://r.research.att.com/gfortran-4.2.3.dmg<br />
+<br />
+#FFW<br />
+http://www.fftw.org/download.html<br />
+ftp://ftp.fftw.org/pub/fftw/fftw-3.2.tar.gz<br />
+tar zxvf fftw-3.2.tar.gz<br />
+cd fftw-3.2/<br />
+./configure<br />
+make<br />
+sudo make install<br />
+sudo ln -s /usr/local/lib/libfftw3.a /usr/local/lib/libfftw.a<br />
+sudo ln -s /usr/local/lib/libfftw3.la /usr/local/lib/libfftw.la<br />
+sudo ln -s /usr/local/include/fftw3.h /usr/local/include/fftw.h<br />
+<br />
+#scipy<br />
+http://ovh.dl.sourceforge.net/sourceforge/scipy/scipy-0.6.0.tar.gz<br />
+python setup.py build_src build_clib --fcompiler=gnu95 build_ext --fcompiler=gnu95 build<br />
+sudo python setup.py install<br />
+<br />
+#matplotlib<br />
+http://ovh.dl.sourceforge.net/sourceforge/matplotlib/matplotlib-0.98.5.2.tar.gz<br />
+sudo ln -s /opt/local/include/gtk-2.0/gdk /usr/local/include/gdk<br />
+sudo ln -s /opt/local/include/gtk-2.0/gtk /usr/local/include/gtk<br />
+sudo ln -s /Users/flydoire/gtk/inst/include/pygtk-2.0/pygtk /usr/local/include/pygtk<br />
+sudo ln -s /Users/flydoire/gtk/inst/include/pygtk-2.0/pyglib.h /usr/local/include/pyglib.h<br />
+sudo ln -s /Users/flydoire/gtk/inst/include/pygtk-2.0/pygobject.h /usr/local/include/pygobject.h<br />
+sudo ln -s /opt/local/include/glib-2.0/glib.h /usr/local/include/glib.h<br />
+sudo ln -s /opt/local/lib/glib-2.0/include/glibconfig.h /usr/local/include/glibconfig.h<br />
+sudo ln -s /opt/local/include/glib-2.0/glib-object.h /usr/local/include/glib-object.h<br />
+sudo ln -s /opt/local/include/glib-2.0/gmodule.h /usr/local/include/gmodule.h<br />
+sudo ln -s /opt/local/include/glib-2.0/glib /usr/local/include/glib<br />
+sudo ln -s /opt/local/include/glib-2.0/gobject /usr/local/include/gobject<br />
+sudo ln -s /opt/local/include/glib-2.0/gio /usr/local/include/gio<br />
+sudo ln -s /opt/local/include/cairo/cairo.h /usr/local/include/cairo.h<br />
+sudo ln -s /opt/local/include/cairo/cairo-version.h /usr/local/include/cairo-version.h<br />
+sudo ln -s /opt/local/include/cairo/cairo-features.h /usr/local/include/cairo-features.h<br />
+sudo ln -s /opt/local/include/cairo/cairo-deprecated.h /usr/local/include/cairo-deprecated.h<br />
+sudo ln -s /opt/local/include/pango-1.0/pango /usr/local/include/pango<br />
+sudo ln -s /opt/local/lib/gtk-2.0/include/gdkconfig.h /usr/local/include/gdkconfig.h<br />
+sudo ln -s /opt/local/include/gtk-2.0/gdk-pixbuf /usr/local/include/gdk-pixbuf<br />
+sudo ln -s /opt/local/include/atk-1.0/atk /usr/local/include/atk<br />
+python setup.py build<br />
+sudo python setup.py install<br />
+<br />
+Then get <a href="http://devteam.taktik.org/uploads/package-OOCGTK.zip" title="package-OOCGTK.zip" target="_blank">this archive </a>and unzip it.<br />
+Adjust the parameters in the file package.sh and run the script<br />
+sh ./package.sh<br />
+<br />
+You should end with a dmg containing a nice and clean bundled app.<br />
+Enjoy !</div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://devteam.taktik.org/index.php?/archives/6-Native-Mac-OS-X-10.5-Leopard-Open-ERP-Client.html">by Fabien Lydoire (nospam@example.com) at February 16, 2009 11:14 AM</a>
+</p>
+</div>
+</div>
+
+
+
+
+<div class="entrygroup" id="http://devteam.taktik.org/index.php?/archives/5-guid.html">
+<h4 lang="en"><a href="http://devteam.taktik.org/index.php?/archives/5-Case-insensitive-completion-for-you-terminal.html">Case insensitive completion for you terminal</a></h4>
+<div class="entry">
+<div  lang="en">
+Create an <b>.inputrc</b> file in your home directory with the following content :<br />
+<br />
+<code>set completion-ignore-case on</code><br /></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://devteam.taktik.org/index.php?/archives/5-Case-insensitive-completion-for-you-terminal.html">by Denis Muquardt (nospam@example.com) at February 16, 2009 11:14 AM</a>
+</p>
+</div>
+</div>
+
+
+
+
+<div class="entrygroup" id="http://devteam.taktik.org/index.php?/archives/4-guid.html">
+<h4 lang="en"><a href="http://devteam.taktik.org/index.php?/archives/4-A-Launch-Service-tip.html">A Launch Service tip</a></h4>
+<div class="entry">
+<div  lang="en">
+How the Finder can determine which application handles a particular file on MacOS X?<br />
+How the Finder can distinguish a bundle from a simple folder ? *<br />
+How the Finder can set the document's icon.<br />
+All these operations are handled by the MacOS X Launch Service. This service uses a database to record informations about all applications.<br />
+By example, when the finder copies an application on the hard drive from a distant volume or any other device, it populates the registry with the informations contained in the <b>Content.plist</b> file.<br />
+<br />
+You can explore and modify the Launch Service database with a the little tool called <b>lsregister</b> located at path <b>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/LaunchServices.framework/Versions/A/Support/lsregister</b>.<br />
+<br />
+<br />
+<br />
+(*) the finder examinates also the HFS+ bundle flag on a folder to detect a bundle. You can use the developer tool <b>SetFile</b> to switch on/off the flag<br />
+<br /></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://devteam.taktik.org/index.php?/archives/4-A-Launch-Service-tip.html">by Denis Muquardt (nospam@example.com) at February 16, 2009 11:14 AM</a>
+</p>
+</div>
+</div>
+
+
+
+
+<div class="entrygroup" id="http://devteam.taktik.org/index.php?/archives/3-guid.html">
+<h4 lang="en"><a href="http://devteam.taktik.org/index.php?/archives/3-Layer-hosting-vs-layer-backed-views-in-Core-Animation.html">Layer-hosting vs layer-backed views in Core Animation</a></h4>
+<div class="entry">
+<div  lang="en">
+I found this important remark in the Core Animation programming guide :<br />
+<blockquote>The instance of MenuView is set as the layer-hosting view of rootLayer. The order of these two calls is important. By first setting the layer to rootLayer and then setting setWantsLayer: to YES our layer is used rather than the one that the view would create. This is the key difference between layer-hosting views and layer-backed views.<br />
+<br />
+[self setLayer:rootLayer];<br />
+[self setWantsLayer:YES];<br />
+<br />
+</blockquote><br />
+<br /></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://devteam.taktik.org/index.php?/archives/3-Layer-hosting-vs-layer-backed-views-in-Core-Animation.html">by Antoine Baudoux (nospam@example.com) at February 16, 2009 11:14 AM</a>
+</p>
+</div>
+</div>
+
+
+
+</div>
+<div class="channelgroup">
+
+
+
+
+
+
+
+<h3><a href="http://www.openerp.com/planet/" title="Planet Open ERP">OpenERP</a></h3>
+
+
+<div class="entrygroup" id="tag:blogger.com,1999:blog-3751376162650614810.post-4557698108301286361">
+<h4><a href="http://openerpcamptocamp.blogspot.com/2009/02/swiss-localization-openerp-version-50.html">Swiss localization : OpenERP version 5.0</a></h4>
+<div class="entry">
+<div >
+<div class="texte"><p class="spip">[French version below]</p>  <p class="spip">Camptocamp is proud to announce the release of the Swiss localization module, a much awaited functionality of OpenERP version 5.0.</p> <p class="spip">Features :<br /></p><ul><li>electronic payments (DTA files)</li><li>BVRs printing </li><li>BVRs import (V11 files)</li><li>new chart of accounts for SMEs</li><li>BVR scan</li></ul> <p class="spip">The modules are available on launchpad :<br /></p><ul><li>l10n_ch :  bzr branch lp :openobject-addons </li><li>l10n_ch_chart_c2c_pcg :  bzr branch lp :openobject-addons</li><li>c2c_scan_bvr : bzr branch lp : openerp-commiter/openobject-addons/trunk-extra-addons</li></ul> <p class="spip">To celebrate the release of OpenERP version 5.0 and present its numerous new functionalities, Camptocamp organizes during the months of February, March, and April 2009 free demo sessions in several French-speaking parts of Switzerland. See more info here : http://openerpcamptocamp.blogspot.com/2009/02/openerp-50-swiss-roadshow-by-camptocamp.html</p> <p class="spip">Should you need further information and/or advice on implementing and using these modules, Camptocamp remains at your entire disposal.</p> <p class="spip">Best regards,</p> <p class="spip">Luc Maurer @ camptocamp</p><p class="spip">-------------------------------------------------------<br /></p><p class="spip"> [English version below]</p> <p class="spip">Camptocamp est heureux de vous annoncer la sortie de la localisation Suisse pour la nouvelle version de OpenERP 5.0<br /></p><p class="spip">Vous trouverez :<br /></p><ul><li>paiement électronique (DTA)</li><li>impression des BVR</li><li>importation des BVR (V11)</li><li>nouveau plan comptable général pour PME</li><li>scan BVR</li></ul> <p class="spip">Les modules sont disponibles sous :<br /></p><ul><li>l10n_ch :  bzr branch lp :openobject-addons</li><li>l10n_ch_chart_c2c_pcg :  bzr branch lp :openobject-addons</li><li>c2c_scan_bvr : bzr branch lp : openerp-commiter/openobject-addons/trunk-extra-addons</li></ul> <p class="spip">Pour fêter la sortie de la nouvelle version d’OpenERP et présenter les nombreuses nouvelles fonctionnalités de l’outil, Camptocamp organise pendant les mois de Février, Mars et Avril 2009 une tournée de démonstrations gratuites en Suisse Romande. Plus d’information sur : : http://openerpcamptocamp.blogspot.com/2009/02/openerp-50-swiss-roadshow-by-camptocamp.html</p> <p class="spip">Camptocamp est à votre entière disposition si vous souhaitez des conseils ou du support sur l’implémentation et l’utilisation de ces modules.</p> <p class="spip">Salutations</p> <p class="spip">Luc Maurer @ camptocamp</p></div></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://openerpcamptocamp.blogspot.com/2009/02/swiss-localization-openerp-version-50.html">by luc@camptocamp (luc.maurer@camptocamp.com) at February 16, 2009 05:39 AM</a>
+</p>
+</div>
+</div>
+
+
+
+</div>
+<div class="channelgroup">
+
+
+
+
+
+
+
+<h3><a href="http://msdynamicsworld.com/news" title="NEWS">Microsoft Dynamic Nav</a></h3>
+
+
+<div class="entrygroup" id="http://msdynamicsworld.com/9497 at http://msdynamicsworld.com" lang="en">
+<h4><a href="http://msdynamicsworld.com/story/customer-relationship-mgmt/microsoft-dynamics-ax-partners-certification-requirements-are-good-">For Microsoft Dynamics AX Partners, Certification Requirements Are Good, But Giving the Power to the Customer May Prove Better….</a></h4>
+<div class="entry">
+<div >
+Moving Customer Power into the Marketplace</div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://msdynamicsworld.com/story/customer-relationship-mgmt/microsoft-dynamics-ax-partners-certification-requirements-are-good-">by Jeff Onesto, Director of Business Development, ASi Inc. at February 16, 2009 02:52 AM</a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+</div>
+<div class="daygroup">
+<h2>February 14, 2009</h2>
+
+<div class="channelgroup">
+
+
+
+
+
+
+
+<h3><a href="http://planet.openbravo.com/" title="Planet Openbravo">Openbravo</a></h3>
+
+
+<div class="entrygroup" id="http://sourceforge.net/forum/forum.php?forum_id=918663" lang="en">
+<h4><a href="http://feedproxy.google.com/~r/openbravo-blogs/~3/KoqiUcJQmcg/forum.php">Openbravo&amp;#39;s SourceForge news: Openbravo ERP: 2.50alpha-r11 available</a></h4>
+<div class="entry">
+<div >
+Openbravo ERP is a Web based ERP for SME, built on proven MVC &amp; MDD framework that facilitate its customization. Already in production, Openbravo ERP encompasses a broad range of functionalities such as finance, supply chain, manufacturing &amp; much more. (<a href="http://sourceforge.net/forum/forum.php?forum_id=918663">0 comments</a>)<div class="feedflare">
+<a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=LaZkBlvC"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?d=41" border="0" /></a> <a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=y42Zly67"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?i=y42Zly67" border="0" /></a> <a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=2ljRUoW1"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?d=52" border="0" /></a>
+</div><img src="http://feeds2.feedburner.com/~r/openbravo-blogs/~4/KoqiUcJQmcg" height="1" width="1" /></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://feedproxy.google.com/~r/openbravo-blogs/~3/KoqiUcJQmcg/forum.php">by jaimetorre@users.sourceforge.net (Jaime Torre) at February 14, 2009 12:22 AM</a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+</div>
+<div class="daygroup">
+<h2>February 13, 2009</h2>
+
+<div class="channelgroup">
+
+
+
+
+
+
+
+<h3><a href="http://searchsap.techtarget.com?track=sy191" title="SearchSAP: SAP news, tips and expert advice">SAP</a></h3>
+
+
+<div class="entrygroup" id="http://feeds.feedburner.com/~r/techtarget/searchsap/sapnews/~3/539156386/0,289625,sid21_gci1347863,00.html" lang="en-us">
+<h4><a href="http://feeds.feedburner.com/~r/techtarget/searchsap/sapnews/~3/539156386/0,289625,sid21_gci1347863,00.html">SAP BI extractors vs. Business Objects for ETL process</a></h4>
+<div class="entry">
+<div >
+An SAP user wants to know the benefits of using standard SAP BI extractors for an ETL process between SAP BW and SAP ERP
+<p><a href="http://feeds.feedburner.com/~a/techtarget/searchsap/sapnews?a=HOccwg"><img src="http://feeds.feedburner.com/~a/techtarget/searchsap/sapnews?i=HOccwg" border="0" /></a></p><img src="http://feeds.feedburner.com/~r/techtarget/searchsap/sapnews/~4/539156386" height="1" width="1" /></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://feeds.feedburner.com/~r/techtarget/searchsap/sapnews/~3/539156386/0,289625,sid21_gci1347863,00.html">by Matt Perkins at February 13, 2009 08:50 PM</a>
+</p>
+</div>
+</div>
+
+
+
+</div>
+<div class="channelgroup">
+
+
+
+
+
+
+
+<h3><a href="http://msdynamicsworld.com/news" title="NEWS">Microsoft Dynamic Nav</a></h3>
+
+
+<div class="entrygroup" id="http://msdynamicsworld.com/9436 at http://msdynamicsworld.com" lang="en">
+<h4><a href="http://msdynamicsworld.com/story/dynamics-nav/nav-blogs-7-pitfalls-customization-future-dynamics-new-2009-help-toolkit-adding-c">From the NAV Blogs: 7 Pitfalls of Customization; the Future of Dynamics; New 2009 Help Toolkit; Adding a Company Picture to a Report</a></h4>
+<div class="entry">
+<div >
+A Roundup of Developments About Microsoft Dynamics NAV</div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://msdynamicsworld.com/story/dynamics-nav/nav-blogs-7-pitfalls-customization-future-dynamics-new-2009-help-toolkit-adding-c">by Jared Berezin at February 13, 2009 05:19 AM</a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+</div>
+<div class="daygroup">
+<h2>February 12, 2009</h2>
+
+<div class="channelgroup">
+
+
+
+
+
+
+
+<h3><a href="http://searchsap.techtarget.com?track=sy191" title="SearchSAP: SAP news, tips and expert advice">SAP</a></h3>
+
+
+<div class="entrygroup" id="http://feeds.feedburner.com/~r/techtarget/searchsap/sapnews/~3/538288456/0,289625,sid21_gci1347589,00.html" lang="en-us">
+<h4><a href="http://feeds.feedburner.com/~r/techtarget/searchsap/sapnews/~3/538288456/0,289625,sid21_gci1347589,00.html">SAP FI/CO consultant's role during upgrade from R/3 to ECC 6.0</a></h4>
+<div class="entry">
+<div >
+SAP FI/CO consultants just need to test core business functionality after an upgrade from SAP R/3 4.7 to ECC 6.0.
+<p><a href="http://feeds.feedburner.com/~a/techtarget/searchsap/sapnews?a=hgydIZ"><img src="http://feeds.feedburner.com/~a/techtarget/searchsap/sapnews?i=hgydIZ" border="0" /></a></p><img src="http://feeds.feedburner.com/~r/techtarget/searchsap/sapnews/~4/538288456" height="1" width="1" /></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://feeds.feedburner.com/~r/techtarget/searchsap/sapnews/~3/538288456/0,289625,sid21_gci1347589,00.html">by Matt Perkins at February 12, 2009 06:32 PM</a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+</div>
+<div class="daygroup">
+<h2>February 11, 2009</h2>
+
+<div class="channelgroup">
+
+
+
+
+
+
+
+<h3><a href="http://planet.openbravo.com/" title="Planet Openbravo">Openbravo</a></h3>
+
+
+<div class="entrygroup" id="tag:blogger.com,1999:blog-276103466018827208.post-7480105563736063127" lang="en">
+<h4><a href="http://feedproxy.google.com/~r/openbravo-blogs/~3/cDI2FgWMxDo/">Rob Goris: Concepts for Openbravo ERP Redesign</a></h4>
+<div class="entry">
+<div >
+We are continuously improving our products and raise the bar with every release. Recently we have started to look at some very fundamental parts of the User Interface of Openbravo ERP and came up with ideas for a future redesign. User feedback told us that there is a need for more powerful and flexible search functionality. We also learned that many user like to edit the grids (tables) directly in the cells and that switching between different records at the same time would be very useful. Furthermore, we are looking at offering more functionality in the context of tasks and we also believe that there is a need for more high level and summarized views on data.<br /><br /><a href="http://3.bp.blogspot.com/_GGQGRX-9RvM/SZGtbDHLyEI/AAAAAAAAA8c/Xhbx493WjbA/s1600-h/MSPACE_0013_Voila.png"><img src="http://3.bp.blogspot.com/_GGQGRX-9RvM/SZGtbDHLyEI/AAAAAAAAA8c/Xhbx493WjbA/s400/MSPACE_0013_Voila.png" alt="" id="BLOGGER_PHOTO_ID_5301208916595296322" border="0" /></a><br /><br />Here we would like to give you a peek preview of the stuff we are working on and give you the opportunity to give your feedback. Our approach is holistic: we believe that all functionality should be working in the context of user journeys rather than just plugging in new features left and right. That's why we also want to propose a complete new Master-Detail concept in which all other functionality is embedded.<br /><br />Images say more than words so check out the <a href="http://www.openbravo.com/concepts/"><span>Demo Videos</span></a> and discuss them on the <a href="https://sourceforge.net/forum/forum.php?thread_id=2995124&forum_id=886353">User Experience Lab forum</a>:<br /><br />Please also fill out the surveys for <a href="http://www.surveymonkey.com/s.aspx?sm=pgjWrLvyiEbgeN_2boVVhDPw_3d_3d">Master Detail</a>, <a href="http://www.surveymonkey.com/s.aspx?sm=kj87mKtSSDKiJWGQDu54eQ_3d_3d">Search &amp; Filter</a>, <a href="http://www.surveymonkey.com/s.aspx?sm=2c1WmQnopu3_2bq2F_2fnK8Rvg_3d_3d">My Workspace</a> and <a href="http://www.surveymonkey.com/s.aspx?sm=c_2fqWDWPgjYOzimU2zanKtw_3d_3d">Overall Impression</a>.<br /><br />I am looking forward to a lively discussion.<br /><br />Thanks, Rob<div class="feedflare">
+<a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=WvPmu1FO"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?d=41" border="0" /></a> <a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=gX30yPuD"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?i=gX30yPuD" border="0" /></a> <a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=dj8YMmtv"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?d=52" border="0" /></a>
+</div><img src="http://feeds2.feedburner.com/~r/openbravo-blogs/~4/cDI2FgWMxDo" height="1" width="1" /></div>
+
+
+
+
+
+
+
+<p class="date">
+<a href="http://feedproxy.google.com/~r/openbravo-blogs/~3/cDI2FgWMxDo/">by noreply@blogger.com (Rob Goris) at February 11, 2009 10:15 AM</a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+</div>
+<div class="daygroup">
 <h2>February 10, 2009</h2>
 
 <div class="channelgroup">
 
-<h3><a href="http://www.openerp.com/planet/" title="Planet Open ERP">OpenERP</a></h3>
+
+
+
+
+
+
+<h3><a href="http://www.openobject.com/planet/" title="Planet Open Object">OpenObject</a></h3>
 
 
 <div class="entrygroup" id="tag:blogger.com,1999:blog-452239050463873058.post-3733501484713721319">
 <h4><a href="http://fptiny.blogspot.com/2009/02/open-erp-maintenance-and-migrations.html">Open ERP maintenance and migrations</a></h4>
 <div class="entry">
 <div >
-With the version 5 of Open ERP, we setup a second level maintenance contract, that can complete partner's first level maintenance/support contract provided to customer. It's a service contract (not required to use Open ERP) to get some guarantees and to work on a professional way. In these editions, we provide:<br /><br /><span>bugfixes guarantees</span> : according to the contract level, we guarantee a delay to manage a bug. Within this delay, we assign a full time developer on the bug that will fix it in an average of 4 hours. On previous versions of Open ERP the bugfix was at the charge of the partner (from the support hours in the partner contract). With this new system, partners get an unlimitted and free bugfixes, paid by the final customer. We setup an automated migration system within the server that can automatically download new versions and apply fixes.<br /><br /><span>Life cycle guarantee</span> : with these new editions, we are able to provide up to 5 years of maintenance on a specific version of Open ERP. It's a<br />guarantee for the customer they will not have to migrate at each new version. (nobody likes to be forced to migrate often a working ERP system)<br /><br /><span>Security and bugs alerts</span>: we reviewed all our internal procedures to be able to report to customers (or partners) new security alerts and bugs. We send the report about the security issue or bug with the fix of the problem. The application of the patch or the training of the customer should be provided by partners through their support contract.<br /><br /><span>Automatic Migrations</span>: the maintenance contract include a guarantee on the automatic migrations from one stable version to another stable version. It already works with current 4.2 versions. We provide you the automatic migration system and the service to help you to migrate if needed.<br /><br />Please note that these editions are only services. The Open ERP code used is exactly the same between all editions or for the community. We will always continue to use bazaar and launchpad to push what we do to the community.<br /><br />But I think we can not achieve these 4 services and guarantees without a<br />service contract. The big change with version 5, is that this effort<br />(migration, bugfixing, life cycle guarantees) is not anymore at the charge of the partner but the end-customer.<br /><br />You can compare the different contracts here:<br /><a href="http://openerp.com/index.php?option=com_content&id=8">http://openerp.com/index.php?option=com_content&amp;id=8</a><br /><br /><br /><span>More explanation</span><br /><br />In reaction of a post we had on the forum:<br />> So I suggest to find a bettter term for "No guarantee" > "Supported"<br /><br />A 'guarantee' is a service ! The editor can not offer 'support' for free, it's not reliable nor scalable !<br /><br />It does not mean we do not provide the code or bugfix, it's just mean if you want a guarantee you need a maintenance contract. Because a guarantee is a service.<br /><br />We, as an open source editor, want to provide everything for free. As a CEO, that's my business but also my passion. But I consider that a service must be paid. No matter of the form of the service. After, everything we achieved through this service are pushed to the open source community for free, once it's done.<br /><br />We used to work like this for the code, it will be the same for the bugfixes, the maintenance and the migrations. Of course, we continue to have R&amp;D budgets to develop new features and improve the quality. I am just talking here about urgent bugfixes that are part of our SLA.<br /><br />I underdand it's a big change and people do not like the changes. But note that last year, partners where complaining of the invert. Before this, bugfixes requested in an emergency by partners had to be charged in the partner contract. So the reaction was, why should the partner pay to bugfix something.<br /><br />This maintenance contract sets the basis of a strong model where:<br /><ul><li>the partner do not have anything to pay (it's the customer that purchase the maintenance)</li><li>the editor can organise himself and offer a strong and guaranteed quality of services for the different maintenance aspects, because he is paid for this.</li></ul><br />On v4.2, the more we had bugs, the more profit was generated for the editor, because the partners had to pay per hours. (of course, it was not our goal) It was good for the editor but not for the product, nor the partner. That's why we wanted to change this for version 5.<br /><br />With these maintenance contracts, the more bugs we found, the more it costs to the editor ! Because we sell fixed price contracts, no matter of the number of bugs. Trust me, we will organise ourself to provide VERY good code and quality of service. And that's very good for maturity of the product.<br /><br />Now, bugs-migrations-security issues will not cost anything to the partner, so they can control their costs more easily on customers projects.<br /><br />So, the goals of these changes and the version 5 are:<br /><blockquote><br /><span>IT'S TIME TO BE MORE PROFESSIONAL AND RELY ON A STRONG BUSINESS MODEL THAT WILL INCREASE THE QUALITY OF THE PRODUCT AND THE SERVICE, WHILE SUSTAINING THE GROWTH TO DELIVER A BETTER PRODUCT TO THE COMMUNITY.</span></blockquote><br /><br />I have 40 people working on R&amp;D, maintenance, bugfix and partners services. Trust me, the yearly 1950 EUR we charge to partners is ridiculously low according to our editors's charges. Before version 5, the editor was profitable due to customers projects and was loosing lots of money on the editor area.<br /><br />> * we do not migrate to a product which does not support<br />> ** UTF-8 printing (nobody else will migrate and even use V5)<br />> ** UTF-8 document management<br /><br />As I said, you can not ask more and more, for free, to the editor. Most of the time we succeed to provide what partners and the community requests, and we will continue to work like this. But you have to understand we all worked by night to achieve these needs and it's not reliable in the long term. We need a strong business model.<br /><br />You can not request more and more new open source features/modules, while asking free maintenance. It's not reliable nor scalable at all. The solution we proposed, through editions, is very good for everyone:<br /><ul><li>The partner resell and, thus, don't pay for the service (+get a commission)</li><li>The customer get the guarantee and the quality of services he needs</li><li>The editor can start consolidating on quality of services and maintenance because he is paid for this.</li><li>The result of all of this will be pushed to the community to sustain the growth of the product and his quality.</li></ul><br />Otherwise, it's not scalable, nor reliable. We have 15 new modules per month,<br />the maintenance of all these modules become more and more complex. Trust me, it's really complex to achieve to growth we made (in features and in quality),<br />we have 40 very good people behing this.<br /><br />That's why I propose a big change in the business model. If we want to<br />sustain the growth and the quality of the product, we need:<br /><ul><li>A win-win relationship between partners and the editor</li><li>Contracts that allow us to provide unlimitted maintenance &amp; bugfixes</li><li>Push everything that have been paid by the customers to the community</li></ul>I think that these new propositions, for v5, fit perfectly into these<br />needs.<br /><br />> The reaction of my most important - and meanwhile angry - 4.2 client<br />> * you call this free?<br />> * what are they going to charge next year ?<br />> * if ever we migrate we might fund an open source module for migration.<br /><br />1. Yes, it's free like in <span>"free software"</span>, not like in <span>"free beer"</span>.<br />2. Probably the same amount, or less if we have more customers to divide the maintenance costs on. The great advantage of open source is that the customer manage the market. If the offer is too expensive, he can do the work himself. Check at the competitors (Compiere / OpenBravo), they charge 8000 € per year for this service. It's not expensive at all, we have 350 modules to maintain and a fast evolution of the product to control, for 1500€ !<br /><br />I consider the "migration guarantee" as a service. Migrations are very complex to manage. We worked 5 months to manage automated migrations between v4 and v5 and the result is quite good; we automated most of our databases.<br />But I also know that we need to provide a service for this because, either if the scripts are very strong, all databases are different and we may encounter difficulties on some installations.<br /><br />If we release for free, then people may complain it doesn't work in all cases. If we don't sell maintenance, I can not work on a specific (one by one) customer requests. We want to offer quality services and code/product. For maintenance and migration, the only possibility is to assign full time developers on this that will work per customer requests.<br /><br />> The reaction of my most important - and meanwhile angry - 4.2 client<br /><br />If you have a problem with your customer, please understand that we don't guaranteed nor sold any maintenance nor support contract to your customer. You probably did it, not me !<br /><br />I understand it's a very confusing situation for you. But the new maintenance contract have been setup to avoid this in the future. What we did with this V5 is to avoid such situation and provide the service you need to take everything at our charge, spreading the cost to the global number of customers.<br /><br />> Automated migrations must be available to the community<br /><br />I fully agree with you ! Migrations must be available to the community.<br /><br />But I also consider migrations guarantee as a service and a big cost to<br />GUARANTEE this in the future. So I thought about a mix to satisfy customers (that need guarantee, quality, quick and direct services) and the community that want to migrate for free.<br /><br />That's why I think migrations should be seen like the 'Shared Funding Projects':<br /><ul><li>Those that needs a professional environment, a guarantee on the quality of services and code, have to purchase the maintenance contract.</li><li>When the maintenances contracts reimbursed the R&amp;D costs of these migrations, we will publish them as open source for the community.</li></ul><br />So, I estimated that we will be able to release the migration scripts with 3 to 8 months, according to the success of the editions. If it takes more than 8 months, I will take the costs at my charge and distribute everything online for free. So that the community have a 'guarantee' on waiting maximum 8 months.<br /><br />This remark is only for migrations scripts and shared funding projects. For all the rest (new developments, bugfixes, ...) we push what we develop directly on launcphad.</div>
+With the version 5 of Open ERP, we setup a second level maintenance contract, that can complete partner's first level maintenance/support contract provided to customer. It's a service contract (not required to use Open ERP) to get some guarantees and to work on a professional way. In these editions, we provide:<br /><br /><span>bugfixes guarantees</span> : according to the contract level, we guarantee a delay to manage a bug. Within this delay, we assign a full time developer on the bug that will fix it in an average of 4 hours. On previous versions of Open ERP the bugfix was at the charge of the partner (from the support hours in the partner contract). With this new system, partners get an unlimitted and free bugfixes, paid by the final customer. We setup an automated migration system within the server that can automatically download new versions and apply fixes.<br /><br /><span>Life cycle guarantee</span> : with these new editions, we are able to provide up to 5 years of maintenance on a specific version of Open ERP. It's a<br />guarantee for the customer they will not have to migrate at each new version. (nobody likes to be forced to migrate often a working ERP system)<br /><br /><span>Security and bugs alerts</span>: we reviewed all our internal procedures to be able to report to customers (or partners) new security alerts and bugs. We send the report about the security issue or bug with the fix of the problem. The application of the patch or the training of the customer should be provided by partners through their support contract.<br /><br /><span>Automatic Migrations</span>: the maintenance contract include a guarantee on the automatic migrations from one stable version to another stable version. It already works with current 4.2 versions. We provide you the automatic migration system and the service to help you to migrate if needed.<br /><br />Please note that these editions are only services. The Open ERP code used is exactly the same between all editions or for the community. We will always continue to use bazaar and launchpad to push what we do to the community.<br /><br />But I think we can not achieve these 4 services and guarantees without a<br />service contract. The big change with version 5, is that this effort<br />(migration, bugfixing, life cycle guarantees) is not anymore at the charge of the partner but the end-customer.<br /><br />You can compare the different contracts here:<br /><a href="http://openerp.com/index.php?option=com_content&id=8">http://openerp.com/index.php?option=com_content&amp;id=8</a><br /><br /><br /><span>More explanation</span><br /><br />In reaction of a post we had on the forum:<br />> So I suggest to find a bettter term for "No guarantee" > "Supported"<br /><br />A 'guarantee' is a service ! The editor can not offer 'support' for free, it's not reliable nor scalable !<br /><br />It does not mean we do not provide the code or bugfix, it's just mean if you want a guarantee you need a maintenance contract. Because a guarantee is a service.<br /><br />We, as an open source editor, want to provide everything for free. As a CEO, that's my business but also my passion. But I consider that a service must be paid. No matter of the form of the service. But, everything we achieved through this service is pushed to the open source community for free.<br /><br />We used to work like this for the code, it will be the same for the bugfixes, the maintenance and the migrations. Of course, we continue to have R&amp;D budgets to develop new features and improve the quality. I am just talking here about urgent bugfixes that are part of our SLA.<br /><br />I understand it's a big change and people do not like changes. But note that last year, partners were complaining of the invert. Before this, bugfixes requested in an emergency by partners had to be charged in the partner contract. So the reaction was, why should the partner pay to bugfix something.<br /><br />This maintenance contract sets the basis of a strong model where:<br /><ul><li>the partner do not have anything to pay (it's the customer that purchase the maintenance)</li><li>the editor can organize himself and offer a strong and guaranteed quality of services for the different maintenance aspects, because he is paid for this.</li></ul>On v4.2, the more we had bugs, the more profit was generated for the editor, because the partners had to pay per hours. (of course, it was not our goal) It was good for the editor but not for the product, nor the partner. That's why we wanted to change this for version 5.<br /><br />With these maintenance contracts, the more bugs we found, the more it costs to the editor ! Because we sell fixed price contracts, no matter of the number of bugs. Trust me, we will organise ourself to provide VERY good code and quality of service. And that's very good for maturity of the product.<br /><br />Now, bugs-migrations-security issues will not cost anything to the partner, so they can control their costs more easily on customers projects.<br /><br />So, the goals of these changes and the version 5 are:<br /><blockquote><br /><span>IT'S TIME TO BE MORE PROFESSIONAL AND RELY ON A STRONG BUSINESS MODEL THAT WILL INCREASE THE QUALITY OF THE PRODUCT AND THE SERVICE, WHILE SUSTAINING THE GROWTH TO DELIVER A BETTER PRODUCT TO THE COMMUNITY.</span></blockquote><br />> Automated migrations must be available to the community<br /><br />I fully agree with you ! Migrations must be available to the community.<br /><br />But I also consider migrations guarantee as a service and a big cost to GUARANTEE this in the future. So I thought about a mix to satisfy customers (that need guarantee, quality, quick and direct services) and the community that want to migrate for free.<br /><br />That's why I think migrations should be seen like the 'Shared Funding Projects':<br /><ul><li>Those that needs a professional environment, a guarantee on the quality of services and code, have to purchase the maintenance contract.</li><li>When the maintenances contracts reimbursed the R&amp;D costs of these migrations, we will publish them as open source for the community.</li></ul><br />So, I estimated that we will be able to release the migration scripts with 3 to 8 months, according to the success of the editions. If it takes more than 8 months, I will take the costs at my charge and distribute everything online for free. So that the community have a 'guarantee' on waiting maximum 8 months.<br /><br />This remark is only for migrations scripts and shared funding projects. For all the rest (new developments, bugfixes, ...) we push what we develop directly on launcphad.</div>
+
+
+
+
 
 
 
@@ -23,10 +684,18 @@ With the version 5 of Open ERP, we setup a second level maintenance contract, th
 </div>
 </div>
 
+
+
+
 <div class="entrygroup" id="tag:blogger.com,1999:blog-452239050463873058.post-5130247390592773407">
+<h4><a href="http://fptiny.blogspot.com/2009/02/this-post-explains-all-changes-that-are.html">New version 5.0</a></h4>
 <div class="entry">
 <div >
 This post explains all the changes that are related to this new version: partnerships, migrations, new features, etc.<br /><br /><span>About the Software</span><br /><br /><br />I suppose you already know most of the changes that have been applied in the Open ERP software. This new version focused on the following elements:<br /><ul><li><span>ACCESSIBILITY &amp; EASE OF USE</span> : the version comes with tooltips on most fields, a complete documentation (1500 pages) linked with contextual help, configuration wizards, pre-configured access-rights, reviewed interfaces, simple/extended mode. This should allow people to start working with Open ERP much more easily.</li><li><span>BETTER INTERFACE</span>: especially with the web client with the drag&amp;drop calendar, the gantt charts, the process view, reviewed look, better dashboards, etc.</li><li><span>TOOLS FOR INTEGRATORS</span>: to allow you to integrate Open ERP by doing parametrization, not develoment: screen/object designer, server actions, workflow editor, etc.</li><li><span>MATURITY</span>: about 1200 bugs have been fixed within the past 5 months.</li></ul>And, of course lots of new modules and features.<br /><br /><span><span>About the marketing</span></span><br /><br /><br />We splitted the (allinone) Open ERP website into two websites, to target different kind of users:<br /><ul><li>Open ERP : for customers, to promote a product or a solution. You will find on this website: features, online demonstration, success stories, services offers.</li><li>Open Object : for the community, to organise collaborative efforts. New things on this website: irc channel, extensive launchpad use, technical keypoints.</li></ul><br />These websites are all related to the same code/software. We can say that:<br /><ul><li>Open ERP is a product</li><li>Open Object is a project</li><li>On Demand is a service</li></ul><br />We think it's important to have a different communication according to the target market. Customers will want to see advantages, ROI, services offers, success stories whereas community will want to see forum, IRC, current bugs, branches of development, ...<br /><br />We also launched new services:<br /><ul><li>OpenERP.tv : a place for the community where you can upload your screencasts You can post your blog on blip.tv with the tag openerp, and we will validate it to integrate in the screencasts section.</li><li>Evaluation-Matrix.com : A pragmatic and collaborative comparison amongst most advanced ERP on the market.</li><li>Doc.OpenERP.com : a 1500 pages of documentation with the following books available: enterprise management (The Open ERP book), the community book, the installation book, the BI book, the modules list, the features list.</li></ul><br />We splitted the planet into 2 planet, the goal is to allow every partner to contribute on the openobject planet: technical issues, new modules, customers, announce of events, ... The communication for the Open ERP planet will be done by our marketing team by reviewing, improving and filtering others contents.<br /><br /><br /><span>About the partnership</span><br /><br />The partnership contract has been changed to be more reliable. We kept the same ideas than the preceeding contract but improved on some points, mainly the point (units) system.<br /><br />We simplifed the unit system to be much more easy and understandable. We got inspired by the ezPublish model. Now, units are computed based on all services you resell to your customer (or buy yourself), making a certified module, maintenance contracts, trainings, etc. This points system is the reflect on your activity on Open ERP:<br /><ul><li>reselled maintenance contract => number of customers</li><li>quality certified modules => number of good modules published</li><li>trainings &amp; support => your knowledge on Open ERP</li></ul><br />This new contract will take effect at the end of your current contract. Please note that we will be more strict with the partner level: sliver/gold. We will review the partnership level every 3 months, based on your real activity. So, people may increse their level/decrease their level according to their real activity on Open ERP in 6 months. Our goal is to be very fair and apply exactly the same rule to everyone.<br /><br />The new rule to be starter/silver/gold/platinium are:<br /><ul><li>Platinium : 5% of the top partners having the most points</li><li>Gold : 15% of the top partners having the most points</li><li>Silver : partners having more than 1500 points</li><li>Starter : new partners</li></ul>It's better because it scale efficiently with the growth of the partner network. We also re-evaluate partners level once every months.<br /><br />In this situation, the partner level is less related to the amount the partner purchase but more to the activity and sales the partner generates.<br /><br />The commission on all our products (maintenance, trainings, ...) has changed too:<br /><ul><li>before it was 20% on all our products</li><li>we increased to 25% splitted like this: 15% direct discount, 10% to be reused to buy others products (maintenance contracts, support, trainings, ...)</li></ul><br />The commission is applied on direct purchases, or on purchases made by your customer. If one of your customer buys directly the service on our online shop, contact us to say it's your customer and we will pay you the commission at the end of the month.<br /><br /><br /><span>About the module certification</span><br /><br />In version 4.2, we had lots of troubles due to the quality of the modules published. Some where not fully finnished (proof of concepts), some where made by contributors and not maintained efficiently, ... It was a bad image for the product. We also get requests from customers and partners to get evaluation and feedback on their own modules.<br /><br />The certification is based on a procedure of 150 technical and functionnal tests and reviewed by 2 people from our quality team. After the certification:<br /><ul><li>We promote your work through a news on Open ERP</li><li>We tag your module as quality certified in the module list</li><li>We send you technical and functionnal feedback</li><li>We include it in maintenance contracts (for corporate contracts) or send you a yearly proposition for the maintenance of the module (migration to new versions, bugfixing, ...)</li></ul><br />It allows you to have a professional review on the quality of a module to avoid:<br /><ul><li>Complexities to migrate the module for futur version of Open ERP,</li><li>Having a module that do not fits Open ERP standards and is not used by the community,</li><li>Discovering bugs and problems once in production,</li><li>Queries that slows down the user interface when going on large production environment, etc.</li></ul><br />Once the quality of a module is certified, we offer second level maintenance contracts on this module to ensure module lifecycle during years, migration and bugfix guarantees.<br /><br />The advantage of using certified modules are:<br /><br /><ul><li>They are bugfree and the editor provides bugfix guarantee contracts,</li><li>You will not have migrations problems for next versions of Open ERP,</li><li>They are scallable and have been tested in production environments,</li><li>We made stress tests to check they run with big databases,</li><li>They are used by the community, so they will evolve and others will contribute.<br /></li></ul><br />The price to certify a module is 800 EUR, but we provide discounts for big projects, having lots of modules.  Note that you also have 25% discount on modules certification.<br /><br />Of course, that's not something you should buy. It's better to resell it<br />to the customer as a quality label.</div>
+
+
+
+
 
 
 
@@ -71,7 +740,7 @@ This post explains all the changes that are related to this new version: partner
 <li><strong>Decide which code needs to be re-generated. </strong>Whenever a build process is done a timestamp with the current time is stored in database. This timestamp is compared with the audit info for the application dictionary objects that participate in the code generation so now WAD is able to generate code only for those elements that have been created or modified after the last build. Additionally when exporting database to xml files the audit info is not longer exported and when updating the audit info is recalculated for the current time, thus it also works in case the modifications in application dictionary came from an <em>update.database. </em>There&#8217;s only one case when this check doesn&#8217;t work: it is when application dictionary elements are modified directly in databse through <em>insert/update </em>SQL statements without updating audit info. In this case the developer will have to generate the code in the old way (using <em>compile -Dtab=modifiedWindows</em>).</li>
 <li><strong>Check if database has been changed. </strong>This check allows to export only if there&#8217;re changes in database and prevents data loses when updating database. To check this it is used the same timestamp as in the first point. Modifications in data are calculeted by DAL and modifications in database structure are queried directly to database. The query for database structure last modification has no problem in Oracle becuase <em>User_Objects</em> table stores the last physical change for each database object, but in PostgreSQL that information is not stored in database. This has been solved for PostgreSQL generating a checksum in database from all the elements in database that can be exported to xml files, that&#8217;s the reason why in PostgreSQL this check takes longer than in Oracle.</li>
 </ul>
-Posted in Openbravo&nbsp;&nbsp;&nbsp;Tagged: developers utilities, r2.50&nbsp;&nbsp;&nbsp;<a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/alostale.wordpress.com/95/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/alostale.wordpress.com/95/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/alostale.wordpress.com/95/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/alostale.wordpress.com/95/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/alostale.wordpress.com/95/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/alostale.wordpress.com/95/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/alostale.wordpress.com/95/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/alostale.wordpress.com/95/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/alostale.wordpress.com/95/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/alostale.wordpress.com/95/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=alostale.wordpress.com&blog=4387311&post=95&subd=alostale&ref=&feed=1" /></div><div class="feedflare">
+Posted in Openbravo Tagged: developers utilities, r2.50 <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gocomments/alostale.wordpress.com/95/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/comments/alostale.wordpress.com/95/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godelicious/alostale.wordpress.com/95/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/delicious/alostale.wordpress.com/95/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/gostumble/alostale.wordpress.com/95/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/stumble/alostale.wordpress.com/95/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/godigg/alostale.wordpress.com/95/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/digg/alostale.wordpress.com/95/" /></a> <a rel="nofollow" href="http://feeds.wordpress.com/1.0/goreddit/alostale.wordpress.com/95/"><img alt="" border="0" src="http://feeds.wordpress.com/1.0/reddit/alostale.wordpress.com/95/" /></a> <img alt="" border="0" src="http://stats.wordpress.com/b.gif?host=alostale.wordpress.com&blog=4387311&post=95&subd=alostale&ref=&feed=1" /></div><div class="feedflare">
 <a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=YLnuy0a5"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?d=41" border="0" /></a> <a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=WTlvE5pK"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?i=WTlvE5pK" border="0" /></a> <a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=6yjhKzgd"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?d=52" border="0" /></a>
 </div><img src="http://feeds2.feedburner.com/~r/openbravo-blogs/~4/lgLlYdDRyZI" height="1" width="1" /></div>
 
@@ -83,116 +752,6 @@ Posted in Openbravo&nbsp;&nbsp;&nbsp;Tagged: developers utilities, r2.50&nbsp;&n
 
 <p class="date">
 <a href="http://feedproxy.google.com/~r/openbravo-blogs/~3/lgLlYdDRyZI/">February 09, 2009 05:34 PM</a>
-</p>
-</div>
-</div>
-
-
-</div>
-
-</div>
-<div class="daygroup">
-<h2>February 07, 2009</h2>
-
-<div class="channelgroup">
-
-
-
-
-
-
-
-<h3><a href="http://www.openobject.com/planet/" title="Planet Open Object">OpenObject</a></h3>
-
-
-<div class="entrygroup" id="tag:blogger.com,1999:blog-452239050463873058.post-5879845437476456732">
-<h4><a href="http://fptiny.blogspot.com/2009/02/open-erp-v5-is-out.html">Open ERP v5 is out !</a></h4>
-<div class="entry">
-<div >
-<p>That major enhancement of <b>Open ERP</b> can now answer to all the needs of a business. Open ERP V5 not only provides management functions, but also all functionalities necessary to a SMB, like : a process management by modules, a wiki, a webmail, a Business Intelligence (Cube OLAP),  a Document Management System, an eCommerce, an idea box, etc.</p>  <p>Emphasis was placed on an extreme simplification of the software for the new users, a carefully designed ergonomy of the web client with, amongst others, drag&amp;drop, Gantt graph, editable processes, etc., and more then 350 modules for specific sectors and big companies.</p>  <p>This new version comes with a full review of the web site giving access to more then 1500 pages of documentations on business management and a reorganisation of the community sources build upon the Open Object framework. Free cycles of <a href="http://openerp.com/index.php?option=com_gcalendar&view=gcalendar&Itemid=27">conferences</a> are planned with the version 5.0 release of Open ERP.</p> <p align="justify"><br /></p> <p align="justify"><span><b>Unmatched functions</b></span></p> <p align="justify"><br /></p> <p align="justify"><span>Thanks to its huge community, Open Object produce more then 20 modules a month. The Open Object community it is more then 1000 contributors, <a href="https://code.launchpad.net/openobject">126 development branches</a> in parallel, an average of <a href="https://bugs.launchpad.net/openobject">400 new functinalities or bugfix</a> per month, one commit every 5 minutes and functional and technical  experts specialized by activity and working in teams.</span></p>  <p align="justify"><span>The rise of Open Object and the diversity of the projects makes it an unmatched framework composed of more then 400 modules installable in a few clicks to cover all kinds of need or to simply start, with a simple module, to answer a simple need. Then, you can install other functionalities to come to a fully integreted and automized system.</span></p> <p align="justify"></p><p align="justify"><span><b>Open ERP V5 </b>is characterized by the appearance of many functionalities far beyond the perimeter of traditional management. </span> </p> <p align="justify"><span>One can underline the following innovations: </span> </p> <ul><p align="justify"></p><li><p align="justify"><span>A  integrated wiki. </span>  </p>  </li><li><p align="justify"><span>An  integrated document management system.</span></p>  </li><li><p align="justify"><span>A  Business Intelligence (BI) using a OLAP database. </span>  </p>  </li><li><p align="justify"><span>An  integrated BPM (management of process).</span></p>  </li><li><p align="justify"><span>A web  portal for clients and suppliers. </span>  </p>  </li><li><p align="justify"><span>Improvement  of translations (1 translation file by language and module).</span></p>  </li><li><p align="justify"><span>A  touchscreen point of sale. </span>  </p>  </li><li><p align="justify"><span>A full  Ajax webmail . </span>  </p>  </li><li><p align="justify"><span>A  shared calendar.  </span></p>  </li><li><p align="justify"><span>Plugins  for Outlook, OpenOffice, ms. Office, Thunderbird.</span></p>  </li><li><p><span><span>An  integrated eCommerce, etc</span><br /></span><br /></p> </li></ul>   <p><span>This new release offers 3 user interfaces :</span></p> <ul><li><p><span>the  rich application client for a day to day advanced use,</span></p>  </li><li><p><span>the  web interface allowing a remote access and an easy deployment,</span></p>  </li><li><p><span><span>the  QT client that perfectly fits in a KDE environment.</span></span><br /><br /> </p> </li></ul> <p><span>Numerous improvements have been added to the client interfaces, like :</span></p> <ul><li><p><span>dynamic graphs and  dashboards,</span></p>  </li><li><p><span>really ergonomic  calendar views,</span></p>  </li><li><p><span>dynamic Gantt graphs  for planning,</span></p>  </li><li><p><span>workflows editors,</span></p>  </li><li><p><span>a fully integreted  documentation,</span></p>  </li><li><p><span>a dynamic process  view used for the end-user training,</span></p>  </li><li><p><span>etc.</span></p> </li></ul> <p><br /></p>  <p><span>The web version of Open ERP includes numerous functions to  modify or create your own application :</span></p> <ul><li><p><span>an visual view  editor,</span></p>  </li><li><p><span>an object editor,</span></p>  </li><li><p><span>a workflow (process)  editor,</span></p>  </li><li><p><span>an Open Office  integrated report editor</span></p>  </li><li><p><span>a statistics engine  (BI cube),</span></p>  </li><li><p><span>etc.</span></p> </li></ul> <p><br /></p>   <p><span><b>Restructuring websites</b></span></p> <p align="justify"><br /></p> <p align="justify"><span>Open ERP have made a full review of its web sites for a better structure and organisation of the ressources and community projects :</span></p>  <p align="justify"><span><b>- <a href="http://openerp.com">http://OpenERP.com</a></b> : there you will find the different <b>functionalities</b>, the <b>documentation</b>, the <b>Open ERP partners</b> and the <b>services</b> proposed by the editor.</span></p>  <p align="justify"><span>- <b><a href="http://openobject.com">http://OpenObject.com</a> : </b><span>Open Object, the Open ERP's framework, where is found all the community sources :</span></span></p> <ul><li><p align="justify">  <span>documentation,</span></p>  </li><li><p align="justify">  <span>Modules list,</span></p>  </li><li><p align="justify">  <span>Forum, IRC, Bazaar.</span></p> </li></ul> <p align="justify"><br /></p> <p align="justify"><span>A new IRC canal has also been opened for the community : irc://freenode.net/openobject </span> </p> <ul><p>   </p></ul> <p align="justify"><span>-<b> http://ondemand.openerp.com</b> : The « On Demand » offer, developped by Open ERP and Axelor. This is a « ready to use Open ERP » including hosting, maintenance and support.</span></p> <p align="justify"></p><p align="justify"><span>Furthermore, <b>Open ERP</b> provides some <b>new services</b> to the community :</span></p>  <p align="justify"><span><span>- </span><span><b><a href="http://doc.openerp.com">http://doc.openerp.com</a> </b></span><span>: 1500 pages of documentations covering all domains of business management or about the developement under Open Object.</span></span></p>  <p align="justify"><span><b>- <a href="http://openerp.tv">http://OpenERP.tv</a> : Screencasts dedicated to Open ERP</b><span> consisting of</span><b> presentation made by the contributors</b></span></p>  <p align="justify"><span>-<b> <a href="https://launchpad.net/openobject">https://launchpad.net/openobject</a></b><a href="https://launchpad.net/openobject%20"> </a> : The development plateform for Ubuntu, gathering all the developments of Open ERP and Open Objects. There is found the bugtracker, the FAQ, the ressources management, translations, etc.</span></p> <p align="justify"><br /></p> <p align="justify"><span><b>Free Softwares overtakes proprietary softwares on the management softwares market</b></span></p> <p align="justify"><br /></p> <p align="justify"><span><b>Open ERP V5 </b></span><span>takes an unquestionable lead on its larger competitors like </span><span><span>Microsoft Dynamix et SAP. Two very thorough studies have compared Open ERP with its proprietary and free competitors, showing an advance of several years for Open ERP:</span></span></p> <ul><li><p align="justify"><span>The ERP  Open Source white paper by Smile : A study carried out over 6 months  by experts of Smile. </span>  </p>  </li><li><p align="justify"><span>Evaluation-Matrix.Com:  an community approach with a pragmatic evaluation of the management  software company.  <br /></span></p></li></ul> <p><br /></p> <p><span><b>Need to know more ?</b></span></p> <p><br /></p> <p><span>Free presentations and trainings are organized everywhere in Europe, in order to present Open ERP V5. The next dates in France or Belgium are:</span></p> <p>  </p> <ul><li><p><span>On February 16:  Technical training and Open conference ERP in Grand-Rosière,  Belgium.</span></p> </li></ul> <ul><li><p><span>On February 20: Free  Open ERP conference in Paris, France </span>  </p>  </li><li><p><span>On February 25: Free  Open ERP conference, Switzerland. </span>  </p>  </li><li><p><span>On March 02: User  Training (session 1) in Grand-Rosière, Belgium.</span></p>  </li><li><p><span>On March 04: Free  Open ERP conference in Grand-Rosière, Belgium.</span></p>  </li><li><p><span>On March 23: User  Training (session 2) in Grand-Rosière, Belgium.</span></p>  </li><li><p><span>On March 25: User  Training (session 3) in Grand-Rosière, Belgium.</span></p>  </li><li><p><span>On April 01: User  Training (session 4) in Grand-Rosière, Belgium.</span></p>  </li><li><p><span>On April 05:  Technical Training in Grand-Rosière, Belgium.</span></p> </li></ul> <p><br /></p>  <p><span>For any subscription, please contact Donia : sales@tinyerp.com</span></p></div>
-
-
-
-
-
-
-
-<p class="date">
-<a href="http://fptiny.blogspot.com/2009/02/open-erp-v5-is-out.html">by Fabien Pinckaers (noreply@blogger.com) at February 07, 2009 08:55 AM</a>
-</p>
-</div>
-</div>
-
-
-</div>
-
-</div>
-<div class="daygroup">
-<h2>February 06, 2009</h2>
-
-<div class="channelgroup">
-
-
-
-
-
-
-
-<h3><a href="http://planet.openbravo.com/" title="Planet Openbravo">Openbravo</a></h3>
-
-
-<div class="entrygroup" id="http://sourceforge.net/forum/forum.php?forum_id=915932" lang="en">
-<h4><a href="http://feedproxy.google.com/~r/openbravo-blogs/~3/WSeDZvzc6u8/forum.php">Openbravo&amp;#39;s SourceForge news: Openbravo ERP: 2.50alpha-r10 available</a></h4>
-<div class="entry">
-<div >
-Openbravo ERP is a Web based ERP for SME, built on proven MVC &amp; MDD framework that facilitate its customization. Already in production, Openbravo ERP encompasses a broad range of functionalities such as finance, supply chain, manufacturing &amp; much more (<a href="http://sourceforge.net/forum/forum.php?forum_id=915932">0 comments</a>)<div class="feedflare">
-<a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=ERbMfjM8"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?d=41" border="0" /></a> <a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=woSRZ9ec"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?i=woSRZ9ec" border="0" /></a> <a href="http://feeds2.feedburner.com/~f/openbravo-blogs?a=BWVp835b"><img src="http://feeds2.feedburner.com/~f/openbravo-blogs?d=52" border="0" /></a>
-</div><img src="http://feeds2.feedburner.com/~r/openbravo-blogs/~4/WSeDZvzc6u8" height="1" width="1" /></div>
-
-
-
-
-
-
-
-<p class="date">
-<a href="http://feedproxy.google.com/~r/openbravo-blogs/~3/WSeDZvzc6u8/forum.php">by jpabloae@users.sourceforge.net (Juan Pablo Aroztegi) at February 06, 2009 04:14 PM</a>
-</p>
-</div>
-</div>
-
-
-</div>
-
-</div>
-<div class="daygroup">
-<h2>February 04, 2009</h2>
-
-<div class="channelgroup">
-
-
-
-
-
-
-
-<h3><a href="http://www.openobject.com/planet/" title="Planet Open Object">OpenObject</a></h3>
-
-
-<div class="entrygroup" id="tag:blogger.com,1999:blog-452239050463873058.post-4819639677879469692">
-<h4><a href="http://fptiny.blogspot.com/2009/02/open-erp-effect.html">The Open ERP effect</a></h4>
-<div class="entry">
-<div >
-I just made a small presentation that explain what's Open ERP.<div id="__ss_989414"><a href="http://www.slideshare.net/tiny07/the-open-erp-effect?type=presentation" title="The Open ERP effect">The Open ERP effect</a><div><br /></div></div></div>
-
-
-
-
-
-
-
-<p class="date">
-<a href="http://fptiny.blogspot.com/2009/02/open-erp-effect.html">by Fabien Pinckaers (noreply@blogger.com) at February 04, 2009 12:05 PM</a>
 </p>
 </div>
 </div>
