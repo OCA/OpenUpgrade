@@ -1,8 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <act_window id="res_partner_team_members" name="Members" src_model="res.partner.team" res_model="res.partner"/>
+        <!--
+        Members dans la zone team me semble être un duplicata de Contacts By Team
+        <act_window 
+            id="res_partner_team_members" 
+            name="Members" 
+            src_model="res.partner.team" 
+            res_model="res.partner"
+            />
+        -->
 
-        <menuitem parent="base_contact_team.res_partner_team_all_mi" id="contact_by_team_mi" name="Contact By Team" />
+        <record model="ir.ui.view" id="res_partner_team_tree_view">
+            <field name="name">res.partner.team.tree.view</field>
+            <field name="model">res.partner.team</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml"> 
+                <tree string="Team">
+                    <field name="name" />
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+
+        <!--
+        <record model="ir.values" id="res_partner_team_values_tree">
+            <field name="key2">tree_but_open</field>
+            <field name="model">res.partner.team</field>
+            <field name="name">Contacts By Team</field>
+            <field name="value" eval="'ir.actions.act_window,%d'%ref('base_contact.action_partner_contact_form')" />
+            <field name="object" eval="True"/>
+        </record>
+        -->
+
+        <record model="ir.actions.act_window" id="contact_by_team_act">
+            <field name="name">Contacts By Team</field>
+            <field name="res_model">res.partner.team</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem parent="base_contact_team.res_partner_team_all_mi" id="contact_by_team_mi"
+            action="contact_by_team_act" />
     </data>
 </openerp>
