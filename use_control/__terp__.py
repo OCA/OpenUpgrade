@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,8 +19,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import product_variant
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
+{
+    "name" : "On Demand Open Object - Subscription Control",
+    "version" : "1.0",
+    "author" : "Tiny",
+    "category" : "Tools",
+    "description": """
+This module provides reports to control your on demand subscription.
+You can not uninstall or delete it.
+""",
+    "website": "http://openerp.com",
+    "depends" : ["base"],
+    "init_xml" : [],
+    "update_xml" : [
+        "use_control_view.xml",
+    ],
+    "demo_xml" : [],
+    "installable": True,
+    "active" : True,
+}

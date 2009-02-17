@@ -71,15 +71,16 @@ class direct_poll(wizard.interface):
         temp.append(answer)
         crm_obj = pooler.get_pool(cr.dbname).get('crm.case')
         partner = crm_obj.read(cr, uid, data['id'], ['partner_id'], context)
-        partner_id = partner['partner_id'][0]
 
-        query = "select answer from partner_question_rel where partner=%s"
-        cr.execute(query, (partner_id,))
-        for x in cr.fetchall():
-            temp.append(x[0])
+        if partner['partner_id']:
+            partner_id = partner['partner_id'][0]
+            query = "select answer from partner_question_rel where partner=%s"
+            cr.execute(query, (partner_id,))
+            for x in cr.fetchall():
+                temp.append(x[0])
 
-        partner_obj = pooler.get_pool(cr.dbname).get('res.partner')
-        partner_obj.write(cr, uid, [partner_id],{'answers_ids':[[6,0,temp]]}, context)
+            partner_obj = pooler.get_pool(cr.dbname).get('res.partner')
+            partner_obj.write(cr, uid, [partner_id],{'answers_ids':[[6,0,temp]]}, context)
 
         # Check if the last answer attached to a new question.
         answer_obj = pooler.get_pool(cr.dbname).get('crm_profiling.answer')
@@ -119,7 +120,7 @@ class direct_poll(wizard.interface):
 <form string="%s">
  <label string="%s" colspan="4" width="450"/>
  <field name="answer" colspan="4" />
-</form>""" % (question[1], question[1],)
+</form>""" % (question[1].encode("utf-8"), question[1].encode("utf-8"),)
 
         _fields = {'answer': {
                 'string':'Answer',

@@ -33,16 +33,16 @@ _form_init =  '''<?xml version="1.0"?>
             <field name="characteristic_ids"/>
         <separator string="message" colspan="4"/>
             <field name="message"/>
-        </form>'''    
-    
+        </form>'''
+
 _fields_init = {
         'template_id':{'string': 'template', 'type': 'many2one','relation':'product.product','domain':(('variants','=',False),)},
         'characteristic_ids': {'string': 'characteristic to combine', 'type': 'many2many','relation':'mrp.characteristic'},
-        'message':{'string':'', 'type': 'char' ,'readonly':True,'size':'100'}    
+        'message':{'string':'', 'type': 'char' ,'readonly':True,'size':'100'}
     }
 
 # wizard for helping generation of variants
-# give characteristics for a template, and the program will create all variants as combination of 
+# give characteristics for a template, and the program will create all variants as combination of
 # every characteristics in groups given
 
 def combine(seqin):
@@ -74,13 +74,13 @@ class fashion_help_wizard(wizard.interface):
                     else:
                         res=False
                 return res
-            
+
         newfields={
             'message': '',
             'template_id' : field_value('template_id'),
             'characteristic_ids' : field_value('characteristic_ids')
              }
-        
+
         if field_value('template_id') and (field_value('characteristic_ids')):
             pool = pooler.get_pool(cr.dbname)
             template= pool.get('product.product').browse(cr, uid, field_value('template_id'))
@@ -93,10 +93,9 @@ class fashion_help_wizard(wizard.interface):
             if len(combi)>100:
                 newfields['message']='too much variants (more than 100), check values.'
                 return newfields
-                
+
             newfields['message']= '%s variants of %s created' % (len(combi),template.name)
             for chars in combi:
-                print chars
                 var_id=pool.get('product.product').copy(cr, uid,field_value('template_id'))
                 pool.get('product.product').write(cr, uid,[var_id],{'characteristic_ids':[(6,0,chars,)]})
                 return newfields
@@ -105,7 +104,7 @@ class fashion_help_wizard(wizard.interface):
         else:
             newfields['message']= 'check data entries'
             return newfields
-    
+
     states = {
         'init': {
             'actions': [],
@@ -117,5 +116,5 @@ class fashion_help_wizard(wizard.interface):
         }
     }
 
-    
+
 fashion_help_wizard('fashion.help.wizard')

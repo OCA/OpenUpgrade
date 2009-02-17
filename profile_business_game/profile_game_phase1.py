@@ -289,7 +289,7 @@ class profile_game_phase_one(osv.osv):
          for journal in acc_journal.browse(cr, uid, journal_ids):
             if journal.code in ('JB','SAJ','EXJ','JC'):
                  if journal.code == 'JB':
-                     code = '512'
+                     code = '512100'
                  if journal.code == 'SAJ':
                      code = '411100'
                  if journal.code == 'EXJ':
