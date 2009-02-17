@@ -33,7 +33,9 @@
         'project',
         'account_analytic_analysis',
         'document',
-        'portal'
+        'portal',
+        'hr_exprense',
+        'hr_holidays',
     ],
     'init_xml' : [],
     'update_xml' : [
