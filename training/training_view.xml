@@ -1037,12 +1037,28 @@
     </data>
 
     <data>
+        <record model="ir.actions.act_window" id="training_location_all_act">
+            <field name="name">Locations</field>
+            <field name="res_model">training.location</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="training_location_new_act">
+            <field name="name">New Location</field>
+            <field name="res_model">training.location</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+    </data>
+
+    <data>
         <menuitem id="training_mi" name="Trainings" />
         <menuitem id="training_config_mi" parent="training_mi" name="Configuration" sequence="1"/>
         <menuitem id="training_config_library_mi" parent="training_config_mi" name="Library" />
         <menuitem id="training_config_library_course_type_mi" parent="training_config_library_mi" action="training_course_type_all_act" />
         <menuitem id="training_config_library_product_line_mi" parent="training_config_library_mi" action="training_course_category_all_act" />
-        <menuitem id="training_config_locations_mi" parent="training_config_mi" name="Locations" />
+        <menuitem id="training_config_locations_mi" parent="training_config_mi" action="training_location_all_act"/>
+        <menuitem id="training_config_locations_new_mi" parent="training_config_locations_mi" action="training_location_new_act" />
 
         <menuitem id="training_library_mi" parent="training_mi" name="Library" sequence="2" />
         <menuitem id="training_library_course_mi" parent="training_library_mi" name="Courses" />
