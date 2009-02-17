@@ -67,6 +67,19 @@
 		<foaf:Agent>
 			<foaf:name>SAP</foaf:name>
 			<foaf:weblog>
+				<foaf:Document rdf:about="http://www.sap.com/about/press/index.epx">
+					<dc:title>SAP - Press Room</dc:title>
+					<rdfs:seeAlso>
+						<rss:channel rdf:about="http://www.sap.com/about/newsroom/rss.epx" />
+					</rdfs:seeAlso>
+				</foaf:Document>
+			</foaf:weblog>
+		</foaf:Agent>
+	</foaf:member>
+	<foaf:member>
+		<foaf:Agent>
+			<foaf:name>SAP</foaf:name>
+			<foaf:weblog>
 				<foaf:Document rdf:about="http://searchsap.techtarget.com?track=sy191">
 					<dc:title>SearchSAP: SAP news, tips and expert advice</dc:title>
 					<rdfs:seeAlso>
