@@ -32,6 +32,7 @@ class use_control_time(osv.osv):
         'user_id': fields.many2one('res.users', 'User', ondelete='set null'),
         'date': fields.datetime('Date'),
         'duration': fields.float('Duration'),
+        'uploaded': fields.boolean('Uploaded')
     }
     def write(self, cr, uid, ids, data, context={}):
         return True
