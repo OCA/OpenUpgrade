@@ -34,7 +34,7 @@
         'account_analytic_analysis',
         'document',
         'portal',
-        'hr_exprense',
+        'hr_expense',
         'hr_holidays',
     ],
     'init_xml' : [],
