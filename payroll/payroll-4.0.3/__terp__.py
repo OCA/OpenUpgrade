@@ -24,7 +24,7 @@
     "version" : "0.3",
     "author" : "Tiny",
     "category" : "Generic Modules/Payroll",
-    "website" : "http://tinyerp.com/module_hr.html",
+    "website" : "http://www.openerp.com",
     "description": "Module for payroll, India",
     "depends" : ["base"],
     "init_xml" : [],

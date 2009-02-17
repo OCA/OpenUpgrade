@@ -27,7 +27,7 @@
     "author" : "Tiny",
     "category" : "Generic Modules/Accounting",
     "module": "",
-    "website": "http://www.tinyerp.com/",
+    "website": "http://www.openerp.com",
     "depends" : ["account","product","crm"],
     "init_xml" : [],
     "update_xml" : [

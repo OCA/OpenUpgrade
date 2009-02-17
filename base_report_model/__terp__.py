@@ -23,7 +23,7 @@
         "name" : "Base Report Model", 
         "version" : "0.1",
         "author" : "Tiny",
-        "website" : "http://openerp.com",
+        "website" : "http://www.openerp.com",
         "category" : "Tools",
         "description": """This module allows you to specify the models which can have an attachment from OpenOffice Report""",
         "depends" : ['base'],

@@ -26,7 +26,7 @@
     "author" : "Tiny",
     "description": """Prodide a new field on the invoice line form, allowing to manage the lines order.
     """,
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Accounting",
     "init_xml" : [],
     "demo_xml" : [],

@@ -39,7 +39,7 @@ Then based one some events (a customer visiting some pages), it can open a
 window so that the visitor can directly talk with your teams. It goes to a
 jabber user according to what you configured in the OpenERP interface.
     """,
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/CRM & SRM",
     "init_xml" : [],
     "demo_xml" : [],

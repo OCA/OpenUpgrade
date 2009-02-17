@@ -27,7 +27,7 @@
     "description": """Module to change defination of the name field of invoice
     using this module you can change the invoice number when it is in draft state.
     """,
-    "website" : "http://tinyerp.com/module_account.html",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Accounting",
     "init_xml" : [
     ],

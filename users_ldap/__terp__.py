@@ -25,7 +25,7 @@
     "depends" : ["base"],
     "author" : "Tiny",
     "description": """Add support for authentication by ldap server""",
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Others",
     "init_xml" : [
     ],

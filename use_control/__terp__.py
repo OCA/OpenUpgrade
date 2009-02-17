@@ -28,7 +28,7 @@
 This module provides reports to control your on demand subscription.
 You can not uninstall or delete it.
 """,
-    "website": "http://openerp.com",
+    "website": "http://www.openerp.com",
     "depends" : ["base"],
     "init_xml" : [],
     "update_xml" : [
