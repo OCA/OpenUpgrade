@@ -185,7 +185,7 @@
     <blockTable colWidths="207.0,119.0,113.0,102.0" style="Table5">
       <tr>
         <td>
-          <para style="terp_default_9"><font face="Times-Roman">[[ repeatIn(get_lines('liability'), 'a') ]]</font> <font color="white">[[  '. '*(a['level']-2) ]]</font>[[ a['level']==0 and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]][[ a['name'] ]]</para>
+          <para style="terp_default_9"><font face="Times-Roman">[[ repeatIn(get_lines('liability'), 'a') ]]</font> <font color="white">[[  '. '*(a['level']-2) ]]</font>[[ a['level']==3 and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]][[ a['name'] ]]</para>
         </td>
         <td>
           <para style="terp_default_Right_9">[[ a['outer'] == '-1' and a['balance'] ]]</para>
@@ -234,7 +234,7 @@
     <blockTable colWidths="207.0,120.0,112.0,103.0" style="Table2">
       <tr>
         <td>
-          <para style="terp_default_9"><font face="Times-Roman">[[ repeatIn(get_lines('asset'), 'a') ]]</font> <font color="white">[[  '. '*(a['level']-2) ]]</font>[[ a['level']==0 and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]][[ a['name'] ]]</para>
+          <para style="terp_default_9"><font face="Times-Roman">[[ repeatIn(get_lines('asset'), 'a') ]]</font> <font color="white">[[  '. '*(a['level']-2) ]]</font>[[ a['level']==3 and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]][[ a['name'] ]]</para>
         </td>
         <td>
           <para style="terp_default_Right_9">[[ a['outer'] == '-1' and a['balance'] ]]</para>

@@ -28,68 +28,84 @@
 import pooler
 import time
 import mx.DateTime
+import rml_parse
 from report import report_sxw
+from account_report_india.report import report_pl_account
 
-class report_pl_account(report_sxw.rml_parse):
+class report_balancesheet_horizontal(rml_parse.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(report_pl_account, self).__init__(cr, uid, name, context)
+        super(report_balancesheet_horizontal, self).__init__(cr, uid, name, context)
+        self.obj_pl=report_pl_account.report_pl_account(cr, uid, name, context)
         self.result_sum_dr=0.0
-        self.result_sum_expense_dr=0.0
+        self.result_sum_lib_dr=0.0
         self.result_sum_cr=0.0
-        self.result_sum_income_cr=0.0
+        self.result_sum_ass_cr=0.0
         self.result_dr=0.0
         self.result_cr=0.0
-        self.res_pl ={}
         self.final=[]
-        self.localcontext.update( {
+        self.localcontext.update({
             'time': time,
             'get_lines' : self.get_lines,
             'get_company': self.get_company,
             'get_currency': self._get_currency,
-            'get_data': self.get_data,
             'sum_dr' : self.sum_dr,
             'sum_cr' : self.sum_cr,
-            'sum_expense_dr' : self.sum_expense_dr,
-            'sum_income_cr' : self.sum_income_cr,
-            'sum_expense1_dr' : self.sum_expense1_dr,
-            'sum_income1_cr' : self.sum_income1_cr,
-            'final_result' : self.final_result,
             'get_acc_obj':self.get_acc_obj,
+            'get_data':self.get_data,
+            'sum_lib_dr' : self.sum_lib_dr,
+            'sum_ass_cr' : self.sum_ass_cr,
+            'sum_lib1_dr' : self.sum_lib1_dr,
+            'sum_ass1_cr' : self.sum_ass1_cr,
+
+            
         })
         self.context = context
         
-    def final_result(self):
-        return self.res_pl
-    
     def sum_dr(self):
+        if self.result_sum_dr < 0.0:
+            self.result_sum_dr *= -1
         return self.result_sum_dr or 0.0
      
     def sum_cr(self):
+        if self.result_sum_cr < 0.0:
+            self.result_sum_cr *= -1
         return self.result_sum_cr or 0.0
-
-    def sum_expense_dr(self):
-        return self.result_sum_expense_dr or 0.0
+    
+    def sum_lib_dr(self):
+        if self.result_sum_lib_dr < 0.0:
+            self.result_sum_lib_dr *= -1
+        return self.result_sum_lib_dr or 0.0
      
-    def sum_income_cr(self):
-       return self.result_sum_income_cr or 0.0
-
-    def sum_expense1_dr(self):
+    def sum_ass_cr(self):
+        if self.result_sum_ass_cr < 0.0:
+            self.result_sum_ass_cr *= -1
+        return self.result_sum_ass_cr or 0.0
+    
+    def sum_lib1_dr(self):
+        if self.result_dr < 0.0:
+            self.result_dr *= -1
         return self.result_dr or 0.0
-
-    def sum_income1_cr(self):
+     
+    def sum_ass1_cr(self):
+        if self.result_cr < 0.0:
+            self.result_cr *= -1
         return self.result_cr or 0.0
 
+    
     def get_data(self,form):
-        gr_list=['expense','income']
-        base_list=['Opening Stock','Purchase','Direct Expenses','Indirect Expenses','Sales Account','Goods Given Account','Direct Incomes','Indirect Incomes']
-        for group in gr_list:
-            if group=='expense':
-                list_acc=['Opening Stock','Purchase','Direct Expenses','Indirect Expenses']
-            if group=='income':
-                list_acc=['Sales Account','Goods Given Account','Direct Incomes','Indirect Incomes']
+        gr_list=['liability','asset']
+        res_pl={}
+        result_pl=self.obj_pl.get_data(form)
+        res_pl=self.obj_pl.final_result()
+        total_list=['Share Holder/Owner Fund','Branch/Division','Loan(Liability) Account','Current Liabilities','Suspense Account','Fixed Assets','Investment','Current Assets','Misc. Expenses(Asset)']
+        resp={}
+        for group in gr_list: 
+            if group=='liability':
+                list_acc=['Share Holder/Owner Fund','Branch/Division','Loan(Liability) Account','Current Liabilities','Suspense Account']
+            if group=='asset':
+                list_acc=['Fixed Assets','Investment','Current Assets','Misc. Expenses(Asset)']
             acc_objs=[]
             final_result={}
-            balance_dict={}
             result=[]
             result_temp=[]
             res={}
@@ -117,61 +133,80 @@ class report_pl_account(report_sxw.rml_parse):
                 res['balance']=balance_dict[aobj.id]['balance']
                 res['type']=aobj.user_type.code
                 res['level']=aobj.level
-                if res['type'] == 'income' and res['balance'] < 0.0:
+                if res['type'] == 'liability' and res['balance'] < 0.0:
                     res['balance'] *= -1
                 if res['level'] > 4:
                     res['outer']='-1'
-                    if res['type'] == 'expense':
+                    if res['type'] == 'liability':
                          self.result_dr +=res['balance']
                     else:
                          self.result_cr +=res['balance']
-                         
+
                 if res['level']== 4:
                     res['outer']='0'
-                    if res['type'] == 'expense':
-                         self.result_sum_expense_dr +=res['balance']
+                    if res['type'] == 'liability':
+                         self.result_sum_lib_dr +=res['balance']
                     else:
-                         self.result_sum_income_cr +=res['balance']
-                    
+                         self.result_sum_ass_cr +=res['balance']
+
                 if res['level']== 3:
                     res['outer']='1'
-                    if res['type'] == 'expense':
+                    if res['type'] == 'liability':
                         self.result_sum_dr +=res['balance']
                     else:
                         self.result_sum_cr +=res['balance']
-                if form['empty_account']==False and res['name'] not in base_list:
+                if res_pl['type']=='Net Profit' and res['name']=='Reserve & Surplus Account':
+                    resp['outer']='-1'
+                    resp['name']= res_pl['type']
+                    resp['type']=res['type']
+                    resp['level']=res['level'] + 1
+                    resp['balance']=res_pl['balance']
+                    self.result_sum_lib_dr +=resp['balance']
+                    self.result_sum_dr +=resp['balance']
+                    self.result_dr +=resp['balance']
+                    res['balance'] += resp['balance']
+                if res_pl['type']=='Net Loss' and res['name']=='Misc. Expenses(Asset)':
+                    resp['outer']='0'
+                    resp['name']= res_pl['type']
+                    resp['type']=res['type']
+                    resp['level']=res['level'] +1
+                    resp['balance']=res_pl['balance']
+                    self.result_sum_ass_cr +=resp['balance']
+                    self.result_sum_cr +=resp['balance']
+                    res['balance'] += resp['balance']
+                if form['empty_account']==False and res['name'] not in total_list:
                     if res['balance']:
-                     if form['display_type'] == 'consolidated':
-                        if res['name'] in base_list:
-                            result.append(res)  
-                     else:
-                        result.append(res) 
+                        if form['display_type'] == 'consolidated':
+                            if res['name'] in total_list:
+                                result.append(res)  
+                        else:
+                            result.append(res) 
                 else:
                     if form['display_type'] == 'consolidated':
-                        if res['name'] in base_list:
+                        if res['name'] in total_list:
                             result.append(res)  
                     else:
                         result.append(res) 
-            final_result['gr_name']=group
-            final_result['list']=result
-            self.final.append(final_result)
-            if self.result_sum_dr < 0.0:
-                self.result_sum_dr *= -1
-            if self.result_sum_cr < 0.0:
-                self.result_sum_cr *= -1
-            if self.result_sum_dr > self.result_sum_cr:
-                self.res_pl['type']='Net Loss'
-                self.res_pl['balance']=(self.result_sum_dr - self.result_sum_cr)
-            else:
-                self.res_pl['type']='Net Profit'
-                self.res_pl['balance']=(self.result_sum_cr - self.result_sum_dr)    
+                if res_pl['type']=='Net Profit' and res['name']=='Reserve & Surplus Account':
+                    for rt in result:
+                        if rt['name']== 'Share Holder/Owner Fund':
+                            rt['balance'] += resp['balance']
+                    result.append(resp)
+                if res_pl['type']=='Net Loss' and res['name']=='Misc. Expenses(Asset)':
+                    result.append(resp)
+                final_result['gr_name']=group
+                final_result['list']=result
+                self.final.append(final_result)
         return None
     
     def get_acc_obj(self,obj_list,group):
+        done=[]
         result=[]
         for obj_acc in obj_list:
-            if obj_acc.type == group:
-                result.append(obj_acc)       
+            if obj_acc.name not in done:
+                done.append(obj_acc.name)
+                if obj_acc.type == group:
+                    result.append(obj_acc)       
         return result
 
     def get_lines(self,group):
@@ -188,6 +223,6 @@ class report_pl_account(report_sxw.rml_parse):
         comp_obj=pooler.get_pool(self.cr.dbname).get('res.company').browse(self.cr,self.uid,form['company_id'])
         return comp_obj.name 
 
-report_sxw.report_sxw('report.pl.account', 'account.account',
-    'addons/account_report_india/report/report_pl_account.rml',parser=report_pl_account,
+report_sxw.report_sxw('report.account.balancesheet.horizontal', 'account.account',
+    'addons/account_report_india/report/report_balance_sheet_horizontal.rml',parser=report_balancesheet_horizontal,
     header=False)

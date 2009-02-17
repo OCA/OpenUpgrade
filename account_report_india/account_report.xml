@@ -3,16 +3,24 @@
 	<data>
 		<report id="account_pl_account1"
 			string="Profit And Loss Account"
-			model="account.report.india"
+			model="account.account"
 			name="pl.account"
 			rml="account_report_india/report/report_pl_account.rml"
+			auto="False"
+			menu="False"/>
+
+		<report id="account_pl_account_horizontal"
+			string="Profit And Loss Account"
+			model="account.account"
+			name="pl.account.horizontal"
+			rml="account_report_india/report/report_pl_account_horizontal.rml"
 			auto="False"
 			menu="False"/>
 
 		<!-- profit and loss account report-related wizards -->
 		<wizard 
 			string="Profit And Loss Account"
-			model="account.report.india"
+			model="account.account"
 			name="account.pl.report"
 			menu="False"
 			id="wizard_pl_report"/>
@@ -25,16 +33,24 @@
 
 		<report id="account_balancesheet"
 			string="Balance Sheet"
-			model="account.report.india"
+			model="account.account"
 			name="account.balancesheet"
 			rml="account_report_india/report/report_balance_sheet.rml"
+			auto="False"
+			menu="False"/>
+
+		<report id="account_balancesheet"
+			string="Balance Sheet"
+			model="account.account"
+			name="account.balancesheet.horizontal"
+			rml="account_report_india/report/report_balance_sheet_horizontal.rml"
 			auto="False"
 			menu="False"/>
 
 		<!-- balance sheet account report-related wizards -->
 		<wizard 
 			string="Balance Sheet"
-			model="account.report.india"
+			model="account.account"
 			name="balancesheet.report"
 			menu="False"
 			id="wizard_balancesheet_report"/>

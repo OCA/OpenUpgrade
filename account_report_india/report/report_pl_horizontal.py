@@ -28,11 +28,12 @@
 import pooler
 import time
 import mx.DateTime
+import rml_parse
 from report import report_sxw
 
-class report_pl_account(report_sxw.rml_parse):
+class report_pl_account_horizontal(rml_parse.rml_parse):
     def __init__(self, cr, uid, name, context):
-        super(report_pl_account, self).__init__(cr, uid, name, context)
+        super(report_pl_account_horizontal, self).__init__(cr, uid, name, context)
         self.result_sum_dr=0.0
         self.result_sum_expense_dr=0.0
         self.result_sum_cr=0.0
@@ -188,6 +189,6 @@ class report_pl_account(report_sxw.rml_parse):
         comp_obj=pooler.get_pool(self.cr.dbname).get('res.company').browse(self.cr,self.uid,form['company_id'])
         return comp_obj.name 
 
-report_sxw.report_sxw('report.pl.account', 'account.account',
-    'addons/account_report_india/report/report_pl_account.rml',parser=report_pl_account,
-    header=False)
+report_sxw.report_sxw('report.pl.account.horizontal', 'account.account',
+    'addons/account_report_india/report/report_pl_account_horizontal.rml',parser=report_pl_account_horizontal, header=False)
+

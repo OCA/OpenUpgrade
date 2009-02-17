@@ -82,11 +82,25 @@ class wizard_balance_sheet_report(wizard.interface):
         dates_fields['company_id']['domain'] = "[('id','in',"+str(company_ids) +")]" 
 
         return data['form']
+    
+    def _check(self, cr, uid, data, context):
+        if data['form']['report_type']=='horizontal':
+            return 'report_horizontal'
+        else:
+            return 'report'
 
     states = {
         'init': {
             'actions': [_get_defaults],
-            'result': {'type':'form', 'arch':dates_form, 'fields':dates_fields, 'state':[('end','Cancel'),('report','Print') ]}
+            'result': {'type':'form', 'arch':dates_form, 'fields':dates_fields, 'state':[('end','Cancel','gtk-cancel'),('checkreport','Print','gtk-print') ]}
+        },
+        'checkreport': {
+            'actions': [],
+            'result': {'type':'choice','next_state':_check}
+        },
+        'report_horizontal': {
+            'actions': [],
+            'result': {'type':'print', 'report':'account.balancesheet.horizontal', 'state':'end'}
         },
         'report': {
             'actions': [],
