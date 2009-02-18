@@ -26,14 +26,14 @@ class project(osv.osv):
     _inherit = "project.project"
 
     _columns = {
-        'contact_id': fields.many2one('res.partner.contact', 'Contact'),
+        'contact_id2': fields.many2one('res.partner.contact', 'Contact'),
     }
 
     def onchange_partner_id(self, cr, uid, ids, part):
         if not part:
-            return {'value':{'contact_id': False, 'pricelist_id': False}}
+            return {'value':{'contact_id': False, 'contact_id2': False, 'pricelist_id': False}}
 
         pricelist = self.pool.get('res.partner').browse(cr, uid, part).property_product_pricelist.id
-        return {'value':{'contact_id': False, 'pricelist_id': pricelist}}
+        return {'value':{'contact_id': False, 'contact_id2': False, 'pricelist_id': pricelist}}
 
 project()

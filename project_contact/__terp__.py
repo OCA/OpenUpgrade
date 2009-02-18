@@ -26,12 +26,14 @@
     "author" : "Syleam",
     "website" : "http://www.syleam.com",
     "category" : "Generic Modules/Projects & Services",
-    "depends" : ["base", "project", "base_contact"],
+    "depends" : ["base", "base_contact", "project"],
     "description": """Module to managed contact on project when base_contact module is installed.
     """,
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml": [],
+    "update_xml": [
+        "project_view.xml",
+    ],
     'installable': True,
     'active': False,
     'certificate': False,
