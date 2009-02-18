@@ -11,7 +11,7 @@ if __name__<>"package":
     from lib.functions import *
     from lib.logreport import *
     from LoginTest import *
-    from rpc import *
+    from lib.rpc import *
     database="test"
     uid = 3
 #
