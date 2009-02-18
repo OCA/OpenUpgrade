@@ -27,17 +27,17 @@
       <blockValign value="TOP"/>
       <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="0,0" stop="0,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#cccccc" start="0,0" stop="0,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,0" stop="0,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,0" stop="1,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#cccccc" start="1,0" stop="1,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,0" stop="1,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="2,0" stop="2,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#cccccc" start="2,0" stop="2,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="2,0" stop="2,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="3,0" stop="3,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#cccccc" start="3,0" stop="3,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#cccccc" start="3,0" stop="3,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="3,0" stop="3,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Table6">
       <blockAlignment value="LEFT"/>
@@ -65,17 +65,17 @@
       <blockValign value="TOP"/>
       <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="0,0" stop="0,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#cccccc" start="0,0" stop="0,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,0" stop="0,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,0" stop="1,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#cccccc" start="1,0" stop="1,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,0" stop="1,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="2,0" stop="2,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#cccccc" start="2,0" stop="2,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="2,0" stop="2,-1"/>
       <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="3,0" stop="3,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#cccccc" start="3,0" stop="3,-1"/>
       <lineStyle kind="LINEABOVE" colorName="#cccccc" start="3,0" stop="3,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="3,0" stop="3,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Table3">
       <blockAlignment value="LEFT"/>
@@ -177,7 +177,7 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="205.0,118.0,113.0,103.0" style="Table_Account_Line_Title">
+    <blockTable colWidths="205.0,118.0,113.0,103.0" style="Table_Account_Line_Title" repeatRows="1">
       <tr>
         <td>
           <para style="terp_tblheader_Details_Centre">Expenses</para>
@@ -192,8 +192,6 @@
           <para style="terp_tblheader_Details_Right">Total Amount([[ get_currency(data['form']) ]])</para>
         </td>
       </tr>
-    </blockTable>
-    <blockTable colWidths="205.0,118.0,113.0,103.0" style="Table6">
       <tr>
         <td>
           <para style="terp_default_9">
@@ -223,12 +221,15 @@
           <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_expense_dr() ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_dr() ]]</para>
+          <para style="terp_default_Right_9_Bold"><u>[[ '%.2f' % sum_dr() ]]</u></para>
         </td>
       </tr>
     </blockTable>
      <condPageBreak height="20cm"/>
-    <blockTable colWidths="205.0,118.0,113.0,102.0" style="Table2">
+    <para style="terp_default_Right_9_Bold">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="205.0,118.0,113.0,102.0" style="Table2" repeatRows="1">
       <tr>
         <td>
           <para style="terp_tblheader_Details_Centre">Incomes</para>
@@ -243,8 +244,6 @@
           <para style="P1">Total Amount([[ get_currency(data['form']) ]])</para>
         </td>
       </tr>
-    </blockTable>
-    <blockTable colWidths="205.0,118.0,113.0,102.0" style="Table3">
       <tr>
         <td>
           <para style="terp_default_9">
@@ -274,7 +273,7 @@
           <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_income_cr() ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_cr() ]]</para>
+          <para style="terp_default_Right_9_Bold"><u>[[ '%.2f' % sum_cr() ]]</u></para>
         </td>
       </tr>
     </blockTable>
@@ -287,7 +286,7 @@
           <para style="terp_default_Bold_9">[[ final_result()['type'] ]]:</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ '%.2f' %final_result()['balance'] ]]</para>
+          <para style="terp_default_Right_9_Bold"><u>[[ '%.2f' %final_result()['balance'] ]]</u></para>
         </td>
       </tr>
     </blockTable>

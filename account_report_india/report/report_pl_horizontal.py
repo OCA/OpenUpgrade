@@ -41,7 +41,7 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
         self.result_dr=0.0
         self.result_cr=0.0
         self.res_pl ={}
-        self.final=[]
+        self.result_temp=[]
         self.localcontext.update( {
             'time': time,
             'get_lines' : self.get_lines,
@@ -83,6 +83,7 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
     def get_data(self,form):
         gr_list=['expense','income']
         base_list=['Opening Stock','Purchase','Direct Expenses','Indirect Expenses','Sales Account','Goods Given Account','Direct Incomes','Indirect Incomes']
+        cal_list={}
         for group in gr_list:
             if group=='expense':
                 list_acc=['Opening Stock','Purchase','Direct Expenses','Indirect Expenses']
@@ -153,9 +154,7 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                             result.append(res)  
                     else:
                         result.append(res) 
-            final_result['gr_name']=group
-            final_result['list']=result
-            self.final.append(final_result)
+                cal_list[group]=result
             if self.result_sum_dr < 0.0:
                 self.result_sum_dr *= -1
             if self.result_sum_cr < 0.0:
@@ -165,7 +164,52 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                 self.res_pl['balance']=(self.result_sum_dr - self.result_sum_cr)
             else:
                 self.res_pl['type']='Net Profit'
-                self.res_pl['balance']=(self.result_sum_cr - self.result_sum_dr)    
+                self.res_pl['balance']=(self.result_sum_cr - self.result_sum_dr)   
+        temp={}
+        for i in range(0,max(len(cal_list['expense']),len(cal_list['income']))):
+            if i < len(cal_list['expense']) and i < len(cal_list['income']):
+                temp={
+                      'name' : cal_list['expense'][i]['name'],
+                      'type' : cal_list['expense'][i]['type'],
+                      'level': cal_list['expense'][i]['level'],
+                      'outer': cal_list['expense'][i]['outer'],
+                      'balance':cal_list['expense'][i]['balance'],
+                      'name1' : cal_list['income'][i]['name'],
+                      'type1' : cal_list['income'][i]['type'],
+                      'level1': cal_list['income'][i]['level'],
+                      'outer1': cal_list['income'][i]['outer'],
+                      'balance1':cal_list['income'][i]['balance'],
+                      }
+                self.result_temp.append(temp)
+            else:
+                if i < len(cal_list['asset']):
+                    temp={
+                          'name' : '',
+                          'type' : '',
+                          'level': False,
+                          'outer': '',
+                          'balance':False,
+                          'name1' : cal_list['income'][i]['name'],
+                          'type1' : cal_list['income'][i]['type'],
+                          'level1': cal_list['income'][i]['level'],
+                          'outer1': cal_list['income'][i]['outer'],
+                          'balance1':cal_list['income'][i]['balance'],
+                          }
+                    self.result_temp.append(temp)
+                if  i < len(cal_list['liability']): 
+                    temp={
+                          'name' : cal_list['expense'][i]['name'],
+                          'type' : cal_list['expense'][i]['type'],
+                          'level': cal_list['expense'][i]['level'],
+                          'outer': cal_list['expense'][i]['outer'],
+                          'balance':cal_list['expense'][i]['balance'],
+                          'name1' : '',
+                          'type1' : '',
+                          'level1': False,
+                          'outer1': '',
+                          'balance1':False,
+                          }
+                    self.result_temp.append(temp)
         return None
     
     def get_acc_obj(self,obj_list,group):
@@ -175,12 +219,8 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                 result.append(obj_acc)       
         return result
 
-    def get_lines(self,group):
-        result=[]
-        for list in self.final:
-            if list['gr_name']== group:
-                result=list['list']
-        return result
+    def get_lines(self):
+        return self.result_temp
     
     def _get_currency(self, form):
         return pooler.get_pool(self.cr.dbname).get('res.company').browse(self.cr, self.uid, form['company_id']).currency_id.code

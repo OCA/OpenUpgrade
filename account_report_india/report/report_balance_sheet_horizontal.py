@@ -42,7 +42,7 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
         self.result_sum_ass_cr=0.0
         self.result_dr=0.0
         self.result_cr=0.0
-        self.final=[]
+        self.result_temp=[]
         self.localcontext.update({
             'time': time,
             'get_lines' : self.get_lines,
@@ -95,6 +95,7 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
     def get_data(self,form):
         gr_list=['liability','asset']
         res_pl={}
+        cal_list={}
         result_pl=self.obj_pl.get_data(form)
         res_pl=self.obj_pl.final_result()
         total_list=['Share Holder/Owner Fund','Branch/Division','Loan(Liability) Account','Current Liabilities','Suspense Account','Fixed Assets','Investment','Current Assets','Misc. Expenses(Asset)']
@@ -105,7 +106,6 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
             if group=='asset':
                 list_acc=['Fixed Assets','Investment','Current Assets','Misc. Expenses(Asset)']
             acc_objs=[]
-            final_result={}
             result=[]
             result_temp=[]
             res={}
@@ -194,27 +194,63 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
                     result.append(resp)
                 if res_pl['type']=='Net Loss' and res['name']=='Misc. Expenses(Asset)':
                     result.append(resp)
-                final_result['gr_name']=group
-                final_result['list']=result
-                self.final.append(final_result)
+                cal_list[group]=result
+        temp={}
+        for i in range(0,max(len(cal_list['liability']),len(cal_list['asset']))):
+            if i < len(cal_list['liability']) and i < len(cal_list['asset']):
+                temp={
+                      'name' : cal_list['liability'][i]['name'],
+                      'type' : cal_list['liability'][i]['type'],
+                      'level': cal_list['liability'][i]['level'],
+                      'outer': cal_list['liability'][i]['outer'],
+                      'balance':cal_list['liability'][i]['balance'],
+                      'name1' : cal_list['asset'][i]['name'],
+                      'type1' : cal_list['asset'][i]['type'],
+                      'level1': cal_list['asset'][i]['level'],
+                      'outer1': cal_list['asset'][i]['outer'],
+                      'balance1':cal_list['asset'][i]['balance'],
+                      }
+                self.result_temp.append(temp)
+            else:
+                if i < len(cal_list['asset']):
+                    temp={
+                          'name' : '',
+                          'type' : '',
+                          'level': False,
+                          'outer': '',
+                          'balance':False,
+                          'name1' : cal_list['asset'][i]['name'],
+                          'type1' : cal_list['asset'][i]['type'],
+                          'level1': cal_list['asset'][i]['level'],
+                          'outer1': cal_list['asset'][i]['outer'],
+                          'balance1':cal_list['asset'][i]['balance'],
+                          }
+                    self.result_temp.append(temp)
+                if  i < len(cal_list['liability']): 
+                    temp={
+                          'name' : cal_list['liability'][i]['name'],
+                          'type' : cal_list['liability'][i]['type'],
+                          'level': cal_list['liability'][i]['level'],
+                          'outer': cal_list['liability'][i]['outer'],
+                          'balance':cal_list['liability'][i]['balance'],
+                          'name1' : '',
+                          'type1' : '',
+                          'level1': False,
+                          'outer1': '',
+                          'balance1':False,
+                          }
+                    self.result_temp.append(temp)
         return None
     
     def get_acc_obj(self,obj_list,group):
-        done=[]
         result=[]
         for obj_acc in obj_list:
-            if obj_acc.name not in done:
-                done.append(obj_acc.name)
-                if obj_acc.type == group:
-                    result.append(obj_acc)       
+            if obj_acc.type == group:
+                result.append(obj_acc)       
         return result
 
-    def get_lines(self,group):
-        result=[]
-        for list in self.final:
-            if list['gr_name']== group:
-                result=list['list']
-        return result
+    def get_lines(self):
+        return self.result_temp
     
     def _get_currency(self, form):
         return pooler.get_pool(self.cr.dbname).get('res.company').browse(self.cr, self.uid, form['company_id']).currency_id.code

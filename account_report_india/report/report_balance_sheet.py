@@ -199,13 +199,10 @@ class report_balancesheet(report_sxw.rml_parse):
         return None
     
     def get_acc_obj(self,obj_list,group):
-        done=[]
         result=[]
         for obj_acc in obj_list:
-            if obj_acc.name not in done:
-                done.append(obj_acc.name)
-                if obj_acc.type == group:
-                    result.append(obj_acc)       
+            if obj_acc.type == group:
+                result.append(obj_acc)       
         return result
 
     def get_lines(self,group):

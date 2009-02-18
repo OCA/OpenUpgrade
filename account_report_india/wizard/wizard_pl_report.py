@@ -62,7 +62,7 @@ dates_fields = {
 
 class wizard_profit_and_loss_account_report(wizard.interface):
     def _get_defaults(self, cr, uid, data, context):
-        data['form']['report_type']='vertical'
+        data['form']['report_type']='horizontal'
         fiscalyear_obj = pooler.get_pool(cr.dbname).get('account.fiscalyear')
         data['form']['fiscalyear'] = fiscalyear_obj.find(cr, uid)
         year_start_date = fiscalyear_obj.browse(cr, uid, data['form']['fiscalyear'] ).date_start
