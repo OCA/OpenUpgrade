@@ -107,7 +107,8 @@
 			<tr py:for="r in res" id="${r['id']}" style="display:none;">
 				<td colspan="${len(res)}">
 					<div id="${r['name']}" style="color: #252a28; padding-left: 5px; overflow-y: hidden; overflow-x: auto; width: 830px;">
-							<pre py:content="XML(r['note'])">content</pre>
+							<pre py:if="r['note']" py:content="XML(r['note'])">content</pre>
+							<pre py:if="not r['note']">No Description...</pre>
 					</div>
 				</td>
 			</tr>

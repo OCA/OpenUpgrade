@@ -12,7 +12,7 @@ class Softwares(controllers.Controller, TinyResource):
     @expose(template="erpcomparator.subcontrollers.templates.softwares")
     def index(self):
         proxy = rpc.RPCProxy('comparison.item')
-        url_re = re.compile('(http\:\/\/[^\s]+)', re.MULTILINE)
+        url_re = re.compile('(http\:\/\/[^\s]+)|(file\:\/\/[^\s]+)|(ftp\:\/\/[^\s]+)|(https\:\/\/[^\s]+)', re.MULTILINE)
         ids = proxy.search([])        
         res = proxy.read(ids, ['name', 'note'])
         
