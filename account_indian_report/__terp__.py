@@ -23,7 +23,7 @@
     "name" : "Indian Account Reporting - Reporting",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "depends" : ['account','account_chart'],
     "category" : "Generic Modules/Accounting",
     "description": """A module that adds new report formats based on the Indian accounting module.

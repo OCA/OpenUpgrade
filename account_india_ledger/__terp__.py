@@ -28,7 +28,7 @@
     parter ledger after creating the partner and customised reports based on that.
     """,
     "category" : "Generic Modules/Accounting",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "depends" : ["base", "account"],
     "init_xml" : [
     ],

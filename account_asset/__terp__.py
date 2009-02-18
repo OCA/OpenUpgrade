@@ -30,7 +30,7 @@
     * Assets.
     *Asset usage period and property.
     """,
-    "website" : "http://tinyerp.com/module_account.html",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Accounting",
     "init_xml" : [
     ],

@@ -23,7 +23,7 @@
     "name" : "Portal Management - Analytic Entries",
     "version" : "0.1",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "depends" : ["portal", "account_analytic_package", "account_analytic_analysis","hr_timesheet_invoice" ],
     "category" : "Generic Modules/Others",
     "description": "Potal Management - Service company specific data for analytic accounting.",

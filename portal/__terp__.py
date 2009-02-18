@@ -23,7 +23,7 @@
     "name" : "Portal Management",
     "version" : "0.1",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "depends" : ["base"],
     "category" : "Generic Modules/Others",
     "description": """

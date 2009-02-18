@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Interfaces/CMS & eCommerce",
-    "website" : "http://tinyerp.com/demo02_6.html",
+    "website" : "http://www.openerp.com",
     "description": "Module to interface with the EZ Publish ecommerce system.",
     "depends" : ["product", "stock", "sale"],
     "init_xml" : [],

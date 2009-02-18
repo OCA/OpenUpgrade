@@ -24,7 +24,7 @@
     "version" : "0.1",
     "author" : "Tiny",
     "category" : "Generic Modules/Human Resources",
-    "website" : "http://tinyerp.com/module_hr.html",
+    "website" : "http://www.openerp.com",
     "depends" : ["hr"],
     "description": "Ability to create employees evaluation.",
     "init_xml" : [],

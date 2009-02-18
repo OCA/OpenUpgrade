@@ -23,7 +23,7 @@
     "name" : "Salesman on invoices",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "depends" : ["account"],
     "category" : "Generic Modules/Accounting",
     "description": "This module adds a salesman on each invoice.",

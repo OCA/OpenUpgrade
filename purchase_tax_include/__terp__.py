@@ -24,7 +24,7 @@
     "version" : "1.0",
     "depends" : ["purchase","account_tax_include"],
     "author" : "Tiny",
-    "website" : "http://tinyerp.com/module_account.html",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Sales & Purchases",
     "description": "This module allows you to use purchase order with prices including or excluding taxes.",
     "init_xml" : [ ],

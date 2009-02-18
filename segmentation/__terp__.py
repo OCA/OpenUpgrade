@@ -32,7 +32,7 @@
 
 NOTICE: This Module is Deprecated. Please install crm_profiling in order to have access to the latest functionnalities.
     """,
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Project & Services",
     "init_xml" : [],
     "demo_xml" : ["segmentation_demo.xml"],
