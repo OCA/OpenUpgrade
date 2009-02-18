@@ -73,17 +73,18 @@ class partner_balance(report_sxw.rml_parse):
 		end_date=fiscalyear_obj.browse(self.cr, self.uid, context['fiscalyear'] )
 		year_end_date = end_date.date_stop 
 		if self.datas['form']['date1'] >= year_start_date and self.datas['form']['date2'] <= year_end_date:
+			self.ACCOUNT_TYPE = "('payable','receivable')"
+			self.cr.execute("SELECT a.id " \
+			        "FROM account_account a " \
+			        "LEFT JOIN account_account_type t " \
+			            "ON (a.type = t.code) " \
+			        "WHERE a.company_id = %s " \
+			            "AND a.type IN " + self.ACCOUNT_TYPE + " " \
+			            "AND a.active", (form['company_id'],))
 #			self.cr.execute('SELECT a.id ' \
 #				'FROM account_account a ' \
-#				'LEFT JOIN account_account_type t ' \
-#					'ON (a.type = t.code) ' \
-#				'WHERE t.partner_account = TRUE ' \
-#					'AND a.company_id = %d ' \
+#					'WHERE a.company_id = %d ' \
 #					'AND a.active', (form['company_id'],))
-			self.cr.execute('SELECT a.id ' \
-				'FROM account_account a ' \
-					'WHERE a.company_id = %d ' \
-					'AND a.active', (form['company_id'],))
 			account_ids = ','.join([str(a) for (a,) in self.cr.fetchall()])
 			partner_id = ','.join([str(a) for a in form['partners'][0][2]])
 			if not partner_id or not account_ids:
@@ -229,7 +230,7 @@ class partner_balance(report_sxw.rml_parse):
 		return temp
 	
 	def _sum_debit(self):
-		return self.sum_credit or 0.0
+		return self.sum_debit or 0.0
 
 	def _sum_credit(self):
 		return self.sum_credit or 0.0
