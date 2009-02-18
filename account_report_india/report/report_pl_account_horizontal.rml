@@ -261,7 +261,7 @@
           <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_expense_dr() ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_dr() ]]</para>
+          <para style="terp_default_Right_9_Bold"><u>[[ '%.2f' % sum_dr() ]]</u></para>
         </td>
         <td>
           <para style="terp_default_Bold_9">Total:([[ get_currency(data['form']) ]])</para>
@@ -273,7 +273,7 @@
           <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_income_cr() ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_cr() ]]</para>
+          <para style="terp_default_Right_9_Bold"><u>[[ '%.2f' % sum_cr() ]]</u></para>
         </td>
       </tr>
     </blockTable>
@@ -283,7 +283,7 @@
           <para style="terp_default_Bold_9">[[ final_result()['type'] ]]:</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ '%.2f' %final_result()['balance'] ]]</para>
+          <para style="terp_default_Right_9_Bold"><u>[[ '%.2f' %final_result()['balance'] ]]</u></para>
         </td>
       </tr>
     </blockTable>

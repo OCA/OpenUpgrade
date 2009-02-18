@@ -172,7 +172,7 @@
       </tr>
     </blockTable>
     <section>
-    <blockTable colWidths="170.0,134.0,128.0,125.0" style="Table_Heading_Title" repeatRows="1">
+    <blockTable colWidths="151.0,139.32,132.32,127.32" style="Table_Heading_Title" repeatRows="1">
       <tr>
         <td>
           <para style="terp_tblheader_Details_Centre">Particulars</para>
@@ -189,7 +189,7 @@
       </tr>
       <tr>
       <td>
-	    <blockTable colWidths="164.0,69.0,65.0,62.0,66.0,60.0,65.0" style="Table_debit_credit" repeatRows="1">
+	    <blockTable colWidths="145.0,72.16,67.16,64.16,68.16,62.16,65.16" style="Table_debit_credit" repeatRows="1">
 	      <tr>
 	        <td>
 	          <para style="terp_tblheader_Details_Centre">
@@ -221,10 +221,10 @@
 	  <tr>
 	  <td>
 	    <para style="terp_default_2"><font face="Times-Roman">[[ repeatIn(get_lines(data['form']), 'a') ]]</font></para>
-	    <blockTable colWidths="164.0,69.0,65.0,62.0,66.0,60.0,65.0" style="Table_Account_Detail_line">
+	    <blockTable colWidths="145.0,72.16,67.16,64.16,68.16,62.16,65.16" style="Table_Account_Detail_line">
 	      <tr>
 	        <td>
-	          <para style="terp_default_9">[[ a['child']=='1' and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]]<font color="white">[[  '. '*(a['level']) ]]</font>[[ a['name'] ]]</para>
+	          <para style="terp_default_9">[[ a['child']=='1' and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]]<font color="white">[[  '. '*(a['level']-3) ]]</font>[[ a['name'] ]]</para>
 	        </td>
 	        <td>
 	          <para style="terp_default_Right_9">[[ a['o_debit'] ]]</para>
@@ -250,7 +250,7 @@
 	 </tr>
      </blockTable>
 	</section>
-    <blockTable colWidths="170.0,70.0,64.0,65.0,62.0,64.0,62.0" style="Table_Final_Summation">
+    <blockTable colWidths="151.0,72.16,67.16,64.16,68.16,62.16,65.16" style="Table_Final_Summation">
       <tr>
         <td>
           <para style="terp_default_Right_9">
@@ -277,7 +277,7 @@
         </td>
       </tr>
     </blockTable>
-   	<blockTable colWidths="170.0,70.0,64.0,65.0,62.0,64.0,62.0" style="Table_Difference_Op_bal">
+   	<blockTable colWidths="151.0,72.16,67.16,64.16,68.16,62.16,65.16" style="Table_Difference_Op_bal">
    	 <tr>
         <td>
 		<para style="terp_default_Bold_9">Difference of Opening Balance :</para>        
