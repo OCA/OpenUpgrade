@@ -182,7 +182,7 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                       }
                 self.result_temp.append(temp)
             else:
-                if i < len(cal_list['asset']):
+                if i < len(cal_list['income']):
                     temp={
                           'name' : '',
                           'type' : '',
@@ -196,7 +196,7 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                           'balance1':cal_list['income'][i]['balance'],
                           }
                     self.result_temp.append(temp)
-                if  i < len(cal_list['liability']): 
+                if  i < len(cal_list['expense']): 
                     temp={
                           'name' : cal_list['expense'][i]['name'],
                           'type' : cal_list['expense'][i]['type'],
