@@ -228,7 +228,7 @@
 					<field name="transaction_id"/>
 					<field name="saleorder_id"/>
 					<field name="invoice_id"/>
-					<field name="transaction_date"/>
+					<field name="transaction_date" select="1"/>
 					<field name="partner" select="2"/>
 				</tree>
 			</field>

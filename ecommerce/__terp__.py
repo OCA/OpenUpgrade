@@ -23,15 +23,16 @@
 {
     'name': 'E-Commerce',
     'version': '1.0',
-    'author': 'e-tiny',
-    'website': 'http://www.etiny.com',
+    'author': 'Tiny',
+    'website': 'http://www.openerp.com',
     'category': 'Generic Modules/E-Commerce Shop',
-    'depends': ['delivery', 'base', 'product', 'sale'],
+    'depends': ['base', 'product', 'sale', 'delivery'],
     'description': """eCommerce Users can order on the website,
 orders are automatically imported in TinyERP.
-You can configure products, categories of products,
-language, currency, carrier, payment
-and also configure row,column,images.""",
+You can configure products, categories of products, product images,
+language, currency. For the delivery of product you can manage the carriers.
+Also give the differrent payment options, then user can choose the appropriate payment methods.
+For display the products on the website you can configure row and column. """,
     'init_xml': [],
     'demo_xml': ['ecommerce_demo_data.xml'],
     'update_xml': [

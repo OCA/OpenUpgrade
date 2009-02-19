@@ -253,7 +253,6 @@ class ecommerce_order_line(osv.osv):
     _description = 'ecommerce order line'
     _columns = {
         'name': fields.char('Order Line', size=64, required=True),
-        'order_id': fields.many2one('ecommerce.saleorder', 'eOrder Ref'),
         'product_qty': fields.float('Quantity', digits=(16,2), required=True),
         'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok','=',True)], change_default=True),
         'product_uom_id': fields.many2one('product.uom', 'Unit of Measure',required=True),

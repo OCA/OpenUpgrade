@@ -30,13 +30,6 @@ def _lang_get(self, cr, uid, context = {}):
     res = [(r['code'], r['name']) for r in res]
     return res + [(False, '')]
 
-#class res_users(osv.osv):
-#    _inherit = "res.users"
-#    _columns = {
-#        'user_code':fields.char('User Code', size=128)
-#    }
-#res_users()
-
 class ecommerce_partner(osv.osv):
     
     _description = 'ecommerce partner'
@@ -44,7 +37,7 @@ class ecommerce_partner(osv.osv):
     _order = "name"
     _columns = {
         'name': fields.char('Name', size=128, required=True, select=True),
-        'last_name': fields.char('Last Name', size=128, required=True, select=True),
+        'last_name': fields.char('Last Name', size=128, select=True),
         'lang': fields.selection(_lang_get, 'Language', size=5),
         'company_name': fields.char('Company Name', size=64),
         'active': fields.boolean('Active'),
