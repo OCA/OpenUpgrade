@@ -105,7 +105,7 @@
 				<li style="color: #252a28;">Can you define an unlimited number of warehouses for stock management ?</li></ul>
 			</p>
 					
-			<b style="color: #021677;">How to propose a new application ?</b><br/>
+			<!--<b style="color: #021677;">How to propose a new application ?</b><br/>
 			<p style="text-align: justify; color: #252a28;">
 				We plan to extend the platform to evaluate any kind of enterprise management
 				application, from the complete ERP to the smallest application dedicated to a
@@ -126,7 +126,7 @@
 	  			id<br/>
 	  			criteria_name<br/>
 	  			evaluation (empty column)<br/>
-			</p>
+			</p>-->
 	
 			<b style="color: #021677;">About Us</b><br/>
 	
