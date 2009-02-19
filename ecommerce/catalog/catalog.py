@@ -48,8 +48,8 @@ class ecommerce_search(osv.osv):
     def searchProduct_ids(self, cr, uid, search_code):
         prd_ids = []
         final_list = []
+        send_ids = []
         obj = self.pool.get('product.product')
-      
         for i in search_code.items():
             args = []
             if(i[1] != ''):
@@ -63,7 +63,11 @@ class ecommerce_search(osv.osv):
                     args.append(final_list)
                     ids = obj.search(cr, uid, args)
                     prd_ids.extend(ids)
-        return prd_ids
+
+        for item in prd_ids:
+            if not item in send_ids:
+                 send_ids.append(item)   
+        return send_ids
     
 ecommerce_search()
 

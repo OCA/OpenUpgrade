@@ -23,7 +23,7 @@
     "name" : "Tiny ERP Huissiers",
     "author": "Tiny",
     "version" : "1.0",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Others",
     "description": """Module for 'Maison de Vente des Huissiers de Justice'""",
     "depends" : ["base", "account"],

@@ -187,9 +187,7 @@
 			<field name="view_id" ref="email_smtpclient_tree" />
 		</record>
 		
-		<menuitem name="Configuration" id="menu_smtpclient_administration_cofiguration" parent="base.menu_administration"/>
-		
-		<menuitem name="Servers" id="menu_smtpclient_administration_server" parent="menu_smtpclient_administration_cofiguration"/>
+		<menuitem name="Email Servers" id="menu_smtpclient_administration_server" parent="base.menu_config"/>
 		
 		<menuitem name="SMTP Server" id="menu_smtpclient_administration_smtp_server" parent="menu_smtpclient_administration_server" action="action_email_smtpclient_tree"/>
 		

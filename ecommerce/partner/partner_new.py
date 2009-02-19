@@ -30,13 +30,6 @@ def _lang_get(self, cr, uid, context = {}):
     res = [(r['code'], r['name']) for r in res]
     return res + [(False, '')]
 
-#class res_users(osv.osv):
-#    _inherit = "res.users"
-#    _columns = {
-#        'user_code':fields.char('User Code', size=128)
-#    }
-#res_users()
-
 class ecommerce_partner(osv.osv):
     
     _description = 'ecommerce partner'
@@ -44,7 +37,7 @@ class ecommerce_partner(osv.osv):
     _order = "name"
     _columns = {
         'name': fields.char('Name', size=128, required=True, select=True),
-        'last_name': fields.char('Last Name', size=128, required=True, select=True),
+        'last_name': fields.char('Last Name', size=128, select=True),
         'lang': fields.selection(_lang_get, 'Language', size=5),
         'company_name': fields.char('Company Name', size=64),
         'active': fields.boolean('Active'),
@@ -85,13 +78,7 @@ class ecommerce_partner(osv.osv):
                        
             up_data = res_users.read(cr, uid, ecommerce_user.id, [], context)
         return up_data
-      
-#    def copy(self, cr, uid, id, default=None, context={}):
-#        
-#        name = self.read(cr, uid, [id], ['name'])[0]['name']
-#        default.update({'name': name+' (copy)'})
-#        return super(res_partner, self).copy(cr, uid, id, default, context)
-       
+
     def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=80):
         
         if not args:
@@ -106,7 +93,7 @@ class ecommerce_partner(osv.osv):
             ids = self.search(cr, uid, args, limit=limit, context=context)
         return self.name_get(cr, uid, ids, context)
     
-    def address_get(self, cr, ids, adr_pref=['default']):
+    def address_get(self, cr, uid, ids, adr_pref=['default']):
         
         cr.execute('select type,id from ecommerce_partner_address where partner_id in ('+','.join(map(str, ids))+')')
         res = cr.fetchall()
@@ -210,21 +197,7 @@ class ecommerce_partner(osv.osv):
         
         return dict(get_ship_price=get_ship_price, final_tax_amt=final_tax_amt)  
            
-#    def _price_unit_default(self, cr, uid, tax_id_list, prd_list, context={}):
-#        if 'check_total' in context:
-#            t = context['check_total']
-#            for l in context.get('invoice_line', {}):
-#                if len(l) >= 3 and l[2]:
-#                    tax_obj = self.pool.get('account.tax')
-#                    p = l[2].get('price_unit', 0) * (1-l[2].get('discount',0)/100.0)
-#                    t = t - (p * l[2].get('quantity'))
-#                    taxes = l[2].get('invoice_line_tax_id')
-#                    if len(taxes[0]) >= 3 and taxes[0][2]:
-#                        taxes = tax_obj.browse(cr, uid, taxes[0][2])
-#                        for tax in tax_obj.compute(cr, uid, taxes, p, l[2].get('quantity'), context.get('address_invoice_id', False), l[2].get('product_id', False), context.get('partner_id', False)):
-#                            t = t-tax['amount']
-#            return t
-#        return 0
+
     
     def get_price_from_picking_ecommerce(self, cr, uid, id, total, weight, volume, context={}):
         
@@ -247,7 +220,7 @@ class ecommerce_partner(osv.osv):
             raise osv.except_osv(_('No price avaible !'), _('No line matched this order in the choosed delivery grids !'))
         return price   
     
-    def ecom_send_email(self, mail_to, subject, body, attachment=None, context = {}):
+    def ecom_send_email(self, cr, uid, mail_to, subject, body, attachment=None, context = {}):
     
         import smtplib
         from email.MIMEText import MIMEText

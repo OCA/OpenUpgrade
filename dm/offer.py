@@ -28,6 +28,7 @@ from osv import osv
 
 AVAILABLE_STATES = [
     ('draft','Draft'),
+    ('ready', 'Ready To Plan'),
     ('open','Open'),
     ('freeze', 'Freeze'),
     ('closed', 'Close'),
@@ -372,16 +373,25 @@ class dm_offer(osv.osv):
 
     def state_close_set(self, cr, uid, ids, *args):
 #        self.__history(cr,uid, ids, 'closed')
+        wf_service = netsvc.LocalService('workflow')
+        for step in self.browse(cr, uid, ids):
+            wf_service.trg_validate(uid, 'dm.offer.step', step.id, 'state_close_set', cr)
         self.write(cr, uid, ids, {'state':'closed'})
+        return True  
+   
+    def state_ready_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'ready'})
         return True  
 
     def state_open_set(self, cr, uid, ids, *args):
+        wf_service = netsvc.LocalService("workflow")
         for step in self.browse(cr,uid,ids):
             for step_id in step.step_ids:
                 if step_id.state != 'open':
                     raise osv.except_osv(
                             _('Could not open this offer !'),
                             _('You must first open all offer steps related to this offer.'))
+            wf_service.trg_validate(uid, 'dm.offer', step.id, 'open', cr)
 #        self.__history(cr,uid, ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True 

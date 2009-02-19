@@ -142,12 +142,12 @@ class Graph(controllers.Controller, TinyResource):
         
         value = []
         
+        lables = [i['name'] for i in child_name]
         for item in item_name:
-            val = []
+            val = [0]  * len(lables)
             for factor in factor_res:
                 if factor.get('item_id')[1] == item['name']:
-                    val += [factor.get('result')/10.0]
-            
+                    val[lables.index(factor.get('factor_id')[1][:18])] = factor.get('result')/10.0
             value += [val]
         
         for n, j in enumerate(item_name):

@@ -4,7 +4,7 @@
     "author": "Tiny",
     "category" : "Generic Modules",
     "depends" : ["base","hr"],
-    "website": "http://tinyerp.com",
+    "website": "http://www.openerp.com",
     "category": "Generic Modules",
     "description": "A module that Check Performance For the Company Employees.",
     "init_xml": ["hr_performance_view.xml"],

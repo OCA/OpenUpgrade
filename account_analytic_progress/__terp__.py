@@ -28,7 +28,7 @@ development projects on the Tiny ERP website.""",
     "author" : "tiny",
     "category" : "Generic Modules/Accounting",
     "module": "",
-    "website": "http://tinyerp.com",
+    "website": "http://www.openerp.com",
     "depends" : ["account_analytic_analysis"],
     "init_xml" : [],
     "update_xml" : [

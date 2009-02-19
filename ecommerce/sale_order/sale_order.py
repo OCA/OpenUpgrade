@@ -27,7 +27,7 @@ import wizard
 
 class ecommerce_sale_order(osv.osv):
 
-    _name ='ecommerce.saleorder'
+    _name = 'ecommerce.saleorder'
     _description = 'ecommerce saleorder'
     _columns = {
         'name': fields.char('Order Description', size=64, required=True),
@@ -45,16 +45,15 @@ class ecommerce_sale_order(osv.osv):
     _defaults = {
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'ecommerce.saleorder'),
         'date_order': lambda *a: time.strftime('%Y-%m-%d'),
-        'epartner_invoice_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['invoice'])['invoice'],
-        'epartner_add_id': lambda self, cr, uid, context: context.get('partner_id', False) and  self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['contact'])['contact'],
-        'epartner_shipping_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['delivery'])['deliver']
+        'epartner_invoice_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], adr_pref=['invoice'])['invoice'],
+        'epartner_add_id': lambda self, cr, uid, context: context.get('partner_id', False) and  self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], adr_pref=['contact'])['contact'],
+        'epartner_shipping_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], adr_pref=['delivery'])['deliver']
     }
 
     def order_create_function(self, cr, uid, ids, context={}):
 
         get_ids = []
         for order in self.browse(cr, uid, ids, context):
-            addid = []
             if not (order.epartner_id and order.epartner_invoice_id and order.epartner_shipping_id):
                 raise osv.except_osv('No addresses !', 'You must assign addresses before creating the order.')
 
@@ -69,7 +68,7 @@ class ecommerce_sale_order(osv.osv):
             if res:
                 partner_id = res[0]['id']
 
-                prt_add_id = res_add.search(cr, uid, [('partner_id','=',partner_id)])
+                prt_add_id = res_add.search(cr, uid, [('partner_id', '=', partner_id)])
                 res_prt_add = res_add.read(cr, uid, prt_add_id, ['id'], context)
                 addid = res_prt_add[0]['id']
 
@@ -184,7 +183,7 @@ class ecommerce_sale_order(osv.osv):
 
         if not part:
             return {'value':{'epartner_invoice_id': False, 'epartner_shipping_id':False, 'epartner_add_id':False}}
-        addr = self.pool.get('ecommerce.partner').address_get(cr, uid, [part], ['delivery', 'invoice', 'contact'])
+        addr = self.pool.get('ecommerce.partner').address_get(cr, uid, [part], adr_pref=['delivery', 'invoice', 'contact'])
         return {'value': {'epartner_invoice_id': addr['invoice'], 'epartner_add_id': addr['contact'], 'epartner_shipping_id': addr['delivery']}}
 
     def confirm_sale_order(self, cr, uid, so_ids, email_id, shipping_charge, context={}):
@@ -200,18 +199,17 @@ class ecommerce_sale_order(osv.osv):
         wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'order_confirm', cr)
         wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'manual_invoice', cr)
         cr.commit()
-
-        get_data = self.pool.get('sale.order').browse(cr,uid,sale_orderid)
+        get_data = self.pool.get('sale.order').browse(cr, uid, sale_orderid)
         if(get_data.invoice_ids):
             invoice_id = get_data.invoice_ids[0].id
         else:
-            raise osv.except_osv('Error','Yet Not Create Invoice!');
+            raise osv.except_osv('Error', 'Yet Not Create Invoice!')
 
         wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_open', cr)
         inv_id.append(invoice_id)
 
         acc_journal = self.pool.get('account.journal')
-        journal_id = acc_journal.search(cr, uid, [('type', '=', 'cash'), ('code','=','BNK')])
+        journal_id = acc_journal.search(cr, uid, [('type', '=', 'cash'), ('code', '=', 'BNK')])
 
         journal = acc_journal.browse(cr, uid, journal_id, context)
         acc_id =  journal[0].default_credit_account_id and journal[0].default_credit_account_id.id
@@ -254,9 +252,9 @@ class ecommerce_order_line(osv.osv):
     _name = 'ecommerce.order.line'
     _description = 'ecommerce order line'
     _columns = {
-        'name': fields.char('Order Line', size=64, required=True),
-        'order_id': fields.many2one('ecommerce.saleorder', 'eOrder Ref'),
+        'name': fields.char('Description', size=64, required=True),
         'product_qty': fields.float('Quantity', digits=(16,2), required=True),
+        'order_id': fields.many2one('ecommerce.saleorder', 'eOrder Ref'),
         'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok','=',True)], change_default=True),
         'product_uom_id': fields.many2one('product.uom', 'Unit of Measure',required=True),
         'price_unit': fields.float('Unit Price',digits=(16, int(config['price_accuracy'])), required=True),

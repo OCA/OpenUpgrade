@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    OpenERP, Open Source Management Solution	
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -57,8 +57,6 @@ class purchase_order(osv.osv):
 
                 else:
                     a = self.pool.get('ir.property').get(cr, uid, 'property_account_expense_categ', 'product.category')
-                fpos = o.fiscal_position or False
-                a = self.pool.get('account.fiscal.position').map_account(cr, uid, fpos, a)
                 il.append((0, False, {
                     'name': ol.name,
                     'account_id': a,
@@ -82,7 +80,6 @@ class purchase_order(osv.osv):
                 'address_contact_id': o.partner_address_id.id,
                 'origin': o.name,
                 'invoice_line': il,
-                'fiscal_position': o.partner_id.property_account_position and o.partner_id.property_account_position.id or False
             }
             inv_id = self.pool.get('account.invoice').create(cr, uid, inv)
 

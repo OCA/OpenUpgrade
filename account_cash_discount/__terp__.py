@@ -25,7 +25,7 @@
     "depends" : ["account",],
     "author" : "Tiny",
     "description" : "",
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Accounting",
     "description": """
     This module adds cash discounts on payment terms. Cash discounts

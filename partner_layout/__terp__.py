@@ -23,7 +23,7 @@
     "name" : "Partner Layout",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Project Layout",
     "description": """
     

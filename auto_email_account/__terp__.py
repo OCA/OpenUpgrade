@@ -27,7 +27,7 @@
     "description": """Use Email client module to send to customers or suppliers
 the selected invoices attached by Email
 """,
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules",
     "init_xml" : [],
     "demo_xml" : [],

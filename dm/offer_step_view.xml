@@ -81,7 +81,7 @@
 					<field name="offer_id" select="1" />
 					<field name="code" select="1"/>
 				</group>
-				<notebook colspan="4">
+				<notebook colspan="4" >
 					<page string="General">
 						<field name="name" select="1" />
 <!--						<field name="type" select="2" widget="selection" on_change="onchange_type(type,offer_id,context)"/>-->
@@ -90,9 +90,9 @@
 						<field name="quotation" select="2"/>
 						<field name="legal_state" select="2" />
 						<newline/>
+						<field name="media_id" colspan="4"  select="1"/>
 						<separator string="Description" colspan="4"/>
 						<field name="desc" nolabel="1" colspan="4"/>
-						<field name="media_id" colspan="4"  select="1"/>
 						<separator string="Status" colspan="4"/>
 						<group col="8" colspan="4">
 							<field name="state" select="1" nolabel="1"/>
@@ -108,15 +108,19 @@
 								<field name="step_from" domain="[('offer_id','=',parent.offer_id)]"/>
 								<field name="step_to" readonly="1"/>
 								<field name="condition" select="1" widget="selection"/>
-								<field name="delay" string="Delay(In Days)" select="2"/>
-								<field name="media_id"/>
+								<label align="1.0" string="Delay After Trigger Date:"/>
+	                            <group col="2" colspan="1">
+	                                <field name="delay" nolabel="1"/>
+	                                <field name="delay_type" nolabel="1"/>
+	                            </group>
+<!--								<field name="media_id"/>-->
 							</form>
 							<tree string="Incoming Transitions">
 								<field name="step_from"/>
 								<field name="step_to"/>
 								<field name="condition" widget="selection"/>
-								<field name="media_id"/>
-								<field name="delay" string="Delay(In Days)"/>
+<!--								<field name="media_id"/>-->
+								<field name="delay_type" select="2"/>
 							</tree>
 						</field>
 						<field name="outgoing_transition_ids" colspan="4" nolabel="1" context="{'type':'step_from','step_id':active_id or False}">
@@ -124,20 +128,24 @@
 								<field name="step_from" readonly="1"/>
 								<field name="step_to" domain="[('offer_id','=',parent.offer_id)]"/>
 								<field name="condition" select="1" widget="selection"/>
-								<field name="delay" string="Delay(In Days)" select="2"/>
+								<label align="1.0" string="Delay After Trigger Date:"/>
+	                            <group col="2" colspan="1">
+	                                <field name="delay" nolabel="1"/>
+	                                <field name="delay_type" nolabel="1"/>
+	                            </group>
 <!--								<field name="media_id" context="{'step_media_ids':parent.media_ids}"/>-->
-								<field name="media_id" />
+<!--								<field name="media_id" />-->
 							</form>
 							<tree string="Outgoing Transitions">
 								<field name="step_from"/>
 								<field name="step_to"/>
 								<field name="condition" widget="selection"/>
-								<field name="media_id"/>
-								<field name="delay" string="Delay(In Days)"/>
+<!--								<field name="media_id"/>-->
+								<field name="delay_type" select="2"/>
 							</tree>
 						</field>
 					</page>
-					<page string="Items">
+					<page string="Products">
 						<separator colspan="4"/>
 						<field name="item_ids" colspan="4" nolabel="1" readonly="0" select="2"/>
 					</page>
@@ -159,15 +167,16 @@
 						<separator string="Purchase Advices" colspan="4"/>
 						<field name="purchase_note" nolabel="1" colspan="4"/>
 					</page>
-					<page string="History">
+<!--					<page string="History">
 						<field name="history_ids" nolabel="1" colspan="4"/>
 					</page>
-<!--					<page string="DTP Documents">
+					<page string="DTP Documents">
 						<field name="document_ids" colspan="4" nolabel="1"/>
 					</page>-->
 					<page string="Manufacturing">
+						<separator colspan="4"/>
 						<field name="manufacturing_constraint_ids" colspan="4" nolabel="1">
-							<form string="Manufacturing Description">
+							<!-- form string="Manufacturing Description">
 								<field name="name" select="1"/>
 								<separator string="Manufacturing Description" colspan="4"/>
 								<field name="constraint" colspan="4" nolabel="1"/>
@@ -177,7 +186,7 @@
 								<field name="name"/>
 								<field name="country_ids"/>
 								<field name="constraint"/>
-							</tree>
+							</tree -->
 						</field>
 					</page>
 				</notebook>
@@ -325,7 +334,7 @@
 	OFFER STEP HISTORY VIEWS
 	=======================================================
 	-->
-
+<!--
 	<record model="ir.ui.view" id="view_offer_step_history_form">
 		<field name="name">dm.offer.step.history.form</field>
 		<field name="model">dm.offer.step.history</field>
@@ -352,13 +361,13 @@
 			</tree>
 		</field>
 	</record>
-
+-->
 
 	<!--
 	=======================================================
 	OFFER STEP ITEM VIEWS
 	=======================================================
-	-->
+	
 
 	<record model="ir.ui.view" id="view_item_tree">
 		<field name="name">dm.offer.step.item.tree</field>
@@ -408,20 +417,7 @@
 	</record>
 
 	<menuitem id="menu_action_offer_step_item" parent="dm.menu_dm_config_offer_steps" action="action_offer_step_item" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
-
-	<act_window name="items"
-		res_model="dm.offer.step.item"
-		src_model="dm.offer"
-		view_type="form"
-		view_mode="tree,form"
-		id="act_offer_item_opened"/>
-
-	<act_window name="items"
-		res_model="dm.offer.step.item"
-		src_model="dm.campaign.proposition"
-		view_type="form"
-		view_mode="tree,form"
-		id="act_offer_item_opened"/>
+-->
 
 	<!--
 	=======================================================
@@ -510,6 +506,29 @@
 
     <!--
     =======================================================
+    PRODUCT EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="product_normal_form_view" model="ir.ui.view">
+        <field name="name">product.normal.form.inherit</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Direct Marketing">
+             	<separator string="Allowed Countries" colspan="4"/>
+             	<field name="country_ids" colspan="4" nolabel="1"/>
+             	<separator string="Allowed States" colspan="4"/>
+             	<field name="state_ids" colspan="4" nolabel="1"/>
+            	</page>
+        	</notebook>
+    	</field>
+	</record>
+
+    <!--
+    =======================================================
         RELATES
     =======================================================
     -->
@@ -519,7 +538,7 @@
 		src_model="dm.offer"
 		view_type="form"
 		view_mode="tree,form"
-		id="act_offer_step_opened"
+		id="act_offer_step_open"
 		domain = "[('offer_id','=',active_id)]"/>
 		
     <act_window name="DTP Documents"
@@ -528,7 +547,8 @@
         view_type="form"
         view_mode="tree,form"
         id="act_offer_document_opened"
-        domain="[('step_id','=',active_id)]"/>
+        domain="[('step_id','=',active_id)]"
+        context="{'step_id':active_id}"/>
 
 	<act_window name="Back To Offer"
 		res_model="dm.offer"
@@ -537,6 +557,14 @@
         view_mode="tree,form"
 		id="act_offer_opened"
 		domain = "[('step_ids','in',[active_id])]"/>
+	
+	<act_window name="Products"
+		res_model="product.product"
+		src_model="dm.offer"
+		view_type="form"
+		view_mode="tree,form"
+		id="act_offer_product_opened"
+		context="{'offer_id':active_id}"/>
 
 <!--
 	<act_window name="WorkItems"

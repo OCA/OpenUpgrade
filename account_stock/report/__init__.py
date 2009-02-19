@@ -1,0 +1,1 @@
+import report_stock_summary_product_vice

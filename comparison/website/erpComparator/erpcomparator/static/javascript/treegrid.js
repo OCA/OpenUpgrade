@@ -281,6 +281,15 @@ TreeNode.prototype = {
             var key = header.name;
             var value = this.record.items[key];
             var td = MochiKit.DOM.TD({'class': header.type || null});
+            if(td.className == 'image' && key == 'add_factor')
+            	MochiKit.DOM.setNodeAttribute(td, 'title', 'Propose a new criterion');
+            if(td.className == 'image' && key == 'show_graph')
+            	MochiKit.DOM.setNodeAttribute(td, 'title', 'View Graph');
+            if(td.className == 'image' && key == 'incr')
+            	MochiKit.DOM.setNodeAttribute(td, 'title', 'Increase importance for this criterion');
+            if(td.className == 'image' && key == 'decr')
+            	MochiKit.DOM.setNodeAttribute(td, 'title', 'Decrease importance for this criterion');
+            	
             if(key == 'name')
             	MochiKit.DOM.setNodeAttribute(td, 'style', 'border-right: 2px solid #99CCCC;');
             if(td.className == 'image') {
@@ -409,7 +418,7 @@ TreeNode.prototype = {
 	                	
 	                	t = vals[2];
 	                    value = [MochiKit.DOM.A({title: title + t, 'style': 'color: black;'}, value)];
-	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick':record.action,'width' : 16, 'height' : 16}));
+	                    value = value.concat(MochiKit.DOM.IMG({'src': '/static/images/treegrid/gtk-edit.png', 'style': 'text-align: right; cursor: pointer;', 'onclick':record.action,'width' : 16, 'height' : 16, 'title': 'Vote for these criterions'}));
 	                    
 	                    td.style.background = background;
 	                    

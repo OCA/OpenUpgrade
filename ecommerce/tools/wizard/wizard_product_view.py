@@ -39,12 +39,12 @@ class wizard_product_ecom_view(wizard.interface):
             'type': 'ir.actions.act_window'
         }
                 
-        states = {
+    states = {
             'init': {
                 'actions': [],
                 'result': {'type': 'action', 'action': _action_open_product_view, 'state': 'end'}
             }        
-        }
+    }
 wizard_product_ecom_view('ecommerce_category_product')
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

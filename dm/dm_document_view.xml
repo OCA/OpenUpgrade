@@ -162,29 +162,39 @@
         <field name="arch" type="xml">
             <form string="Plugin">
             	<group  colspan="4">
-	                <field name="name" select="1" colspan="4"/>
-	                <field name="field" select="2" colspan="4"/>
-	                <field name="file_id" colspan="4" filename="file_fname"/>
-	                <field name="file_fname"/>
+	                <field name="name" select="1" />
+					<field name="code" select="1" />	                
+					<field name="type" select="1" />
+					<field name="store_value" />
                 </group>
                 <newline/>
-				<separator string="Argument List" colspan="4"/>
-				<field name="argument_ids" nolabel="1" colspan="4">
-					<form string="Argument List">
-            			<group  colspan="4">
-			                <field name="name" select="1"/>
-			                <field name="value"/>
-						</group>			                
-						<separator  colspan="4"/> 
-						<field name="note" nolabel="1" colspan="4"/>
-					</form>
-					<tree string="Argument List">
-		                <field name="name" select="1"/>
-		                <field name="value"/>
-					</tree>					
-				</field>
 				<separator string="Description" colspan="4"/>
-				<field name="note" nolabel="1" colspan="4"/>
+				<field name="note" nolabel="1" colspan="4"/>                
+                <notebook colspan="4">
+                    <page string="Customer Plugin" attrs="{'invisible':[('type','!=','fields')]}">
+                        <field name="object" colspan="4" attrs="{'required':[('type','=','fields')]}" />
+    	                <field name="field"  colspan="4" domain = "[('model_id','=',object)]" attrs="{'required':[('type','=','fields')]}" />
+                    </page>
+                    <page string="Dynamic Plugin" attrs="{'invisible':[('type','!=','dynamic')]}">
+		                <field name="file_id" colspan="4" filename="file_fname" attrs="{'required':[('type','=','dynamic')]}"/>
+		                <field name="file_fname" attrs="{'required':[('type','=','dynamic')]}"/>
+						<separator string="Argument List" colspan="4"/>
+						<field name="argument_ids" nolabel="1" colspan="4">
+							<form string="Argument List">
+		            			<group  colspan="4">
+					                <field name="name" select="1"/>
+					                <field name="value"/>
+								</group>			                
+								<separator  colspan="4"/> 
+								<field name="note" nolabel="1" colspan="4"/>
+							</form>
+							<tree string="Argument List">
+				                <field name="name" select="1"/>
+				                <field name="value"/>
+							</tree>					
+						</field>
+                    </page>
+				</notebook>
 			</form>
         </field>
     </record>
@@ -255,5 +265,18 @@
 
     <menuitem id="menu_action_dm_plugins_value" parent="dm.menu_dm_config_customer" action="action_dm_plugins_value" sequence="4" />
 
+    <!--
+    =======================================================
+        RELATES
+    =======================================================
+    -->
+    
+    <act_window name="Back To Offer Step"
+		res_model="dm.offer.step"
+		src_model="dm.offer.document"
+		view_type="form"
+        view_mode="tree,form"
+		id="act_back_to_offer_step_open"
+		domain = "[('document_ids','in',[active_id])]"/>
 </data>
 </openerp>    

@@ -60,7 +60,6 @@
 				<separator string="Sale Order" colspan="4"/>
 				<newline/>
 				<field name="name"/>
-				<field name="order_id"/>
 				<field name="product_qty"/>
 				<field name="product_id"/>
 				<field name="product_uom_id"/>
@@ -75,7 +74,6 @@
 		<field name="arch" type="xml">
 			<tree string="Sale Order">
 				<field name="name"/>
-				<field name="order_id"/>
 				<field name="product_qty"/>
 				<field name="product_id"/>
 				<field name="product_uom_id"/>

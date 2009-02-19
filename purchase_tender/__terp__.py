@@ -24,7 +24,7 @@
     "version" : "0.1",
     "author" : "Tiny",
     "category" : "Generic Modules/Purchase",
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "description": """ This module allows you to manage your Purchase Tenders. When a purchase order is created, you now have the opportunity to save the related tender. 
     This new object will regroup and will allow you to easily keep track and order all your purchase orders.
 """,

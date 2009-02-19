@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<openerp>
+	<data>
+		<report
+			id="report_sale_order_india"
+			string="Print Sale Order"
+			model="sale.order"
+			name="sale.order.india"
+			rml="sale_numbers/report/sale_order.rml"
+			auto="False"/>
+	</data>
+</openerp>
