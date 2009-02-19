@@ -26,19 +26,31 @@
     "category":"Profile",
     "depends":[
         "account_base",
+<<<<<<< TREE
         "account_india_ledger",
 <<<<<<< TREE
         "account_indian_report",
         "account_voucher"
 =======
+=======
+        #"account_india_ledger",
+>>>>>>> MERGE-SOURCE
         "account_invoice",
         "account_voucher",
         "account_india",
         "account_report_india",
+<<<<<<< TREE
         "account_stock",
         "sale_numbers",
         "purchase_number",
         "l10n_chart_in", 
+>>>>>>> MERGE-SOURCE
+=======
+        #"account_stock",
+        #"sale_numbers",
+        #"purchase_number",
+        #important for the indian accounting but do not load with account module
+        "l10n_chart_in",
 >>>>>>> MERGE-SOURCE
     ],
     "demo_xml":[],
