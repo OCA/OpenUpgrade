@@ -14,8 +14,7 @@
         "account_stock",
         "sale_numbers",
         "purchase_number",
-        "l10n_chart_in",
-        
+        "l10n_chart_in", 
     ],
     "demo_xml":[],
     "update_xml":[],
