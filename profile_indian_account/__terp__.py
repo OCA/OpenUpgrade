@@ -6,7 +6,7 @@
     "category":"Profile",
     "depends":[
         "account_base",
-        "account_india_ledger",
+        #"account_india_ledger",
         "account_invoice",
         "account_voucher",
         "account_india",

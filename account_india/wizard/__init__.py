@@ -28,6 +28,7 @@
 #
 ##############################################################################
 
+import account_create
 import account_chart_wizard
 import wizard_third_party_ledger
 import wizard_journal_ledger

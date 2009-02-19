@@ -26,6 +26,12 @@
 			action="wizard_third_party_wise_ledger"
 			type="wizard"
 			id="menu_third_party_wise_ledger"/>
-			
+		
+		<wizard 
+			string="Create Account"
+			model="res.partner"
+			name="partner.account.create"
+			menu="True"
+			id="wizard_partner_account_create"/>
 	</data>
 </openerp>
