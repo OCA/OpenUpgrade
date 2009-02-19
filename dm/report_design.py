@@ -72,6 +72,31 @@ class report_xml(osv.osv):
 #        'actual_model':fields.char('Report Object', size=64),
         'document_id':fields.integer('Document'),
         }
+    def upload_report(self, cr, uid, report_id, file_sxw,file_type, context):
+        '''
+        Untested function
+        '''
+        pool = pooler.get_pool(cr.dbname)
+        sxwval = StringIO(base64.decodestring(file_sxw))
+        if file_type=='sxw':
+            fp = tools.file_open('normalized_oo2rml.xsl',
+                    subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
+            rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
+        if file_type=='odt':
+            fp = tools.file_open('normalized_odt2rml.xsl',
+                    subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
+            rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
+        if file_type=='html':
+            rml_content = base64.decodestring(file_sxw)
+        print rml_content
+        report = pool.get('ir.actions.report.xml').write(cr, uid, [report_id], {
+            'report_sxw_content': base64.decodestring(file_sxw),
+            'report_rml_content': rml_content,
+        })
+        cr.commit()
+        db = pooler.get_db_only(cr.dbname)
+        interface.register_all(db)
+        return True    
 report_xml()
 
 #def mygetObjects(self, cr, uid, ids, context):

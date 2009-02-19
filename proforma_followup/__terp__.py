@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,33 +20,28 @@
 #
 ##############################################################################
 
+
 {
-    'name': 'E-Commerce',
+    'name': 'Pro-forma invoices and their payments Management',
     'version': '1.0',
+    'category': 'Generic Modules/Accounting',
+    'description': """
+        Once a pro-forma invoice is created, the module sends automatically mail 
+        and call actions after X days.
+        It's the same principle than account_followup but for proforma invoice only. 
+        Only followups by email, no need to do reports. 
+        Also, at each steps, we should be able to call several functions. 
+        (for example, if a pro-forma is canceled, it will close a delivery order)
+""",
     'author': 'Tiny',
     'website': 'http://www.openerp.com',
-    'category': 'Generic Modules/E-Commerce Shop',
-    'depends': ['base', 'product', 'sale', 'delivery'],
-    'description': """eCommerce Users can order on the website,
-orders are automatically imported in TinyERP.
-You can configure products, categories of products, product images,
-language, currency. For the delivery of product you can manage the carriers.
-Also give the differrent payment options, then user can choose the appropriate payment methods.
-For display the products on the website you can configure row and column. """,
+    'depends': ['account'],
     'init_xml': [],
-    'demo_xml': ['ecommerce_demo_data.xml'],
     'update_xml': [
-        'tools/ecom_product_view.xml',
-        'basic_info_view.xml',
-        'partner/partner_new_view.xml',
-        'catalog/catalog_view.xml',
-        'tools/tools_wizard.xml',
-        'sale_order/sale_order_view.xml',
-        'sale_order/sale_order_sequence.xml',
-        'report_shipping.xml', 
-        'security/ir.model.access.csv'
+        'proforma_followup_view.xml',
     ],
+    'demo_xml': [],
     'installable': True,
-    'active': False
+    'active': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

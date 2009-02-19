@@ -83,10 +83,10 @@ class ecommerce_payment_received(osv.osv):
     _name = "ecommerce.payment.received"
     _description = "ecommerce payment received"
     _columns = {
-        'transaction_id': fields.char('Uniq Transaction Id', size=128, readonly=True),
+        'transaction_id': fields.char('Transaction Id', size=128, readonly=True, help="Its Unique id which is generated from the paypal."),
         'saleorder_id': fields.many2one('sale.order', 'Sale Order'),
         'invoice_id': fields.many2one('account.invoice', 'Invoice'),
-        'transaction_date': fields.date('Date', required=True),
+        'transaction_date': fields.date('Date', required=True, help="Transaction finish date."),
         'partner': fields.many2one('res.partner', 'Partner', required=True),
         'paypal_acc': fields.many2one('ecommerce.payment', 'Paypal Account', required=True)
     }
