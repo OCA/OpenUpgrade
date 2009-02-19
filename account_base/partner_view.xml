@@ -8,12 +8,10 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="date" select="2" position="after">
-					<group col="4" colspan="4">
-						<separator string="Exices Details" colspan="4"/>
-						<field name="excise" select="2"/>
-						<field name="range" select="2"/>
-						<field name="div" select="2"/>
-					</group>
+					<separator string="Exices Details" colspan="4"/>
+					<field name="excise" select="2"/>
+					<field name="range" select="2"/>
+					<field name="div" select="2"/>
 					<field name="vat_no" select="2" />
 					<field name="cst_no" select="2"/>
 					<field name="pan_no" select="2" />
