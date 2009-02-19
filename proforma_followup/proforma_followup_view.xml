@@ -32,10 +32,23 @@
 	                    <separator colspan="4" string="Email"/>
 	                    <field colspan="4" name="subject" attrs="{ 'required':[('send_email','=',True)]}"/>
 	                    <field colspan="4" name="email_body" attrs="{ 'required':[('send_email','=',True)]}"/>
+	                    <newline/>
+	                    <separator string="Legend" colspan="4"/>
+	                    <label string="%%(partner_name)s: Partner name"/>
+						<label string="%%(user_signature)s: User name"/>
+						<newline/>
+						<label string="%%(followup_amount)s: Total Amount Due"/>
+						<label string="%%(date)s: Current Date"/>
+						<newline/>
+						<label string="%%(company_name)s: User's Company name"/>
+						<label string="%%(company_currency)s: User's Company Currency"/>
+						<newline/>
                     </group>
                     <group colspan="4" col="2" attrs="{'invisible':[('call_function','=',False)]}">
                     	<separator colspan="4" string="Function"/>
-	                    <field colspan="4" name="function" attrs="{ 'required':[('call_function','=',True)]}"/>
+                    	<field colspan="2" name="model" attrs="{ 'required':[('call_function','=',True)]}"/>
+	                    <field colspan="2" name="function" attrs="{ 'required':[('call_function','=',True)]}"/>
+	                    <field colspan="4" name="args"/>
                     </group>
                 </form>
             </field>
@@ -53,6 +66,8 @@
                     <field colspan="4" name="proforma_line" nolabel="1"/>
                     <separator colspan="4" string="Description"/>
                     <field colspan="4" name="description" nolabel="1" select="1"/>
+                    <field colspan="2" name="state"/>
+                   <!-- <button name="run_followups" string="test" type="object"/> -->
                 </form>
             </field>
         </record>
@@ -67,6 +82,7 @@
                     <field name="company_id"/>
                     <field name="description"/>
                     <field name="proforma_line"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>

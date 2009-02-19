@@ -39,6 +39,7 @@
     'init_xml': [],
     'update_xml': [
         'proforma_followup_view.xml',
+        'proforma_followup_data.xml',
     ],
     'demo_xml': [],
     'installable': True,
