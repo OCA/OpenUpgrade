@@ -25,14 +25,20 @@
     'version': '1.0',
     'author': 'Tiny',
     'website': 'http://www.openerp.com',
-    'category': 'Generic Modules/E-Commerce Shop',
+    'category': 'Generic Modules/E-Commerce',
     'depends': ['base', 'product', 'sale', 'delivery'],
-    'description': """eCommerce Users can order on the website,
-orders are automatically imported in TinyERP.
-You can configure products, categories of products, product images,
-language, currency. For the delivery of product you can manage the carriers.
-Also give the differrent payment options, then user can choose the appropriate payment methods.
-For display the products on the website you can configure row and column. """,
+    'description': """
+ecommerce users can order on the website, orders are automatically imported in OpenERP.
+
+You can export products, product's categories, product images and create links between
+categories of products, currency and languages to website.
+
+Delivery of products manage by carriers.
+
+Different payment methods are available for users to make payment.
+
+You can display products in table on website using rows and columns specified in webshop.
+                 """,
     'init_xml': [],
     'demo_xml': ['ecommerce_demo_data.xml'],
     'update_xml': [

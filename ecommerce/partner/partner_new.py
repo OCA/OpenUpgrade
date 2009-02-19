@@ -93,7 +93,7 @@ class ecommerce_partner(osv.osv):
             ids = self.search(cr, uid, args, limit=limit, context=context)
         return self.name_get(cr, uid, ids, context)
     
-    def address_get(self, cr, ids, adr_pref=['default']):
+    def address_get(self, cr, uid, ids, adr_pref=['default']):
         
         cr.execute('select type,id from ecommerce_partner_address where partner_id in ('+','.join(map(str, ids))+')')
         res = cr.fetchall()

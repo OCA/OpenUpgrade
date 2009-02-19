@@ -45,9 +45,9 @@ class ecommerce_sale_order(osv.osv):
     _defaults = {
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'ecommerce.saleorder'),
         'date_order': lambda *a: time.strftime('%Y-%m-%d'),
-        'epartner_invoice_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['invoice'])['invoice'],
-        'epartner_add_id': lambda self, cr, uid, context: context.get('partner_id', False) and  self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['contact'])['contact'],
-        'epartner_shipping_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['delivery'])['deliver']
+        'epartner_invoice_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], adr_pref=['invoice'])['invoice'],
+        'epartner_add_id': lambda self, cr, uid, context: context.get('partner_id', False) and  self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], adr_pref=['contact'])['contact'],
+        'epartner_shipping_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], adr_pref=['delivery'])['deliver']
     }
 
     def order_create_function(self, cr, uid, ids, context={}):
@@ -183,7 +183,7 @@ class ecommerce_sale_order(osv.osv):
 
         if not part:
             return {'value':{'epartner_invoice_id': False, 'epartner_shipping_id':False, 'epartner_add_id':False}}
-        addr = self.pool.get('ecommerce.partner').address_get(cr, uid, [part], ['delivery', 'invoice', 'contact'])
+        addr = self.pool.get('ecommerce.partner').address_get(cr, uid, [part], adr_pref=['delivery', 'invoice', 'contact'])
         return {'value': {'epartner_invoice_id': addr['invoice'], 'epartner_add_id': addr['contact'], 'epartner_shipping_id': addr['delivery']}}
 
     def confirm_sale_order(self, cr, uid, so_ids, email_id, shipping_charge, context={}):
@@ -252,8 +252,9 @@ class ecommerce_order_line(osv.osv):
     _name = 'ecommerce.order.line'
     _description = 'ecommerce order line'
     _columns = {
-        'name': fields.char('Order Line', size=64, required=True),
+        'name': fields.char('Description', size=64, required=True),
         'product_qty': fields.float('Quantity', digits=(16,2), required=True),
+        'order_id': fields.many2one('ecommerce.saleorder', 'eOrder Ref'),
         'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok','=',True)], change_default=True),
         'product_uom_id': fields.many2one('product.uom', 'Unit of Measure',required=True),
         'price_unit': fields.float('Unit Price',digits=(16, int(config['price_accuracy'])), required=True),
