@@ -133,8 +133,8 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
                 res['balance']=balance_dict[aobj.id]['balance']
                 res['type']=aobj.user_type.code
                 res['level']=aobj.level
-                if res['type'] == 'liability' and res['balance'] < 0.0:
-                    res['balance'] *= -1
+#                if res['type'] == 'liability' and res['balance'] < 0.0:
+#                    res['balance'] *= -1
                 if res['level'] > 4:
                     res['outer']='-1'
                     if res['type'] == 'liability':
