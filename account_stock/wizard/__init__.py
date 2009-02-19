@@ -1,0 +1,1 @@
+import wizard_stock_summary_product_vice

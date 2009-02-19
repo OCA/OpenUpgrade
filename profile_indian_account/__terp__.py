@@ -25,10 +25,21 @@
     "author":"Tiny",
     "category":"Profile",
     "depends":[
-        "l10n_chart_in",
+        "account_base",
         "account_india_ledger",
+<<<<<<< TREE
         "account_indian_report",
         "account_voucher"
+=======
+        "account_invoice",
+        "account_voucher",
+        "account_india",
+        "account_report_india",
+        "account_stock",
+        "sale_numbers",
+        "purchase_number",
+        "l10n_chart_in", 
+>>>>>>> MERGE-SOURCE
     ],
     "demo_xml":[],
     "update_xml":[],
