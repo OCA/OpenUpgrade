@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="sms_smsclient_form">
+			<field name="name">sms.smsclient.form</field>
+			<field name="model">sms.smsclient</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="SMS Gateway">
+					<notebook>
+						<page string="General">
+							<field name="name" select="1"/>
+							<field name="method" select="1"/>
+							<newline/>
+							<field name="url" colspan="4"/>
+							<field name="property_ids" colspan="4">
+								<tree string="Gateway Parameters">
+									<field name="type"/>
+									<field name="name"/>
+									<field name="value"/>
+								</tree>
+								<form string="Gateway Parameters">
+									<field name="type"/>
+									<field name="name"/>
+									<field name="value"/>
+								</form>
+							</field>
+							<field name="state"/>
+						</page>
+						<page string="History">
+							<field name="history_line" select="2" colspan="4" nolabel="1">
+								<tree string="Gateway History">
+									<field name="date_create"/>
+									<field name="user_id"/>
+									<field name="name"/>
+									<field name="gateway_id"/>
+									<field name="to"/>
+									<field name="sms"/>
+								</tree>
+								<form string="Gateway History">
+									<field name="user_id"/>
+									<field name="date_create"/>
+									<field name="name"/>
+									<field name="gateway_id"/>
+									<field name="to"/>
+									<field name="sms" colspan="4"/>
+								</form>
+							</field>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_sms_smsclient_tree">
+			<field name="name">SMS Gateway</field>
+			<field name="res_model">sms.smsclient</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="sms_smsclient_form" />
+		</record>
+		
+		<menuitem name="SMS Gateway" id="menu_smsclient_administration_server" parent="base.menu_config"/>
+		<menuitem name="New Gateway" id="menu_smsclient_administration_sms_server" parent="menu_smsclient_administration_server" action="action_sms_smsclient_tree"/>
+	</data>
+</openerp>
