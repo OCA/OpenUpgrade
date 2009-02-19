@@ -164,18 +164,18 @@ class dm_overlay(osv.osv):
     _name = 'dm.overlay'
     _rec_name = 'trademark_id'
 
-    def create(self,cr,uid,vals,context={}):
-        data = self.browse(cr, uid, [])
-        overlay_id = self.search(cr, uid, [('trademark_id','=',vals['trademark_id']), ('dealer_id','=',vals['dealer_id'])])
-        if overlay_id:
-            raise  osv.except_osv('Warning', "You cannot create an overlay for this particular trademark and dealer !")
-
-        dealer_obj = self.pool.get('res.partner').browse(cr, uid, [vals['dealer_id']])[0]
-        dealer_country_ids = [country_ids.id for country_ids in dealer_obj.country_ids]
-        for i in vals['country_ids'][0][-1]:
-            if not i in dealer_country_ids:
-                raise  osv.except_osv('Warning', "This country is not allowed for %s" % (dealer_obj.name,) )
-        return super(dm_overlay,self).create(cr,uid,vals,context)
+#    def create(self,cr,uid,vals,context={}):
+#        data = self.browse(cr, uid, [])
+#        overlay_id = self.search(cr, uid, [('trademark_id','=',vals['trademark_id']), ('dealer_id','=',vals['dealer_id'])])
+#        if overlay_id:
+#            raise  osv.except_osv('Warning', "You cannot create an overlay for this particular trademark and dealer !")
+#
+#        dealer_obj = self.pool.get('res.partner').browse(cr, uid, [vals['dealer_id']])[0]
+#        dealer_country_ids = [country_ids.id for country_ids in dealer_obj.country_ids]
+#        for i in vals['country_ids'][0][-1]:
+#            if not i in dealer_country_ids:
+#                raise  osv.except_osv('Warning', "This country is not allowed for %s" % (dealer_obj.name,) )
+#        return super(dm_overlay,self).create(cr,uid,vals,context)
 
     def _overlay_code(self, cr, uid, ids, name, args, context={}):
         result ={}
@@ -372,8 +372,8 @@ class dm_campaign(osv.osv):
 
     _columns = {
         'code1' : fields.function(_campaign_code,string='Code',type="char",size="64",method=True,readonly=True),
-        'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])], required=True,
-            help="Choose the commercial offer to use with this campaign, only offers in open state can be assigned"),
+        'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','in',['ready','open']),('type','in',['new','standart','rewrite'])], required=True,
+            help="Choose the commercial offer to use with this campaign, only offers in ready to plan or open state can be assigned"),
         'country_id' : fields.many2one('res.country', 'Country',required=True, 
             help="The language and currency will be automaticaly assigned if they are defined for the country"),
         'lang_id' : fields.many2one('res.lang', 'Language'),
@@ -573,8 +573,8 @@ class dm_campaign(osv.osv):
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
             vals['date'] = date_end
-            if camp.project_id:
-                self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
+            if 'project_id' in vals and vals['project_id']:
+                self.pool.get('project.project').write(cr,uid,[vals['project_id']],{'date_end':vals['date_start']})
 
         """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
         if (not camp.trademark_id) and camp.offer_id.recommended_trademark:
@@ -594,7 +594,7 @@ class dm_campaign(osv.osv):
             country_id = camp.country_id.id
             
 #        check if an overlay exists else create it
-        overlay_country_ids=[]    
+        overlay_country_ids=[] 
         if trademark_id and dealer_id and country_id:
             overlay_obj = self.pool.get('dm.overlay')
             overlay_id = overlay_obj.search(cr, uid, [('trademark_id','=',trademark_id), ('dealer_id','=',dealer_id)])

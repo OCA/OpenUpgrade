@@ -47,10 +47,8 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Campaigns">
-                <group colspan="3" col="4">
-                    <separator string="Campaign Description" colspan="5"/>
-<!--                    <field name="name" string="Name" select="1" col="3"/>
-                    <field name="code1" string="Code" select="2" col="2"/>-->
+                <group colspan="4">
+                    <separator string="Campaign Description" colspan="4"/>
                     <field name="name" string="Name" select="1"/>
                     <field name="code1" string="Code" select="2"/>
                 </group>
@@ -80,7 +78,7 @@
                         <separator string="Tasks Management" colspan="4"/>
                         <group colspan="4">
                         <field name="project_id" string="Retro Planning"/>
-                         <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" states = "pending,open" attrs="{'invisible':[('project_id','!=',False)]}"/> 
+                        <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('project_id','=',False),('state','in',['draft','close'])]}"/> 
                         </group>
                         <separator string="Campaign Status" colspan="4"/>
                         <group col="10" colspan="4">
@@ -143,14 +141,14 @@
                             </form>
                         </field>
                         <separator string="Manufacturing Status" colspan="4"/>
-                        <group col="8" colspan="4">
+                        <group colspan="4">
                             <field name="manufacturing_state" nolabel="1"/>
                             <button name="manufacturing_state_inprogress_set" string="In Progress" attrs="{'invisible':[('manufacturing_state','!=','pending')]}" type="object"/>
                             <button name="manufacturing_state_done_set" string="Done" attrs="{'invisible':[('manufacturing_state','!=','inprogress')]}" type="object"/>
                         	<button name="manufacturing_state_inprogress_set" string="Set to In Progress" attrs="{'invisible':[('manufacturing_state','!=','done')]}" type="object"/>
                         </group>
                     </page>
-                    <page string="Desktop Publishing">
+                    <page string="DTP">
                         <separator string="Desktop Publishing" colspan="4"/>
                         <group colspan="2" col="2">
                             <field name="dtp_responsible_id"/>
@@ -189,7 +187,7 @@
                             </form>
                         </field>
                         <separator string="DTP Status" colspan="4"/>
-                        <group col="8" colspan="4">
+                        <group colspan="4">
                             <field name="dtp_state" nolabel="1"/>
                             <button name="dtp_state_inprogress_set" string="In Progress" attrs="{'invisible':[('dtp_state','!=','pending')]}" type="object"/>
                             <button name="dtp_state_done_set" string="Done" attrs="{'invisible':[('dtp_state','!=','inprogress')]}" type="object"/>
@@ -242,7 +240,7 @@
                             </form>
                         </field>
                         <separator string="Customers Files Status" colspan="4"/>
-                        <group col="8" colspan="4">
+                        <group colspan="4">
                             <field name="customer_file_state" nolabel="1"/>
                             <button name="customer_file_state_inprogress_set" string="In Progress" attrs="{'invisible':[('customer_file_state','!=','pending')]}" type="object"/>
                             <button name="customer_file_state_done_set" string="Done" attrs="{'invisible':[('customer_file_state','!=','inprogress')]}" type="object"/>
@@ -288,7 +286,7 @@
                             </form>
                         </field>
                         <separator string="Items Procurement Status" colspan="4"/>
-                        <group col="8" colspan="4">
+                        <group colspan="4">
                             <field name="items_state" nolabel="1"/>
                             <button name="items_state_inprogress_set" string="In Progress" attrs="{'invisible':[('items_state','!=','pending')]}" type="object"/>
                             <button name="items_state_done_set" string="Done" attrs="{'invisible':[('items_state','!=','inprogress')]}" type="object"/>
@@ -296,6 +294,13 @@
                         </group>
                     </page>
                     <page string="Advanced">
+                    	<field name="mail_service_ids" nolabel="1" colspan="4" mode="tree">
+	                        <tree string="Mail Service" editable="bottom">
+	                            <field name="offer_step_id"/>
+	                            <field name="mail_service_id"/>
+	                            <field name="action_id"/>
+	                        </tree>
+						</field>
                     	<separator string="Payment Methods" colspan="4"/>
                    		<field name="payment_methods" colspan="4" nolabel="1"/>
                     </page>
@@ -303,15 +308,6 @@
                         <separator string="Notes" colspan="4"/>
                         <field name="notes" colspan="4" nolabel="1"/>
                     </page>
-                    <page string="Mail Service">
-	                    <field name="mail_service_ids" nolabel="1" colspan="4" mode="tree">
-	                        <tree string="Mail Service" editable="bottom">
-	                            <field name="offer_step_id"/>
-	                            <field name="mail_service_id"/>
-	                            <field name="action_id"/>
-	                        </tree>
-						</field>
-                    </page>                     
                 </notebook>
             </form>
         </field>
@@ -1500,10 +1496,14 @@
         <field name="type">form</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
-            <field name="parent_id" position="after">
-                <field name="country_ids" colspan="4"/>
-                <field name="state_ids" colspan="4"/>
-            </field>
+        	<notebook colspan="4" position="inside">
+                <page string="Direct Marketing">
+                	<separator string="Allowed Countries" colspan="4"/>
+                	<field name="country_ids" colspan="4" nolabel="1"/>
+                	<separator string="Allowed States" colspan="4"/>
+                	<field name="state_ids" colspan="4" nolabel="1"/>
+                </page>
+            </notebook>
         </field>
     </record>
 

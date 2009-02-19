@@ -63,7 +63,9 @@
                         </group>
                         <group colspan="2" col="2">
                             <separator string="Origin" colspan="2"/>
+                            <group attrs="{'invisible':[('type','!=','rewrite')]}" colspan="2">
                             <field name="offer_origin_id" select="2"/>
+                            </group>
                             <field name="preoffer_original_id"  select="2" context="{'offer_type':'Preoffer'}"/>
                             <field name="lang_orig" select="2"/>
                             <newline />
@@ -78,7 +80,8 @@
                         <separator string="Offer Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="state" nolabel="1" select="1"/>
-                            <button name="state_open_set" string="Open" states="draft,freeze"/>
+                            <button name="state_ready_set" string="Ready To Plan" states="draft,freeze"/>
+                            <button name="state_open_set" string="Open" states="draft,ready,freeze"/>
                             <button name="state_freeze_set" string="Freeze" states="open"/>
                             <button name="state_close_set" string="Close" states="open,draft,freeze"/>
                             <button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
@@ -393,11 +396,11 @@
                         <separator string="Description" colspan="4"/>
                         <field name="desc" nolabel="1"/>
                     </page>
-                    -->
                     <page string="History">
                         <separator string="History" />
                         <field name="history_ids" nolabel="1" colspan="4"/>
                     </page>
+                    -->
                 </notebook>
             </form>
         </field>

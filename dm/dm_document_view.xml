@@ -265,5 +265,18 @@
 
     <menuitem id="menu_action_dm_plugins_value" parent="dm.menu_dm_config_customer" action="action_dm_plugins_value" sequence="4" />
 
+    <!--
+    =======================================================
+        RELATES
+    =======================================================
+    -->
+    
+    <act_window name="Back To Offer Step"
+		res_model="dm.offer.step"
+		src_model="dm.offer.document"
+		view_type="form"
+        view_mode="tree,form"
+		id="act_back_to_offer_step_open"
+		domain = "[('document_ids','in',[active_id])]"/>
 </data>
 </openerp>    

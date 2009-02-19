@@ -22,7 +22,14 @@
             <field name="flow_start">True</field>
             <field name="name">draft</field>
         </record>
-
+		
+		<record id="act_offer_ready" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_offer"/>
+            <field name="name">ready_to_plan</field>
+            <field name="kind">function</field>
+            <field name="action">state_ready_set()</field>
+        </record>
+        
         <record id="act_offer_open" model="workflow.activity">
             <field name="wkf_id" ref="wkf_dm_offer"/>
             <field name="name">open</field>
@@ -46,6 +53,13 @@
         </record>
         
         <!-- Transition -->
+        <record id="trans_offer_draft_ready" model="workflow.transition">
+            <field name="act_from" ref="act_offer_draft"/>
+            <field name="act_to" ref="act_offer_ready"/>
+            <field name="signal">state_ready_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
         <record id="trans_offer_draft_open" model="workflow.transition">
             <field name="act_from" ref="act_offer_draft"/>
             <field name="act_to" ref="act_offer_open"/>
@@ -60,6 +74,13 @@
             <field name="role_id" ref="res_roles_offermanager"/>
         </record>
         
+        <record id="trans_offer_ready_open" model="workflow.transition">
+            <field name="act_from" ref="act_offer_ready"/>
+            <field name="act_to" ref="act_offer_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
         <record id="trans_offer_open_freeze" model="workflow.transition">
             <field name="act_from" ref="act_offer_open"/>
             <field name="act_to" ref="act_offer_freeze"/>
@@ -71,6 +92,13 @@
             <field name="act_from" ref="act_offer_open"/>
             <field name="act_to" ref="act_offer_close"/>
             <field name="signal">state_close_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_offer_freeze_ready" model="workflow.transition">
+            <field name="act_from" ref="act_offer_freeze"/>
+            <field name="act_to" ref="act_offer_ready"/>
+            <field name="signal">state_ready_set</field>
             <field name="role_id" ref="res_roles_offermanager"/>
         </record>
         
