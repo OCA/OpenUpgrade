@@ -54,35 +54,36 @@ class dm_ddf_plugin(osv.osv):
             order = dm_customer_order.browse(cr,uid,order_id)
             customer_ids = map(lambda x:x.customer_id.id,order)
             plugins = d.document_template_id.plugin_ids
-            for plugin in plugins:
-                args={}
-                if plugin.type=='fields':
-                    args['object']=str(plugin.object)
-                    args['field_name']=str(plugin.field.name)
-                    args['field_type']=str(plugin.field.ttype)
-                    args['field_relation']=str(plugin.field.relation)
-                        
-                    path = os.path.join(os.getcwd(), "addons/dm/")
-                    plugin_name = 'customer_function'
-                else :
-                    arguments = plugin.argument_ids
-                    for a in arguments:
-                        args[str(a.name)]=str(a.value)
-                    path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
-                    plugin_name = plugin.file_fname.split('.')[0]
-                import sys
-                sys.path.append(path)
-                X =  __import__(plugin_name)
-                plugin_func = getattr(X,plugin_name)
-                plugin_value = plugin_func(cr,uid,customer_ids,**args)
-                if plugin.store_value : 
-                    map(lambda x :dm_plugins_value.create(cr,uid,
-                                {'date':time.strftime('%Y-%m-%d'),
-                                 'customer_id':x[0],
-                                 'plugin_id':plugin.id,
-                                 'value' : x[1]}),
-                                plugin_value
-                                )
+            if plugins:
+                for plugin in plugins:
+                    args={}
+                    if plugin.type=='fields':
+                        args['object']=str(plugin.object)
+                        args['field_name']=str(plugin.field.name)
+                        args['field_type']=str(plugin.field.ttype)
+                        args['field_relation']=str(plugin.field.relation)
+                            
+                        path = os.path.join(os.getcwd(), "addons/dm/")
+                        plugin_name = 'customer_function'
+                    else :
+                        arguments = plugin.argument_ids
+                        for a in arguments:
+                            args[str(a.name)]=str(a.value)
+                        path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
+                        plugin_name = plugin.file_fname.split('.')[0]
+                    import sys
+                    sys.path.append(path)
+                    X =  __import__(plugin_name)
+                    plugin_func = getattr(X,plugin_name)
+                    plugin_value = plugin_func(cr,uid,customer_ids,**args)
+                    if plugin.store_value : 
+                        map(lambda x :dm_plugins_value.create(cr,uid,
+                                    {'date':time.strftime('%Y-%m-%d'),
+                                     'customer_id':x[0],
+                                     'plugin_id':plugin.id,
+                                     'value' : x[1]}),
+                                    plugin_value
+                                    )
         return True
     
     def _data_get(self, cr, uid, ids, name, arg, context):
@@ -235,7 +236,17 @@ dm_offer_document_category()
 class dm_offer_document(osv.osv):
     _name = "dm.offer.document"
     _rec_name = 'name'
-    
+
+    def default_get(self, cr, uid, fields, context=None):
+        value = super(dm_offer_document, self).default_get(cr, uid, fields, context)
+        if 'step_id' in context and context['step_id']:
+            offer = self.pool.get('dm.offer')
+            offer_id = offer.search(cr, uid, [('step_ids','in',[context['step_id']])])
+            browse_id = offer.browse(cr, uid, offer_id)[0]
+            value['lang_id'] = browse_id.lang_orig.id
+            value['copywriter_id'] = browse_id.copywriter_id.id
+        return value
+        
     def _has_attchment_fnc(self, cr, uid, ids, name, arg, context={}):
         res={}
         for id in ids :
