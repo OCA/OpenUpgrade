@@ -729,7 +729,6 @@
                             </page>
                             <page string="Quantities">
                                 <separator string="Addresses Quantities" colspan="4"/>
-                                <field name="quantity_planned" select="2"/>
                                 <newline/>
                                 <field name="quantity_wanted" select="2" attrs="{'readonly':[('all_add_avail','=',1)]}"/>
                                 <field name="all_add_avail" select="2"/>
@@ -864,7 +863,6 @@
                     </page>
                     <page string="Quantities">
                         <separator string="Addresses Quantities" colspan="4"/>
-                        <field name="quantity_planned" select="2"/>
                         <newline/>
                         <field name="quantity_wanted" select="2" attrs="{'readonly':[('all_add_avail','=',1)]}"/>
                         <field name="all_add_avail" select="2"/>

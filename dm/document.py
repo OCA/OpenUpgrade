@@ -53,37 +53,37 @@ class dm_ddf_plugin(osv.osv):
             order_id = dm_customer_order.search(cr,uid,[('offer_step_id','=',d.step_id.id)])
             order = dm_customer_order.browse(cr,uid,order_id)
             customer_ids = map(lambda x:x.customer_id.id,order)
-            plugins = d.document_template_id.plugin_ids
-            if plugins:
-                for plugin in plugins:
-                    args={}
-                    if plugin.type=='fields':
-                        args['object']=str(plugin.object)
-                        args['field_name']=str(plugin.field.name)
-                        args['field_type']=str(plugin.field.ttype)
-                        args['field_relation']=str(plugin.field.relation)
-                            
-                        path = os.path.join(os.getcwd(), "addons/dm/")
-                        plugin_name = 'customer_function'
-                    else :
-                        arguments = plugin.argument_ids
-                        for a in arguments:
-                            args[str(a.name)]=str(a.value)
-                        path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
-                        plugin_name = plugin.file_fname.split('.')[0]
-                    import sys
-                    sys.path.append(path)
-                    X =  __import__(plugin_name)
-                    plugin_func = getattr(X,plugin_name)
-                    plugin_value = plugin_func(cr,uid,customer_ids,**args)
-                    if plugin.store_value : 
-                        map(lambda x :dm_plugins_value.create(cr,uid,
-                                    {'date':time.strftime('%Y-%m-%d'),
-                                     'customer_id':x[0],
-                                     'plugin_id':plugin.id,
-                                     'value' : x[1]}),
-                                    plugin_value
-                                    )
+            plugins = d.document_template_id.plugin_ids or []
+            for plugin in plugins:
+                args={}
+                if plugin.type=='fields':
+                    res  = self.pool.get('ir.model').browse(cr,uid,plugin.object.id)
+                    args['object']=res.model
+                    args['field_name']=str(plugin.field.name)
+                    args['field_type']=str(plugin.field.ttype)
+                    args['field_relation']=str(plugin.field.relation)
+                        
+                    path = os.path.join(os.getcwd(), "addons/dm/")
+                    plugin_name = 'customer_function'
+                else :
+                    arguments = plugin.argument_ids
+                    for a in arguments:
+                        args[str(a.name)]=str(a.value)
+                    path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",cr.dbname)
+                    plugin_name = plugin.file_fname.split('.')[0]
+                import sys
+                sys.path.append(path)
+                X =  __import__(plugin_name)
+                plugin_func = getattr(X,plugin_name)
+                plugin_value = plugin_func(cr,uid,customer_ids,**args)
+                if plugin.store_value : 
+                    map(lambda x :dm_plugins_value.create(cr,uid,
+                                {'date':time.strftime('%Y-%m-%d'),
+                                 'customer_id':x[0],
+                                 'plugin_id':plugin.id,
+                                 'value' : x[1]}),
+                                plugin_value
+                                )
         return True
     
     def _data_get(self, cr, uid, ids, name, arg, context):
@@ -131,7 +131,7 @@ class dm_ddf_plugin(osv.osv):
     _columns = {
         'name' : fields.char('DDF Plugin Name', size=64),
         'store_value' : fields.boolean('Store Value'),
-        'code' : fields.char('Code', size=64),
+        'code' : fields.char('Code', size=64 , required=True),
         'file_id': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary"),
         'file_fname': fields.char('Filename',size=64),
         'argument_ids' : fields.one2many('dm.plugin.argument', 'plugin_id', 'Argument List'),
@@ -151,10 +151,12 @@ class dm_plugin_argument(osv.osv):
     _name = "dm.plugin.argument"
     _description = "Argument List"
     _columns = {
-        'name' : fields.char('Argument Name', size=64,required=True,readonly=True),
-        'value' : fields.char('Argument Value', size=64,required=True),
+        'name' : fields.char('Argument Name', size=64,required=True),
+        'value' : fields.text('Argument Value', size=64),
         'plugin_id' : fields.many2one('dm.ddf.plugin','Plugin'),
-        'note' : fields.text('Description',readonly=True)
+        'note' : fields.text('Description',readonly=True),
+        'sotred_plugin' : fields.boolean('Value from plugin'),
+        'custome_plugin_id' : fields.many2one('dm.ddf.plugin','Plugin For Value' ,domain=[('type','=','fields')]),
         }
 dm_plugin_argument()
 
@@ -267,7 +269,7 @@ class dm_offer_document(osv.osv):
         'code' : fields.char('Code', size=16, required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter', domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
-        'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
+        'category_id' : fields.many2one('dm.offer.document.category','Categories'),
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
         'document_template_id' : fields.many2one('dm.document.template', 'Document Template',),

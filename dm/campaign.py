@@ -141,7 +141,7 @@ class dm_campaign_group(osv.osv):
         'project_id' : fields.many2one('project.project', 'Project', readonly=True),
         'campaign_ids': fields.one2many('dm.campaign', 'campaign_group_id', 'Campaigns', domain=[('campaign_group_id','=',False)], readonly=True),
         'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_group_id', 'Purchase Lines'),
-        'quantity_planned_total' : fields.function(_quantity_planned_total, string='Total planned Quantity',type="char",size="64",method=True,readonly=True),
+#        'quantity_planned_total' : fields.function(_quantity_planned_total, string='Total planned Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_wanted_total' : fields.function(_quantity_wanted_total, string='Total Wanted Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_usable_total' : fields.function(_quantity_usable_total, string='Total Usable Quantity',type="char",size="64",method=True,readonly=True),
@@ -781,21 +781,25 @@ class dm_campaign_proposition(osv.osv):
         result ={}
         for id in ids:
             pro = self.browse(cr,uid,[id])[0]
-            camp_code = pro.camp_id.code1 or ''
-            offer_code = pro.camp_id.offer_id and pro.camp_id.offer_id.code or ''
-            trademark_code = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
-            dealer_code =pro.camp_id.dealer_id and pro.camp_id.dealer_id.ref or ''
-            date_start = pro.date_start or ''
-            date = date_start.split('-')
-            year = month = ''
-            if len(date)==3:
-                year = date[0][2:]
-                month = date[1]
-            country_code = pro.camp_id.country_id.code or ''
-            seq = '%%0%sd' % 2 % id
-            final_date = month+year
-            code1='-'.join([camp_code, seq])
-            result[id]=code1
+            pro_ids = self.search(cr,uid,[('camp_id','=',pro.camp_id.id)])
+            i=1
+            for pro_id in pro_ids:
+                camp_code = pro.camp_id.code1 or ''
+                offer_code = pro.camp_id.offer_id and pro.camp_id.offer_id.code or ''
+                trademark_code = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
+                dealer_code =pro.camp_id.dealer_id and pro.camp_id.dealer_id.ref or ''
+                date_start = pro.date_start or ''
+                date = date_start.split('-')
+                year = month = ''
+                if len(date)==3:
+                    year = date[0][2:]
+                    month = date[1]
+                country_code = pro.camp_id.country_id.code or ''
+                seq = '%%0%sd' % 2 % i
+                final_date = month+year
+                code1='-'.join([camp_code, seq])
+                result[pro_id]=code1
+                i +=1
         return result
 
     def _quantity_wanted_get(self, cr, uid, ids, name, args, context={}):
@@ -894,8 +898,7 @@ class dm_campaign_proposition(osv.osv):
         'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching'),('split','Split')],"Type"),
         'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition', readonly=True),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
-        'quantity_planned' : fields.function(_quantity_planned_get,string='planned Quantity',type="char",size="64",method=True,readonly=True,
-                    help='The planned quantity is an estimation of the usable quantity of addresses you  will get after delivery, deduplication and cleaning\n' \
+        'quantity_planned' : fields.float('Planned Quantity',digits=(16,2), help='The planned quantity is an estimation of the usable quantity of addresses you  will get after delivery, deduplication and cleaning\n' \
                             'This is usually the quantity used to order the manufacturing of the mailings'),
         'quantity_wanted' : fields.function(_quantity_wanted_get,string='Wanted Quantity',type="char",size="64",method=True,readonly=True,
                     help='The wanted quantity is the number of addresses you wish to get for that segment.\n' \
@@ -1034,14 +1037,15 @@ class dm_campaign_proposition_segment(osv.osv):
         result ={}
         for id in ids:
             seg = self.browse(cr,uid,[id])[0]
-            if seg.customers_list_id:
+            segment_list = self.search(cr,uid,[('customers_list_id','=',seg.customers_list_id.id)])
+            i = 1 
+            for s in segment_list:  
                 country_code = seg.customers_list_id.country_id.code or ''
                 cust_list_code =  seg.customers_list_id.code
-                seq = '%%0%sd' % 2 % id
+                seq = '%%0%sd' % 2 % i
                 code1='-'.join([country_code[:3], cust_list_code[:3], seq[:4]])
-            else:
-                code1='No List Defined'
-            result[id]=code1
+                result[s]=code1
+                i +=1
         return result
 
     def onchange_list(self, cr, uid, ids, customers_list, start_census, end_census):
