@@ -98,6 +98,8 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
         cal_list={}
         result_pl=self.obj_pl.get_data(form)
         res_pl=self.obj_pl.final_result()
+        if res_pl['type']== 'Net Profit':
+            res_pl['balance'] *= -1
         total_list=['Share Holder/Owner Fund','Branch/Division','Loan(Liability) Account','Current Liabilities','Suspense Account','Fixed Assets','Investment','Current Assets','Misc. Expenses(Asset)']
         resp={}
         for group in gr_list: 
