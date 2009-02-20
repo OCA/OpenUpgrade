@@ -55,15 +55,15 @@ class ecommerce_payment(osv.osv):
         
     _columns = {
         'name': fields.selection(_get_method, 'Method', size=64, required=True),
-        'chequepay_to': fields.char('Account Name', size=128, required=False),
+        'chequepay_to': fields.char('Account Owner', size=128, required=False),
         'street': fields.char('Street', size=128, required=False),
         'street2': fields.char('Street2', size=128, required=False),
         'zip': fields.char('Zip', change_default=True, size=24, required=False),
         'city': fields.char('City', size=128, required=False),
-        'state_id': fields.many2one("res.country.state", 'State', required=False),
+        'state_id': fields.many2one('res.country.state', 'State', required=False),
         'country_id': fields.many2one('res.country', 'Country', required=False),
         'biz_account': fields.char('Your Business E-mail Id', required=False, size=128,
-            help="Paypal Business Account Id."),
+            help="Paypal business account Id."),
         'return_url': fields.char('Return URL', required=False, size=128,
             help="Return url which is set at the paypal account."),
         'cancel_url': fields.char('Cancel URL', required=False, size=128,
@@ -72,7 +72,6 @@ class ecommerce_payment(osv.osv):
             help="Transaction detail with the uniq transaction id."),
         'creditcards': fields.many2many('ecommerce.creditcard', 'creditcard_method', 'creditcards', 'ecommerce_creditcard', 'Credit Cards'),
         'acc_number': fields.char('Account Number', size=64, help="Bank account number"),
-        'iban': fields.char('IBAN', size=64, help="for international bank transfers"),
         'bic': fields.char('BIC number or SWIFT', size=64),
         'bank_name': fields.char('Bank Name', size=128)            
     }
@@ -86,7 +85,7 @@ class ecommerce_payment_received(osv.osv):
         'transaction_id': fields.char('Transaction Id', size=128, readonly=True, help="Its Unique id which is generated from the paypal."),
         'saleorder_id': fields.many2one('sale.order', 'Sale Order'),
         'invoice_id': fields.many2one('account.invoice', 'Invoice'),
-        'transaction_date': fields.date('Date', required=True, help="Transaction finish date."),
+        'transaction_date': fields.date('Date Payment', required=True, help="Transaction finish date."),
         'partner': fields.many2one('res.partner', 'Partner', required=True),
         'paypal_acc': fields.many2one('ecommerce.payment', 'Paypal Account', required=True)
     }
@@ -102,7 +101,7 @@ class ecommerce_shop(osv.osv):
     _description = "ecommerce shop"
     _columns = {
         'name': fields.char('Name', size=256, required=True,
-            help="Name of the Shop which u want to configure for website."),
+            help="Name of the shop which you are configure at website."),
         'company_id': fields.many2one('res.company', 'Company'),
         'shop_id': fields.many2one('sale.shop', 'Sale Shop', required=True),
  	    'payment_method': fields.many2many('ecommerce.payment', 'shop_payment', 'shop_id', 'payment_id', 'Payable method', required=False),
@@ -111,15 +110,15 @@ class ecommerce_shop(osv.osv):
         'currency_ids': fields.many2many('res.currency','currency_rel', 'currency', 'ecommerce_currency', 'Currency',
             help="Add the currency options for the online customers."),
         'language_ids': fields.many2many('res.lang', 'lang_rel', 'language','ecommerce_lang', 'Language',
-            help="Add the Launguage options for the online customers."),
-        'row_configuration': fields.integer('No. of Row', help="Add No. of row for products which u want to configure at website"),
-        'column_configuration': fields.integer('No. of Columns', help="Add No of columns for products which u want to configure at website"),
+            help="Add the launguage options for the online customers."),
+        'row_configuration': fields.integer('No. of Rows', help="Add number of rows for products which you want to configure at website"),
+        'column_configuration': fields.integer('No. of Columns', help="Add number of columns for products which you want to configure at website"),
         'image_height': fields.integer('Height in Pixel', help="Add product image height in pixels."),
         'image_width': fields.integer('Width in Pixel', help="Add product image width in pixels."),
         'delivery_ids': fields.many2many('delivery.grid', 'delivery_rel', 'delivery', 'ecommrce_delivery', 'Delivery',
             help="Add the carriers which we use for the shipping."),
         'search_ids': fields.many2many('ecommerce.search', 'search_rel', 'search', 'ecommrce_search_parameter', 'Search On',
-            help="Add the Search Parameters which you are allow from the website." )
+            help="Add the search parameters which you are allow from the website." )
         } 
 
     _defaults = {
@@ -136,10 +135,10 @@ class ecommerce_category(osv.osv):
     _description = "ecommerce category"
     _columns = {
         'name': fields.char('E-commerce Category', size=64, required=True,
-            help="Add the Category name which you want to display on the website."),
+            help="Add the category name which you want to display at the website."),
         'web_id': fields.many2one('ecommerce.shop', 'Webshop'),
         'category_id': fields.many2one('product.category', 'Tiny Category',
-            help="It display the product which are under the tiny category."),
+            help="It display the product which are under the openerp category."),
         'parent_category_id': fields.many2one('ecommerce.category','Parent Category'),
         'child_id': fields.one2many('ecommerce.category', 'parent_category_id', string='Child Categories'), 
     }

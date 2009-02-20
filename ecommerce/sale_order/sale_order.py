@@ -259,7 +259,17 @@ class ecommerce_order_line(osv.osv):
         'product_uom_id': fields.many2one('product.uom', 'Unit of Measure',required=True),
         'price_unit': fields.float('Unit Price',digits=(16, int(config['price_accuracy'])), required=True),
     }
+    
+    def onchange_product(self, cr, uid, ids, product_id):
 
+        product_obj = self.pool.get('product.product')
+        if not product_id:
+              return {'value': {'name': False, 'product_uom_id': False, 'price_unit':False}}
+        else:
+            product = product_obj.browse(cr, uid, product_id)
+            return {'value': {'name': product.product_tmpl_id.name, 'product_uom_id': product.product_tmpl_id.uom_id.id,
+                               'price_unit': product.lst_price}}
+        
 ecommerce_order_line()
 
 
