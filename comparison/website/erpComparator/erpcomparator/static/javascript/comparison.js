@@ -240,20 +240,27 @@ function item_vote() {
 	
 	var treenode = comparison_tree.selection_last;
 	var childnodes = treenode.childNodes; 
-		
 	window.mbox.hide();
 	var i = 1;
 	var val = '';
 	
 	forEach(treenode.childNodes, function(node){
 		var name = node.record.id;
-		var params = {};
-		params['id'] = name;
-		params['score_id'] = $(name + '_score_id').value;
-		params['item_id'] = $('item_id').value;
-		params['note'] = $('note').value;
+		try{
+			var elem = document.getElementById(name + '_score_id');
+		}
+		catch(e) {
+			alert(e)
+		}
 		
-		values = "id,"+name+"|score_id,"+$(name + '_score_id').value+"|item_id,"+$('item_id').value+"|note,"+$('note').value;
+		if(elem != null) {
+			var params = {};
+			params['id'] = name;
+			params['score_id'] = $(name + '_score_id').value;
+			params['item_id'] = $('item_id').value;
+			params['note'] = $('note').value;
+			values = "id,"+name+"|score_id,"+$(name + '_score_id').value+"|item_id,"+$('item_id').value+"|note,"+$('note').value;
+		}
 		
 		if (i != treenode.childNodes.length) {
 			val += values + '!';
@@ -336,3 +343,15 @@ function on_button_click(evt, node) {
 	
 }
 
+var expand_tree = function(elem) {
+	
+	var tree= comparison_tree;
+	if(elem.value == 'Complete Comparison') {
+		tree.rootNode.expand(true);
+		elem.value = 'Summerized Comparison'
+	}
+	else if(elem.value = 'Summerized Comparison') {
+		tree.reload()
+		elem.value = 'Complete Comparison'
+	}
+}
