@@ -269,14 +269,15 @@ class dm_offer_document(osv.osv):
         'code' : fields.char('Code', size=16, required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter', domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
-        'category_id' : fields.many2one('dm.offer.document.category','Categories'),
+        'category_id' : fields.many2one('dm.offer.document.category', 'Category'),
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'has_attachment' : fields.function(_has_attchment_fnc, method=True, type='char', string='Has Attachment'),
         'document_template_id' : fields.many2one('dm.document.template', 'Document Template',),
         'document_template_plugin_ids' : fields.many2many('dm.ddf.plugin','dm_doc_template_plugin_rel',
               'document_id','document_template_plugin_id','Dynamic Plugins',),
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
-        'note' : fields.text('Description')        
+        'note' : fields.text('Description'),
+        'gender_id' : fields.many2one('dm.customer.gender', 'Gender'),      
     }
     _defaults = {
         'state': lambda *a: 'draft',

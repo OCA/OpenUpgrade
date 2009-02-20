@@ -62,8 +62,8 @@
 					<field name="lang_id"/>
 					<field name="copywriter_id" select="1"/>
 					<field name="step_id" select="1"/>
-					<separator string="Document Categories" colspan="4"/>
-					<field name="category_ids" colspan="4" nolabel="1"/>
+					<field name="gender_id" select="1"/>
+					<field name="category_id" colspan="4"/>
 					<separator string="Description" colspan="4"/>
 					<field name="note" colspan="4" nolabel="1"/>
 					<separator string="Status" colspan="4"/>
@@ -93,6 +93,7 @@
 				<field name="step_id" />				
 				<field name="copywriter_id"/>
 				<field name="state"/>
+				<field name="gender_id"/>
 				<field name="has_attachment" invisible="1"/>
 			</tree>
 		</field>

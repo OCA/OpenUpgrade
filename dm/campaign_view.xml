@@ -724,8 +724,6 @@
                                 <field name="deduplication_level"/>
                                 <separator string="Segmentation Criteria" colspan="4"/>
                                 <field name="segmentation_criteria" colspan="4" nolabel="1"/>
-                                <separator string="Notes" colspan="4"/>
-                                <field name="note" colspan="4" nolabel="1"/>
                             </page>
                             <page string="Quantities">
                                 <separator string="Addresses Quantities" colspan="4"/>
@@ -751,6 +749,9 @@
                                 <newline/>
                                 <field name="quantity_usable" string="= Usable Quantity" select="2"/>
                                 <field name="quantity_real" select="2"/>
+                            </page>
+                            <page string="Notes">
+                            	<field name="note" colspan="4" nolabel="1"/>
                             </page>
                         </notebook>
                    </form>

@@ -479,8 +479,8 @@ class dm_campaign(osv.osv):
 
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
-        if not camp.date_start or not camp.dealer_id or not camp.trademark_id :
-            raise osv.except_osv("Error!!","Informations are missing. Check Date Start, Dealer and Trademark")
+        if not camp.date_start or not camp.dealer_id or not camp.trademark_id or not camp.lang_id or not camp.currency_id:
+            raise osv.except_osv("Error!!","Informations are missing. Check Drop Date, Dealer, Trademark, Language and Currency")
 
         if ((camp.manufacturing_state != 'done') or (camp.dtp_state != 'done') or (camp.customer_file_state != 'done') or (camp.items_state != 'done')):
             raise osv.except_osv(

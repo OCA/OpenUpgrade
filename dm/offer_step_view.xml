@@ -87,10 +87,10 @@
 <!--						<field name="type" select="2" widget="selection" on_change="onchange_type(type,offer_id,context)"/>-->
 <!--						<field name="type" select="2" widget="selection"/>-->
 						<field name="type" select="2"/>
+						<field name="action" select="1"/>
 						<field name="quotation" select="2"/>
 						<field name="legal_state" select="2" />
-						<newline/>
-						<field name="media_id" colspan="4"  select="1"/>
+						<field name="media_id" select="1"/>
 						<separator string="Description" colspan="4"/>
 						<field name="desc" nolabel="1" colspan="4"/>
 						<separator string="Status" colspan="4"/>
@@ -518,6 +518,8 @@
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page string="Direct Marketing">
+                <separator string="Language" colspan="4"/>
+             	<field name="language_id" colspan="4" nolabel="1"/>
              	<separator string="Allowed Countries" colspan="4"/>
              	<field name="country_ids" colspan="4" nolabel="1"/>
              	<separator string="Allowed States" colspan="4"/>
@@ -527,6 +529,25 @@
     	</field>
 	</record>
 
+    <!--
+    =======================================================
+    SERVER ACTION EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_server_action_form" model="ir.ui.view">
+        <field name="name">ir.actions.server.inherit</field>
+        <field name="model">ir.actions.server</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_server_action_form"/>
+        <field name="arch" type="xml">
+        	<field name="condition" position="after">
+        		<field name="dm_action"/>
+        	</field>
+        </field>
+	</record>
+        
+        
     <!--
     =======================================================
         RELATES

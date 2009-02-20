@@ -121,6 +121,7 @@ class dm_offer_step(osv.osv):
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
 #        'manufacturing_constraint_ids': fields.one2many('dm.offer.step.manufacturing_constraint', 'offer_step_id', 'Manufacturing Constraints'),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
+        'action' : fields.many2one('ir.actions.server', string="Action", required=True, domain="[('dm_action','=',True)]"),
     }
 
     _defaults = {
@@ -270,6 +271,7 @@ class product_product(osv.osv):
     _columns = {
         'country_ids' : fields.many2many('res.country', 'product_country_rel', 'product_id', 'country_id', 'Allowed Countries'),
         'state_ids' : fields.many2many('res.country.state','product_state_rel', 'product_id', 'state_id', 'Allowed States'),
+        'language_id' : fields.many2one('res.lang', 'Language'),
     }
 
     def _default_all_country(self, cr, uid, context={}):
@@ -311,6 +313,13 @@ class product_product(osv.osv):
 '''
 product_product()
 
-
+class actions_server(osv.osv):
+    _name = 'ir.actions.server'
+    _inherit = 'ir.actions.server'
+    _columns = {
+        'dm_action' : fields.boolean('Action')
+    }
+    
+actions_server()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
