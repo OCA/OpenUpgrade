@@ -78,7 +78,7 @@
                         <separator string="Tasks Management" colspan="4"/>
                         <group colspan="4">
                         <field name="project_id" string="Retro Planning"/>
-                        <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('project_id','=',False),('state','in',['draft','close'])]}"/> 
+                        <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('project_id','!=',False)]}"/> 
                         </group>
                         <separator string="Campaign Status" colspan="4"/>
                         <group col="10" colspan="4">
@@ -1506,6 +1506,24 @@
             </notebook>
         </field>
     </record>
+
+    <!--
+    =======================================================
+    PARTNER ADDRESS EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_partner_address_inherit1" model="ir.ui.view">
+        <field name="name">res.partner.address.form1</field>
+        <field name="model">res.partner.address</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+           <field name="arch" type="xml">
+                <field name="name" select="1" position="before">
+                	<field name="firstname" select="1"/>
+                </field>
+        </field>
+	</record>
 
     <!--
     =======================================================

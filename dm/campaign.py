@@ -1955,6 +1955,49 @@ class res_partner(osv.osv):
     }
 res_partner()
 
+class res_partner_address(osv.osv):
+    _name = "res.partner.address"
+    _inherit="res.partner.address"
+    _columns = {
+        'name': fields.char('Last Name', size=64),
+        'firstname' : fields.char('First Name',size=16),
+        'type': fields.selection( [('direct marketing','Direct Marketing'), ('default','Default'),('invoice','Invoice'), ('delivery','Delivery'), ('contact','Contact'), ('other','Other') ],'Address Type', help="Used to select automatically the right address according to the context in sales and purchases documents."),
+    }
+
+    def create(self,cr,uid,vals,context={}):
+        if 'type' in vals and vals['type']:
+            if vals['type'] == 'direct marketing':
+                if 'partner_id' in vals and vals['partner_id']:
+                    address = self.search(cr, uid, [('partner_id','=',vals['partner_id'])])
+                    for id in self.browse(cr, uid, address):
+                        print id, id.type
+                        if id.type == 'direct marketing':
+                            raise osv.except_osv('Warning', "Only one 'Direct Marketing' address type can exist for %s" % (id.partner_id.name,))
+        return super(res_partner_address, self).create(cr, uid, vals, context)
+
+    def write(self, cr, uid, ids, vals, context=None):
+        partner_address = self.browse(cr, uid, ids)[0]
+        partner = ''
+        if ('partner_id' in vals and vals['partner_id']) and not ('type' in vals and vals['type']):
+            if partner_address.type == 'direct marketing':
+                partner = vals['partner_id']
+        elif 'type' in vals and vals['type']:
+            if vals['type'] == 'direct marketing': 
+                if 'partner_id' in vals and vals['partner_id']:
+                    partner = vals['partner_id']
+                else:
+                    partner = partner_address.partner_id.id
+        
+        if partner:
+            search_id = self.search(cr, uid, [('partner_id','=',partner)])
+            address = self.browse(cr, uid, search_id)
+            for id in address:
+                if id.type == 'direct marketing':
+                    raise osv.except_osv('Warning', "Only one 'Direct Marketing' address type can exist for %s" % (id.partner_id.name,))
+        return super(res_partner_address,self).write(cr, uid, ids, vals, context)
+
+res_partner_address()
+
 class purchase_order(osv.osv):
     _name = 'purchase.order'
     _inherit = 'purchase.order'
