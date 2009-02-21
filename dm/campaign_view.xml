@@ -78,7 +78,7 @@
                         <separator string="Tasks Management" colspan="4"/>
                         <group colspan="4">
                         <field name="project_id" string="Retro Planning"/>
-                        <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('project_id','=',False),('state','in',['draft','close'])]}"/> 
+                        <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('project_id','!=',False)]}"/> 
                         </group>
                         <separator string="Campaign Status" colspan="4"/>
                         <group col="10" colspan="4">
@@ -724,12 +724,9 @@
                                 <field name="deduplication_level"/>
                                 <separator string="Segmentation Criteria" colspan="4"/>
                                 <field name="segmentation_criteria" colspan="4" nolabel="1"/>
-                                <separator string="Notes" colspan="4"/>
-                                <field name="note" colspan="4" nolabel="1"/>
                             </page>
                             <page string="Quantities">
                                 <separator string="Addresses Quantities" colspan="4"/>
-                                <field name="quantity_planned" select="2"/>
                                 <newline/>
                                 <field name="quantity_wanted" select="2" attrs="{'readonly':[('all_add_avail','=',1)]}"/>
                                 <field name="all_add_avail" select="2"/>
@@ -752,6 +749,9 @@
                                 <newline/>
                                 <field name="quantity_usable" string="= Usable Quantity" select="2"/>
                                 <field name="quantity_real" select="2"/>
+                            </page>
+                            <page string="Notes">
+                            	<field name="note" colspan="4" nolabel="1"/>
                             </page>
                         </notebook>
                    </form>
@@ -864,7 +864,6 @@
                     </page>
                     <page string="Quantities">
                         <separator string="Addresses Quantities" colspan="4"/>
-                        <field name="quantity_planned" select="2"/>
                         <newline/>
                         <field name="quantity_wanted" select="2" attrs="{'readonly':[('all_add_avail','=',1)]}"/>
                         <field name="all_add_avail" select="2"/>
@@ -1506,6 +1505,24 @@
             </notebook>
         </field>
     </record>
+
+    <!--
+    =======================================================
+    PARTNER ADDRESS EXTENSIONS
+    =======================================================
+    -->
+
+    <record id="view_partner_address_inherit1" model="ir.ui.view">
+        <field name="name">res.partner.address.form1</field>
+        <field name="model">res.partner.address</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+           <field name="arch" type="xml">
+                <field name="name" select="1" position="before">
+                	<field name="firstname" select="1"/>
+                </field>
+        </field>
+	</record>
 
     <!--
     =======================================================

@@ -21,21 +21,35 @@ class offer_document(rml_parse):
         })
         self.context = context        
     def document(self):
-        dm_customer_order = pooler.get_pool(self.cr.dbname).get('dm.customer.order')        
-        dm_plugins_value = pooler.get_pool(self.cr.dbname).get('dm.plugins.value')
-        order_id = dm_customer_order.search(self.cr,self.uid,[('offer_step_id','=',self.ids)])
-        order = dm_customer_order.browse(self.cr,self.uid,order_id)
-        customer_id = map(lambda x:x.customer_id.id,order)
-        res=[]
-        for cust in customer_id:
-            vals={}
-            vals['cust_id'] = cust
-            plugin_ids = dm_plugins_value.search(self.cr,self.uid,[('customer_id','=',cust)])
-            plugin_values = dm_plugins_value.read(self.cr,self.uid,plugin_ids,['plugin_id','value'])
-            for plugin in plugin_values:
-                vals[str(plugin['plugin_id'][0])]=plugin['value']
-            res.append(vals)
-        return res
+        dm_document = self.pool.get('dm.offer.document')
+        dm_plugins_value = self.pool.get('dm.plugins.value')
+        ddf_plugin = self.pool.get('dm.ddf.plugin')
+        customer_id = self.datas['form']['customer_id']
+        document = dm_document.browse(self.cr,self.uid,self.ids,['document_template_id','step_id'])[0]
+        plugins = document.document_template_id.plugin_ids or []
+        vals={}
+        for plugin in plugins:
+            args={}
+            if plugin.type=='fields':
+                res  = self.pool.get('ir.model').browse(self.cr,self.uid,plugin.object.id)
+                args['object']=res.model
+                args['field_name']=str(plugin.field.name)
+                args['field_type']=str(plugin.field.ttype)
+                args['field_relation']=str(plugin.field.relation)
+                path = os.path.join(os.getcwd(), "addons/dm/")
+                import sys
+                sys.path.append(path)
+                X =  __import__('customer_function')
+                plugin_func = getattr(X,'customer_function')
+                plugin_value = plugin_func(self.cr,self.uid,[customer_id],**args)
+                for p in plugin_value : 
+                    vals[str(plugin.id)]=p[1]
+            else :                
+                plugin_ids = dm_plugins_value.search(self.cr,self.uid,[('customer_id','=',customer_id)])
+                plugin_values = dm_plugins_value.read(self.cr,self.uid,plugin_ids,['plugin_id','value'])
+                for p in plugin_values:
+                    vals[str(p['plugin_id'][0])]=p['value']
+        return [vals]
 
 from report.report_sxw import report_sxw
 
@@ -88,7 +102,6 @@ class report_xml(osv.osv):
             rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
         if file_type=='html':
             rml_content = base64.decodestring(file_sxw)
-        print rml_content
         report = pool.get('ir.actions.report.xml').write(cr, uid, [report_id], {
             'report_sxw_content': base64.decodestring(file_sxw),
             'report_rml_content': rml_content,
