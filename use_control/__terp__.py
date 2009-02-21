@@ -35,6 +35,6 @@ You can not uninstall or delete it.
         "use_control_view.xml",
     ],
     "demo_xml" : [],
-    "installable": True,
-    "active" : True,
+    "installable": False,
+    "active" : False,
 }
