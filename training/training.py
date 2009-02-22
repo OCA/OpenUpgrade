@@ -64,6 +64,7 @@ training_course()
 
 class training_course_purchase_line(osv.osv):
     _name = 'training.course.purchase_line'
+    _rec_name = 'course_id'
     _columns = {
         'course_id' : fields.many2one('training.course', 'course', required=True),
         'product_id' : fields.many2one('product.product', 'Product', required=True),
@@ -150,7 +151,7 @@ training_questionnaire()
 class training_offer(osv.osv):
     _name = 'training.offer'
     _columns = {
-        'name' : fields.char('Name', size=64, select=True, required=True),
+        'name' : fields.char('Name', size=64, required=True, select=1),
         'product_id' : fields.many2one('product.product', 'Product'),
         'course_ids' : fields.many2many('training.course',
                                         'training_course_offer_rel',
@@ -171,7 +172,8 @@ class training_offer(osv.osv):
                                    ],
                                    'State',
                                    required=True,
-                                   readonly=True),
+                                   readonly=True,
+                                   select=1),
     }
 
     _defaults = {
@@ -196,7 +198,7 @@ training_question()
 class training_examen_answer(osv.osv):
     _name = 'training.examen_answer'
     _columns = {
-        'name' : fields.char('Response', size=128, required=True),
+        'name' : fields.char('Response', size=128, required=True, select=1),
         'is_response' : fields.boolean('Correct Answer'),
         'question_id' : fields.many2one('training.question', 'Question', select=True, required=True),
     }
@@ -206,11 +208,17 @@ class training_question(osv.osv):
     _name = 'training.question'
     _columns = {
         'name' : fields.text('Question', required=True, select=1),
-        'kind' : fields.selection([('mandatory', 'Mandatory'),('eliminatory',
-                                                               'Eliminatory'),('normal', 'Normal')],
+        'kind' : fields.selection([('mandatory', 'Mandatory'),
+                                   ('eliminatory', 'Eliminatory'),
+                                   ('normal', 'Normal')
+                                  ],
                                   'Kind', required=True, select=1),
-        'type' : fields.selection([('plain', 'Plain'),('qcm', 'QCM'),('yesno', 'Yes/No')], 'Type',
-                                   required=True, select=1 ),
+        'type' : fields.selection([('plain', 'Plain'),
+                                   ('qcm', 'QCM'),
+                                   ('yesno', 'Yes/No')], 
+                                  'Type', 
+                                  required=True, 
+                                  select=1 ),
         'response_plain' : fields.text('Response Plain'),
         'response_yesno' : fields.boolean('Response Yes/No'),
         'examen_answer_ids' : fields.one2many('training.examen_answer', 'question_id', 'Response QCM'),
@@ -233,14 +241,14 @@ class training_questionnaire(osv.osv):
     _name = 'training.questionnaire'
 
     _columns = {
-        'name' : fields.char( 'Name', size=32, required=True ),
+        'name' : fields.char( 'Name', size=32, required=True, select=1 ),
         'course_id' : fields.many2one('training.course', 'Course'),
         'state' : fields.selection([('draft', 'Draft'),
                                     ('pending', 'Pending'),
                                     ('inprogress', 'In Progress'),
                                     ('deprecated', 'Deprecated')
                                    ],
-                                   'State', required=True, readonly=True),
+                                   'State', required=True, readonly=True, select=1),
         'objective' : fields.text('Objective'),
         'description' : fields.text('Description'),
         'question_ids' : fields.many2many('training.question',
@@ -271,7 +279,7 @@ class training_catalog(osv.osv):
     _name = 'training.catalog'
     _rec_name = 'year'
     _columns = {
-        'year' : fields.integer('Year', size=4, required=True, select=True),
+        'year' : fields.integer('Year', size=4, required=True, select=1),
         'session_ids' : fields.one2many('training.session', 'catalog_id', 'Sessions'),
         'note' : fields.text('Note'),
         'state' : fields.selection([('draft','Draft'),
@@ -279,7 +287,8 @@ class training_catalog(osv.osv):
                                     ('done','Done')],
                                    'State',
                                    required=True,
-                                   readonly=True),
+                                   readonly=True,
+                                   select=1),
     }
 
     _defaults = {
@@ -305,7 +314,7 @@ training_event()
 class training_session(osv.osv):
     _name = 'training.session'
     _columns = {
-        'name' : fields.char('Name', size=64, required=True, select=True),
+        'name' : fields.char('Name', size=64, required=True, select=1),
         'state' : fields.selection([('draft', 'Draft'),
                                     ('open_pending', 'Open and Pending'),
                                     ('validate', 'Validate'),
@@ -315,10 +324,10 @@ class training_session(osv.osv):
                                    'State',
                                    required=True,
                                    readonly=True,
-                                   select=True
+                                   select=1
                                   ),
-        'offer_id' : fields.many2one('training.offer', 'Offer', select=True, required=True),
-        'catalog_id' : fields.many2one('training.catalog', 'Catalog', select=True),
+        'offer_id' : fields.many2one('training.offer', 'Offer', select=1, required=True),
+        'catalog_id' : fields.many2one('training.catalog', 'Catalog', select=1),
         'event_ids' : fields.many2many('training.event',
                                        'training_session_event_rel',
                                        'session_id',
@@ -366,6 +375,7 @@ training_session()
 
 class training_session_purchase_line(osv.osv):
     _name = 'training.session.purchase_line'
+    _rec_name = 'session_id'
 
     _columns = {
         'session_id' : fields.many2one('training.session', 'Session', required=True),
@@ -443,7 +453,7 @@ class training_event(osv.osv):
         return {}.fromkeys(ids, True)
 
     _columns = {
-        'name' : fields.char('Name', size=64, select=True, required=True),
+        'name' : fields.char('Name', size=64, select=1, required=True),
         'session_ids' : fields.many2many('training.session',
                                          'training_session_event_rel',
                                          'event_id',
@@ -451,9 +461,9 @@ class training_event(osv.osv):
                                          'Sessions',
                                          ondelete='cascade'),
         # Attention, la date doit etre obligatoire
-        'date' : fields.datetime('Date', required=False, select=True),
-        'duration' : fields.time('Duration', required=False, select=True),
-        'location_id' : fields.many2one('training.location', 'Location', select=True),
+        'date' : fields.datetime('Date', required=False, select=1),
+        'duration' : fields.time('Duration', required=False, select=1),
+        'location_id' : fields.many2one('training.location', 'Location', select=1),
         'participant_ids' : fields.many2many('training.subscription',
                                              'training_participation',
                                              'event_id',
@@ -475,7 +485,7 @@ class training_event(osv.osv):
                                    'State',
                                    required=True,
                                    readonly=True,
-                                   select=True
+                                   select=1
                                   ),
     }
 
@@ -497,7 +507,7 @@ class training_plannified_examen(osv.osv):
         'partner_id' : fields.many2one('res.partner',
                                        'Partner',
                                        domain=[('is_guardian', '=', True)],
-                                       select=True,
+                                       select=1,
                                        required=True),
         'event_id' : fields.many2one('training.event', 'Event'),
         'questionnaire_id' : fields.many2one('training.questionnaire',
@@ -603,12 +613,12 @@ training_seance_purchase_line()
 class training_subscription(osv.osv):
     _name = 'training.subscription'
     _columns = {
-        'name' : fields.char( 'Reference', size=32, required=True, select=True,readonly=True ),
+        'name' : fields.char( 'Reference', size=32, required=True, select=1,readonly=True ),
         'date' : fields.datetime( 'Date', required=True, select=True ),
-        'session_id' : fields.many2one( 'training.session', 'Session', select=True, required=True),
-        'contact_id' : fields.many2one( 'res.partner.contact', 'Contact', select=True, required=True),
-        'partner_id' : fields.many2one( 'res.partner', 'Partner', select=True, required=True),
-        'address_id' : fields.many2one( 'res.partner.address', 'Invoice Address', select=True, required=True),
+        'session_id' : fields.many2one( 'training.session', 'Session', select=1, required=True),
+        'contact_id' : fields.many2one( 'res.partner.contact', 'Contact', select=1, required=True),
+        'partner_id' : fields.many2one( 'res.partner', 'Partner', select=1, required=True),
+        'address_id' : fields.many2one( 'res.partner.address', 'Invoice Address', select=1, required=True),
         # Pour le group ID, discuter pour savoir si on doit utiliser le seuil pédagogique du groupe pour savoir si on crée un nouveau group ou non
         'invoice_id' : fields.many2one( 'account.invoice', 'Invoice' ),
         'group_id' : fields.many2one( 'training.group', 'Group'),
@@ -619,7 +629,8 @@ class training_subscription(osv.osv):
                                    ], 
                                    'State', 
                                    readonly=True,
-                                   required=True ),
+                                   required=True,
+                                   select=1),
         'price' : fields.float('Price', digits=(16,2), required=True),
         'paid' : fields.boolean('Paid'),
     }
