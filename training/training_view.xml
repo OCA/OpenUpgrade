@@ -189,7 +189,7 @@
                             </field> 
                         </page>
                     </notebook>
-                    <group colspan="4">
+                    <group colspan="4" col="6">
                         <field name="state" required="True" />
                         <button string="Draft" type="object" name="draft_cb" />
                         <button string="Pending" type="object" name="pending_cb" />
@@ -339,7 +339,7 @@
                             <field name="question_ids" colspan="4" nolabel="1" />
                         </page>
                     </notebook>
-                    <group colspan="4" col="5">
+                    <group colspan="4" col="6">
                         <field name="state" />
                         <button name="draft_cb" string="Draft" type="object" />
                         <button name="pending_cb" string="Pending" type="object" />
@@ -496,7 +496,7 @@
                         </page>
                     
                     </notebook>
-                    <group colspan="4">
+                    <group colspan="4" col="8">
                         <field name="state" />
                         <button name="draft_cb" string="Draft" type="object" />
                         <button name="open_pending_cb" string="Open and Pending" type="object" />
@@ -668,7 +668,7 @@
                             <field name="partner_ids" nolabel="1"/>
                         </page>
                     </notebook>
-                    <group colspan="4">
+                    <group colspan="4" col="8">
                         <field name="state" />
                         <button name="draft_cb" string="Draft" type="object" />
                         <button name="open_pending_cb" string="Open and Pending" type="object" />
