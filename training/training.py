@@ -109,7 +109,15 @@ class training_course(osv.osv):
         'internal_note' : fields.text('Note'),
         'lang_id' : fields.many2one('res.lang', 'Language', required=True),
         'offer_ids' : fields.many2many( 'training.offer', 'training_course_offer_rel', 'course_id', 'offer_id', 'Offers' ),
-        'state' : fields.selection([('draft', 'Draft'),('mature', 'Mature'), ('deprecated', 'Deprecated')], 'State'),
+        'state' : fields.selection([('draft', 'Draft'),
+                                    ('pending', 'Pending'),
+                                    ('inprogress', 'In Progress'),
+                                    ('deprecated', 'Deprecated'),
+                                    ('validate', 'Validate'),
+                                   ],
+                                   'State',
+                                   required=True,
+                                   readonly=True),
         'purchase_line_ids' : fields.one2many('training.course.purchase_line', 'course_id', 'Supplier Commands'),
         'questionnaire_ids' : fields.one2many('training.questionnaire', 'course_id', 'Questionnaire'),
     }
@@ -117,6 +125,21 @@ class training_course(osv.osv):
     _defaults = {
         'state' : lambda *a: 'draft',
     }
+
+    def draft_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+
+    def pending_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'pending'}, context=context)
+
+    def inprogress_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
+
+    def deprecated_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'deprecated'}, context=context)
+
+    def validate_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': 'validate'}, context=context)
 
 training_course()
 
@@ -142,7 +165,28 @@ class training_offer(osv.osv):
                                                'offer_id',
                                                'questionnaire_id',
                                                'Exams'),
+        'state' : fields.selection([('draft', 'Draft'),
+                                    ('validate', 'Validate'),
+                                    ('deprecated', 'Deprecated')
+                                   ],
+                                   'State',
+                                   required=True,
+                                   readonly=True),
     }
+
+    _defaults = {
+        'state' : lambda *a: 'draft',
+    }
+
+    def draft_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state' : 'draft'}, context=context)
+
+    def validate_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state' : 'validate'}, context=context)
+
+    def deprecated_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state' : 'deprecated'}, context=context)
+
 training_offer()
 
 class training_question(osv.osv):
@@ -192,9 +236,11 @@ class training_questionnaire(osv.osv):
         'name' : fields.char( 'Name', size=32, required=True ),
         'course_id' : fields.many2one('training.course', 'Course'),
         'state' : fields.selection([('draft', 'Draft'),
-                                    ('mature', 'Mature'),
-                                    ('deprecated', 'Deprecated')], 
-                                   'State', required=True),
+                                    ('pending', 'Pending'),
+                                    ('inprogress', 'In Progress'),
+                                    ('deprecated', 'Deprecated')
+                                   ],
+                                   'State', required=True, readonly=True),
         'objective' : fields.text('Objective'),
         'description' : fields.text('Description'),
         'question_ids' : fields.many2many('training.question',
@@ -207,6 +253,18 @@ class training_questionnaire(osv.osv):
         'state' : lambda *a: 'draft',
     }
 
+    def draft_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+
+    def pending_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'pending'}, context=context)
+
+    def inprogress_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
+
+    def deprecated_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'deprecated'}, context=context)
+
 training_questionnaire()
 
 class training_catalog(osv.osv):
@@ -217,15 +275,26 @@ class training_catalog(osv.osv):
         'session_ids' : fields.one2many('training.session', 'catalog_id', 'Sessions'),
         'note' : fields.text('Note'),
         'state' : fields.selection([('draft','Draft'),
-                                    ('in_progress', 'In Progress'),
-                                    ('done','Done')], 
-                                   'State', required=True),
+                                    ('inprogress', 'In Progress'),
+                                    ('done','Done')],
+                                   'State',
+                                   required=True,
+                                   readonly=True),
     }
 
     _defaults = {
         'year' : lambda *a: int(time.strftime('%Y'))+1,
         'state' : lambda *a: 'draft',
     }
+
+    def draft_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+
+    def inprogress_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
+
+    def done_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'done'}, context=context)
 
 training_catalog()
 
@@ -238,10 +307,14 @@ class training_session(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64, required=True, select=True),
         'state' : fields.selection([('draft', 'Draft'),
-                                    ('confirm', 'Confirm'),
+                                    ('open_pending', 'Open and Pending'),
+                                    ('validate', 'Validate'),
+                                    ('inprogress', 'In Progress'),
+                                    ('closed', 'Closed'),
                                     ('cancel', 'Cancel')],
                                    'State',
                                    required=True,
+                                   readonly=True,
                                    select=True
                                   ),
         'offer_id' : fields.many2one('training.offer', 'Offer', select=True, required=True),
@@ -269,6 +342,25 @@ class training_session(osv.osv):
         'catalog_id' : _find_catalog_id,
         'state' : lambda *a: 'draft',
     }
+
+    def draft_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+
+    def open_pending_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'open_pending'}, context=context)
+
+    def validate_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'validate'}, context=context)
+
+    def inprogress_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
+
+    def closed_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'closed'}, context=context)
+
+    def cancel_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'cancel'}, context=context)
+
 
 training_session()
 
@@ -301,14 +393,22 @@ class training_massive_subscription_wizard(osv.osv_memory):
                     'partner_id' : partner.id,
                     'session_id' : session_id,
                 }
-                subscription_id = subscription_proxy.create(cr, uid, 
-                                                            vals,
-                                                            context = context )
+                subscription_id = subscription_proxy.create(cr, uid, vals, context = context )
         return { 'type' : 'ir.actions.act_window_close' }
 
     _columns = {
-        'partner_ids' : fields.many2many( 'res.partner.contact', 'tmi_partner_rel', 'wiz_id', 'partner_id', 'Partners', required=True ),
-        'session_ids' : fields.many2many( 'training.session', 'tmi_session_rel', 'wiz_id', 'session_id', 'Sessions', required=True ),
+        'partner_ids' : fields.many2many('res.partner.contact',
+                                         'tmi_partner_rel',
+                                         'wiz_id',
+                                         'partner_id',
+                                         'Partners',
+                                         required=True ),
+        'session_ids' : fields.many2many('training.session',
+                                         'tmi_session_rel',
+                                         'wiz_id',
+                                         'session_id',
+                                         'Sessions',
+                                         required=True ),
     }
 
 training_massive_subscription_wizard()
@@ -344,14 +444,39 @@ class training_event(osv.osv):
 
     _columns = {
         'name' : fields.char('Name', size=64, select=True, required=True),
-        'session_ids' : fields.many2many('training.session', 'training_session_event_rel', 'event_id', 'session_id', 'Sessions', ondelete='cascade'),
+        'session_ids' : fields.many2many('training.session',
+                                         'training_session_event_rel',
+                                         'event_id',
+                                         'session_id',
+                                         'Sessions',
+                                         ondelete='cascade'),
         # Attention, la date doit etre obligatoire
         'date' : fields.datetime('Date', required=False, select=True),
         'duration' : fields.time('Duration', required=False, select=True),
         'location_id' : fields.many2one('training.location', 'Location', select=True),
-        'participant_ids' : fields.many2many( 'training.subscription', 'training_participation', 'event_id', 'subscription_id', 'Participants', domain="[('group_id', '=', group_id)]" ),
+        'participant_ids' : fields.many2many('training.subscription',
+                                             'training_participation',
+                                             'event_id',
+                                             'subscription_id',
+                                             'Participants',
+                                             domain="[('group_id', '=', group_id)]" ),
         'group_id' : fields.many2one('training.group', 'Group'),
-        'support_ok' : fields.function( _support_ok_get, method=True, type="boolean", string="Support OK", readonly=True ),
+        'support_ok' : fields.function(_support_ok_get, 
+                                       method=True,
+                                       type="boolean",
+                                       string="Support OK",
+                                       readonly=True),
+        'state' : fields.selection([('draft', 'Draft'),
+                                    ('open_pending', 'Open and Pending'),
+                                    ('validate', 'Validate'),
+                                    ('inprogress', 'In Progress'),
+                                    ('closed', 'Closed'),
+                                    ('cancel', 'Cancel')],
+                                   'State',
+                                   required=True,
+                                   readonly=True,
+                                   select=True
+                                  ),
     }
 
     _constraints = [
@@ -359,6 +484,7 @@ class training_event(osv.osv):
     ]
 
     _defaults = {
+        'state' : lambda *a: 'draft',
         'date' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
@@ -366,28 +492,46 @@ training_event()
 
 class training_plannified_examen(osv.osv):
     _name = 'training.plannified_examen'
-    _inherits = {
-        'training.event' : 'event_id'
-    }
+    _inherits = { 'training.event' : 'event_id' }
     _columns = {
-        'partner_id' : fields.many2one('res.partner', 'Partner', domain=[('is_guardian', '=', True)], select=True, required=True),
+        'partner_id' : fields.many2one('res.partner',
+                                       'Partner',
+                                       domain=[('is_guardian', '=', True)],
+                                       select=True,
+                                       required=True),
         'event_id' : fields.many2one('training.event', 'Event'),
-        'questionnaire_id' : fields.many2one('training.questionnaire', 'Questionnaire',
+        'questionnaire_id' : fields.many2one('training.questionnaire',
+                                             'Questionnaire',
                                              required=True),
     }
+
+    def draft_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+
+    def open_pending_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'open_pending'}, context=context)
+
+    def validate_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'validate'}, context=context)
+
+    def inprogress_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
+
+    def closed_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'closed'}, context=context)
+
+    def cancel_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'cancel'}, context=context)
 
 training_plannified_examen()
 
 class training_seance(osv.osv):
     _name = 'training.seance'
-    _inherits = {
-        'training.event' : 'event_id'
-    }
+    _inherits = { 'training.event' : 'event_id' }
 
     _columns = {
         'partner_ids' : fields.many2many('res.partner', 'training_seance_partner_rel', 'seance_id', 'partner_id', 'StakeHolders'),
         'event_id' : fields.many2one('training.event', 'Event'),
-        'state' : fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('cancel','Cancel')], 'State', required=True),
         'course_id' : fields.many2one('training.course', 'Course', required=True),
         'copies' : fields.integer('Copies'),
         'printed' : fields.boolean('Printed'),
@@ -397,9 +541,6 @@ class training_seance(osv.osv):
         'room' : fields.char('Room', size=32),
         'limit' : fields.integer('Limit'), 
         'purchase_line_ids' : fields.one2many('training.seance.purchase_line', 'seance_id', 'Supplier Commands'),
-    }
-    _defaults = {
-        'state' : lambda *a: 'draft',
     }
 
     def create(self, cr, uid, vals, context=None):
@@ -424,6 +565,25 @@ class training_seance(osv.osv):
         #wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
 
         return super(training_seance, self).create(cr, uid, vals, context=context)
+
+
+    def draft_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
+
+    def open_pending_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'open_pending'}, context=context)
+
+    def validate_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'validate'}, context=context)
+
+    def inprogress_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
+
+    def closed_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'closed'}, context=context)
+
+    def cancel_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state':'cancel'}, context=context)
 
 training_seance()
 
@@ -452,11 +612,14 @@ class training_subscription(osv.osv):
         # Pour le group ID, discuter pour savoir si on doit utiliser le seuil pédagogique du groupe pour savoir si on crée un nouveau group ou non
         'invoice_id' : fields.many2one( 'account.invoice', 'Invoice' ),
         'group_id' : fields.many2one( 'training.group', 'Group'),
-        'state' : fields.selection( [('draft', 'Draft'),
-                                     ('confirm','Confirm'),
-                                     ('cancel','Cancel'),
-                                     ('done', 'Done')
-                                    ], 'State', required=True ),
+        'state' : fields.selection([('draft', 'Draft'),
+                                    ('confirm','Confirm'),
+                                    ('cancel','Cancel'),
+                                    ('done', 'Done')
+                                   ], 
+                                   'State', 
+                                   readonly=True,
+                                   required=True ),
         'price' : fields.float('Price', digits=(16,2), required=True),
         'paid' : fields.boolean('Paid'),
     }

@@ -189,11 +189,12 @@
                             </field> 
                         </page>
                     </notebook>
-                    <group colspan="4" col="5">
+                    <group colspan="4">
                         <field name="state" required="True" />
-                        <button string="Draft" type="object" />
-                        <button string="Confirm" type="object" />
-                        <button string="Cancel" type="object" />
+                        <button string="Draft" type="object" name="draft_cb" />
+                        <button string="Pending" type="object" name="pending_cb" />
+                        <button string="In Progress" type="object" name="inprogress_cb" />
+                        <button string="Deprecated" type="object" name="deprecated_cb" />
                     </group>
                 </form>
             </field>
@@ -339,10 +340,11 @@
                         </page>
                     </notebook>
                     <group colspan="4" col="5">
-                        <field name="state" required="True" />
-                        <button string="Draft" type="object" />
-                        <button string="Mature" type="object" />
-                        <button string="Deprecated" type="object" />
+                        <field name="state" />
+                        <button name="draft_cb" string="Draft" type="object" />
+                        <button name="pending_cb" string="Pending" type="object" />
+                        <button name="inprogress" string="In Progress" type="object" />
+                        <button name="deprecated" string="Deprecated" type="object" />
                     </group>
                 </form>
             </field>
@@ -406,9 +408,9 @@
                     </notebook>
                     <group colspan="4" col="5">
                         <field name="state" />
-                        <button string="Draft" type="object" />
-                        <button string="In Progress" type="object" />
-                        <button string="Done" type="object" />
+                        <button name="draft_cb" string="Draft" type="object" />
+                        <button name="inprogress_cb" string="In Progress" type="object" />
+                        <button name="done_cb" string="Done" type="object" />
                     </group>
                 </form>
             </field>
@@ -494,11 +496,14 @@
                         </page>
                     
                     </notebook>
-                    <group colspan="4" col="5">
+                    <group colspan="4">
                         <field name="state" />
-                        <button string="Draft" type="object" />
-                        <button string="Confirm" type="object" />
-                        <button string="Cancel" type="object" />
+                        <button name="draft_cb" string="Draft" type="object" />
+                        <button name="open_pending_cb" string="Open and Pending" type="object" />
+                        <button name="validate_cb" string="Validate" type="object" />
+                        <button name="inprogress_cb" string="In Progress" type="object" />
+                        <button name="closed_cb" string="Closed" type="object" />
+                        <button name="cancel_cb" string="Cancel" type="object" />
                     </group>
                 </form>
             </field>
@@ -654,17 +659,23 @@
                         </page>
                         <page string="Participants">
                             <field name="group_id" />
-                            <field name="participant_ids" colspan="4" nolabel="1" domain="[('group_id', '=', group_id), ('session_ids', 'in', [ session_id ])]" />
+                            <field name="participant_ids" 
+                                colspan="4" 
+                                nolabel="1" 
+                                domain="[('group_id', '=', group_id), ('session_ids', 'in', [ session_id ])]" />
                         </page>
                         <page string="StakeHolders">
                             <field name="partner_ids" nolabel="1"/>
                         </page>
                     </notebook>
-                    <group colspan="4" col="5">
+                    <group colspan="4">
                         <field name="state" />
-                        <button string="Draft" type="object" />
-                        <button string="Confirm" type="object" />
-                        <button string="Cancel" type="object" />
+                        <button name="draft_cb" string="Draft" type="object" />
+                        <button name="open_pending_cb" string="Open and Pending" type="object" />
+                        <button name="validate_cb" string="Validate" type="object" />
+                        <button name="inprogress_cb" string="In Progress" type="object" />
+                        <button name="closed_cb" string="Closed" type="object" />
+                        <button name="cancel_cb" string="Cancel" type="object" />
                     </group>
                 </form>
             </field>
@@ -687,7 +698,7 @@
                     <field name="date" />
                     <field name="duration" />
                     <field name="state" />
-                    <field name="session_ids" />
+                    <!--<field name="session_ids" />-->
                 </tree>
             </field>
         </record>
@@ -703,7 +714,7 @@
                     <field name="date" />
                     <field name="duration" />
                     <field name="state" />
-                    <field name="session_ids" />
+                    <!--<field name="session_ids" />-->
                 </calendar>
             </field>
         </record>
@@ -745,6 +756,16 @@
                     <field name="partner_id" />
                     <field name="event_id" />
                     <field name="questionnaire_id" />
+                    <newline />
+                    <group colspan="4">
+                        <field name="state" />
+                        <button name="draft_cb" string="Draft" type="object" />
+                        <button name="open_pending_cb" string="Open and Pending" type="object" />
+                        <button name="validate_cb" string="Validate" type="object" />
+                        <button name="inprogress_cb" string="In Progress" type="object" />
+                        <button name="closed_cb" string="Closed" type="object" />
+                        <button name="cancel_cb" string="Cancel" type="object" />
+                    </group>
                 </form>
             </field>
         </record>
@@ -758,6 +779,7 @@
                     <field name="partner_id" />
                     <field name="event_id" />
                     <field name="questionnaire_id" />
+                    <field name="state" />
                 </tree>
             </field>
         </record>
@@ -916,8 +938,8 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Offer" col="6">
-                    <field name="name"/>
-                    <field name="product_id" />
+                    <field name="name" colspan="2"/>
+                    <field name="product_id" colspan="2"/>
                     <notebook colspan="4">
                         <page string="Description">
                             <separator string="Objective" colspan="4" />
@@ -932,6 +954,12 @@
                             <field name="questionnaire_ids" colspan="4" nolabel="1"/>
                         </page>
                     </notebook>
+                    <group col="4" colspan="4">
+                        <field name="state" />
+                        <button name="draft_cb" string="Draft" type="object" states="validate,deprecated" />
+                        <button name="validate_cb" string="Validate" type="object" states="draft" /> 
+                        <button name="deprecated_cb" string="Deprecated" type="object" states="validate" />
+                    </group>
                 </form>
             </field>
         </record>
@@ -1052,63 +1080,207 @@
     </data>
 
     <data>
-        <menuitem id="training_mi" name="Trainings" />
-        <menuitem id="training_config_mi" parent="training_mi" name="Configuration" sequence="1"/>
-        <menuitem id="training_config_library_mi" parent="training_config_mi" name="Library" />
-        <menuitem id="training_config_library_course_type_mi" parent="training_config_library_mi" action="training_course_type_all_act" />
-        <menuitem id="training_config_library_product_line_mi" parent="training_config_library_mi" action="training_course_category_all_act" />
-        <menuitem id="training_config_locations_mi" parent="training_config_mi" action="training_location_all_act"/>
-        <menuitem id="training_config_locations_new_mi" parent="training_config_locations_mi" action="training_location_new_act" />
+        <menuitem 
+            id="training_mi" 
+            name="Trainings" />
+        <menuitem id="training_config_mi" 
+            parent="training_mi" 
+            name="Configuration" 
+            sequence="1"/>
+        <menuitem id="training_config_library_mi" 
+            parent="training_config_mi" 
+            name="Library" />
+        <menuitem id="training_config_library_course_type_mi" 
+            parent="training_config_library_mi" 
+            action="training_course_type_all_act" />
+        <menuitem 
+            id="training_config_library_product_line_mi" 
+            parent="training_config_library_mi" 
+            action="training_course_category_all_act" />
+        <menuitem 
+            id="training_config_locations_mi" 
+            parent="training_config_mi" 
+            action="training_location_all_act"/>
+        <menuitem 
+            id="training_config_locations_new_mi" 
+            parent="training_config_locations_mi" 
+            action="training_location_new_act" />
 
-        <menuitem id="training_library_mi" parent="training_mi" name="Library" sequence="2" />
-        <menuitem id="training_library_course_mi" parent="training_library_mi" name="Courses" />
-        <menuitem id="training_library_course_course_mi" parent="training_library_course_mi" action="training_course_all_act" />
-        <menuitem id="training_library_course_course_current_mi" parent="training_library_course_course_mi" action="training_course_current_all_act" />
-        <menuitem id="training_library_course_course_draft_mi" parent="training_library_course_course_mi" action="training_course_draft_all_act" />
-        <menuitem id="training_library_course_course_mature_mi" parent="training_library_course_course_mi" action="training_course_mature_all_act" />
-        <menuitem id="training_library_course_course_new_mi" parent="training_library_course_course_mi" action="training_course_new_act" />
-        <menuitem id="training_library_course_category_course_mi" parent="training_library_course_mi" action="training_course_by_category_all_act" />
+        <menuitem 
+            id="training_library_mi" 
+            parent="training_mi" 
+            name="Library" 
+            sequence="2" />
+        <menuitem 
+            id="training_library_course_mi" 
+            parent="training_library_mi" 
+            name="Courses" />
+        <menuitem 
+            id="training_library_course_course_mi" 
+            parent="training_library_course_mi" 
+            action="training_course_all_act" />
+        <menuitem 
+            id="training_library_course_course_current_mi" 
+            parent="training_library_course_course_mi" 
+            action="training_course_current_all_act" />
+        <menuitem 
+            id="training_library_course_course_draft_mi" 
+            parent="training_library_course_course_mi" 
+            action="training_course_draft_all_act" />
+        <menuitem 
+            id="training_library_course_course_mature_mi" 
+            parent="training_library_course_course_mi" 
+            action="training_course_mature_all_act" />
+        <menuitem 
+            id="training_library_course_course_new_mi" 
+            parent="training_library_course_course_mi" 
+            action="training_course_new_act" />
+        <menuitem 
+            id="training_library_course_category_course_mi" 
+            parent="training_library_course_mi" 
+            action="training_course_by_category_all_act" />
 
-        <menuitem id="training_library_exam_mi" parent="training_library_mi" name="Exams" />
-        <menuitem id="training_library_exam_questionnaire_all_mi" parent="training_library_exam_mi" action="training_questionnaire_all_act" />
-        <menuitem id="training_library_exam_current_mi" parent="training_library_exam_questionnaire_all_mi" action="training_questionnaire_current_act" />
-        <menuitem id="training_library_exam_new_mi" parent="training_library_exam_questionnaire_all_mi" action="training_questionnaire_new_act" />
-        <menuitem id="training_library_exam_question_mi" parent="training_library_exam_mi" action="training_question_all_act"/>
-        <menuitem id="training_library_exam_question_new_mi" parent="training_library_exam_question_mi" action="training_question_new_act" />
+        <menuitem 
+            id="training_library_exam_mi" 
+            parent="training_library_mi" 
+            name="Exams" />
+        <menuitem 
+            id="training_library_exam_questionnaire_all_mi" 
+            parent="training_library_exam_mi" 
+            action="training_questionnaire_all_act" />
+        <menuitem 
+            id="training_library_exam_current_mi" 
+            parent="training_library_exam_questionnaire_all_mi" 
+            action="training_questionnaire_current_act" />
+        <menuitem 
+            id="training_library_exam_new_mi" 
+            parent="training_library_exam_questionnaire_all_mi" 
+            action="training_questionnaire_new_act" />
+        <menuitem 
+            id="training_library_exam_question_mi" 
+            parent="training_library_exam_mi" 
+            action="training_question_all_act"/>
+        <menuitem 
+            id="training_library_exam_question_new_mi" 
+            parent="training_library_exam_question_mi" 
+            action="training_question_new_act" />
 
-        <menuitem id="training_offer_mi" parent="training_mi" name="Offers" />
-        <menuitem id="training_offer_open_mi" parent="training_offer_mi" action="training_offer_open_act" />
-        <menuitem id="training_offer_new_mi" parent="training_offer_mi" action="training_offer_new_act" />
-        <menuitem id="training_offer_catalog_all_mi" parent="training_offer_mi" action="training_catalog_all_act" />
-        <menuitem id="training_offer_catalog_old_mi" parent="training_offer_catalog_all_mi" action="training_catalog_old_act" /> 
-        <menuitem id="training_offer_catalog_current_mi" parent="training_offer_catalog_all_mi" action="training_catalog_current_act" />
-        <menuitem id="training_offer_catalog_new_mi" parent="training_offer_catalog_all_mi" action="training_catalog_new_act" />
+        <menuitem 
+            id="training_offer_mi" 
+            parent="training_mi" 
+            name="Offers" />
+        <menuitem 
+            id="training_offer_open_mi" 
+            parent="training_offer_mi" 
+            action="training_offer_open_act" />
+        <menuitem 
+            id="training_offer_new_mi" 
+            parent="training_offer_mi" 
+            action="training_offer_new_act" />
+        <menuitem 
+            id="training_offer_catalog_all_mi" 
+            parent="training_offer_mi" 
+            action="training_catalog_all_act" />
+        <menuitem 
+            id="training_offer_catalog_old_mi" 
+            parent="training_offer_catalog_all_mi" 
+            action="training_catalog_old_act" /> 
+        <menuitem 
+            id="training_offer_catalog_current_mi" 
+            parent="training_offer_catalog_all_mi" 
+            action="training_catalog_current_act" />
+        <menuitem 
+            id="training_offer_catalog_new_mi" 
+            parent="training_offer_catalog_all_mi" 
+            action="training_catalog_new_act" />
 
-        <menuitem id="training_planning_mi" parent="training_mi" name="Plannings" sequence="30" />
+        <menuitem 
+            id="training_planning_mi" 
+            parent="training_mi" 
+            name="Plannings" 
+            sequence="30" />
 
-        <menuitem id="training_planning_session_all_mi" parent="training_planning_mi" action="training_session_all_act" />
-        <menuitem id="training_planning_session_draft_mi" parent="training_planning_session_all_mi" action="training_session_draft_act" />
-        <menuitem id="training_planning_session_validate_mi" parent="training_planning_session_all_mi" action="training_session_validate_act" />
-        <menuitem id="training_planning_session_duplicate_mi" parent="training_planning_session_all_mi" name="Sessions to Deduplicate" />
-        <menuitem id="training_planning_session_new_mi" parent="training_planning_session_all_mi" action="training_session_new_act" />
+        <menuitem 
+            id="training_planning_session_all_mi" 
+            parent="training_planning_mi" 
+            action="training_session_all_act" />
+        <menuitem 
+            id="training_planning_session_draft_mi" 
+            parent="training_planning_session_all_mi" 
+            action="training_session_draft_act" />
+        <menuitem 
+            id="training_planning_session_validate_mi" 
+            parent="training_planning_session_all_mi" 
+            action="training_session_validate_act" />
+        <menuitem 
+            id="training_planning_session_duplicate_mi" 
+            parent="training_planning_session_all_mi" 
+            name="Sessions to Deduplicate" />
+        <menuitem 
+            id="training_planning_session_new_mi" 
+            parent="training_planning_session_all_mi" 
+            action="training_session_new_act" />
 
-        <menuitem id="training_planning_seances_mi" parent="training_planning_mi" action="training_seance_all_act" />
-        <menuitem id="training_planning_seances_planning_mi" parent="training_planning_seances_mi" action="training_seance_calendar_all_act" />
-        <menuitem id="training_planning_seances_confirm_mi" parent="training_planning_seances_mi" action="training_seance_to_confirm_act" />
-        <menuitem id="training_planning_seances_deduplicate_mi" parent="training_planning_seances_mi" name="Seances to Deduplicate" />
+        <menuitem 
+            id="training_planning_seances_mi" 
+            parent="training_planning_mi" 
+            action="training_seance_all_act" />
+        <menuitem 
+            id="training_planning_seances_planning_mi" 
+            parent="training_planning_seances_mi" 
+            action="training_seance_calendar_all_act" />
+        <menuitem 
+            id="training_planning_seances_confirm_mi" 
+            parent="training_planning_seances_mi" 
+            action="training_seance_to_confirm_act" />
+        <menuitem 
+            id="training_planning_seances_deduplicate_mi" 
+            parent="training_planning_seances_mi" 
+            name="Seances to Deduplicate" />
 
-        <menuitem id="training_planning_exam_planning_mi" parent="training_planning_mi" action="training_plannified_examen_all_act" />
-        <menuitem id="training_planning_exam_planning_planning_mi" parent="training_planning_exam_planning_mi" action="training_plannified_examen_calendar_act" />
-        <menuitem id="training_planning_exam_planning_planify_mi" parent="training_planning_exam_planning_mi" action="training_plannified_examen_new_act" />
+        <menuitem 
+            id="training_planning_exam_planning_mi" 
+            parent="training_planning_mi" 
+            action="training_plannified_examen_all_act" />
+        <menuitem 
+            id="training_planning_exam_planning_planning_mi" 
+            parent="training_planning_exam_planning_mi" 
+            action="training_plannified_examen_calendar_act" />
+        <menuitem 
+            id="training_planning_exam_planning_planify_mi" 
+            parent="training_planning_exam_planning_mi" 
+            action="training_plannified_examen_new_act" />
 
-        <menuitem id="training_planning_event_planning_mi" parent="training_planning_mi" action="training_event_all_calendar_act" />
+        <menuitem 
+            id="training_planning_event_planning_mi" 
+            parent="training_planning_mi" 
+            action="training_event_all_calendar_act" />
 
-        <menuitem id="training_subscription_management_mi" parent="training_mi" name="Subscriptions" sequence="50" />
-        <menuitem id="training_subscription_management_subscription_mi" parent="training_subscription_management_mi" action="training_subscription_all_act" />
-        <menuitem id="training_subscription_management_subscription_validate_mi" parent="training_subscription_management_subscription_mi" action="training_subscription_to_validate_act" />
-        <menuitem id="training_subscription_management_subscription_invoice_mi" parent="training_subscription_management_subscription_mi" action="training_subscription_to_invoice_act" />
+        <menuitem 
+            id="training_subscription_management_mi" 
+            parent="training_mi" 
+            name="Subscriptions" 
+            sequence="50" />
+        <menuitem 
+            id="training_subscription_management_subscription_mi" 
+            parent="training_subscription_management_mi" 
+            action="training_subscription_all_act" />
+        <menuitem 
+            id="training_subscription_management_subscription_validate_mi" 
+            parent="training_subscription_management_subscription_mi" 
+            action="training_subscription_to_validate_act" />
+        <menuitem 
+            id="training_subscription_management_subscription_invoice_mi" 
+            parent="training_subscription_management_subscription_mi" 
+            action="training_subscription_to_invoice_act" />
 
-        <menuitem id="training_subscription_management_subscription_new_mi" parent="training_subscription_management_mi" action="training_subscription_new_act" />
-        <menuitem id="training_subscription_management_subscription_massive_mi" parent="training_subscription_management_mi" action="training_session_massive_subscription_act" />
+        <menuitem 
+            id="training_subscription_management_subscription_new_mi" 
+            parent="training_subscription_management_mi" 
+            action="training_subscription_new_act" />
+        <menuitem 
+            id="training_subscription_management_subscription_massive_mi" 
+            parent="training_subscription_management_mi" 
+            action="training_session_massive_subscription_act" />
     </data>
 </openerp>
