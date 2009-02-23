@@ -21,10 +21,14 @@
 						<field name="is_fleet_expired" readonly="1" />
 					</group>
 					<separator string="Moves" />
-					<group col="6" colspan="4">
-						<field name="incoming_picking_id" mode="form" domain="[('type','=','in')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'customer','location_dest_id_usage':'internal','product_id':product_id,'location_id':fleet_id,'prodlot_id':prodlot_id}" />
-						<field name="picking_id" domain="[('type','=','internal')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'internal','location_dest_id_usage':'internal','product_id':product_id,'prodlot_id':prodlot_id}" />
-						<field name="outgoing_picking_id" domain="[('type','=','out')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'internal','location_dest_id_usage':'customer','product_id':product_id,'location_dest_id':fleet_id,'prodlot_id':prodlot_id}" />
+					<group col="4" colspan="4">
+						<field name="related_incoming_picking_state" nolabel="1"/><field name="incoming_picking_id" mode="form" domain="[('type','=','in')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'customer','location_dest_id_usage':'internal','product_id':product_id,'location_id':fleet_id,'prodlot_id':prodlot_id}" />
+					</group>
+					<group col="4" colspan="4">
+						<field name="related_picking_state" nolabel="1"/><field name="picking_id" domain="[('type','=','internal')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'internal','location_dest_id_usage':'internal','product_id':product_id,'prodlot_id':prodlot_id}" />
+					</group>
+					<group col="4" colspan="4">
+						<field name="related_outgoing_picking_state" nolabel="1"/><field name="outgoing_picking_id" domain="[('type','=','out')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'internal','location_dest_id_usage':'customer','product_id':product_id,'location_dest_id':fleet_id,'prodlot_id':prodlot_id}" />
 					</group>
 					<separator string="Qualification" />
 					<group col="6" colspan="4">

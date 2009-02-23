@@ -3,9 +3,9 @@ from mx.DateTime import RelativeDateTime, DateTime
 from mx import DateTime
 
 
-fixed_month_init_day = 1 # TODO make this a parameter!
-fixed_days_before_month_end = 0 #TODO make this a parameter!
-min_maintenance_months = 6 #TODO make this a parameter!
+fixed_month_init_day = 1 # TODO make this a fields.property parameter!
+fixed_days_before_month_end = 0 #TODO make this a fields.property parameter!
+min_maintenance_months = 6 #TODO make this a fields.property parameter!
 
 
 class sale_order_line(osv.osv):
@@ -35,7 +35,7 @@ class sale_order_line(osv.osv):
         'is_maintenance': fields.related('product_id', 'is_maintenance', type='boolean', string='Is Maintenance'),
     }
     
-    def maintenance_qty_change(self, cr, uid, ids, maintenance_product_qty=False, maintenance_month_qty=False, maintenance_start_date=False, maintenance_end_date=False, is_maintenance=False):
+    def maintenance_qty_change(self, cr, uid, ids, maintenance_product_qty=False, maintenance_month_qty=False, maintenance_start_date=False, maintenance_end_date=False, is_maintenance=False, fleet_id=False):
         result = {}
         if not is_maintenance:
             return result
@@ -76,6 +76,13 @@ class sale_order_line(osv.osv):
             result['value'].update({'maintenance_month_qty': maintenance_month_qty})
             if maintenance_month_qty < min_maintenance_months:
                 warning_messages += "- we usually try to sell %s months at least!\n" % min_maintenance_months
+                
+            
+            if fleet_id:
+                fleet = self.pool.get('stock.location').browse(cr, uid, fleet_id)
+                theoretic_end = self._get_end_date_from_start_date(cr, uid, start, fleet)
+                if theoretic_end.year != end.year or theoretic_end.month != end.month or theoretic_end.day != end.day:
+                    warning_messages += "- Theoretic Maintenance End Date was: %s !\n" % theoretic_end.strftime('%Y-%m-%d')
                 
 
         if maintenance_product_qty and maintenance_month_qty: #only set the default fleet at init

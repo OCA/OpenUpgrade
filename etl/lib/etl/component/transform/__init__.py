@@ -29,6 +29,8 @@ ETL Components:
 """
 import diff
 import sort
+import merge
+
 import logger_bloc
 import logger
 import data_filter

@@ -31,8 +31,8 @@ import netsvc
 from osv import fields, osv
 
 class sale_order(osv.osv):
-    _inherit='sale.order'
-    _columns={
+    _inherit = 'sale.order'
+    _columns = {
         'payment_type': fields.many2one('payment.type', 'Payment type', help='The type of payment. It will be transferred to the invoice'),
         'partner_bank': fields.many2one('res.partner.bank','Bank Account', select=True, help='The bank account to pay to or to be paid from. It will be transferred to the invoice'),
     }
@@ -64,10 +64,33 @@ class sale_order(osv.osv):
         return result
 
     def _make_invoice(self, cr, uid, order, lines, context={}):
-        """ Redefines _make_invoice to create invoice with payment_type and acc_number from the sale order"""
+        """ Redefines _make_invoice to create invoices with payment_type and acc_number from the sale order"""
         inv_id = super(sale_order, self)._make_invoice(cr, uid, order, lines, context)
         inv_obj = self.pool.get('account.invoice')
         inv_obj.write(cr, uid, [inv_id], {'payment_type':order.payment_type.id, 'partner_bank':order.partner_bank.id}, context=context)
         return inv_id
 
 sale_order()
+
+
+class stock_picking(osv.osv):
+    _inherit = 'stock.picking'
+
+    def action_invoice_create(self, cr, uid, ids, journal_id=False, group=False, type='out_invoice', context=None):
+        """ Redefines action_invoice_create to create invoices with payment_type and acc_number from the partner of the picking list"""
+        res = super(stock_picking, self).action_invoice_create(cr, uid, ids, journal_id, group, type, context)
+        invoice_obj = self.pool.get('account.invoice')
+        sale_obj = self.pool.get('sale.order')
+        for picking_id, invoice_id in res.items():
+            #print picking_id, invoice_id
+            picking = self.browse(cr, uid, picking_id, context=context)
+            partner = picking.address_id.partner_id
+            paytype_id = partner.payment_type_customer.id
+            result = {'value': {}}
+            result['value']['payment_type'] = paytype_id
+            invoice_vals = sale_obj.onchange_paytype_id(cr, uid, ids, paytype_id, partner.id, result)['value']
+            #print invoice_vals
+            invoice_obj.write(cr, uid, [invoice_id], invoice_vals, context=context)
+        return res
+
+stock_picking()
