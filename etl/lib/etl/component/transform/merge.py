@@ -25,6 +25,7 @@
 
 from etl.component import component
 import sys
+
 class merge(component.component):
     """
         This is an ETL Component that merge all input flows into only one ouput flow.
@@ -39,25 +40,23 @@ class merge(component.component):
 
 
     def process(self):
-        #TODO : proper handle exception
-        for channel, list_trans in self.input_get().items():
-            my_gen_list = []
-            for generator in list_trans:
-                my_gen_list.append(generator)
-        p = 0
-        has_yield = False
-        while True:
-            if p == len(my_gen_list):
-                p = 0
-                has_yield = False
+        my_gen_list = []
+        for list_trans in self.input_get().values():
+            my_gen_list += list_trans
+        p = -1
+        while my_gen_list:
+            p = (p+1) % len(my_gen_list)
             try:
                 data = my_gen_list[p].next()
-            except:
-                p += 1
-                if not has_yield and p == len(my_gen_list):
-                    break
-                continue
-            if data:
                 yield data, 'main'
-                has_yield = True
-                p += 1
+            except StopIteration, e:
+                del my_gen_list[p]
+                p = 0
+
+if __name__=='__main__':
+    # implement blackbox test
+    # Input:
+    #   'main': [{'name':'test'}], 'second': [{'name':'test2'}]
+    # Output:
+    #   'concat'
+    pass
