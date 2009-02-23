@@ -90,7 +90,6 @@ class product_template(osv.osv):
         variants_obj = self.pool.get('product.product')
         temp_type_list=[]
         temp_val_list=[]
-        
 
         for product_temp in self.browse(cr, uid, ids, context):
             for temp_type in product_temp.dimension_type_ids:
@@ -128,7 +127,7 @@ class product_product(osv.osv):
             r = map(lambda dim: (dim.dimension_id.name or '')+'/'+(dim.name or '-'), p.dimension_value_ids)
             res[p.id] = ','.join(r)
         return res
-    
+
     def _check_dimension_values(self, cr, uid, ids): # TODO: check that all dimension_types of the product_template have a corresponding dimension_value ??
         for p in self.browse(cr, uid, ids, {}):
             buffer=[]
