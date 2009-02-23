@@ -20,43 +20,43 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to perform sort operation.
+   This is an ETL Component that use to display log detail in streamline.
 """
 
 from etl.component import component
+import sys
 
-class sort(component.component):
+class merge(component.component):
     """
-        This is an ETL Component that use to perform sort operation.
- 
+        This is an ETL Component that merge all input flows into only one ouput flow.
+
         Type: Data Component
-        Computing Performance: Semi-Streamline
-        Input Flows: 1
+        Computing Performance: Streamline
+        Input Flows: 0-x
         * .* : the main data flow with input data
-        Output Flows: 0-x
-        * .* : return the main flow with sort result
+        Output Flows: 1
+        * .* : return the main flow 
     """    
 
-    def __init__(self, name,fieldname):
-        super(sort, self).__init__('(etl.component.process.sort) '+name )
-        self.fieldname = fieldname
 
-    # Read all input channels, sort and write to 'main' channel
     def process(self):
-        datas = []
-        for channel,trans in self.input_get().items():
-            for iterator in trans:
-                for d in iterator:
-                    datas.append(d)
+        my_gen_list = []
+        for list_trans in self.input_get().values():
+            my_gen_list += list_trans
+        p = -1
+        while my_gen_list:
+            p = (p+1) % len(my_gen_list)
+            try:
+                data = my_gen_list[p].next()
+                yield data, 'main'
+            except StopIteration, e:
+                del my_gen_list[p]
+                p = 0
 
-        datas.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
-        for d in datas:
-            yield d, 'main'
-
-
-if __name__ == '__main__':
-    from etl_test import etl_test
-    test=etl_test.etl_component_test(sort('sort','name'))
-    test.check_input({'main':[{'id':1, 'name':'OpenERP'},{'id':2,'name':'Fabien'}]})
-    test.check_output([{'id':2, 'name':'OpenERP'},{'id':1,'name':'Fabien'}],'main')
-    res=test.output()
+if __name__=='__main__':
+    # implement blackbox test
+    # Input:
+    #   'main': [{'name':'test'}], 'second': [{'name':'test2'}]
+    # Output:
+    #   'concat'
+    pass

@@ -1,6 +1,8 @@
 import pooler
 import time
 import netsvc
+import os
+import os.path
 
 ##############################################################################
 # Service to record use of the database
@@ -38,21 +40,59 @@ class use_control_service(netsvc.Service):
         netsvc.Service.__init__(self, name)
         self.joinGroup("web-services")
         self.exportMethod(self.data_get)
-    def data_get(self, password, dbname, date_from=False, date_to=False):
+
+    # Return the size of the system in Mb.
+    def get_size(self, cr, dbname):
+        cr.execute('select pg_database_size(%s)', (dbname,))
+        db_size = cr.fetchone()[0]
+        dir_size = 0
+        if os.path.isdir(os.path.join('filestore',dbname)):
+            for (path, dirs, files) in os.walk(os.path.join('filestore',dbname)):
+                for file in files:
+                    filename = os.path.join(path, file)
+                    dir_size += os.path.getsize(filename)
+        return float((dir_size + db_size) / (1024*1024) + 1.0) / 1024.0
+
+    def data_get(self, password, db):
         security.check_super(password)
-        return {
-            'details': [
-                {'user':'Administrator', 'login': 'admin', 'duration': 12},
-                {'user':'Demo User', 'login': 'demo', 'duration': 12},
-            ],
-            'modules': [
-                'base', 'sale', 'use_control'
-            ],
-            'latest_connection': '2009-01-01 12:30:01',
-            'users_number': 4,
-            'space': 123,
-            'hours': 12,
+        cr = pooler.get_db(db).cursor()
+        cr.execute('''select
+                to_char(t.date, 'YYYY-MM-DD') as date,
+                u.name as username,
+                u.login as login,
+                sum(t.duration) as hours
+            from
+                use_control_time t
+            left join
+                res_users u on (u.id=t.user_id)
+            where (not uploaded) or (uploaded is null)
+            group by
+                to_char(t.date, 'YYYY-MM-DD'),
+                u.name,
+                u.login
+           ''')
+        data = cr.fetchall()
+        cr.execute('update use_control_time t set uploaded=True where (not uploaded) or (uploaded is null)')
+        cr.execute('select name from ir_module_module where state=%s', ('installed',))
+        modules = map(lambda x: x[0], cr.fetchall())
+
+        hours = reduce(lambda x, y: x+y[3], data, 0.0)
+
+        cr.execute('select count(id) from res_users where active')
+        users = cr.fetchone()[0]
+        cr.execute('select max(date) from use_control_time')
+        maxdate = cr.fetchone()[0]
+        result = {
+            'details': data,
+            'modules': modules,
+            'latest_connection': maxdate,
+            'users_number': users,
+            'space': self.get_size(cr, db),
+            'hours': hours,
         }
+        cr.commit()
+        cr.close()
+        return result
 use_control_service()
 
 
