@@ -16,7 +16,7 @@
 	     			<field name="maintenance_start_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
 	     			<field name="maintenance_end_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
 	     			</group>
-	     			<separator string="Analytice Accounting" />
+	     			<separator string="Analytic Accounting" />
 	     			<field colspan="4" name="account_analytic_lines" attrs="{'readonly':[('is_maintenance','=',False)]}" nolabel="1"/>
 	     		</page>
 				</notebook>
