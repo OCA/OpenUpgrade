@@ -33,7 +33,7 @@ sms_send_form = '''<?xml version="1.0"?>
 </form>'''
 
 sms_send_fields = {
-    'gateway':{'string':'SMS Gateway', 'type':'many2one', 'relation':'sms.smsclient', 'required':True},
+    'gateway':{'string':'SMS Gateway', 'type':'many2one', 'relation':'sms.smsclient', 'required':True, 'domain':"[('state','=','confirm')]"},
     'text': {'string':'SMS Message', 'type':'text', 'required':True}
 }
 

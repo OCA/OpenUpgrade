@@ -22,6 +22,7 @@
 
 from osv import fields, osv
 import time
+import urllib
 
 class SMSClient(osv.osv):
     _name = 'sms.smsclient'
@@ -39,15 +40,29 @@ class SMSClient(osv.osv):
             ('waiting','Waiting for Verification'),
             ('confirm','Verified'),
         ],'Gateway Status', select=True, readonly=True),
+        'users_id': fields.many2many('res.users', 'res_smsserver_group_rel', 'sid', 'uid', 'Users Allowed'),
+        'code' : fields.char('Verification Code', size=256),
+        'body' : fields.text('Message', help="The message text that will be send along with the email which is send through this server"),
     }
     _defaults = {
         'state': lambda *a: 'new',
         'method': lambda *a: 'http'
     }
     
+    def check_permissions(self, cr, uid, id):
+        cr.execute('select * from res_smsserver_group_rel where sid=%s and uid=%s' % (id, uid))
+        data = cr.fetchall()
+        if len(data) <= 0:
+            return False
+        
+        return True
+    
     def send_message(self, cr, uid, gateway, to, text):
-        import urllib
         gate = self.browse(cr, uid, gateway)
+        
+        if not self.check_permissions(cr, uid, gateway):
+            raise osv.except_osv(_('Permission Error!'), _('You have no permission to access %s ') % (gate.name,) )
+        
         url = gate.url
         prms = {}
         for p in gate.property_ids:
@@ -57,19 +72,56 @@ class SMSClient(osv.osv):
                 prms[p.name] = text
             else:
                 prms[p.name] = p.value
-            
+                
         params = urllib.urlencode(prms)
-        #f = urllib.urlopen(url+"?"+params)
-        history = self.pool.get('sms.smsclient.history')
-        id = history.create(cr, uid, {
-                    'name':'SMS Sent',
+        req = url+"?"+params
+        queue = self.pool.get('sms.smsclient.queue')
+        queue.create(cr, uid, {
+                    'name':req,
                     'gateway_id':gateway,
-                    'sms': text,
-                    'to':to
+                    'type': 'draft',
+                    'mobile':to,
+                    'msg':text
                 })
+
+        return True
+    
+    def _check_queue(self, cr, uid, ids=False, context={}):
+        queue = self.pool.get('sms.smsclient.queue')
+        history = self.pool.get('sms.smsclient.history')
+        
+        sids = queue.search(cr, uid, [], limit=30)
+        
+        for sms in queue.browse(cr, uid, sids):
+            #f = urllib.urlopen(sms.name)
+            
+            history.create(cr, uid, {
+                        'name':'SMS Sent',
+                        'gateway_id':sms.gateway_id.id,
+                        'sms': sms.msg,
+                        'to':sms.mobile
+                    })
+        
+        queue.write(cr, uid, sids, {'type':'sent'})
         return True
     
 SMSClient()
+
+class SMSQueue(osv.osv):
+    _name = 'sms.smsclient.queue'
+    _description = 'SMS Queue'
+    _columns = {
+        'name' : fields.char('SMS Request', size=256, required=True),
+        'msg' : fields.char('SMS Text', size=256, required=True),
+        'mobile' : fields.char('Mobile No', size=256, required=True),
+        'gateway_id':fields.many2one('sms.smsclient', 'SMS Gateway'),
+        'type':fields.selection([
+            ('draft','Waiting'),
+            ('send','Sent'),
+            ('error','Error'),
+        ],'Message Status', select=True),
+    }
+SMSQueue()
 
 class Properties(osv.osv):
     _name = 'sms.smsclient.parms'

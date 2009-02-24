@@ -157,7 +157,7 @@ class SmtpClient(osv.osv):
             try:
                 self.smtpServer = smtplib.SMTP()
                 #self.smtpServer.debuglevel = 5
-                self.smtpServer.connect(str(self.server['server']),self.server['port'])
+                self.smtpServer.connect(str(self.server['server']),str(self.server['port']))
                 
                 if self.server['ssl']:
                     self.smtpServer.ehlo()
