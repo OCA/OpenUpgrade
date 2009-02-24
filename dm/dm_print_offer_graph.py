@@ -55,7 +55,7 @@ def graph_get(cr, uid, graph, offer_id):
 #           Wainting for analysis to be complated
             trargs = {
 #                'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay) + ' days'
-                'label': transition.condition.name + ' - ' + transition.step_from.media_id.name  + '\\n' + str(transition.delay) + ' ' +transition.delay_type
+                'label': transition.condition.name + ' - ' + transition.step_to.media_id.name  + '\\n' + str(transition.delay) + ' ' +transition.delay_type
             }
             if step.split_mode=='and':
                 trargs['arrowtail']='box'
