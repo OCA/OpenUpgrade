@@ -45,7 +45,7 @@ AVAILABLE_TYPE = [
 
 class dm_media(osv.osv):
     _name = "dm.media"
-    
+    """    
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
         if 'step_media_ids' in context and context['step_media_ids']:
@@ -55,8 +55,8 @@ class dm_media(osv.osv):
                 raise osv.except_osv('Error !',"It is necessary to select media in offer step.")
         else:
             brse_rec = super(dm_media, self).search(cr, uid, [])
-        return brse_rec      
-    
+        return brse_rec
+    """
     _columns = {
         'name' : fields.char('Media', size=64, translate=True, required=True),
     }

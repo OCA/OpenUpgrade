@@ -19,10 +19,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 import time
 import netsvc
 import datetime
-#import campaign
 
 from osv import fields
 from osv import osv
@@ -62,18 +62,6 @@ dm_offer_step_type()
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
 
-#    def __history(self, cr, uid, ids, keyword, context={}):
-#        for id in ids:
-#            data = {
-#                'user_id': uid,
-#                'state' : keyword,
-#                'step_id': id,
-#                'date' : time.strftime('%Y-%m-%d')
-#            }
-#            obj = self.pool.get('dm.offer.step.history')
-#            obj.create(cr, uid, data, context)
-#        return True
-
     def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
@@ -111,8 +99,6 @@ class dm_offer_step(osv.osv):
         'notes' : fields.text('Notes'),
         'document_ids' : fields.one2many('dm.offer.document', 'step_id', 'DTP Documents'),
         'flow_start' : fields.boolean('Flow Start'),
-#        'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
-#        'item_ids' : fields.one2many('dm.offer.step.item', 'offer_step_id', 'Items'),
         'item_ids' : fields.many2many('product.product','dm_offer_step_product_rel','product_id','offer_step_id','Items', states={'closed':[('readonly',True)]}),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',readonly=True),
@@ -149,7 +135,6 @@ class dm_offer_step(osv.osv):
         return {'value':value}
     
     def state_close_set(self, cr, uid, ids, context=None):
-#        self.__history(cr,uid, ids, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
         return True
 
@@ -163,17 +148,14 @@ class dm_offer_step(osv.osv):
                             _('You must first validate all documents attached to this offer step.'))
 #                    self.pool.get('dm.offer.document').write(cr,uid,[doc.id],{'state':'validate'})
             wf_service.trg_validate(uid, 'dm.offer.step', step.id, 'open', cr)
-#        self.__history(cr,uid,ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True
 
     def state_freeze_set(self, cr, uid, ids, context=None):
-#        self.__history(cr,uid,ids, 'freeze')
         self.write(cr, uid, ids, {'state':'freeze'})
         return True
 
     def state_draft_set(self, cr, uid, ids, context=None):
-#        self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True
 
@@ -196,7 +178,6 @@ class dm_offer_step_transition(osv.osv):
         'delay_type' : fields.selection([('minutes', 'Minutes'),('hour','Hours'),('day','Days'),('month','Months')], 'Delay type', required=True),
         'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
-#        'media_id' : fields.many2one('dm.media','Media',required=True)
     }
     _defaults = {
         'delay_type': lambda *a: 'day',
@@ -213,57 +194,6 @@ class dm_offer_step_transition(osv.osv):
 
 dm_offer_step_transition()
 
-"""
-class dm_offer_step_history(osv.osv):
-    _name = "dm.offer.step.history"
-    _order = 'date'
-    _columns = {
-        'step_id' : fields.many2one('dm.offer.step', 'Offer'),
-        'user_id' : fields.many2one('res.users', 'User'),
-        'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16),
-        'date' : fields.date('Date')
-    }
-
-    _defaults = {
-        'date' : lambda *a: time.strftime('%Y-%m-%d'),
-    }
-
-dm_offer_step_history()
-
-class dm_offer_step_item(osv.osv):
-    _name = "dm.offer.step.item"
-
-    def _step_type(self, cr, uid, ids, name, args, context={}):
-        result={}
-        for id in ids:
-            result[id] = self.browse(cr, uid, id).offer_step_id.type.code
-        return result
-
-    _columns = {
-        'name': fields.char('Description', size=64, required=True),
-        'product_ids' : fields.many2many('product.product','dm_step_item_product_rel', 'product_id', 'item_id', 'Products', context={'flag':True}),
-        'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
-        'offer_step_type': fields.function(_step_type,string='Offer Step Type',type="char",method=True,readonly=True), 
-        'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
-        'price' : fields.float('Price',digits=(16,2)),
-        'notes' : fields.text('Notes'),
-        'purchase_constraints' : fields.text('Purchase Constraints'),
-    }
-    _defaults = {
-        'item_type' : lambda *a: 'main',
-    }
-dm_offer_step_item()
-
-class dm_offer_step_manufacturing_constraint(osv.osv):
-    _name = "dm.offer.step.manufacturing_constraint"
-    _columns = {
-        'name': fields.char('Description', size=64, required=True),
-        'country_ids': fields.many2many('res.country','dm_manuf_constraint_country_rel','manuf_constraint_id','country_id','Country'),
-        'constraint': fields.text('Manufacturing Description'),
-        'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
-    }
-dm_offer_step_manufacturing_constraint()
-"""
 
 class product_product(osv.osv):
     _name = "product.product"

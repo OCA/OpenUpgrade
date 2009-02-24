@@ -1,0 +1,71 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* chricar_partner_parent_companies
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-02-23 09:29:07+0000\n"
+"PO-Revision-Date: 2009-02-23 09:29:07+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: chricar_partner_parent_companies
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "Fehlerhafter xml Code für diese Ansicht!"
+
+#. module: chricar_partner_parent_companies
+#: view:res.partner:0
+#: field:res.partner,participation_ids:0
+msgid "Participations"
+msgstr "Beteiligungen"
+
+#. module: chricar_partner_parent_companies
+#: view:res.partner:0
+#: view:res.partner.parent_company:0
+msgid "Notes"
+msgstr "Notizen"
+
+#. module: chricar_partner_parent_companies
+#: constraint:res.partner:0
+msgid "The VAT doesn't seem to be correct."
+msgstr "Die USt. scheint falsch zu sein."
+
+#. module: chricar_partner_parent_companies
+#: model:ir.actions.act_window,name:chricar_partner_parent_companies.action_partner_parent_companies_form
+msgid "Partner ID Numbers"
+msgstr ""
+
+#. module: chricar_partner_parent_companies
+#: model:ir.module.module,shortdesc:chricar_partner_parent_companies.module_name_translation
+msgid "Partner Parent Companies"
+msgstr "Eigentümer"
+
+#. module: chricar_partner_parent_companies
+#: model:ir.module.module,description:chricar_partner_parent_companies.module_name_translation
+msgid "This module allows to define owners of a partner.\n"
+"    The owner has to be definend in OpenERP as partner.\n"
+"    Currently no check is made if max 100% of the capital is defined here\n"
+"    Contract date+number\n"
+"    legal and fiscal relevant periods\n"
+"    Added Participation tab to partners to show Parent and Participations"
+msgstr "Dieses Modul ermöglicht die Definition von Eigentümern von Partnern.\n"
+"    Der Eigentümer muss in OpenERP als Partner definiert sein.\n"
+"    Es wird nicht geprüft, ob 100% des Kapitals defniert werden\n"
+"    Vertagsnummer und -datum\n"
+"    handelsrechtliche und steuerrechtliche Gültigkeit\n"
+"    Darstellung im Reiter Beteiligungen"
+
+#. module: chricar_partner_parent_companies
+#: view:res.partner:0
+#: field:res.partner,partner_ids:0
+#: view:res.partner.parent_company:0
+msgid "Parent Companies"
+msgstr "Eigentümer"
+

@@ -147,22 +147,19 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="4" name="delay"/>
             <field name="step_to" ref="dm_offer_step_piforopenerpondemandfreetrial2009"/>
             <field name="step_from" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
-<!--            <field name="media_id" ref="dm.media_paper"/>-->
 	    	<field name="condition" ref="dm_offer_step_transition_purchase"/>
 	    	<field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
         </record>
         <record id="dm_offer_step_transition_1" model="dm.offer.step.transition">
             <field name="step_to" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
             <field name="step_from" ref="dm_offer_step_smforopenerpondemandfreetrial2009"/>
-<!--            <field name="media_id" ref="dm.media_phone"/>-->
-	    	<field name="condition" ref="dm_offer_step_transition_not_purchase"/>
+	    	<field name="condition" ref="dm_offer_step_transition_purchase"/>
             <field eval="0" name="delay"/>
             <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
         </record>
         <record id="dm_offer_step_transition_2" model="dm.offer.step.transition">
             <field name="step_to" ref="dm_offer_step_alimforopenerpondemandfreetrial2009"/>
             <field name="step_from" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
-<!--            <field name="media_id" ref="dm.media_email"/>-->
 	    	<field name="condition" ref="dm_offer_step_transition_not_purchase"/>
             <field eval="0" name="delay"/>
             <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
@@ -170,7 +167,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
         <record id="dm_offer_step_transition_3" model="dm.offer.step.transition">
             <field name="step_to" ref="dm_offer_step_alpiforopenerpondemandfreetrial2009"/>
             <field name="step_from" ref="dm_offer_step_piforopenerpondemandfreetrial2009"/>
-<!--            <field name="media_id" ref="dm.media_email"/>-->
 	    	<field name="condition" ref="dm_offer_step_transition_automatic"/>
             <field eval="0" name="delay"/>
             <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>

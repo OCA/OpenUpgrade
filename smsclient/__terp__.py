@@ -36,7 +36,8 @@
     ],
     "update_xml" : [
         "smsclient_view.xml",
-        "smsclient_wizard.xml"
+        "smsclient_wizard.xml",
+        "smsclient_data.xml",
     ],
     "active": False,
     "installable": True

@@ -31,7 +31,7 @@ class product_variant_dimension_type(osv.osv):
     
     _columns = {
         'name' : fields.char('Dimension', size=64),
-        'sequence' : fields.integer('Sequence'),
+        'sequence' : fields.integer('Sequence', help="The product 'variants' code will use this to order the dimension values"),
         'value_ids' : fields.one2many('product.variant.dimension.value', 'dimension_id', 'Dimension Values'),
         'product_tmpl_id': fields.many2one('product.template', 'Product Template', required=True),
         'allow_custom_value': fields.boolean('Allow Custom Value', help="If true, custom values can be entered in the product configurator"),
@@ -49,7 +49,7 @@ product_variant_dimension_type()
 
 class product_variant_dimension_value(osv.osv):
     _name = "product.variant.dimension.value"
-    _description = "Dimension Type"
+    _description = "Dimension Value"
     
     def _get_dimension_values(self, cr, uid, ids, context={}):
         result = []
@@ -59,13 +59,13 @@ class product_variant_dimension_value(osv.osv):
         return result
     
     _columns = {
-        'name' : fields.char('Dimension Value', size=64),
+        'name' : fields.char('Dimension Value', size=64, required=True),
         'sequence' : fields.integer('Sequence'),
         'price_extra' : fields.float('Price Extra', size=64),
         'price_margin' : fields.float('Price Margin', size=64),
         'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension Type', required=True),
         'product_tmpl_id': fields.related('dimension_id', 'product_tmpl_id', type="many2one", relation="product.template", string="Product Template", store=True),
-        'dimension_sequence': fields.related('dimension_id', 'sequence', string="Related Dimension Sequence", 
+        'dimension_sequence': fields.related('dimension_id', 'sequence', string="Related Dimension Sequence",#used for ordering purposes in the "variants"
              store={
                 'product.variant.dimension.type': (_get_dimension_values, None, 10),
             }),
@@ -147,6 +147,7 @@ class product_product(osv.osv):
         # 'price_extra': fields.function('Price Extra'),
         # 'price_margin': fields.function('Price Margin'),
         #
+        # TODO: store = true? If yes find out invalidation listeners
         'variants': fields.function(_variant_name_get, method=True, type='char', size=64, string='Variants'),
     }
     _constraints = [ (_check_dimension_values, 'Several dimension values for the same dimension type', ['dimension_value_ids']),]
