@@ -89,11 +89,12 @@ class SMSClient(osv.osv):
         queue = self.pool.get('sms.smsclient.queue')
         history = self.pool.get('sms.smsclient.history')
         
-        sids = queue.search(cr, uid, [('state','!=','send')], limit=30)
+        sids = queue.search(cr, uid, [('state','!=','send'),('state','!=','sending')], limit=30)
+        queue.write(cr, uid, sids, {'state':'sending'})
         error = []
         sent = []
         for sms in queue.browse(cr, uid, sids):
-            #f = urllib.urlopen(sms.name)
+            f = urllib.urlopen(sms.name)
             if len(sms.msg) > 160:
                 error.append(sms.id)
                 continue
@@ -120,7 +121,8 @@ class SMSQueue(osv.osv):
         'mobile' : fields.char('Mobile No', size=256, required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'gateway_id':fields.many2one('sms.smsclient', 'SMS Gateway', readonly=True, states={'draft':[('readonly',False)]}),
         'state':fields.selection([
-            ('draft','Waiting'),
+            ('draft','Queued'),
+            ('sending','Waiting'),
             ('send','Sent'),
             ('error','Error'),
         ],'Message Status', select=True, readonly=True),
