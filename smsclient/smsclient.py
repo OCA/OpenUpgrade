@@ -79,21 +79,24 @@ class SMSClient(osv.osv):
         queue.create(cr, uid, {
                     'name':req,
                     'gateway_id':gateway,
-                    'type': 'draft',
+                    'state': 'draft',
                     'mobile':to,
                     'msg':text
                 })
-
         return True
     
     def _check_queue(self, cr, uid, ids=False, context={}):
         queue = self.pool.get('sms.smsclient.queue')
         history = self.pool.get('sms.smsclient.history')
         
-        sids = queue.search(cr, uid, [], limit=30)
-        
+        sids = queue.search(cr, uid, [('state','!=','send')], limit=30)
+        error = []
+        sent = []
         for sms in queue.browse(cr, uid, sids):
             #f = urllib.urlopen(sms.name)
+            if len(sms.msg) > 160:
+                error.append(sms.id)
+                continue
             
             history.create(cr, uid, {
                         'name':'SMS Sent',
@@ -101,25 +104,32 @@ class SMSClient(osv.osv):
                         'sms': sms.msg,
                         'to':sms.mobile
                     })
-        
-        queue.write(cr, uid, sids, {'type':'sent'})
+            sent.append(sms.id)
+            
+        queue.write(cr, uid, sent, {'state':'send'})
+        queue.write(cr, uid, error, {'state':'error', 'error':'Size of SMS should not be more then 160 char'})
         return True
-    
 SMSClient()
 
 class SMSQueue(osv.osv):
     _name = 'sms.smsclient.queue'
     _description = 'SMS Queue'
     _columns = {
-        'name' : fields.char('SMS Request', size=256, required=True),
-        'msg' : fields.char('SMS Text', size=256, required=True),
-        'mobile' : fields.char('Mobile No', size=256, required=True),
-        'gateway_id':fields.many2one('sms.smsclient', 'SMS Gateway'),
-        'type':fields.selection([
+        'name' : fields.text('SMS Request', size=256, required=True, readonly=True, states={'draft':[('readonly',False)]}),
+        'msg' : fields.text('SMS Text', size=256, required=True, readonly=True, states={'draft':[('readonly',False)]}),
+        'mobile' : fields.char('Mobile No', size=256, required=True, readonly=True, states={'draft':[('readonly',False)]}),
+        'gateway_id':fields.many2one('sms.smsclient', 'SMS Gateway', readonly=True, states={'draft':[('readonly',False)]}),
+        'state':fields.selection([
             ('draft','Waiting'),
             ('send','Sent'),
             ('error','Error'),
-        ],'Message Status', select=True),
+        ],'Message Status', select=True, readonly=True),
+        'error':fields.text('Last Error', size=256, readonly=True, states={'draft':[('readonly',False)]}),
+        'date_create': fields.datetime('Date', readonly=True),
+    }
+    _defaults = {
+        'date_create': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'state': lambda *a: 'draft',
     }
 SMSQueue()
 

@@ -105,5 +105,49 @@
 		<menuitem name="SMS Gateway History" id="menu_smsclient_administration_sms_server_history" parent="menu_smsclient_administration_server" action="action_sms_smsclient_history_tree"/>
 
 		<act_window context="{'gateway_id': active_id}" domain="[('gateway_id', '=', active_id)]" id="act_sms_gateway_2_sms_history" name="SMS History" res_model="sms.smsclient.history" src_model="sms.smsclient"/>
+		
+		<!-- Message Queue -->
+		<record model="ir.ui.view" id="sms_smsclient_message_queue_tree">
+			<field name="name">sms.smsclient.queue.tree</field>
+			<field name="model">sms.smsclient.queue</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Message Queue">
+					<field name="date_create"/>
+					<field name="mobile"/>
+					<field name="msg"/>
+					<field name="state"/>
+					<field name="gateway_id"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="sms_smsclient_message_queue_form">
+			<field name="name">sms.smsclient.history.form</field>
+			<field name="model">sms.smsclient.queue</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Gateway History">
+					<field name="date_create" select="1"/>
+					<field name="gateway_id" select="1"/>
+					<field name="mobile" select="1"/>
+					<field name="state" select="1"/>
+					<separator string="SMS Message"	colspan="4"/>
+					<field name="msg" colspan="4" select="2" nolabel="1"/>
+					<separator string="Last Error"	colspan="4"/>
+					<field name="error" colspan="4" select="2" nolabel="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_sms_smsclient_queue_tree">
+			<field name="name">Message Queue</field>
+			<field name="res_model">sms.smsclient.queue</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="sms_smsclient_message_queue_tree" />
+		</record>
+		<menuitem name="Message Queue" id="menu_smsclient_administration_sms_server_queue" parent="menu_smsclient_administration_server" action="action_sms_smsclient_queue_tree"/>
+
+		<act_window context="{'gateway_id': active_id}" domain="[('gateway_id', '=', active_id)]" id="act_sms_gateway_2_sms_queue" name="Message Queue" res_model="sms.smsclient.queue" src_model="sms.smsclient"/>
+		
 	</data>
 </openerp>
