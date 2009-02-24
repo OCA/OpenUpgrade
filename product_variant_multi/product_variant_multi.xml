@@ -168,29 +168,6 @@
 				</xpath>
 			</field>
 		</record>
-		
-		
-		<record id="product_variant_multi.product_normal_form_view" model="ir.ui.view">
-			<field name="name">product_variant_multi.product.normal.form</field>
-			<field name="model">product.product</field>
-			<field name="type">form</field>
-			<field name="inherit_id" ref="product.product_normal_form_view" />
-			<field name="arch" type="xml">
-				<xpath expr="/form/notebook" position="inside">
-					<page string="Variant">
-            <field name="product_tmpl_id" select="1"/>
-            <field name="active" select="1"/>
-            <field name="variants" select="1" string="Variant Code"/>
-            <field name="default_code" select="1"/>
-            <field name="price_margin" select="1"/>
-            <field name="price_extra" select="1"/>
-						<field name="dimension_value_ids" context="{'product_tmpl_id':product_tmpl_id}"/>
-					</page>
-				</xpath>
-			</field>
-		</record>
-
-
 
 
 		<record id="product_variant_multi.product_product_form_view" model="ir.ui.view">
