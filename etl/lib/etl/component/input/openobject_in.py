@@ -43,14 +43,12 @@ class openobject_in(component.component):
 
     def __init__(self,name,openobject_connector,model,domain=[],fields=[],context={},transformer=None,row_limit=0):
         super(openobject_in, self).__init__('(etl.component.input.sql_in) '+name,transformer=transformer)      
-          
         self.openobject_connector = openobject_connector  
-        self.model=model             
-        self.domain=domain 
+        self.model=model
+        self.domain=domain
         self.context=context
         self.fields=fields
-        self.row_limit=row_limit                            
-        
+        self.row_limit=row_limit
 
     def action_start(self,key,singal_data={},data={}):        
         super(openobject_in, self).action_start(key,singal_data,data)                
