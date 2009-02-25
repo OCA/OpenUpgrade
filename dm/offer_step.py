@@ -105,7 +105,6 @@ class dm_offer_step(osv.osv):
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition', states={'closed':[('readonly',True)]}),
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
-#        'manufacturing_constraint_ids': fields.one2many('dm.offer.step.manufacturing_constraint', 'offer_step_id', 'Manufacturing Constraints'),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
         'action' : fields.many2one('ir.actions.server', string="Action", required=True, domain="[('dm_action','=',True)]"),
     }
@@ -185,15 +184,11 @@ class dm_offer_step_transition(osv.osv):
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
         if context.has_key('type'):
-#            if not context['step_id']:
-#                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
-#            data['condition']='automatic'
             data['delay']='0'
             data[context['type']] = context['step_id']
         return data
 
 dm_offer_step_transition()
-
 
 class product_product(osv.osv):
     _name = "product.product"
@@ -226,21 +221,6 @@ class product_product(osv.osv):
                     for item in step.item_ids:
                         result.append(item.id)
             return result
-'''       
-    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
-        result=super(product_product,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-        if 'flag' in context:
-            if result['type']=='form':
-                for k,v in result['fields'].items():
-                    if not (k=='name' or k=='default_code' or k=='categ_id' or k=='list_price' or k=='standard_price' or k=='seller_ids' \
-                        or k=='description' or k=='description_sale'  or k=='description_purchase'):
-                        del result['fields'][k]
-
-                result['arch']= """<?xml version="1.0" encoding="utf-8"?>\n<form string="Product">\n<notebook>\n<page string="General">\n<field name="name" select="1"/>\n<field name="default_code" select="1"/>\n<field name="categ_id" select="1"/>\n<field name="list_price"/>\n<field name="standard_price"/>\n<field colspan="4" name="seller_ids" nolabel="1" widget="one2many_list"/>\n</page>\n
-                    <page string="Descriptions">\n<separator string="Description" colspan="4"/>\n<field colspan="4" name="description" nolabel="1"/>\n<separator string="Sale Description" colspan="4"/>\n
-                    <field colspan="4" name="description_sale" nolabel="1"/>\n<separator string="Purchase Description" colspan="4"/>\n<field colspan="4" name="description_purchase" nolabel="1"/>\n</page>\n</notebook>\n</form>"""
-        return result
-'''
 product_product()
 
 class actions_server(osv.osv):

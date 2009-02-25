@@ -1295,39 +1295,6 @@ rkJggg==
         </record>
     </data>
 
-    <!-- ITEMS -->
-<!-- 
-    <data noupdate="1">
-        <record id="dm_offer_step_item_0" model="dm.offer.step.item">
-            <field eval="&quot;&quot;&quot;Bookstore Free Trial&quot;&quot;&quot;" name="name"/>
-            <field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2009"/>
-            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
-            <field eval="&quot;&quot;&quot;A 1 month Free Trial for the Bookstore profile&quot;&quot;&quot;" name="notes"/>
-        </record>
-        <record id="dm_offer_step_item_1" model="dm.offer.step.item">
-            <field eval="&quot;&quot;&quot;Association Free Trial&quot;&quot;&quot;" name="name"/>
-            <field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2009"/>
-            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
-            <field eval="&quot;&quot;&quot;A 1 month Free Trial for the Association profile&quot;&quot;&quot;" name="notes"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="dm_offer_step_item_2" model="dm.offer.step.item">
-            <field eval="&quot;&quot;&quot;Open ERP User Book&quot;&quot;&quot;" name="name"/>
-            <field name="offer_step_id" ref="dm.dm_offer_step_imforopenerpondemandfreetrial2009"/>
-            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
-            <field eval="&quot;&quot;&quot;The Open ERP User Book&quot;&quot;&quot;" name="notes"/>
-        </record>
-    </data>
-    <data noupdate="1">
-        <record id="dm_offer_step_item_3" model="dm.offer.step.item">
-            <field eval="&quot;&quot;&quot;Discovery Day 2009 Subscription&quot;&quot;&quot;" name="name"/>
-            <field name="offer_step_id" ref="dm.dm_offer_step_piforopenerpondemandfreetrial2009"/>
-            <field eval="&quot;&quot;&quot;main&quot;&quot;&quot;" name="item_type"/>
-            <field eval="&quot;&quot;&quot;Subscription for the Open ERP Discovery Day on May 2009&quot;&quot;&quot;" name="notes"/>
-        </record>
-    </data>
- -->
     <data noupdate="1">
         <record id="dm_campaign_proposition_ondemandfreetrialbookstoreoffer0" model="dm.campaign.proposition">
             <field eval="1" name="keep_prices"/>
@@ -1383,7 +1350,7 @@ rkJggg==
 
 <data noupdate="1">
         <record id="res_users_tom0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_manufacturingmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[ref('dm.res_groups_manufacturingmanager'),ref('base.group_user')])]" name="groups_id"/>
             <field eval="[(6,0,[])]" name="roles_id"/>
             <field eval="1" name="active"/>
             <field eval="&quot;&quot;&quot;tom&quot;&quot;&quot;" name="password"/>
@@ -1395,7 +1362,7 @@ rkJggg==
     </data>
     <data noupdate="1">
         <record id="res_users_jim0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_campaignmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[ref('dm.res_groups_campaignmanager'),ref('base.group_user')])]" name="groups_id"/>
             <field eval="[(6,0,[])]" name="roles_id"/>
             <field eval="1" name="active"/>
             <field eval="&quot;&quot;&quot;jim&quot;&quot;&quot;" name="password"/>
@@ -1407,7 +1374,7 @@ rkJggg==
     </data>
     <data noupdate="1">
         <record id="res_users_bob0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_offermanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[ref('dm.res_groups_offermanager'),ref('base.group_user')])]" name="groups_id"/>
             <field eval="[(6,0,[ref('dm.res_roles_offermanager')])]" name="roles_id"/>
             <field eval="1" name="active"/>
             <field eval="&quot;&quot;&quot;bob&quot;&quot;&quot;" name="password"/>
@@ -1419,7 +1386,7 @@ rkJggg==
     </data>
     <data noupdate="1">
         <record id="res_users_sue0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_itemmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[ref('dm.res_groups_itemmanager'),ref('base.group_user')])]" name="groups_id"/>
             <field eval="[(6,0,[])]" name="roles_id"/>
             <field eval="1" name="active"/>
             <field eval="&quot;&quot;&quot;sue&quot;&quot;&quot;" name="password"/>
@@ -1431,7 +1398,7 @@ rkJggg==
     </data>
     <data noupdate="1">
         <record id="res_users_ann0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_dtpmanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[ref('dm.res_groups_dtpmanager'),ref('base.group_user')])]" name="groups_id"/>
             <field eval="[(6,0,[])]" name="roles_id"/>
             <field eval="1" name="active"/>
             <field eval="&quot;&quot;&quot;ann&quot;&quot;&quot;" name="password"/>
@@ -1443,7 +1410,7 @@ rkJggg==
     </data>
     <data noupdate="1">
         <record id="res_users_joe0" model="res.users">
-            <field eval="[(6,0,[ref('dm.res_groups_custfilemanager')])]" name="groups_id"/>
+            <field eval="[(6,0,[ref('dm.res_groups_custfilemanager'),ref('base.group_user')])]" name="groups_id"/>
             <field eval="[(6,0,[])]" name="roles_id"/>
             <field eval="1" name="active"/>
             <field eval="&quot;&quot;&quot;joe&quot;&quot;&quot;" name="password"/>
@@ -1679,7 +1646,6 @@ rkJggg==
 			<field eval="0" name="decoy_for_campaign"/>
 			<field eval="&quot;&quot;&quot;John&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="client_media_ids"/>
-			<field eval="&quot;&quot;&quot;Doe&quot;&quot;&quot;" name="lastname"/>
 			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
 			<field eval="0" name="decoy_for_renting"/>
             <field eval="[(6,0,[ref('base.af'),ref('base.al'),ref('base.dz'),ref('base.as'),
@@ -1768,7 +1734,8 @@ rkJggg==
 		<record id="res_partner_address_dm_customer_0" model="res.partner.address">
             <field name="function" ref="base.function_sale"/>
             <field eval="&quot;&quot;&quot;Dinland&quot;&quot;&quot;" name="city"/>
-            <field eval="&quot;&quot;&quot;John Doe&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Doe&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;John&quot;&quot;&quot;" name="firstname"/>
             <field eval="&quot;&quot;&quot;01652&quot;&quot;&quot;" name="zip"/>
             <field eval="&quot;&quot;&quot;M.&quot;&quot;&quot;" name="title"/>
             <field name="partner_id" ref="dm_customer_0"/>
@@ -1790,7 +1757,6 @@ rkJggg==
 			<field eval="0" name="decoy_for_campaign"/>
 			<field eval="&quot;&quot;&quot;Biil&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="client_media_ids"/>
-			<field eval="&quot;&quot;&quot;Linghton&quot;&quot;&quot;" name="lastname"/>
 			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
 			<field eval="0" name="decoy_for_renting"/>
             <field eval="[(6,0,[ref('base.af'),ref('base.al'),ref('base.dz'),ref('base.as'),
@@ -1878,7 +1844,8 @@ rkJggg==
 		</record>
 		<record id="res_partner_address_dm_customer_1" model="res.partner.address">
             <field eval="&quot;&quot;&quot;San Jose&quot;&quot;&quot;" name="city"/>
-            <field eval="&quot;&quot;&quot;Biil Lin&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Linghton&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Biil&quot;&quot;&quot;" name="firstname"/>
             <field eval="&quot;&quot;&quot;01234&quot;&quot;&quot;" name="zip"/>
             <field eval="&quot;&quot;&quot;M.&quot;&quot;&quot;" name="title"/>
             <field name="partner_id" ref="dm_customer_1"/>
@@ -1900,7 +1867,6 @@ rkJggg==
 			<field eval="0" name="decoy_for_campaign"/>
 			<field eval="&quot;&quot;&quot;Daisy&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="client_media_ids"/>
-			<field eval="&quot;&quot;&quot;Duck&quot;&quot;&quot;" name="lastname"/>
 			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
 			<field eval="0" name="decoy_for_renting"/>
             <field eval="[(6,0,[ref('base.af'),ref('base.al'),ref('base.dz'),ref('base.as'),
@@ -1988,7 +1954,8 @@ rkJggg==
 		</record>
 		<record id="res_partner_address_dm_customer_2" model="res.partner.address">
             <field eval="&quot;&quot;&quot;New York&quot;&quot;&quot;" name="city"/>
-            <field eval="&quot;&quot;&quot;Daisy&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Duck&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Daisy&quot;&quot;&quot;" name="firstname"/>
             <field eval="&quot;&quot;&quot;02543&quot;&quot;&quot;" name="zip"/>
             <field name="partner_id" ref="dm_customer_2"/>
             <field name="country_id" ref="base.us"/>

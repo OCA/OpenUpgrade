@@ -164,19 +164,6 @@ class dm_overlay(osv.osv):
     _name = 'dm.overlay'
     _rec_name = 'trademark_id'
 
-#    def create(self,cr,uid,vals,context={}):
-#        data = self.browse(cr, uid, [])
-#        overlay_id = self.search(cr, uid, [('trademark_id','=',vals['trademark_id']), ('dealer_id','=',vals['dealer_id'])])
-#        if overlay_id:
-#            raise  osv.except_osv('Warning', "You cannot create an overlay for this particular trademark and dealer !")
-#
-#        dealer_obj = self.pool.get('res.partner').browse(cr, uid, [vals['dealer_id']])[0]
-#        dealer_country_ids = [country_ids.id for country_ids in dealer_obj.country_ids]
-#        for i in vals['country_ids'][0][-1]:
-#            if not i in dealer_country_ids:
-#                raise  osv.except_osv('Warning', "This country is not allowed for %s" % (dealer_obj.name,) )
-#        return super(dm_overlay,self).create(cr,uid,vals,context)
-
     def _overlay_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
@@ -292,9 +279,11 @@ class dm_campaign(osv.osv):
             country = self.pool.get('res.country').browse(cr,uid,[country_id])[0]
             value['lang_id'] =  country.main_language.id
             value['currency_id'] = country.main_currency.id
+            value['forwarding_charge'] = country.forwarding_charge
         else:
             value['lang_id']=0
             value['currency_id']=0
+            value['forwarding_charge'] = 0.0
         return {'value':value}
 
     def _quantity_planned_total(self, cr, uid, ids, name, args, context={}):
@@ -408,7 +397,6 @@ class dm_campaign(osv.osv):
         'currency_id' : fields.many2one('res.currency','Currency',ondelete='cascade'),
         'manufacturing_cost_ids': fields.one2many('dm.campaign.manufacturing_cost','campaign_id','Manufacturing Costs'),
         'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
-#        'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_id', 'Purchase Lines'),
         'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
         'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'},
             help="The router is the partner who will send the mailing to the final customer"),
@@ -558,9 +546,9 @@ class dm_campaign(osv.osv):
             raise osv.except_osv("Error!!","You cannot use this offer in this country")        
 
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
-        if not camp.forwarding_charge:
-            if camp.country_id.forwarding_charge:
-                vals['forwarding_charge'] = camp.country_id.forwarding_charge
+#        if not camp.forwarding_charge:
+#            if camp.country_id.forwarding_charge:
+#                vals['forwarding_charge'] = camp.country_id.forwarding_charge
         
         if camp.country_id.payment_methods:
             payment_methods = [payment_methods.id for payment_methods in camp.country_id.payment_methods]
@@ -639,9 +627,9 @@ class dm_campaign(osv.osv):
             self.pool.get('dm.campaign.mail_service').create(cr,uid,mail_vals)           
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
         write_vals = {}
-        if not data_cam.forwarding_charge:
-            if data_cam.country_id.forwarding_charge:
-                write_vals['forwarding_charge'] = data_cam.country_id.forwarding_charge
+#        if not data_cam.forwarding_charge:
+#            if data_cam.country_id.forwarding_charge:
+#                write_vals['forwarding_charge'] = data_cam.country_id.forwarding_charge
                     
         if data_cam.country_id.payment_methods:
             payment_methods = [payment_methods.id for payment_methods in data_cam.country_id.payment_methods]
@@ -920,6 +908,7 @@ class dm_campaign_proposition(osv.osv):
         'keep_segments' : fields.boolean('Keep Segments'),
         'keep_prices' : fields.boolean('Keep Prices At Duplication'),
         'force_sm_price' : fields.boolean('Force Starting Mail Price'),
+        'price_prog_use' : fields.boolean('Price Progression'),
         'sm_price' : fields.float('Starting Mail Price', digits=(16,2)),
 #        'prices_prog_id' : fields.many2one('dm.campaign.proposition.prices_progression', 'Prices Progression'),
         'manufacturing_costs': fields.float('Manufacturing Costs',digits=(16,2)),
@@ -1166,6 +1155,11 @@ DOC_TYPES = [
 class dm_campaign_purchase_line(osv.osv):
     _name = 'dm.campaign.purchase_line'
     _rec_name = 'product_id'
+
+    def default_get(self, cr, uid, fields, context=None):
+        if context.has_key('product_category'):
+            raise osv.except_osv('Warning', "Purchase order generation is not yet implemented !!!")
+        return super(dm_campaign_purchase_line, self).default_get(cr, uid, fields, context)
 
     def _get_uom_id(self, cr, uid, *args):
         cr.execute('select id from product_uom order by id limit 1')

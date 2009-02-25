@@ -682,9 +682,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 	<!-- Default Category in DTP Documents -->
 	
 	<data noupdate="1">
-<!--		<record id="production_category0" model="dm.offer.document.category">-->
-<!--			<field name="name" search="[('name','ilike','Production')]"/>-->
-<!--        </record>-->
 		<function eval="('default',False,'category_id', [('dm.offer.document', False)], dm_offer_document_category_production0, True, False, False, False, True)" id="category_default_set" model="ir.values" name="set"/>
 	</data>
 	
