@@ -15,22 +15,24 @@ def check(chk_fnct):
     data = {}
     def check_one(db, uid, passwd):
         data.setdefault(db, {})
-        if (uid not in data) or (data[uid]<time.time()):
-            data[uid] = time.time() + 3600 * HOUR_MINI
-            cr = pooler.get_db(db).cursor()
-            try:
-                cr.execute('SELECT name FROM use_control_db_block')
-                msg = cr.fetchone()
-                if msg:
-                    raise Exception(msg[0])
+        cr = pooler.get_db(db).cursor()
+        try:
+            # Check if the database is not blocked
+            cr.execute('SELECT name FROM use_control_db_block')
+            msg = cr.fetchone()
+            if msg:
+                raise Exception(msg[0])
+
+            if (uid not in data) or (data[uid] < time.time()):
+                data[uid] = time.time() + 3600 * HOUR_MINI
                 try:
                     cr.execute('insert into use_control_time (user_id, date, duration) values (%s,%s,%s)', 
                                 (int(uid), time.strftime('%Y-%m-%d %H:%M:%S'), HOUR_MINI))
                     cr.commit()
                 except:
                     pass
-            finally:
-                cr.close()
+        finally:
+            cr.close()
         return chk_fnct(db, uid, passwd)
     return check_one
 
@@ -113,6 +115,7 @@ class use_control_service(netsvc.Service):
             obj = pool.get('use.control.db.block')
             obj.create(cr, 1, {'name': message})
         finally:
+            cr.commit()
             cr.close()
         return True
 
@@ -124,6 +127,7 @@ class use_control_service(netsvc.Service):
             obj = pool.get('use.control.db.block')
             obj.unlink(cr, 1, obj.search(cr, 1, []))
         finally:
+            cr.commit()
             cr.close()
         return True
         
