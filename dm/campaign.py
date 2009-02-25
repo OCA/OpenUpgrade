@@ -1175,7 +1175,7 @@ class dm_campaign_purchase_line(osv.osv):
                 """if in a group, obj = 1st campaign of the group, if not it's the campaing"""
                 if not (pline.campaign_group_id or pline.campaign_id):
                     raise  osv.except_osv('Warning', "There's no campaign or campaign group defined for this purchase line .")
-                
+
                 if pline.campaign_group_id:
                     if not pline.campaign_group_id.campaign_ids:
                         raise  osv.except_osv('Warning', "There's no campaign defined for the campaign group : %s" %(pline.campaign_group_id.name))
