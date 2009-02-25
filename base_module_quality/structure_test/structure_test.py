@@ -38,6 +38,7 @@ This test checks if the module satisfy tiny structure
 """)
         self.bool_installed_only = False
         self.ponderation = 1.0
+        self.result_dict = {}
         return None
 
     def run_test(self, cr, uid, module_path):
@@ -48,7 +49,6 @@ This test checks if the module satisfy tiny structure
         f_list = []
         module_dict = {}
         module_dict['module'] = []
-#        score = 0
         n = 0
         final_score = 0.0
         for file in list_files:
@@ -90,7 +90,7 @@ This test checks if the module satisfy tiny structure
                 for r in reports:
                     org_list_rep.append(l+r)
             org_list_rep.append('__init__.py')
-            score_report = self.get_score(module_dict['report'], org_list_rep)
+            score_report = self.get_score(module_dict['report'], org_list_rep, 'report//')
             n = n + 1
             final_score += score_report
 
@@ -104,7 +104,7 @@ This test checks if the module satisfy tiny structure
                 for r in wizards:
                     org_list_wiz.append(l+r)
             org_list_wiz.append('__init__.py')
-            score_wizard = self.get_score(module_dict['wizard'], org_list_wiz, is_wizard=True)
+            score_wizard = self.get_score(module_dict['wizard'], org_list_wiz, 'wizard//')
             n = n + 1
             final_score += score_wizard
 
@@ -112,7 +112,7 @@ This test checks if the module satisfy tiny structure
         if module_dict.has_key('security'):
             security = [module_name + '_security.xml']
             security.extend(['ir.model.access.csv'])
-            score_security = self.get_score(module_dict['security'], security)
+            score_security = self.get_score(module_dict['security'], security, 'security//')
             n = n + 1
             final_score += score_security
 
@@ -120,7 +120,7 @@ This test checks if the module satisfy tiny structure
         self.score = float(final_score) / n
         self.result = self.get_result({ module_name: [module_name, int(self.score*100)]})
 
-        self.result_details = '' # should be modify
+        self.result_details += self.get_result_details(self.result_dict)
         return None
 
     def get_result(self, dict):
@@ -129,18 +129,26 @@ This test checks if the module satisfy tiny structure
             return self.format_table(header, data_list=dict)
         return ""
 
-    def get_score(self, module_list, original_files, is_wizard=False):
+    def get_score(self, module_list, original_files, mod_folder=''):
         score = 0
         module_length = len(module_list)
         for i in module_list:
             if i in original_files:
                 score += 1
-            else:
-                if not is_wizard:
-                    score -= 1
-                    module_length -= 1
+            else:     
+                self.result_dict[i] = [mod_folder+i,'File name does not follow naming standards.']
+                score -= 1
+                module_length -= 1
         score = float(score) / float(module_length)
         return score
+    
+    def get_result_details(self, dict):
+        str_html = '''<html><head></head><body><table border="1">'''
+        header = ('<tr><th>%s</th><th>%s</th></tr>',[_('File Name'),_('Feedback about structure of module')])
+        if not self.error:
+           res = str_html + self.format_html_table(header, data_list=dict) + '</table></body></html>'
+           return res
+        return ""
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
