@@ -20,11 +20,11 @@
                 <field name="name" select="1"/>
                 <field name="partner_id" select="1" />
                 <field name="media_id" select="1"/>
-				<field name="action_id" select="1"/>
-				<field name="action_interval" />
-				<!--field name="cron_id" /-->
-				<field name="unit_interval" />
-				<field name="default_for_media" on_change="_check_unique_mail_service(media_id,default_for_media)"/>				
+                <field name="action_id" select="1"/>
+                <field name="action_interval" />
+                <!--field name="cron_id" /-->
+                <field name="unit_interval" />
+                <field name="default_for_media" on_change="_check_unique_mail_service(media_id,default_for_media)"/>
             </form>
         </field>
     </record>
@@ -41,14 +41,14 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_dm_mail_service_form">
-        <field name="name">All Mail Service</field>
+        <field name="name">All Mail Services</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">dm.mail_service</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_dm_mail_service_tree"/>        
+        <field name="view_id" ref="view_dm_mail_service_tree"/>
     </record>
 
     <menuitem id="menu_dm_mail_service_form" parent="dm.menu_dm_config_mail_service" action="action_dm_mail_service_form" sequence="1" />
 </data>
-</openerp>    
+</openerp>
