@@ -30,23 +30,23 @@ class wizard_proposition_products(wizard.interface):
         <field name="fixed_prog"/>
         <field name="percent_prog"/>
     </form>'''
-    
+
     prices_prog_form = '''<?xml version="1.0"?>
     <form string="">
         <field name="prices_progression" colspan="4"/>
     </form>'''
-    
+
     message ='''<?xml version="1.0"?>
     <form string="Create Prices Progression">
         <label align="0.0" colspan="4" string="Price Progresson Assigned"/>
     </form>'''
-    
+
     error_message = '''<?xml version="1.0"?>
     <form string="Error!!!">
         <label align="0.0" colspan="4" string="error test"/>
     </form>'''
-    
-    
+
+
     new_prices_prog_fields = {
         'prices_prog_name': {'string': 'Name', 'type': 'char', 'size':64, 'required':True },
         'fixed_prog': {'string': 'Fixed Progression', 'type': 'float', 'digits':(16,2)},
@@ -153,7 +153,7 @@ class wizard_proposition_products(wizard.interface):
         'error': {
             'actions': [],
             'result': {'type': 'form', 'arch': error_message, 'fields':{} ,'state': [('end','Cancel'),('init','Select Prices Progression')]}
-        },        
+        },
         'select': {
             'actions': [_select_prices_prog],
             'result': {'type': 'form', 'arch': message, 'fields':{} ,'state': [('end', 'Ok', 'gtk-ok', True)]}
