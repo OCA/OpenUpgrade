@@ -22,5 +22,6 @@
 import sendcode
 import verifycode
 import testemail
+import wizard_spam
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

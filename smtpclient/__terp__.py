@@ -40,6 +40,7 @@
         "smtpclient_view.xml",
         "smtpclient_wizard.xml",
         "security/ir.model.access.csv",
+        "smtpclient_data.xml",
     ],
     "active": False,
     "installable": True
