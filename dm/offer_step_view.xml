@@ -90,8 +90,8 @@
                         <field name="type" select="2"/>
                         <field name="media_id" select="1"/>
                         <field name="action" select="1"/>
-                        <field name="quotation" select="2"/>
-                        <field name="legal_state" select="2" />
+                        <field name="quotation" select="2" groups="base.group_extended"/>
+                        <field name="legal_state" select="2" groups="base.group_extended"/>
                         <separator string="Description" colspan="4"/>
                         <field name="desc" nolabel="1" colspan="4"/>
                         <separator string="Status" colspan="4"/>
@@ -104,40 +104,42 @@
                         </group>
                     </page>
                     <page string="Transitions">
-                        <field name="outgoing_transition_ids" colspan="4" nolabel="1" context="{'type':'step_from','step_id':active_id or False}">
+                        <field name="outgoing_transition_ids" colspan="4" nolabel="1" default_get="{'type':'step_from','step_id':active_id or False}">
                             <form string="Transition">
                                 <field name="step_from" readonly="1"/>
                                 <field name="step_to" domain="[('offer_id','=',parent.offer_id)]"/>
-                                <field name="condition" select="1" widget="selection"/>
+<!--                                <field name="condition" select="1" widget="selection"/>-->
+								<field name="condition" select="1"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
-                                    <field name="delay_type" nolabel="1"/>
+                                    <field name="delay_type" nolabel="1" select="2"/>
                                 </group>
                             </form>
                             <tree string="Outgoing Transitions">
                                 <field name="step_from"/>
                                 <field name="step_to"/>
-                                <field name="condition" widget="selection"/>
-                                <field name="delay_type" select="2"/>
+                                <field name="condition"/>
+                                <field name="delay_type"/>
                             </tree>
                         </field>
                         <field name="incoming_transition_ids" colspan="4" nolabel="1">
                             <form string="Transition">
                                 <field name="step_from" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <field name="step_to" readonly="1"/>
-                                <field name="condition" select="1" widget="selection"/>
+<!--                                <field name="condition" select="1" widget="selection"/>-->
+								<field name="condition" select="1"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
-                                    <field name="delay_type" nolabel="1"/>
+                                    <field name="delay_type" nolabel="1" select="2"/>
                                 </group>
                             </form>
                             <tree string="Incoming Transitions">
                                 <field name="step_from"/>
                                 <field name="step_to"/>
-                                <field name="condition" widget="selection"/>
-                                <field name="delay_type" select="2"/>
+                                <field name="condition"/>
+                                <field name="delay_type"/>
                             </tree>
                         </field>
                     </page>
@@ -165,19 +167,7 @@
                     </page>
                     <page string="Mailing Manufacturing">
                         <separator string="Mailing Manufacturing Products" colspan="4"/>
-                        <field name="manufacturing_constraint_ids" colspan="4" nolabel="1">
-                            <!-- form string="Manufacturing Description">
-                                <field name="name" select="1"/>
-                                <separator string="Manufacturing Description" colspan="4"/>
-                                <field name="constraint" colspan="4" nolabel="1"/>
-                                <field name="country_ids"/>
-                            </form>
-                            <tree string="Manufacturing Descriptions">
-                                <field name="name"/>
-                                <field name="country_ids"/>
-                                <field name="constraint"/>
-                            </tree -->
-                        </field>
+                        <field name="manufacturing_constraint_ids" colspan="4" nolabel="1"/>
                     </page>
                 </notebook>
             </form>
@@ -203,7 +193,7 @@
         -->
         <record model="ir.ui.view" id="view_offer_step_transition_trigger_form">
                 <field name="name">dm.offer.step.transition.trigger.form</field>
-                <field name="model">dm.offer.step.transition.tigger</field>
+                <field name="model">dm.offer.step.transition.trigger</field>
                 <field name="type">form</field>
                 <field name="arch" type="xml">
                         <form string="Transition Trigger">
@@ -231,47 +221,6 @@
                 <field name="view_id" ref="view_offer_step_transition_trigger_tree"/>
         </record>
         <menuitem parent="dm.menu_dm_config_offer_steps" id="menu_offer_step_transition_trigger" action="action_offer_step_transition_trigger"/>
-
-
-    <!--
-
-    =======================================================
-    OFFER STEP TRANSITION VIEWS
-    =======================================================
-
-    -->
-    <!--<record model="ir.ui.view" id="view_offer_step_transition_form">
-        <field name="name">dm.offer.step.transition.form</field>
-        <field name="model">dm.offer.step.transition</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Transition">
-                <field name="step_from"/>
-                <field name="step_to"/>
-                <field name="condition" select="1"/>
-                <field name="delay" string="Delay(In Days)" select="2"/>
-                <field name="media_id"/>
-            </form>
-        </field>
-    </record>
-    <record model="ir.ui.view" id="view_offer_step_transition_tree">
-        <field name="name">dm.offer.step.transition.tree</field>
-        <field name="model">dm.offer.step.transition</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Transition">
-                <field name="condition"/>
-                <field name="delay" string="Delay(In Days)"/>
-            </tree>
-        </field>
-    </record>
-    <record model="ir.actions.act_window" id="action_offer_step_transition">
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.offer.step.transition</field>
-        <field name="view_type">form</field>
-        <field name="view_id" ref="view_offer_step_transition_tree"/>
-    </record>
-    <menuitem name="Direct Marketing/Configuration/Offer Steps/All Transitions" id="menu_action_offer_step_transition" action="action_offer_step_transition" groups="res_groups_offeradmin,,res_groups_campaignadmin,res_groups_campaignmanager"/>-->
 
    <!--
     =======================================================

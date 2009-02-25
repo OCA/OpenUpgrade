@@ -95,7 +95,7 @@
                             <field name="campaign_group_id"/>
                         </group>
                         <group colspan="4">
-                            <field name="manufacturing_task_ids" nolabel="1" mode="tree,gantt" widget="one2many_list" context="{'type':'Mailing Manufacturing','project_id':project_id}">
+                            <field name="manufacturing_task_ids" nolabel="1" mode="tree,gantt" widget="one2many_list" default_get="{'type':'Mailing Manufacturing','project_id':project_id}">
                                 <tree string="Manufacturing tasks" editable="bottom">
                                     <field name="name" string="Task Name"/>
                                     <field name="date_deadline" string="Theorical Date"/>
@@ -105,19 +105,7 @@
                                 </tree>
                             </field>
                         </group>
-<!--                        <group colspan="1">
-                            <field name="manufacturing_cost_ids" nolabel="1" colspan="2">
-                                <form string="Manufacturing Cost">
-                                    <field name="name" colspan="4"/>
-                                    <field name="amount" />
-                                </form>
-                                <tree string="Manufacturing Costs">
-                                    <field name="name"/>
-                                    <field name="amount"/>
-                                </tree>
-                            </field>
-                        </group>-->
-                        <field name="manufacturing_purchase_line_ids" widget="one2many_list" nolabel="1" colspan="4" >
+                        <field name="manufacturing_purchase_line_ids" widget="one2many_list" nolabel="1" colspan="4" default_get="{'product_category':'Mailing Manufacturing'}">
                             <form string="Mailing Manufacturing Purchase Line">
                                 <group colspan="2" col="2">
                                     <separator string="Purchase Line Product" colspan="2"/>
@@ -153,7 +141,7 @@
                         <group colspan="2" col="2">
                             <field name="dtp_responsible_id"/>
                         </group>
-                        <field name="dtp_task_ids" nolabel="1" colspan="4" mode="tree,gantt" context="{'type':'DTP','project_id':project_id}">
+                        <field name="dtp_task_ids" nolabel="1" colspan="4" mode="tree,gantt" default_get="{'type':'DTP','project_id':project_id}">
                             <tree string="DTP Tasks" editable="bottom">
                                 <field name="name" string="Task Name"/>
                                 <field name="date_deadline" string="Theorical Date" widget="date"/>
@@ -162,8 +150,8 @@
                                 <field name="date_close" string="Real Date"/>
                             </tree>
                         </field>
-                        <field name="dtp_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
-                            <form string="DTP Purchase Line">
+                        <field name="dtp_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" default_get="{'product_category':'DTP'}">
+                        	<form string="DTP Purchase Line">
                                 <group colspan="2" col="2">
                                     <separator string="Purchase Line Product" colspan="2"/>
                                     <field name="product_category"/>
@@ -207,7 +195,7 @@
                             <field name="deduplicator_id"/>
                             <field name="router_id"/>
                         </group>
-                        <field name="cust_file_task_ids" nolabel="1" colspan="4" mode="tree,gantt" context="{'type':'Customers List','project_id':project_id}">
+                        <field name="cust_file_task_ids" nolabel="1" colspan="4" mode="tree,gantt" default_get="{'type':'Customers List','project_id':project_id}">
                             <tree string="Customers Files Tasks" editable="bottom">
                                 <field name="name" string="Task Name"/>
                                 <field name="date_deadline" string="Theorical Date"/>
@@ -216,7 +204,7 @@
                                 <field name="date_close" string="Real Date"/>
                             </tree>
                         </field>
-                        <field name="cust_file_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
+                        <field name="cust_file_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" default_get="{'product_category':'Customers List'}">
                             <form string="Customers Files Purchase Line">
                                 <group colspan="2" col="2">
                                     <separator string="Purchase Line Product" colspan="2"/>
@@ -252,7 +240,7 @@
                         <group colspan="2" col="2">
                             <field name="item_responsible_id"/>
                         </group>
-                        <field name="item_task_ids" nolabel="1" colspan="4" mode="tree,gantt" context="{'type':'Items Procurement','project_id':project_id}">
+                        <field name="item_task_ids" nolabel="1" colspan="4" mode="tree,gantt" default_get="{'type':'Items Procurement','project_id':project_id}">
                             <tree string="Items Procurement Tasks" editable="bottom">
                                 <field name="name" string="Task Name"/>
                                 <field name="date_deadline" string="Theorical Date"/>
@@ -261,8 +249,8 @@
                                 <field name="date_close" string="Real Date"/>
                             </tree>
                         </field>
-                        <field name="item_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list">
-                            <form string="Item Purchase Line">
+                        <field name="item_purchase_line_ids" nolabel="1" colspan="4" widget="one2many_list" default_get="{'product_category':'Items'}">
+	                        <form string="Item Purchase Line">
                                 <group colspan="2" col="2">
                                     <separator string="Purchase Line Product" colspan="2"/>
                                     <field name="product_category"/>
@@ -676,8 +664,11 @@
                     <field name="customer_pricelist_id"/>
                     <button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
                     </group>
+                    <group col="4" colspan="4">
                     <field name="force_sm_price"/>
                     <field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
+                    <field name="price_prog_use" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
+                    </group>
 <!--                    <field name="forwarding_charges"/>-->
                     <field name="item_ids" colspan="4" nolabel="1">
                         <form string="Catalogue">
@@ -1118,18 +1109,6 @@
     </record>
     <menuitem id="menu_action_campaign_duplicator_form" parent="dm.menu_dm_config_camp_custlist" action="action_campaign_duplicator_form"/>
 
-<!--
-    <record model="ir.actions.act_window" id="action_campaign_translator_form">
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="base.view_partner_tree"/>
-        <field name="domain">[('category_id','like','Translator')]</field>
-        <field name="context">{'category':'Translator'}</field>
-    </record>
-    <menuitem name="Direct Marketing/Configuration/Campaigns/All Translators" id="menu_action_campaign_translator_form" action="action_campaign_translator_form"/>
--->
 
     <!--
     =======================================================

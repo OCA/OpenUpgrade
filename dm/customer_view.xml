@@ -19,8 +19,7 @@
             <form string="Customer">
                 <group colspan="3" col="4">
                     <separator string="Customer Description" colspan="5"/>
-                    <field name="name" select="1" string="First Name"/>
-                    <field name="lastname" select="1"/>
+                    <field name="name" select="1"/>
                     <field name="ref" select="1"/>
 <!--                    <field name="code" select="1"/>-->
                     <field name="lang" select="2"/>
@@ -28,14 +27,6 @@
             <notebook>
                 <page string="Address">
                     <separator string="Address Infos" colspan="4"/>
-                    <!--<field name="add1" select="2"/>
-                    <field name="add2" select="2"/>
-                    <field name="add3" select="2"/>
-                    <field name="add4" select="2"/>
-                    <field name="zip" select="2"/>
-                    <field name="zip_summary" select="2"/>
-                    <field name="country_id" select="1"/>
-                    <field name="distribution_office" select="2"/>-->
                 	<field colspan="4" mode="form,tree" name="address" nolabel="1" select="1">
 	                    <form string="Partner contacts">
 	                    	<field name="firstname" select="2"/>
@@ -116,7 +107,6 @@
             	<field name="ref"/>
 <!--                <field name="code"/>-->
                 <field name="name" colspan="4"/>
-                <field name="lastname" colspan="4"/>
                 <field name="country"/>
                 <field name="lang"/>
 <!--                <field name="language_id"/>-->
@@ -343,14 +333,9 @@
                     <page string="Customers">
                         <field name="customer_text_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Textual Criteria">
-<!--                            <group col="3">-->
-<!--                                <separator string="Customer Textual Field"/>-->
-<!--                                <separator string="Operator"/>-->
-<!--                                <separator string="Value"/>-->
-<!--                            </group>-->
-                            <field name="field"/>
-                            <field name="operator" nolabel="1"/>
-                            <field name="value" nolabel="1"/>
+	                            <field name="field"/>
+	                            <field name="operator" nolabel="1"/>
+	                            <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Textual Criteria">
                                 <field name="field"/>

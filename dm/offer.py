@@ -112,186 +112,11 @@ class dm_offer_production_cost(osv.osv):
     }
 
 dm_offer_production_cost()
-"""
-class dm_customers_list(osv.osv):
-    _name = "dm.customers_list"
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=16, required=True),
-        'broker_id' : fields.many2one('res.partner', 'Broker', domain=[('category_id','ilike','Broker')], context={'category':'Broker'}),
-        'delivery_date' : fields.date('Delivery Date'),
-        'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'list_id', 'Segments', readonly=True),
-    }
-dm_customers_list()
-
-class dm_order(osv.osv):
-    _name = "dm.order"
-    _columns = {
-        'raw_datas' : fields.char('Raw Datas', size=128),
-        'customer_code' : fields.char('Customer Code',size=64),
-        'title' : fields.char('Title',size=32),
-        'customer_firstname' : fields.char('First Name', size=64),
-        'customer_lastname' : fields.char('Last Name', size=64),
-        'customer_add1' : fields.char('Address1', size=64),
-        'customer_add2' : fields.char('Address2', size=64),
-        'customer_add3' : fields.char('Address3', size=64),
-        'customer_add4' : fields.char('Address4', size=64),
-        'country' : fields.char('Country', size=16),
-        'zip' : fields.char('Zip Code', size=12),
-        'zip_summary' : fields.char('Zip Summary', size=64),
-        'distribution_office' : fields.char('Distribution Office', size=64),
-        'segment_code' : fields.char('Segment Code', size=64),
-        'offer_step_code' : fields.char('Offer Step Code', size=64),
-        'state' : fields.selection([('draft','Draft'),('done','Done')], 'Status', readonly=True),
-    }
-    _defaults = {
-        'state': lambda *a: 'draft',
-    }
-
-    def set_confirm(self, cr, uid, ids, *args):
-
-        return True
-
-    def onchange_rawdatas(self,cr,uid,ids,raw_datas):
-        if not raw_datas:
-            return {}
-        raw_datas = "2;00573G;162220;MR;Shah;Harshit;W Sussex;;25 Oxford Road;;GBR;BN;BN11 1XQ;WORTHING.LU.SX"
-        value = raw_datas.split(';')
-        key = ['datamatrix_type','segment_code','customer_code','title','customer_lastname','customer_firstname','customer_add1','customer_add2','customer_add3','customer_add4','country','zip_summary','zip','distribution_office']
-        value = dict(zip(key,value))
-        return {'value':value}
-
-dm_order()
-
-class dm_customer(osv.osv):
-    _name = "dm.customer"
-    _columns = {
-        'code' : fields.char('Code',size=64),
-        'language_id' : fields.many2one('res.lang','Main Language'),
-        'language_ids' : fields.many2many('res.lang','dm_customer_langs','lang_id','customer_id','Other Languages'),
-        'prospect_media_ids' : fields.many2many('dm.media','dm_customer_prospect_media','prospect_media_id','customer_id','Prospect for Media'),
-        'client_media_ids' : fields.many2many('dm.media','dm_customer_client_media','client_media_id','customer_id','Client for Media'),
-        'title' : fields.char('Title',size=32),
-        'firstname' : fields.char('First Name', size=64),
-        'lastname' : fields.char('Last Name', size=64),
-        'add1' : fields.char('Address1', size=64),
-        'add2' : fields.char('Address2', size=64),
-        'add3' : fields.char('Address3', size=64),
-        'add4' : fields.char('Address4', size=64),
-        'country_id' : fields.many2one('res.country','Country'),
-        'zip' : fields.char('Zip Code', size=16),
-        'zip_summary' : fields.char('Zip Summary', size=64),
-        'distribution_office' : fields.char('Distribution Office', size=64),
-    }
-dm_customer()
-
-class dm_customer_order(osv.osv):
-    _name = "dm.customer.order"
-    _columns ={
-        'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete='cascade'),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
-        'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
-        'note' : fields.text('Notes'),
-        'state' : fields.selection([('draft','Draft'),('done','Done')], 'Status', readonly=True),
-    }
-    _defaults = {
-        'state': lambda *a: 'draft',
-    }
-"""
-
-"""
-    def set_confirm(self, cr, uid, ids, *args):
-        res = self.browse(cr,uid,ids)[0]
-#        if res.customer_id:
-#            customer = self.pool.get('dm.customer').browse(cr,uid,[res.customer_id])[0]
-#            vals = {}
-#            if res.name != customer.name:
-#                 vals['name'] = customer.name
-#            if res.customer_number != customer.customer_number:
-#                 vals['customer_number'] = customer.customer_number
-        customer_id = res.customer_id.id
-
-        # Create Customer
-
-        if not res.customer_id:
-              vals={}
-              vals['customer_code']=res.customer_code
-              vals['name'] = ( res.customer_firstname or '') + ' ' + (res.customer_lastname or '')
-              address={'city':res.customer_add3,
-                       'name': vals['name'], 
-                       'zip': res.zip, 
-                       'title': res.title, 
-                       'street2': res.customer_add2, 
-                       'street': res.customer_add1,
-                    }
-#              state_id = self.pool.get("res.country.state")
-#              country_id = self.pool.get("res.country")
-              vals['address'] = [[0, 0,address]]
-              customer_id = self.pool.get('dm.customer').create(cr,uid,vals)
-        # Workitem
-
-        segment = self.pool.get('dm.campaign.proposition.segment')
-        segment_id = segment.search(cr,uid,[('action_code','=',res.action_code)])
-        if not segment_id :
-            raise osv.except_osv('Warning', 'No matching code found in campaign segment')
-        workitem = self.pool.get('dm.offer.step.workitem')
-        workitem_id = workitem.search(cr,uid,[('customer_id','=',res.customer_id.id),('segment_id','=',segment_id[0])])
-        vals={}
-
-        segment_obj = segment.browse(cr,uid,segment_id)[0]
-        offer_id = segment_obj.proposition_id.camp_id.offer_id.id
-        offer_step = self.pool.get('dm.offer.step')
-        step_id = offer_step.search(cr,uid,[('offer_id','=',offer_id),('type','=',res.offer_step)])
-
-        vals['step_id'] =step_id[0]
-
-        step = offer_step.browse(cr,uid,step_id)[0]
-
-        # change the loop
-        amount = 0
-        for p in step.product_ids:
-            amount+=p.price
-        vals['purchase_amount']= amount
-
-        # change workitem
-        if workitem_id : 
-
-            workitem.write(cr,uid,workitem_id,vals)
-        # create new workitem
-        else:
-            vals['customer_id']=customer_id
-            if segment_id :
-                vals['segment_id']=segment_id[0]
-            workitem.create(cr,uid,vals)
-
-        self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
-        return True
-"""
-
-#dm_customer_order()
 
 class dm_offer(osv.osv):
     _name = "dm.offer"
     _rec_name = 'name'
     
-    #    def __history(self, cr, uid, ids, keyword, context={}):
-#    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
-#        for id in ids:
-#            camp_id = self.pool.get('dm.campaign').search(cr, uid, [('offer_id','=',id)])
-#            for i in camp_id:
-#                browse_id = self.pool.get('dm.campaign').browse(cr, uid, [i])[0]
-#                data = {
-#                    'date' : browse_id.date_start,
-#                    'responsible': browse_id.responsible_id.name,
-#    #                'state' : keyword,
-#                    'offer_id': id,
-#                    'campaign': browse_id.name,
-#                    'code': browse_id.code1,
-#                }
-#                obj = self.pool.get('dm.offer.history')
-#                obj.create(cr, uid, data, context)
-#        return super(dm_offer, self).read(cr, uid, ids, fields=fields, context=context, load=load)
-
     def dtp_last_modification_date(self, cr, uid, ids, field_name, arg, context={}):
         result={}
         for id in ids:
@@ -362,17 +187,7 @@ class dm_offer(osv.osv):
         (_check_preoffer, 'Error ! this offer idea is already assigned to an offer',['preoffer_original_id'])
     ]
 
-#    def change_code(self,cr,uid,ids,type,copywriter_id) :
-#        if type=='model' and ids:
-#            return {'value':{'code':'Model%%0%sd' % 3 % ids[0]}}
-#        if copywriter_id and ids:
-#            copywriter = self.pool.get('res.partner').browse(cr,uid,[copywriter_id])[0]
-#            code = ( copywriter.ref or '')+'%%0%sd' % 3 % ids[0]
-#            return {'value':{'code':code}}
-#        return {'value':{'code':''}}
-
     def state_close_set(self, cr, uid, ids, *args):
-#        self.__history(cr,uid, ids, 'closed')
         wf_service = netsvc.LocalService('workflow')
         for step in self.browse(cr, uid, ids):
             wf_service.trg_validate(uid, 'dm.offer.step', step.id, 'state_close_set', cr)
@@ -392,17 +207,14 @@ class dm_offer(osv.osv):
                             _('Could not open this offer !'),
                             _('You must first open all offer steps related to this offer.'))
             wf_service.trg_validate(uid, 'dm.offer', step.id, 'open', cr)
-#        self.__history(cr,uid, ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True 
     
     def state_freeze_set(self, cr, uid, ids, *args):
-#        self.__history(cr,uid,ids, 'freeze')
         self.write(cr, uid, ids, {'state':'freeze'})
         return True
     
     def state_draft_set(self, cr, uid, ids, *args):
-#        self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         wf_service = netsvc.LocalService("workflow")
         for off_id in ids:
@@ -411,8 +223,6 @@ class dm_offer(osv.osv):
     
     def go_to_offer(self,cr, uid, ids, *args):
         self.copy(cr,uid,ids[0],{'type':'standart'})
-#        self.__history(cr,uid,ids, 'open')
-        #self.write(cr, uid, ids, {'state':'open'})
         return True
     
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
@@ -510,21 +320,5 @@ class dm_offer_translation(osv.osv):
     }
 dm_offer_translation()
 
-#class dm_offer_history(osv.osv):
-#    _name = "dm.offer.history"
-#    _order = 'date'
-#    _columns = {
-#        'offer_id' : fields.many2one('dm.offer', 'Offer', required=True, ondelete="cascade"),
-#        'date' : fields.date('Date'),
-##        'user_id' : fields.many2one('res.users', 'User'),
-##        'state': fields.selection(AVAILABLE_STATES, 'Status', size=16)
-#        'campaign_id' : fields.many2one('dm.campaign','Name'),
-#        'code' : fields.char('Code', size=16),
-#        'responsible_id' : fields.many2one('res.users','Responsible'),
-#    }
-##    _defaults = {
-##        'date': lambda *a: time.strftime('%Y-%m-%d'),
-##    }
-#dm_offer_history()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
