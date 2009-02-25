@@ -26,7 +26,7 @@
     'version': '1.0',
     'category': 'Generic Modules/Others',
     'description': """This is an extension module of document management system with
-    * Implementation of Versioning and lock system
+    * Implementation of Versioning and lock system
 """,
     'author': 'Tiny',
     'website': 'http://www.openerp.com',

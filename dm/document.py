@@ -168,19 +168,6 @@ class dm_document_template(osv.osv):
         'note' : fields.text('Description')
         }
     
-#    def write(self, cr, uid, ids, vals, context=None):
-#        res = super(dm_document_template,self).write(cr, uid, ids, vals, context)
-#        document_template =self.read(cr,uid,ids)[0]
-#        list1 = document_template['dynamic_fields']
-#        dm_offer_document = self.pool.get('dm.offer.document')
-#        document_ids = dm_offer_document.search(cr,uid,[('document_template_id','=',ids[0])])
-#        documents = dm_offer_document.read(cr,uid,document_ids)
-#        for doc in documents:
-#            list2 = doc['document_template_field_ids'] 
-#            diff = list(set(list2).difference(set(list1)))
-#            map(lambda x : list2.remove(x) ,diff)
-#            dm_offer_document.write(cr,uid,doc['id'],{'document_template_field_ids':[[6, 0,list2]]})
-#        return res                 
 dm_document_template()
 
 class dm_plugins_value(osv.osv):
@@ -220,20 +207,6 @@ class dm_offer_document_category(osv.osv):
     }
 
 dm_offer_document_category()
-
-#class ir_model_fields(osv.osv):
-#    _inherit='ir.model.fields'
-#    def search(self, cr, uid, args, offset=0, limit=None, order=None,context=None, count=False):
-#        if context:
-#            if 'dm_template_id' in context:
-#                if not context['dm_template_id']:
-#                    return []
-#                res = self.pool.get('dm.document.template').browse(cr,uid,context['dm_template_id'])
-#                field_id = map(lambda x : x.id,res.dynamic_fields)
-#                return field_id
-#        return super(ir_model_fields,self).search(cr,uid,args,offset,limit,order,context,count)
-#    
-#ir_model_fields()
 
 class dm_offer_document(osv.osv):
     _name = "dm.offer.document"

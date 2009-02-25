@@ -44,14 +44,12 @@ if sys.version[0:3] > '2.4':
 else:
     from md5 import md5
 
-
-
 class SmtpClient(osv.osv):
     _name = 'email.smtpclient'
     _description = 'Email Client'
     _columns = {
         'name' : fields.char('Server Name', size=256, required=True),
-        'from' : fields.char('Email From', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
+        'from_email' : fields.char('Email From', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
         'email' : fields.char('Email Address', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
         'user' : fields.char('User Name', size=256, required=True, readonly=True, states={'new':[('readonly',False)]}),
         'password' : fields.char('Password', size=256, required=True, invisible=True, readonly=True, states={'new':[('readonly',False)]}),
@@ -81,13 +79,11 @@ class SmtpClient(osv.osv):
         'state': lambda *a: 'new',
         'verify_email': lambda *a: _("Verification Message. This is the code\n\n__code__\n\nyou must copy in the OpenERP Email Server (Verify Server wizard).\n\nCreated by user __user__"),
     }
-    
-    def init(self, cr):
-        self.server = None
-        self.smtpServer = None
+    server = {}
+    smtpServer = {}
         
     def change_email(self, cr, uid, ids, email):
-        if email.index('@'):
+        if len(email) > 0 and email.index('@'):
             user = email[0:email.index('@')]
             return {'value':{'user':user}}
         else:
@@ -103,68 +99,75 @@ class SmtpClient(osv.osv):
     
     def test_verify_email(self, cr, uid, ids, toemail, test=False, code=False):
         
-        self.open_connection(cr, uid, ids, ids[0])
-        
-        if test and self.server['state'] != 'confirm':
+        serverid = ids[0]
+        self.open_connection(cr, uid, ids, serverid)
+
+        if test and self.server[serverid]['state'] != 'confirm':
             pooler.get_pool(cr.dbname).get('email.smtpclient.history').create \
                 (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':_('Please verify Email Server, without verification you can not send Email(s).')})
             raise osv.except_osv(_('Server Error!'), _('Please verify Email Server, without verification you can not send Email(s).'))
         
-        try:
-            if test and self.server['state'] == 'confirm':
-                body = str(self.server['test_email'])
+        if test and self.server[serverid]['state'] == 'confirm':
+            body = str(self.server[serverid]['test_email'])
+        else:
+            body = str(self.server[serverid]['verify_email'])
+            if code:
+                key = code
             else:
-                body = str(self.server['verify_email'])
-                if code:
-                    key = code
-                else:
-                    key = md5(time.strftime('%Y-%m-%d %H:%M:%S') + toemail).hexdigest();
-                    
-                body = body.replace("__code__", key)
+                key = md5(time.strftime('%Y-%m-%d %H:%M:%S') + toemail).hexdigest();
                 
-            user = pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, [uid])[0]
-            body = body.replace("__user__", user.name)
+            body = body.replace("__code__", key)
             
-            if len(body.strip()) <= 0:
-                raise osv.except_osv(_('Message Error!'), _('Please configure Email Server Messages [Verification / Test]'))
-            
-            msg = MIMEText(body or '', _charset='utf-8')
-            
-            if not test and not self.server['state'] == 'confirm':
-                msg['Subject'] = _('OpenERP SMTP server Email Registration Code!')
-            else:
-                msg['Subject'] = _('OpenERP Test Email!')
-            
-            msg['To'] = toemail
-            msg['From'] = str(self.server['from'])
-            self.smtpServer.sendmail(str(self.server['email']), toemail, msg.as_string())
-        except Exception, e:
-            return False
+        user = pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, [uid])[0]
+        body = body.replace("__user__", user.name)
         
+        if len(body.strip()) <= 0:
+            raise osv.except_osv(_('Message Error!'), _('Please configure Email Server Messages [Verification / Test]'))
+        
+        msg = MIMEText(body or '', _charset='utf-8')
+        
+        if not test and not self.server[serverid]['state'] == 'confirm':
+            msg['Subject'] = _('OpenERP SMTP server Email Registration Code!')
+        else:
+            msg['Subject'] = _('OpenERP Test Email!')
+        
+        msg['To'] = COMMASPACE.join(toemail)
+        msg['From'] = str(self.server[serverid]['from_email'])
+        
+        message = msg.as_string()
+        
+        queue = pooler.get_pool(cr.dbname).get('email.smtpclient.queue')
+        queue.create(cr, uid, {
+                'to':toemail,
+                'server_id':serverid,
+                'name':msg['Subject'],
+                'body':body,
+                'serialized_message':message,
+            })
         return True
         
     def open_connection(self, cr, uid, ids, serverid=False, permission=True):
         if serverid:
-            self.server = self.read(cr, uid, [serverid])[0]
+            self.server[serverid] = self.read(cr, uid, [serverid])[0]
         else:
             raise osv.except_osv(_('Read Error!'), _('Unable to read Server Settings'))
         
         if permission:
-            if not self.check_permissions(cr, uid, ids):
-                raise osv.except_osv(_('Permission Error!'), _('You have no permission to access SMTP Server : %s ') % (self.server['name'],) )
+            if not self.check_permissions(cr, uid, [serverid]):
+                raise osv.except_osv(_('Permission Error!'), _('You have no permission to access SMTP Server : %s ') % (self.server[serverid]['name'],) )
                 
-        if self.server:
+        if self.server[serverid]:
             try:
-                self.smtpServer = smtplib.SMTP()
-                #self.smtpServer.debuglevel = 5
-                self.smtpServer.connect(str(self.server['server']),str(self.server['port']))
+                self.smtpServer[serverid] = smtplib.SMTP()
+                self.smtpServer[serverid].debuglevel = 5
+                self.smtpServer[serverid].connect(str(self.server[serverid]['server']),str(self.server[serverid]['port']))
                 
-                if self.server['ssl']:
-                    self.smtpServer.ehlo()
-                    self.smtpServer.starttls()
-                    self.smtpServer.ehlo()
+                if self.server[serverid]['ssl']:
+                    self.smtpServer[serverid].ehlo()
+                    self.smtpServer[serverid].starttls()
+                    self.smtpServer[serverid].ehlo()
                     
-                self.smtpServer.login(str(self.server['user']),str(self.server['password']))
+                self.smtpServer[serverid].login(str(self.server[serverid]['user']),str(self.server[serverid]['password']))
             except Exception, e:
                 raise osv.except_osv(_('SMTP Server Error!'), e)
             
@@ -199,57 +202,93 @@ class SmtpClient(osv.osv):
         
         return ids[0]
 
-    def send_email(self, cr, uid, ids, emailto, subject, resource_id, body=False, report_name=False, file_name=False):
-        self.open_connection(cr, uid, ids, ids[0])
+    def send_email(self, cr, uid, server_id, emailto, subject, body=False, attachments=[]):
         
-        def create_report(self,cr,uid,res_ids,report_name=False,file_name=False):
-            if not report_name or not res_ids:
-                return (False,Exception(_('Report name and Resources ids are required!')))
-
-            try:
-                ret_file_name = file_name+'.pdf'
-                service = netsvc.LocalService("report."+report_name);
-                (result,format) = service.create(cr,uid,res_ids,{},{})
-                fp = open(ret_file_name,'wb+');
-                fp.write(result);
-                fp.close();
-            except Exception,e:
-                print 'Exception in create report:',e
-                return (False,str(e))
-            #end try:
-        
-            return (True,ret_file_name)
-        
-        file = create_report(self,cr,uid,resource_id,report_name,file_name)
-        is_file = file[0]
-        if is_file:
-            file_name=file[1]
-        try:
-            if self.server['state'] == 'confirm':
+        smtp_server = self.browse(cr, uid, server_id)
+        if type(emailto) == type([]):
+            for to in emailto:
                 msg = MIMEMultipart()
                 msg['Subject'] = subject 
-                msg['To'] = emailto
-                msg['From'] = str(self.server['from'])
-                msg.attach(MIMEText(body or '', _charset='utf-8'))
-                part = MIMEBase('application', "octet-stream")
-                if is_file:
-                    part.set_payload( open(file_name,"rb").read())
-                    part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file_name))
+                msg['To'] =  to
+                msg['From'] = smtp_server.from_email
+                msg.attach(MIMEText(body or '', _charset='utf-8', _subtype="html"))
+                
+                for file in attachments:
+                    part = MIMEBase('application', "octet-stream")
+                    part.set_payload(open(file,"rb").read())
+                    Encoders.encode_base64(part)
+                    part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file))
                     msg.attach(part)
+                
+                message = msg.as_string()
+                
+                queue = pooler.get_pool(cr.dbname).get('email.smtpclient.queue')
+                queue.create(cr, uid, {
+                        'to':to,
+                        'server_id':server_id,
+                        'cc':False,
+                        'bcc':False,
+                        'name':subject,
+                        'body':body,
+                        'serialized_message':message,
+                    })
+        else:
+            msg = MIMEMultipart()
+            msg['Subject'] = subject 
+            msg['To'] =  emailto
+            msg['From'] = smtp_server.from_email
+            msg.attach(MIMEText(body or '', _charset='utf-8', _subtype="html"))
+            
+            for file in attachments:
+                part = MIMEBase('application', "octet-stream")
+                part.set_payload(open(file,"rb").read())
                 Encoders.encode_base64(part)
-                self.smtpServer.sendmail(str(self.server['email']), emailto, msg.as_string())
-                
-                report_id = pooler.get_pool(cr.dbname).get('ir.actions.report.xml').search(cr, uid, [('report_name','=',report_name)], context=False)
-                report_model=pooler.get_pool(cr.dbname).get('ir.actions.report.xml').read(cr,uid,report_id,['model'])[0]['model']
-                model_id=pooler.get_pool(cr.dbname).get('ir.model').search(cr, uid, [('model','=',report_model)], context=False)[0]
-                
-                for resource in resource_id:
-                    r=pooler.get_pool(cr.dbname).get('email.smtpclient.history').create \
-                    (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':_('The Email is sent successfully to corresponding address'),'email':emailto,'model':model_id,'resource_id':resource})
-        except Exception, e:
-            print 'Exception :',e
-            return False
+                part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file))
+                msg.attach(part)
+            
+            message = msg.as_string()
+            
+            queue = pooler.get_pool(cr.dbname).get('email.smtpclient.queue')
+            queue.create(cr, uid, {
+                    'to':emailto,
+                    'server_id':server_id,
+                    'cc':False,
+                    'bcc':False,
+                    'name':subject,
+                    'body':body,
+                    'serialized_message':message,
+                })
+            
+    def _check_queue(self, cr, uid, ids=False, context={}):
+        import tools
         
+        queue = self.pool.get('email.smtpclient.queue')
+        history = self.pool.get('email.smtpclient.history')
+        sids = queue.search(cr, uid, [('state','!=','send'),('state','!=','sending')], limit=30)
+        queue.write(cr, uid, sids, {'state':'sending'})
+        error = []
+        sent = []
+        open_server = []
+        for email in queue.browse(cr, uid, sids):
+            if not email.server_id.id in open_server:
+                open_server.append(email.server_id.id)
+                self.open_connection(cr, uid, ids, email.server_id.id)
+                
+            try:
+                self.smtpServer[email.server_id.id].sendmail(str(email.server_id.email), email.to, email.serialized_message)
+                print 'Email send to : ', email.to
+            except Exception, e:
+                queue.write(cr, uid, [email.id], {'error':e, 'state':'error'})
+                continue
+            
+            history.create(cr, uid, {
+                        'name':email.body,
+                        'user_id':uid,
+                        'server_id': email.server_id.id,
+                        'email':email.to
+                    })
+            sent.append(email.id)
+        queue.write(cr, uid, sent, {'state':'send'})
         return True
 SmtpClient()
 
@@ -257,10 +296,10 @@ class HistoryLine(osv.osv):
     _name = 'email.smtpclient.history'
     _description = 'Email Client History'
     _columns = {
-        'name' : fields.text('Description',required=True,readonly=True),
+        'name' : fields.text('Description',required=True, readonly=True),
         'date_create': fields.datetime('Date',readonly=True),
         'user_id':fields.many2one('res.users', 'Username', readonly=True, select=True),
-        'server_id' : fields.many2one('email.smtpclient', 'Smtp Server', ondelete='set null', required=True),
+        'server_id' : fields.many2one('email.smtpclient', 'Smtp Server', ondelete='set null', readonly=True, required=True),
         'model':fields.many2one('ir.model', 'Model', readonly=True, select=True),
         'resource_id':fields.integer('Resource ID', readonly=True),
         'email':fields.char('Email',size=64,readonly=True),
@@ -275,6 +314,32 @@ class HistoryLine(osv.osv):
         super(HistoryLine,self).create(cr, uid, vals, context)
         cr.commit()
 HistoryLine()
+
+class MessageQueue(osv.osv):
+    _name = 'email.smtpclient.queue'
+    _description = 'Email Queue'
+    _columns = {
+        'to' : fields.char('Mail to', size=1024, readonly=True, states={'draft':[('readonly',False)], 'error':[('readonly',False)]}),
+        'server_id':fields.many2one('email.smtpclient', 'SMTP Server', readonly=True, states={'draft':[('readonly',False)]}),
+        'cc' : fields.char('CC to', size=1024, readonly=True, states={'draft':[('readonly',False)]}),
+        'bcc' : fields.char('BCC to', size=1024, readonly=True, states={'draft':[('readonly',False)]}),
+        'name' : fields.char('Subject', size=1024, readonly=True, states={'draft':[('readonly',False)]}),
+        'body' : fields.text('Email Text', readonly=True, states={'draft':[('readonly',False)]}),
+        'serialized_message':fields.text('Message', readonly=True, states={'draft':[('readonly',False)]}),
+        'state':fields.selection([
+            ('draft','Queued'),
+            ('sending','Waiting'),
+            ('send','Sent'),
+            ('error','Error'),
+        ],'Message Status', select=True, readonly=True),
+        'error':fields.text('Last Error', size=256, readonly=True, states={'draft':[('readonly',False)]}),
+        'date_create': fields.datetime('Date', readonly=True),
+    }
+    _defaults = {
+        'date_create': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'state': lambda *a: 'draft',
+    }
+MessageQueue()
 
 class report_smtp_server(osv.osv):
     _name = "report.smtp.server"

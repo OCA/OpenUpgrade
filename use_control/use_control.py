@@ -90,3 +90,20 @@ class use_control_time_month(osv.osv):
             )""")
 use_control_time_month()
 
+class use_control_db_block(osv.osv):
+    _name = "use.control.db.block"
+    _description = "Containt the blocking message"
+
+    _columns = {
+        'name': fields.text('Block message'),
+    }
+
+    def create(self, cr, uid, values, context=None):
+        self.unlink(cr, uid, self.search(cr, uid, [], context), context)
+        return super(use_control_db_block, self).create(cr, uid, values, context)
+
+    def copy(self, cr, uid, id, context):
+        return id
+
+use_control_db_block()
+

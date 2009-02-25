@@ -28,8 +28,8 @@ class document_directory(osv.osv):
     _inherit='document.directory'
     _columns = {
         'versioning': fields.boolean('Automatic Versioning'),
-        'version_regex' : fields.char('Reg. Ex.',size=64,require=True),
-        'version_replace': fields.char('Replace',size=64,require=True)
+        'version_regex' : fields.char('Reg. Ex.',size=64,required=True),
+        'version_replace': fields.char('Replace',size=64,required=True)
     }
     _defaults={
         'versioning':lambda *a:1,
