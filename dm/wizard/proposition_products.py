@@ -68,32 +68,33 @@ class wizard_proposition_products(wizard.interface):
         pprog_obj=pool.get('dm.campaign.proposition.prices_progression').browse(cr, uid, prices_prog_id)
         if prop_obj.item_ids:
             for p in prop_obj.item_ids:
-                pool.get('dm.item').unlink(cr, uid, p.id)
+                pool.get('dm.campaign.proposition.item').unlink(cr, uid, p.id)
 
         stp=0
 
-        # Creates proposition items
+        """Creates proposition items"""
         for step in step_obj:
             item_ids=pool.get('dm.offer.step.item').search(cr, uid, [('offer_step_id','=',step.id)])
             item_obj=pool.get('dm.offer.step.item').browse(cr, uid, item_ids)
             for item in item_obj:
                 if item:
-                    if prop_obj.force_sm_price :
-                        pu = prop_obj.sm_price
-                    else :
-                        pu = pool.get('product.pricelist').price_get(cr, uid,
-                            [prop_obj.customer_pricelist_id.id], item.product_id.id,1.0,
-                            context=context)[prop_obj.customer_pricelist_id.id]
+                    for product in item.product_ids:
+                        if prop_obj.force_sm_price :
+                            pu = prop_obj.sm_price
+                        else :
+                            pu = pool.get('product.pricelist').price_get(cr, uid,
+                                [prop_obj.customer_pricelist_id.id], product.id,1.0,
+                                context=context)[prop_obj.customer_pricelist_id.id]
 
-                    price = pu * (1 + (stp * pprog_obj.percent_prog)) + (stp * pprog_obj.fixed_prog)
+                        price = pu * (1 + (stp * pprog_obj.percent_prog)) + (stp * pprog_obj.fixed_prog)
 
-                    vals = {'product_id':item.product_id.id,
-                            'proposition_id':data['ids'][0],
-                            'item_type':item.item_type,
-                            'price':price,
-                            'offer_step_type':item.offer_step_id.type
-                            }
-                    new_id=pool.get('dm.item').create(cr, uid, vals)
+                        vals = {'product_id':product.id,
+                                'proposition_id':data['ids'][0],
+                                'item_type':item.item_type,
+                                'price':price,
+                                'offer_step_type_id':item.offer_step_id.type.id
+                                }
+                        new_id=pool.get('dm.campaign.proposition.item').create(cr, uid, vals)
             stp=stp+1
 
         """
@@ -158,5 +159,5 @@ class wizard_proposition_products(wizard.interface):
             'result': {'type': 'form', 'arch': message, 'fields':{} ,'state': [('end', 'Ok', 'gtk-ok', True)]}
         },
         }
-wizard_proposition_items("wizard_proposition_items")
+wizard_proposition_products("wizard_proposition_products")
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
