@@ -104,3 +104,6 @@ class use_control_db_block(osv.osv):
 
     def copy(self, cr, uid, id, context):
         return id
+
+use_control_db_block()
+
