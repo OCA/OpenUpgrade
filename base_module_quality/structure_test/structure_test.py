@@ -80,6 +80,9 @@ This test checks if the module satisfy tiny structure
         for name in module_dict['module']:
             if name in com_list:
                 score = score + 1
+            else:
+                score = score - 1
+                module_len = module_len - 1
         n = n + 1
         score = float(score) / float(module_len)
         final_score += score
@@ -90,6 +93,7 @@ This test checks if the module satisfy tiny structure
             report_pys = map(lambda x:x.split('.')[0],report_pys)
             reports = ['.sxw', '.rml', '.xsl', '.py', '.xml']
             org_list_rep = []
+            report_len = len(module_dict['report'])
             for l in report_pys:
                 for r in reports:
                     org_list_rep.append(l+r)
@@ -98,8 +102,11 @@ This test checks if the module satisfy tiny structure
             for i in module_dict['report']:
                 if i in org_list_rep:
                     score_report = score_report + 1
+                else:
+                    score_report = score_report - 1
+                    report_len = report_len - 1
             n = n + 1
-            score_report = float(score_report) / float(len(module_dict['report']))
+            score_report = float(score_report) / float(report_len)
             final_score += score_report
 
         # wizard folder checking...
@@ -125,11 +132,15 @@ This test checks if the module satisfy tiny structure
             score_security = 0
             security = [module_name + '_security.xml']
             security.extend(['ir.model.access.csv'])
+            security_len = len(module_dict['security'])
             for i in module_dict['security']:
                 if i in security:
                     score_security = score_security + 1
+                else:
+                    score_security = score_security - 1
+                    security_len = security_len - 1
             n = n + 1
-            score_security = float(score_security) / float(len(module_dict['security']))
+            score_security = float(score_security) / float(security_len)
             final_score += score_security
 
         # final score
