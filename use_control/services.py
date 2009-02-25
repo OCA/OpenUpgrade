@@ -17,11 +17,13 @@ def check(chk_fnct):
         data.setdefault(db, {})
         cr = pooler.get_db(db).cursor()
         try:
-            # Check if the database is not blocked
+            # Check if the database is blocked
             cr.execute('SELECT name FROM use_control_db_block')
             msg = cr.fetchone()
             if msg:
-                raise Exception(msg[0])
+                # raise an Exception formatted for the client
+                # netsvc.Service.abortResponse can't be called while it's not a static method...
+                raise Exception('warning -- %s\n\n%s' % ('Database blocked', msg[0]))
 
             if (uid not in data) or (data[uid] < time.time()):
                 data[uid] = time.time() + 3600 * HOUR_MINI
