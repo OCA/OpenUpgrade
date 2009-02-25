@@ -48,7 +48,7 @@ This test checks if the module satisfy tiny structure
         f_list = []
         module_dict = {}
         module_dict['module'] = []
-        score = 0
+#        score = 0
         n = 0
         final_score = 0.0
         for file in list_files:
@@ -76,15 +76,8 @@ This test checks if the module satisfy tiny structure
         main_file = ['__init__.py', '__terp__.py']
         com_list.extend(main_file)
         module_dict['module'] = filter(lambda x: len(x.split("."))>1,module_dict['module'])
-        module_len = len(module_dict['module'])
-        for name in module_dict['module']:
-            if name in com_list:
-                score = score + 1
-            else:
-                score = score - 1
-                module_len = module_len - 1
+        score = self.get_score(module_dict['module'], com_list)
         n = n + 1
-        score = float(score) / float(module_len)
         final_score += score
 
         # report folder checking...
@@ -93,20 +86,12 @@ This test checks if the module satisfy tiny structure
             report_pys = map(lambda x:x.split('.')[0],report_pys)
             reports = ['.sxw', '.rml', '.xsl', '.py', '.xml']
             org_list_rep = []
-            report_len = len(module_dict['report'])
             for l in report_pys:
                 for r in reports:
                     org_list_rep.append(l+r)
             org_list_rep.append('__init__.py')
-            score_report = 0
-            for i in module_dict['report']:
-                if i in org_list_rep:
-                    score_report = score_report + 1
-                else:
-                    score_report = score_report - 1
-                    report_len = report_len - 1
+            score_report = self.get_score(module_dict['report'], org_list_rep)
             n = n + 1
-            score_report = float(score_report) / float(report_len)
             final_score += score_report
 
         # wizard folder checking...
@@ -119,28 +104,16 @@ This test checks if the module satisfy tiny structure
                 for r in wizards:
                     org_list_wiz.append(l+r)
             org_list_wiz.append('__init__.py')
-            score_wizard = 0
-            for i in module_dict['wizard']:
-                if i in org_list_wiz:
-                    score_wizard = score_wizard + 1
+            score_wizard = self.get_score(module_dict['wizard'], org_list_wiz, is_wizard=True)
             n = n + 1
-            score_wizard = float(score_wizard) / float(len(module_dict['wizard']))
             final_score += score_wizard
 
         # security folder checking...
         if module_dict.has_key('security'):
-            score_security = 0
             security = [module_name + '_security.xml']
             security.extend(['ir.model.access.csv'])
-            security_len = len(module_dict['security'])
-            for i in module_dict['security']:
-                if i in security:
-                    score_security = score_security + 1
-                else:
-                    score_security = score_security - 1
-                    security_len = security_len - 1
+            score_security = self.get_score(module_dict['security'], security)
             n = n + 1
-            score_security = float(score_security) / float(security_len)
             final_score += score_security
 
         # final score
@@ -155,6 +128,19 @@ This test checks if the module satisfy tiny structure
         if not self.error:
             return self.format_table(header, data_list=dict)
         return ""
+
+    def get_score(self, module_list, original_files, is_wizard=False):
+        score = 0
+        module_length = len(module_list)
+        for i in module_list:
+            if i in original_files:
+                score += 1
+            else:
+                if not is_wizard:
+                    score -= 1
+                    module_length -= 1
+        score = float(score) / float(module_length)
+        return score
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
