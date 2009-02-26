@@ -119,7 +119,6 @@ This test checks if the module satisfy tiny structure
         # final score
         self.score = float(final_score) / n
         self.result = self.get_result({ module_name: [module_name, int(self.score*100)]})
-
         self.result_details += self.get_result_details(self.result_dict)
         return None
 
@@ -136,7 +135,7 @@ This test checks if the module satisfy tiny structure
             if i in original_files:
                 score += 1
             else:
-                if not mod_folder != 'wizard//':
+                if mod_folder != 'wizard/':
                     self.result_dict[i] = [mod_folder + i,'File name does not follow naming standards.']
                     score -= 1
                     module_length -= 1

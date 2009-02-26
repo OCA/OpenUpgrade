@@ -32,7 +32,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         super(quality_test, self).__init__()
         self.name = _("Object Test")
         self.note = _("""
-Testing of Objects
+Test Checks if fields on the object follow the coding standard of tiny
 """)
         self.bool_installed_only = True
         self.ponderation = 1.0
