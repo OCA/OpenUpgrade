@@ -32,25 +32,34 @@ class city(osv.osv):
 			return []
 		res = []
 		for line in self.browse(cr, uid, ids):
-			state = line.state_id.name	
-			country = line.state_id.country_id.name	
-			location = "%s %s, %s, %s" %(line.zipcode, line.name, state, country)
+			location = "%s %s" %(line.zipcode, line.name)
+			if line.state_id:
+				location = "%s, %s" %(location, line.state_id.name)
+			if line.country_id:
+				location = "%s, %s" %(location, line.country_id.name)
 			res.append((line['id'], location))
 		return res
 
-	def search(self, cr, uid, args=None, offset=0, limit=80, unknow=0, context=None):
-		res = super(city, self).search(cr, uid, args, offset, limit, unknow, context)
-		if not res and args:
-			args = [('zipcode', 'ilike', args[0][2])]
-			res = super(city, self).search(cr, uid, args, offset, limit, unknow, context)
-		return res	
+	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=80):
+	    if not args:
+	        args=[]
+	    if context is None:
+	        context={}
+	    ids = []
+	    if name:
+	        ids = self.search(cr, user, [('name',operator,name)]+ args, limit=limit, context=context)
+	    if not ids:
+	        ids = self.search(cr, user, [('zipcode',operator,name)]+ args, limit=limit, context=context)
+	    return self.name_get(cr, user, ids, context)
 		
 	_name = 'city.city'
 	_description = 'City'
 	_columns = {
-		'state_id': fields.many2one('res.country.state', 'State', required=True, select=1),
-		'name': fields.char('City', size=64, required=True, select=1),
-		'zipcode': fields.char('ZIP', size=64, required=True, select=1),
+        'state_id': fields.many2one("res.country.state", 'State', domain="[('country_id','=',country_id)]", select=1),
+		'name': fields.char('City Name', size=64, required=True, select=1),
+		'zipcode': fields.char('ZIP', size=64, select=1),
+        'country_id': fields.many2one('res.country', 'Country', select=1),
+		'code': fields.char('City Code', size=64, help="The official code for the city"),
 	}
 city()
 
@@ -85,7 +94,7 @@ class res_partner_address(osv.osv):
 	def _get_state(self, cr, uid, ids, field_name, arg, context):
 		res={}
 		for obj in self.browse(cr,uid,ids):
-			if obj.location:
+			if obj.location and obj.location.state_id:
 				res[obj.id] = [obj.location.state_id.id, obj.location.state_id.name]
 			else:
 				res[obj.id] = False
@@ -94,20 +103,20 @@ class res_partner_address(osv.osv):
 	def _get_country(self, cr, uid, ids, field_name, arg, context):
 		res={}
 		for obj in self.browse(cr,uid,ids):
-			if obj.location:
-				res[obj.id] = [obj.location.state_id.country_id.id, obj.location.state_id.country_id.name]
+			if obj.location and obj.location.country_id:
+				res[obj.id] = [obj.location.country_id.id, obj.location.country_id.name]
 			else:
 				res[obj.id] = False
 		return res
 
 	_inherit = "res.partner.address"
 	_columns = {
-			'location': fields.many2one('city.city', 'Location'),
-			'zip': fields.function(_get_zip, method=True, type="char", string='Zip', size=24),
-			'city': fields.function(_get_city, method=True, type="char", string='City', size=128),
-			'state_id': fields.function(_get_state, obj="res.country.state", method=True, type="many2one", string='State'), 
-			'country_id': fields.function(_get_country, obj="res.country" ,method=True, type="many2one", string='Country'), 
-				}
+		'location': fields.many2one('city.city', 'City'),
+		'zip': fields.function(_get_zip, method=True, type="char", string='Zip', size=24),
+		'city': fields.function(_get_city, method=True, type="char", string='Location', size=128),
+		'state_id': fields.function(_get_state, obj="res.country.state", method=True, type="many2one", string='State'), 
+		'country_id': fields.function(_get_country, obj="res.country" ,method=True, type="many2one", string='Country'), 
+	}
 res_partner_address()
 
 
