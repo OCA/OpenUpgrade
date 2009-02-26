@@ -29,7 +29,7 @@ This modules is an improvement of the basic planning module and offers additiona
         - planning of the functions that will be needed
         - additional data for planned ressources: the start and end dates
     """,
-    "website" : "http://tinyerp.com/",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Human Resources",
     "init_xml" : [],
     "demo_xml" : [],

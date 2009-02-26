@@ -28,8 +28,8 @@ class document_directory(osv.osv):
     _inherit='document.directory'
     _columns = {
         'versioning': fields.boolean('Automatic Versioning'),
-        'version_regex' : fields.char('Reg. Ex.',size=64,require=True),
-        'version_replace': fields.char('Replace',size=64,require=True)
+        'version_regex' : fields.char('Reg. Ex.',size=64,required=True),
+        'version_replace': fields.char('Replace',size=64,required=True)
     }
     _defaults={
         'versioning':lambda *a:1,
@@ -51,12 +51,21 @@ class document_file(osv.osv):
                          pattern=document.parent_id.version_regex
                          replace=document.parent_id.version_replace.replace('count',str(count))
                          newname=re.sub(pattern,replace, filename)
+                         res=self.search(cr, uid, [('parent_id' , '=', document.parent_id.id)])
+                         for i in res:
+                             name= self.read(cr, uid, i, ['datas_fname'])
+                             if  name['datas_fname']==newname:
+                                 c=[newname[newname.find("v")+1]]
+                                 count =int(c[0])+1
+                                 replace=document.parent_id.version_replace.replace('count',str(count))
+                                 newname=re.sub(pattern,replace, filename)
 
                          pool = pooler.get_pool(cr.dbname)
                          data = self.browse(cr, uid, ids[0], context=context)
                          if not 'name' in vals :
                              vals.update({'name':data.name,'datas':temp,'parent_id':data.parent_id.id,'datas_fname':filename})
-                         self.create(cr, uid, vals, context=context)
+                             self.create(cr, uid, vals, context=context)
+                             cr.commit()
                          vals['datas_fname'] = newname
                          vals['datas']=data.datas
 

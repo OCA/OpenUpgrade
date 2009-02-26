@@ -11,8 +11,12 @@ from erpcomparator.tinyres import TinyResource
 class Login(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.login")
-    def index(self):
-        return dict()
+    def index(self, **kw):
+        if kw.get('msg'):
+            error = str(kw.get('msg'))
+        else:
+            error = ""
+        return dict(error = error)
    
     @expose('json')
     def do_login(self, **kw):

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -25,11 +25,24 @@
     "author":"Tiny",
     "category":"Profile",
     "depends":[
-        "l10n_chart_in",
+        "account_base",
         "account_india_ledger",
-        "account_indian_report"
+        "account_indian_report",
         "account_voucher"
-        
+        #"account_india_ledger",
+        "account_invoice",
+        "account_voucher",
+        "account_india",
+        "account_report_india",
+        "account_stock",
+        "sale_numbers",
+        "purchase_number",
+        "l10n_chart_in", 
+        #"account_stock",
+        #"sale_numbers",
+        #"purchase_number",
+        #important for the indian accounting but do not load with account module
+        "l10n_chart_in",
     ],
     "demo_xml":[],
     "update_xml":[],

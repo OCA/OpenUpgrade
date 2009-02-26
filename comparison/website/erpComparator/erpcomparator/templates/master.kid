@@ -6,11 +6,11 @@
 	<meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
     
     <script type="text/javascript" src="/static/javascript/MochiKit/MochiKit.js"></script>
+    <script type="text/javascript" src="/static/javascript/modalbox.js"></script>
     <script type="text/javascript" src="/static/javascript/master.js"></script>
     <script type="text/javascript" src="/static/javascript/treegrid.js"></script>
     <script type="text/javascript" src="/static/javascript/ajax.js"></script>
     <script type="text/javascript" src="/static/javascript/comparison.js"></script>
-    <script type="text/javascript" src="/static/javascript/modalbox.js"></script>
     <script type="text/javascript" src="/static/javascript/swfobject.js"></script>
     
     <link href="/static/css/tabs.css" rel="stylesheet" type="text/css"/>

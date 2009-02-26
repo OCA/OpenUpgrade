@@ -29,33 +29,30 @@ import datetime
 class data_map(component.component):
     """
         Data map component
-    """   
+    """
 
     def __init__(self,name,map_criteria,transformer=None):
-        super(data_map, self).__init__('(etl.component.transfer.data_map) '+name,transformer=transformer)         
+        super(data_map, self).__init__('(etl.component.transfer.data_map) '+name,transformer=transformer)
         self.map_criteria = map_criteria
-        
 
-    def process(self):  
-        #TODO : proper handle exception. not use generic Exception class      
-        datas = []  
-        
+    def process(self):
+        #TODO : proper handle exception. not use generic Exception class
+        datas = []
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
-                    try:                      
+                    try:
                         if self.transformer:
                             d=self.transformer.transform(d)
-                        for map_data in self.map_criteria:                                                       
+                        for map_data in self.map_criteria:
                              val = d[map_data['name']]
                              _map = map_data.get('map',False)
                              if val and _map:
                                  val=eval((_map) % d)
                              d.pop(map_data['name'])
-                             d[map_data['destination']]=val                                        
+                             d[map_data['destination']]=val
                         if self.transformer:
-                            d=self.transformer.transform(d)                        
+                            d=self.transformer.transform(d)
                         yield d, 'main'
-                        
-                    except NameError,e:                          
+                    except NameError,e:
                         self.action_error(e)

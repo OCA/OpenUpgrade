@@ -141,7 +141,7 @@ class dm_campaign_group(osv.osv):
         'project_id' : fields.many2one('project.project', 'Project', readonly=True),
         'campaign_ids': fields.one2many('dm.campaign', 'campaign_group_id', 'Campaigns', domain=[('campaign_group_id','=',False)], readonly=True),
         'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_group_id', 'Purchase Lines'),
-        'quantity_planned_total' : fields.function(_quantity_planned_total, string='Total planned Quantity',type="char",size="64",method=True,readonly=True),
+#        'quantity_planned_total' : fields.function(_quantity_planned_total, string='Total planned Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_wanted_total' : fields.function(_quantity_wanted_total, string='Total Wanted Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_usable_total' : fields.function(_quantity_usable_total, string='Total Usable Quantity',type="char",size="64",method=True,readonly=True),
@@ -163,16 +163,6 @@ dm_campaign_type()
 class dm_overlay(osv.osv):
     _name = 'dm.overlay'
     _rec_name = 'trademark_id'
-
-    def create(self,cr,uid,vals,context={}):
-        id = super(dm_overlay,self).create(cr,uid,vals,context)
-        data = self.browse(cr, uid, id)
-        overlay_country_ids = [country_ids.id for country_ids in data.country_ids]
-        dealer_country_ids = [country_ids.id for country_ids in data.dealer_id.country_ids]
-        for i in overlay_country_ids:
-            if not i in dealer_country_ids:
-                raise  osv.except_osv('Warning', "This country is not allowed for %s" % (data.dealer_id.name,) )
-        return id
 
     def _overlay_code(self, cr, uid, ids, name, args, context={}):
         result ={}
@@ -289,9 +279,11 @@ class dm_campaign(osv.osv):
             country = self.pool.get('res.country').browse(cr,uid,[country_id])[0]
             value['lang_id'] =  country.main_language.id
             value['currency_id'] = country.main_currency.id
+            value['forwarding_charge'] = country.forwarding_charge
         else:
             value['lang_id']=0
             value['currency_id']=0
+            value['forwarding_charge'] = 0.0
         return {'value':value}
 
     def _quantity_planned_total(self, cr, uid, ids, name, args, context={}):
@@ -369,8 +361,8 @@ class dm_campaign(osv.osv):
 
     _columns = {
         'code1' : fields.function(_campaign_code,string='Code',type="char",size="64",method=True,readonly=True),
-        'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])], required=True,
-            help="Choose the commercial offer to use with this campaign, only offers in open state can be assigned"),
+        'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','in',['ready','open']),('type','in',['new','standart','rewrite'])], required=True,
+            help="Choose the commercial offer to use with this campaign, only offers in ready to plan or open state can be assigned"),
         'country_id' : fields.many2one('res.country', 'Country',required=True, 
             help="The language and currency will be automaticaly assigned if they are defined for the country"),
         'lang_id' : fields.many2one('res.lang', 'Language'),
@@ -405,7 +397,6 @@ class dm_campaign(osv.osv):
         'currency_id' : fields.many2one('res.currency','Currency',ondelete='cascade'),
         'manufacturing_cost_ids': fields.one2many('dm.campaign.manufacturing_cost','campaign_id','Manufacturing Costs'),
         'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
-#        'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_id', 'Purchase Lines'),
         'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
         'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'},
             help="The router is the partner who will send the mailing to the final customer"),
@@ -432,6 +423,7 @@ class dm_campaign(osv.osv):
                                                         domain=[('product_category','=','Items')], context={'product_category':'Items'}),
         'forwarding_charge' : fields.float('Forwarding Charge', digits=(16,2)),
         'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','campaign_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
+        'mail_service_ids': fields.one2many('dm.campaign.mail_service','campaign_id','Mailing Service'),        
     }
 
     _defaults = {
@@ -475,8 +467,8 @@ class dm_campaign(osv.osv):
 
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
-        if not camp.date_start or not camp.dealer_id or not camp.trademark_id :
-            raise osv.except_osv("Error!!","Informations are missing. Check Date Start, Dealer and Trademark")
+        if not camp.date_start or not camp.dealer_id or not camp.trademark_id or not camp.lang_id or not camp.currency_id:
+            raise osv.except_osv("Error!!","Informations are missing. Check Drop Date, Dealer, Trademark, Language and Currency")
 
         if ((camp.manufacturing_state != 'done') or (camp.dtp_state != 'done') or (camp.customer_file_state != 'done') or (camp.items_state != 'done')):
             raise osv.except_osv(
@@ -549,111 +541,134 @@ class dm_campaign(osv.osv):
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
-        res = super(dm_campaign,self).write(cr, uid, ids, vals, context)
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
         if not self.check_forbidden_country(cr, uid, camp.offer_id.id,camp.country_id.id):
             raise osv.except_osv("Error!!","You cannot use this offer in this country")        
 
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
-        if not camp.forwarding_charge:
-            if camp.country_id.forwarding_charge:
-                self.write(cr, uid, camp.id, {'forwarding_charge':camp.country_id.forwarding_charge})
+#        if not camp.forwarding_charge:
+#            if camp.country_id.forwarding_charge:
+#                vals['forwarding_charge'] = camp.country_id.forwarding_charge
         
         if camp.country_id.payment_methods:
             payment_methods = [payment_methods.id for payment_methods in camp.country_id.payment_methods]
-            self.write(cr, uid, camp.id, {'payment_methods':[[6,0,payment_methods]]})
+            vals['payment_methods'] = [[6,0,payment_methods]]
             
         # Set campaign end date at one year after start date if end date does not exist
-        if ('date_start' in vals) and not ('date' in vals):
+        if 'date_start' in vals and vals['date_start']:
             time_format = "%Y-%m-%d"
             d = time.strptime(vals['date_start'],time_format)
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
-            super(osv.osv,self).write(cr, uid, camp.id, {'date':date_end})
-            if camp.project_id:
-                self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
+            vals['date'] = date_end
+            if 'project_id' in vals and vals['project_id']:
+                self.pool.get('project.project').write(cr,uid,[vals['project_id']],{'date_end':vals['date_start']})
 
-            """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
-            if not camp.trademark_id:
-                super(osv.osv, self).write(cr, uid, camp.id, {'trademark_id':offers.recommended_trademark.id})
+        """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
+        if (not camp.trademark_id) and camp.offer_id.recommended_trademark:
+            vals['trademark_id'] = camp.offer_id.recommended_trademark.id
 
-        # check if an overlay exists else create it
-        overlay_country_ids=[]
-        camp1 = self.browse(cr, uid, camp.id)
-        if camp1.trademark_id and camp1.dealer_id and camp1.country_id:
-            overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',camp1.trademark_id.id), ('dealer_id','=',camp1.dealer_id.id)])
-
-            for o_id in overlay:
-                browse_overlay = self.pool.get('dm.overlay').browse(cr, uid, o_id)
-                overlay_country_ids = [country_ids.id for country_ids in browse_overlay.country_ids]
-
-            if overlay and (camp1.country_id.id in overlay_country_ids):
-                super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay[0]}, context)  
-            elif overlay and not (camp1.country_id.id in overlay_country_ids):
-                overlay_country_ids.append(camp1.country_id.id)
-                self.pool.get('dm.overlay').write(cr, uid, browse_overlay.id, {'country_ids':[[6,0,overlay_country_ids]]}, context)
-                super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay[0]}, context)
-            else:
-                overlay_country_ids.append(camp1.country_id.id)
-                overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':camp1.trademark_id.id, 'dealer_id':camp1.dealer_id.id, 'country_ids':[[6,0,overlay_country_ids]]}, context)
-                super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay_ids1}, context)
+        if 'trademark_id' in vals and vals['trademark_id']:
+            trademark_id = vals['trademark_id']
         else:
-            super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':0}, context)
+            trademark_id = camp.trademark_id.id
+        if 'dealer_id' in vals and vals['dealer_id']:
+            dealer_id = vals['dealer_id']
+        else:
+            dealer_id = camp.dealer_id.id
+        if 'country_id' in vals and vals['country_id']:
+            country_id = vals['country_id']
+        else:
+            country_id = camp.country_id.id
             
-        return res
+#        check if an overlay exists else create it
+        overlay_country_ids=[] 
+        if trademark_id and dealer_id and country_id:
+            overlay_obj = self.pool.get('dm.overlay')
+            overlay_id = overlay_obj.search(cr, uid, [('trademark_id','=',trademark_id), ('dealer_id','=',dealer_id)])
+            if overlay_id :
+                browse_overlay = overlay_obj.browse(cr, uid, overlay_id)[0]
+                overlay_country_ids = [country_ids.id for country_ids in browse_overlay.country_ids]
+                vals['overlay_id']=overlay_id[0]
+                if not (country_id in overlay_country_ids):
+                    overlay_country_ids.append(country_id)
+                    overlay_obj.write(cr, uid, browse_overlay.id, {'country_ids':[[6,0,overlay_country_ids]]}, context)
+            else:
+                overlay_ids1 = overlay_obj.create(cr, uid, {'trademark_id':trademark_id, 'dealer_id':dealer_id, 'country_ids':[[6,0,[country_id]]]}, context)
+                vals['overlay_id'] = overlay_ids1
+        return super(dm_campaign,self).write(cr, uid, ids, vals, context)
     
     def create(self,cr,uid,vals,context={}):
+
         type_id = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','model')])[0]
         if context.has_key('campaign_type') and context['campaign_type']=='model':
             vals['campaign_type']=type_id
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
         data_cam = self.browse(cr, uid, id_camp)
         if not self.check_forbidden_country(cr, uid, data_cam.offer_id.id,data_cam.country_id.id):
-            raise osv.except_osv("Error!!","You cannot use this offer in this country")
-        
+            raise osv.except_osv("Error!!","You cannot use this offer in this country")        
+        ''' create campaign mail service '''
+
+#        mail_service_id = for each step in the offer the system should :
+#            - check the media of the step,
+#            - find the default mail service for that media
+#            - assign it to mail_service_id
+#        action_id = the action_id of the mail service
+        mail_service_obj = self.pool.get('dm.mail_service')
+        for step_id in data_cam.offer_id.step_ids :
+            mail_service_id = mail_service_obj.search(cr,uid,[('media_id','=',step_id.media_id.id),('default_for_media','=',True)])
+            mail_service = mail_service_obj.browse(cr,uid,mail_service_id)[0]
+            mail_vals = {
+                         'campaign_id'      : id_camp,
+                         'offer_step_id'    : step_id.id,
+                         'mail_service_id'  : mail_service.id,
+                         'action_id'        : mail_service.action_id.id
+                         }        
+            self.pool.get('dm.campaign.mail_service').create(cr,uid,mail_vals)           
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
-        if not data_cam.forwarding_charge:
-            if data_cam.country_id.forwarding_charge:
-                super(dm_campaign, self).write(cr, uid, id_camp, {'forwarding_charge':data_cam.country_id.forwarding_charge})
-    
+        write_vals = {}
+#        if not data_cam.forwarding_charge:
+#            if data_cam.country_id.forwarding_charge:
+#                write_vals['forwarding_charge'] = data_cam.country_id.forwarding_charge
+                    
         if data_cam.country_id.payment_methods:
             payment_methods = [payment_methods.id for payment_methods in data_cam.country_id.payment_methods]
-            super(dm_campaign, self).write(cr, uid, id_camp, {'payment_methods':[[6,0,payment_methods]]})
+            write_vals['payment_methods']=[[6,0,payment_methods]]
             
         # Set campaign end date at one year after start date if end date does not exist
         if (data_cam.date_start) and (not data_cam.date):
-            time_format = "%Y-%m-%d"
-            d = time.strptime(data_cam.date_start,time_format)
+            d = time.strptime(data_cam.date_start,"%Y-%m-%d")
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
-            super(dm_campaign,self).write(cr, uid, id_camp, {'date':date_end})
+            write_vals['date']=date_end
                 
         # Set trademark to offer's trademark only if trademark is null
         if vals['campaign_type'] != type_id:
             if vals['offer_id'] and (not vals['trademark_id']):
                 offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
-                super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
+                write_vals['trademark_id'] = offer_id.recommended_trademark.id
+        if write_vals :
+            super(dm_campaign,self).write(cr, uid, id_camp, write_vals)
 
         # check if an overlay exists else create it
         data_cam1 = self.browse(cr, uid, id_camp)
         overlay_country_ids = []
         if data_cam1.trademark_id and data_cam1.dealer_id and data_cam1.country_id:
-            overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',data_cam1.trademark_id.id), ('dealer_id','=',data_cam1.dealer_id.id)])
-            for o_id in overlay:
-                browse_overlay = self.pool.get('dm.overlay').browse(cr, uid, o_id)
+            overlay_obj = self.pool.get('dm.overlay')
+            overlay_id = overlay_obj.search(cr, uid, [('trademark_id','=',data_cam1.trademark_id.id), ('dealer_id','=',data_cam1.dealer_id.id)])
+            new_write_vals ={}
+            if overlay_id :
+                browse_overlay = overlay_obj.browse(cr, uid, overlay_id)[0]
                 overlay_country_ids = [country_ids.id for country_ids in browse_overlay.country_ids]
-            if overlay and (data_cam1.country_id.id in overlay_country_ids):
-                super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay[0]}, context)  
-            elif overlay and not (data_cam1.country_id.id in overlay_country_ids):
-                overlay_country_ids.append(data_cam1.country_id.id)
-                self.pool.get('dm.overlay').write(cr, uid, browse_overlay.id, {'country_ids':[[6,0,overlay_country_ids]]}, context)
-                super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay[0]}, context)
+                new_write_vals['overlay_id']=overlay_id[0]
+                if not (data_cam1.country_id.id in overlay_country_ids):
+                    overlay_country_ids.append(data_cam1.country_id.id)
+                    overlay_obj.write(cr, uid, browse_overlay.id, {'country_ids':[[6,0,overlay_country_ids]]}, context)
             else:
-                overlay_country_ids.append(data_cam1.country_id.id)
-                overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_ids':[[6,0,overlay_country_ids]]}, context)
-                super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay_ids1}, context)
-                
-        return id_camp
+                overlay_ids1 = overlay_obj.create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_ids':[[6,0,[data_cam1.country_id.id]]]}, context)
+                new_write_vals['overlay_id'] = overlay_ids1
+            super(dm_campaign, self).write(cr, uid, data_cam1.id, new_write_vals, context)  
+        return id_camp            
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
         result = super(dm_campaign,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
@@ -703,17 +718,17 @@ class dm_campaign_proposition(osv.osv):
         return value
 
     def write(self, cr, uid, ids, vals, context=None):
-        res = super(dm_campaign_proposition,self).write(cr, uid, ids, vals, context)
-        camp = self.pool.get('dm.campaign.proposition').browse(cr,uid,ids)[0]
-        c = camp.camp_id.id
-        id = self.pool.get('dm.campaign').browse(cr, uid, c)
-        if not camp.date_start:
-            super(osv.osv, self).write(cr, uid, camp.id, {'date_start':id.date_start})
-        return res
+        if 'camp_id' in vals and vals['camp_id']:
+            campaign = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
+            if campaign.date_start:
+                vals['date_start']=campaign.date_start
+            else:
+                vals['date_start'] = 0
+        return super(dm_campaign_proposition,self).write(cr, uid, ids, vals, context)
 
     def create(self,cr,uid,vals,context={}):
         id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
-        if not vals['date_start']:
+        if 'date_start' in vals and not vals['date_start']:
             if id.date_start:
                 vals['date_start']=id.date_start
         if 'forwarding_charge' not in vals:
@@ -754,21 +769,25 @@ class dm_campaign_proposition(osv.osv):
         result ={}
         for id in ids:
             pro = self.browse(cr,uid,[id])[0]
-            camp_code = pro.camp_id.code1 or ''
-            offer_code = pro.camp_id.offer_id and pro.camp_id.offer_id.code or ''
-            trademark_code = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
-            dealer_code =pro.camp_id.dealer_id and pro.camp_id.dealer_id.ref or ''
-            date_start = pro.date_start or ''
-            date = date_start.split('-')
-            year = month = ''
-            if len(date)==3:
-                year = date[0][2:]
-                month = date[1]
-            country_code = pro.camp_id.country_id.code or ''
-            seq = '%%0%sd' % 2 % id
-            final_date = month+year
-            code1='-'.join([camp_code, seq])
-            result[id]=code1
+            pro_ids = self.search(cr,uid,[('camp_id','=',pro.camp_id.id)])
+            i=1
+            for pro_id in pro_ids:
+                camp_code = pro.camp_id.code1 or ''
+                offer_code = pro.camp_id.offer_id and pro.camp_id.offer_id.code or ''
+                trademark_code = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
+                dealer_code =pro.camp_id.dealer_id and pro.camp_id.dealer_id.ref or ''
+                date_start = pro.date_start or ''
+                date = date_start.split('-')
+                year = month = ''
+                if len(date)==3:
+                    year = date[0][2:]
+                    month = date[1]
+                country_code = pro.camp_id.country_id.code or ''
+                seq = '%%0%sd' % 2 % i
+                final_date = month+year
+                code1='-'.join([camp_code, seq])
+                result[pro_id]=code1
+                i +=1
         return result
 
     def _quantity_wanted_get(self, cr, uid, ids, name, args, context={}):
@@ -867,8 +886,7 @@ class dm_campaign_proposition(osv.osv):
         'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching'),('split','Split')],"Type"),
         'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition', readonly=True),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
-        'quantity_planned' : fields.function(_quantity_planned_get,string='planned Quantity',type="char",size="64",method=True,readonly=True,
-                    help='The planned quantity is an estimation of the usable quantity of addresses you  will get after delivery, deduplication and cleaning\n' \
+        'quantity_planned' : fields.float('Planned Quantity',digits=(16,2), help='The planned quantity is an estimation of the usable quantity of addresses you  will get after delivery, deduplication and cleaning\n' \
                             'This is usually the quantity used to order the manufacturing of the mailings'),
         'quantity_wanted' : fields.function(_quantity_wanted_get,string='Wanted Quantity',type="char",size="64",method=True,readonly=True,
                     help='The wanted quantity is the number of addresses you wish to get for that segment.\n' \
@@ -890,6 +908,7 @@ class dm_campaign_proposition(osv.osv):
         'keep_segments' : fields.boolean('Keep Segments'),
         'keep_prices' : fields.boolean('Keep Prices At Duplication'),
         'force_sm_price' : fields.boolean('Force Starting Mail Price'),
+        'price_prog_use' : fields.boolean('Price Progression'),
         'sm_price' : fields.float('Starting Mail Price', digits=(16,2)),
 #        'prices_prog_id' : fields.many2one('dm.campaign.proposition.prices_progression', 'Prices Progression'),
         'manufacturing_costs': fields.float('Manufacturing Costs',digits=(16,2)),
@@ -1007,14 +1026,15 @@ class dm_campaign_proposition_segment(osv.osv):
         result ={}
         for id in ids:
             seg = self.browse(cr,uid,[id])[0]
-            if seg.customers_list_id:
+            segment_list = self.search(cr,uid,[('customers_list_id','=',seg.customers_list_id.id)])
+            i = 1 
+            for s in segment_list:  
                 country_code = seg.customers_list_id.country_id.code or ''
                 cust_list_code =  seg.customers_list_id.code
-                seq = '%%0%sd' % 2 % id
+                seq = '%%0%sd' % 2 % i
                 code1='-'.join([country_code[:3], cust_list_code[:3], seq[:4]])
-            else:
-                code1='No List Defined'
-            result[id]=code1
+                result[s]=code1
+                i +=1
         return result
 
     def onchange_list(self, cr, uid, ids, customers_list, start_census, end_census):
@@ -1136,6 +1156,11 @@ class dm_campaign_purchase_line(osv.osv):
     _name = 'dm.campaign.purchase_line'
     _rec_name = 'product_id'
 
+    def default_get(self, cr, uid, fields, context=None):
+        if context.has_key('product_category'):
+            raise osv.except_osv('Warning', "Purchase order generation is not yet implemented !!!")
+        return super(dm_campaign_purchase_line, self).default_get(cr, uid, fields, context)
+
     def _get_uom_id(self, cr, uid, *args):
         cr.execute('select id from product_uom order by id limit 1')
         res = cr.fetchone()
@@ -1148,7 +1173,12 @@ class dm_campaign_purchase_line(osv.osv):
         for pline in plines:
             if pline.state == 'pending':
                 """if in a group, obj = 1st campaign of the group, if not it's the campaing"""
+                if not (pline.campaign_group_id or pline.campaign_id):
+                    raise  osv.except_osv('Warning', "There's no campaign or campaign group defined for this purchase line .")
+
                 if pline.campaign_group_id:
+                    if not pline.campaign_group_id.campaign_ids:
+                        raise  osv.except_osv('Warning', "There's no campaign defined for the campaign group : %s" %(pline.campaign_group_id.name))
                     obj = pline.campaign_group_id.campaign_ids[0]
                     code = pline.campaign_group_id.code
                 else:
@@ -1736,7 +1766,7 @@ class dm_campaign_purchase_line(osv.osv):
 
                 else:
                     raise osv.except_osv('Warning', "The's no Product Category defined for this Purchase Line")
-
+        self.write(cr, uid, ids, {'state':'ordered'})
         return True
 
     def _default_date(self, cr, uid, context={}):
@@ -1922,6 +1952,49 @@ class res_partner(osv.osv):
         'state_ids': _default_all_state,
     }
 res_partner()
+
+class res_partner_address(osv.osv):
+    _name = "res.partner.address"
+    _inherit="res.partner.address"
+    _columns = {
+        'name': fields.char('Last Name', size=64),
+        'firstname' : fields.char('First Name',size=16),
+        'type': fields.selection( [('direct marketing','Direct Marketing'), ('default','Default'),('invoice','Invoice'), ('delivery','Delivery'), ('contact','Contact'), ('other','Other') ],'Address Type', help="Used to select automatically the right address according to the context in sales and purchases documents."),
+    }
+
+    def create(self,cr,uid,vals,context={}):
+        if 'type' in vals and vals['type']:
+            if vals['type'] == 'direct marketing':
+                if 'partner_id' in vals and vals['partner_id']:
+                    address = self.search(cr, uid, [('partner_id','=',vals['partner_id'])])
+                    for id in self.browse(cr, uid, address):
+                        print id, id.type
+                        if id.type == 'direct marketing':
+                            raise osv.except_osv('Warning', "Only one 'Direct Marketing' address type can exist for %s" % (id.partner_id.name,))
+        return super(res_partner_address, self).create(cr, uid, vals, context)
+
+    def write(self, cr, uid, ids, vals, context=None):
+        partner_address = self.browse(cr, uid, ids)[0]
+        partner = ''
+        if ('partner_id' in vals and vals['partner_id']) and not ('type' in vals and vals['type']):
+            if partner_address.type == 'direct marketing':
+                partner = vals['partner_id']
+        elif 'type' in vals and vals['type']:
+            if vals['type'] == 'direct marketing': 
+                if 'partner_id' in vals and vals['partner_id']:
+                    partner = vals['partner_id']
+                else:
+                    partner = partner_address.partner_id.id
+        
+        if partner:
+            search_id = self.search(cr, uid, [('partner_id','=',partner)])
+            address = self.browse(cr, uid, search_id)
+            for id in address:
+                if id.type == 'direct marketing':
+                    raise osv.except_osv('Warning', "Only one 'Direct Marketing' address type can exist for %s" % (id.partner_id.name,))
+        return super(res_partner_address,self).write(cr, uid, ids, vals, context)
+
+res_partner_address()
 
 class purchase_order(osv.osv):
     _name = 'purchase.order'

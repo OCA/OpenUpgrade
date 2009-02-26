@@ -37,9 +37,7 @@ class account_invoice(report_sxw.rml_parse):
     def _get_shipping(self):
        
         if 'price' in self.context and self.context.has_key('price'):
-            
-           return self.context['price']
-        
+            return self.context['price']       
         return 0.0
      
 report_sxw.report_sxw(

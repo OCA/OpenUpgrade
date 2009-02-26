@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/Base",
-    "website": "http://www.tinyerp.com",
+    "website": "http://www.openerp.com",
     "depends" : ["base"],
     "description": """
         This module adds the possibility to define a sequence for

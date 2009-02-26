@@ -33,22 +33,22 @@
 		<!-- Ecommerce Payment Methods -->
 			
 		<record id="ecommerce_method" model="payment.method">
-			<field name="name">cheque</field>
+			<field name="name">Cheque</field>
 			<field name="shortcut">cheque</field>
 		</record> 
 		
 		<record id="ecommerce_method1" model="payment.method">
-			<field name="name">paypal</field>
+			<field name="name">Paypal</field>
 			<field name="shortcut">paypal</field>
 		</record>
 		 
 		<record id="ecommerce_method2" model="payment.method">
-			<field name="name">creditcard</field>
+			<field name="name">Creditcard</field>
 			<field name="shortcut">creditcard</field>
 		</record>
 		
 		<record id="ecommerce_method3" model="payment.method">
-			<field name="name">banktrans</field>
+			<field name="name">Banktransaction</field>
 			<field name="shortcut">banwt</field>
 		</record> 
 		
@@ -773,7 +773,6 @@
 		</record>
 		<record id="ecommerce_order_line_pc0" model="ecommerce.order.line">
 			<field name="product_id" ref="product.product_product_pc2"/>
-			<field name="order_id" ref="ecommerce_saleorder_so0"/>
 			<field name="product_uom_id" ref="product.product_uom_unit"/>
 			<field name="price_unit">50000.0</field>
 			<field eval="3.0" name="product_qty"/>
@@ -781,7 +780,6 @@
 		</record>
 		<record id="ecommerce_order_line_mouse0" model="ecommerce.order.line">
 			<field name="product_id" ref="product.product_product_25"/>
-			<field name="order_id" ref="ecommerce_saleorder_so0"/>
 			<field name="product_uom_id" ref="product.product_uom_unit"/>
 			<field name="price_unit">10000.0</field>
 			<field name="product_qty">70.0</field>
@@ -803,7 +801,6 @@
 		</record>
 		<record id="ecommerce_order_line_processor0" model="ecommerce.order.line">
 			<field name="product_id" ref="product.product_product_cpu_gen"/>
-			<field name="order_id" ref="ecommerce_saleorder_so1"/>
 			<field name="product_uom_id" ref="product.product_uom_unit"/>
 			<field name="price_unit">12000.0</field>
 			<field name="product_qty">16.0</field>
@@ -826,12 +823,6 @@
 			<field name="currency_id" ref="res_currency_aud0"/>
 			<field name="rate">35.0</field>
 		</record>
-
-		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
-			<field eval="[(6,0,[ref('base.EUR'),ref('ecommerce.res_currency_aud0'),ref('base.EUR'),ref('base.CAD'),ref('base.USD')])]" name="currency_ids"/>
-			<field eval="[(6,0,[ref('base.lang_en')])]" name="language_ids"/>
-			<field eval="[(6,0,[ref('delivery.delivery_grid')])]" name="delivery_ids"/>
-		</record>
 		
 		<!-- Search Parameters -->
 		<record id="ecommerce_search_productname0" model="ecommerce.search">
@@ -847,6 +838,14 @@
 		<record id="ecommerce_search_productprice0" model="ecommerce.search">
 			<field name="code">list_price</field>
 			<field name="name">Product Price</field>
+		</record>
+		
+		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
+			<field eval="[(6,0,[ref('base.EUR'),ref('res_currency_aud0'),ref('base.EUR'),ref('base.CAD'),ref('base.USD')])]" name="currency_ids"/>
+			<field eval="[(6,0,[ref('ecommerce_payment'),ref('ecommerce_payment1')])]" name="payment_method"/>
+			<field eval="[(6,0,[ref('base.lang_en')])]" name="language_ids"/>
+			<field eval="[(6,0,[ref('ecommerce_search_productname0'),ref('ecommerce_search_productcolor0'),ref('ecommerce_search_productprice0')])]" name="search_ids"/>
+			<field eval="[(6,0,[ref('delivery.delivery_grid')])]" name="delivery_ids"/>
 		</record>
 
 </data>

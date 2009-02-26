@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+
+(c) 2008 Sednacom <http://www.sednacom.fr>
+
+ authors :
+  - Brice < brice@sednacom.fr >
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+-->
+<terp>
+<data>
+
+    <record model="ir.ui.view" id="view_users_form_zarafa">
+        <field name="name">res.users.form.zarafa</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <page string="Security" position="before">
+                <page string="Zarafa">
+                    <separator string="Zarafa interface" colspan="4" />
+                    <field name="zarafa_server" />
+                    <field name="zarafa_email" />
+                    <field name="zarafa_user" />
+                    <field name="zarafa_password" />
+                </page>
+            </page>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_partner_address_tree_email">
+        <field name="name">res.partner.address.tree.email</field>
+        <field name="model">res.partner.address</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="base.view_partner_address_tree" />
+        <field name="arch" type="xml">
+            <field name="zip" position="replace" >
+                <field name="email" />
+            </field>
+        </field>
+    </record>
+
+
+    <wizard id="wizard_import_zarafa_contact"
+        string="Import Zarafa contacts"
+        model="zarafa.contact"
+        name="zarafa.contact.import"
+    />
+
+    <menuitem name="Tools/Import contact from Zarafa"
+        id="menu_action_import_zarafa_contact"
+        action="wizard_import_zarafa_contact"
+        type="wizard" />
+
+
+</data>
+</terp>

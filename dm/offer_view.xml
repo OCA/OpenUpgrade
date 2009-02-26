@@ -6,7 +6,6 @@
     <menuitem name="Configuration" id="menu_dm_config" parent="menu_dm" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager" sequence="0"/>
     <menuitem name="Offers" id="menu_dm_offer" parent="menu_dm" sequence="2"/>
     <menuitem name="Offers" id="menu_dm_config_offer" parent="dm.menu_dm_config" sequence="2"/>
-<!--    <menuitem name="Customers" id="menu_dm_config_customer" parent="dm.menu_dm_config" sequence="7"/>-->
 
     <!--
     =======================================================
@@ -63,12 +62,14 @@
                         </group>
                         <group colspan="2" col="2">
                             <separator string="Origin" colspan="2"/>
+                            <group attrs="{'invisible':[('type','!=','rewrite')]}" colspan="2">
                             <field name="offer_origin_id" select="2"/>
+                            </group>
                             <field name="preoffer_original_id"  select="2" context="{'offer_type':'Preoffer'}"/>
                             <field name="lang_orig" select="2"/>
                             <newline />
                             <separator string="" colspan="2"/>
-                            <field name="legal_state" select="2"/>
+                            <field name="legal_state" select="2" groups="base.group_extended"/>
                             <field name="active" select="2"/>
                         </group>
                         <separator string="Categories" colspan="4"/>
@@ -78,7 +79,8 @@
                         <separator string="Offer Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="state" nolabel="1" select="1"/>
-                            <button name="state_open_set" string="Open" states="draft,freeze"/>
+                            <button name="state_ready_set" string="Ready To Plan" states="draft,freeze"/>
+                            <button name="state_open_set" string="Open" states="draft,ready,freeze"/>
                             <button name="state_freeze_set" string="Freeze" states="open"/>
                             <button name="state_close_set" string="Close" states="open,draft,freeze"/>
                             <button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
@@ -101,7 +103,7 @@
                             </tree>
                         </field>
                     </page>
-                    <page string="Dates">
+                    <page string="Dates" groups="base.group_extended">
                         <group colspan="2" col="2">
                             <separator string="Order Dates" colspan="2"/>
                             <field name="order_date" select="2"/>
@@ -123,9 +125,6 @@
                         <separator string="Keywords" colspan="4"/>
                         <field name="keywords" colspan="4"  nolabel="1" select="1"/>
                     </page>
-<!--                    <page string="Statistics" >-->
-<!--                        still not define -->
-<!--                    </page>-->
                 </notebook>
             </form>
         </field>
@@ -388,16 +387,6 @@
                         <field name="notes" colspan="4"  nolabel="1"/>
                         <button name="go_to_offer" string="Create Offers" type="object"/>
                     </page>
-                    <!--
-                    <page string="Description">
-                        <separator string="Description" colspan="4"/>
-                        <field name="desc" nolabel="1"/>
-                    </page>
-                    -->
-                    <page string="History">
-                        <separator string="History" />
-                        <field name="history_ids" nolabel="1" colspan="4"/>
-                    </page>
                 </notebook>
             </form>
         </field>
@@ -480,12 +469,6 @@
 <!--                        <button name="go_to_offer" string="Create Offers" states="draft" type="object"/> -->
                         </group>
                     </page>
-                    <!--
-                    <page string="Description">
-                        <separator string="Description" colspan="4"/>
-                        <field name="desc" nolabel="1"/>
-                    </page>
-                    -->
                     <page string="Keywords" >
                         <separator string="Keywords" colspan="4"/>
                         <field name="keywords" colspan="4"  nolabel="1" select="1"/>
@@ -496,8 +479,6 @@
                         <field name="planned_delivery_date"/>
                         <field name="delivery_date"/>
                         <newline />
-<!--                        <field name="fixed_date"/>-->
-<!--                        <field name="buffer_delay"/>-->
                     </page>
                 </notebook>
             </form>

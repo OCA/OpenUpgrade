@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/Others",
-    "website": "http://www.tinyerp.com",
+    "website": "http://www.openerp.com",
     "depends" : ["base", "sale"],
     "init_xml" : [],
     "update_xml" : ['sale_view.xml'],

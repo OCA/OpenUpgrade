@@ -59,10 +59,9 @@
 			<form string="Sale Order">
 				<separator string="Sale Order" colspan="4"/>
 				<newline/>
+				<field name="product_id" on_change="onchange_product(product_id)" colspan="4"/>
 				<field name="name"/>
-				<field name="order_id"/>
 				<field name="product_qty"/>
-				<field name="product_id"/>
 				<field name="product_uom_id"/>
 				<field name="price_unit"/>
 			</form>
@@ -75,7 +74,6 @@
 		<field name="arch" type="xml">
 			<tree string="Sale Order">
 				<field name="name"/>
-				<field name="order_id"/>
 				<field name="product_qty"/>
 				<field name="product_id"/>
 				<field name="product_uom_id"/>

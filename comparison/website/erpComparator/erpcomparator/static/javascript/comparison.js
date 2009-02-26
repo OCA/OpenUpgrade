@@ -37,15 +37,21 @@ function getSelectedItems() {
 	}, getElementsByTagAndClassName('input', 'grid-record-selector', tbl));
 }
 
-function do_login() {
-	params = {}
-	params['user_name'] = $('user_name').value;
-	params['password'] = $('password').value;
-	
+function do_login(user_name, password) {
+	params = {};
+	if('undefined' == typeof user_name && 'undefined' == typeof password) {
+		params['user_name'] = $('user_name').value;
+		params['password'] = $('password').value;
+	}
+	else {
+		params['user_name'] = user_name;
+		params['password'] = password;
+	}
+
 	var req = Ajax.JSON.post('/login/check_login', params);
 	req.addCallback(function(obj){
 		if (obj.user_info) {
-			window.location.href = '/comparison?user_name='+params['user_name']+'&password='+params['password'];
+			window.location.href = '/comparison';
 		}
 		if (obj.error) {
 			return alert(obj.error);
@@ -53,28 +59,42 @@ function do_login() {
 	});
 }
 
-function register() {
-	params = {}
-	var req = Ajax.post('/login', params);
+function register(msg) {
+	
+	if('undefined' != typeof msg) {
+		var params = {}
+		params["msg"] = msg;
+	}
+	else {
+		var params = {}
+	}
+	var req = Ajax.post('/login/', params)
 	req.addCallback(function(xmlHttp) {
-		
-		var d = window.mbox.content;
-		d.innerHTML = xmlHttp.responseText;
-		
-		window.mbox.width = 400;
-        window.mbox.height = 250;
-        
-        window.mbox.onUpdate = add_new_user;
-		window.mbox.show();
-	});
+			var d = window.mbox.content;
+			d.innerHTML = xmlHttp.responseText;
+			
+			window.mbox.width = 400;
+	        window.mbox.height = 250;
+	        
+	        window.mbox.onUpdate = add_new_user;
+			window.mbox.show();
+			});
 }
 
 function add_new_user() {
-	
+	if($('registered_user') && $('registered_user').checked) {
+		do_login($('usr_name').value, $('usr_password').value)
+	}
+	else {
 	params = {}
 	params['user_name'] = $('name_user').value;
 	params['password'] = $('passwd').value;
 	params['email'] = $('email').value;
+	
+	name = params['user_name'].match(/^[A-Za-z0-9_]+$/);
+	if (! name) {
+		return alert("Username accepts only Digit, Later, _ sign...");	
+	}
 	
 	if (!params['user_name'] || !params['password'] || !params['email']) {
 		return alert("Fields marked with * are mandatory...");
@@ -84,12 +104,13 @@ function add_new_user() {
 	req.addCallback(function(obj){
 		if (obj.res) {
 			window.mbox.hide();
-			window.location.href = '/comparison?user_name='+params['user_name']+'&password='+params['password'];
+			window.location.href = '/comparison';
 		}
 		if (obj.error) {
 			return alert(obj.error);
 		}
 	});
+	}
 }
 
 function change_vote(node, pond_val) {
@@ -123,11 +144,18 @@ function add_factor(id) {
 		var d = window.mbox.content;
 		d.innerHTML = xmlHttp.responseText;
 		
+		if(getElement('error_box') != null) {
+        	var msg = "You are not logged in..."
+        	register(msg);
+        }
+        
+        else {
 		window.mbox.width = 450;
         window.mbox.height = 300;
         
         window.mbox.onUpdate = add_new_factor;
 		window.mbox.show();
+        }
 	});
 }
 
@@ -162,7 +190,8 @@ function add_new_factor() {
 	        	}
 	    	}
 	    	if (obj.error) {
-	            return alert(obj.error);
+//	            return alert(obj.error);
+	            register()
 	        }
 	    });
 	}
@@ -177,7 +206,7 @@ MochiKit.DOM.addLoadEvent(function(evt){
     window.mbox = new ModalBox({
         title: 'Evaluation Matrix...',
         buttons: [
-            {text: 'Save', onclick: onUpdate},
+            {text: 'Submit', onclick: onUpdate}
         ]
     });
 });
@@ -194,11 +223,16 @@ function open_item_vote(id, header) {
 		var d = window.mbox.content;
 		d.innerHTML = xmlHttp.responseText;
 		
-		window.mbox.width = 650;
-        window.mbox.height = 500;
-        
-        window.mbox.onUpdate = item_vote;
-		window.mbox.show();
+        if(getElement('error_box') != null) {
+        	var msg = "You are not logged in..."
+        	register(msg);
+        }
+        else {
+        	window.mbox.width = 650;
+        	window.mbox.height = 500;
+        	window.mbox.onUpdate = item_vote;
+			window.mbox.show();
+        }
 	});
 }
 
@@ -206,20 +240,27 @@ function item_vote() {
 	
 	var treenode = comparison_tree.selection_last;
 	var childnodes = treenode.childNodes; 
-		
 	window.mbox.hide();
 	var i = 1;
 	var val = '';
 	
 	forEach(treenode.childNodes, function(node){
 		var name = node.record.id;
-		var params = {};
-		params['id'] = name;
-		params['score_id'] = $(name + '_score_id').value;
-		params['item_id'] = $('item_id').value;
-		params['note'] = $('note').value;
+		try{
+			var elem = document.getElementById(name + '_score_id');
+		}
+		catch(e) {
+			alert(e)
+		}
 		
-		values = "id,"+name+"|score_id,"+$(name + '_score_id').value+"|item_id,"+$('item_id').value+"|note,"+$('note').value;
+		if(elem != null) {
+			var params = {};
+			params['id'] = name;
+			params['score_id'] = $(name + '_score_id').value;
+			params['item_id'] = $('item_id').value;
+			params['note'] = $('note').value;
+			values = "id,"+name+"|score_id,"+$(name + '_score_id').value+"|item_id,"+$('item_id').value+"|note,"+$('note').value;
+		}
 		
 		if (i != treenode.childNodes.length) {
 			val += values + '!';
@@ -242,17 +283,33 @@ function item_vote() {
 			}
 		}
     	if (obj.error) {
-            return alert(obj.error);
+//            return alert(obj.error);
+				register()
         }
     });
 	
 }
 function load_radar() {
-	
+	var browserName = navigator.appName;
+	var browserVersion = parseInt(navigator.appVersion);
 	ids = radarData();
 	
-	factor_name= $('factors').value;
-	factor_name = factor_name.replace(/&/g, "@");
+	if(browserName.indexOf('Netscape')!=-1 && browserVersion >= 4) {
+		factor_name= $('factors').value;
+		factor_name = factor_name.replace(/&/g, "@") ;
+	}
+	
+	else if(browserName.indexOf('Microsoft Internet Explorer')!=-1 && browserVersion>=3) {
+		MochiKit.DOM.getElementsByTagAndClassName('select','factors', null)[0].parentNode.parentNode.cells[0].style.padding = '10px';
+		var index = MochiKit.DOM.getElementsByTagAndClassName('select','factors', null)[0].selectedIndex;
+		var factor = MochiKit.DOM.getElementsByTagAndClassName('select','factors', null)[0][index].innerHTML;
+		factor_name= factor;
+		factor_name = factor_name.replace(/&amp;/g, "@") ;
+	}
+	
+	else if(browserName.indexOf('Opera')!=-1) {
+		log("Opera")
+	}
 	
 	list = urlEncode('/graph/radar?ids='+ids+'&factor_name='+factor_name);
 	
@@ -286,3 +343,15 @@ function on_button_click(evt, node) {
 	
 }
 
+var expand_tree = function(elem) {
+	
+	var tree= comparison_tree;
+	if(elem.value == 'Complete Comparison') {
+		tree.rootNode.expand(true);
+		elem.value = 'Summerized Comparison'
+	}
+	else if(elem.value = 'Summerized Comparison') {
+		tree.reload()
+		elem.value = 'Complete Comparison'
+	}
+}

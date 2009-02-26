@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="voucher_partner_form">
+			<field name="name">voucher.partner.form</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="date" select="2" position="after">
+					<separator string="Exices Details" colspan="4"/>
+					<field name="excise" select="2"/>
+					<field name="range" select="2"/>
+					<field name="div" select="2"/>
+					<field name="vat_no" select="2" />
+					<field name="cst_no" select="2"/>
+					<field name="pan_no" select="2" />
+					<field name="ser_tax" select="2"/>
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>

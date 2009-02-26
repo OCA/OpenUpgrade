@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <wizard id="base.res_partner_send_sms_wizard" model="res.partner" name="res.partner.sms_send.gateway" string="Send SMS"/>
+        <wizard id="sms_smsclient_send_code" name="sms.smsclient.code.send" model="sms.smsclient" string="Send Verification Code"/>
+        <wizard id="sms_smsclient_verify_code" name="sms.smsclient.code.verify" model="sms.smsclient" string="Verify SMS Gateway"/>
+        
+    </data>
+</openerp>

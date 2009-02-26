@@ -23,7 +23,7 @@
     "name" : "Direct Marketing",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Direct Marketing",
     "description": """
 

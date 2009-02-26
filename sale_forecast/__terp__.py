@@ -23,7 +23,7 @@
     "name" : "Sales Forecasts, goals and statistics",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://tinyerp.com",
+    "website" : "http://www.openerp.com",
     "depends" : ["account", "account_invoice_salesman","crm","sale"],
     "category" : "Generic Modules/Accounting",
     "description": """This module allows manager to do their sales forecast.

@@ -24,7 +24,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/Human Resources",
-    "website" : "http://tinyerp.com/module_hr.html",
+    "website" : "http://www.openerp.com",
     "depends" : ["base","hr","hr_holidays_request","md_hr_contract","hr_evaluation"],
     "init_xml" : [],
     "demo_xml" : [

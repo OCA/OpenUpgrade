@@ -26,28 +26,47 @@
 """
 import signal
 import logger
+import pickle
 class job(signal.signal):
     """
        Base class of ETL job.
     """
-    def action_start(self,key,signal_data={},data={}):
+    def action_start(self,key,signal_data={},data={}):        
+        self.status='start'        
+        self.logger.notifyChannel("job", logger.LOG_INFO, 
+                     'the '+str(self)+' is start now...')
+        return True
+  
+    def action_restart(self,key,signal_data={},data={}):
+        self=self.import_job()        
         self.status='start'        
         self.logger.notifyChannel("job", logger.LOG_INFO, 
                      'the '+str(self)+' is start now...')
         return True
 
     def action_pause(self,key,signal_data={},data={}):
+        self.export_job()    
+        for output in self.outputs:
+            output.action_pause(self)      
         self.status='pause'
         self.logger.notifyChannel("job", logger.LOG_INFO, 
-                     'the '+str(self)+' is pause now...')
-        #TODO : pause job process and also call pause action of components and trans.
+                     'the '+str(self)+' is pause now...')        
         return True
 
-    def action_stop(self,key,signal_data={},data={}):
+    def action_stop(self,key,signal_data={},data={}):                    
+        
+        for output in self.outputs:
+            output.action_stop(self)        
         self.status='stop'
         self.logger.notifyChannel("job", logger.LOG_INFO, 
-                     'the '+str(self)+' is stop now...')
-        #TODO : stop job process and also call stop action of components and trans.
+                     'the '+str(self)+' is stop now...')    
+        return True
+
+    def action_end(self,key,signal_data={},data={}):
+        self.status='end'
+        self.logger.notifyChannel("job", logger.LOG_INFO, 
+                     'the '+str(self)+' is end now...')              
+        
         return True
 
     def action_copy(self,key,signal_data={},data={}):
@@ -62,10 +81,12 @@ class job(signal.signal):
         self.name=name
         self.outputs=outputs
         self.status='open' # open,start,pause,stop,close
+        self.save_filename='save.p'
         
         self.signal_connect(self,'start',self.action_start)
         self.signal_connect(self,'pause',self.action_pause)
         self.signal_connect(self,'stop',self.action_stop)
+        self.signal_connect(self,'end',self.action_end)
         self.signal_connect(self,'copy',self.action_copy)
         self.logger = logger.logger()
     def __str__(self):     
@@ -73,20 +94,24 @@ class job(signal.signal):
         return self.name   
     
     
-    def import_job(self,connector):
+    def import_job(self):
         #TODO : read job instance from file
-        pass
-    def export_job(self,connector):
+        connector=open('save.p', 'wb')
+        pickle.dump(self, connector)
+        
+    def export_job(self):        
         #TODO : write job instance in file
-        pass
+        connector=open('save.p', 'rb')
+        return pickle.load(connector)
+        
 
     def run(self):
         # run job process
         self.signal('start')
         for c in self.outputs:
-            for a in c.channel_get():
-                pass
-        self.signal('stop')
+            for a in c.channel_get():                
+                pass 
+        self.signal('end')
 
 
 

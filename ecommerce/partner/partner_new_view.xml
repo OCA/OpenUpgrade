@@ -29,34 +29,34 @@
 				<field name="last_name" select="2" />
 				<field name="company_name" select="2"></field>
 				<field name="lang" select="2"/>
-				<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
-						<form string="Partner contacts">
-							<field name="username" select="2"/>
-							<field name="type"/>
-							<field name="street" select="2"/>
-							<field name="street2"/>
-							<newline/>
-							<field name="zip" select="2"/>
-							<field name="city" select="2"/>
-							<newline/>
-							<field name="country_id" select="2" completion="1"/>
-							<field name="state_id" select="2"/>
-							<newline/>
-							<field name="phone"/>
-							<field name="fax"/>
-							<newline/>
-							<field name="mobile"/>
-							<field name="email" select="2" widget="email" />
-						</form>
-						<tree string="Partner contacts">
-							<field name="username" />
-							<field name="zip"/>
-							<field name="city"/>
-							<field name="country_id"/>
-						</tree>
-					</field>
-					<separator string="Categories" colspan="4"/>
-					<field name="category_ids" colspan="4" select="2" nolabel="1"/>
+				<field name="address" mode="form,tree" colspan="4" nolabel="1" select="2">
+					<form string="Partner contacts">
+						<field name="username" select="2"/>
+						<field name="type"/>
+						<field name="street" select="2"/>
+						<field name="street2"/>
+						<newline/>
+						<field name="zip" select="2"/>
+						<field name="city" select="2"/>
+						<newline/>
+						<field name="country_id" select="2" completion="1"/>
+						<field name="state_id" select="2"/>
+						<newline/>
+						<field name="phone"/>
+						<field name="fax"/>
+						<newline/>
+						<field name="mobile"/>
+						<field name="email" select="2" widget="email" />
+					</form>
+					<tree string="Partner contacts">
+						<field name="username" />
+						<field name="zip"/>
+						<field name="city"/>
+						<field name="country_id"/>
+					</tree>
+				</field>
+				<separator string="Categories" colspan="4"/>
+				<field name="category_ids" colspan="4" select="2" nolabel="1"/>
 			</form>
 		</field>
 	</record>
@@ -111,7 +111,7 @@
 				<field name="fax"/>
 				<newline/>
 				<field name="mobile" select="2"/>
-				<field name="email" select="2"/>
+				<field name="email" select="2" widget="email"/>
 			</form>
 		</field>
 	</record>

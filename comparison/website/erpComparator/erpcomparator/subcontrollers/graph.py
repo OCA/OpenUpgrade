@@ -26,21 +26,30 @@ class Graph(controllers.Controller, TinyResource):
         
         proxy_item = rpc.RPCProxy('comparison.item')
         item_ids = proxy_item.search([])
-        
         res = proxy_item.read(item_ids, ['name'])
+        
         titles = []
         factors = []
         
         summary = {}
         parent_child = []
         
+        selected_items = []
+        
+        if cherrypy.session.has_key('selected_items'):
+            selected_items = cherrypy.session['selected_items']
+            selected_items = selected_items and eval(str(selected_items))
         for r in res:
             title = {}
+            title['sel'] = False
+            if selected_items:
+                for s in selected_items:
+                    if r['id'] == s:
+                        title['sel'] = True
+            
             title['name'] = r['name']
             title['id'] = r['id']
             titles += [title]
-        
-        selected_fact = None
         
 #        if view_factor_id:
 #            view_factors = proxy_factor.search([('id', '=', [view_factor_id])])
@@ -75,7 +84,7 @@ class Graph(controllers.Controller, TinyResource):
             view['name'] = view_name
             all_child += [view]
             
-        return dict(titles=titles, parents=parents, view_name=view_name, all_child=all_child, selected_fact=selected_fact)
+        return dict(titles=titles, parents=parents, view_name=view_name, all_child=all_child, selected_items=selected_items)
 
     @expose('json')
     def radar(self, **kw):
@@ -133,12 +142,12 @@ class Graph(controllers.Controller, TinyResource):
         
         value = []
         
+        lables = [i['name'] for i in child_name]
         for item in item_name:
-            val = []
+            val = [0]  * len(lables)
             for factor in factor_res:
                 if factor.get('item_id')[1] == item['name']:
-                    val += [factor.get('result')/10.0]
-            
+                    val[lables.index(factor.get('factor_id')[1][:18])] = factor.get('result')/10.0
             value += [val]
         
         for n, j in enumerate(item_name):

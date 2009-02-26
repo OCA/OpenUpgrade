@@ -69,6 +69,10 @@
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
 
+		<record model="res.partner.category" id="cat_mail_service">
+            <field name="name" eval="&quot;Mail Service&quot;"/>
+            <field name="parent_id" ref="res_partner_category_directmarketing0" />
+        </record>
 
         <!-- Media -->
 
@@ -594,13 +598,8 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     <!-- Document Categories -->
 
     <data>
-        <record id="dm_offer_document_category_analysis0" model="dm.offer.document.category">
-            <field eval="&quot;&quot;&quot;Analysis&quot;&quot;&quot;" name="name"/>
-        </record>
-    </data>
-    <data>
-        <record id="dm_offer_document_category_reference0" model="dm.offer.document.category">
-            <field eval="&quot;&quot;&quot;Reference&quot;&quot;&quot;" name="name"/>
+        <record id="dm_offer_document_category_test0" model="dm.offer.document.category">
+            <field eval="&quot;&quot;&quot;Test&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
     <data>
@@ -663,7 +662,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="[(6,0,[])]" name="group_ids"/>
             <field name="user_id" ref="base.user_root"/>
             <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;[('category_ids','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
+            <field eval="&quot;&quot;&quot;[('category_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
             <field name="ressource_parent_type_id" ref="dm.model_dm_offer_document_category"/>
             <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
             <field name="ressource_type_id" ref="dm.model_dm_offer_document"/>
@@ -680,4 +679,34 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 		<function eval="('default',False,'shop_id', [('dm.customer.order', False)], shop1, True, False, False, False, True)" id="shop_default_set" model="ir.values" name="set"/>
 	</data>
 
+	<!-- Default Category in DTP Documents -->
+	
+	<data noupdate="1">
+		<function eval="('default',False,'category_id', [('dm.offer.document', False)], dm_offer_document_category_production0, True, False, False, False, True)" id="category_default_set" model="ir.values" name="set"/>
+	</data>
+	
+    <!-- Server Action -->
+    
+	<data noupdate="1">
+		<record id="ir_actions_server_none0" model="ir.actions.server">
+			<field eval="&quot;&quot;&quot;# You can use the following variables
+#    - object
+#    - object2
+#    - time
+#    - cr
+#    - uid
+#    - ids
+# If you plan to return an action, assign: action = {...}
+&quot;&quot;&quot;" name="code"/>
+			<field eval="5" name="sequence"/>
+			<field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+			<field name="model_id" ref="dm.model_dm_offer_step"/>
+			<field eval="[(6,0,[])]" name="child_ids"/>
+			<field eval="1" name="dm_action"/>
+			<field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+			<field eval="&quot;&quot;&quot;None&quot;&quot;&quot;" name="name"/>
+		</record>
+	</data>
+    
 </openerp>

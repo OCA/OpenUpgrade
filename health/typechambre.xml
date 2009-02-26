@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+	<record id="typechambre.1" model="health.room.type">
+	    <field name="name" >Chambre simple MAPAD</field>
+	    <field name="ref" >BAT1</field>
+	    <field name="nbrlit" >50</field>
+	    <field name="nbrchambre" >50</field>
+	    <field name="prix" >40.85</field>
+	</record>
+	<record id="typechambre.2" model="health.room.type">
+	    <field name="name" >Chambre double MAPAD</field>
+	    <field name="ref" >BAT2</field>
+	    <field name="nbrlit" >52</field>
+	    <field name="nbrchambre" >26</field>
+	    <field name="prix" >36.15</field>
+	</record>
+	<record id="typechambre.3" model="health.room.type">
+	    <field name="name" >Reposance</field>
+	    <field name="ref" >REPOS</field>
+	    <field name="nbrlit" >1</field>
+	    <field name="nbrchambre" >1</field>
+	    <field name="prix" >0</field>
+	</record>
+	<record id="typechambre.4" model="health.room.type">
+	    <field name="name" >Chambre individuelle Résidence</field>
+	    <field name="ref" >RES</field>
+	    <field name="nbrlit" >18</field>
+	    <field name="nbrchambre" >18</field>
+	    <field name="prix" >40.85</field>
+	</record>
+	<record id="typechambre.5" model="health.room.type">
+	    <field name="name" >Chambre double Résidence</field>
+	    <field name="ref" >RES2</field>
+	    <field name="nbrlit" >4</field>
+	    <field name="nbrchambre" >2</field>
+	    <field name="prix" >36.15</field>
+	</record>
+	<record id="typechambre.6" model="health.room.type">
+	    <field name="name" >Soeurs ainées</field>
+	    <field name="ref" >SA</field>
+	    <field name="nbrlit" >11</field>
+	    <field name="nbrchambre" >11</field>
+	    <field name="prix" >34.28</field>
+	</record>
+	<record id="typechambre.7" model="health.room.type">
+	    <field name="name" >Hébergement temporaire CH seule</field>
+	    <field name="ref" >TEMPO</field>
+	    <field name="nbrlit" >1</field>
+	    <field name="nbrchambre" >1</field>
+	    <field name="prix" >0</field>
+	</record>
+	<record id="typechambre.8" model="health.room.type">
+	    <field name="name" >Hébergement temporaire CH double</field>
+	    <field name="ref" >TEMPO2</field>
+	    <field name="nbrlit" >2</field>
+	    <field name="nbrchambre" >1</field>
+	    <field name="prix" >0</field>
+	</record>
+	<record id="typechambre.9" model="health.room.type">
+	    <field name="name" >Hébergement tempo Résidence ch 2 lits</field>
+	    <field name="ref" >TEMPO RS2</field>
+	    <field name="nbrlit" >4</field>
+	    <field name="nbrchambre" >2</field>
+	    <field name="prix" >0</field>
+	</record>
+	</data>
+</openerp>

@@ -54,11 +54,10 @@ class sql_connector(connector.connector):
             self.connector = cx_Oracle.connect(self.uid, self.passwd, dsn_tns)    
         else:
             raise Exception('Not Supported')           
-        return self.connector
+        return self.connector    
 
-    
-
-    def close(self):        
+    def close(self):    
+        self.connector.commit()
         self.connector.close()
 
 

@@ -38,13 +38,11 @@ class openobject_out(component.component):
         * main : return all data
     """   
 
-    def __init__(self,name,openobject_connector,model,transformer=None,row_limit=0):
+    def __init__(self,name,openobject_connector,model,transformer=None):
         super(openobject_out, self).__init__('(etl.component.output.openobject_out) '+name,transformer=transformer)      
           
         self.openobject_connector = openobject_connector 
-        self.model=model    
-        self.row_limit=row_limit 
-        self.row_count=0                                
+        self.model=model
         self.connector=False 
 
     def action_end(self,key,singal_data={},data={}):        

@@ -11,6 +11,8 @@ import netsvc
 from report import interface ,report_sxw
 from osv import osv
 import time
+from document import dm_ddf_plugin
+from customer_function import customer_function
 
 class offer_document(rml_parse):
     def __init__(self, cr, uid, name, context):
@@ -21,21 +23,48 @@ class offer_document(rml_parse):
         })
         self.context = context        
     def document(self):
-        dm_customer_order = pooler.get_pool(self.cr.dbname).get('dm.customer.order')        
-        dm_plugins_value = pooler.get_pool(self.cr.dbname).get('dm.plugins.value')
-        order_id = dm_customer_order.search(self.cr,self.uid,[('offer_step_id','=',self.ids)])
-        order = dm_customer_order.browse(self.cr,self.uid,order_id)
-        customer_id = map(lambda x:x.customer_id.id,order)
-        res=[]
-        for cust in customer_id:
-            vals={}
-            vals['cust_id'] = cust
-            plugin_ids = dm_plugins_value.search(self.cr,self.uid,[('customer_id','=',cust)])
-            plugin_values = dm_plugins_value.read(self.cr,self.uid,plugin_ids,['plugin_id','value'])
-            for plugin in plugin_values:
-                vals[str(plugin['plugin_id'][0])]=plugin['value']
-            res.append(vals)
-        return res
+        dm_document = self.pool.get('dm.offer.document')
+        dm_plugins_value = self.pool.get('dm.plugins.value')
+        ddf_plugin = self.pool.get('dm.ddf.plugin')
+        customer_id = self.datas['form']['customer_id']
+        document = dm_document.browse(self.cr,self.uid,self.ids,['document_template_id','step_id'])[0]
+        plugins = document.document_template_id.plugin_ids or []
+        vals={}
+        for plugin in plugins:
+            args={}
+            if plugin.type=='fields':
+                res  = self.pool.get('ir.model').browse(self.cr,self.uid,plugin.object.id)
+                args['object']=res.model
+                args['field_name']=str(plugin.field.name)
+                args['field_type']=str(plugin.field.ttype)
+                args['field_relation']=str(plugin.field.relation)
+                plugin_value = customer_function(self.cr,self.uid,[customer_id],**args)
+                for p in plugin_value : 
+                    vals[str(plugin.id)]=p[1]
+            else :                
+                arguments = plugin.argument_ids
+                for a in arguments:
+                    if not a.stored_plugin :
+                        args[str(a.name)]=str(a.value)
+                    else : 
+                        res  = self.pool.get('ir.model').browse(self.cr,self.uid,a.custome_plugin_id.object.id)
+                        arg = {'object':str(res.model),
+                                    'field_name':str(a.custome_plugin_id.field.name),
+                                    'field_type':str(a.custome_plugin_id.field.ttype),
+                                    'field_relation' : str(a.custome_plugin_id.field.relation)}
+                        plugin_value = customer_function(self.cr,self.uid,[customer_id],**arg)
+                        for p in plugin_value : 
+                            args[str(a.name)]=p[1]                        
+                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",self.cr.dbname)
+                plugin_name = plugin.file_fname.split('.')[0]
+                import sys
+                sys.path.append(path)
+                X =  __import__(plugin_name)
+                plugin_func = getattr(X,plugin_name)
+                plugin_values = plugin_func(self.cr,self.uid,[customer_id],**args)
+                for p in plugin_values:
+                    vals[str(plugin.id)]=p[1]
+        return [vals]
 
 from report.report_sxw import report_sxw
 
@@ -72,19 +101,28 @@ class report_xml(osv.osv):
 #        'actual_model':fields.char('Report Object', size=64),
         'document_id':fields.integer('Document'),
         }
+    def upload_report(self, cr, uid, report_id, file_sxw,file_type, context):
+        '''
+        Untested function
+        '''
+        pool = pooler.get_pool(cr.dbname)
+        sxwval = StringIO(base64.decodestring(file_sxw))
+        if file_type=='sxw':
+            fp = tools.file_open('normalized_oo2rml.xsl',
+                    subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
+            rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
+        if file_type=='odt':
+            fp = tools.file_open('normalized_odt2rml.xsl',
+                    subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
+            rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
+        if file_type=='html':
+            rml_content = base64.decodestring(file_sxw)
+        report = pool.get('ir.actions.report.xml').write(cr, uid, [report_id], {
+            'report_sxw_content': base64.decodestring(file_sxw),
+            'report_rml_content': rml_content,
+        })
+        cr.commit()
+        db = pooler.get_db_only(cr.dbname)
+        interface.register_all(db)
+        return True    
 report_xml()
-
-#def mygetObjects(self, cr, uid, ids, context):
-#    table = self.table
-#    pool = pooler.get_pool(cr.dbname)
-#    ir_actions_report_xml_obj = pool.get('ir.actions.report.xml')
-#    if self.table=='dm.offer.document':
-#        report_xml_ids = ir_actions_report_xml_obj.search(cr, uid,
-#                [('report_name', '=', self.name[7:])], context=context)        
-#        if report_xml_ids:
-#            report_xml = ir_actions_report_xml_obj.browse(cr, uid, report_xml_ids[0],
-#                    context=context)
-#            table=report_xml.actual_model
-#        ids = pooler.get_pool(cr.dbname).get(table).search(cr,uid,[])
-#    res = pooler.get_pool(cr.dbname).get(table).browse(cr, uid, ids, list_class=browse_record_list, context=context, fields_process=_fields_process)
-#    return res

@@ -67,25 +67,10 @@ dm_order()
 
 class res_partner(osv.osv):
     _inherit = "res.partner"
-#    _table = "res_partner"
-#    _rec_name = "firstname"
     _columns = {
-#        'code' : fields.char('Code',size=64),
-#        'language_id' : fields.many2one('res.lang','Main Language'),
         'language_ids' : fields.many2many('res.lang','dm_customer_langs','lang_id','customer_id','Other Languages'),
         'prospect_media_ids' : fields.many2many('dm.media','dm_customer_prospect_media','prospect_media_id','customer_id','Prospect for Media'),
         'client_media_ids' : fields.many2many('dm.media','dm_customer_client_media','client_media_id','customer_id','Client for Media'),
-#        'title' : fields.char('Title',size=32),
-#        'firstname' : fields.char('First Name', size=64),
-        'lastname' : fields.char('Last Name', size=64),
-#        'add1' : fields.char('Address1', size=64),
-#        'add2' : fields.char('Address2', size=64),
-#        'add3' : fields.char('Address3', size=64),
-#        'add4' : fields.char('Address4', size=64),
-#        'country_id' : fields.many2one('res.country','Country'),
-#        'zip' : fields.char('Zip Code', size=16),
-#        'zip_summary' : fields.char('Zip Summary', size=64),
-#        'distribution_office' : fields.char('Distribution Office', size=64),
         'decoy_address' : fields.boolean('Decoy Address', help='A decoy address is an address used to identify unleagal uses of a customers file'),
         'decoy_owner' : fields.many2one('res.partner','Decoy Address Owner', help='The partner this decoy address belongs to'),
         'decoy_external_ref' : fields.char('External Reference', size=64, help='The reference of the decoy address for the owner'),
@@ -112,76 +97,39 @@ class dm_customer_order(osv.osv):
 #        'state': lambda *a: 'draft',
     }
 
-    """
-    def set_confirm(self, cr, uid, ids, *args):
-        res = self.browse(cr,uid,ids)[0]
-#        if res.customer_id:
-#            customer = self.pool.get('dm.customer').browse(cr,uid,[res.customer_id])[0]
-#            vals = {}
-#            if res.name != customer.name:
-#                 vals['name'] = customer.name
-#            if res.customer_number != customer.customer_number:
-#                 vals['customer_number'] = customer.customer_number
-        customer_id = res.customer_id.id
-
-        # Create Customer
-
-        if not res.customer_id:
-              vals={}
-              vals['customer_code']=res.customer_code
-              vals['name'] = ( res.customer_firstname or '') + ' ' + (res.customer_lastname or '')
-              address={'city':res.customer_add3,
-                       'name': vals['name'], 
-                       'zip': res.zip, 
-                       'title': res.title, 
-                       'street2': res.customer_add2, 
-                       'street': res.customer_add1,
-                    }
-#              state_id = self.pool.get("res.country.state")
-#              country_id = self.pool.get("res.country")
-              vals['address'] = [[0, 0,address]]
-              customer_id = self.pool.get('dm.customer').create(cr,uid,vals)
-        # Workitem
-
-        segment = self.pool.get('dm.campaign.proposition.segment')
-        segment_id = segment.search(cr,uid,[('action_code','=',res.action_code)])
-        if not segment_id :
-            raise osv.except_osv('Warning', 'No matching code found in campaign segment')
-        workitem = self.pool.get('dm.offer.step.workitem')
-        workitem_id = workitem.search(cr,uid,[('customer_id','=',res.customer_id.id),('segment_id','=',segment_id[0])])
-        vals={}
-
-        segment_obj = segment.browse(cr,uid,segment_id)[0]
-        offer_id = segment_obj.proposition_id.camp_id.offer_id.id
-        offer_step = self.pool.get('dm.offer.step')
-        step_id = offer_step.search(cr,uid,[('offer_id','=',offer_id),('type','=',res.offer_step)])
-
-        vals['step_id'] =step_id[0]
-
-        step = offer_step.browse(cr,uid,step_id)[0]
-
-        # change the loop
-        amount = 0
-        for p in step.product_ids:
-            amount+=p.price
-        vals['purchase_amount']= amount
-
-        # change workitem
-        if workitem_id : 
-
-            workitem.write(cr,uid,workitem_id,vals)
-        # create new workitem
-        else:
-            vals['customer_id']=customer_id
-            if segment_id :
-                vals['segment_id']=segment_id[0]
-            workitem.create(cr,uid,vals)
-
-        self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
-        return True
-        """
-
 dm_customer_order()
+
+class dm_customer_gender(osv.osv):
+    _name = "dm.customer.gender"
+
+    def _customer_gender_code(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for id in ids:
+            code=""
+            cust_gender = self.browse(cr,uid,[id])[0]
+            if cust_gender.lang_id:
+                if not cust_gender.from_gender:
+                    code='_'.join([cust_gender.lang_id.code, cust_gender.to_gender.name])
+                else:
+                    code='_'.join([cust_gender.lang_id.code, 'from', cust_gender.from_gender.name, 'to', cust_gender.to_gender.name])
+            else:
+                if not cust_gender.from_gender:
+                    code=cust_gender.to_gender.name
+                else:
+                    code='_'.join(['from', cust_gender.from_gender.name, 'to', cust_gender.to_gender.name])
+            result[id]=code
+        return result
+    
+    _columns = {
+        'name' : fields.char('Name', size=16),
+        'code' : fields.function(_customer_gender_code,string='Code',type='char',method=True,readonly=True),
+        'from_gender' : fields.many2one('res.partner.title', 'From Gender', domain="[('domain','=','contact')]"),
+        'to_gender' : fields.many2one('res.partner.title', 'To Gender', required=True, domain="[('domain','=','contact')]"),
+        'lang_id' : fields.many2one('res.lang', 'Language'),
+        'description' : fields.text('Description'),
+    }
+    
+dm_customer_gender()
 
 """
 class dm_workitem(osv.osv):
@@ -329,12 +277,6 @@ class dm_customer_text_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-#        'field' : fields.many2one('ir.model.fields','Customers Field',
-#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-#               '!',('model_id','like','dm.customers_list'),
-#               '!',('model_id','like','dm.plugins.value'),
-#               ('ttype','like','char')],
-#               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id','=','Partner'),
                ('ttype','like','char')],
@@ -351,13 +293,6 @@ class dm_customer_numeric_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-#        'field' : fields.many2one('ir.model.fields','Customers Field',
-#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-#               ('ttype','like','integer'),
-#               ('ttype','like','float'),
-#               '!',('model_id','like','dm.customers_list'),
-#               '!',('model_id','like','dm.plugins.value')],
-#               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id','=','Partner'),
                (('ttype','like','integer') or ('ttype','like','float'))],
@@ -374,12 +309,6 @@ class dm_customer_boolean_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-#        'field' : fields.many2one('ir.model.fields','Customers Field',
-#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-#               '!',('model_id','like','dm.customers_list'),
-#               '!',('model_id','like','dm.plugins.value'),
-#               ('ttype','like','boolean')],
-#               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id','=','Partner'),
                ('ttype','like','boolean')],
@@ -396,12 +325,6 @@ class dm_customer_date_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-#        'field' : fields.many2one('ir.model.fields','Customers Field',
-#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-#               ('ttype','like','date'),
-#               '!',('model_id','like','dm.customers_list'),
-#               '!',('model_id','like','dm.plugins.value')],
-#               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id','=','Partner'),
                (('ttype','like','date') or ('ttype','like','datetime'))],
@@ -418,10 +341,6 @@ class dm_customer_order_text_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-#        'field' : fields.many2one('ir.model.fields','Customers Field',
-#               domain=['&',('model_id','like','dm.customer'),'!',('model_id','like','dm.customer.order'),
-#               '!',('model_id','like','dm.customers_list')],
-#               context={'model':'dm.customer'}),
         'field' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id.model','=','dm.customer.order'),
                ('ttype','like','char')],
@@ -438,7 +357,6 @@ class dm_customer_order_numeric_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-#         'field' : fields.many2one('ir.model.fields','Customers Field'),
         'field' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id.model','=','dm.customer.order'),
                (('ttype','like','integer') or ('ttype','like','float'))],
@@ -471,7 +389,6 @@ class dm_customer_order_date_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-#        'field' : fields.many2one('ir.model.fields','Customers Field'),
         'field' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id.model','=','dm.customer.order'),
                (('ttype','like','date') or ('ttype','like','datetime'))],
@@ -487,13 +404,8 @@ class dm_offer_history(osv.osv):
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer', required=True, ondelete="cascade"),
         'date' : fields.date('Drop Date'),
-#        'user_id' : fields.many2one('res.users', 'User'),
-#        'state': fields.selection(AVAILABLE_STATES, 'Status', size=16)
         'campaign_id' : fields.many2one('dm.campaign','Name', ondelete="cascade"),
         'code' : fields.char('Code', size=16),
         'responsible_id' : fields.many2one('res.users','Responsible'),
     }
-#    _defaults = {
-#        'date': lambda *a: time.strftime('%Y-%m-%d'),
-#    }
 dm_offer_history()

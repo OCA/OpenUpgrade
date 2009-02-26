@@ -84,6 +84,15 @@
 	<menuitem id="menu_ecommerce_configuration" name="Configuration" parent="menu_ecommerce"/>
 	<menuitem name="Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form" parent="menu_ecommerce_configuration"/>
 	
+  	<record id="action_webshop_form_new" model="ir.actions.act_window">
+           <field name="name">New Web Shop</field>
+           <field name="type">ir.actions.act_window</field>
+           <field name="res_model">ecommerce.shop</field>
+           <field name="view_type">form</field>
+           <field name="view_mode">form,tree</field>
+    </record>
+    <menuitem action="action_webshop_form_new" sequence="50" id="menu_web_shop_form_new" parent="menu_ecommerce_configuration"/>
+	
 	<!-- Tree view of the category -->
 
 		<record model="ir.ui.view" id="product_category_form_view">
@@ -144,14 +153,19 @@
 				<field name="name" select="1" colspan="2"/>
 				<newline/> 
 				<notebook colspan="4">
+					<page string="Bank Wired Transaction" attrs="{'invisible':[('name','!=','banwt')]}">
+						<field name="bank_name"/>
+						<field name="acc_number"/>
+						<field name="bic"/>				
+					</page>
 					<page string="Payment Address" attrs="{'invisible':[('name','!=','cheque'),('name','!=','banwt')]}" >
 						<field name="chequepay_to" select="2" colspan="2" />
 						<field name="street" select="2" colspan="2"  />
 						<field name="street2" select="2" />
 						<field name="zip" select="2" ></field>
 						<field name="city" />
-						<field name="state_id" />
 						<field name="country_id" />
+						<field name="state_id" />
 					</page>
 					
 					<page string="Paypal Account Detail" attrs="{'invisible':[('name','!=','paypal')]}">
@@ -163,12 +177,6 @@
 					</page>
 					<page string="Credit Cards Accepted" attrs="{'invisible':[('name','!=','creditcard')]}">
 						<field name="creditcards"/>
-					</page>
-					<page string="Bank Wired Transaction" attrs="{'invisible':[('name','!=','banwt')]}">
-						<field name="bank_name"/>
-						<field name="acc_number"/>
-						<field name="iban"/>
-						<field name="bic"/>				
 					</page>
 				</notebook>
 			</form>
@@ -228,8 +236,8 @@
 					<field name="transaction_id"/>
 					<field name="saleorder_id"/>
 					<field name="invoice_id"/>
-					<field name="transaction_date"/>
-					<field name="partner" select="2"/>
+					<field name="transaction_date" select="1"/>
+					<field name="partner" select="1"/>
 				</tree>
 			</field>
 		</record>
@@ -239,12 +247,12 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Payment Received Details">
-					<field name="transaction_id" select="1" colspan="2"/>
+					<field name="partner" select="1"/>
+					<field name="paypal_acc" select="1"/>
+					<field name="transaction_date" select="1"/>
+					<field name="transaction_id" select="2" colspan="2"/>
 					<field name="saleorder_id" select="2" colspan="2"/>
 					<field name="invoice_id" select="2"/>
-					<field name="transaction_date" select="2"/>
-					<field name="partner" select="2"/>
-					<field name="paypal_acc"/>
 				</form>
 			</field>
 		</record>

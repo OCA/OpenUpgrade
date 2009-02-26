@@ -39,18 +39,9 @@ class component(signal.signal,statistic.statistic):
     _start_output={} 
     
         
-    def action_start(self,key,signal_data={},data={}):
-         trans=signal_data.get('trans',None)     
-         stat_date=signal_data.get('start_date',None)             
-         self.statistic( \
-             str(key), \
-             trans and str(trans.destination) or None, \
-             trans and str(trans.channel_source) or None, \
-             trans and str(trans.channel_destination) or None, \
-             len(self.data[trans]), \
-             stat_date)         
+    def action_start(self,key,signal_data={},data={}):         
          self.logger.notifyChannel("component", logger.LOG_INFO, 
-                     'the '+str(self)+' is start now...')
+                     'the '+str(self)+' is start now...')         
          return True
 
     def action_start_input(self,key,signal_data={},data={}):
@@ -71,23 +62,15 @@ class component(signal.signal,statistic.statistic):
     def action_stop(self,key,signal_data={},data={}):    
          # TODO : stop all IN_trans and OUT_trans  related this component
          self.logger.notifyChannel("component", logger.LOG_INFO, 
-                     'the '+str(self)+' is stop now...')                
+                     'the '+str(self)+' is stop now...')             
          return True
 
     
 
-    def action_end(self,key,signal_data={},data={}):         
-         trans=signal_data.get('trans',None)         
-         stat_date=signal_data.get('end_date',None)         
-         self.statistic( \
-             str(key), \
-             trans and str(trans.destination) or None, \
-             trans and str(trans.channel_source) or None, \
-             trans and str(trans.channel_destination) or None, \
-             len(self.data[trans]), \
-             stat_date)
+    def action_end(self,key,signal_data={},data={}):          
          self.logger.notifyChannel("component", logger.LOG_INFO, 
-                     'the '+str(self)+' is end now...')
+                     'the '+str(self)+' is end now...')        
+         
          return True 
          
 
@@ -137,35 +120,37 @@ class component(signal.signal,statistic.statistic):
         self.data.setdefault(trans, [])
         self._start_output.setdefault(trans,False)
         self._start_input.setdefault(trans,False)
-        gen = self.generator_get(trans) or [] 
+        gen = self.generator_get(trans) or []          
         if trans:
-            trans.signal('start')      
-        self.signal('start',{'trans':trans,'start_date':datetime.datetime.today()})     
-        while True:            
-            if self.data[trans]:                
-                if not self._start_output[trans]:
-                    self._start_output[trans]=datetime.datetime.today()                               
-                    self.signal('start_output',{'trans':trans,'start_output_date':datetime.datetime.today()})
-                yield self.data[trans].pop(0)                
-                continue
-            elif self.data[trans] is None:
-                self.signal('no_input')               
-                raise StopIteration
-            if not self._start_input[trans]:   
-                self._start_input[trans]=datetime.datetime.today()
-                self.signal('start_input',{'trans':trans,'start_input_date':datetime.datetime.today()})
-            data, chan = gen.next()             
-            if data is None:
-                self.signal('no_input')               
-                raise StopIteration            
-            for t,t2 in self.trans_out:
-                if (t == chan) or (not t) or (not chan):
-                    self.data.setdefault(t2, [])
-                    self.data[t2].append(data)   
-        # TOCHECK : why not send 'stop' signal of trans and 'end' signal of component after end of process
-        if trans:
-            trans.signal('stop')     
-        self.signal('end',{'trans':trans,'end_date':datetime.datetime.today()})
+            trans.signal('start')
+        self.signal('start')
+        try:     
+            while True:            
+                if self.data[trans]:                
+                    if not self._start_output[trans]:
+                        self._start_output[trans]=datetime.datetime.today()                               
+                        self.signal('start_output',{'trans':trans,'start_output_date':datetime.datetime.today()})
+                    yield self.data[trans].pop(0)                
+                    continue
+                elif self.data[trans] is None:
+                    self.signal('no_input')               
+                    raise StopIteration
+                if not self._start_input[trans]:   
+                    self._start_input[trans]=datetime.datetime.today()
+                    self.signal('start_input',{'trans':trans,'start_input_date':datetime.datetime.today()})
+                data, chan = gen.next()             
+                if data is None:
+                    self.signal('no_input')               
+                    raise StopIteration            
+                for t,t2 in self.trans_out:
+                    if (t == chan) or (not t) or (not chan):
+                        self.data.setdefault(t2, [])
+                        self.data[t2].append(data)   
+        except StopIteration,e:  
+            if trans:
+                trans.signal('end')          
+            self.signal('end')
+            
 
     def stats_get():
         return statistic.statistic.statistics_get

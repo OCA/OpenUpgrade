@@ -60,4 +60,3 @@ if __name__ == '__main__':
     test.check_input({'main':[{'id':1, 'name':'OpenERP'},{'id':2,'name':'Fabien'}]})
     test.check_output([{'id':2, 'name':'OpenERP'},{'id':1,'name':'Fabien'}],'main')
     res=test.output()
-    
