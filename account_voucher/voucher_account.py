@@ -142,6 +142,8 @@ class Account(osv.osv):
 #                    res_temp['name']=vals['name']
 #            vals['code']=self.account_code_gen(cr, uid, res_temp['parent_id'],res_temp['name'])
         if vals.has_key('name'):
+            if not vals.has_key('company_id'):
+                vals['company_id']=self.browse(cr,uid,ids)[0].company_id.id
             name=self.search(cr,uid,[('name','ilike',vals['name']),('company_id','=',vals['company_id'])])
             if name:
                 raise osv.except_osv('Error', 'Same Account Name is Already present !')
@@ -250,7 +252,6 @@ class res_currency(osv.osv):
 
     _columns = {
                 'sub_name': fields.char('Sub Currency', size=32, required=True)
-
             }
     _defaults = {
         'sub_name': lambda *a: 'cents',
