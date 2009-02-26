@@ -27,7 +27,7 @@ from etl.component import component
 from etl.connector import sql_connector
 import datetime
 
-class sql_in(component.component):
+class sql_in(component):
     """
         This is an ETL Component that use to read data from sql db.
 
@@ -39,7 +39,7 @@ class sql_in(component.component):
         * .* : return the main flow with data from csv file
     """
 
-    def __init__(self,name,sqlconnector,sqlquery,transformer=None,row_limit=0):
+    def __init__(self,sqlconnector,sqlquery,name='',transformer=None,row_limit=0):
         super(sql_in, self).__init__('(etl.component.input.sql_in) '+name,transformer=transformer)
 
         self.sqlconnector = sqlconnector

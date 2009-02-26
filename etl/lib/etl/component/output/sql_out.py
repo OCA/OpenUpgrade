@@ -26,7 +26,7 @@ This is an ETL Component that use to write data into sql table.
 from etl.component import component
 import datetime
 
-class sql_out(component.component):
+class sql_out(component):
     """
         This is an ETL Component that use to write data into sql table.
 
@@ -38,7 +38,7 @@ class sql_out(component.component):
         * main : return all data
     """   
 
-    def __init__(self,name,sqlconnector,sqltable,transformer=None,row_limit=0):
+    def __init__(self,sqlconnector,sqltable,name='',transformer=None,row_limit=0):
         super(sql_out, self).__init__('(etl.component.output.sql_out) '+name,transformer=transformer)      
           
         self.sqlconnector = sqlconnector 

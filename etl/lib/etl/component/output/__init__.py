@@ -28,7 +28,7 @@ ETL Input Components:
 * xml_out : write data in xml file
 
 """
-import csv_out
-import sql_out
-import openobject_out
+from csv_out import csv_out
+from sql_out import sql_out
+from openobject_out import openobject_out
 
