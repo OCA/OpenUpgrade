@@ -1,7 +1,29 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
+	
+		<!-- Countries -->
 
+		<record id="base.be" model="res.country">
+            <field name="main_language" ref="base.lang_en"/>
+            <field name="main_currency" ref="base.EUR"/>
+        </record>
+
+		<record id="base.in" model="res.country">
+            <field name="main_language" ref="base.lang_en"/>
+            <field name="main_currency" ref="base.INR"/>
+        </record>
+
+		<record id="base.fr" model="res.country">
+            <field name="main_language" ref="base.lang_en"/>
+            <field name="main_currency" ref="base.EUR"/>
+        </record>
+        
+		<record id="base.us" model="res.country">
+            <field name="main_language" ref="base.lang_en"/>
+            <field name="main_currency" ref="base.USD"/>
+        </record>
+        
         <!-- Partner Categories -->
 
         <record id="res_partner_category_directmarketing0" model="res.partner.category">
@@ -708,5 +730,49 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 			<field eval="&quot;&quot;&quot;None&quot;&quot;&quot;" name="name"/>
 		</record>
 	</data>
+
+    <!-- ACCOUNT JOURNAL -->
     
+    <data noupdate="1">
+	    <record id="paypal_journal" model="account.journal">
+		    <field name="name">Paypal Journal</field>
+		    <field name="code">PAJ</field>
+		    <field name="type">cash</field>
+		    <field name="view_id" ref="account.account_journal_bank_view"/>
+		    <field name="sequence_id" ref="account.sequence_journal"/>
+		    <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
+		    <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
+		    <field name="user_id" ref="base.user_root"/>
+	    </record>
+	    <record id="visa_journal" model="account.journal">
+		    <field name="name">Visa Journal</field>
+		    <field name="code">VIJ</field>
+		    <field name="type">cash</field>
+		    <field name="view_id" ref="account.account_journal_bank_view"/>
+		    <field name="sequence_id" ref="account.sequence_journal"/>
+		    <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
+		    <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
+		    <field name="user_id" ref="base.user_root"/>
+	    </record>
+	    <record id="mastercard_journal" model="account.journal">
+		    <field name="name">Mastercard Journal</field>
+		    <field name="code">MAJ</field>
+		    <field name="type">cash</field>
+		    <field name="view_id" ref="account.account_journal_bank_view"/>
+		    <field name="sequence_id" ref="account.sequence_journal"/>
+		    <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
+		    <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
+		    <field name="user_id" ref="base.user_root"/>
+	    </record>
+	    <record id="ae_journal" model="account.journal">
+		    <field name="name">American Express Journal</field>
+		    <field name="code">AEJ</field>
+		    <field name="type">cash</field>
+		    <field name="view_id" ref="account.account_journal_bank_view"/>
+		    <field name="sequence_id" ref="account.sequence_journal"/>
+		    <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
+		    <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
+		    <field name="user_id" ref="base.user_root"/>
+	    </record>
+    </data>
 </openerp>
