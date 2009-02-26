@@ -90,7 +90,7 @@ This test checks if the module satisfy tiny structure
                 for r in reports:
                     org_list_rep.append(l+r)
             org_list_rep.append('__init__.py')
-            score_report = self.get_score(module_dict['report'], org_list_rep, 'report//')
+            score_report = self.get_score(module_dict['report'], org_list_rep, 'report/')
             n = n + 1
             final_score += score_report
 
@@ -104,7 +104,7 @@ This test checks if the module satisfy tiny structure
                 for r in wizards:
                     org_list_wiz.append(l+r)
             org_list_wiz.append('__init__.py')
-            score_wizard = self.get_score(module_dict['wizard'], org_list_wiz, 'wizard//')
+            score_wizard = self.get_score(module_dict['wizard'], org_list_wiz, 'wizard/')
             n = n + 1
             final_score += score_wizard
 
@@ -112,7 +112,7 @@ This test checks if the module satisfy tiny structure
         if module_dict.has_key('security'):
             security = [module_name + '_security.xml']
             security.extend(['ir.model.access.csv'])
-            score_security = self.get_score(module_dict['security'], security, 'security//')
+            score_security = self.get_score(module_dict['security'], security, 'security/')
             n = n + 1
             final_score += score_security
 
