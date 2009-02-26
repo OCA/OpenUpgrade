@@ -31,4 +31,5 @@ ETL Input Components:
 from csv_in import csv_in
 from sql_in import sql_in
 from openobject_in import openobject_in
+from vcard_in import vcard_in
 
