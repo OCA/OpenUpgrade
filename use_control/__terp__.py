@@ -33,6 +33,7 @@ You can not uninstall or delete it.
     "init_xml" : [],
     "update_xml" : [
         "use_control_view.xml",
+        "security/ir.model.access.csv",
     ],
     "demo_xml" : [],
     "installable": True,
