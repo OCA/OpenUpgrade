@@ -19,64 +19,57 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-"""
-This is an ETL Component that use to read data from csv file.
-"""
-
 
 from etl.component import component
 import csv
+import vobject  
+class vcard_in(component):
 
-
-class csv_in(component):
-    """
-        This is an ETL Component that use to read data from csv file.
-
-        Type: Data Component
-        Computing Performance: Streamline
-        Input Flows: 0
-        * .* : nothing
-        Output Flows: 0-x
-        * .* : return the main flow with data from csv file
-    """
-
-    def __init__(self,fileconnector,name='',transformer=None,row_limit=0, csv_params={}):
-        super(csv_in, self).__init__('(etl.component.input.csv_in) '+name,transformer=transformer)
+    def __init__(self,fileconnector,name=''):
+        super(vcard_in, self).__init__('(etl.component.input.csv_in) '+name)
         self.fileconnector = fileconnector
-        self.csv_params=csv_params
-        self.row_limit=row_limit
         self.fp=None
         self.reader=None
 
     def action_start(self,key,singal_data={},data={}):
-        super(csv_in, self).action_start(key,singal_data,data)
-        self.row_count=0
+       
+        super(vcard_in, self).action_start(key,singal_data,data)
         self.fp=self.fileconnector.open('r')
-        self.reader=csv.DictReader(self.fp,**self.csv_params)
-
+      
+        #self.reader=csv.DictReader(self.fp,**self.csv_params)
+        self.s = "".join(self.fp.readlines())
+        self.reader = vobject.readComponents(self.s)
+           
+        
     def action_end(self,key,singal_data={},data={}):
-        super(csv_in, self).action_end(key,singal_data,data)
+       
+        super(vcard_in, self).action_end(key,singal_data,data)
         if self.fp:
-             self.fp.close()
+            self.fp.close()
+           
         if self.fileconnector:
-             self.fileconnector.close()
-
+            self.fileconnector.close()
+    
     def process(self):
         try:
-            for data in self.reader:
-                self.row_count+=1
-                if self.row_limit and self.row_count > self.row_limit:
-                     raise StopIteration
-                if self.transformer:
-                    data=self.transformer.transform(data)
-                if data:
-                    yield data,'main'
-
-
-        except TypeError,e:
-            self.action_error(e)
+            while True:
+                row={}
+                data=self.reader.next()
+                for d in data.contents:
+                    if unicode(d)=='version':
+                        row['version']=data.version.value
+                    if unicode(d)=='email':
+                        row['email']=data.email.value
+                    if unicode(d)=='fn':
+                        row['fn']=data.fn.value
+                    if unicode(d)=='org':
+                        row['org']=data.org.value[0]
+                       
+                yield row,'main'
+            
         except IOError,e:
-            self.action_error(e)
+            self.action_error(e) 
+         
 
 
 

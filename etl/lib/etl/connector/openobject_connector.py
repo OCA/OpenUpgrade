@@ -29,8 +29,8 @@ from etl import etl_socket
 from etl.connector import connector
 
 
-class openobject_connector(connector.connector):    
-    def __init__(self, uri, db, login, passwd, obj='/object',con_type='xmlrpc'):
+class openobject_connector(connector):    
+    def __init__(self, uri, db, login, passwd, obj='/xmlrpc/object',con_type='xmlrpc'):
         super(openobject_connector, self).__init__(uri)        
         self.db = db
         self.user_login = login
@@ -51,14 +51,14 @@ class openobject_connector(connector.connector):
         return self.connector
 
     def login(self):
-        internal_connector=openobject_connector(self.uri,self.db,self.user_login,self.passwd,obj='/common')
+        internal_connector=openobject_connector(self.uri,self.db,self.user_login,self.passwd,obj='/xmlrpc/common')
         internal_connector.open()
         self.uid=internal_connector.execute_without_login('login',self.user_login,self.passwd)
         internal_connector.close()
         return self.uid
 
     def logout(self):
-        internal_connector=openobject_connector(self.uri,self.db,self.user_login,self.passwd,obj='/common')
+        internal_connector=openobject_connector(self.uri,self.db,self.user_login,self.passwd,obj='/xmlrpc/common')
         internal_connector.open()
         res=internal_connector.execute_without_login('logout',self.user_login,self.passwd)
         if res :
@@ -81,7 +81,7 @@ class openobject_connector(connector.connector):
     
     def execute_without_login(self,method, *args):             
         super(openobject_connector, self).execute()
-        if self.con_type=='xmlrpc':
+        if self.con_type=='xmlrpc':            
             result = getattr(self.connector,method)(self.db, *args)
             return self.__convert(result)
         elif self.con_type=='socket':            
@@ -97,7 +97,7 @@ class openobject_connector(connector.connector):
         if not self.uid:
             raise Exception('Not login')
         super(openobject_connector, self).execute()
-        if self.con_type=='xmlrpc':
+        if self.con_type=='xmlrpc':            
             result = getattr(self.connector,method)(self.db,self.uid,self.passwd, *args)
             return self.__convert(result)
         elif self.con_type=='socket':            

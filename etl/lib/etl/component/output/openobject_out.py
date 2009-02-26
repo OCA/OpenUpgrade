@@ -26,7 +26,7 @@ This is an ETL Component that use to write data into openobject model.
 from etl.component import component
 import datetime
 
-class openobject_out(component.component):
+class openobject_out(component):
     """
         This is an ETL Component that use to write data into sql table.
 
@@ -38,7 +38,7 @@ class openobject_out(component.component):
         * main : return all data
     """   
 
-    def __init__(self,name,openobject_connector,model,transformer=None):
+    def __init__(self,openobject_connector,model,name='',transformer=None):
         super(openobject_out, self).__init__('(etl.component.output.openobject_out) '+name,transformer=transformer)      
           
         self.openobject_connector = openobject_connector 

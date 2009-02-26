@@ -25,6 +25,6 @@ ETL Control Components:
 * data_count : calculate total of tranfering data
 * sleep : put job process in sleep
 """
-import data_count
-import sleep
+from data_count import data_count
+from sleep import sleep
 

@@ -25,7 +25,7 @@
 
 from etl.component import component
 import sys
-class logger(component.component):
+class logger(component):
     """
         This is an ETL Component that use to display log detail in streamline.
  
@@ -36,7 +36,7 @@ class logger(component.component):
 		Output Flows: 0-y
 		* .* : return the main flow 
     """    
-    def __init__(self, name, output=sys.stdout):        
+    def __init__(self, name='', output=sys.stdout):        
         self.output = output
         self.is_end = 'main'
         super(logger, self).__init__('(etl.component.output.logger) '+name)

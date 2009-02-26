@@ -25,17 +25,9 @@
 
 """
 import datetime 
-import logger   
+import logger  
 
-INTEGER='int'
-STRING='str'
-DATE='date'
-DATETIME='datetime'
-TIME='time'
-FLOAT='float'
-LONG='long'
-COMPLEX='complex'
-BOOLEAN='bool'
+
 
 DATE_FORMAT='%Y-%m-%d'
 TIME_FORMAT='%H:%M:%S'
@@ -59,7 +51,15 @@ class transformer(object):
            description= {'id':etl.transformer.LONG,'name':etl.transformer.STRING,'invoice_date':etl.transformer.DATE,'invoice_amount':etl.transformer.FLOAT,'is_paid':etl.transformer.BOOLEAN}
            return = [{'id':1,'name':'abc','invoice_date': datetime.date object (2009, 10, 20) ,'invoice_amount':200.00,'is_paid':True}]
     """
-    
+    INTEGER='int'
+    STRING='str'
+    DATE='date'
+    DATETIME='datetime'
+    TIME='time'
+    FLOAT='float'
+    LONG='long'
+    COMPLEX='complex'
+    BOOLEAN='bool'
 
     _transform_method={
         'int':int,

@@ -25,12 +25,13 @@ This package use for ETL system
 """
 
 
-import signal
+from signal import signal
+from statistic import statistic
+from job import job
+from transition import transition
+from transformer import transformer
+
 import logger
-import statistic
-import transformer
-import job
-import transition
 import component
 import connector
 

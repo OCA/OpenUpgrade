@@ -26,7 +26,7 @@ ETL Connectors:
 """
 from etl.connector import connector
 
-class file_connector(connector.connector):
+class file_connector(connector):
     def __init__(self,uri,bufsize=-1,encoding='utf-8'):
         super(file_connector, self).__init__(uri)               
         self.bufsize=bufsize

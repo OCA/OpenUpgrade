@@ -25,7 +25,7 @@ This is an ETL Component that use to find diff.
 
 from etl.component import component
 
-class diff(component.component):
+class diff(component):
     """
         This is an ETL Component that use to find diff.
         Takes 2 flows in input and detect a difference between these two flows
@@ -43,7 +43,7 @@ class diff(component.component):
         * removed: return all elements that where in main and not in the second flow
         * added: return all elements from the second flow that are not in main channel
     """
-    def __init__(self, name,keys):
+    def __init__(self, keys,name=''):
         self.keys = keys
         self.row = {}
         self.diff = []

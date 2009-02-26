@@ -27,8 +27,8 @@ ETL Components:
 * Transform Components
 * Control Components
 """
-from etl.component import component
-from etl.component import input
-from etl.component import output
-from etl.component import transform
-from etl.component import control
+from component import component
+import input
+import output
+import transform
+import control

@@ -73,8 +73,8 @@ function register(msg) {
 			var d = window.mbox.content;
 			d.innerHTML = xmlHttp.responseText;
 			
-			window.mbox.width = 400;
-	        window.mbox.height = 250;
+			window.mbox.width = 500;
+	        window.mbox.height = 330;
 	        
 	        window.mbox.onUpdate = add_new_user;
 			window.mbox.show();
@@ -150,8 +150,8 @@ function add_factor(id) {
         }
         
         else {
-		window.mbox.width = 450;
-        window.mbox.height = 300;
+		window.mbox.width = 500;
+        window.mbox.height = 330;
         
         window.mbox.onUpdate = add_new_factor;
 		window.mbox.show();
@@ -228,8 +228,8 @@ function open_item_vote(id, header) {
         	register(msg);
         }
         else {
-        	window.mbox.width = 650;
-        	window.mbox.height = 500;
+        	window.mbox.width = 500;
+        	window.mbox.height = 330;
         	window.mbox.onUpdate = item_vote;
 			window.mbox.show();
         }
@@ -344,14 +344,12 @@ function on_button_click(evt, node) {
 }
 
 var expand_tree = function(elem) {
-	
-	var tree= comparison_tree;
-	if(elem.value == 'Complete Comparison') {
-		tree.rootNode.expand(true);
-		elem.value = 'Summerized Comparison'
+	if(elem.innerHTML == 'Complete Comparison') {
+		elem.innerHTML = 'Summerized Comparison'
+		window.location.href = '/comparison?all='+'1'
 	}
-	else if(elem.value = 'Summerized Comparison') {
-		tree.reload()
-		elem.value = 'Complete Comparison'
+	else if(elem.innerHTML = 'Summerized Comparison') {
+		elem.innerHTML = 'Complete Comparison'
+		window.location.href = '/comparison'
 	}
 }

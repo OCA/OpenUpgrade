@@ -26,7 +26,7 @@
 from etl.component import component
 import sys
 
-class merge(component.component):
+class merge(component):
     """
         This is an ETL Component that merge all input flows into only one ouput flow.
 

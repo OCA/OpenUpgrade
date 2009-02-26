@@ -300,7 +300,7 @@ TreeNode.prototype = {
             	MochiKit.DOM.setNodeAttribute(td,'width','2px');
             }
             if(td.className == 'url')
-            	MochiKit.DOM.setNodeAttribute(td,'width','3px');
+            	MochiKit.DOM.setNodeAttribute(td,'width','5px');
             if (i == 0) { // first column
     
                 var tds = [];

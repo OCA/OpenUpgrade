@@ -122,7 +122,7 @@ class wizard_proposition_products(wizard.interface):
     
     def check_price_prog(self, cr, uid, data, context):
         res = pooler.get_pool(cr.dbname).get('dm.campaign.proposition').browse(cr, uid, data['ids'])[0]
-        if res.price_prog_use:
+        if not res.price_prog_use:
             data['form'] = {'prices_progression': 1}
             return 'select'
         else:
