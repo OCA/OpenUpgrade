@@ -27,7 +27,7 @@ from etl.component import component
 import csv
 import datetime
 
-class csv_out(component.component):
+class csv_out(component):
     """
         This is an ETL Component that use to write data to csv file.
 
@@ -39,7 +39,7 @@ class csv_out(component.component):
         * main : return all data
     """   
 
-    def __init__(self,name,fileconnector,transformer=None,row_limit=0, csv_params={}):
+    def __init__(self,fileconnector,transformer=None,name='',row_limit=0, csv_params={}):
         super(csv_out, self).__init__('(etl.component.output.csv_out) '+name,transformer=transformer)      
           
         self.fileconnector = fileconnector 

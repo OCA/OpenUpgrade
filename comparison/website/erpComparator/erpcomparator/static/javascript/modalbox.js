@@ -50,8 +50,8 @@ ModalBox.prototype = {
 
     show : function() {
 
-        //setElementDimensions(this.overlay, elementDimensions(document.body));
-        MochiKit.DOM.setElementDimensions(this.overlay, {'w': window.screen.availWidth, 'h': window.screen.availHeight});
+        setElementDimensions(this.overlay, elementDimensions(document.body));
+//        MochiKit.DOM.setElementDimensions(this.overlay, {'w': window.screen.availWidth, 'h': window.screen.availHeight});
 		
         var w = this.width || 0;
         var h = this.height || 0;

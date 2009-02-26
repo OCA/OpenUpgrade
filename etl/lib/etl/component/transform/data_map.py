@@ -26,13 +26,13 @@ Data Map component
 from etl.component import component
 import datetime
 
-class data_map(component.component):
+class map(component):
     """
         Data map component
     """
 
-    def __init__(self,name,map_criteria,transformer=None):
-        super(data_map, self).__init__('(etl.component.transfer.data_map) '+name,transformer=transformer)
+    def __init__(self,map_criteria,name='',transformer=None):
+        super(map, self).__init__('(etl.component.transfer.map) '+name,transformer=transformer)
         self.map_criteria = map_criteria
 
     def process(self):

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    ETL system- Extract Transfer Load system
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,15 +20,5 @@
 #
 ##############################################################################
 
-"""
-ETL Input Components:
-* csv_out : write data in csv file
-* sql_out : insert, update, delete data in sql database
-* openobject_out : create, write, unlink  data in openobject 
-* xml_out : write data in xml file
 
-"""
-from csv_out import csv_out
-from sql_out import sql_out
-from openobject_out import openobject_out
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

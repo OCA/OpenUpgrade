@@ -25,7 +25,7 @@ This is an ETL Component that use to perform sort operation.
 
 from etl.component import component
 
-class sort(component.component):
+class sort(component):
     """
         This is an ETL Component that use to perform sort operation.
  
@@ -37,7 +37,7 @@ class sort(component.component):
         * .* : return the main flow with sort result
     """    
 
-    def __init__(self, name,fieldname):
+    def __init__(self, fieldname,name=''):
         super(sort, self).__init__('(etl.component.process.sort) '+name )
         self.fieldname = fieldname
 

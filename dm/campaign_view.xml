@@ -664,7 +664,7 @@
                     <field name="customer_pricelist_id"/>
                     <button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
                     </group>
-                    <group col="4" colspan="4">
+                    <group col="6" colspan="4">
                     <field name="force_sm_price"/>
                     <field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
                     <field name="price_prog_use" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
@@ -843,8 +843,11 @@
                         <field name="split_id" />
                         <field name="reuse_id" />
                         <separator string="Segmentation" colspan="4"/>
+                        <group colspan="4" col="6">
                         <field name="start_census"/>
                         <field name="end_census"/>
+                        <field name="type_census"/>
+                        </group>
                         <field name="deduplication_level"/>
                         <separator string="Segmentation Criteria" colspan="4"/>
                         <field name="segmentation_criteria" colspan="4" nolabel="1"/>
@@ -862,11 +865,11 @@
                         <newline/>
                         <field name="quantity_dedup_dedup" string="- Deduplication"/>
                         <newline/>
-                        <field name="quantity_cleaned_dedup" string="- Cleaning"/>
+                        <field name="quantity_cleaned_dedup" string="- Cleaning" groups="base.group_extended"/>
                         <newline/>
                         <separator string="Removed by Cleaner" colspan="2"/>
                         <newline/>
-                        <field name="quantity_dedup_cleaner" string="- Deduplication"/>
+                        <field name="quantity_dedup_cleaner" string="- Deduplication" groups="base.group_extended"/>
                         <newline/>
                         <field name="quantity_cleaned_cleaner" string="- Cleaning"/>
                         <field name="quantity_purged" select="2"/>
@@ -933,7 +936,7 @@
                     <field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
                     <group colspan="4">
                     <separator string="Total Quantities" colspan="4"/>
-                    <field name="quantity_planned_total"/>
+<!--                    <field name="quantity_planned_total"/>-->
                     <field name="quantity_wanted_total"/>
                     <field name="quantity_delivered_total"/>
                     <field name="quantity_usable_total"/>
@@ -1466,7 +1469,19 @@
     =======================================================
     -->
 
-    <record id="view_partner_property_form" model="ir.ui.view">
+    <record id="view_partner_property_form1" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+             <field name="name" select="2" position="before">
+                    <field name="firstname" select="1"/>
+             </field>
+        </field>
+	</record>
+	
+    <record id="view_partner_property_form2" model="ir.ui.view">
         <field name="name">res.partner.form.inherit</field>
         <field name="model">res.partner</field>
         <field name="type">form</field>
@@ -1474,6 +1489,7 @@
         <field name="arch" type="xml">
             <notebook colspan="4" position="inside">
                 <page string="Direct Marketing">
+                	<field name="dm_contact_id" colspan="4"/>
                     <separator string="Allowed Countries" colspan="4"/>
                     <field name="country_ids" colspan="4" nolabel="1"/>
                     <separator string="Allowed States" colspan="4"/>

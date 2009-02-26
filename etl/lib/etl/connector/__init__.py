@@ -26,7 +26,7 @@ ETL Connectors:
 * DB Connection
 * Open Object Interfaces
 """
-import connector
-import file_connector
-import sql_connector
-import openobject_connector
+from connector import connector
+from file_connector import file_connector 
+from sql_connector import sql_connector 
+from openobject_connector import openobject_connector  

@@ -24,10 +24,10 @@
     The module for ETL job.
 
 """
-import signal
+from signal import signal
 import logger
 import pickle
-class job(signal.signal):
+class job(signal):
     """
        Base class of ETL job.
     """
@@ -76,7 +76,7 @@ class job(signal.signal):
         return True
 
  
-    def __init__(self,name,outputs=[]):
+    def __init__(self,outputs=[],name=''):
         super(job, self).__init__()
         self.name=name
         self.outputs=outputs

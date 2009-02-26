@@ -25,11 +25,11 @@
 from etl.component import component
 import time
 
-class sleep(component.component):
+class sleep(component):
     """
        put job process in sleep.
     """
-    def __init__(self, name,delay=1):
+    def __init__(self, delay=1,name=''):
         self.delay = delay
         super(sleep, self).__init__('(etl.component.control.sleep) '+name)
 

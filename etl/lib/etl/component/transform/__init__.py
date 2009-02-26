@@ -27,11 +27,11 @@ ETL Components:
 * logger_bloc
 * logger
 """
-import diff
-import sort
-import merge
+from diff import diff
+from sort import sort
+from merge import merge
 
-import logger_bloc
-import logger
-import data_filter
-import data_map
+from logger_bloc import logger_bloc
+from logger import logger
+from data_filter import data_filter
+from data_map import map
