@@ -177,19 +177,20 @@
                         <field name="object" colspan="4" attrs="{'required':[('type','=','fields')]}" />
     	                <field name="field"  colspan="4" domain = "[('model_id','=',object)]" attrs="{'required':[('type','=','fields')]}" />
                     </page>
-                    <page string="Dynamic Plugin" attrs="{'invisible':[('type','!=','dynamic')]}">
+                    <page string="Dynamic Plugin" attrs="{'invisible':[('type','=','fields')]}">
 		                <field name="file_id" colspan="4" filename="file_fname" />
 		                <field name="file_fname" />
+		                <field name="url_text" attrs="{'invisible':[('type','!=','url')]}" />
 						<separator string="Argument List" colspan="4"/>
 						<field name="argument_ids" nolabel="1" colspan="4">
 							<form string="Argument List">
 		            			<group  colspan="4">
 					                <field name="name" select="1"/>
-					                <field name="sotred_plugin"/>
-					                <group  colspan="4" attrs="{'invisible':[('sotred_plugin','=',True)]}">
+					                <field name="stored_plugin"/>
+					                <group  colspan="4" attrs="{'invisible':[('stored_plugin','=',True)]}">
 					                	<field name="value" />
 					                </group>
-					                <group  colspan="4"  attrs="{'invisible':[('sotred_plugin','=',False)]} ">
+					                <group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',False)]} ">
 					                	<field name="custome_plugin_id"/>
 					                </group>
 								</group>			                

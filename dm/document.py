@@ -40,6 +40,7 @@ class dm_ddf_plugin(osv.osv):
             plugin_ids = map(lambda x : x.id,res.plugin_ids)
             return plugin_ids
         return super(dm_ddf_plugin,self).search(cr,uid,args,offset,limit,order,context,count)
+
     
     def _check_plugin(self, cr, uid, ids=False, context={}):
         dm_document = self.pool.get('dm.offer.document')
@@ -136,9 +137,10 @@ class dm_ddf_plugin(osv.osv):
         'file_fname': fields.char('Filename',size=64),
         'argument_ids' : fields.one2many('dm.plugin.argument', 'plugin_id', 'Argument List'),
         'note' : fields.text('Description'),
-        'type' : fields.selection([('fields','Customer'),('dynamic','Dynamic')], 'Type', required=True),
+        'type' : fields.selection([('fields','Customer'),('dynamic','Dynamic'),('url','URL')], 'Type', required=True),
         'field' : fields.many2one('ir.model.fields','Customers Field'),
-        'object' : fields.many2one('ir.model','Object',),      
+        'object' : fields.many2one('ir.model','Object'),
+        'url_text' : fields.char('Text To Display',size=64),     
                      
      }
     _sql_constraints = [
@@ -155,7 +157,7 @@ class dm_plugin_argument(osv.osv):
         'value' : fields.text('Argument Value', size=64),
         'plugin_id' : fields.many2one('dm.ddf.plugin','Plugin'),
         'note' : fields.text('Description',readonly=True),
-        'sotred_plugin' : fields.boolean('Value from plugin'),
+        'stored_plugin' : fields.boolean('Value from plugin'),
         'custome_plugin_id' : fields.many2one('dm.ddf.plugin','Plugin For Value' ,domain=[('type','=','fields')]),
         }
 dm_plugin_argument()

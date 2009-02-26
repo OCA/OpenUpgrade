@@ -135,13 +135,14 @@ This test checks if the module satisfy tiny structure
         for i in module_list:
             if i in original_files:
                 score += 1
-            else:     
-                self.result_dict[i] = [mod_folder+i,'File name does not follow naming standards.']
-                score -= 1
-                module_length -= 1
+            else:
+                if not mod_folder != 'wizard//':
+                    self.result_dict[i] = [mod_folder + i,'File name does not follow naming standards.']
+                    score -= 1
+                    module_length -= 1
         score = float(score) / float(module_length)
         return score
-    
+
     def get_result_details(self, dict):
         str_html = '''<html><head></head><body><table border="1">'''
         header = ('<tr><th>%s</th><th>%s</th></tr>',[_('File Name'),_('Feedback about structure of module')])
