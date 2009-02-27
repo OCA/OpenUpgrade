@@ -45,14 +45,15 @@ Test Checks if fields and views on the object
         field_obj = pool.get('ir.model.fields')
         view_obj = pool.get('ir.ui.view')
         field_ids = field_obj.search(cr, uid, [('model', 'in', obj_list)])
-        view_ids = view_obj.search(cr, uid, [('model', 'in', obj_list)])
+        view_ids = view_obj.search(cr, uid, [('model', 'in', obj_list), ('type', 'in', ['tree', 'form'])])
         field_data = field_obj.browse(cr, uid, field_ids)
         view_data = view_obj.browse(cr, uid, view_ids)
         result_dict = {}
         result_view = {}
         good_field = 0
-        bad_field = 0
         total_field = 0
+        for field in field_data:
+            result_dict[field.model] = []
         for field in field_data:
             type = field.ttype
             name = field.name
@@ -63,22 +64,22 @@ Test Checks if fields and views on the object
                     good_field += 1
                 else:
                     data = 'many2one field should end with _id'
-                    result_dict[name] = [field.model, name, data]
-                    bad_field += 1
+                    result_dict[field.model].append([field.model, name, data])
             elif type in ['many2many', 'one2many']:
                 if name.split('_')[-1] == 'ids':
                     good_field += 1
                 else:
                     data = '%s field should end with _ids'%(type)
-                    result_dict[name] = [field.model, name, data]
-                    bad_field += 1
+                    result_dict[field.model].append([field.model, name, data])
             elif check_str.match(name):
                 good_field += 1
             else:
                 data = 'Field name should be in lower case or it should follow python standard'
-                result_dict[name] = [field.model, name, data]
-                bad_field += 1
+                result_dict[field.model].append([field.model, name, data])
 
+        for res in result_dict.keys():
+            if not result_dict[res]:
+                del result_dict[res]
         view_dict = {}
         total_views = len(obj_list) * 2
         model_views = 0
@@ -90,6 +91,7 @@ Test Checks if fields and views on the object
             view_dict[view.model].append(view.type)
         for dict in view_dict:
             if len(view_dict[dict]) < 2:
+                model_views -= 1
                 result_view[dict] = [dict, 'You should have atleast form/tree view of an object']
 
         score_view = float(model_views) / float(total_views)
@@ -108,15 +110,26 @@ Test Checks if fields and views on the object
         return ""
 
     def get_result_details(self, dict):
-        str_html = '''<html><head></head><body><table border="1">'''
-        header = ('<tr><th>%s</th><th>%s</th><th>%s</th></tr>',[_('Object Name'), _('Field name'), _('Suggestion')])
-        if not self.error:
-           res = str_html + self.format_html_table(header, data_list=dict) + '</table></body></html>'
-           return res
+        res = ""
+        if dict!={}:
+            str_html = '''<html><strong> Fields Result</strong><head></head><body>'''
+            res+=str_html
+            header = ('<tr><th width="200">%s</th><th width="200">%s</th><th width="300">%s</th></tr>',[_('Object Name'), _('Field name'), _('Suggestion')])
+            if not self.error:
+               for key in dict.keys():
+                   data_list = []
+                   final_dict = {}
+                   data_list = dict[key]
+                   count = 0
+                   for i in data_list:
+                       count = count + 1
+                       final_dict[key + str(count)] = i
+                   res += '<table>' + self.format_html_table(header, data_list=final_dict) + '</table><br>'
+            return res+'</body></html>'
         return ""
 
     def get_result_views(self, dict):
-        str_html = '''<html><head></head><body><table border="1">'''
+        str_html = '''<html><strong> Views Result</strong><head></head><body><table>'''
         header = ('<tr><th>%s</th><th>%s</th></tr>',[_('Object Name'), _('Suggestion')])
         if not self.error:
            res = str_html + self.format_html_table(header, data_list=dict) + '</table></body></html>'
