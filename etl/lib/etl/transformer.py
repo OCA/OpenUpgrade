@@ -24,15 +24,13 @@
     The class provides transformeration process.
 
 """
-import datetime 
-import logger  
-
-
+import datetime
+import logger
 
 DATE_FORMAT='%Y-%m-%d'
 TIME_FORMAT='%H:%M:%S'
 DATETIME_FORMAT='%Y-%m-%d %H:%M:%S'    
-    
+
 class transformer(object):
     """
         transfer data into different type.
@@ -61,7 +59,7 @@ class transformer(object):
     COMPLEX='complex'
     BOOLEAN='bool'
 
-    _transform_method={
+    _transform_method = {
         'int':int,
         'str':unicode,
         'date':lambda x:datetime.datetime.strptime(x,DATE_FORMAT).date(),

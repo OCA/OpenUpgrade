@@ -54,8 +54,6 @@ class vcard_in(component):
             while True:
                 row={}
                 data=self.reader.next()
-                print data
-                print data.keys()
                 for d in data.contents:
                     # TODO Improve to be generic
                     if unicode(d)=='version':
