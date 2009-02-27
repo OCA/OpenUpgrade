@@ -139,7 +139,7 @@ This test checks if the module satisfy tiny structure
                     self.result_dict[i] = [mod_folder + i,'File name does not follow naming standards.']
                     score -= 1
                     module_length -= 1
-        score = float(score) / float(module_length)
+        score = module_length and float(score) / float(module_length)
         return score
 
     def get_result_details(self, dict):
