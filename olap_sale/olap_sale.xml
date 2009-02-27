@@ -753,6 +753,13 @@ Measures
 	<field name="table_name">sale_order_line</field>
 	<field name="agregator">sum</field>
   </record>
+  <record model="olap.measure" id="measure_sql_expression">
+	<field name="name">Calculated Measure</field>
+	<field name="cube_id" ref="cube_sales_order_line"/>
+	<field name="measure_type">sql_expr</field>
+    <field name="value_sql">sum(sale_order_line.product_uom_qty+sale_order.amount_total)</field>
+  </record>
+
 
 </data>
 </openerp>
