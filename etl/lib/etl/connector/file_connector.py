@@ -25,20 +25,20 @@ ETL Connectors:
 * File Access
 """
 from etl.connector import connector
+import urllib
 
 class file_connector(connector):
     def __init__(self,uri,bufsize=-1,encoding='utf-8'):
         super(file_connector, self).__init__(uri)               
         self.bufsize=bufsize
         self.encoding=encoding
-        
-    def open(self,mode='r'):
+
+    def open(self):
         # TODO : pass encoding in file
         super(file_connector, self).open()
-        self.connector=open(self.uri,mode,self.bufsize)    
+        self.connector=urllib.URLopener().open(file)
         #self.file.encoding=self.encoding
         return self.connector
-        
 
     def close(self):
         super(file_connector, self).close()
