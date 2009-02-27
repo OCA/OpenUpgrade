@@ -234,16 +234,18 @@ class Comparison(controllers.Controller, TinyResource):
         if pond_val == 'incr':
             if pond > 0.0:
                 pond = pond + 0.1
+                effect = 'positive'
         else:
             if pond > 0.0:
                 pond = pond - 0.1
+                effect = 'negative'
         
         user_proxy = rpc.RPCProxy('comparison.user')
         user_id = user_proxy.search([('name', '=', user_info)])
         user_id = user_id[0]
         
         try:
-            value = sproxy.create({'factor_id': id, 'user_id': user_id, 'ponderation': pond})
+            value = sproxy.create({'factor_id': id, 'user_id': user_id, 'ponderation': pond, 'effect':effect})
         except Exception, e:
             return dict(value=value, error=str(e))
         
