@@ -76,6 +76,7 @@ class document_file(osv.osv):
                                      cr.commit()
                                  vals['datas_fname'] = newname
                                  vals['datas']=data.datas
+                                 vals['lock']=1
 
             result = super(document_file,self).write(cr,uid,ids,vals,context=context)
             cr.commit()
