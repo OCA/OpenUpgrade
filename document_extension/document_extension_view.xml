@@ -11,5 +11,17 @@
         	</field>
        </field>
     </record>
+
+    <record model="ir.ui.view" id="view_document_rule_file_form">
+        <field name="name">ir.attachment</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="document.view_document_file_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<field name="res_id" position="after">
+        		<field name="lock" />
+        	</field>
+       </field>
+    </record>
 </data>
 </openerp>
