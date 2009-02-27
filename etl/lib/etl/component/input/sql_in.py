@@ -39,8 +39,8 @@ class sql_in(component):
         * .* : return the main flow with data from csv file
     """
 
-    def __init__(self,sqlconnector,sqlquery,name='',transformer=None,row_limit=0):
-        super(sql_in, self).__init__('(etl.component.input.sql_in) '+name,transformer=transformer)
+    def __init__(self,sqlconnector,sqlquery,name='component.input.sql_in',transformer=None,row_limit=0):
+        super(sql_in, self).__init__(name,transformer=transformer)
 
         self.sqlconnector = sqlconnector
         self.sqlquery=sqlquery

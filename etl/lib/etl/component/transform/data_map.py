@@ -25,34 +25,63 @@ Data Map component
 
 from etl.component import component
 import datetime
+from etl import tools
 
 class map(component):
     """
         Data map component
     """
 
-    def __init__(self,map_criteria,name='',transformer=None):
-        super(map, self).__init__('(etl.component.transfer.map) '+name,transformer=transformer)
+    def __init__(self,map_criteria,preprocess=None,name='component.transfer.map',transformer=None):
+        super(map, self).__init__(name,transformer=transformer)
         self.map_criteria = map_criteria
+        self.preprocess = preprocess
 
     def process(self):
         #TODO : proper handle exception. not use generic Exception class
-        datas = []
-        for channel,trans in self.input_get().items():
+        channels = self.input_get()
+        datas = {}
+        if self.preprocess:
+            datas = self.preprocess(self,channels)
+
+        for channel,trans in channels.items():
             for iterator in trans:
                 for d in iterator:
-                    try:
+                    for channel_dest,channel_value in self.map_criteria.items():
+                        result = {}
+                        for key,val in channel_value.items():
+                            if val:
+                                datas['main'] = d
+                                datas['tools'] = tools
+                                result[key] = eval(val, datas)
+                            else:
+                                result[key] = val
                         if self.transformer:
-                            d=self.transformer.transform(d)
-                        for map_data in self.map_criteria:
-                             val = d[map_data['name']]
-                             _map = map_data.get('map',False)
-                             if val and _map:
-                                 val=eval((_map) % d)
-                             d.pop(map_data['name'])
-                             d[map_data['destination']]=val
-                        if self.transformer:
-                            d=self.transformer.transform(d)
-                        yield d, 'main'
-                    except NameError,e:
-                        self.action_error(e)
+                            result=self.transformer.transform(result)
+                        yield result, channel_dest
+
+
+if __name__ == '__main__':
+    from etl_test import etl_test
+    input_part = [
+        {'id': 1, 'name': 'Fabien', 'country_id': 3},
+        {'id': 2, 'name': 'Luc', 'country_id': 3},
+        {'id': 3, 'name': 'Henry', 'country_id': 1}
+    ]
+    input_cty = [{'id': 1, 'name': 'Belgium'},{'id': 3, 'name': 'France'}]
+    map_keys = {'main': {
+        'id': "main['id']",
+        'name': "main['id'].upper()",
+        'country': "country_var[main['country_id']]['name']"
+    }}
+    def preprocess(self, channels):
+        cdict = {}
+        for trans in channels['country']:
+            for iterator in trans:
+                for d in iterator:
+                    cdict[d['id']] = d
+        return {'country_var': cdict}
+    test=etl_test.etl_component_test(map(map_keys, preprocess))
+    test.check_input({'partner':input_part, 'countries': input_cty})
+    print test.output()
+

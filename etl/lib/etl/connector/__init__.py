@@ -27,6 +27,6 @@ ETL Connectors:
 * Open Object Interfaces
 """
 from connector import connector
-from file_connector import file_connector 
+from localfile import localfile 
 from sql_connector import sql_connector 
 from openobject_connector import openobject_connector  

@@ -6,7 +6,7 @@ sys.path.append('..')
 import etl
 from etl import transformer
 
-fileconnector=etl.connector.file_connector('input/invoice.csv')
+fileconnector=etl.connector.localfile('input/invoice.csv')
 trans=transformer(
     {
         'id':transformer.LONG,

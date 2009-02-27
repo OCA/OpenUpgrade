@@ -36,11 +36,11 @@ class logger_bloc(component):
 		Output Flows: 0-y
 		* .* : return the main flow 
     """    
-    def __init__(self, name='', output=sys.stdout):
+    def __init__(self, name='component.output.logger_bloc', output=sys.stdout):
         self.name = name
         self.output = output
         self.is_end = 'main'
-        super(logger_bloc, self).__init__('(etl.component.output.logger_bloc) '+name)
+        super(logger_bloc, self).__init__(name)
 
     def process(self):
         #TODO : proper handle exception

@@ -28,6 +28,7 @@ ETL Input Components:
 * xml_in : read data from xml file
 
 """
+from data import data
 from csv_in import csv_in
 from sql_in import sql_in
 from openobject_in import openobject_in

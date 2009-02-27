@@ -39,8 +39,8 @@ class csv_out(component):
         * main : return all data
     """   
 
-    def __init__(self,fileconnector,transformer=None,name='',row_limit=0, csv_params={}):
-        super(csv_out, self).__init__('(etl.component.output.csv_out) '+name,transformer=transformer)      
+    def __init__(self,fileconnector,transformer=None,name='component.output.csv_out',row_limit=0, csv_params={}):
+        super(csv_out, self).__init__(name,transformer=transformer)      
           
         self.fileconnector = fileconnector 
         self.csv_params=csv_params       

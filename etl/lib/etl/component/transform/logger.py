@@ -36,17 +36,17 @@ class logger(component):
 		Output Flows: 0-y
 		* .* : return the main flow 
     """    
-    def __init__(self, name='', output=sys.stdout):        
+    def __init__(self, name='component.output.logger', output=sys.stdout):        
         self.output = output
         self.is_end = 'main'
-        super(logger, self).__init__('(etl.component.output.logger) '+name)
+        super(logger, self).__init__(name)
 
     def process(self):
         #TODO : proper handle exception
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:                    
-                    self.output.write('\tLog '+self.name+str(d)+'\n')
+                    self.output.write('Log '+self.name+' '+str(d)+'\n')
                     yield d, 'main'
         super(logger, self).process()
 

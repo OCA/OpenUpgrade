@@ -26,8 +26,8 @@ import vobject
 
 class vcard_in(component):
 
-    def __init__(self,fileconnector,name=''):
-        super(vcard_in, self).__init__('(etl.component.input.csv_in) '+name)
+    def __init__(self,fileconnector,name='component.input.csv_in'):
+        super(vcard_in, self).__init__(name)
         self.fileconnector = fileconnector
         self.fp=None
         self.reader=None
@@ -54,7 +54,10 @@ class vcard_in(component):
             while True:
                 row={}
                 data=self.reader.next()
+                print data
+                print data.keys()
                 for d in data.contents:
+                    # TODO Improve to be generic
                     if unicode(d)=='version':
                         row['version']=data.version.value
                     if unicode(d)=='email':
@@ -63,12 +66,8 @@ class vcard_in(component):
                         row['fn']=data.fn.value
                     if unicode(d)=='org':
                         row['org']=data.org.value[0]
-                       
                 yield row,'main'
-            
         except IOError,e:
             self.action_error(e) 
-         
-
 
 

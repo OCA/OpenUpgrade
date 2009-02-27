@@ -31,8 +31,8 @@ class data_filter(component):
         Data filter component
     """   
 
-    def __init__(self,filter_criteria,name='',transformer=None):
-        super(data_filter, self).__init__('(etl.component.transfer.data_filter) '+name,transformer=transformer)         
+    def __init__(self,filter_criteria,name='component.transfer.data_filter',transformer=None):
+        super(data_filter, self).__init__(name,transformer=transformer)         
         self.filter_criteria = filter_criteria          
 
     def process(self):  

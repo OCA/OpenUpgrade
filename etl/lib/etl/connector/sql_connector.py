@@ -29,7 +29,8 @@ from etl.connector import connector
 
 class sql_connector(connector):    
     def __init__(self, host,port, db, uid, passwd,sslmode='allow',con_type='postgres'):
-        super(sql_connector, self).__init__(host+':'+str(port))    
+        super(sql_connector, self).__init__()
+        self.uri = host+':'+str(port)
         self.host=host
         self.port=port
         self.sslmode=sslmode             

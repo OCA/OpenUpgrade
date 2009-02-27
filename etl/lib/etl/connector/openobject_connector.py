@@ -31,13 +31,14 @@ from etl.connector import connector
 
 class openobject_connector(connector):    
     def __init__(self, uri, db, login, passwd, obj='/xmlrpc/object',con_type='xmlrpc'):
-        super(openobject_connector, self).__init__(uri)        
+        super(openobject_connector, self).__init__()
         self.db = db
         self.user_login = login
         self.obj = obj
         self.passwd = passwd
         self.con_type=con_type
         self.uid = False
+        self.uri = uri
 
     def open(self):
         super(openobject_connector, self).open()
@@ -48,23 +49,8 @@ class openobject_connector(connector):
             self.obj = self.obj[1:]
         else:
             raise Exception('Not Supported')        
+        self.uid=self.login(self.user_login,self.passwd)
         return self.connector
-
-    def login(self):
-        internal_connector=openobject_connector(self.uri,self.db,self.user_login,self.passwd,obj='/xmlrpc/common')
-        internal_connector.open()
-        self.uid=internal_connector.execute_without_login('login',self.user_login,self.passwd)
-        internal_connector.close()
-        return self.uid
-
-    def logout(self):
-        internal_connector=openobject_connector(self.uri,self.db,self.user_login,self.passwd,obj='/xmlrpc/common')
-        internal_connector.open()
-        res=internal_connector.execute_without_login('logout',self.user_login,self.passwd)
-        if res :
-           self.uid=False
-        internal_connector.close()
-        return res 
 
     def __convert(self, result):
         if type(result)==type(u''):
@@ -79,17 +65,14 @@ class openobject_connector(connector):
         else:
             return result 
     
-    def execute_without_login(self,method, *args):             
-        super(openobject_connector, self).execute()
+    def login(self,uid, passwd):             
         if self.con_type=='xmlrpc':            
-            result = getattr(self.connector,method)(self.db, *args)
-            return self.__convert(result)
+            xg = xmlrpclib.ServerProxy(self.uri+'/xmlrpc/common') 
+            return xg.login(self.db, uid,passwd)
         elif self.con_type=='socket':            
-            self.connector.connect(self.uri)                 
-            self.connector.mysend((self.obj, method, self.db)+args)
-            res = self.connector.myreceive()  
-            self.connector.disconnect()       
-            return res
+            xg = xmlrpclib.ServerProxy(self.uri+'/xmlrpc/common') 
+            return xg.login(self.db, uid,passwd)
+            raise Exception('Not Implemented')
         else:
             raise Exception('Not Supported')
   

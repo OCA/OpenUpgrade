@@ -1,4 +1,4 @@
-all: test_simple
+all: test_simple vcard
 	
 
 test_simple:
@@ -6,7 +6,13 @@ test_simple:
 	./test2.py
 	./test3.py
 	./test4.py
+	./map.py
+
+test_openobject:
 	./test5.py
+
+vcard:
+	./test_vcard.py
 
 clean:
 	rm -f *pyc

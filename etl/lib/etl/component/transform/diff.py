@@ -43,12 +43,12 @@ class diff(component):
         * removed: return all elements that where in main and not in the second flow
         * added: return all elements from the second flow that are not in main channel
     """
-    def __init__(self, keys,name=''):
+    def __init__(self, keys,name='component.process.diff'):
         self.keys = keys
         self.row = {}
         self.diff = []
         self.same = []
-        super(diff, self).__init__('(etl.component.process.diff) '+name)
+        super(diff, self).__init__(name)
 
     # Return the key of a row
     def key_get(self, row):

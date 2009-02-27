@@ -37,8 +37,8 @@ class sort(component):
         * .* : return the main flow with sort result
     """    
 
-    def __init__(self, fieldname,name=''):
-        super(sort, self).__init__('(etl.component.process.sort) '+name )
+    def __init__(self, fieldname,name='component.process.sort'):
+        super(sort, self).__init__(name )
         self.fieldname = fieldname
 
     # Read all input channels, sort and write to 'main' channel

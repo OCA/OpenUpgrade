@@ -33,7 +33,7 @@
 
 def test1():    
     #TODO : avoid using .CSV files, povide stringIO with string directly in the __main__
-    fileconnector=etl.connector.file_connector.file_connector('demo/data/invoice.csv')
+    fileconnector=etl.connector.localfile('demo/data/invoice.csv')
     transformer.description= {'id':etl.transformer.LONG,'name':etl.transformer.STRING,'invoice_date':etl.transformer.DATE,'invoice_amount':etl.transformer.FLOAT,'is_paid':etl.transformer.BOOLEAN}    
     transformer=etl.transformer(transformer.description)
     csv_in1= etl.component.input.csv_in.csv_in(fileconnector=fileconnector,transformer=transformer)

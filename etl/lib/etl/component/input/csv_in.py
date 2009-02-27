@@ -40,8 +40,8 @@ class csv_in(component):
         * .* : return the main flow with data from csv file
     """
 
-    def __init__(self,fileconnector,name='',transformer=None,row_limit=0, csv_params={}):
-        super(csv_in, self).__init__('(etl.component.input.csv_in) '+name,transformer=transformer)
+    def __init__(self,fileconnector,name='component.input.csv_in',transformer=None,row_limit=0, csv_params={}):
+        super(csv_in, self).__init__(name,transformer=transformer)
         self.fileconnector = fileconnector
         self.csv_params=csv_params
         self.row_limit=row_limit
@@ -51,7 +51,7 @@ class csv_in(component):
     def action_start(self,key,singal_data={},data={}):
         super(csv_in, self).action_start(key,singal_data,data)
         self.row_count=0
-        self.fp=self.fileconnector.open('r')
+        self.fp=self.fileconnector.open()
         self.reader=csv.DictReader(self.fp,**self.csv_params)
 
     def action_end(self,key,singal_data={},data={}):

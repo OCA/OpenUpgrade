@@ -5,10 +5,10 @@ sys.path.append('..')
 
 import etl
 
-fileconnector_partner=etl.connector.file_connector('input/partner.csv')
-fileconnector_partner1=etl.connector.file_connector('input/partner1.csv')
-fileconnector_partner3=etl.connector.file_connector('input/partner3.csv')
-fileconnector_output=etl.connector.file_connector('output/test1_partner.csv')
+fileconnector_partner=etl.connector.localfile('input/partner.csv')
+fileconnector_partner1=etl.connector.localfile('input/partner1.csv')
+fileconnector_partner3=etl.connector.localfile('input/partner3.csv')
+fileconnector_output=etl.connector.localfile('output/test1_partner.csv')
 
 csv_in1= etl.component.input.csv_in(fileconnector_partner,name='Partner Data')
 csv_in2= etl.component.input.csv_in(fileconnector_partner1,name='Partner Data1')

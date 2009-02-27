@@ -6,8 +6,8 @@ sys.path.append('..')
 import etl
 
 
-fileconnector_partner=etl.connector.file_connector('input/partner.csv')
-fileconnector_partner2=etl.connector.file_connector('input/partner2.csv')
+fileconnector_partner=etl.connector.localfile('input/partner.csv')
+fileconnector_partner2=etl.connector.localfile('input/partner2.csv')
 
 in1 = etl.component.input.csv_in(fileconnector_partner,name='Partner Data')
 in2 = etl.component.input.csv_in(fileconnector_partner2,name='Partner Data2')
@@ -21,7 +21,7 @@ log2 = etl.component.transform.logger(name="Log Add")
 log3 = etl.component.transform.logger(name="Log Remove")
 log4 = etl.component.transform.logger(name="Log Update")
 
-fileconnector_output=etl.connector.file_connector('output/test2_add.csv')
+fileconnector_output=etl.connector.localfile('output/test2_add.csv')
 csv_out1 = etl.component.output.csv_out(fileconnector_output,name='Output')
 
 etl.transition(in1, log_1)

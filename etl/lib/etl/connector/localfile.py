@@ -19,24 +19,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 """
-   This is ETL Component to put job process in sleep.
+ETL Connectors:
+* File Access
 """
-from etl.component import component
-import time
+from etl.connector import connector
 
-class sleep(component):
-    """
-       put job process in sleep.
-    """
-    def __init__(self, delay=1,name='component.control.sleep'):
-        self.delay = delay
-        super(sleep, self).__init__(name)
+class localfile(connector):
+    def __init__(self,uri,bufsize=-1,encoding='utf-8'):
+        super(localfile, self).__init__()
+        self.bufsize=bufsize
+        self.encoding=encoding
+        self.uri = uri
 
-    def process(self):
-        for channel,trans in self.input_get().items():
-            for iterator in trans:
-                for d in iterator:
-                    time.sleep(self.delay)
-                    yield d, 'main'
+    def open(self, mode='r'):
+        # TODO : pass encoding in file
+        super(localfile, self).open()
+        self.connector=file(self.uri, mode)
+        #self.file.encoding=self.encoding
+        return self.connector
 
+    def close(self):
+        super(localfile, self).close()
+        self.connector.close()

@@ -19,27 +19,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 """
-ETL Connectors:
-* File Access
+This is an ETL Component that use to read data from csv file.
 """
-from etl.connector import connector
-import urllib
 
-class file_connector(connector):
-    def __init__(self,uri,bufsize=-1,encoding='utf-8'):
-        super(file_connector, self).__init__(uri)               
-        self.bufsize=bufsize
-        self.encoding=encoding
 
-    def open(self):
-        # TODO : pass encoding in file
-        super(file_connector, self).open()
-        self.connector=urllib.URLopener().open(file)
-        #self.file.encoding=self.encoding
-        return self.connector
+from etl.component import component
+import csv
 
-    def close(self):
-        super(file_connector, self).close()
-        self.connector.close()    
+
+class data(component):
+    """
+        This is an ETL Component that return python data from a list of dict
+    """
+
+    def __init__(self,datas,name='component.input.data',transformer=None):
+        super(data, self).__init__(name=name,transformer=transformer)
+        self.datas = datas
+
+    def process(self):
+        for d in self.datas:
+            yield d,'main'
+
