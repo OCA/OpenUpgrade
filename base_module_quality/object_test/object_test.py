@@ -32,7 +32,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         super(quality_test, self).__init__()
         self.name = _("Object Test")
         self.note = _("""
-Test Checks if fields on the object follow the coding standard of tiny
+Test Checks if fields and views on the object
 """)
         self.bool_installed_only = True
         self.ponderation = 1.0
@@ -43,9 +43,13 @@ Test Checks if fields on the object follow the coding standard of tiny
         module_name = module_path.split('/')[-1]
         obj_list = self.get_objects(cr, uid, module_name)
         field_obj = pool.get('ir.model.fields')
+        view_obj = pool.get('ir.ui.view')
         field_ids = field_obj.search(cr, uid, [('model', 'in', obj_list)])
+        view_ids = view_obj.search(cr, uid, [('model', 'in', obj_list)])
         field_data = field_obj.browse(cr, uid, field_ids)
+        view_data = view_obj.browse(cr, uid, view_ids)
         result_dict = {}
+        result_view = {}
         good_field = 0
         bad_field = 0
         total_field = 0
@@ -74,13 +78,31 @@ Test Checks if fields on the object follow the coding standard of tiny
                 data = 'Field name should be in lower case or it should follow python standard'
                 result_dict[name] = [field.model, name, data]
                 bad_field += 1
-        self.score = total_field and float(good_field) / float(total_field)
-        self.result = self.get_result({ module_name: [module_name, int(self.score * 100)]})
-        self.result_details += self.get_result_details(result_dict) # to be implemented
+
+        view_dict = {}
+        total_views = len(obj_list) * 2
+        model_views = 0
+        for view in view_data:
+            view_dict[view.model] = []
+            model_views += 1
+        for view in view_data:
+            type = view.type
+            view_dict[view.model].append(view.type)
+        for dict in view_dict:
+            if len(view_dict[dict]) < 2:
+                result_view[dict] = [dict, 'You should have atleast form/tree view of an object']
+
+        score_view = float(model_views) / float(total_views)
+        score_field = total_field and float(good_field) / float(total_field)
+        self.score = (score_view + score_field)/2
+
+        self.result = self.get_result({ module_name: [int(score_field * 100), int(score_view * 100)]})
+        self.result_details += self.get_result_details(result_dict)
+        self.result_details += self.get_result_views(result_view)
         return None
 
     def get_result(self, dict):
-        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Module Name'), _('Result'),])
+        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Result of fields in %'), _('Result of views in %')])
         if not self.error:
             return self.format_table(header, data_list=dict)
         return ""
@@ -93,7 +115,13 @@ Test Checks if fields on the object follow the coding standard of tiny
            return res
         return ""
 
-
+    def get_result_views(self, dict):
+        str_html = '''<html><head></head><body><table border="1">'''
+        header = ('<tr><th>%s</th><th>%s</th></tr>',[_('Object Name'), _('Suggestion')])
+        if not self.error:
+           res = str_html + self.format_html_table(header, data_list=dict) + '</table></body></html>'
+           return res
+        return ""
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
