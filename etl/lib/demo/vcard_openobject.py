@@ -11,7 +11,7 @@ ooconnector = etl.connector.openobject_connector('http://localhost:8069', 'trunk
 map = etl.component.transform.map({'main':{
     'id': "tools.uniq_id(main.get('org', 'anonymous'), prefix='partner_')",
     'address_id': "tools.uniq_id(main.get('fn', 'anonymous'), prefix='contact_')",
-    'name': "main.get('org',[anonymous])[0]",
+    'name': "main.get('org',['anonymous'])[0]",
     'contact_name': "main.get('fn','anonymous')",
     'email': "main.get('email','')"
 }})
