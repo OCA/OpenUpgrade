@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+		<!-- Synchronize Products & Stocks -->
+		<wizard string="Synchronize Products And Stocks" model="product.product"
+			name="magento.products.sync" id="wizard_magento_products" />
+		<menuitem
+			name="Magento/Synchronization/Synchronize Products And Stocks"
+			action="wizard_magento_products" type="wizard" id="menu_magento_products" />
+		
+		<!-- Synchronize Categories -->
+		<wizard string="Synchronize Categories" model="product.category"
+			name="magento.categories.sync" id="wizard_magento_categories" />
+		<menuitem
+			name="Magento/Synchronization/Synchronize Categories"
+			action="wizard_magento_categories" type="wizard" id="menu_magento_categories" />
+
+		<!-- Import Sales Orders -->
+		<wizard string="Import sale orders" model="sale.order"
+			name="magento.saleorders.import" id="wizard_magento_saleorders_import" />
+		<menuitem
+			name="Magento/Synchronization/Import sale orders"
+			action="wizard_magento_saleorders_import" type="wizard"
+			id="menu_magento_saleorders_import" /> 
+		
+		<!-- Correct Sales Orders -->
+		<wizard string="Correct sale orders" model="sale.order"
+			name="magento.saleorders.correct" id="wizard_magento_saleorders_correct" />
+		<menuitem
+			name="Magento/Synchronization/Correct sale orders"
+			action="wizard_magento_saleorders_correct" type="wizard"
+			id="menu_magento_saleorders_correct" /> 
+			
+		<!-- Update Sales Orders -->
+		<wizard string="Update sale orders" model="sale.order"
+			name="magento.saleorders.update" id="wizard_magento_saleorders_update" />
+		<menuitem
+			name="Magento/Synchronization/Update sale orders"
+			action="wizard_magento_saleorders_update" type="wizard"
+			id="menu_magento_saleorders_update" />
+		
+			
+		
+	</data>
+</terp>

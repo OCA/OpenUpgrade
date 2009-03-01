@@ -1,0 +1,67 @@
+0.9.9 - Nov 18, 2008
+
+	Merging sale orders push, from Charles Galpin branch
+
+0.9.8 - Oct 20, 2008
+
+	bug fixes #16 URL :http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=16
+
+0.9.8 - Sep 15, 2008
+	enhancements:
+		Added synchronize per item on products and categories.
+		You can now synchronize :
+			- On the main menu, all you items
+			- On a tree view, the selected items
+			- On a form view, the current item
+		Also, when you save an item, it is automatically updated on Magento
+		RFE #10 : URL http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=10
+		
+	bug fixes:
+		URL troubles for the orders wizards, the url will look now in your 
+		http://MagentoHost/app/code/local , instead of community.
+		Bug #11 : URL http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=11 
+		
+		Fix an issue on CGI environment
+		Bug #12 : URL  http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=12
+	
+
+
+0.9.7 - Sep 15, 2008 - 85 downloads
+	enhancements:
+		added webservices login API fields on Magento interface
+		use native Magento API for products and categories exports (drop lot of PHP code)
+		partial implementation of:
+		"use native Magento ACL based security for the PHP webservices" http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=6
+	bug fixes:
+		multi-store products and categories export: "product synchronization fails (in multi-stores environment specifically)" http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=7
+		bug fixed in sale order import wizard (there was an error while printing a stack trace)
+	
+
+
+0.9.6 - Aug 25, 2008 - 101 downloads
+	enhancements:
+		added one click category export from OpenERP to Magento.
+		added flag on OpenERP categories to state if they are exportable or not
+	
+		
+		
+0.9.5 - Aug 1, 2008 - 70 downloads
+	enhancements:
+		Synch product taxes and product categories ids when exporting products
+		Deal with visibility status and store id
+		PHP clode clean up, better use of the fresh Magento API like the addData method instead of the setters
+		Product dictionnary XML/RPC message rewriten
+
+		
+		
+0.9.4 - Jul 28, 2008 - 17 downloads
+	enhancements:
+		"No need to depend on Python 2.5" - http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=5&can=1
+	bug fixes:
+		"can't see OpenERP products in the Magento back-office after import" - http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=4&can=1 
+
+		
+		
+0.9.3 - Jul 25, 2008 - 14 downloads - First public release!
+	enhancements:
+		"Change the webservice PHP server impl�mentation to use the Magento infrastructure or the the Pear XML/RPC library" - http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=3&can=1
