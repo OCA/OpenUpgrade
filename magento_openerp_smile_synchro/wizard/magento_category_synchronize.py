@@ -110,7 +110,7 @@ def do_export(self, cr, uid, data, context):
                 categ_new += 1
                 
             else:
-                server.call(session,'category.update',[category_magento_id, category_data])
+                server.call(session,'category.update', [category.magento_id, category_data])
                 logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully updated category with OpenERP id %s and Magento id %s" % (category.id, category.magento_id))
                 categ_update += 1
                 
