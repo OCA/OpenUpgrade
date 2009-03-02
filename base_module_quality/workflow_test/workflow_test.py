@@ -50,7 +50,6 @@ class quality_test(base_module_quality.abstract_quality_check):
         field_obj = pool.get('ir.model.fields')
         field_ids = field_obj.search(cr, uid, [('model', 'in', obj_list)])
         field_data = field_obj.browse(cr, uid, field_ids)
-
         wkf_obj = pool.get('workflow')
         wkf_activity_obj = pool.get('workflow.activity')
 
@@ -58,10 +57,10 @@ class quality_test(base_module_quality.abstract_quality_check):
         wkf_avail = []
         result_dict = {}
         activity_chk = {}
+
         if obj_list:
             wkf_ids = wkf_obj.search(cr, uid, [('osv', 'in', obj_list)])
             wkfs = wkf_obj.read(cr, uid, wkf_ids, ['osv'])
-            print wkfs
             for i in wkfs:
                 activity_chk[i['osv']] = {'start': 'not_ok', 'stop': 'not_ok'}
                 wkf_avail.append(i['osv'])
@@ -70,14 +69,19 @@ class quality_test(base_module_quality.abstract_quality_check):
         #Activity of workflow checking...
         activity_ids = wkf_activity_obj.search(cr, uid, [('wkf_id', 'in', wkf_ids)])
         activities = wkf_activity_obj.browse(cr, uid, activity_ids)
+        ok = 0
+        not_ok = 0
         for activity in activities:
             if activity.flow_start:
                 activity_chk[activity.wkf_id.osv]['start'] = 'ok'
             if activity.flow_stop:
                 activity_chk[activity.wkf_id.osv]['stop'] = 'ok'
             activity_chk[activity.wkf_id.osv]['model'] = activity.wkf_id.osv
-        ok = 0
-        not_ok = 0
+            if activity.in_transitions and activity.out_transitions:
+                ok += 1
+            if not activity.in_transitions and not activity.out_transitions:
+                not_ok += 1
+                result_dict[activity.id] = [activity.name, 'Use less activity (improves readability and protects server resources)']
         for act in activity_chk:
             if activity_chk[act]['start'] == 'ok':
                 ok += 1
@@ -111,7 +115,7 @@ class quality_test(base_module_quality.abstract_quality_check):
                     good_view += 1
         score_avail = float(good_view) / float(bad_view + good_view)
 
-        self.score = score_general + score_avail / 2
+        self.score = (score_general + score_avail) / 2
         self.result = self.get_result({ module_name: ['Result Workflow', int(self.score * 100)]})
         self.result_details += self.get_result_details(result_dict)
         return None
