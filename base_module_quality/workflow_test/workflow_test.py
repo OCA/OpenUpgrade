@@ -50,14 +50,49 @@ class quality_test(base_module_quality.abstract_quality_check):
         field_obj = pool.get('ir.model.fields')
         field_ids = field_obj.search(cr, uid, [('model', 'in', obj_list)])
         field_data = field_obj.browse(cr, uid, field_ids)
+
+        wkf_obj = pool.get('workflow')
+        wkf_activity_obj = pool.get('workflow.activity')
+
         state_check = []
         wkf_avail = []
         result_dict = {}
+        activity_chk = {}
         if obj_list:
-            wkf_ids = pool.get('workflow').search(cr, uid, [('osv', 'in', obj_list)])
-            wkfs = pool.get('workflow').read(cr, uid, wkf_ids, ['osv'])
+            wkf_ids = wkf_obj.search(cr, uid, [('osv', 'in', obj_list)])
+            wkfs = wkf_obj.read(cr, uid, wkf_ids, ['osv'])
+            print wkfs
             for i in wkfs:
+                activity_chk[i['osv']] = {'start': 'not_ok', 'stop': 'not_ok'}
                 wkf_avail.append(i['osv'])
+        wkf_ids = map(lambda x:x['id'],wkfs)
+
+        #Activity of workflow checking...
+        activity_ids = wkf_activity_obj.search(cr, uid, [('wkf_id', 'in', wkf_ids)])
+        activities = wkf_activity_obj.browse(cr, uid, activity_ids)
+        for activity in activities:
+            if activity.flow_start:
+                activity_chk[activity.wkf_id.osv]['start'] = 'ok'
+            if activity.flow_stop:
+                activity_chk[activity.wkf_id.osv]['stop'] = 'ok'
+            activity_chk[activity.wkf_id.osv]['model'] = activity.wkf_id.osv
+        ok = 0
+        not_ok = 0
+        for act in activity_chk:
+            if activity_chk[act]['start'] == 'ok':
+                ok += 1
+            else:
+                not_ok +=  1
+                result_dict[activity_chk[act]['model']] = [activity_chk[act]['model'], 'Workflow activities should have atleast one starting node']
+            if activity_chk[act]['stop'] == 'ok':
+                ok += 1
+            else:
+                not_ok +=  1
+                result_dict[activity_chk[act]['model']] = [activity_chk[act]['model'], 'Workflow activities should have atleast one ending node']
+
+        score_general = float(ok) / float(ok + not_ok)
+
+        # workflow defined on object or not checking..
         for field in field_data:
             if field.name == 'state':
                 state_check.append(field.model)
@@ -74,7 +109,9 @@ class quality_test(base_module_quality.abstract_quality_check):
                     result_dict[view.model] = [view.model, 'The presence of a field state in object often indicative of a need for workflow behind. And connect them to ensure consistency in this field.']
                 elif count > 0 and view.model in wkf_avail:
                     good_view += 1
-        self.score = float(good_view) / float(bad_view + good_view)
+        score_avail = float(good_view) / float(bad_view + good_view)
+
+        self.score = score_general + score_avail / 2
         self.result = self.get_result({ module_name: ['Result Workflow', int(self.score * 100)]})
         self.result_details += self.get_result_details(result_dict)
         return None
