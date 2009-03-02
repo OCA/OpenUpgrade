@@ -34,7 +34,6 @@ from osv import fields,osv
 #######################################
 
 class product_product(osv.osv):
-    _name = 'product.product'
     _inherit = 'product.product'
     _columns = {
         'magento_id': fields.integer('Magento product id'),
@@ -70,7 +69,6 @@ class product_product(osv.osv):
 product_product()
 
 class product_category(osv.osv):
-    _name = 'product.category'
     _inherit = 'product.category'
     _columns = {
         'magento_id': fields.integer('magento category id'),
@@ -111,7 +109,6 @@ product_category()
 #######################################
 
 class sale_order(osv.osv):
-    _name ='sale.order'
     _inherit = 'sale.order'
     _columns = {
         'magento_id': fields.integer('magento order id'),
@@ -125,7 +122,6 @@ sale_order()
 
 
 class res_partner(osv.osv):
-    _name = 'res.partner'
     _inherit = 'res.partner' 
     _columns = {
         'magento_id': fields.integer('magento partner id'), 
@@ -137,7 +133,6 @@ res_partner()
 
 
 class sale_shop(osv.osv):
-    _name = 'sale.shop'
     _inherit = 'sale.shop'
     _columns = {
         'magento_flag': fields.boolean('Magento webshop'),
