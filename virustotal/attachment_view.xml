@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model='ir.ui.view' id='virustotal_attachment_view'>
+            <field name="name">ir.attachment.view</field>
+            <field name="model">ir.attachment</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_attachment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr='//page[@string="Attachment"]/group[1]' position='before'>
+                    <group colspan='4' col='14'>
+                        <separator string='VirusTotal' colspan='14'/>
+                        <field name='vt_status_pict' nolabel='1'/>
+                        <field name='vt_status' nolabel='1'/>
+                        <group colspan='6' col='1' attrs="{'invisible':[('vt_status', '=', 'nottested')]}">
+                            <field name='vt_url' nolabel='1' widget='url'/>
+                        </group>
+                        <button name='search_viruses' string='Search viruses' colspan="6" attrs="{'invisible':[('vt_status', '!=', 'nottested')]}" type="object"/>
+                    </group>
+                </xpath>    
+            </field>
+        </record> 
+    </data>
+</openerp>
+

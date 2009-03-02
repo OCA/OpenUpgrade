@@ -55,15 +55,7 @@ class vcard_in(component):
                 row={}
                 data=self.reader.next()
                 for d in data.contents:
-                    # TODO Improve to be generic
-                    if unicode(d)=='version':
-                        row['version']=data.version.value
-                    if unicode(d)=='email':
-                        row['email']=data.email.value
-                    if unicode(d)=='fn':
-                        row['fn']=data.fn.value
-                    if unicode(d)=='org':
-                        row['org']=data.org.value[0]
+                    row[unicode(d)]=eval('data.'+unicode(d)+'.value')                    
                 yield row,'main'
         except IOError,e:
             self.action_error(e) 

@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<!--  The defined view are inherited to add the Magento fields -->
+<openerp>
+	<data>
+	
+	
+		<!-- Product View -->
+		<record model="ir.ui.view" id="product_normal_form_view">
+			<field name="name">product.product.form.inherit
+			</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<page position="after" string="Information">
+					<page position="inside" string="Magento">
+						<separator string="Magento Information" />
+						<newline />
+						<field name="magento_id" position="inside" colspan="4" />
+						<field name="exportable" position="inside" colspan="4" />
+						<field name="updated" position="inside" colspan="4" readonly="1"/>	
+						<field name="magento_tax_class_id" position="inside" colspan="4" />
+					</page>
+				</page>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="product_product_tree_view">
+			<field name="name">product.product.tree.inherit
+			</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_product_tree_view" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Products">
+					<field name="magento_id" position="after" />
+					<field name="updated" position="inside" colspan="4" readonly="1"/>
+					<field name="exportable" position="inside" colspan="4" />
+				</tree>
+			</field>
+		</record>
+		
+		
+		<!-- Category View -->
+		<record model="ir.ui.view" id="product_category_form_view">
+			<field name="name">product.category.form.inherit
+			</field>
+			<field name="model">product.category</field>
+			<field name="inherit_id" ref="product.product_category_form_view" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Product Categories">
+					<separator string="Magento Information" colspan="4" position="after" />
+					<field name="magento_id" position="after" />
+					<field name="exportable" position="inside" colspan="4" />
+					<field name="updated" position="inside" colspan="4" readonly="1"/>
+					<field name="magento_product_type" position="inside" colspan="4" />
+					<field name="magento_product_attribute_set_id" position="inside" colspan="4" />
+				</form>
+			</field>
+		</record>
+		
+		
+		<!-- Sale View -->
+		<record model="ir.ui.view" id="view_order_form">
+			<field name="name">sale.order.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<page position="after" string="Sale Order">
+					<page position="inside" string="Magento">
+						<separator string="Magento Information" />
+						<newline />
+						<field name="magento_id" position="inside" colspan="4" />
+						<newline />
+						<field name="has_error" position="inside" colspan="4" />
+					</page>
+				</page>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_order_tree">
+			<field name="name">sale.order.inherit</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_tree" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Sales orders">
+					<field name="magento_id" position="after" />
+					<field name="has_error" position="after" />
+				</tree>
+			</field>
+		</record>
+		
+		
+		<!-- Partner View -->
+		<record model="ir.ui.view" id="view_magento_partner_form">
+			<field name="name">res.partner.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<page position="after" string="General">
+					<page position="inside" string="Magento">
+						<separator string="Magento Information" />
+						<newline />
+						<field name="magento_id" position="inside" colspan="4" />
+					</page>
+				</page>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_tree">
+			<field name="name">res.partner.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="type">tree</field>
+			<field name="inherit_id" ref="base.view_partner_tree" />
+			<field name="arch" type="xml">
+				<tree string="Partners">
+					<field name="magento_id" position="after" />
+				</tree>
+			</field>
+		</record>
+		
+		
+		<!-- Shop View -->
+		<record model="ir.ui.view" id="view_shop_tree">
+			<field name="name">sale.shop.inherit</field>
+			<field name="model">sale.shop</field>
+			<field name="inherit_id" ref="sale.view_shop_tree" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Sale Shop">
+					<field name="magento_flag" position="after" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_shop_form">
+			<field name="name">sale.shop.inherit</field>
+			<field name="model">sale.shop</field>
+			<field name="inherit_id" ref="sale.view_shop_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Sale Shop">
+					<separator string="Magento Information" colspan="4"
+						position="after" />
+					<field name="magento_flag" position="after" />
+				</form>
+			</field>
+		</record>
+		
+		
+		<!-- Web Action / Menuitem / View	-->
+		<record model="ir.actions.act_window" id="action_magento_web_form">
+			<field name="name">Magento Web</field>
+			<field name="res_model">magento.web</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Magento/Magento Web" id="menu_magento_web_form"
+			action="action_magento_web_form" />
+		<record model="ir.ui.view" id="view_magento_web_form">
+			<field name="name">magento.web.form</field>
+			<field name="model">magento.web</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Magento web">
+					<separator string="Magento Information" colspan="4" />
+					<field name="magento_name" />
+					<newline />
+					<field name="magento_url" />
+					<newline />
+					<field name="magento_flag" />
+					<newline />
+					<field name="auto_update" />
+					<separator string="Magento Api Information" colspan="4" />
+					<field name="api_user" />
+					<newline />
+					<field name="api_pwd" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_magento_web_tree">
+			<field name="name">magento.web.tree</field>
+			<field name="model">magento.web</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Magento web">
+					<field name="magento_name" />
+					<field name="magento_url" />
+					<field name="magento_flag" />
+				</tree>
+			</field>
+		</record>
+	</data>
+</openerp>

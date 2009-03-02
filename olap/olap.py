@@ -893,6 +893,8 @@ class olap_measure(osv.osv):
 
     def onchange_measure_name(self,cr,uid,ids,column,context={}):
         val={}
+        if not column:
+            return {}
         col = self.pool.get('olap.database.columns').browse(cr,uid,column)
         val['table_name']= col.table_id.table_db_name
         val['value_column_id_name']= col.column_db_name
@@ -901,13 +903,13 @@ class olap_measure(osv.osv):
     
     _columns = {
         'name': fields.char('Measure name',size=64,required=True),
-        'cube_id': fields.many2one('olap.cube', 'Cube',required = True),
+        'cube_id': fields.many2one('olap.cube', 'Cube',),
 #        'value_column': fields.char('Fact table column', size=64, readonly=True),
-        'value_column': fields.many2one('olap.database.columns','Fact Table Column',required=True),
-        'value_column_id_name': fields.char('Column ID',size=64,required=True),
-        'table_name': fields.char('Table name',size=64,required=True, help="The name of the table on which the column is defined. If False, take the table from the cube."),
-        'measure_type':fields.selection([('fact_column','Fact Table Column'),('sql_expr','SQL Expression')],'Measure Type',required=True),
-        'value_sql': fields.char('SQL Expression',size=64),
+        'value_column': fields.many2one('olap.database.columns','Fact Table Column'),
+        'value_column_id_name': fields.char('Column ID',size=64),
+        'table_name': fields.char('Table name',size=64, help="The name of the table on which the column is defined. If False, take the table from the cube."),
+        'measure_type':fields.selection([('fact_column','Fact Table Column'),('sql_expr','SQL Expression')],'Measure Type',required=True, help="Select between auto column or sql expression for the measures"),
+        'value_sql': fields.char('SQL Expression',size=200,help="You can provide valid sql expression. Make sure it have function with fully qualified column name like (sum,avg ...)(tablename.columnname (+,- ...) tablename.columnname)"),
         'agregator': fields.selection([('sum','Sum'),('count','count'),('avg','Average')], 'Agregator', required=True),
         'datatype': fields.selection([('float','Float')], 'Datatype', required=True),
         'formatstring': fields.selection([('none','None')], 'Format string', required=True),
@@ -1006,7 +1008,14 @@ class bi_load_db_wizard(osv.osv_memory):
                 # Format for storing the tables
                 # tables['table_db_name']=id
                 tables_id = map(lambda x: str(tables[x]),tables)
-#                    print ":::: table col ::::",table_col
+                cols={}
+                if tables_id:
+                    cr.execute('select column_db_name,id,table_id from olap_database_columns where table_id in (' + ','.join(tables_id) +')')
+                else:
+                    cr.execute('select column_db_name,id,table_id from olap_database_columns')
+              
+                for data in cr.fetchall():
+                    cols[str(data[1])]=(data[0],int(data[2]))
                 # Format of storing the cols 
                 # cols['id']=(col_db_name,table_id)    
                 print 'Creating / Updating Tables...' 
@@ -1016,50 +1025,33 @@ class bi_load_db_wizard(osv.osv_memory):
                         'fact_database_id':id_db,
                         'table_db_name':table[0]
                     }
+                   
                     if table[0] in tables.keys():
                         table_id=tobj.write(cr,uid,[tables[table[0]]], val, context)
                     else:
                         val['name']=table[0]
                         tables[val['name']] = tobj.create(cr,uid,val, context)    
-
-                print 'Creating / Updating Columns ....' 
-                cols={}
-                if tables_id:
-                    cr.execute('select column_db_name,id,table_id from olap_database_columns where table_id in (' + ','.join(tables_id) +')')
-                else:
-                    cr.execute('select column_db_name,id,table_id from olap_database_columns')
-                table_col={}
-                cols_name={}
-                for x in tables:
-                    table_col[str(tables[x])]=[{}]
-                for data in cr.fetchall():
-                    cols[str(data[1])]=(data[0],int(data[2]))
-                    table_col[str(data[2])][0][data[0]]=data[1]
-                    cols_name[str(data[0])]=(data[1],int(data[2]))
+                print 'Creating / Updating Columns...' 
                 cr_db.execute("""SELECT
                         table_name, column_name, udt_name
                     from
                         INFORMATION_SCHEMA.columns
                     WHERE table_schema = 'public'""")
+                
                 for col in cr_db.fetchall():
                     val={
                         'table_id': tables[col[0]],
                         'column_db_name': col[1],
                         'type': col[2],
                     }
+                    
                     id_made=filter(lambda x:(int(cols[x][1])==int(tables[col[0]])),cols)
-                    if col[0] in tables.keys() and col[1] in cols_name.keys() and id_made:
-                        if table_col[str(tables[col[0]])][0] and col[1] in table_col[str(tables[col[0]])][0].keys():
-                            col_id=tcol.write(cr,uid,table_col[str(tables[col[0]])][0][col[1]], val, context)
-                        else:
-                            val['name']=col[1]
-                            id_made = tcol.create(cr,uid,val, context)
-                            cols[str(id_made)] = (val['name'],int(val['table_id']))
+                    if col[1] in cols.keys() and col[0] in tables.keys()and id_made:
+                        col_id=tcol.write(cr,uid,cols[tables[str(col[0])]], val, context)
                     else:
                         val['name']=col[1]
                         id_made = tcol.create(cr,uid,val, context)
                         cols[str(id_made)] = (val['name'],int(val['table_id']))
-
                 print 'Creating / Updating Constraints...' 
                 cr_db.execute("""select 
                         table_name,column_name 
@@ -1070,7 +1062,6 @@ class bi_load_db_wizard(osv.osv_memory):
                                     select constraint_name from INFORMATION_SCHEMA .table_constraints
                                     where 
                                         constraint_type = 'PRIMARY KEY')""")
-
                 print "Updating the Primary Key Constraint" 
                 for constraint in cr_db.fetchall():
                     val={
@@ -1079,7 +1070,6 @@ class bi_load_db_wizard(osv.osv_memory):
                     
                     id_to_write=filter(lambda x:(int(cols[x][1])==int(tables[constraint[0]])and(constraint[1]==cols[x][0])),cols)
                     col_id=tcol.write(cr,uid,int(id_to_write[0]),val,context) 
-
                 print "Updating the Foreign key constraint" 
                 cr_db.execute("""select 
                             constraint_name,table_name 
@@ -1107,8 +1097,7 @@ class bi_load_db_wizard(osv.osv_memory):
                         'related_to':tables[for_key[constraint[2]]]
                     }
                     id_to_write=filter(lambda x:(int(cols[x][1])==int(tables[constraint[0]])and (constraint[1]==cols[x][0])),cols)
-                    if id_to_write:
-                        col_id=tcol.write(cr,uid,int(id_to_write[0]),val,context) 
+                    col_id=tcol.write(cr,uid,int(id_to_write[0]),val,context) 
             
             
             elif type =='mysql':
@@ -1408,12 +1397,11 @@ class bi_auto_configure_wizard(osv.osv_memory):
             id_tables=dbtab_obj.search(cr,uid,[('fact_database_id','=',ids.database_id.id)])
             tables_main=dbtab_obj.read(cr,uid,id_tables,context={'wizard':True})
             for tables in tables_main:
-
+                end_user_name = {'name':(" ").join( map(lambda x:x.capitalize(),tables['table_db_name'].split("_")))}
+                table_new = dbtab_obj.write(cr,uid,tables['id'], end_user_name)
                 if not(tables['table_db_name'].startswith('ir') or tables['table_db_name'].startswith('wkf') or tables['table_db_name'].startswith('res_groups') or tables['table_db_name'].startswith('res_role')) and tables['table_db_name'] not in ['inherit','user_rule_group_rel','group_rule_group_rel']:
-                    end_user_name = {'name':(" ").join( map(lambda x:x.capitalize(),tables['table_db_name'].split("_")))}
-                    table_new = dbtab_obj.write(cr,uid,tables['id'], end_user_name)
-
                     vals={}
+                    
                     if len(apptab_ids)==0 and (tables['table_db_name'] not in apptab_name):
                         vals['table_name']=tables['table_db_name']
                         vals['name']=(" ").join(map(lambda x:x.capitalize(),tables['name'].split("_")))
@@ -1480,7 +1468,6 @@ class bi_auto_configure_wizard(osv.osv_memory):
                 val={}
                 vals['hide']=True
                 vals['active']=False
-                vals['name'] = (" ").join(map(lambda x:x.capitalize(),col['name'].split("_")))
                 database_columns.write(cr,uid,col['id'],vals)
                 
             
