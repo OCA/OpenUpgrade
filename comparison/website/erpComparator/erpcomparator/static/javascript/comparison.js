@@ -283,8 +283,8 @@ function item_vote() {
 			}
 		}
     	if (obj.error) {
-//            return alert(obj.error);
-				register()
+            return alert(obj.error);
+//				register()
         }
     });
 	
