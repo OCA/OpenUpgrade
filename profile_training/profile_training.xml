@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_confirm_install_module_form" model="ir.ui.view">
+            <field name="name">Training Profile : Install extra modules</field>
+            <field name="model">profile.training.config.install_modules_wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Install Extra Module">
+                    <separator string="training Management" colspan="4"/>
+                    <field name="training_exam" />
+                    <field name="training_room" />
+                    <separator string="" colspan="4"/>
+                    <label string="" colspan="2"/>
+                    <group col="4" colspan="2">
+                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
+                        <button name="action_install" string="Install" icon='gtk-ok' type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_config_install_module" model="ir.actions.act_window">
+            <field name="name">Training Profile : Install Extra Modules</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">profile.training.config.install_modules_wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.actions.todo" id="profile_training.config_install_wizard">
+            <field name="name">Training Profile : Install Extra modules</field>
+            <field name="note">Install more modules. A few modules are proposed according to the Training Profile you selected. You will be able to install them based on our requirements.</field>
+            <field name="action_id" ref="action_config_install_module"/>
+        </record>
+    </data>
+</openerp>
