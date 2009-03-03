@@ -57,6 +57,10 @@ class quality_test(base_module_quality.abstract_quality_check):
         wkf_avail = []
         result_dict = {}
         activity_chk = {}
+        bad_view = 0
+        good_view = 0
+        ok = 0
+        not_ok = 0
 
         if obj_list:
             wkf_ids = wkf_obj.search(cr, uid, [('osv', 'in', obj_list)])
@@ -64,13 +68,17 @@ class quality_test(base_module_quality.abstract_quality_check):
             for i in wkfs:
                 activity_chk[i['osv']] = {'start': 'not_ok', 'stop': 'not_ok'}
                 wkf_avail.append(i['osv'])
+                model_ids = self.get_ids(cr, uid, [i['osv']])
+                if len(model_ids[i['osv']]) < 2: # to be modified..
+                    bad_view += 1
+                    result_dict[i['osv']] = [i['osv'], 'You should have enough demo data which allows testing of integrity of module and ensures the proper functioning of workflows']
+                else:
+                    good_view += 1
         wkf_ids = map(lambda x:x['id'],wkfs)
 
         #Activity of workflow checking...
         activity_ids = wkf_activity_obj.search(cr, uid, [('wkf_id', 'in', wkf_ids)])
         activities = wkf_activity_obj.browse(cr, uid, activity_ids)
-        ok = 0
-        not_ok = 0
         for activity in activities:
             if activity.flow_start:
                 activity_chk[activity.wkf_id.osv]['start'] = 'ok'
@@ -100,13 +108,10 @@ class quality_test(base_module_quality.abstract_quality_check):
         for field in field_data:
             if field.name == 'state':
                 state_check.append(field.model)
-        bad_view = 0
-        good_view = 0
         for view in view_data:
             if view.model in state_check:
                 dom = xml.dom.minidom.parseString(view.arch)
                 node = dom.childNodes
-                attrs = self.node_attributes(node[0])
                 count = self.count_button(node[0], count=0)
                 if count > 3 and not view.model in wkf_avail:
                     bad_view +=  1
@@ -133,17 +138,6 @@ class quality_test(base_module_quality.abstract_quality_check):
             res = str_html + self.format_html_table(header, data_list=dict) + '</table><newline/></body></html>'
             return res
         return ""
-
-    def node_attributes(self, node):
-        result = {}
-        attrs = node.attributes
-        if attrs is None:
-            return {}
-        for i in range(attrs.length):
-            result[attrs.item(i).localName] = str(attrs.item(i).nodeValue)
-            if attrs.item(i).localName == "digits" and isinstance(attrs.item(i).nodeValue, (str, unicode)):
-                result[attrs.item(i).localName] = eval(attrs.item(i).nodeValue)
-        return result
 
     def count_button(self, node, count):
         for node in node.childNodes:
