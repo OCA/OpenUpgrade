@@ -19,6 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
     "name" : "MultiStep Product Configurator",
     "description" : "TODO WORK IN PROGRESS!!!! DO NOT USE IN PRODUCTION YET!",
