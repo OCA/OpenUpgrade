@@ -97,7 +97,7 @@ class training_course(osv.osv):
         return res
 
     _columns = {
-        'display_name' : fields.char('Display Name', 64 ),
+        'display_name' : fields.char('Display Name', size=64),
         'duration' : fields.time('Duration', required=True),
         'children' : fields.function( _get_child_ids, method=True, type='one2many', relation="training.course", string='Children'),
         'total_duration' : fields.function(_total_duration_compute, string='Total Duration', readonly=True, store=True, method=True, type="time"),
@@ -110,37 +110,23 @@ class training_course(osv.osv):
         'internal_note' : fields.text('Note'),
         'lang_id' : fields.many2one('res.lang', 'Language', required=True),
         'offer_ids' : fields.many2many( 'training.offer', 'training_course_offer_rel', 'course_id', 'offer_id', 'Offers' ),
-        'state' : fields.selection([('draft', 'Draft'),
-                                    ('pending', 'Pending'),
-                                    ('inprogress', 'In Progress'),
-                                    ('deprecated', 'Deprecated'),
-                                    ('validate', 'Validate'),
-                                   ],
-                                   'State',
-                                   required=True,
-                                   readonly=True),
+        'state_course' : fields.selection([('draft', 'Draft'),
+                                           ('pending', 'Pending'),
+                                           ('inprogress', 'In Progress'),
+                                           ('deprecated', 'Deprecated'),
+                                           ('validate', 'Validate'),
+                                          ],
+                                          'State',
+                                          required=True,
+                                          readonly=True,
+                                          select=1),
         'purchase_line_ids' : fields.one2many('training.course.purchase_line', 'course_id', 'Supplier Commands'),
         'questionnaire_ids' : fields.one2many('training.questionnaire', 'course_id', 'Questionnaire'),
     }
 
     _defaults = {
-        'state' : lambda *a: 'draft',
+        'state_course' : lambda *a: 'draft',
     }
-
-    def draft_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
-
-    def pending_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'pending'}, context=context)
-
-    def inprogress_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
-
-    def deprecated_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'deprecated'}, context=context)
-
-    def validate_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'validate'}, context=context)
 
 training_course()
 
@@ -179,15 +165,6 @@ class training_offer(osv.osv):
     _defaults = {
         'state' : lambda *a: 'draft',
     }
-
-    def draft_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state' : 'draft'}, context=context)
-
-    def validate_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state' : 'validate'}, context=context)
-
-    def deprecated_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state' : 'deprecated'}, context=context)
 
 training_offer()
 
@@ -261,18 +238,6 @@ class training_questionnaire(osv.osv):
         'state' : lambda *a: 'draft',
     }
 
-    def draft_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
-
-    def pending_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'pending'}, context=context)
-
-    def inprogress_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
-
-    def deprecated_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'deprecated'}, context=context)
-
 training_questionnaire()
 
 class training_catalog(osv.osv):
@@ -296,15 +261,6 @@ class training_catalog(osv.osv):
         'state' : lambda *a: 'draft',
     }
 
-    def draft_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
-
-    def inprogress_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
-
-    def done_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'done'}, context=context)
-
 training_catalog()
 
 class training_event(osv.osv):
@@ -317,8 +273,8 @@ class training_session(osv.osv):
         'name' : fields.char('Name', size=64, required=True, select=1),
         'state' : fields.selection([('draft', 'Draft'),
                                     ('open_pending', 'Open and Pending'),
-                                    ('validate', 'Validate'),
                                     ('inprogress', 'In Progress'),
+                                    ('validate', 'Validate'),
                                     ('closed', 'Closed'),
                                     ('cancel', 'Cancel')],
                                    'State',
@@ -351,24 +307,6 @@ class training_session(osv.osv):
         'catalog_id' : _find_catalog_id,
         'state' : lambda *a: 'draft',
     }
-
-    def draft_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
-
-    def open_pending_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'open_pending'}, context=context)
-
-    def validate_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'validate'}, context=context)
-
-    def inprogress_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
-
-    def closed_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'closed'}, context=context)
-
-    def cancel_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'cancel'}, context=context)
 
 
 training_session()
@@ -500,8 +438,8 @@ class training_event(osv.osv):
 
 training_event()
 
-class training_plannified_examen(osv.osv):
-    _name = 'training.plannified_examen'
+class training_planned_examen(osv.osv):
+    _name = 'training.planned_examen'
     _inherits = { 'training.event' : 'event_id' }
     _columns = {
         'partner_id' : fields.many2one('res.partner',
@@ -515,25 +453,8 @@ class training_plannified_examen(osv.osv):
                                              required=True),
     }
 
-    def draft_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
 
-    def open_pending_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'open_pending'}, context=context)
-
-    def validate_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'validate'}, context=context)
-
-    def inprogress_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
-
-    def closed_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'closed'}, context=context)
-
-    def cancel_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'cancel'}, context=context)
-
-training_plannified_examen()
+training_planned_examen()
 
 class training_seance(osv.osv):
     _name = 'training.seance'
@@ -552,48 +473,6 @@ class training_seance(osv.osv):
         'limit' : fields.integer('Limit'), 
         'purchase_line_ids' : fields.one2many('training.seance.purchase_line', 'seance_id', 'Supplier Commands'),
     }
-
-    def create(self, cr, uid, vals, context=None):
-        if context is None:
-            context = {}
-
-        # Creation d'un procurement 
-        #proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
-        #    'name': (production.origin or '').split(':')[0] + ':' + production.name,
-        #    'origin': (production.origin or '').split(':')[0] + ':' + production.name,
-        #    'date_planned': newdate,
-        #    'product_id': line.product_id.id,
-        #    'product_qty': line.product_qty,
-        #    'product_uom': line.product_uom.id,
-        #    'product_uos_qty': line.product_uos and line.product_qty or False,
-        #    'product_uos': line.product_uos and line.product_uos.id or False,
-        #    'location_id': production.location_src_id.id,
-        #    'procure_method': line.product_id.procure_method,
-        #    'move_id': move_id,
-        #})
-        #wf_service = netsvc.LocalService("workflow")
-        #wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-
-        return super(training_seance, self).create(cr, uid, vals, context=context)
-
-
-    def draft_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'draft'}, context=context)
-
-    def open_pending_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'open_pending'}, context=context)
-
-    def validate_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'validate'}, context=context)
-
-    def inprogress_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'inprogress'}, context=context)
-
-    def closed_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'closed'}, context=context)
-
-    def cancel_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'cancel'}, context=context)
 
 training_seance()
 
@@ -634,21 +513,6 @@ class training_subscription(osv.osv):
         'price' : fields.float('Price', digits=(16,2), required=True),
         'paid' : fields.boolean('Paid'),
     }
-
-    def confirm_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, { 'state' : 'confirm' }, context=context )
-
-    def cancel_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, { 'state' : 'cancel' }, context=context )
-
-    def cancel_to_invoice_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, { 'state' : 'cancel' }, context=context )
-
-    def done_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, { 'state' : 'done' }, context=context )
-
-    def draft_cb(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, { 'state' : 'draft' }, context=context )
 
     _defaults = {
         'state' : lambda *a: 'draft',

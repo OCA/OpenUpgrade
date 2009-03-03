@@ -36,13 +36,23 @@
     'init_xml' : [
         'training_sequence.xml'
     ],
-    'demo_xml' : [],
+    'demo_xml' : [
+        'training_demo.xml',
+    ],
     'update_xml' : [
         'partner_view.xml',
         'base_contact_view.xml',
         'training_view.xml',
         'training_wizard.xml',
         'training_report.xml',
+        'workflow/training_catalog.xml',
+        'workflow/training_course.xml',
+        'workflow/training_offer.xml',
+        'workflow/training_planned_exam.xml',
+        'workflow/training_questionnaire.xml',
+        'workflow/training_seance.xml',
+        'workflow/training_session.xml',
+        'workflow/training_subscription.xml',
     ],
     'active' : False,
     'installable' : True,

@@ -190,11 +190,11 @@
                         </page>
                     </notebook>
                     <group colspan="4" col="6">
-                        <field name="state" required="True" />
-                        <button string="Draft" type="object" name="draft_cb" />
-                        <button string="Pending" type="object" name="pending_cb" />
-                        <button string="In Progress" type="object" name="inprogress_cb" />
-                        <button string="Deprecated" type="object" name="deprecated_cb" />
+                        <field name="state_course" required="True" />
+                        <button string="Pending" type="workflow" name="signal_pending" />
+                        <button string="In Progress" type="workflow" name="signal_inprogress" />
+                        <button string="Deprecated" type="workflow" name="signal_deprecated" />
+                        <button string="Validate" type="workflow" name="signal_validate" />
                     </group>
                 </form>
             </field>
@@ -341,10 +341,9 @@
                     </notebook>
                     <group colspan="4" col="6">
                         <field name="state" />
-                        <button name="draft_cb" string="Draft" type="object" />
-                        <button name="pending_cb" string="Pending" type="object" />
-                        <button name="inprogress" string="In Progress" type="object" />
-                        <button name="deprecated" string="Deprecated" type="object" />
+                        <button name="signal_pending" string="Pending" type="workflow" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" />
+                        <button name="signal_deprecated" string="Deprecated" type="workflow" />
                     </group>
                 </form>
             </field>
@@ -408,9 +407,8 @@
                     </notebook>
                     <group colspan="4" col="5">
                         <field name="state" />
-                        <button name="draft_cb" string="Draft" type="object" />
-                        <button name="inprogress_cb" string="In Progress" type="object" />
-                        <button name="done_cb" string="Done" type="object" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" />
+                        <button name="signal_done" string="Done" type="workflow" />
                     </group>
                 </form>
             </field>
@@ -498,12 +496,11 @@
                     </notebook>
                     <group colspan="4" col="8">
                         <field name="state" />
-                        <button name="draft_cb" string="Draft" type="object" />
-                        <button name="open_pending_cb" string="Open and Pending" type="object" />
-                        <button name="validate_cb" string="Validate" type="object" />
-                        <button name="inprogress_cb" string="In Progress" type="object" />
-                        <button name="closed_cb" string="Closed" type="object" />
-                        <button name="cancel_cb" string="Cancel" type="object" />
+                        <button name="signal_open_pending" string="Open and Pending" type="workflow" />
+                        <button name="signal_validate" string="Validate" type="workflow" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" />
+                        <button name="signal_closed" string="Closed" type="workflow" />
+                        <button name="signal_cancel" string="Cancel" type="workflow" />
                     </group>
                 </form>
             </field>
@@ -668,14 +665,13 @@
                             <field name="partner_ids" nolabel="1"/>
                         </page>
                     </notebook>
-                    <group colspan="4" col="8">
+                    <group colspan="4" col="7">
                         <field name="state" />
-                        <button name="draft_cb" string="Draft" type="object" />
-                        <button name="open_pending_cb" string="Open and Pending" type="object" />
-                        <button name="validate_cb" string="Validate" type="object" />
-                        <button name="inprogress_cb" string="In Progress" type="object" />
-                        <button name="closed_cb" string="Closed" type="object" />
-                        <button name="cancel_cb" string="Cancel" type="object" />
+                        <button name="signal_open_pending" string="Open and Pending" type="workflow" />
+                        <button name="signal_validate" string="Validate" type="workflow" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" />
+                        <button name="signal_closed" string="Closed" type="workflow" />
+                        <button name="signal_cancel" string="Cancel" type="workflow" />
                     </group>
                 </form>
             </field>
@@ -747,9 +743,9 @@
             <field name="domain">[('state', '=', 'draft')]</field>
         </record>
 
-        <record model="ir.ui.view" id="training_plannified_examen_form">
-            <field name="name">training.plannified_examen.form</field>
-            <field name="model">training.plannified_examen</field>
+        <record model="ir.ui.view" id="training_planned_examen_form">
+            <field name="name">training.planned_examen.form</field>
+            <field name="model">training.planned_examen</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Exam">
@@ -759,20 +755,20 @@
                     <newline />
                     <group colspan="4">
                         <field name="state" />
-                        <button name="draft_cb" string="Draft" type="object" />
-                        <button name="open_pending_cb" string="Open and Pending" type="object" />
-                        <button name="validate_cb" string="Validate" type="object" />
-                        <button name="inprogress_cb" string="In Progress" type="object" />
-                        <button name="closed_cb" string="Closed" type="object" />
-                        <button name="cancel_cb" string="Cancel" type="object" />
+                        <button name="signal_draft" string="Draft" type="workflow" />
+                        <button name="signal_open_pending" string="Open and Pending" type="workflow" />
+                        <button name="signal_validate" string="Validate" type="workflow" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" />
+                        <button name="signal_closed" string="Closed" type="workflow" />
+                        <button name="signal_cancel" string="Cancel" type="workflow" />
                     </group>
                 </form>
             </field>
         </record>
 
-        <record model="ir.ui.view" id="training_plannified_examen_tree">
-            <field name="name">training.plannified_examen.tree</field>
-            <field name="model">training.plannified_examen</field>
+        <record model="ir.ui.view" id="training_planned_examen_tree">
+            <field name="name">training.planned_examen.tree</field>
+            <field name="model">training.planned_examen</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Exams">
@@ -784,9 +780,9 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="training_plannified_examen_calendar">
-            <field name="name">training.plannified_examen.calendar</field>
-            <field name="model">training.plannified_examen</field>
+        <record model="ir.ui.view" id="training_planned_examen_calendar">
+            <field name="name">training.planned_examen.calendar</field>
+            <field name="model">training.planned_examen</field>
             <field name="type">calendar</field>
             <field name="arch" type="xml">
                 <calendar string="Events" date_start="date">
@@ -797,22 +793,22 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="training_plannified_examen_calendar_act">
+        <record model="ir.actions.act_window" id="training_planned_examen_calendar_act">
             <field name="name">Planning of Exams</field>
-            <field name="res_model">training.plannified_examen</field>
+            <field name="res_model">training.planned_examen</field>
             <field name="view_type">form</field>
             <field name="view_mode">calendar,tree</field>
         </record>
 
-        <record model="ir.actions.act_window" id="training_plannified_examen_all_act">
+        <record model="ir.actions.act_window" id="training_planned_examen_all_act">
             <field name="name">Exams</field>
-            <field name="res_model">training.plannified_examen</field>
+            <field name="res_model">training.planned_examen</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <record model="ir.actions.act_window" id="training_plannified_examen_new_act">
+        <record model="ir.actions.act_window" id="training_planned_examen_new_act">
             <field name="name">Planify a New Exam</field>
-            <field name="res_model">training.plannified_examen</field>
+            <field name="res_model">training.planned_examen</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
         </record>
@@ -838,10 +834,10 @@
                     <separator colspan="4"/>
                     <group colspan="4" col="6">
                         <field name="state" />
-                        <button string="Set to Draft" type="object" name="draft_cb" states="cancel" />
-                        <button string="Confirm" type="object" name="confirm_cb" states="draft" />
-                        <button string="Cancel" type="object" name="cancel_cb" states="draft,confirm" />
-                        <button string="Cancel to Invoice" type="object" name="cancel_to_invoice_cb" states="confirm" />
+                        <button string="Confirm" type="workflow" name="signal_confirm" />
+                        <button string="Cancel" type="workflow" name="signal_cancel" />
+                        <button string="Cancel to Invoice" type="workflow" name="signal_cancel_to_invoice" />
+                        <button string="Done" type="workflow" name="signal_done" />
                     </group>
                 </form>
             </field>
@@ -956,9 +952,8 @@
                     </notebook>
                     <group col="4" colspan="4">
                         <field name="state" />
-                        <button name="draft_cb" string="Draft" type="object" states="validate,deprecated" />
-                        <button name="validate_cb" string="Validate" type="object" states="draft" /> 
-                        <button name="deprecated_cb" string="Deprecated" type="object" states="validate" />
+                        <button name="signal_validate" string="Validate" type="workflow" states="draft" /> 
+                        <button name="signal_deprecated" string="Deprecated" type="workflow" states="validate" />
                     </group>
                 </form>
             </field>
@@ -1241,15 +1236,15 @@
         <menuitem 
             id="training_planning_exam_planning_mi" 
             parent="training_planning_mi" 
-            action="training_plannified_examen_all_act" />
+            action="training_planned_examen_all_act" />
         <menuitem 
             id="training_planning_exam_planning_planning_mi" 
             parent="training_planning_exam_planning_mi" 
-            action="training_plannified_examen_calendar_act" />
+            action="training_planned_examen_calendar_act" />
         <menuitem 
             id="training_planning_exam_planning_planify_mi" 
             parent="training_planning_exam_planning_mi" 
-            action="training_plannified_examen_new_act" />
+            action="training_planned_examen_new_act" />
 
         <menuitem 
             id="training_planning_event_planning_mi" 

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="workflow" id="workflow_offer">
+            <field name="name">workflow.training.offer</field>
+            <field name="osv">training.offer</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_offer_draft">
+            <field name="wkf_id" ref="workflow_offer" />
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'draft'})</field>
+            <field name="flow_start">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_offer_deprecated">
+            <field name="wkf_id" ref="workflow_offer" />
+            <field name="name">deprecated</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'deprecated'})</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_offer_validate">
+            <field name="wkf_id" ref="workflow_offer" />
+            <field name="name">validate</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'validate'})</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+
+        <record model="workflow.transition" id="transition_offer_deprecated">
+            <field name="act_from" ref="activity_offer_draft" />
+            <field name="act_to" ref="activity_offer_deprecated" />
+            <field name="signal">signal_deprecated</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_offer_validate">
+            <field name="act_from" ref="activity_offer_deprecated" />
+            <field name="act_to" ref="activity_offer_validate" />
+            <field name="signal">signal_validate</field>
+        </record>
+    </data>
+</openerp>
