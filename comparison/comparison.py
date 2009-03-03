@@ -216,6 +216,10 @@ class comparison_vote(osv.osv):
         'state': lambda *args: 'draft',
     }
     
+    _sql_constraints = [
+        ('vote_unique', 'unique(user_id,factor_id,item_id)', "You can't vote twice to the same factor of the same item!" )
+    ]
+    
     def accept_vote(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'valid'})
         return True
