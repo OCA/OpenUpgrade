@@ -7,13 +7,14 @@ __description__ = '''
 				'''
 __args__ = []
 
-def customer_function(cr,uid,customer_ids,**args):
+def customer_function(cr,uid,ids,**args):
 	pool = pooler.get_pool(cr.dbname)
-	object = args['object']
-	dm_customer = pool.get(object)
-	if object=='res.partner.address' :
-		customer_ids = dm_customer.search(cr,uid,[('partner_id','in',customer_ids)])
-	customers = dm_customer.read(cr,uid,customer_ids,[args['field_name']])
+	model_name = args['model_name']
+	model_object = pool.get(model_name)
+	if model_name=='res.partner.address' :
+		customer = pool.get('res.partner').browse(cr,uid,ids)[0]
+		ids = model_object.search(cr,uid,[('id','=',customer.dm_contact_id.id)])
+	customers = model_object.read(cr,uid,ids,[args['field_name']])
 	if args['field_type'] == 'char':
 		value = map(lambda x : (x['id'],x[args['field_name']]),customers)
 	elif args['field_type'] == 'boolean':
@@ -39,5 +40,4 @@ def customer_function(cr,uid,customer_ids,**args):
 					read_name = res_lang.read(cr,uid,language,['name'])
 					id[args['field_name']] = str(read_name[0]['name'])
 		value = map(lambda x : (x['id'],x[args['field_name']]),customers)
-	print "==================",value
 	return value
