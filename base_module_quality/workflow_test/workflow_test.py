@@ -118,7 +118,7 @@ class quality_test(base_module_quality.abstract_quality_check):
                     result_dict[view.model] = [view.model, 'The presence of a field state in object often indicative of a need for workflow behind. And connect them to ensure consistency in this field.']
                 elif count > 0 and view.model in wkf_avail:
                     good_view += 1
-        score_avail = float(good_view) / float(bad_view + good_view)
+        score_avail = good_view and float(good_view) / float(bad_view + good_view)
 
         self.score = (score_general + score_avail) / 2
         self.result = self.get_result({ module_name: ['Result Workflow', int(self.score * 100)]})
