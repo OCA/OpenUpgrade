@@ -128,13 +128,17 @@ class product_variant_configurator_configurator(osv.osv_memory):
             
             for res in self.read(cr,uid,ids):
                 if res['product_tmpl_id']:
-                    default_uom_id=self.pool.get('product.template').read(cr,uid,res['product_tmpl_id'])['uom_id'][0]
+                    tmpl_obj=self.pool.get('product.template')
+                    tmpl_infos=tmpl_obj.read(cr,uid,res['product_tmpl_id'],['name','uom_id'])
+                    default_uom_id=tmpl_infos['uom_id'][0]
+                    tmpl_name=tmpl_infos['name']
+
                     if res['product_variant_id']:
                         prod_name=self.pool.get('product.product').read(cr,uid,res['product_variant_id'])['variants']
                         vals = {'order_id':order_id,
                               'product_id':res['product_variant_id'],
                               'delay':0.0,
-                              'name':prod_name,
+                              'name': tmpl_name + " - " + prod_name,
                               'type':'make_to_order',
                               'state':'draft',
                               'price_unit':0.0,

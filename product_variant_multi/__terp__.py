@@ -29,7 +29,8 @@
     "demo_xml" : [],
     "update_xml" : [
         "security/ir.model.access.csv",
-        "product_variant_multi.xml"
+        "product_variant_multi.xml",
+        "demo_data.xml"
     ],
     "active": False,
     "installable": True
