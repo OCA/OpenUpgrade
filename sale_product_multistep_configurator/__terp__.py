@@ -2,8 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution    
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2009 Smile.fr. All Rights Reserved
+#    authors: Raphaël Valyi, Xavier Fernandez
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
     "version" : "0.5",
     "author" : "Smile",
     "website": "http://www.smile.fr",
-    "category" : "Generic Modules/Inventory Control",
+    "category" : "Generic Modules/Sales",
     "depends" : ["sale"],
     "init_xml" : [],
     "demo_xml" : [],
