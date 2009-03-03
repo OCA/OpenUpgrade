@@ -62,33 +62,21 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
         self.context = context
         
     def sum_dr(self):
-        if self.result_sum_dr < 0.0:
-            self.result_sum_dr *= -1
         return self.result_sum_dr or 0.0
      
     def sum_cr(self):
-        if self.result_sum_cr < 0.0:
-            self.result_sum_cr *= -1
         return self.result_sum_cr or 0.0
     
     def sum_lib_dr(self):
-        if self.result_sum_lib_dr < 0.0:
-            self.result_sum_lib_dr *= -1
         return self.result_sum_lib_dr or 0.0
      
     def sum_ass_cr(self):
-        if self.result_sum_ass_cr < 0.0:
-            self.result_sum_ass_cr *= -1
         return self.result_sum_ass_cr or 0.0
     
     def sum_lib1_dr(self):
-        if self.result_dr < 0.0:
-            self.result_dr *= -1
         return self.result_dr or 0.0
      
     def sum_ass1_cr(self):
-        if self.result_cr < 0.0:
-            self.result_cr *= -1
         return self.result_cr or 0.0
 
     
@@ -98,6 +86,8 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
         cal_list={}
         result_pl=self.obj_pl.get_data(form)
         res_pl=self.obj_pl.final_result()
+        if res_pl['type']== 'Net Profit':
+            res_pl['balance'] *= -1
         total_list=['Share Holder/Owner Fund','Branch/Division','Loan(Liability) Account','Current Liabilities','Suspense Account','Fixed Assets','Investment','Current Assets','Misc. Expenses(Asset)']
         resp={}
         for group in gr_list: 
@@ -124,7 +114,10 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
                 comp_ids.append(form['company_id'])
             for lacc in list_acc:
                 acc_ids +=self.pool.get('account.account').search(self.cr, self.uid, [('name','=', lacc),('company_id','in',comp_ids)])
-            ids2 = self.pool.get('account.account')._get_children_and_consol(self.cr, self.uid, acc_ids, context)
+            if form['display_type'] == 'consolidated':
+                ids2= acc_ids
+            else:
+                ids2 = self.pool.get('account.account')._get_children_and_consol(self.cr, self.uid, acc_ids, context)
             acc_objs=self.pool.get('account.account').browse(self.cr, self.uid, ids2)
             balance_dict=self.pool.get('account.account').compute_total(self.cr,self.uid,ids2,year_start_date,year_end_date,form['date1'],form['date2'],{'debit': 0.0,'credit': 0.0, 'balance': 0.0})
             for aobj in acc_objs:
@@ -133,8 +126,6 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
                 res['balance']=balance_dict[aobj.id]['balance']
                 res['type']=aobj.user_type.code
                 res['level']=aobj.level
-#                if res['type'] == 'liability' and res['balance'] < 0.0:
-#                    res['balance'] *= -1
                 if res['level'] > 4:
                     res['outer']='-1'
                     if res['type'] == 'liability':
@@ -187,6 +178,17 @@ class report_balancesheet_horizontal(rml_parse.rml_parse):
                             result.append(res)  
                     else:
                         result.append(res) 
+                if form['display_type'] == 'consolidated':
+                    if res_pl['type']=='Net Profit' and res['name']=='Share Holder/Owner Fund':
+                        resp['outer']='0'
+                        resp['name']= res_pl['type']
+                        resp['type']=res['type']
+                        resp['level']=res['level'] + 1
+                        resp['balance']=res_pl['balance']
+                        result.append(resp)
+                        self.result_sum_lib_dr +=resp['balance']
+                        self.result_sum_dr +=resp['balance']
+                        res['balance'] += resp['balance']
                 if res_pl['type']=='Net Profit' and res['name']=='Reserve & Surplus Account':
                     for rt in result:
                         if rt['name']== 'Share Holder/Owner Fund':
