@@ -22,13 +22,13 @@
 
 from osv import fields, osv
 
-class configurator(osv.osv_memory):
+class sale_product_multistep_configurator_configurator(osv.osv_memory):
     _name = "sale_product_multistep_configurator.configurator"
     _columns = {}
     
-configurator()
+sale_product_multistep_configurator_configurator()
 
-class configurator_step(osv.osv):
+class sale_product_multistep_configurator_configurator_step(osv.osv):
     _name = "sale_product_multistep_configurator.configurator.step"
     _columns = {
                 'name': fields.char('Value Name', size=64, select=1), #TODO related?
@@ -36,7 +36,7 @@ class configurator_step(osv.osv):
                 'sequence' : fields.integer('Sequence', help="Determine in which order step are executed"),
                 }
     
-configurator_step()
+sale_product_multistep_configurator_configurator_step()
 
 
 class ir_actions_act_window(osv.osv):
