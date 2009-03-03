@@ -94,7 +94,7 @@ class quality_test(base_module_quality.abstract_quality_check):
                 not_ok +=  1
                 result_dict[activity_chk[act]['model']] = [activity_chk[act]['model'], 'Workflow activities should have atleast one ending node']
 
-        score_general = float(ok) / float(ok + not_ok)
+        score_general = ok and float(ok) / float(ok + not_ok)
 
         # workflow defined on object or not checking..
         for field in field_data:
