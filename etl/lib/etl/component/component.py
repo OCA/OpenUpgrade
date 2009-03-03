@@ -29,7 +29,7 @@ from etl import logger
 
 
 
-class component(signal.signal,statistic.statistic):
+class component(signal,statistic):
     """
        Base class of ETL Component.
     """    
@@ -153,7 +153,7 @@ class component(signal.signal,statistic.statistic):
             
 
     def stats_get():
-        return statistic.statistic.statistics_get
+        return statistic.statistics_get
         
 
     #@stats_get()

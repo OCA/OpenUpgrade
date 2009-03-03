@@ -419,8 +419,13 @@ class comparison_ponderation_suggestion(osv.osv):
         pool_factor = self.pool.get('comparison.factor')
         obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
         obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
-        suggestion = obj_sugg.ponderation or 1.0 # to avoid 0 division
-        new_pond = (obj_factor.ponderation / suggestion)
+#        suggestion = obj_sugg.ponderation or 1.0 # to avoid 0 division
+#        new_pond = (obj_factor.ponderation / suggestion)
+        if obj_sugg.effect == 'positive':
+            new_pond = obj_factor.ponderation - 0.1
+        else:
+            new_pond = obj_factor.ponderation + 0.1
+        
         note = obj_factor.note or ''
         factor_id = pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond,'note':str(note) + '\n' +'Ponderation Revoked by Website Administrator. Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
         self.write(cr, uid, ids, {'state':'cancel'})
@@ -431,11 +436,13 @@ class comparison_ponderation_suggestion(osv.osv):
         'factor_id': fields.many2one('comparison.factor', 'Factor', required=True, ondelete='cascade'),
         'ponderation': fields.float('Ponderation',required=True),
         'state': fields.selection([('draft','Draft'),('done','Done'),('cancel','Cancel')],'State',readonly=True),
-        'note': fields.text('Suggestion')
+        'note': fields.text('Suggestion'),
+        'effect':fields.selection([('positive','Positive'),('negative','Negative')],'Ponderation Effect', help="Select Positive if your suggestion has greater poderation value than the current value, negative otherwise."),
     }
     _defaults = {
         'ponderation': lambda *a: 1.0,
         'state': lambda *a: 'draft',
+        'effect': lambda *a: 'positive',
     }
     
     _sql_constraints = [
@@ -448,7 +455,7 @@ class comparison_ponderation_suggestion(osv.osv):
         for obj_sugg in self.browse(cr, uid, [result]):
             obj_factor = pool_factor.browse(cr, uid, obj_sugg.factor_id.id)
             obj_user = self.pool.get('comparison.user').browse(cr, uid, obj_sugg.user_id.id)
-            new_pond = (obj_factor.ponderation * obj_sugg.ponderation)
+            new_pond = obj_sugg.ponderation
             note = obj_factor.note or ''
             pool_factor.write(cr, uid, [obj_sugg.factor_id.id],{'ponderation':new_pond, 'note':str(note) + '\n' +'Ponderation Change Suggested by ' + str(obj_user.name) + '(' + obj_user.email + '). Value Changed from ' + str(obj_factor.ponderation) + ' to ' + str(new_pond) +'.' })
         return result

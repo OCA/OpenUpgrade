@@ -110,7 +110,10 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                 comp_ids.append(form['company_id'])
             for lacc in list_acc:
                 acc_ids +=self.pool.get('account.account').search(self.cr, self.uid, [('name','=', lacc),('company_id','in',comp_ids)])
-            ids2 = self.pool.get('account.account')._get_children_and_consol(self.cr, self.uid, acc_ids, context)
+            if form['display_type'] == 'consolidated':
+                ids2= acc_ids
+            else:
+                ids2 = self.pool.get('account.account')._get_children_and_consol(self.cr, self.uid, acc_ids, context)
             acc_objs=self.pool.get('account.account').browse(self.cr, self.uid, ids2)
             balance_dict=self.pool.get('account.account').compute_total(self.cr,self.uid,ids2,year_start_date,year_end_date,form['date1'],form['date2'],{'debit': 0.0,'credit': 0.0, 'balance': 0.0})
             for aobj in acc_objs:
@@ -119,8 +122,6 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                 res['balance']=balance_dict[aobj.id]['balance']
                 res['type']=aobj.user_type.code
                 res['level']=aobj.level
-#                if res['type'] == 'income' and res['balance'] < 0.0:
-#                    res['balance'] *= -1
                 if res['level'] > 4:
                     res['outer']='-1'
                     if res['type'] == 'expense':

@@ -24,12 +24,11 @@ This is an ETL Component that use to read data from open object model.
 """
 
 from etl.component import component
-from etl.connector import openobject_connector
 import socket
 import xmlrpclib
 import datetime
 
-class openobject_in(component.component):
+class openobject_in(component):
     """
         This is an ETL Component that use to read data from open object model.
        
@@ -41,16 +40,14 @@ class openobject_in(component.component):
         * .* : return the main flow with data from csv file
     """    
 
-    def __init__(self,name,openobject_connector,model,domain=[],fields=[],context={},transformer=None,row_limit=0):
-        super(openobject_in, self).__init__('(etl.component.input.sql_in) '+name,transformer=transformer)      
-          
+    def __init__(self,openobject_connector,model,name='component.input.sql_in',domain=[],fields=[],context={},transformer=None,row_limit=0):
+        super(openobject_in, self).__init__(name,transformer=transformer)      
         self.openobject_connector = openobject_connector  
-        self.model=model             
-        self.domain=domain 
+        self.model=model
+        self.domain=domain
         self.context=context
         self.fields=fields
-        self.row_limit=row_limit                            
-        
+        self.row_limit=row_limit
 
     def action_start(self,key,singal_data={},data={}):        
         super(openobject_in, self).action_start(key,singal_data,data)                

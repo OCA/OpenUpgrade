@@ -43,21 +43,22 @@ class etl_component_test(object):
         self.output_data={}
         self.datas=[]
         self.output_channel='main'
-        self.test_input=component.component('test input')
-        self.test_output=component.component('test output')  
+        self.test_input=component()
+        self.test_output=component()
         self.test_input.generator=self.input_generator_get()
         self.test_output.generator=self.output_generator_get()     
  
     def check_input(self,input_data):       
         self.input_data=input_data
+
     def check_output(self,output_data,channel='main'):
         self.output_data=output_data
         self.output_channel=channel
 
     def input_generator_get(self):
         for chan in self.input_data:
-		    for d in self.input_data[chan]:
-		        yield d,chan
+            for d in self.input_data[chan]:
+                yield d,chan
 
     def output_generator_get(self):
         self.datas={}
@@ -68,14 +69,14 @@ class etl_component_test(object):
                     data.append(d)
             self.datas[channel]=data 
         for chan in self.datas:
-		    for d in self.datas[chan]:
-		        yield d,chan
+            for d in self.datas[chan]:
+                yield d,chan
     
  
     def output(self):        
-        tran=transition.transition(self.test_input,self.component)        
-        tran1=transition.transition(self.component,self.test_output)                
-        job1=job.job('test job',[self.test_output])
+        tran=transition(self.test_input,self.component)        
+        tran1=transition(self.component,self.test_output)                
+        job1=job([self.test_output])
         job1.run() 
         if self.output_channel not in self.datas:
             raise etl_test_exception('expected output channel does not has actual data.')

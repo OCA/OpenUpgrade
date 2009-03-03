@@ -11,6 +11,8 @@ import netsvc
 from report import interface ,report_sxw
 from osv import osv
 import time
+from document import dm_ddf_plugin
+from customer_function import customer_function
 
 class offer_document(rml_parse):
     def __init__(self, cr, uid, name, context):
@@ -36,19 +38,32 @@ class offer_document(rml_parse):
                 args['field_name']=str(plugin.field.name)
                 args['field_type']=str(plugin.field.ttype)
                 args['field_relation']=str(plugin.field.relation)
-                path = os.path.join(os.getcwd(), "addons/dm/")
-                import sys
-                sys.path.append(path)
-                X =  __import__('customer_function')
-                plugin_func = getattr(X,'customer_function')
-                plugin_value = plugin_func(self.cr,self.uid,[customer_id],**args)
+                plugin_value = customer_function(self.cr,self.uid,[customer_id],**args)
                 for p in plugin_value : 
                     vals[str(plugin.id)]=p[1]
             else :                
-                plugin_ids = dm_plugins_value.search(self.cr,self.uid,[('customer_id','=',customer_id)])
-                plugin_values = dm_plugins_value.read(self.cr,self.uid,plugin_ids,['plugin_id','value'])
+                arguments = plugin.argument_ids
+                for a in arguments:
+                    if not a.stored_plugin :
+                        args[str(a.name)]=str(a.value)
+                    else : 
+                        res  = self.pool.get('ir.model').browse(self.cr,self.uid,a.custome_plugin_id.object.id)
+                        arg = {'object':str(res.model),
+                                    'field_name':str(a.custome_plugin_id.field.name),
+                                    'field_type':str(a.custome_plugin_id.field.ttype),
+                                    'field_relation' : str(a.custome_plugin_id.field.relation)}
+                        plugin_value = customer_function(self.cr,self.uid,[customer_id],**arg)
+                        for p in plugin_value : 
+                            args[str(a.name)]=p[1]                        
+                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",self.cr.dbname)
+                plugin_name = plugin.file_fname.split('.')[0]
+                import sys
+                sys.path.append(path)
+                X =  __import__(plugin_name)
+                plugin_func = getattr(X,plugin_name)
+                plugin_values = plugin_func(self.cr,self.uid,[customer_id],**args)
                 for p in plugin_values:
-                    vals[str(p['plugin_id'][0])]=p['value']
+                    vals[str(plugin.id)]=p[1]
         return [vals]
 
 from report.report_sxw import report_sxw

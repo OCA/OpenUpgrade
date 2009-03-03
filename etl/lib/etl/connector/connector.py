@@ -26,8 +26,7 @@ class connector(object):
     """
         Base class of ETL Connector.
     """
-    def __init__(self,uri):        
-        self.uri=uri  
+    def __init__(self):        
         self.connector=None      
     def open(self):
         pass

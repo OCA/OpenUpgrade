@@ -26,20 +26,20 @@ ETL Connectors:
 """
 from etl.connector import connector
 
-class file_connector(connector.connector):
+class file_connector(connector):
     def __init__(self,uri,bufsize=-1,encoding='utf-8'):
-        super(file_connector, self).__init__(uri)               
+        super(file_connector, self).__init__()
         self.bufsize=bufsize
         self.encoding=encoding
-        
-    def open(self,mode='r'):
+        self.uri = uri
+
+    def open(self, mode='r'):
         # TODO : pass encoding in file
         super(file_connector, self).open()
-        self.connector=open(self.uri,mode,self.bufsize)    
+        self.connector=file(self.uri, mode)
         #self.file.encoding=self.encoding
         return self.connector
-        
 
     def close(self):
         super(file_connector, self).close()
-        self.connector.close()    
+        self.connector.close()

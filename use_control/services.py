@@ -100,13 +100,14 @@ class use_control_service(netsvc.Service):
         result = {
             'details': data,
             'modules': modules,
-            'latest_connection': maxdate,
+            'latest_connection': maxdate or False,
             'users_number': users,
             'space': self._get_size(cr, db),
             'hours': hours,
         }
         cr.commit()
         cr.close()
+        print result
         return result
 
     def block(self, password, dbname, message):

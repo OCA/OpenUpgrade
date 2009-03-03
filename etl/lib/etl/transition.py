@@ -24,9 +24,9 @@
     The class for ETL transition.
 
 """
-import signal
+from signal import signal
 import logger
-class transition(signal.signal):
+class transition(signal):
     """
        Base class of ETL transition.
     """

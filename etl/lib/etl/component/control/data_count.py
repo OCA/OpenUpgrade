@@ -27,15 +27,12 @@
 
 from etl.component import component
 
-class control_count(component.component):
+class data_count(component):
     """
     ETL Data Count Control Component:
     * calculate total of tranfering data
 
-    """
-    _name='etl.component.control.data_count'  
-    _description='calculate total of tranfering data.'   
-    _author='tiny'
+    """   
 
     def process(self):
         datas = {}

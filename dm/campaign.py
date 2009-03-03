@@ -1078,9 +1078,9 @@ class dm_campaign_proposition_segment(osv.osv):
         'all_add_avail': fields.boolean('All Adresses Available',
                     help='Used to order all adresses available in the customers list based on the segmentation criteria'),
         'split_id' : fields.many2one('dm.campaign.proposition.segment','Split'),
-        'start_census' :fields.integer('Start Census (days)',help='The recency is the time since the latest purchase.\n' \
+        'start_census' :fields.integer('Start Census',help='The recency is the time since the latest purchase.\n' \
                                     'For example : A 0-30 recency means all the customers that have purchased in the last 30 days'),
-        'end_census' : fields.integer('End Census (days)'),
+        'end_census' : fields.integer('End Census'),
         'deduplication_level' : fields.integer('Deduplication Level',
                     help='The deduplication level defines the order in which the deduplication takes place.'),
         'active' : fields.boolean('Active'),
@@ -1088,10 +1088,12 @@ class dm_campaign_proposition_segment(osv.osv):
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'note' : fields.text('Notes'),
         'segmentation_criteria': fields.text('Segmentation Criteria'),
+        'type_census' : fields.selection([('minutes', 'Minutes'),('hour','Hours'),('day','Days'),('month','Months')], 'Census Type'),
     }
     _order = 'deduplication_level'
     _defaults =  {
         'all_add_avail': lambda *a: True,
+        'type_census': lambda *a: 'day',
     }
 
 dm_campaign_proposition_segment()
@@ -1929,6 +1931,7 @@ class res_partner(osv.osv):
     _columns = {
         'country_ids' : fields.many2many('res.country', 'partner_country_rel', 'partner_id', 'country_id', 'Allowed Countries'),
         'state_ids' : fields.many2many('res.country.state','partner_state_rel', 'partner_id', 'state_id', 'Allowed States'),
+        'dm_contact_id' : fields.many2one('res.partner.address', 'Address To Use', ondelete='cascade'),
     }
     def _default_category(self, cr, uid, context={}):
         if 'category_id' in context and context['category_id']:
@@ -1959,40 +1962,7 @@ class res_partner_address(osv.osv):
     _columns = {
         'name': fields.char('Last Name', size=64),
         'firstname' : fields.char('First Name',size=16),
-        'type': fields.selection( [('direct marketing','Direct Marketing'), ('default','Default'),('invoice','Invoice'), ('delivery','Delivery'), ('contact','Contact'), ('other','Other') ],'Address Type', help="Used to select automatically the right address according to the context in sales and purchases documents."),
     }
-
-    def create(self,cr,uid,vals,context={}):
-        if 'type' in vals and vals['type']:
-            if vals['type'] == 'direct marketing':
-                if 'partner_id' in vals and vals['partner_id']:
-                    address = self.search(cr, uid, [('partner_id','=',vals['partner_id'])])
-                    for id in self.browse(cr, uid, address):
-                        print id, id.type
-                        if id.type == 'direct marketing':
-                            raise osv.except_osv('Warning', "Only one 'Direct Marketing' address type can exist for %s" % (id.partner_id.name,))
-        return super(res_partner_address, self).create(cr, uid, vals, context)
-
-    def write(self, cr, uid, ids, vals, context=None):
-        partner_address = self.browse(cr, uid, ids)[0]
-        partner = ''
-        if ('partner_id' in vals and vals['partner_id']) and not ('type' in vals and vals['type']):
-            if partner_address.type == 'direct marketing':
-                partner = vals['partner_id']
-        elif 'type' in vals and vals['type']:
-            if vals['type'] == 'direct marketing': 
-                if 'partner_id' in vals and vals['partner_id']:
-                    partner = vals['partner_id']
-                else:
-                    partner = partner_address.partner_id.id
-        
-        if partner:
-            search_id = self.search(cr, uid, [('partner_id','=',partner)])
-            address = self.browse(cr, uid, search_id)
-            for id in address:
-                if id.type == 'direct marketing':
-                    raise osv.except_osv('Warning', "Only one 'Direct Marketing' address type can exist for %s" % (id.partner_id.name,))
-        return super(res_partner_address,self).write(cr, uid, ids, vals, context)
 
 res_partner_address()
 

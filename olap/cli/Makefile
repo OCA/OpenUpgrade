@@ -1,6 +1,6 @@
 DATABASE = 'bi'
 
-all: simple sale date where sublevels
+all: simple sale date where sublevels calc_meas cross
 
 simple:
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinyerp" -c "select {[User].[all]} on rows, {[measures].[Credit Limit],[measures].[Count]} on columns from Partner"
@@ -28,8 +28,8 @@ date:
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[Order Date].children} on rows, {[measures].[Items Sold],[measures].[Total Sold]} on columns from Sales"
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[Order Date].[2007]} on rows, {[measures].[Items Sold],[measures].[Total Sold]} on columns from Sales"
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[Order Date].[2008]} on rows, {[measures].[Items Sold],[measures].[Total Sold]} on columns from Sales"
-	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[Order Date].children,[Order Date].[2008].children,[Order Date].[2008].[Q2].children}, {[measures].[Items Sold]} from Sales"
-	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[Order Date].children,[Order Date].[2008].children,[Order Date].[2008].[Q2].children}, {[measures].[Items Sold]} from Sales where ([Order Date].[2008].[Q2])"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[Order Date].children,[Order Date].[2008].children,[Order Date].[2008].[Q2].children} on rows, {[measures].[Items Sold]} on columns from Sales"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[Order Date].children,[Order Date].[2008].children,[Order Date].[2008].[Q2].children} on rows, {[measures].[Items Sold]} on columns from Sales where ([Order Date].[2008].[Q2])"
 
 where:
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[Order Date].children, [Order Date].[all]} on rows, {[measures].[Items Sold]} from Sales where ([Order Date].[2008])"
@@ -40,4 +40,12 @@ sublevels:
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[City].[all],[City].children,[City].[Liege].children} on rows, {[measures].[Items Sold]} on columns from Sales"
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[Products Category].[all],[Products Category].children} on rows, {[measures].[Items Sold]} on columns from Sales"
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[Products Category].[all],[Products Category].children,[Products Category].[PC].children} on rows, {[measures].[Items Sold]} on columns from Sales"
-	
+
+calc_meas:
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[City].[all]} on rows, {[measures].[Calculated Measure]} on columns from Sales"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[City].[all],[City].children} on rows, {[measures].[Calculated Measure]} on columns from Sales"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select {[City].[all],[City].children} on rows, {[measures].[Items Sold],[measures].[Calculated Measure]} on columns from Sales"
+
+cross:	
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select crossjoin({[City].[all]},{[Users].[All]}) on rows, {[measures].[Items Sold]} on columns from Sales"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "tinysales" -c "select crossjoin(crossjoin({[City].[all]},[Users].[All]),[Order Date].[all]) on rows, {[measures].[Calculated Measure]} on columns from Sales"

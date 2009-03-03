@@ -1,0 +1,440 @@
+<?xml version="1.0"?>
+<!-- 
+##############################################################################
+#
+# Copyright (c) Camptocamp SA - http://www.camptocamp.com
+# Author: Arnaud Wüst
+#
+#    This file is part of the c2c_budget module
+#
+# WARNING: This program as such is intended to be used by professional
+# programmers who take the whole responsability of assessing all potential
+# consequences resulting from its eventual inadequacies and bugs
+# End users who are looking for a ready-to-use solution with commercial
+# garantees and support are strongly adviced to contract a Free Software
+# Service Company
+#
+# This program is Free Software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+##############################################################################
+-->
+<openerp>
+    <data>
+
+        	
+    	<!-- ########################################### -->
+    	<!-- Views                                       -->
+    	<!-- ########################################### -->
+		
+		<!--VIEW: form view to edit/create a main budget -->
+		<record model="ir.ui.view" id="view_budget_form">
+    		<field name="name">c2c_budget.form</field>
+    		<field name="model">c2c_budget</field>
+		    <field name="type">form</field>
+		    <field name="priority" eval="5"/>
+			<field name="arch" type="xml">
+			
+				<form string="Budget">
+					<group colspan="8" col="8" string="Budget">
+						<field name="name" select="1" />
+						<field name="code" select="1"/>
+						<newline/>
+						<field name="budget_item_id" domain="[('parent_id','=', False)]" />
+						<field name="active" select="2"/>
+						<newline/>
+						<field name="start_date" select="2"/>
+						<field name="end_date" select="2"/>
+						<newline/>
+						<field name="create_date" />
+						<newline/>
+					</group>
+					<notebook>
+						<page string="Versions">
+							<field name="budget_version_ids" nolabel="1" widget="many2many" />
+						</page><page string="Notes">
+							<field name="note" nolabel="1"/>
+						</page>
+					</notebook>							
+				</form>
+			</field>
+		</record>	
+
+		<!--VIEW: form view to edit/create a budget versions -->
+		<record model="ir.ui.view" id="view_budget_version_form">
+    		<field name="name">c2c_budget.version.form</field>
+    		<field name="model">c2c_budget.version</field>
+		    <field name="type">form</field>
+		    <field name="priority" eval="5"/>
+			<field name="arch" type="xml">
+			
+				<form string="Budget Versions">
+					<group colspan="8" col="8" string="Budgets Versions">
+						<field name="name" select="1"/>
+						<field name="code" select="1"/>
+						<newline/>
+						<field name="budget_id" select="1" />
+						<field name="currency_id" />
+						<newline/>
+						<field name="company_id" select="2"/>
+						<field name="user_id" select="2"/>
+    					<newline/>
+						<field name="ref_date" />
+						<field name="create_date" />
+						<newline/>
+
+					</group>
+					<notebook>
+						<page string="Budget Lines">
+							<field name="budget_line_ids" nolabel="1" mode="tree" select="1" context="currency_id=currency_id, budget_id=budget_id, version_id=id" >
+								<tree string="Budget Lines" editable="top">	
+									<field name="period_id" context="budget_id=parent.budget_id, version_id=parent.id" />
+									<field name="budget_item_id" context="budget_id=parent.budget_id, version_id=parent.id" />
+									<field name="name" />
+									<field name="analytic_account_id"/>
+									<field name="amount" />
+									<field name="currency_id" />
+									<field name="amount_in_budget_currency"  sum="Total Amount" />
+								</tree>							
+								<form>	
+									<field name="period_id" context="budget_id=parent.budget_id, version_id=parent.id" />
+									<field name="budget_item_id" context="budget_id=parent.budget_id, version_id=.parent.id" />
+									<field name="name" />
+									<field name="analytic_account_id"/>
+									<field name="amount" />
+									<field name="currency_id" />
+									<field name="amount_in_budget_currency"  sum="Total Amount" />
+								</form>							
+							</field>
+						</page><page string="Notes">
+							<field name="note" nolabel="1" />
+						</page>
+					</notebook>							
+				</form>
+			</field>
+		</record>	
+
+		<!--VIEW: form view to edit/create a budget item -->
+		<record model="ir.ui.view" id="view_budget_item_form">
+    		<field name="name">c2c_budget.item.form</field>
+    		<field name="model">c2c_budget.item</field>
+		    <field name="type">form</field>
+		    <field name="priority" eval="5"/>
+			<field name="arch" type="xml">
+			
+				<form string="Budget Items">
+					<group colspan="8" col="8" string="Budget Items">
+						<field name="name" select="1"/>
+						<field name="code" select="1"/>
+						<newline/>
+						<field name="type" select="1" />
+						<field name="parent_id" select="2" />
+						<newline/>
+						<field name="active" select="2"/>
+					</group>
+					<group colspan="8" col="8" string="Reports">
+						<field name="sequence" />
+						<field name="style" />					
+					</group>
+					<notebook>
+						<page string="Accounts">
+							<field name="account" nolabel="1" context="limit=800"/>
+						</page><page string="Children">
+							<field name="children_ids" nolabel="1" widget="many2many" domain="[('parent_id', '=', False)]" />
+						</page><page string="Calculation">
+							<label string="For item of type 'view', you can define a method of calculation based on other items." align="0.0" />
+							<label string="Start your formula by 'result=' and use standard math symbols with items codes surrounded by %%()f . Items' codes will be replaced by items' values and then parsed in python code. So be sure to be python compilant." align="0.0" />
+							<label string="Here is a simple example: result=(%%(ebitda)f+%%(ebit)f)*2" align="0.0" />
+							
+							<field name="calculation" nolabel="1" colspan="8"/>
+						</page><page string="Notes">
+							<field name="note" nolabel="1"/>
+						</page>
+					</notebook>							
+				</form>
+			</field>
+		</record>	
+		
+		
+		
+    	<!-- VIEW: budget list -->
+		<record model="ir.ui.view" id="view_budget_list">
+    		<field name="name">c2c_budget.list</field>
+    		<field name="model">c2c_budget</field>
+		    <field name="type">tree</field>
+		    <field name="priority" eval="4"/>
+			<field name="arch" type="xml">
+				<tree string="Budgets">	
+					<field name="name"/>
+					<field name="code"/>
+					<field name="start_date" />
+					<field name="end_date" />
+					<field name="active" />
+				</tree>
+			</field>
+		</record>	
+		
+
+    	<!-- VIEW: budget version list in budget form-->
+		<record model="ir.ui.view" id="view_budget_version_list">
+    		<field name="name">c2c_budget.version.list</field>
+    		<field name="model">c2c_budget.version</field>
+		    <field name="type">tree</field>
+		    <field name="priority" eval="3"/>
+			<field name="arch" type="xml">
+				<tree string="Budgets Versions">	
+					<field name="name"/>
+					<field name="code"/>
+					<field name="ref_date" />
+					<field name="company_id" />
+					<field name="currency_id" />
+				</tree>
+			</field>
+		</record>	
+
+
+    	<!-- VIEW: budget version list from the menu-->
+		<record model="ir.ui.view" id="view_budget_version_list_from_menu">
+    		<field name="name">c2c_budget.version.list</field>
+    		<field name="model">c2c_budget.version</field>
+		    <field name="type">tree</field>
+		    <field name="priority" eval="4"/>
+			<field name="arch" type="xml">
+				<tree string="Budgets Versions">	
+					<field name="name"/>
+					<field name="code"/>
+					<field name="budget_id" />
+					<field name="ref_date" />
+					<field name="company_id" />
+					<field name="currency_id" />
+				</tree>
+			</field>
+		</record>	
+
+
+    	<!-- VIEW: budget item list -->
+		<record model="ir.ui.view" id="view_budget_item_list">
+    		<field name="name">c2c_budget.item.list</field>
+    		<field name="model">c2c_budget.item</field>
+		    <field name="type">tree</field>
+		    <field name="priority" eval="4"/>
+			<field name="arch" type="xml">
+				<tree string="Budgets Items">	
+					<field name="name"/>
+					<field name="code"/>
+					<field name="sequence" />
+					<field name="type" />					
+					<field name="active" />
+				</tree>
+			</field>
+		</record>	
+
+
+    	<!-- VIEW: budget structure -->
+		<record model="ir.ui.view" id="view_budget_item_tree">
+			<field name="name">c2c_budget.item.tree</field>
+			<field name="model">c2c_budget.item</field>
+			<field name="type">tree</field>
+			<field name="field_parent">children_ids</field>
+		    <field name="priority" eval="6"/>
+			<field name="arch" type="xml">
+				<tree string="Budgets Structure">
+					<field name="name"/>
+					<field name="code"/>
+					<field name="type"/>
+				</tree>
+			</field>
+		</record>
+
+
+    	<!-- VIEW: budget line list inside the page "budget version" -->
+		<record model="ir.ui.view" id="view_budget_line_list_in_budget_version">
+    		<field name="name">c2c_budget.line.list.in.budget.version</field>
+    		<field name="model">c2c_budget.line</field>
+		    <field name="type">tree</field>
+		    <field name="priority" eval="4"/>
+			<field name="arch" type="xml">
+				<tree string="Budget Lines" editable="top">	
+					<field name="period_id"/>
+					<field name="analytic_account_id"/>
+					<field name="budget_item_id" domain="[('type','=', 'normal')]" />
+					<field name="name" />
+					<field name="amount" />
+					<field name="currency_id" />
+					<field name="amount_in_budget_currency"  sum="Total Amount" />
+				</tree>
+			</field>
+		</record>	
+
+
+		
+		
+    	<!-- VIEW: budget line list -->
+		<record model="ir.ui.view" id="view_budget_line_list">
+    		<field name="name">c2c_budget.line.list</field>
+    		<field name="model">c2c_budget.line</field>
+		    <field name="type">tree</field>
+		    <field name="priority" eval="3"/>
+			<field name="arch" type="xml">
+				<tree string="Budget Lines" editable="top">	
+					<field name="budget_version_id" />
+					<field name="period_id"/>
+					<field name="budget_item_id"  domain="[('type', '=', 'normal')]" />
+					<field name="name" />
+					<field name="analytic_account_id"/>
+					<field name="amount" />
+					<field name="currency_id" />
+					<field name="amount_in_budget_currency"  sum="Total Amount" />
+				</tree>
+			</field>
+		</record>	
+
+		<record model="ir.ui.view" id="view_budget_line_form">
+    		<field name="name">c2c_budget.line.list</field>
+    		<field name="model">c2c_budget.line</field>
+		    <field name="type">form</field>
+		    <field name="priority" eval="3"/>
+			<field name="arch" type="xml">
+				<form string="Budget Lines">
+					<field name="budget_version_id" select="1"/>
+					<field name="period_id" select="1"/>
+					<field name="budget_item_id"  domain="[('type', '=', 'normal')]" select="1"/>
+					<field name="name" select="1" />
+					<field name="analytic_account_id"/>
+					<field name="amount" />
+					<field name="currency_id" />
+				</form>
+			</field>
+		</record>	
+
+
+
+    	<!-- VIEW: budget analytic line list -->
+		<record model="ir.ui.view" id="view_budget_analytic_line_list">
+    		<field name="name">c2c_budget.analytic_line.list</field>
+    		<field name="model">c2c_budget.analytic_line</field>
+		    <field name="type">tree</field>
+		    <field name="priority" eval="4"/>
+			<field name="arch" type="xml">
+				<tree string="Analytic Budget Lines" editable="top">	
+					<field name="budget_version_id" />
+					<field name="period_id"/>
+					<field name="analytic_account_id"/>
+					<field name="budget_item_id" domain="[('type', '=', 'normal')]"/>
+					<field name="name" />
+					<field name="amount" />
+					<field name="currency_id" />
+					<field name="amount_in_budget_currency"  sum="Total Amount"/>
+				</tree>
+			</field>
+		</record>	
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+   		<!-- ########################################### -->
+    	<!-- Actions                                     -->
+    	<!-- ########################################### -->
+    	
+    	<!-- ACTION: dbl click on Financial Management/Budgets/Budgets -->
+	    <record model="ir.actions.act_window" id="open_budget_list">
+            <field name="res_model">c2c_budget</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+     	</record>        
+    	<!-- ACTION: dbl click on Financial Management/Budgets/Budgets versions -->
+	    <record model="ir.actions.act_window" id="open_budget_version_list">
+            <field name="res_model">c2c_budget.version</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_budget_version_list_from_menu"/>
+     	</record>        
+    	<!-- ACTION: dbl click on Financial Management/Budgets/Budgets lines -->
+	    <record model="ir.actions.act_window" id="open_budget_lines_list">
+            <field name="res_model">c2c_budget.line</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_budget_line_list"/>
+     	</record>        
+    	<!-- ACTION: dbl click on Financial Management/Budgets/Budgets items -->
+	    <record model="ir.actions.act_window" id="open_budget_items_list">
+            <field name="res_model">c2c_budget.item</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_budget_item_list"/>
+     	</record>        
+    	<!-- ACTION: dbl click on Financial Management/Budgets/Budgets structure-->
+		<record model="ir.actions.act_window" id="open_budget_items_tree">
+			<field name="name">Budgets Structure</field>
+			<field name="res_model">c2c_budget.item</field>
+			<field name="view_type">tree</field>
+			<field name="view_id" ref="view_budget_item_tree"/>
+			<field name="domain">[('parent_id', '=', False)]</field>
+		</record>
+		
+		<!-- ACTION: dbl click on a budget item in the tree structure to open the item-->
+		<record model="ir.actions.act_window" id="dblc_budget_structure">
+			 <field name="res_model">c2c_budget.item</field>
+			 <field name="name">Open Item</field>
+			 <field name="view_type">form</field>
+			 <field name="view_mode">tree,form</field>
+			 <field name="domain">[('id', '=', active_id)]</field>
+		</record>
+		<record model="ir.values" id="ir_open_item">
+			<field name="key2" eval=" 'tree_but_open'" />
+			<field name="model" eval="'c2c_budget.item'" />
+			<field name="name">Open Item</field>
+			<field name="value" eval="'ir.actions.act_window,'+str(dblc_budget_structure)" />
+			<field name="object" eval="True" />
+		</record>
+
+		<!-- ACTION: dbl click on a budget item in the tree structure to check the structure-->
+		<wizard string="Validate Budget Structure" 
+		        model="c2c_budget.item" 
+		        name="c2c_budget.validate_budget_structure" 
+		        id="action_validate_budget_structure" 
+		/>
+		<record model="ir.values" id="ir_check_structure">
+			<field name="key2" eval=" 'tree_but_open'" />
+			<field name="model"  eval="'c2c_budget.item'" />
+			<field name="name">Check Budget Stucture</field>
+			<field name="value" eval="'ir.actions.wizard,%d'%action_validate_budget_structure"/>
+			<field name="object" eval="True"/>
+		</record>
+
+		
+    	<!-- ########################################### -->
+    	<!-- Menus                                       -->
+    	<!-- ########################################### -->
+    	
+        	
+    	
+		<menuitem name="Financial Management/Budgets"  id="menu_budget" />
+		<menuitem name="Financial Management/Budgets/Budgets" id="menu_budget_list" action="open_budget_list"/>
+		<menuitem name="Financial Management/Budgets/Budgets Versions" id="menu_budget_version_list" action="open_budget_version_list"/>
+    	<menuitem name="Financial Management/Budgets/Budgets Lines" id="menu_budget_line_list" action="open_budget_lines_list"/>
+		<menuitem name="Financial Management/Budgets/Budgets Items" id="menu_budget_item_list" action="open_budget_items_list"/>
+    	<menuitem name="Financial Management/Budgets/Budgets Structures" id="menu_budget_item_tree" action="open_budget_items_tree"/>
+
+
+    </data>
+</openerp>

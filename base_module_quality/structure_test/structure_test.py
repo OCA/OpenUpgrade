@@ -90,7 +90,7 @@ This test checks if the module satisfy tiny structure
                 for r in reports:
                     org_list_rep.append(l+r)
             org_list_rep.append('__init__.py')
-            score_report = self.get_score(module_dict['report'], org_list_rep, 'report//')
+            score_report = self.get_score(module_dict['report'], org_list_rep, 'report/')
             n = n + 1
             final_score += score_report
 
@@ -104,7 +104,7 @@ This test checks if the module satisfy tiny structure
                 for r in wizards:
                     org_list_wiz.append(l+r)
             org_list_wiz.append('__init__.py')
-            score_wizard = self.get_score(module_dict['wizard'], org_list_wiz, 'wizard//')
+            score_wizard = self.get_score(module_dict['wizard'], org_list_wiz, 'wizard/')
             n = n + 1
             final_score += score_wizard
 
@@ -112,14 +112,13 @@ This test checks if the module satisfy tiny structure
         if module_dict.has_key('security'):
             security = [module_name + '_security.xml']
             security.extend(['ir.model.access.csv'])
-            score_security = self.get_score(module_dict['security'], security, 'security//')
+            score_security = self.get_score(module_dict['security'], security, 'security/')
             n = n + 1
             final_score += score_security
 
         # final score
         self.score = float(final_score) / n
         self.result = self.get_result({ module_name: [module_name, int(self.score*100)]})
-
         self.result_details += self.get_result_details(self.result_dict)
         return None
 
@@ -135,13 +134,14 @@ This test checks if the module satisfy tiny structure
         for i in module_list:
             if i in original_files:
                 score += 1
-            else:     
-                self.result_dict[i] = [mod_folder+i,'File name does not follow naming standards.']
-                score -= 1
-                module_length -= 1
-        score = float(score) / float(module_length)
+            else:
+                if mod_folder != 'wizard/':
+                    self.result_dict[i] = [mod_folder + i,'File name does not follow naming standards.']
+                    score -= 1
+                    module_length -= 1
+        score = module_length and float(score) / float(module_length)
         return score
-    
+
     def get_result_details(self, dict):
         str_html = '''<html><head></head><body><table border="1">'''
         header = ('<tr><th>%s</th><th>%s</th></tr>',[_('File Name'),_('Feedback about structure of module')])
