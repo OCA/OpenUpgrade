@@ -23,8 +23,8 @@
 import wizard
 import pooler
 
-class wizard_product_ecom_view(wizard.interface):
-    
+class ecommerce_productview_wizard(wizard.interface):
+
     def _action_open_product_view(self, cr, uid, data, context):    
         category_obj = pooler.get_pool(cr.dbname).get('ecommerce.category')
         category_id = category_obj.browse(cr, uid, data['ids'][0]).category_id
@@ -45,6 +45,6 @@ class wizard_product_ecom_view(wizard.interface):
                 'result': {'type': 'action', 'action': _action_open_product_view, 'state': 'end'}
             }        
     }
-wizard_product_ecom_view('ecommerce_category_product')
+ecommerce_productview_wizard('ecommerce_category_product')
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

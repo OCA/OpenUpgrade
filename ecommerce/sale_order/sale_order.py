@@ -25,12 +25,12 @@ from tools import config
 import netsvc
 import wizard
 
-class ecommerce_sale_order(osv.osv):
+class ecommerce_saleorder(osv.osv):
 
     _name = 'ecommerce.saleorder'
     _description = 'ecommerce saleorder'
     _columns = {
-        'name': fields.char('Order Description', size=64, required=True),
+        'name': fields.char('Order Reference', size=64, required=True),
         'date_order': fields.date('Date Ordered', required=True),
         'epartner_id': fields.many2one('ecommerce.partner', 'Ecommerce Partner', required=True),
         'epartner_add_id': fields.many2one('ecommerce.partner.address', 'Contact Address'),
@@ -70,7 +70,6 @@ class ecommerce_sale_order(osv.osv):
 
                 prt_add_id = res_add.search(cr, uid, [('partner_id', '=', partner_id)])
                 res_prt_add = res_add.read(cr, uid, prt_add_id, ['id'], context)
-                addid = res_prt_add[0]['id']
 
             if not prt_id:
                 partner_id = self.pool.get('res.partner').create(cr, uid, {
@@ -179,7 +178,7 @@ class ecommerce_sale_order(osv.osv):
            })
         return True
 
-    def onchange_epartner_id(self, cr, uid, ids, part):
+    def onchange_epartner_id(self, cr, uid, part):
 
         if not part:
             return {'value':{'epartner_invoice_id': False, 'epartner_shipping_id':False, 'epartner_add_id':False}}
@@ -242,11 +241,11 @@ class ecommerce_sale_order(osv.osv):
                    'The Ecommerce Team')
 
         data = self.pool.get('ecommerce.partner')
-        data.ecom_send_email(cr, uid, email_id, subject, body, attachment=result, context={})
+        data.ecommerce_sendmail(cr, uid, email_id, subject, body, attachment=result, context={})
 
         return dict(inv_id=invoice_id, so_id=sale_orderid)
 
-ecommerce_sale_order()
+ecommerce_saleorder()
 
 class ecommerce_order_line(osv.osv):
     _name = 'ecommerce.order.line'
@@ -256,15 +255,15 @@ class ecommerce_order_line(osv.osv):
         'product_qty': fields.float('Quantity', digits=(16,2), required=True),
         'order_id': fields.many2one('ecommerce.saleorder', 'eOrder Ref'),
         'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok','=',True)], change_default=True),
-        'product_uom_id': fields.many2one('product.uom', 'Unit of Measure',required=True),
+        'product_uom_id': fields.many2one('product.uom', 'Product UOM',required=True),
         'price_unit': fields.float('Unit Price',digits=(16, int(config['price_accuracy'])), required=True),
     }
     
-    def onchange_product(self, cr, uid, ids, product_id):
+    def onchange_product(self, cr, uid, product_id):
 
         product_obj = self.pool.get('product.product')
         if not product_id:
-              return {'value': {'name': False, 'product_uom_id': False, 'price_unit':False}}
+            return {'value': {'name': False, 'product_uom_id': False, 'price_unit':False}}
         else:
             product = product_obj.browse(cr, uid, product_id)
             return {'value': {'name': product.product_tmpl_id.name, 'product_uom_id': product.product_tmpl_id.uom_id.id,

@@ -36,7 +36,7 @@ class ecommerce_partner(osv.osv):
     _name = "ecommerce.partner"
     _order = "name"
     _columns = {
-        'name': fields.char('Name', size=128, required=True, select=True),
+        'name': fields.char('Name', size=128, required=True, select=True, help="Its ecommerce partner name and address"),
         'last_name': fields.char('Last Name', size=128, select=True),
         'lang': fields.selection(_lang_get, 'Language', size=5),
         'company_name': fields.char('Company Name', size=64),
@@ -199,10 +199,10 @@ class ecommerce_partner(osv.osv):
            
 
     
-    def get_price_from_picking_ecommerce(self, cr, uid, id, total, weight, volume, context={}):
+    def get_price_from_picking_ecommerce(self, cr, uid, get_id, total, weight, volume, context={}):
         
         grid = self.pool.get('delivery.grid')
-        grid_get = grid.browse(cr, uid, int(id))
+        grid_get = grid.browse(cr, uid, int(get_id))
         price = 0.0
         ok = False
 
@@ -220,7 +220,7 @@ class ecommerce_partner(osv.osv):
             raise osv.except_osv(_('No price avaible !'), _('No line matched this order in the choosed delivery grids !'))
         return price   
     
-    def ecom_send_email(self, cr, uid, mail_to, subject, body, attachment=None, context = {}):
+    def ecommerce_sendmail(self, cr, uid, mail_to, subject, body, attachment=None, context = {}):
     
         import smtplib
         from email.MIMEText import MIMEText
@@ -236,7 +236,7 @@ class ecommerce_partner(osv.osv):
             s.ehlo()
             s.starttls()
             s.ehlo()
-            s.login('mansuri.sananaz@gmail.com', 'sananaz29101204')
+            s.login('mansuri.sananaz@gmail.com', '2332442222')
             outer = MIMEMultipart()
             outer['Subject'] = 'Invoice:'
             outer['To'] = mail_to

@@ -32,22 +32,22 @@
 		
 		<!-- Ecommerce Payment Methods -->
 			
-		<record id="ecommerce_method" model="payment.method">
+		<record id="ecommerce_method" model="ecommerce.payment.method">
 			<field name="name">Cheque</field>
 			<field name="shortcut">cheque</field>
 		</record> 
 		
-		<record id="ecommerce_method1" model="payment.method">
+		<record id="ecommerce_method1" model="ecommerce.payment.method">
 			<field name="name">Paypal</field>
 			<field name="shortcut">paypal</field>
 		</record>
 		 
-		<record id="ecommerce_method2" model="payment.method">
+		<record id="ecommerce_method2" model="ecommerce.payment.method">
 			<field name="name">Creditcard</field>
 			<field name="shortcut">creditcard</field>
 		</record>
 		
-		<record id="ecommerce_method3" model="payment.method">
+		<record id="ecommerce_method3" model="ecommerce.payment.method">
 			<field name="name">Banktransaction</field>
 			<field name="shortcut">banwt</field>
 		</record> 
@@ -75,7 +75,7 @@
 		
 		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
 			<field eval="[(6,0,[])]" name="delivery_ids"/>
-			<field eval="&quot;&quot;&quot;tinyerp&quot;&quot;&quot;" name="name"/>
+			<field name="name">tinyerp</field>
 			<field eval="[(6,0,[])]" name="language_ids"/>
 			<field name="company_id" ref="base.main_company"/>
 			<field eval="[(6,0,[])]" name="currency_ids"/>
@@ -85,7 +85,7 @@
 		<!-- Ecommerce Category Demo 0 -->
 
 		<record id="product_category_laptop0" model="product.category">
-			<field eval="&quot;Laptop&quot;" name="name"/>
+			<field name="name">Laptop</field>
 		</record>
 
 		<record id="product_category_compaq" model="product.category">
@@ -842,11 +842,10 @@
 		
 		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
 			<field eval="[(6,0,[ref('base.EUR'),ref('res_currency_aud0'),ref('base.EUR'),ref('base.CAD'),ref('base.USD')])]" name="currency_ids"/>
-			<field eval="[(6,0,[ref('ecommerce_payment'),ref('ecommerce_payment1')])]" name="payment_method"/>
+			<field eval="[(6,0,[ref('ecommerce_payment'),ref('ecommerce_payment1')])]" name="payment_method_ids"/>
 			<field eval="[(6,0,[ref('base.lang_en')])]" name="language_ids"/>
 			<field eval="[(6,0,[ref('ecommerce_search_productname0'),ref('ecommerce_search_productcolor0'),ref('ecommerce_search_productprice0')])]" name="search_ids"/>
 			<field eval="[(6,0,[ref('delivery.delivery_grid')])]" name="delivery_ids"/>
 		</record>
-
 </data>
 </openerp>

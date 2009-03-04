@@ -144,15 +144,24 @@ class Comparison(controllers.Controller, TinyResource):
         
         fields = jsonify.encode(fields)
         icon_name = self.headers[0].get('icon')
-        
-        self.url = '/comparison/data'
-        self.url_params = dict(model=model, 
-                                ids=ids,
-                                fields=ustr(fields), 
-                                domain=ustr(domain), 
-                                context=ustr(context), 
-                                field_parent=field_parent,
-                                icon_name=icon_name)
+        if kw.has_key('all'):
+            self.url = '/comparison/data'
+            self.url_params = dict(model=model, 
+                                    ids=ids,
+                                    fields=ustr(fields), 
+                                    domain=ustr(domain), 
+                                    context=ustr(context), 
+                                    field_parent=field_parent,
+                                    icon_name=icon_name,all = kw.get('all'))
+        else:
+            self.url = '/comparison/data'
+            self.url_params = dict(model=model, 
+                                    ids=ids,
+                                    fields=ustr(fields), 
+                                    domain=ustr(domain), 
+                                    context=ustr(context), 
+                                    field_parent=field_parent,
+                                    icon_name=icon_name)
         
         def _jsonify(obj):
             for k, v in obj.items():
@@ -337,7 +346,7 @@ class Comparison(controllers.Controller, TinyResource):
     
     @expose('json')
     def data(self, model, ids=[], fields=[], field_parent=None, icon_name=None, domain=[], context={}, sort_by=None, sort_order="asc",
-             factor_id=None, ponderation=None, parent_id=None, parent_name=None, ftype=''):
+             factor_id=None, ponderation=None, parent_id=None, parent_name=None, ftype='',all = None):
 
         ids = ids or []
         
@@ -389,7 +398,7 @@ class Comparison(controllers.Controller, TinyResource):
         
         fact_proxy = rpc.RPCProxy('comparison.factor')
 #        For state = open ids only... 
-        ids = fact_proxy.search([('id', 'in', ids), ('state', '=', 'open')])
+#        ids = fact_proxy.search([('id', 'in', ids), ('state', '=', 'open')])
         
         fields_info = proxy.fields_get(fields, ctx)
         result = proxy.read(ids, fields, ctx)
@@ -437,62 +446,122 @@ class Comparison(controllers.Controller, TinyResource):
                         x[field] = dict(fields_info[field]['selection']).get(x[field], '')
 
         records = []
-        for item in result:
-            # empty string instead of bool and None
-            for k, v in item.items():
-                if v==None or (v==False and type(v)==bool):
-                    item[k] = ''
-                    
-            record = {}
-            
-            for i, j in item.items():
-                for r in factor_res:
-                    if j == r.get('factor_id')[1]:
-                        if r.get('votes') > 0.0:
-                            item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
-                        else:
-                            item[r.get('item_id')[1]] = "No Vote"
-                            
-                        if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
-                            item[r.get('item_id')[1]] += '|' + "open_item_vote(%s, '%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
-                        if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
-                            item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
-                        else:
-                            item['add_factor'] = '/static/images/treegrid/gtk-edit.png'
-                            item['show_graph'] = '/static/images/treegrid/graph.png'
-            
-                    item['incr'] = '/static/images/increase.png'
-                    item['decr'] = '/static/images/decrease.png'
-                    
-            if res:
-                record['id'] = res
-            else:
-                record['id'] = item.pop('id') or id
+        if all == '1':
+            print "all="
+            print "result===",result
+            for item in result:
+                # empty string instead of bool and None
+                for k, v in item.items():
+                    if v==None or (v==False and type(v)==bool):
+                        item[k] = ''
+                        
+                record = {}
                 
-            record['target'] = None
-
-            if item['ponderation']:
-                item['ponderation'] = '%.2f' % float(item['ponderation'] or ponderation) + '@'
-            else:
-                item['ponderation'] = '0.00'
+                for i, j in item.items():
+                    for r in factor_res:
+                        if j == r.get('factor_id')[1]:
+                            if r.get('votes') > 0.0:
+                                item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
+                            else:
+                                item[r.get('item_id')[1]] = "No Vote"
+                                
+                            if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
+                                item[r.get('item_id')[1]] += '|' + "open_item_vote(%s, '%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
+                            if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
+                                item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
+                            else:
+                                item['add_factor'] = '/static/images/treegrid/gtk-edit.png'
+                                item['show_graph'] = '/static/images/treegrid/graph.png'
+                
+                        item['incr'] = '/static/images/increase.png'
+                        item['decr'] = '/static/images/decrease.png'
+                        
+                if res:
+                    record['id'] = res
+                else:
+                    record['id'] = item.pop('id') or id
                     
-            if icon_name and item.get(icon_name):
-                icon = item.pop(icon_name)
-                record['icon'] = icons.get_icon(icon)
-
-                if icon == 'STOCK_OPEN':
-                    record['action'] = None
-
-            record['children'] = []
-            
-            if item['child_ids']:
-                record['children'] = item.pop('child_ids') or None
-
-            if field_parent and field_parent in item:
-                record['children'] = item.pop(field_parent) or None
-            
-            record['items'] = item
-            records += [record]
+                record['target'] = None
+    
+                if item['ponderation']:
+                    item['ponderation'] = '%.2f' % float(item['ponderation'] or ponderation) + '@'
+                else:
+                    item['ponderation'] = '0.00'
+                        
+                if icon_name and item.get(icon_name):
+                    icon = item.pop(icon_name)
+                    record['icon'] = icons.get_icon(icon)
+    
+                    if icon == 'STOCK_OPEN':
+                        record['action'] = None
+    
+                record['children'] = []
+                
+                if item['child_ids']:
+                    record['children'] = item.pop('child_ids') or None
+    
+                if field_parent and field_parent in item:
+                    record['children'] = item.pop(field_parent) or None
+                
+                record['items'] = item
+                records += [record]
+        else:
+            for item in result:
+                # empty string instead of bool and None
+                for k, v in item.items():
+                    if v==None or (v==False and type(v)==bool):
+                        item[k] = ''
+                        
+                record = {}
+                
+                for i, j in item.items():
+                    for r in factor_res:
+                        if j == r.get('factor_id')[1]:
+                            if r.get('votes') > 0.0:
+                                item[r.get('item_id')[1]] = '%d%%' % math.floor(r.get('result'))
+                            else:
+                                item[r.get('item_id')[1]] = "No Vote"
+                                
+                            if r.get('factor_id')[0] in [v.get('parent_id')[0] for v in parent_ids]:
+                                item[r.get('item_id')[1]] += '|' + "open_item_vote(%s, '%s');" % (r.get('factor_id')[0], r.get('item_id')[1]) + '|' + r.get('factor_id')[1]
+                            if r.get('factor_id')[0] in [v1.get('id') for v1 in child_ids]:
+                                item[r.get('item_id')[1]] += '-' + r.get('factor_id')[1]
+                            else:
+                                item['add_factor'] = '/static/images/treegrid/gtk-edit.png'
+                                item['show_graph'] = '/static/images/treegrid/graph.png'
+                
+                        item['incr'] = '/static/images/increase.png'
+                        item['decr'] = '/static/images/decrease.png'
+                        
+                if res:
+                    record['id'] = res
+                else:
+                    record['id'] = item.pop('id') or id
+                    
+                record['target'] = None
+    
+                if item['ponderation']:
+                    item['ponderation'] = '%.2f' % float(item['ponderation'] or ponderation) + '@'
+                else:
+                    item['ponderation'] = '0.00'
+                        
+                if icon_name and item.get(icon_name):
+                    icon = item.pop(icon_name)
+                    record['icon'] = icons.get_icon(icon)
+    
+                    if icon == 'STOCK_OPEN':
+                        record['action'] = None
+    
+                record['children'] = []
+                
+                if item['child_ids']:
+                    record['children'] = item.pop('child_ids') or None
+    
+                if field_parent and field_parent in item:
+                    record['children'] = item.pop(field_parent) or None
+                
+                record['items'] = item
+                records += [record]
         
         return dict(records=records)
     
