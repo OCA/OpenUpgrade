@@ -116,7 +116,7 @@
             <field name="arch" type="xml">
                 <form string="Course">
                     <group colspan="4" col='6'>
-                        <field name="name" string="Designation" select="1" />
+                        <field name="name" string="Designation" select="1" required="True"/>
                         <field name="parent_id" string="Product Line" required="True" />
                         <field name="course_type_id" />
                         <field name="display_name" />
