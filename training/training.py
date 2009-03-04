@@ -480,6 +480,7 @@ training_seance()
 
 class training_seance_purchase_line(osv.osv):
     _name = 'training.seance.purchase_line'
+    _rec_name = 'product_id'
 
     _columns = {
         'seance_id' : fields.many2one('training.seance', 'Seance', required=True),
