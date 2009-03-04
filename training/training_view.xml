@@ -1281,4 +1281,28 @@
             parent="training_subscription_management_mi" 
             action="training_session_massive_subscription_act" />
     </data>
+
+    <data>
+        <!--
+        <record model="ir.ui.view" id="order_line_client_portal">
+            <field name="name">order.line.client.portal</field>
+            <field name="model"></field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Order Line">
+                    <field name="type" readonly="True" />
+                    <field name="product_id" readonly="True" />
+                    <field name="quantity" readonly="True" />
+                    <field name="product_oum_id" readonly="True" />
+                    <field name="description" colspan="4" readonly="True" />
+                    <field name="scheduled_date" readonly="True" />
+                    <field name="purchase_order_line_id" readonly="True" />
+                    <label string="" />
+                    <field name="confirmed_by_supplier" />
+                </form>
+            </field>
+        </record>
+        -->
+        
+    </data>
 </openerp>
