@@ -596,14 +596,19 @@ def load_module_graph(cr, graph, status=None, perform_checks=True, **kwargs):
 
         idref = {}
         status['progress'] = (float(statusi)+0.4) / len(graph)
+        
+        mode = 'update'
+        if hasattr(package, 'init') or package.state == 'to install':
+            mode = 'init'
+            
         if hasattr(package, 'init') or hasattr(package, 'update') or package.state in ('to install', 'to upgrade'):
             has_updates = True
             init_module_objects(cr, m, modules)
             for kind in ('init', 'update'):
                 for filename in package.data.get('%s_xml' % kind, []):
-                    mode = 'update'
-                    if hasattr(package, 'init') or package.state == 'to install':
-                        mode = 'init'
+#                    mode = 'update'
+#                    if hasattr(package, 'init') or package.state == 'to install':
+#                        mode = 'init'
                     logger.notifyChannel('init', netsvc.LOG_INFO, 'module %s: loading %s' % (m, filename))
                     name, ext = os.path.splitext(filename)
                     fp = tools.file_open(opj(m, filename))
