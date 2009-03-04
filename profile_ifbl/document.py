@@ -33,6 +33,27 @@ class document_ifbl(osv.osv):
         'state' : lambda *a: 'unlocked'
     }
 
+    def check(self, cr, uid, ids, mode):
+        if not ids:
+            return
+        ima = self.pool.get('ir.model.access')
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+
+        if mode != 'read':
+            if len(ids) == 1:
+                msg = _('You can not modify this document !')
+            else:
+                msg = _('You can not modify one of these documents !')
+
+            for obj in self.browse(cr, uid, ids):
+                if obj.state == 'locked':
+                    raise osv.except_osv(_('AccessError'), msg)
+
+        cr.execute('select distinct res_model from ir_attachment where id in ('+','.join(map(str, ids))+')')
+        for obj in cr.fetchall():
+            ima.check(cr, uid, obj[0], mode)
+
 document_ifbl()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
