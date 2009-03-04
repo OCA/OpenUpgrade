@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+    <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+        <pageTemplate id="first">
+            <frame id="first" x1="42.0" y1="42.0" width="511" height="758"/>
+            <header>
+                <pageGraphics>
+                    <setFont name="Helvetica-Bold" size="9"/>
+                    <drawString x="1.0cm" y="28.1cm">[[ company.name ]]</drawString>
+                    <drawRightString x="20cm" y="28.1cm"> Training Module </drawRightString>
+                    <lineMode width="0.7"/>
+                    <stroke color="black"/>
+                    <lines>1cm 28cm 20cm 28cm</lines>
+                    <drawString x="1.0cm" y="1cm"> [[ formatLang(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),date_time = True) ]]</drawString>
+                </pageGraphics>
+            </header>
+
+        </pageTemplate>
+    </template>
+    <stylesheet>
+        <initialize>
+            <paraStyle name="all" alignment="justify"/>
+        </initialize>
+        <paraStyle name="center" fontSize="20.0" alignment="CENTER" leading="20"/>
+    </stylesheet>
+    <images/>
+    <story>
+        <para style="center"><font color="red">Open</font> ERP</para>
+        <para style="center">This report is in construction !</para>
+    </story>
+</document>

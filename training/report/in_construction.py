@@ -20,6 +20,30 @@
 #
 ##############################################################################
 
+import time
+from report import report_sxw
+
+class in_construction(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(in_construction, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+
+reports = [
+    ('report.training.seance.booking.support', 'training.seance'),
+    ('report.training.seance.booking.classroom', 'training.seance'),
+    ('report.training.subscription.cancel', 'training.subscription'),
+    ('report.training.subscription.confirm', 'training.subscription'),
+    #('report.training.course.material.report', 'training.course.material.report'),
+    #('report.training.course.financial.report', 'training.course.financial.report')
+]
+
+for name, model in reports:
+    report_sxw.report_sxw(name, model,
+                          'addons/training/report/in_construction.rml',
+                          parser=in_construction,
+                          header=False)
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
-import in_construction
