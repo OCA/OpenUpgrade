@@ -34,12 +34,13 @@
         'mrp',
     ],
     'init_xml' : [
-        'training_sequence.xml'
+        'training_sequence.xml',
     ],
     'demo_xml' : [
         'training_demo.xml',
     ],
     'update_xml' : [
+        'security/training_security.xml',
         'partner_view.xml',
         'base_contact_view.xml',
         'training_view.xml',
