@@ -143,7 +143,8 @@ class training_offer(osv.osv):
                                         'training_course_offer_rel',
                                         'offer_id',
                                         'course_id',
-                                        'Courses'
+                                        'Courses',
+                                        domain="[('state', '=', 'validate')]"
                                        ),
         'objective' : fields.text('Objective'),
         'description' : fields.text('Description'),
