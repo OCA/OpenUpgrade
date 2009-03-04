@@ -221,6 +221,7 @@ class training_questionnaire(osv.osv):
         'name' : fields.char( 'Name', size=32, required=True, select=1 ),
         'course_id' : fields.many2one('training.course', 'Course'),
         'state' : fields.selection([('draft', 'Draft'),
+                                    ('validate', 'Validate'),
                                     ('pending', 'Pending'),
                                     ('inprogress', 'In Progress'),
                                     ('deprecated', 'Deprecated')
@@ -505,8 +506,8 @@ class training_subscription(osv.osv):
                                     ('confirm','Confirm'),
                                     ('cancel','Cancel'),
                                     ('done', 'Done')
-                                   ], 
-                                   'State', 
+                                   ],
+                                   'State',
                                    readonly=True,
                                    required=True,
                                    select=1),
