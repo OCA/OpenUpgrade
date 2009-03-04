@@ -471,7 +471,7 @@
                     <field name="catalog_id" />
                     <newline />
                     <notebook colspan="4">
-                        <page string="General">
+                        <page string="Events">
                             <field name="event_ids" readonly="true" colspan="4" nolabel="1">
                                 <tree string="Events">
                                     <field name="name" />
@@ -623,9 +623,9 @@
             <field name="arch" type="xml">
                 <form string="Seance">
                     <field name="name" />
-                    <newline />
-                    <field name="date" />
                     <field name="duration" />
+                    <field name="date" />
+                    <newline />
 
                     <notebook colspan="4">
                         <page string="General">
