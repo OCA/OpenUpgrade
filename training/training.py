@@ -466,13 +466,13 @@ class training_seance(osv.osv):
         'partner_ids' : fields.many2many('res.partner', 'training_seance_partner_rel', 'seance_id', 'partner_id', 'StakeHolders'),
         'event_id' : fields.many2one('training.event', 'Event'),
         'course_id' : fields.many2one('training.course', 'Course', required=True),
-        'copies' : fields.integer('Copies'),
-        'printed' : fields.boolean('Printed'),
+        #'copies' : fields.integer('Copies'),
+        #'printed' : fields.boolean('Printed'),
         'reserved' : fields.boolean('Reserved'),
         'layout' : fields.char('Layout', size=32),
         'place' : fields.char('Place', size=32),
         'room' : fields.char('Room', size=32),
-        'limit' : fields.integer('Limit'), 
+        #'limit' : fields.integer('Limit'), 
         'purchase_line_ids' : fields.one2many('training.seance.purchase_line', 'seance_id', 'Supplier Commands'),
     }
 
