@@ -68,6 +68,7 @@
             <field name="act_from" ref="activity_course_inprogress" />
             <field name="act_to" ref="activity_course_validate" />
             <field name="signal">signal_validate</field>
+            <field name="role_id" ref="role_course_manager" />
         </record>
     </data>
 </openerp>
