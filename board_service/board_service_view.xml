@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+    <menuitem id="service_dashboard_menu" name="Service Profile" parent="board.dashboard_menu"/>
+    
+    <!-- Weekly Dashboad View -->
+  
+ 	<!-- Sales Forecast Lines view -->
+  
+  	<record model="ir.ui.view" id="view_forecast_tree">
+            <field name="name">sale.forecast.line.tree</field>
+            <field name="model">sale.forecast.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Draft Sales Forcast Lines">
+                    <field name="user_id"/>
+                    <field name="computation_type"/>
+                	<field name="amount"/>
+                	<field name="computed_amount"/>
+                	<field name="forecast_rate" widget="progressbar"/>
+                </tree>
+            </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_forecast_form">
+            <field name="name">sale.forecast.line.form</field>
+            <field name="model">sale.forecast.line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Forecast Lines" >
+                	<group col="4" colspan="2">
+                    	<separator string="Forecasts" colspan="4"/>
+                        	<field name="user_id"/>
+                            <field name="computation_type"/>
+                            <newline/>
+                            <field name="amount"/>
+                    </group>
+                    <group col="2" colspan="2">
+                    	<separator string="Results" colspan="2"/>
+                        	<field name="computed_amount"/>
+                            <field name="final_evolution"/>
+                    </group>
+                    <notebook colspan="4">
+                    	<page string="Forecast Details">
+							<group col="8" colspan="8">
+                            	<separator string="Filter on States" colspan="8"/>
+                                	<field name="state_draft" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
+                                    <field name="state_confirmed" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
+                                    <field name="state_cancel" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
+                                    <field name="state_done" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
+							</group>
+                            <separator string="Filter on Cases Sections" colspan="2"/>
+                            <separator string="Filter on Cases Categories" colspan="2"/>
+                            	<field name="crm_case_section" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','!=','cases'),]}"/>
+                                <field name="crm_case_categ" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','!=','cases'),]}"/>
+                            <separator string="Filter on Products" colspan="2"/>
+                            <separator string="Filter on Product Categories" colspan="2"/>
+	                        	<field name="product_product" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','=','cases'),('computation_type','=','invoice_fix'),('computation_type','=','number_of_sale_order')]}"/>
+	                            <field name="product_categ" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','=','cases'),('computation_type','=','invoice_fix'),('computation_type','=','number_of_sale_order')]}"/>
+                        </page>
+                        <page string="Notes">
+                        	<field name="note" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Feedback">
+                        	<field name="feedback" colspan="4" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+    </record>
+    
+        
+    <record id="action_view_forecast" model="ir.actions.act_window">
+    	<field name="name">Draft Sales Forecast Lines</field>
+        <field name="res_model">sale.forecast.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_forecast_tree"/>
+        <field name="domain">[('forecast_id.state','=','draft')]</field>
+    </record>
+    
+    <!-- Dashboard View -->   
+        
+        
+    <record id="board_service_weekly_form" model="ir.ui.view">
+    	<field name="name">board.service.weekly.form</field>
+        <field name="model">board.board</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Weekly Dashboard">
+        		<hpaned>
+        			<child1>
+            			<action colspan="4" name="%(action_view_forecast)d" string="Draft Sales Forecast Lines"/>
+            		</child1>
+            	</hpaned>
+        	</form>
+        </field>
+    </record>
+        
+    <record id="action_service_weekly_board" model="ir.actions.act_window">
+    	<field name="name">Weekly Dashboard</field>
+        <field name="res_model">board.board</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="board_service_weekly_form"/>
+    </record>
+
+    <menuitem
+            action="action_service_weekly_board" 
+            icon="terp-graph" 
+            id="menu_weekly_board" 
+            parent="service_dashboard_menu" 
+            sequence="1"/>
+
+    <!-- Daily Dashboad  -->
+     
+    <record id="board_service_daliy_form" model="ir.ui.view">
+    	<field name="name">board.daily.form</field>
+        <field name="model">board.board</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Daily Dashboard">
+        		<hpaned>
+        			<child1>
+            			<action colspan="4" name="%(board_project.action_view_task_tree)d" string="My Open Tasks"/>
+            			<action colspan="4" name="%(project.action_view_task5_pending)d" string="My Pending Tasks"/>
+            			<action colspan="4" name="%(project_gtd.act_timebox_tasks_my_inbox)d" string="My Inbox"/>
+            		</child1>
+            	</hpaned>
+        	</form>
+        </field>
+    </record>
+        
+    <record id="action_service_daily_board" model="ir.actions.act_window">
+    	<field name="name">Daily Dashboard</field>
+        <field name="res_model">board.board</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="board_service_daliy_form"/>
+    </record>
+        
+    <menuitem
+            action="action_service_daily_board" 
+            icon="terp-graph" 
+            id="menu_daily_board" 
+            parent="service_dashboard_menu" 
+            sequence="1"/>
+    
+	</data>
+</openerp>
