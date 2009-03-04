@@ -130,9 +130,9 @@ Test checks for fields, views, security rules
             bad_sec += 1
             result_security[obj] = [obj, 'Object should have at least one security rule defined on it']
 
-        score_view = float(model_views) / float(total_views)
+        score_view = total_views and float(model_views) / float(total_views)
         score_field = total_field and float(good_field) / float(total_field)
-        score_security = float(good_sec - bad_sec) / float(good_sec)
+        score_security = good_sec and float(good_sec - bad_sec) / float(good_sec)
         self.score = (score_view + score_field + score_security)/3
 
         self.result = self.get_result({ module_name: [int(score_field * 100), int(score_view * 100), int(score_security * 100)]})

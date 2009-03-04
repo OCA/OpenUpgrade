@@ -58,6 +58,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         good_view = 0
         act_ok = 0
         not_ok = 0
+        wkfs = []
 
         if obj_list:
             wkf_ids = wkf_obj.search(cr, uid, [('osv', 'in', obj_list)])
