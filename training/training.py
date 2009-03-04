@@ -97,7 +97,7 @@ class training_course(osv.osv):
         return res
 
     _columns = {
-        'display_name' : fields.char('Display Name', size=64),
+        'display_name' : fields.char('Display Name', size=38),
         'duration' : fields.time('Duration', required=True),
         'children' : fields.function( _get_child_ids, method=True, type='one2many', relation="training.course", string='Children'),
         'total_duration' : fields.function(_total_duration_compute, string='Total Duration', readonly=True, store=True, method=True, type="time"),
