@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {
-    "name" : "Stock Management",
+    "name" : "Unique serial number management management: ",
     "version" : "0.9.0",
     "author" : "Raphaël Valyi",
     "website" : "http://rvalyi.blogspot.com",
