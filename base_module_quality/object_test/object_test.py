@@ -20,11 +20,13 @@
 #
 ##############################################################################
 
+import os
+import re
+
 from tools.translate import _
 
 from base_module_quality import base_module_quality
 import pooler
-import re
 
 class quality_test(base_module_quality.abstract_quality_check):
 
@@ -32,7 +34,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         super(quality_test, self).__init__()
         self.name = _("Object Test")
         self.note = _("""
-Test Checks if fields and views on the object
+Test checks for fields, views, security rules
 """)
         self.bool_installed_only = True
         self.ponderation = 1.0
@@ -42,16 +44,26 @@ Test Checks if fields and views on the object
         pool = pooler.get_pool(cr.dbname)
         module_name = module_path.split('/')[-1]
         obj_list = self.get_objects(cr, uid, module_name)
+        ids_model = self.get_model_ids(cr, uid, obj_list)
+
         field_obj = pool.get('ir.model.fields')
         view_obj = pool.get('ir.ui.view')
+        access_obj = pool.get('ir.model.access')
+
         field_ids = field_obj.search(cr, uid, [('model', 'in', obj_list)])
         view_ids = view_obj.search(cr, uid, [('model', 'in', obj_list), ('type', 'in', ['tree', 'form'])])
+        access_ids = access_obj.search(cr, uid, [('model_id', 'in', ids_model)])
+
         field_data = field_obj.browse(cr, uid, field_ids)
         view_data = view_obj.browse(cr, uid, view_ids)
+        access_data = access_obj.browse(cr, uid, access_ids)
+
         result_dict = {}
         result_view = {}
+        result_security = {}
         good_field = 0
         total_field = 0
+        # field test .....
         for field in field_data:
             result_dict[field.model] = []
         for field in field_data:
@@ -77,6 +89,7 @@ Test Checks if fields and views on the object
                 data = 'Field name should be in lower case or it should follow python standard'
                 result_dict[field.model].append([field.model, name, data])
 
+        #views tests
         for res in result_dict.keys():
             if not result_dict[res]:
                 del result_dict[res]
@@ -94,17 +107,43 @@ Test Checks if fields and views on the object
                 model_views -= 1
                 result_view[dict] = [dict, 'You should have atleast form/tree view of an object']
 
+        #security rules test...
+        list_files = os.listdir(module_path)
+        security_folder = False
+        for file in list_files:
+            if file=='security':
+                path = os.path.join(module_path, file)
+                if os.path.isdir(path):
+                    security_folder = True
+        if not security_folder:
+            result_security[module_name] = [module_name, 'Security folder is not available (All security rules and groups should define in security folder)']
+        access_list = []
+        group_list = []
+        good_sec = len(obj_list)
+        bad_sec = 0
+        for access in access_data:
+            access_list.append(access.model_id.model)
+            if not access.group_id:
+                result_security[access.model_id.model] = [access.model_id.model, 'Specified object has no related group define on access rules']
+                bad_sec += 1 # to be check
+        not_avail_access = filter(lambda x: not x in access_list,obj_list)
+        for obj in not_avail_access:
+            bad_sec += 1
+            result_security[obj] = [obj, 'Object should have at least one security rule defined on it']
+
         score_view = float(model_views) / float(total_views)
         score_field = total_field and float(good_field) / float(total_field)
-        self.score = (score_view + score_field)/2
+        score_security = float(good_sec - bad_sec) / float(good_sec)
+        self.score = (score_view + score_field + score_security)/3
 
-        self.result = self.get_result({ module_name: [int(score_field * 100), int(score_view * 100)]})
+        self.result = self.get_result({ module_name: [int(score_field * 100), int(score_view * 100), int(score_security * 100)]})
         self.result_details += self.get_result_details(result_dict)
-        self.result_details += self.get_result_views(result_view)
+        self.result_details += self.get_result_general(result_view, name="View")
+        self.result_details += self.get_result_general(result_security, name="Security")
         return None
 
     def get_result(self, dict):
-        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Result of fields in %'), _('Result of views in %')])
+        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-40s \n! %-10s \n', [_('Result of fields in %'), _('Result of views in %'), _('Result of Security in %')])
         if not self.error:
             return self.format_table(header, data_list=dict)
         return ""
@@ -125,11 +164,11 @@ Test Checks if fields and views on the object
                        count = count + 1
                        final_dict[key + str(count)] = i
                    res += '<table>' + self.format_html_table(header, data_list=final_dict) + '</table><br>'
-            return res+'</body></html>'
+            return res + '</body></html>'
         return ""
 
-    def get_result_views(self, dict):
-        str_html = '''<html><strong> Views Result</strong><head></head><body><table>'''
+    def get_result_general(self, dict, name=''):
+        str_html = '''<html><strong> %s Result</strong><head></head><body><table>'''%(name)
         header = ('<tr><th>%s</th><th>%s</th></tr>',[_('Object Name'), _('Suggestion')])
         if not self.error:
            res = str_html + self.format_html_table(header, data_list=dict) + '</table></body></html>'

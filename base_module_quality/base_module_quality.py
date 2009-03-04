@@ -53,7 +53,7 @@ class abstract_quality_check(object):
         #Used to provide more details if necessary.
         self.result_details = ""
 
-        #This bool defines if the test can be run only if the module 
+        #This bool defines if the test can be run only if the module
         #is installed.
         #True => the module have to be installed.
         #False => the module can be uninstalled.
@@ -66,10 +66,10 @@ class abstract_quality_check(object):
         #Specify test got an error on module
         self.error = False
 
-        #The tests have to subscribe itselfs in this list, that contains 
+        #The tests have to subscribe itselfs in this list, that contains
         #all the test that have to be performed.
         self.tests = []
-        self.list_folders = os.listdir(config['addons_path'] + 
+        self.list_folders = os.listdir(config['addons_path'] +
             '/base_module_quality/')
         for item in self.list_folders:
             self.item = item
@@ -92,7 +92,7 @@ class abstract_quality_check(object):
     def get_objects(self, cr, uid, module):
         # This function returns all object of the given module..
         pool = pooler.get_pool(cr.dbname)
-        ids2 = pool.get('ir.model.data').search(cr, uid, 
+        ids2 = pool.get('ir.model.data').search(cr, uid,
             [('module', '=', module), ('model', '=', 'ir.model')])
         model_list = []
         model_data = pool.get('ir.model.data').browse(cr, uid, ids2)
@@ -102,6 +102,14 @@ class abstract_quality_check(object):
         for mod in pool.get('ir.model').browse(cr, uid, model_list):
             obj_list.append(str(mod.model))
         return obj_list
+
+    def get_model_ids(self, cr, uid, models=[]):
+        # This function returns all ids of the given objects..
+        if not models:
+            return []
+        ids_list = []
+        pool = pooler.get_pool(cr.dbname)
+        return pool.get('ir.model').search(cr, uid, [('model', 'in', models)])
 
     def get_ids(self, cr, uid, object_list):
         #This method return dictionary with ids of records of object for module
