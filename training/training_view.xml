@@ -1290,15 +1290,22 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Order Line">
-                    <field name="type" readonly="True" />
-                    <field name="product_id" readonly="True" />
-                    <field name="quantity" readonly="True" />
-                    <field name="product_oum_id" readonly="True" />
-                    <field name="description" colspan="4" readonly="True" />
-                    <field name="scheduled_date" readonly="True" />
-                    <field name="purchase_order_line_id" readonly="True" />
-                    <label string="" />
-                    <field name="confirmed_by_supplier" />
+                    <notebook colspan="4">
+                        <page string="Order Line">
+                            <field name="type" readonly="True" />
+                            <field name="product_id" readonly="True" />
+                            <field name="quantity" readonly="True" />
+                            <field name="product_oum_id" readonly="True" />
+                            <field name="description" colspan="4" readonly="True" />
+                            <field name="scheduled_date" readonly="True" />
+                            <field name="purchase_order_line_id" readonly="True" />
+                            <label string="" />
+                            <field name="confirmed_by_supplier" />
+                        </page>
+                        <page string="Note">
+                            <field name="note" colspan="4" nolabel="1" />
+                        </page>
+                    </notebook>
                 </form>
             </field>
         </record>
