@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-
+import sale
 import product
 import configurator_wizard
 

@@ -33,8 +33,8 @@ class product_product(osv.osv):
                 args=[]
             
             conf_lines=context.get('dimension_configuration_line_ids')
-            dim_values=[ line[2]['dimension_type_value_id'] for line in conf_lines if line[2]['modified']]
-            constraints_list=[('dimension_value_ids', 'in', [i] ) for i in dim_values]
+            dim_values=[ line[2]['dimension_type_value_id'] for line in conf_lines if line[2]['dimension_type_value_id']]
+            constraints_list=[('dimension_value_ids', 'in', [i] ) for i in dim_values if i]
             ids = self.search(cr, uid, constraints_list+args,context=context)
 
             return self.name_get(cr, uid, ids,context)

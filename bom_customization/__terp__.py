@@ -29,7 +29,8 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ['bom_customization_view.xml',
-                     'configurator_view.xml'],
+                    'configurator_view.xml',
+                    'demo_data.xml'],
     "active": False,
     "installable": True
 }
