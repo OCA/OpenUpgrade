@@ -48,25 +48,6 @@
   </xsl:attribute>
 </xsl:template>
 
-<xsl:template name="fixed_frame">
-	<xsl:for-each select="//draw:text-box">
-		<frame>
-			<xsl:attribute name="id"><xsl:value-of select="./@draw:name" /></xsl:attribute>
-			<xsl:attribute name="x1"><xsl:value-of select="./@svg:x" /></xsl:attribute>
-			<xsl:attribute name="y1">
-				<xsl:value-of
-					select="//transferredfromstylesxml/style:page-master[1]/style:properties/@fo:page-height - ./@svg:y - ./@fo:min-height" />
-			</xsl:attribute>
-			<xsl:attribute name="width">
-				<xsl:value-of select="./@svg:width" />
-			</xsl:attribute>
-			<xsl:attribute name="height">
-				<xsl:value-of select="./@fo:min-height" />
-			</xsl:attribute>
-		</frame>
-	</xsl:for-each>
-</xsl:template>
-
 <xsl:template name="margin_sizes">
   <xsl:variable name="margin_left" select="//transferredfromstylesxml/style:page-master[1]/style:properties/@fo:margin-left" />
   <xsl:variable name="margin_right" select="//transferredfromstylesxml/style:page-master[1]/style:properties/@fo:margin-right" />
@@ -95,7 +76,6 @@
   <template pageSize="(21cm, 29.7cm)" title="Test" author="Martin Simon" allowSplitting="20">
     <xsl:call-template name="page_size" />
     <pageTemplate id="first">
-	  <xsl:call-template name="fixed_frame" />
       <frame id="first" x1="2cm" y1="2cm" width="17cm" height="26cm">
         <xsl:call-template name="margin_sizes" />
       </frame>
@@ -132,70 +112,22 @@
 	    </xsl:if>
         <blockAlignment value="LEFT" />
         <blockValign value="TOP" />
-        <xsl:call-template name="make_linestyle" />
+        <xsl:call-template name="make_tablegrid" />
         <xsl:call-template name="make_tablebackground" />
       </blockTableStyle>
     </xsl:if>
   </xsl:for-each>
 </xsl:template>
 
-<xsl:template name="make_linestyle">
-	<xsl:for-each select=".//table:table-row">
-		<xsl:variable name="row" select="position() - 1"/>
-		<xsl:for-each select=".//table:table-cell">
-			<xsl:variable name="col" select="position() - 1"/>
-			<xsl:variable name="linebefore">
-				<xsl:value-of select="key('table_cell_style',@table:style-name)/style:properties/@fo:border-left"/>
-			</xsl:variable>
-			<xsl:if test="not($linebefore='') and not($linebefore='none')">
-				<xsl:variable name="colorname">
-					<xsl:value-of select="substring-after($linebefore,'#')"/>
-				</xsl:variable>
-				<lineStyle kind="LINEBEFORE" colorName="#{$colorname}" start="{$col},{$row}" stop="{$col},-1"/>
-			</xsl:if>
-			<xsl:variable name="lineafter">
-				<xsl:value-of select="key('table_cell_style',@table:style-name)/style:properties/@fo:border-right"/>
-			</xsl:variable>
-			<xsl:if test="not($lineafter='') and not($lineafter='none')">
-				<xsl:variable name="colorname">
-					<xsl:value-of select="substring-after($lineafter,'#')"/>
-				</xsl:variable>
-				<lineStyle kind="LINEAFTER" colorName="#{$colorname}" start="{$col},{$row}" stop="{$col},-1"/>
-			</xsl:if>
-			<xsl:variable name="lineabove">
-				<xsl:value-of select="key('table_cell_style',@table:style-name)/style:properties/@fo:border-top"/>
-			</xsl:variable>
-			<xsl:if test="not($lineabove='') and not($lineabove='none')">
-				<xsl:variable name="colorname">
-					<xsl:value-of select="substring-after($lineabove,'#')"/>
-				</xsl:variable>
-				<lineStyle kind="LINEABOVE" colorName="#{$colorname}" start="{$col},{$row}" stop="{$col},{$row}"/>
-			</xsl:if>
-			<xsl:variable name="linebelow">
-				<xsl:value-of select="key('table_cell_style',@table:style-name)/style:properties/@fo:border-bottom"/>
-			</xsl:variable>
-			<xsl:if test="not($linebelow='') and not($linebelow='none')">
-				<xsl:variable name="colorname">
-					<xsl:value-of select="substring-after($linebelow,'#')"/>
-				</xsl:variable>
-				<lineStyle kind="LINEBELOW" colorName="#{$colorname}" start="{$col},{-1}" stop="{$col},{-1}"/>
-			</xsl:if>
-			<xsl:variable name="grid">
-				<xsl:value-of select="key('table_cell_style',@table:style-name)/style:properties/@fo:border"/>
-			</xsl:variable>
-			<xsl:if test="not($grid='') and not($grid='none')">
-				<xsl:variable name="colorname">
-					<xsl:value-of select="substring-after($grid,'#')"/>
-				</xsl:variable>
-				<!-- Don't use grid because we don't need a line between each rows -->
-				<lineStyle kind="LINEBEFORE" colorName="#{$colorname}" start="{$col},{$row}" stop="{$col},-1"/>
-				<lineStyle kind="LINEAFTER" colorName="#{$colorname}" start="{$col},{$row}" stop="{$col},-1"/>
-				<lineStyle kind="LINEABOVE" colorName="#{$colorname}" start="{$col},{$row}" stop="{$col},{$row}"/>
-				<lineStyle kind="LINEBELOW" colorName="#{$colorname}" start="{$col},{-1}" stop="{$col},{-1}"/>
-			</xsl:if>
-		</xsl:for-each>
-	</xsl:for-each>
+<xsl:template name="make_tablegrid">
+  <xsl:variable name="test_grid">
+    <xsl:call-template name="test_grid" />
+  </xsl:variable>
+  <xsl:if test="contains($test_grid,'has_grid')">
+    <lineStyle kind="GRID" colorName="black" />
+  </xsl:if>
 </xsl:template>
+
 
 <!-- Was needed to simulate bulleted lists:
 <xsl:template match="text:ordered-list|text:unordered-list">
@@ -222,20 +154,6 @@
 <xsl:template match="office:body">
   <story>
     <xsl:apply-templates />
-	<xsl:for-each select="//draw:text-box">
-		<currentFrame>
-			<xsl:attribute name="name">
-				<xsl:value-of select="./@draw:name" />
-			</xsl:attribute>
-		</currentFrame>
-		<xsl:apply-templates>
-			<xsl:with-param name="skip_draw" select="0" />
-		</xsl:apply-templates>
-		<frameEnd />
-	</xsl:for-each>
-	<xsl:for-each select="//text:ordered-list">
-		<para><seqReset id="{./@text:style-name}"/></para>
-	</xsl:for-each>
   </story>
 </xsl:template>
 
@@ -270,10 +188,26 @@
       </xsl:variable>
       <xsl:if test="not($background='') and boolean(key('table_cell_style',@table:style-name)/style:properties/@fo:background-color) and starts-with($background,'#')">
         <!--only RGB hexcolors are accepted -->
-		<blockBackground colorName="{$background}" start="{$col},{$row}" stop="{$col},-1" />
+        <blockBackground colorName="{$background}" start="{$col},{$row}" stop="{$col},{$row}" />
       </xsl:if>
      </xsl:for-each>
    </xsl:for-each>
+</xsl:template>
+
+<xsl:template name="test_grid">
+  <!--very primitive: if at last one cell has a border,
+       the whole table style is set to GRID.-->
+  <xsl:for-each select=".//table:table-cell">
+    <xsl:for-each select="key('table_cell_style',@table:style-name)/style:properties" >
+      <!--Test all table cell styles if there is at least one border line -->
+      <xsl:variable name="border">
+        <xsl:value-of select="@fo:border" />
+      </xsl:variable>
+      <xsl:if test="not($border='none') and not($border='') and boolean(@fo:border)">
+        <xsl:text>has_grid</xsl:text>
+      </xsl:if>
+    </xsl:for-each>
+  </xsl:for-each>
 </xsl:template>
 
 <xsl:template name="make_columns">
@@ -374,7 +308,7 @@
 
 <xsl:template match="text:ordered-list">
   <xsl:apply-templates />
-
+  <para><seqreset id="ordered_list" /></para>
   <!-- Reset the counter. seqreset is not a trml2pdf tag, but a Platypus Intra Paragraph Markup,
        so it needs a dummy paragraph to enclose it -->
 </xsl:template>
@@ -399,7 +333,7 @@
           </xsl:otherwise>
         </xsl:choose>
         <xsl:attribute name="bulletFontName">ZapfDingbats</xsl:attribute>
-        <xsl:attribute name="bulletText">l</xsl:attribute>
+        <xsl:attribute name="bulletText">l</xsl:attribute>        
       </xsl:when>
       <xsl:otherwise>
         <!-- Generate the numbers for an ordered list -->
@@ -414,20 +348,13 @@
               <xsl:value-of select="$size" />
             </xsl:attribute>
           </xsl:if>
-          <seq id="{../../@text:style-name}"/>.</bullet>
-
+          <seq id="ordered_list" />.</bullet>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:if>
 </xsl:template>
 
-<xsl:template match="text:drop-down">
-    <xsl:value-of select="text:label[2]/@text:value" />
-</xsl:template>
-
-
 <xsl:template match="text:p|text:h">
-	<xsl:param name="skip_draw" select="1" />
   <xsl:if test="boolean(key('page_break_before',@text:style-name))" >
     <pageBreak />
   </xsl:if>
@@ -435,8 +362,6 @@
     <xsl:when test="boolean(.//draw:image)">
       <xsl:call-template name="make_image" />
     </xsl:when>
-	<xsl:when test="boolean(name(..) = 'draw:text-box') and boolean($skip_draw)">
-	</xsl:when>
     <xsl:otherwise>
       <para>
         <xsl:attribute name="style">
@@ -485,7 +410,7 @@
 </xsl:template>
 
 -->
-
+            
 <xsl:template match="style:style[@style:family='paragraph']">
   <paraStyle>
     <xsl:attribute name="name">
@@ -499,7 +424,6 @@
     <xsl:call-template name="make_alignment" />
     <xsl:call-template name="make_background" />
     <xsl:call-template name="make_space_beforeafter" />
-    <xsl:call-template name="make_fontcolor" />
   </paraStyle>
 </xsl:template>
 
@@ -509,12 +433,12 @@
   <xsl:if test="not($right_indent='') and boolean(style:properties/@fo:margin-right)">
     <xsl:attribute name="rightIndent">
       <xsl:value-of select="$right_indent" />
-    </xsl:attribute>
+    </xsl:attribute>      
   </xsl:if>
   <xsl:if test="not($left_indent='') and boolean(style:properties/@fo:margin-left)">
     <xsl:attribute name="leftIndent">
       <xsl:value-of select="$left_indent" />
-    </xsl:attribute>
+    </xsl:attribute>      
   </xsl:if>
 </xsl:template>
 
@@ -549,7 +473,7 @@
 </xsl:template>
 
 <xsl:template name="make_fontsize">
-  <xsl:variable name="fontSize">
+  <xsl:variable name="fontSize">       
     <xsl:value-of select="style:properties/@fo:font-size" />
   </xsl:variable>
   <xsl:if test="not($fontSize='') and boolean(style:properties/@fo:font-size)">
@@ -565,10 +489,10 @@
 
 <!--this template is not needed anymore for "normalized" sxw files -->
 <xsl:template name="make_parent">
-  <xsl:variable name="parent">
+  <xsl:variable name="parent">       
     <xsl:value-of select="@style:parent-style-name" />
   </xsl:variable>
-  <xsl:if test="not($parent='') and boolean(@style:parent-style-name)">
+  <xsl:if test="not($parent='') and boolean(@style:parent-style-name)">    
     <xsl:attribute name="parent">
       <xsl:value-of select="$parent" />
     </xsl:attribute>
@@ -644,42 +568,32 @@
         </xsl:when>
         <xsl:otherwise>
           <xsl:text>Helvetica</xsl:text>
-        </xsl:otherwise>
+        </xsl:otherwise>        
       </xsl:choose>
     </xsl:when>
     <xsl:otherwise>
       <xsl:choose>
         <xsl:when test="($fontWeight='bold') and ($fontStyle='italic')">
-          <xsl:text>Times-BoldItalic</xsl:text>
+          <xsl:text>Helvetica-BoldOblique</xsl:text>
         </xsl:when>
         <xsl:when test="($fontWeight='bold') and not ($fontStyle='italic')">
-          <xsl:text>Times-Bold</xsl:text>
+          <xsl:text>Helvetica-Bold</xsl:text>
         </xsl:when>
         <xsl:when test="not($fontWeight='bold') and ($fontStyle='italic')">
-          <xsl:text>Times-Italic</xsl:text>
+          <xsl:text>Helvetica-Oblique</xsl:text>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:text>Times-Roman</xsl:text>
-        </xsl:otherwise>
+          <xsl:text>Helvetica</xsl:text>
+        </xsl:otherwise>        
       </xsl:choose>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:when>
 <xsl:otherwise>
   <!--Use this as default -->
-  <xsl:text>Times-Roman</xsl:text>
+  <xsl:text>Helvetica</xsl:text>   
 </xsl:otherwise>
 </xsl:choose>
-</xsl:template>
-<xsl:template name="make_fontcolor">
-  <xsl:variable name="textColor">
-    <xsl:value-of select="style:properties/@fo:color"/>
-  </xsl:variable>
-  <xsl:if test="not($textColor='') and boolean(style:properties/@fo:color)">
-  <xsl:attribute name="textColor">
-      <xsl:value-of select="$textColor" />
-   </xsl:attribute>
-  </xsl:if>
 </xsl:template>
 
 <!--
