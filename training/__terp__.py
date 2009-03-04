@@ -49,8 +49,6 @@
         'workflow/catalog_workflow.xml',
         'workflow/course_workflow.xml',
         'workflow/offer_workflow.xml',
-        'workflow/planned_exam_workflow.xml',
-        'workflow/questionnaire_workflow.xml',
         'workflow/seance_workflow.xml',
         'workflow/session_workflow.xml',
         'workflow/subscription_workflow.xml',
