@@ -27,7 +27,7 @@ class res_partner_contact_technical_skill(osv.osv):
     _name = 'res.partner.contact_technical_skill'
 
     _columns = {
-        'name' : fields.char('Name', size=32, select=True),
+        'name' : fields.char('Name', size=32, select=True, required=True),
     }
 
     _sql_constraints = [
