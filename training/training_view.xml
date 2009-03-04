@@ -1284,8 +1284,8 @@
 
     <data>
         <!--
-        <record model="ir.ui.view" id="order_line_client_portal">
-            <field name="name">order.line.client.portal</field>
+        <record model="ir.ui.view" id="order_line_supplier_portal">
+            <field name="name">order.line.supplier.portal</field>
             <field name="model"></field>
             <field name="type">form</field>
             <field name="arch" type="xml">
@@ -1308,6 +1308,13 @@
                     </notebook>
                 </form>
             </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_order_line_supplier_portal">
+            <field name="name">Order Lines</field>
+            <field name="res_model"></field>
+            <field name="view_id" ref="order_line_supplier_portal" />
+            <field name="domain">[('', '>=', time.strftime('%Y-%m-%d'))]</field>
         </record>
         -->
         
