@@ -26,7 +26,27 @@
     "website" : "http://www.openerp.com",
     "category" : "Board/Service",
     "description": """
-    
+        This module displays two dashboards for the logged in user:
+        
+        Dashboard 1:
+                    Draft Forecasts Lines
+                    Turnover by Product and Month
+                    Aged Receivables
+                    Timesheet to Validate
+                    Sales pipeline
+                    Planning Statistics
+                    
+           This dashboard is reachable from Dashboards/Service Profile/Weekly Dashboard.
+           
+        Dashboard 2: 
+                    Open Tasks
+                    Pending Tasks
+                    Inbox
+                    Meeting of the Day
+                    Departement's Timesheet Lines of last 3 days.
+        
+            This dashboard is reachable from Dashboards/Service Profile/Daily Dashboard.             
+                    
                 """,
     "depends" : ["base",
                  "project_gtd",
