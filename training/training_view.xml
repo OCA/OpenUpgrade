@@ -152,17 +152,19 @@
                         <page string="Professors">
                             <field name="instructor_ids" nolabel="1" colspan="4"/>
                         </page>
+                        <!--
                         <page string="Note">
                             <field name="internal_note" nolabel="1" colspan="4" />
                         </page>
                         <page string="Certifications">
                             <label string="TODO" />
                         </page>
+                        -->
                         <page string="Pedagogical Suggestion">
                             <separator string="Preliminary Courses" colspan="4" />
                             <separator string="Complementary Courses" colspan="4" />
                         </page>
-                        <page string="Supplier Commands">
+                        <page string="Supplier Orders">
                             <field name="purchase_line_ids" nolabel="1" colspan="4">
                                 <form string="Command">
                                     <field name="product_id" />
@@ -190,7 +192,7 @@
                         </page>
                     </notebook>
                     <group colspan="4" col="6">
-                        <field name="state_course" required="True" />
+                        <field name="state_course" />
                         <button string="Pending" type="workflow" name="signal_pending" />
                         <button string="In Progress" type="workflow" name="signal_inprogress" />
                         <button string="Deprecated" type="workflow" name="signal_deprecated" />
