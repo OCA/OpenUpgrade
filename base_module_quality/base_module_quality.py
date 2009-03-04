@@ -76,10 +76,10 @@ class abstract_quality_check(object):
             path = config['addons_path']+'/base_module_quality/'+item
             if os.path.exists(path + '/' + item + '.py') and item not in ['report', 'wizard', 'security']:
                 item2 = 'base_module_quality.' + item +'.' + item
-                x = __import__(item2)
-                x2 = getattr(x, item)
-                x3 = getattr(x2, item)
-                self.tests.append(x3)
+                x_module = __import__(item2)
+                x_file = getattr(x_module, item)
+                x_obj = getattr(x_file, item)
+                self.tests.append(x_obj)
 #        raise 'Not Implemented'
 
     def run_test(self, cr, uid, module_path=""):
@@ -107,7 +107,6 @@ class abstract_quality_check(object):
         # This function returns all ids of the given objects..
         if not models:
             return []
-        ids_list = []
         pool = pooler.get_pool(cr.dbname)
         return pool.get('ir.model').search(cr, uid, [('model', 'in', models)])
 
@@ -120,7 +119,7 @@ class abstract_quality_check(object):
             result_ids[obj] = ids
         return result_ids
 
-    def format_table(self, header=[], data_list=[]): #This function can work forwidget="text_wiki"
+    def format_table(self, header=[], data_list={}): #This function can work forwidget="text_wiki"
         detail = ""
         detail += (header[0]) % tuple(header[1])
         frow = '\n|-'
@@ -143,8 +142,8 @@ class abstract_quality_check(object):
             detail += (frow) % tuple(value)
         return detail
 
-    def add_quatation(self, x, y):
-        return x/y
+    def add_quatation(self, x_no, y_no):
+        return x_no/y_no
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

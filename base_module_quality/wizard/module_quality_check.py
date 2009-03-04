@@ -75,7 +75,7 @@ class create_quality_check(wizard.interface):
                 module_path = os.path.join(ad, module_data.name)
                 val = test.quality_test()
 
-                if not val.bool_installed_only or module_data.state=="installed":
+                if not val.bool_installed_only or module_data.state == "installed":
                     val.run_test(cr, uid, str(module_path))
                     data = {
                         'name': val.name,
@@ -86,7 +86,7 @@ class create_quality_check(wizard.interface):
                         'state': 'done',
                         'note': val.note,
                     }
-                    create_ids.append((0,0,data))
+                    create_ids.append((0, 0, data))
                     score_sum += val.score * val.ponderation
                     ponderation_sum += val.ponderation
                 else:
@@ -97,7 +97,7 @@ class create_quality_check(wizard.interface):
                         'state': 'skipped',
                         'summary': _("The module has to be installed before running this test.")
                     }
-                    create_ids.append((0,0,data))
+                    create_ids.append((0, 0, data))
 
             final_score = str(score_sum / ponderation_sum * 100) + "%"
             data = {

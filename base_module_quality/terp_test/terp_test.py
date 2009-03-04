@@ -49,7 +49,6 @@ class quality_test(base_module_quality.abstract_quality_check):
             if os.path.isdir(path):
                 for j in os.listdir(path):
                     list_files.append(os.path.join(i, j))
-        n = 0
         score = 0.0
         feel_good_factor = 0
         feel_bad_factor = 0
@@ -65,9 +64,9 @@ class quality_test(base_module_quality.abstract_quality_check):
         for key in terp_keys:
             if key in res:
                 feel_good_factor += 1 # each tag should appear
-                if isinstance(res[key],(str, unicode, list)):
+                if isinstance(res[key], (str, unicode, list)):
                     if not res[key]:
-                        if key in ['description', 'author', 'website', 'category', 'version',]:
+                        if key in ['description', 'author', 'website', 'category', 'version']:
                             data = "Module's terp file has no information about " + key + " tag"
                             result_dict1[key] = [key, data]
                         elif key in ['name', 'depends']:
@@ -99,25 +98,25 @@ class quality_test(base_module_quality.abstract_quality_check):
                                 result_dict[key] = [key, 'Website tag of terp file should be in valid format or it should be lead to valid page']
                                 feel_bad_factor += 1
 
-                if isinstance(res[key],bool):
+                if isinstance(res[key], bool):
                     if key == 'active':
                         if current_module != 'base':
                             if res[key]:
                                 feel_bad_factor += 1
-                                result_dict[key] = [key,'Active tag of terp file should not be set to True!']
+                                result_dict[key] = [key, 'Active tag of terp file should not be set to True!']
                         else:
                             if not res[key]:
                                 result_dict[key] = [key, 'Active tag of terp file of base module should be set to True!']
                                 feel_bad_factor += 1
                     if key == 'installable' and not res[key]: # installable tag is provided and False
                         result_dict[key] = [key, 'Installable tag of terp file of module should be set to True so that it can install on client!']
-                        feel_bad_factor +=1
+                        feel_bad_factor += 1
             else:
                 feel_bad_factor += 1
-                result_dict1[key] = [key,"Tag is missing!"]
+                result_dict1[key] = [key, "Tag is missing!"]
 
 
-        score = round((feel_good_factor) / float(feel_good_factor + feel_bad_factor),2)
+        score = round((feel_good_factor) / float(feel_good_factor + feel_bad_factor), 2)
         self.result_details += self.get_result_details(result_dict)
         self.result_details += self.get_result_details(result_dict1)
         return [_('__terp__.py file'), score]
@@ -129,18 +128,18 @@ class quality_test(base_module_quality.abstract_quality_check):
         self.result = self.get_result({'__terp__.py': terp_score})
         return None
 
-    def get_result(self, dict):
-        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Object Name'), _('Result (/1)'),])
+    def get_result(self, dict_terp):
+        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Object Name'), _('Result (/1)')])
         if not self.error:
-            return self.format_table(header, data_list=dict)
+            return self.format_table(header, data_list=dict_terp)
         return ""
 
-    def get_result_details(self, dict):
+    def get_result_details(self, dict_terp):
         if dict != {}:
             str_html = '''<html><head></head><body><table border="1">'''
-            header = ('<tr><th>%s</th><th>%s</th></tr>', [_('Tag Name'),_('Feed back About terp file of Module')])
+            header = ('<tr><th>%s</th><th>%s</th></tr>', [_('Tag Name'), _('Feed back About terp file of Module')])
             if not self.error:
-                res = str_html + self.format_html_table(header, data_list=dict) + '</table><newline/></body></html>'
+                res = str_html + self.format_html_table(header, data_list=dict_terp) + '</table><newline/></body></html>'
                 return res
         return ""
 

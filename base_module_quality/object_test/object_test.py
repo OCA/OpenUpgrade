@@ -67,21 +67,21 @@ Test checks for fields, views, security rules
         for field in field_data:
             result_dict[field.model] = []
         for field in field_data:
-            type = field.ttype
+            ttype = field.ttype
             name = field.name
             total_field += 1
             check_str = re.compile('[a-z]+[\w_]*$') #re.compile('[a-z]+[_]?[a-z]+$')
-            if type == 'many2one':
+            if ttype == 'many2one':
                 if name.split('_')[-1] == 'id':
                     good_field += 1
                 else:
                     data = 'many2one field should end with _id'
                     result_dict[field.model].append([field.model, name, data])
-            elif type in ['many2many', 'one2many']:
+            elif ttype in ['many2many', 'one2many']:
                 if name.split('_')[-1] == 'ids':
                     good_field += 1
                 else:
-                    data = '%s field should end with _ids'%(type)
+                    data = '%s field should end with _ids'% (ttype)
                     result_dict[field.model].append([field.model, name, data])
             elif check_str.match(name):
                 good_field += 1
@@ -100,25 +100,24 @@ Test checks for fields, views, security rules
             view_dict[view.model] = []
             model_views += 1
         for view in view_data:
-            type = view.type
-            view_dict[view.model].append(view.type)
-        for dict in view_dict:
-            if len(view_dict[dict]) < 2:
+            ttype = view.type
+            view_dict[view.model].append(ttype)
+        for view in view_dict:
+            if len(view_dict[view]) < 2:
                 model_views -= 1
-                result_view[dict] = [dict, 'You should have atleast form/tree view of an object']
+                result_view[view] = [view, 'You should have atleast form/tree view of an object']
 
         #security rules test...
         list_files = os.listdir(module_path)
         security_folder = False
-        for file in list_files:
-            if file=='security':
-                path = os.path.join(module_path, file)
+        for file_sec in list_files:
+            if file_sec == 'security':
+                path = os.path.join(module_path, file_sec)
                 if os.path.isdir(path):
                     security_folder = True
         if not security_folder:
             result_security[module_name] = [module_name, 'Security folder is not available (All security rules and groups should define in security folder)']
         access_list = []
-        group_list = []
         good_sec = len(obj_list)
         bad_sec = 0
         for access in access_data:
@@ -126,7 +125,7 @@ Test checks for fields, views, security rules
             if not access.group_id:
                 result_security[access.model_id.model] = [access.model_id.model, 'Specified object has no related group define on access rules']
                 bad_sec += 1 # to be check
-        not_avail_access = filter(lambda x: not x in access_list,obj_list)
+        not_avail_access = filter(lambda x: not x in access_list, obj_list)
         for obj in not_avail_access:
             bad_sec += 1
             result_security[obj] = [obj, 'Object should have at least one security rule defined on it']
@@ -142,37 +141,37 @@ Test checks for fields, views, security rules
         self.result_details += self.get_result_general(result_security, name="Security")
         return None
 
-    def get_result(self, dict):
+    def get_result(self, dict_obj):
         header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-40s \n! %-10s \n', [_('Result of fields in %'), _('Result of views in %'), _('Result of Security in %')])
         if not self.error:
-            return self.format_table(header, data_list=dict)
+            return self.format_table(header, data_list=dict_obj)
         return ""
 
-    def get_result_details(self, dict):
+    def get_result_details(self, dict_obj):
         res = ""
-        if dict!={}:
+        if dict_obj != {}:
             str_html = '''<html><strong> Fields Result</strong><head></head><body>'''
-            res+=str_html
-            header = ('<tr><th width="200">%s</th><th width="200">%s</th><th width="300">%s</th></tr>',[_('Object Name'), _('Field name'), _('Suggestion')])
+            res += str_html
+            header = ('<tr><th width="200">%s</th><th width="200">%s</th><th width="300">%s</th></tr>', [_('Object Name'), _('Field name'), _('Suggestion')])
             if not self.error:
-               for key in dict.keys():
-                   data_list = []
-                   final_dict = {}
-                   data_list = dict[key]
-                   count = 0
-                   for i in data_list:
-                       count = count + 1
-                       final_dict[key + str(count)] = i
-                   res += '<table>' + self.format_html_table(header, data_list=final_dict) + '</table><br>'
+                for key in dict_obj.keys():
+                    data_list = []
+                    final_dict = {}
+                    data_list = dict_obj[key]
+                    count = 0
+                    for i in data_list:
+                        count = count + 1
+                        final_dict[key + str(count)] = i
+                    res += '<table>' + self.format_html_table(header, data_list=final_dict) + '</table><br>'
             return res + '</body></html>'
         return ""
 
-    def get_result_general(self, dict, name=''):
-        str_html = '''<html><strong> %s Result</strong><head></head><body><table>'''%(name)
-        header = ('<tr><th>%s</th><th>%s</th></tr>',[_('Object Name'), _('Suggestion')])
+    def get_result_general(self, dict_obj, name=''):
+        str_html = '''<html><strong> %s Result</strong><head></head><body><table>'''% (name)
+        header = ('<tr><th>%s</th><th>%s</th></tr>', [_('Object Name'), _('Suggestion')])
         if not self.error:
-           res = str_html + self.format_html_table(header, data_list=dict) + '</table></body></html>'
-           return res
+            res = str_html + self.format_html_table(header, data_list=dict_obj) + '</table></body></html>'
+            return res
         return ""
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
