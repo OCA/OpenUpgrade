@@ -31,7 +31,11 @@
     ],
     'init_xml' : [ ],
     'demo_xml' : [ ],
-    'update_xml' : [ ],
+    'update_xml' : [
+        'training_exam_view.xml',
+        'workflow/questionnaire_workflow.xml',
+        'workflow/planned_exam_workflow.xml',
+    ],
     'active' : False,
     'installable' : True,
 }
