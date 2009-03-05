@@ -62,9 +62,10 @@ def do_export(self, cr, uid, data, context):
                 categ_ids.append(exportable_category[0])
             else:
                 categ_not.append(id)
-            
-        if len(categ_not) > 0:
-            raise wizard.except_wizard(_("Error"), _("you asked to export non-exportable categories : IDs %s") % categ_not)
+
+        # Produces an error when writting a non exportable category
+        #if len(categ_not) > 0:
+        #    raise wizard.except_wizard(_("Error"), _("you asked to export non-exportable categories : IDs %s") % categ_not)
 
     #===============================================================================
     #  Category packaging
@@ -89,7 +90,7 @@ def do_export(self, cr, uid, data, context):
                 
         path='1/'+path
         path=path.replace("//","/")
-        if path.endswith('/'): 
+        if path.endswith('/'):
             path=path[0:-1]
         
         category_data = {
@@ -97,23 +98,24 @@ def do_export(self, cr, uid, data, context):
                 'path' : path,
                 'is_active' : 1,
         }
-
+        updated = True
         #===============================================================================
         #  Category upload to Magento
         #===============================================================================
-        
         try:
             if(category.magento_id == 0):
                 new_id = server.call(session,'category.create', [magento_parent_id, category_data])
                 categ_pool.write_magento_id(cr, uid, category.id, {'magento_id': new_id})
                 logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully created category with OpenERP id %s and Magento id %s") % (category.id, new_id))
                 categ_new += 1
-                
+
             else:
+                # The path must include magento_id at the end when a category is updated
+                category_data['path'] = category_data['path'] + '/' + str(category.magento_id)
                 server.call(session,'category.update', [category.magento_id, category_data])
                 logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully updated category with OpenERP id %s and Magento id %s") % (category.id, category.magento_id))
                 categ_update += 1
-                
+
         except xmlrpclib.Fault, error:
             if error.faultCode == 102: #turns out that the category doesn't exist in Magento (might have been deleted), try to create a new one.
                 try:
@@ -121,19 +123,22 @@ def do_export(self, cr, uid, data, context):
                     categ_pool.write_magento_id(cr, uid, category.id, {'magento_id': new_id})
                     logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully created category with OpenERP id %s and Magento id %s") % (category.id, new_id))
                     categ_new += 1
-                    
+
                 except xmlrpclib.Fault, error:
                     logger.notifyChannel(_("Magento Export"), netsvc.LOG_ERROR, _("Magento API return an error on category id %s . Error %s") % (category.id, error))
+                    updated = False
                     categ_fail += 1
             else:
                 logger.notifyChannel(_("Magento Export"), netsvc.LOG_ERROR, _("Magento API return an error on category id %s . Error %s") % (category.id, error))
+                updated = False
                 categ_fail += 1 
-                
+
         except Exception, error:
                 raise wizard.except_wizard(_("OpenERP Error"), _("An error occured : %s ") % error)
 
+        categ_pool.write_magento_id(cr, uid, category.id, {'updated': updated})
+
     server.endSession(session)
-    
     return {'categ_new':categ_new, 'categ_update':categ_update, 'categ_fail':categ_fail }
 
 
