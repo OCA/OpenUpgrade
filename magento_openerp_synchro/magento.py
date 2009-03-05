@@ -54,7 +54,7 @@ class magento_web(osv.osv):
             return True
     
     _constraints = [
-        (_constraint_unique, 'Error: The module has been designed for only one Magento Web.', [])
+        (_constraint_unique, _('Error: The module has been designed for only one Magento Web.'), [])
     ]
     
     # for lack of a better place to put this    
@@ -62,7 +62,7 @@ class magento_web(osv.osv):
         import netsvc
         import magento_utils
         logger = netsvc.Logger()
-        logger.notifyChannel("Magento Import", netsvc.LOG_INFO, "createOrder")    
+        logger.notifyChannel(_("Magento Import"), netsvc.LOG_INFO, "createOrders")
 
         utils = magento_utils.magento_utils()
         results = utils.createOrders(cr, uid, sale_order_array)
@@ -78,22 +78,22 @@ class magento_web(osv.osv):
         try:
             magento_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
             if len(magento_id) > 1 :
-                raise osv.except_osv('UserError', 'You must have only one shop with Magento flag turned on')
+                raise osv.except_osv(_('UserError'), _('You must have only one shop with Magento flag turned on'))
             else :
                 magento_web = self.pool.get('magento.web').browse(cr, uid, magento_id[0])
                 server = xmlrpclib.ServerProxy("%sindex.php/api/xmlrpc" % magento_web.magento_url)
             
         except Exception, error:
-            raise osv.except_osv("UserError", "You must have a declared website with a valid URL, a Magento username and password")   
-            connect_logger.notifyChannel("Magento Connect", netsvc.LOG_ERROR, "Error : %s" % error)    
+            raise osv.except_osv(_("UserError"), _("You must have a declared website with a valid URL, a Magento username and password"))
+            connect_logger.notifyChannel(_("Magento Connect"), netsvc.LOG_ERROR, _("Error : %s") % error)
    
         try:
             session = server.login(magento_web.api_user, magento_web.api_pwd)
             
         except xmlrpclib.Fault,error:
-            raise osv.except_osv("MagentoError", "Magento returned %s" % error)
+            raise osv.except_osv(_("MagentoError"), _("Magento returned %s") % error)
         except Exception, error:
-            raise osv.except_osv("ConnectionError", "Couldn't connect to Magento with URL %sindex.php/api/xmlrpc" % magento_web.magento_url)    
+            raise osv.except_osv(_("ConnectionError"), _("Couldn't connect to Magento with URL %sindex.php/api/xmlrpc") % magento_web.magento_url)
 
         return server, session
 
@@ -107,14 +107,14 @@ class magento_web(osv.osv):
         try:
             magento_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
             if len(magento_id) > 1 :
-                raise osv.except_osv('UserError', 'You must have only one shop with Magento flag turned on')
+                raise osv.except_osv(_('UserError'), _('You must have only one shop with Magento flag turned on'))
             else :
                 magento_web = self.pool.get('magento.web').browse(cr, uid, magento_id[0])
                 server = xmlrpclib.ServerProxy("%sapp/code/local/Smile/OpenERPSync/openerp-synchro.php" % magento_web.magento_url)
             
         except Exception, error:
-            raise osv.except_osv("UserError", "You must have a declared website with a valid URL, a Magento username and password")   
-            connect_logger.notifyChannel("Magento Connect", netsvc.LOG_ERROR, "Error : %s" % error) 
+            raise osv.except_osv(_("UserError"), _("You must have a declared website with a valid URL, a Magento username and password"))
+            connect_logger.notifyChannel(_("Magento Connect"), netsvc.LOG_ERROR, _("Error : %s") % error)
 
         return server
 

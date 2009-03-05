@@ -64,7 +64,7 @@ def _do_import(self, cr, uid, data, context):
     magento_orders = self.pool.get('sale.order').search(cr, uid, [('magento_id', '>', 0)])
     if magento_orders:
         last_order = self.pool.get('sale.order').browse(cr, uid, max(magento_orders))
-        last_order_id = last_order.magento_id     
+        last_order_id = last_order.magento_id
     else:
         last_order_id = 0
     
@@ -74,8 +74,8 @@ def _do_import(self, cr, uid, data, context):
     try:
         sale_order_array = server.sale_orders_sync(last_order_id)
     except ExpatError, error:
-        logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
-        raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % mw.magento_url)
+        logger.notifyChannel(_("Magento Import"), netsvc.LOG_ERROR, _("Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s") % error)
+        raise wizard.except_wizard(_("Magento Import"), _("Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!") % mw.magento_url)
 
     
     # order Processing
@@ -134,7 +134,7 @@ def _do_import(self, cr, uid, data, context):
         else:
             fixed_partner_id = partner_id
                     
-        # if address doesn't exist, create it        
+        # if address doesn't exist, create it
         if(known_ba == False):
             bill_adr_id = self.pool.get('res.partner.address').create(cr, uid, {
             'partner_id': fixed_partner_id,
@@ -147,7 +147,7 @@ def _do_import(self, cr, uid, data, context):
             })
             
         # if the address does'nt exist & isn't the same as billing, create it
-        if((so['shipping_address'] == so['billing_address']) and known_sa == False):      
+        if((so['shipping_address'] == so['billing_address']) and known_sa == False):
             ship_adr_id = self.pool.get('res.partner.address').create(cr, uid, {
                 'partner_id': fixed_partner_id,
                 'name': so['shipping_address']['firstname']+" "+so['shipping_address']['lastname'],
@@ -167,11 +167,11 @@ def _do_import(self, cr, uid, data, context):
         if shop_id and len(shop_id) >= 1:
             shop=self.pool.get('sale.shop').browse(cr, uid, shop_id[0])
         else:
-            raise wizard.except_wizard('UserError', 'You must have one shop with magento_id set to 1')
+            raise wizard.except_wizard(_('UserError'), _('You must have one shop with magento_id set to 1'))
             
         # creates Sale Order
         order_id=self.pool.get('sale.order').create(cr, uid, {
-                'name': 'magento SO/'+str(so['id']),
+                'name': _('magento SO/')+str(so['id']),
                 'partner_id': fixed_partner_id,
                 'partner_shipping_id': ship_adr_id,
                 'partner_invoice_id': bill_adr_id,
@@ -186,7 +186,7 @@ def _do_import(self, cr, uid, data, context):
         #===============================================================================
         # Sale order lines
         #-If the product exist : create line
-        #-Else : report error on sale order            
+        #-Else : report error on sale order
         #===============================================================================
         line_error = False
         
@@ -206,9 +206,9 @@ def _do_import(self, cr, uid, data, context):
                         'tax_id' : [(6, 0, [x.id for x in product.taxes_id])] #See fields.py, many2many set method.
                 })
                 
-            # report the error   
+            # report the error
             else:
-                logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Sale Order %s : Error on product id : %s sku : %s name %s" % (order_id , line['product_magento_id'], line['product_sku'], line['product_name']))    
+                logger.notifyChannel(_("Magento Import"), netsvc.LOG_ERROR, _("Sale Order %s : Error on product id : %s sku : %s name %s") % (order_id , line['product_magento_id'], line['product_sku'], line['product_name']))
                 self.pool.get('sale.order').write(cr, uid, order_id, {'has_error' : 1})
                 line_error = True
            
@@ -227,7 +227,7 @@ def _do_import(self, cr, uid, data, context):
             })
 
         except error:
-            logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "ERROR: couldn't create a shipping product, did you configure a shipping product in the delivery module? %s" % error)
+            logger.notifyChannel(_("Magento Import"), netsvc.LOG_ERROR, _("ERROR: couldn't create a shipping product, did you configure a shipping product in the delivery module? %s") % error)
             
         # done fields counter   
         if line_error:

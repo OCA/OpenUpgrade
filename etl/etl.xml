@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<menuitem name="ETL" id="menu_action_etl_form"
+			icon="terp-partner" />
+		<menuitem name="Configuration" parent="menu_action_etl_form"
+			id="menu_action_etl_confi_form" />
+
+		<!--Project definiton		-->
+		<menuitem name="Project Definitions"
+			parent="menu_action_etl_confi_form"
+			id="menu_action_etl_confi_proj_form" />
+		<menuitem name="All Projects"
+			parent="menu_action_etl_confi_proj_form"
+			id="menu_action_etl_confi_project_all_form" />
+		<menuitem name="Current Projects"
+			parent="menu_action_etl_confi_proj_form"
+			id="menu_action_etl_confi_project_cur_form" />
+		<menuitem name="New Project"
+			parent="menu_action_etl_confi_proj_form"
+			id="menu_action_etl_confi_project_new_form" />
+
+		<!--		channel defination-->
+		<menuitem name="Channel Defination"
+			parent="menu_action_etl_confi_form"
+			id="menu_action_etl_confi_cd_form" />
+		<menuitem name="Log Channel"
+			parent="menu_action_etl_confi_cd_form"
+			id="menu_action_etl_confi_cd_lc_form" />
+		<menuitem name="All Log Channel"
+			parent="menu_action_etl_confi_cd_lc_form"
+			id="menu_action_etl_confi_cd_logc_alc_form" />
+		<menuitem name="New Log Channel"
+			parent="menu_action_etl_confi_cd_lc_form"
+			id="menu_action_etl_confi_cd_logc_nlc_form" />
+		<menuitem name="Transition Channels"
+			parent="menu_action_etl_confi_cd_form"
+			id="menu_action_etl_confi_cd_tc_form" />
+
+		<menuitem name="Schema Defination"
+			parent="menu_action_etl_confi_form"
+			id="menu_action_etl_confi_sd_form" />
+		<menuitem name="All Schemas"
+			parent="menu_action_etl_confi_sd_form"
+			id="menu_action_etl_confi_sd_as_form" />
+		<menuitem name="New Schema"
+			parent="menu_action_etl_confi_sd_form"
+			id="menu_action_etl_confi_sd_ns_form" />
+
+		<!--File format		-->
+		<menuitem name="File Format" parent="menu_action_etl_confi_form"
+			id="menu_action_etl_confi_ff_form" />
+		<menuitem name="CSV File Format"
+			parent="menu_action_etl_confi_ff_form"
+			id="menu_action_etl_confi_ff_CSVff_form" />
+
+		<!--	connector	-->
+		<menuitem name="Connector" parent="menu_action_etl_confi_form"
+			id="menu_action_etl_confi_c_form" />
+		<menuitem name="SQL Connector"
+			parent="menu_action_etl_confi_c_form"
+			id="menu_action_etl_confi_c_sql_form" />
+		<menuitem name="Tested Connector"
+			parent="menu_action_etl_confi_c_sql_form"
+			id="menu_action_etl_confi_c_sql_tc_form" />
+		<menuitem name="New Connector"
+			parent="menu_action_etl_confi_c_sql_form"
+			id="menu_action_etl_confi_c_sql_nc_form" />
+		<menuitem name="File Access Control"
+			parent="menu_action_etl_confi_c_form"
+			id="menu_action_etl_confi_c_fac_form" />
+		<menuitem name="Tested Connector"
+			parent="menu_action_etl_confi_c_fac_form"
+			id="menu_action_etl_confi_c_fac_tc_form" />
+		<menuitem name="New Connector"
+			parent="menu_action_etl_confi_c_fac_form"
+			id="menu_action_etl_confi_c_fac_nc_form" />
+		<menuitem name="Open Object Connector"
+			parent="menu_action_etl_confi_c_form"
+			id="menu_action_etl_confi_c_ooc_form" />
+		<menuitem name="Tested Connector"
+			parent="menu_action_etl_confi_c_ooc_form"
+			id="menu_action_etl_confi_c_ooc_tc_form" />
+		<menuitem name="New Connector"
+			parent="menu_action_etl_confi_c_ooc_form"
+			id="menu_action_etl_confi_c_ooc_nc_form" />
+
+
+
+		<!--	component types	-->
+
+		<menuitem name="Component types"
+			parent="menu_action_etl_confi_form"
+			id="menu_action_etl_confi_ct_form" />
+		<menuitem name="All Component types"
+			parent="menu_action_etl_confi_ct_form"
+			id="menu_action_etl_confi_ct_act_form" />
+
+		<!--	job definitions	-->
+
+		<menuitem name="Job Definitons"
+			parent="menu_action_etl_confi_form"
+			id="menu_action_etl_confi_jd_form" />
+		<!--jobs		-->
+
+
+		<record id="view_etl_job_form" model="ir.ui.view">
+			<field name="name">view_etl_job_form</field>
+			<field name="model">etl.job</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="etl_job">
+					<notebook colspan="4">
+						<page string="Job Definition">
+							<field name="name" select="1" />
+							<field name="project_id" />
+							<field name="user_id" />
+							<field name="author" />
+							<field name="is_start" />
+
+							<newline />
+							<separator string="Notes" colspan="4" />
+							<field name="notes" colspan="4" nolabel="1" />
+							<newline />
+							<separator string="Status" colspan="4" />
+							<field name="state" />
+							<group col="2" colspan="2">
+								<button name="open_job"
+									string="Open Job" type="object" />
+								<button name="launch_process"
+									string="Launch a Process" type="object" />
+							</group>
+						</page>
+						<page string="Job Components">
+							<field name="component_ids" nolabel="1"
+								colspan="4" widget="one2many_list">
+								<tree string="Components">
+									<field name="name" select="1" />
+									<field name="job_id" />
+								</tree>
+								<form string="Components">
+									<field name="name" select="1" />
+									<field name="job_id" />
+								</form>
+							</field>
+
+						</page>
+						<page string="Statistics">
+							<newline />
+							<separator string="Processes" colspan="4" />
+							<field name="running_process" />
+							<field name="total_process" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_etl_job_tree" model="ir.ui.view">
+			<field name="name">view_etl_job_tree</field>
+			<field name="model">etl.job</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="etl_job">
+					<field name="name" select="1" />
+					<field name="project_id" />
+					<field name="user_id" />
+					<field name="author" />
+					<field name="is_start" />
+					<field name="notes" />
+					<field name="state" />
+					<field name="running_process" />
+					<field name="total_process" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="menu_action_etl_job_form"
+			model="ir.actions.act_window">
+			<field name="name">ETL Job</field>
+			<field name="res_model">etl.job</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_etl_job_tree" />
+		</record>
+		<menuitem name="Jobs" parent="menu_action_etl_confi_jd_form"
+			action="menu_action_etl_job_form"
+			id="menu_action_etl_confi_jd_j_form" />
+
+
+		<menuitem name="All Jobs"
+			parent="menu_action_etl_confi_jd_j_form"
+			id="menu_action_etl_confi_jd_j_aj_form" />
+		<menuitem name=" Running Jobs"
+			parent="menu_action_etl_confi_jd_j_form"
+			id="menu_action_etl_confi_jd_j_rj_form" />
+		<menuitem name=" New Job"
+			parent="menu_action_etl_confi_jd_j_form"
+			id="menu_action_etl_confi_jd_j_nj_form" />
+
+		<!-- components-->
+
+		<record id="view_etl_component_item_form" model="ir.ui.view">
+			<field name="name">view_etl_component_item_form</field>
+			<field name="model">etl.component.item</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="etl_Component_item">
+					<field name="name" select="1" />
+					<field name="job_id" />
+					<notebook colspan="4">
+						<page string="Property" />
+						<page string="Transitions">
+							<separator string="Input Transition"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" />
+							<separator string="Output Transition"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_etl_component_item_tree" model="ir.ui.view">
+			<field name="name">view_etl_component_item_tree</field>
+			<field name="model">etl.component.item</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="etl_job">
+					<field name="name" select="1" />
+					<field name="job_id" />
+					<field name="trans_in_ids" colspan="4" />
+					<field name="trans_out_ids" colspan="4" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="menu_action_etl_component_item_form"
+			model="ir.actions.act_window">
+			<field name="name">ETL Component Item</field>
+			<field name="res_model">etl.component.item</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_etl_component_item_tree" />
+		</record>
+
+
+		<menuitem name="Components"
+			parent="menu_action_etl_confi_jd_form"
+			action="menu_action_etl_component_item_form"
+			id="menu_action_etl_confi_jd_c_form" />
+
+		<!--input component        -->
+		<menuitem name="Input Component"
+			parent="menu_action_etl_confi_jd_c_form"
+			id="menu_action_etl_confi_jd_c_ic_form" />
+		<!--csv file format        -->
+		<menuitem name="CSVFile Data Input"
+			parent="menu_action_etl_confi_jd_c_ic_form"
+			id="menu_action_etl_confi_jd_c_ic_csvff_form" />
+		<menuitem name="All Components"
+			parent="menu_action_etl_confi_jd_c_ic_csvff_form"
+			id="menu_action_etl_confi_jd_c_ic_csvff_ac_form" />
+		<menuitem name="New component"
+			parent="menu_action_etl_confi_jd_c_ic_csvff_form"
+			id="menu_action_etl_confi_jd_c_ic_csvff_nc_form" />
+		<!--excel file format        -->
+		<menuitem name="ExcelFile Data Input"
+			parent="menu_action_etl_confi_jd_c_ic_form"
+			id="menu_action_etl_confi_jd_c_ic_edi_form" />
+		<menuitem name="All Components"
+			parent="menu_action_etl_confi_jd_c_ic_edi_form"
+			id="menu_action_etl_confi_jd_c_ic_efd_ac_form" />
+		<menuitem name="New component"
+			parent="menu_action_etl_confi_jd_c_ic_edi_form"
+			id="menu_action_etl_confi_jd_c_ic_efd_nc_form" />
+		<!--xml file data input        -->
+		<menuitem name="XMLFile Data Input"
+			parent="menu_action_etl_confi_jd_c_ic_form"
+			id="menu_action_etl_confi_jd_c_ic_xdi_form" />
+		<menuitem name="All Components"
+			parent="menu_action_etl_confi_jd_c_ic_xdi_form"
+			id="menu_action_etl_confi_jd_c_ic_xdi_ac_form" />
+		<menuitem name="New component"
+			parent="menu_action_etl_confi_jd_c_ic_xdi_form"
+			id="menu_action_etl_confi_jd_c_ic_xdi_nc_form" />
+
+		<!--openerp module        -->
+		<menuitem name="Open ERP module"
+			parent="menu_action_etl_confi_jd_c_ic_form"
+			id="menu_action_etl_confi_jd_c_ic_oem_form" />
+		<menuitem name="All Components"
+			parent="menu_action_etl_confi_jd_c_ic_oem_form"
+			id="menu_action_etl_confi_jd_c_ic_oem_ac_form" />
+		<menuitem name="New component"
+			parent="menu_action_etl_confi_jd_c_ic_oem_form"
+			id="menu_action_etl_confi_jd_c_ic_oem_nc_form" />
+
+		<!--  openerp mcx cube query      -->
+		<menuitem name="Open ERP MDX Cube Query"
+			parent="menu_action_etl_confi_jd_c_ic_form"
+			id="menu_action_etl_confi_jd_c_ic_oemcq_form" />
+		<menuitem name="All Components"
+			parent="menu_action_etl_confi_jd_c_ic_oemcq_form"
+			id="menu_action_etl_confi_jd_c_ic_oemcq_ac_form" />
+		<menuitem name="New component"
+			parent="menu_action_etl_confi_jd_c_ic_oemcq_form"
+			id="menu_action_etl_confi_jd_c_ic_oemcq_nc_form" />
+
+		<!--  open erp web service      -->
+		<menuitem name="Open ERP web-service"
+			parent="menu_action_etl_confi_jd_c_ic_form"
+			id="menu_action_etl_confi_jd_c_ic_oew_form" />
+		<menuitem name="All Components"
+			parent="menu_action_etl_confi_jd_c_ic_oew_form"
+			id="menu_action_etl_confi_jd_c_ic_oew_ac_form" />
+		<menuitem name="New component"
+			parent="menu_action_etl_confi_jd_c_ic_oew_form"
+			id="menu_action_etl_confi_jd_c_ic_oew_nc_form" />
+
+		<!-- sql input data       -->
+		<menuitem name="SQL Input Data"
+			parent="menu_action_etl_confi_jd_c_ic_form"
+			id="menu_action_etl_confi_jd_c_ic_sid_form" />
+		<menuitem name="All Components"
+			parent="menu_action_etl_confi_jd_c_ic_sid_form"
+			id="menu_action_etl_confi_jd_c_ic_sid_ac_form" />
+		<menuitem name="New component"
+			parent="menu_action_etl_confi_jd_c_ic_sid_form"
+			id="menu_action_etl_confi_jd_c_ic_sid_nc_form" />
+
+		<!--output component        -->
+		<menuitem name="Output Component"
+			parent="menu_action_etl_confi_jd_c_form"
+			id="menu_action_etl_confi_jd_c_oc_form" />
+		<menuitem name="CSVFile Data Output component"
+			parent="menu_action_etl_confi_jd_c_oc_form"
+			id="menu_action_etl_confi_jd_c_oc_cdom_form" />
+		<menuitem name="ExcelFile Data Component"
+			parent="menu_action_etl_confi_jd_c_oc_form"
+			id="menu_action_etl_confi_jd_c_oc_efdc_form" />
+		<menuitem name="XMLFile Data Component"
+			parent="menu_action_etl_confi_jd_c_oc_form"
+			id="menu_action_etl_confi_jd_c_oc_xfdc_form" />
+		<menuitem name="Open ERP module "
+			parent="menu_action_etl_confi_jd_c_oc_form"
+			id="menu_action_etl_confi_jd_c_oc_oem_form" />
+		<menuitem name="Open ERP web-service "
+			parent="menu_action_etl_confi_jd_c_oc_form"
+			id="menu_action_etl_confi_jd_c_oc_oews_form" />
+		<menuitem name="SQL Output Data "
+			parent="menu_action_etl_confi_jd_c_oc_form"
+			id="menu_action_etl_confi_jd_c_oc_sod_form" />
+
+
+		<!--process etl component		-->
+
+		<menuitem name="Process ETL Component"
+			parent="menu_action_etl_confi_jd_c_form"
+			id="menu_action_etl_confi_jd_c_pec_form" />
+		<menuitem name="Sort process"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__sop_form" />
+		<menuitem name="Reverse Order process"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__rop_form" />
+		<menuitem name="Field Mapping Process"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__fmp_form" />
+		<menuitem name="Filtering Row Process"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__frp_form" />
+		<menuitem name="Filtering Column process"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__fcp_form" />
+		<menuitem name="Diff Process"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__dp_form" />
+		<menuitem name="Merge Process"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__mp_form" />
+		<menuitem name="Search/Replace (from info in the component)"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__sr_form" />
+		<menuitem name="Search/Replace (from another flow)"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__sre_form" />
+		<menuitem name="Uniq Checks Process"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__ucp_form" />
+		<menuitem name="Schema Validation"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__sv_form" />
+		<menuitem name="Python Code"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__pc_form" />
+		<menuitem name="Fork Flow"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__ff_form" />
+		<menuitem name="Split Flow"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__sf_form" />
+		<menuitem name="Sub-Job"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec__sj_form" />
+		<menuitem name="Aggregate component"
+			parent="menu_action_etl_confi_jd_c_pec_form"
+			id="menu_action_etl_confi_jd_c_pec_ac_form" />
+		<menuitem name="Aggregate unsorted lists"
+			parent="menu_action_etl_confi_jd_c_pec_ac_form"
+			id="menu_action_etl_confi_jd_c_pec_ac_aul_form" />
+		<menuitem name="Aggregate sorted lists"
+			parent="menu_action_etl_confi_jd_c_pec_ac_form"
+			id="menu_action_etl_confi_jd_c_pec_ac_asl_form" />
+
+
+
+		<!--logger etl component		-->
+
+		<menuitem name="Logger ETL Component"
+			parent="menu_action_etl_confi_jd_c_form"
+			id="menu_action_etl_confi_jd_c_lec_form" />
+		<menuitem name="Data Logger component"
+			parent="menu_action_etl_confi_jd_c_lec_form"
+			id="menu_action_etl_confi_jd_c_lec_dlc_form" />
+		<menuitem name="Data Log block"
+			parent="menu_action_etl_confi_jd_c_lec_form"
+			id="menu_action_etl_confi_jd_c_lec_dlb_form" />
+
+		<!--analysis component		-->
+
+		<menuitem name="Analysis Components"
+			parent="menu_action_etl_confi_jd_c_form"
+			id="menu_action_etl_confi_jd_c_ac_form" />
+		<menuitem name="Speed Tests"
+			parent="menu_action_etl_confi_jd_c_ac_form"
+			id="menu_action_etl_confi_jd_c_ac_st_form" />
+		<menuitem name="Statistics on processed data"
+			parent="menu_action_etl_confi_jd_c_ac_form"
+			id="menu_action_etl_confi_jd_c_ac_spd_form" />
+		<!--transitions		-->
+
+
+		<record id="view_etl_transition_form" model="ir.ui.view">
+			<field name="name">view_etl_transition</field>
+			<field name="model">etl.transition</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="etl_transition">
+					<field name="name" select="1" />
+					<field name="type" />
+					<separator string="Transition property" colspan="4" />
+					<newline />
+					<field name="source_id" />
+					<field name="destination_id" />
+					<field name="channel_source" />
+					<field name="channel_destination" select="1" />
+					<separator string="Status" colspan="4" />
+					<newline />
+					<field name="state" />
+					<group col="2" colspan="2">
+						<button name="c_trans" string="Close Transition"
+							type="object" />
+						<button name="s_trans" string="State Transition"
+							type="object" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_etl_transition_tree" model="ir.ui.view">
+			<field name="name">view_etl_transition_tree</field>
+			<field name="model">etl.transition</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="etl_transition">
+					<field name="name" />
+					<field name="type" />
+					<field name="source_id" />
+					<field name="destination_id" />
+					<field name="channel_source" />
+					<field name="channel_destination" select="1" />
+					<field name="state" />
+					<group col="2" colspan="2">
+						<button name="c_trans" string="Close Transition"
+							type="object" />
+						<button name="s_trans" string="State Transition"
+							type="object" />
+					</group>
+				</tree>
+			</field>
+		</record>
+
+		<record id="menu_action_etl_confi_trans_form"
+			model="ir.actions.act_window">
+			<field name="name">ETL Transition</field>
+			<field name="res_model">etl.transition</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_etl_transition_tree" />
+		</record>
+
+		<menuitem name="Transitions" parent="menu_action_etl_confi_form"
+			action="menu_action_etl_confi_trans_form"
+			id="menu_action_etl_confi_t_form" />
+
+
+
+		<menuitem name="Data Transitions"
+			parent="menu_action_etl_confi_t_form"
+			id="menu_action_etl_confi_t_dt_form" />
+		<menuitem name="Trigger Transitions"
+			parent="menu_action_etl_confi_t_form"
+			id="menu_action_etl_confi_t_tt_form" />
+
+		<!--traceability		-->
+		<menuitem name="Traceability" parent="menu_action_etl_form"
+			id="menu_action_etl_trace_form" />
+		<menuitem name="Loggers" parent="menu_action_etl_trace_form"
+			id="menu_action_etl_trace_l_form" />
+		<menuitem name="Jobs Events" parent="menu_action_etl_trace_form"
+			id="menu_action_etl_trace_jv_form" />
+		<menuitem name="Process Log" parent="menu_action_etl_trace_form"
+			id="menu_action_etl_trace_pl_form" />
+
+		<!--process		-->
+		<menuitem name="Process" parent="menu_action_etl_form"
+			id="menu_action_etl_proc_form" />
+		<menuitem name="Draft Process"
+			parent="menu_action_etl_proc_form" id="menu_action_etl_proc_dp_form" />
+		<menuitem name="Running Process"
+			parent="menu_action_etl_proc_form" id="menu_action_etl_proc_rp_form" />
+	</data>
+</openerp>

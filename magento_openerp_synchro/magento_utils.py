@@ -86,7 +86,7 @@ class magento_utils:
         else:
             fixed_partner_id = partner_id
                     
-        # if address doesn't exist, create it        
+        # if address doesn't exist, create it
         if(known_ba == False):
             bill_adr_id = self.pool.get('res.partner.address').create(cr, uid, {
             'partner_id': fixed_partner_id,
@@ -99,7 +99,7 @@ class magento_utils:
             })
             
         # if the address doesn't exist & isn't the same as billing, create it
-        if((so['shipping_address'] == so['billing_address']) and known_sa == False):      
+        if((so['shipping_address'] == so['billing_address']) and known_sa == False):
             ship_adr_id = self.pool.get('res.partner.address').create(cr, uid, {
                 'partner_id': fixed_partner_id,
                 'name': so['shipping_address']['firstname']+" "+so['shipping_address']['lastname'],
@@ -118,11 +118,11 @@ class magento_utils:
         if shop_id and len(shop_id) >= 1:
             shop=self.pool.get('sale.shop').browse(cr, uid, shop_id[0])
         else:
-            raise wizard.except_wizard('UserError', 'You must have one shop with magento_id set to 1')
+            raise wizard.except_wizard(_('UserError'), _('You must have one shop with magento_id set to 1'))
             
         # creates Sale Order
         order_id=self.pool.get('sale.order').create(cr, uid, {
-                'name': 'magento SO/'+str(so['id']),
+                'name': _('magento SO/')+str(so['id']),
                 'partner_id': fixed_partner_id,
                 'partner_shipping_id': ship_adr_id,
                 'partner_invoice_id': bill_adr_id,
@@ -157,9 +157,9 @@ class magento_utils:
                         'tax_id' : [(6, 0, [x.id for x in get_product.taxes_id])] #See fields.py, many2many set method.
                 })
                 
-            # report the error   
+            # report the error
             else:
-                self.logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Sale Order %s : Cannot find product with id : %s sku : %s name %s" % (order_id , line['product_magento_id'], line['product_sku'], line['product_name']))    
+                self.logger.notifyChannel(_("Magento Import"), netsvc.LOG_ERROR, _("Sale Order %s : Cannot find product with id : %s sku : %s name %s") % (order_id , line['product_magento_id'], line['product_sku'], line['product_name']))
                 self.pool.get('sale.order').write(cr, uid, order_id, {'has_error' : 1})
                 line_error = True
            
@@ -176,7 +176,7 @@ class magento_utils:
                 'price_unit': so['shipping_amount'],
         })
         
-        # done fields counter   
+        # done fields counter
         if line_error :
             has_error = 1
         

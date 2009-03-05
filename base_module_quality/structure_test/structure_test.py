@@ -22,11 +22,8 @@
 
 import os
 
-import pooler
 from tools.translate import _
 from base_module_quality import base_module_quality
-from tools import config
-
 
 class quality_test(base_module_quality.abstract_quality_check):
 
@@ -42,70 +39,70 @@ This test checks if the module satisfy tiny structure
         return None
 
     def run_test(self, cr, uid, module_path):
-        a = len(module_path.split('/'))
+        len_module = len(module_path.split('/'))
         module_name = module_path.split('/')
-        module_name = module_name[a-1]
+        module_name = module_name[len_module-1]
         list_files = os.listdir(module_path)
         f_list = []
         module_dict = {}
         module_dict['module'] = []
-        n = 0
+        count = 0
         final_score = 0.0
-        for file in list_files:
-            if file.split('.')[-1] != 'pyc':
-                path = os.path.join(module_path, file)
-                if file=='wizard' and os.path.isdir(path):
-                    module_dict[file] = []
-                if file=='report' and os.path.isdir(path):
-                    module_dict[file] = []
-                if file=='security' and os.path.isdir(path):
-                    module_dict[file] = []
-                module_dict['module'].append(file)
-                f_list.append(file)
+        for file_struct in list_files:
+            if file_struct.split('.')[-1] != 'pyc':
+                path = os.path.join(module_path, file_struct)
+                if file_struct == 'wizard' and os.path.isdir(path):
+                    module_dict[file_struct] = []
+                if file_struct == 'report' and os.path.isdir(path):
+                    module_dict[file_struct] = []
+                if file_struct == 'security' and os.path.isdir(path):
+                    module_dict[file_struct] = []
+                module_dict['module'].append(file_struct)
+                f_list.append(file_struct)
         for i in f_list:
             path = os.path.join(module_path, i)
-            if os.path.isdir(path) and not i=='i18n':
+            if os.path.isdir(path) and not i == 'i18n':
                 for j in os.listdir(path):
                     if i in ['report', 'wizard', 'security', 'module'] and j.split('.')[-1] != 'pyc':
                         module_dict[i].append(j)
                         f_list.append(os.path.join(i, j))
 
         # module files calculation (module.py,module_view.xml,etc..)
-        com_list = ['_unit_test.xml', '.py', '_view.xml', '_workflow.xml' , '_wizard.xml', '_report.xml', '_data.xml', '_demo.xml', '_security.xml', '_sequence.xml']
+        com_list = ['_unit_test.xml', '.py', '_view.xml', '_workflow.xml' , '_wizard.xml', '_report.xml', '_data.xml', '_demo.xml', '_security.xml', '_sequence.xml', '_graph.xml']
         com_list = map(lambda x: module_name+x, com_list)
         main_file = ['__init__.py', '__terp__.py']
         com_list.extend(main_file)
-        module_dict['module'] = filter(lambda x: len(x.split("."))>1,module_dict['module'])
+        module_dict['module'] = filter(lambda x: len(x.split(".")) > 1, module_dict['module'])
         score = self.get_score(module_dict['module'], com_list)
-        n = n + 1
+        count = count + 1
         final_score += score
 
         # report folder checking...
         if module_dict.has_key('report'):
-            report_pys = filter(lambda x: x.split('.')[1]=='py' and x!='__init__.py',module_dict['report'])
-            report_pys = map(lambda x:x.split('.')[0],report_pys)
+            report_pys = filter(lambda x: x.split('.')[1] == 'py' and x != '__init__.py', module_dict['report'])
+            report_pys = map(lambda x:x.split('.')[0], report_pys)
             reports = ['.sxw', '.rml', '.xsl', '.py', '.xml']
             org_list_rep = []
-            for l in report_pys:
-                for r in reports:
-                    org_list_rep.append(l+r)
+            for pys in report_pys:
+                for report in reports:
+                    org_list_rep.append(pys + report)
             org_list_rep.append('__init__.py')
             score_report = self.get_score(module_dict['report'], org_list_rep, 'report/')
-            n = n + 1
+            count = count + 1
             final_score += score_report
 
         # wizard folder checking...
         if module_dict.has_key('wizard'):
-            wizard_pys = filter(lambda x: x.split('.')[1]=='py' and x!='__init__.py',module_dict['wizard'])
+            wizard_pys = filter(lambda x: x.split('.')[1] == 'py' and x != '__init__.py', module_dict['wizard'])
             wizard_pys = map(lambda x:x.split('.')[0], wizard_pys)
             wizards = ['_view.xml', '_workflow.xml', '.py']
             org_list_wiz = []
-            for l in wizard_pys:
-                for r in wizards:
-                    org_list_wiz.append(l+r)
+            for pys in wizard_pys:
+                for report in wizards:
+                    org_list_wiz.append(pys + report)
             org_list_wiz.append('__init__.py')
             score_wizard = self.get_score(module_dict['wizard'], org_list_wiz, 'wizard/')
-            n = n + 1
+            count = count + 1
             final_score += score_wizard
 
         # security folder checking...
@@ -113,19 +110,19 @@ This test checks if the module satisfy tiny structure
             security = [module_name + '_security.xml']
             security.extend(['ir.model.access.csv'])
             score_security = self.get_score(module_dict['security'], security, 'security/')
-            n = n + 1
+            count = count + 1
             final_score += score_security
 
         # final score
-        self.score = float(final_score) / n
+        self.score = float(final_score) / count
         self.result = self.get_result({ module_name: [module_name, int(self.score*100)]})
         self.result_details += self.get_result_details(self.result_dict)
         return None
 
-    def get_result(self, dict):
-        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Module Name'), _('Result'),])
+    def get_result(self, dict_struct):
+        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Module Name'), _('Result')])
         if not self.error:
-            return self.format_table(header, data_list=dict)
+            return self.format_table(header, data_list=dict_struct)
         return ""
 
     def get_score(self, module_list, original_files, mod_folder=''):
@@ -136,18 +133,18 @@ This test checks if the module satisfy tiny structure
                 score += 1
             else:
                 if mod_folder != 'wizard/':
-                    self.result_dict[i] = [mod_folder + i,'File name does not follow naming standards.']
+                    self.result_dict[i] = [mod_folder + i, 'File name does not follow naming standards.']
                     score -= 1
                     module_length -= 1
         score = module_length and float(score) / float(module_length)
         return score
 
-    def get_result_details(self, dict):
+    def get_result_details(self, dict_struct):
         str_html = '''<html><head></head><body><table border="1">'''
-        header = ('<tr><th>%s</th><th>%s</th></tr>',[_('File Name'),_('Feedback about structure of module')])
+        header = ('<tr><th>%s</th><th>%s</th></tr>', [_('File Name'), _('Feedback about structure of module')])
         if not self.error:
-           res = str_html + self.format_html_table(header, data_list=dict) + '</table></body></html>'
-           return res
+            res = str_html + self.format_html_table(header, data_list=dict_struct) + '</table></body></html>'
+            return res
         return ""
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

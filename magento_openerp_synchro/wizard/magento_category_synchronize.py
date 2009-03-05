@@ -64,7 +64,7 @@ def do_export(self, cr, uid, data, context):
                 categ_not.append(id)
             
         if len(categ_not) > 0:
-            raise wizard.except_wizard("Error", "you asked to export non-exportable categories : IDs %s" % categ_not)
+            raise wizard.except_wizard(_("Error"), _("you asked to export non-exportable categories : IDs %s") % categ_not)
 
     #===============================================================================
     #  Category packaging
@@ -106,12 +106,12 @@ def do_export(self, cr, uid, data, context):
             if(category.magento_id == 0):
                 new_id = server.call(session,'category.create', [magento_parent_id, category_data])
                 categ_pool.write_magento_id(cr, uid, category.id, {'magento_id': new_id})
-                logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully created category with OpenERP id %s and Magento id %s" % (category.id, new_id))
+                logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully created category with OpenERP id %s and Magento id %s") % (category.id, new_id))
                 categ_new += 1
                 
             else:
                 server.call(session,'category.update', [category.magento_id, category_data])
-                logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully updated category with OpenERP id %s and Magento id %s" % (category.id, category.magento_id))
+                logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully updated category with OpenERP id %s and Magento id %s") % (category.id, category.magento_id))
                 categ_update += 1
                 
         except xmlrpclib.Fault, error:
@@ -119,20 +119,20 @@ def do_export(self, cr, uid, data, context):
                 try:
                     new_id = server.call(session,'category.create', [magento_parent_id, category_data])
                     categ_pool.write_magento_id(cr, uid, category.id, {'magento_id': new_id})
-                    logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully created category with OpenERP id %s and Magento id %s" % (category.id, new_id))
+                    logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully created category with OpenERP id %s and Magento id %s") % (category.id, new_id))
                     categ_new += 1
                     
                 except xmlrpclib.Fault, error:
-                    logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on category id %s . Error %s" % (category.id, error))
-                    categ_fail += 1    
+                    logger.notifyChannel(_("Magento Export"), netsvc.LOG_ERROR, _("Magento API return an error on category id %s . Error %s") % (category.id, error))
+                    categ_fail += 1
             else:
-                logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on category id %s . Error %s" % (category.id, error))   
+                logger.notifyChannel(_("Magento Export"), netsvc.LOG_ERROR, _("Magento API return an error on category id %s . Error %s") % (category.id, error))
                 categ_fail += 1 
                 
         except Exception, error:
-                raise wizard.except_wizard("OpenERP Error", "An error occured : %s " % error)   
+                raise wizard.except_wizard(_("OpenERP Error"), _("An error occured : %s ") % error)
 
-    server.endSession(session)        
+    server.endSession(session)
     
     return {'categ_new':categ_new, 'categ_update':categ_update, 'categ_fail':categ_fail }
 

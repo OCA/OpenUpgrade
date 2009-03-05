@@ -68,7 +68,7 @@ def do_export(self, cr, uid, data, context):
                 prod_not.append(id)   
             
         if len(prod_not) > 0:
-            raise wizard.except_wizard("Error", "you asked to export non-exportable products : IDs %s" % prod_not)
+            raise wizard.except_wizard(_("Error"), _("you asked to export non-exportable products : IDs %s") % prod_not)
         
     #===============================================================================
     #  Product packaging
@@ -108,8 +108,8 @@ def do_export(self, cr, uid, data, context):
                 'price' : product.list_price,
                 'weight': (product.weight_net or 0),
                 'category_ids': category_tab,
-                'description' : (product.description or "description"),
-                'short_description' : (product.description_sale or "short description"),
+                'description' : (product.description or _("description")),
+                'short_description' : (product.description_sale or _("short description")),
                 'websites':['base'],
                 'tax_class_id': product.magento_tax_class_id or 2,
                 'status': 1,
@@ -129,13 +129,13 @@ def do_export(self, cr, uid, data, context):
                     new_id = server.call(session, 'product.create', ['simple', attr_set_id, sku, product_data])
                     product_pool.write_magento_id(cr, uid, product.id, {'magento_id': new_id})
                     server.call(session, 'product_stock.update', [sku, stock_data])
-                    logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully created product with OpenERP id %s and Magento id %s" % (product.id, new_id))
+                    logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully created product with OpenERP id %s and Magento id %s") % (product.id, new_id))
                     prod_new += 1
                 #Or Update
                 else:
                     server.call(session, 'product.update', [sku, product_data])
                     server.call(session, 'product_stock.update', [sku, stock_data])
-                    logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully updated product with OpenERP id %s and Magento id %s" % (product.id, product.magento_id))
+                    logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully updated product with OpenERP id %s and Magento id %s") % (product.id, product.magento_id))
                     prod_update += 1
                      
             except xmlrpclib.Fault, error:
@@ -145,19 +145,19 @@ def do_export(self, cr, uid, data, context):
                         new_id = server.call(session, 'product.create', ['simple', attr_set_id, sku, product_data])
                         product_pool.write_magento_id(cr, uid, product.id, {'magento_id': new_id})
                         server.call(session, 'product_stock.update', [sku, stock_data])
-                        logger.notifyChannel("Magento Export", netsvc.LOG_INFO, " Successfully created product with OpenERP id %s and Magento id %s" % (product.id, new_id))
+                        logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully created product with OpenERP id %s and Magento id %s") % (product.id, new_id))
                         prod_new += 1
                     except xmlrpclib.Fault, error:
-                        logger.notifyChannel("Magento Export ", netsvc.LOG_ERROR, " Magento API return an error on product id %s . Error %s" % (product.id, error))
+                        logger.notifyChannel(_("Magento Export"), netsvc.LOG_ERROR, _("Magento API return an error on product id %s . Error %s") % (product.id, error))
                         prod_fail += 1
                 else:
-                    logger.notifyChannel("Magento Export", netsvc.LOG_ERROR, "Magento API return an error on product id %s . Error %s" % (product.id, error))
+                    logger.notifyChannel(_("Magento Export"), netsvc.LOG_ERROR, _("Magento API return an error on product id %s . Error %s") % (product.id, error))
                     prod_fail += 1
             except Exception, error:
-                raise wizard.except_wizard("OpenERP Error", "An error occured : %s " % error)  
+                raise wizard.except_wizard(_("OpenERP Error"), _("An error occured : %s ") % error)
 
         
-    server.endSession(session)      
+    server.endSession(session)
     return {'prod_new':prod_new, 'prod_update':prod_update, 'prod_fail':prod_fail}
 
 

@@ -20,12 +20,11 @@
 #
 ##############################################################################
 
+import base64
+
 import wizard
 from osv import osv
 import pooler
-from tools.translate import _
-
-import base64
 
 form_rep = '''<?xml version="1.0"?>
 <form string="Standard entries">
@@ -40,13 +39,13 @@ fields_rep = {
 def get_detail(self, cr, uid, datas, context={}):
     data = pooler.get_pool(cr.dbname).get('quality.check.detail').browse(cr, uid, datas['id'])
     data.detail = base64.encodestring(data.detail)
-    return {'module_file':data.detail}
+    return {'module_file': data.detail}
 
 class save_report(wizard.interface):
     states = {
         'init': {
             'actions': [get_detail],
-            'result': {'type': 'form', 'arch':form_rep, 'fields':fields_rep, 'state':[('end','Cancel')]}
+            'result': {'type': 'form', 'arch': form_rep, 'fields':fields_rep, 'state': [('end','Cancel')]}
         },
     }
 save_report('quality_detail_save')

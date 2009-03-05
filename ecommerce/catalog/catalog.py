@@ -22,6 +22,7 @@
 
 from osv import fields, osv
 import time
+from lxml import etree
 
 class product_product(osv.osv):
     _inherit = "product.product"
@@ -30,12 +31,12 @@ class product_product(osv.osv):
     }
 product_product()
 
-class specail_offer(osv.osv):
+class ecommerce_specail_offer(osv.osv):
     _inherit = "product.pricelist.version"
     _columns = {
-        'offer_name': fields.char('OfferName', size=64, translate=True)
+        'offer_name': fields.char('Offer Name', size=64, translate=True)
     }
-specail_offer()
+ecommerce_specail_offer()
 
 class ecommerce_search(osv.osv):
     _name = "ecommerce.search"
@@ -45,7 +46,13 @@ class ecommerce_search(osv.osv):
         'code': fields.char('Search Parameter Code', size=28, required=True)
     }
           
-    def searchProduct_ids(self, cr, uid, search_code):
+    def searchproducts(self, cr, uid, search_code):
+        
+        root = etree.XML('<root><a><b/></a></root>')
+        print "*************************",dir(root)
+        root.append(etree.Element("child1"))
+        print "*********** ROOT",etree.tostring(root, pretty_print=True)
+        
         prd_ids = []
         final_list = []
         send_ids = []
@@ -63,15 +70,14 @@ class ecommerce_search(osv.osv):
                     args.append(final_list)
                     ids = obj.search(cr, uid, args)
                     prd_ids.extend(ids)
-
         for item in prd_ids:
             if not item in send_ids:
-                 send_ids.append(item)   
+                send_ids.append(item)   
         return send_ids
     
 ecommerce_search()
 
-class reviews(osv.osv):
+class ecommerce_reviews(osv.osv):
     _name = "ecommerce.product.reviews"
     _rec_name = "product"
     _description = "Reviews about product"
@@ -87,5 +93,5 @@ class reviews(osv.osv):
         'reviewdate': lambda *a: time.strftime('%Y-%m-%d'),
     }
     
-reviews()
+ecommerce_reviews()
 

@@ -19,16 +19,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import xml.dom.minidom
 
-import os
 import tools
 from tools.translate import _
-
 from base_module_quality import base_module_quality
 import pooler
-import re
-import tools
-import xml.dom.minidom
+
 
 class quality_test(base_module_quality.abstract_quality_check):
 
@@ -57,6 +54,11 @@ class quality_test(base_module_quality.abstract_quality_check):
         wkf_avail = []
         result_dict = {}
         activity_chk = {}
+        bad_view = 0
+        good_view = 0
+        act_ok = 0
+        not_ok = 0
+        wkfs = []
 
         if obj_list:
             wkf_ids = wkf_obj.search(cr, uid, [('osv', 'in', obj_list)])
@@ -64,13 +66,17 @@ class quality_test(base_module_quality.abstract_quality_check):
             for i in wkfs:
                 activity_chk[i['osv']] = {'start': 'not_ok', 'stop': 'not_ok'}
                 wkf_avail.append(i['osv'])
-        wkf_ids = map(lambda x:x['id'],wkfs)
+                model_ids = self.get_ids(cr, uid, [i['osv']])
+                if len(model_ids[i['osv']]) < 2: # to be modified..
+                    bad_view += 1
+                    result_dict[i['osv']] = [i['osv'], 'You should have enough demo data which allows testing of integrity of module and ensures the proper functioning of workflows']
+                else:
+                    good_view += 1
+        wkf_ids = map(lambda x:x['id'], wkfs)
 
         #Activity of workflow checking...
         activity_ids = wkf_activity_obj.search(cr, uid, [('wkf_id', 'in', wkf_ids)])
         activities = wkf_activity_obj.browse(cr, uid, activity_ids)
-        ok = 0
-        not_ok = 0
         for activity in activities:
             if activity.flow_start:
                 activity_chk[activity.wkf_id.osv]['start'] = 'ok'
@@ -78,72 +84,58 @@ class quality_test(base_module_quality.abstract_quality_check):
                 activity_chk[activity.wkf_id.osv]['stop'] = 'ok'
             activity_chk[activity.wkf_id.osv]['model'] = activity.wkf_id.osv
             if activity.in_transitions and activity.out_transitions:
-                ok += 1
+                act_ok += 1
             if not activity.in_transitions and not activity.out_transitions:
                 not_ok += 1
                 result_dict[activity.id] = [activity.name, 'Use less activity (improves readability and protects server resources)']
         for act in activity_chk:
             if activity_chk[act]['start'] == 'ok':
-                ok += 1
+                act_ok += 1
             else:
                 not_ok +=  1
                 result_dict[activity_chk[act]['model']] = [activity_chk[act]['model'], 'Workflow activities should have atleast one starting node']
             if activity_chk[act]['stop'] == 'ok':
-                ok += 1
+                act_ok += 1
             else:
                 not_ok +=  1
                 result_dict[activity_chk[act]['model']] = [activity_chk[act]['model'], 'Workflow activities should have atleast one ending node']
 
-        score_general = float(ok) / float(ok + not_ok)
+        score_general = act_ok and float(act_ok) / float(act_ok + not_ok)
 
         # workflow defined on object or not checking..
         for field in field_data:
             if field.name == 'state':
                 state_check.append(field.model)
-        bad_view = 0
-        good_view = 0
         for view in view_data:
             if view.model in state_check:
                 dom = xml.dom.minidom.parseString(view.arch)
                 node = dom.childNodes
-                attrs = self.node_attributes(node[0])
                 count = self.count_button(node[0], count=0)
                 if count > 3 and not view.model in wkf_avail:
                     bad_view +=  1
                     result_dict[view.model] = [view.model, 'The presence of a field state in object often indicative of a need for workflow behind. And connect them to ensure consistency in this field.']
                 elif count > 0 and view.model in wkf_avail:
                     good_view += 1
-        score_avail = float(good_view) / float(bad_view + good_view)
+        score_avail = good_view and float(good_view) / float(bad_view + good_view)
 
         self.score = (score_general + score_avail) / 2
         self.result = self.get_result({ module_name: ['Result Workflow', int(self.score * 100)]})
         self.result_details += self.get_result_details(result_dict)
         return None
 
-    def get_result(self, dict):
+    def get_result(self, dict_wf):
         header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Module Name'), _('Result of views in %')])
         if not self.error:
-            return self.format_table(header, data_list=dict)
+            return self.format_table(header, data_list=dict_wf)
         return ""
 
-    def get_result_details(self, dict):
+    def get_result_details(self, dict_wf):
         str_html = '''<html><head></head><body><table border="1">'''
-        header = ('<tr><th>%s</th><th>%s</th></tr>', [_('Object Name'),_('Feed back About Workflow of Module')])
+        header = ('<tr><th>%s</th><th>%s</th></tr>', [_('Object Name'), _('Feed back About Workflow of Module')])
         if not self.error:
-            res = str_html + self.format_html_table(header, data_list=dict) + '</table><newline/></body></html>'
+            res = str_html + self.format_html_table(header, data_list=dict_wf) + '</table><newline/></body></html>'
             return res
         return ""
-
-    def node_attributes(self, node):
-        result = {}
-        attrs = node.attributes
-        if attrs is None:
-            return {}
-        for i in range(attrs.length):
-            result[attrs.item(i).localName] = str(attrs.item(i).nodeValue)
-            if attrs.item(i).localName == "digits" and isinstance(attrs.item(i).nodeValue, (str, unicode)):
-                result[attrs.item(i).localName] = eval(attrs.item(i).nodeValue)
-        return result
 
     def count_button(self, node, count):
         for node in node.childNodes:

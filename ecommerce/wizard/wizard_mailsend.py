@@ -57,12 +57,11 @@ finished_fields = {
     'mailnotsent': {'string': 'Mail Not sent', 'type': 'text'}
 }
 
-class wiz_send_email_eshop(wizard.interface):
+class ecommerce_sendmail_wizard(wizard.interface):
  
     def _send_reminder(self, cr, uid, data, context):
 
         partner = data['form']['partner_id'][0][2]
-        
         if partner:
             res = pooler.get_pool(cr.dbname).get('ecommerce.partner').browse(cr, uid, partner)
             for partner in res:
@@ -83,7 +82,7 @@ class wiz_send_email_eshop(wizard.interface):
                         res_atc = map(lambda x: (x['datas_fname'],
                                                  base64.decodestring(x['datas'])), res_atc)
                         tools.email_send(mail_from, [to], data['form']['subject'], data['form']['message'], attach=res_atc)
-                        
+
         return 'finished'
         
     def get_mail_dtl(self, cr, uid, data, context):
@@ -116,7 +115,7 @@ class wiz_send_email_eshop(wizard.interface):
         }
     }
   
-wiz_send_email_eshop('customer.send.mail.eshop') 
+ecommerce_sendmail_wizard('ecommerce.customer.sendmail') 
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

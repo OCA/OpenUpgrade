@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2009 Smile.fr. All Rights Reserved
+#    authors: Raphaël Valyi, Xavier Fernandez
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -19,7 +19,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import wizard_mail_send_eshop
-import wizard_product_view
+{
+    "name" : "Customization of BoM",
+    "version" : "0.5",
+    "author" : "Smile.fr",
+    "website": "http://www.smile.fr",
+    "category" : "Generic Modules/Sales",
+    "depends" : ["mrp", "sale"],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : ['bom_customization_view.xml',
+                    'configurator_view.xml',
+                    'demo_data.xml'],
+    "active": False,
+    "installable": True
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -40,16 +40,16 @@ Different payment methods are available for users to make payment.
 You can display products in table on website using rows and columns specified in webshop.
                  """,
     'init_xml': [],
-    'demo_xml': ['ecommerce_demo_data.xml'],
+    'demo_xml': ['ecommerce_demo.xml'],
     'update_xml': [
-        'tools/ecom_product_view.xml',
-        'basic_info_view.xml',
-        'partner/partner_new_view.xml',
+        'ecommerce_product_view.xml',
+        'ecommerce_view.xml',
+        'partner/partner_view.xml',
         'catalog/catalog_view.xml',
-        'tools/tools_wizard.xml',
+        'ecommerce_wizard.xml',
         'sale_order/sale_order_view.xml',
         'sale_order/sale_order_sequence.xml',
-        'report_shipping.xml', 
+        'ecommerce_report.xml', 
         'security/ir.model.access.csv'
     ],
     'installable': True,

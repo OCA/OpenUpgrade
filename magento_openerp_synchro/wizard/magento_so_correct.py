@@ -66,8 +66,8 @@ def _do_correct(self, cr, uid, data, context):
         try:
             mag_so=server.get_sale_order(error_so.magento_id)
         except ExpatError, error:
-            logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders correct, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
-            raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders correct, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % mw.magento_url)
+            logger.notifyChannel(_("Magento Import"), netsvc.LOG_ERROR, _("Error occured during Sales Orders correct, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s") % error)
+            raise wizard.except_wizard(_("Magento Import"), _("Error occured during Sales Orders correct, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!") % mw.magento_url)
 
 
         error_counter = 0
@@ -99,12 +99,12 @@ def _do_correct(self, cr, uid, data, context):
                 else:
                     error_counter += 1
          
-        # update the counters   
+        # update the counters
         if(error_counter == 0):
             self.pool.get('sale.order').write(cr,uid,so_id,{'has_error' : 0})
             corrected += 1
         else:
-            has_error += 1     
+            has_error += 1
              
     return {'corrected':corrected,'has_error':has_error}
 

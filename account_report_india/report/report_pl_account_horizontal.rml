@@ -225,13 +225,13 @@
             </para>
           </td>
           <td>
-            <para style="terp_default_Right_9">[[ a['outer'] == '-1' and a['balance'] ]]</para>
+            <para style="terp_default_Right_9">[[ a['outer'] == '-1' and abs(a['balance']) ]]</para>
           </td>
           <td>
-            <para style="terp_default_Right_9">[[ a['outer'] == '0' and a['balance'] ]]</para>
+            <para style="terp_default_Right_9">[[ a['outer'] == '0' and abs(a['balance']) ]]</para>
           </td>
           <td>
-            <para style="terp_default_Right_9_Bold">[[ a['outer'] == '1' and a['balance'] ]]</para>
+            <para style="terp_default_Right_9_Bold">[[ a['outer'] == '1' and abs(a['balance']) ]]</para>
           </td>
           <td>
             <para style="terp_default_9">
@@ -239,13 +239,13 @@
             </para>
           </td>
           <td>
-            <para style="terp_default_Right_9">[[ a['outer1'] == '-1' and a['balance1'] ]]</para>
+            <para style="terp_default_Right_9">[[ a['outer1'] == '-1' and abs(a['balance1']) ]]</para>
           </td>
           <td>
-            <para style="terp_default_Right_9">[[ a['outer1'] == '0' and a['balance1'] ]]</para>
+            <para style="terp_default_Right_9">[[ a['outer1'] == '0' and abs(a['balance1']) ]]</para>
           </td>
           <td>
-            <para style="terp_default_Right_9_Bold">[[ a['outer1'] == '1' and a['balance1'] ]]</para>
+            <para style="terp_default_Right_9_Bold">[[ a['outer1'] == '1' and abs(a['balance1']) ]]</para>
           </td>
         </tr>
       </blockTable>
@@ -255,25 +255,25 @@
           <para style="terp_default_Bold_9">Total:([[ get_currency(data['form']) ]])</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_expense_dr() ]]</para>
+          <para style="terp_default_Right_9_Bold">[[ '%.2f' % abs(sum_expense_dr()) ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_expense_dr() ]]</para>
+          <para style="terp_default_Right_9_Bold">[[ '%.2f' % abs(sum_expense_dr()) ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold"><u>[[ '%.2f' % sum_dr() ]]</u></para>
+          <para style="terp_default_Right_9_Bold"><u>[[ '%.2f' % abs(sum_dr()) ]]</u></para>
         </td>
         <td>
           <para style="terp_default_Bold_9">Total:([[ get_currency(data['form']) ]])</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_income1_cr() ]]</para>
+          <para style="terp_default_Right_9_Bold">[[ '%.2f' % abs(sum_income1_cr()) ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold">[[ '%.2f' % sum_income_cr() ]]</para>
+          <para style="terp_default_Right_9_Bold">[[ '%.2f' % abs(sum_income_cr()) ]]</para>
         </td>
         <td>
-          <para style="terp_default_Right_9_Bold"><u>[[ '%.2f' % sum_cr() ]]</u></para>
+          <para style="terp_default_Right_9_Bold"><u>[[ '%.2f' % abs(sum_cr()) ]]</u></para>
         </td>
       </tr>
     </blockTable>

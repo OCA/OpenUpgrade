@@ -4,7 +4,7 @@ class sale_order(osv.osv):
     _inherit = 'sale.order'
     _columns = {
         'magento_id': fields.integer('magento order id'),
-        'has_error': fields.integer('magento order error'),    
+        'has_error': fields.integer('magento order error'),
     }
     _defaults = {
         'magento_id': lambda *a: 0,

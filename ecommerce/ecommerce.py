@@ -23,22 +23,22 @@
 from osv import fields , osv
 import time
 
-class payment_method(osv.osv):
+class ecommerce_payment_method(osv.osv):
     
-    _name = "payment.method"
+    _name = "ecommerce.payment.method"
     _description = "payment method"
     _columns = {
         'name': fields.char('Name', size=64, required=True),
         'shortcut': fields.char('Shortcut', size=64, required=True),
     }        
-payment_method()
+ecommerce_payment_method()
 
 class ecommerce_creditcard(osv.osv):
     _name = "ecommerce.creditcard"
     _description = "Credit Cards"
     _columns = {
-        'name': fields.char('Credit Card Name', size=64, required=True),
-        'code': fields.char('Credit Card Code', size=28, required=True)
+        'name': fields.char('Card Name', size=64, required=True),
+        'code': fields.char('Code', size=28, required=True)
     }
 ecommerce_creditcard()
 
@@ -48,13 +48,13 @@ class ecommerce_payment(osv.osv):
     _description = "ecommerce payment"
 
     def _get_method(self, cursor, user, context=None):
-        obj_payment = self.pool.get('payment.method')
+        obj_payment = self.pool.get('ecommerce.payment.method')
         ids_method = obj_payment.search(cursor, user, [])
     	data_method = obj_payment.read(cursor, user, ids_method, ['shortcut', 'name'], context)
 	return [(r['shortcut'], r['name']) for r in data_method]
         
     _columns = {
-        'name': fields.selection(_get_method, 'Method', size=64, required=True),
+        'name': fields.selection(_get_method, 'Payment Method', size=64, required=True),
         'chequepay_to': fields.char('Account Owner', size=128, required=False),
         'street': fields.char('Street', size=128, required=False),
         'street2': fields.char('Street2', size=128, required=False),
@@ -83,7 +83,7 @@ class ecommerce_payment_received(osv.osv):
     _description = "ecommerce payment received"
     _columns = {
         'transaction_id': fields.char('Transaction Id', size=128, readonly=True, help="Its Unique id which is generated from the paypal."),
-        'saleorder_id': fields.many2one('sale.order', 'Sale Order'),
+        'saleorder_id': fields.many2one('sale.order', 'Sales Order'),
         'invoice_id': fields.many2one('account.invoice', 'Invoice'),
         'transaction_date': fields.date('Date Payment', required=True, help="Transaction finish date."),
         'partner': fields.many2one('res.partner', 'Partner', required=True),
@@ -104,8 +104,8 @@ class ecommerce_shop(osv.osv):
             help="Name of the shop which you are configure at website."),
         'company_id': fields.many2one('res.company', 'Company'),
         'shop_id': fields.many2one('sale.shop', 'Sale Shop', required=True),
- 	    'payment_method': fields.many2many('ecommerce.payment', 'shop_payment', 'shop_id', 'payment_id', 'Payable method', required=False),
-        'category_ids': fields.one2many('ecommerce.category', 'web_id','Categories', translate=True,
+ 	    'payment_method_ids': fields.many2many('ecommerce.payment', 'shop_payment', 'shop_id', 'payment_id', 'Payment Methods', required=False),
+        'category_ids': fields.one2many('ecommerce.category', 'web_id', 'Categories', translate=True,
             help="Add the product categories which you want to displayed on the website."),
         'currency_ids': fields.many2many('res.currency','currency_rel', 'currency', 'ecommerce_currency', 'Currency',
             help="Add the currency options for the online customers."),
@@ -116,7 +116,7 @@ class ecommerce_shop(osv.osv):
         'image_height': fields.integer('Height in Pixel', help="Add product image height in pixels."),
         'image_width': fields.integer('Width in Pixel', help="Add product image width in pixels."),
         'delivery_ids': fields.many2many('delivery.grid', 'delivery_rel', 'delivery', 'ecommrce_delivery', 'Delivery',
-            help="Add the carriers which we use for the shipping."),
+            help="Add the carriers which you use for the shipping."),
         'search_ids': fields.many2many('ecommerce.search', 'search_rel', 'search', 'ecommrce_search_parameter', 'Search On',
             help="Add the search parameters which you are allow from the website." )
         } 
@@ -136,7 +136,7 @@ class ecommerce_category(osv.osv):
     _columns = {
         'name': fields.char('E-commerce Category', size=64, required=True,
             help="Add the category name which you want to display at the website."),
-        'web_id': fields.many2one('ecommerce.shop', 'Webshop'),
+        'web_id': fields.many2one('ecommerce.shop', 'Web Shop'),
         'category_id': fields.many2one('product.category', 'Tiny Category',
             help="It display the product which are under the openerp category."),
         'parent_category_id': fields.many2one('ecommerce.category','Parent Category'),

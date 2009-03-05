@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2009 Smile.fr. All Rights Reserved
+#    authors: Raphaël Valyi, Xavier Fernandez
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -19,6 +19,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import wizard
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+{
+    "name" : "MultiStep Product Configurator",
+    "description" : "TODO WORK IN PROGRESS!!!! DO NOT USE IN PRODUCTION YET!",
+    "version" : "0.5",
+    "author" : "Smile",
+    "website": "http://www.smile.fr",
+    "category" : "Generic Modules/Sales",
+    "depends" : ["sale"],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : [
+        "sale_product_multistep_configurator.xml",
+        "sale_product_multistep_configurator_wizard.xml",
+        "sale_view.xml"
+    ],
+    "active": False,
+    "installable": True
+}
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

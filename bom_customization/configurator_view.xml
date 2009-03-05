@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record id="bom_customization.configurator" model="ir.ui.view">
+			<field name="name">bom_customization.configurator</field>
+			<field name="model">bom_customization.configurator</field>
+			<field name="type">form</field>
+
+			<field name="arch" type="xml">
+
+				<form string="BOM Configurator">
+					<field name="bom_option" />
+					<field name="bom_key_values" />
+				</form>
+			</field>
+		</record>
+
+	</data>
+</openerp>
