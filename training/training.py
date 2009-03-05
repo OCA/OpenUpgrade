@@ -50,8 +50,10 @@ class training_course_type(osv.osv):
 
     _columns = {
         'name' : fields.char('Name', size=32, required=True, select=1),
-        'objective' : fields.text('Objective'),
-        'description' : fields.text('Description'),
+        'objective' : fields.text('Objective',
+                                  help="Allows to the user to write the objectives of the course type"),
+        'description' : fields.text('Description',
+                                    help="Allows to the user to write the description of the course type"),
         'min_limit' : fields.integer('Minimum Limit', required=True, select=2),
         'max_limit' : fields.integer('Maximum Limit', required=True, select=2),
     }
@@ -99,37 +101,48 @@ class training_course(osv.osv):
     _columns = {
         'duration' : fields.time('Duration',
                                  required=True,
-                                 help="Duration for a standalone course"),
+                                 help="The duration for a standalone course"),
+
         'children' : fields.function(_get_child_ids,
                                      method=True,
                                      type='one2many',
                                      relation="training.course",
                                      string='Children'),
+
         'total_duration' : fields.function(_total_duration_compute,
                                            string='Total Duration',
                                            readonly=True,
                                            store=True,
                                            method=True,
                                            type="time"),
+
         'sequence' : fields.integer('Sequence'),
+
         'target_public' : fields.char('Target Public',
                                       size=256,
                                       help="Allows the participants to select a course whose can participate"),
+
         'reference_id' : fields.many2one('training.course',
                                          'Master Course',
                                          help="The master course is necessary if the user wants to link certain courses together to easy the managment"),
-        'analytic_account_id' : fields.many2one( 'account.analytic.account', 'Account' ),
+
+        'analytic_account_id' : fields.many2one('account.analytic.account', 'Account'),
+
         'course_type_id' : fields.many2one('training.course_type', 'Type',
                                            required=True),
+
         'lecturer_ids' : fields.many2many('res.partner', 
                                             'training_course_partner_rel',
                                             'course_id',
                                             'partner_id',
                                             'Lecturers',
-                                            help="The lecturers who give the course"
+                                            help="The lecturers who give the course",
                                            ),
+
         'internal_note' : fields.text('Note'),
+
         'lang_id' : fields.many2one('res.lang', 'Language', required=True),
+
         'offer_ids' : fields.many2many('training.offer',
                                        'training_course_offer_rel',
                                        'course_id',
@@ -137,6 +150,7 @@ class training_course(osv.osv):
                                        'Offers',
                                        help="The offers containing the course"
                                       ),
+
         'state_course' : fields.selection([('draft', 'Draft'),
                                            ('pending', 'Pending'),
                                            ('inprogress', 'In Progress'),
@@ -148,6 +162,7 @@ class training_course(osv.osv):
                                           readonly=True,
                                           select=1
                                          ),
+
         'purchase_line_ids' : fields.one2many('training.course.purchase_line', 'course_id',
                                               'Supplier Commands'),
     }
@@ -170,8 +185,11 @@ class training_offer(osv.osv):
                                         'Courses',
                                         domain="[('state', '=', 'validate')]"
                                        ),
-        'objective' : fields.text('Objective'),
-        'description' : fields.text('Description'),
+        'objective' : fields.text('Objective',
+                                  help="Allows to write the objectives of the course",
+                                 ),
+        'description' : fields.text('Description',
+                                    help="Allows to write the description of the course"),
         'state' : fields.selection([('draft', 'Draft'),
                                     ('validate', 'Validate'),
                                     ('deprecated', 'Deprecated')
@@ -192,9 +210,17 @@ class training_catalog(osv.osv):
     _name = 'training.catalog'
     _rec_name = 'year'
     _columns = {
-        'year' : fields.integer('Year', size=4, required=True, select=1),
-        'session_ids' : fields.one2many('training.session', 'catalog_id', 'Sessions'),
-        'note' : fields.text('Note'),
+        'year' : fields.integer('Year',
+                                size=4,
+                                required=True,
+                                select=1
+                                help="The year when the catalog has been published",
+                               ),
+        'session_ids' : fields.one2many('training.session', 'catalog_id',
+                                        'Sessions',
+                                        help="The sessions in the catalog"),
+        'note' : fields.text('Note',
+                             help="Allows to write a note for the catalog"),
         'state' : fields.selection([('draft','Draft'),
                                     ('inprogress', 'In Progress'),
                                     ('done','Done')],
@@ -218,7 +244,11 @@ training_event()
 class training_session(osv.osv):
     _name = 'training.session'
     _columns = {
-        'name' : fields.char('Name', size=64, required=True, select=1),
+        'name' : fields.char('Name',
+                             size=64,
+                             required=True,
+                             select=1,
+                             help="The session's name"),
         'state' : fields.selection([('draft', 'Draft'),
                                     ('open_pending', 'Open and Pending'),
                                     ('inprogress', 'In Progress'),
@@ -230,8 +260,16 @@ class training_session(osv.osv):
                                    readonly=True,
                                    select=1
                                   ),
-        'offer_id' : fields.many2one('training.offer', 'Offer', select=1, required=True),
-        'catalog_id' : fields.many2one('training.catalog', 'Catalog', select=1),
+        'offer_id' : fields.many2one('training.offer',
+                                     'Offer',
+                                     select=1,
+                                     required=True,
+                                     help="Allows to select a validated offer for the session",
+                                    ),
+        'catalog_id' : fields.many2one('training.catalog', 'Catalog',
+                                       select=1,
+                                       help="Allows to select a published catalog"
+                                      ),
         'event_ids' : fields.many2many('training.event',
                                        'training_session_event_rel',
                                        'session_id',
