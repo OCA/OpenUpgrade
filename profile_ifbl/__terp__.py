@@ -41,7 +41,8 @@
     'init_xml' : [],
     'update_xml' : [
         'document_view.xml',
-        'base_contact_team_view.xml'
+        'base_contact_team_view.xml',
+        'training_view.xml',
     ],
     'demo_xml' : [],
     'installable' : True,

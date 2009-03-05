@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="profile_ifbl_training_course_form">
+            <field name="name">profile.ifbl.training.course.form</field>
+            <field name="model">training.course</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="training.training_course_form" />
+            <field name="arch" type="xml">
+                <xpath expr="/form/group/field[@name='course_type_id']" position="after">
+                    <field name="display_name" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
