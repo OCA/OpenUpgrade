@@ -29,6 +29,7 @@
     'category' : 'Profile',
     'depends' : [
         'training',
+        'portal_training',
         'crm',
         'project',
         'account_analytic_analysis',
