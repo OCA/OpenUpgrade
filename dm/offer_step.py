@@ -95,7 +95,6 @@ class dm_offer_step(osv.osv):
         'mailing_at_dates' : fields.boolean('Mailing at dates', states={'closed':[('readonly',True)]}),
         'floating date' : fields.boolean('Floating date', states={'closed':[('readonly',True)]}),
         'interactive' : fields.boolean('Interactive', states={'closed':[('readonly',True)]}),
-#        'wrkitem_id' : fields.one2many('dm.offer.step.workitem','step_id', 'WorkItems'),
         'notes' : fields.text('Notes'),
         'document_ids' : fields.one2many('dm.offer.document', 'step_id', 'DTP Documents'),
         'flow_start' : fields.boolean('Flow Start'),

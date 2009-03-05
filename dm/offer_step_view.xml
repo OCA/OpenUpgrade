@@ -106,10 +106,10 @@
                     <page string="Transitions">
                         <field name="outgoing_transition_ids" colspan="4" nolabel="1" default_get="{'type':'step_from','step_id':active_id or False}">
                             <form string="Transition">
-                                <field name="step_from" readonly="1"/>
-                                <field name="step_to" domain="[('offer_id','=',parent.offer_id)]"/>
+                                <field name="step_from" colspan="4" readonly="1"/>
+                                <field name="step_to" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>
 <!--                                <field name="condition" select="1" widget="selection"/>-->
-								<field name="condition" select="1"/>
+                                <field name="condition" select="1"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
@@ -128,7 +128,7 @@
                                 <field name="step_from" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <field name="step_to" readonly="1"/>
 <!--                                <field name="condition" select="1" widget="selection"/>-->
-								<field name="condition" select="1"/>
+                                <field name="condition" select="1"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
@@ -329,6 +329,7 @@
         <field name="arch" type="xml">
             <form string="Offer Media">
                 <field name="name" select="1"/>
+                <field name="code" select="1"/>
             </form>
         </field>
     </record>
@@ -340,6 +341,7 @@
         <field name="arch" type="xml">
             <tree string="All Offer Medias">
                 <field name="name"/>
+                <field name="code"/>
             </tree>
         </field>
     </record>
