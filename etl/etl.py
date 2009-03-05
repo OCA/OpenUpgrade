@@ -1,8 +1,8 @@
-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    ETL system- Extract Transfer Load system
-#    Copyright (C) 2404-2409 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,7 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 
 from osv import osv, fields
 
@@ -85,13 +84,32 @@ class etl_connector(osv.osv):
     _columns={
               'name' : fields.char('Connector Name', size=64, required=True), 
               'type' : fields.selection(_get_connector_type, 'Connector Type'), 
+              }
+    
+etl_connector()
+
+class etl_connector_localfile(osv.osv):
+    _name='etl.connector'
+    _inherit='etl.connector'
+        
+    _columns={
+              'uri' : fields.char('URL Path', size=64), 
+              'bufsize' : fields.integer('Buffer Size')
+              }
+  
+etl_connector_localfile()
+
+class etl_connector_openobject(osv.osv):
+    _name='etl.connector'
+    _inherit='etl.connector'
+    
+    _columns={
               'uri' : fields.char('URL Path', size=64), 
               'db' : fields.char('Database', size=64), 
               'login' : fields.char('Login Name', size=64), 
               'passwd' : fields.char('Password', size=64), 
               'obj' : fields.char('Object', size=64), 
               'con_type' : fields.char('Connection Type', size=64), 
-              'bufsize' : fields.integer('Buffer Size')
               }
     
     _defaults = {
@@ -99,8 +117,7 @@ class etl_connector(osv.osv):
                 'con_type' :  lambda *a : 'xmlrpc'
                 }
     
-etl_connector()
-
+etl_connector_openobject()
 
 class etl_job(osv.osv):
     _name= 'etl.job'
@@ -113,8 +130,8 @@ class etl_job(osv.osv):
               'notes' : fields.text('Notes'), 
               'component_ids' : fields.many2many('etl.component', 'rel_job_comp', 'c_id', 'j_id', 'Components'), 
               'state' : fields.selection([('open', 'Open'), ('start', 'Started'), ('pause', 'Pause'), ('stop', 'Stop'), ('close', 'Close')], 'State', readonly=True), 
-              'running_process' : fields.char('Running Processes', size=24), 
-              'total_process' : fields.char('Total Processes', size=24)
+              'running_process' : fields.integer('Running Processes'), 
+              'total_process' : fields.integer('Total Processes')
               }
     
     _defaults = {
@@ -148,9 +165,27 @@ class etl_component(osv.osv):
                 'type' : fields.many2one('etl.component.type', 'Component Type'), 
                 'job_id' : fields.many2one('etl.job', 'Job', required=True), 
                 'trans_in_ids' : fields.one2many('etl.transition', 'source_component_id', 'Source ID'), 
-                'trans_out_ids' : fields.one2many('etl.transition', 'destination_component_id', 'Destination ID')
+                'trans_out_ids' : fields.one2many('etl.transition', 'destination_component_id', 'Destination ID'), 
+                'connector_id' :  fields.many2one('etl.connector', 'Connector'), 
+                'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
+                'row_limit' : fields.integer('Limit'), 
+                'csv_params' : fields.char('CSV Parameters', size=64), 
                   }
+        
 etl_component()
+
+class etl_component_csv_in(osv.osv):
+        _name='etl.component'
+        _inherit = 'etl.component'
+
+        _columns={
+                'connector_id' :  fields.many2one('etl.connector', 'Connector'), 
+                'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
+                'row_limit' : fields.integer('Limit'), 
+                'csv_params' : fields.char('CSV Parameters', size=64), 
+                  }
+        
+etl_component_csv_in()
 
 class etl_transition(osv.osv):
         _name = 'etl.transition'

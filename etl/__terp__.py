@@ -3,12 +3,13 @@
     'version': '1.0',
     'category': 'Generic Modules/Others',
     'description': """
-    The base module to manage of the  documents """,
-    'author': 'Tiny & Axelor',
+	ETL system- Extract Transfer Load system
+	    """
+    'author': 'Tiny',
     'website': 'http://openerp.com',
     'depends': ['base'],
     'init_xml': [],
-    'update_xml': ['etl.xml'],
+    'update_xml': ['etl.xml', 'etl_data.xml'],
     'installable': True,
     'active': False,
     }
