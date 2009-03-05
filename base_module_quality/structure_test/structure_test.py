@@ -36,6 +36,8 @@ This test checks if the module satisfy tiny structure
         self.bool_installed_only = False
         self.ponderation = 1.0
         self.result_dict = {}
+        self.module_score = 0.0
+        self.counter = 0
         return None
 
     def run_test(self, cr, uid, module_path):
@@ -43,6 +45,7 @@ This test checks if the module satisfy tiny structure
         module_name = module_path.split('/')
         module_name = module_name[len_module-1]
         list_files = os.listdir(module_path)
+        self.result_dict = {}
         f_list = []
         module_dict = {}
         module_dict['module'] = []
@@ -53,12 +56,14 @@ This test checks if the module satisfy tiny structure
                 path = os.path.join(module_path, file_struct)
                 if file_struct == 'wizard' and os.path.isdir(path):
                     module_dict[file_struct] = []
-                if file_struct == 'report' and os.path.isdir(path):
+                elif file_struct == 'report' and os.path.isdir(path):
                     module_dict[file_struct] = []
-                if file_struct == 'security' and os.path.isdir(path):
+                elif file_struct == 'security' and os.path.isdir(path):
                     module_dict[file_struct] = []
-                if file_struct == 'process' and os.path.isdir(path):
+                elif file_struct == 'process' and os.path.isdir(path):
                     module_dict[file_struct] = []
+                elif file_struct != 'i18n' and os.path.isdir(path):
+                    self.run_test(cr, uid, path)
                 module_dict['module'].append(file_struct)
                 f_list.append(file_struct)
         for i in f_list:
@@ -81,7 +86,7 @@ This test checks if the module satisfy tiny structure
 
         # report folder checking...
         if module_dict.has_key('report'):
-            report_pys = filter(lambda x: x.split('.')[1] == 'py' and x != '__init__.py', module_dict['report'])
+            report_pys = filter(lambda x: (len(x.split('.'))>1 and x.split('.')[1] == 'py') and x != '__init__.py', module_dict['report'])
             report_pys = map(lambda x:x.split('.')[0], report_pys)
             reports = ['.sxw', '.rml', '.xsl', '.py', '.xml']
             org_list_rep = []
@@ -95,7 +100,7 @@ This test checks if the module satisfy tiny structure
 
         # wizard folder checking...
         if module_dict.has_key('wizard'):
-            wizard_pys = filter(lambda x: x.split('.')[1] == 'py' and x != '__init__.py', module_dict['wizard'])
+            wizard_pys = filter(lambda x: (len(x.split('.'))>1 and x.split('.')[1] == 'py') and x != '__init__.py', module_dict['wizard'])
             wizard_pys = map(lambda x:x.split('.')[0], wizard_pys)
             wizards = ['_view.xml', '_workflow.xml', '.py']
             org_list_wiz = []
@@ -123,7 +128,10 @@ This test checks if the module satisfy tiny structure
             final_score += score_process
 
         # final score
-        self.score = float(final_score) / count
+        self.module_score +=  final_score
+        self.counter += 1
+        self.score = self.module_score / (self.counter + count)
+#        self.score = float(final_score) / count
         self.result = self.get_result({ module_name: [module_name, int(self.score*100)]})
         self.result_details += self.get_result_details(self.result_dict)
         return None
