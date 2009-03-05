@@ -97,8 +97,6 @@ class training_course(osv.osv):
         return res
 
     _columns = {
-        'display_name' : fields.char('Display Name', size=38,
-                                     help="Allows to show a short name for this course"),
         'duration' : fields.time('Duration',
                                  required=True,
                                  help="Duration for a standalone course"),
