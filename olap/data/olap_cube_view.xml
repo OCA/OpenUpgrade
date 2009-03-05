@@ -428,6 +428,59 @@ Wizard view for the Auto Configuring the data
         parent = "menu_bi_conf_cubes"
         action="action_olap_measure_form"
         id="menu_action_olap_measure_form"/>
+        
+	# ------------------------------------------------------------------
+    # Olap Saved Query
+    # ------------------------------------------------------------------
+	<record model="ir.ui.view" id="view_olap_saved_query_form_tree">
+        <field name="name">olap.saved.query.tree</field>
+        <field name="model">olap.saved.query</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Olap Saved Query">
+                <field name="query"/>
+                <field name="user_id"/>
+                <field name="cube_id"/>
+                <field name="schema_id"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_olap_saved_query_form_tree">
+        <field name="name">olap.saved.query.tree</field>
+        <field name="model">olap.saved.query</field>
+        <field name="type">mdx</field>
+        <field name="arch" type="xml">
+            <tree string="Olap Saved Query">
+                <field name="user_id"/>
+                <field name="query"/>
+                <field name="cube_id"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_olap_saved_query_form">
+        <field name="name">olap.saved.query.form</field>
+        <field name="model">olap.saved.query</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Olap Saved Query">
+                <field name="query" select="1" colspan="4" readonly="True"/>
+                <field name="user_id" readonly="True"/>
+                <field name="cube_id" select="2" readonly="True"/>
+                <field name="schema_id" select="2" readonly="True"/>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_olap_saved_query_form">
+        <field name="name">Olap Saved Query</field>
+        <field name="res_model">olap.saved.query</field>
+        <field name="view_type">form</field>
+    </record>
+    <menuitem
+        name="Olap Saved Query"
+        parent = "menu_bi_conf_tools"
+        action="action_olap_saved_query_form"
+        id="menu_action_olap_saved_query_form"/>
 
 <!-- 
 
@@ -453,7 +506,7 @@ All Logs
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="All Logs">
-                <field name="query" select="1" readonly="True"/>
+                <field name="query" colspan="4" select="1" readonly="True"/>
                 <field name="time" select="2" readonly="True"/>
                 <field name="result_size" select="2" readonly="True"/>
                 <field name="cube_id" select="2" readonly="True"/>
