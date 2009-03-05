@@ -446,8 +446,8 @@ Wizard view for the Auto Configuring the data
         </field>
     </record>
     
-    <record model="ir.ui.view" id="view_olap_saved_query_form_tree">
-        <field name="name">olap.saved.query.tree</field>
+    <record model="ir.ui.view" id="view_olap_saved_query_form_mdx">
+        <field name="name">olap.saved.query.mdx</field>
         <field name="model">olap.saved.query</field>
         <field name="type">mdx</field>
         <field name="arch" type="xml">
@@ -475,6 +475,7 @@ Wizard view for the Auto Configuring the data
         <field name="name">Olap Saved Query</field>
         <field name="res_model">olap.saved.query</field>
         <field name="view_type">form</field>
+        <field name="view_mode">tree,form,mdx</field>
     </record>
     <menuitem
         name="Olap Saved Query"
