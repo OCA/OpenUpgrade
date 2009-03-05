@@ -29,6 +29,7 @@ class profile_training_config_install_modules_wizard(osv.osv_memory):
         'name':fields.char('Name', size=64),
         'training_exam': fields.boolean('Training Exams'),
         'training_room': fields.boolean('Training Rooms'),
+        'portal_training': fields.boolean('Portal Training'),
     }
     def action_cancel(self,cr,uid,ids,conect=None):
         return {

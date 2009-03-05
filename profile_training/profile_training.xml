@@ -7,9 +7,12 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Install Extra Module">
-                    <separator string="training Management" colspan="4"/>
+                    <separator string="Training Management" colspan="4"/>
                     <field name="training_exam" />
                     <field name="training_room" />
+                    <separator string="Portal" colspan="4" />
+                    <field name="portal_training" />
+                    <newline />
                     <separator string="" colspan="4"/>
                     <label string="" colspan="2"/>
                     <group col="4" colspan="2">
