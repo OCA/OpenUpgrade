@@ -27,6 +27,7 @@
     'website' : 'http://www.openerp.com',
     'description' : 'Portal Training',
     'depends' : [
+        'portal',
         'board',
         'training',
     ],
