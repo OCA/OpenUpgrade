@@ -10,7 +10,7 @@
 			<field name="arch" type="xml">
 
 				<form string="BOM Configurator">
-					<field name="bom_option" />
+					<field name="bom_property_id" domain="[('group_id','=',13)]"/>
 					<field name="bom_key_values" />
 				</form>
 			</field>

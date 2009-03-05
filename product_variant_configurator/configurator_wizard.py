@@ -31,7 +31,7 @@ class product_variant_configurator_line(osv.osv_memory):
                 "dimension_custom_value": fields.char('Custom Value', size=64),
                 "configurator_id": fields.many2one('product_variant_configurator.configurator', 'product_variant_configurator Test'),
                 "allow_custom_value": fields.boolean('Allow custom values ?'),
-                #"product_tmpl_id": fields.related('configurator_test_id','product_tmpl_id', type="many2one", relation="product.template", string="Product Template")
+                #"product_tmpl_id": fields.related('configurator_id','product_tmpl_id', type="many2one", relation="product.template", string="Product Template")
     }
     
     def onchange_dimension_type_id(self, cr, uid, ids, dimension_type_id):
@@ -144,7 +144,6 @@ class product_variant_configurator_configurator(osv.osv_memory):
         result['value'] = {'dimension_configuration_line_ids': line_ids}
         
         return result
-
     
     def configure_line(self, cr, uid, ids, context={}):
         active_id_object_type = context.get('active_id_object_type', False)
@@ -217,6 +216,8 @@ class product_variant_configurator_configurator(osv.osv_memory):
         
         if sol_id and active_id_object_type == 'sale.order':
             
+            context.update({'sol_id': sol_id})
+            
             #TODO inherit this response from generic configurator
             return {
                     'view_type': 'form',
@@ -224,6 +225,7 @@ class product_variant_configurator_configurator(osv.osv_memory):
                     'res_model': context.get('next_step', False),#'sale_product_multistep_configurator', #'ir.actions.configuration.wizard',
                     'type': 'ir.actions.act_window',
                     'target':'new',
+                    'context': context,
                 }
             
         elif active_id_object_type == 'sale.order.line':
