@@ -57,13 +57,15 @@ This test checks if the module satisfy tiny structure
                     module_dict[file_struct] = []
                 if file_struct == 'security' and os.path.isdir(path):
                     module_dict[file_struct] = []
+                if file_struct == 'process' and os.path.isdir(path):
+                    module_dict[file_struct] = []
                 module_dict['module'].append(file_struct)
                 f_list.append(file_struct)
         for i in f_list:
             path = os.path.join(module_path, i)
             if os.path.isdir(path) and not i == 'i18n':
                 for j in os.listdir(path):
-                    if i in ['report', 'wizard', 'security', 'module'] and j.split('.')[-1] != 'pyc':
+                    if i in ['report', 'wizard', 'security', 'module', 'process'] and j.split('.')[-1] != 'pyc':
                         module_dict[i].append(j)
                         f_list.append(os.path.join(i, j))
 
@@ -112,6 +114,13 @@ This test checks if the module satisfy tiny structure
             score_security = self.get_score(module_dict['security'], security, 'security/')
             count = count + 1
             final_score += score_security
+
+        # process folder checking...
+        if module_dict.has_key('process'):
+            process = [module_name + '_process.xml']
+            score_process = self.get_score(module_dict['process'], process, 'process/')
+            count = count + 1
+            final_score += score_process
 
         # final score
         self.score = float(final_score) / count
