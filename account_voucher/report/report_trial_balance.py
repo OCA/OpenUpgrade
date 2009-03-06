@@ -27,11 +27,12 @@
 
 import time
 from report import report_sxw
+import rml_parse
 from tools import amount_to_text_en
 import pooler
 import wizard
 
-class report_trial_balance(report_sxw.rml_parse):
+class report_trial_balance(rml_parse.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(report_trial_balance, self).__init__(cr, uid, name, context)
         self.sum_debit = 0.0
