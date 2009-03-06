@@ -7,7 +7,7 @@ CUSTOM CUBE FOR SALES
 -->
 
   <record model="olap.fact.database" id="fact_databases_BI">
-	<field name="name">Tiny ERP databases</field>
+	<field name="name">OpenERP Sales Databases</field>
 	<field name="db_name">sales</field>
 	<field name="db_login">postgres</field>
 	<field name="db_password">postgres</field>
@@ -16,7 +16,7 @@ CUSTOM CUBE FOR SALES
 Schema
 -->
   <record model="olap.schema" id="schema_main_sales">
-	<field name="name">tinysales</field>
+	<field name="name">OpenERPSales</field>
 	<field name="state">none</field>
 	<field name="database_id" ref="fact_databases_BI"/>
   </record>

@@ -107,7 +107,7 @@ class level(object):
         for group in result_axis.get('group_by', []):
             axis_select2.append_group_by(group)
         # TODO: end
-#       metadata.bind.echo = True
+        #metadata.bind.echo = True
         axis_select2.append_column(result_axis['column_name'][-1].label('axis_name'))
         query = axis_select2.execute()
         result = query.fetchall()
@@ -115,7 +115,6 @@ class level(object):
             y=list(x)
             return ([self.level]+y[:-1],y[-1])
         axis = map(_tuple_define, result)
-
         # Gives the mapping
 
         primary_key = ''
@@ -191,7 +190,6 @@ class level(object):
             single condition like: foreign_key in (...) and reapplied to axis
             values.
         """
-        print '*** Transform ***'
 
         table, axis, mapping, result_axis = self._compute_axis(metadata, True)
         table2 = common.table_get(metadata, self.object.dimension_id.cube_id.table_id)

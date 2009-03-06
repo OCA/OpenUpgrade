@@ -14,7 +14,6 @@ class mapper(object):
 
 class query(object):
     def __init__(self, axis, cube, slicer_obj=None, *args):
-        print ">>>>>>>>>>>>>>In the query init >>>>>>>>>",axis,"\n Cube>>",cube,slicer_obj
         super(query, self).__init__()
         self.object = False
         self.cube = cube
@@ -49,14 +48,10 @@ class query(object):
         axis_result = []
         cube_size = []
         cross = False
-        print "\n >>> In the query run>>>",self.axis.name
-        print "\n >>> In the query run>>>",self.axis
 
 
         for ax in self.axis:
-            print ">>>>>>>> In the run loop >>>>>>>>>",ax.name
             if ax.name == 'cross':
-                print ">>>>>>>> I made the cross >>>>>>>>>>>"
                 cross = ax.run(metadata)
                 '''
                     It is assumed the result will be made and the 
@@ -71,15 +66,10 @@ class query(object):
                 '''
                 
                 res = [(item0,item1) for item0 in result for item1 in cross]
-                print "To see the length of the result ,cross and res >>",len(result),len(cross),len(res)
-                print ">>>>>This is the res i cartesian product of the axis and cross>>>>>>>>>>>",res
-                print ">>>>>>>>>>>>. this is the axis so far made >>>>>>>>>",axis[0]
                 count = 0 
                 value = []
                 for r,r1 in res:
-                    print " This is the r value made >>>>>>>>>",r['value'],r1['value']
                     value.append([(item0[0],[item0[1],str(item1[1])])for item0 in r['value'] for item1 in r1['value']])
-                    print " This is the r value made after >>>>>>>>>",value
 #                axis[0]= r
                 index = 0
                 for r,r1 in res:
@@ -95,13 +85,13 @@ class query(object):
 #                axis.append(result)
 #                print x
             else:
+		
                 result = ax.run(metadata)
                 length = 0
                 axis_result2 = []
                 for r in result:
                     length += len(r['value'])
                     axis_result2 += map(lambda x: (map(lambda y: y or False,x[0]),x[1] or False), r['value'])
-                print "\n\n\n %%%%%%%%%%>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",axis_result2
                 axis_result.append(axis_result2)
                 axis.append(result)
                 cube_size.append(length)
@@ -113,12 +103,10 @@ class query(object):
         slice = self.slicer.run(metadata)
         position = 0
         ax = []
-        print "\n\n This is the axis o...... ....  ... ",axis
         for subset in common.xcombine(*axis):
 #            print "\n\n in the subset >>>>>>>>>",subset
             select,table_fact = self.cube.run(metadata)
             for s in subset+slice:
-                print ">>>>>>>>>>>>>s >>>>>>>>>>",s
 #                s['value']
 #                'value': [(['Order Date', 2008.0], 2008.0)],
                 for key,val in s['query'].items():
@@ -128,14 +116,12 @@ class query(object):
                             position += 1
                             select.append_column(v)
                         elif key=='whereclause':
-                            print '\n ~~~~~~~~Adding Slicer ',v
                             select.append_whereclause(v)
                         elif key=='group_by':
                             select.append_group_by(v)
                         else:
                             raise 'Error, %s not implemented !'% (key,)
-            metadata.bind.echo = True
-            print ">>>>>>>>>>>IN the QUERY<<<<<<<<<<<<<<<<<",select
+            #metadata.bind.echo = True
 
             query = select.execute()
             result = query.fetchall()
@@ -172,7 +158,6 @@ class query(object):
         self.slicer.validate(cube)
 
         for axis in self.axis:
-            print ">>>>>>>> axis validate >>>>>>>>>",axis
             axis.validate(cube)
         for dimension in cube.dimension_ids:
             pass

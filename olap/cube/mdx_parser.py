@@ -96,10 +96,10 @@ class mdx_parser(object):
         rightRoundBr = Literal(")").suppress()
         comma = Literal(",").suppress()
         crossjoinToken = Keyword("crossjoin", caseless=True).suppress() 
-         
-        crossx = Forward()
-        cross_mdx = Group(crossx) | self.mdx_axis() + comma +  self.cross_axis()
-        crossx << ((crossjoinToken + leftRoundBr +  delimitedList(cross_mdx)  + rightRoundBr) |  self.cross_axis())
+        
+        crossx = Forward() 
+        cross_mdx = Group(crossx) | self.mdx_axis() + comma + self.cross_axis()
+        crossx << ((crossjoinToken + leftRoundBr +  delimitedList(cross_mdx)  + rightRoundBr) | self.cross_axis())
         simple_mdx = self.mdx_axis()
 
         mdx = simple_mdx | crossx
