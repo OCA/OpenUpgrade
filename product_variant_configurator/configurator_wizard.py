@@ -120,6 +120,7 @@ class product_variant_configurator_configurator(osv.osv_memory):
             line_ids.append(self.pool.get('product_variant_configurator.line').create(cr, uid, vals))
 
         result['value'] = {'dimension_configuration_line_ids': line_ids}
+        print result
         return result
     
     def onchange_product_variant_id(self, cr, uid, ids, product_variant_id=False, dimension_configuration_line_ids=False):
