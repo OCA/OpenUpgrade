@@ -257,6 +257,37 @@
                 </tree>
             </field>
         </record>
+
+        <record id="training_exam_result_form" model="ir.ui.view">
+            <field name="name">training.exam.result.form</field>
+            <field name="model">training.exam.result</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Result">
+                    <field name="participation_id" />
+                    <field name="exam_id" />
+                </form>
+            </field>
+        </record>
+
+        <record id="training_exam_result_tree" model="ir.ui.view">
+            <field name="name">training.exam.result.tree</field>
+            <field name="model">training.exam.result</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Results">
+                    <field name="participation_id" />
+                    <field name="exam_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_exam_result_all_act">
+            <field name="name">All Results</field>
+            <field name="res_model">training.exam.result</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
     </data>
 
     <data>
@@ -307,5 +338,11 @@
             id="training_planning_exam_planning_planify_mi" 
             parent="training_planning_exam_planning_mi" 
             action="training_planned_examen_new_act" />
+
+        <!-- Training/ Plannings/ Exams/ All Results -->
+        <menuitem
+            id="training_planning_exam_result_all_mi"
+            parent="training_planning_exam_planning_mi"
+            action="training_exam_result_all_act" />
     </data>
 </openerp>
