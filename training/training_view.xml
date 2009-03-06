@@ -39,13 +39,13 @@
         <record model="ir.values" id="ir_action_course_by_category">
             <field name="key2" eval="'tree_but_open'" />
             <field name="model" eval="'training.course_category'" />
-            <field name="name">Course By Category</field>
+            <field name="name">Courses By Category</field>
             <field name="value" eval="'ir.actions.act_window,%d'%open_training_course_by_category_all_act" />
             <field name="object" eval="True" />
         </record>
 
         <record model="ir.actions.act_window" id="training_course_by_category_all_act">
-            <field name="name">Course By Category</field>
+            <field name="name">Courses By Category</field>
             <field name="res_model">training.course_category</field>
             <field name="view_type">tree</field>
             <field name="view_mode">tree,form</field>
