@@ -4,7 +4,7 @@
     'category': 'Generic Modules/Others',
     'description': """
     The base module to manage of the  documents """,
-    'author': 'Tiny & Axelor',
+    'author': 'Tiny',
     'website': 'http://openerp.com',
     'depends': ['base'],
     'init_xml': [],

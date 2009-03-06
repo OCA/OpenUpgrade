@@ -1,5 +1,5 @@
 {
-    "name" : "Sednacom extra tools",
+    "name" : "Zarafa Integration",
     "version" : "1.0",
     "author" : "Sednacom",
     "category" : "Generic Modules/Others",
