@@ -140,14 +140,14 @@ Test checks for fields, views, security rules
         remove_list = []
         for depend in module_data[0].dependencies_id:
             depend_list.append(depend.name)
-        for depend in module_data[0].dependencies_id: #should be modified ,,search and browse not in loop
-            module_ids = module_obj.search(cr, uid, [('name', '=', depend.name)])
-            module_data = module_obj.browse(cr, uid, module_ids)
-            for m in module_data[0].dependencies_id:
-                depend_check.append(m.name)
-            for i in depend_list:
-                if i in depend_check and not i in remove_list:
-                    remove_list.append(str(i))
+        module_ids = module_obj.search(cr, uid, [('name', 'in', depend_list)])
+        module_data = module_obj.browse(cr, uid, module_ids)
+        for data in module_data:
+            for check in data.dependencies_id:
+                depend_check.append(check.name)
+            for dep in depend_list:
+                if dep in depend_check and not dep in remove_list:
+                    remove_list.append(str(dep))
         if remove_list:
             result_security[module_name] = [remove_list, 'Unnecessary dependacy should be removed please Provide only highest requirement level']
 
