@@ -86,7 +86,16 @@ class stock_location(osv.osv):
                 result['value'] = {'intrinsic_anniversary_time': anniversary_time.strftime('%Y-%m-%d')}
                 result['warning'] = {'title':'Incorrect Anniversary Time', 'message':"- Anniversary date should should ideally start at day %s of the month; corrected to day %s\n" % (fixed_month_init_day, fixed_month_init_day)}
         return result
-                
+    
+    #FIXME: this call back is due to a current OpenERP limitation:
+    #currently (v5, March 2009), it's not possible to use the orm create method to create a hierarchy of objects all together within a single call.
+    #this is due to a bug/limitation of the Modified Pre-orderered Tree Traversal algorithm.
+    def sub_fleet_change(self, cr, uid, ids, fleet_id):
+        result = {}
+        if not fleet_id:
+            result['warning'] = {'title': 'Save PARENT FLEET first please!', 'message':'Due to a current OpenERP limitation, you should please close the SUBFLEET popup and save the form BEFORE adding any subfleet'}
+            result['value'] = {'child_ids':[]}
+        return result
     
     
     def _default_usage(self, cr, uid, context={}):

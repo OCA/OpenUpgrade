@@ -119,7 +119,7 @@ def do_export(self, cr, uid, data, context):
                 'qty': product.virtual_available,
                 'is_in_stock': product.virtual_available,
             }
-            
+            updated = True
             #===============================================================================
             #  Product upload to Magento
             #===============================================================================
@@ -137,7 +137,7 @@ def do_export(self, cr, uid, data, context):
                     server.call(session, 'product_stock.update', [sku, stock_data])
                     logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully updated product with OpenERP id %s and Magento id %s") % (product.id, product.magento_id))
                     prod_update += 1
-                     
+
             except xmlrpclib.Fault, error:
                 #If fail, try to create
                 if error.faultCode == 101: #turns out that the product doesn't exist in Magento (might have been deleted), try to create a new one.
@@ -149,14 +149,17 @@ def do_export(self, cr, uid, data, context):
                         prod_new += 1
                     except xmlrpclib.Fault, error:
                         logger.notifyChannel(_("Magento Export"), netsvc.LOG_ERROR, _("Magento API return an error on product id %s . Error %s") % (product.id, error))
+                        updated = False
                         prod_fail += 1
                 else:
                     logger.notifyChannel(_("Magento Export"), netsvc.LOG_ERROR, _("Magento API return an error on product id %s . Error %s") % (product.id, error))
+                    updated = False
                     prod_fail += 1
             except Exception, error:
                 raise wizard.except_wizard(_("OpenERP Error"), _("An error occured : %s ") % error)
 
-        
+            product_pool.write_magento_id(cr, uid, product.id, {'updated': updated})
+
     server.endSession(session)
     return {'prod_new':prod_new, 'prod_update':prod_update, 'prod_fail':prod_fail}
 

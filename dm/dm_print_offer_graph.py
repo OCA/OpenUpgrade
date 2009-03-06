@@ -44,7 +44,10 @@ def graph_get(cr, uid, graph, offer_id):
                            user_lang or 'en_US',[step.type.id])
         type_code = res_trans[step.type.id] or step.type.code
 
-        args['label'] = type_code
+        args['label'] = type_code + '\\n' + step.media_id.code
+        #args['label'] = type_code
+        args['comment'] = step.media_id.name
+        print args
         graph.add_node(pydot.Node(step.id, **args))
 
     for step in offer.step_ids:
@@ -55,7 +58,8 @@ def graph_get(cr, uid, graph, offer_id):
 #           Wainting for analysis to be complated
             trargs = {
 #                'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay) + ' days'
-                'label': transition.condition.name + ' - ' + transition.step_to.media_id.name  + '\\n' + str(transition.delay) + ' ' +transition.delay_type
+#                'label': transition.condition.name + ' - ' + transition.step_to.media_id.name  + '\\n' + str(transition.delay) + ' ' +transition.delay_type
+                'label': transition.condition.name + '\\n' + str(transition.delay) + ' ' + transition.delay_type
             }
             if step.split_mode=='and':
                 trargs['arrowtail']='box'

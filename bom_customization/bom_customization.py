@@ -55,7 +55,7 @@ class bom_customization(osv.osv):
     
     #TODO get rid of name
     _columns = {
-                'name': fields.char('Useless Field', size=64),
+                'name': fields.related('customization_key_id','name', type="char", string="Name"),
                 'bom_ids': fields.many2many('mrp.bom','mrp_bom_bom_customizations_rel','bom_id','bom_customization_id',"BoM's"),
                 'customization_value_id': fields.many2one('bom_customization.bom_customization_values', 'Customization Value'),
                 'customization_key_id': fields.many2one('bom_customization.bom_customization_keys', 'Customization Key'),

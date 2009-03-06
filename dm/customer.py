@@ -131,16 +131,17 @@ class dm_customer_gender(osv.osv):
     
 dm_customer_gender()
 
-"""
 class dm_workitem(osv.osv):
     _name = "dm.workitem"
+    _description = "workitem"
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step',required=True, ondelete="cascade"),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', required=True, ondelete="cascade"),
-        'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete="cascade"),
-        'date_next_action' : fields.date('Next Action'),
-        'purchase_amount' : fields.float('Amount', digits=(16,2))
+        'customer_id' : fields.many2one('res.partner', 'Customer', required=True, ondelete="cascade"),
+#        'date_next_action' : fields.date('Next Action'),
+#        'purchase_amount' : fields.float('Amount', digits=(16,2))
     }
+"""
     def create(self, cr, uid, vals, context=None, check=True):
         step = self.pool.get('dm.offer.step').browse(cr,uid,[vals['step_id']])[0]
         if step.outgoing_transition_ids:
@@ -177,9 +178,9 @@ class dm_workitem(osv.osv):
 """
 """
         return True
+"""
 
 dm_workitem()
-"""
 
 class dm_customer_segmentation(osv.osv):
     _name = "dm.customer.segmentation"
@@ -227,7 +228,7 @@ class dm_customer_segmentation(osv.osv):
         if browse_id.order_date_criteria_ids:
             for i in browse_id.order_date_criteria_ids:
                 criteria.append("s.%s %s '%s'"%(i.field.name, i.operator, i.value))
-                
+
         if criteria:
             sql_query = ("""select distinct p.name \nfrom res_partner p, sale_order s\nwhere p.id = s.customer_id and %s\n""" % (' and '.join(criteria))).replace('isnot','is not')
         else:

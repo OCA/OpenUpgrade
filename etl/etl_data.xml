@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		 <record id="conn1" model="etl.connector.type">
+		    <field name="name">Localfile</field>
+			<field name="code">localfile</field>
+		</record>
+		
+		<record id="conn2" model="etl.connector.type">
+		    <field name="name">Openobejct</field>
+			<field name="code">openobejct</field>
+		</record>
+
+		<record id="comp1" model="etl.component.type">
+		    <field name="name">input.csv_in</field>
+			<field name="code">input.csv_in</field>
+		</record>
+
+		<record id="comp2" model="etl.component.type">
+		    <field name="name">logger</field>
+			<field name="code">logger</field>
+		</record>
+
+        </record>
+	</data>
+</openerp>

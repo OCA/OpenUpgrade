@@ -745,7 +745,7 @@ class olap_query_logs(osv.osv):
     _description = "Olap query logs"
     _columns = {
         'user_id' : fields.many2one('res.users', 'Tiny ERP User'),
-        'query':fields.char('Query',size=500,required=True),
+        'query':fields.text('Query',required=True),
         'time':fields.datetime('Time',required=True),
         'result_size':fields.integer('Result Size', readonly=True),
         'cube_id': fields.many2one('olap.cube', 'Cube',required=True),
@@ -958,6 +958,17 @@ class olap_application_field(osv.osv):
     }
 olap_application_field()
 
+class olap_saved_query(osv.osv):
+    _name = "olap.saved.query"
+    _decription  = "Olap Saved Query"
+    _rec_name = 'user_id'
+    _columns = {
+                'user_id' : fields.many2one('res.users', 'Tiny ERP User'),
+                'query': fields.text('Query', required = True),
+                'cube_id': fields.many2one('olap.cube', 'Cube',required=True),
+                'schema_id': fields.many2one('olap.schema', 'Schema',required=True),
+                }
+olap_saved_query()
 # Wizard for the Load Data Structure
 # Replacement for the Load Wizard according to the new structure
 class bi_load_db_wizard(osv.osv_memory):

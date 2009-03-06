@@ -18,12 +18,15 @@
         <field name="arch" type="xml">
             <form string="Mail Service">
                 <field name="name" select="1"/>
-                <field name="partner_id" select="1" />
+                <field name="partner_id" select="1"/>
                 <field name="media_id" select="1"/>
+                <group colspan="6">
+                <separator string="Mailing Action" colspan="4"/>
                 <field name="action_id" select="1"/>
                 <field name="action_interval" />
                 <!--field name="cron_id" /-->
-                <field name="unit_interval" />
+                <field name="unit_interval" nolabel="1"/>
+                </group>
                 <field name="default_for_media" on_change="_check_unique_mail_service(media_id,default_for_media)"/>
             </form>
         </field>

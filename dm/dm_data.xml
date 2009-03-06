@@ -100,14 +100,17 @@
 
         <record model="dm.media" id="media_paper">
             <field name="name" eval="&quot;Paper&quot;"/>
+            <field name="code" eval="&quot;paper&quot;"/>
         </record>
 
         <record model="dm.media" id="media_email">
             <field name="name" eval="&quot;Email&quot;"/>
+            <field name="code" eval="&quot;email&quot;"/>
         </record>
 
         <record model="dm.media" id="media_phone">
             <field name="name" eval="&quot;Phone&quot;"/>
+            <field name="code" eval="&quot;Phone&quot;"/>
         </record>
 
 
