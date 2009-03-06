@@ -41,6 +41,19 @@ class Account(osv.osv):
             res[aobj.id] = level
         return res
     
+    def _get_children_and_consol(self, cr, uid, ids, context={}):
+        ids2=[]
+        temp=[]
+        read_data= self.read(cr, uid, ids,['id','child_id'], context)
+        for data in read_data:
+            ids2.append(data['id'])
+            if data['child_id']:
+                temp=[]
+                for x in data['child_id']:
+                    temp.append(x)
+                ids2 += self._get_children_and_consol(cr, uid, temp, context)
+        return ids2
+
     _columns = {
 
         'journal_id':fields.many2one('account.journal', 'Journal',domain=[('type','=','situation')]),
