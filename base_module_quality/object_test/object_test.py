@@ -49,14 +49,18 @@ Test checks for fields, views, security rules
         field_obj = pool.get('ir.model.fields')
         view_obj = pool.get('ir.ui.view')
         access_obj = pool.get('ir.model.access')
+        module_obj = pool.get('ir.module.module')
 
         field_ids = field_obj.search(cr, uid, [('model', 'in', obj_list)])
         view_ids = view_obj.search(cr, uid, [('model', 'in', obj_list), ('type', 'in', ['tree', 'form'])])
         access_ids = access_obj.search(cr, uid, [('model_id', 'in', ids_model)])
+        module_ids = module_obj.search(cr, uid, [('name', '=', module_name)])
+
 
         field_data = field_obj.browse(cr, uid, field_ids)
         view_data = view_obj.browse(cr, uid, view_ids)
         access_data = access_obj.browse(cr, uid, access_ids)
+        module_data = module_obj.browse(cr, uid, module_ids)
 
         result_dict = {}
         result_view = {}
@@ -130,15 +134,32 @@ Test checks for fields, views, security rules
             bad_sec += 1
             result_security[obj] = [obj, 'Object should have at least one security rule defined on it']
 
+        #  Dependacy test of module
+        depend_list = []
+        depend_check = []
+        remove_list = []
+        for depend in module_data[0].dependencies_id:
+            depend_list.append(depend.name)
+        for depend in module_data[0].dependencies_id: #should be modified ,,search and browse not in loop
+            module_ids = module_obj.search(cr, uid, [('name', '=', depend.name)])
+            module_data = module_obj.browse(cr, uid, module_ids)
+            for m in module_data[0].dependencies_id:
+                depend_check.append(m.name)
+            for i in depend_list:
+                if i in depend_check and not i in remove_list:
+                    remove_list.append(str(i))
+        if remove_list:
+            result_security[module_name] = [remove_list, 'Unnecessary dependacy should be removed please Provide only highest requirement level']
+
         score_view = total_views and float(model_views) / float(total_views)
         score_field = total_field and float(good_field) / float(total_field)
         score_security = good_sec and float(good_sec - bad_sec) / float(good_sec)
-        self.score = (score_view + score_field + score_security)/3
+        self.score = (score_view + score_field + score_security) / 3
 
         self.result = self.get_result({ module_name: [int(score_field * 100), int(score_view * 100), int(score_security * 100)]})
         self.result_details += self.get_result_details(result_dict)
         self.result_details += self.get_result_general(result_view, name="View")
-        self.result_details += self.get_result_general(result_security, name="Security")
+        self.result_details += self.get_result_general(result_security, name="General")
         return None
 
     def get_result(self, dict_obj):
