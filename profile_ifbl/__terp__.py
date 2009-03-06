@@ -30,6 +30,8 @@
     'depends' : [
         'training',
         'portal_training',
+        'training_exam',
+        'training_room',
         'crm',
         'project',
         'account_analytic_analysis',
