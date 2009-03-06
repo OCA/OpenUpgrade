@@ -11,7 +11,7 @@
 	        	<page string="Fleets">
 							<field name="fleets" invisible="1" />
 							<field colspan="4" mode="tree, form" context="{'fleet_type':'sub_fleet'}" name="sub_fleets" nolabel="1">
-								<tree string="Sub Fleets" colors="red:is_expired;blue:fleet_type=='fleet'">
+								<tree string="Sub Fleets" colors="red:is_expired">
 									<field name="location_id" string="Fleet"/>
 									<field name="name" string="Sub Fleet"/>
 									<field name="is_expired" />
