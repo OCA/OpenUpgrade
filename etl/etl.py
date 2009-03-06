@@ -119,6 +119,75 @@ class etl_connector_openobject(osv.osv):
     
 etl_connector_openobject()
 
+
+
+
+class etl_component_type(osv.osv):
+    _name='etl.component.type'
+    _description = "ETL Component Type"
+    
+    _columns={
+              'name' : fields.char('Name', size=64, required=True), 
+              'code' : fields.char('Code', size=24, required=True), 
+              'parent_component' : fields.many2one('etl.component.type', 'Parent Component'), 
+              }
+etl_component_type()
+
+
+class etl_component(osv.osv):
+        _name='etl.component'
+        _description = "ETL Component"
+        
+        _columns={
+                'name' : fields.char('Name', size=64, required=True), 
+                'type' : fields.many2one('etl.component.type', 'Component Type'), 
+                'job_id' : fields.many2one('etl.job', 'Job', required=True), 
+                'job_process_id' : fields.many2one('etl.job.process', 'Job Process'), 
+                'trans_in_ids' : fields.one2many('etl.transition', 'source_component_id', 'Source ID'), 
+                'trans_out_ids' : fields.one2many('etl.transition', 'destination_component_id', 'Destination ID'), 
+                  }
+        
+etl_component()
+
+
+class etl_component_vcard_in(osv.osv):
+        _name='etl.component'
+        _inherit = 'etl.component'
+        _description = "ETL Component"
+
+        _columns={
+                'connector_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=',localfile)]"), 
+                  }
+        
+etl_component_vcard_in()
+
+
+class etl_component_csv_in(osv.osv):
+        _name='etl.component'
+        _inherit = 'etl.component'
+        _description = "ETL Component"
+
+        _columns={
+                'connector_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=',localfile)]"), 
+                'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
+                'row_limit' : fields.integer('Limit'), 
+                'csv_params' : fields.char('CSV Parameters', size=64), 
+                  }
+        
+etl_component_csv_in()
+
+
+class etl_component_transform_logger(osv.osv):
+        _name='etl.component'
+        _inherit = 'etl.component'
+        _description = "ETL Component"
+
+        _columns={
+                'output_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=',sys)]"), 
+                }
+        
+etl_component_transform_logger()
+
 class etl_job(osv.osv):
     _name= 'etl.job'
     _columns={
@@ -140,52 +209,27 @@ class etl_job(osv.osv):
 etl_job()
 
 
-class etl_component_type(osv.osv):
-    _name='etl.component.type'
-    
-    _columns={
-              'name' : fields.char('Name', size=64, required=True), 
-              'code' : fields.char('Code', size=24, required=True), 
-              'parent_component' : fields.many2one('etl.component.type', 'Parent Component'), 
-              }
-etl_component_type()
-
-
-class etl_component(osv.osv):
-        _name='etl.component'
+class etl_job_process(osv.osv):
+        _name = 'etl.job.process'
+        _description = "This defines  ETL Job Process"
         
-#        def _get_component_type(self, cr, uid, context={}):
-#            c_obj = self.pool.get('etl.component.type')
-#            type_ids = c_obj.search(cr, uid, [])
-#            result = c_obj.read(cr, uid, type_ids, ['code', 'name'], context)
-#            return [(r['code'], r['name']) for r in result]
-        
-        _columns={
-                'name' : fields.char('Name', size=30, required=True), 
-                'type' : fields.many2one('etl.component.type', 'Component Type'), 
-                'job_id' : fields.many2one('etl.job', 'Job', required=True), 
-                'trans_in_ids' : fields.one2many('etl.transition', 'source_component_id', 'Source ID'), 
-                'trans_out_ids' : fields.one2many('etl.transition', 'destination_component_id', 'Destination ID'), 
-                'connector_id' :  fields.many2one('etl.connector', 'Connector'), 
-                'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
-                'row_limit' : fields.integer('Limit'), 
-                'csv_params' : fields.char('CSV Parameters', size=64), 
+        _columns = {
+                  'name' : fields.char('Name', size=64, required=True), 
+                  'job_id' : fields.many2one('etl.job', 'Job', required=True), 
+                  'component_ids' : fields.one2many('etl.component', 'job_process_id', 'Components', required=True), 
+                  'start_date' : fields.datetime('Start Date', readonly=True), 
+                  'end_date' : fields.datetime('End Date', readonly=True), 
+                  'compute_time' : fields.float('Computation Time'), 
+                  'input_records' : fields.integer('Total Input Records'), 
+                  'output_records' : fields.integer('Total Output Records'), 
+                  'state' : fields.selection([('open', 'Open'), ('start', 'Started'), ('pause', 'Paused'), ('stop', 'Stop'), ('close', 'Closed')], 'State', readonly=True), 
                   }
         
-etl_component()
-
-class etl_component_csv_in(osv.osv):
-        _name='etl.component'
-        _inherit = 'etl.component'
-
-        _columns={
-                'connector_id' :  fields.many2one('etl.connector', 'Connector'), 
-                'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
-                'row_limit' : fields.integer('Limit'), 
-                'csv_params' : fields.char('CSV Parameters', size=64), 
-                  }
+        _defaults = {
+                'state': lambda *a: 'open', 
+                }
         
-etl_component_csv_in()
+etl_job_process()
 
 class etl_transition(osv.osv):
         _name = 'etl.transition'
@@ -198,7 +242,7 @@ class etl_transition(osv.osv):
             return [(r['code'], r['name']) for r in result]
         
         _columns = {
-                  'name' : fields.char('Name', size=30, required=True), 
+                  'name' : fields.char('Name', size=64, required=True), 
                   'type' : fields.selection([('data', 'Data Transition'), ('trigger', 'Trigger Transition')], 'Transition Type', required=True), 
                   'source_component_id' : fields.many2one('etl.component', 'Source Component', required=True), 
                   'destination_component_id' : fields.many2one('etl.component', 'Destination Component', required=True), 
@@ -211,5 +255,6 @@ class etl_transition(osv.osv):
                 'state': lambda *a: 'open', 
                 }
 etl_transition()
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

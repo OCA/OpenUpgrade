@@ -4,7 +4,7 @@
     'category': 'Generic Modules/Others',
     'description': """
 	ETL system- Extract Transfer Load system
-	    """
+	    """,
     'author': 'Tiny',
     'website': 'http://openerp.com',
     'depends': ['base'],
