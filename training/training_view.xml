@@ -151,14 +151,6 @@
                         <page string="Lecturers">
                             <field name="lecturer_ids" nolabel="1" colspan="4"/>
                         </page>
-                        <!--
-                        <page string="Note">
-                            <field name="internal_note" nolabel="1" colspan="4" />
-                        </page>
-                        <page string="Certifications">
-                            <label string="TODO" />
-                        </page>
-                        -->
                         <page string="Pedagogical Suggestion">
                             <separator string="Preliminary Courses" colspan="4" />
                             <separator string="Complementary Courses" colspan="4" />
@@ -176,6 +168,9 @@
                                     <field name="uom_id" />
                                 </tree>
                             </field>
+                        </page>
+                        <page string="Note">
+                            <field name="internal_note" nolabel="1" colspan="4" />
                         </page>
                     </notebook>
                     <group colspan="4" col="6">
@@ -358,7 +353,6 @@
                                 </tree>
                             </field>
                         </page>
-                    
                     </notebook>
                     <group colspan="4" col="8">
                         <field name="state" />
@@ -464,20 +458,11 @@
         </record>
 
         <record model="ir.actions.act_window" id="training_event_all_calendar_act">
-            <field name="name">Planning of Events</field>
+            <field name="name">Calendar of Events</field>
             <field name="res_model">training.event</field>
             <field name="view_type">form</field>
             <field name="view_mode">calendar,tree</field>
         </record>
-
-        <!--
-        <record model="ir.actions.act_window" id="training_event_all_act">
-            <field name="name">Events</field>
-            <field name="res_model">training.event</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree</field>
-        </record>
-        -->
 
         <record model="ir.ui.view" id="training_seance_form">
             <field name="name">training.seance.form</field>
@@ -496,6 +481,9 @@
                             <separator string="Location" colspan="4" />
                             <field name="place" />
                             <field name="room" />
+                            <!--
+                            <field name="location_id" />
+                            -->
                             <field name="layout" />
                             <field name="reserved" />
                             <!--
@@ -588,7 +576,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         <record model="ir.actions.act_window" id="training_seance_calendar_all_act">
-            <field name="name">Planning of Seances</field>
+            <field name="name">Calendar of Seances</field>
             <field name="res_model">training.seance</field>
             <field name="view_type">form</field>
             <field name="view_mode">calendar</field>
@@ -787,7 +775,7 @@
         </record>
 
         <record id="training_massive_subscription_wizard" model="ir.ui.view">
-            <field name="name">Massive Subscribing</field>
+            <field name="name">Mass Subscribing</field>
             <field name="model">wizard.training.massive.subscription</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
@@ -853,12 +841,37 @@
     </data>
 
     <data>
+        <record model="ir.ui.view" id="view_training_location_form">
+            <field name="name">view.training.location.form</field>
+            <field name="model">training.location</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Location">
+                    <field name="name" />
+                    <field name="address_id" />
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_training_location_form">
+            <field name="name">view.training.location.form</field>
+            <field name="model">training.location</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Locations">
+                    <field name="name" />
+                    <field name="address_id" />
+                </form>
+            </field>
+        </record>
+
         <record model="ir.actions.act_window" id="training_location_all_act">
             <field name="name">Locations</field>
             <field name="res_model">training.location</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
+
         <record model="ir.actions.act_window" id="training_location_new_act">
             <field name="name">New Location</field>
             <field name="res_model">training.location</field>
@@ -930,7 +943,7 @@
 
         <menuitem 
             id="training_offer_mi" 
-            parent="training_mi" 
+            parent="training_library_mi" 
             name="Offers" />
         <menuitem 
             id="training_offer_open_mi" 
@@ -940,9 +953,14 @@
             id="training_offer_new_mi" 
             parent="training_offer_mi" 
             action="training_offer_new_act" />
+
+        <menuitem
+            id="training_catalog_mi"
+            parent="training_mi"
+            name="Catalogs" />
         <menuitem 
             id="training_offer_catalog_all_mi" 
-            parent="training_offer_mi" 
+            parent="training_catalog_mi" 
             action="training_catalog_all_act" />
         <menuitem 
             id="training_offer_catalog_old_mi" 

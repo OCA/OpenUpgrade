@@ -131,7 +131,7 @@ class training_course(osv.osv):
         'course_type_id' : fields.many2one('training.course_type', 'Type',
                                            required=True),
 
-        'lecturer_ids' : fields.many2many('res.partner', 
+        'lecturer_ids' : fields.many2many('res.partner',
                                             'training_course_partner_rel',
                                             'course_id',
                                             'partner_id',
@@ -213,7 +213,7 @@ class training_catalog(osv.osv):
         'year' : fields.integer('Year',
                                 size=4,
                                 required=True,
-                                select=1
+                                select=1,
                                 help="The year when the catalog has been published",
                                ),
         'session_ids' : fields.one2many('training.session', 'catalog_id',
@@ -275,12 +275,18 @@ class training_session(osv.osv):
                                        'session_id',
                                        'event_id',
                                        'Events',
-                                       ondelete='cascade'),
-        'date' : fields.datetime('Date', required=True),
-        'purchase_line_ids' : fields.one2many('training.session.purchase_line', 'session_id', 'Supplier Commands'),
+                                       ondelete='cascade',
+                                       help="List of the events in the session"),
+        'date' : fields.datetime('Date',
+                                 required=True,
+                                 help="The date of the planned session"
+                                ),
+
+        'purchase_line_ids' : fields.one2many('training.session.purchase_line', 'session_id', 
+                                              'Supplier Commands'),
     }
 
-    def _find_catalog_id(self,cr,uid,data,context=None):
+    def _find_catalog_id(self, cr, uid, context=None):
         new_year = int(time.strftime('%Y')) + 1
         catalog_proxy = self.pool.get('training.catalog')
         catalog_ids = catalog_proxy.search(cr,uid,[('year', '=', new_year)],context=context)
@@ -294,11 +300,11 @@ class training_session(osv.osv):
         'state' : lambda *a: 'draft',
     }
 
-
 training_session()
 
 class training_session_purchase_line(osv.osv):
     _name = 'training.session.purchase_line'
+
     _rec_name = 'session_id'
 
     _columns = {
@@ -352,6 +358,7 @@ class training_location(osv.osv):
 
     _columns = {
         'name' : fields.char('Name', size=32, select=True, required=True),
+        'address_id' : fields.many2one('res.partner.address', 'Address', required=True),
     }
 
 training_location()
@@ -366,6 +373,16 @@ training_group()
 class training_subscription(osv.osv):
     _name = 'training.subscription'
 training_subscription()
+
+class training_participation(osv.osv):
+    _name = 'training.participation'
+    _columns = {
+        'event_id' : fields.many2one('training.event', 'Event' ),
+        'subscription_id' : fields.many2one('training.subscription', 'Subscription', select=True, required=True),
+    }
+
+training_participation()
+
 
 class training_event(osv.osv):
     _name = 'training.event'
@@ -490,14 +507,5 @@ class training_subscription(osv.osv):
     }
 
 training_subscription()
-
-class training_participation(osv.osv):
-    _name = 'training.participation'
-    _columns = {
-        'event_id' : fields.many2one('training.event', 'Event' ),
-        'subscription_id' : fields.many2one('training.subscription', 'Subscription', select=True, required=True),
-    }
-
-training_participation()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
