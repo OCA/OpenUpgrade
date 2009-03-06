@@ -73,13 +73,16 @@ class training_question(osv.osv):
                                   'Kind', required=True, select=1),
         'type' : fields.selection([('plain', 'Plain'),
                                    ('qcm', 'QCM'),
-                                   ('yesno', 'Yes/No')], 
-                                  'Type', 
-                                  required=True, 
+                                   ('yesno', 'Yes/No')
+                                  ],
+                                  'Type',
+                                  required=True,
                                   select=1 ),
         'response_plain' : fields.text('Response Plain'),
         'response_yesno' : fields.boolean('Response Yes/No'),
-        'examen_answer_ids' : fields.one2many('training.examen_answer', 'question_id', 'Response QCM'),
+        'examen_answer_ids' : fields.one2many('training.examen_answer',
+                                              'question_id',
+                                              'Response QCM'),
         'questionnaire_ids': fields.many2many('training.questionnaire',
                                               'training_questionnaire_question_rel',
                                               'question_id',
@@ -126,6 +129,7 @@ class training_planned_examen(osv.osv):
     _name = 'training.planned_examen'
     _inherits = { 'training.event' : 'event_id' }
     _columns = {
+        # Ajouter le contact en plus du partenaire en many2many
         'partner_id' : fields.many2one('res.partner',
                                        'Partner',
                                        domain=[('is_guardian', '=', True)],
@@ -139,5 +143,26 @@ class training_planned_examen(osv.osv):
 
 
 training_planned_examen()
+
+class training_exam_result(osv.osv):
+    _name = 'training.exam.result'
+    _columns = {
+        'participation_id' : fields.many2one('training.participation', 'Participation',
+                                             required=True),
+        'exam_id' : fields.many2one('training.planned_examen', 'Exam',
+                                    required=True),
+    }
+
+training_exam_result()
+
+#class training_exam_result_line(osv.osv):
+#    _name = 'training.exam.result.line'
+#    _columns = {
+#        'question_id' : fields.many2one('training.question', 'Question', required=True),
+#    }
+#
+#training_exam_result_line()
+
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

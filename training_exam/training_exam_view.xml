@@ -154,11 +154,13 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Exam">
+                    <!-- 
                     <field name="partner_id" />
-                    <field name="event_id" />
+                    <field name="contact_id" />
+                    -->
                     <field name="questionnaire_id" />
                     <newline />
-                    <group colspan="4">
+                    <group colspan="8">
                         <field name="state" />
                         <button name="signal_draft" string="Draft" type="workflow" />
                         <button name="signal_open_pending" string="Open and Pending" type="workflow" />
@@ -199,7 +201,7 @@
         </record>
 
         <record model="ir.actions.act_window" id="training_planned_examen_calendar_act">
-            <field name="name">Planning of Exams</field>
+            <field name="name">Calendar of Exams</field>
             <field name="res_model">training.planned_examen</field>
             <field name="view_type">form</field>
             <field name="view_mode">calendar,tree</field>
@@ -212,7 +214,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         <record model="ir.actions.act_window" id="training_planned_examen_new_act">
-            <field name="name">Planify a New Exam</field>
+            <field name="name">New Exam</field>
             <field name="res_model">training.planned_examen</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
@@ -258,39 +260,49 @@
     </data>
 
     <data>
+        <!-- Training/ Library/ Exams/ -->
         <menuitem 
             id="training_library_exam_mi" 
             parent="training.training_library_mi" 
             name="Exams" />
+        <!-- Training/ Library/ Exams/ Exams-->
         <menuitem 
             id="training_library_exam_questionnaire_all_mi" 
             parent="training_library_exam_mi" 
             action="training_questionnaire_all_act" />
+        <!-- Training/ Library/ Exams/ Exams/ Current Exams-->
         <menuitem 
             id="training_library_exam_current_mi" 
             parent="training_library_exam_questionnaire_all_mi" 
             action="training_questionnaire_current_act" />
+        <!-- Training/ Library/ Exams/ Exams/ New Exam-->
         <menuitem 
             id="training_library_exam_new_mi" 
             parent="training_library_exam_questionnaire_all_mi" 
             action="training_questionnaire_new_act" />
+        <!-- Training/ Library/ Exams/ Questions -->
         <menuitem 
             id="training_library_exam_question_mi" 
             parent="training_library_exam_mi" 
             action="training_question_all_act"/>
+        <!-- Training/ Library/ Exams/ New Question -->
         <menuitem 
             id="training_library_exam_question_new_mi" 
             parent="training_library_exam_question_mi" 
             action="training_question_new_act" />
 
+        <!-- Training/ Plannings/ Exams -->
         <menuitem 
             id="training_planning_exam_planning_mi" 
             parent="training.training_planning_mi" 
             action="training_planned_examen_all_act" />
+
+        <!-- Training/ Plannings/ Exams/ Calendar of Exams -->
         <menuitem 
             id="training_planning_exam_planning_planning_mi" 
             parent="training_planning_exam_planning_mi" 
             action="training_planned_examen_calendar_act" />
+        <!-- Training/ Plannings/ Exams/ New Exam -->
         <menuitem 
             id="training_planning_exam_planning_planify_mi" 
             parent="training_planning_exam_planning_mi" 
