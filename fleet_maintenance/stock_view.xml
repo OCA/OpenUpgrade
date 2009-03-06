@@ -32,7 +32,7 @@
 
 					<notebook colspan="4">
 						<page string="Fleet Extensions">
-							<field colspan="4" mode="tree, form" context="{'fleet_type':'sub_fleet'}" name="child_ids" nolabel="1">
+							<field colspan="4" mode="tree, form" context="{'fleet_type':'sub_fleet'}" name="child_ids" nolabel="1" on_change="sub_fleet_change(active_id or False)">
 								<tree string="Sub Fleets">
 									<field name="name" />
 									<field name="is_expired" />
