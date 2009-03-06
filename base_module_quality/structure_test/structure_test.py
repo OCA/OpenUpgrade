@@ -51,6 +51,9 @@ This test checks if the module satisfy tiny structure
         module_dict['module'] = []
         count = 0
         final_score = 0.0
+
+        if not module_name.islower():
+            self.result_dict[module_name] = [module_name, 'Module name should have in lowercase']
         for file_struct in list_files:
             if file_struct.split('.')[-1] != 'pyc':
                 path = os.path.join(module_path, file_struct)
