@@ -120,7 +120,32 @@
             sequence="1"/>
 
     <!-- Daily Dashboad  -->
-     
+    
+    <!-- Meeting of the day view -->
+    
+    <record model="ir.actions.act_window" id="action_my_meetings">
+   		<field name="name">My Meeting of the Day</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="crm_configuration.crm_case_tree_view_meet"/>
+		<field name="domain">[('section_id.name', '=', 'Meetings'),('date','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	
+   	<record model="ir.actions.act_window.view" id="act_my_meetings_tree">
+       	<field name="sequence" eval="1"/>
+       	<field name="view_mode">tree</field>
+       	<field name="view_id" ref="crm_configuration.crm_case_tree_view_meet"/>
+       	<field name="act_window_id" ref="action_my_meetings"/>
+   	</record>
+   	
+   	<record model="ir.actions.act_window.view" id="act_my_meetings_form">
+       	<field name="sequence" eval="2"/>
+       	<field name="view_mode">form</field>
+       	<field name="view_id" ref="crm_configuration.crm_case_form_view_meet"/>
+       	<field name="act_window_id" ref="action_my_meetings"/>
+   	</record>
+   
     <record id="board_service_daliy_form" model="ir.ui.view">
     	<field name="name">board.service.daily.form</field>
         <field name="model">board.board</field>
@@ -129,10 +154,14 @@
         	<form string="Daily Dashboard">
         		<hpaned>
         			<child1>
-            			<action colspan="4" name="%(board_project.action_view_task_tree)d" string="My Open Tasks"/>
-            			<action colspan="4" name="%(project.action_view_task5_pending)d" string="My Pending Tasks"/>
-            			<action colspan="4" name="%(project_gtd.act_timebox_tasks_my_inbox)d" string="My Inbox"/>
+            			<action colspan="4" width="500" name="%(board_project.action_view_task_tree)d" string="My Open Tasks"/>
+            			<action colspan="4" width="500" name="%(project.action_view_task5_pending)d" string="My Pending Tasks"/>
+            			<action colspan="4" width="500" name="%(project_gtd.act_timebox_tasks_my_inbox)d" string="My Inbox"/>
             		</child1>
+					<child2>
+						<action colspan="4" name="%(action_my_meetings)d" string="My Meeting of the Day"/>
+						<action colspan="4" name="%(report_timesheet.action_random_timesheet_board)d" string="Random Timesheet Lines"/>
+					</child2>
             	</hpaned>
         	</form>
         </field>
