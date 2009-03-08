@@ -34,9 +34,27 @@ import pooler
 
 def do_export(self, cr, uid, data, context):
 
-    self.pool = pooler.get_pool(cr.dbname)
-    product_pool = self.pool.get('product.product')
-    return product_pool.do_export(cr, uid, data, context)
+    product_pool = pooler.get_pool(cr.dbname).get('product.product')
+
+    #===============================================================================
+    #  Getting ids
+    #===============================================================================
+    if data['model'] == 'ir.ui.menu':
+        prod_ids = product_pool.search(cr, uid, [('exportable', '=', True)]) #,('updated', '=', False)])
+    else:
+        prod_ids = []
+        prod_not = []
+        for id in data['ids']:
+            exportable_product = product_pool.search(cr, uid, [('id', '=', id), ('exportable', '=', True)])
+            if exportable_product:
+                prod_ids.append(exportable_product[0])
+            else:
+                prod_not.append(id)
+
+        if len(prod_not) > 0:
+            raise wizard.except_wizard(_("Error"), _("You asked to export non-exportable products: IDs %s") % prod_not)
+
+    return product_pool.magento_export(cr, uid, prod_ids, context)
 
 
 #===============================================================================

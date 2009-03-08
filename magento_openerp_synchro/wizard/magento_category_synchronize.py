@@ -34,9 +34,27 @@ import pooler
 
 def do_export(self, cr, uid, data, context):
 
-    self.pool = pooler.get_pool(cr.dbname)
-    categ_pool = self.pool.get('product.category')
-    return categ_pool.do_export(cr, uid, data, context)
+    categ_pool = pooler.get_pool(cr.dbname).get('product.category')
+
+    #===============================================================================
+    #  Getting ids
+    #===============================================================================
+    if data['model'] == 'ir.ui.menu':
+        categ_ids = categ_pool.search(cr, uid, [('exportable', '=', True)])
+    else:
+        categ_ids=[]
+        categ_not=[]
+        for id in data['ids']:
+            exportable_category = categ_pool.search(cr, uid, [('id', '=', id), ('exportable', '=', True)])
+            if exportable_category:
+                categ_ids.append(exportable_category[0])
+            else:
+                categ_not.append(id)
+
+        if len(categ_not) > 0:
+            raise wizard.except_wizard(_("Error"), _("You asked to export non-exportable categories: IDs %s") % categ_not)
+
+    return categ_pool.magento_export(cr, uid, categ_ids, context)
 
 
 #===============================================================================

@@ -38,12 +38,12 @@ class magento_web(osv.osv):
     _name = 'magento.web'
     _description = 'Magento Web'
     _columns = {
-        'magento_flag'      : fields.boolean('magento web flag'),
-        'magento_name'      : fields.char('Magento Web Name', size=64),
-        'magento_url'       : fields.char('Magento Url', size=64), 
+        'magento_flag'      : fields.boolean('Magento web flag', help="The Magento active web must have this box checked."),
+        'magento_name'      : fields.char('Magento web name', size=64),
+        'magento_url'       : fields.char('Magento Url', size=64, help="URL to Magento shop ending with /"),
         'api_user'          : fields.char('Magento Api User', size=64),
         'api_pwd'           : fields.char('Magento Api Password', size=64),
-        'auto_update'       : fields.boolean('Enhance auto update for products and category'),
+        'auto_update'       : fields.boolean('Auto update products and categories', help="If auto update is checked, when you create, modify or delete products and categories in OpenERP, they are automatically created, modified or deleted in Magento. Also, if a existing product or category in OpenERP is checked as exportable, it is created in Magento. And when is unchecked as exportable, it is deleted in Magento."),
     }
     
     def _constraint_unique(self, cr, uid, ids):

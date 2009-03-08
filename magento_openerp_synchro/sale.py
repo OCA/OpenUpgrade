@@ -3,8 +3,8 @@ from osv import fields,osv
 class sale_order(osv.osv):
     _inherit = 'sale.order'
     _columns = {
-        'magento_id': fields.integer('magento order id'),
-        'has_error': fields.integer('magento order error'),
+        'magento_id': fields.integer('Magento order id'),
+        'has_error': fields.integer('Magento order error'),
     }
     _defaults = {
         'magento_id': lambda *a: 0,

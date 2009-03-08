@@ -30,6 +30,7 @@
 
 from osv import fields,osv
 import netsvc
+import xmlrpclib
 
 class product_product(osv.osv):
     _inherit = 'product.product'
@@ -37,7 +38,10 @@ class product_product(osv.osv):
         'magento_id': fields.integer('Magento product id'),
         'exportable': fields.boolean('Export to website'),
         'updated': fields.boolean('Product updated on Magento'),
-        'magento_tax_class_id': fields.integer('Magento tax class Id'),
+        'magento_tax_class_id': fields.integer('Magento tax class id'),
+        'image': fields.binary('Image', help='Image of the product (jpg or png)'),
+        'image_name': fields.char('Image name', size=64, help="Image name created by Magento"),
+        'image_label': fields.char('Image label', size=64, help="Image label in the website. Left empty to take the product name as image label."),
     }
     _defaults = {
         'magento_id': lambda *a: 0,
@@ -46,38 +50,59 @@ class product_product(osv.osv):
         'magento_tax_class_id': lambda *a: 2,
     }
 
+    def write_magento(self, cr, uid, ids, datas = {}, context = {} ):
+        return super(osv.osv, self).write(cr, uid, ids, datas, context)
+
     def write(self, cr, uid, ids, datas = {}, context = {} ):
         super(osv.osv, self).write(cr, uid, ids, datas, context)
         mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+        if not mw_id:
+            return 1
         mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
         if mw.auto_update :
-            datas['model']='product.product'
-            datas['ids']=ids
-            self.do_export(cr, uid, datas, context)
-            del datas['model']
-            del datas['ids']
+            for p in self.browse(cr, uid, ids, context=context):
+                if p.exportable:
+                    self.magento_export(cr, uid, [p.id], context)
+                else:
+                    if p.magento_id:
+                        self.magento_delete(cr, uid, [p.id], context)
+                    super(osv.osv, self).write(cr, uid, [p.id], {'updated': False, 'magento_id':0})
         else :
-            self.pool.get('product.product').write(cr, uid, ids, {'updated': False})
-        return 1 
+            super(osv.osv, self).write(cr, uid, ids, {'updated': False})
+        return 1
 
     def create(self, cr, uid, datas, context = {}):
         id = super(osv.osv, self).create(cr, uid, datas, context=context)
         mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+        if not mw_id:
+            return id
         mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
-        if mw.auto_update :
-            datas['model'] = 'product.product'
-            datas['ids'] = [id]
-            self.do_export(cr, uid, datas, context)
-            del datas['model']
-            del datas['ids']
+        if datas.has_key('exportable') and not datas['exportable'] or not mw.auto_update :
+            super(osv.osv, self).write(cr, uid, [id], {'updated': False})
         else :
-            self.pool.get('product.product').write(cr, uid, [id], {'updated': False})
+            self.magento_export(cr, uid, [id], context)
         return id
 
-    def write_magento_id(self, cr, uid, ids, datas = {}, context = {} ):
-        return super(osv.osv, self).write(cr, uid, ids, datas, context)
+    def unlink(self, cr, uid, ids, context = {}):
+        mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+        if mw_id:
+            mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
+            if mw.auto_update :
+                self.magento_delete(cr, uid, ids, context)
+        return super(osv.osv, self).unlink(cr, uid, ids)
 
-    def do_export(self, cr, uid, data, context):
+    def magento_delete(self, cr, uid, ids, context):
+        logger = netsvc.Logger()
+        mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+        mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
+        (server, session) = mw.connect()
+        for p in self.browse(cr, uid, ids, context=context):
+            if p.magento_id:
+                server.call(session, 'product.delete', [p.magento_id])
+                logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully deleted product with OpenERP id %s and Magento id %s") % (p.id, p.magento_id))
+        server.endSession(session)
+
+    def magento_export(self, cr, uid, prod_ids, context):
         #===============================================================================
         #  Init
         #===============================================================================
@@ -91,28 +116,9 @@ class product_product(osv.osv):
         (server, session) = mw.connect()
 
         #===============================================================================
-        #  Getting ids
-        #===============================================================================
-        if data['model'] == 'ir.ui.menu':
-            prod_ids = self.search(cr, uid, [('exportable', '=', True)])#,('updated', '=', False)])
-        else:
-            prod_ids = []
-            prod_not = []
-            for id in data['ids']:
-                exportable_product = self.search(cr, uid, [('id', '=', id), ('exportable', '=', True)])
-                if len(exportable_product) == 1:
-                    prod_ids.append(exportable_product[0])
-                else:
-                    prod_not.append(id)
-
-            # Produces an error when writting a non exportable product
-            #if len(prod_not) > 0:
-            #    raise osv.except_osv(_("Error"), _("you asked to export non-exportable products : IDs %s") % prod_not)
-
-        #===============================================================================
         #  Product packaging
         #===============================================================================
-        #Getting the set attribute  
+        #Getting the set attribute
         #TODO: customize this code in order to pass custom attribute sets (configurable products), possibly per product
         sets = server.call(session, 'product_attribute_set.list')
         for set in sets:
@@ -120,6 +126,15 @@ class product_product(osv.osv):
                 attr_set_id = set['set_id']
             else :
                 attr_set_id = 1
+
+        #===============================================================================
+        #  Product pricelists
+        #===============================================================================
+        pricelist_obj = self.pool.get('product.pricelist')
+        pl_default_id = pricelist_obj.search(cr, uid, [('magento_default', '=', True)])
+        if len(pl_default_id) != 1:
+            raise osv.except_osv(_("User Error"), _("You have not set any default pricelist to compute the Magento general prices (the standard prices of each product)"))
+        pl_other_ids = pricelist_obj.search(cr, uid, [('magento_id', '<>', 0)])
 
         # splitting the prod_ids array in subarrays to avoid memory leaks in case of massive upload. Hint by Gunter Kreck
         import math
@@ -142,22 +157,46 @@ class product_product(osv.osv):
 
                 sku = (product.code or "mag") + "_" + str(product.id)
 
+                # Product data
                 product_data = {
                     'name': product.name,
-                    'price' : product.list_price,
+                    'price' : pricelist_obj.price_get(cr, uid, pl_default_id, product.id, 1.0)[pl_default_id[0]],
                     'weight': (product.weight_net or 0),
                     'category_ids': category_tab,
                     'description' : (product.description or _("description")),
                     'short_description' : (product.description_sale or _("short description")),
                     'websites':['base'],
                     'tax_class_id': product.magento_tax_class_id or 2,
-                    'status': 1,
+                    'status': product.active and 1 or 2,
+                    'meta_title': product.name,
+                    'meta_keyword': product.name,
+                    'meta_description': product.description_sale and product.description_sale[:255],
                 }
 
+                # Stock data
                 stock_data = {
                     'qty': product.virtual_available,
                     'is_in_stock': product.virtual_available,
                 }
+
+                # Pricelist data (tier prices)
+                prices_data = []
+                for pl_id, price in pricelist_obj.price_get(cr, uid, pl_other_ids, product.id, 1.0).iteritems():
+                    pl = pricelist_obj.browse(cr, uid, pl_id, context=context)
+                    prices_data.append({'website': 'all', 'customer_group_id': pl.magento_id, 'qty': 1, 'price': price})
+
+                # Image data
+                image_name = ''
+                image_data = {}
+                if product.image:
+                    image_data = {
+                        'file': {'content': product.image, 'mime': 'image/jpeg'},
+                        'label': product.image_label or product.name,
+                        #'position': 0,
+                        'types': ['image', 'small_image', 'thumbnail'],
+                        'exclude': 0,
+                    }
+
                 updated = True
                 #===============================================================================
                 #  Product upload to Magento
@@ -166,14 +205,25 @@ class product_product(osv.osv):
                     #Create
                     if(product.magento_id == 0):
                         new_id = server.call(session, 'product.create', ['simple', attr_set_id, sku, product_data])
-                        self.write_magento_id(cr, uid, product.id, {'magento_id': new_id})
                         server.call(session, 'product_stock.update', [sku, stock_data])
+                        if prices_data:
+                            server.call(session, 'product_tier_price.update', [sku, prices_data])
+                        if image_data:
+                            image_name = server.call(session, 'product_media.create', [sku, image_data])
+                        self.write_magento(cr, uid, product.id, {'magento_id': new_id, 'image_name': image_name})
                         logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully created product with OpenERP id %s and Magento id %s") % (product.id, new_id))
                         prod_new += 1
                     #Or Update
                     else:
                         server.call(session, 'product.update', [sku, product_data])
                         server.call(session, 'product_stock.update', [sku, stock_data])
+                        server.call(session, 'product_tier_price.update', [sku, prices_data])
+                        if image_data and not product.image_name: # Image added
+                            image_name = server.call(session, 'product_media.create', [sku, image_data])
+                            self.write_magento(cr, uid, product.id, {'image_name': image_name})
+                        if not image_data and product.image_name: # Image removed
+                            server.call(session, 'product_media.remove', [sku, product.image_name])
+                            self.write_magento(cr, uid, product.id, {'image_name': ''})
                         logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully updated product with OpenERP id %s and Magento id %s") % (product.id, product.magento_id))
                         prod_update += 1
 
@@ -182,8 +232,12 @@ class product_product(osv.osv):
                     if error.faultCode == 101: #turns out that the product doesn't exist in Magento (might have been deleted), try to create a new one.
                         try:
                             new_id = server.call(session, 'product.create', ['simple', attr_set_id, sku, product_data])
-                            self.write_magento_id(cr, uid, product.id, {'magento_id': new_id})
                             server.call(session, 'product_stock.update', [sku, stock_data])
+                            if prices_data:
+                                server.call(session, 'product_tier_price.update', [sku, prices_data])
+                            if image_data:
+                                image_name = server.call(session, 'product_media.create', [sku, image_data])
+                            self.write_magento(cr, uid, product.id, {'magento_id': new_id, 'image_name': image_name})
                             logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully created product with OpenERP id %s and Magento id %s") % (product.id, new_id))
                             prod_new += 1
                         except xmlrpclib.Fault, error:
@@ -197,7 +251,7 @@ class product_product(osv.osv):
                 except Exception, error:
                     raise osv.except_osv(_("OpenERP Error"), _("An error occured : %s ") % error)
 
-                self.write_magento_id(cr, uid, product.id, {'updated': updated})
+                self.write_magento(cr, uid, product.id, {'updated': updated})
 
         server.endSession(session)
         return {'prod_new':prod_new, 'prod_update':prod_update, 'prod_fail':prod_fail}
@@ -208,11 +262,11 @@ product_product()
 class product_category(osv.osv):
     _inherit = 'product.category'
     _columns = {
-        'magento_id': fields.integer('magento category id'),
+        'magento_id': fields.integer('Magento category id'),
         'exportable': fields.boolean('Export to website'),
         'updated': fields.boolean('Category updated on Magento'),
-        'magento_product_type': fields.integer('Magento Product Type'), 
-        'magento_product_attribute_set_id': fields.integer('Magento Product Attribute Set Id'), 
+        'magento_product_type': fields.integer('Magento product type'),
+        'magento_product_attribute_set_id': fields.integer('Magento product attribute set id'),
     }
     _defaults = {
         'magento_id': lambda *a: 0,
@@ -222,38 +276,59 @@ class product_category(osv.osv):
         'magento_product_attribute_set_id': lambda *a: 0,
     }
 
+    def write_magento(self, cr, uid, ids, datas = {}, context = {} ):
+        return super(osv.osv, self).write(cr, uid, ids, datas, context)
+
     def write(self, cr, uid, ids, datas = {}, context = {} ):
         super(osv.osv, self).write(cr, uid, ids, datas, context)
         mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+        if not mw_id:
+            return 1
         mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
         if mw.auto_update :
-            datas['model']='product.category'
-            datas['ids']=ids
-            self.do_export(cr, uid, datas, context)
-            del datas['model']
-            del datas['ids']
+            for c in self.browse(cr, uid, ids, context=context):
+                if c.exportable:
+                    self.magento_export(cr, uid, [c.id], context)
+                else:
+                    if c.magento_id:
+                        self.magento_delete(cr, uid, [c.id], context)
+                    super(osv.osv, self).write(cr, uid, [c.id], {'updated': False, 'magento_id':0})
         else :
-            self.pool.get('product.category').write(cr, uid, ids, {'updated': False})
+            super(osv.osv, self).write(cr, uid, ids, {'updated': False})
         return 1
 
     def create(self, cr, uid, datas, context = {}):
         id = super(osv.osv, self).create(cr, uid, datas, context=context)
         mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+        if not mw_id:
+            return id
         mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
-        if mw.auto_update :
-            datas['model'] = 'product.category'
-            datas['ids'] = [id]
-            self.do_export(cr, uid, datas, context)
-            del datas['model']
-            del datas['ids']
+        if datas.has_key('exportable') and not datas['exportable'] or not mw.auto_update :
+            super(osv.osv, self).write(cr, uid, [id], {'updated': False})
         else :
-            self.pool.get('product.category').write(cr, uid, [id], {'updated': False})
+            self.magento_export(cr, uid, [id], context)
         return id
 
-    def write_magento_id(self, cr, uid, ids, datas = {}, context = {} ):
-        return super(osv.osv, self).write(cr, uid, ids, datas, context)
+    def unlink(self, cr, uid, ids, context = {}):
+        mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+        if mw_id:
+            mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
+            if mw.auto_update :
+                self.magento_delete(cr, uid, ids, context)
+        return super(osv.osv, self).unlink(cr, uid, ids)
 
-    def do_export(self, cr, uid, data, context):
+    def magento_delete(self, cr, uid, ids, context):
+        logger = netsvc.Logger()
+        mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
+        mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
+        (server, session) = mw.connect()
+        for c in self.browse(cr, uid, ids, context=context):
+            if c.magento_id:
+                server.call(session, 'category.delete', [c.magento_id])
+                logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully deleted category with OpenERP id %s and Magento id %s") % (c.id, c.magento_id))
+        server.endSession(session)
+
+    def magento_export(self, cr, uid, categ_ids, context):
         #===============================================================================
         #  Init
         #===============================================================================
@@ -265,25 +340,6 @@ class product_category(osv.osv):
         mw_id = self.pool.get('magento.web').search(cr, uid, [('magento_flag', '=', True)])
         mw = self.pool.get('magento.web').browse(cr, uid, mw_id[0])
         (server, session) = mw.connect()
-
-        #===============================================================================
-        #  Getting ids
-        #===============================================================================
-        if data['model'] == 'ir.ui.menu':
-            categ_ids = self.search(cr, uid, [('exportable', '=', True)])
-        else:
-            categ_ids=[]
-            categ_not=[]
-            for id in data['ids']:
-                exportable_category = self.search(cr, uid, [('id', '=', id), ('exportable', '=', True)])
-                if len(exportable_category) == 1:
-                    categ_ids.append(exportable_category[0])
-                else:
-                    categ_not.append(id)
-
-            # Produces an error when writting a non exportable category
-            #if len(categ_not) > 0:
-            #    raise osv.except_osv(_("Error"), _("you asked to export non-exportable categories : IDs %s") % categ_not)
 
         #===============================================================================
         #  Category packaging
@@ -321,7 +377,7 @@ class product_category(osv.osv):
             try:
                 if(category.magento_id == 0):
                     new_id = server.call(session,'category.create', [magento_parent_id, category_data])
-                    self.write_magento_id(cr, uid, category.id, {'magento_id': new_id})
+                    self.write_magento(cr, uid, category.id, {'magento_id': new_id})
                     logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully created category with OpenERP id %s and Magento id %s") % (category.id, new_id))
                     categ_new += 1
 
@@ -336,7 +392,7 @@ class product_category(osv.osv):
                 if error.faultCode == 102: #turns out that the category doesn't exist in Magento (might have been deleted), try to create a new one.
                     try:
                         new_id = server.call(session,'category.create', [magento_parent_id, category_data])
-                        self.write_magento_id(cr, uid, category.id, {'magento_id': new_id})
+                        self.write_magento(cr, uid, category.id, {'magento_id': new_id})
                         logger.notifyChannel(_("Magento Export"), netsvc.LOG_INFO, _("Successfully created category with OpenERP id %s and Magento id %s") % (category.id, new_id))
                         categ_new += 1
 
@@ -352,7 +408,7 @@ class product_category(osv.osv):
             except Exception, error:
                 raise osv.except_osv(_("OpenERP Error"), _("An error occured : %s ") % error)
 
-            self.write_magento_id(cr, uid, category.id, {'updated': updated})
+            self.write_magento(cr, uid, category.id, {'updated': updated})
 
         server.endSession(session)
         return {'categ_new':categ_new, 'categ_update':categ_update, 'categ_fail':categ_fail }

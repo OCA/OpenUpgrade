@@ -1,6 +1,20 @@
 <?xml version="1.0"?>
 <openerp>
-	<data>
+	<data noupdate="1">
+		
+	<!-- Default Config, of course then you need to update it to your Magento config -->
+		<record model="magento.web" id="default_magento_web">
+			<field name="magento_name">default_magento_website</field>
+			<field name="magento_url">http://localhost/magento/</field>
+			<field name="magento_flag" eval="True" />
+			<field name="auto_update" eval="False" />
+			<field name="api_user">your_magento_webservice_api_user_name</field>
+			<field name="api_pwd">your_magento_webservice_api_user_password</field>
+		</record>
+		
+		<record id="sale.shop" model="sale.shop">
+			<field eval="1" name="magento_flag"/>
+		</record>
 
 	<!-- Resource: product.uom.categ -->
 		<record id="product_uom_categ_unit" model="product.uom.categ">
@@ -32,19 +46,5 @@
 			<field name="categ_id" ref="cat_service" />
 		</record>
 		
-		
-	<!-- Default Config, of course then you need to update it to your Magento config -->
-		<record model="magento.web" id="default_magento_web">
-			<field name="magento_name">default_magento_website</field>
-			<field name="magento_url">http://localhost/magento/</field>
-			<field name="magento_flag">True</field>
-			<field name="auto_update">False</field>
-			<field name="api_user">your_magento_webservice_api_user_name</field>
-			<field name="api_pwd">your_magento_webservice_api_user_password</field>
-		</record>
-		
-		<record id="sale.shop" model="sale.shop">
-			<field eval="1" name="magento_flag"/>
-		</record>
 	</data>
 </openerp>
