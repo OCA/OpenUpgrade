@@ -249,7 +249,7 @@ class product_product(osv.osv):
                         updated = False
                         prod_fail += 1
                 except Exception, error:
-                    raise osv.except_osv(_("OpenERP Error"), _("An error occured : %s ") % error)
+                    raise osv.except_osv(_("OpenERP Error"), _("An error occurred : %s ") % error)
 
                 self.write_magento(cr, uid, product.id, {'updated': updated})
 
@@ -406,7 +406,7 @@ class product_category(osv.osv):
                     categ_fail += 1
 
             except Exception, error:
-                raise osv.except_osv(_("OpenERP Error"), _("An error occured : %s ") % error)
+                raise osv.except_osv(_("OpenERP Error"), _("An error occurred : %s ") % error)
 
             self.write_magento(cr, uid, category.id, {'updated': updated})
 

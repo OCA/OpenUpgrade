@@ -32,6 +32,7 @@ import xmlrpclib
 import pooler
 import wizard
 from xml.parsers.expat import ExpatError
+from xmlrpclib import ProtocolError
 
 #===============================================================================
 #    Payment mapping constants; change them if you need
@@ -73,9 +74,12 @@ def _do_import(self, cr, uid, data, context):
 
     try:
         sale_order_array = server.sale_orders_sync(last_order_id)
+    except ProtocolError, error:
+        logger.notifyChannel(_("Magento Import"), netsvc.LOG_ERROR, _("Error, can't connect to Magento OpenERP sale import PHP extension at %s ! Are you sure you installed it? Error: %s") % (mw.magento_url, error))
+        raise wizard.except_wizard(_("Magento Import"), _("Error, can't connect to Magento OpenERP sale import PHP extension at %s ! Are you sure you installed it? Error: %s") % (mw.magento_url, error))
     except ExpatError, error:
-        logger.notifyChannel(_("Magento Import"), netsvc.LOG_ERROR, _("Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s") % error)
-        raise wizard.except_wizard(_("Magento Import"), _("Error occured during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!") % mw.magento_url)
+        logger.notifyChannel(_("Magento Import"), netsvc.LOG_ERROR, _("Error occurred during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s") % error)
+        raise wizard.except_wizard(_("Magento Import"), _("Error occurred during Sales Orders Sync, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!"))
 
     
     # order Processing
