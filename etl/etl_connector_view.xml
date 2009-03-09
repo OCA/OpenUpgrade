@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!--	#################   Connector	###################-->
+
+		<record id="etl_connector_form" model="ir.ui.view">
+			<field name="name">etl.confi.c.form</field>
+			<field name="model">etl.connector</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="etl.connector">
+					<field name="name" colspan="2" />
+					<field name="type" />
+					<field name="uri" />
+					<field name="db" />
+					<field name="login" />
+					<field name="passwd" />
+					<field name="obj" />
+					<field name="con_type" />
+					<field name="bufsize" />
+				</form>
+			</field>
+		</record>
+
+
+		<record id="etl_connector_tree" model="ir.ui.view">
+			<field name="name">etl.confi.c.tree</field>
+			<field name="model">etl.connector</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="etl.connector">
+					<field name="name" />
+					<field name="type" />
+					<field name="uri" />
+					<field name="db" />
+					<field name="login" />
+					<field name="passwd" />
+					<field name="obj" />
+					<field name="con_type" />
+					<field name="bufsize" />
+				</tree>
+			</field>
+		</record>
+
+
+		<record id="etl_connector_tree" model="ir.actions.act_window">
+			<field name="name">ETL Connector</field>
+			<field name="res_model">etl.connector</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="etl_connector_tree" />
+		</record>
+
+		<record id="etl_connector_type_form" model="ir.ui.view">
+			<field name="name">view.etl.connector.type.form</field>
+			<field name="model">etl.connector.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="etl.connector.type">
+					<field name="name" />
+					<field name="code" />
+					<separator string="Arguments" colspan="4" />
+					<field name="args" nolabel="1" colspan="4" />
+				</form>
+			</field>
+		</record>
+
+
+		<record id="etl_connector_type_tree" model="ir.ui.view">
+			<field name="name">view.etl.connector.type.tree</field>
+			<field name="model">etl.connector.type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="etl.connector.type">
+					<field name="name" />
+					<field name="code" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_etl_connector_type_tree"
+			model="ir.actions.act_window">
+			<field name="name">ETL Connector Type</field>
+			<field name="res_model">etl.connector.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="etl_connector_type_tree" />
+		</record>
+
+		
+	<menuitem name="Connector Types" parent="menu_etl_configure"
+			sequence="8" id="etl_connector_type" />
+
+		
+	<menuitem name="Connector Types" parent="etl_connector_type"
+			sequence="8" action="action_etl_connector_type_tree"
+			id="menu_etl_connector_type" />
+
+		
+	<menuitem name="Connectors" parent="menu_etl_configure"
+			sequence="9" action="action_etl_connector_type_tree"
+			id="etl_connector" />
+
+
+		
+	<menuitem name="SQL Connector" parent="etl_connector"
+			id="etl_connector_sql" />
+		
+	<menuitem name="Tested Connector" parent="etl_connector_sql"
+			id="etl_connector_sql_tested_connector" />
+		
+	<menuitem name="New Connector" parent="etl_connector_sql"
+			id="etl_connector_sql_new_connector" />
+
+
+		
+	<menuitem name="File Access Control" parent="etl_connector"
+			id="connector_file_access_control" />
+		
+	<menuitem name="Tested Connector"
+			parent="connector_file_access_control"
+			id="file_access_control_tested" />
+		
+	<menuitem name="New Connector"
+			parent="connector_file_access_control" id="file_access_control_new" />
+
+		
+	<menuitem name="Open Object Connector" parent="etl_connector"
+			id="connector_open_object_connector" />
+		
+	<menuitem name="Tested Connector"
+			parent="connector_open_object_connector"
+			id="open_object_connector_tested" />
+		
+	<menuitem name="New Connector"
+			parent="connector_open_object_connector"
+			id="open_object_connector_new" />
+
+
+	</data>
+</openerp>

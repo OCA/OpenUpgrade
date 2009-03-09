@@ -23,9 +23,7 @@
 import os
 
 from tools.translate import _
-
 from base_module_quality import base_module_quality
-import pooler
 
 class quality_test(base_module_quality.abstract_quality_check):
 
@@ -33,7 +31,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         super(quality_test, self).__init__()
         self.name = _("PEP-8 Test")
         self.note = _("""
-PEP-8 Test
+PEP-8 Test , copyright of py files check, method can not call from loops
 """)
         self.bool_installed_only = False
         self.ponderation = 1.0
@@ -49,7 +47,6 @@ PEP-8 Test
                 if os.path.isdir(path):
                     for j in os.listdir(path):
                         list_files.append(os.path.join(i, j))
-
         py_list = []
         for file_py in list_files:
             if file_py.split('.')[-1] == 'py' and not file_py.endswith('__init__.py') and not file_py.endswith('__terp__.py'):
@@ -59,6 +56,10 @@ PEP-8 Test
         self.check_import(py_list)
         self.check_licence(py_list)
         self.check_loop(py_list)
+        self.check_space(py_list)
+        self.check_space_operator(py_list)
+        self.check_len(py_list)
+        self.check_boolean(py_list)
         self.score = self.good_standard and float(self.good_standard) / float(self.good_standard + self.bad_standard)
         self.result = self.get_result({ module_path: [int(self.score * 100)]})
         self.result_details += self.get_result_general(self.result_py)
@@ -69,6 +70,7 @@ PEP-8 Test
             f = open(py, 'r')
             class_or_def = False
             line_counter = 0
+            file_name = py.split('/')[-1]
             while True:
                 line_counter += 1
                 line = f.readline()
@@ -79,13 +81,12 @@ PEP-8 Test
                 comment_found = line.find('#')
                 if comment_found == -1 and import_found != -1:
                     self.good_standard += 1
-                    file_name = py.split('/')[-1]
                     if (class_or_def):
                         self.bad_standard += 1
-                        self.result_py[file_name] = [file_name, line_counter, 'Imports are always put at the top of the file, just after any module comments and docstrings, and before module globals and constants']
+                        self.result_py[file_name + str(line_counter)] = [file_name, line_counter, 'Imports are always put at the top of the file, just after any module comments and docstrings, and before module globals and constants']
                     if (line.find('from') < 0 and line.find(',') != -1):
                         self.bad_standard += 1
-                        self.result_py[file_name] = [file_name, line_counter, 'Imports should usually be on separate lines']
+                        self.result_py[file_name + str(line_counter)] = [file_name, line_counter, 'Imports should usually be on separate lines']
 
     def check_licence(self, py_list):
         for py in py_list:
@@ -96,6 +97,7 @@ PEP-8 Test
             license_found = False
             gnu_website_found = False
             line_counter = 0
+            file_name = py.split('/')[-1]
             while True:
                 declaration = False
                 flag = False
@@ -109,7 +111,6 @@ PEP-8 Test
                 gnu_found = line.find('GNU')
                 license_found = line.find('License')
                 gnu_website_found = line.find('www.gnu.org/licenses')
-                file_name = py.split('/')[-1]
                 if ((copyright_found > -1) or (gnu_found > -1) or (license_found > -1) or (gnu_website_found > -1)):
                     self.good_standard += 1
                     declaration = True
@@ -117,7 +118,7 @@ PEP-8 Test
                     break
                 if (comment_found > -1) and bad_position and declaration:
                     self.bad_standard += 1
-                    self.result_py[file_name] = [file_name, line_counter, 'Declaration of copyright must be at the top of file']
+                    self.result_py[file_name + str(line_counter)] = [file_name, line_counter, 'Declaration of copyright must be at the top of file']
                     break
             if bad_position and (not flag):
                 self.bad_standard += 1
@@ -151,8 +152,88 @@ PEP-8 Test
                         got = line.find(method)
                         if(got > -1):
                             self.bad_standard += 1
-                            self.result_py[file_name] = [file_name, line_counter, 'puting method inside loop is not good']
+                            self.result_py[file_name + str(line_counter)] = [file_name, line_counter, 'puting method inside loop is not good']
             self.good_standard += counter
+
+    def check_space(self, py_list):
+        for py in py_list:
+            f = open(py, 'r')
+            counter_line = 0
+            file_name = py.split('/')[-1]
+            counter = 0
+            while True:
+                counter_line += 1
+                line = f.readline()
+                if not line: break
+                pos_comma = line.find(',')
+                pos_semicolon = line.find(';')
+                pos_colon = line.find(':')
+                space_find = -1
+                if (pos_comma != -1 or pos_semicolon != -1 or pos_colon != -1):
+                    counter += 1
+                    for i in line:
+                        space_find += 1
+                        if (i == ' '):
+                            if ((space_find + 1) == pos_comma) or ((space_find + 1) == pos_semicolon) or ((space_find + 1) == pos_colon):
+                                self.bad_standard += 1
+                                self.result_py[file_name + str(counter_line)] = [file_name, counter_line, 'You should not have space before (: ; ,)']
+            self.good_standard += counter #  to be check
+
+    def check_space_operator(self, py_list):
+        for py in py_list:
+            f = open(py, 'r')
+            space_counter = 0
+            eq_found = False
+            operator_found = False
+            line_counter = 0
+            file_name = py.split('/')[-1]
+            while True:
+                line_counter += 1
+                line = f.readline()
+                if not line: break
+                for counter in line:
+                    if (counter == ' '):
+                        space_counter += 1
+                    else:
+                        if (space_counter > 1):
+                            if counter in ['=', '<', '>', '!', '+', '-', '*', '/', '^', '%'] or operator_found:
+                                self.bad_standard += 1
+                                self.result_py[file_name + str(line_counter)] = [file_name, line_counter, 'More than one space around an assignment (or other) operator to align it with another']
+                        operator_found = False
+                        space_counter = 0
+                    if counter in ['=', '<', '>', '!', '+', '-', '*', '/', '^', '%']:
+                        self.good_standard += 1
+                        operator_found = True
+
+    def check_len(self, py_list):
+        for py in py_list:
+            f = open(py, 'r')
+            line_counter = 0
+            file_name = py.split('/')[-1]
+            while True:
+                line_counter += 1
+                line = f.readline()
+                if not line: break
+                if (line.find('if') > -1) and (line.find('len(') > -1) and (line.find(')') > -1):
+                    self.good_standard += 1
+                    if (line.find(':') > -1) and not line.find('<') > -1 and not line.find('>') > -1 and not line.find('=') > -1 and not line.find('!') > -1 :
+                        self.bad_standard += 1
+                        self.result_py[file_name + str(line_counter)] = [file_name, line_counter, ' For sequences, (strings, lists, tuples), use the fact that empty sequences are false']
+
+    def check_boolean(self, py_list):
+        for py in py_list:
+            f = open(py, 'r')
+            line_counter = 0
+            file_name = py.split('/')[-1]
+            while True:
+                line_counter += 1
+                line = f.readline()
+                if not line: break
+                if (line.find('if') > -1):
+                    self.good_standard += 1
+                    if ((line.find('==') > -1) or (line.find('!=') > -1)) and ((line.find('True') > -1) or (line.find('False') > -1)):
+                        self.bad_standard += 1
+                        self.result_py[file_name + str(line_counter)] = [file_name, line_counter, "Don't compare boolean values to True or False using == or !="]
 
     def get_result(self, dict_obj):
         header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n', [_('Result of import statements in py %')])

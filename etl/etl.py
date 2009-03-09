@@ -36,7 +36,7 @@ class etl_channel(osv.osv):
     _columns={
               'name' : fields.char('Channel Name', size=64, required=True), 
               'code' : fields.char('Code', size=24, required=True), 
-              'type' : fields.selection([('logger', 'Logger'), ('transition', 'Transition')], 'Type'), 
+              'type' : fields.selection([('logger', 'Logger'), ('transition', 'Transition')], 'Type', required=True), 
               }
 etl_channel()
 
@@ -68,6 +68,7 @@ class etl_connector_type(osv.osv):
     _columns={
               'name' : fields.char('Name', size=64, required=True), 
               'code' : fields.char('Code', size=24, required=True), 
+              'args'  : fields.text('Arguments'), 
               }
 etl_connector_type()
 
@@ -83,7 +84,7 @@ class etl_connector(osv.osv):
         
     _columns={
               'name' : fields.char('Connector Name', size=64, required=True), 
-              'type' : fields.selection(_get_connector_type, 'Connector Type'), 
+              'type' : fields.selection(_get_connector_type, 'Connector Type', required=True), 
               }
     
 etl_connector()
@@ -94,7 +95,8 @@ class etl_connector_localfile(osv.osv):
         
     _columns={
               'uri' : fields.char('URL Path', size=64), 
-              'bufsize' : fields.integer('Buffer Size')
+              'bufsize' : fields.integer('Buffer Size'), 
+              'file' : fields.binary('File')
               }
   
 etl_connector_localfile()
@@ -121,7 +123,6 @@ etl_connector_openobject()
 
 
 
-
 class etl_component_type(osv.osv):
     _name='etl.component.type'
     _description = "ETL Component Type"
@@ -129,7 +130,7 @@ class etl_component_type(osv.osv):
     _columns={
               'name' : fields.char('Name', size=64, required=True), 
               'code' : fields.char('Code', size=24, required=True), 
-              'parent_component' : fields.many2one('etl.component.type', 'Parent Component'), 
+              'args'  : fields.text('Arguments'), 
               }
 etl_component_type()
 
@@ -140,11 +141,9 @@ class etl_component(osv.osv):
         
         _columns={
                 'name' : fields.char('Name', size=64, required=True), 
-                'type' : fields.many2one('etl.component.type', 'Component Type'), 
-                'job_id' : fields.many2one('etl.job', 'Job', required=True), 
-                'job_process_id' : fields.many2one('etl.job.process', 'Job Process'), 
-                'trans_in_ids' : fields.one2many('etl.transition', 'source_component_id', 'Source ID'), 
-                'trans_out_ids' : fields.one2many('etl.transition', 'destination_component_id', 'Destination ID'), 
+                'type' : fields.many2one('etl.component.type', 'Component Type', required=True), 
+                'trans_in_ids' : fields.one2many('etl.transition', 'destination_component_id', 'Source ID'), 
+                'trans_out_ids' : fields.one2many('etl.transition', 'source_component_id', 'Destination ID'), 
                   }
         
 etl_component()
@@ -172,6 +171,7 @@ class etl_component_csv_in(osv.osv):
                 'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
                 'row_limit' : fields.integer('Limit'), 
                 'csv_params' : fields.char('CSV Parameters', size=64), 
+                'file' : fields.binary('File')
                   }
         
 etl_component_csv_in()
@@ -197,7 +197,7 @@ class etl_job(osv.osv):
               'author' : fields.char('Author', size =50), 
               'is_start' : fields.boolean('Starting Job'), 
               'notes' : fields.text('Notes'), 
-              'component_ids' : fields.many2many('etl.component', 'rel_job_comp', 'c_id', 'j_id', 'Components'), 
+              'component_ids' : fields.one2many('etl.component', 'job_id', 'Components'), 
               'state' : fields.selection([('open', 'Open'), ('start', 'Started'), ('pause', 'Pause'), ('stop', 'Stop'), ('close', 'Close')], 'State', readonly=True), 
               'running_process' : fields.integer('Running Processes'), 
               'total_process' : fields.integer('Total Processes')

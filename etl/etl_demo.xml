@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<!--	COMPONENTS-->
+
+		<record id="component_csv_in1" model="etl.component">
+			<field name="name">csv_in1</field>
+			<field name="type" ref="comp_input_csv_in" />
+		</record>
+
+		<record id="component_csv_in2" model="etl.component">
+			<field name="name">csv_in2</field>
+			<field name="type" ref="comp_input_csv_in" />
+		</record>
+
+		<record id="component_csv_out1" model="etl.component">
+			<field name="name">csv_out1</field>
+			<field name="type" ref="comp_output_csv_out" />
+		</record>
+
+		<record id="component_sort1" model="etl.component">
+			<field name="name">sort1</field>
+			<field name="type" ref="comp_transform_sort" />
+		</record>
+
+		<record id="component_log1" model="etl.component">
+			<field name="name">log1</field>
+			<field name="type" ref="comp_transform_logger" />
+		</record>
+
+		<record id="component_log2" model="etl.component">
+			<field name="name">log2</field>
+			<field name="type" ref="comp_transform_logger" />
+		</record>
+
+		<record id="component_sleep1" model="etl.component">
+			<field name="name">sleep1</field>
+			<field name="type" ref="comp_control_sleep" />
+		</record>
+
+
+		<!--TRANSITIONS-->
+
+		<record id="transition_trans" model="etl.transition">
+			<field name="name">trans1</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_csv_in1" />
+			<field name="destination_component_id"
+				ref="component_sort1" />
+		</record>
+
+		<record id="transition_trans" model="etl.transition">
+			<field name="name">trans</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_csv_in1" />
+			<field name="destination_component_id"
+				ref="component_sort1" />
+		</record>
+
+		<record id="transition_trans1" model="etl.transition">
+			<field name="name">trans1</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_csv_in2" />
+			<field name="destination_component_id"
+				ref="component_sort1" />
+		</record>
+
+		<record id="transition_trans3" model="etl.transition">
+			<field name="name">trans3</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_sort1" />
+			<field name="destination_component_id"
+				ref="component_sleep1" />
+		</record>
+
+		<record id="transition_trans4" model="etl.transition">
+			<field name="name">trans4</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_sleep1" />
+			<field name="destination_component_id" ref="component_log2" />
+		</record>
+
+		<record id="transition_trans5" model="etl.transition">
+			<field name="name">trans5</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_sort1" />
+			<field name="destination_component_id"
+				ref="component_csv_out1" />
+		</record>
+	
+<!--	-->
+<!--		<record id="job1" model="etl.job">-->
+<!--			<field name="name">job1</field>-->
+<!--			<field name="type">data</field>-->
+<!--			<field name="source_component_id" ref="component_sort1" />-->
+<!--			<field name="destination_component_id"-->
+<!--				ref="component_csv_out1" />-->
+<!--		</record>-->
+	
+	
+	</data>
+</openerp>
