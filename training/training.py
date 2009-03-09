@@ -25,6 +25,7 @@ import time
 
 class training_course_category(osv.osv):
     _name = 'training.course_category'
+    _description = 'The category of a course'
     _inherits = {
         'account.analytic.account' : 'analytic_account_id',
     }
@@ -47,6 +48,7 @@ training_course_category()
 
 class training_course_type(osv.osv):
     _name = 'training.course_type'
+    _description = 'The type of a course'
 
     _columns = {
         'name' : fields.char('Name', size=32, required=True, select=1),
@@ -81,6 +83,7 @@ training_offer()
 
 class training_course(osv.osv):
     _name = 'training.course'
+    _description = 'Course'
     _inherits = {
         'account.analytic.account' : 'analytic_account_id'
     }
@@ -175,6 +178,7 @@ training_course()
 
 class training_offer(osv.osv):
     _name = 'training.offer'
+    _description = 'Offer'
     _columns = {
         'name' : fields.char('Name', size=64, required=True, select=1),
         'product_id' : fields.many2one('product.product', 'Product'),
@@ -208,6 +212,7 @@ training_offer()
 
 class training_catalog(osv.osv):
     _name = 'training.catalog'
+    _description = 'Catalog'
     _rec_name = 'year'
     _columns = {
         'year' : fields.integer('Year',
@@ -243,6 +248,7 @@ training_event()
 
 class training_session(osv.osv):
     _name = 'training.session'
+    _description = 'Session'
     _columns = {
         'name' : fields.char('Name',
                              size=64,
@@ -316,8 +322,9 @@ class training_session_purchase_line(osv.osv):
 
 training_session_purchase_line()
 
-class training_massive_subscription_wizard(osv.osv_memory):
-    _name = 'wizard.training.massive.subscription'
+class training_mass_subscription_wizard(osv.osv_memory):
+    _name = 'wizard.training.mass.subscription'
+    _description = 'Mass Subscription Wizard'
 
     def action_cancel(self, cr, uid, ids, context = None):
         return { 'type' : 'ir.actions.act_window_close' }
@@ -351,10 +358,11 @@ class training_massive_subscription_wizard(osv.osv_memory):
                                          required=True ),
     }
 
-training_massive_subscription_wizard()
+training_mass_subscription_wizard()
 
 class training_location(osv.osv):
     _name = 'training.location'
+    _description = 'Location'
 
     _columns = {
         'name' : fields.char('Name', size=32, select=True, required=True),
@@ -365,6 +373,7 @@ training_location()
 
 class training_group(osv.osv):
     _name = 'training.group'
+    _description = 'Group'
     _columns = {
         'name': fields.char('Name', size=64, required=True, select=True),
     }
@@ -376,6 +385,7 @@ training_subscription()
 
 class training_participation(osv.osv):
     _name = 'training.participation'
+    _description = 'Participation'
     _columns = {
         'event_id' : fields.many2one('training.event', 'Event' ),
         'subscription_id' : fields.many2one('training.subscription', 'Subscription', select=True, required=True),
@@ -386,6 +396,7 @@ training_participation()
 
 class training_event(osv.osv):
     _name = 'training.event'
+    _description = 'Event'
 
     def _check_date(self,cr,uid,ids,context=None):
         return self.browse(cr, uid, ids)[0].date > time.strftime('%Y-%m-%d')
@@ -443,6 +454,7 @@ training_event()
 
 class training_seance(osv.osv):
     _name = 'training.seance'
+    _description = 'Seance'
     _inherits = { 'training.event' : 'event_id' }
 
     _columns = {
@@ -477,6 +489,7 @@ training_seance_purchase_line()
 
 class training_subscription(osv.osv):
     _name = 'training.subscription'
+    _description = 'Subscription'
     _columns = {
         'name' : fields.char( 'Reference', size=32, required=True, select=1,readonly=True ),
         'date' : fields.datetime( 'Date', required=True, select=True ),

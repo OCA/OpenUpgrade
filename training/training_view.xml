@@ -779,12 +779,12 @@
             <field name="view_mode">form</field>
         </record>
 
-        <record id="training_massive_subscription_wizard" model="ir.ui.view">
+        <record id="training_mass_subscription_wizard" model="ir.ui.view">
             <field name="name">Mass Subscribing</field>
-            <field name="model">wizard.training.massive.subscription</field>
+            <field name="model">wizard.training.mass.subscription</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form col="4" string="Massive Subscription">
+                <form col="4" string="Mass Subscription">
                     <group colspan="2" fill="0">
                         <separator string="Partners" />
                         <newline />
@@ -811,10 +811,10 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="training_session_massive_subscription_act">
-            <field name="name">Massive Subscription</field>
+        <record model="ir.actions.act_window" id="training_session_mass_subscription_act">
+            <field name="name">Mass Subscription</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">wizard.training.massive.subscription</field>
+            <field name="res_model">wizard.training.mass.subscription</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
@@ -1047,9 +1047,9 @@
             parent="training_subscription_management_mi" 
             action="training_subscription_new_act" />
         <menuitem 
-            id="training_subscription_management_subscription_massive_mi" 
+            id="training_subscription_management_subscription_mass_mi" 
             parent="training_subscription_management_mi" 
-            action="training_session_massive_subscription_act" />
+            action="training_session_mass_subscription_act" />
     </data>
 
     <data>

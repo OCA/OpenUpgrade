@@ -55,6 +55,7 @@ training_question()
 
 class training_examen_answer(osv.osv):
     _name = 'training.examen_answer'
+    _description = 'Answer'
     _columns = {
         'name' : fields.char('Response', size=128, required=True, select=1),
         'is_response' : fields.boolean('Correct Answer'),
@@ -64,6 +65,7 @@ training_examen_answer()
 
 class training_question(osv.osv):
     _name = 'training.question'
+    _description = 'Question'
     _columns = {
         'name' : fields.text('Question', required=True, select=1),
         'kind' : fields.selection([('mandatory', 'Mandatory'),
@@ -100,6 +102,7 @@ training_question()
 
 class training_questionnaire(osv.osv):
     _name = 'training.questionnaire'
+    _description = 'Questionnaire'
 
     _columns = {
         'name' : fields.char( 'Name', size=32, required=True, select=1 ),
@@ -127,6 +130,7 @@ training_questionnaire()
 
 class training_planned_examen(osv.osv):
     _name = 'training.planned_examen'
+    _description = 'Planned Examen'
     _inherits = { 'training.event' : 'event_id' }
     _columns = {
         # Ajouter le contact en plus du partenaire en many2many
@@ -146,6 +150,7 @@ training_planned_examen()
 
 class training_exam_result(osv.osv):
     _name = 'training.exam.result'
+    _description = 'Examen Result'
     _columns = {
         'participation_id' : fields.many2one('training.participation', 'Participation',
                                              required=True),
