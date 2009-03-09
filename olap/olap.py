@@ -466,6 +466,7 @@ class olap_database_columns(osv.osv):
             
                 if make_ids:
                     make_ids.append(hier_obj.table_id.column_link_id.related_to.id)
+                    make_ids.append(hier_obj.table_id.column_link_id.table_id.id)
                     args = [('table_id','in',make_ids),('hide','<>',True),('active','<>',False)]
                     ids = super(olap_database_columns,self).search(cr, uid, args, offset, limit,
                         order, context=context, count=count)
@@ -903,7 +904,7 @@ class olap_measure(osv.osv):
     
     _columns = {
         'name': fields.char('Measure name',size=64,required=True),
-        'cube_id': fields.many2one('olap.cube', 'Cube',),
+        'cube_id': fields.many2one('olap.cube', 'Cube',required=True),
 #        'value_column': fields.char('Fact table column', size=64, readonly=True),
         'value_column': fields.many2one('olap.database.columns','Fact Table Column'),
         'value_column_id_name': fields.char('Column ID',size=64),

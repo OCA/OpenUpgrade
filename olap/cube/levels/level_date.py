@@ -25,8 +25,9 @@ class level_date_month(level_interface):
     def children(self, level, metadata, table):
         col = common.col_get(sqlalchemy.Table(level.object.table_name,metadata), level.object.column_name)
         col_id = common.col_get(sqlalchemy.Table(level.object.table_name,metadata), level.object.column_name)
+        qexpr = sqlalchemy.literal('Q')+ sqlalchemy.sql.cast(sqlalchemy.func.date_part('QUARTER',col_id), sqlalchemy.types.String) + sqlalchemy.sql.cast(sqlalchemy.func.date_part('month',col_id),sqlalchemy.types.String)
         return  {
-            'column': [sqlalchemy.func.date_part('month',col_id)],
+            'column': [sqlalchemy.func.date_part('month',col)],
             'column_name':[sqlalchemy.func.date_part('month',col)],
             'axis_mapping': [axis_map.column_mapping]
         }
@@ -74,12 +75,13 @@ class level_date_quarter(level_interface):
             }
         col = common.col_get(sqlalchemy.Table(level.object.table_name,metadata), level.object.column_name)
         col_id = common.col_get(sqlalchemy.Table(level.object.table_name,metadata), level.object.column_name)
+        qexpr = sqlalchemy.literal('Q')+ sqlalchemy.sql.cast(sqlalchemy.func.date_part('QUARTER',col_id), sqlalchemy.types.String)
         if not level.name in quarters:
             raise 'Quarter should be in Q1,Q2,Q3,Q4 !'
 
         result = {
-            'column': [sqlalchemy.func.date_part('month',col_id)],
-            'column_name': [sqlalchemy.func.date_part('month',col_id)],
+            'column': [qexpr],
+            'column_name': [qexpr],
             'axis_mapping': [axis_map.column_static],
             'where_clause': [
                 (sqlalchemy.func.date_part('month',col_id)==quarters[level.name][0]) |
@@ -92,7 +94,6 @@ class level_date_quarter(level_interface):
 
 
     def children(self, level, metadata, table):
-
         table = sqlalchemy.Table(level.object.table_name, metadata)
         col =common.col_get(table, level.object.column_name)
         col_id = common.col_get(table,level.object.column_name)

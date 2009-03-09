@@ -31,7 +31,7 @@ def _get_delegated_ids(self, cr, uid, context):
         left join
             report_account_analytic_planning p on (l.planning_id=p.id)
         where
-            l.delegate_id=%d and 
+            l.delegate_id=%s and 
             l.user_id is NULL and
             p.date_from<=%s and
             p.date_to>=%s''', (uid, val['date_from'], val['date_to'])
@@ -52,7 +52,7 @@ class delegated_field(fields.one2many):
                 left join
                     report_account_analytic_planning p on (l.planning_id=p.id)
                 where
-                    l.delegate_id=%d and 
+                    l.delegate_id=%s and 
                     l.user_id is NULL and
                     p.date_from<=%s and
                     p.date_to>=%s''', (planing.user_id.id, planing.date_from, planing.date_to))

@@ -38,7 +38,7 @@ class column_fixed(mapping):
 
 class column_mapping_value(mapping):
 	def __init__(self, value, position=0):
-#		print value
+		print "\n\n\n &&&&&&&&&&&&& \n\n",value
 		self.axis_value = {}
 		for v in range(len(value)):
 			self.axis_value[value[v][0]] = v

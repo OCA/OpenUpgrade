@@ -209,7 +209,7 @@
 			<field name="model">stock.location</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Stock location" colors="red:is_expired==True;">
+				<tree string="Stock location">
 					<field name="complete_name" />
 					<field name="partner_id" />
 					<field name="stock_real" />
