@@ -52,7 +52,7 @@
         'workflow/seance_workflow.xml',
         'workflow/session_workflow.xml',
         'workflow/subscription_workflow.xml',
-        'process/plan_course_process.xml',_
+        'process/plan_course_process.xml',
     ],
     'active' : False,
     'installable' : True,
