@@ -23,9 +23,7 @@
 import os
 
 from tools.translate import _
-
 from base_module_quality import base_module_quality
-import pooler
 
 class quality_test(base_module_quality.abstract_quality_check):
 
@@ -33,7 +31,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         super(quality_test, self).__init__()
         self.name = _("PEP-8 Test")
         self.note = _("""
-PEP-8 Test
+PEP-8 Test , copyright of py files check, method can not call from loops
 """)
         self.bool_installed_only = False
         self.ponderation = 1.0
@@ -49,7 +47,6 @@ PEP-8 Test
                 if os.path.isdir(path):
                     for j in os.listdir(path):
                         list_files.append(os.path.join(i, j))
-
         py_list = []
         for file_py in list_files:
             if file_py.split('.')[-1] == 'py' and not file_py.endswith('__init__.py') and not file_py.endswith('__terp__.py'):
@@ -61,6 +58,8 @@ PEP-8 Test
         self.check_loop(py_list)
         self.check_space(py_list)
         self.check_space_operator(py_list)
+        self.check_len(py_list)
+        self.check_boolean(py_list)
         self.score = self.good_standard and float(self.good_standard) / float(self.good_standard + self.bad_standard)
         self.result = self.get_result({ module_path: [int(self.score * 100)]})
         self.result_details += self.get_result_general(self.result_py)
@@ -205,6 +204,36 @@ PEP-8 Test
                     if counter in ['=', '<', '>', '!', '+', '-', '*', '/', '^', '%']:
                         self.good_standard += 1
                         operator_found = True
+
+    def check_len(self, py_list):
+        for py in py_list:
+            f = open(py, 'r')
+            line_counter = 0
+            file_name = py.split('/')[-1]
+            while True:
+                line_counter += 1
+                line = f.readline()
+                if not line: break
+                if (line.find('if') > -1) and (line.find('len(') > -1) and (line.find(')') > -1):
+                    self.good_standard += 1
+                    if (line.find(':') > -1) and not line.find('<') > -1 and not line.find('>') > -1 and not line.find('=') > -1 and not line.find('!') > -1 :
+                        self.bad_standard += 1
+                        self.result_py[file_name + str(line_counter)] = [file_name, line_counter, ' For sequences, (strings, lists, tuples), use the fact that empty sequences are false']
+
+    def check_boolean(self, py_list):
+        for py in py_list:
+            f = open(py, 'r')
+            line_counter = 0
+            file_name = py.split('/')[-1]
+            while True:
+                line_counter += 1
+                line = f.readline()
+                if not line: break
+                if (line.find('if') > -1):
+                    self.good_standard += 1
+                    if ((line.find('==') > -1) or (line.find('!=') > -1)) and ((line.find('True') > -1) or (line.find('False') > -1)):
+                        self.bad_standard += 1
+                        self.result_py[file_name + str(line_counter)] = [file_name, line_counter, "Don't compare boolean values to True or False using == or !="]
 
     def get_result(self, dict_obj):
         header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n', [_('Result of import statements in py %')])
