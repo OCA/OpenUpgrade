@@ -1,8 +1,21 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
-  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+   <template pageSize="(1120.0,770.0)" title="Test" author="Martin Simon" allowSplitting="20" >
     <pageTemplate id="first">
-      <frame id="first" x1="28.0" y1="28.0" width="539" height="786"/>
+      <frame id="first" x1="22.0" y1="15.0" width="1080" height="680"/>
+			<pageGraphics>
+				<setFont name="Helvetica-Bold" size="9"/>
+				<!--COL 1-->
+				<drawString x="1.3cm" y="25.50cm">[[ get_company(data['form']) ]]</drawString>
+				<!--COL 2-->
+				<setFont name="Helvetica" size="9"/>
+				<drawString x="1.3cm" y="0.50cm"> [[ formatLang(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),date_time = True) ]]</drawString>
+				<drawString x="37.20cm" y="0.50cm">Page <pageNumber/></drawString>
+
+			    <lineMode width="0.7"/>
+				<lines>1.3cm 24.9cm 38.3cm 24.9cm</lines>
+				<setFont name="Helvetica" size="8"/>
+			  </pageGraphics>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -152,19 +165,14 @@
   </stylesheet>
   <images/>
   <story>
-    <blockTable colWidths="539.0" style="Table_Title_Report">
+    <blockTable colWidths="1049.0" style="Table_Title_Report">
       <tr>
         <td>
           <para style="terp_header_Centre">Trial Balance</para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="539.0" style="Table_Company_name">
-      <tr>
-        <td>
-          <para style="terp_header_Centre">[[ get_company(data['form']) ]]</para>
-        </td>
-      </tr>
+    <blockTable colWidths="1049.0" style="Table_Company_name">
       <tr>
         <td>
           <para style="terp_header_Centre">From : [[ data['form']['date_from'] ]] To: [[ data['form']['date_to'] ]]</para>
@@ -172,7 +180,7 @@
       </tr>
     </blockTable>
     <section>
-    <blockTable colWidths="151.0,139.32,132.32,127.32" style="Table_Heading_Title" repeatRows="1">
+    <blockTable colWidths="262.25,262.25,262.25,262.25" style="Table_Heading_Title" repeatRows="1">
       <tr>
         <td>
           <para style="terp_tblheader_Details_Centre">Particulars</para>
@@ -189,7 +197,7 @@
       </tr>
       <tr>
       <td>
-	    <blockTable colWidths="145.0,72.16,67.16,64.16,68.16,62.16,65.16" style="Table_debit_credit" repeatRows="1">
+	    <blockTable colWidths="257.60,131.00,131.00,131.00,131.00,131.00,131.00" style="Table_debit_credit" repeatRows="1">
 	      <tr>
 	        <td>
 	          <para style="terp_tblheader_Details_Centre">
@@ -221,7 +229,7 @@
 	  <tr>
 	  <td>
 	    <para style="terp_default_2"><font face="Times-Roman">[[ repeatIn(get_lines(data['form']), 'a') ]]</font></para>
-	    <blockTable colWidths="145.0,72.16,67.16,64.16,68.16,62.16,65.16" style="Table_Account_Detail_line">
+	    <blockTable colWidths="257.60,131.00,131.00,131.00,131.00,131.00,131.00" style="Table_Account_Detail_line">
 	      <tr>
 	        <td>
 	          <para style="terp_default_9">[[ a['child']=='1' and ( setTag('para','para',{'style':'terp_default_Bold_9'})) ]]<font color="white">[[  '. '*(a['level']-3) ]]</font>[[ a['name'] ]]</para>
@@ -250,7 +258,7 @@
 	 </tr>
      </blockTable>
 	</section>
-    <blockTable colWidths="151.0,72.16,67.16,64.16,68.16,62.16,65.16" style="Table_Final_Summation">
+    <blockTable colWidths="262.25,131.12,131.12,131.12,131.12,131.12,131.12" style="Table_Final_Summation">
       <tr>
         <td>
           <para style="terp_default_Right_9">
@@ -277,7 +285,7 @@
         </td>
       </tr>
     </blockTable>
-   	<blockTable colWidths="151.0,72.16,67.16,64.16,68.16,62.16,65.16" style="Table_Difference_Op_bal">
+   	<blockTable colWidths="262.25,131.12,131.12,131.12,131.12,131.12,131.12" style="Table_Difference_Op_bal">
    	 <tr>
         <td>
 		<para style="terp_default_Bold_9">Difference of Opening Balance :</para>        
