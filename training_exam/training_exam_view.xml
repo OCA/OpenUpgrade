@@ -154,13 +154,22 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Exam">
-                    <!-- 
-                    <field name="partner_id" />
-                    <field name="contact_id" />
-                    -->
+                    <field name="name" />
                     <field name="questionnaire_id" />
-                    <newline />
-                    <group colspan="8">
+                    <notebook colspan="4">
+                        <page string="General">
+                            <field name="date" />
+                            <field name="duration" />
+                            <field name="location_id" />
+                        </page>
+                        <page string="Participants">
+                            <field name="participant_ids" />
+                        </page>
+                        <page string="Contacts">
+                            <field name="contact_ids" />
+                        </page>
+                    </notebook>
+                    <group col="8" colspan="4">
                         <field name="state" />
                         <button name="signal_draft" string="Draft" type="workflow" />
                         <button name="signal_open_pending" string="Open and Pending" type="workflow" />
@@ -178,10 +187,12 @@
             <field name="model">training.planned_examen</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="Exams">
-                    <field name="partner_id" />
-                    <field name="event_id" />
+                <tree string="Planned Exams">
+                    <field name="name" />
                     <field name="questionnaire_id" />
+                    <field name="date" />
+                    <field name="duration" />
+                    <field name="location_id" />
                     <field name="state" />
                 </tree>
             </field>
@@ -194,8 +205,10 @@
             <field name="arch" type="xml">
                 <calendar string="Events" date_start="date">
                     <field name="name"/>
+                    <field name="questionnaire_id" />
+                    <field name="duration" />
+                    <field name="contact_ids" />
                     <field name="location_id"/>
-                    <field name="session_ids" />
                 </calendar>
             </field>
         </record>

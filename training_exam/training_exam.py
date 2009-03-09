@@ -134,11 +134,14 @@ class training_planned_examen(osv.osv):
     _inherits = { 'training.event' : 'event_id' }
     _columns = {
         # Ajouter le contact en plus du partenaire en many2many
-        'partner_id' : fields.many2one('res.partner',
-                                       'Partner',
-                                       domain=[('is_guardian', '=', True)],
-                                       select=1,
-                                       required=True),
+        #'partner_id' : fields.many2one('res.partner',
+        #                               'Partner',
+        #                               domain=[('is_guardian', '=', True)],
+        #                               select=1,
+        #                               required=True),
+        'contact_ids' : fields.many2many('res.partner.contact', 'planned_examen_contact_rel',
+                                         'planned_exam_id', 'contact_id',
+                                         'StakeHolder'),
         'event_id' : fields.many2one('training.event', 'Event'),
         'questionnaire_id' : fields.many2one('training.questionnaire',
                                              'Questionnaire',
