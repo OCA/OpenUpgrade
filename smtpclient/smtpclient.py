@@ -131,7 +131,7 @@ class SmtpClient(osv.osv):
         else:
             msg['Subject'] = _('OpenERP Test Email!')
         
-        msg['To'] = COMMASPACE.join(toemail)
+        msg['To'] = toemail
         msg['From'] = str(self.server[serverid]['from_email'])
         
         message = msg.as_string()
