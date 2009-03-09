@@ -35,8 +35,8 @@ reports = [
     ('report.training.seance.booking.classroom', 'training.seance'),
     ('report.training.subscription.cancel', 'training.subscription'),
     ('report.training.subscription.confirm', 'training.subscription'),
-    #('report.training.course.material.report', 'training.course.material.report'),
-    #('report.training.course.financial.report', 'training.course.financial.report')
+    ('report.training.course.material.report', 'training.course'),
+    ('report.training.course.financial.report', 'training.course')
 ]
 
 for name, model in reports:
