@@ -82,7 +82,8 @@ def create_accout(self, cr, uid, data, context={}):
     account = pooler.get_pool(cr.dbname).get('account.account')
     type = pooler.get_pool(cr.dbname).get("account.account.type")
     
-    ids = type.search(cr, uid, [('code','=','view')])
+    lia_id = type.search(cr, uid, [('code','=','liability')])
+    ass_id = type.search(cr, uid, [('code','=','asset')])
     
     code = account.read(cr, uid, [dacc], ['code'])[0]['code']    
     debit_id = account.create(cr, uid, {
@@ -91,7 +92,7 @@ def create_accout(self, cr, uid, data, context={}):
         'parent_id':dacc,
         'type':'receivable',
         'reconcile':True,
-        'user_type':ids[0]
+        'user_type':ass_id[0]
     })
     
     code = account.read(cr, uid, [cacc], ['code'])[0]['code']    
@@ -101,7 +102,7 @@ def create_accout(self, cr, uid, data, context={}):
         'parent_id':cacc,
         'type':'payable',
         'reconcile':True,
-        'user_type':ids[0]
+        'user_type':lia_id[0]
     })
     
     partner = pooler.get_pool(cr.dbname).get('res.partner')
