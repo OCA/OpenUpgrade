@@ -407,8 +407,10 @@ class olap_database_columns(osv.osv):
                 dim_obj = self.pool.get('olap.dimension').browse(cr,uid,int(context['dim_x']))
                 make_ids =[]
                 make_ids.append(dim_obj.cube_id.table_id.column_link_id.table_id.id)
+
                 for lines in  dim_obj.cube_id.table_id.line_ids:
                     make_ids.append(lines.field_id.related_to.id)
+                    make_ids.append(lines.field_id.table_id.id)
                 args = [('table_id', 'in', make_ids),('related_to','<>',False),('hide','<>',True),('active','<>',False)]
                 return super(olap_database_columns,self).search(cr, uid, args, offset, limit,order, context=context, count=count)
 
@@ -429,18 +431,18 @@ class olap_database_columns(osv.osv):
                     make_ids.append(lines.related_to.id)
                 link_id = col_pool.browse(cr,uid,int(context['link_col']))
                 make_ids.append(link_id.table_id.id)
-                args = [('table_id','in',make_ids),('related_to','<>',False),('primary_key','<>',True),('hide','<>',True),('active','<>',False)]
+                args = ['|',('table_id','in',make_ids),('related_to','in',make_ids),('primary_key','<>',True),('hide','<>',True),('active','<>',False)]
                 ids = super(olap_database_columns,self).search(cr, uid, args, offset, limit,order, context=context, count=count)
                 return ids
             elif context and context.has_key('master_dim') and context['master_dim']:
                 make_ids=[]
                 col_obj = col_pool.browse(cr,uid,int(context['link_col']))
-                args = [('table_id','=',col_obj.related_to.id),('related_to','<>',False),('hide','<>',True),('active','<>',False)]
+                args = ['|',('table_id','=',col_obj.related_to.id),('related_to','=',col_obj.table_id.id),('hide','<>',True),('active','<>',False)]
                 return  super(olap_database_columns,self).search(cr, uid, args, offset, limit, order, context=context, count=count)
             else:
                 col = col_pool.browse(cr,uid,int(context['link_col']))
                 base_table = col.table_id
-                args = [('table_id','=',base_table.id),('related_to','<>',False),('hide','<>',True),('active','<>',False)]
+                args = ['|',('table_id','=',base_table.id),('related_to','=',base_table.id),('hide','<>',True),('active','<>',False)]
                 return super(olap_database_columns,self).search(cr, uid, args, offset, limit,order, context=context, count=count)
 
 
@@ -847,6 +849,8 @@ class olap_level(osv.osv):
             return hier_obj.name
     
     def onchange_column_name(self,cr,uid,ids,column,context={}):
+        if not column:
+            return {}
         val={}
         col = self.pool.get('olap.database.columns').browse(cr,uid,column)
         val['table_name']= col.table_id.table_db_name

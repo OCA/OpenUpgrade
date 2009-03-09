@@ -31,7 +31,7 @@ from osv import osv
 
 class dm_campaign_group(osv.osv):
     _name = "dm.campaign.group"
-
+    
     def _quantity_planned_total(self, cr, uid, ids, name, args, context={}):
         result={}
         numeric=True
@@ -884,9 +884,9 @@ class dm_campaign_proposition(osv.osv):
         'sale_rate' : fields.float('Sale Rate (%)', digits=(16,2),
                     help='This is the planned sale rate (in percent) for this commercial proposition'),
         'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching'),('split','Split')],"Type"),
-        'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition', readonly=True),
+        'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
-        'quantity_planned' : fields.float('Planned Quantity',digits=(16,2), help='The planned quantity is an estimation of the usable quantity of addresses you  will get after delivery, deduplication and cleaning\n' \
+        'quantity_planned' : fields.integer('Planned Quantity', help='The planned quantity is an estimation of the usable quantity of addresses you  will get after delivery, deduplication and cleaning\n' \
                             'This is usually the quantity used to order the manufacturing of the mailings'),
         'quantity_wanted' : fields.function(_quantity_wanted_get,string='Wanted Quantity',type="char",size="64",method=True,readonly=True,
                     help='The wanted quantity is the number of addresses you wish to get for that segment.\n' \
@@ -899,7 +899,7 @@ class dm_campaign_proposition(osv.osv):
         'quantity_real' : fields.function(_quantity_real_get,string='Real Quantity',type="char",size="64",method=True,readonly=True,
                     help='The real quantity is the number of addresses you really get in the file.'),
         'starting_mail_price' : fields.float('Starting Mail Price',digits=(16,2)),
-        'customer_pricelist_id':fields.many2one('product.pricelist','Items Pricelist', required=False),
+        'customer_pricelist_id':fields.many2one('product.pricelist','Product Pricelist', required=False),
         'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
@@ -1112,7 +1112,7 @@ class dm_campaign_proposition_item(osv.osv):
         'qty_real' : fields.integer('Real Quantity'),
         'price' : fields.float('Sale Price'),
         'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
-        'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
+        'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Product Type', size=64),
         'offer_step_type_id': fields.many2one('dm.offer.step.type','Offer Step Type'), 
         'notes' : fields.text('Notes'),
     }

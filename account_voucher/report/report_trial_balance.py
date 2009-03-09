@@ -27,11 +27,12 @@
 
 import time
 from report import report_sxw
+import rml_parse
 from tools import amount_to_text_en
 import pooler
 import wizard
 
-class report_trial_balance(report_sxw.rml_parse):
+class report_trial_balance(rml_parse.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(report_trial_balance, self).__init__(cr, uid, name, context)
         self.sum_debit = 0.0
@@ -88,20 +89,20 @@ class report_trial_balance(report_sxw.rml_parse):
         if move:       
             for m in move:            
                 if form['date_from'] >= year_start_date and form['date_to'] <= year_end_date:
-                    if m.date <= form['date_from']:
-                       if m.date >= year_start_date or m.date < form['date_from']:
-                            op_debit +=m.debit
-                            op_credit +=m.credit              
-                    if m.date >= form['date_from'] and m.date <= form['date_to']:
-                        op_debit+=m.debit
-                        op_credit+=m.credit
+                    if m['date'] <= form['date_from']:
+                       if m['date'] >= year_start_date or m['date'] < form['date_from']:
+                            op_debit +=m['debit']
+                            op_credit +=m['credit']              
+                    if m['date'] >= form['date_from'] and m['date'] <= form['date_to']:
+                        op_debit+=m['debit']
+                        op_credit+=m['credit']
         if move_other:
             for m1 in move_other:
                 if form['date_from'] >= year_start_date and form['date_to'] <= year_end_date:
-                    if m1.date < form['date_from']:                        
-                        if m1.date >= year_start_date and m1.date < form['date_from']:
-                            op_debit +=m1.debit
-                            op_credit +=m1.credit   
+                    if m1['date'] < form['date_from']:                        
+                        if m1['date'] >= year_start_date and m1['date'] < form['date_from']:
+                            op_debit +=m1['debit']
+                            op_credit +=m1['credit']   
         if op_debit > op_credit:
             op_debit-=op_credit
             op_credit=0.0
@@ -121,14 +122,14 @@ class report_trial_balance(report_sxw.rml_parse):
         if move_other: 
             for m in move_other:
                 if form['date_from'] >= year_start_date and form['date_to'] <= year_end_date:                    
-                    if m.date >= form['date_from'] and m.date <= form['date_to']:
-                        op_debit1+=m.debit
-                        op_credit1+=m.credit
+                    if m['date'] >= form['date_from'] and m['date'] <= form['date_to']:
+                        op_debit1+=m['debit']
+                        op_credit1+=m['credit']
         res['debit']=op_debit1
         res['credit']=op_credit1
         return res
     
-    def get_lines(self, form, ids={}, done=None):#, level=1):
+    def get_lines(self, form, ids={}):
         comp_ids=[]
         child_ids=pooler.get_pool(self.cr.dbname).get('res.company')._get_company_children(self.cr, self.uid,form['company_id'])
         if child_ids:
@@ -137,7 +138,6 @@ class report_trial_balance(report_sxw.rml_parse):
             comp_ids.append(form['company_id'])
         type_list=['asset','liability','income','expense']
         type_ids=pooler.get_pool(self.cr.dbname).get('account.account.type').search(self.cr, self.uid, [('code','in',type_list)])
-        #type_obj=self.pool.get('account.account.type').browse(self.cr, self.uid, type_ids)
         base_list=['Opening Stock','Purchase','Direct Expenses','Indirect Expenses','Sales Account','Goods Given Account','Direct Incomes','Indirect Incomes','Share Holder/Owner Fund','Loan(Liability) Account','Current Liabilities','Suspense Account','Fixed Assets','Investment','Current Assets','Misc. Expenses(Asset)']
         acc= pooler.get_pool(self.cr.dbname).get('account.account').search(self.cr, self.uid, [('user_type','in',type_ids),('company_id','in',comp_ids)])
         ids =acc
@@ -145,8 +145,6 @@ class report_trial_balance(report_sxw.rml_parse):
             ids = self.ids
         if not ids:
             return []
-        if not done:
-            done={}
         result = []
         context  = self.context.copy()
         context['date_from'] = form['date_from']
@@ -157,39 +155,31 @@ class report_trial_balance(report_sxw.rml_parse):
         year_end_date = fiscalyear_obj.browse(self.cr, self.uid, context['fiscalyear'] ).date_stop 
         start_date = form['date_from']
         end_date =  form['date_to']
-        accounts = self.pool.get('account.account').browse(self.cr, self.uid, ids)
+        accounts = self.pool.get('account.account').read(self.cr, self.uid, ids, [ 'id','code','name','level','type1','child_id' ])
         for account in accounts:
-            if account.id in done:
-                    continue
-            done[account.id] = 1
             journal_id = self.pool.get('account.journal').search(self.cr, self.uid,[('type','=','situation')])
             jnl_other_id = self.pool.get('account.journal').search(self.cr, self.uid,[('type','!=','situation')])
-            move_id = self.pool.get('account.move.line').search(self.cr, self.uid, [('account_id','=', account.id),('journal_id','in',journal_id)])
-            move_other_id = self.pool.get('account.move.line').search(self.cr, self.uid, [('account_id','=', account.id),('journal_id','in',jnl_other_id)])
-            move = self.pool.get('account.move.line').browse(self.cr, self.uid, move_id)
-            move_other = self.pool.get('account.move.line').browse(self.cr, self.uid, move_other_id)
+            move_id = self.pool.get('account.move.line').search(self.cr, self.uid, [('account_id','=', account['id']),('journal_id','in',journal_id)])
+            move_other_id = self.pool.get('account.move.line').search(self.cr, self.uid, [('account_id','=', account['id']),('journal_id','in',jnl_other_id)])
+            move = self.pool.get('account.move.line').read(self.cr, self.uid, move_id, ['date','debit','credit'])
+            move_other = self.pool.get('account.move.line').read(self.cr, self.uid, move_other_id , ['date','debit','credit'])
             open = 0.0
             res = {
-                'code': account.code,
-                'name': account.name,
-                'level': account.level,
+                'code': account['code'],
+                'name': account['name'],
+                'level': account['level'],
                 'o_debit':  self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['debit'],
                 'o_credit': self.sum_op_bal(move,move_other,form,year_start_date,year_end_date)['credit'],
                 't_debit':  self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['debit'],
                 't_credit': self.sum_tr_bal(move_other,form,year_start_date,year_end_date)['credit'],
                 'c_debit':  self.sum_cl_bal(move,move_other,form,year_start_date,year_end_date)['debit'],
                 'c_credit': self.sum_cl_bal(move,move_other,form,year_start_date,year_end_date)['credit'],
-                'type' : account.type1
+                'type' : account['type1']
             }
-            if account.child_id:
+            if account['child_id']:
                 res['child']='1'
             else:
                 res['child']='0'
-#            if account.parent_id:
-#                for r in result:
-#                    if r['name']== account.parent_id.name:
-#                        res['level'] = r['level'] + 1
-#                        break
             self.sum_debit += res['o_debit']
             self.sum_credit += res['o_credit']
             self._sum_tra_debit += res['t_debit']

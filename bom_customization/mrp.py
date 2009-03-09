@@ -30,7 +30,7 @@ class mrp_bom(osv.osv):
     _inherit = 'mrp.bom'
     
     _columns = { 
-        'bom_customizations': fields.many2many('bom_customization.bom_customizations', 'mrp_bom_bom_customizations_rel', 'bom_customization_id','bom_id','BoM Customizations'),
+        'bom_customizations': fields.many2many('bom_customization.bom_customizations', 'mrp_bom_bom_customizations_rel','bom_id','bom_customization_id', 'BoM Customizations'),
     }
 mrp_bom()
 

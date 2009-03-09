@@ -642,8 +642,10 @@
                     <separator string="Global Information" colspan="2"/>
                     <field name="camp_id"/>
                     <field name="proposition_type" select="1"/>
-                    <field name="initial_proposition_id" select="1"/>
-                    <field name="date_start" select="2"/>
+                    <group colspan="2" attrs="{'invisible':[('proposition_type','!=','relaunching')]}">
+                    	<field name="initial_proposition_id" select="1"/>
+                    </group>
+              		<field name="date_start" select="2"/>
                     <field name="sale_rate"/>
                     <field name="forwarding_charge" select="2"/>
                     </group>
@@ -658,7 +660,7 @@
                     <separator string="Notes" colspan="4"/>
                     <field name="notes" colspan="4" nolabel="1"/>
                 </page>
-                <page string="Items and Prices">
+                <page string="Products and Prices">
                     <separator string="Prices policy" colspan="4"/>
                     <group colspan="4">
                     <field name="customer_pricelist_id"/>
@@ -673,14 +675,14 @@
                     <field name="item_ids" colspan="4" nolabel="1">
                         <form string="Catalogue">
                             <field name="offer_step_type_id"/>
-                            <field name="product_id" string="Item"/>
+                            <field name="product_id" string="Product"/>
                             <field name="price"/>
                             <field name="item_type"/>
                             <field name="notes"/>
                         </form>
                         <tree string="Catalogue" editable="bottom">
                             <field name="offer_step_type_id"/>
-                            <field name="product_id" string="Item"/>
+                            <field name="product_id" string="Product"/>
                             <field name="price"/>
                             <field name="item_type"/>
                             <field name="notes"/>
@@ -699,7 +701,7 @@
                             <field name="name" string="Name" select="1"/>
                             <field name="code1" string="Code" select="1"/>
                             <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
-                            <field name="customers_file_id" select="1"/>
+                            <field name="customers_file_id" select="1" groups="base.group_extended"/>
                         </group>
                         <notebook colspan="4">
                             <page string="General">
@@ -707,10 +709,15 @@
                                 <field name="split_id" />
                                 <field name="reuse_id" />
                                 <field name="active" />
-                                <separator string="Segmentation" colspan="4"/>
-                                <field name="start_census"/>
-                                <field name="end_census"/>
-                                <field name="deduplication_level"/>
+                                <group colspan="4" groups="base.group_extended">
+		                        	<separator string="Segmentation" colspan="4"/>
+			                        <group colspan="4" col="6">
+			                        <field name="start_census"/>
+			                        <field name="end_census"/>
+			                        <field name="type_census"/>
+			                        </group>
+		                        	<field name="deduplication_level"/>
+		                        </group>
                                 <separator string="Segmentation Criteria" colspan="4"/>
                                 <field name="segmentation_criteria" colspan="4" nolabel="1"/>
                             </page>
@@ -751,7 +758,8 @@
                         <field name="quantity_planned" />
                         <field name="quantity_wanted" />
                         <field name="quantity_delivered" />
-                        <field name="quantity_usable" />
+<!--                     <field name="quantity_usable" />-->
+                        <field name="quantity_real"/>
                         <field name="note" />
                     </tree>
                 </field>
@@ -833,7 +841,7 @@
                     <field name="name" string="Name" select="1"/>
                     <field name="code1" string="Code" select="1"/>
                     <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
-                    <field name="customers_file_id" select="1" />
+                    <field name="customers_file_id" select="1" groups="base.group_extended"/>
                 </group>
                 <notebook colspan="4">
                     <page string="General">
@@ -842,13 +850,15 @@
                         <field name="active" />
                         <field name="split_id" />
                         <field name="reuse_id" />
-                        <separator string="Segmentation" colspan="4"/>
-                        <group colspan="4" col="6">
-                        <field name="start_census"/>
-                        <field name="end_census"/>
-                        <field name="type_census"/>
+						<group colspan="4" groups="base.group_extended">
+                        	<separator string="Segmentation" colspan="4"/>
+	                        <group colspan="4" col="6">
+	                        <field name="start_census"/>
+	                        <field name="end_census"/>
+	                        <field name="type_census"/>
+	                        </group>
+                        	<field name="deduplication_level"/>
                         </group>
-                        <field name="deduplication_level"/>
                         <separator string="Segmentation Criteria" colspan="4"/>
                         <field name="segmentation_criteria" colspan="4" nolabel="1"/>
                         <separator string="Notes" colspan="4"/>
@@ -895,7 +905,7 @@
                 <field name="quantity_planned" select="2"/>
                 <field name="quantity_wanted" select="2"/>
                 <field name="quantity_delivered" select="2"/>
-                <field name="quantity_usable" select="2"/>
+                <field name="quantity_real"/>
                 <field name="note"/>
             </tree>
         </field>

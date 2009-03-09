@@ -10,8 +10,22 @@
 			<field name="arch" type="xml">
 
 				<form string="BOM Configurator">
-					<field name="bom_property_id" domain="[('group_id','=',13)]"/>
-					<field name="bom_key_values" />
+					<field name="bom_property_id_selection" on_change="onchange_bom_property_id_selection(bom_property_id_selection, product_id)"/><!-- domain="[('group_id','=',13)]"  -->
+					<field name="configurator_line_ids"  widget="one2many_list">
+						<form string="Key / Value" editable="bottom">
+							<field name="customization_key_id"/>
+							<field name="customization_value_id"/>
+						</form>
+						<tree string="Key / Value" editable="bottom">
+							<field name="customization_key_id"/>
+							<field name="customization_value_id"/>
+						</tree>
+					</field>
+					<field name="product_id" invisible='1' />
+					<group col="2" colspan="2">
+						<button icon="gtk-cancel" special="cancel" string="Cancel" />
+						<button icon="gtk-ok" name="configure_line" string="Validate" type="object" attrs="{'invisible':[('bom_property_id_selection','=',False)]}" />
+					</group>
 				</form>
 			</field>
 		</record>
