@@ -128,8 +128,13 @@
                     </group>
                     <notebook colspan="4">
                         <page string="Offers">
-                            <field name="offer_ids" widget="one2many" nolabel="1" mode="form">
-                                <form string="Offers">
+                            <field name="offer_ids" widget="one2many" nolabel="1" mode="tree" view_mode="tree,form">
+                                <tree string="Offers">
+                                    <field name="name" />
+                                    <field name="objective" />
+                                    <field name="description" />
+                                </tree>
+                                <form string="Offer">
                                     <field name="name" />
                                     <newline />
                                     <separator string="Objective" colspan="4" />
