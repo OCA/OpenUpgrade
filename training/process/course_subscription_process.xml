@@ -1,0 +1,179 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record id="process_process_subscriptionprocess0" model="process.process">
+            <field name="name">Course Subscription Process</field>
+            <field eval="1" name="active"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_faxtelmaildirect0" model="process.node">
+            <field name="process_id" ref="process_process_subscriptionprocess0"/>
+            <field eval="1" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Fax - Tel - Mail - Direct&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_partnerportal0" model="process.node">
+            <field name="process_id" ref="process_process_subscriptionprocess0"/>
+            <field eval="1" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Partner Portal&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_ecommerceweb0" model="process.node">
+            <field name="process_id" ref="process_process_subscriptionprocess0"/>
+            <field eval="1" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;eCommerce Web&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_onlinepayment0" model="process.node">
+            <field name="process_id" ref="process_process_subscriptionprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Online Payment&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_cancellation0" model="process.node">
+            <field name="process_id" ref="process_process_subscriptionprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Cancellation&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_subscriptions0" model="process.node">
+            <field name="process_id" ref="process_process_subscriptionprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Subscriptions&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_penaltyinvoice0" model="process.node">
+            <field name="process_id" ref="process_process_subscriptionprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Penalty Invoice&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_planseances0" model="process.node">
+            <field name="process_id" ref="process_process_subscriptionprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Plan Seances&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_seancestodeduplicate0" model="process.node">
+            <field name="process_id" ref="process_process_subscriptionprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Seances to Deduplicate&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_node_invoices0" model="process.node">
+            <field name="process_id" ref="process_process_subscriptionprocess0"/>
+            <field eval="0" name="flow_start"/>
+            <field eval="&quot;&quot;&quot;state&quot;&quot;&quot;" name="kind"/>
+            <field eval="&quot;&quot;&quot;Invoices&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_manualsubscription0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Manual Subscription&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_subscriptions0"/>
+            <field name="source_node_id" ref="process_node_faxtelmaildirect0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_portalsubscription0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Portal Subscription&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_subscriptions0"/>
+            <field name="source_node_id" ref="process_node_partnerportal0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_ecommerceonlinepayment0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;eCommerce Online Payment&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_onlinepayment0"/>
+            <field name="source_node_id" ref="process_node_ecommerceweb0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_ecommercesubscription0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;eCommerce Subscription&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_subscriptions0"/>
+            <field name="source_node_id" ref="process_node_ecommerceweb0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_cancellation0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Cancellation&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_cancellation0"/>
+            <field name="source_node_id" ref="process_node_subscriptions0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_cancellation1" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Cancellation&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_penaltyinvoice0"/>
+            <field name="source_node_id" ref="process_node_subscriptions0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_sessionstovalidate0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Sessions to Validate&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_planseances0"/>
+            <field name="source_node_id" ref="process_node_subscriptions0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_subscriptionseancesdup0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Subscription - Seances - Dup&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_seancestodeduplicate0"/>
+            <field name="source_node_id" ref="process_node_subscriptions0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_groupstoduplicate0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Groups to Duplicate&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_seancestodeduplicate0"/>
+            <field name="source_node_id" ref="process_node_planseances0"/>
+        </record>
+    </data>
+    <data>
+        <record id="process_transition_invoicing0" model="process.transition">
+            <field eval="[(6,0,[])]" name="role_ids"/>
+            <field eval="[(6,0,[])]" name="transition_ids"/>
+            <field eval="&quot;&quot;&quot;Invoicing&quot;&quot;&quot;" name="name"/>
+            <field name="target_node_id" ref="process_node_invoices0"/>
+            <field name="source_node_id" ref="process_node_planseances0"/>
+        </record>
+    </data>
+</openerp>
