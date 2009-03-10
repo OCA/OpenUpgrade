@@ -22,7 +22,7 @@
                 <field name="flow_start" />
                 <field name="flow_stop" />
                 <separator string="Description" colspan="4"/>
-                <field name="description" colspan="4" nolabel="1"/>
+                <field name="description" colspan="4" nolabel="1" widget="text_wiki"/>
             </form>
         </field>
     </record>
@@ -93,7 +93,7 @@
                         <field name="quotation" select="2" groups="base.group_extended"/>
                         <field name="legal_state" select="2" groups="base.group_extended"/>
                         <separator string="Description" colspan="4"/>
-                        <field name="desc" nolabel="1" colspan="4"/>
+                        <field name="desc" nolabel="1" colspan="4" widget="text_wiki"/>
                         <separator string="Status" colspan="4"/>
                         <group col="8" colspan="4">
                             <field name="state" select="1" nolabel="1"/>
@@ -155,17 +155,17 @@
                         <field name="doc_number" select="2"/>
                         </group>
                         <separator string="Planning Advices" colspan="4"/>
-                        <field name="planning_note" nolabel="1" colspan="4"/>
+                        <field name="planning_note" nolabel="1" colspan="4" widget="text_wiki"/>
                         <separator string="DTP Advices" colspan="4"/>
-                        <field name="dtp_note" nolabel="1" colspan="4"/>
+                        <field name="dtp_note" nolabel="1" colspan="4" widget="text_wiki"/>
                         <newline/>
                         <separator string="Trademark Advices" colspan="4"/>
-                        <field name="trademark_note" nolabel="1" colspan="4"/>
+                        <field name="trademark_note" nolabel="1" colspan="4" widget="text_wiki"/>
                         <newline/>
                         <separator string="Production Advices" colspan="4"/>
-                        <field name="production_note" nolabel="1" colspan="4"/>
+                        <field name="production_note" nolabel="1" colspan="4" widget="text_wiki"/>
                         <separator string="Purchase Advices" colspan="4"/>
-                        <field name="purchase_note" nolabel="1" colspan="4"/>
+                        <field name="purchase_note" nolabel="1" colspan="4" widget="text_wiki"/>
                     </page>
                     <page string="Mailing Manufacturing">
                         <separator string="Mailing Manufacturing Products" colspan="4"/>
@@ -275,7 +275,7 @@
     =======================================================
     MANUFACTURING CONSTRAINT VIEWS
     =======================================================
-    -->
+    
 
     <record model="ir.ui.view" id="view_offer_step_manufacturing_constraint_form">
         <field name="name">dm.offer.step.manufacturing_constraint.form</field>
@@ -316,7 +316,7 @@
     </record>
 
     <menuitem id="menu_action_step_manufacturing_constraint_form" parent="dm.menu_dm_config_offer_steps" action="action_step_manufacturing_constraint_form" groups="res_groups_offeradmin,res_groups_campaignadmin"/>
-
+-->
 
     <!--
     =======================================================

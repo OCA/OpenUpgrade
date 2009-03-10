@@ -124,7 +124,7 @@
                                     <field name="date_delivery"/>
                                 </group>
                                 <separator string="Notes" colspan="4"/>
-                                <field name="notes" colspan="4" nolabel="1"/>
+                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                                 <field name="state" nolabel="1"/>
                             </form>
                         </field>
@@ -170,7 +170,7 @@
                                     <field name="date_delivery"/>
                                 </group>
                                 <separator string="Notes" colspan="4"/>
-                                <field name="notes" colspan="4" nolabel="1"/>
+                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                                 <field name="state" nolabel="1"/>
                             </form>
                         </field>
@@ -223,7 +223,7 @@
                                     <field name="date_delivery"/>
                                 </group>
                                 <separator string="Notes" colspan="4"/>
-                                <field name="notes" colspan="4" nolabel="1"/>
+                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                                 <field name="state" nolabel="1"/>
                             </form>
                         </field>
@@ -269,7 +269,7 @@
                                     <field name="date_delivery"/>
                                 </group>
                                 <separator string="Notes" colspan="4"/>
-                                <field name="notes" colspan="4" nolabel="1"/>
+                                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                                 <field name="state" nolabel="1"/>
                             </form>
                         </field>
@@ -294,7 +294,7 @@
                     </page>
                     <page string="Notes">
                         <separator string="Notes" colspan="4"/>
-                        <field name="notes" colspan="4" nolabel="1"/>
+                        <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                     </page>
                 </notebook>
             </form>
@@ -584,7 +584,7 @@
                             <field name="offer_id"/>
                         </group>
                         <separator string="Notes" colspan="4"/>
-                        <field name="notes" colspan="4" nolabel="1"/>
+                        <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                         <button name="copy_campaign" string="Create Campaign" type="object"/>
                     </page>
                 </notebook>
@@ -658,7 +658,7 @@
                     <field name="quantity_real"/>
                     </group>
                     <separator string="Notes" colspan="4"/>
-                    <field name="notes" colspan="4" nolabel="1"/>
+                    <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                 </page>
                 <page string="Products and Prices">
                     <separator string="Prices policy" colspan="4"/>
@@ -681,7 +681,7 @@
                             <field name="qty_real"/>
                             <field name="qty_planned"/>
                             <separator string="Notes" colspan="4"/>
-                            <field name="notes" nolabel="1" colspan="4"/>
+                            <field name="notes" nolabel="1" colspan="4" widget="text_wiki"/>
                         </form>
                         <tree string="Catalogue" editable="bottom">
                             <field name="offer_step_type_id"/>
@@ -750,7 +750,7 @@
 								<field name="quantity_real" select="2"/>
 							</page>
                             <page string="Notes">
-                                <field name="note" colspan="4" nolabel="1"/>
+                                <field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
                             </page>
                         </notebook>
                    </form>
@@ -865,7 +865,7 @@
                         <separator string="Segmentation Criteria" colspan="4"/>
                         <field name="segmentation_criteria" colspan="4" nolabel="1"/>
                         <separator string="Notes" colspan="4"/>
-                        <field name="note" colspan="4" nolabel="1"/>
+                        <field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
                     </page>
                     <page string="Quantities">
                         <separator string="Addresses Quantities" colspan="4"/>
@@ -1011,7 +1011,7 @@
                 <field name="name" select="1"/>
                 <field name="code" select="1"/>
                 <separator string="Description" colspan="4"/>
-                <field name="description" nolabel="1" colspan="4" select="2"/>
+                <field name="description" nolabel="1" colspan="4" select="2" widget="text_wiki"/>
             </form>
         </field>
     </record>
@@ -1220,7 +1220,7 @@
                     <field name="date_delivery"/>
                 </group>
                 <separator string="Description" colspan="4"/>
-                <field name="notes" colspan="4" nolabel="1"/>
+                <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                 <field name="state" nolabel="1"/>
             </form>
         </field>
@@ -1277,7 +1277,7 @@
                 </group>
                 <group colspan="4">
                     <separator string="Descrition" colspan="4"/>
-                    <field name="notes" colspan="4" nolabel="1"/>
+                    <field name="notes" colspan="4" nolabel="1" widget="text_wiki"/>
                 </group>
             </form>
         </field>
@@ -1418,7 +1418,7 @@
                     <field name="start_census"/>
                     <field name="end_census"/>
                     <field name="deduplication_level"/>
-                    <field name="note" colspan="4"/>
+                    <field name="note" colspan="4" widget="text_wiki"/>
                 </form>
                 <tree string="Segments">
                     <field name="name" string="Name"/>

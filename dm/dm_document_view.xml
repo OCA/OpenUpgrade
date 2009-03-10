@@ -65,7 +65,7 @@
 					<field name="gender_id" select="1"/>
 					<field name="category_id" colspan="4"/>
 					<separator string="Description" colspan="4"/>
-					<field name="note" colspan="4" nolabel="1"/>
+					<field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
 					<separator string="Status" colspan="4"/>
 					<group col="2" colspan="4">
 						<field name="state" nolabel="1"/>
@@ -125,7 +125,7 @@
                 <separator string="Plugins" colspan="4"/>
                 <field name="plugin_ids" colspan="4" nolabel="1" />
                 <separator string="Description" colspan="4"/>
-                <field name="note" colspan="4" nolabel="1"/>
+                <field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
             </form>
         </field>
     </record>
@@ -171,7 +171,7 @@
                 </group>
                 <newline/>
 				<separator string="Description" colspan="4"/>
-				<field name="note" nolabel="1" colspan="4"/>                
+				<field name="note" nolabel="1" colspan="4" widget="text_wiki"/>                
                 <notebook colspan="4">
                     <page string="Customer Plugin" attrs="{'invisible':[('type','!=','fields')]}">
                         <field name="model_id" colspan="4" attrs="{'required':[('type','=','fields')]}" />
@@ -193,7 +193,7 @@
 				                	<field name="custome_plugin_id"/>
 				                </group>
 						<separator  colspan="4"/> 
-						<field name="note" nolabel="1" colspan="4"/>
+						<field name="note" nolabel="1" colspan="4" widget="text_wiki"/>
 					</form>
 					<tree string="Argument List">
 				        	<field name="name" select="1"/>
