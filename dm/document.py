@@ -33,7 +33,7 @@ class dm_ddf_plugin(osv.osv):
     _name = "dm.ddf.plugin"
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None,context=None, count=False):
-        if 'dm_template_id' in context:
+        if context and 'dm_template_id' in context:
             if not context['dm_template_id']:
                 return []
             res = self.pool.get('dm.document.template').browse(cr,uid,context['dm_template_id'])
