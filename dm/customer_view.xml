@@ -29,7 +29,6 @@
                     <separator string="Address Infos" colspan="4"/>
                 	<field colspan="4" mode="form,tree" name="address" nolabel="1" select="1">
 	                    <form string="Partner contacts">
-	                    	<field name="firstname" select="2"/>
 	                        <field name="name" select="2"/>
 	                        <field domain="[('domain', '=', 'contact')]" name="title" string="Type"/>
 	                        <field name="function"/>
@@ -141,7 +140,7 @@
     CUSTOMER ORDER VIEWS
     =======================================================
     -->
- 
+    
     <record model="ir.ui.view" id="view_dm_customer_order_form">
         <field name="name">dm.customer.order.form</field>
         <field name="model">dm.customer.order</field>
