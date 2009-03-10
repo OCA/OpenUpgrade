@@ -688,7 +688,9 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     <!-- Server Action -->
     
 	<data noupdate="1">
-		<record id="ir_actions_server_none0" model="ir.actions.server">
+	<!-- use this 
+		<record id="ir_actions_server_none0" model="ir.actions.server" -->
+		<record id="ir_actions_server_none0" model="dm.offer.step.action">
 			<field eval="&quot;&quot;&quot;# You can use the following variables
 #    - object
 #    - object2
