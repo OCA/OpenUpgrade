@@ -611,8 +611,8 @@
                     <field name="name" />
                     <field name="date" />
                     <separator string="Invoicing" colspan="4" />
-                    <field name="partner_id" />
-                    <field name="address_id" />
+                    <field name="partner_id" on_change="on_change_partner(partner_id)"/>
+                    <field name="address_id" domain="[('partner_id','=', partner_id),('type', '=', 'invoice')]"/>
                     <field name="session_id" />
                     <field name="price" />
                     <field name="invoice_id" />
