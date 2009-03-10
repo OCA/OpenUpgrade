@@ -44,7 +44,7 @@
 		</record>
 
 
-		<record id="etl_connector_tree" model="ir.actions.act_window">
+		<record id="action_etl_connector_tree" model="ir.actions.act_window">
 			<field name="name">ETL Connector</field>
 			<field name="res_model">etl.connector</field>
 			<field name="view_type">form</field>
@@ -99,9 +99,8 @@
 
 		
 	<menuitem name="Connectors" parent="menu_etl_configure"
-			sequence="9" action="action_etl_connector_type_tree"
+			sequence="9" action="action_etl_connector_tree"
 			id="etl_connector" />
-
 
 		
 	<menuitem name="SQL Connector" parent="etl_connector"
