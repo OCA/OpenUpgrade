@@ -138,7 +138,6 @@ class Account(osv.osv):
                  vals['type1'] = 'cr'
             else:
                  vals['type1'] = 'none'
-        print "vals::::",vals
         super(Account, self).write(cr, uid,ids, vals, context)
         self_obj= self.browse(cr,uid,ids)
         move_pool=self.pool.get('account.move')
