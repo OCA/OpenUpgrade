@@ -58,12 +58,12 @@ class dm_ddf_plugin(osv.osv):
             for plugin in plugins:
                 args={}
                 if plugin.type=='fields':
-                    res  = self.pool.get('ir.model').browse(cr,uid,plugin.object.id)
-                    args['object']=res.model
-                    args['field_name']=str(plugin.field.name)
-                    args['field_type']=str(plugin.field.ttype)
-                    args['field_relation']=str(plugin.field.relation)
-                        
+                    res  = self.pool.get('ir.model').browse(cr,uid,plugin.model_id.id)
+                    args['model_name']=res.model
+                    args['field_name']=str(plugin.field_id.name)
+                    args['field_type']=str(plugin.field_id.ttype)
+                    args['field_relation']=str(plugin.field_id.relation)
+    
                     path = os.path.join(os.getcwd(), "addons/dm/")
                     plugin_name = 'customer_function'
                 else :
@@ -138,9 +138,10 @@ class dm_ddf_plugin(osv.osv):
         'argument_ids' : fields.one2many('dm.plugin.argument', 'plugin_id', 'Argument List'),
         'note' : fields.text('Description'),
         'type' : fields.selection([('fields','Customer'),('dynamic','Dynamic'),('url','URL')], 'Type', required=True),
-        'field' : fields.many2one('ir.model.fields','Customers Field'),
-        'object' : fields.many2one('ir.model','Object'),
-        'url_text' : fields.char('Text To Display',size=64),     
+        'model_id' : fields.many2one('ir.model','Object'),
+        'field_id' : fields.many2one('ir.model.fields','Customers Field'),
+#        'url_text' : fields.char('Text To Display',size=64),     
+ 
                      
      }
     _sql_constraints = [
