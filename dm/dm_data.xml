@@ -8,17 +8,14 @@
             <field name="main_language" ref="base.lang_en"/>
             <field name="main_currency" ref="base.EUR"/>
         </record>
-
 		<record id="base.in" model="res.country">
             <field name="main_language" ref="base.lang_en"/>
             <field name="main_currency" ref="base.INR"/>
         </record>
-
 		<record id="base.fr" model="res.country">
             <field name="main_language" ref="base.lang_en"/>
             <field name="main_currency" ref="base.EUR"/>
         </record>
-        
 		<record id="base.us" model="res.country">
             <field name="main_language" ref="base.lang_en"/>
             <field name="main_currency" ref="base.USD"/>
@@ -30,67 +27,54 @@
             <field eval="&quot;&quot;&quot;Direct Marketing&quot;&quot;&quot;" name="name"/>
             <field eval="1" name="active"/>
         </record>
-
         <record model="res.partner.category" id="cat_copywriter">
             <field name="name" eval="&quot;Copywriter&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_dealer">
             <field name="name" eval="&quot;Dealer&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_broker">
             <field name="name" eval="&quot;Broker&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_deduplicator">
             <field name="name" eval="&quot;Deduplicator&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_cleaner">
             <field name="name" eval="&quot;Cleaner&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_trademark">
             <field name="name" eval="&quot;Trademark&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_translator">
             <field name="name" eval="&quot;Translator&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_owner">
             <field name="name" eval="&quot;Owner&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_router">
             <field name="name" eval="&quot;Router&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_mailing_supplier">
             <field name="name" eval="&quot;Mailing Supplier&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_dtp_supplier">
             <field name="name" eval="&quot;DTP Supplier&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
         <record model="res.partner.category" id="cat_item_supplier">
             <field name="name" eval="&quot;Item Supplier&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-
 		<record model="res.partner.category" id="cat_mail_service">
             <field name="name" eval="&quot;Mail Service&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
@@ -102,7 +86,6 @@
             <field name="name" eval="&quot;Paper&quot;"/>
             <field name="code" eval="&quot;paper&quot;"/>
         </record>
-
         <record model="dm.media" id="media_email">
             <field name="name" eval="&quot;Email&quot;"/>
             <field name="code" eval="&quot;email&quot;"/>
@@ -113,34 +96,28 @@
             <field name="code" eval="&quot;Phone&quot;"/>
         </record>
 
-
         <!-- Campaign Types -->
 
         <record id="dm_campaign_type_loyalty" model="dm.campaign.type">
             <field name="code">loyalty</field>
             <field name="name">Development of customer loyalty</field>
         </record>
-
         <record id="dm_campaign_type_deleting" model="dm.campaign.type">
             <field name="name">Deleting campaign</field>
             <field name="code">deleting</field>
         </record>
-
         <record id="dm_campaign_type_mixed" model="dm.campaign.type">
             <field name="code">mixed</field>
             <field name="name">Mixed campaign</field>
         </record>
-
         <record id="dm_campaign_type_recruiting" model="dm.campaign.type">
             <field name="code">recruiting</field>
             <field name="name">Recruiting campaign</field>
         </record>
-
         <record id="dm_campaign_type_model" model="dm.campaign.type">
             <field name="code">model</field>
             <field name="name">Model</field>
         </record>
-
 
         <!-- RP Project Task Types-->
 
@@ -160,7 +137,6 @@
             <field eval="&quot;&quot;&quot;Items Procurement&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;Direct Marketing -  Items Procurement Task&quot;&quot;&quot;" name="description"/>
         </record>
-
 
         <!-- Product Categories -->
 
@@ -308,7 +284,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;2009-08-01 09:00:00&quot;&quot;&quot;" name="date_start"/>
         </record>
     </data>
-
     <data noupdate="1">
         <record id="project_task_translationrequest0" model="project.task">
             <field eval="10" name="sequence"/>
@@ -778,4 +753,169 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 		    <field name="user_id" ref="base.user_root"/>
 	    </record>
     </data>
+    
+    <!-- PLUGINS -->
+    
+    <data noupdate="1">
+		<record id="dm_ddf_plugin_name0" model="dm.ddf.plugin">
+			<field eval="&quot;&quot;&quot;name&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Name&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="store_value"/>
+			<field name="object" ref="base.model_res_partner"/>
+			<field eval="&quot;&quot;&quot;Partner's Name&quot;&quot;&quot;" name="note"/>
+			<field name="field" ref="base.field_res_partner_name"/>
+			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_code0" model="dm.ddf.plugin">
+			<field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Code&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="store_value"/>
+			<field name="object" ref="base.model_res_partner"/>
+			<field eval="&quot;&quot;&quot;Partner's Code&quot;&quot;&quot;" name="note"/>
+			<field name="field" ref="base.field_res_partner_ref"/>
+			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_language0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;language&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Language&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field eval="&quot;&quot;&quot;Partner's Language&quot;&quot;&quot;" name="note"/>
+				<field name="field" ref="base.field_res_partner_lang"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_address0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;address&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Address&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field eval="&quot;&quot;&quot;Partner's Address&quot;&quot;&quot;" name="note"/>
+				<field name="field" ref="base.field_res_partner_address"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_decoyaddress0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;decoy_address&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Decoy Address&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field name="field" ref="dm.field_res_partner_decoy_address"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_decoyaddressowner0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;decoy_address_owner&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Decoy Address Owner&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field eval="&quot;&quot;&quot;Partner's Decoy Address&quot;&quot;&quot;" name="note"/>
+				<field name="field" ref="dm.field_res_partner_decoy_owner"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_externalreference0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;external_reference&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;External Reference&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field eval="&quot;&quot;&quot;External reference&quot;&quot;&quot;" name="note"/>
+				<field name="field" ref="dm.field_res_partner_decoy_external_ref"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_usedforcampaigns0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;used_campaigns&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Used for Campaigns&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field eval="&quot;&quot;&quot;Define if this Decoy can be used campaigns&quot;&quot;&quot;" name="note"/>
+				<field name="field" ref="dm.field_res_partner_decoy_for_campaign"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_usedforfilerenting0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;used_file_renting&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Used for File Renting&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field name="field" ref="dm.field_res_partner_decoy_for_renting"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_usedforfilerenting0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;Define if this decoy address can be used with customer file renting&quot;&quot;&quot;" name="note"/>
+		</record>
+		<record id="dm_ddf_plugin_decoyaddressformedia0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;decoy_address_media&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Decoy Address for Media&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field name="field" ref="dm.field_res_partner_decoy_media_ids"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_otherlanguage0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;other_language&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Other Language&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field eval="&quot;&quot;&quot;Other Language&quot;&quot;&quot;" name="note"/>
+				<field name="field" ref="dm.field_res_partner_language_ids"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_prospectformedia0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;prospect_media&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Prospect for Media&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field eval="&quot;&quot;&quot;Prospect for Media&quot;&quot;&quot;" name="note"/>
+				<field name="field" ref="dm.field_res_partner_prospect_media_ids"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_clientformedia0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;client_media&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Client for Media&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field eval="&quot;&quot;&quot;Client for Media&quot;&quot;&quot;" name="note"/>
+				<field name="field" ref="dm.field_res_partner_client_media_ids"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_allowedcountries0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;allowed_countries&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Allowed Countries&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field eval="&quot;&quot;&quot;Allowed Countries&quot;&quot;&quot;" name="note"/>
+				<field name="field" ref="dm.field_res_partner_country_ids"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_ddf_plugin_allowedstates0" model="dm.ddf.plugin">
+				<field eval="&quot;&quot;&quot;allowed_states&quot;&quot;&quot;" name="code"/>
+				<field eval="&quot;&quot;&quot;Allowed States&quot;&quot;&quot;" name="name"/>
+				<field eval="0" name="store_value"/>
+				<field name="object" ref="base.model_res_partner"/>
+				<field eval="&quot;&quot;&quot;Allowed States&quot;&quot;&quot;" name="note"/>
+				<field name="field" ref="dm.field_res_partner_state_ids"/>
+				<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+	</data>
+	<!-- TEMPLATE -->
+	<data>
+		<record id="dm_document_template_partner0" model="dm.document.template">
+			<field eval="[(6,0,[ref('dm_ddf_plugin_name0'),ref('dm_ddf_plugin_code0'),ref('dm_ddf_plugin_language0'),ref('dm_ddf_plugin_address0'),ref('dm_ddf_plugin_decoyaddress0'),ref('dm_ddf_plugin_decoyaddressowner0'),ref('dm_ddf_plugin_externalreference0'),ref('dm_ddf_plugin_usedforcampaigns0'),ref('dm_ddf_plugin_usedforfilerenting0'),ref('dm_ddf_plugin_decoyaddressformedia0'),ref('dm_ddf_plugin_otherlanguage0'),ref('dm_ddf_plugin_prospectformedia0'),ref('dm_ddf_plugin_clientformedia0'),ref('dm_ddf_plugin_allowedcountries0'),ref('dm_ddf_plugin_allowedstates0')])]" name="plugin_ids"/>
+			<field eval="&quot;&quot;&quot;Partner&quot;&quot;&quot;" name="name"/>
+		</record>
+	</data>
+	<!-- GENDER -->
+	<data noupdate="1">
+		<record id="dm_customer_gender_sir0" model="dm.customer.gender">
+			<field name="to_gender" ref="base.res_partner_title_sir"/>
+			<field eval="&quot;&quot;&quot;Sir&quot;&quot;&quot;" name="description"/>
+			<field eval="&quot;&quot;&quot;Sir&quot;&quot;&quot;" name="name"/>
+		</record>
+		<record id="dm_customer_gender_madam0" model="dm.customer.gender">
+			<field name="to_gender" ref="base.res_partner_title_madam"/>
+			<field eval="&quot;&quot;&quot;Madam&quot;&quot;&quot;" name="description"/>
+			<field eval="&quot;&quot;&quot;Madam&quot;&quot;&quot;" name="name"/>
+		</record>
+		<record id="dm_customer_gender_miss0" model="dm.customer.gender">
+			<field name="to_gender" ref="base.res_partner_title_miss"/>
+			<field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="description"/>
+			<field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="name"/>
+		</record>
+	</data>
 </openerp>

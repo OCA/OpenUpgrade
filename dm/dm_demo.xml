@@ -56,6 +56,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
             <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
@@ -76,6 +77,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
             <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_piforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="2" name="doc_number"/>
@@ -91,6 +93,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
             <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_alpiforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
@@ -105,6 +108,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
             <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_alimforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
@@ -119,6 +123,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
             <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="&quot;&quot;&quot;The Intermediate mailing is a phone by a commercial call to thank the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
@@ -208,9 +213,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="action" ref="dm.ir_actions_server_none0"/>
         </record>
     </data>
-
     <!-- Trademark -->
-
     <data noupdate="1">
         <record id="dm_trademark_openerp0" model="dm.trademark">
             <field eval="&quot;&quot;&quot;OERP&quot;&quot;&quot;" name="code"/>
@@ -1353,7 +1356,7 @@ rkJggg==
 
     <!-- Users -->
 
-<data noupdate="1">
+	<data noupdate="1">
         <record id="res_users_tom0" model="res.users">
             <field eval="[(6,0,[ref('dm.res_groups_manufacturingmanager'),ref('base.group_user')])]" name="groups_id"/>
             <field eval="[(6,0,[])]" name="roles_id"/>
@@ -1437,10 +1440,7 @@ rkJggg==
             <field name="files_responsible_id" ref="res_users_joe0"/>
         </record>
     </data>
-
     <!-- CUSTOMERS LIST -->
-
-
     <data noupdate="1">
         <record id="product_product_bookstorecustomerslist0" model="product.product">
             <field eval="&quot;&quot;&quot;buy&quot;&quot;&quot;" name="supply_method"/>
@@ -1527,7 +1527,6 @@ rkJggg==
             <field name="product_id" ref="product_product_associationcustomerslist0"/>
         </record>
     </data>
-
     <data noupdate="1">
         <record id="dm_customers_list_openerpcustomers0" model="dm.customers_list">
             <field eval="1.0" name="other_cost"/>
@@ -1546,7 +1545,6 @@ rkJggg==
             <field eval="&quot;&quot;&quot;net&quot;&quot;&quot;" name="invoice_base"/>
         </record>
     </data>
-
     <data noupdate="1">
         <record id="dm_customers_list_bookstore_nale_us0" model="dm.customers_list">
             <field eval="1.0" name="other_cost"/>
@@ -1564,7 +1562,6 @@ rkJggg==
             <field eval="&quot;&quot;&quot;net&quot;&quot;&quot;" name="invoice_base"/>
         </record>
     </data>
-
     <data noupdate="1">
         <record id="dm_customers_list_assoc_bosslist_us0" model="dm.customers_list">
             <field eval="1.5" name="other_cost"/>
@@ -1582,7 +1579,6 @@ rkJggg==
             <field eval="&quot;&quot;&quot;net&quot;&quot;&quot;" name="invoice_base"/>
         </record>
     </data>
-
     <!-- SEGMENT -->
 
     <data noupdate="1">
@@ -1638,10 +1634,7 @@ rkJggg==
             <field eval="2600" name="quantity_real"/>
         </record>
     </data>
-
-
 	<!-- Customers -->
-
 	<data noupdate="1">
 		<record id="dm_customer_0" model="res.partner">
 			<field eval="&quot;&quot;&quot;JD&quot;&quot;&quot;" name="ref"/>
@@ -1862,7 +1855,6 @@ rkJggg==
             <field eval="&quot;&quot;&quot;bl@maxmailing.com&quot;&quot;&quot;" name="email"/>
         </record>
 	</data>
-
 	<data noupdate="1">
 		<record id="dm_customer_2" model="res.partner">
 			<field eval="&quot;&quot;&quot;DD&quot;&quot;&quot;" name="ref"/>
@@ -1971,7 +1963,6 @@ rkJggg==
             <field eval="&quot;&quot;&quot;daisy@disnep.com&quot;&quot;&quot;" name="email"/>
         </record>
 	</data>
-
 	<!-- Customer Orders -->
 	<data noupdate="1">
 		<record id="dm_customer_order_so0" model="dm.customer.order">
@@ -1991,7 +1982,6 @@ rkJggg==
 			<field name="partner_shipping_id" ref="dm.res_partner_address_dm_customer_1"/>
 			<field name="shop_id" ref="dm.shop1"/>
 		</record>
-
 		<record id="dm_customer_order_so1" model="dm.customer.order">
 			<field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2010"/>
 			<field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="order_policy"/>
@@ -2009,7 +1999,6 @@ rkJggg==
 			<field name="partner_shipping_id" ref="dm.res_partner_address_dm_customer_2"/>
 			<field name="shop_id" ref="dm.shop1"/>
 		</record>
-
 		<record id="dm_customer_order_so2" model="dm.customer.order">
 			<field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2010"/>
 			<field eval="&quot;&quot;&quot;manual&quot;&quot;&quot;" name="order_policy"/>
