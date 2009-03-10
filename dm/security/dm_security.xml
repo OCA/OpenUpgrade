@@ -39,6 +39,7 @@
 	</record>
 	<record id="res_groups_dtpmanager" model="res.groups">
 		<field name="name">Direct Marketing / DTP Manager</field>
+		<field eval="[(6,0,[ref('dm.menu_dm_config'),ref('dm.menu_action_offer_doc'),ref('board_dm.menu_board_dtp_manager'),ref('board_dm.next_id_112')])]" name="menu_access"/>
 	</record>
 	<record id="res_groups_custfileadmin" model="res.groups">
 		<field name="name">Direct Marketing / Customer File Admin</field>
