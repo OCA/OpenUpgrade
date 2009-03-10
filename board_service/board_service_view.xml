@@ -91,7 +91,6 @@
         			<child1>
             			<action colspan="4" name="%(action_view_forecast)d" string="Draft Sales Forecast Lines" width="500"/>
             			<button colspan="4" icon="terp-purchase" name="%(hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_validate)d" string="My Department's Timesheet to Validate" type="action" width="300"/>
-            			
             		</child1>
             		<child2>
             			<action colspan="4" name="%(report_sale.action_so_pipeline)d" string="Sales Pipeline"/>
@@ -122,20 +121,33 @@
     <!-- Daily Dashboad  -->
     
     <!-- Meeting of the day view -->
+     
+    <record model="ir.ui.view" id="view_my_meeting_dashboard_tree">
+        <field name="name">CRM - Meetings Tree</field>
+        <field name="model">crm.case</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Meetings Tree"  colors="red:state=='open'">
+                <field name="date" string="Meeting Date" select="2"/>
+                <field name="name" />
+                <field name="partner_id" select="1"/>
+            </tree>
+        </field>
+    </record>
     
     <record model="ir.actions.act_window" id="action_my_meetings">
    		<field name="name">My Meeting of the Day</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="crm_configuration.crm_case_tree_view_meet"/>
+		<field name="view_id" ref="view_my_meeting_dashboard_tree"/>
 		<field name="domain">[('section_id.name', '=', 'Meetings'),('date','&gt;=',time.strftime('%Y-%m-%d'))]</field>
 	</record>
 	
    	<record model="ir.actions.act_window.view" id="act_my_meetings_tree">
        	<field name="sequence" eval="1"/>
        	<field name="view_mode">tree</field>
-       	<field name="view_id" ref="crm_configuration.crm_case_tree_view_meet"/>
+       	<field name="view_id" ref="view_my_meeting_dashboard_tree"/>
        	<field name="act_window_id" ref="action_my_meetings"/>
    	</record>
    	
@@ -146,6 +158,33 @@
        	<field name="act_window_id" ref="action_my_meetings"/>
    	</record>
    
+	<!-- My Pending Task View -->
+       
+   <record id="view_pending_task_dashboard_tree" model="ir.ui.view">
+    <field name="name">project.task.tree</field>
+    <field name="model">project.task</field>
+    <field name="type">tree</field>
+    <field eval="2" name="priority"/>
+    <field name="arch" type="xml">
+        <tree  string="My Pending Tasks">
+            <field name="name"/>
+            <field name="project_id"/>
+            <field name="user_id" string="Delegated To"/>
+            <field name="delay_hours" string="Delay" sum="Delay" widget="float_time"/>
+            <field name="progress" widget="progressbar"/>
+        </tree>
+    </field>
+    </record>
+        
+    <record id="action_view_task_pending_dashboard" model="ir.actions.act_window">
+	    <field name="name">My Pending Tasks</field>
+	    <field name="res_model">project.task</field>
+	    <field name="view_type">form</field>
+	    <field name="view_mode">tree,form,calendar,graph</field>
+	    <field name="view_id" ref="view_pending_task_dashboard_tree"/>
+	    <field name="domain">[('user_id', '=', uid),('state','=','pending')]</field>
+    </record>
+
     <record id="board_service_daliy_form" model="ir.ui.view">
     	<field name="name">board.service.daily.form</field>
         <field name="model">board.board</field>
@@ -155,7 +194,7 @@
         		<hpaned>
         			<child1>
             			<action colspan="4" width="500" name="%(board_project.action_view_task_tree)d" string="My Open Tasks"/>
-            			<action colspan="4" width="500" name="%(project.action_view_task5_pending)d" string="My Pending Tasks"/>
+            			<action colspan="4" width="500" name="%(action_view_task_pending_dashboard)d" string="My Pending Tasks"/>
             			<action colspan="4" width="500" name="%(project_gtd.act_timebox_tasks_my_inbox)d" string="My Inbox"/>
             		</child1>
 					<child2>
