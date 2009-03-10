@@ -41,7 +41,7 @@ class ecommerce_partner(osv.osv):
         'lang': fields.selection(_lang_get, 'Language', size=5),
         'company_name': fields.char('Company Name', size=64),
         'active': fields.boolean('Active'),
-        'address': fields.one2many('ecommerce.partner.address', 'partner_id', 'Contacts'),
+        'address_ids': fields.one2many('ecommerce.partner.address', 'partner_id', 'Contacts'),
         'category_ids': fields.many2many('res.partner.category', 'ecommerce_partner_category_rel', 'partner_id', 'category_id', 'Categories'),
     }
     _defaults = {

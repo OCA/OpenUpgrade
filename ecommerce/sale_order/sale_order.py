@@ -38,7 +38,7 @@ class ecommerce_saleorder(osv.osv):
         'epartner_invoice_id': fields.many2one('ecommerce.partner.address', 'Invoice Address'),
         'pricelist_id': fields.many2one('product.pricelist', 'Pricelist', required=True),
         'web_id': fields.many2one('ecommerce.shop', 'Web Shop', required=True),
-        'order_lines': fields.one2many('ecommerce.order.line', 'order_id', 'Order Lines'),
+        'orderline_ids': fields.one2many('ecommerce.order.line', 'order_id', 'Order Lines'),
         'order_id': fields.many2one('sale.order', 'Sale Order'),
         'note': fields.text('Notes'),
     }
@@ -60,17 +60,12 @@ class ecommerce_saleorder(osv.osv):
             res_prt = self.pool.get('res.partner')
             prt_id = res_prt.search(cr, uid, [('name', '=', order.epartner_id.name)])
             res = res_prt.read(cr, uid, prt_id, [], context)
-            res_add = self.pool.get('res.partner.address')
-
             res_categ = self.pool.get('res.partner.category')
             search_categ = res_categ.search(cr, uid, [('name', '=', 'Customer')])
 
             if res:
                 partner_id = res[0]['id']
-
-                prt_add_id = res_add.search(cr, uid, [('partner_id', '=', partner_id)])
-                res_prt_add = res_add.read(cr, uid, prt_add_id, ['id'], context)
-
+                
             if not prt_id:
                 partner_id = self.pool.get('res.partner').create(cr, uid, {
                     'name': order.epartner_id.name,
@@ -178,7 +173,7 @@ class ecommerce_saleorder(osv.osv):
            })
         return True
 
-    def onchange_epartner_id(self, cr, uid, part):
+    def onchange_epartner_id(self, cr, uid, ids, part):
 
         if not part:
             return {'value':{'epartner_invoice_id': False, 'epartner_shipping_id':False, 'epartner_add_id':False}}
@@ -259,7 +254,7 @@ class ecommerce_order_line(osv.osv):
         'price_unit': fields.float('Unit Price',digits=(16, int(config['price_accuracy'])), required=True),
     }
     
-    def onchange_product(self, cr, uid, product_id):
+    def onchange_product(self, cr, uid, ids, product_id):
 
         product_obj = self.pool.get('product.product')
         if not product_id:

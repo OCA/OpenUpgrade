@@ -65,26 +65,26 @@ class ecommerce_sendmail_wizard(wizard.interface):
         if partner:
             res = pooler.get_pool(cr.dbname).get('ecommerce.partner').browse(cr, uid, partner)
             for partner in res:
-                if partner.address and not partner.address[0].email:
+                if partner.address_ids and not partner.address_ids[0].email:
                     not_sent.append(partner.name)
-                for adr in partner.address:
-                    if adr.email:
-                        sent_dict[partner.name] = adr.email
-                        name = adr.username or partner.name
-                        to = '%s <%s>' % (name, adr.email)
-                        mail_from = 'priteshmodi.eiffel@yahoo.co.in'
-                       
-                        attach_ids = pooler.get_pool(cr.dbname).get('ir.attachment').search(cr, uid, 
-                                                                                            [('res_model', '=', 'ecommerce.shop'),
-                                                                                            ('res_id', '=', data['ids'][0])])
-                        res_atc = pooler.get_pool(cr.dbname).get('ir.attachment').read(cr, uid,
-                                                                                       attach_ids, ['datas_fname', 'datas'])
-                        res_atc = map(lambda x: (x['datas_fname'],
-                                                 base64.decodestring(x['datas'])), res_atc)
-                        tools.email_send(mail_from, [to], data['form']['subject'], data['form']['message'], attach=res_atc)
+                    for adr in partner.address_ids:
+                        if adr.email:
+                            sent_dict[partner.name] = adr.email
+                            name = adr.username or partner.name
+                            to = '%s <%s>' % (name, adr.email)
+                            mail_from = 'priteshmodi.eiffel@yahoo.co.in'
+                           
+                            attach_ids = pooler.get_pool(cr.dbname).get('ir.attachment').search(cr, uid, 
+                                                                                                [('res_model', '=', 'ecommerce.shop'),
+                                                                                                ('res_id', '=', data['ids'][0])])
+                            res_atc = pooler.get_pool(cr.dbname).get('ir.attachment').read(cr, uid,
+                                                                                           attach_ids, ['datas_fname', 'datas'])
+                            res_atc = map(lambda x: (x['datas_fname'],
+                                                     base64.decodestring(x['datas'])), res_atc)
+                            tools.email_send(mail_from, [to], data['form']['subject'], data['form']['message'], attach=res_atc)
 
         return 'finished'
-        
+
     def get_mail_dtl(self, cr, uid, data, context):
         cust_get_mail = []
         cust_not_get_mail = []

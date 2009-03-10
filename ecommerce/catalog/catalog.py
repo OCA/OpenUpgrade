@@ -22,7 +22,6 @@
 
 from osv import fields, osv
 import time
-from lxml import etree
 
 class product_product(osv.osv):
     _inherit = "product.product"
@@ -47,11 +46,6 @@ class ecommerce_search(osv.osv):
     }
           
     def searchproducts(self, cr, uid, search_code):
-        
-        root = etree.XML('<root><a><b/></a></root>')
-        print "*************************",dir(root)
-        root.append(etree.Element("child1"))
-        print "*********** ROOT",etree.tostring(root, pretty_print=True)
         
         prd_ids = []
         final_list = []
