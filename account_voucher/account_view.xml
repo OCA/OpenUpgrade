@@ -20,11 +20,10 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="user_type" position="after">
-<!--					<field name="diff" select="2" />-->
 					<field name="balance" string="Closing Balance" select="2"/>
 					<field name="type1" select="2" />
 					<field name="open_bal" select="2"/>
-					<field name="journal_id"/>
+					<field name="journal_id" invisible="1"/>
 				</field>
 			</field>
 		</record>
@@ -41,31 +40,37 @@
 			</field>
 		</record>
 		
-		<record model="ir.ui.view" id="account_form3">
-			<field name="name">account.form</field>
+		<record model="ir.ui.view" id="view_account_new_tree1">
+			<field name="name">view.account.new.tree1</field>
 			<field name="inherit_id" ref="account.view_account_tree"/>
 			<field name="model">account.account</field>
-			<field name="type">form</field>
+			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="name" position="after">
-						<field name="open_bal" select="1"/>
-				</field>
+				<field name="balance" position="replace"/>
+						
 			</field>
 		</record>
-		
-		<record model="ir.ui.view" id="account_form4">
-			<field name="name">account.form</field>
+		<record model="ir.ui.view" id="view_account_new_tree2">
+			<field name="name">view.account.new.tree2</field>
 			<field name="inherit_id" ref="account.view_account_tree"/>
 			<field name="model">account.account</field>
-			<field name="type">form</field>
+			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="balance" position="replace">
-						<field name="balance" />
-				<field name="type1"/>
-				</field>
+				<field name="debit" position="replace"/>
+						
 			</field>
 		</record>
-	
+		<record model="ir.ui.view" id="view_account_new_tree3">
+			<field name="name">view.account.new.tree3</field>
+			<field name="inherit_id" ref="account.view_account_tree"/>
+			<field name="model">account.account</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<field name="credit" position="replace"/>
+						
+			</field>
+		</record>
+
 <!--	sub_currency	-->
 		<record model="ir.ui.view" id="sub_currency_form">
 			<field name="name">sub.currency.form</field>

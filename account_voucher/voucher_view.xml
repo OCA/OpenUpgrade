@@ -30,7 +30,7 @@
 							<field name="name" select="1"/>
 							<field name="journal_id" select="1" on_change="onchange_journal(journal_id,type)"/>
 							<field name="account_id" select="2" on_change="onchange_account(account_id)"/>
-							<field name="amount" select="1" invisible="1"/>
+							<field name="amount" select="1"/>
 							<field name="partner_id" select="2"/>
 							<newline/>
 <!--							<field name="payment_ids" colspan="4" nolabel="1" default_get="{'lines': payment_ids ,'journal':journal_id }">-->
