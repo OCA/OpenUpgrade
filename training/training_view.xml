@@ -637,11 +637,14 @@
             <field name="model">training.subscription</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="subscriptions">
+                <tree string="Subscriptions">
+                    <field name="date" />
+                    <field name="contact_id" />
                     <field name="partner_id" />
                     <field name="session_id" />
                     <field name="group_id" />
                     <field name="state" />
+                    <field name="paid" />
                 </tree>
             </field>
         </record>
