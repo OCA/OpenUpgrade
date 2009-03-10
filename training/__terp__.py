@@ -40,6 +40,7 @@
         'training_demo.xml',
     ],
     'update_xml' : [
+        'security/ir.model.access.csv',
         'security/training_security.xml',
         'partner_view.xml',
         'base_contact_view.xml',
