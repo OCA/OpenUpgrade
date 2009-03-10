@@ -33,28 +33,28 @@ class offer_document(rml_parse):
         for plugin in plugins:
             args={}
             if plugin.type=='fields':
-                res  = self.pool.get('ir.model').browse(self.cr,self.uid,plugin.object.id)
-                args['object']=res.model
-                args['field_name']=str(plugin.field.name)
-                args['field_type']=str(plugin.field.ttype)
-                args['field_relation']=str(plugin.field.relation)
-                plugin_value = customer_function(self.cr,self.uid,[customer_id],**args)
-                for p in plugin_value : 
-                    vals[str(plugin.id)]=p[1]
+                 res  = self.pool.get('ir.model').browse(self.cr,self.uid,plugin.model_id.id)
+                 args['model_name']=str(res.model)
+                 args['field_name']=str(plugin.field_id.name)
+                 args['field_type']=str(plugin.field_id.ttype)
+                 args['field_relation']=str(plugin.field_id.relation)
+                 plugin_value = customer_function(self.cr,self.uid,[customer_id],**args)
+                 for p in plugin_value : 
+                      vals[str(plugin.id)]=p[1]
             else :                
                 arguments = plugin.argument_ids
                 for a in arguments:
                     if not a.stored_plugin :
                         args[str(a.name)]=str(a.value)
-                    else : 
-                        res  = self.pool.get('ir.model').browse(self.cr,self.uid,a.custome_plugin_id.object.id)
-                        arg = {'object':str(res.model),
-                                    'field_name':str(a.custome_plugin_id.field.name),
-                                    'field_type':str(a.custome_plugin_id.field.ttype),
-                                    'field_relation' : str(a.custome_plugin_id.field.relation)}
-                        plugin_value = customer_function(self.cr,self.uid,[customer_id],**arg)
-                        for p in plugin_value : 
-                            args[str(a.name)]=p[1]                        
+                    else :
+                         res  = self.pool.get('ir.model').browse(self.cr,self.uid,a.custome_plugin_id.model_id.id)
+                         arg = {'model_name':str(res.model),
+                                     'field_name':str(a.custome_plugin_id.field_id.name),
+                                     'field_type':str(a.custome_plugin_id.field_id.ttype),
+                                     'field_relation' : str(a.custome_plugin_id.field_id.relation)}
+                         plugin_value = customer_function(self.cr,self.uid,[customer_id],**arg)
+                         for p in plugin_value : 
+                             args[str(a.name)]=p[1]                        
                 path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",self.cr.dbname)
                 plugin_name = plugin.file_fname.split('.')[0]
                 import sys
