@@ -40,8 +40,6 @@
         'training_demo.xml',
     ],
     'update_xml' : [
-        'security/ir.model.access.csv',
-        'security/training_security.xml',
         'partner_view.xml',
         'base_contact_view.xml',
         'training_view.xml',
@@ -55,6 +53,8 @@
         'workflow/subscription_workflow.xml',
         'process/plan_course_process.xml',
         'process/course_subscription_process.xml',
+        'security/training_security.xml',
+        'security/ir.model.access.csv',
     ],
     'active' : False,
     'installable' : True,

@@ -64,6 +64,10 @@
             <field name="signal">signal_deprecated</field>
         </record>
 
+        <record model="res.roles" id="role_course_manager">
+            <field name="name">Training / Course Manager</field>
+        </record>
+
         <record model="workflow.transition" id="transition_course_validate">
             <field name="act_from" ref="activity_course_inprogress" />
             <field name="act_to" ref="activity_course_validate" />
