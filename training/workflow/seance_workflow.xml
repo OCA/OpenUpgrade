@@ -7,7 +7,7 @@
             <field name="on_create">True</field>
         </record>
 
-        <record model="workflow.activity" id="activity_offer_draft">
+        <record model="workflow.activity" id="activity_seance_draft">
             <field name="wkf_id" ref="workflow_seance" />
             <field name="name">draft</field>
             <field name="kind">function</field>
@@ -15,29 +15,29 @@
             <field name="flow_start">True</field>
         </record>
 
-        <record model="workflow.activity" id="activity_offer_open_pending">
+        <record model="workflow.activity" id="activity_seance_open_pending">
             <field name="wkf_id" ref="workflow_seance" />
             <field name="name">open_pending</field>
             <field name="kind">function</field>
             <field name="action">write({'state':'open_pending'})</field>
         </record>
 
-        <record model="workflow.activity" id="activity_offer_inprogress">
+        <record model="workflow.activity" id="activity_seance_inprogress">
             <field name="wkf_id" ref="workflow_seance" />
             <field name="name">inprogress</field>
             <field name="kind">function</field>
             <field name="action">write({'state':'inprogress'})</field>
         </record>
 
-        <record model="workflow.activity" id="activity_offer_validate">
+        <record model="workflow.activity" id="activity_seance_validate">
             <field name="wkf_id" ref="workflow_seance" />
             <field name="name">validate</field>
             <field name="kind">function</field>
-            <field name="action">write({'state':'validate'})</field>
+            <field name="action">action_validate()</field>
             <field name="flow_stop">True</field>
         </record>
 
-        <record model="workflow.activity" id="activity_offer_closed">
+        <record model="workflow.activity" id="activity_seance_closed">
             <field name="wkf_id" ref="workflow_seance" />
             <field name="name">closed</field>
             <field name="kind">function</field>
@@ -45,7 +45,7 @@
             <field name="flow_stop">True</field>
         </record>
 
-        <record model="workflow.activity" id="activity_offer_cancel">
+        <record model="workflow.activity" id="activity_seance_cancel">
             <field name="wkf_id" ref="workflow_seance" />
             <field name="name">cancel</field>
             <field name="kind">function</field>
@@ -54,32 +54,32 @@
         </record>
 
         <record model="workflow.transition" id="transition_seance_draft">
-            <field name="act_from" ref="activity_offer_draft" />
-            <field name="act_to" ref="activity_offer_open_pending" />
-            <field name="signal">signal_inprogress</field>
+            <field name="act_from" ref="activity_seance_draft" />
+            <field name="act_to" ref="activity_seance_open_pending" />
+            <field name="signal">signal_open_pending</field>
         </record>
 
         <record model="workflow.transition" id="transition_seance_inprogress">
-            <field name="act_from" ref="activity_offer_open_pending" />
-            <field name="act_to" ref="activity_offer_inprogress" />
+            <field name="act_from" ref="activity_seance_open_pending" />
+            <field name="act_to" ref="activity_seance_inprogress" />
             <field name="signal">signal_inprogress</field>
         </record>
 
         <record model="workflow.transition" id="transition_seance_validate">
-            <field name="act_from" ref="activity_offer_inprogress" />
-            <field name="act_to" ref="activity_offer_validate" />
+            <field name="act_from" ref="activity_seance_inprogress" />
+            <field name="act_to" ref="activity_seance_validate" />
             <field name="signal">signal_validate</field>
         </record>
 
         <record model="workflow.transition" id="transition_seance_closed">
-            <field name="act_from" ref="activity_offer_inprogress" />
-            <field name="act_to" ref="activity_offer_closed" />
+            <field name="act_from" ref="activity_seance_inprogress" />
+            <field name="act_to" ref="activity_seance_closed" />
             <field name="signal">signal_closed</field>
         </record>
 
         <record model="workflow.transition" id="transition_seance_cancel">
-            <field name="act_from" ref="activity_offer_inprogress" />
-            <field name="act_to" ref="activity_offer_cancel" />
+            <field name="act_from" ref="activity_seance_inprogress" />
+            <field name="act_to" ref="activity_seance_cancel" />
             <field name="signal">signal_cancel</field>
         </record>
     </data>

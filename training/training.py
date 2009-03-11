@@ -21,6 +21,7 @@
 ##############################################################################
 
 from osv import osv, fields
+import netsvc
 import time
 
 class training_course_category(osv.osv):
@@ -303,7 +304,7 @@ class training_session(osv.osv):
         'state' : lambda *a: 'draft',
     }
 
-    def validate_cb(self, cr, uid, ids, context=None):
+    def action_validate(self, cr, uid, ids, context=None):
         session = self.browse(cr, uid, ids, context=context)[0]
         event_ids = []
 
@@ -496,6 +497,30 @@ class training_seance(osv.osv):
         'purchase_line_ids' : fields.one2many('training.seance.purchase_line', 'seance_id', 'Supplier Commands'),
     }
 
+    def action_validate(self, cr, uid, ids, context=None):
+        if not ids:
+            return False
+
+        seance = self.pool.get('training.seance').browse(cr, uid, [vals['seance_id']], context=context)[0]
+
+        location_id = self.pool.get('stock.location').search(cr, uid, [('name', '=', 'Physical Locations')], context=context)[0]
+
+        for product in seance.purchase_line_ids:
+            # We create a new procurement for this line
+            procurement_id = self.pool.get('mrp.procurement').create(cr, uid, {
+                'name': "Seance %s - %s" % (seance.name, seance.date),
+                'date_planned' : seance.date,
+                'product_id' : product.product_id.id,
+                'product_qty' : product.product_qty,
+                'product_uom' : product.product_uom_id.id,
+                'location_id' : location_id,
+            })
+
+            wf_service = netsvc.LocalService("workflow")
+            wf_service.trg_validate(uid, 'mrp.procurement', procurement_id, 'button_confirm', cr)
+
+        return self.write(cr, uid, ids, {'state':'validate'}, context=context)
+
 training_seance()
 
 class training_seance_purchase_line(osv.osv):
@@ -509,30 +534,6 @@ class training_seance_purchase_line(osv.osv):
         'product_uom_id' : fields.many2one('product.uom', 'Product UoM', required=True),
         'procurement_id' : fields.many2one('mrp.procurement', readonly=True),
     }
-
-    def create2(self, cr, uid, vals, context=None):
-        seance = self.pool.get('training.seance').browse(cr, uid, [vals['seance_id']], context=context)[0]
-
-        # We create a new procurement for this line
-        procurement_id = self.pool.get('mrp.procurement').create(cr, uid, {
-            'name': "Seance %s - %s" % (seance.name, seance.date),
-            'date_planned' : seance.date,
-            'product_id' : vals['product_id'],
-            'product_qty' : vals['product_qty'],
-            'product_uom' : vals['product_uom_id'],
-            #'location_id' : False,
-        })
-        vals['procurement_id'] = procurement_id
-
-        wf_service = netsvc.LocalService("workflow")
-        wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-        return super(training_seance_purchase_line, self).create(cr, uid, vals, context=context)
-
-    def unlink2(self, cr, uid, ids, context=None):
-        return super(training_seance_purchase_line, self).unlink(cr, uid, ids, context=context)
-
-    def write2(self, cr, uid, ids, vals, context=None):
-        return super(training_seance, self).write(cr, uid, ids, vals, context=context)
 
 
 training_seance_purchase_line()

@@ -33,10 +33,7 @@
             <field name="wkf_id" ref="workflow_session" />
             <field name="name">validate</field>
             <field name="kind">function</field>
-            <!--
-            <field name="action">write({'state':'validate'})</field>
-            -->
-            <field name="action">validate_cb()</field>
+            <field name="action">action_validate()</field>
             <field name="flow_stop">True</field>
         </record>
 
