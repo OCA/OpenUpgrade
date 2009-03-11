@@ -32,6 +32,8 @@
     'init_xml' : [ ],
     'demo_xml' : [ ],
     'update_xml' : [
+        'security/ir.model.access.csv',
+        'security/training_exam_security.xml',
         'training_exam_view.xml',
         'workflow/questionnaire_workflow.xml',
         'workflow/planned_exam_workflow.xml',
