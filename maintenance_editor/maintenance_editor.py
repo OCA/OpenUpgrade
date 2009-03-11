@@ -115,7 +115,7 @@ class maintenance_maintenance_module(osv.osv):
                 continue
 
             terp = get_terp(element_dir)
-            if terp:
+            if terp and 'certificate' in terp:
                 self.create(cr, uid, {'name': element, 
                                       'version': get_version(terp), 
                                       'certificate': terp['certificate']}
@@ -164,6 +164,7 @@ class maintenance_maintenance(osv.osv):
         'password' : fields.char('Password', size=64, invisible=True, required=True),
         'module_ids' : fields.many2many('maintenance.maintenance.module','maintenance_module_rel','maintenance_id','module_id',string='Modules'),
         'state' : fields.selection([('draft','Draft'), ('open','Open'), ('cancel','Cancel'), ('done','Done')], 'State', readonly=True),
+        'note': fields.text('Note'),
     }
 
     _defaults = {
