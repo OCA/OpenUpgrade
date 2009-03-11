@@ -72,8 +72,8 @@ class training_course_purchase_line(osv.osv):
     _columns = {
         'course_id' : fields.many2one('training.course', 'course', required=True),
         'product_id' : fields.many2one('product.product', 'Product', required=True),
-        'quantity' : fields.integer('Quantity', required=True),
-        'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
+        'product_qty' : fields.integer('Quantity', required=True),
+        'product_uom_id' : fields.many2one('product.uom', 'Product UoM', required=True),
     }
 training_course_purchase_line()
 
@@ -89,10 +89,7 @@ class training_course(osv.osv):
     }
 
     def _total_duration_compute(self,cr,uid,ids,name,args,context):
-        res = {}
-        for object in self.browse( cr, uid, ids, context=context ):
-            res[object.id] = 0.0
-        return res
+        return dict.fromkeys(ids, 0.0)
 
     def _get_child_ids( self, cr, uid, ids, name, args, context ):
         res = {}
@@ -135,12 +132,12 @@ class training_course(osv.osv):
                                            required=True),
 
         'lecturer_ids' : fields.many2many('res.partner',
-                                            'training_course_partner_rel',
-                                            'course_id',
-                                            'partner_id',
-                                            'Lecturers',
-                                            help="The lecturers who give the course",
-                                           ),
+                                          'training_course_partner_rel',
+                                          'course_id',
+                                          'partner_id',
+                                          'Lecturers',
+                                          help="The lecturers who give the course",
+                                         ),
 
         'internal_note' : fields.text('Note'),
 
@@ -187,7 +184,7 @@ class training_offer(osv.osv):
                                         'offer_id',
                                         'course_id',
                                         'Courses',
-                                        domain="[('state', '=', 'validate')]"
+                                        domain="[('state_course', '=', 'validate')]"
                                        ),
         'objective' : fields.text('Objective',
                                   help="Allows to write the objectives of the course",
@@ -306,6 +303,34 @@ class training_session(osv.osv):
         'state' : lambda *a: 'draft',
     }
 
+    def validate_cb(self, cr, uid, ids, context=None):
+        session = self.browse(cr, uid, ids, context=context)[0]
+        event_ids = []
+
+        for course in session.offer_id.course_ids:
+            seance_proxy = self.pool.get('training.seance')
+            seance_id = seance_proxy.create(cr, uid, {
+                'name' : 'Seance - %s' % (session.name,),
+                'course_id' : course.id,
+            })
+            event_id = seance_proxy.read(cr,
+                                         uid,
+                                         [seance_id],
+                                         ['event_id'],
+                                         context=context)[0]['event_id'][0]
+            event_ids.append(event_id)
+
+        values = {
+            'state':'validate'
+        }
+
+        if event_ids:
+            values['event_ids'] = [(6, 0, event_ids)]
+
+        res = self.write(cr, uid, ids, values, context=context)
+
+        return res
+
 training_session()
 
 class training_session_purchase_line(osv.osv):
@@ -316,8 +341,8 @@ class training_session_purchase_line(osv.osv):
     _columns = {
         'session_id' : fields.many2one('training.session', 'Session', required=True),
         'product_id' : fields.many2one('product.product', 'Product', required=True),
-        'quantity' : fields.integer('Quantity', required=True),
-        'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
+        'product_qty' : fields.integer('Quantity', required=True),
+        'product_uom_id' : fields.many2one('product.uom', 'Product UoM', required=True),
     }
 
 training_session_purchase_line()
@@ -423,7 +448,7 @@ class training_event(osv.osv):
                                              'Participants',
                                              domain="[('group_id', '=', group_id)]" ),
         'group_id' : fields.many2one('training.group', 'Group'),
-        'support_ok' : fields.function(_support_ok_get, 
+        'support_ok' : fields.function(_support_ok_get,
                                        method=True,
                                        type="boolean",
                                        string="Support OK",
@@ -480,10 +505,35 @@ class training_seance_purchase_line(osv.osv):
     _columns = {
         'seance_id' : fields.many2one('training.seance', 'Seance', required=True),
         'product_id' : fields.many2one('product.product', 'Product', required=True),
-        'quantity' : fields.integer('Quantity', required=True),
-        'uom_id' : fields.many2one('product.uom', 'UoM', required=True),
+        'product_qty' : fields.integer('Quantity', required=True),
+        'product_uom_id' : fields.many2one('product.uom', 'Product UoM', required=True),
         'procurement_id' : fields.many2one('mrp.procurement', readonly=True),
     }
+
+    def create2(self, cr, uid, vals, context=None):
+        seance = self.pool.get('training.seance').browse(cr, uid, [vals['seance_id']], context=context)[0]
+
+        # We create a new procurement for this line
+        procurement_id = self.pool.get('mrp.procurement').create(cr, uid, {
+            'name': "Seance %s - %s" % (seance.name, seance.date),
+            'date_planned' : seance.date,
+            'product_id' : vals['product_id'],
+            'product_qty' : vals['product_qty'],
+            'product_uom' : vals['product_uom_id'],
+            #'location_id' : False,
+        })
+        vals['procurement_id'] = procurement_id
+
+        wf_service = netsvc.LocalService("workflow")
+        wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
+        return super(training_seance_purchase_line, self).create(cr, uid, vals, context=context)
+
+    def unlink2(self, cr, uid, ids, context=None):
+        return super(training_seance_purchase_line, self).unlink(cr, uid, ids, context=context)
+
+    def write2(self, cr, uid, ids, vals, context=None):
+        return super(training_seance, self).write(cr, uid, ids, vals, context=context)
+
 
 training_seance_purchase_line()
 

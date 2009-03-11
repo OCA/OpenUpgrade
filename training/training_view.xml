@@ -164,13 +164,13 @@
                             <field name="purchase_line_ids" nolabel="1" colspan="4">
                                 <form string="Command">
                                     <field name="product_id" />
-                                    <field name="quantity" />
-                                    <field name="uom_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
                                 </form>
                                 <tree string="Command" editable="bottom">
                                     <field name="product_id" />
-                                    <field name="quantity" />
-                                    <field name="uom_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
                                 </tree>
                             </field>
                         </page>
@@ -207,6 +207,7 @@
                     <field name="name" string="Designation" />
                     <field name="description" />
                     <field name="duration" />
+                    <field name="state_course" />
                 </tree>
             </field>
         </record>
@@ -223,7 +224,7 @@
             <field name="res_model">training.course</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state', '=', 'current')]</field>
+            <field name="domain">[('state_course', '=', 'validate')]</field>
         </record>
 
         <record model="ir.actions.act_window" id="training_course_draft_all_act">
@@ -231,15 +232,15 @@
             <field name="res_model">training.course</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="domain">[('state_course', '=', 'draft')]</field>
         </record>
 
         <record model="ir.actions.act_window" id="training_course_mature_all_act">
-            <field name="name">Mature Courses</field>
+            <field name="name">Deprecated Courses</field>
             <field name="res_model">training.course</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state', '=', 'mature')]</field>
+            <field name="domain">[('state_course', '=', 'deprecated')]</field>
         </record>
 
         <record model="ir.actions.act_window" id="training_course_new_act">
@@ -348,13 +349,13 @@
                             <field name="purchase_line_ids" nolabel="1" colspan="4">
                                 <form string="Command">
                                     <field name="product_id" />
-                                    <field name="quantity" />
-                                    <field name="uom_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
                                 </form>
                                 <tree string="Command" editable="bottom">
                                     <field name="product_id" />
-                                    <field name="quantity" />
-                                    <field name="uom_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
                                 </tree>
                             </field>
                         </page>
@@ -362,10 +363,10 @@
                     <group colspan="4" col="8">
                         <field name="state" />
                         <button name="signal_open_pending" string="Open and Pending" type="workflow" />
-                        <button name="signal_validate" string="Validate" type="workflow" />
                         <button name="signal_inprogress" string="In Progress" type="workflow" />
                         <button name="signal_closed" string="Closed" type="workflow" />
                         <button name="signal_cancel" string="Cancel" type="workflow" />
+                        <button name="signal_validate" string="Validate" type="workflow" />
                     </group>
                 </form>
             </field>
@@ -500,13 +501,13 @@
                             <field name="purchase_line_ids" nolabel="1" colspan="4">
                                 <form string="Command">
                                     <field name="product_id" />
-                                    <field name="quantity" />
-                                    <field name="uom_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
                                 </form>
                                 <tree string="Command" editable="bottom">
                                     <field name="product_id" />
-                                    <field name="quantity" />
-                                    <field name="uom_id" />
+                                    <field name="product_qty" />
+                                    <field name="product_uom_id" />
                                 </tree>
                             </field>
                         </page>

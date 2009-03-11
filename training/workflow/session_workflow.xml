@@ -33,7 +33,10 @@
             <field name="wkf_id" ref="workflow_session" />
             <field name="name">validate</field>
             <field name="kind">function</field>
+            <!--
             <field name="action">write({'state':'validate'})</field>
+            -->
+            <field name="action">validate_cb()</field>
             <field name="flow_stop">True</field>
         </record>
 
@@ -56,7 +59,7 @@
         <record model="workflow.transition" id="transition_session_draft">
             <field name="act_from" ref="activity_session_draft" />
             <field name="act_to" ref="activity_session_open_pending" />
-            <field name="signal">signal_inprogress</field>
+            <field name="signal">signal_open_pending</field>
         </record>
 
         <record model="workflow.transition" id="transition_session_inprogress">
