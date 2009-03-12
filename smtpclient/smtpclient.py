@@ -355,7 +355,7 @@ class report_smtp_server(osv.osv):
     def init(self, cr):
          cr.execute("""
             create or replace view report_smtp_server as (
-                   select min(h.id) as id,c.id as server_id,h.name as history,m.name as model,count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id left join ir_model m on m.id=h.model group by h.name,m.name,c.id
+                   select min(h.id) as id,c.id as server_id,h.name as history, h.name as name,m.name as model,count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id left join ir_model m on m.id=h.model group by h.name,m.name,c.id
                               )
          """)
 report_smtp_server()

@@ -11,6 +11,7 @@
 						<field name="reviewer_id"/>
 						<field name="date_from" attrs="{'readonly':[('state','=','done')]}"/>
 						<field name="date_to" attrs="{'readonly':[('state','=','done')]}"/>
+						<field name="user_id"/>
 					</group>
 					<field name="performance_id" nolabel="1" colspan="4" attrs="{'readonly':[('state','=','done')]}">
 						<form string="Performance Lines">
