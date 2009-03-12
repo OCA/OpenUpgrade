@@ -45,7 +45,7 @@
                                 <field name="response_yesno" colspan="4" /> 
                             </group>
                             <group attrs="{'invisible':[('type','!=', 'qcm')]}" col="1" colspan="4">
-                                <field name="examen_answer_ids" /> 
+                                <field name="exam_answer_ids" /> 
                             </group>
                         </page>
                         <page string="Questionnaire">
@@ -148,9 +148,9 @@
             <field name="view_mode">form,tree</field>
         </record>
 
-        <record model="ir.ui.view" id="training_planned_examen_form">
-            <field name="name">training.planned_examen.form</field>
-            <field name="model">training.planned_examen</field>
+        <record model="ir.ui.view" id="training_planned_exam_form">
+            <field name="name">training.planned_exam.form</field>
+            <field name="model">training.planned_exam</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Exam">
@@ -182,9 +182,9 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="training_planned_examen_tree">
-            <field name="name">training.planned_examen.tree</field>
-            <field name="model">training.planned_examen</field>
+        <record model="ir.ui.view" id="training_planned_exam_tree">
+            <field name="name">training.planned_exam.tree</field>
+            <field name="model">training.planned_exam</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Planned Exams">
@@ -198,9 +198,9 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="training_planned_examen_calendar">
-            <field name="name">training.planned_examen.calendar</field>
-            <field name="model">training.planned_examen</field>
+        <record model="ir.ui.view" id="training_planned_exam_calendar">
+            <field name="name">training.planned_exam.calendar</field>
+            <field name="model">training.planned_exam</field>
             <field name="type">calendar</field>
             <field name="arch" type="xml">
                 <calendar string="Events" date_start="date">
@@ -213,22 +213,22 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="training_planned_examen_calendar_act">
+        <record model="ir.actions.act_window" id="training_planned_exam_calendar_act">
             <field name="name">Calendar of Exams</field>
-            <field name="res_model">training.planned_examen</field>
+            <field name="res_model">training.planned_exam</field>
             <field name="view_type">form</field>
             <field name="view_mode">calendar,tree</field>
         </record>
 
-        <record model="ir.actions.act_window" id="training_planned_examen_all_act">
+        <record model="ir.actions.act_window" id="training_planned_exam_all_act">
             <field name="name">Exams</field>
-            <field name="res_model">training.planned_examen</field>
+            <field name="res_model">training.planned_exam</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <record model="ir.actions.act_window" id="training_planned_examen_new_act">
+        <record model="ir.actions.act_window" id="training_planned_exam_new_act">
             <field name="name">New Exam</field>
-            <field name="res_model">training.planned_examen</field>
+            <field name="res_model">training.planned_exam</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
         </record>
@@ -247,9 +247,9 @@
             </field>
         </record>
 
-        <record id="training_examen_answer_form" model="ir.ui.view">
-            <field name="name">training.examen_answer.form</field>
-            <field name="model">training.examen_answer</field>
+        <record id="training_exam_answer_form" model="ir.ui.view">
+            <field name="name">training.exam_answer.form</field>
+            <field name="model">training.exam_answer</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Examen Answer">
@@ -259,9 +259,9 @@
             </field>
         </record>
 
-        <record id="training_examen_answer_tree" model="ir.ui.view">
-            <field name="name">training.examen_answer.tree</field>
-            <field name="model">training.examen_answer</field>
+        <record id="training_exam_answer_tree" model="ir.ui.view">
+            <field name="name">training.exam_answer.tree</field>
+            <field name="model">training.exam_answer</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Examen Answer">
@@ -339,18 +339,18 @@
         <menuitem 
             id="training_planning_exam_planning_mi" 
             parent="training.training_planning_mi" 
-            action="training_planned_examen_all_act" />
+            action="training_planned_exam_all_act" />
 
         <!-- Training/ Plannings/ Exams/ Calendar of Exams -->
         <menuitem 
             id="training_planning_exam_planning_planning_mi" 
             parent="training_planning_exam_planning_mi" 
-            action="training_planned_examen_calendar_act" />
+            action="training_planned_exam_calendar_act" />
         <!-- Training/ Plannings/ Exams/ New Exam -->
         <menuitem 
             id="training_planning_exam_planning_planify_mi" 
             parent="training_planning_exam_planning_mi" 
-            action="training_planned_examen_new_act" />
+            action="training_planned_exam_new_act" />
 
         <!-- Training/ Plannings/ Exams/ All Results -->
         <menuitem

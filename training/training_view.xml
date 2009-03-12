@@ -824,9 +824,9 @@
             <field name="target">new</field>
         </record>
 
-        <record id="training_examen_answer_form" model="ir.ui.view">
-            <field name="name">training.examen_answer.form</field>
-            <field name="model">training.examen_answer</field>
+        <record id="training_exam_answer_form" model="ir.ui.view">
+            <field name="name">training.exam_answer.form</field>
+            <field name="model">training.exam_answer</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Examen Answer">
@@ -836,9 +836,9 @@
             </field>
         </record>
 
-        <record id="training_examen_answer_tree" model="ir.ui.view">
-            <field name="name">training.examen_answer.tree</field>
-            <field name="model">training.examen_answer</field>
+        <record id="training_exam_answer_tree" model="ir.ui.view">
+            <field name="name">training.exam_answer.tree</field>
+            <field name="model">training.exam_answer</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Examen Answer">
