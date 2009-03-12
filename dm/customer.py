@@ -279,7 +279,7 @@ class dm_customer_text_criteria(osv.osv):
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id','=','Partner'),
+               domain=[('model_id.model','=','res.partner'),
                ('ttype','like','char')],
                context={'model':'res.partner'}),
         'operator' : fields.selection(TEXT_OPERATORS, 'Operator', size=32),
@@ -295,7 +295,7 @@ class dm_customer_numeric_criteria(osv.osv):
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id','=','Partner'),
+               domain=[('model_id.model','=','res.partner'),
                (('ttype','like','integer') or ('ttype','like','float'))],
                context={'model':'res.partner'}),
         'operator' : fields.selection(NUMERIC_OPERATORS, 'Operator', size=32),
@@ -311,7 +311,7 @@ class dm_customer_boolean_criteria(osv.osv):
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id','=','Partner'),
+               domain=[('model_id.model','=','res.partner'),
                ('ttype','like','boolean')],
                context={'model':'res.partner'}),
         'operator' : fields.selection(BOOL_OPERATORS, 'Operator', size=32),
@@ -327,7 +327,7 @@ class dm_customer_date_criteria(osv.osv):
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
         'field' : fields.many2one('ir.model.fields','Customers Field',
-               domain=[('model_id','=','Partner'),
+               domain=[('model_id.model','=','res.partner'),
                (('ttype','like','date') or ('ttype','like','datetime'))],
                context={'model':'res.partner'}),
         'operator' : fields.selection(DATE_OPERATORS, 'Operator', size=32),

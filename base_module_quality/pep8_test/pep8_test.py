@@ -53,27 +53,27 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                 file_path = os.path.join(module_path, file_py)
                 py_list.append(file_path)
 
-        self.check_import(py_list)
-        self.check_licence(py_list)
-        self.check_loop(py_list)
-        self.check_space(py_list)
-        self.check_space_operator(py_list)
-        self.check_len(py_list)
-        self.check_boolean(py_list)
+        open_files = map(lambda x: open(x, 'r'), py_list)
+        self.check_import(open_files)
+        self.check_licence(open_files)
+        self.check_loop(open_files)
+        self.check_space(open_files)
+        self.check_space_operator(open_files)
+        self.check_len(open_files)
+        self.check_boolean(open_files)
         self.score = self.good_standard and float(self.good_standard) / float(self.good_standard + self.bad_standard)
         self.result = self.get_result({ module_path: [int(self.score * 100)]})
         self.result_details += self.get_result_general(self.result_py)
         return None
 
-    def check_import(self, py_list):
-        for py in py_list:
-            f = open(py, 'r')
+    def check_import(self, open_files):
+        for py in open_files:
             class_or_def = False
             line_counter = 0
-            file_name = py.split('/')[-1]
+            file_name = py.name.split('/')[-1]
             while True:
                 line_counter += 1
-                line = f.readline()
+                line = py.readline()
                 if not line: break
                 if ((line.find('class') > -1) or (line.find('def') > -1)):
                     class_or_def = True
@@ -88,21 +88,20 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                         self.bad_standard += 1
                         self.result_py[file_name + str(line_counter)] = [file_name, line_counter, 'Imports should usually be on separate lines']
 
-    def check_licence(self, py_list):
-        for py in py_list:
-            f = open(py, 'r')
+    def check_licence(self, open_files):
+        for py in open_files:
             bad_position = False
             copyright_found = False
             gnu_found = False
             license_found = False
             gnu_website_found = False
             line_counter = 0
-            file_name = py.split('/')[-1]
+            file_name = py.name.split('/')[-1]
             while True:
                 declaration = False
                 flag = False
                 line_counter += 1
-                line = f.readline()
+                line = py.readline()
                 if not line: break
                 if ((line.find('class') > -1) or (line.find('def') > -1) or (line.find('import') > -1)):
                     bad_position = True
@@ -124,17 +123,16 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                 self.bad_standard += 1
                 self.result_py[file_name] = [file_name, '--', 'File is not copyright']
 
-    def check_loop(self, py_list):
-        for py in py_list:
-            f = open(py, 'r')
+    def check_loop(self, open_files):
+        for py in open_files:
             methods = ['browse', 'search', 'read', 'copy', 'unlink']
             place_for = 1000
-            file_name = py.split('/')[-1]
+            file_name = py.name.split('/')[-1]
             line_counter = 0
             counter = 0
             while True:
                 line_counter += 1
-                line = f.readline()
+                line = py.readline()
                 if not line: break
                 place_method = 0
                 for i in line :
@@ -155,15 +153,14 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                             self.result_py[file_name + str(line_counter)] = [file_name, line_counter, 'puting method inside loop is not good']
             self.good_standard += counter
 
-    def check_space(self, py_list):
-        for py in py_list:
-            f = open(py, 'r')
+    def check_space(self, open_files):
+        for py in open_files:
             counter_line = 0
-            file_name = py.split('/')[-1]
+            file_name = py.name.split('/')[-1]
             counter = 0
             while True:
                 counter_line += 1
-                line = f.readline()
+                line = py.readline()
                 if not line: break
                 pos_comma = line.find(',')
                 pos_semicolon = line.find(';')
@@ -179,17 +176,16 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                                 self.result_py[file_name + str(counter_line)] = [file_name, counter_line, 'You should not have space before (: ; ,)']
             self.good_standard += counter #  to be check
 
-    def check_space_operator(self, py_list):
-        for py in py_list:
-            f = open(py, 'r')
+    def check_space_operator(self, open_files):
+        for py in open_files:
             space_counter = 0
             eq_found = False
             operator_found = False
             line_counter = 0
-            file_name = py.split('/')[-1]
+            file_name = py.name.split('/')[-1]
             while True:
                 line_counter += 1
-                line = f.readline()
+                line = py.readline()
                 if not line: break
                 for counter in line:
                     if (counter == ' '):
@@ -205,14 +201,13 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                         self.good_standard += 1
                         operator_found = True
 
-    def check_len(self, py_list):
-        for py in py_list:
-            f = open(py, 'r')
+    def check_len(self, open_files):
+        for py in open_files:
             line_counter = 0
-            file_name = py.split('/')[-1]
+            file_name = py.name.split('/')[-1]
             while True:
                 line_counter += 1
-                line = f.readline()
+                line = py.readline()
                 if not line: break
                 if (line.find('if') > -1) and (line.find('len(') > -1) and (line.find(')') > -1):
                     self.good_standard += 1
@@ -220,14 +215,13 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                         self.bad_standard += 1
                         self.result_py[file_name + str(line_counter)] = [file_name, line_counter, ' For sequences, (strings, lists, tuples), use the fact that empty sequences are false']
 
-    def check_boolean(self, py_list):
-        for py in py_list:
-            f = open(py, 'r')
+    def check_boolean(self, open_files):
+        for py in open_files:
             line_counter = 0
-            file_name = py.split('/')[-1]
+            file_name = py.name.split('/')[-1]
             while True:
                 line_counter += 1
-                line = f.readline()
+                line = py.readline()
                 if not line: break
                 if (line.find('if') > -1):
                     self.good_standard += 1
@@ -236,7 +230,7 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                         self.result_py[file_name + str(line_counter)] = [file_name, line_counter, "Don't compare boolean values to True or False using == or !="]
 
     def get_result(self, dict_obj):
-        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n', [_('Result of import statements in py %')])
+        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n', [_('Result of pep8_test in %')])
         if not self.error:
             return self.format_table(header, data_list=dict_obj)
         return ""

@@ -19,7 +19,7 @@
 							<field name="epartner_invoice_id" select="1"/>
 							<field name="web_id"/>
 							<field name="pricelist_id"/>
-							<field name="order_lines" widget="one2many_list" colspan="4" nolabel="1"/>
+							<field name="orderline_ids" widget="one2many_list" colspan="4" nolabel="1"/>
 					</page>
 					<page string="Other data">
 						<field name="order_id" colspan="3"/>

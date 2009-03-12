@@ -112,7 +112,7 @@
 		<field name="name">ecommerce.product.category.tree</field>
 		<field name="model">ecommerce.category</field>
 		<field name="type">tree</field>
-		<field name="field_parent">child_id</field>
+		<field name="field_parent">child_ids</field>
 		<field name="arch" type="xml">
 			<tree string="Products Categories">
 				<field name="name"/>
@@ -172,10 +172,10 @@
 						<newline/>
 						<field name="return_url" select="2" />
 						<field name="cancel_url" select="2" />
-						<field name="transaction_detail" colspan="4" nolabel="1" />
+						<field name="transaction_dtl_ids" colspan="4" nolabel="1" />
 					</page>
 					<page string="Credit Cards Accepted" attrs="{'invisible':[('name','!=','creditcard')]}">
-						<field name="creditcards"/>
+						<field name="creditcard_ids"/>
 					</page>
 				</notebook>
 			</form>
@@ -236,7 +236,7 @@
 				<field name="saleorder_id"/>
 				<field name="invoice_id"/>
 				<field name="transaction_date" select="1"/>
-				<field name="partner" select="1"/>
+				<field name="partner_id" select="1"/>
 			</tree>
 		</field>
 	</record>
@@ -246,8 +246,8 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Payment Received Details">
-				<field name="partner" select="1"/>
-				<field name="paypal_acc" select="1"/>
+				<field name="partner_id" select="1"/>
+				<field name="paypal_acc_id" select="1"/>
 				<field name="transaction_date" select="1"/>
 				<field name="transaction_id" select="2"/>
 				<field name="saleorder_id" select="2"/>

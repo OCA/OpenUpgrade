@@ -65,7 +65,7 @@
 					<field name="gender_id" select="1"/>
 					<field name="category_id" colspan="4"/>
 					<separator string="Description" colspan="4"/>
-					<field name="note" colspan="4" nolabel="1"/>
+					<field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
 					<separator string="Status" colspan="4"/>
 					<group col="2" colspan="4">
 						<field name="state" nolabel="1"/>
@@ -125,7 +125,7 @@
                 <separator string="Plugins" colspan="4"/>
                 <field name="plugin_ids" colspan="4" nolabel="1" />
                 <separator string="Description" colspan="4"/>
-                <field name="note" colspan="4" nolabel="1"/>
+                <field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
             </form>
         </field>
     </record>
@@ -171,40 +171,38 @@
                 </group>
                 <newline/>
 				<separator string="Description" colspan="4"/>
-				<field name="note" nolabel="1" colspan="4"/>                
+				<field name="note" nolabel="1" colspan="4" widget="text_wiki"/>                
                 <notebook colspan="4">
                     <page string="Customer Plugin" attrs="{'invisible':[('type','!=','fields')]}">
-                        <field name="object" colspan="4" attrs="{'required':[('type','=','fields')]}" />
-    	                <field name="field"  colspan="4" domain = "[('model_id','=',object)]" attrs="{'required':[('type','=','fields')]}" />
+                        <field name="model_id" colspan="4" attrs="{'required':[('type','=','fields')]}" />
+     	                <field name="field_id"  colspan="4" domain = "[('model_id','=',model_id)]" attrs="{'required':[('type','=','fields')]}" />
+
                     </page>
-                    <page string="Dynamic Plugin" attrs="{'invisible':[('type','=','fields')]}">
+                    <page string="Dynamic Plugin" attrs="{'invisible':[('type','not in',['dynamic','url'])]}">
 		                <field name="file_id" colspan="4" filename="file_fname" />
 		                <field name="file_fname" />
-		                <field name="url_text" attrs="{'invisible':[('type','!=','url')]}" />
-						<separator string="Argument List" colspan="4"/>
-						<field name="argument_ids" nolabel="1" colspan="4">
-							<form string="Argument List">
-		            			<group  colspan="4">
-					                <field name="name" select="1"/>
-					                <field name="stored_plugin"/>
-					                <group  colspan="4" attrs="{'invisible':[('stored_plugin','=',True)]}">
-					                	<field name="value" />
-					                </group>
-					                <group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',False)]} ">
-					                	<field name="custome_plugin_id"/>
-					                </group>
-								</group>			                
-								<separator  colspan="4"/> 
-								<field name="note" nolabel="1" colspan="4"/>
-							</form>
-							<tree string="Argument List">
-				                <field name="name" select="1"/>
-				                <field name="value"/>
-							</tree>					
-						</field>
-                    </page>
-				</notebook>
-			</form>
+				<separator string="Argument List" colspan="4"/>
+				<field name="argument_ids" nolabel="1" colspan="4">
+					<form string="Argument List">
+						<field name="name" select="1"/>
+					        <field name="stored_plugin"/>
+						<group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',True)]}">
+					        	<field name="value" />
+					        </group>
+					        <group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',False)]} ">
+				                	<field name="custome_plugin_id"/>
+				                </group>
+						<separator  colspan="4"/> 
+						<field name="note" nolabel="1" colspan="4" widget="text_wiki"/>
+					</form>
+					<tree string="Argument List">
+				        	<field name="name" select="1"/>
+						<field name="value"/>
+					</tree>					
+				</field>
+                    	</page>
+		</notebook>
+	    </form>
         </field>
     </record>
 

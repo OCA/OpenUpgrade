@@ -151,7 +151,6 @@ dm_campaign_group()
 
 class dm_campaign_type(osv.osv):
     _name = "dm.campaign.type"
-
     _columns = {
         'name': fields.char('Description', size=64, translate=True, required=True),
         'code': fields.char('Code', size=16, translate=True, required=True),
@@ -1955,16 +1954,6 @@ class res_partner(osv.osv):
         'state_ids': _default_all_state,
     }
 res_partner()
-
-class res_partner_address(osv.osv):
-    _name = "res.partner.address"
-    _inherit="res.partner.address"
-    _columns = {
-        'name': fields.char('Last Name', size=64),
-        'firstname' : fields.char('First Name',size=16),
-    }
-
-res_partner_address()
 
 class purchase_order(osv.osv):
     _name = 'purchase.order'

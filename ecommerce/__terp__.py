@@ -26,7 +26,7 @@
     'author': 'Tiny',
     'website': 'http://www.openerp.com',
     'category': 'Generic Modules/E-Commerce',
-    'depends': ['base', 'product', 'sale', 'delivery'],
+    'depends': ['delivery'],
     'description': """
 ecommerce users can order on the website, orders are automatically imported in OpenERP.
 
@@ -42,11 +42,10 @@ You can display products in table on website using rows and columns specified in
     'init_xml': [],
     'demo_xml': ['ecommerce_demo.xml'],
     'update_xml': [
-        'ecommerce_product_view.xml',
+        'ecommerce_wizard.xml',
         'ecommerce_view.xml',
         'partner/partner_view.xml',
-        'catalog/catalog_view.xml',
-        'ecommerce_wizard.xml',
+        'catalog/catalog_view.xml',       
         'sale_order/sale_order_view.xml',
         'sale_order/sale_order_sequence.xml',
         'ecommerce_report.xml', 

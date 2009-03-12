@@ -26,9 +26,9 @@ def _offer_documents(self, cr, uid, data, context):
     offer_id = data['id']
     pool = pooler.get_pool(cr.dbname)
     step_id = pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',offer_id)])
-    document_ids =pool.get('dm.offer.document').search(cr,uid,[('step_id','in',step_id)])
+#    document_ids =pool.get('dm.offer.document').search(cr,uid,[('step_id','in',step_id)])
     value = {
-        'domain': [('id', 'in',document_ids)],
+        'domain': [('step_id','in',step_id)],
         'name': 'Documents',
         'view_type': 'form',
         'view_mode': 'tree,form',

@@ -29,7 +29,6 @@
                     <separator string="Address Infos" colspan="4"/>
                 	<field colspan="4" mode="form,tree" name="address" nolabel="1" select="1">
 	                    <form string="Partner contacts">
-	                    	<field name="firstname" select="2"/>
 	                        <field name="name" select="2"/>
 	                        <field domain="[('domain', '=', 'contact')]" name="title" string="Type"/>
 	                        <field name="function"/>
@@ -141,7 +140,7 @@
     CUSTOMER ORDER VIEWS
     =======================================================
     -->
- 
+    
     <record model="ir.ui.view" id="view_dm_customer_order_form">
         <field name="name">dm.customer.order.form</field>
         <field name="model">dm.customer.order</field>
@@ -166,7 +165,7 @@
                 <field name="order_policy" on_change="shipping_policy_change(order_policy)"/>
                 <field name="invoice_quantity" attrs="{'readonly':[('order_policy','=','prepaid'),('order_policy','=','picking')]}"/>
                 <separator string="Note" colspan="4"/>
-                <field name="note" colspan="4" nolabel="1"/>
+                <field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
                 <field name="state"/>
                 <button string="Confirm" name="set_confirm" type="object" states="draft" colspan="2"/>
             </form>
@@ -280,7 +279,7 @@
 				<field name="to_gender" select="1"/>
 				<field name="lang_id" select="2"/>
 				<separator string="Description" colspan="4"/>
-				<field name="description" nolabel="1" colspan="4"/>
+				<field name="description" nolabel="1" colspan="4" widget="text_wiki"/>
             </form>
         </field>
     </record>
@@ -328,7 +327,7 @@
                 <notebook colspan="4">
                     <page string="General">
                         <separator string="Description" colspan="4"/>
-                        <field name="notes" nolabel="1" select="2" colspan="4"/>
+                        <field name="notes" nolabel="1" select="2" colspan="4" widget="text_wiki"/>
                     </page>
                     <page string="Customers">
                         <field name="customer_text_criteria_ids" colspan="2" nolabel="1" select="2">
