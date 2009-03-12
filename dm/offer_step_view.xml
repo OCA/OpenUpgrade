@@ -89,7 +89,7 @@
                         <field name="type" select="2" widget="selection"/>
 <!--                        <field name="type" select="2"/>-->
                         <field name="media_id" select="1"/>
-                        <field name="action" select="1"/>
+                        <field name="action_id" select="1" domain="[('media_id','=',media_id)]"/>
                         <field name="quotation" select="2" groups="base.group_extended"/>
                         <field name="legal_state" select="2" groups="base.group_extended"/>
                         <separator string="Description" colspan="4"/>
@@ -200,7 +200,10 @@
                 <field name="arch" type="xml">
                         <form string="Transition Trigger">
                                 <field name="name"/>
-                                <field name="code"/>
+                                <!--field name="code"/-->
+                                <field name="model_id"/>
+                                <field name="state"/>
+                                <field name="condition"/>
                         </form>
                 </field>
         </record>
@@ -211,7 +214,7 @@
                 <field name="arch" type="xml">
                         <tree string="Transition Trigger">
                                 <field name="name"/>
-                                <field name="code"/>
+                                <!--field name="code"/-->
                         </tree>
                 </field>
         </record>
