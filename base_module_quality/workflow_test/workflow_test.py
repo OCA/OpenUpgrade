@@ -74,7 +74,7 @@ class quality_test(base_module_quality.abstract_quality_check):
                     good_view += 1
         wkf_ids = map(lambda x:x['id'], wkfs)
         if not wkf_ids:
-            result_dict[module_name] = [module_name, 'No workflow defined']
+            result_dict[module_name] = [module_name, 'No workflow defined on module']
         #Activity of workflow checking...
         activity_ids = wkf_activity_obj.search(cr, uid, [('wkf_id', 'in', wkf_ids)])
         activities = wkf_activity_obj.browse(cr, uid, activity_ids)
