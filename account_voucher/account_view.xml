@@ -3,37 +3,39 @@
 	<data>
 		<record model="ir.ui.view" id="account_move_type">
 			<field name="name">account.move.type.form</field>
-			<field name="inherit_id" ref="account.view_move_form" />
+			<field name="inherit_id" ref="account.view_move_form"/>
 			<field name="model">account.move</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="journal_id" position="after">
-					<field name="voucher_type" />
+						<field name="voucher_type"/>
 				</field>
 			</field>
 		</record>
 
 		<record model="ir.ui.view" id="account_form1">
 			<field name="name">account.form</field>
-			<field name="inherit_id" ref="account.view_account_form" />
+			<field name="inherit_id" ref="account.view_account_form"/>
 			<field name="model">account.account</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="user_type" position="after">
+					<field name="balance" string="Closing Balance" select="2"/>
 					<field name="type1" select="2" />
+					<field name="open_bal" select="2"/>
+					<field name="journal_id" invisible="1"/>
 				</field>
 			</field>
 		</record>
-
+		
 		<record model="ir.ui.view" id="account_form2">
 			<field name="name">account.form</field>
-			<field name="inherit_id" ref="account.view_account_form" />
+			<field name="inherit_id" ref="account.view_account_form"/>
 			<field name="model">account.account</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="user_type" position="replace">
-					<field name="user_type" select="1"
-						on_change="onchange_type(user_type,type1)" />
+						<field name="user_type" select="1" on_change="onchange_type(user_type,type1)"/>
 				</field>
 			</field>
 		</record>
@@ -43,6 +45,7 @@
 			<field name="inherit_id" ref="account.view_account_tree"/>
 			<field name="model">account.account</field>
 			<field name="type">tree</field>
+			<field name="priority">10</field>
 			<field name="arch" type="xml">
 				<field name="balance" position="replace"/>
 						
@@ -53,6 +56,7 @@
 			<field name="inherit_id" ref="account.view_account_tree"/>
 			<field name="model">account.account</field>
 			<field name="type">tree</field>
+			<field name="priority">10</field>
 			<field name="arch" type="xml">
 				<field name="debit" position="replace"/>
 						
@@ -63,11 +67,39 @@
 			<field name="inherit_id" ref="account.view_account_tree"/>
 			<field name="model">account.account</field>
 			<field name="type">tree</field>
+			<field name="priority">10</field>
 			<field name="arch" type="xml">
 				<field name="credit" position="replace"/>
 						
 			</field>
 		</record>
+
+        <record id="view_account_tree_old" model="ir.ui.view">
+            <field name="name">account.account.tree</field>
+            <field name="model">account.account</field>
+            <field name="type">tree</field>
+            <field name="field_parent">child_id</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <tree string="Chart of accounts" toolbar="1" colors="blue:type=='view'">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="debit"/>
+                    <field name="credit"/>
+                    <field name="balance"/>
+                    <field name="company_currency_id"/>
+                    <field name="type" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="account.action_account_tree" model="ir.actions.act_window">
+            <field name="name">Chart of Accounts</field>
+            <field name="res_model">account.account</field>
+            <field name="view_type">tree</field>
+            <field name="view_id" ref="view_account_tree_old"/>
+            <field name="domain">[('parent_id','=',False)]</field>
+        </record>
+
 
 <!--	sub_currency	-->
 		<record model="ir.ui.view" id="sub_currency_form">
@@ -81,11 +113,12 @@
 				</field>
 			</field>
 		</record>
-
+		
 		<act_window name="Opening Balance Entry"
 			domain="[('journal_id', '=', journal_id)]"
-			res_model="account.move.line" src_model="account.account"
-			id="act_account_acount_move_line_open1" />
+			res_model="account.move.line"
+			src_model="account.account"
+			id="act_account_acount_move_line_open1"/>
 
 	</data>
 </openerp>
