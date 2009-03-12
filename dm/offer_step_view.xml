@@ -480,7 +480,7 @@
     <record id="view_dm_offer_step_action_tree" model="ir.ui.view">
         <field name="name">dm.offer.step.action.tree</field>
         <field name="model">dm.offer.step.action</field>
-        <field name="type">form</field>
+        <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Offer Action">
                 <field name="media_id"/>
@@ -497,7 +497,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">dm.offer.step.action</field>
         <field name="view_type">form</field>
-        <field name="view_id" ref="view_dm_offer_step_action_form"/>
+        <field name="view_id" ref="view_dm_offer_step_action_tree"/>
     </record>
 
 <menuitem id="menu_action_dm_offer_step_action_form" parent="dm.menu_dm_config_offer_steps" action="action_dm_offer_step_action_form" sequence="2" />
