@@ -13,8 +13,8 @@
 			<field name="name">Openobejct</field>
 			<field name="code">openobject_connector</field>
 		</record>
-
-
+	
+		
 		<!--COMPONENT TYPES-->
 
 		<record id="comp_input_csv_in" model="etl.component.type">
@@ -42,5 +42,32 @@
 			<field name="code">control.sleep</field>
 		</record>
 		
+		
+		<record id="comp_input_sql_in" model="etl.component.type">
+			<field name="name">input.sql_in</field>
+			<field name="code">input.sql_in</field>
+		</record>
+
+		<record id="comp_transform_logger" model="etl.component.type">
+			<field name="name">transform.logger</field>
+			<field name="code">transform.logger</field>
+		</record>
+
+		<record id="comp_output_sql_out" model="etl.component.type">
+			<field name="name">output.sql_out</field>
+			<field name="code">output.sql_out</field>
+		</record>
+
+		<record id="comp_transform_sort" model="etl.component.type">
+			<field name="name">transform.sort</field>
+			<field name="code">transform.sort</field>
+		</record>
+
+		<record id="comp_control_sleep" model="etl.component.type">
+			<field name="name">control.sleep</field>
+			<field name="code">control.sleep</field>
+		
+		
 	</data>
 </openerp>
+

@@ -7,25 +7,25 @@
 		<record id="fileconnector_partner" model="etl.connector">
 			<field name="name">Partner Data</field>
 			<field name="type">localfile</field>
-			<field name="uri">input/partner.csv</field>
+			<field name="uri">/etl_interface/input/partner.csv</field>
 		</record>
 
 		<record id="fileconnector_partner1" model="etl.connector">
 			<field name="name">Partner Data1</field>
 			<field name="type">localfile</field>
-			<field name="uri">input/partner1.csv</field>
+			<field name="uri">/etl_interface/input/partner1.csv</field>
 		</record>
 
 		<record id="fileconnector_partner3" model="etl.connector">
 			<field name="name">Partner Data3</field>
 			<field name="type">localfile</field>
-			<field name="uri">input/partner3.csv</field>
+			<field name="uri">/etl_interface/input/partner3.csv</field>
 		</record>
 
 		<record id="fileconnector_output" model="etl.connector">
 			<field name="name">Partner OUT Data1</field>
 			<field name="type">localfile</field>
-			<field name="uri">output/test1_partner.csv</field>
+			<field name="uri">/etl_interface/output/test1_partner.csv</field>
 		</record>
 
 		<!--	COMPONENTS-->
