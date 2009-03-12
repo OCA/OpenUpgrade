@@ -73,7 +73,8 @@ class quality_test(base_module_quality.abstract_quality_check):
                 else:
                     good_view += 1
         wkf_ids = map(lambda x:x['id'], wkfs)
-
+        if not wkf_ids:
+            result_dict[module_name] = [module_name, 'No workflow defined']
         #Activity of workflow checking...
         activity_ids = wkf_activity_obj.search(cr, uid, [('wkf_id', 'in', wkf_ids)])
         activities = wkf_activity_obj.browse(cr, uid, activity_ids)
@@ -119,7 +120,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         score_avail = good_view and float(good_view) / float(bad_view + good_view)
 
         self.score = (score_general + score_avail) / 2
-        self.result = self.get_result({ module_name: ['Result Workflow', int(self.score * 100)]})
+        self.result = self.get_result({module_name: [module_name, int(self.score * 100)]})
         self.result_details += self.get_result_details(result_dict)
         return None
 

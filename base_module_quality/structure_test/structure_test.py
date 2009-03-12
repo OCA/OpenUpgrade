@@ -140,7 +140,7 @@ This test checks if the module satisfy tiny structure
         return None
 
     def get_result(self, dict_struct):
-        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Module Name'), _('Result')])
+        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Module Name'), _('Result in %')])
         if not self.error:
             return self.format_table(header, data_list=dict_struct)
         return ""

@@ -230,7 +230,7 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                         self.result_py[file_name + str(line_counter)] = [file_name, line_counter, "Don't compare boolean values to True or False using == or !="]
 
     def get_result(self, dict_obj):
-        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n', [_('Result of import statements in py %')])
+        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n', [_('Result of pep8_test in %')])
         if not self.error:
             return self.format_table(header, data_list=dict_obj)
         return ""
