@@ -21,6 +21,7 @@
 ##############################################################################
 
 import base64
+import cStringIO
 
 import wizard
 from osv import osv
@@ -28,18 +29,24 @@ import pooler
 
 form_rep = '''<?xml version="1.0"?>
 <form string="Standard entries">
+    <field name="name"/>
+    <newline/>
     <field name="module_file"/>
 </form>'''
 
 
 fields_rep = {
-    'module_file': {'string': 'Save report', 'type': 'binary', 'required': True},
+      'name': {'string': 'File name', 'type': 'char', 'required': True},
+      'module_file': {'string': 'Save report', 'type': 'binary', 'required': True},
 }
 
 def get_detail(self, cr, uid, datas, context={}):
     data = pooler.get_pool(cr.dbname).get('quality.check.detail').browse(cr, uid, datas['id'])
-    data.detail = base64.encodestring(data.detail)
-    return {'module_file': data.detail}
+    buf = cStringIO.StringIO(data.detail)
+    data_report = base64.encodestring(data.detail)
+    out = base64.encodestring(buf.getvalue())
+    buf.close()
+    return {'module_file': out, 'name': data.name + '.html'}
 
 class save_report(wizard.interface):
     states = {
