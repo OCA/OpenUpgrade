@@ -106,13 +106,15 @@
                     <group colspan="4" col="6">
                         <field name="state" />
                         <button name="signal_pending" string="Pending" type="workflow"
-                            states="draft" />
+                            states="draft,validated,deprecated,inprogress" />
                         <button name="signal_inprogress" string="In Progress" type="workflow" 
                             states="pending" />
                         <button name="signal_deprecate" string="Deprecate" type="workflow" 
                             states="inprogress"/>
                         <button name="signal_validate" string="Validate" type="workflow"
                             states="inprogress" />
+                        <button name="signal_draft" string="Draft" type="workflow"
+                            states="deprecated" />
                     </group>
                 </form>
             </field>

@@ -51,6 +51,25 @@
             <field name="signal">signal_pending</field>
         </record>
 
+        <record model="workflow.transition" id="transition_questionnaire_validated_to_pending">
+            <field name="act_from" ref="activity_questionnaire_validated" />
+            <field name="act_to" ref="activity_questionnaire_pending" />
+            <field name="signal">signal_pending</field>
+        </record>
+
+        <record model="workflow.transition"
+            id="transition_questionnaire_deprecated_to_pending">
+            <field name="act_from" ref="activity_questionnaire_deprecated" />
+            <field name="act_to" ref="activity_questionnaire_pending" />
+            <field name="signal">signal_pending</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_questionnaire_inprogress_to_pending">
+            <field name="act_from" ref="activity_questionnaire_inprogress" />
+            <field name="act_to" ref="activity_questionnaire_pending" />
+            <field name="signal">signal_pending</field>
+        </record>
+
         <record model="workflow.transition" id="transition_questionnaire_inprogress">
             <field name="act_from" ref="activity_questionnaire_pending" />
             <field name="act_to" ref="activity_questionnaire_inprogress" />
@@ -67,6 +86,12 @@
             <field name="act_from" ref="activity_questionnaire_inprogress" />
             <field name="act_to" ref="activity_questionnaire_validated" />
             <field name="signal">signal_validate</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_questionnaire_draft">
+            <field name="act_from" ref="activity_questionnaire_deprecated" />
+            <field name="act_to" ref="activity_questionnaire_draft" />
+            <field name="signal">signal_draft</field>
         </record>
     </data>
 </openerp>

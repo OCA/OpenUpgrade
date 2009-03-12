@@ -41,6 +41,12 @@
             <field name="act_to" ref="activity_catalog_done" />
             <field name="signal">signal_done</field>
         </record>
+
+        <record model="workflow.transition" id="transition_catalog_draft">
+            <field name="act_from" ref="activity_catalog_inprogress" />
+            <field name="act_to" ref="activity_catalog_draft" />
+            <field name="signal">signal_draft</field>
+        </record>
     </data>
 </openerp>
 
