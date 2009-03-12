@@ -36,8 +36,8 @@ form_rep = '''<?xml version="1.0"?>
 
 
 fields_rep = {
-      'name': {'string': 'File name', 'type': 'char', 'required': True},
-      'module_file': {'string': 'Save report', 'type': 'binary', 'required': True},
+  'name': {'string': 'File name', 'type': 'char', 'required': True, 'help': 'Save report as .html format'},
+  'module_file': {'string': 'Save report', 'type': 'binary', 'required': True},
 }
 
 def get_detail(self, cr, uid, datas, context={}):
@@ -57,6 +57,4 @@ class save_report(wizard.interface):
     }
 save_report('quality_detail_save')
 
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
