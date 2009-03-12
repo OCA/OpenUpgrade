@@ -21,7 +21,7 @@
 ##############################################################################
 
 import os
-
+import re
 from tools.translate import _
 from base_module_quality import base_module_quality
 
@@ -67,6 +67,8 @@ PEP-8 Test , copyright of py files check, method can not call from loops
         return None
 
     def check_import(self, open_files):
+        import_pattern = re.compile('[\s]*import[\s]{1,}')
+        # if you want to include __import__ then you should use : '[\s]*import[\s]{1,}|[\s]*__import__[\s]{1,}'
         for py in open_files:
             class_or_def = False
             line_counter = 0
@@ -77,9 +79,9 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                 if not line: break
                 if ((line.find('class') > -1) or (line.find('def') > -1)):
                     class_or_def = True
-                import_found = line.find('import')
+                import_found = import_pattern.match(line)
                 comment_found = line.find('#')
-                if comment_found == -1 and import_found != -1:
+                if comment_found == -1 and import_found:
                     self.good_standard += 1
                     if (class_or_def):
                         self.bad_standard += 1
@@ -87,6 +89,7 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                     if (line.find('from') < 0 and line.find(',') != -1):
                         self.bad_standard += 1
                         self.result_py[file_name + str(line_counter)] = [file_name, line_counter, 'Imports should usually be on separate lines']
+                        
 
     def check_licence(self, open_files):
         for py in open_files:
