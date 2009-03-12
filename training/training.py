@@ -170,7 +170,7 @@ class training_course(osv.osv):
                                            ('pending', 'Pending'),
                                            ('inprogress', 'In Progress'),
                                            ('deprecated', 'Deprecated'),
-                                           ('validate', 'Validate'),
+                                           ('validated', 'Validated'),
                                           ],
                                           'State',
                                           required=True,
@@ -199,7 +199,7 @@ class training_offer(osv.osv):
                                         'offer_id',
                                         'course_id',
                                         'Courses',
-                                        domain="[('state_course', '=', 'validate')]"
+                                        domain="[('state_course', '=', 'validated')]"
                                        ),
         'objective' : fields.text('Objective',
                                   help="Allows to write the objectives of the course",
@@ -207,7 +207,7 @@ class training_offer(osv.osv):
         'description' : fields.text('Description',
                                     help="Allows to write the description of the course"),
         'state' : fields.selection([('draft', 'Draft'),
-                                    ('validate', 'Validate'),
+                                    ('validated', 'Validated'),
                                     ('deprecated', 'Deprecated')
                                    ],
                                    'State',
@@ -270,9 +270,9 @@ class training_session(osv.osv):
         'state' : fields.selection([('draft', 'Draft'),
                                     ('open_pending', 'Open and Pending'),
                                     ('inprogress', 'In Progress'),
-                                    ('validate', 'Validate'),
+                                    ('validated', 'Validated'),
                                     ('closed', 'Closed'),
-                                    ('cancel', 'Cancel')],
+                                    ('cancelled', 'Cancelled')],
                                    'State',
                                    required=True,
                                    readonly=True,
@@ -336,15 +336,13 @@ class training_session(osv.osv):
             event_ids.append(event_id)
 
         values = {
-            'state':'validate'
+            'state':'validated'
         }
 
         if event_ids:
             values['event_ids'] = [(6, 0, event_ids)]
 
-        res = self.write(cr, uid, ids, values, context=context)
-
-        return res
+        return self.write(cr, uid, ids, values, context=context)
 
 training_session()
 
@@ -473,7 +471,7 @@ class training_event(osv.osv):
                                     ('validate', 'Validate'),
                                     ('inprogress', 'In Progress'),
                                     ('closed', 'Closed'),
-                                    ('cancel', 'Cancel')],
+                                    ('cancelled', 'Cancelled')],
                                    'State',
                                    required=True,
                                    readonly=True,
@@ -533,7 +531,7 @@ class training_seance(osv.osv):
             wf_service = netsvc.LocalService("workflow")
             wf_service.trg_validate(uid, 'mrp.procurement', procurement_id, 'button_confirm', cr)
 
-        return self.write(cr, uid, ids, {'state':'validate'}, context=context)
+        return self.write(cr, uid, ids, {'state':'validated'}, context=context)
 
 training_seance()
 
@@ -590,8 +588,8 @@ class training_subscription(osv.osv):
         'invoice_id' : fields.many2one('account.invoice', 'Invoice'),
         'group_id' : fields.many2one('training.group', 'Group'),
         'state' : fields.selection([('draft', 'Draft'),
-                                    ('confirm','Confirm'),
-                                    ('cancel','Cancel'),
+                                    ('confirmed','Confirmed'),
+                                    ('cancelled','Cancelled'),
                                     ('done', 'Done')
                                    ],
                                    'State',

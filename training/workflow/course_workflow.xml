@@ -37,11 +37,11 @@
             <field name="flow_stop">True</field>
         </record>
 
-        <record model="workflow.activity" id="activity_course_validate">
+        <record model="workflow.activity" id="activity_course_validated">
             <field name="wkf_id" ref="workflow_course" />
-            <field name="name">validate</field>
+            <field name="name">validated</field>
             <field name="kind">function</field>
-            <field name="action">write({'state_course':'validate'})</field>
+            <field name="action">write({'state_course':'validated'})</field>
             <field name="flow_stop">True</field>
         </record>
 
@@ -61,7 +61,7 @@
         <record model="workflow.transition" id="transition_course_deprecated">
             <field name="act_from" ref="activity_course_inprogress" />
             <field name="act_to" ref="activity_course_deprecated" />
-            <field name="signal">signal_deprecated</field>
+            <field name="signal">signal_deprecate</field>
         </record>
 
         <record model="res.roles" id="role_course_manager">
@@ -70,7 +70,7 @@
 
         <record model="workflow.transition" id="transition_course_validate">
             <field name="act_from" ref="activity_course_inprogress" />
-            <field name="act_to" ref="activity_course_validate" />
+            <field name="act_to" ref="activity_course_validated" />
             <field name="signal">signal_validate</field>
             <field name="role_id" ref="role_course_manager" />
         </record>

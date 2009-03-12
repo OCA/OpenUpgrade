@@ -29,11 +29,11 @@
             <field name="action">write({'state':'inprogress'})</field>
         </record>
 
-        <record model="workflow.activity" id="activity_planned_exam_validate">
+        <record model="workflow.activity" id="activity_planned_exam_validated">
             <field name="wkf_id" ref="workflow_planned_exam" />
-            <field name="name">validate</field>
+            <field name="name">validated</field>
             <field name="kind">function</field>
-            <field name="action">write({'state':'validate'})</field>
+            <field name="action">write({'state':'validated'})</field>
             <field name="flow_stop">True</field>
         </record>
 
@@ -47,16 +47,16 @@
 
         <record model="workflow.activity" id="activity_planned_exam_cancel">
             <field name="wkf_id" ref="workflow_planned_exam" />
-            <field name="name">cancel</field>
+            <field name="name">cancelled</field>
             <field name="kind">function</field>
-            <field name="action">write({'state':'cancel'})</field>
+            <field name="action">write({'state':'cancelled'})</field>
             <field name="flow_stop">True</field>
         </record>
 
         <record model="workflow.transition" id="transition_planned_exam_draft">
             <field name="act_from" ref="activity_planned_exam_draft" />
             <field name="act_to" ref="activity_planned_exam_open_pending" />
-            <field name="signal">signal_inprogress</field>
+            <field name="signal">signal_open_pending</field>
         </record>
 
         <record model="workflow.transition" id="transition_planned_exam_inprogress">
@@ -67,14 +67,14 @@
 
         <record model="workflow.transition" id="transition_planned_exam_validate">
             <field name="act_from" ref="activity_planned_exam_inprogress" />
-            <field name="act_to" ref="activity_planned_exam_validate" />
+            <field name="act_to" ref="activity_planned_exam_validated" />
             <field name="signal">signal_validate</field>
         </record>
 
         <record model="workflow.transition" id="transition_planned_exam_closed">
             <field name="act_from" ref="activity_planned_exam_inprogress" />
             <field name="act_to" ref="activity_planned_exam_closed" />
-            <field name="signal">signal_closed</field>
+            <field name="signal">signal_close</field>
         </record>
 
         <record model="workflow.transition" id="transition_planned_exam_cancel">

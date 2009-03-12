@@ -17,16 +17,16 @@
 
         <record model="workflow.activity" id="activity_subscription_confirm">
             <field name="wkf_id" ref="workflow_subscription" />
-            <field name="name">confirm</field>
+            <field name="name">confirmed</field>
             <field name="kind">function</field>
-            <field name="action">write({'state':'confirm'})</field>
+            <field name="action">write({'state':'confirmed'})</field>
         </record>
 
         <record model="workflow.activity" id="activity_subscription_cancel">
             <field name="wkf_id" ref="workflow_subscription" />
-            <field name="name">cancel</field>
+            <field name="name">cancelled</field>
             <field name="kind">function</field>
-            <field name="action">write({'state':'cancel'})</field>
+            <field name="action">write({'state':'cancelled'})</field>
         </record>
 
         <record model="workflow.activity" id="activity_subscription_done">

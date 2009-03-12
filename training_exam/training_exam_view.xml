@@ -105,10 +105,14 @@
                     </notebook>
                     <group colspan="4" col="6">
                         <field name="state" />
-                        <button name="signal_pending" string="Pending" type="workflow" />
-                        <button name="signal_inprogress" string="In Progress" type="workflow" />
-                        <button name="signal_deprecated" string="Deprecated" type="workflow" />
-                        <button name="signal_validate" string="Validate" type="workflow" />
+                        <button name="signal_pending" string="Pending" type="workflow"
+                            states="draft" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" 
+                            states="pending" />
+                        <button name="signal_deprecate" string="Deprecate" type="workflow" 
+                            states="inprogress"/>
+                        <button name="signal_validate" string="Validate" type="workflow"
+                            states="inprogress" />
                     </group>
                 </form>
             </field>
@@ -138,7 +142,7 @@
             <field name="res_model">training.questionnaire</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('state', '=', 'mature')]</field>
+            <field name="domain">[('state', '=', 'validated')]</field>
         </record>
 
         <record model="ir.actions.act_window" id="training_questionnaire_new_act">
@@ -171,12 +175,11 @@
                     </notebook>
                     <group col="8" colspan="4">
                         <field name="state" />
-                        <button name="signal_draft" string="Draft" type="workflow" />
-                        <button name="signal_open_pending" string="Open and Pending" type="workflow" />
-                        <button name="signal_validate" string="Validate" type="workflow" />
-                        <button name="signal_inprogress" string="In Progress" type="workflow" />
-                        <button name="signal_closed" string="Closed" type="workflow" />
-                        <button name="signal_cancel" string="Cancel" type="workflow" />
+                        <button name="signal_open_pending" string="Open and Pending" type="workflow" states="draft" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" states="open_pending" />
+                        <button name="signal_close" string="Close" type="workflow" states="inprogress" />
+                        <button name="signal_cancel" string="Cancel" type="workflow" states="inprogress" />
+                        <button name="signal_validate" string="Validate" type="workflow" states="inprogress" />
                     </group>
                 </form>
             </field>
