@@ -50,6 +50,7 @@ import pooler
 class maintenance_maintenance_module_refresh_wizard(wizard.interface):
     def init(self, cr, uid, data, context):
         pooler.get_pool(cr.dbname).get('maintenance.maintenance.module').refresh(cr, uid)
+        raise osv.except_osv(_('Refresh'), _('List refreshed successfully'))
         return {}
 
     states = {
@@ -131,9 +132,29 @@ class maintenance_maintenance_module(osv.osv):
             
 maintenance_maintenance_module()
 
+
+class maintenance_contract_type(osv.osv):
+    _name = "maintenance.contract.type"
+
+    _columns = {
+        'name': fields.char('Name', size=32, required=True, select=1),
+        'product_id': fields.many2one('product.product', 'Product'),
+        'crm_case_section_id': fields.many2one('crm.case.section', 'CRM Case Section', required=True),
+        'crm_case_categ_id': fields.many2one('crm.case.categ', 'CRM Case Category', required=True, 
+            domain="[('section_id', '=', crm_case_section_id)]"),
+
+    }
+
+    _sql_constraints = [
+        ('name_uniq', 'unique (name)', 'The name of the maintenance contract type must be unique !')
+    ]
+    
+maintenance_contract_type()
+
+
 class maintenance_maintenance(osv.osv):
     _name = "maintenance.maintenance"
-    _description = "maintenance"
+    _description = "maintenance contract"
 
     def _contract_date(self, cr, uid, ids):
         for contract in self.browse(cr, uid, ids):
@@ -168,6 +189,7 @@ class maintenance_maintenance(osv.osv):
         'module_ids' : fields.many2many('maintenance.maintenance.module','maintenance_module_rel','maintenance_id','module_id',string='Modules'),
         'state' : fields.selection([('draft','Draft'), ('open','Open'), ('cancel','Cancel'), ('done','Done')], 'State', readonly=True),
         'note': fields.text('Note'),
+        'type_id': fields.many2one('maintenance.contract.type', 'Contract Type', required=True),
     }
 
     _defaults = {
@@ -247,6 +269,41 @@ class maintenance_maintenance(osv.osv):
 
     def retrieve_updates(self, cr, uid, ids, modules):
         return self.__for_each_module(cr, uid, ids, modules, lambda m: addons.get_module_as_zip_from_module_directory(m.path, b64enc=True))
+
+    def submit(self, cr, uid, id, tb, explanations, remarks=None, origin=None):
+        contract = self.browse(cr, uid, id)
+        
+        origin_to_channelname = {
+            'client': 'Client Bug Reporting Form',
+            'openerp.com': 'OpenERP.com Web Form',
+        }
+        channelname = origin_to_channelname.get(origin)
+
+        if channelname:
+            channelobj = self.pool.get('res.partner.canal')
+            channelid = channelobj.search(cr, uid, [('name', '=', channelname)])
+            channelid = channelid and channelid[0] or None
+            if not channelid:
+                channelid = channelobj.create(cr, uid, {'name': channelname})
+        else:
+            channelid = False   # no Channel for the CRM Case
+        
+
+        crmcase = self.pool.get('crm.case')
+        desc = "%s\n\n-----\n%s" % (explanations, tb)
+        if remarks:
+            desc = "%s\n\n----\n%s" % (desc, remarks)
+        
+        caseid = crmcase.create(cr, uid, {
+            'name': 'Maintenance report from %s' % (contract.name),
+            'section_id': contract.type_id.crm_case_section_id.id,
+            'categ_id': contract.type_id.crm_case_categ_id.id,
+            'partner_id': contract.partner_id.id,
+            'description': desc,
+            'canal_id': channelid,
+        })
+        crmcase.case_log(cr, uid, [caseid])
+        return caseid
 
 maintenance_maintenance()
 
