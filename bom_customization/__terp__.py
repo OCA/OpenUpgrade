@@ -25,12 +25,15 @@
     "author" : "Smile.fr",
     "website": "http://www.smile.fr",
     "category" : "Generic Modules/Sales",
-    "depends" : ["mrp", "sale"],
+    "depends" : ["mrp", "sale", "product_variant_multi", "sale_product_multistep_configurator"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ['bom_customization_view.xml',
                     'configurator_view.xml',
-                    'demo_data.xml'],
+                    'sale_view.xml',
+                    'stock_view.xml',
+                    'mrp_view.xml',
+                    'demo_data.xml',],
     "active": False,
     "installable": True
 }

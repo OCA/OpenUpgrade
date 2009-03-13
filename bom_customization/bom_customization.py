@@ -50,14 +50,15 @@ class bom_customization_values(osv.osv):
 bom_customization_values()
 
 
-class bom_customization(osv.osv):
-    _name = "bom_customization.bom_customizations"
+class sale_order_line_customization(osv.osv):
+    _name = "bom_customization.sale_order_line_customizations"
     
     #TODO get rid of name
     _columns = {
                 'name': fields.related('customization_key_id','name', type="char", string="Name"),
-                'bom_ids': fields.many2many('mrp.bom','mrp_bom_bom_customizations_rel','bom_customization_id','bom_id',"BoM's"),
+                #'bom_ids': fields.many2many('mrp.bom','mrp_bom_bom_customizations_rel','bom_customization_id','bom_id',"BoM's"),
+                'sale_order_line_id': fields.many2one('sale.order.line', "Sale order line"),
                 'customization_value_id': fields.many2one('bom_customization.bom_customization_values', 'Customization Value'),
                 'customization_key_id': fields.many2one('bom_customization.bom_customization_keys', 'Customization Key'),
     }
-bom_customization()
+sale_order_line_customization()

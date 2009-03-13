@@ -20,6 +20,7 @@
 #
 ##############################################################################
 from osv import fields, osv
+import sale_product_multistep_configurator
 
 
 class product_variant_configurator_line(osv.osv_memory):
@@ -31,26 +32,29 @@ class product_variant_configurator_line(osv.osv_memory):
                 "dimension_custom_value": fields.char('Custom Value', size=64),
                 "configurator_id": fields.many2one('product_variant_configurator.configurator', 'product_variant_configurator Test'),
                 "allow_custom_value": fields.boolean('Allow custom values ?'),
-                #"product_tmpl_id": fields.related('configurator_id','product_tmpl_id', type="many2one", relation="product.template", string="Product Template")
     }
     
     def onchange_dimension_type_id(self, cr, uid, ids, dimension_type_id):
-        print "onchange_dimension_type_id"
         dim_allow=self.pool.get('product.variant.dimension.type').read(cr, uid, dimension_type_id, ['allow_custom_value'])
         print dim_allow
         if dim_allow:
             allow_custom=dim_allow['allow_custom_value']
-            print allow_custom
         
         return {'value':{'dimension_type_id':dimension_type_id, 'allow_custom_value': allow_custom}}
     
     def onchange_dimension_type_value_id(self, cr, uid, ids, dimension_type_value_id):
         return {'value':{'dimension_type_value_id':dimension_type_value_id}}
     
-    def onchange_dimension_custom_value(self, cr, uid, ids, dimension_custom_value):
-        return {'value':{'dimension_custom_value':dimension_custom_value}}
+    def onchange_dimension_custom_value(self, cr, uid, ids, dimension_custom_value, allow_custom_value):
+        #FIX: this shouldn't be necessary if attrs="{'readonly':[('allow_custom_value','=',False)]}"
+        # was working in tree view
+        if allow_custom_value:
+            return {'value':{'dimension_custom_value':dimension_custom_value}}
+        else:
+            return {'value':{'dimension_custom_value':False}}
 
 product_variant_configurator_line()
+
 
 class product_variant_configurator_configurator(osv.osv_memory):
     _name = "product_variant_configurator.configurator"
@@ -59,17 +63,13 @@ class product_variant_configurator_configurator(osv.osv_memory):
               "product_tmpl_id": fields.many2one('product.template', "Product Template"),
               "dimension_configuration_line_ids": fields.one2many('product_variant_configurator.line', 'configurator_id', 'Configurator Lines'),
               "product_variant_id": fields.many2one('product.product', "Product Variant", domain="[('product_tmpl_id','=',product_tmpl_id)]"),
-              "next_step": fields.char('Next Step', size=64),
     }
-    _defaults = {
-                 "next_step": lambda self, cr, uid, context : context.get('next_step', False),
-                 }
-    
     
     def create(self, cr, uid, vals, context=None):
         id = super(osv.osv_memory, self).create(cr, uid, vals, context)
         line_ids=[i[1] for i in vals['dimension_configuration_line_ids']]
-        self.pool.get('product_variant_configurator.line').write(cr, uid, line_ids, {'configurator_id':id})
+        if line_ids:
+            self.pool.get('product_variant_configurator.line').write(cr, uid, line_ids, {'configurator_id':id})
         return id
 
     #TODO load the product of the sale order line in the wizard in case of modification
@@ -112,7 +112,7 @@ class product_variant_configurator_configurator(osv.osv_memory):
         line_ids = []
         for dim in dim_ids:
             #TODO that would be much better if the client could interpret a hash of lines to create (later on) 
-            #instead of creating those lines now while not beeing able yet to link them to the current configurator object
+            #instead of creating those lines now while not being able yet to link them to the current configurator object
             dim_allow=self.pool.get('product.variant.dimension.type').read(cr, uid, dim.id, ['allow_custom_value'])
             if dim_allow:
                 allow_custom=dim_allow['allow_custom_value']
@@ -120,7 +120,6 @@ class product_variant_configurator_configurator(osv.osv_memory):
             line_ids.append(self.pool.get('product_variant_configurator.line').create(cr, uid, vals))
 
         result['value'] = {'dimension_configuration_line_ids': line_ids}
-        print result
         return result
     
     def onchange_product_variant_id(self, cr, uid, ids, product_variant_id=False, dimension_configuration_line_ids=False):
@@ -143,14 +142,13 @@ class product_variant_configurator_configurator(osv.osv_memory):
         line_ids = [line[1] for line in dimension_configuration_line_ids]
 
         result['value'] = {'dimension_configuration_line_ids': line_ids}
-        
         return result
     
     def configure_line(self, cr, uid, ids, context={}):
         active_id_object_type = context.get('active_id_object_type', False)
         res_obj = self.pool.get('sale.order.line')
         line_obj = self.pool.get('product_variant_configurator.line')
-        sol_id = False        
+        sol_id = False
         
         if active_id_object_type == 'sale.order':
             print "Creating Line"
@@ -196,8 +194,12 @@ class product_variant_configurator_configurator(osv.osv_memory):
                 if res['product_tmpl_id']:
                     default_uom_id = self.pool.get('product.template').read(cr,uid,res['product_tmpl_id'])['uom_id'][0]
                     if res['product_variant_id']:
+                        tmpl_obj = self.pool.get('product.template')
+                        tmpl_name = tmpl_obj.read(cr,uid,res['product_tmpl_id'],['name'])['name']
                         prod_name = self.pool.get('product.product').read(cr,uid,res['product_variant_id'])['variants']
-                        vals = {'product_id':res['product_variant_id'],'name':prod_name,}
+                        name = tmpl_name
+                        if prod_name: name = tmpl_name + " - " + prod_name
+                        vals = {'product_id':res['product_variant_id'], 'name':name,}
                         if res['product_variant_id']: res_obj.write(cr, uid, [sol_id], vals)
             
             cust_lines_obj = self.pool.get('sale.order.line.dimension_custom_values')
@@ -213,26 +215,12 @@ class product_variant_configurator_configurator(osv.osv_memory):
                         cust_lines_obj.write(cr, uid, cl_id, cust_vals, context=context)
                     else:
                         cust_lines_obj.create(cr, uid, cust_vals, context=context)
-            
         
-        if sol_id and active_id_object_type == 'sale.order':
-            
+        if sol_id :
             context.update({'sol_id': sol_id})
+
+            return sale_product_multistep_configurator.sale_product_multistep_configurator.next_step(context)
             
-            #TODO inherit this response from generic configurator
-            return {
-                    'view_type': 'form',
-                    "view_mode": 'form',
-                    'res_model': context.get('next_step', False),#'sale_product_multistep_configurator', #'ir.actions.configuration.wizard',
-                    'type': 'ir.actions.act_window',
-                    'target':'new',
-                    'context': context,
-                }
-            
-        elif active_id_object_type == 'sale.order.line':
-            return {
-                    'type': 'ir.actions.act_window_close',
-            }
         else:
             return True
         
