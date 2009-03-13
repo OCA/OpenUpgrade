@@ -630,7 +630,8 @@
                             states="draft,cancelled" />
                         <button string="Cancel" type="workflow" name="signal_cancel"
                             states="confirmed" />
-                        <button string="Cancel to Invoice" type="workflow" name="signal_cancel_to_invoice" 
+                        <button string="Cancel to Invoice" type="workflow"
+                            name="signal_confirm_to_cancel_with_invoice" 
                             states="confirmed" />
                         <button string="Done" type="workflow" name="signal_done" states="confirmed" />
                     </group>
