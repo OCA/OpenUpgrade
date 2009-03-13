@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -43,14 +43,16 @@ def graph_get(cr, uid, graph, offer_id):
         user_lang = user.context_lang
 
         trans_obj =  pooler.get_pool(cr.dbname).get('ir.translation')
-        res_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
+        type_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
                            user_lang or 'en_US',[step.type.id])
-        type_code = res_trans[step.type.id] or step.type.code
+#        media_trans = trans_obj._get_ids(cr, uid, 'dm.media,code', 'model',
+#                           user_lang or 'en_US',[step.media_id.id])
+        type_code = type_trans[step.type.id] or step.type.code
+#        media_code = media_trans[step.media_id.id] or step.media_id.code
 
+#        args['label'] = type_code + '\\n' + media_code
         args['label'] = type_code + '\\n' + step.media_id.code
-        #args['label'] = type_code
-        args['comment'] = step.media_id.name
-        print args
+        print "XXXXXXXXXXXxxxxx",args
         graph.add_node(pydot.Node(step.id, **args))
 
     for step in offer.step_ids:
@@ -58,7 +60,7 @@ def graph_get(cr, uid, graph, offer_id):
 #            tr_cond_trans = trans_obj._get_ids(cr, uid, 'dm.offer.transition,condition', 'model',
 #                                       user_lang or 'en_US',[step.type.id])
 
-#           Wainting for analysis to be complated
+#           Wainting for analysis to be completed
             trargs = {
 #                'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay) + ' days'
 #                'label': transition.condition.name + ' - ' + transition.step_to.media_id.name  + '\\n' + str(transition.delay) + ' ' +transition.delay_type

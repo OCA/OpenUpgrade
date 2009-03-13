@@ -332,7 +332,7 @@
         <field name="model">dm.media</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Offer Media">
+            <form string="Media">
                 <field name="name" select="1"/>
                 <field name="code" select="1"/>
             </form>
@@ -344,7 +344,7 @@
         <field name="model">dm.media</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="All Offer Medias">
+            <tree string="All Medias">
                 <field name="name"/>
                 <field name="code"/>
             </tree>
@@ -352,7 +352,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_dm_media_form">
-        <field name="name">All Offer Medias</field>
+        <field name="name">All Medias</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">dm.media</field>
         <field name="view_type">form</field>

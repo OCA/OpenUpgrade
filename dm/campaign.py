@@ -621,7 +621,7 @@ class dm_campaign(osv.osv):
                          'campaign_id'      : id_camp,
                          'offer_step_id'    : step_id.id,
                          'mail_service_id'  : mail_service.id,
-                         'action_id'        : mail_service.action_id.id
+#                         'action_id'        : mail_service.action_id.id
                          }        
             self.pool.get('dm.campaign.mail_service').create(cr,uid,mail_vals)           
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer

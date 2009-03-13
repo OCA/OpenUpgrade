@@ -19,6 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 from osv import fields
 from osv import osv
 
@@ -30,18 +31,17 @@ class dm_mail_service(osv.osv):
         for rec in self.browse(cr, uid, ids):
             res[rec.id] = (rec.partner_id and rec.partner_id.name or '') + ' for ' + (rec.media_id and rec.media_id.name or '')
         return res 
-#    
+
     _columns = {
         'name' : fields.function(_default_name, method=True, string='Name',store=True ,type='char' ,size=128),
         'partner_id' : fields.many2one('res.partner','Partner',domain=[('category_id','=','Mail Service')]),
         'media_id' : fields.many2one('dm.media','Media'),
-#        'action_id' : fields.many2one('ir.actions.server','Mailing Action'),
         'action_interval': fields.integer('Interval'),
         'unit_interval': fields.selection( [('minutes', 'Minutes'),
             ('hours', 'Hours'), ('work_days','Work Days'), ('days', 'Days'),\
             ('weeks', 'Weeks'), ('months', 'Months')], 'Interval Unit'),
 #        'cron_id' : fields.many2one('ir.cron','Scheduler'),
-        'default_for_media' : fields.boolean('Default'),          
+        'default_for_media' : fields.boolean('Default Mail Service for Media'),
         'mail_action_id' : fields.many2one('ir.actions.server','Server Action'),
     }
 
@@ -53,7 +53,7 @@ class dm_mail_service(osv.osv):
 #                raise osv.except_osv("Error!!","You cannot create more than one default mail service for same media")
         else :
             return True 
-        
+
     def create(self, cr, uid, vals, context={}):
         new_mail_service = super(dm_mail_service, self).create(cr, uid, vals, context)
         mail_service = self.browse(cr, uid, new_mail_service)
@@ -67,7 +67,7 @@ class dm_mail_service(osv.osv):
         return new_mail_service
 
 dm_mail_service()
- 
+
 
 class dm_campaign_mail_service(osv.osv):
     _name = "dm.campaign.mail_service"
@@ -76,7 +76,6 @@ class dm_campaign_mail_service(osv.osv):
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
         'campaign_id' : fields.many2one('dm.campaign','Campaign'),
         'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
-        'action_id' : fields.many2one('ir.actions.server','Action'),
+#        'action_id' : fields.many2one('ir.actions.server','Action'),
     }
-    
 dm_campaign_mail_service()
