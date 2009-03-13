@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,14 +20,17 @@
 #
 ##############################################################################
 
-import time, os
+import time
+import os
 import netsvc
-import pooler,tools
+import pooler
+import pydot
+import tools
 import sys
 import report
 
 def graph_get(cr, uid, graph, offer_id):
-    import pydot
+    
     offer_obj = pooler.get_pool(cr.dbname).get('dm.offer')
     offer = offer_obj.browse(cr, uid, offer_id)[0]
     nodes = {}

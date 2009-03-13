@@ -98,6 +98,9 @@ class maintenance_maintenance_module(osv.osv):
             except IOError:
                 return None
 
+        if not os.path.exists(self.__root_path):
+            os.makedirs(self.__root_path)
+
         ids = self.search(cr, uid, [])
         names = []
         for module in self.browse(cr, uid, ids):

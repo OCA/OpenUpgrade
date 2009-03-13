@@ -55,9 +55,9 @@ PEP-8 Test , copyright of py files check, method can not call from loops
 
         open_files = map(lambda x: open(x, 'r'), py_list)
         self.check_import(open_files)
+        self.check_space(open_files)
         self.check_licence(open_files)
         self.check_loop(open_files)
-        self.check_space(open_files)
         self.check_space_operator(open_files)
         self.check_len(open_files)
         self.check_boolean(open_files)
@@ -68,6 +68,7 @@ PEP-8 Test , copyright of py files check, method can not call from loops
 
     def check_import(self, open_files):
         for py in open_files:
+            py.seek(0)
             class_or_def = False
             line_counter = 0
             file_name = py.name.split('/')[-1]
@@ -90,6 +91,7 @@ PEP-8 Test , copyright of py files check, method can not call from loops
 
     def check_licence(self, open_files):
         for py in open_files:
+            py.seek(0)
             bad_position = False
             copyright_found = False
             gnu_found = False
@@ -125,6 +127,7 @@ PEP-8 Test , copyright of py files check, method can not call from loops
 
     def check_loop(self, open_files):
         for py in open_files:
+            py.seek(0)
             methods = ['browse', 'search', 'read', 'copy', 'unlink']
             place_for = 1000
             file_name = py.name.split('/')[-1]
@@ -155,6 +158,7 @@ PEP-8 Test , copyright of py files check, method can not call from loops
 
     def check_space(self, open_files):
         for py in open_files:
+            py.seek(0)
             counter_line = 0
             file_name = py.name.split('/')[-1]
             counter = 0
@@ -176,8 +180,10 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                                 self.result_py[file_name + str(counter_line)] = [file_name, counter_line, 'You should not have space before (: ; ,)']
             self.good_standard += counter #  to be check
 
+
     def check_space_operator(self, open_files):
         for py in open_files:
+            py.seek(0)
             space_counter = 0
             eq_found = False
             operator_found = False
@@ -203,6 +209,7 @@ PEP-8 Test , copyright of py files check, method can not call from loops
 
     def check_len(self, open_files):
         for py in open_files:
+            py.seek(0)
             line_counter = 0
             file_name = py.name.split('/')[-1]
             while True:
@@ -214,9 +221,11 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                     if (line.find(':') > -1) and not line.find('<') > -1 and not line.find('>') > -1 and not line.find('=') > -1 and not line.find('!') > -1 :
                         self.bad_standard += 1
                         self.result_py[file_name + str(line_counter)] = [file_name, line_counter, ' For sequences, (strings, lists, tuples), use the fact that empty sequences are false']
+                        
 
     def check_boolean(self, open_files):
         for py in open_files:
+            py.seek(0)
             line_counter = 0
             file_name = py.name.split('/')[-1]
             while True:

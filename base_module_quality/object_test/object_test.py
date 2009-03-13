@@ -34,7 +34,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         super(quality_test, self).__init__()
         self.name = _("Object Test")
         self.note = _("""
-Test checks for fields, views, security rules
+Test checks for fields, views, security rules, dependancy level
 """)
         self.bool_installed_only = True
         self.ponderation = 1.0
@@ -140,6 +140,7 @@ Test checks for fields, views, security rules
         remove_list = []
         for depend in module_data[0].dependencies_id:
             depend_list.append(depend.name)
+        good_depend = len(depend_list)
         module_ids = module_obj.search(cr, uid, [('name', 'in', depend_list)])
         module_data = module_obj.browse(cr, uid, module_ids)
         for data in module_data:
@@ -150,20 +151,22 @@ Test checks for fields, views, security rules
                     remove_list.append(str(dep))
         if remove_list:
             result_security[module_name] = [remove_list, 'Unnecessary dependacy should be removed please Provide only highest requirement level']
+        bad_depend = len(remove_list)
 
         score_view = total_views and float(model_views) / float(total_views)
         score_field = total_field and float(good_field) / float(total_field)
+        score_depend = good_depend and float(good_depend) / float(good_depend + bad_depend)
         score_security = good_sec and float(good_sec - bad_sec) / float(good_sec)
-        self.score = (score_view + score_field + score_security) / 3
+        self.score = (score_view + score_field + score_security + score_depend) / 4
 
-        self.result = self.get_result({ module_name: [int(score_field * 100), int(score_view * 100), int(score_security * 100)]})
+        self.result = self.get_result({ module_name: [int(score_field * 100), int(score_view * 100), int(score_security * 100), int(score_depend * 100)]})
         self.result_details += self.get_result_details(result_dict)
         self.result_details += self.get_result_general(result_view, name="View")
         self.result_details += self.get_result_general(result_security, name="General")
         return None
 
     def get_result(self, dict_obj):
-        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-40s \n! %-10s \n', [_('Result of fields in %'), _('Result of views in %'), _('Result of Security in %')])
+        header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-40s \n! %-40s \n! %-10s \n', [_('Result of fields in %'), _('Result of views in %'), _('Result of Security in %'), _('Result of dependancy in %')])
         if not self.error:
             return self.format_table(header, data_list=dict_obj)
         return ""

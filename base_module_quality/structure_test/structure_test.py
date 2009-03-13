@@ -79,7 +79,7 @@ This test checks if the module satisfy tiny structure
 
         # module files calculation (module.py,module_view.xml,etc..)
         com_list = ['_unit_test.xml', '.py', '_view.xml', '_workflow.xml' , '_wizard.xml', '_report.xml', '_data.xml', '_demo.xml', '_security.xml', '_sequence.xml', '_graph.xml']
-        com_list = map(lambda x: module_name+x, com_list)
+        com_list = map(lambda x: module_name + x, com_list)
         main_file = ['__init__.py', '__terp__.py']
         com_list.extend(main_file)
         module_dict['module'] = filter(lambda x: len(x.split(".")) > 1, module_dict['module'])

@@ -116,8 +116,8 @@ class dm_offer_step(osv.osv):
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
 #        use this line if step action wont wrk
-#        'action' : fields.many2one('actions_server', string="Action", required=True, domain="[('dm_action','=',True)]"),
-        'action' : fields.many2one('dm.offer.step.action', string="Action", required=True, domain="[('dm_action','=',True)]"),
+#        'action' : fields.many2one('ir.actions.server', string="Action", required=True, domain="[('dm_action','=',True)]"),
+         'action_id' : fields.many2one('dm.offer.step.action', string="Action", required=True, domain="[('dm_action','=',True)]"),
     }
 
     _defaults = {
@@ -173,9 +173,11 @@ dm_offer_step()
 
 class dm_offer_step_transition_trigger(osv.osv):
     _name = "dm.offer.step.transition.trigger"
+    _inherits = {'ir.actions.server':'server_action_id'}
     _columns = {
-        'name' : fields.char('Trigger Name',size=64,required=True),
-        'code' : fields.char('Code' ,size=64,required=True),
+        'server_action_id' : fields.many2one('ir.actions.server','Server Action'),
+#        'name' : fields.char('Trigger Name',size=64,required=True),
+#        'code' : fields.char('Code' ,size=64,required=True),
     }
 dm_offer_step_transition_trigger()
 

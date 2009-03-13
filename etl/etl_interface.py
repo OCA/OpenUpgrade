@@ -20,9 +20,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from osv import osv, fields
 import etl
+import tools
+from osv import osv, fields
 
 class etl_project(osv.osv):
     _name='etl.project'
@@ -51,7 +51,7 @@ class etl_transformer(osv.osv):
     
     def create_instance(self, cr, uid, ids, context, component=None):
         trans = self.browse(cr, uid, ids)
-        val = '<etl_transformer>'#etl.transformer(trans.tranformer_line_ids)
+        val = etl.transformer(trans.tranformer_line_ids) 
         context['components'][component]['transformer'] = val
         return None
     
@@ -107,14 +107,14 @@ class etl_connector_localfile(osv.osv):
     _columns={
               'uri' : fields.char('URL Path', size=124), 
               'bufsize' : fields.integer('Buffer Size'), 
-              'file' : fields.binary('File')
               }
     
     def create_instance(self, cr, uid, ids , context, component= None):
         obj_connector=self.pool.get('etl.connector')
-        connector = obj_connector.browse(cr, uid, ids, context)
-        val =  '<connector_localfile>'#etl.connector.localfile( connector.uri, connector.bufsize, encoding='utf-8')
-        context['components'][component]['connector'] = val
+        for con in obj_connector.browse(cr, uid, [ids]):
+            if con.type == 'localfile':
+                val =  etl.connector.localfile(tools.config['addons_path']+con.uri, con.bufsize, encoding='utf-8')
+                context['components'][component]['connector'] = val
         return super(etl_connector_localfile, self).create_instance(cr, uid, ids, context, component)
   
 etl_connector_localfile()
@@ -132,20 +132,54 @@ class etl_connector_openobject(osv.osv):
               'con_type' : fields.char('Connection Type', size=64), 
               }
     
-    _defaults = {
-                'obj' : lambda *a : '/xmlrpc/object', 
-                'con_type' :  lambda *a : 'xmlrpc'
-                }
+    
+    def onchange_type(self, cr, uid, ids, type):
+        val={}
+        if type and type=='openobject_connector':
+            val['obj']= '/xmlrpc/object'
+            val['con_type']= 'xmlrpc'
+        if type and type=='localfile':
+            val['obj']= ''
+            val['con_type']= ''
+        if type and type=='sql_connector':
+            val['con_type']= 'postgres'
+            val['obj']= ''
+        return {'value':val}
+        
+    def create_instance(self, cr, uid, ids , context, component= None):
+        obj_connector=self.pool.get('etl.connector')
+        for con in obj_connector.browse(cr, uid, [ids]):
+            if con.type == 'openobject_connector':
+                val = etl.connector.openobject_connector(con.uri, cr.dbname, con.login, con.passwd, con.obj, con.con_type)
+                context['components'][component]['connector'] = val
+        return super(etl_connector_openobject, self).create_instance(cr, uid, ids, context, component)
+        
+etl_connector_openobject()
+
+class etl_connector_sql(osv.osv):
+    _name='etl.connector'
+    _inherit='etl.connector'
+    
+    _columns={
+              'host' : fields.char('Host', size=64), 
+              'port' : fields.char('Port', size=64), 
+              'db' : fields.char('Database', size=64), 
+              'uid' : fields.char('User  ID', size=64), 
+              'passwd' : fields.char('Password', size=64), 
+              'con_type' : fields.char('Connection Type', size=64), 
+              'sslmode' : fields.boolean('Allow SSL Mode'), 
+              }
     
     def create_instance(self, cr, uid, ids , context, component= None):
         obj_connector=self.pool.get('etl.connector')
-        connector = obj_connector.browse(cr, uid, ids, context)
-        val =  '<connector_localfile>'#etl.connector.localfile( connector.uri, cr.dbname, connector.login,connector.passwd, connector.obj, connector.con_type )
-        context['components'][component]['connector'] = val
-        return super(etl_connector_openobject, self).create_instance(cr, uid, ids, context, component)
-    
-etl_connector_openobject()
-
+        for con in obj_connector.browse(cr, uid, [ids]):
+            if con.type == 'sql_connector':
+                if con.sslmode: sslmode = 'allow'
+                val = connector.sql_connector(con.host, con.port, con.db, con.uid, con.passwd, sshmode , con.con_type)
+                context['components'][component]['connector'] = val
+        return super(etl_connector_sql, self).create_instance(cr, uid, ids, context, component)
+        
+etl_connector_sql()
 
 class etl_component_type(osv.osv):
     _name='etl.component.type'
@@ -171,26 +205,63 @@ class etl_component(osv.osv):
               }
     
     def create_instance(self, cr, uid, ids, context):
-#        TODO: Create instence of transitions
         obj_component=self.pool.get('etl.component')
         obj_trans=self.pool.get('etl.transition')
+        cmp = obj_component.browse(cr, uid, ids)
         
-        component = obj_component.browse(cr, uid, ids)
-        if component.trans_in_ids:
-            for tran_in in component.trans_in_ids:
-                #TODO: create instance of transition
-                context['components'][component.id]['transitions'] = {}
-                obj_trans.create_instance( cr, uid, tran_in.id, context, component.id)
+        if not ids in context['components']:
+            context['components'][ids] = {'instance':False}
+            
+        context['components'][cmp.id]['transitions'] = {}
+        if cmp.trans_in_ids:
+            for tran_in in cmp.trans_in_ids:
+                obj_trans.create_instance(cr, uid, tran_in.id, context, cmp.id)
                 
-        if component.trans_out_ids:
-            for tran_out in component.trans_out_ids:
-                #TODO: create instance of transition
-                context['components'][component.id]['transitions'] = {}
-                obj_trans.create_instance(self, cr, uid, tran_out.id, context, component.id)
+        if cmp.trans_out_ids:
+            for tran_out in cmp.trans_out_ids:
+                obj_trans.create_instance(cr, uid, tran_out.id, context, cmp.id)
+        
         return None
         
 etl_component()
 
+class etl_component_control_data_count(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    
+    def create_instance(self, cr, uid, ids, context={}):
+            obj_component=self.pool.get('etl.component')
+            for cmp in obj_component.browse(cr, uid, [ids]):
+                if cmp.type.name == 'control.data_count':
+                    context['components'][ids] = {}
+                    context['components'][ids]['instance'] = etl.component.control.data_count()
+            return super(etl_component_control_data_count, self).create_instance(cr, uid, ids, context)
+    
+etl_component_control_data_count()
+
+class etl_component_transform_sort(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    
+    def create_instance(self, cr, uid, ids, context={}):
+            obj_component=self.pool.get('etl.component')
+            for cmp in obj_component.browse(cr, uid, [ids]):
+                if cmp.type.name == 'transform.sort':
+                    context['components'][ids] = {}
+                    context['components'][ids]['instance'] = etl.component.transform.sort('name')
+            return super(etl_component_transform_sort, self).create_instance(cr, uid, ids, context)
+    
+etl_component_transform_sort()
+
+class etl_component_field(osv.osv):
+    _name='etl.component.field'
+    _columns={
+              'source_field' : fields.char('Source Field', size=124), 
+              'dest_field' : fields.char('Destination Field', size=124), 
+              'component_id' : fields.many2one('etl.component', 'Model'), 
+              }
+
+etl_component_field()
 
 class etl_component_vcard_in(osv.osv):
     _name='etl.component'
@@ -204,11 +275,60 @@ class etl_component_vcard_in(osv.osv):
     def create_instance(self, cr, uid, ids, context={}):
             obj_component=self.pool.get('etl.component')
             for cmp in obj_component.browse(cr, uid, [ids]):
-                #TODO : Create instance of etl_component_vcard_in
-                pass
+                if cmp.type.name == 'input.vcard_in':
+                    context['components'][ids] = {}
+                    context['components'][ids]['transformer'] = None
+                    
+                    if cmp.connector_id:
+                        obj_connector = self.pool.get('etl.connector')
+                        obj_connector.create_instance(cr, uid, cmp.connector_id.id, context, cmp.id)
+                        conn_instance = context['components'][ids]['connector']
+                        
+                        val = etl.component.input.vcard_in(conn_instance, 'component.input.csv_in')
+                        context['components'][ids]['instance'] = val
             return super(etl_component_vcard_in, self).create_instance(cr, uid, ids, context)
         
 etl_component_vcard_in()
+
+class etl_component_transform_map(osv.osv):
+    _name = 'etl.component'
+    _inherit = 'etl.component'
+    
+    _columns={
+            'name' : fields.char('Name', size=24, required=True), 
+            'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
+            'field_ids' : fields.one2many('etl.component.field', 'component_id', 'fields'), 
+            'preprocess' : fields.text('Preprocess'), 
+              }
+    
+    def create_instance(self, cr, uid, ids, context={}):
+        obj_component=self.pool.get('etl.component')
+        
+        for cmp in obj_component.browse(cr, uid, [ids]):
+            if cmp.type.name == 'transform.map':
+                context['components'][ids] = {}
+                context['components'][ids]['transformer'] = None
+                
+                if cmp.transformer_id:
+                    obj_transformer = self.pool.get('etl.transformer')
+                    obj_transformer.create_instance(cr, uid, cmp.transformer_id.id, context, cmp.id)
+                
+                trans_instance = context['components'][ids]['transformer']
+                
+                field_obj = self.pool.get('etl.component.field')
+                field_ids = field_obj.search(cr, uid, [('component_id', '=', cmp.id)])
+                field_data = field_obj.read(cr, uid, field_ids, ['source_field','dest_field'])
+                map_criteria = {}
+                map_criteria['main'] = {}
+                for data in field_data:
+                    map_criteria['main'][data['source_field']] = data['dest_field']
+                val = etl.component.transform.map(map_criteria, cmp.preprocess, 'component.transfer.map', trans_instance) 
+                context['components'][ids]['instance'] = val
+            
+        return super(etl_component_transform_map, self).create_instance(cr, uid, ids, context)
+        
+    
+etl_component_transform_map()
 
 class etl_component_csv_out(osv.osv):
     _name='etl.component'
@@ -234,7 +354,7 @@ class etl_component_csv_out(osv.osv):
                 conn_instance = context['components'][ids]['connector']
                 trans_instance = context['components'][ids]['transformer']
                 
-                val = '<component output.csv_out>'#etl.component.output.csv_out(conn_instance, 'component.output.csv_out', trans_instance, comp.row_limit, comp.csv_params)
+                val = etl.component.output.csv_out(conn_instance, 'component.output.csv_out', trans_instance, cmp.row_limit, cmp.csv_params) 
                 context['components'][ids]['instance'] = val
             
         return super(etl_component_csv_out, self).create_instance(cr, uid, ids, context)
@@ -253,6 +373,9 @@ class etl_component_csv_in(osv.osv):
             'row_limit' : fields.integer('Limit'), 
             'csv_params' : fields.char('CSV Parameters', size=64), 
               }
+    _defaults={
+               'csv_params':lambda *x:'{}'
+               }
     
          
     def create_instance(self, cr, uid, ids, context={}):
@@ -275,7 +398,7 @@ class etl_component_csv_in(osv.osv):
                 conn_instance = context['components'][ids]['connector']
                 trans_instance = context['components'][ids]['transformer']
                 
-                val = '<component input.csv_in>'#etl.component.input.csv_in(conn_instance, 'component.input.csv_in', trans_instance, comp.row_limit, comp.csv_params)
+                val =etl.component.input.csv_in(conn_instance, 'component.input.csv_in', trans_instance, cmp.row_limit, cmp.csv_params or {})
                 context['components'][ids]['instance'] = val
     
         return super(etl_component_csv_in, self).create_instance(cr, uid, ids, context)
@@ -298,12 +421,98 @@ class etl_component_transform_logger(osv.osv):
         for cmp in obj_component.browse(cr, uid, [ids]):
             if cmp.type.name == 'transform.logger':
                 context['components'][ids] = {}
-                val = '<components logger>'#etl.component.transform.logger(cmp.name)
+                val = etl.component.transform.logger(cmp.name)
                 context['components'][ids]['instance'] = val
         
         return super(etl_component_transform_logger, self).create_instance(cr, uid, ids, context)
         
 etl_component_transform_logger()
+#
+#class etl_component_input_data(osv.osv):
+#    _name='etl.component'
+#    _inherit = 'etl.component'
+#
+#    _columns={
+#              'data_ids' : fields.one2many('etl.component.data.line', 'component_id', 'Datas'), 
+#              'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
+#              }
+#    
+#etl_component_input_data()
+#
+#
+#class etl_component_input_data_line(osv.osv):
+#    _name='etl.component.data.line'
+#    _columns={
+#              'field' : fields.char('Field', size=124), 
+#              'value' : fields.char('Value', size=124), 
+#              'component_id' : fields.many2one('etl.component', 'Model'), 
+#              }
+#
+#etl_component_input_data_line()
+
+class etl_component_open_object_out(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    _description="This is for open object out"
+
+    _columns={
+              'field_ids' : fields.one2many('etl.component.field', 'component_id', 'Fields'), 
+              'model_id' : fields.many2one('ir.model', 'Model'), 
+              'connector_id' : fields.many2one('etl.connector', 'Connector'), 
+              'transformer_id' : fields.many2one('etl.transformer', 'Transformer'), 
+              }
+    
+    def create_instance(self, cr, uid, ids, context={}):
+        obj_component=self.pool.get('etl.component')
+        
+        for cmp in obj_component.browse(cr, uid, [ids]):
+            if cmp.type.name == 'output.openobject_out':
+                context['components'][ids] = {}
+                context['components'][ids]['connector'] = None
+                context['components'][ids]['transformer'] = None
+                
+                if cmp.connector_id:
+                    obj_connector=self.pool.get('etl.connector')
+                    obj_connector.create_instance(cr, uid, cmp.connector_id.id , context, cmp.id)
+                    
+                if cmp.transformer_id:
+                    obj_transformer = self.pool.get('etl.transformer')
+                    obj_transformer.create_instance(cr, uid, cmp.transformer_id.id, context, cmp.id)
+                
+                conn_instance = context['components'][ids]['connector']
+                trans_instance = context['components'][ids]['transformer']
+                
+                field_obj = self.pool.get('etl.component.field')
+                field_ids = field_obj.search(cr, uid, [('component_id','=',cmp.id)])
+                field_data = field_obj.read(cr, uid, field_ids, ['source_field','dest_field'])
+                field_ids = {}
+                for data in field_data:
+                    field_ids[data['source_field']] = data['dest_field']
+                val = etl.component.output.openobject_out(conn_instance, cmp.model_id.model, field_ids, 'component.output.openobject_out', trans_instance)
+                context['components'][ids]['instance'] = val
+    
+        return super(etl_component_open_object_out, self).create_instance(cr, uid, ids, context)
+            
+etl_component_open_object_out()
+
+class etl_component_control_sleep(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    _description = "ETL Component"
+
+#    _columns={
+#            'delay' :  fields.float('Delay'), 
+#              }
+    
+    def create_instance(self, cr, uid, ids, context={}):
+            obj_component=self.pool.get('etl.component')
+            context['components'][ids] = {}
+            for cmp in obj_component.browse(cr, uid, [ids]):
+                if cmp.type.name == 'control.sleep':
+                    context['components'][ids]['instance'] = etl.component.control.sleep()
+            return super(etl_component_control_sleep, self).create_instance(cr, uid, ids, context)
+        
+etl_component_control_sleep()
 
 class etl_job(osv.osv):
     _name= 'etl.job'
@@ -328,14 +537,19 @@ class etl_job(osv.osv):
         context['components'] = {}
         obj_component=self.pool.get('etl.component')
         
-        for comp in obj_component.browse(cr, uid, ids):
-            obj_component.create_instance(cr, uid, comp.id, context)
+        for cmp in obj_component.browse(cr, uid, ids):
+            obj_component.create_instance(cr, uid, cmp.id, context)
         return None
     
     def action_launch_process(self, cr, uid, ids, context={}):
         obj_component=self.pool.get('etl.component')
         component_ids = self.read(cr, uid, ids, ['component_ids'])[0]['component_ids']
         self.create_instance(cr, uid, component_ids, context)
+        para = []
+        for cmp in component_ids:
+           para.append(context['components'][cmp]['instance'])
+        job1=etl.job(para)
+        job1.run()
         return 
         
 etl_job()
@@ -354,11 +568,11 @@ class etl_job_process(osv.osv):
               'compute_time' : fields.float('Computation Time'), 
               'input_records' : fields.integer('Total Input Records'), 
               'output_records' : fields.integer('Total Output Records'), 
-              'state' : fields.selection([('open', 'Open'), ('start', 'Started'), ('pause', 'Paused'), ('stop', 'Stop'), ('close', 'Closed')], 'State', readonly=True), 
+              'state' : fields.selection([('draft', 'Draft'), ('open', 'Open'), ('start', 'Started'), ('pause', 'Paused'), ('stop', 'Stop'), ('close', 'Closed')], 'State', readonly=True), 
               }
     
     _defaults = {
-            'state': lambda *a: 'open', 
+            'state': lambda *a: 'draft', 
             }
     
 etl_job_process()
@@ -389,6 +603,26 @@ class etl_transition(osv.osv):
     
     
     def create_instance(self, cr, uid, ids, context={}, component=None):
+        obj_trans=self.pool.get('etl.transition')
+        for trans in obj_trans.browse(cr, uid, [ids]):
+            source = trans.source_component_id.id
+            destination = trans.destination_component_id.id
+            if not (source in context['components']):
+                obj_component=self.pool.get('etl.component')
+                obj_component.create_instance(cr, uid, source, context)
+                context['components'][source]['transitions'] = {}
+            
+            elif not (destination in context['components']):
+                obj_component=self.pool.get('etl.component')
+                obj_component.create_instance(cr, uid, destination, context)
+                context['components'][destination]['transitions'] = {}
+                
+            else:
+                cmp_in = context['components'][source]['instance']
+                cmp_out = context['components'][destination]['instance']
+                trans_instance = etl.transition(cmp_in, cmp_out)
+                context['components'][source]['transitions'][trans.id] = trans_instance
+                context['components'][destination]['transitions'][trans.id] = trans_instance
         return None
     
 etl_transition()

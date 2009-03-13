@@ -177,7 +177,7 @@ class dm_overlay(osv.osv):
     _columns = {
         'code' : fields.function(_overlay_code,string='Code',type='char',method=True,readonly=True),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', required=True),
-        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
+        'dealer_id' : fields.many2one('res.partner', 'Dealer', domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
         'country_ids' : fields.many2many('res.country', 'overlay_country_rel', 'overlay_id', 'country_id', 'Country', required=True),
         'bank_account_id' : fields.many2one('account.account', 'Account'),
     }

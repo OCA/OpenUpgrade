@@ -9,8 +9,8 @@
     'website': 'http://openerp.com', 
     'depends': ['base'], 
     'init_xml': [], 
-    'update_xml': ['etl_view.xml', 'etl_component_view.xml', 'etl_connector_view.xml', 'etl_data.xml'], 
-    'demo_xml': ['etl_demo.xml'], 
+    'update_xml': ['etl_view.xml', 'etl_component_view.xml', 'etl_connector_view.xml', 'etl_data.xml' , 'etl_demo.xml'], 
+    'demo_xml': [], 
     'installable': True, 
     'active': False, 
     }
