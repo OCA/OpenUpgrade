@@ -47,14 +47,12 @@ class wizard_document_report(wizard.interface):
         res.sort(lambda x,y: cmp(x[1],y[1]))
         return res    
     
-    
     report_list_fields = {
                     
         'report': {'string': 'Select Report', 'type': 'selection', 'selection':_get_reports, },
-        'customer_id': {'string': 'Select Customer', 'type': 'many2one','relation':'res.partner', 'selection':_get_reports, }
+        'customer_id': {'string': 'Select Customer', 'type': 'many2one','relation':'res.partner', 'selection':_get_reports, 'domain':[('category_id','=','DTP Preview Customers')] }
         
         }
-    
     
     states = {
         'init': {

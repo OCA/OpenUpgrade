@@ -125,7 +125,7 @@ class dm_ddf_plugin(osv.osv):
             vals = {'name':arg[0], 'note':desc, 'plugin_id':id, 'value':' '}
             new_id = self.pool.get('dm.plugin.argument').create(cr, uid, vals)
         if '__description__' in dir(X):
-            self.write(cr, uid, d, {'note':X.__description__})
+            self.write(cr, uid, id, {'note':X.__description__})
         return True
     
     _columns = {

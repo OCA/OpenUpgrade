@@ -79,6 +79,10 @@
             <field name="name" eval="&quot;Mail Service&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
+        <record id="dtp_preview_customers" model="res.partner.category">
+			<field name="parent_id" ref="dm.res_partner_category_directmarketing0"/>
+			<field eval="&quot;&quot;&quot;DTP Preview Customers&quot;&quot;&quot;" name="name"/>
+		</record>
 
         <!-- Media -->
 

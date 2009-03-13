@@ -8,13 +8,15 @@
             <field eval="&quot;&quot;&quot;TINY&quot;&quot;&quot;" name="ref"/>
             <field eval="[(6,0,[ref('dm.cat_cleaner'),ref('dm.cat_deduplicator'),ref('dm.cat_broker'),ref('dm.cat_owner'),ref('dm.cat_copywriter'),ref('dm.cat_dealer')])]" name="category_id"/>
         </record>
+        
         <record id="base.res_partner_thymbra" model="res.partner">
             <field eval="[(6,0,[ref('base.res_partner_category_4'),ref('dm.cat_broker')])]" name="category_id"/>
-
         </record>
+        
         <record id="dm_offer_category_openerp0" model="dm.offer.category">
             <field eval="&quot;&quot;&quot;OpenERP&quot;&quot;&quot;" name="name"/>
         </record>
+        
         <record id="dm_offer_category_ondemandoffer0" model="dm.offer.category">
             <field name="parent_id" ref="dm_offer_category_openerp0"/>
             <field eval="&quot;&quot;&quot;OnDemand Offer&quot;&quot;&quot;" name="name"/>
@@ -1684,6 +1686,7 @@ rkJggg==
 			<field eval="[(6,0,[])]" name="client_media_ids"/>
 			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
 			<field eval="0" name="decoy_for_renting"/>
+			<field eval="[(6,0,[ref('dm.dtp_preview_customers'),ref('dm.res_partner_category_directmarketing0')])]" name="category_id"/>
             <field eval="[(6,0,[ref('base.af'),ref('base.al'),ref('base.dz'),ref('base.as'),
             ref('base.ad'),ref('base.ao'),ref('base.ai'),ref('base.aq'),ref('base.ag'),ref('base.ar'),ref('base.am'),
             ref('base.aw'),ref('base.au'),ref('base.at'),ref('base.az'),ref('base.bs'),ref('base.bh'),ref('base.bd'),
@@ -1780,6 +1783,7 @@ rkJggg==
             <field name="state_id" ref="base.us-fl"/>
             <field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
             <field eval="&quot;&quot;&quot;n.john@papercut.com&quot;&quot;&quot;" name="email"/>
+            
         </record>
 	</data>
 
@@ -1793,6 +1797,7 @@ rkJggg==
 			<field eval="&quot;&quot;&quot;Biil&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="client_media_ids"/>
 			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
+			<field eval="[(6,0,[ref('dm.dtp_preview_customers'),ref('dm.res_partner_category_directmarketing0')])]" name="category_id"/>
 			<field eval="0" name="decoy_for_renting"/>
             <field eval="[(6,0,[ref('base.af'),ref('base.al'),ref('base.dz'),ref('base.as'),
             ref('base.ad'),ref('base.ao'),ref('base.ai'),ref('base.aq'),ref('base.ag'),ref('base.ar'),ref('base.am'),
@@ -1889,6 +1894,7 @@ rkJggg==
             <field name="state_id" ref="base.us-fl"/>
             <field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
             <field eval="&quot;&quot;&quot;bl@maxmailing.com&quot;&quot;&quot;" name="email"/>
+            
         </record>
 	</data>
 	<data noupdate="1">
@@ -1901,6 +1907,7 @@ rkJggg==
 			<field eval="&quot;&quot;&quot;Daisy&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="client_media_ids"/>
 			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
+			<field eval="[(6,0,[ref('dm.dtp_preview_customers'),ref('dm.res_partner_category_directmarketing0')])]" name="category_id"/>
 			<field eval="0" name="decoy_for_renting"/>
             <field eval="[(6,0,[ref('base.af'),ref('base.al'),ref('base.dz'),ref('base.as'),
             ref('base.ad'),ref('base.ao'),ref('base.ai'),ref('base.aq'),ref('base.ag'),ref('base.ar'),ref('base.am'),
@@ -1996,6 +2003,7 @@ rkJggg==
             <field name="state_id" ref="base.us-fl"/>
             <field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
             <field eval="&quot;&quot;&quot;daisy@disnep.com&quot;&quot;&quot;" name="email"/>
+            
         </record>
 	</data>
 	<!-- Customer Orders -->
