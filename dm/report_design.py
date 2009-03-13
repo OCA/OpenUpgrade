@@ -1,6 +1,7 @@
 from osv import fields
 from osv import osv
 import pooler
+import sys
 from report.report_sxw import report_sxw,browse_record_list,_fields_process,rml_parse
 from StringIO import StringIO
 import base64
@@ -57,7 +58,7 @@ class offer_document(rml_parse):
                              args[str(a.name)]=p[1]                        
                 path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",self.cr.dbname)
                 plugin_name = plugin.file_fname.split('.')[0]
-                import sys
+                
                 sys.path.append(path)
                 X =  __import__(plugin_name)
                 plugin_func = getattr(X,plugin_name)

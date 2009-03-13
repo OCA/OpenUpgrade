@@ -49,7 +49,7 @@ This test checks the speed of the module. Note that at least 5 demo data is need
         obj_ids = self.get_ids(cr, uid, obj_list)
         result_dict = {}
         result_dict2 = {}
-        self.result_details += _("O(1) means that the number of SQL requests to read the object does not depand on the number of objects we are reading. This feature is hardly wished.\n")
+        self.result_details += _("<html>O(1) means that the number of SQL requests to read the object does not depand on the number of objects we are reading. This feature is hardly wished.\n</html>")
         for obj, ids in obj_ids.items():
             obj_counter += 1
             ids = ids[:100]
@@ -111,4 +111,3 @@ This test checks the speed of the module. Note that at least 5 demo data is need
         return ""
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

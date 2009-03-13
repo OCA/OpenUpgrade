@@ -31,7 +31,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
-        "planning_security.xml",
+        "security\planning_security.xml",
         "report_analytic_planning_view.xml",
     ],
     "active": False,

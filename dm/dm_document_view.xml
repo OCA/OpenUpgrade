@@ -175,7 +175,7 @@
                 <notebook colspan="4">
                     <page string="Customer Plugin" attrs="{'invisible':[('type','!=','fields')]}">
                         <field name="model_id" colspan="4" attrs="{'required':[('type','=','fields')]}" />
-     	                <field name="field_id"  colspan="4" domain = "[('model_id','=',model_id)]" attrs="{'required':[('type','=','fields')]}" />
+     	                <field name="field_id"  colspan="4" domain = "[('model_id','=',model_id),('ttype','!=','one2many'),('ttype','not in',['many2one','many2many'])]" attrs="{'required':[('type','=','fields')]}" />
 
                     </page>
                     <page string="Dynamic Plugin" attrs="{'invisible':[('type','not in',['dynamic','url'])]}">

@@ -19,51 +19,51 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
-
 from osv import fields
 from osv import osv
-import pooler
 
 class dm_mail_service(osv.osv):
     _name = "dm.mail_service"
+    _inherits = {'ir.actions.server':'mail_action_id'}
     def _default_name(self, cr, uid, ids, name, args, context={}):
-        res={}
+        res = {}
         for rec in self.browse(cr, uid, ids):
-             res[rec.id] = (rec.partner_id and rec.partner_id.name or '') + ' for ' + (rec.media_id and rec.media_id.name or '')
+            res[rec.id] = (rec.partner_id and rec.partner_id.name or '') + ' for ' + (rec.media_id and rec.media_id.name or '')
         return res 
-    
+#    
     _columns = {
         'name' : fields.function(_default_name, method=True, string='Name',store=True ,type='char' ,size=128),
         'partner_id' : fields.many2one('res.partner','Partner',domain=[('category_id','=','Mail Service')]),
         'media_id' : fields.many2one('dm.media','Media'),
-        'action_id' : fields.many2one('ir.actions.server','Mailing Action'),
+#        'action_id' : fields.many2one('ir.actions.server','Mailing Action'),
         'action_interval': fields.integer('Interval'),
         'unit_interval': fields.selection( [('minutes', 'Minutes'),
-            ('hours', 'Hours'), ('work_days','Work Days'), ('days', 'Days'),('weeks', 'Weeks'), ('months', 'Months')], 'Interval Unit'),
+            ('hours', 'Hours'), ('work_days','Work Days'), ('days', 'Days'),\
+            ('weeks', 'Weeks'), ('months', 'Months')], 'Interval Unit'),
 #        'cron_id' : fields.many2one('ir.cron','Scheduler'),
-        'default_for_media' : fields.boolean('Default')          
+        'default_for_media' : fields.boolean('Default'),          
+        'mail_action_id' : fields.many2one('ir.actions.server','Server Action'),
     }
 
-    def _check_unique_mail_service(self, cr, uid, ids,media_id,default_for_media):
+    def _check_unique_mail_service(self, cr, uid, ids, media_id, default_for_media):
         if default_for_media :
-            res = self.search(cr, uid, [('media_id','=',media_id),('default_for_media','=',True)])
+            res = self.search(cr, uid, [('media_id', '=', media_id), ('default_for_media', '=', True)])
             if res and (ids and (res in ids) or True) : 
                 return {'value':{'default_for_media':False}}
 #                raise osv.except_osv("Error!!","You cannot create more than one default mail service for same media")
         else :
             return True 
         
-    def create(self,cr,uid,vals,context={}):
-        new_mail_service = super(dm_mail_service,self).create(cr,uid,vals,context)
-        mail_service = self.browse(cr, uid, new_mail_service,)
+    def create(self, cr, uid, vals, context={}):
+        new_mail_service = super(dm_mail_service, self).create(cr, uid, vals, context)
+        mail_service = self.browse(cr, uid, new_mail_service)
         new_vals = {
                     'name'           : mail_service.name,
                     'interval_number': mail_service.action_interval,
                     'interval_type'  : mail_service.unit_interval,
                     'model'          : 'dm.mail_service',
                     'function'       : '_check_action'  }
-        self.pool.get('ir.cron').create(cr,uid,new_vals)
+        self.pool.get('ir.cron').create(cr, uid, new_vals)
         return new_mail_service
 
 dm_mail_service()

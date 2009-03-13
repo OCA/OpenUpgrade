@@ -46,7 +46,7 @@
                             <field name="state" readonly="1"/>
                         </page>
                         <page string="Detail">
-	                        <!--<button name="%(quality_detail_save)d" string="Save Report" type="action"/>-->
+	                        <button name="%(quality_detail_save)d" string="Save Report" type="action"/>
                             <field name="detail" widget="text_html" nolabel="1" colspan="4" readonly="1"/>
                         </page>
                     </notebook>

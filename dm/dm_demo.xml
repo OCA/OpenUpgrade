@@ -899,7 +899,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type" ref="dm.dm_offer_step_type_startingmailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none0"/>
             <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -920,7 +920,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type" ref="dm.dm_offer_step_type_intermediatemailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_piforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -936,7 +936,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type" ref="dm.dm_offer_step_type_packageinsert0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_alpiforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -951,7 +951,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type" ref="dm.dm_offer_step_type_accompanyingletterofthepackageinsert0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_alimforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -966,7 +966,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type" ref="dm.dm_offer_step_type_accompanyingletteroftheintermediatemailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -981,14 +981,35 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
 
         <record id="dm_offer_step_transition_purchase" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Purchase&quot;&quot;&quot;" name="name"/>
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_offer_step"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;purchase&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_transition_not_purchase" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Not Purchase&quot;&quot;&quot;" name="name"/>
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_offer_step"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_transition_automatic" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Automatic&quot;&quot;&quot;" name="name"/>
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_offer_step"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;automatic&quot;&quot;&quot;" name="code"/>
         </record>
 
@@ -1054,7 +1075,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type" ref="dm.dm_offer_step_type_startingmailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2010"/>
             <field eval="0" name="interactive"/>
-            <field name="action" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none0"/>
         </record>
     </data>
     <!-- Trademark -->
@@ -1234,6 +1255,13 @@ rkJggg==
 			<field name="partner_id" ref="res_partner_print_send0"/>
 			<field name="media_id" ref="dm.media_paper"/>
 			<field eval="1" name="default_for_media"/>
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_offer_step"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
 		</record>
 		
 		<record id="dm_mail_service_phone0" model="dm.mail_service">
@@ -1241,6 +1269,13 @@ rkJggg==
 			<field name="partner_id" ref="res_partner_print_send0"/>
 			<field name="media_id" ref="dm.media_phone"/>
 			<field eval="1" name="default_for_media"/>
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_offer_step"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
 		</record>
 		
 		<record id="dm_mail_service_email0" model="dm.mail_service">
@@ -1248,6 +1283,13 @@ rkJggg==
 			<field name="partner_id" ref="res_partner_print_send0"/>
 			<field name="media_id" ref="dm.media_email"/>
 			<field eval="1" name="default_for_media"/>
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_offer_step"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
 		</record>
 	</data>
 
