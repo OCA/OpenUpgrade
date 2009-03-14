@@ -57,6 +57,7 @@
                  "report_analytic_planning",
                  "report_sale",
                  "report_crm",
+                 "report_task",
                  "report_timesheet",
                  ],
     "init_xml" : [],

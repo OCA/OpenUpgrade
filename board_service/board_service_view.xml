@@ -120,7 +120,7 @@
             parent="service_dashboard_menu" 
             sequence="1"/>
 
-    <!-- Daily Dashboad  -->
+    <!-- Daily Dashboard  -->
     
     <!-- Meeting of the day view -->
      
@@ -223,6 +223,44 @@
             id="menu_daily_board" 
             parent="service_dashboard_menu" 
             sequence="1"/>
+            
+            
+    <!-- Random Activities Dashboard View -->
+
+    <record id="board_service_random_activities_form" model="ir.ui.view">
+    	<field name="name">board.service.random.activitiy.form</field>
+        <field name="model">board.board</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+        	<form string="Random Activities">
+        		<hpaned>
+        			<child1>
+            			<action colspan="4" name="%(report_timesheet.action_random_timesheet_lines_board)d" string="Timesheet Lines"/>
+            			<action colspan="4" name="%(report_task.action_closed_task_board)d" string="Closed Tasks"/>
+            			
+            			<action colspan="4" name="%(report_sale.action_view_created_sale_order_dashboard)d" string="Sale Orders created"/>
+            			<action colspan="4" name="%(report_account.action_view_created_invoice_dashboard)d" string="Invoices Created"/>
+            		</child1>
+				</hpaned>
+        	</form>
+        </field>
+    </record>
+        
+    <record id="action_service_random_activities_board" model="ir.actions.act_window">
+    	<field name="name">Random Activities(Within Last 15 Days)</field>
+        <field name="res_model">board.board</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="usage">menu</field>
+        <field name="view_id" ref="board_service_random_activities_form"/>
+    </record>
+        
+    <menuitem
+            action="action_service_random_activities_board" 
+            icon="terp-graph" 
+            id="menu_random_activities_board" 
+            parent="service_dashboard_menu" 
+            sequence="3"/>        
     
 	</data>
 </openerp>
