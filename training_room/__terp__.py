@@ -33,6 +33,7 @@
     'demo_xml' : [ ],
     'update_xml' : [
         'training_room_view.xml',
+        'security/ir.model.access.csv',
     ],
     'active' : False,
     'installable' : True,

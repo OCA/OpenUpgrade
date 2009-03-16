@@ -199,7 +199,7 @@ class training_offer(osv.osv):
     _name = 'training.offer'
     _description = 'Offer'
     _columns = {
-        'name' : fields.char('Name', size=64, required=True, select=1, "The name's offer"),
+        'name' : fields.char('Name', size=64, required=True, select=1, help="The name's offer"),
         'product_id' : fields.many2one('product.product', 
                                        'Product', 
                                        help="An offer can be a product for invoicing",
@@ -386,7 +386,7 @@ class training_session_purchase_line(osv.osv):
                                       ),
         'product_uom_id' : fields.many2one('product.uom', 'Product UoM', 
                                            required=True,
-                                           help="The unit of mesure for the product,
+                                           help="The unit of mesure for the product",
                                           ),
     }
 
