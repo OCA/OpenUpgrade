@@ -713,7 +713,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 		</record>
 	</data>
     <!-- ACCOUNT JOURNAL -->
-    
+<!--    
     <data noupdate="1">
 	    <record id="paypal_journal" model="account.journal">
 		    <field name="name">Paypal Journal</field>
@@ -756,7 +756,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 		    <field name="user_id" ref="base.user_root"/>
 	    </record>
     </data>
-    
+-->    
     <!-- PLUGINS -->
     
     <data noupdate="1">
@@ -832,5 +832,40 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 			<field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="description"/>
 			<field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="name"/>
 		</record>
+
+        <record id="dm_offer_step_transition_purchase" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;Purchase&quot;&quot;&quot;" name="name"/>
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_offer_step"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+            <field eval="&quot;&quot;&quot;purchase&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_transition_not_purchase" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;Not Purchase&quot;&quot;&quot;" name="name"/>
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_offer_step"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+            <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
+        </record>
+        <record id="dm_offer_step_transition_automatic" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;Automatic&quot;&quot;&quot;" name="name"/>
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_offer_step"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+            <field eval="&quot;&quot;&quot;automatic&quot;&quot;&quot;" name="code"/>
+        </record>
+
 	</data>
 </openerp>

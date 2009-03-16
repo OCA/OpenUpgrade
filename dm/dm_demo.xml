@@ -982,40 +982,6 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="&quot;&quot;&quot;Check availability of the commercials for the phone calls&quot;&quot;&quot;" name="planning_note"/>
         </record>
 
-        <record id="dm_offer_step_transition_purchase" model="dm.offer.step.transition.trigger">
-            <field eval="&quot;&quot;&quot;Purchase&quot;&quot;&quot;" name="name"/>
-            <field eval="5" name="sequence"/>
-            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
-            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
-            <field name="model_id" ref="dm.model_dm_offer_step"/>
-            <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="1" name="dm_action"/>
-            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
-            <field eval="&quot;&quot;&quot;purchase&quot;&quot;&quot;" name="code"/>
-        </record>
-        <record id="dm_offer_step_transition_not_purchase" model="dm.offer.step.transition.trigger">
-            <field eval="&quot;&quot;&quot;Not Purchase&quot;&quot;&quot;" name="name"/>
-            <field eval="5" name="sequence"/>
-            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
-            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
-            <field name="model_id" ref="dm.model_dm_offer_step"/>
-            <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="1" name="dm_action"/>
-            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
-            <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
-        </record>
-        <record id="dm_offer_step_transition_automatic" model="dm.offer.step.transition.trigger">
-            <field eval="&quot;&quot;&quot;Automatic&quot;&quot;&quot;" name="name"/>
-            <field eval="5" name="sequence"/>
-            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
-            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
-            <field name="model_id" ref="dm.model_dm_offer_step"/>
-            <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="1" name="dm_action"/>
-            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
-            <field eval="&quot;&quot;&quot;automatic&quot;&quot;&quot;" name="code"/>
-        </record>
-
         <record id="dm_offer_step_transition_0" model="dm.offer.step.transition">
             <field eval="4" name="delay"/>
             <field name="step_to_id" ref="dm_offer_step_piforopenerpondemandfreetrial2009"/>

@@ -76,6 +76,7 @@ class dm_ddf_plugin(osv.osv):
                 X =  __import__(plugin_name)
                 plugin_func = getattr(X, plugin_name)
                 plugin_value = plugin_func(cr, uid, customer_ids, **args)
+
                 if plugin.store_value : 
                     map(lambda x :dm_plugins_value.create(cr, uid,
                                 {'date':time.strftime('%Y-%m-%d'),
