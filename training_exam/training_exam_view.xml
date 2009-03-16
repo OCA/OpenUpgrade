@@ -133,14 +133,14 @@
         </record>
 
         <record model="ir.actions.act_window" id="training_questionnaire_all_act">
-            <field name="name">Exams</field>
+            <field name="name">Questionnaires</field>
             <field name="res_model">training.questionnaire</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
         <record model="ir.actions.act_window" id="training_questionnaire_current_act">
-            <field name="name">Current Exams</field>
+            <field name="name">Current Questionnaires</field>
             <field name="res_model">training.questionnaire</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -148,7 +148,7 @@
         </record>
 
         <record model="ir.actions.act_window" id="training_questionnaire_new_act">
-            <field name="name">New Exam</field>
+            <field name="name">New Questionnaire</field>
             <field name="res_model">training.questionnaire</field>
             <field name="view_type">form</field>
             <field name="view_mode">form,tree</field>
@@ -245,7 +245,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page[@string='Courses']" position="after">
-                    <page string="Exams">
+                    <page string="Questionnaires">
                         <field name="questionnaire_ids" colspan="4" nolabel="1"/>
                     </page>
                 </xpath>
@@ -319,12 +319,12 @@
             id="training_library_exam_questionnaire_all_mi" 
             parent="training_library_exam_mi" 
             action="training_questionnaire_all_act" />
-        <!-- Training/ Library/ Exams/ Exams/ Current Exams-->
+        <!-- Training/ Library/ Exams/ Questionnaires/ Current Exams-->
         <menuitem 
             id="training_library_exam_current_mi" 
             parent="training_library_exam_questionnaire_all_mi" 
             action="training_questionnaire_current_act" />
-        <!-- Training/ Library/ Exams/ Exams/ New Exam-->
+        <!-- Training/ Library/ Exams/ Questionnaires/ New Exam-->
         <menuitem 
             id="training_library_exam_new_mi" 
             parent="training_library_exam_questionnaire_all_mi" 

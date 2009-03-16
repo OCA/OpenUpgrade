@@ -44,7 +44,7 @@ class training_offer(osv.osv):
                                                'training_questionnaire_offer_rel',
                                                'offer_id',
                                                'questionnaire_id',
-                                               'Exams'),
+                                               'Questionnaires'),
     }
 
 training_offer()
