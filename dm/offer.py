@@ -141,11 +141,11 @@ class dm_offer(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
-        'lang_orig' : fields.many2one('res.lang', 'Original Language'),
+        'lang_orig_id' : fields.many2one('res.lang', 'Original Language'),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter',domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
         'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
         'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),
-        'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),
+        'recommended_trademark_id' : fields.many2one('dm.trademark','Recommended Trademark'),
         'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer',domain=[('type','in',['new','standart','rewrite'])]),
         'preoffer_original_id' : fields.many2one('dm.offer', 'Original Offer Idea',domain=[('type','=','preoffer')] ),
         'active' : fields.boolean('Active'),
@@ -158,7 +158,7 @@ class dm_offer(osv.osv):
         'preoffer_offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('type','in',['new','standart','rewrite'])]),
         'preoffer_type' : fields.selection([('rewrite','Rewrite'),('new','New')], 'Type', size=16),
         'production_category_ids' : fields.many2many('dm.offer.category','dm_offer_production_category','offer_id','offer_production_categ_id', 'Production Categories' , domain="[('domain','=','production')]"),
-        'production_cost' : fields.many2one('dm.offer.production.cost', 'Production Cost'),
+        'production_cost_id' : fields.many2one('dm.offer.production.cost', 'Production Cost'),
         'purchase_note' : fields.text('Purchase Notes'),
         'purchase_category_ids' : fields.many2many('dm.offer.category','dm_offer_purchase_category','offer_id','offer_purchase_categ_id', 'Purchase Categories', domain="[('domain','=','purchase')]"),
         'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History', ondelete="cascade", readonly=True),
@@ -302,8 +302,8 @@ class dm_offer(osv.osv):
         for step in new_steps : 
             if step['o_trans_id']:
                 for trans in step['o_trans_id']:
-                    step_to =[nid['new_id'] for nid in new_steps if nid['old_id']==trans.step_to.id][0]
-                    self.pool.get('dm.offer.step.transition').copy(cr,uid,trans.id,{'step_to':step_to,'step_from':step['new_id']})
+                    step_to =[nid['new_id'] for nid in new_steps if nid['old_id']==trans.step_to_id.id][0]
+                    self.pool.get('dm.offer.step.transition').copy(cr,uid,trans.id,{'step_to_id':step_to,'step_from_id':step['new_id']})
         return offer_id
 
 dm_offer()

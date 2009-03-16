@@ -64,7 +64,7 @@ def graph_get(cr, uid, graph, offer_id):
             trargs = {
 #                'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay) + ' days'
 #                'label': transition.condition.name + ' - ' + transition.step_to.media_id.name  + '\\n' + str(transition.delay) + ' ' +transition.delay_type
-                'label': transition.condition.name + '\\n' + str(transition.delay) + ' ' + transition.delay_type
+                'label': transition.condition_id.name + '\\n' + str(transition.delay) + ' ' + transition.delay_type
             }
             if step.split_mode=='and':
                 trargs['arrowtail']='box'
@@ -72,7 +72,7 @@ def graph_get(cr, uid, graph, offer_id):
                 trargs['arrowtail']='inv'
             elif step.split_mode=='xor':
                 trargs['arrowtail']='inv'
-            graph.add_edge(pydot.Edge( str(transition.step_from.id) ,str(transition.step_to.id), fontsize=10, **trargs))
+            graph.add_edge(pydot.Edge( str(transition.step_from_id.id) ,str(transition.step_to_id.id), fontsize=10, **trargs))
     return True
 
 

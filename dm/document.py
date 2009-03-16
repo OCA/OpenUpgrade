@@ -220,7 +220,7 @@ class dm_offer_document(osv.osv):
             offer = self.pool.get('dm.offer')
             offer_id = offer.search(cr, uid, [('step_ids', 'in', [context['step_id']])])
             browse_id = offer.browse(cr, uid, offer_id)[0]
-            value['lang_id'] = browse_id.lang_orig.id
+            value['lang_id'] = browse_id.lang_orig_id.id
             value['copywriter_id'] = browse_id.copywriter_id.id
         return value
         

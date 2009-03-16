@@ -875,7 +875,7 @@
             <field eval="&quot;&quot;&quot;OnDemand offer trial&quot;&quot;&quot;" name="keywords"/>
             <field eval="&quot;&quot;&quot;new&quot;&quot;&quot;" name="preoffer_type"/>
             <field name="copywriter_id" ref="base.main_partner"/>
-            <field name="lang_orig" ref="base.lang_en"/>
+            <field name="lang_orig_id" ref="base.lang_en"/>
             <field eval="[(6,0,[])]" name="forbidden_state_ids"/>
             <field eval="[(6,0,[ref('dm_offer_category_ondemandoffer0')])]" name="category_ids"/>
             <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
@@ -1018,29 +1018,29 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
 
         <record id="dm_offer_step_transition_0" model="dm.offer.step.transition">
             <field eval="4" name="delay"/>
-            <field name="step_to" ref="dm_offer_step_piforopenerpondemandfreetrial2009"/>
-            <field name="step_from" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
-	    	<field name="condition" ref="dm_offer_step_transition_purchase"/>
+            <field name="step_to_id" ref="dm_offer_step_piforopenerpondemandfreetrial2009"/>
+            <field name="step_from_id" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
+	    	<field name="condition_id" ref="dm_offer_step_transition_purchase"/>
 	    	<field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
         </record>
         <record id="dm_offer_step_transition_1" model="dm.offer.step.transition">
-            <field name="step_to" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
-            <field name="step_from" ref="dm_offer_step_smforopenerpondemandfreetrial2009"/>
-	    	<field name="condition" ref="dm_offer_step_transition_purchase"/>
+            <field name="step_to_id" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
+            <field name="step_from_id" ref="dm_offer_step_smforopenerpondemandfreetrial2009"/>
+	    	<field name="condition_id" ref="dm_offer_step_transition_purchase"/>
             <field eval="0" name="delay"/>
             <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
         </record>
         <record id="dm_offer_step_transition_2" model="dm.offer.step.transition">
-            <field name="step_to" ref="dm_offer_step_alimforopenerpondemandfreetrial2009"/>
-            <field name="step_from" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
-	    	<field name="condition" ref="dm_offer_step_transition_not_purchase"/>
+            <field name="step_to_id" ref="dm_offer_step_alimforopenerpondemandfreetrial2009"/>
+            <field name="step_from_id" ref="dm_offer_step_imforopenerpondemandfreetrial2009"/>
+	    	<field name="condition_id" ref="dm_offer_step_transition_not_purchase"/>
             <field eval="0" name="delay"/>
             <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
         </record>
         <record id="dm_offer_step_transition_3" model="dm.offer.step.transition">
-            <field name="step_to" ref="dm_offer_step_alpiforopenerpondemandfreetrial2009"/>
-            <field name="step_from" ref="dm_offer_step_piforopenerpondemandfreetrial2009"/>
-	    	<field name="condition" ref="dm_offer_step_transition_automatic"/>
+            <field name="step_to_id" ref="dm_offer_step_alpiforopenerpondemandfreetrial2009"/>
+            <field name="step_from_id" ref="dm_offer_step_piforopenerpondemandfreetrial2009"/>
+	    	<field name="condition_id" ref="dm_offer_step_transition_automatic"/>
             <field eval="0" name="delay"/>
             <field eval="&quot;&quot;&quot;day&quot;&quot;&quot;" name="delay_type"/>
         </record>
@@ -1052,7 +1052,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="&quot;&quot;&quot;OnDemand offer trial 2010&quot;&quot;&quot;" name="keywords"/>
             <field eval="&quot;&quot;&quot;new&quot;&quot;&quot;" name="preoffer_type"/>
             <field name="copywriter_id" ref="base.main_partner"/>
-            <field name="lang_orig" ref="base.lang_en"/>
+            <field name="lang_orig_id" ref="base.lang_en"/>
             <field eval="[(6,0,[])]" name="forbidden_state_ids"/>
             <field eval="[(6,0,[ref('dm_offer_category_ondemandoffer0')])]" name="category_ids"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
@@ -1247,7 +1247,7 @@ rkJggg==
     </data>
     <data noupdate="1">
         <record id="dm.dm_offer_openerpondemandfreetrial2010" model="dm.offer">
-            <field name="recommended_trademark" ref="dm_trademark_openerp0"/>
+            <field name="recommended_trademark_id" ref="dm_trademark_openerp0"/>
         </record>
     </data>
 
@@ -1309,7 +1309,7 @@ rkJggg==
         <record id="dm_campaign_openerpondemandfreetrial2009" model="dm.campaign">
             <field name="trademark_id" ref="dm.dm_trademark_openerp0"/>
             <field name="currency_id" ref="base.USD"/>
-            <field ref="dm.dm_campaign_type_loyalty" name="campaign_type"/>
+            <field ref="dm.dm_campaign_type_loyalty" name="campaign_type_id"/>
             <field eval="&quot;&quot;&quot;pending&quot;&quot;&quot;" name="manufacturing_state"/>
             <field name="dealer_id" ref="base.main_partner"/>
             <field name="country_id" ref="base.us"/>
@@ -1353,7 +1353,7 @@ rkJggg==
             <field eval="&quot;&quot;&quot;init&quot;&quot;&quot;" name="proposition_type"/>
             <field eval="5.0" name="sale_rate"/>
             <field eval="&quot;&quot;&quot;Bookstore Offer Free Trial&quot;&quot;&quot;" name="name"/>
-            <field eval="[(6,0,[])]" name="payment_methods"/>
+            <field eval="[(6,0,[])]" name="payment_method_ids"/>
             <field name="camp_id" ref="dm.dm_campaign_openerpondemandfreetrial2009"/>
             <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
         </record>
@@ -1378,7 +1378,7 @@ rkJggg==
             <field eval="7.0" name="sale_rate"/>
             <field eval="&quot;&quot;&quot;Association Offer Free Trial&quot;&quot;&quot;" name="name"/>
             <field name="customer_pricelist_id" ref="product.list0"/>
-            <field eval="[(6,0,[])]" name="payment_methods"/>
+            <field eval="[(6,0,[])]" name="payment_method_ids"/>
             <field name="camp_id" ref="dm.dm_campaign_openerpondemandfreetrial2009"/>
             <field eval="time.strftime('%Y-%m-%d')" name="date_start"/>
         </record>

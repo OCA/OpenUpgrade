@@ -109,10 +109,10 @@
           <para style="P5">[[ ','.join(map(lambda x : x['product_id'].name ,step.product_ids ) ) ]]</para>
         </td>
         <td>
-          <para style="P5">[[ ','.join(map(lambda x : x['step_from'].code ,step.incoming_transition_ids) ) ]]</para>
+          <para style="P5">[[ ','.join(map(lambda x : x['step_from_id'].code ,step.incoming_transition_ids) ) ]]</para>
         </td>
         <td>
-          <para style="P5">[[ ','.join(map(lambda x : x['step_to'].code ,step.outgoing_transition_ids) ) ]]</para>
+          <para style="P5">[[ ','.join(map(lambda x : x['step_to_id'].code ,step.outgoing_transition_ids) ) ]]</para>
         </td>
         <td>
           <para style="P5">[[offer_step_docs(step.id) ]]</para>
