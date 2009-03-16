@@ -41,8 +41,9 @@ class training_course_category(osv.osv):
 
     _columns = {
         'analytic_account_id' : fields.many2one('account.analytic.account', 'Analytic Account'),
-        'description' : fields.text('Description'),
-        'child_ids' : fields.function(_get_child_ids, method=True, type='one2many', relation="training.course", string='Children'),
+        'description' : fields.text('Description', help="Description of the course category"),
+        'child_ids' : fields.function(_get_child_ids, method=True, type='one2many',
+                                      relation="training.course", string='Children'),
     }
 
 training_course_category()
@@ -52,7 +53,7 @@ class training_course_type(osv.osv):
     _description = 'The type of a course'
 
     _columns = {
-        'name' : fields.char('Name', size=32, required=True, select=1),
+        'name' : fields.char('Name', size=32, required=True, select=1, help="The course type's name"),
         'objective' : fields.text('Objective',
                                   help="Allows to the user to write the objectives of the course type"),
         'description' : fields.text('Description',
@@ -107,7 +108,7 @@ class training_course(osv.osv):
                                  required=True,
                                  help="The duration for a standalone course"),
 
-        'p_id' : fields.many2one('training.course', 'Parent Course'),
+        'p_id' : fields.many2one('training.course', 'Parent Course', help="The parent course"),
 
         'children' : fields.one2many('training.course', 'p_id', string="Children",
                                      help="A course can be completed with some subcourses"),
@@ -120,7 +121,7 @@ class training_course(osv.osv):
                                            type="float",
                                            help="The total duration is computed if there is any subcourse"),
 
-        'sequence' : fields.integer('Sequence'),
+        'sequence' : fields.integer('Sequence', help="The sequence can help the user to reorganize the order of the courses"),
 
         'target_public' : fields.char('Target Public',
                                       size=256,
@@ -133,7 +134,7 @@ class training_course(osv.osv):
         'analytic_account_id' : fields.many2one('account.analytic.account', 'Account'),
 
         'course_type_id' : fields.many2one('training.course_type', 'Type',
-                                           required=True
+                                           required=True,
                                           ),
 
         'lecturer_ids' : fields.many2many('res.partner.contact',
@@ -144,10 +145,11 @@ class training_course(osv.osv):
                                           help="The lecturers who give the course",
                                          ),
 
-        'internal_note' : fields.text('Note'),
+        'internal_note' : fields.text('Note', 
+                                      help="The user can write some internal note for this course"),
 
         'lang_id' : fields.many2one('res.lang', 'Language', required=True,
-                                   help="The language of the course"),
+                                    help="The language of the course"),
 
         'offer_ids' : fields.many2many('training.offer',
                                        'training_course_offer_rel',
@@ -167,10 +169,12 @@ class training_course(osv.osv):
                                           required=True,
                                           readonly=True,
                                           select=1,
+                                          help="The state of the course"
                                          ),
 
         'purchase_line_ids' : fields.one2many('training.course.purchase_line', 'course_id',
-                                              'Supplier Commands'),
+                                              'Supplier Commands',
+                                              help="The purchase line helps to create a purchase order for the seance"),
 
         'preliminary_course_ids' : fields.many2many('training.course',
                                                     'training_course_pre_course_rel',
@@ -195,14 +199,18 @@ class training_offer(osv.osv):
     _name = 'training.offer'
     _description = 'Offer'
     _columns = {
-        'name' : fields.char('Name', size=64, required=True, select=1),
-        'product_id' : fields.many2one('product.product', 'Product'),
+        'name' : fields.char('Name', size=64, required=True, select=1, "The name's offer"),
+        'product_id' : fields.many2one('product.product', 
+                                       'Product', 
+                                       help="An offer can be a product for invoicing",
+                                      ),
         'course_ids' : fields.many2many('training.course',
                                         'training_course_offer_rel',
                                         'offer_id',
                                         'course_id',
                                         'Courses',
-                                        domain="[('state_course', '=', 'validated')]"
+                                        domain="[('state_course', '=', 'validated')]",
+                                        help="An offer can contain some courses",
                                        ),
         'objective' : fields.text('Objective',
                                   help="Allows to write the objectives of the course",
@@ -216,7 +224,9 @@ class training_offer(osv.osv):
                                    'State',
                                    required=True,
                                    readonly=True,
-                                   select=1),
+                                   select=1,
+                                   help="The status of the course",
+                                  ),
     }
 
     _defaults = {
@@ -247,7 +257,9 @@ class training_catalog(osv.osv):
                                    'State',
                                    required=True,
                                    readonly=True,
-                                   select=1),
+                                   select=1,
+                                   help="The status of the catalog",
+                                  ),
     }
 
     _defaults = {
@@ -279,7 +291,8 @@ class training_session(osv.osv):
                                    'State',
                                    required=True,
                                    readonly=True,
-                                   select=1
+                                   select=1,
+                                   help="The status of the session",
                                   ),
         'offer_id' : fields.many2one('training.offer',
                                      'Offer',
@@ -304,7 +317,9 @@ class training_session(osv.osv):
                                 ),
 
         'purchase_line_ids' : fields.one2many('training.session.purchase_line', 'session_id', 
-                                              'Supplier Commands'),
+                                              'Supplier Commands',
+                                              help="The supplier commands will create a purchase order for each command for the session"
+                                             ),
     }
 
     def _find_catalog_id(self, cr, uid, context=None):
@@ -355,10 +370,24 @@ class training_session_purchase_line(osv.osv):
     _rec_name = 'session_id'
 
     _columns = {
-        'session_id' : fields.many2one('training.session', 'Session', required=True),
-        'product_id' : fields.many2one('product.product', 'Product', required=True),
-        'product_qty' : fields.integer('Quantity', required=True),
-        'product_uom_id' : fields.many2one('product.uom', 'Product UoM', required=True),
+        'session_id' : fields.many2one('training.session', 
+                                       'Session', 
+                                       required=True,
+                                       help="The session for this purchase order",
+                                      ),
+        'product_id' : fields.many2one('product.product', 
+                                       'Product', 
+                                       required=True,
+                                       help="The product for the purchase order",
+                                      ),
+        'product_qty' : fields.integer('Quantity', 
+                                       required=True,
+                                       help="The quantity of the product for the purchase order",
+                                      ),
+        'product_uom_id' : fields.many2one('product.uom', 'Product UoM', 
+                                           required=True,
+                                           help="The unit of mesure for the product,
+                                          ),
     }
 
 training_session_purchase_line()
@@ -405,7 +434,12 @@ class training_group(osv.osv):
     _name = 'training.group'
     _description = 'Group'
     _columns = {
-        'name': fields.char('Name', size=64, required=True, select=True),
+        'name': fields.char('Name', 
+                            size=64, 
+                            required=True, 
+                            select=True,
+                            help="The group's name",
+                           ),
     }
 training_group()
 
@@ -417,7 +451,7 @@ class training_participation(osv.osv):
     _name = 'training.participation'
     _description = 'Participation'
     _columns = {
-        'event_id' : fields.many2one('training.event', 'Event' ),
+        'event_id' : fields.many2one('training.event', 'Event'),
         'subscription_id' : fields.many2one('training.subscription', 'Subscription', select=True, required=True),
     }
 
