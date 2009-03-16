@@ -448,7 +448,6 @@
                     <field name="name" />
                     <field name="date" />
                     <field name="duration" />
-                    <field name="location_id" />
                     <field name="session_ids" />
                 </form>
             </field>
@@ -463,7 +462,6 @@
                     <field name="name" />
                     <field name="date" />
                     <field name="duration" />
-                    <field name="location_id" />
                     <field name="session_ids" />
                 </tree>
             </field>
@@ -477,7 +475,6 @@
                 <calendar string="Events" date_start="date">
                     <field name="name"/>
                     <field name="session_ids" />
-                    <field name="location_id"/>
                 </calendar>
             </field>
         </record>
@@ -506,9 +503,6 @@
                             <separator string="Location" colspan="4" />
                             <field name="place" />
                             <field name="room" />
-                            <!--
-                            <field name="location_id" />
-                            -->
                             <field name="layout" />
                             <field name="reserved" />
                             <!--
@@ -874,46 +868,6 @@
     </data>
 
     <data>
-        <record model="ir.ui.view" id="view_training_location_form">
-            <field name="name">view.training.location.form</field>
-            <field name="model">training.location</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Location">
-                    <field name="name" />
-                    <field name="address_id" />
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="view_training_location_form">
-            <field name="name">view.training.location.form</field>
-            <field name="model">training.location</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Locations">
-                    <field name="name" />
-                    <field name="address_id" />
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.actions.act_window" id="training_location_all_act">
-            <field name="name">Locations</field>
-            <field name="res_model">training.location</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-
-        <record model="ir.actions.act_window" id="training_location_new_act">
-            <field name="name">New Location</field>
-            <field name="res_model">training.location</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-        </record>
-    </data>
-
-    <data>
         <menuitem 
             id="training_mi" 
             name="Trainings" />
@@ -931,14 +885,6 @@
             id="training_config_library_product_line_mi" 
             parent="training_config_library_mi" 
             action="training_course_category_all_act" />
-        <menuitem 
-            id="training_config_locations_mi" 
-            parent="training_config_mi" 
-            action="training_location_all_act"/>
-        <menuitem 
-            id="training_config_locations_new_mi" 
-            parent="training_config_locations_mi" 
-            action="training_location_new_act" />
 
         <menuitem 
             id="training_library_mi" 

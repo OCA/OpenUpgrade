@@ -401,17 +401,6 @@ class training_mass_subscription_wizard(osv.osv_memory):
 
 training_mass_subscription_wizard()
 
-class training_location(osv.osv):
-    _name = 'training.location'
-    _description = 'Location'
-
-    _columns = {
-        'name' : fields.char('Name', size=32, select=True, required=True),
-        'address_id' : fields.many2one('res.partner.address', 'Address', required=True),
-    }
-
-training_location()
-
 class training_group(osv.osv):
     _name = 'training.group'
     _description = 'Group'
@@ -456,7 +445,6 @@ class training_event(osv.osv):
         # Attention, la date doit etre obligatoire
         'date' : fields.datetime('Date', required=False, select=1),
         'duration' : fields.time('Duration', required=False, select=1),
-        'location_id' : fields.many2one('training.location', 'Location', select=1),
         'participant_ids' : fields.many2many('training.subscription',
                                              'training_participation',
                                              'event_id',

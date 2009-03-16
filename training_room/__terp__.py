@@ -31,7 +31,9 @@
     ],
     'init_xml' : [ ],
     'demo_xml' : [ ],
-    'update_xml' : [ ],
+    'update_xml' : [
+        'training_room_view.xml',
+    ],
     'active' : False,
     'installable' : True,
 }

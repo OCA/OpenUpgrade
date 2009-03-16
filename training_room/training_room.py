@@ -20,4 +20,27 @@
 #
 ##############################################################################
 
-import training_room
+from osv import osv, fields
+import netsvc
+import time
+
+class training_location(osv.osv):
+    _name = 'training.location'
+    _description = 'Location'
+
+    _columns = {
+        'name' : fields.char('Name', size=32, select=True, required=True),
+        'address_id' : fields.many2one('res.partner.address', 'Address', required=True),
+    }
+
+training_location()
+
+class training_event(osv.osv):
+    _inherit = 'training.event'
+
+    _columns = {
+        'location_id' : fields.many2one('training.location', 'Location', select=1),
+    }
+
+training_event()
+
