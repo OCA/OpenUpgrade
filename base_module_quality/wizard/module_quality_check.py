@@ -130,4 +130,3 @@ class create_quality_check(wizard.interface):
 create_quality_check("create_quality_check_wiz")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
