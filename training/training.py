@@ -31,7 +31,7 @@ class training_course_category(osv.osv):
         'account.analytic.account' : 'analytic_account_id',
     }
 
-    def _get_child_ids( self, cr, uid, ids, name, args, context ):
+    def _get_child_ids(self, cr, uid, ids, name, args, context):
         res = {}
         for object in self.browse(cr, uid, ids):
             child_ids = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', '=', object.analytic_account_id.id)])
@@ -102,15 +102,26 @@ class training_course(osv.osv):
     def _total_duration_compute(self,cr,uid,ids,name,args,context):
         return dict.fromkeys(ids, 0.0)
 
-    def _get_child_ids( self, cr, uid, ids, name, args, context ):
+    def _get_child_ids(self, cr, uid, ids, name, args, context):
         res = {}
         for object in self.browse(cr, uid, ids):
             child_ids = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', '=', object.analytic_account_id.id)])
             res[object.id] = self.search(cr, uid, [('analytic_account_id', 'in', child_ids)])
         return res
 
+    def _set_child_ids(self, cr, uid, obj_id, name, value, args, context=None):
+        #import tools
+        #tools.debug(cr)
+        #tools.debug(uid)
+        #tools.debug(obj_id)
+        #tools.debug(name)
+        #tools.debug(value)
+        #tools.debug(args)
+        #tools.debug(context)
+        return True
+
     _columns = {
-        'duration' : fields.time('Duration',
+        'duration' : fields.float('Duration',
                                  required=True,
                                  help="The duration for a standalone course"),
 
@@ -118,6 +129,7 @@ class training_course(osv.osv):
                                      method=True,
                                      type='one2many',
                                      relation="training.course",
+                                     fnct_inv=_set_child_ids,
                                      string='Children',
                                      help="A course can be completed with some subcourses"),
 
@@ -126,7 +138,7 @@ class training_course(osv.osv):
                                            readonly=True,
                                            store=True,
                                            method=True,
-                                           type="time",
+                                           type="float",
                                            help="The total dureation is computed if there is any subcourse"),
 
         'sequence' : fields.integer('Sequence'),
