@@ -5,7 +5,6 @@ import level
 
 class cross(object):
     def __init__(self, cross):
-        print ">>>>>>>>>In the cross init >>>>>>>>>>>",cross
     	self.cross = cross
         self.name = False 
         self.object = False
