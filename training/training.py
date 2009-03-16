@@ -139,7 +139,7 @@ class training_course(osv.osv):
                                            store=True,
                                            method=True,
                                            type="float",
-                                           help="The total dureation is computed if there is any subcourse"),
+                                           help="The total duration is computed if there is any subcourse"),
 
         'sequence' : fields.integer('Sequence'),
 
