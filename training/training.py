@@ -171,6 +171,18 @@ class training_course(osv.osv):
 
         'purchase_line_ids' : fields.one2many('training.course.purchase_line', 'course_id',
                                               'Supplier Commands'),
+
+        'preliminary_course_ids' : fields.many2many('training.course',
+                                                    'training_course_pre_course_rel',
+                                                    'course_id',
+                                                    'prelim_course_id',
+                                                    'Preliminary Courses'),
+
+        'complementary_course_ids' : fields.many2many('training.course',
+                                                      'training_course_cpl_course_rel',
+                                                      'course_id',
+                                                      'cpl_course_id',
+                                                      'Complementary Courses'),
     }
 
     _defaults = {
