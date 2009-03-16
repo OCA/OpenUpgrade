@@ -645,7 +645,7 @@ class dm_campaign(osv.osv):
         if vals['campaign_type_id'] != type_id:
             if vals['offer_id'] and (not vals['trademark_id']):
                 offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
-                write_vals['trademark_id'] = offer_id.recommended_trademark.id
+                write_vals['trademark_id'] = offer_id.recommended_trademark_id.id
         if write_vals :
             super(dm_campaign,self).write(cr, uid, id_camp, write_vals)
 
