@@ -160,7 +160,7 @@ This test checks if the module satisfy tiny structure
         return score
 
     def get_result_details(self, dict_struct):
-        str_html = '''<html><head></head><body><table border="1">'''
+        str_html = '''<html><head></head><body><table>'''
         header = ('<tr><th>%s</th><th>%s</th></tr>', [_('File Name'), _('Feedback about structure of module')])
         if not self.error:
             res = str_html + self.format_html_table(header, data_list=dict_struct) + '</table></body></html>'
