@@ -93,5 +93,16 @@
 			<field name="code">control.data_count</field>
 		</record>
 		
+		<record id="comp_python_code" model="etl.component.type">
+			<field name="name">python.code</field>
+			<field name="code">python.code</field>
+		</record>
+		
+			
+		<record id="comp_schema_validation" model="etl.component.type">
+			<field name="name">schema.validation</field>
+			<field name="code">schema.validation</field>
+		</record>
+		
 	</data>
 </openerp>

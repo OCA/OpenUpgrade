@@ -179,6 +179,11 @@
 			action="action_etl_component_csv_in_tree"
 			parent="menu_etl_jd_c_ic_form" id="menu_etl_jd_c_ic_csvff_form" />
 
+		<menuitem name="New component"
+			action="action_etl_component_csv_in_from"
+			parent="menu_etl_jd_c_ic_csvff_form"
+			id="menu_etl_csv_in_form" />
+
 		<record id="etl_component_vcard_in_form" model="ir.ui.view">
 			<field name="name">view.etl.component.csv.in.form</field>
 			<field name="model">etl.component</field>
@@ -246,14 +251,73 @@
 			
 		<!--excel file format        -->
 
+		
+		<record id="etl_component_excel_in_form" model="ir.ui.view">
+			<field name="name">view.etl.component.excel.in.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="EXCEL-IN Component">
+					<field name="name" select="1" />
+					<field name="type" />
+					<field name="connector_id" />
+					<field name="transformer_id" />
+					<field name="row_limit" />
+					<field name="excel_params" />
+					<separator string="Incomming Transitions"
+						colspan="4" />
+					<field name="trans_in_ids" nolabel="1" colspan="4"
+						readonly="1" />
+					<separator string="Outgoing Transitions"
+						colspan="4" />
+					<field name="trans_out_ids" nolabel="1" colspan="4"
+						readonly="1" />
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_excel_in_tree"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type.name','=','input.excel_in')]</field>
+		</record>
+
+		<record id="action_etl_component_excel_in_from"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type.name','=','input.excel_in')]</field>
+			<field name="view_id" ref="etl_component_excel_in_form" />
+		</record>
+
+		<record id="action_etl_component_excel_in_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_excel_in_tree" />
+		</record>
+		<record id="action_etl_component_excel_in_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_excel_in_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_excel_in_tree" />
+		</record>
+
 		<menuitem name="ExcelFile Data Input"
+			action="action_etl_component_excel_in_tree"
 			parent="menu_etl_jd_c_ic_form" id="menu_etl_jd_c_ic_edi_form" />
 
-		<menuitem name="All Components"
-			parent="menu_etl_jd_c_ic_edi_form" id="menu_etl_jd_c_ic_efd_ac_form" />
-
 		<menuitem name="New component"
-			parent="menu_etl_jd_c_ic_edi_form" id="menu_etl_jd_c_ic_efd_nc_form" />
+			parent="menu_etl_jd_c_ic_edi_form" 
+			action="action_etl_component_excel_in_from"
+			id="menu_etl_jd_c_ic_efd_nc_form" />
 
 
 
@@ -261,13 +325,71 @@
 		<!--#######################  xml file data input   ###################        -->
 
 
+			<record id="etl_component_xml_in_form" model="ir.ui.view">
+			<field name="name">view.etl.component.xml.in.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="XML-IN Component">
+					<field name="name" select="1" />
+					<field name="type" />
+					<field name="connector_id" />
+					<field name="transformer_id" />
+					<field name="row_limit" />
+					<field name="xml_params" />
+					<separator string="Incomming Transitions"
+						colspan="4" />
+					<field name="trans_in_ids" nolabel="1" colspan="4"
+						readonly="1" />
+					<separator string="Outgoing Transitions"
+						colspan="4" />
+					<field name="trans_out_ids" nolabel="1" colspan="4"
+						readonly="1" />
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_xml_in_tree"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type.name','=','input.xml_in')]</field>
+		</record>
+
+		<record id="action_etl_component_xml_in_form"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type.name','=','input.xml_in')]</field>
+			<field name="view_id" ref="etl_component_xml_in_form" />
+		</record>
+
+		<record id="action_etl_component_excel_in_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_xml_in_tree" />
+		</record>
+		<record id="action_etl_component_xml_in_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_xml_in_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_xml_in_tree" />
+		</record>
+		
+
 		<menuitem name="XMLFile Data Input"
+			action="action_etl_component_xml_in_tree"
 			parent="menu_etl_jd_c_ic_form" id="menu_etl_jd_c_ic_xdi_form" />
 
-		<menuitem name="All Components"
-			parent="menu_etl_jd_c_ic_xdi_form" id="menu_etl_jd_c_ic_xdi_ac_form" />
-
 		<menuitem name="New component"
+			action="action_etl_component_xml_in_form"
 			parent="menu_etl_jd_c_ic_xdi_form" id="menu_etl_jd_c_ic_xdi_nc_form" />
 
 
@@ -428,10 +550,85 @@
 			action="action_etl_component_csv_out_tree"
 			parent="menu_etl_jd_c_oc_form" id="menu_etl_jd_c_oc_cdom_form" />
 
+				
+		<record id="action_etl_component_excel_out_tree"
+			model="ir.actions.act_window">
+			<field name="name">EXCEL Out component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type.name','=','output.excel_out')]</field>
+		</record>
+
+		<record id="action_etl_component_excel_out_from"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type.name','=','output.excel_out')]</field>
+			<field name="view_id" ref="etl_component_excel_in_form" />
+		</record>
+
+		<record id="action_etl_component_excel_out_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_excel_out_tree" />
+		</record>
+		<record id="action_etl_component_excel_out_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_excel_in_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_excel_out_tree" />
+		</record>
+			
+
 		<menuitem name="ExcelFile Data Component"
+			action="action_etl_component_excel_out_tree"
 			parent="menu_etl_jd_c_oc_form" id="menu_etl_jd_c_oc_efdc_form" />
 
+		<record id="action_etl_component_xml_out_tree"
+			model="ir.actions.act_window">
+			<field name="name">XML Out component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type.name','=','output.xml_out')]</field>
+		</record>
+
+		<record id="action_etl_component_xml_out_form"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type.name','=','output.xml_out')]</field>
+			<field name="view_id" ref="etl_component_xml_in_form" />
+		</record>
+
+		<record id="action_etl_component_xml_out_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_xml_out_tree" />
+		</record>
+		<record id="action_etl_component_xml_out_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_xml_in_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_xml_out_tree" />
+		</record>
+			
+			
 		<menuitem name="XMLFile Data Component"
+			action="action_etl_component_xml_out_tree"
 			parent="menu_etl_jd_c_oc_form" id="menu_etl_jd_c_oc_xfdc_form" />
 
 
@@ -569,8 +766,81 @@
 
 		<menuitem name="Process ETL Component"
 			parent="menu_etl_job_def_components" id="menu_etl_jd_c_pec_form" />
+			
+		<record id="etl_component_sort_form" model="ir.ui.view">
+			<field name="name">view.etl.component.sort.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="SORT Component">
+					<field name="name" select="1" />
+					<field name="type" />
+					<notebook colspan="4" >
+						<page string="Property">
+							<field name="transform_ids" nolabel="1" colspan="4" widget="one2many_list" editable="bottom">
+								<tree string="Order Properties">
+									<field name="sequence" />
+									<field name="order_on" />
+									<field name="order_by"/>
+								</tree>
+								<form string="Order Properties">
+									<field name="sequence" />
+									<field name="order_on" />
+									<field name="order_by"/>
+								</form>
+							</field>
+						</page>
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_sort_tree"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type.name','=','transform.sort')]</field>
+		</record>
+
+
+		<record id="action_etl_component_sort_from"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type.name','=','transform.sort')]</field>
+			<field name="view_id" ref="etl_component_sort_form" />
+		</record>
+		
+		<record id="action_etl_component_sort_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id" ref="action_etl_component_sort_tree" />
+		</record>
+		
+		<record id="action_etl_component_sort_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_sort_form" />
+			<field name="act_window_id" ref="action_etl_component_sort_tree" />
+		</record>
 
 		<menuitem name="Sort process" parent="menu_etl_jd_c_pec_form"
+			action="action_etl_component_sort_tree"
 			id="menu_etl_jd_c_pec__sop_form" />
 
 		<menuitem name="Reverse Order process"
@@ -678,10 +948,141 @@
 		<menuitem name="Uniq Checks Process"
 			parent="menu_etl_jd_c_pec_form" id="menu_etl_jd_c_pec__ucp_form" />
 
+		<record id="etl_component_schema_validation_form" model="ir.ui.view">
+			<field name="name">view.etl.component.schema.validation.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Schema Validation">
+					<field name="name" select="1" />
+					<field name="type" />
+					<notebook colspan="4" >
+						<page string="Tests  to perform">
+							<field name="field_name" />
+							<field name="field_extra"/>
+							<field name="field_size"/>
+							<field name="field_format"/>
+							<field name="not_null"/>
+							<field name="field_type" />
+						</page>
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_schema_validation_tree"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type.name','=','schema.validation')]</field>
+		</record>
+
+
+		<record id="etl_component_schema_validation_form"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type.name','=','schema.validation')]</field>
+			<field name="view_id" ref="etl_component_schema_validation_form" />
+		</record>
+		
+		<record id="action_etl_component_schema_validation_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id" ref="action_etl_component_schema_validation_tree" />
+		</record>
+		
+		<record id="action_etl_component_schema_validation_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_schema_validation_form" />
+			<field name="act_window_id" ref="action_etl_component_schema_validation_tree" />
+		</record>
+		
 		<menuitem name="Schema Validation"
+			action="action_etl_component_schema_validation_tree"
 			parent="menu_etl_jd_c_pec_form" id="menu_etl_jd_c_pec__sv_form" />
+			
+		<record id="etl_component_python_code_form" model="ir.ui.view">
+			<field name="name">view.etl.component.python.code.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Python Code">
+					<field name="name" select="1" />
+					<field name="type" />
+					<notebook colspan="4" >
+						<page string="Python Code">
+						<separator string="Enter Python Code"/>
+							<field name="python_code" nolabel = "1"/>
+						</page>
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_python_code_tree"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type.name','=','python.code')]</field>
+		</record>
+
+
+		<record id="etl_component_python_code_form"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type.name','=','python.code')]</field>
+			<field name="view_id" ref="etl_component_python_code_form" />
+		</record>
+		
+		<record id="action_etl_component_python_code_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id" ref="action_etl_component_python_code_tree" />
+		</record>
+		
+		<record id="action_etl_component_python_code_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_python_code_form" />
+			<field name="act_window_id" ref="action_etl_component_python_code_tree" />
+		</record>
+
 
 		<menuitem name="Python Code" parent="menu_etl_jd_c_pec_form"
+			action="action_etl_component_python_code_tree"
 			id="menu_etl_jd_c_pec__pc_form" />
 
 		<menuitem name="Fork Flow" parent="menu_etl_jd_c_pec_form"
