@@ -44,10 +44,10 @@ def graph_get(cr, uid, graph, offer_id):
 
         trans_obj =  pooler.get_pool(cr.dbname).get('ir.translation')
         type_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
-                           user_lang or 'en_US',[step.type.id])
+                           user_lang or 'en_US',[step.type_id.id])
 #        media_trans = trans_obj._get_ids(cr, uid, 'dm.media,code', 'model',
 #                           user_lang or 'en_US',[step.media_id.id])
-        type_code = type_trans[step.type.id] or step.type.code
+        type_code = type_trans[step.type_id.id] or step.type_id.code
 #        media_code = media_trans[step.media_id.id] or step.media_id.code
 
 #        args['label'] = type_code + '\\n' + media_code

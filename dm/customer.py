@@ -108,23 +108,23 @@ class dm_customer_gender(osv.osv):
             code=""
             cust_gender = self.browse(cr,uid,[id])[0]
             if cust_gender.lang_id:
-                if not cust_gender.from_gender:
-                    code='_'.join([cust_gender.lang_id.code, cust_gender.to_gender.name])
+                if not cust_gender.from_gender_id:
+                    code='_'.join([cust_gender.lang_id.code, cust_gender.to_gender_id.name])
                 else:
-                    code='_'.join([cust_gender.lang_id.code, 'from', cust_gender.from_gender.name, 'to', cust_gender.to_gender.name])
+                    code='_'.join([cust_gender.lang_id.code, 'from', cust_gender.from_gender_id.name, 'to', cust_gender.to_gender_id.name])
             else:
-                if not cust_gender.from_gender:
-                    code=cust_gender.to_gender.name
+                if not cust_gender.from_gender_id:
+                    code=cust_gender.to_gender_id.name
                 else:
-                    code='_'.join(['from', cust_gender.from_gender.name, 'to', cust_gender.to_gender.name])
+                    code='_'.join(['from', cust_gender.from_gender_id.name, 'to', cust_gender.to_gender_id.name])
             result[id]=code
         return result
     
     _columns = {
         'name' : fields.char('Name', size=16),
         'code' : fields.function(_customer_gender_code,string='Code',type='char',method=True,readonly=True),
-        'from_gender' : fields.many2one('res.partner.title', 'From Gender', domain="[('domain','=','contact')]"),
-        'to_gender' : fields.many2one('res.partner.title', 'To Gender', required=True, domain="[('domain','=','contact')]"),
+        'from_gender_id' : fields.many2one('res.partner.title', 'From Gender', domain="[('domain','=','contact')]"),
+        'to_gender_id' : fields.many2one('res.partner.title', 'To Gender', required=True, domain="[('domain','=','contact')]"),
         'lang_id' : fields.many2one('res.lang', 'Language'),
         'description' : fields.text('Description'),
     }
@@ -212,7 +212,7 @@ class dm_customer_segmentation(osv.osv):
                 criteria.append("p.%s %s %f"%(i.field.name, i.operator, i.value))
         if browse_id.customer_boolean_criteria_ids:
             for i in browse_id.customer_boolean_criteria_ids:
-                criteria.append("p.%s %s %s"%(i.field.name, i.operator, i.value))
+                criteria.append("p.%s %s %s"%(i.field_id.name, i.operator, i.value))
         if browse_id.customer_date_criteria_ids:
             for i in browse_id.customer_date_criteria_ids:
                 criteria.append("p.%s %s '%s'"%(i.field.name, i.operator, i.value))
@@ -227,7 +227,7 @@ class dm_customer_segmentation(osv.osv):
                 criteria.append("s.%s %s %s"%(i.field.name, i.operator, i.value))
         if browse_id.order_date_criteria_ids:
             for i in browse_id.order_date_criteria_ids:
-                criteria.append("s.%s %s '%s'"%(i.field.name, i.operator, i.value))
+                criteria.append("s.%s %s '%s'"%(i.field_id.name, i.operator, i.value))
 
         if criteria:
             sql_query = ("""select distinct p.name \nfrom res_partner p, sale_order s\nwhere p.id = s.customer_id and %s\n""" % (' and '.join(criteria))).replace('isnot','is not')
@@ -310,7 +310,7 @@ class dm_customer_boolean_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-        'field' : fields.many2one('ir.model.fields','Customers Field',
+        'field_id' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id.model','=','res.partner'),
                ('ttype','like','boolean')],
                context={'model':'res.partner'}),
@@ -390,7 +390,7 @@ class dm_customer_order_date_criteria(osv.osv):
 
     _columns = {
         'segmentation_id' : fields.many2one('dm.customer.segmentation', 'Segmentation'),
-        'field' : fields.many2one('ir.model.fields','Customers Field',
+        'field_id' : fields.many2one('ir.model.fields','Customers Field',
                domain=[('model_id.model','=','dm.customer.order'),
                (('ttype','like','date') or ('ttype','like','datetime'))],
                context={'model':'dm.customer.order'}),

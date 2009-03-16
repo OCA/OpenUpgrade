@@ -980,9 +980,9 @@ class dm_customers_list(osv.osv):
                             'Net : Usable quantity after deduplication\n' \
                             'Raw : Delivered quantity\n' \
                             'Real : Realy used qunatity'),
-        'recruiting_origin' : fields.many2one('dm.customers_list.recruit_origin','Recruiting Origin',
+        'recruiting_origin_id' : fields.many2one('dm.customers_list.recruit_origin','Recruiting Origin',
                     help='Origin of the recruiting of the adresses'),
-        'list_type' : fields.many2one('dm.customers_list.type','Type'),
+        'list_type_id' : fields.many2one('dm.customers_list.type','Type'),
         'update_frq' : fields.integer('Update Frequency'),
         'notes': fields.text('Description'),
     }

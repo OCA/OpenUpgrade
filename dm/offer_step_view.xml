@@ -62,7 +62,7 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Offer Steps">
-                <field name="type"/>
+                <field name="type_id"/>
                 <field name="name"/>
                 <field name="code"/>
                 <field name="offer_id"/>
@@ -85,9 +85,9 @@
                 <notebook colspan="4" >
                     <page string="General">
                         <field name="name" select="1" />
-<!--                       <field name="type" select="2" widget="selection" on_change="onchange_type(type,offer_id,context)"/>-->
-                        <field name="type" select="2" widget="selection"/>
-<!--                        <field name="type" select="2"/>-->
+<!--                       <field name="type_id" select="2" widget="selection" on_change="onchange_type(type_id,offer_id,context)"/>-->
+                        <field name="type_id" select="2" widget="selection"/>
+<!--                        <field name="type_id" select="2"/>-->
                         <field name="media_id" select="1"/>
                         <field name="action_id" select="1" domain="[('media_id','=',media_id)]"/>
                         <field name="quotation" select="2" groups="base.group_extended"/>
@@ -104,7 +104,7 @@
                         </group>
                     </page>
                     <page string="Transitions">
-                        <field name="outgoing_transition_ids" colspan="4" nolabel="1" default_get="{'type':'step_from','step_id':active_id or False}">
+                        <field name="outgoing_transition_ids" colspan="4" nolabel="1" default_get="{'type_id':'step_from','step_id':active_id or False}">
                             <form string="Transition">
                                 <field name="step_from" colspan="4" readonly="1"/>
                                 <field name="step_to" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>

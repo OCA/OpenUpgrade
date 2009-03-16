@@ -78,8 +78,8 @@ class dm_offer_step(osv.osv):
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
             res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
-                    context.get('lang', False) or 'en_US',[offer_step.type.id])
-            type_code = res_trans[offer_step.type.id] or offer_step.type.code
+                    context.get('lang', False) or 'en_US',[offer_step.type_id.id])
+            type_code = res_trans[offer_step.type_id.id] or offer_step.type_id.code
             code = '_'.join([offer_step.offer_id.code,(type_code or '')])
             result[id]=code
         return result
@@ -92,7 +92,7 @@ class dm_offer_step(osv.osv):
         'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,readonly=True, states={'closed':[('readonly',True)]}),
         'quotation' : fields.char('Quotation', size=16, states={'closed':[('readonly',True)]}),
         'media_id' : fields.many2one('dm.media', 'Media', ondelete="cascade",required=True, states={'closed':[('readonly',True)]}),
-        'type' : fields.many2one('dm.offer.step.type','Type',required=True, states={'closed':[('readonly',True)]}),
+        'type_id' : fields.many2one('dm.offer.step.type','Type',required=True, states={'closed':[('readonly',True)]}),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
         'desc' : fields.text('Description', states={'closed':[('readonly',True)]}),
         'dtp_note' : fields.text('DTP Notes', states={'closed':[('readonly',True)]}),
@@ -125,8 +125,8 @@ class dm_offer_step(osv.osv):
         'split_mode' : lambda *a : 'or',
     }
     
-    def onchange_type(self,cr,uid,ids,type,offer_id,context):
-        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type])[0]
+    def onchange_type(self,cr,uid,ids,type_id,offer_id,context):
+        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type_id])[0]
         value = {
                     'flow_start':step_type['flow_start'],
                 }
@@ -196,9 +196,9 @@ class dm_offer_step_transition(osv.osv):
     }
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
-        if context.has_key('type'):
+        if context.has_key('type_id'):
             data['delay']='0'
-            data[context['type']] = context['step_id']
+            data[context['type_id']] = context['step_id']
         return data
 
 dm_offer_step_transition()

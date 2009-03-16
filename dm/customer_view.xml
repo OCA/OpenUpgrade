@@ -275,8 +275,8 @@
             <form string="Customer Gender">
 				<field name="name" select="1"/>
 				<field name="code" select="2"/>
-				<field name="from_gender" select="1"/>
-				<field name="to_gender" select="1"/>
+				<field name="from_gender_id" select="1"/>
+				<field name="to_gender_id" select="1"/>
 				<field name="lang_id" select="2"/>
 				<separator string="Description" colspan="4"/>
 				<field name="description" nolabel="1" colspan="4" widget="text_wiki"/>
@@ -292,8 +292,8 @@
             <tree string="Customer Genders">
                 <field name="name"/>
 				<field name="code"/>
-				<field name="from_gender"/>
-				<field name="to_gender"/>
+				<field name="from_gender_id"/>
+				<field name="to_gender_id"/>
 				<field name="lang_id"/>
             </tree>
         </field>
@@ -356,12 +356,12 @@
                         </field>
                         <field name="customer_boolean_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Boolean Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
                                 <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Boolean Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator"/>
                                 <field name="value"/>
                             </tree>
@@ -418,12 +418,12 @@
                         </field>
                         <field name="order_date_criteria_ids" colspan="2" nolabel="1" select="2">
                             <form string="Customer Order Date Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator" nolabel="1"/>
                                 <field name="value" nolabel="1"/>
                             </form>
                             <tree string="Customer Order Date Criteria">
-                                <field name="field"/>
+                                <field name="field_id"/>
                                 <field name="operator"/>
                                 <field name="value"/>
                             </tree>
