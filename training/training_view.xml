@@ -147,6 +147,20 @@
                         <page string="Sub Courses">
                             <field name="children" nolabel="1" colspan="4"
                                 context="{'default_parent_id':parent_id, 'default_course_type_id': course_type_id, 'default_lang_id':lang_id}">
+                                <form string="Sub Course">
+                                    <group colspan="4" col='6'>
+                                        <field name="name" string="Designation" select="1" required="True"/>
+                                        <field name="parent_id" string="Product Line" required="True" />
+                                        <field name="course_type_id" />
+                                        <field name="code" string="Code" select="1" />
+                                        <field name="lang_id" />
+                                        <field name="target_public" />
+                                        <field name="reference_id" />
+                                        <field name="duration" widget="float_time"/>
+                                    </group>
+                                    <separator string="Note" colspan="4" />
+                                    <field name="internal_note" nolabel="1" colspan="4"/>
+                                </form>
                                 <tree string="Sub Courses">
                                     <field name="sequence" />
                                     <field name="name" string="Designation" />
