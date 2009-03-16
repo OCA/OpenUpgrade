@@ -102,35 +102,14 @@ class training_course(osv.osv):
     def _total_duration_compute(self,cr,uid,ids,name,args,context):
         return dict.fromkeys(ids, 0.0)
 
-    def _get_child_ids(self, cr, uid, ids, name, args, context):
-        res = {}
-        for object in self.browse(cr, uid, ids):
-            child_ids = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', '=', object.analytic_account_id.id)])
-            res[object.id] = self.search(cr, uid, [('analytic_account_id', 'in', child_ids)])
-        return res
-
-    def _set_child_ids(self, cr, uid, obj_id, name, value, args, context=None):
-        #import tools
-        #tools.debug(cr)
-        #tools.debug(uid)
-        #tools.debug(obj_id)
-        #tools.debug(name)
-        #tools.debug(value)
-        #tools.debug(args)
-        #tools.debug(context)
-        return True
-
     _columns = {
         'duration' : fields.float('Duration',
                                  required=True,
                                  help="The duration for a standalone course"),
 
-        'children' : fields.function(_get_child_ids,
-                                     method=True,
-                                     type='one2many',
-                                     relation="training.course",
-                                     fnct_inv=_set_child_ids,
-                                     string='Children',
+        'p_id' : fields.many2one('training.course', 'Parent Course'),
+
+        'children' : fields.one2many('training.course', 'p_id', string="Children",
                                      help="A course can be completed with some subcourses"),
 
         'total_duration' : fields.function(_total_duration_compute,
