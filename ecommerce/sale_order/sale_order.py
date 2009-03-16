@@ -206,7 +206,7 @@ class ecommerce_saleorder(osv.osv):
         journal_id = acc_journal.search(cr, uid, [('type', '=', 'cash'), ('code', '=', 'BNK')])
 
         journal = acc_journal.browse(cr, uid, journal_id, context)
-        acc_id =  journal[0].default_credit_account_id and journal[0].default_credit_account_id.id
+        acc_id = journal[0].default_credit_account_id and journal[0].default_credit_account_id.id
         if not acc_id:
             raise wizard.except_wizard(_('Error !'), _('Your journal must have a default credit and debit account.'))
         period_id = self.pool.get('account.period').find(cr, uid)
