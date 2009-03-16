@@ -36,7 +36,9 @@ class measure(object):
             rightRdBr = Literal(")").suppress()
             arith_operator = ["-","*","/","+"]
             operator_arith = oneOf(' '.join(arith_operator))
-            sqlexpression = sql_function("sql_func") + leftRdBr + delimitedList(scalar,",",combine=False) + rightRdBr | sql_function("sql_func") + leftRdBr +  scalar + ZeroOrMore( operator_arith("arithmetic") + scalar) + rightRdBr 
+            sql_function.setResultsName('sql_func')
+            operator_arith.setResultsName('arithmetic')
+            sqlexpression = sql_function + leftRdBr + delimitedList(scalar,",",combine=False) + rightRdBr | sql_function + leftRdBr +  scalar + ZeroOrMore(operator_arith + scalar) + rightRdBr 
             res = sqlexpression.parseString(self.object.value_sql)
             operators = []
             cols = []

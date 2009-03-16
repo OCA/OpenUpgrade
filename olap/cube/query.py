@@ -57,16 +57,16 @@ class query(object):
                 cross_all.append(cross)
                 final_axis = []
                 for cr in cross:
-                    for el in axis_result[0]:
+                    for el in axis_result[-1]:
                         t = copy.deepcopy(el)
                         t = list(t)
                         t[0].append(cr['value'][0][0])
                         t.append(cr['value'][0][1])
                         final_axis.append(tuple(t))
-                axis_result=[final_axis[:]]
+                axis_result[-1]=final_axis[:]
                 final_axis=[]
                 d = 0 
-                for data in common.xcombine(axis[0],cross):
+                for data in common.xcombine(axis[-1],cross):
                     data_temp =copy.deepcopy(data[0])
                     if 'whereclause' in data[1]['query'].keys():
                         if 'whereclause' in data_temp.keys():
@@ -76,8 +76,8 @@ class query(object):
                     data_temp['delta'] = d
                     d= d + 1
                     final_axis.append(data_temp)
-                axis[0] = []
-                axis[0] = final_axis
+                axis[-1] = []
+                axis[-1] = final_axis
             else:
                 result = ax.run(metadata)
                 length = 0
