@@ -15,11 +15,25 @@
             <field name="flow_start">True</field>
         </record>
 
-        <record model="workflow.activity" id="activity_session_open_pending">
+        <record model="workflow.activity" id="activity_session_opened">
             <field name="wkf_id" ref="workflow_session" />
-            <field name="name">open_pending</field>
+            <field name="name">open</field>
             <field name="kind">function</field>
-            <field name="action">write({'state':'open_pending'})</field>
+            <field name="action">write({'state':'opened'})</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_session_opened_confirmed">
+            <field name="wkf_id" ref="workflow_session" />
+            <field name="name">opened_confirmed</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'opened_confirmed'})</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_session_closed_confirmed">
+            <field name="wkf_id" ref="workflow_session" />
+            <field name="name">closed_confirmed</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'closed_confirmed'})</field>
         </record>
 
         <record model="workflow.activity" id="activity_session_inprogress">
@@ -27,13 +41,6 @@
             <field name="name">inprogress</field>
             <field name="kind">function</field>
             <field name="action">write({'state':'inprogress'})</field>
-        </record>
-
-        <record model="workflow.activity" id="activity_session_validated">
-            <field name="wkf_id" ref="workflow_session" />
-            <field name="name">validated</field>
-            <field name="kind">function</field>
-            <field name="action">action_validate()</field>
         </record>
 
         <record model="workflow.activity" id="activity_session_closed">
@@ -52,20 +59,26 @@
             <field name="flow_stop">True</field>
         </record>
 
-        <record model="workflow.transition" id="transition_session_draft_to_open_pending">
+        <record model="workflow.transition" id="transition_session_draft_to_opened">
             <field name="act_from" ref="activity_session_draft" />
-            <field name="act_to" ref="activity_session_open_pending" />
-            <field name="signal">signal_open_pending</field>
+            <field name="act_to" ref="activity_session_opened" />
+            <field name="signal">signal_open</field>
         </record>
 
-        <record model="workflow.transition" id="transition_session_pending_to_validated">
-            <field name="act_from" ref="activity_session_open_pending" />
-            <field name="act_to" ref="activity_session_validated" />
-            <field name="signal">signal_validate</field>
+        <record model="workflow.transition" id="transition_session_opened_to_opened_confirmed">
+            <field name="act_from" ref="activity_session_opened" />
+            <field name="act_to" ref="activity_session_opened_confirmed" />
+            <field name="signal">signal_open_confirm</field>
         </record>
 
-        <record model="workflow.transition" id="transition_session_validated_to_inprogress">
-            <field name="act_from" ref="activity_session_validated" />
+        <record model="workflow.transition" id="transition_session_opened_confirmed_to_closed_confirmed">
+            <field name="act_from" ref="activity_session_opened_confirmed" />
+            <field name="act_to" ref="activity_session_closed_confirmed" />
+            <field name="signal">signal_close_confirm</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_closed_confirmed_to_inprogress">
+            <field name="act_from" ref="activity_session_closed_confirmed" />
             <field name="act_to" ref="activity_session_inprogress" />
             <field name="signal">signal_inprogress</field>
         </record>
@@ -73,23 +86,29 @@
         <record model="workflow.transition" id="transition_session_inprogress_to_closed">
             <field name="act_from" ref="activity_session_inprogress" />
             <field name="act_to" ref="activity_session_closed" />
-            <field name="signal">signal_closed</field>
+            <field name="signal">signal_close</field>
         </record>
 
-        <record model="workflow.transition" id="transition_session_validated_to_pending">
-            <field name="act_from" ref="activity_session_validated" />
-            <field name="act_to" ref="activity_session_open_pending" />
-            <field name="signal">signal_pending</field>
+        <record model="workflow.transition" id="transition_session_closed_confirmed_to_cancelled">
+            <field name="act_from" ref="activity_session_closed_confirmed" />
+            <field name="act_to" ref="activity_session_cancelled" />
+            <field name="signal">signal_cancel</field>
         </record>
 
-        <record model="workflow.transition" id="transition_session_inprogress_to_validated">
-            <field name="act_from" ref="activity_session_inprogress" />
-            <field name="act_to" ref="activity_session_validated" />
-            <field name="signal">signal_validate</field>
+        <record model="workflow.transition" id="transition_session_draft_to_cancelled">
+            <field name="act_from" ref="activity_session_draft" />
+            <field name="act_to" ref="activity_session_cancelled" />
+            <field name="signal">signal_cancel</field>
         </record>
 
-        <record model="workflow.transition" id="transition_session_inprogress_to_cancelled">
-            <field name="act_from" ref="activity_session_inprogress" />
+        <record model="workflow.transition" id="transition_session_opened_to_cancelled">
+            <field name="act_from" ref="activity_session_opened" />
+            <field name="act_to" ref="activity_session_cancelled" />
+            <field name="signal">signal_cancel</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_opened_confirmed_to_cancelled">
+            <field name="act_from" ref="activity_session_opened_confirmed" />
             <field name="act_to" ref="activity_session_cancelled" />
             <field name="signal">signal_cancel</field>
         </record>

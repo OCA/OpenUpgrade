@@ -283,9 +283,10 @@ class training_session(osv.osv):
                              select=1,
                              help="The session's name"),
         'state' : fields.selection([('draft', 'Draft'),
-                                    ('open_pending', 'Open and Pending'),
+                                    ('opened', 'Opened'),
+                                    ('opened_confirmed', 'Opened Confirmed'),
+                                    ('closed_confirmed', 'Closed Confirmed'),
                                     ('inprogress', 'In Progress'),
-                                    ('validated', 'Validated'),
                                     ('closed', 'Closed'),
                                     ('cancelled', 'Cancelled')],
                                    'State',
@@ -336,7 +337,7 @@ class training_session(osv.osv):
         'state' : lambda *a: 'draft',
     }
 
-    def action_validate(self, cr, uid, ids, context=None):
+    def action_create_seance(self, cr, uid, ids, context=None):
         session = self.browse(cr, uid, ids, context=context)[0]
         event_ids = []
 
@@ -353,14 +354,9 @@ class training_session(osv.osv):
                                          context=context)[0]['event_id'][0]
             event_ids.append(event_id)
 
-        values = {
-            'state':'validated'
-        }
-
-        if event_ids:
-            values['event_ids'] = [(6, 0, event_ids)]
-
-        return self.write(cr, uid, ids, values, context=context)
+        return self.write(cr, uid, ids,
+                          {'event_ids' : [(6, 0, event_ids)]},
+                          context=context)
 
 training_session()
 
@@ -492,8 +488,9 @@ class training_event(osv.osv):
                                        string="Support OK",
                                        readonly=True),
         'state' : fields.selection([('draft', 'Draft'),
-                                    ('open_pending', 'Open and Pending'),
-                                    ('validate', 'Validate'),
+                                    ('opened', 'Opened'),
+                                    ('opened_confirmed', 'Opened Confirmed'),
+                                    ('closed_confirmed', 'Closed Confirmed'),
                                     ('inprogress', 'In Progress'),
                                     ('closed', 'Closed'),
                                     ('cancelled', 'Cancelled')],
