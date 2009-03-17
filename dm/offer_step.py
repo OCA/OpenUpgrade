@@ -64,7 +64,7 @@ class dm_offer_step_action(osv.osv):
     _inherits = {'ir.actions.server':'server_action_id'}
     _columns = {
         'server_action_id' : fields.many2one('ir.actions.server','Server Action'),
-        'media_id' : fields.many2one('dm.media','Media')
+        'media_id' : fields.many2one('dm.media','Media',required=True)
     }
     
 dm_offer_step_action()
