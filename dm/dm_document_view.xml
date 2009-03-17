@@ -165,13 +165,13 @@
             <form string="DTP Plugin">
             	<group  colspan="4">
 	                <field name="name" select="1" />
-					<field name="code" select="1" />	                
-					<field name="type" select="1" />
-					<field name="store_value" />
+			<field name="code" select="1" />	                
+			<field name="type" select="1" />
+			<field name="store_value" />
                 </group>
                 <newline/>
-				<separator string="Description" colspan="4"/>
-				<field name="note" nolabel="1" colspan="4" widget="text_wiki"/>                
+		<separator string="Description" colspan="4"/>
+		<field name="note" nolabel="1" colspan="4" widget="text_wiki"/>                
                 <notebook colspan="4">
                     <page string="Customer Plugin" attrs="{'invisible':[('type','!=','fields')]}">
                         <field name="model_id" colspan="4" attrs="{'required':[('type','=','fields')]}" />
@@ -179,8 +179,10 @@
 
                     </page>
                     <page string="Dynamic Plugin" attrs="{'invisible':[('type','not in',['dynamic','url'])]}">
-		                <field name="file_id" colspan="4" filename="file_fname" />
-		                <field name="file_fname" />
+				<!--group colspan="4"  attrs="{'invisible':[('type','!=','dynamic')]}"-->
+			                <field name="file_id" colspan="4" filename="file_fname" />
+			                <field name="file_fname" />
+				<!--/group-->
 				<separator string="Argument List" colspan="4"/>
 				<field name="argument_ids" nolabel="1" colspan="4">
 					<form string="Argument List">

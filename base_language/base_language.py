@@ -20,4 +20,20 @@
 #
 ##############################################################################
 
-import base_language
+from osv import fields, osv
+from locale import localeconv
+
+class lang(osv.osv):
+    _inherit = "res.lang"
+    
+    def create(self,cr,uid,vals,context={}):
+        code = vals['code']
+        lang_id = self.search(cr,uid,[('code','=',code)])
+        if lang_id:
+            return lang_id[0]
+        else :
+            return super(lang,self).create(cr,uid,vals,context)
+lang()
+    
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
