@@ -290,11 +290,18 @@
                             <field name="note" nolabel="1" />
                         </page>
                     </notebook>
-                    <group colspan="4" col="5">
+                    <group colspan="4" col="6">
                         <field name="state" />
-                        <button name="signal_inprogress" string="In Progress" type="workflow" states="draft"/>
-                        <button name="signal_done" string="Done" type="workflow" states="inprogress" />
-                        <button name="signal_draft" string="Draft" type="workflow" states="inprogress" />
+                        <button name="draft" string="Draft" 
+                            type="workflow" states="validated" />
+                        <button name="signal_validate" string="Validate" 
+                            type="workflow" states="draft"/>
+                        <button name="signal_cancel" string="Cancel" 
+                            type="workflow" states="validated,inprogress"/>
+                        <button name="signal_inprogress" string="In Progress" 
+                            type="workflow" states="validated"/>
+                        <button name="signal_deprecate" string="Deprecate" 
+                            type="workflow" states="inprogress" />
                     </group>
                 </form>
             </field>
