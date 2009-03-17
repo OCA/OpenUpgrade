@@ -902,7 +902,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none_email0"/>
             <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -923,7 +923,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_intermediatemailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none_phone0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_piforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -939,7 +939,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_packageinsert0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none_paper0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_alpiforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -954,7 +954,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletterofthepackageinsert0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none_email0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_alimforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -969,7 +969,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletteroftheintermediatemailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none_email0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -1045,7 +1045,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2010"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_none0"/>
+            <field name="action_id" ref="dm.ir_actions_server_none_email0"/>
         </record>
     </data>
     <!-- Trademark -->
@@ -1761,7 +1761,7 @@ rkJggg==
 			<!-- field eval="&quot;&quot;&quot;Sir.&quot;&quot;&quot;" name="title"/ -->
 			<field eval="0" name="decoy_address"/>
 			<field eval="0" name="decoy_for_campaign"/>
-			<field eval="&quot;&quot;&quot;Biil&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Bill&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="client_media_ids"/>
 			<field eval="[(6,0,[])]" name="decoy_media_ids"/>
 			<field eval="[(6,0,[ref('dm.dtp_preview_customers'),ref('dm.res_partner_category_directmarketing0')])]" name="category_id"/>
