@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!-- sale form -->
+    <record model="ir.ui.view" id="sale_order_form_wop1">
+        <field name="name">sale.order.form.wop1</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="price_unit" position="replace">
+                <field name="price_unit" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_order_form_wop2">
+        <field name="name">sale.order.form.wop2</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <tree string="Sales order lines" position="replace">
+                <tree string="Sales order lines">
+                    <field colspan="4" name="name"/>
+                    <field name="product_uom_qty" string="Qty"/>
+                    <field name="product_uom" string="UoM"/>
+                    <field name="discount"/>
+                    <field name="price_unit" groups="sale.group_sale_manager"/>
+                    <field name="price_net" groups="sale.group_sale_manager"/>
+                    <field name="price_subtotal" groups="sale.group_sale_manager"/>
+                </tree>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_order_form_wop3">
+        <field name="name">sale.order.form.wop3</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="amount_untaxed" sum="Untaxed amount" position="replace">
+                <field name="amount_untaxed" sum="Untaxed amount" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_order_form_wop4">
+        <field name="name">sale.order.form.wop4</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="amount_tax" position="replace">
+                <field name="amount_tax" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_order_form_wop5">
+        <field name="name">sale.order.form.wop5</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="amount_total" sum="Total amount" position="replace">
+                <field name="amount_total" sum="Total amount" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="sale_order_form_wop6">
+        <field name="name">sale.order.form.wop6</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <button name="button_dummy" states="draft" string="Compute" type="object" position="replace">
+                <button name="button_dummy" states="draft" string="Compute" type="object" groups="sale.group_sale_manager"/>
+            </button>
+        </field>
+    </record>
+
+<!-- sale list -->
+<record model="ir.ui.view" id="view_order_tree_wop1">
+        <field name="name">sale.order.tree.wop1</field>
+        <field name="model">sale.order</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="amount_untaxed" position="replace">
+                <field name="amount_untaxed" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+    </record>
+
+    </data>
+</openerp>
