@@ -19,7 +19,7 @@ map = etl.component.transform.map({'main':{
 oo_out= etl.component.output.openobject_out(
      ooconnector,
      'res.partner',
-     ['id','name']
+     {'id':'id','name':'name'}
 )
 
 oo_out2= etl.component.output.openobject_out(

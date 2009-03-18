@@ -16,7 +16,7 @@
                 <form string="Sleep component">
                     <group colspan="4">
 					    <field name="name" select="1" />
-					    <field name="type_id" invisible="1" domain="[('type_id.name','=','control.sleep')]"/>
+					    <field name="type_id" domain="[('name','=','control.sleep')]"/>
                         <field name="transformer_id" invisible="1" colspan="4"/>
                     </group>                    
                     <notebook colspan="4">                        

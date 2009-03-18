@@ -129,7 +129,7 @@ etl_component_type()
 class etl_component(osv.osv):
     _name='etl.component'
     _description = "ETL Component"
-    _cache={}
+    _cache={}    
     _columns={
             'name' : fields.char('Name', size=64, required=True), 
             'type_id' : fields.many2one('etl.component.type', 'Component Type', required=True), 
@@ -290,13 +290,14 @@ class etl_job_process(osv.osv):
             job=self.get_job_instance(cr, uid, process.id, context) 
             job.pickle_file=tools.config['root_path']+'/save_job.p'            
             if process.state in ('open'):
+                self.write(cr,uid,process.id,{'state':'start','start_date':time.strftime('%Y-%m-%d %H:%M:%S')}) 
                 job.run()#job.signal('start')
             elif process.state in ('pause'):
+                self.write(cr,uid,process.id,{'state':'start','start_date':time.strftime('%Y-%m-%d %H:%M:%S')}) 
                 job.signal('restart')                                
             else:
-                raise osv.except_osv(_('Error !'), _('Cannot start process in %s state !'%process.state))
+                raise osv.except_osv(_('Error !'), _('Cannot start process in %s state !'%process.state))          
             
-            self.write(cr,uid,process.id,{'state':'start','start_date':time.strftime('%Y-%m-%d %H:%M:%S')}) 
                 
             self.action_end_process(cr,uid,[process.id],context)
 

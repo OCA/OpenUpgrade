@@ -16,7 +16,7 @@
                  <form string="Openobject Out Component">
                     <group colspan="4">
 					    <field name="name" select="1" />
-					    <field name="type_id" invisible="1" domain="[('type_id.name','=','output.openobject_out')]"/>
+					    <field name="type_id" domain="[('name','=','output.openobject_out')]"/>
                         <field name="transformer_id"  colspan="4"/>
                     </group>                    
                     <notebook colspan="4">                        

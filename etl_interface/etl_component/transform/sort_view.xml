@@ -16,7 +16,7 @@
 				<form string="Sort Component">
                     <group colspan="4">
 					    <field name="name" select="1" />
-					    <field name="type_id" invisible="1" domain="[('type_id.name','=','transform.sort')]"/>
+					    <field name="type_id" domain="[('name','=','transform.sort')]"/>
                         <field name="transformer_id" invisible="1" colspan="4"/>
                     </group>                    
                     <notebook colspan="4">                                                
