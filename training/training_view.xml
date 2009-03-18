@@ -439,24 +439,11 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="training_session_gantt">
-            <field name="name">training.session.gantt</field>
-            <field name="model">training.session</field>
-            <field name="type">gantt</field>
-            <field name="arch" type="xml">
-                <gantt date_start="date" string="Sessions">
-                    <level object="training.events" link="event_ids" domain="[]">
-                        <field name="name" />
-                    </level>
-                </gantt>
-            </field>
-        </record>
-
         <record model="ir.actions.act_window" id="training_session_all_act">
             <field name="name">Sessions</field>
             <field name="res_model">training.session</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form,calendar,gantt</field>
+            <field name="view_mode">tree,form,calendar</field>
         </record>
         <record model="ir.actions.act_window" id="training_session_validate_act">
             <field name="name">Sessions to Confirm</field>
