@@ -8,6 +8,7 @@
         "account_base",
         #"account_india_ledger",
         "account_invoice",
+        "l10n_chart_in",
         "account_voucher",
         "account_india",
         "account_report_india",
@@ -15,7 +16,6 @@
         #"sale_numbers",
         #"purchase_number",
         #important for the indian accounting but do not load with account module
-        "l10n_chart_in",
     ],
     "demo_xml":[],
     "update_xml":[],
