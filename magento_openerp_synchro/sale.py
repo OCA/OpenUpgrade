@@ -10,6 +10,10 @@ class sale_order(osv.osv):
         'magento_id': lambda *a: 0,
         'has_error': lambda *a: 0,
     }
+    
+    def magento_import(self, cr, uid, order_ids, context):
+        pass
+        
 sale_order()
 
 
