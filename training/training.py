@@ -578,6 +578,7 @@ training_seance_purchase_line()
 class training_subscription(osv.osv):
     _name = 'training.subscription'
     _description = 'Subscription'
+
     _columns = {
         'name' : fields.char('Reference',
                              size=32,
@@ -608,12 +609,8 @@ class training_subscription(osv.osv):
                                        'Contact',
                                        select=1,
                                        required=True,
+                                       domain="[('partner_id', '=', partner_id)]",
                                       ),
-        #'child_ids' : fields.function(_get_child_ids, method=True, type='one2many',
-        #                              relation="training.course", string='Children'),
-        #'contact_id' : fields.function(_get_contacts, method=True, type='many2one',
-        #                               relation='res.partner.contact', string="Contact", select=1,
-        #                               store=1),
         # Pour le group ID, discuter pour savoir si on doit utiliser le seuil pédagogique du groupe pour savoir si on crée un nouveau group ou non
         'invoice_id' : fields.many2one('account.invoice', 'Invoice'),
         'group_id' : fields.many2one('training.group', 'Group'),
@@ -635,6 +632,7 @@ class training_subscription(osv.osv):
         'paid' : lambda *a: False,
         'name' : lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'training.subscription'),
     }
+
 
     def on_change_partner(self, cr, uid, ids, partner_id):
         """
