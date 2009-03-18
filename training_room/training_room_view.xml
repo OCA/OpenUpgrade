@@ -50,15 +50,15 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_training_location_form">
-            <field name="name">view.training.location.form</field>
+        <record model="ir.ui.view" id="view_training_location_tree">
+            <field name="name">view.training.location.tree</field>
             <field name="model">training.location</field>
-            <field name="type">form</field>
+            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <form string="Locations">
+                <tree string="Locations">
                     <field name="name" />
                     <field name="address_id" />
-                </form>
+                </tree>
             </field>
         </record>
 
