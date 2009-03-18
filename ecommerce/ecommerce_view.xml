@@ -80,7 +80,11 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_shop_basic_tree"/>
 	</record>
-	<menuitem id="menu_ecommerce" name="Ecommerce"/>
+	
+<!--	<menuitem icon="terp-sale" id="menu_sale_root" name="Sales Management"-->
+<!--            groups="group_sale_user"/>-->
+            
+	<menuitem icon="terp-purchase" id="menu_ecommerce" name="Ecommerce"/>
 	<menuitem id="menu_ecommerce_configuration" name="Configuration" parent="menu_ecommerce"/>
 	<menuitem name="Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form" parent="menu_ecommerce_configuration"/>
 	
