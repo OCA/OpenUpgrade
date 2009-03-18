@@ -426,17 +426,43 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="training_session_calendar">
+            <field name="name">training.session.calendar</field>
+            <field name="model">training.session</field>
+            <field name="type">calendar</field>
+            <field name="arch" type="xml">
+                <calendar string="Session" date_start="date">
+                    <field name="name" />
+                    <field name="state" />
+                    <field name="offer_id" />
+                </calendar>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="training_session_gantt">
+            <field name="name">training.session.gantt</field>
+            <field name="model">training.session</field>
+            <field name="type">gantt</field>
+            <field name="arch" type="xml">
+                <gantt date_start="date" string="Sessions">
+                    <level object="training.events" link="event_ids" domain="[]">
+                        <field name="name" />
+                    </level>
+                </gantt>
+            </field>
+        </record>
+
         <record model="ir.actions.act_window" id="training_session_all_act">
             <field name="name">Sessions</field>
             <field name="res_model">training.session</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,calendar,gantt</field>
         </record>
         <record model="ir.actions.act_window" id="training_session_validate_act">
             <field name="name">Sessions to Validate</field>
             <field name="res_model">training.session</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,calendar</field>
             <field name="domain">[('state', '=', 'draft')]</field>
         </record>
         <record model="ir.actions.act_window" id="training_session_new_act">
@@ -462,7 +488,7 @@
                     <field name="name" />
                     <field name="date" />
                     <field name="duration" />
-                    <field name="session_ids" />
+                    <field name="session_ids" colspan="4"/>
                 </form>
             </field>
         </record>

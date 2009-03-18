@@ -26,10 +26,8 @@
             <field name="wkf_id" ref="workflow_session" />
             <field name="name">opened_confirmed</field>
             <field name="kind">function</field>
-            <field name="action">
-                action_create_seance()
-                write({'state':'opened_confirmed'})
-            </field>
+            <field name="action">action_create_seance()
+write({'state':'opened_confirmed'})</field>
         </record>
 
         <record model="workflow.activity" id="activity_session_closed_confirmed">
