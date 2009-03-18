@@ -459,11 +459,11 @@
             <field name="view_mode">tree,form,calendar,gantt</field>
         </record>
         <record model="ir.actions.act_window" id="training_session_validate_act">
-            <field name="name">Sessions to Validate</field>
+            <field name="name">Sessions to Confirm</field>
             <field name="res_model">training.session</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar</field>
-            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="domain">[('state', '=', 'opened')]</field>
         </record>
         <record model="ir.actions.act_window" id="training_session_new_act">
             <field name="name">New Session</field>
@@ -476,6 +476,7 @@
             <field name="res_model">training.session</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
         </record>
 
 
