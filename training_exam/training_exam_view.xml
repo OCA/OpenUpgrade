@@ -165,7 +165,7 @@
                     <notebook colspan="4">
                         <page string="General">
                             <field name="date" />
-                            <field name="duration" />
+                            <field name="duration" widget="float_time" />
                             <field name="location_id" />
                         </page>
                         <page string="Participants">
@@ -203,7 +203,7 @@
                     <field name="name" />
                     <field name="questionnaire_id" />
                     <field name="date" />
-                    <field name="duration" />
+                    <field name="duration" widget="float_time" />
                     <field name="location_id" />
                     <field name="state" />
                 </tree>
@@ -218,7 +218,7 @@
                 <calendar string="Events" date_start="date">
                     <field name="name"/>
                     <field name="questionnaire_id" />
-                    <field name="duration" />
+                    <field name="duration" widget="float_time" />
                     <field name="contact_ids" />
                     <field name="location_id"/>
                 </calendar>

@@ -164,7 +164,7 @@
                                 <tree string="Sub Courses">
                                     <field name="sequence" />
                                     <field name="name" string="Designation" />
-                                    <field name="duration" />
+                                    <field name="duration" widget="float_time" />
                                 </tree>
                             </field>
                         </page>
@@ -224,7 +224,7 @@
                     <field name="code" string="Code" />
                     <field name="name" string="Designation" />
                     <field name="description" />
-                    <field name="duration" />
+                    <field name="duration" widget="float_time" />
                     <field name="state_course" />
                 </tree>
             </field>
@@ -366,7 +366,7 @@
                                 <tree string="Events">
                                     <field name="name" />
                                     <field name="date" />
-                                    <field name="duration" />
+                                    <field name="duration" widget="float_time" />
                                     <field name="support_ok" />
                                 </tree>
                             </field>
@@ -426,6 +426,19 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="training_session_tree_without_state">
+            <field name="name">training.session.tree</field>
+            <field name="model">training.session</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sessions">
+                    <field name="name" />
+                    <field name="offer_id" />
+                    <field name="catalog_id" />
+                </tree>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="training_session_calendar">
             <field name="name">training.session.calendar</field>
             <field name="model">training.session</field>
@@ -450,6 +463,7 @@
             <field name="res_model">training.session</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form,calendar</field>
+            <field name="view_id" ref="training_session_tree_without_state" />
             <field name="domain">[('state', '=', 'opened')]</field>
         </record>
         <record model="ir.actions.act_window" id="training_session_new_act">
@@ -463,6 +477,7 @@
             <field name="res_model">training.session</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
+            <field name="view_id" ref="training_session_tree_without_state" />
             <field name="domain">[('state', '=', 'draft')]</field>
         </record>
 
@@ -475,7 +490,7 @@
                 <form string="Event">
                     <field name="name" />
                     <field name="date" />
-                    <field name="duration" />
+                    <field name="duration" widget="float_time" />
                     <field name="session_ids" colspan="4"/>
                 </form>
             </field>
@@ -489,7 +504,7 @@
                 <tree string="Events">
                     <field name="name" />
                     <field name="date" />
-                    <field name="duration" />
+                    <field name="duration" widget="float_time" />
                     <field name="session_ids" />
                 </tree>
             </field>
@@ -521,7 +536,7 @@
             <field name="arch" type="xml">
                 <form string="Seance">
                     <field name="name" />
-                    <field name="duration" />
+                    <field name="duration" widget="float_time" />
                     <field name="date" />
                     <newline />
 
@@ -600,7 +615,7 @@
                 <tree string="Seances">
                     <field name="name" />
                     <field name="date" />
-                    <field name="duration" />
+                    <field name="duration" widget="float_time" />
                     <field name="state" />
                     <!--<field name="session_ids" />-->
                 </tree>
@@ -616,7 +631,7 @@
                     <field name="name" />
                     <field name="partner_id" />
                     <field name="date" />
-                    <field name="duration" />
+                    <field name="duration" widget="float_time" />
                     <field name="state" />
                     <!--<field name="session_ids" />-->
                 </calendar>
