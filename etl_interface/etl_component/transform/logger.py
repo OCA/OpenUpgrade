@@ -29,13 +29,18 @@ class etl_component_transform_logger(osv.osv):
     _inherit = 'etl.component'    
 
     _columns={
-            'output_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=',sys)]"), 
+            'output_id' :  fields.many2one('etl.connector', 'Connector'), 
     }
         
     def create_instance(self, cr, uid, id , context={}):
         val=super(etl_component_transform_logger, self).create_instance(cr, uid, id, context)
-        cmp=self.browse(cr, uid, id)        
-        if cmp.type_id.name == 'transform.logger':            
+        obj_connector=self.pool.get('etl.connector')
+        cmp=self.browse(cr, uid, id)
+        if cmp.type_id.name == 'transform.logger':  
+            conn_instance=trans_instance=False
+            if cmp.output_id:    
+                print 'component ma connector 6', cmp.output_id.type
+                conn_instance=obj_connector.get_instance(cr, uid, cmp.output_id.id , context)         
             val = etl.component.transform.logger(cmp.name)
         return val
         

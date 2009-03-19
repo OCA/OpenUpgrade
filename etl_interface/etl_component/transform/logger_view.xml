@@ -21,7 +21,7 @@
                     </group>                    
                     <notebook colspan="4">  
                         <page string="Property">
-                            <field name="output_id"/>										        					         					   
+                            <field name="output_id" domain="[('type','=','localfile')]"/>										        					         					   
                         </page>                                              
                         <page string="Transitions Detail">
 					        <separator string="Incomming Transitions" colspan="4" />
