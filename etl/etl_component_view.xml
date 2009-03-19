@@ -933,19 +933,406 @@
 		<menuitem name="Filtering Column process"
 			parent="menu_etl_jd_c_pec_form" id="menu_etl_jd_c_pec__fcp_form" />
 
+
+
+		
+		<record id="etl_component_diff_form" model="ir.ui.view">
+			<field name="name">view.etl.component.diff.form</field>
+			<field name="model">etl.component </field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Diff Process">
+					<field name="name" select="1" required="1"/>
+					<field name="type"/>
+					<notebook colspan="4">
+						<page string="Property">
+							<field name="key_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+								<tree string="Keys for Comparison">
+									<field name="sequence" string="Sequence"/>
+									<field name="key"/>
+								</tree>
+								<form string="Keys for Comparison">
+									<field name="sequence" string="Sequence"/>
+									<field name="key"/>
+								</form>
+							</field>
+						</page>
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_diff_tree"
+			model="ir.actions.act_window">
+			<field name="name">Diff component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id"
+				ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.diff')]</field>
+		</record>
+
+		<record id="action_etl_component_diff_form"
+			model="ir.actions.act_window">
+			<field name="name">Diff component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.diff')]</field>
+		</record>
+
+		<record id="action_etl_component_diff_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_diff_tree" />
+		</record>
+		<record id="action_etl_component_diff_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_diff_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_diff_tree" />
+		</record>
+
+
+
 		<menuitem name="Diff Process" parent="menu_etl_jd_c_pec_form"
+			action="action_etl_component_diff_tree"
 			id="menu_etl_jd_c_pec__dp_form" />
 
+
+		<record id="etl_component_merge_form" model="ir.ui.view">
+			<field name="name">view.etl.component.merge.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Merge Component">
+					<field name="name" select="1" />
+					<field name="type" />
+					<notebook colspan="4" >
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_merge_tree"
+			model="ir.actions.act_window">
+			<field name="name">Merge</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type.name','=','component.merge')]</field>
+		</record>
+
+
+		<record id="etl_component_merge_form"
+			model="ir.actions.act_window">
+			<field name="name">Merge</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type.name','=','component.merge')]</field>
+			<field name="view_id" ref="etl_component_merge_form" />
+		</record>
+		
+		<record id="action_etl_component_merge_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id" ref="action_etl_component_merge_tree" />
+		</record>
+		
+		<record id="action_etl_component_merge_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_merge_form" />
+			<field name="act_window_id" ref="action_etl_component_merge_tree" />
+		</record>
+
+
 		<menuitem name="Merge Process" parent="menu_etl_jd_c_pec_form"
+			action="action_etl_component_merge_tree"
 			id="menu_etl_jd_c_pec__mp_form" />
+			
+			
+			<record id="etl_component_search_replace_form" model="ir.ui.view">
+			<field name="name">view.etl.component.search_replace.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Search/Replace (from info in the component)">
+					<field name="name" select="1" required="1"/>
+					<field name="type"/>
+					<notebook colspan="4">
+						<page string="Property">
+							<field name="find_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+								<tree string="Operation Using Regular Expressions">
+									<field name="column" string="Column"/>
+									<field name="find"/>
+									<field name="replace"/>
+								</tree>
+								<form string="Keys for Comparison">
+									<field name="column" string="Column"/>
+									<field name="find"/>
+									<field name="replace"/>
+								</form>
+							</field>
+						</page>
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_search_replace_tree"
+			model="ir.actions.act_window">
+			<field name="name">Search/Replace (from info in the component)</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id"
+				ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.search_replace')]</field>
+		</record>
+
+		<record id="action_etl_component_search_replace_form"
+			model="ir.actions.act_window">
+			<field name="name">Search/Replace (from info in the component)</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.search_replace')]</field>
+		</record>
+
+		<record id="action_etl_component_search_replace_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_search_replace_tree" />
+		</record>
+		<record id="action_etl_component_search_replace_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_search_replace_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_search_replace_tree" />
+		</record>
+
 
 		<menuitem name="Search/Replace (from info in the component)"
+		action="action_etl_component_search_replace_tree"
 			parent="menu_etl_jd_c_pec_form" id="menu_etl_jd_c_pec__sr_form" />
+			
+			
+			
+			<record id="etl_component_find_replace_list_form" model="ir.ui.view">
+			<field name="name">view.etl.component.find_replace_list.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Search/Replace(From Another Flow) ">
+					<field name="name" select="1" required="1"/>
+					<field name="type"/>
+					<notebook colspan="4">
+						<page string="Property">
+							<field name="list_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+								<tree string="Keys For Mapping">
+									<field name="main_flow" />
+									<field name="second_flow"/>
+								</tree>
+								<form string="Keys For Mapping">
+									<field name="main_flow" />
+									<field name="second_flow"/>
+								</form>
+							</field>
+							
+							<field name="replace_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+								<tree string="Fields To Replace">
+									<field name="field_replace" />
+									<field name="field_new"/>
+								</tree>
+								<form string="Fields To Replace">
+									<field name="field_replace" />
+									<field name="field_new"/>
+								</form>
+							</field>
+							
+							
+						</page>
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
 
+		<record id="action_etl_component_find_replace_list_tree"
+			model="ir.actions.act_window">
+			<field name="name">Search/Replace(From Another Flow)</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id"
+				ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.search_replace_flow')]</field>
+		</record>
+
+		<record id="action_etl_component_find_replace_list_form"
+			model="ir.actions.act_window">
+			<field name="name">Search/Replace(From Another Flow)</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.search_replace_flow')]</field>
+		</record>
+
+		<record id="action_etl_component_find_replace_list_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_find_replace_list_tree" />
+		</record>
+		<record id="action_etl_component_find_replace_list_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_find_replace_list_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_find_replace_list_tree" />
+		</record>
+			
 		<menuitem name="Search/Replace (from another flow)"
+		action="action_etl_component_find_replace_list_tree"
 			parent="menu_etl_jd_c_pec_form" id="menu_etl_jd_c_pec__sre_form" />
+			
+			
+			<record id="etl_component_check_form" model="ir.ui.view">
+			<field name="name">view.etl.component.check.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="UNIQUE Check Process">
+					<field name="name" select="1" required="1"/>
+					<field name="type"/>
+					<notebook colspan="4">
+						<page string="Property">
+							<field name="check_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+								<tree string="Unique Keys">
+									<field name="key" string="Keys"/>
+								</tree>
+								<form string="Unique Keys">
+								<field name="key" string="Keys"/>
+								</form>
+							</field>
+						</page>
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
 
+		<record id="action_etl_component_check_tree"
+			model="ir.actions.act_window">
+			<field name="name">Unique Check Process component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id"
+				ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.check')]</field>
+		</record>
+
+		<record id="action_etl_component_check_form"
+			model="ir.actions.act_window">
+			<field name="name">Unique Check Process component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.check')]</field>
+		</record>
+
+		<record id="action_etl_component_check_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_check_tree" />
+		</record>
+		<record id="action_etl_component_check_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_check_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_check_tree" />
+		</record>
+			
+			
 		<menuitem name="Uniq Checks Process"
+			action="action_etl_component_check_tree"
 			parent="menu_etl_jd_c_pec_form" id="menu_etl_jd_c_pec__ucp_form" />
 
 		<record id="etl_component_schema_validation_form" model="ir.ui.view">
@@ -1028,7 +1415,7 @@
 					<field name="type" />
 					<notebook colspan="4" >
 						<page string="Python Code">
-						<separator string="Enter Python Code"/>
+						<separator string="Enter Python Code" colspan="4"/>
 							<field name="python_code" nolabel = "1"/>
 						</page>
 						<page string="Transitions">
@@ -1096,12 +1483,184 @@
 
 		<menuitem name="Aggregate component"
 			parent="menu_etl_jd_c_pec_form" id="menu_etl_jd_c_pec_ac_form" />
+			
+			
+			<record id="etl_component_aggregate_form" model="ir.ui.view">
+			<field name="name">view.etl.component.aggregate.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Aggregate Unsort Process">
+					<field name="name" select="1" required="1"/>
+					<field name="type"/>
+					<notebook colspan="4">
+						<page string="Property">
+							<field name="sort_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+								<tree string="Operations">
+									<field name="field_name" />
+									<field name="python_fun" string="python function" />
+								</tree>
+								<form string="Operations">
+									<field name="field_name" />
+									<field name="python_fun" />
+								</form>
+							</field>
+							
+							<field name="aggregate_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+								<tree string="Group By">
+									<field name="field_name" />
+								</tree>
+								<form string="Group By">
+									<field name="field_name" />
+								</form>
+							</field>
+						</page>
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_aggregate_tree"
+			model="ir.actions.act_window">
+			<field name="name">Aggregate Unsort Process</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id"
+				ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.aggregate_unsort')]</field>
+		</record>
+
+		<record id="action_etl_component_aggregate_form"
+			model="ir.actions.act_window">
+			<field name="name">Aggregate  Process</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.aggregate_unsort')]</field>
+		</record>
+
+		<record id="action_etl_component_aggregate_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_aggregate_tree" />
+		</record>
+		<record id="action_etl_component_aggregate_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_aggregate_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_aggregate_tree" />
+		</record>
+			
 
 		<menuitem name="Aggregate unsorted lists"
+			action="action_etl_component_aggregate_tree"
 			parent="menu_etl_jd_c_pec_ac_form"
 			id="menu_etl_jd_c_pec_ac_aul_form" />
 
+
+		<record id="etl_component_aggregate_sort_form" model="ir.ui.view">
+			<field name="name">view.etl.component.aggregate.sort.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Aggregate Sort Process">
+					<field name="name" select="1" required="1"/>
+					<field name="type"/>
+					<notebook colspan="4">
+						<page string="Property">
+							<field name="sort_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+								<tree string="Operations">
+									<field name="field_name" />
+									<field name="python_fun" string="python function" />
+								</tree>
+								<form string="Operations">
+									<field name="field_name" />
+									<field name="python_fun" />
+								</form>
+							</field>
+							
+							<field name="aggregate_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+								<tree string="Group By">
+									<field name="field_name" />
+								</tree>
+								<form string="Group By">
+									<field name="field_name" />
+								</form>
+							</field>
+						</page>
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_aggregate_sort_tree"
+			model="ir.actions.act_window">
+			<field name="name">Aggregate Sort Process</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id"
+				ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.aggregate_sort')]</field>
+		</record>
+
+		<record id="action_etl_aggregate_sort_form"
+			model="ir.actions.act_window">
+			<field name="name">Aggregate Sort Process</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="domain">[('type.name','=','component.aggregate_sort')]</field>
+		</record>
+
+		<record id="action_etl_component_aggregate_sort_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_aggregate_sort_tree" />
+		</record>
+		<record id="action_etl_component_aggregate_sort_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_aggregate_sort_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_aggregate_sort_tree" />
+		</record>
+			
+
 		<menuitem name="Aggregate sorted lists"
+		action="action_etl_component_aggregate_sort_tree"
 			parent="menu_etl_jd_c_pec_ac_form"
 			id="menu_etl_jd_c_pec_ac_asl_form" />
 

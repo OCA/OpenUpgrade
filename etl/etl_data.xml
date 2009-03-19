@@ -104,5 +104,33 @@
 			<field name="code">schema.validation</field>
 		</record>
 		
+		
+			
+		<record id="comp_diff" model="etl.component.type">
+			<field name="name">component.diff</field>
+			<field name="code">component.diff</field>
+		</record>
+		
+			
+		<record id="comp_search_replace" model="etl.component.type">
+			<field name="name">component.search_replace</field>
+			<field name="code">component.search_replace</field>
+		</record>
+		
+		<record id="comp_sub_job" model="etl.component.type">
+			<field name="name">component.sub_job</field>
+			<field name="code">component.sub_job</field>
+		</record>
+		
+		<record id="comp_aggregate_sort" model="etl.component.type">
+			<field name="name">component.aggregate_sort</field>
+			<field name="code">component.aggregate_sort</field>
+		</record>
+		
+		<record id="comp_aggregate_unsort" model="etl.component.type">
+			<field name="name">component.aggregate_unsort</field>
+			<field name="code">component.aggregate_unsort</field>
+		</record>
+		
 	</data>
 </openerp>

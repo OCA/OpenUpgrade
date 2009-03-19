@@ -336,7 +336,79 @@
 		<menuitem name="Trigger Transitions" parent="menu_etl_t_form"
 			action="action_etl_trans_trigger_tree" id="menu_etl_t_tt_form" />
 
+		<record id="view_etl_job_process_component_form" model="ir.ui.view">
+			<field name="name">etl.job.process.component.form</field>
+			<field name="model">etl.job.process.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Component">
+                    <group colspan="4">
+					    <field name="name" select="1" />					
+					</group>
+					<notebook colspan="4">
+                        <page string="Details">
+	                        <separator string="Status" colspan="4" />
+	                       	<field name="start_date" />
+							<field name="end_date" />
+							<field name="compute_time" />
+							<field name="input_records" />
+							<field name="output_records" />
+						    <field name="state" />
+                        </page>
+					</notebook>
+				</form>
+			</field>
+		</record>
 
+
+		<record id="view_etl_job_process_tree" model="ir.ui.view">
+			<field name="name">etl.job.process.component.tree</field>
+			<field name="model">etl.job.process.component</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="etl_job">
+					<field name="name" select="1" />
+					<field name="state" />
+					<field name="input_records" />
+					<field name="output_records" />
+					<field name="start_date" select="1" />
+					<field name="end_date" select="1" />
+					<field name="compute_time" />
+					<field name="seconds_par_record" />
+				</tree>
+			</field>
+		</record>
+		
+		
+		<record id="view_etl_job_process_component_form" model="ir.ui.view">
+			<field name="name">etl.job.log.form</field>
+			<field name="model">etl.job.log</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Logs/Messages">
+				    <field name="name" select="1" />					
+					<field name="component_id" />
+					<field name="date_time" />
+					<separator string="Description" colspan="4"/>
+					<field name="desc" colspan="4" nolabel="1" /> 
+				</form>
+			</field>
+		</record>
+
+
+		<record id="view_etl_job_process_tree" model="ir.ui.view">
+			<field name="name">etl.job.log.tree</field>
+			<field name="model">etl.job.log</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="etl_job">
+					<field name="name" select="1" />					
+					<field name="component_id" />
+					<field name="date_time" />
+					<field name="desc" />
+				</tree>
+			</field>
+		</record>
 		<!-- Job  Process	 -->
 
 		<record id="view_etl_job_process_form" model="ir.ui.view">
@@ -352,9 +424,51 @@
 					<notebook colspan="4">
                         <page string="Job Detail">
                         <field name="job_id" colspan="4"/>
-                        <!-- <separator string="Components" colspan="4" />
-					    <field name="component_ids" colspan="4" nolabel="1" /> -->
-                        <separator string="Status" colspan="4" />
+                        <separator string="Components" colspan="4" />
+ 						<field name="component_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+                                <tree string="Components">
+                                    <field name="name" select="1" />
+									<field name="state" />
+									<field name="records_in" />
+									<field name="records_out" />
+									<field name="start_date" select="1" />
+									<field name="end_date" select="1" />
+									<field name="compute_time" />
+									<field name="seconds_par_record" />
+                                </tree>
+                                <form string="Component">
+				                    <group colspan="4">
+									    <field name="name" select="1" />					
+									</group>
+									<notebook colspan="4">
+				                        <page string="Details">
+					                        <separator string="Status" colspan="4" />
+					                       	<field name="start_date" />
+											<field name="end_date" />
+											<field name="compute_time" />
+											<field name="records_in" />
+											<field name="records_out" />
+										    <field name="state" />
+				                        </page>
+									</notebook>
+								</form>
+						</field>  
+					    <field name="log_ids" colspan="4" nolabel="4" widget="one2many_list" editable="bottom">
+					       <tree string="Logs">
+							    <field name="name" select="1" />					
+								<field name="component_id" />
+								<field name="date_time" />
+								<field name="desc" />
+							</tree>
+							<form string="Logs/Messages">
+							    <field name="name" select="1" />					
+								<field name="component_id" />
+								<field name="date_time" />
+								<separator string="Description" colspan="4"/>
+								<field name="desc" colspan="4" nolabel="1" /> 
+							</form>
+                           </field>
+						<separator string="Status" colspan="4" />
 					    <field name="state" />
 					    <group colspan="2">
                             <button name="action_open_process" string="Open" type="object" states="draft" />
