@@ -472,6 +472,7 @@
         <field name="arch" type="xml">
             <form string="Offer Action">
                 <field name="name" />
+                <field name="code" required="1" />
                 <field name="media_id"/>
                 <field name="state" />
                 <field name="condition" />

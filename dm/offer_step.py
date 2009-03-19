@@ -63,10 +63,31 @@ class dm_offer_step_action(osv.osv):
     _name = 'dm.offer.step.action'
     _inherits = {'ir.actions.server':'server_action_id'}
     _columns = {
+        'code' : fields.char('Code', size=16),
         'server_action_id' : fields.many2one('ir.actions.server','Server Action'),
         'media_id' : fields.many2one('dm.media','Media',required=True)
     }
     
+    def create(self,cr,uid,vals,context={}):
+        cron_vals = {
+            'name':'Scheduler for %s'%vals['name'],
+            'interval_number':1,
+            'interval_type':'days',
+            'numbercall':-1,
+            'doall':False,
+            'model':'dm.offer.step.action',
+            'function':'_wi_check',
+            'nextcall' : time.strftime('%Y-%m-%d 20:00:00'),
+            'args': '(step_action_code,)'                     
+                     }
+        self.pool.get('ir.cron').create(cr,uid,cron_vals)
+        return super(dm_offer_step_action,self).create(cr,uid,vals,context)
+    _defaults = {
+        'code' : lambda *a: '',
+    }
+    _sql_constraints = [
+        ('code_uniq', 'unique (code)', 'The code of the action must be unique !')
+    ]
 dm_offer_step_action()
 
 class dm_offer_step(osv.osv):
