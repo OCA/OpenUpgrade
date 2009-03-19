@@ -195,7 +195,7 @@ class etl_transition(osv.osv):
         cmp_out = obj_component.get_instance(cr, uid, trans.destination_component_id.id, context) 
         if (cr,uid,id) in self._cache:
             return self._cache[(cr,uid,id)]              
-        val=etl.transition(cmp_in, cmp_out)         
+        val=etl.transition(cmp_in, cmp_out,channel_source=trans.channel_source, channel_destination=trans.channel_destination, type=trans.type)         
         return val
 
     def action_open_transition(self,cr,uid,ids,context={}):

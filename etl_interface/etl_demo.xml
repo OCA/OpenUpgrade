@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 	<data>
+        <!--		Transition CHANNEL -->
+		<record id="channel_main" model="etl.channel">
+			<field name="name">main</field>
+			<field name="code">main</field>
+			<field name="type">transition</field>
+		</record>	
+        <record id="channel_error" model="etl.channel">
+			<field name="name">error</field>
+			<field name="code">error</field>
+			<field name="type">transition</field>
+		</record>	
+		<record id="channel_gmail" model="etl.channel">
+			<field name="name">gmail</field>
+			<field name="code">gmail</field>
+			<field name="type">transition</field>
+		</record>
+		
+		<record id="channel_partner" model="etl.channel">
+			<field name="name">partner</field>
+			<field name="code">partner</field>
+			<field name="type">transition</field>
+		</record>
+		
+		<record id="channel_address" model="etl.channel">
+			<field name="name">address</field>
+			<field name="code">address</field>
+			<field name="type">transition</field>
+		</record>
 
 		<!--	CONNECTORS-->
 
@@ -129,35 +157,40 @@
 		
 
 		<!--	FIELDS-->
+
+        <record id="map_line1" model="etl.component.transform.map_lines">
+			<field name="name">main</field>			
+			<field name="component_id" ref="component_map1" />
+		</record>
 		
-		<record id="field1" model="etl.component.transform.map_lines">
-			<field name="source_field">id</field>
+		<record id="field1" model="etl.component.transform.map_fields">
+			<field name="name">id</field>
 			<field name="dest_field">tools.uniq_id(main.get('org', 'anonymous'), prefix='partner_')</field>
-			<field name="component_id" ref="component_map1" />
+			<field name="map_line_id" ref="map_line1" />
 		</record>
 		
-		<record id="field2" model="etl.component.transform.map_lines">
-			<field name="source_field">address_id</field>
+		<record id="field2" model="etl.component.transform.map_fields">
+			<field name="name">address_id</field>
 			<field name="dest_field">tools.uniq_id(main.get('fn', 'anonymous'), prefix='contact_')</field>
-			<field name="component_id" ref="component_map1" />
+			<field name="map_line_id" ref="map_line1" />
 		</record>
 		
-		<record id="field3" model="etl.component.transform.map_lines">
-			<field name="source_field">name</field>
+		<record id="field3" model="etl.component.transform.map_fields">
+			<field name="name">name</field>
 			<field name="dest_field">main.get('org',['anonymous'])[0]</field>
-			<field name="component_id" ref="component_map1" />
+			<field name="map_line_id" ref="map_line1" />
 		</record>
 		
-		<record id="field4" model="etl.component.transform.map_lines">
-			<field name="source_field">contact_name</field>
+		<record id="field4" model="etl.component.transform.map_fields">
+			<field name="name">contact_name</field>
 			<field name="dest_field">main.get('fn','anonymous')</field>
-			<field name="component_id" ref="component_map1" />
+			<field name="map_line_id" ref="map_line1" />
 		</record>
 		
-		<record id="field5" model="etl.component.transform.map_lines">
-			<field name="source_field">email</field>
+		<record id="field5" model="etl.component.transform.map_fields">
+			<field name="name">email</field>
 			<field name="dest_field">main.get('email','').upper()</field>
-			<field name="component_id" ref="component_map1" />
+			<field name="map_line_id" ref="map_line1" />
 		</record>
 		
 		<record id="field_oo1" model="etl.component.openobject.lines">
@@ -197,25 +230,7 @@
 		</record>
 		
 		
-		<!--		CHANNEL-->
-			
-		<record id="channel_gmail" model="etl.channel">
-			<field name="name">gmail</field>
-			<field name="code">gmail</field>
-			<field name="type">transition</field>
-		</record>
 		
-		<record id="channel_partner" model="etl.channel">
-			<field name="name">partner</field>
-			<field name="code">partner</field>
-			<field name="type">transition</field>
-		</record>
-		
-		<record id="channel_address" model="etl.channel">
-			<field name="name">address</field>
-			<field name="code">address</field>
-			<field name="type">transition</field>
-		</record>
 		
 		<!--TRANSITIONS-->
 

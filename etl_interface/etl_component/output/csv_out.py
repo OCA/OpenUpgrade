@@ -27,6 +27,15 @@ from osv import osv, fields
 class etl_component_csv_out(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'    
+    
+    _columns={
+          'connector_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=','localfile')]"),
+          'row_limit' : fields.integer('Limit'), 
+          'csv_params' : fields.char('CSV Parameters', size=64), 
+     }
+    _defaults={
+          'csv_params':lambda *x:'{}'
+     }
          
     def create_instance(self, cr, uid, id, context={}):
         val=super(etl_component_csv_out, self).create_instance(cr, uid, id, context)
