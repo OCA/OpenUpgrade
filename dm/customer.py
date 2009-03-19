@@ -138,50 +138,40 @@ class dm_workitem(osv.osv):
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step',required=True, ondelete="cascade"),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', required=True, ondelete="cascade"),
         'customer_id' : fields.many2one('res.partner', 'Customer', required=True, ondelete="cascade"),
-#        'date_next_action' : fields.date('Next Action'),
-#        'purchase_amount' : fields.float('Amount', digits=(16,2))
+        'action_time' : fields.datetime('Action Time', required=True),
+        'error_msg' : fields.text('Error Message'),
+        'state' : fields.selection([('pending','Pending'),('processing','Processing'),('done','Done')], 'Status', readonly=True),
     }
-"""
-    def create(self, cr, uid, vals, context=None, check=True):
-        step = self.pool.get('dm.offer.step').browse(cr,uid,[vals['step_id']])[0]
-        if step.outgoing_transition_ids:
-            transitions = dict(map(lambda x : (x.id,x.delay),step.outgoing_transition_ids))
-            trans = [(k,v) for k,v in transitions.items() if v == min(transitions.values())][0]
-            new_date = datetime.date.today() + datetime.timedelta(trans[1])
-            vals['date_next_action'] = new_date
-        return super(dm_offer_step_workitem, self).create(cr, uid, vals, context)
-
-    def _update_workitem(self, cr, uid, ids=False, context={}):
-        '''
-        Function called by the sceduler to update workitem from the segments of propositions.
-        '''
-"""
-"""
-        wrkitem_ids =self.search(cr,uid,[('date_next_action','=',time.strftime('%Y-%m-%d'))])
-        wrkitems =self.browse(cr,uid,wrkitem_ids)
-        if not wrkitems:
-            return
-        for wrkitem in wrkitems :
-            step = wrkitem.step_id
-            if step.outgoing_transition_ids:
-                transitions = dict(map(lambda x : (x,int(x.delay)),step.outgoing_transition_ids))
-                trans = [k for k,v in transitions.items() if v == min(transitions.values())][0]
-                # If relaunching
-                if trans.step_to_id.type == 'RL':
-                    prop_id = self.pool.get('dm.campaign.proposition').copy(cr, uid, wrkitem.segment_id.proposition_id.id,
-                        {'proposition_type':'relaunching', 'initial_proposition_id':wrkitem.segment_id.proposition_id.id})
-                    self.pool.get('dm.campaign.proposition.segment').write(cr, uid, wrkitem.segment_id.id, {'proposition_id':prop_id})
-                    re_step_id = self.pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',step.offer_id.id),('flow_start','=',True),('media_id','=',step.media_id.id)])
-                    self.write(cr,uid,wrkitem.id,{'step_id':re_step_id[0]}) 
-                else :
-                    self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to_id.id})
-"""
-"""
-        return True
-"""
-
+    _defaults = {
+        'state': lambda *a: 'pending',
+    }
 dm_workitem()
 
+"""
+class dm_workitem_action(osv.osv):
+    _name = "dm.workitem.action"
+
+    def crm_case_create(self, cr, uid, ids):
+        return True
+
+    def action_done(self, cr, uid, ids):
+        return True
+
+    def plugin_value_compute(self, cr, uid, ids):
+        return False
+
+    def pdf_document_fusion(self, cr, uid, ids):
+        return True
+
+    def dms_document_store(self, cr, uid, ids):
+        return True
+
+    _columns = {
+        'workitem_id' : fields.many2one('dm.workitem', 'Workitem', ondelete='cascade'),
+        'error_msg' : fields.text('Error Message'),
+    }
+dm_workitem_action()
+"""
 class dm_customer_segmentation(osv.osv):
     _name = "dm.customer.segmentation"
     _description = "Segmentation"

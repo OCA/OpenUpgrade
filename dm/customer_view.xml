@@ -311,6 +311,54 @@
 
     <!--
     =======================================================
+    WORKITEM VIEWS
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_workitem_form">
+        <field name="name">dm.worktitem.form</field>
+        <field name="model">dm.workitem</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Workitem">
+				<field name="customer_id" select="1"/>
+				<field name="step_id" select="1"/>
+				<field name="segment_id" select="1"/>
+				<field name="action_time" select="2"/>
+				<field name="error_msg" select="2" colspan="4"/>
+				<field name="state" select="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_workitem_tree">
+        <field name="name">dm.workitem.tree</field>
+        <field name="model">dm.workitem</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Workitems">
+				<field name="customer_id" />
+				<field name="step_id" />
+				<field name="segment_id" />
+				<field name="action_time" />
+				<field name="state" />
+				<field name="error_msg" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_workitem_form">
+        <field name="name">All Workitems</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.workitem</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_workitem_tree"/>
+    </record>
+
+    <menuitem id="menu_action_view_dm_workitem_form" parent="dm.menu_dm_config_customer" action="action_dm_workitem_form"/>
+
+    <!--
+    =======================================================
     SEGMENTATION VIEWS
     =======================================================
     -->

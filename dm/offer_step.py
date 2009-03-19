@@ -78,7 +78,7 @@ class dm_offer_step_action(osv.osv):
             'model':'dm.offer.step.action',
             'function':'_wi_check',
             'nextcall' : time.strftime('%Y-%m-%d 20:00:00'),
-            'args': '(step_action_code,)'                     
+            'args': '(%s,)'%vals['code']
                      }
         self.pool.get('ir.cron').create(cr,uid,cron_vals)
         return super(dm_offer_step_action,self).create(cr,uid,vals,context)
