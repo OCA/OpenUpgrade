@@ -87,9 +87,8 @@ class Account(osv.osv):
              vals['type1'] = 'cr'
         else:
              vals['type1'] = 'none'
-        if not vals.has_key('journal_id'):
-            journal_ids=self.pool.get('account.journal').search(cr,uid,[('name','=','Opening Journal')])
-            vals['journal_id'] = journal_ids and journal_ids[0] or False
+        journal_ids=self.pool.get('account.journal').search(cr,uid,[('name','=','Opening Journal')])
+        vals['journal_id'] = journal_ids and journal_ids[0] or False
         account_id = super(Account, self).create(cr, uid, vals, context)
         if vals.get('type1', False) != False:
             journal_id = vals.get('journal_id',False)
