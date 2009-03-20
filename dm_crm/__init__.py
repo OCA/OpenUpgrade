@@ -19,23 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Direct Marketing For CRM",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            Generates CRM case in Direct Marketing
-            """,
-    "depends" : ["crm","dm"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-                    "dm_crm_data.xml"
-                    ],
-    "active": False,
-    "installable": True,
-}
+
+import dm_crm_campaign
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
