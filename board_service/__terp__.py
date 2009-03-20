@@ -26,9 +26,9 @@
     "website" : "http://www.openerp.com",
     "category" : "Board/Service",
     "description": """
-        This module displays two dashboards for the logged in user:
+        This module displays three dashboards for the logged in user:
         
-        A. Dashboard 1:
+        A. Dashboard 1: Weekly Dashboard
                    - Draft Forecasts Lines
                    - Turnover by Product and Month
                    - Aged Receivables
@@ -38,15 +38,25 @@
                     
                 This dashboard is reachable from Dashboards/Service Profile/Weekly Dashboard.
            
-        B. Dashboard 2: 
+        B. Dashboard 2: Daily Dashboard
                    - Open Tasks
                    - Pending Tasks
                    - Inbox
                    - Meeting of the Day
                    - Departement's Timesheet Lines of last 3 days.
         
-                This dashboard is reachable from Dashboards/Service Profile/Daily Dashboard.             
-                    
+                This dashboard is reachable from Dashboards/Service Profile/Daily Dashboard.
+                
+        C. Dashboard 3 : Random Activities
+                   - Random Timesheet Lines from the past 15 days
+                   - Random Tasks Closed within the past 15 days
+                   - Random Cases Closed within the past 15 days
+                   - Random Open Cases Created within the past 15 days
+                   - Random Sales Orders Created within the past 15 days
+                   - Random Invoices Created within the past 15 days 
+
+                This dashboard is reachable from Dashboards/Service Profile/Random Activities(Within Last 15 Days).
+                
                 """,
     "depends" : ["base",
                  "project_gtd",
@@ -57,6 +67,7 @@
                  "report_analytic_planning",
                  "report_sale",
                  "report_crm",
+                 "report_task",
                  "report_timesheet",
                  ],
     "init_xml" : [],

@@ -22,6 +22,15 @@
 
 from osv import osv, fields
 from tools.translate import _
+    
+import smtplib
+
+from email.MIMEText import MIMEText
+from email.MIMEMultipart import MIMEMultipart
+from email.Header import Header
+from email import Encoders
+
+import logging        
 
 def _lang_get(self, cr, uid, context = {}):
     obj = self.pool.get('res.lang')
@@ -36,13 +45,15 @@ class ecommerce_partner(osv.osv):
     _name = "ecommerce.partner"
     _order = "name"
     _columns = {
-        'name': fields.char('Name', size=128, required=True, select=True, help="Its ecommerce partner name and address"),
+        'name': fields.char('Name', size=128, required=True, select=True,
+                             help="Its ecommerce partner name and address"),
         'last_name': fields.char('Last Name', size=128, select=True),
         'lang': fields.selection(_lang_get, 'Language', size=5),
         'company_name': fields.char('Company Name', size=64),
         'active': fields.boolean('Active'),
         'address_ids': fields.one2many('ecommerce.partner.address', 'partner_id', 'Contacts'),
-        'category_ids': fields.many2many('res.partner.category', 'ecommerce_partner_category_rel', 'partner_id', 'category_id', 'Categories'),
+        'category_ids': fields.many2many('res.partner.category', 'ecommerce_partner_category_rel',
+                                          'partner_id', 'category_id', 'Categories'),
     }
     _defaults = {
         'active': lambda *a: 1,
@@ -78,7 +89,7 @@ class ecommerce_partner(osv.osv):
                        
             up_data = res_users.read(cr, uid, ecommerce_user.id, [], context)
         return up_data
-
+ 
     def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=80):
         
         if not args:
@@ -91,7 +102,7 @@ class ecommerce_partner(osv.osv):
                 ids = self.search(cr, uid, [('name', operator, name)] + args, limit = limit, context = context)
         else:
             ids = self.search(cr, uid, args, limit=limit, context=context)
-        return self.name_get(cr, uid, ids, context)
+        return self.name_get(cr, uid, ids, context=context)
     
     def address_get(self, cr, uid, ids, adr_pref=['default']):
         
@@ -145,7 +156,7 @@ class ecommerce_partner(osv.osv):
                             continue
                         if state_ids and not contact.state_id.id in state_ids:
                             continue
-                        if grid.zip_from and (contact.zip or '') <  grid.zip_from:
+                        if grid.zip_from and (contact.zip or '') < grid.zip_from:
                             continue
                         if grid.zip_to and (contact.zip or '') > grid.zip_to:
                             continue
@@ -187,7 +198,7 @@ class ecommerce_partner(osv.osv):
             sub_total = round(prd['price'] * prd['quantity'])
             if not prd:
                 continue
-            total  += sub_total or 0.0
+            total += sub_total or 0.0
             weight += (p.product_tmpl_id.weight or 0.0) * prd['quantity']
             volume += (p.product_tmpl_id.volume or 0.0) * prd['quantity']
             if p.taxes_id:
@@ -217,17 +228,12 @@ class ecommerce_partner(osv.osv):
                 ok = True
                 break
         if not ok:
-            raise osv.except_osv(_('No price avaible !'), _('No line matched this order in the choosed delivery grids !'))
+            raise osv.except_osv(_('No price avaible !'),
+                                  _('No line matched this order in the choosed delivery grids !'))
         return price   
     
     def ecommerce_sendmail(self, cr, uid, mail_to, subject, body, attachment=None, context = {}):
-    
-        import smtplib
-        from email.MIMEText import MIMEText
-        from email.MIMEMultipart import MIMEMultipart
-        from email.Header import Header
-        from email import Encoders
-        
+
         try:
             mail_from = 'mansuri.sananaz@gmail.com'
 
@@ -264,7 +270,6 @@ class ecommerce_partner(osv.osv):
             s.close()
         
         except Exception, e:
-            import logging
             logging.getLogger().error(str(e))
         
         return True 
@@ -278,7 +283,8 @@ class ecommerce_partner_address(osv.osv):
     _columns = {
         'username': fields.char('Contact Name', size=128, select=True),
         'partner_id': fields.many2one('ecommerce.partner', 'Partner', ondelete='cascade', select=True),
-        'type': fields.selection([('default', 'Default'), ('invoice', 'Invoice'), ('delivery', 'Delivery'), ('contact', 'Contact'), ('other', 'Other')], 'Address Type'),
+        'type': fields.selection([('default', 'Default'), ('invoice', 'Invoice'), ('delivery', 'Delivery'),
+                                   ('contact', 'Contact'), ('other', 'Other')], 'Address Type'),
         'street': fields.char('Street', size=128),
         'street2': fields.char('Street2', size=128),
         'zip': fields.char('Zip', change_default=True, size=24),

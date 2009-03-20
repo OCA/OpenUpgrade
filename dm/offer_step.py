@@ -64,9 +64,45 @@ class dm_offer_step_action(osv.osv):
     _inherits = {'ir.actions.server':'server_action_id'}
     _columns = {
         'server_action_id' : fields.many2one('ir.actions.server','Server Action'),
-        'media_id' : fields.many2one('dm.media','Media')
+        'media_id' : fields.many2one('dm.media','Media',required=True)
     }
-    
+
+    def create(self,cr,uid,vals,context={}):
+        cron_name = 'Scheduler for %s'%vals['name']
+        act_id = super(dm_offer_step_action,self).create(cr,uid,vals,context)
+
+        srv_act_id = self.browse(cr, uid , [act_id])[0].server_action_id.id
+
+        cron_vals = {
+            'name': cron_name,
+            'interval_number':1,
+            'interval_type':'days',
+            'numbercall':-1,
+            'doall':False,
+            'model':'dm.offer.step.action',
+            'function':'_wi_check',
+            'nextcall' : time.strftime('%Y-%m-%d 20:00:00'),
+            'args' : '(%s,%s)'%(act_id,srv_act_id),
+        }
+        self.pool.get('ir.cron').create(cr,uid,cron_vals)
+        return act_id
+
+    def _wi_check(self, cr, uid, action_id, srv_action_id, context={}):
+
+        witems = self.pool.get('dm.workitem').search(cr, uid, [('step_id.action_id','=',action_id),
+              ('state','=','pending'),('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
+
+        print "Action ID : ",action_id
+        print "Server Action ID : ",srv_action_id
+        print "WorkItems : ",witems
+
+        obj = self.pool.get('ir.actions.server')
+        for wi in witems:
+            context['active_id']=wi
+            res = obj.run(cr, uid, [srv_action_id], context)
+            print "RES Server Action : ",res
+
+        return True
 dm_offer_step_action()
 
 class dm_offer_step(osv.osv):
@@ -78,8 +114,8 @@ class dm_offer_step(osv.osv):
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
             res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
-                    context.get('lang', False) or 'en_US',[offer_step.type.id])
-            type_code = res_trans[offer_step.type.id] or offer_step.type.code
+                    context.get('lang', False) or 'en_US',[offer_step.type_id.id])
+            type_code = res_trans[offer_step.type_id.id] or offer_step.type_id.code
             code = '_'.join([offer_step.offer_id.code,(type_code or '')])
             result[id]=code
         return result
@@ -92,7 +128,7 @@ class dm_offer_step(osv.osv):
         'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,readonly=True, states={'closed':[('readonly',True)]}),
         'quotation' : fields.char('Quotation', size=16, states={'closed':[('readonly',True)]}),
         'media_id' : fields.many2one('dm.media', 'Media', ondelete="cascade",required=True, states={'closed':[('readonly',True)]}),
-        'type' : fields.many2one('dm.offer.step.type','Type',required=True, states={'closed':[('readonly',True)]}),
+        'type_id' : fields.many2one('dm.offer.step.type','Type',required=True, states={'closed':[('readonly',True)]}),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
         'desc' : fields.text('Description', states={'closed':[('readonly',True)]}),
         'dtp_note' : fields.text('DTP Notes', states={'closed':[('readonly',True)]}),
@@ -110,8 +146,8 @@ class dm_offer_step(osv.osv):
         'flow_start' : fields.boolean('Flow Start'),
         'item_ids' : fields.many2many('product.product','dm_offer_step_product_rel','product_id','offer_step_id','Items', states={'closed':[('readonly',True)]}),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
-        'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',readonly=True),
-        'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition', states={'closed':[('readonly',True)]}),
+        'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to_id', 'Incoming Transition',readonly=True),
+        'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from_id', 'Outgoing Transition', states={'closed':[('readonly',True)]}),
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
@@ -125,8 +161,8 @@ class dm_offer_step(osv.osv):
         'split_mode' : lambda *a : 'or',
     }
     
-    def onchange_type(self,cr,uid,ids,type,offer_id,context):
-        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type])[0]
+    def onchange_type(self,cr,uid,ids,type_id,offer_id,context):
+        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type_id])[0]
         value = {
                     'flow_start':step_type['flow_start'],
                 }
@@ -185,20 +221,20 @@ class dm_offer_step_transition(osv.osv):
     _name = "dm.offer.step.transition"
     _rec_name = 'condition'
     _columns = {
-        'condition' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
+        'condition_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
         'delay' : fields.integer('Offer Delay' ,required=True),
         'delay_type' : fields.selection([('minutes', 'Minutes'),('hour','Hours'),('day','Days'),('month','Months')], 'Delay type', required=True),
-        'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
-        'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
+        'step_from_id' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
+        'step_to_id' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
     }
     _defaults = {
         'delay_type': lambda *a: 'day',
     }
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
-        if context.has_key('type'):
+        if context.has_key('type_id'):
             data['delay']='0'
-            data[context['type']] = context['step_id']
+            data[context['type_id']] = context['step_id']
         return data
 
 dm_offer_step_transition()

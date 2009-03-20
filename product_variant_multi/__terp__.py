@@ -41,7 +41,7 @@
     will help the salesman selecting the appropriate variant in the sale order line
     using dimension criteria instead of having to crawl the full space of variants.
     """,
-    "depends" : ["base", "product", "sale", "mrp"],
+    "depends" : ["base", "product", "sale"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [

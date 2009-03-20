@@ -20,7 +20,7 @@
 #
 ##############################################################################
 
-from osv import fields , osv
+from osv import fields, osv
 import time
 
 class ecommerce_payment_method(osv.osv):

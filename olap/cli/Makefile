@@ -44,8 +44,12 @@ sublevels:
 calc_meas:
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select {[City].[all]} on rows, {[measures].[Calculated Measure]} on columns from Sales"
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select {[City].[all],[City].children} on rows, {[measures].[Calculated Measure]} on columns from Sales"
-	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select {[City].[all],[City].children} on rows, {[measures].[Total Sales],[measures].[Calculated Measure]} on columns from Sales"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select {[City].[all],[City].children} on rows, {[measures].[Calculated Measure]} on columns from Sales"
 
 cross:	
-#	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin({[City].[all]},{[Users].[All]}) on rows, {[measures].[Total Sales]} on columns from Sales"
-	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin(crossjoin({[City].[all]},{[Users].[All]}),{[Order Date].[all]}) on rows, {[measures].[Calculated Measure]} on columns from Sales"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin({[City].[all]},{[Users].[all]}) on rows, {[measures].[Total Sales]} on columns from Sales"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin({[City].[all],[Users].[all]},{[Order Date].[all]}) on rows, {[measures].[Calculated Measure]} on columns from Sales"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin({[City].[all],[Users].[all]},{[Order Date].[all]}) on rows, {[measures].[Calculated Measure]} on columns from Sales"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin(crossjoin({[City].[all],[Users].[all]},{[Order Date].[all]}),{[Order Date].children}) on rows, {[measures].[Calculated Measure]} on columns from Sales"
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin(crossjoin({[City].[all],[Users].[all]},{[Order Date].[all]}),{[Order Date].children}) on rows, crossjoin({[All Products].[all],[Products Category].[all]},{[Partner Country].children}) on columns from Sales"
+	

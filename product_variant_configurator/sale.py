@@ -25,10 +25,21 @@ from osv import fields, osv
 class sale_order_line_dimension_custom_values(osv.osv):
     _name = "sale.order.line.dimension_custom_values"
     
+    def _get_to_update_ids(self, cr, uid, ids, context={}):
+        result = []
+        for sol in self.pool.get('sale.order.line').browse(cr, uid, ids, context=context):
+            for d_c_value in sol.dimension_custom_value_ids:
+                result.append(d_c_value.id)
+        return result
+    
     _columns = {
                 "dimension_type_id": fields.many2one("product.variant.dimension.type", "Dimension Type"),
                 "custom_value": fields.char('Custom Value', size=64),
                 "sale_order_line_id": fields.many2one("sale.order.line", "Sale Order Line"),
+                "mrp_production_id": fields.related('sale_order_line_id', 'mrp_production_id', type="many2one", relation="mrp.production", string="Production Order",
+                                        store={
+                                               'sale.order.line': (_get_to_update_ids, None, 10),
+                                               }),
                 }
     
 sale_order_line_dimension_custom_values()

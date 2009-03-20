@@ -39,7 +39,7 @@ class csv_out(component):
         * main : return all data
     """   
 
-    def __init__(self,fileconnector,transformer=None,name='component.output.csv_out',row_limit=0, csv_params={}):
+    def __init__(self,fileconnector,name='component.output.csv_out',transformer=None,row_limit=0, csv_params={}):
         super(csv_out, self).__init__(name,transformer=transformer)      
           
         self.fileconnector = fileconnector 

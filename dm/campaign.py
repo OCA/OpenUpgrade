@@ -371,7 +371,7 @@ class dm_campaign(osv.osv):
         'campaign_group_id' : fields.many2one('dm.campaign.group', 'Campaign group'),
         'notes' : fields.text('Notes'),
         'proposition_ids' : fields.one2many('dm.campaign.proposition', 'camp_id', 'Proposition'),
-        'campaign_type' : fields.many2one('dm.campaign.type','Type'),
+        'campaign_type_id' : fields.many2one('dm.campaign.type','Type'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status',readonly=True),
         'dtp_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'DTP Status',readonly=True),
@@ -395,7 +395,7 @@ class dm_campaign(osv.osv):
             help="The cleaner is a partner responsible to remove bad addresses from the customers list"),
         'currency_id' : fields.many2one('res.currency','Currency',ondelete='cascade'),
         'manufacturing_cost_ids': fields.one2many('dm.campaign.manufacturing_cost','campaign_id','Manufacturing Costs'),
-        'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
+        'manufacturing_product_id': fields.many2one('product.product','Manufacturing Product'),
         'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
         'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'},
             help="The router is the partner who will send the mailing to the final customer"),
@@ -421,7 +421,7 @@ class dm_campaign(osv.osv):
         'item_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Items Purchase Lines",
                                                         domain=[('product_category','=','Items')], context={'product_category':'Items'}),
         'forwarding_charge' : fields.float('Forwarding Charge', digits=(16,2)),
-        'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','campaign_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
+        'payment_method_ids' : fields.many2many('account.journal','campaign_payment_method_rel','campaign_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
         'mail_service_ids': fields.one2many('dm.campaign.mail_service','campaign_id','Mailing Service'),        
     }
 
@@ -549,9 +549,9 @@ class dm_campaign(osv.osv):
 #            if camp.country_id.forwarding_charge:
 #                vals['forwarding_charge'] = camp.country_id.forwarding_charge
         
-        if camp.country_id.payment_methods:
-            payment_methods = [payment_methods.id for payment_methods in camp.country_id.payment_methods]
-            vals['payment_methods'] = [[6,0,payment_methods]]
+        if camp.country_id.payment_method_ids:
+            payment_methods = [payment_methods.id for payment_methods in camp.country_id.payment_method_ids]
+            vals['payment_method_ids'] = [[6,0,payment_methods]]
             
         # Set campaign end date at one year after start date if end date does not exist
         if 'date_start' in vals and vals['date_start']:
@@ -564,8 +564,8 @@ class dm_campaign(osv.osv):
                 self.pool.get('project.project').write(cr,uid,[vals['project_id']],{'date_end':vals['date_start']})
 
         """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
-        if (not camp.trademark_id) and camp.offer_id.recommended_trademark:
-            vals['trademark_id'] = camp.offer_id.recommended_trademark.id
+        if (not camp.trademark_id) and camp.offer_id.recommended_trademark_id:
+            vals['trademark_id'] = camp.offer_id.recommended_trademark_id.id
 
         if 'trademark_id' in vals and vals['trademark_id']:
             trademark_id = vals['trademark_id']
@@ -601,7 +601,7 @@ class dm_campaign(osv.osv):
 
         type_id = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','model')])[0]
         if context.has_key('campaign_type') and context['campaign_type']=='model':
-            vals['campaign_type']=type_id
+            vals['campaign_type_id']=type_id
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
         data_cam = self.browse(cr, uid, id_camp)
         if not self.check_forbidden_country(cr, uid, data_cam.offer_id.id,data_cam.country_id.id):
@@ -621,7 +621,7 @@ class dm_campaign(osv.osv):
                          'campaign_id'      : id_camp,
                          'offer_step_id'    : step_id.id,
                          'mail_service_id'  : mail_service.id,
-                         'action_id'        : mail_service.action_id.id
+#                         'action_id'        : mail_service.action_id.id
                          }        
             self.pool.get('dm.campaign.mail_service').create(cr,uid,mail_vals)           
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
@@ -630,9 +630,9 @@ class dm_campaign(osv.osv):
 #            if data_cam.country_id.forwarding_charge:
 #                write_vals['forwarding_charge'] = data_cam.country_id.forwarding_charge
                     
-        if data_cam.country_id.payment_methods:
-            payment_methods = [payment_methods.id for payment_methods in data_cam.country_id.payment_methods]
-            write_vals['payment_methods']=[[6,0,payment_methods]]
+        if data_cam.country_id.payment_method_ids:
+            payment_methods = [payment_methods.id for payment_methods in data_cam.country_id.payment_method_ids]
+            write_vals['payment_method_ids']=[[6,0,payment_methods]]
             
         # Set campaign end date at one year after start date if end date does not exist
         if (data_cam.date_start) and (not data_cam.date):
@@ -642,10 +642,10 @@ class dm_campaign(osv.osv):
             write_vals['date']=date_end
                 
         # Set trademark to offer's trademark only if trademark is null
-        if vals['campaign_type'] != type_id:
+        if vals['campaign_type_id'] != type_id:
             if vals['offer_id'] and (not vals['trademark_id']):
                 offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
-                write_vals['trademark_id'] = offer_id.recommended_trademark.id
+                write_vals['trademark_id'] = offer_id.recommended_trademark_id.id
         if write_vals :
             super(dm_campaign,self).write(cr, uid, id_camp, write_vals)
 
@@ -681,7 +681,7 @@ class dm_campaign(osv.osv):
         camp = self.browse(cr,uid,ids)[0]
         default={}
         default['name']='New campaign from model %s' % camp.name
-        default['campaign_type'] = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','recruiting')])[0]
+        default['campaign_type_id'] = self.pool.get('dm.campaign.type').search(cr, uid, [('code','=','recruiting')])[0]
         default['responsible_id'] = uid
         self.copy(cr,uid,ids[0],default)
         return True
@@ -733,9 +733,9 @@ class dm_campaign_proposition(osv.osv):
         if 'forwarding_charge' not in vals:
             if id.country_id.forwarding_charge:
                 vals['forwarding_charge']=id.country_id.forwarding_charge
-        if id.payment_methods:
-            payment_methods = [payment_methods.id for payment_methods in id.payment_methods]
-            vals['payment_methods'] = [[6,0,payment_methods]]
+        if id.payment_method_ids:
+            payment_methods = [payment_methods.id for payment_methods in id.payment_method_ids]
+            vals['payment_method_ids'] = [[6,0,payment_methods]]
         return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
     
     def copy(self, cr, uid, id, default=None, context={}):
@@ -903,7 +903,7 @@ class dm_campaign_proposition(osv.osv):
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'item_ids' : fields.one2many('dm.campaign.proposition.item', 'proposition_id', 'Catalogue'),
-        'payment_methods' : fields.many2many('account.journal','proposition_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
+        'payment_method_ids' : fields.many2many('account.journal','proposition_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
         'keep_segments' : fields.boolean('Keep Segments'),
         'keep_prices' : fields.boolean('Keep Prices At Duplication'),
         'force_sm_price' : fields.boolean('Force Starting Mail Price'),
@@ -980,9 +980,9 @@ class dm_customers_list(osv.osv):
                             'Net : Usable quantity after deduplication\n' \
                             'Raw : Delivered quantity\n' \
                             'Real : Realy used qunatity'),
-        'recruiting_origin' : fields.many2one('dm.customers_list.recruit_origin','Recruiting Origin',
+        'recruiting_origin_id' : fields.many2one('dm.customers_list.recruit_origin','Recruiting Origin',
                     help='Origin of the recruiting of the adresses'),
-        'list_type' : fields.many2one('dm.customers_list.type','Type'),
+        'list_type_id' : fields.many2one('dm.customers_list.type','Type'),
         'update_frq' : fields.integer('Update Frequency'),
         'notes': fields.text('Description'),
     }
@@ -1920,7 +1920,7 @@ class Country(osv.osv):
                 'main_language' : fields.many2one('res.lang','Main Language',ondelete='cascade',),
                 'main_currency' : fields.many2one('res.currency','Main Currency',ondelete='cascade'),
                 'forwarding_charge' : fields.float('Forwarding Charge', digits=(16,2)),
-                'payment_methods' : fields.many2many('account.journal','country_payment_method_rel','country_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
+                'payment_method_ids' : fields.many2many('account.journal','country_payment_method_rel','country_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
     }
 Country()
 

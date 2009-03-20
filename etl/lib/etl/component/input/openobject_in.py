@@ -40,7 +40,7 @@ class openobject_in(component):
         * .* : return the main flow with data from csv file
     """    
 
-    def __init__(self,openobject_connector,model,name='component.input.sql_in',domain=[],fields=[],context={},transformer=None,row_limit=0):
+    def __init__(self,openobject_connector,model,domain=[],fields=[],context={},name='component.input.sql_in',transformer=None,row_limit=0):
         super(openobject_in, self).__init__(name,transformer=transformer)      
         self.openobject_connector = openobject_connector  
         self.model=model

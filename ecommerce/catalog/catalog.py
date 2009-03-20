@@ -73,11 +73,13 @@ ecommerce_search()
 
 class ecommerce_reviews(osv.osv):
     _name = "ecommerce.product.reviews"
-    _rec_name = "product"
+    _rec_name = "product_id"
     _description = "Reviews about product"
     _columns = {
-        'product_id': fields.many2one('product.product','Product', required=True, ondelete='cascade'),
-        'customer_id': fields.many2one('ecommerce.partner','Customer', required=True, ondelete='cascade'),
+        'product_id': fields.many2one('product.product','Product',
+                                       required=True, ondelete='cascade'),
+        'customer_id': fields.many2one('ecommerce.partner','Customer',
+                                        required=True, ondelete='cascade'),
         'reviewdate': fields.date('Review Date'),
         'rating': fields.integer('Rating'),
         'review': fields.text('Review')

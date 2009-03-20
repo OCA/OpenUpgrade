@@ -62,7 +62,7 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Offer Steps">
-                <field name="type"/>
+                <field name="type_id"/>
                 <field name="name"/>
                 <field name="code"/>
                 <field name="offer_id"/>
@@ -85,9 +85,9 @@
                 <notebook colspan="4" >
                     <page string="General">
                         <field name="name" select="1" />
-<!--                       <field name="type" select="2" widget="selection" on_change="onchange_type(type,offer_id,context)"/>-->
-                        <field name="type" select="2" widget="selection"/>
-<!--                        <field name="type" select="2"/>-->
+<!--                       <field name="type_id" select="2" widget="selection" on_change="onchange_type(type_id,offer_id,context)"/>-->
+                        <field name="type_id" select="2" widget="selection"/>
+<!--                        <field name="type_id" select="2"/>-->
                         <field name="media_id" select="1"/>
                         <field name="action_id" select="1" domain="[('media_id','=',media_id)]"/>
                         <field name="quotation" select="2" groups="base.group_extended"/>
@@ -104,12 +104,12 @@
                         </group>
                     </page>
                     <page string="Transitions">
-                        <field name="outgoing_transition_ids" colspan="4" nolabel="1" default_get="{'type':'step_from','step_id':active_id or False}">
+                        <field name="outgoing_transition_ids" colspan="4" nolabel="1" default_get="{'type_id':'step_from_id','step_id':active_id or False}">
                             <form string="Transition">
-                                <field name="step_from" colspan="4" readonly="1"/>
-                                <field name="step_to" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>
+                                <field name="step_from_id" colspan="4" readonly="1"/>
+                                <field name="step_to_id" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>
 <!--                                <field name="condition" select="1" widget="selection"/>-->
-                                <field name="condition" select="1"/>
+                                <field name="condition_id" select="1"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
@@ -117,18 +117,18 @@
                                 </group>
                             </form>
                             <tree string="Outgoing Transitions">
-                                <field name="step_from"/>
-                                <field name="step_to"/>
-                                <field name="condition"/>
+                                <field name="step_from_id"/>
+                                <field name="step_to_id"/>
+                                <field name="condition_id"/>
                                 <field name="delay_type"/>
                             </tree>
                         </field>
                         <field name="incoming_transition_ids" colspan="4" nolabel="1">
                             <form string="Transition">
-                                <field name="step_from" domain="[('offer_id','=',parent.offer_id)]"/>
-                                <field name="step_to" readonly="1"/>
+                                <field name="step_from_id" domain="[('offer_id','=',parent.offer_id)]"/>
+                                <field name="step_to_id" readonly="1"/>
 <!--                                <field name="condition" select="1" widget="selection"/>-->
-                                <field name="condition" select="1"/>
+                                <field name="condition_id" select="1"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
@@ -136,9 +136,9 @@
                                 </group>
                             </form>
                             <tree string="Incoming Transitions">
-                                <field name="step_from"/>
-                                <field name="step_to"/>
-                                <field name="condition"/>
+                                <field name="step_from_id"/>
+                                <field name="step_to_id"/>
+                                <field name="condition_id"/>
                                 <field name="delay_type"/>
                             </tree>
                         </field>
@@ -332,7 +332,7 @@
         <field name="model">dm.media</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Offer Media">
+            <form string="Media">
                 <field name="name" select="1"/>
                 <field name="code" select="1"/>
             </form>
@@ -344,7 +344,7 @@
         <field name="model">dm.media</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="All Offer Medias">
+            <tree string="All Medias">
                 <field name="name"/>
                 <field name="code"/>
             </tree>
@@ -352,7 +352,7 @@
     </record>
 
     <record model="ir.actions.act_window" id="action_dm_media_form">
-        <field name="name">All Offer Medias</field>
+        <field name="name">All Medias</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">dm.media</field>
         <field name="view_type">form</field>
@@ -471,10 +471,11 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Offer Action">
-                <field name="media_id"/>
                 <field name="name" />
-                <field name="condition" />
+                <field name="code" required="1" />
+                <field name="media_id"/>
                 <field name="state" />
+                <field name="condition" />
                 <field name="model_id" />
             </form>
         </field>

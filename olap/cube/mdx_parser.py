@@ -87,7 +87,7 @@ class mdx_parser(object):
         cross_parser = self.mdx_level()
         cross_parser.setParseAction(lambda s,a,toks:cross.cross(toks))
 
-        cross_parse = leftCurlBr + cross_parser + rightCurlBr
+        cross_parse = leftCurlBr + cross_parser("cross") + rightCurlBr
 
         return cross_parse 
         
@@ -98,8 +98,9 @@ class mdx_parser(object):
         crossjoinToken = Keyword("crossjoin", caseless=True).suppress() 
         
         crossx = Forward() 
-        cross_mdx = Group(crossx) | self.mdx_axis() + comma + self.cross_axis()
-        crossx << ((crossjoinToken + leftRoundBr +  delimitedList(cross_mdx)  + rightRoundBr) | self.cross_axis())
+        cross_mdx = crossx | self.mdx_axis() 
+        crossx << (crossjoinToken + leftRoundBr +  cross_mdx + comma + self.cross_axis()  + rightRoundBr)
+#        crossx.setParseAction(lambda s,a,toks:axis.axis(toks)
         simple_mdx = self.mdx_axis()
 
         mdx = simple_mdx | crossx
@@ -113,14 +114,12 @@ class mdx_parser(object):
         onToken = Keyword("on", caseless=True).suppress()
         page_name = oneOf(' '.join(row_names))
         axis_parser = self.mdx_cross_axis() + Optional(onToken + page_name)
-        print ">>>>>>>>>>>>>>>This is the axis parser >>>>>>>>"
 
         def _assign_name(s,a,toks):
-            print ">>> In the _assign_name>>>>>>>>>",len(toks),toks,type(toks)
-            print ">>>>> This is the toks [0]>>>>>>>>>>",toks[0]
-            if len(toks)==3:
-                toks[0].name_set(toks[2])
-                toks[1].name_set('cross')
+            if len(toks)>=3:
+                toks[0].name_set(toks[-1])
+                for x in range(1,len(toks)-1):
+                    toks[x].name_set('cross')
             elif len(toks)==2:
                 toks[0].name_set(toks[1])
             elif len(toks)==1:
@@ -131,7 +130,6 @@ class mdx_parser(object):
         axis_parser.setParseAction(_assign_name)
         axis_lst = delimitedList(axis_parser, ",")
         axis_lst.setParseAction(lambda s,a,toks: [toks])
-        print ">>>>>>>>>>>> Return from the axis_;list"
         return axis_lst
     
     def mdx_slice(self):

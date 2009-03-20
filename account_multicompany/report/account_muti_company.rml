@@ -108,7 +108,7 @@
       </tr>
     </blockTable>
     <section>
-    <para style="terp_default_9">[[ repeatIn(get_company(data['form']),'o') ]]</para>
+    <para style="terp_default_9">[[ repeatIn(get_company(data['form']),'o',width=[]) ]]</para>
     <blockTable colWidths="250.0,150.0" style="Table_Account_Line_Title" repeatRows="1">
       <tr>
         <td>
@@ -121,7 +121,7 @@
      </blockTable>
      </section>
      <section>
-     <para style="terp_default_9">[[ repeatIn(get_account_detail(data['form']),'o1') ]]</para>
+     <para style="terp_default_9">[[ repeatIn(get_account_detail(data['form']),'o1',width=[]) ]]</para>
 	    <blockTable colWidths="0.00,250.0,150.0" style="Table_Account_Line_Title">
 	      <tr>
 	      	<td>

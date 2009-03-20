@@ -85,7 +85,7 @@ class wizard_proposition_products(wizard.interface):
                     price = pu * (1 + (stp * pprog_obj.percent_prog)) + (stp * pprog_obj.fixed_prog)
                     vals = {'product_id':item.id,
                             'proposition_id':data['ids'][0],
-                            'offer_step_type_id':step.type.id,
+                            'offer_step_type_id':step.type_id.id,
                             'qty_planned':item.virtual_available,
                             'qty_real':item.qty_available,
                             'price':item.list_price,

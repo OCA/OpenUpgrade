@@ -32,7 +32,7 @@
         <field name="arch" type="xml">
             <tree string="Campaigns">
                 <field name="name" string="Name"/>
-                <field name="campaign_type"/>
+                <field name="campaign_type_id"/>
                 <field name="date_start"/>
                 <field name="responsible_id" />
                 <field name="country_id" />
@@ -57,8 +57,8 @@
                         <group colspan="2" col="2">
                         <separator string="Global Information" colspan="2"/>
                         <field name="offer_id" select="1"/>
-                        <field name="campaign_type" widget="selection" select="2"/>
-                        <!--field name="campaign_type" select="2"/-->
+                        <field name="campaign_type_id" widget="selection" select="2"/>
+                        <!--field name="campaign_type_id" select="2"/-->
                         <field name="dealer_id" groups="base.group_extended"/>
                         <field name="trademark_id"/>
                         <field name="responsible_id" />
@@ -286,11 +286,10 @@
                             <tree string="Mail Service" editable="bottom">
                                 <field name="offer_step_id"/>
                                 <field name="mail_service_id"/>
-                                <field name="action_id"/>
                             </tree>
                         </field>
                         <separator string="Payment Methods" colspan="4"/>
-                           <field name="payment_methods" colspan="4" nolabel="1"/>
+                           <field name="payment_method_ids" colspan="4" nolabel="1"/>
                     </page>
                     <page string="Notes">
                         <separator string="Notes" colspan="4"/>
@@ -560,7 +559,7 @@
         <field name="arch" type="xml">
             <tree string="All Campaigns Model">
                 <field name="name" string="Name"/>
-                <field name="campaign_type"/>
+                <field name="campaign_type_id"/>
                 <field name="country_id" />
             </tree>
         </field>
@@ -598,7 +597,7 @@
         <field name="res_model">dm.campaign</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="domain">[('campaign_type.code','=','model')]</field>
+        <field name="domain">[('campaign_type_id.code','=','model')]</field>
         <field name="context">{'campaign_type':'model'}</field>
     </record>
 
@@ -692,7 +691,7 @@
                         </tree>
                     </field>
                     <separator string="Payment Methods" colspan="4"/>
-                    <field name="payment_methods" colspan="4" nolabel="1"/>
+                    <field name="payment_method_ids" colspan="4" nolabel="1"/>
                     <separator string="" colspan="4"/>
                     <field name="keep_prices" string="Keep Prices at Duplication"/>
                 </page>
@@ -1260,8 +1259,8 @@
                     <field name="country_id" select="1"/>
                     <field name="currency_id" select="2"/>
                     <separator string="" colspan="2"/>
-                    <field name="list_type" select="2"/>
-                    <field name="recruiting_origin" select="2"/>
+                    <field name="list_type_id" select="2"/>
+                    <field name="recruiting_origin_id" select="2"/>
                     <field name="update_frq" select="2"/>
                 </group>
                 <group colspan="2" col="2">
@@ -1470,7 +1469,7 @@
                    <field name="main_language" select="1"/>
                    <field name="forwarding_charge" select="2"/>
                    <separator string="Payment Methods" colspan="4"/>
-                   <field name="payment_methods" colspan="4" nolabel="1"/>
+                   <field name="payment_method_ids" colspan="4" nolabel="1"/>
                 </field>
             </field>
         </record>

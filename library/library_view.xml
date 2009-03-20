@@ -340,7 +340,6 @@
         </field>
     </record>
 
-
     <record model="ir.ui.view" id="vpicktree">
         <field name="name">stock.picking.tree</field>
         <field name="model">stock.picking</field>
@@ -353,14 +352,10 @@
                 <field name="origin" />
                 <field name="address_id" />
                 <field name="state" readonly="1"/>
-                <field name="date" />
                 <field name="date_done" />
             </tree>
         </field>
     </record>
-
-
-
 
     <record model="ir.ui.view" id="library_price_category_tree">
         <field name="name">library.price.category</field>

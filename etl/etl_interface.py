@@ -24,6 +24,7 @@ import etl
 import tools
 from osv import osv, fields
 
+
 class etl_project(osv.osv):
     _name='etl.project'
     _columns={
@@ -31,6 +32,7 @@ class etl_project(osv.osv):
               'job_ids' : fields.one2many('etl.job', 'project_id', 'Jobs')
     }
 etl_project()
+
 
 class etl_channel(osv.osv):
     _name='etl.channel'
@@ -40,6 +42,7 @@ class etl_channel(osv.osv):
               'type' : fields.selection([('logger', 'Logger'), ('transition', 'Transition')], 'Type', required=True), 
               }
 etl_channel()
+
 
 class etl_transformer(osv.osv):
     _name='etl.transformer'
@@ -68,6 +71,7 @@ class etl_transformer_line(osv.osv):
               }
     
 etl_transformer_line()
+
 
 class etl_connector_type(osv.osv):
     _name='etl.connector.type'
@@ -100,6 +104,7 @@ class etl_connector(osv.osv):
     
 etl_connector()
 
+
 class etl_connector_localfile(osv.osv):
     _name='etl.connector'
     _inherit='etl.connector'
@@ -118,6 +123,7 @@ class etl_connector_localfile(osv.osv):
         return super(etl_connector_localfile, self).create_instance(cr, uid, ids, context, component)
   
 etl_connector_localfile()
+
 
 class etl_connector_openobject(osv.osv):
     _name='etl.connector'
@@ -156,6 +162,7 @@ class etl_connector_openobject(osv.osv):
         
 etl_connector_openobject()
 
+
 class etl_connector_sql(osv.osv):
     _name='etl.connector'
     _inherit='etl.connector'
@@ -180,6 +187,7 @@ class etl_connector_sql(osv.osv):
         return super(etl_connector_sql, self).create_instance(cr, uid, ids, context, component)
         
 etl_connector_sql()
+
 
 class etl_component_type(osv.osv):
     _name='etl.component.type'
@@ -225,6 +233,7 @@ class etl_component(osv.osv):
         
 etl_component()
 
+
 class etl_component_control_data_count(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'
@@ -239,10 +248,14 @@ class etl_component_control_data_count(osv.osv):
     
 etl_component_control_data_count()
 
+
 class etl_component_transform_sort(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'
-    
+    _columns = {
+                'transform_ids':fields.one2many('etl.component.sort.process', 'component_id', 'transform')
+                
+                }
     def create_instance(self, cr, uid, ids, context={}):
             obj_component=self.pool.get('etl.component')
             for cmp in obj_component.browse(cr, uid, [ids]):
@@ -253,6 +266,7 @@ class etl_component_transform_sort(osv.osv):
     
 etl_component_transform_sort()
 
+
 class etl_component_field(osv.osv):
     _name='etl.component.field'
     _columns={
@@ -262,6 +276,182 @@ class etl_component_field(osv.osv):
               }
 
 etl_component_field()
+
+
+class etl_component_diff_process(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    _columns = {
+                'key_ids':fields.one2many('etl.component.diff', 'component_id', 'Diff')
+                
+                }
+
+etl_component_diff_process()
+
+
+class etl_component_diff(osv.osv):
+    _name='etl.component.diff'
+    _columns={
+              'sequence' : fields.char('Sequence', size=124), 
+              'key' : fields.char('Key', size=124), 
+             'component_id' : fields.many2one('etl.component', 'Model'), 
+              }
+
+etl_component_diff()
+
+
+class etl_component_find_replace_process(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    _columns = {
+                'find_ids':fields.one2many('etl.component.find.replace', 'component_id', 'Diff')
+                
+                }
+
+etl_component_find_replace_process()
+
+
+class etl_component_find_replace(osv.osv):
+    _name='etl.component.find.replace'
+
+    _columns={
+              'column' : fields.char('Column', size=124), 
+              'find' : fields.char('Find', size=124), 
+              'replace' : fields.char('Replace with', size=124), 
+              'component_id' : fields.many2one('etl.component', 'Find/Replace'), 
+              }
+
+etl_component_find_replace()
+
+
+class etl_component_check_process(osv.osv):
+    _name='etl.component'
+    _inherit='etl.component'
+    _columns={
+              
+             'check_ids' : fields.one2many('etl.component.check', 'component_id', 'Check'), 
+              }
+
+etl_component_check_process()
+    
+
+class etl_component_check(osv.osv):
+    _name='etl.component.check'
+    _columns={
+               'key' : fields.char('Keys', size=124), 
+               'component_id' : fields.many2one('etl.component', 'Model'), 
+              }
+
+etl_component_check()
+
+
+class etl_component_merge(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    
+
+etl_component_merge()
+
+
+class etl_component_python_code(osv.osv):
+    _name='etl.component'
+    _inherit='etl.component'
+    _columns={
+              'python_code' : fields.text('Python Code', size=124), 
+              }
+
+etl_component_python_code()
+
+
+class etl_component_schema_validation(osv.osv):
+    _name='etl.component'
+    _inherit='etl.component'
+    _columns={
+              'field_name' : fields.boolean('Check Field Name'), 
+              'field_extra' : fields.boolean('Refuse Extra Fields'), 
+              'field_type' : fields.boolean('Check Field Type'), 
+              'field_size' : fields.boolean('Check Field Size'), 
+              'field_format' : fields.boolean('Check Format'), 
+              'not_null' : fields.boolean('Check NOT NULL'), 
+            
+              }
+
+etl_component_schema_validation()
+
+
+class etl_component_sort_process(osv.osv):
+    _name='etl.component.sort.process'
+    _columns={
+              'sequence' : fields.integer('Sequence'), 
+              'order_on' : fields.char('Order On', size=124), 
+              'order_by' : fields.char('Order By', size=124), 
+              'component_id' : fields.many2one('etl.component', 'Model'), 
+              }
+
+etl_component_sort_process()
+
+
+class etl_component_find_replace_list_process(osv.osv):
+    _name='etl.component'
+    _inherit='etl.component'
+    _columns={
+               'list_ids':fields.one2many('etl.component.find.replace.list', 'key_id', 'keys'), 
+               'replace_ids':fields.one2many('etl.component.find.replace.list', 'replace_id', 'Replace')
+              }
+
+etl_component_find_replace_list_process()
+
+
+class etl_component_find_replace_list(osv.osv):
+    _name='etl.component.find.replace.list'
+    _columns={
+              'main_flow' : fields.char('Main Flow Field', size=124), 
+              'second_flow' : fields.char('Second Flow Field', size=124), 
+              'field_replace' : fields.char('Field To Replace', size=124), 
+              'field_new'  : fields.char('Fields for new value', size=124), 
+             'key_id' : fields.many2one('etl.component', 'Keys'), 
+             'replace_id' : fields.many2one('etl.component', 'Replace'), 
+             
+              }
+
+etl_component_find_replace_list()
+
+
+class etl_component_aggregate_with_sort_process(osv.osv):
+    _name="etl.component"
+    _inherit="etl.component"
+    _columns={
+              
+              'sort_ids':fields.one2many('etl.component.aggregate.with.sort', 'sort_id', 'fields'), 
+              'aggregate_ids':fields.one2many('etl.component.aggregate.with.sort', 'aggragate_id', 'fields')
+              }
+
+etl_component_aggregate_with_sort_process()
+
+
+class etl_component_aggregate_with_sort(osv.osv):
+    _name="etl.component.aggregate.with.sort"
+    _columns={
+              'field_name':fields.char('Field Name', size=124), 
+              'python_fun':fields.char('Python Function', size=124), 
+              'sort_id':fields.many2one('etl.component', 'Model'), 
+              'aggragate_id':fields.many2one('etl.component', 'Model')
+              }
+
+etl_component_aggregate_with_sort()
+
+
+class etl_component_aggregate(osv.osv):
+    _name="etl.component.aggregate"
+    _columns={
+              'field_name':fields.char('Field Name', size=124), 
+              'python_fun':fields.char('Python Function', size=124), 
+              'sort_id':fields.many2one('etl.component', 'Model'), 
+              'aggragate_id':fields.many2one('etl.component', 'Model')
+              }
+
+etl_component_aggregate()
+
 
 class etl_component_vcard_in(osv.osv):
     _name='etl.component'
@@ -290,6 +480,7 @@ class etl_component_vcard_in(osv.osv):
         
 etl_component_vcard_in()
 
+
 class etl_component_transform_map(osv.osv):
     _name = 'etl.component'
     _inherit = 'etl.component'
@@ -317,7 +508,7 @@ class etl_component_transform_map(osv.osv):
                 
                 field_obj = self.pool.get('etl.component.field')
                 field_ids = field_obj.search(cr, uid, [('component_id', '=', cmp.id)])
-                field_data = field_obj.read(cr, uid, field_ids, ['source_field','dest_field'])
+                field_data = field_obj.read(cr, uid, field_ids, ['source_field', 'dest_field'])
                 map_criteria = {}
                 map_criteria['main'] = {}
                 for data in field_data:
@@ -329,6 +520,7 @@ class etl_component_transform_map(osv.osv):
         
     
 etl_component_transform_map()
+
 
 class etl_component_csv_out(osv.osv):
     _name='etl.component'
@@ -361,6 +553,7 @@ class etl_component_csv_out(osv.osv):
         
         
 etl_component_csv_out()
+
 
 class etl_component_csv_in(osv.osv):
     _name='etl.component'
@@ -404,6 +597,153 @@ class etl_component_csv_in(osv.osv):
         return super(etl_component_csv_in, self).create_instance(cr, uid, ids, context)
         
 etl_component_csv_in()
+
+
+class etl_component_excel_out(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    _description = "ETL Component"
+         
+    def create_instance(self, cr, uid, ids, context={}):
+        obj_component=self.pool.get('etl.component')
+        
+        for cmp in obj_component.browse(cr, uid, [ids]):
+            if cmp.type.name == 'output.excel_out':
+                context['components'][ids] = {}
+                context['components'][ids]['connector'] = None
+                context['components'][ids]['transformer'] = None
+                if cmp.connector_id:
+                    obj_connector=self.pool.get('etl.connector')
+                    obj_connector.create_instance(cr, uid, cmp.connector_id.id , context, cmp.id)
+                    
+                if cmp.transformer_id:
+                    obj_transformer = self.pool.get('etl.transformer')
+                    obj_transformer.create_instance(cr, uid, cmp.transformer_id.id, context, cmp.id)
+                
+                conn_instance = context['components'][ids]['connector']
+                trans_instance = context['components'][ids]['transformer']
+                
+                val = etl.component.output.excel_out(conn_instance, 'component.output.excel_out', trans_instance, cmp.row_limit, cmp.excel_params) 
+                context['components'][ids]['instance'] = val
+            
+        return super(etl_component_excel_out, self).create_instance(cr, uid, ids, context)
+        
+        
+etl_component_excel_out()
+
+
+class etl_component_excel_in(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    _description = "ETL Component"
+
+    _columns={
+            'connector_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=','localfile')]"), 
+            'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
+            'row_limit' : fields.integer('Limit'), 
+            'excel_params' : fields.char('EXCEL Parameters', size=64), 
+              }
+    
+         
+    def create_instance(self, cr, uid, ids, context={}):
+        obj_component=self.pool.get('etl.component')
+        
+        for cmp in obj_component.browse(cr, uid, [ids]):
+            if cmp.type.name == 'input.excel_in':
+                context['components'][ids] = {}
+                context['components'][ids]['connector'] = None
+                context['components'][ids]['transformer'] = None
+                
+                if cmp.connector_id:
+                    obj_connector=self.pool.get('etl.connector')
+                    obj_connector.create_instance(cr, uid, cmp.connector_id.id , context, cmp.id)
+                    
+                if cmp.transformer_id:
+                    obj_transformer = self.pool.get('etl.transformer')
+                    obj_transformer.create_instance(cr, uid, cmp.transformer_id.id, context, cmp.id)
+                
+                conn_instance = context['components'][ids]['connector']
+                trans_instance = context['components'][ids]['transformer']
+                
+                val =etl.component.input.excel_in(conn_instance, 'component.input.excel_in', trans_instance, cmp.row_limit, cmp.excel_params or {})
+                context['components'][ids]['instance'] = val
+    
+        return super(etl_component_excel_in, self).create_instance(cr, uid, ids, context)
+        
+etl_component_excel_in()
+
+
+class etl_component_xml_out(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    _description = "ETL Component"
+         
+    def create_instance(self, cr, uid, ids, context={}):
+        obj_component=self.pool.get('etl.component')
+        
+        for cmp in obj_component.browse(cr, uid, [ids]):
+            if cmp.type.name == 'output.xml_out':
+                context['components'][ids] = {}
+                context['components'][ids]['connector'] = None
+                context['components'][ids]['transformer'] = None
+                if cmp.connector_id:
+                    obj_connector=self.pool.get('etl.connector')
+                    obj_connector.create_instance(cr, uid, cmp.connector_id.id , context, cmp.id)
+                    
+                if cmp.transformer_id:
+                    obj_transformer = self.pool.get('etl.transformer')
+                    obj_transformer.create_instance(cr, uid, cmp.transformer_id.id, context, cmp.id)
+                
+                conn_instance = context['components'][ids]['connector']
+                trans_instance = context['components'][ids]['transformer']
+                
+                val = etl.component.output.excel_out(conn_instance, 'component.output.xml_out', trans_instance, cmp.row_limit, cmp.xml_params) 
+                context['components'][ids]['instance'] = val
+            
+        return super(etl_component_xml_out, self).create_instance(cr, uid, ids, context)
+        
+        
+etl_component_xml_out()
+
+
+class etl_component_xml_in(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+    _description = "ETL Component"
+
+    _columns={
+            'connector_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=','localfile')]"), 
+            'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
+            'row_limit' : fields.integer('Limit'), 
+            'xml_params' : fields.char('XML Parameters', size=64), 
+              }
+         
+    def create_instance(self, cr, uid, ids, context={}):
+        obj_component=self.pool.get('etl.component')
+        
+        for cmp in obj_component.browse(cr, uid, [ids]):
+            if cmp.type.name == 'input.xml_in':
+                context['components'][ids] = {}
+                context['components'][ids]['connector'] = None
+                context['components'][ids]['transformer'] = None
+                
+                if cmp.connector_id:
+                    obj_connector=self.pool.get('etl.connector')
+                    obj_connector.create_instance(cr, uid, cmp.connector_id.id , context, cmp.id)
+                    
+                if cmp.transformer_id:
+                    obj_transformer = self.pool.get('etl.transformer')
+                    obj_transformer.create_instance(cr, uid, cmp.transformer_id.id, context, cmp.id)
+                
+                conn_instance = context['components'][ids]['connector']
+                trans_instance = context['components'][ids]['transformer']
+                
+                val =etl.component.input.csv_in(conn_instance, 'component.input.xml_in', trans_instance, cmp.row_limit, cmp.xml_params or {})
+                context['components'][ids]['instance'] = val
+    
+        return super(etl_component_xml_in, self).create_instance(cr, uid, ids, context)
+        
+etl_component_xml_in()
 
 
 class etl_component_transform_logger(osv.osv):
@@ -483,8 +823,8 @@ class etl_component_open_object_out(osv.osv):
                 trans_instance = context['components'][ids]['transformer']
                 
                 field_obj = self.pool.get('etl.component.field')
-                field_ids = field_obj.search(cr, uid, [('component_id','=',cmp.id)])
-                field_data = field_obj.read(cr, uid, field_ids, ['source_field','dest_field'])
+                field_ids = field_obj.search(cr, uid, [('component_id', '=', cmp.id)])
+                field_data = field_obj.read(cr, uid, field_ids, ['source_field', 'dest_field'])
                 field_ids = {}
                 for data in field_data:
                     field_ids[data['source_field']] = data['dest_field']
@@ -494,6 +834,7 @@ class etl_component_open_object_out(osv.osv):
         return super(etl_component_open_object_out, self).create_instance(cr, uid, ids, context)
             
 etl_component_open_object_out()
+
 
 class etl_component_control_sleep(osv.osv):
     _name='etl.component'
@@ -513,6 +854,7 @@ class etl_component_control_sleep(osv.osv):
             return super(etl_component_control_sleep, self).create_instance(cr, uid, ids, context)
         
 etl_component_control_sleep()
+
 
 class etl_job(osv.osv):
     _name= 'etl.job'
@@ -576,6 +918,7 @@ class etl_job_process(osv.osv):
             }
     
 etl_job_process()
+
 
 class etl_transition(osv.osv):
     _name = 'etl.transition'

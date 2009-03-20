@@ -23,6 +23,8 @@
 import bom_customization
 import mrp
 import configurator_wizard
+import sale
+import stock
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

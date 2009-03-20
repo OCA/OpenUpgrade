@@ -29,7 +29,7 @@ not_sent = []
 
 mail_send_form = '''<?xml version="1.0"?>
 <form string="Mail to Customer">
-    <field name = "partner_id"/>
+    <field name="partner_id"/>
     <newline/>
     <field name="subject"/>
     <newline/>
@@ -46,10 +46,10 @@ mail_send_fields = {
 }
    
 finished_form = '''<?xml version="1.0"?>
-    <form string="Mail send ">
-        <label string="Operation Completed " colspan="4"/>
-        <field name ="mailsent" width="300"/>
-        <field name ="mailnotsent" width="300"/>
+    <form string="Mail send">
+        <label string="Operation Completed" colspan="4"/>
+        <field name="mailsent" width="300"/>
+        <field name="mailnotsent" width="300"/>
     </form>'''
 
 finished_fields = {

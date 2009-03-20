@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -29,6 +29,21 @@ import tools
 import sys
 import report
 
+def translate_accent(text):
+    text = text.encode('utf-8')
+    text = text.replace('é','e').replace('è','e').replace('ë','e').replace('ê','e')
+    text = text.replace('â','a').replace('à','a')
+    text = text.replace('ù','u').replace('û','u')
+    text = text.replace('î','i').replace('ï','i')
+    text = text.replace('ô','o').replace('ö','o')
+    text = text.replace('Â','A').replace('Ä','A')
+    text = text.replace('É','E').replace('È','E').replace('Ë','E').replace('Ê','E')
+    text = text.replace('Î','I').replace('Ï','I')
+    text = text.replace('Ö','O').replace('Ô','O')
+    text = text.replace('Ü','U').replace('Û','U').replace('Ù','U')
+    return text
+
+
 def graph_get(cr, uid, graph, offer_id):
     
     offer_obj = pooler.get_pool(cr.dbname).get('dm.offer')
@@ -43,14 +58,16 @@ def graph_get(cr, uid, graph, offer_id):
         user_lang = user.context_lang
 
         trans_obj =  pooler.get_pool(cr.dbname).get('ir.translation')
-        res_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
-                           user_lang or 'en_US',[step.type.id])
-        type_code = res_trans[step.type.id] or step.type.code
+        type_trans = trans_obj._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
+                           user_lang or 'en_US',[step.type_id.id])
+#        media_trans = trans_obj._get_ids(cr, uid, 'dm.media,code', 'model',
+#                           user_lang or 'en_US',[step.media_id.id])
+        type_code = type_trans[step.type_id.id] or step.type_id.code
+#        media_code = media_trans[step.media_id.id] or step.media_id.code
 
-        args['label'] = type_code + '\\n' + step.media_id.code
-        #args['label'] = type_code
-        args['comment'] = step.media_id.name
-        print args
+#        args['label'] = type_code + '\\n' + media_code
+        args['label'] = translate_accent(type_code + '\\n' + step.media_id.code)
+        print "XXXXXXXXXXXxxxxx",args
         graph.add_node(pydot.Node(step.id, **args))
 
     for step in offer.step_ids:
@@ -58,11 +75,11 @@ def graph_get(cr, uid, graph, offer_id):
 #            tr_cond_trans = trans_obj._get_ids(cr, uid, 'dm.offer.transition,condition', 'model',
 #                                       user_lang or 'en_US',[step.type.id])
 
-#           Wainting for analysis to be complated
+#           Wainting for analysis to be completed
             trargs = {
 #                'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay) + ' days'
 #                'label': transition.condition.name + ' - ' + transition.step_to.media_id.name  + '\\n' + str(transition.delay) + ' ' +transition.delay_type
-                'label': transition.condition.name + '\\n' + str(transition.delay) + ' ' + transition.delay_type
+                'label': translate_accent(transition.condition_id.name + '\\n' + str(transition.delay) + ' ' + transition.delay_type)
             }
             if step.split_mode=='and':
                 trargs['arrowtail']='box'
@@ -70,7 +87,7 @@ def graph_get(cr, uid, graph, offer_id):
                 trargs['arrowtail']='inv'
             elif step.split_mode=='xor':
                 trargs['arrowtail']='inv'
-            graph.add_edge(pydot.Edge( str(transition.step_from.id) ,str(transition.step_to.id), fontsize=10, **trargs))
+            graph.add_edge(pydot.Edge( str(transition.step_from_id.id) ,str(transition.step_to_id.id), fontsize=10, **trargs))
     return True
 
 
@@ -88,7 +105,7 @@ class report_graph_instance(object):
         offer_id = ids
         self.done = False
 
-        offer = pooler.get_pool(cr.dbname).get('dm.offer').browse(cr, uid, offer_id)[0].name
+        offer = translate_accent(pooler.get_pool(cr.dbname).get('dm.offer').browse(cr, uid, offer_id)[0].name)
 
         graph = pydot.Dot(fontsize=16, label=offer)
         graph.set('size', '10.7,7.3')

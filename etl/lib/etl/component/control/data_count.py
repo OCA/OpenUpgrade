@@ -33,7 +33,8 @@ class data_count(component):
     * calculate total of tranfering data
 
     """   
-
+    def __init__(self,name='component.control.data_count'):
+        super(data_count, self).__init__(name)
     def process(self):
         datas = {}
         for channel,trans in self.input_get().items():

@@ -76,6 +76,7 @@ class dm_ddf_plugin(osv.osv):
                 X =  __import__(plugin_name)
                 plugin_func = getattr(X, plugin_name)
                 plugin_value = plugin_func(cr, uid, customer_ids, **args)
+
                 if plugin.store_value : 
                     map(lambda x :dm_plugins_value.create(cr, uid,
                                 {'date':time.strftime('%Y-%m-%d'),
@@ -220,7 +221,7 @@ class dm_offer_document(osv.osv):
             offer = self.pool.get('dm.offer')
             offer_id = offer.search(cr, uid, [('step_ids', 'in', [context['step_id']])])
             browse_id = offer.browse(cr, uid, offer_id)[0]
-            value['lang_id'] = browse_id.lang_orig.id
+            value['lang_id'] = browse_id.lang_orig_id.id
             value['copywriter_id'] = browse_id.copywriter_id.id
         return value
         

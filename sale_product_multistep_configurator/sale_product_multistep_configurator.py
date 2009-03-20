@@ -22,10 +22,46 @@
 
 from osv import fields, osv
 
+
+def next_step(context):
+    index = context.get('next_step', False)
+    context.update({'next_step': index+1 })
+    model_list= context.get('step_list', False)
+    model = 'sale.order.line'
+    if index and model_list and index < len(model_list):
+        model = model_list[index]
+    
+    if model == 'sale.order.line':
+        if context.get('active_id_object_type', False) == 'sale.order.line':
+            return {
+                    'type': 'ir.actions.act_window_close',
+                }
+        else:
+            return {
+                    'view_type': 'form',
+                    "view_mode": 'form',
+                    'res_model': model,
+                    'type': 'ir.actions.act_window',
+                    'target':'new',
+                    'res_id': context.get('sol_id', False),
+                    'buttons': True,
+                    'context': context,
+                }
+    else:
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': model,#'sale_product_multistep_configurator', #'ir.actions.configuration.wizard',
+                'type': 'ir.actions.act_window',
+                'target':'new',
+                'context': context,
+            }
+
+
 class sale_product_multistep_configurator_configurator(osv.osv_memory):
     _name = "sale_product_multistep_configurator.configurator"
     _columns = {}
-    
+        
 sale_product_multistep_configurator_configurator()
 
 class sale_product_multistep_configurator_configurator_step(osv.osv):
@@ -35,6 +71,7 @@ class sale_product_multistep_configurator_configurator_step(osv.osv):
                 'model_id': fields.many2one('ir.model', 'Object ID', required=True, select=True),
                 'sequence' : fields.integer('Sequence', help="Determine in which order step are executed"),
                 }
+    _order = 'sequence'
     
 sale_product_multistep_configurator_configurator_step()
 
@@ -52,22 +89,20 @@ class ir_actions_act_window(osv.osv):
         result = super(ir_actions_act_window, self).read(cr, uid, read_ids, ['context'], context, load)[0]
 
         if eval(result['context']).get('multistep_wizard_dispatch', False):
-            print "*** DISPATCHING FOR CONFIGURATOR ***"
             configurator_context = eval(result['context'])
-            print "inherited configurator_context", configurator_context
             
-            #TODO get action_id from configurator_step model?
-            #TODO do not hardcode the flow logic anymore, get it form configurator_step!
-            action_id = self.search(cr, uid, [('name', '=', 'product_variant_configurator.action_product_configure')])[0]
+            list_of_step_ids = self.pool.get('sale_product_multistep_configurator.configurator.step').search(cr, uid, [])
+            list_of_steps = self.pool.get('sale_product_multistep_configurator.configurator.step').read(cr, uid, list_of_step_ids)
+            model_names = [i['model_id'][1] for i in list_of_steps]
+            action_id = self.search(cr, uid, [('res_model', '=', model_names[0])])[0]
             
             result = super(ir_actions_act_window, self).read(cr, uid, action_id, fields, context, load)
             configurator_context.update(eval(result['context']))#used to pass active_id_object_type and make sure we will dispatch here again eventually, see corresponding act_window      
-            configurator_context.update({'next_step':'bom_customization.configurator'})#TODO have a back system + TODO be dynamic here
-            print "specific configurator_context", configurator_context
+            configurator_context.update({'next_step':1})#TODO have a back system + TODO be dynamic here
+            configurator_context.update({'step_list': model_names})
             result['context'] = unicode(configurator_context)
             return result
         else:
             return super(ir_actions_act_window, self).read(cr, uid, ids, fields, context, load)
 
 ir_actions_act_window()
-
