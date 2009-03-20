@@ -120,11 +120,11 @@
                         <field name="parent_id" string="Product Line" required="True" />
                         <field name="course_type_id" />
                         <field name="code" string="Code" select="1" />
-                        <field name="total_duration" widget="float_time" />
+                        <field name="total_duration" widget="float_time"/>
                         <field name="lang_id" />
                         <field name="target_public" />
                         <field name="reference_id" />
-                        <field name="duration" widget="float_time"/>
+                        <field name="duration" widget="float_time" />
                     </group>
                     <notebook colspan="4">
                         <page string="Offers">

@@ -100,8 +100,14 @@ class training_course(osv.osv):
         'account.analytic.account' : 'analytic_account_id'
     }
 
-    def _total_duration_compute(self,cr,uid,ids,name,args,context):
-        return dict.fromkeys(ids, 0.0)
+    def _total_duration_compute(self, cr, uid, ids, name, args, context=None):
+        res = dict.fromkeys(ids, 0.0)
+
+        for course in self.browse(cr, uid, ids, context=context):
+            for child in course.children:
+                res[course.id] = res[course.id] + child.duration
+
+        return res
 
     _columns = {
         'duration' : fields.float('Duration',
