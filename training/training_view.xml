@@ -313,7 +313,7 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Catalogs">
-                    <field name="year" />
+                    <field name="year" widget="char" />
                 </tree>
             </field>
         </record>
