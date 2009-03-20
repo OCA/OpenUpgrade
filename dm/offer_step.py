@@ -63,14 +63,18 @@ class dm_offer_step_action(osv.osv):
     _name = 'dm.offer.step.action'
     _inherits = {'ir.actions.server':'server_action_id'}
     _columns = {
-        'code' : fields.char('Code', size=16),
         'server_action_id' : fields.many2one('ir.actions.server','Server Action'),
         'media_id' : fields.many2one('dm.media','Media',required=True)
     }
-    
+
     def create(self,cr,uid,vals,context={}):
+        cron_name = 'Scheduler for %s'%vals['name']
+        act_id = super(dm_offer_step_action,self).create(cr,uid,vals,context)
+
+        srv_act_id = self.browse(cr, uid , [act_id])[0].server_action_id.id
+
         cron_vals = {
-            'name':'Scheduler for %s'%vals['name'],
+            'name': cron_name,
             'interval_number':1,
             'interval_type':'days',
             'numbercall':-1,
@@ -78,16 +82,27 @@ class dm_offer_step_action(osv.osv):
             'model':'dm.offer.step.action',
             'function':'_wi_check',
             'nextcall' : time.strftime('%Y-%m-%d 20:00:00'),
-            'args': '(%s,)'%vals['code']
-                     }
+            'args' : '(%s,%s)'%(act_id,srv_act_id),
+        }
         self.pool.get('ir.cron').create(cr,uid,cron_vals)
-        return super(dm_offer_step_action,self).create(cr,uid,vals,context)
-    _defaults = {
-        'code' : lambda *a: '',
-    }
-    _sql_constraints = [
-        ('code_uniq', 'unique (code)', 'The code of the action must be unique !')
-    ]
+        return act_id
+
+    def _wi_check(self, cr, uid, action_id, srv_action_id, context={}):
+
+        witems = self.pool.get('dm.workitem').search(cr, uid, [('step_id.action_id','=',action_id),
+              ('state','=','pending'),('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
+
+        print "Action ID : ",action_id
+        print "Server Action ID : ",srv_action_id
+        print "WorkItems : ",witems
+
+        obj = self.pool.get('ir.actions.server')
+        for wi in witems:
+            context['active_id']=wi
+            res = obj.run(cr, uid, [srv_action_id], context)
+            print "RES Server Action : ",res
+
+        return True
 dm_offer_step_action()
 
 class dm_offer_step(osv.osv):
