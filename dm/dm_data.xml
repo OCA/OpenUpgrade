@@ -599,7 +599,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         -->
     </data>
 
-    <!-- Document Categories -->
+    <!-- Offer Document Categories -->
 
     <data>
         <record id="dm_offer_document_category_test0" model="dm.offer.document.category">
@@ -612,7 +612,24 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         </record>
     </data>
 
+    <!-- Campaign Document Types -->
+
+    <data>
+        <record id="dm_campaign_document_type_pdf0" model="dm.campaign.document.type">
+            <field eval="&quot;&quot;&quot;PDF&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;pdf&quot;&quot;&quot;" name="code"/>
+        </record>
+    </data>
+    <data>
+        <record id="dm_campaign_document_type_html0" model="dm.campaign.document.type">
+            <field eval="&quot;&quot;&quot;HTML&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;html&quot;&quot;&quot;" name="code"/>
+        </record>
+    </data>
+
     <!-- DMS Directories -->
+
+    <!-- Offers -->
 
     <data noupdate="1">
         <record id="document_directory_directmarketing0" model="document.directory">
@@ -672,6 +689,84 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="ressource_type_id" ref="dm.model_dm_offer_document"/>
         </record>
     </data>
+
+    <!-- Campaigns -->
+
+    <data noupdate="1">
+        <record id="document_directory_campaigns0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Campaigns&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field name="parent_id" ref="document_directory_directmarketing0"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_propo0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Commercial Propositions&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('camp_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_proposition"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_segment0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Segments&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('proposition_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_proposition"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_proposition_segment"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_campaign_document_type0" model="document.directory">
+            <field eval="1" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents by Type&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_proposition_segment"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_document_type"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_campaign_documents0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('type_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_document_type"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_document"/>
+        </record>
+    </data>
+
+    <!--
+    <data noupdate="1">
+        <record id="document_directory_documents0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('category_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_offer_document_category"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_document"/>
+        </record>
+    </data>
+    -->
 
     <!-- Default Shop in Customer Order -->
     
