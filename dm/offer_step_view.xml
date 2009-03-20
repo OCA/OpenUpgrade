@@ -219,7 +219,7 @@
                 </field>
         </record>
         <record model="ir.actions.act_window" id="action_offer_step_transition_trigger">
-        <field name="name">Transition Trigger</field>
+        		<field name="name">All Transition Triggers</field>
                 <field name="type">ir.actions.act_window</field>
                 <field name="res_model">dm.offer.step.transition.trigger</field>
                 <field name="view_type">form</field>
@@ -227,52 +227,6 @@
         </record>
         <menuitem parent="dm.menu_dm_config_offer_steps" id="menu_offer_step_transition_trigger" action="action_offer_step_transition_trigger"/>
 
-   <!--
-    =======================================================
-    OFFER STEP WORKITEM VIEWS
-    =======================================================
-    -->
-<!--
-    <record model="ir.ui.view" id="view_offer_step_workitem_form">
-        <field name="name">dm.offer.step.workitem.form</field>
-        <field name="model">dm.offer.step.workitem</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Workitem">
-                <field name="step_id"/>
-                <field name="customer_id" select="1"/>
-                <field name="segment_id"/>
-                <field name="date_next_action" select="2"/>
-                <field name="purchase_amount" select="2"/>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_offer_step_workitem_tree">
-        <field name="name">dm.offer.step.workitem.tree</field>
-        <field name="model">dm.offer.step.workitem</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Workitem">
-                <field name="step_id"/>
-                <field name="customer_id"/>
-                <field name="segment_id"/>
-                <field name="date_next_action"/>
-                <field name="purchase_amount"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_offer_step_workitem">
-        <field name="name">All Work Items</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.offer.step.workitem</field>
-        <field name="view_type">form</field>
-        <field name="view_id" ref="view_offer_step_workitem_tree"/>
-    </record>
-
-    <menuitem id="menu_action_offer_step_workitem" parent="dm.menu_dm_config_offer_steps"  action="action_offer_step_workitem" groups="res_groups_offeradmin,res_groups_campaignadmin"/>
--->
 
     <!--
     =======================================================
