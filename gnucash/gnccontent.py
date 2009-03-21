@@ -209,8 +209,8 @@ class gnc_book_elem(gnc_elem):
 			return gnc_elem_customer(name)
 		elif name == 'gnc:GncInvoice':
 			return gnc_elem_invoice(name)
-		elif name == 'gnc:GncEntry-':
-			return gnc_elem_customer(name)
+		elif name == 'gnc:GncEntry':
+			return gnc_elem_entry(name)
 		return gnc_unk_elem(name,self.name)
 
 	def begin(self,oh,attrs):
@@ -534,11 +534,49 @@ class gnc_elem_invoice(gnc_elem_dict):
 		#oh.debug("Start Gnucash account")
 		pass
 	def end(self,oh,parent):
-		oh.end_account(self,parent)
+		# *-* oh.end_invoice(self,parent)
+		pass
 	def get_slots(self,slots):
 		self.slots.extend(slots)
 	def get_commodity(self,oh,com):
 		self.commodity=com.dic
+
+class gnc_elem_entry(gnc_elem_dict):
+	def __init__(self,name=''):
+		super(gnc_elem_entry,self).__init__(name)
+		self.slots =[]
+		#self.commodity=None
+	def create(self,oh,name):
+		(tbl, key) = name.split(':')
+		if tbl != 'entry':
+			return gnc_unk_elem(name,self.name)
+		
+		if key == "guid":
+			return gnc_elem_var_id(name)
+		elif key in [ 'description', 'i-taxable', 'i-taxincluded', 
+			'i-disc-type', 'i-disc-how', 'action', 'billable', 
+			'b-taxable', 'b-taxincluded', 'b-pay' ]:
+			return gnc_elem_var(name)
+		elif key in [ 'invoice', 'i-acct', 'i-taxtable', 'b-acct', 
+			'bill', 'b-taxtable' ]:
+			return gnc_elem_var_ref(name)
+		elif key in ['qty', 'i-price', 'b-price' ]:
+			return gnc_elem_var_qty(name)
+		elif key in [ 'date', 'entered']:
+			return gnc_elem_date(name)
+		elif key == "slots":
+			return gnc_elem_slots(name)
+		return gnc_unk_elem(name,self.name)
+	def begin(self,oh,attrs):
+		#oh.debug("Start Gnucash account")
+		pass
+	def end(self,oh,parent):
+		# *-* oh.end_entry(self,parent)
+		pass
+	def get_slots(self,slots):
+		self.slots.extend(slots)
+	#def get_commodity(self,oh,com):
+	#	self.commodity=com.dic
 
 class gnc_elem_var_id(gnc_elem_var):
 	""" The declaration of the id for some object """
