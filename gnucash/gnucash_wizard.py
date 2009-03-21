@@ -53,6 +53,12 @@ def get_first(tup):
 def fnc_date_only(val,gnco,gnself):
 	return val.date().isoformat()
 
+def cas_get_ref(c, a, s):
+	if c:
+		return c[1]
+	else:
+		return None
+
 class GCHandler (gnccontent.GCDbgHandler):
 	"""This backend syncs the Gnucash object into the OpenERP ones.
 	   It should have a lifetime within the import process.
@@ -200,20 +206,20 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    ('number','inv_ref'),
 			    ('comment','notes'),
 			    ('reference', 'billing_id'),
-			    ('partner_id', 'owner', None, get_first ),
+			    ('partner_id', 'owner', cas_get_ref, get_first ),
 			    ('state','active', lambda c,a,s: (c and 'open') or 'cancel'),
-			    ('currency_id', 'currency', None, get_first),
-			    ('date_invoice','posted' ),
+			    ('currency_id', 'currency', cas_get_ref, get_first),
+			    ('date_invoice','posted', fnc_date_only ),
 			    ])
 
 	def end_entry(self,act,par):
 		self.decCount('gnc:GncEntry')
 		self.sync('entry','account.invoice.line',act,
 			[('name','description'),
-			    ('invoice_id', 'invoice', None, get_first ),
+			    ('invoice_id', 'invoice', cas_get_ref, get_first ),
 			    ('quantity','qty'),
 			    ('discount', 'i-discount'),
-			    ('account_id', 'i_acct', None, get_first ),
+			    ('account_id', 'i_acct', cas_get_ref, get_first ),
 			    ('price_unit', 'i-price'),
 			    ('notes', '', lambda c,a,s: unicode(a))
 			])
@@ -245,7 +251,6 @@ class GCHandler (gnccontent.GCDbgHandler):
 			guid=gnco.dic['guid']
 		else:
 			guid=gnco.dic['id']
-		print "gguid:", guid
 		goi=self.iobj.search(self.cr, self.uid, [('guid', '=',guid),('model','=',oo_model)])
 		found = False
 		
@@ -308,7 +313,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 					fnc= fld[2]
 				else:
 					fnc = lambda a,b,c: a
-				#if len(fld)>3:
+				#if len(fld)>3 and fld[3]:
 					#fno= fld[3]
 				#else:
 					#fno= lambda a: a
