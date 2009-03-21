@@ -270,6 +270,14 @@ class gnc_elem_var(gnc_elem):
 	def getchars(self,oh,chars):
 		self.val+=chars
 
+class gnc_elem_var_ren(gnc_elem_var):
+	def __init__(self,name,rename):
+		self.name =name
+		self.rename= rename
+		self.val=''
+	def end(self,oh,parent):
+		parent.setDict(oh,self.rename,self.val)
+	
 class gnc_elem_var_qty(gnc_elem_var):
 	#def begin(self,oh,attrs):
 	#	pass
@@ -478,13 +486,15 @@ class gnc_elem_partner(gnc_elem_dict):
 			(tbl,key)=name.split(':')
 			if tbl != self.getns():
 				return gnc_unk_elem(name,self.name)
-			if key in ['guid']:
+			if key == 'guid':
 				return gnc_elem_var_id(name)
 			#elif key in ['value','quantity']:
 			#	return gnc_elem_var_qty(name)
 			#elif key == 'reconcile-date':
 			#	return gnc_elem_date(name)
-			elif key in [ 'id','name','use-tt']:
+			elif key == 'id' :
+				return gnc_elem_var_ren(name,'partner_ref')
+			elif key in [ 'name','use-tt']:
 				return gnc_elem_var(name)
 			elif key in [ 'active']:
 				return gnc_elem_var(name)
@@ -532,10 +542,12 @@ class gnc_elem_invoice(gnc_elem_dict):
 		if tbl != 'invoice':
 			return gnc_unk_elem(name,self.name)
 		
-		if key in [ 'active', 'id', 'billing_id', 'notes' ]:
+		if key in [ 'active', 'billing_id', 'notes' ]:
 			return gnc_elem_var(name)
 		elif key == "guid":
 			return gnc_elem_var_id(name)
+		elif key == "id":
+			return gnc_elem_var_ren(name,'inv_ref')
 		elif key in [ 'posttxn', 'postlot', 'postacc', 'terms' ]:
 			return gnc_elem_var_ref(name)
 		elif key in [ 'owner', 'billto' ]:

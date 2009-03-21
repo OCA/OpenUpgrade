@@ -197,7 +197,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 		self.decCount('gnc:GncInvoice')
 		self.sync('invoice','account.invoice',act,
 			[('name','name'),
-			    ('number','id'),
+			    ('number','inv_ref'),
 			    ('comment','notes'),
 			    ('reference', 'billing_id'),
 			    ('partner_id', 'owner', None, get_first ),
@@ -210,7 +210,6 @@ class GCHandler (gnccontent.GCDbgHandler):
 		self.decCount('gnc:GncEntry')
 		self.sync('entry','account.invoice.line',act,
 			[('name','description'),
-			    ('number','id'),
 			    ('invoice_id', 'invoice', None, get_first ),
 			    ('quantity','qty'),
 			    ('discount', 'i-discount'),
@@ -234,7 +233,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 			raise Exception('Unresolved guid for %s: %s'%(gnc.name,str(fld)))
 		return fld['res_id']
 
-	def sync(self,oo_module, oo_model,gnco,fields=[]):
+	def sync(self,oo_module, oo_model,gnco,fields=[], match_fields = []):
 		if not fields:
 			raise Exception('No fields specified')
 		if ( self.sync_mark > self.syncLimit):
@@ -242,8 +241,31 @@ class GCHandler (gnccontent.GCDbgHandler):
 			return None
 		
 		obj = self.pool.get(oo_model)
-		goi=self.iobj.search(self.cr, self.uid, [('guid', '=',gnco.dic['id']),('model','=',oo_model)])
+		if gnco.dic.has_key('guid'):
+			guid=gnco.dic['guid']
+		else:
+			guid=gnco.dic['id']
+		print "gguid:", guid
+		goi=self.iobj.search(self.cr, self.uid, [('guid', '=',guid),('model','=',oo_model)])
 		found = False
+		
+		if not goi and (len(match_fields)>0):
+			match_arr=[]
+			for fld in match_fields:
+				if len(fld)>2 and fld[2]:
+					fnc= fld[2]
+				else:
+					fnc = lambda a,b,c: a
+				val=None
+				if fld[1] in gnco.dic:
+					val = gnco.dic[fld[1]]
+				match_arr.append( (fld[0],'=',fnc(val,gnco,self)) )
+			print "Retrying match with: ", match_arr
+			res = obj.search(self.cr, self.uid, match_arr)
+			if res:
+				gos= self.iobj.create(self.cr,self.uid, {'guid': guid, 'parent_book': self.cur_book['res_id'], 'module': oo_module,'model':oo_model,'res_id': res[0]})
+				goi= [gos,]
+		
 		if goi:
 		    gos = self.iobj.read(self.cr,self.uid,goi,['guid','parent_book','module','model','res_id'])
 		    if gos:
@@ -298,7 +320,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 			self.debug_lim(oo_model,"must create: %s" %str(oonew))
 			res = obj.create(self.cr,self.uid,oonew)
 			self.debug_lim(oo_model,"created: %s #%s"%(oo_model,str(res)))
-			self.iobj.create(self.cr,self.uid, {'guid': gnco.dic['id'], 'parent_book': self.cur_book['res_id'], 'module': oo_module,'model':oo_model,'res_id': res})
+			self.iobj.create(self.cr,self.uid, {'guid': guid, 'parent_book': self.cur_book['res_id'], 'module': oo_module,'model':oo_model,'res_id': res})
 			return res
 
 	def end_transaction(self,trn,par):
@@ -341,7 +363,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 	def _end_partner(self, act, mfields=[]):
 		fields= [('name','name'), ('active','active')]
 		fields.extend(mfields)
-		self.sync('base','res.partner',act, fields)
+		self.sync('base','res.partner',act, fields, [('name','name')])
 		
 	def end_vendor(self,act,par):
 		self.decCount('gnc:GncVendor')
