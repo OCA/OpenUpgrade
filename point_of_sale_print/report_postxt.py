@@ -21,7 +21,7 @@
 
 from osv import fields, osv
 from string import Template
-# import netsvc
+import netsvc
 
 class report_postxt(osv.osv):
     # no.. _inherit = "ir.actions.report.custom"
@@ -46,12 +46,40 @@ class report_postxt(osv.osv):
     
     def pprint(self, cr,uid, report , data, context):
 	"""This should print the report using the dictionary in data
-		"""
+	"""
+	import tempfile
+	import os
+
+	logger = netsvc.Logger()
 	str_report= self._do_report(report['txt_content'],data)
-	print "Report:\n",str_report ,"\n\n"
 	if (report['printer']):
-		print "Should print this at ", report['printer']
-	pass
+		logger.notifyChannel("pos_print", netsvc.LOG_INFO, 'Trying to print %s on %s ref. ' % \
+			(report['name'],report['printer']))
+		try:
+			import cups
+		except:
+			raise Exception(_('Cannot talk to cups, please install pycups'))
+		ccon = cups.Connection()
+		copies=report['copies']
+		if not copies:
+			copies=1
+		(fileno, fp_name) = tempfile.mkstemp('.raw', 'openerp_')
+		fp = file(fp_name, 'wb+')
+		#fp.write(content.encode('iso8859-7'))
+		fp.write(str_report)
+		fp.close()
+		os.close(fileno)
+		job = ccon.printFile(report['printer'],fp_name,"Openerp: "+report['name'],{'copies': str(copies), 'raw': 'raw'})
+		os.unlink(fp_name)
+		if job:
+			logger.notifyChannel("pos_print", netsvc.LOG_INFO, 'Created job %d'% job)
+			return True
+		else:
+			raise Exception(_('Cannot print at printer %s')%report['printer'])
+			return False
+	else:
+		print "Report:\n",str_report ,"\n\n"
+
     
     def _do_report(self, report, dict):
 	sections= {}
