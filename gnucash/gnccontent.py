@@ -32,7 +32,7 @@ class GCDbgHandler (object):
 	Override the class and add your backend support"""
 	def __init__(self):
 		self.linesout=0
-		self.printed = {'account': 5, 'trans' :5, 'commodity': 2}
+		self.printed = {'account': 5, 'trans' :5, 'commodity': 2, 'invoice:owner' :2, 'invoice:billto': 2}
 		self.counters = {}
 	def debug(self,stri):
 		if self.linesout > 200:
@@ -102,6 +102,14 @@ class GCDbgHandler (object):
 	def end_customer(self,act,par):
 		self.decCount('gnc:GncCustomer')
 		self.print_item('customer',act)
+
+	def end_invoice(self,act,par):
+		self.decCount('gnc:GncInvoice')
+		self.print_item('invoice',act)
+
+	def end_entry(self,act,par):
+		self.decCount('gnc:GncEntry')
+		self.print_item('entry',act)
 
 
 class gnc_elem(object):
@@ -198,6 +206,10 @@ class gnc_book_elem(gnc_elem):
 		elif name == 'gnc:GncVendor':
 			return gnc_elem_vendor(name)
 		elif name == 'gnc:GncCustomer':
+			return gnc_elem_customer(name)
+		elif name == 'gnc:GncInvoice':
+			return gnc_elem_invoice(name)
+		elif name == 'gnc:GncEntry-':
 			return gnc_elem_customer(name)
 		return gnc_unk_elem(name,self.name)
 
@@ -461,6 +473,8 @@ class gnc_elem_partner(gnc_elem_dict):
 				return gnc_elem_var(name)
 			elif key in [ 'currency']:
 				return gnc_elem_commodity(name)
+			elif key in [ 'addr' ]:
+				return gnc_elem_address(name)
 		return gnc_unk_elem(name,self.name)
 	def get_commodity(self,oh,com):
 		self.dic['commodity']=com.dic
@@ -478,6 +492,53 @@ class gnc_elem_customer(gnc_elem_partner):
 	def end(self,oh,parent):
 		oh.end_customer(self,parent)
 		#parent.splits.append(self.dic)
+
+class gnc_elem_address(gnc_elem_dict):
+	def create(self,oh,name):
+		if ':' in name:
+			(tbl,key)=name.split(':')
+			if tbl == 'addr' and (key in [ 'name', 'addr1','addr2', 'addr3', 'addr4', 'phone', 'email' ]):
+				#id is a normal string, too.
+				return gnc_elem_var(name)
+		return gnc_unk_elem(name,self.name)
+	def end(self,oh,parent):
+		#parent.get_address(oh,self) *-*
+		pass
+
+class gnc_elem_invoice(gnc_elem_dict):
+	def __init__(self,name=''):
+		super(gnc_elem_invoice,self).__init__(name)
+		self.slots =[]
+		self.commodity=None
+	def create(self,oh,name):
+		(tbl, key) = name.split(':')
+		if tbl != 'invoice':
+			return gnc_unk_elem(name,self.name)
+		
+		if key in [ 'active', 'id' ]:
+			return gnc_elem_var(name)
+		elif key == "guid":
+			return gnc_elem_var_id(name)
+		elif key in [ 'posttxn', 'postlot', 'postacc' ]:
+			return gnc_elem_var_ref(name)
+		elif key in [ 'owner', 'billto' ]:
+			return gnc_elem_var_ref2(name)
+		elif key == "currency":
+			return gnc_elem_commodity(name)
+		elif key in [ 'posted', 'opened']:
+			return gnc_elem_date(name)
+		elif key == "slots":
+			return gnc_elem_slots(name)
+		return gnc_unk_elem(name,self.name)
+	def begin(self,oh,attrs):
+		#oh.debug("Start Gnucash account")
+		pass
+	def end(self,oh,parent):
+		oh.end_account(self,parent)
+	def get_slots(self,slots):
+		self.slots.extend(slots)
+	def get_commodity(self,oh,com):
+		self.commodity=com.dic
 
 class gnc_elem_var_id(gnc_elem_var):
 	""" The declaration of the id for some object """
@@ -502,6 +563,30 @@ class gnc_elem_var_ref(gnc_elem_var):
 	def end(self,oh,parent):
 		oh.fill_idref(self,parent)
 		parent.setDict(oh,self.name.split(':')[1],(self.val,self.ref))
+
+class gnc_elem_var_ref2(gnc_elem_dict):
+	""" Reference to object, by id and type """
+	def __init__(self,name ='',rname='owner'):
+		super(gnc_elem_var_ref2,self).__init__(name)
+		self.ref=None
+		self.rname=rname
+		self.rtype=None
+		self.dic['ref'] = None
+	
+	def create(self,oh,name):
+		(tbl, key) = name.split(':')
+		if tbl != self.rname:
+			return gnc_unk_elem(name,self.name)
+		if key == 'type':
+			return gnc_elem_var(name)
+		elif key == "id":
+			return gnc_elem_var_id(name)
+		return gnc_unk_elem(name,self.name)
+	
+	def end(self,oh,parent):
+		# todo: verify dic['type'] = model..
+		parent.setDict(oh,self.name.split(':')[1],(self.dic['id'],self.dic['ref'] ))
+		oh.print_item(self.name,self)
 
 class GCContent(sax.handler.ContentHandler):
 
