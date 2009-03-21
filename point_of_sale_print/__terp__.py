@@ -22,17 +22,17 @@
 {
     "name" : "POS text printing",
     "version" : "0.1",
-    "depends" : ["base" ],
+    "depends" : [ "base" ],
     "author" : "P. Christeas",
     "description": """
     """,
     "website" : "http://www.hellug.gr",
-    "category" : "Generic Modules/Accounting",
-    "init_xml" : [ "pos.xml",
+    "category" : "Generic Modules/Others",
+    "init_xml" : [ 
     ],
     "demo_xml" : [
     ],
-    "update_xml" : [ ""
+    "update_xml" : [ "report_postxt.xml"
     ],
     "active": False,
     "installable": True
