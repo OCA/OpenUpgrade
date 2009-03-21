@@ -23,6 +23,7 @@ from osv import fields
 import wizard
 import pooler
 import time
+from tools.translate import _
 
 def _invoice_membership(self, cr, uid, data, context):
     partner_ids = data['ids']
@@ -36,7 +37,7 @@ def _invoice_membership(self, cr, uid, data, context):
             )
     fetchal = cr.fetchall()
     if not fetchal:
-        raise wizard.except_wizard('Error !', 'No Address defined for this partner')
+        raise wizard.except_wizard(_('Error !'), _('No Address defined for this partner'))
     partner_address_ids = {}
     for x in range(len(fetchal)):
         pid = fetchal[x][0]
@@ -61,7 +62,6 @@ def _invoice_membership(self, cr, uid, data, context):
         line_value =  {
             'product_id' : product_id,
             }
-
         quantity = 1
         line_dict = invoice_line_obj.product_id_change(cr, uid, {}, product_id, product['uom_id'][0], quantity, '', 'out_invoice', partner_id, fpos_id, context=context)
         line_value.update(line_dict['value'])

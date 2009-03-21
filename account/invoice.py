@@ -178,6 +178,7 @@ class account_invoice(osv.osv):
                 move[line.move_id.id] = True
             for line in r.line_id:
                 move[line.move_id.id] = True
+        
         invoice_ids = []
         if move:
             invoice_ids = self.pool.get('account.invoice').search(cr, uid, [('move_id','in',move.keys())], context=context)
@@ -289,15 +290,30 @@ class account_invoice(osv.osv):
     }
 
     def unlink(self, cr, uid, ids, context=None):
-        invoices = self.read(cr, uid, ids, ['state'])
-        unlink_ids = []
-        for t in invoices:
-            if t['state'] in ('draft', 'cancel'):
-                unlink_ids.append(t['id'])
-            else:
-                raise osv.except_osv(_('Invalid action !'), _('Cannot delete invoice(s) that are already opened or paid !'))
-        osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
-        return True
+        for inv in self.browse(cr, uid, ids, context):
+            print inv.name, inv.amount_total
+            for line in inv.invoice_line:
+                print line.price_subtotal
+#        invoices = self.read(cr, uid, ids, ['state'])
+#        unlink_ids = []
+#        for t in invoices:
+#            if t['state'] in ('draft', 'cancel'):
+#                unlink_ids.append(t['id'])
+#            else:
+#                raise osv.except_osv(_('Invalid action !'), _('Cannot delete invoice(s) that are already opened or paid !'))
+#        osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
+#        return True
+
+    #def unlink(self, cr, uid, ids, context=None):
+    #    invoices = self.read(cr, uid, ids, ['state'])
+    #    unlink_ids = []
+    #    for t in invoices:
+    #        if t['state'] in ('draft', 'cancel'):
+    #            unlink_ids.append(t['id'])
+    #        else:
+    #            raise osv.except_osv(_('Invalid action !'), _('Cannot delete invoice(s) that are already opened or paid !'))
+    #    osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
+    #    return True
 
 #   def get_invoice_address(self, cr, uid, ids):
 #       res = self.pool.get('res.partner').address_get(cr, uid, [part], ['invoice'])
@@ -341,14 +357,6 @@ class account_invoice(osv.osv):
         if type in ('in_invoice', 'in_refund'):
             result['value']['partner_bank'] = bank_id
 
-        if payment_term != partner_payment_term:
-            if partner_payment_term:
-                to_update = self.onchange_payment_term_date_invoice(
-                    cr,uid,ids,partner_payment_term,date_invoice)
-                result['value'].update(to_update['value'])
-            else:
-                result['value']['date_due'] = False
-
         if partner_bank_id != bank_id:
             to_update = self.onchange_partner_bank(cr, uid, ids, bank_id)
             result['value'].update(to_update['value'])
@@ -362,17 +370,13 @@ class account_invoice(osv.osv):
             return {}
         res={}
         pt_obj= self.pool.get('account.payment.term')
-
         if not date_invoice :
             date_invoice = time.strftime('%Y-%m-%d')
-
         pterm_list= pt_obj.compute(cr, uid, payment_term_id, value=1, date_ref=date_invoice)
-
         if pterm_list:
             pterm_list = [line[0] for line in pterm_list]
             pterm_list.sort()
             res= {'value':{'date_due': pterm_list[-1]}}
-
         return res
 
     def onchange_invoice_line(self, cr, uid, ids, lines):
@@ -481,6 +485,13 @@ class account_invoice(osv.osv):
                     'ref': ref,
                 })]
         return iml
+
+    def action_date_assign(self, cr, uid, ids, *args):
+        for inv in self.browse(cr, uid, ids):
+            res = self.onchange_payment_term_date_invoice(cr, uid, inv.id, inv.payment_term.id, inv.date_invoice)
+            if res and res['value']:
+                self.write(cr, uid, [inv.id], res['value'])
+        return True
 
     def action_move_create(self, cr, uid, ids, *args):
         ait_obj = self.pool.get('account.invoice.tax')
@@ -1127,14 +1138,14 @@ class account_invoice_tax(osv.osv):
                 if inv.type in ('out_invoice','in_invoice'):
                     val['base_code_id'] = tax['base_code_id']
                     val['tax_code_id'] = tax['tax_code_id']
-                    val['base_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['base'] * tax['base_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')})
-                    val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['tax_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')})
+                    val['base_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['base'] * tax['base_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
+                    val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['tax_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
                     val['account_id'] = tax['account_collected_id'] or line.account_id.id
                 else:
                     val['base_code_id'] = tax['ref_base_code_id']
                     val['tax_code_id'] = tax['ref_tax_code_id']
-                    val['base_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['base'] * tax['ref_base_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')})
-                    val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['ref_tax_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')})
+                    val['base_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['base'] * tax['ref_base_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
+                    val['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, val['amount'] * tax['ref_tax_sign'], context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=False)
                     val['account_id'] = tax['account_paid_id'] or line.account_id.id
 
                 key = (val['tax_code_id'], val['base_code_id'], val['account_id'])
@@ -1148,6 +1159,8 @@ class account_invoice_tax(osv.osv):
 
         for t in tax_grouped.values():
             t['amount'] = cur_obj.round(cr, uid, cur, t['amount'])
+            t['base_amount'] = cur_obj.round(cr, uid, cur, t['base_amount'])
+            t['tax_amount'] = cur_obj.round(cr, uid, cur, t['tax_amount'])
         return tax_grouped
 
     def move_line_get(self, cr, uid, invoice_id):

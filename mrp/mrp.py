@@ -27,6 +27,7 @@ import ir
 import netsvc
 import time
 from mx import DateTime
+from tools.translate import _
 
 #----------------------------------------------------------
 # Workcenters
@@ -397,10 +398,10 @@ class mrp_production(osv.osv):
         'priority': fields.selection([('0','Not urgent'),('1','Normal'),('2','Urgent'),('3','Very Urgent')], 'Priority'),
 
         'product_id': fields.many2one('product.product', 'Product', required=True, domain=[('type','<>','service')]),
-        'product_qty': fields.float('Product Qty', required=True),
-        'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
-        'product_uos_qty': fields.float('Product Qty'),
-        'product_uos': fields.many2one('product.uom', 'Product UOM'),
+        'product_qty': fields.float('Product Qty', required=True, states={'draft':[('readonly',False)]}, readonly=True),
+        'product_uom': fields.many2one('product.uom', 'Product UOM', required=True, states={'draft':[('readonly',False)]}, readonly=True),
+        'product_uos_qty': fields.float('Product UoS Qty', states={'draft':[('readonly',False)]}, readonly=True),
+        'product_uos': fields.many2one('product.uom', 'Product UoS', states={'draft':[('readonly',False)]}, readonly=True),
 
         'location_src_id': fields.many2one('stock.location', 'Raw Materials Location', required=True,
             help="Location where the system will look for products used in raw materials."),
@@ -455,6 +456,7 @@ class mrp_production(osv.osv):
         default.update({
             'name': self.pool.get('ir.sequence').get(cr, uid, 'mrp.production'),
             'move_lines' : [],
+            'move_created_ids': []
         })
         return super(mrp_production, self).copy(cr, uid, id, default, context)
 
@@ -492,7 +494,7 @@ class mrp_production(osv.osv):
                     self.write(cr, uid, [production.id], {'bom_id': bom_id, 'routing_id': routing_id})
 
             if not bom_id:
-                raise osv.except_osv('Error', "Couldn't find bill of material for product")
+                raise osv.except_osv(_('Error'), _("Couldn't find bill of material for product"))
 
             #if bom_point.routing_id and bom_point.routing_id.location_id:
             #   self.write(cr, uid, [production.id], {'location_src_id': bom_point.routing_id.location_id.id})
@@ -769,10 +771,10 @@ class mrp_procurement(osv.osv):
         'date_planned': fields.datetime('Scheduled date', required=True),
         'date_close': fields.datetime('Date Closed'),
         'product_id': fields.many2one('product.product', 'Product', required=True),
-        'product_qty': fields.float('Quantity', required=True),
-        'product_uom': fields.many2one('product.uom', 'Product UoM', required=True),
-        'product_uos_qty': fields.float('UoS Quantity'),
-        'product_uos': fields.many2one('product.uom', 'Product UoS'),
+        'product_qty': fields.float('Quantity', required=True, states={'draft':[('readonly',False)]}, readonly=True),
+        'product_uom': fields.many2one('product.uom', 'Product UoM', required=True, states={'draft':[('readonly',False)]}, readonly=True),
+        'product_uos_qty': fields.float('UoS Quantity', states={'draft':[('readonly',False)]}, readonly=True),
+        'product_uos': fields.many2one('product.uom', 'Product UoS', states={'draft':[('readonly',False)]}, readonly=True),
         'move_id': fields.many2one('stock.move', 'Reservation', ondelete='set null'),
 
         'bom_id': fields.many2one('mrp.bom', 'BoM', ondelete='cascade', select=True),
@@ -836,11 +838,13 @@ class mrp_procurement(osv.osv):
 
     def check_move_cancel(self, cr, uid, ids, context={}):
         res = True
+        ok = False
         for procurement in self.browse(cr, uid, ids, context):
             if procurement.move_id:
+                ok = True
                 if not procurement.move_id.state=='cancel':
                     res = False
-        return res
+        return res and ok
 
     def check_move_done(self, cr, uid, ids, context={}):
         res = True
@@ -1082,17 +1086,21 @@ class mrp_procurement(osv.osv):
 
     def action_cancel(self, cr, uid, ids):
         todo = []
+        todo2 = []
         for proc in self.browse(cr, uid, ids):
             if proc.move_id and proc.move_id.state=='waiting':
-                todo.append(proc.move_id.id)
+                if proc.close_move:
+                    todo2.append(proc.move_id.id)
+                else:
+                    todo.append(proc.move_id.id)
+        if len(todo2):
+            self.pool.get('stock.move').action_cancel(cr, uid, todo2)
         if len(todo):
             self.pool.get('stock.move').write(cr, uid, todo, {'state':'assigned'})
         self.write(cr, uid, ids, {'state':'cancel'})
-
         wf_service = netsvc.LocalService("workflow")
         for id in ids:
             wf_service.trg_trigger(uid, 'mrp.procurement', id, cr)
-
         return True
 
     def action_check_finnished(self, cr, uid, ids):
@@ -1173,6 +1181,13 @@ class stock_warehouse_orderpoint(osv.osv):
             v = {'product_uom':prod.uom_id.id}
             return {'value': v}
         return {}
+    def copy(self, cr, uid, id, default=None,context={}):
+        if not default:
+            default = {}
+        default.update({
+            'name': self.pool.get('ir.sequence').get(cr, uid, 'mrp.warehouse.orderpoint') or '',
+        })
+        return super(stock_warehouse_orderpoint, self).copy(cr, uid, id, default, context)
 stock_warehouse_orderpoint()
 
 
