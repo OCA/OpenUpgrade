@@ -184,6 +184,32 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    ('company_id','',lambda c,a,s: s.cur_company,get_first)
 			    ])
 		
+	def end_invoice(self,act,par):
+		self.decCount('invoice')
+		self.sync('invoice','account.invoice',act,
+			[('name','name'),
+			    ('number','id'),
+			    ('comment','notes'),
+			    ('reference', 'billing_id'),
+			    ('partner_id', 'owner', None, get_first ),
+			    ('state','active', lambda c,a,s: (c and 'open') or 'cancel'),
+			    ('currency_id', 'currency', None, get_first),
+			    ('date_invoice','posted' ),
+			    ])
+
+	def end_entry(self,act,par):
+		self.decCount('entry')
+		self.sync('entry','account.invoice.line',act,
+			[('name','description'),
+			    ('number','id'),
+			    ('invoice_id', 'invoice', None, get_first ),
+			    ('quantity','qty'),
+			    ('discount', 'i-discount'),
+			    ('account_id', 'i_acct', None, get_first ),
+			    ('price_unit', 'i-price'),
+			    ('notes', '', lambda c,a,s: unicode(a))
+			])
+
 	def get_parent(self, oo_model, fldt, gnc):
 		if not fldt or fldt == None:
 			return None
@@ -267,7 +293,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 		trn.dic['period_id']=self.find_period(trn.dic['date-posted'])
 		mid= self.sync('account','account.move',trn,
 			[('name','description'), ('journal_id','',lambda c,a,s: 4,get_first),
-			('date','date-posted',lambda c,a,s: c[:10]), ('period_id','period_id',None ,get_first)
+			('date','date-posted'), ('period_id','period_id',None ,get_first)
 			])
 		for spld in trn.splits:
 			split = gnccontent.gnc_elem_dict('split')
