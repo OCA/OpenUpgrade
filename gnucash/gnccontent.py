@@ -411,15 +411,17 @@ class gnc_elem_date(gnc_elem):
 		tzval='+0000'
 		if len(val)>19:
 			tzval=val[20:]
-			val=val[:19]
+			val=val[:19].strip()
 		date= None
 		for fmt in [ '%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S', '%Y-%m-%d%H:%M:%S' ] :
 			try:
 				date=datetime.strptime(val,fmt)
-			except ValueError:
-				pass
+			except ValueError,er:
+				continue
 			break
 		#print "TZ: ", tzval
+		if not date:
+			raise ValueError("Cannot parse date: %s"%val)
 		return date;
 			
 	def create(self,oh,name):
