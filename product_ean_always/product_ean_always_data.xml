@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="normal_form_view" model="ir.ui.view">
+			<field name="name">normal.form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="ean13" position="replace">
+					<field name="ean13" select="1"/>
+				</field>
+			</field>
+		</record>
+	</data>
+</openerp>
