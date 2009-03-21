@@ -57,7 +57,7 @@ class account_balance(report_sxw.rml_parse):
 
         def get_periods(self, form):
             result=''
-            if form.has_key('periods'):
+            if form.has_key('periods') and form['periods'][0][2]:
                 period_ids = ",".join([str(x) for x in form['periods'][0][2] if x])
                 self.cr.execute("select name from account_period where id in (%s)" % (period_ids))
                 res=self.cr.fetchall()
@@ -227,3 +227,4 @@ class account_balance(report_sxw.rml_parse):
             return self.sum_debit
 
 report_sxw.report_sxw('report.account.account.balance', 'account.account', 'addons/account/report/account_balance.rml', parser=account_balance, header=False)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

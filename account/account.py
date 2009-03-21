@@ -330,6 +330,9 @@ class account_account(osv.osv):
     _constraints = [
         (_check_recursion, 'Error ! You can not create recursive accounts.', ['parent_id'])
     ]
+    _sql_constraints = [
+        ('code_company_uniq', 'unique (code,company_id)', 'The code of the account must be unique per company !')
+    ]
     def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=80):
         if not args:
             args = []
@@ -470,7 +473,7 @@ class account_journal(osv.osv):
         'user_id': lambda self,cr,uid,context: uid,
     }
     def create(self, cr, uid, vals, context={}):
-        journal_id = super(osv.osv, self).create(cr, uid, vals, context)
+        journal_id = super(account_journal, self).create(cr, uid, vals, context)
 #       journal_name = self.browse(cr, uid, [journal_id])[0].code
 #       periods = self.pool.get('account.period')
 #       ids = periods.search(cr, uid, [('date_stop','>=',time.strftime('%Y-%m-%d'))])
@@ -481,6 +484,7 @@ class account_journal(osv.osv):
 #               'period_id': period.id
 #           })
         return journal_id
+
     def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=80):
         if not args:
             args=[]
@@ -1496,7 +1500,7 @@ class account_model(osv.osv):
         for model in self.browse(cr, uid, ids, context):
             period_id = self.pool.get('account.period').find(cr,uid, context=context)
             if not period_id:
-                raise osv.except_osv('No period found !', 'Unable to find a valid period !')
+                raise osv.except_osv(_('No period found !'), _('Unable to find a valid period !'))
             period_id = period_id[0]
             move_id = self.pool.get('account.move').create(cr, uid, {
                 'ref': model.ref,

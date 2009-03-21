@@ -395,6 +395,10 @@ class stock_picking(osv.osv):
             res[pick]['max_date'] = dt2
         return res
 
+    def create(self, cr, user, vals, context=None):
+        if 'name' not in vals:
+            vals['name'] = self.pool.get('ir.sequence').get(cr, user, 'stock.picking')
+        return super(stock_picking, self).create(cr, user, vals, context)
 
     _columns = {
         'name': fields.char('Reference', size=64, select=True),
@@ -432,7 +436,7 @@ class stock_picking(osv.osv):
             select=True, required=True, readonly=True, states={'draft':[('readonly',False)]}),
     }
     _defaults = {
-        'name': lambda self,cr,uid,context: self.pool.get('ir.sequence').get(cr, uid, 'stock.picking'),
+        'name': lambda self,cr,uid,context: '/',
         'active': lambda *a: 1,
         'state': lambda *a: 'draft',
         'move_type': lambda *a: 'direct',
@@ -444,7 +448,7 @@ class stock_picking(osv.osv):
         if default is None:
             default = {}
         default = default.copy()
-        default['name'] = False
+        default['name'] = self.pool.get('ir.sequence').get(cr, uid, 'stock.picking')
         return super(stock_picking, self).copy(cr, uid, id, default, context)
 
     def onchange_partner_in(self, cr, uid, context, partner_id=None):
@@ -665,15 +669,15 @@ class stock_picking(osv.osv):
                 invoice_id = invoices_group[partner.id]
                 invoice=invoice_obj.browse(cursor, user,invoice_id)
                 invoice_vals = {
-                    'name': invoice.name +', '+str(picking.name or  ''),
-                    'origin': invoice.origin+', '+str(picking.name or  '')+(picking.origin and (':' + picking.origin) or ''),
+                    'name': (invoice.name or '') +', '+(picking.name or  ''),
+                    'origin': (invoice.origin or '')+', '+(picking.name or  '')+(picking.origin and (':' + picking.origin) or ''),
                     'comment':(comment and (invoice.comment and invoice.comment+"\n"+comment or comment)) or (invoice.comment and invoice.comment or ''),
                 }
                 invoice_obj.write(cursor, user, [invoice_id],invoice_vals,context=context)
             else:
                 invoice_vals = {
                     'name': picking.name,
-                    'origin': str(picking.name or '') + (picking.origin and (':' + picking.origin) or ''),
+                    'origin': (picking.name or '') + (picking.origin and (':' + picking.origin) or ''),
                     'type': type,
                     'account_id': account_id,
                     'partner_id': partner.id,
@@ -697,7 +701,7 @@ class stock_picking(osv.osv):
                 if move_line.picking_id.origin:
                     origin+=':' + move_line.picking_id.origin
                 if group:
-                    name = str(picking.name or '') + '-' + move_line.name
+                    name = (picking.name or '') + '-' + move_line.name
                 else:
                     name = move_line.name
 
@@ -753,6 +757,14 @@ stock_picking()
 
 class stock_production_lot(osv.osv):
 
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
+        res = super(stock_production_lot, self).search(cr, uid, args, offset, limit, order, context=context, count=count)
+        if res:
+            return [k for k,v in self._get_stock(cr, uid, res, 'stock_available', None, context).items() if v]
+        return res
+    
     def name_get(self, cr, uid, ids, context={}):
         if not ids:
             return []
@@ -1003,7 +1015,7 @@ class stock_move(osv.osv):
             ptype = self.pool.get('stock.location').picking_type_get(cr, uid, todo[0][0].location_dest_id, todo[0][1][0])
             pickid = self.pool.get('stock.picking').create(cr, uid, {
                 'name': picking.name,
-                'origin': str(picking.origin or ''),
+                'origin': (picking.origin or ''),
                 'type': ptype,
                 'note': picking.note,
                 'move_type': picking.move_type,
