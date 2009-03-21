@@ -519,7 +519,7 @@ class gnc_elem_invoice(gnc_elem_dict):
 			return gnc_elem_var(name)
 		elif key == "guid":
 			return gnc_elem_var_id(name)
-		elif key in [ 'posttxn', 'postlot', 'postacc' ]:
+		elif key in [ 'posttxn', 'postlot', 'postacc', 'terms' ]:
 			return gnc_elem_var_ref(name)
 		elif key in [ 'owner', 'billto' ]:
 			return gnc_elem_var_ref2(name)
@@ -586,7 +586,7 @@ class gnc_elem_var_ref2(gnc_elem_dict):
 	def end(self,oh,parent):
 		# todo: verify dic['type'] = model..
 		parent.setDict(oh,self.name.split(':')[1],(self.dic['id'],self.dic['ref'] ))
-		oh.print_item(self.name,self)
+		#oh.print_item(self.name,self)
 
 class GCContent(sax.handler.ContentHandler):
 
