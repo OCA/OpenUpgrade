@@ -50,6 +50,9 @@ def get_first(tup):
 	"""Convenience function that returns the first part of a tuple"""
 	return tup[0]
 
+def fnc_date_only(val,gnco,gnself):
+	return val.date().isoformat()
+
 class GCHandler (gnccontent.GCDbgHandler):
 	"""This backend syncs the Gnucash object into the OpenERP ones.
 	   It should have a lifetime within the import process.
@@ -65,6 +68,9 @@ class GCHandler (gnccontent.GCDbgHandler):
 		self.dbglims= {}
 		self.cur_book=None
 		self.cur_company=None
+		self.sync_mark=0
+		self.syncLimit=3000
+		self.notProc=0
 		self.act_types= [ { 'gnc': None, 'user_type': 'view'},
 			{ 'gnc': 'CASH','type': 'other', 'user_type': 'cash'},
 			{ 'gnc': 'BANK','type': 'other', 'user_type': 'asset'},
@@ -96,6 +102,8 @@ class GCHandler (gnccontent.GCDbgHandler):
 	def fill_idref(self,idv,obj):
 		if not idv.val:
 			return
+		if ( self.sync_mark > self.syncLimit):
+			return None
 		ooids = self.iobj.search(self.cr, self.uid, [('guid', '=',idv.val)])
 		if ooids:
 		    oos = self.iobj.read(self.cr,self.uid,ooids,['guid','parent_book','module','model','res_id'])
@@ -170,6 +178,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 			if val:
 				dd[str(key)] = val
 		self.dprint('Counters left:',dd)
+		self.dprint('Not processed since 3k limit:',self.notProc)
 		self.cur_book=None
 		self.cur_company=None
 	
@@ -185,7 +194,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    ])
 		
 	def end_invoice(self,act,par):
-		self.decCount('invoice')
+		self.decCount('gnc:GncInvoice')
 		self.sync('invoice','account.invoice',act,
 			[('name','name'),
 			    ('number','id'),
@@ -198,7 +207,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    ])
 
 	def end_entry(self,act,par):
-		self.decCount('entry')
+		self.decCount('gnc:GncEntry')
 		self.sync('entry','account.invoice.line',act,
 			[('name','description'),
 			    ('number','id'),
@@ -228,6 +237,9 @@ class GCHandler (gnccontent.GCDbgHandler):
 	def sync(self,oo_module, oo_model,gnco,fields=[]):
 		if not fields:
 			raise Exception('No fields specified')
+		if ( self.sync_mark > self.syncLimit):
+			self.notProc=self.notProc+1
+			return None
 		
 		obj = self.pool.get(oo_model)
 		goi=self.iobj.search(self.cr, self.uid, [('guid', '=',gnco.dic['id']),('model','=',oo_model)])
@@ -260,6 +272,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 							oocp[fld[0]] = fnc(val,gnco,self)
 					if oocp:
 						#self.upd+=1
+						self.sync_mark=self.sync_mark+1
 						self.debug_lim(oo_model,"Must update: %s" % str(oocp))
 						obj.write(self.cr,self.uid, [ooit['id']],oocp)
 						
@@ -281,6 +294,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 				if fld[1] in gnco.dic:
 					val = gnco.dic[fld[1]]
 				oonew[fld[0]] = fnc(val,gnco,self)
+			self.sync_mark=self.sync_mark+1
 			self.debug_lim(oo_model,"must create: %s" %str(oonew))
 			res = obj.create(self.cr,self.uid,oonew)
 			self.debug_lim(oo_model,"created: %s #%s"%(oo_model,str(res)))
@@ -293,7 +307,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 		trn.dic['period_id']=self.find_period(trn.dic['date-posted'])
 		mid= self.sync('account','account.move',trn,
 			[('name','description'), ('journal_id','',lambda c,a,s: 4,get_first),
-			('date','date-posted'), ('period_id','period_id',None ,get_first)
+			('date','date-posted',fnc_date_only), ('period_id','period_id',None ,get_first)
 			])
 		for spld in trn.splits:
 			split = gnccontent.gnc_elem_dict('split')
