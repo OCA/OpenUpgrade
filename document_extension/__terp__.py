@@ -26,7 +26,7 @@
     "category" : "Generic Modules/Others",
     "website": "http://www.openerp.com",
     "description": """This is an extension module of document management system with
-    * Implementation of Versioning and lock system
+    * Implementation of Versioning and lock system
 """,
     "depends" : ["base","process","document"],
     "init_xml" : [],
