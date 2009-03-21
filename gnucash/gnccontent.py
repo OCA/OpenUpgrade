@@ -401,19 +401,34 @@ class gnc_trns_elem(gnc_elem_dict):
 	def get_commodity(self,oh,com):
 		self.commodity=com.dic
 
+from datetime import datetime
 class gnc_elem_date(gnc_elem):
 	def __init__(self,name):
 		self.name = name
 		self.value=None
 		self.ns = None
+	def parse_date(self,val):
+		tzval='+0000'
+		if len(val)>19:
+			tzval=val[20:]
+			val=val[:19]
+		date= None
+		for fmt in [ '%Y-%m-%d %H:%M:%S', '%Y-%m-%dT%H:%M:%S', '%Y-%m-%d%H:%M:%S' ] :
+			try:
+				date=datetime.strptime(val,fmt)
+			except ValueError:
+				pass
+			break
+		#print "TZ: ", tzval
+		return date;
+			
 	def create(self,oh,name):
 		if name == 'ts:date' or name == 'ts:ns':
 			return gnc_elem_var(name)
 		return gnc_unk_elem(name,self.name)
 	def setDict(self,oh,key,val):
 		if key == 'date':
-		    #TODO: parse it
-		    self.value=val
+		    self.value=self.parse_date(val)
 		elif key == 'ns':
 			self.ns=val
 	def end(self,oh,parent):
