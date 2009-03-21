@@ -31,7 +31,8 @@
     "demo_xml" : [],
     "update_xml" : ["hr_timesheet_wizard.xml"],
     "active": False,
-    "installable": True
+    "installable": True,
+    "python_deps": ["gopherlib", "schoolbell"]
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
