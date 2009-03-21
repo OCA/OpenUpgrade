@@ -9,15 +9,16 @@
                 <form string="POS prints">
 		    <notebook>
 		    <page string="General">
-			<group colspan="2">
+			<group colspan="4">
 				<field name="name" select="1"/>
 				<!-- <field name="type" select="2"/> -->
 				<field name="model" select="1"/>
+				<field name="code" select="1"/>
 				<field name="usage"/>
 				<field name="printer"/>
 				<field name="copies"/>
 			</group>
-			<group colspan="2">
+			<group colspan="4">
 				<field name="groups_id"/>
 			</group>
 		    </page>

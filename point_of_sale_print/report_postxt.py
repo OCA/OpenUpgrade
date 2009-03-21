@@ -31,6 +31,7 @@ class report_postxt(osv.osv):
         'type': fields.char('Report Type', size=32, required=True),
         'model':fields.char('Object', size=64, required=True),
         'usage': fields.char('Action Usage', size=32),
+	'code': fields.char('Code', size=32, help="This code is used so that modules can lookup some specific report"),
         'multi': fields.boolean('On multiple doc.', help="If set to true, the action will not be displayed on the right toolbar of a form view."),
         'groups_id': fields.many2many('res.groups', 'res_groups_report_rel', 'uid', 'gid', 'Groups'),
 	'printer': fields.char('Printer', size=50, help="Preferred printer for this report. Useful for server-side printing."),
