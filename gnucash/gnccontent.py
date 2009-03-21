@@ -32,7 +32,7 @@ class GCDbgHandler (object):
 	Override the class and add your backend support"""
 	def __init__(self):
 		self.linesout=0
-		self.printed = {'account': 5, 'trans' :5, 'commodity': 2, 'invoice:owner' :2, 'invoice:billto': 2}
+		self.printed = {'account': 5, 'trans' :5, 'commodity': 2, 'invoice' :2, 'entry': 2}
 		self.counters = {}
 	def debug(self,stri):
 		if self.linesout > 200:
@@ -515,7 +515,7 @@ class gnc_elem_invoice(gnc_elem_dict):
 		if tbl != 'invoice':
 			return gnc_unk_elem(name,self.name)
 		
-		if key in [ 'active', 'id' ]:
+		if key in [ 'active', 'id', 'billing_id', 'notes' ]:
 			return gnc_elem_var(name)
 		elif key == "guid":
 			return gnc_elem_var_id(name)
@@ -534,7 +534,7 @@ class gnc_elem_invoice(gnc_elem_dict):
 		#oh.debug("Start Gnucash account")
 		pass
 	def end(self,oh,parent):
-		# *-* oh.end_invoice(self,parent)
+		oh.end_invoice(self,parent)
 		pass
 	def get_slots(self,slots):
 		self.slots.extend(slots)
@@ -560,7 +560,7 @@ class gnc_elem_entry(gnc_elem_dict):
 		elif key in [ 'invoice', 'i-acct', 'i-taxtable', 'b-acct', 
 			'bill', 'b-taxtable' ]:
 			return gnc_elem_var_ref(name)
-		elif key in ['qty', 'i-price', 'b-price' ]:
+		elif key in ['qty', 'i-price', 'b-price', 'i-discount' ]:
 			return gnc_elem_var_qty(name)
 		elif key in [ 'date', 'entered']:
 			return gnc_elem_date(name)
@@ -571,7 +571,7 @@ class gnc_elem_entry(gnc_elem_dict):
 		#oh.debug("Start Gnucash account")
 		pass
 	def end(self,oh,parent):
-		# *-* oh.end_entry(self,parent)
+		oh.end_entry(self,parent)
 		pass
 	def get_slots(self,slots):
 		self.slots.extend(slots)
