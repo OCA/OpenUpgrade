@@ -1,0 +1,294 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#e6e6e6" start="3,0" stop="3,0"/>
+      <blockBackground colorName="#e6e6e6" start="4,0" stop="4,0"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT"/>
+    <paraStyle name="P3" fontName="Times-Bold" fontSize="12.0" leading="15" alignment="RIGHT"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="12.0" leading="15"/>
+    <paraStyle name="P6" fontName="Times-Bold" fontSize="14.0" leading="17"/>
+    <paraStyle name="P7" fontName="Times-Bold" fontSize="6.0" leading="8"/>
+    <paraStyle name="P8" fontName="Times-Bold" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P10" fontName="Times-Bold" fontSize="12.0" leading="15"/>
+    <paraStyle name="P11" fontName="Times-Bold" fontSize="12.0" leading="15"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P13" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="P14" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P15" fontName="Times-Bold" fontSize="14.0" leading="17"/>
+    <paraStyle name="P16" fontName="Times-Bold" fontSize="6.0" leading="8"/>
+    <paraStyle name="P17" fontName="Times-BoldItalic" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P18" fontName="Times-BoldItalic" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P19" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT"/>
+    <paraStyle name="P20" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT"/>
+    <paraStyle name="P21" fontName="Times-BoldItalic" fontSize="11.0" leading="14"/>
+    <paraStyle name="P22" fontName="Times-Bold" fontSize="12.0" leading="15"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P1">[[ repeatIn(objects,'o') ]] </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="482.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P3">[[ o.partner_id.title or '' ]] [[ o.partner_id.name ]]</para>
+          <para style="P4">[[ o.contact.title or '' ]] [[ o.contact.name ]]</para>
+          <para style="P4">[[ o.contact.street ]]</para>
+          <para style="P4">[[ o.contact.street2 or '' ]]</para>
+          <para style="P4">[[ o.contact.zip or '' ]] [[ o.contact.city or '' ]]</para>
+          <para style="P4">[[ o.contact.state_id and o.contact.state_id.name or '' ]]</para>
+          <para style="P4">[[ o.contact.country_id and o.contact.country_id.name or '' ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P5">Dear Customer,</para>
+    <para style="P5">
+      <font color="white"> </font>
+    </para>
+    <para style="P5">following are the details for the Loan and installment that passed and the installment details are as follows, in case of any queries please contact to our our office </para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">Loan Detail</para>
+    <para style="P7">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="107.0,10.0,123.0,103.0,10.0,127.0" repeatRows="1" style="Table4">
+      <tr>
+        <td>
+          <para style="P8">Description</para>
+        </td>
+        <td>
+          <para style="P8">:</para>
+        </td>
+        <td>
+          <para style="P9">[[o.name]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P10">Apply Amount</para>
+        </td>
+        <td>
+          <para style="P11">:</para>
+        </td>
+        <td>
+          <para style="P1">[[o.loan_amount]]</para>
+        </td>
+        <td>
+          <para style="P10">Approve Amount</para>
+        </td>
+        <td>
+          <para style="P11">:</para>
+        </td>
+        <td>
+          <para style="P12">[[ o.approve_amount ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P10">Apply Date</para>
+        </td>
+        <td>
+          <para style="P11">:</para>
+        </td>
+        <td>
+          <para style="P1">[[o.apply_date]]</para>
+        </td>
+        <td>
+          <para style="P10">Approve Date</para>
+        </td>
+        <td>
+          <para style="P11">:</para>
+        </td>
+        <td>
+          <para style="P1">[[o.approve_date]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P10">Start Date</para>
+        </td>
+        <td>
+          <para style="P11">:</para>
+        </td>
+        <td>
+          <para style="P1">[[o.approve_date]]</para>
+        </td>
+        <td>
+          <para style="P10">End Date</para>
+        </td>
+        <td>
+          <para style="P11">:</para>
+        </td>
+        <td>
+          <para style="P1">[[ending_date()]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P10">Installment Amount</para>
+        </td>
+        <td>
+          <para style="P11">:</para>
+        </td>
+        <td>
+          <para style="P13">[[ '%.2f' % ( o.installment_id[0].capital + o.installment_id[0].interest) ]]</para>
+        </td>
+        <td>
+          <para style="P10">No of Installment</para>
+        </td>
+        <td>
+          <para style="P11">:</para>
+        </td>
+        <td>
+          <para style="P12">[[ o.total_installment ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P10">Interest Rate</para>
+        </td>
+        <td>
+          <para style="P11">:</para>
+        </td>
+        <td>
+          <para style="P14">[[ o.interest_rate ]]%</para>
+        </td>
+        <td>
+          <para style="P10">Total Interest</para>
+        </td>
+        <td>
+          <para style="P11">:</para>
+        </td>
+        <td>
+          <para style="P12">[[ o.interest ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P15">
+      <font color="white"> </font>
+    </para>
+    <para style="P15">Installment Details</para>
+    <para style="P16">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="156.0,77.0,78.0,85.0,85.0" repeatRows="1" style="Table3">
+      <tr>
+        <td>
+          <para style="P17">Description</para>
+        </td>
+        <td>
+          <para style="P18">Installment</para>
+        </td>
+        <td>
+          <para style="P18">Interest</para>
+        </td>
+        <td>
+          <para style="P18">SubTotal</para>
+        </td>
+        <td>
+          <para style="P18">Total</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">[[repeatIn(o.installment_id,'i')]]</para>
+          <para style="P12">[[i.name]]</para>
+        </td>
+        <td>
+          <para style="P19">[[ '%.2f' % i.capital ]]</para>
+        </td>
+        <td>
+          <para style="P19">[[ '%.2f' % i.interest ]]</para>
+        </td>
+        <td>
+          <para style="P19">[[ '%.2f' % i.total ]] </para>
+        </td>
+        <td>
+          <para style="P19">[[ '%.2f' % amount_total(i) ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P20">[[ '%.2f' % get_capital(i) ]]</para>
+        </td>
+        <td>
+          <para style="P20">
+            <font face="Times-Roman">[[ '%.2f' % get_interest(i) ]]</font>
+          </para>
+        </td>
+        <td>
+          <para style="P20">[[ '%.2f' % get_subtotal(i) ]]</para>
+        </td>
+        <td>
+          <para style="P19">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P21">
+      <font color="white"> </font>
+    </para>
+    <para style="P22">
+      <font color="white"> </font>
+    </para>
+    <para style="P22">For [[ company.name ]]</para>
+    <para style="P22">
+      <font color="white"> </font>
+    </para>
+    <para style="P22">
+      <font color="white"> </font>
+    </para>
+    <para style="P22">[[ user.name ]]</para>
+    <para style="P22">Manager</para>
+  </story>
+</document>
+

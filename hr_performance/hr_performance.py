@@ -91,7 +91,7 @@ class hr_performance(osv.osv):
                 return False
         return True       
      
-    def fill_employee_list(self,cr,uid,ids,context):
+    def fill_employee_list(self, cr, uid, ids, *args):
         res=[]
         search_ids = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
         
@@ -105,11 +105,11 @@ class hr_performance(osv.osv):
             'employee_id': emp_id,
             'performance_id':ids[0]
             },context={'from_btn':True})
-                            
+            
             att_ids = self.pool.get('hr.performance.line.attribute').search(cr, uid,[])
             
             for attribute_id in att_ids:
-                att_obj=self.pool.get('hr.performance.line.attribute').browse(cr, uid,attribute_id, context=context)
+                att_obj=self.pool.get('hr.performance.line.attribute').browse(cr, uid,attribute_id, *args)
                 self.pool.get('attribute.line').create(cr, uid, {
                         'attribute_id': attribute_id,
                         'performance_line_id':pl_id,
@@ -117,7 +117,7 @@ class hr_performance(osv.osv):
                         'obtained_marks':0 },context={'from_btn':True})
         return self.write(cr, uid, ids, {'state':'saved'})
     
-    def change_sate(self,cr,uid,ids,context):
+    def change_sate(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'done'})
         return True
         

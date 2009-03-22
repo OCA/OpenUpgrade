@@ -203,7 +203,6 @@ class SmtpClient(osv.osv):
         return ids[0]
 
     def send_email(self, cr, uid, server_id, emailto, subject, body=False, attachments=[]):
-        
         smtp_server = self.browse(cr, uid, server_id)
         if type(emailto) == type([]):
             for to in emailto:
