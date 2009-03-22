@@ -36,6 +36,8 @@ class account_loan(osv.osv):
         'auto_id': fields.integer('Auto Id', size=32),
         'name': fields.char('Description', size=128, required=True),
         'partner_id': fields.many2one('res.partner', 'Customer'),
+        'proof_1': fields.many2one('res.partner', 'Gaurenter 1'),
+        'proof_2': fields.many2one('res.partner', 'Gaurenter 2'),
         'contact': fields.many2one('res.partner.address', 'Contact'),
         'loan_type':fields.selection(_loan_type_get,'Loan Type',select=True, required=True),
         'loan_period':fields.selection(_loan_period_get,'Loan Period',select=True, required=True),
