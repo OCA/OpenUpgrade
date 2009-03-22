@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 	<data>
 
 		<record model="ir.ui.view" id="view_loan_type_form">
@@ -219,10 +219,11 @@
 							<field name="proof_id" colspan="4" nolabel="1"/>
 							
 							<field name="proof_1" select="1"/>
-							<field name="proof_2" select="2" domain="[('roof_2,'!=',proof_1)]"/>
+							<field name="proof_2" select="2"/>
 						</page>
 						<page string="Notes">
-							<field name="notes"/>
+						    <separator string="Terms and Confitions" colspan="4"/>
+							<field name="notes" colspan="4" nolabel="1"/>
 						</page>
 					</notebook>
 				</form>
@@ -400,4 +401,4 @@
 		</record>
 		<menuitem name="Financial Management/Loan/Installment" id="menu_account_loan_installment_form" action="action_account_loan_installment_form"/>
 	</data>
-</terp>
+</openerp>
