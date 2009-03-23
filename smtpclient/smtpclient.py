@@ -80,7 +80,18 @@ class SmtpClient(osv.osv):
     }
     server = {}
     smtpServer = {}
+    
+    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
+        def override_password(o):
+            for field in o[0]:
+                if 'password' == field :
+                    o[0]['password'] = '********'
+            return o
         
+        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
+        result = override_password(result)
+        return result
+
     def change_email(self, cr, uid, ids, email):
         if len(email) > 0 and email.index('@'):
             user = email[0:email.index('@')]
