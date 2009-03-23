@@ -110,6 +110,8 @@ Test checks for fields, views, security rules, dependancy level
             if len(view_dict[view]) < 2:
                 model_views -= 1
                 result_view[view] = [view, 'You should have atleast form/tree view of an object']
+        if model_views > total_views:
+            model_views = total_views
 
         #security rules test...
         list_files = os.listdir(module_path)
@@ -140,7 +142,7 @@ Test checks for fields, views, security rules, dependancy level
         remove_list = []
         for depend in module_data[0].dependencies_id:
             depend_list.append(depend.name)
-        good_depend = len(depend_list)
+#        good_depend = len(depend_list)
         module_ids = module_obj.search(cr, uid, [('name', 'in', depend_list)])
         module_data = module_obj.browse(cr, uid, module_ids)
         for data in module_data:
@@ -153,9 +155,11 @@ Test checks for fields, views, security rules, dependancy level
             result_security[module_name] = [remove_list, 'Unnecessary dependacy should be removed please Provide only highest requirement level']
         bad_depend = len(remove_list)
 
+
         score_view = total_views and float(model_views) / float(total_views)
         score_field = total_field and float(good_field) / float(total_field)
-        score_depend = good_depend and float(good_depend) / float(good_depend + bad_depend)
+#        score_depend = good_depend and float(good_depend) / float(good_depend + bad_depend)
+        score_depend = (100 - (bad_depend * 5)) / 100.0 #  note : score is calculated based on if you have for e.g. two module extra in dependancy it will score -10 out of 100
         score_security = good_sec and float(good_sec - bad_sec) / float(good_sec)
         self.score = (score_view + score_field + score_security + score_depend) / 4
 
