@@ -1,17 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" ?>
 <openerp>
     <data>
-        <!--
-        <record model="portal.portal" id="portal_supplier">
-            <field name="name">Portal Supplier</field>
-            <field name="group_id" ref="portal.portal_group"/>
-            <field name="menu_id" ref="menu_portal_supplier"/>
-            <field name="menu_action_id" ref="portal_supplier_action_menu"/>
-            <field name="home_action_id" ref="portal_supplier_action_menu"/>
-            <field name="company_id" ref="base.main_company"/>
+        <record id="ir_ui_menu_portalsupplier0" model="ir.ui.menu">
+            <field eval="[(6,0,[])]" name="groups_id"/>
+            <field eval="&quot;&quot;&quot;Supplier Portal&quot;&quot;&quot;" name="name"/>
+            <field eval="10" name="sequence"/>
+            <field name="parent_id" ref="portal.menu_portal_root"/>
+            <field eval="&quot;&quot;&quot;ir.actions.act_window,0&quot;&quot;&quot;" name="action"/>
+            <field eval="&quot;&quot;&quot;('stock', ('STOCK_OPEN', 'ICON_SIZE_MENU'))&quot;&quot;&quot;" name="icon_pict"/>
+            <field eval="&quot;&quot;&quot;STOCK_OPEN&quot;&quot;&quot;" name="icon"/>
         </record>
-        -->
+    </data>
+    <data noupdate="1">
+        <record id="portal_portal_portalsupplier0" model="portal.portal">
+            <field name="menu_id" ref="ir_ui_menu_portalsupplier0"/>
+            <field model="ir.actions.act_window" name="menu_action_id" search="[('name','=','Supplier Portal main menu')]"/>
+            <field eval="&quot;&quot;&quot;Supplier Portal&quot;&quot;&quot;" name="name"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="group_id" ref="portal.portal_group"/>
+        </record>
     </data>
 </openerp>
-
-
