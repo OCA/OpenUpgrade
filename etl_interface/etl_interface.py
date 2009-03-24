@@ -324,6 +324,11 @@ class etl_job_process(osv.osv):
             'state': lambda *a: 'draft', 
     }
     
+    def action_hook_component(self, cr, uid, process, component):
+        cid = self.pool.get('etl.job.process.component').create(cr, uid, {'name' : component, 'start_date' :time.strftime('%Y-%m-%d %H:%M:%S'), 'state' : 'start', 'job_process_id' : process})
+        cr.commit()
+        return cid
+    
     
     def action_start(self, key, signal_data={}, data={}):
         print 'job is started...', key, data
@@ -332,6 +337,23 @@ class etl_job_process(osv.osv):
         process=self.browse(cr, uid, data['process_id'], context={})
         self.write(cr, uid, process.id, {'state':'start', 'start_date':time.strftime('%Y-%m-%d %H:%M:%S')})
         cr.commit()
+        if process.statistics:
+            components = []
+            for comp in  process.job_id.component_ids:
+                components.append(comp)
+                for trans in comp.trans_in_ids + comp.trans_out_ids:
+                    components.append(trans.source_component_id)
+                    components.append(trans.destination_component_id)
+            comps = []
+            for comp in  components:
+                comps.append(comp.id)
+                for trans in comp.trans_in_ids + comp.trans_out_ids:
+                    comps.append(trans.source_component_id.id)
+                    comps.append(trans.destination_component_id.id)
+            comps = list(set(comps))
+            for c_id in comps:
+                 self.action_hook_component(cr, uid, process.id, c_id)
+            cr.commit()
         return True
   
     def action_restart(self, key, signal_data={}, data={}):
@@ -339,11 +361,11 @@ class etl_job_process(osv.osv):
         return True
 
     def action_pause(self, key, signal_data={}, data={}):
-        print 'job is paused...', key, data
+        print 'job is pause...', key, data
         return True
 
     def action_stop(self, key, signal_data={}, data={}):                    
-        print 'job is stoped...', key, data
+        print 'job is stop...', key, data
         return True
 
     def action_end(self, key, signal_data={}, data={}):
@@ -409,6 +431,7 @@ class etl_job_process(osv.osv):
     
     def test_process(self, cr, uid, ids, context={}):
         for process in self.browse(cr, uid, ids, context=context):
+            print process.state
             if process.state == 'end':
                 return True
             else:
@@ -434,6 +457,12 @@ class etl_job_process(osv.osv):
         self.pool.get('etl.job.process').write(cr, uid, ids, {'state':'draft', 'component_ids':[(6, 0, [])]})
         return True
 
+    def run_scheduler(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
+        if not context:
+            context={}
+        self._start_job_process(cr, uid, use_new_cursor=use_new_cursor, context=context)
+        return True
+        
 etl_job_process()
 
 

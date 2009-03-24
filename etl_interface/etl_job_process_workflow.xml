@@ -45,6 +45,8 @@
 		<record id="act_exception" model="workflow.activity">
 			<field name="wkf_id" ref="wkf_job_process" />
 			<field name="name">exception</field>
+			<field name="kind">function</field>
+			<field name="action">test_process()</field>
 		</record>
 
 		<record id="act_stop" model="workflow.activity">
@@ -83,7 +85,7 @@
 		<record id="trans_open_start" model="workflow.transition">
 			<field name="act_from" ref="act_open" />
 			<field name="act_to" ref="act_start" />
-			<field name="signal">action_start</field>
+			<field name="signal">action_start_process</field>
 		</record>
 
 
@@ -132,7 +134,7 @@
 		<record id="trans_pause_start" model="workflow.transition">
 			<field name="act_from" ref="act_pause" />
 			<field name="act_to" ref="act_start" />
-			<field name="signal">action_start</field>
+			<field name="signal">action_start_process</field>
 		</record>
 
 		<record id="trans_exception_cancel" model="workflow.transition">
@@ -144,7 +146,7 @@
 		<record id="trans_exception_start" model="workflow.transition">
 			<field name="act_from" ref="act_exception" />
 			<field name="act_to" ref="act_start" />
-			<field name="signal">action_start</field>
+			<field name="signal">action_start_process</field>
 		</record>
 
 	</data>

@@ -478,7 +478,7 @@
 							<field name="state"/>
 								<button name="action_open"	string="Open" states="draft" icon="gtk-yes"/>
 								<button name="action_cancel_draft"	string="Set to Draft" states="cancel" type="object" icon="gtk-convert"/>
-								<button name="action_start" string="Start" states="open,pause" icon="gtk-execute"/>
+								<button name="action_start_process" string="Start" states="open,pause" icon="gtk-execute"/>
 								<button name="action_pause" string="Pause" states="start" icon="gtk-media-pause"/>
 								<button name="action_restart_process"	string="Retry" type="object" states="exception" icon="gtk-ok"/>
 								<button name="action_stop" string="Stop" states="start,pause" icon="gtk-no"/>
