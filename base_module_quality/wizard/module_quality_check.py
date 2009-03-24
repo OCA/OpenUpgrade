@@ -106,7 +106,7 @@ class create_quality_check(wizard.interface):
                     }
                 create_ids.append((0, 0, data))
 
-            final_score = str(score_sum / ponderation_sum * 100) + "%"
+            final_score = '%.2f' % (score_sum / ponderation_sum * 100)
             data = {
                 'name': module_data.name,
                 'final_score': final_score,
