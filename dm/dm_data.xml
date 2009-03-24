@@ -620,12 +620,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;pdf&quot;&quot;&quot;" name="code"/>
         </record>
     </data>
-    <data>
-        <record id="dm_campaign_document_type_html0" model="dm.campaign.document.type">
-            <field eval="&quot;&quot;&quot;HTML&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;html&quot;&quot;&quot;" name="code"/>
-        </record>
-    </data>
 
     <!-- DMS Directories -->
 
@@ -787,30 +781,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     <!-- Server Action -->
     
     <data noupdate="1">
-        <record id="ir_actions_server_html_doc_generate0" model="dm.offer.step.action">
-            <field eval="&quot;&quot;&quot;# You can use the following variables
-#    - object
-#    - object2
-#    - time
-#    - cr
-#    - uid
-#    - ids
-# If you plan to return an action, assign: action = {...}
-&quot;&quot;&quot;" name="code"/>
-            <field eval="5" name="sequence"/>
-            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
-            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
-            <field name="model_id" ref="dm.model_dm_workitem"/>
-            <field name="media_id" ref="dm.media_email"/>
-            <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="1" name="dm_action"/>
-<!--            <field eval="&quot;&quot;&quot;html_generation&quot;&quot;&quot;" name="code"/-->
-            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
-            <field eval="&quot;&quot;&quot;Generate HTML Document&quot;&quot;&quot;" name="name"/>
-        </record>
-    </data>
-
-    <data noupdate="1">
         <record id="ir_actions_server_pdf_doc_generate0" model="dm.offer.step.action">
             <field eval="&quot;&quot;&quot;# You can use the following variables
 #    - object
@@ -831,30 +801,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 <!--            <field eval="&quot;&quot;&quot;pdf_generation&quot;&quot;&quot;" name="code"/>-->
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate PDF Document&quot;&quot;&quot;" name="name"/>
-        </record>
-    </data>
-
-    <data noupdate="1">
-        <record id="ir_actions_server_crm_case_create0" model="dm.offer.step.action">
-            <field eval="&quot;&quot;&quot;# You can use the following variables
-#    - object
-#    - object2
-#    - time
-#    - cr
-#    - uid
-#    - ids
-# If you plan to return an action, assign: action = {...}
-&quot;&quot;&quot;" name="code"/>
-            <field eval="5" name="sequence"/>
-            <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
-            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
-            <field name="model_id" ref="dm.model_dm_workitem"/>
-            <field name="media_id" ref="dm.media_phone"/>
-            <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="1" name="dm_action"/>
-<!--            <field eval="&quot;&quot;&quot;crm_case_create&quot;&quot;&quot;" name="code"/>-->
-            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
-            <field eval="&quot;&quot;&quot;Create CRM Case&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
 

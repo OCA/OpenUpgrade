@@ -902,7 +902,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -923,7 +923,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_intermediatemailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_crm_case_create0"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_piforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -954,7 +954,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletterofthepackageinsert0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_alimforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -969,7 +969,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletteroftheintermediatemailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -1045,7 +1045,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2010"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
         </record>
     </data>
     <!-- Trademark -->
