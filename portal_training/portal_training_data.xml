@@ -1,6 +1,11 @@
 <?xml version="1.0" ?>
 <openerp>
     <data>
+        <record id="res_groups_portalsuppliergroup0" model="res.groups">
+            <field eval="[(6,0,[])]" name="rule_groups"/>
+            <field eval="[(6,0,[])]" name="users"/>
+            <field eval="&quot;&quot;&quot;Portal Supplier Group&quot;&quot;&quot;" name="name"/>
+        </record>
         <record id="ir_ui_menu_portalsupplier0" model="ir.ui.menu">
             <field eval="[(6,0,[])]" name="groups_id"/>
             <field eval="&quot;&quot;&quot;Supplier Portal&quot;&quot;&quot;" name="name"/>
@@ -17,7 +22,21 @@
             <field model="ir.actions.act_window" name="menu_action_id" search="[('name','=','Supplier Portal main menu')]"/>
             <field eval="&quot;&quot;&quot;Supplier Portal&quot;&quot;&quot;" name="name"/>
             <field name="company_id" ref="base.main_company"/>
-            <field name="group_id" ref="portal.portal_group"/>
+            <field name="group_id" ref="res_groups_portalsuppliergroup0"/>
+        </record>
+    </data>
+    <data>
+        <record id="res_groups_portalsuppliergroup0" model="res.groups">
+            <field eval="[(6,0,[ref('ir_ui_menu_portalsupplier0')])]" name="menu_access"/>
+        </record>
+        <record id="ir_model_access_purchaseorderline0" model="ir.model.access">
+            <field name="model_id" ref="purchase.model_purchase_order_line"/>
+            <field eval="1" name="perm_read"/>
+            <field eval="&quot;&quot;&quot;Purchase Order Line&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="perm_unlink"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="0" name="perm_create"/>
+            <field name="group_id" ref="res_groups_portalsuppliergroup0"/>
         </record>
     </data>
 </openerp>
