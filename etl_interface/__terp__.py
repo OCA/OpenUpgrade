@@ -35,6 +35,7 @@
          'etl_view.xml', 
          'etl_component_view.xml',
          'etl_connector_view.xml', 
+         'etl_job_process_workflow.xml',
          'etl_component/control/data_count_view.xml',
          'etl_component/control/sleep_view.xml',
          'etl_component/input/csv_in_view.xml',
@@ -45,7 +46,6 @@
          'etl_component/input/vcard_in_view.xml',
          'etl_component/output/csv_out_view.xml',
          'etl_component/output/sql_out_view.xml',
-         
          'etl_component/output/openobject_out_view.xml',
          'etl_component/transform/sort_view.xml',
          'etl_component/transform/map_view.xml',

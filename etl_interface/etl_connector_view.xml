@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data>		
+	<data>
 
-		 <record id="etl_connector_type_form" model="ir.ui.view">
+		<record id="etl_connector_type_form" model="ir.ui.view">
 			<field name="name">view.etl.connector.type.form</field>
 			<field name="model">etl.connector.type</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="etl.connector.type">
 					<field name="name" />
-					<field name="code" />					
+					<field name="code" />
 				</form>
 			</field>
 		</record>
@@ -37,11 +37,11 @@
 		</record>
 
 		<!--
-		<menuitem name="Connector Types" parent="menu_etl_configure"
+			<menuitem name="Connector Types" parent="menu_etl_configure"
 			sequence="8" action="action_etl_connector_type_tree"
 			id="menu_etl_connector_type" /> -->
 
-		
+
 
 		<record id="etl_connector_basic_form" model="ir.ui.view">
 			<field name="name">etl.connector.basic.form</field>
@@ -49,10 +49,11 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="etl.connector">
-                    <group colspan="4">
-					    <field name="name" select="1" />
-    					<field name="type" select="1" on_change="onchange_type(type)" />
-                    </group>
+					<group colspan="4">
+						<field name="name" select="1" />
+						<field name="type" select="1"
+							on_change="onchange_type(type)" />
+					</group>
 				</form>
 			</field>
 		</record>
@@ -78,8 +79,8 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="etl_connector_basic_tree" />
 		</record>
-		
-			<record id="action_etl_connector_basic_view1"
+
+		<record id="action_etl_connector_basic_view1"
 			model="ir.actions.act_window.view">
 			<field eval="1" name="sequence" />
 			<field name="view_mode">tree</field>
@@ -96,11 +97,11 @@
 			<field name="act_window_id"
 				ref="action_etl_connector_basic_tree" />
 		</record>
-		
-		<menuitem name="Connectors" parent="etl_interface.menu_etl_configure" sequence="9"
-			 action="action_etl_connector_basic_tree"
-			 id="etl_connector_all_tree" />
-		
+
+		<menuitem name="Connectors"
+			parent="etl_interface.menu_etl_configure" sequence="9"
+			action="action_etl_connector_basic_tree" id="etl_connector_all_tree" />
+
 
 	</data>
 </openerp>
