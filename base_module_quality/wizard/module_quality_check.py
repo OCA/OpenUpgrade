@@ -74,21 +74,28 @@ class create_quality_check(wizard.interface):
                     ad = tools.config['root_path']+'/addons'
                 module_path = os.path.join(ad, module_data.name)
                 val = test.quality_test()
-
                 if not val.bool_installed_only or module_data.state == "installed":
                     val.run_test(cr, uid, str(module_path))
-                    data = {
-                        'name': val.name,
-                        'score': val.score * 100,
-                        'ponderation': val.ponderation,
-                        'summary': val.result,
-                        'detail': val.result_details,
-                        'state': 'done',
-                        'note': val.note,
-                    }
-                    create_ids.append((0, 0, data))
-                    score_sum += val.score * val.ponderation
-                    ponderation_sum += val.ponderation
+                    if not val.error:
+                        data = {
+                            'name': val.name,
+                            'score': val.score * 100,
+                            'ponderation': val.ponderation,
+                            'summary': val.result,
+                            'detail': val.result_details,
+                            'state': 'done',
+                            'note': val.note,
+                        }
+                        score_sum += val.score * val.ponderation
+                        ponderation_sum += val.ponderation
+                    else:
+                        data = {
+                            'name': val.name,
+                            'score': 0,
+                            'summary': val.result,
+                            'state': 'skipped',
+                            'note': val.note,
+                        }
                 else:
                     data = {
                         'name': val.name,
@@ -97,7 +104,7 @@ class create_quality_check(wizard.interface):
                         'state': 'skipped',
                         'summary': _("The module has to be installed before running this test.")
                     }
-                    create_ids.append((0, 0, data))
+                create_ids.append((0, 0, data))
 
             final_score = str(score_sum / ponderation_sum * 100) + "%"
             data = {

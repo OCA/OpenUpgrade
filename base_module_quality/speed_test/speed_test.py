@@ -46,8 +46,8 @@ This test checks the speed of the module. Note that at least 5 demo data is need
         obj_list = self.get_objects(cr, uid, module_name)
         result_dict2 = {}
         if not obj_list:
-            result_dict2[module_name] = [module_name, _("Given module has no objects.Speed test can work only when new objects are created in the module along with demo data")]
-            self.result += self.get_result(result_dict2)
+            self.error = True
+            self.result += _("Given module has no objects.Speed test can work only when new objects are created in the module along with demo data")
             return None
         obj_counter = 0
         score = 0.0

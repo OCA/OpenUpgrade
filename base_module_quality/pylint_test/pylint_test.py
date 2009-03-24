@@ -52,6 +52,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         count = 0
         score = 0.0
         dict_py = {}
+        flag = False
         self.result_details += '''<html>
         <head>
             <link rel="stylesheet" type="text/css" href="/tg_widgets/openerp/css/wiki.css" media="all">
@@ -59,6 +60,8 @@ class quality_test(base_module_quality.abstract_quality_check):
         <body>'''
         for file_py in list_files:
             if file_py.split('.')[-1] == 'py' and not file_py.endswith('__init__.py') and not file_py.endswith('__terp__.py'):
+                if not flag:
+                    flag = True
                 file_path = os.path.join(module_path, file_py)
                 try:
                     res = os.popen('pylint --rcfile=' + config_file_path + ' ' + file_path).read()
@@ -83,6 +86,11 @@ class quality_test(base_module_quality.abstract_quality_check):
                     #self.result += file + ": "+_("Unable to parse the result. Check the details.")+"\n"
                     dict_py[file_py] = [file_py, _("Unable to parse the result. Check the details.")]
                 self.result_details += res.replace('''<div''', '''<div class="wikiwidget readonlyfield"''')
+
+        if not flag:
+            self.error = True
+            self.result = _("No python file found")
+            return None
         self.result_details += '</body></html>'
         average_score = count and score / count or score
         self.score = (max(average_score, 0)) / 10
