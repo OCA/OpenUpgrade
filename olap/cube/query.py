@@ -67,7 +67,7 @@ class query(object):
                 final_axis=[]
                 d = 0 
                 for data in common.xcombine(axis[-1],cross):
-                    data_temp =copy.deepcopy(data[0])
+                    data_temp = copy.copy(data[0])
                     if 'whereclause' in data[1]['query'].keys():
                         if 'whereclause' in data_temp.keys():
                             data_temp['query']['whereclause'].append(data[1]['query']['whereclause'])
@@ -110,13 +110,11 @@ class query(object):
                         else:
                             raise 'Error, %s not implemented !'% (key,)
 #            metadata.bind.echo = True
-
             query = select.execute()
             result = query.fetchall()
             for record in result:
                 cube = cube_data
                 r = list(record)
-
                 value = False
                 for s in subset:
                     cube = s['axis_mapping'].cube_set(cube, r, s['delta'])
