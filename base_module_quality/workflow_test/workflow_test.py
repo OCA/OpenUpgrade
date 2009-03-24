@@ -118,8 +118,11 @@ class quality_test(base_module_quality.abstract_quality_check):
                     good_view += 1
         score_avail = good_view and float(good_view) / float(bad_view + good_view)
         self.score = (score_general + score_avail) / 2
+
         if not wkf_ids and not bad_view:
-            self.score = 0.0
+            self.error = True
+            self.result = _("No Workflow define")
+            return None
         self.result = self.get_result({module_name: [module_name, int(self.score * 100)]})
         self.result_details += self.get_result_details(result_dict)
         return None

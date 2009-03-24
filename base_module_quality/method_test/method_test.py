@@ -43,8 +43,8 @@ This test checks if the module classes are raising exception when calling basic 
         obj_list = self.get_objects(cr, uid, module_name)
         result_dict = {}
         if not obj_list:
-            result_dict['error'] = ['Module has no objects', '', '', '']
-            self.result = self.get_result(result_dict)
+            self.error = True
+            self.result = _("Module has no objects")
             return None
         ok_count = 0
         ex_count = 0

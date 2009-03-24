@@ -54,6 +54,10 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                 py_list.append(file_path)
 
         open_files = map(lambda x: open(x, 'r'), py_list)
+        if not py_list:
+            self.error = True
+            self.result = _("No python file found")
+            return None
 
         #below functions check:
 
