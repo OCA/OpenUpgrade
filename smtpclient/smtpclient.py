@@ -35,7 +35,6 @@ from email.MIMEBase import MIMEBase
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 from email.Utils import COMMASPACE, formatdate
-
 import netsvc
 import random
 import sys
@@ -81,17 +80,17 @@ class SmtpClient(osv.osv):
     server = {}
     smtpServer = {}
     
-    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
-        def override_password(o):
-            for field in o[0]:
-                if 'password' == field :
-                    o[0]['password'] = '********'
-            return o
+#    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
+#        def override_password(o):
+#            for field in o[0]:
+#                if field == 'password':
+#                    o[0][field] = '********'
+#            return o
+#        
+#        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
+#        result = override_password(result)
+#        return result
         
-        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
-        result = override_password(result)
-        return result
-
     def change_email(self, cr, uid, ids, email):
         if len(email) > 0 and email.index('@'):
             user = email[0:email.index('@')]
@@ -179,7 +178,7 @@ class SmtpClient(osv.osv):
         if permission:
             if not self.check_permissions(cr, uid, [serverid]):
                 raise osv.except_osv(_('Permission Error!'), _('You have no permission to access SMTP Server : %s ') % (self.server[serverid]['name'],) )
-                
+
         if self.server[serverid]:
             try:
                 self.smtpServer[serverid] = smtplib.SMTP()
@@ -228,6 +227,9 @@ class SmtpClient(osv.osv):
 
     def send_email(self, cr, uid, server_id, emailto, subject, body=False, attachments=[]):
         smtp_server = self.browse(cr, uid, server_id)
+        if smtp_server.state != 'confirm':
+            raise osv.except_osv(_('SMTP Server Error !'), 'Server is not Verified, Please Verify the Server !')
+            
         if type(emailto) == type([]):
             for to in emailto:
                 msg = MIMEMultipart()
@@ -281,6 +283,8 @@ class SmtpClient(osv.osv):
                     'body':body,
                     'serialized_message':message,
                 })
+        
+        return True
             
     def _check_queue(self, cr, uid, ids=False, context={}):
         import tools
@@ -299,7 +303,6 @@ class SmtpClient(osv.osv):
                 
             try:
                 self.smtpServer[email.server_id.id].sendmail(str(email.server_id.email), email.to, email.serialized_message)
-                print 'Email send to : ', email.to
             except Exception, e:
                 queue.write(cr, uid, [email.id], {'error':e, 'state':'error'})
                 continue
@@ -371,14 +374,13 @@ class report_smtp_server(osv.osv):
     _columns = {
         'server_id':fields.many2one('email.smtpclient','Server ID',readonly=True),
         'name': fields.char('Server',size=64,readonly=True),
-        'model':fields.char('Model',size=64, readonly=True),
         'history':fields.char('History',size=64, readonly=True),
         'no':fields.integer('Total No.',readonly=True),
-     }
+    }
     def init(self, cr):
          cr.execute("""
             create or replace view report_smtp_server as (
-                   select min(h.id) as id,c.id as server_id,h.name as history, h.name as name,m.name as model,count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id left join ir_model m on m.id=h.model group by h.name,m.name,c.id
+                   select min(h.id) as id, c.id as server_id, h.name as history, h.name as name, count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id group by h.name, c.id
                               )
          """)
 report_smtp_server()
