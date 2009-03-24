@@ -36,6 +36,7 @@
     ],
     "update_xml" : [
         "smsclient_view.xml",
+        "serveraction_view.xml",
         "smsclient_wizard.xml",
         "smsclient_data.xml",
     ],
