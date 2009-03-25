@@ -39,9 +39,13 @@
          'etl_component/control/sleep_view.xml',
          'etl_component/input/csv_in_view.xml',
          'etl_component/input/sql_in_view.xml',
+         'etl_component/input/excel_in_view.xml',
+         'etl_component/input/xml_in_view.xml',
+         'etl_component/input/openobject_in_view.xml',
          'etl_component/input/vcard_in_view.xml',
          'etl_component/output/csv_out_view.xml',
          'etl_component/output/sql_out_view.xml',
+         
          'etl_component/output/openobject_out_view.xml',
          'etl_component/transform/sort_view.xml',
          'etl_component/transform/map_view.xml',

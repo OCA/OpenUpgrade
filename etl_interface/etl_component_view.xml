@@ -9,7 +9,7 @@
 			<field name="arch" type="xml">
 				<form string="Component Type">
 					<field name="name" select="1" colspan="4" />
-					<field name="code" />					
+					<field name="code" />
 				</form>
 			</field>
 		</record>
@@ -39,7 +39,7 @@
 
 
 		<!-- 
-		<menuitem name="Component types"
+			<menuitem name="Component types"
 			parent="menu_etl_configure"
 			action="action_etl_component_type_tree" sequence="10"
 			id="menu_action_etl_component_types" /> -->
@@ -51,19 +51,23 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Component">
-                    <group col="6" colspan="4">
-					    <field name="name" select="1" />
-					    <field name="type_id" select="1" />
-                        <field name="transformer_id" colspan="4"/>
-                    </group>
-                    <notebook colspan="4">                        
-                        <page string="Transitions Detail">
-					        <separator string="Incomming Transitions" colspan="4" />
-					        <field name="trans_in_ids" nolabel="1" colspan="4" readonly="1" />
-					        <separator string="Outgoing Transitions" colspan="4" />
-					        <field name="trans_out_ids" nolabel="1" colspan="4" readonly="1" />
-                        </page>
-                    </notebook>
+					<group col="6" colspan="4">
+						<field name="name" select="1" />
+						<field name="type_id" select="1" />
+						<field name="transformer_id" colspan="4" />
+					</group>
+					<notebook colspan="4">
+						<page string="Transitions Detail">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
 				</form>
 			</field>
 		</record>
@@ -92,7 +96,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="etl_component_tree" />
 		</record>
-		
+
 		<record id="action_etl_component_view1"
 			model="ir.actions.act_window.view">
 			<field eval="1" name="sequence" />
@@ -100,7 +104,7 @@
 			<field name="view_id" ref="etl_component_tree" />
 			<field name="act_window_id" ref="action_etl_component_tree" />
 		</record>
-		
+
 		<record id="action_etl_component_view2"
 			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
@@ -108,21 +112,22 @@
 			<field name="view_id" ref="etl_component_form" />
 			<field name="act_window_id" ref="action_etl_component_tree" />
 		</record>
-		
-		<menuitem name="Components" parent="etl_interface.menu_etl_configure"
-			 id="menu_etl_job_def_components" />
+
+		<menuitem name="Components"
+			parent="etl_interface.menu_etl_configure"
+			id="menu_etl_job_def_components" />
 
 		<menuitem name="Input Component" sequence="1"
-			parent="menu_etl_job_def_components" id="menu_etl_jd_c_ic_form" />
-		
+			parent="menu_etl_job_def_components" id="menu_etl_component_input_form" />
+
 		<menuitem name="Output Component"
 			parent="menu_etl_job_def_components" id="menu_etl_jd_c_oc_form" />
 
 		<menuitem name="Transform ETL Component"
-			parent="menu_etl_job_def_components" id="menu_etl_jd_c_pec_form" />	
+			parent="menu_etl_job_def_components" id="menu_etl_jd_c_pec_form" />
 
-        <menuitem name="Control ETL Component"
-			parent="menu_etl_job_def_components" id="menu_etl_jd_c_control_form" />			
+		<menuitem name="Control ETL Component"
+			parent="menu_etl_job_def_components" id="menu_etl_jd_c_control_form" />
 
 
 	</data>
