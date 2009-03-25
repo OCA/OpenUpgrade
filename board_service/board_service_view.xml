@@ -245,12 +245,12 @@
         	<form string="Random Activities">
         		<hpaned>
         			<child1>
-            			<action colspan="4" name="%(report_timesheet.action_random_timesheet_lines_board)d" string="Timesheet Lines"/>
-            			<action colspan="4" name="%(report_task.action_closed_task_board)d" string="Closed Tasks"/>
-            			<action colspan="4" name="%(report_crm.action_view_closed_crm_case_dashboard)d" string="Closed Cases"/>
-            			<action colspan="4" name="%(report_crm.action_view_open_crm_case_dashboard)d" string="Open Cases"/>
-            			<action colspan="4" name="%(report_sale.action_view_created_sale_order_dashboard)d" string="Sale Orders Created"/>
-            			<action colspan="4" name="%(report_account.action_view_created_invoice_dashboard)d" string="Invoices Created"/>
+            			<action colspan="4" name="%(report_timesheet.action_random_timesheet_lines_board)d" string="Timesheet Lines" height="250"/>
+            			<action colspan="4" name="%(report_task.action_closed_task_board)d" string="Closed Tasks" height="250"/>
+            			<action colspan="4" name="%(report_crm.action_view_closed_crm_case_dashboard)d" string="Closed Cases" height="250"/>
+            			<action colspan="4" name="%(report_crm.action_view_open_crm_case_dashboard)d" string="Open Cases" height="250"/>
+            			<action colspan="4" name="%(report_sale.action_view_created_sale_order_dashboard)d" string="Sale Orders Created" height="250"/>
+            			<action colspan="4" name="%(report_account.action_view_created_invoice_dashboard)d" string="Invoices Created" height="250"/>
             		</child1>
 				</hpaned>
         	</form>
