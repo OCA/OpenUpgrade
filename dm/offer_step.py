@@ -147,7 +147,7 @@ class dm_offer_step(osv.osv):
         'planning_note' : fields.text('Planning Notes', states={'closed':[('readonly',True)]}),
         'purchase_note' : fields.text('Purchase Notes', states={'closed':[('readonly',True)]}),
         'mailing_at_dates' : fields.boolean('Mailing at dates', states={'closed':[('readonly',True)]}),
-        'floating date' : fields.boolean('Floating date', states={'closed':[('readonly',True)]}),
+        'floating_date' : fields.boolean('Floating date', states={'closed':[('readonly',True)]}),
         'interactive' : fields.boolean('Interactive', states={'closed':[('readonly',True)]}),
         'notes' : fields.text('Notes'),
         'document_ids' : fields.one2many('dm.offer.document', 'step_id', 'DTP Documents'),
