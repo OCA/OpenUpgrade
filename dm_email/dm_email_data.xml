@@ -20,8 +20,7 @@
             <field name="media_id" ref="dm.media_email"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
             <field eval="1" name="dm_action"/>
-            <field eval="&quot;&quot;&quot;from dm import report_design
-            report_design.generate_reports(cr,uid,obj,'html',context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;from dm import report_design \nreport_design.generate_reports(cr,uid,obj,'html',context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate HTML Document&quot;&quot;&quot;" name="name"/>
         </record>
