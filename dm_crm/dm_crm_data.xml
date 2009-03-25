@@ -33,8 +33,8 @@
 			<field name="record_id" ref="dm.field_dm_workitem_error_msg"/>
             <field eval="1" name="dm_action"/>
         </record>
-        <record id="ir_server_object_lines_0" model="ir.server.object.lines">
-<!--			<field name="server_id" ref="dm_crm.ir_actions_server_crm_case_create0"/>-->
+        <!-- record id="ir_server_object_lines_0" model="ir.server.object.lines">
+			<field name="server_id" ref="dm_crm.ir_actions_server_crm_case_create0"/>
 			<field eval="&quot;&quot;&quot;value&quot;&quot;&quot;" name="type"/>
 			<field eval="&quot;&quot;&quot;1&quot;&quot;&quot;" name="value"/>
 			<field name="col1" ref="crm.field_crm_case_section_id"/>
@@ -44,7 +44,7 @@
 			<field eval="&quot;&quot;&quot;value&quot;&quot;&quot;" name="type"/>
 			<field eval="&quot;&quot;&quot;CRM Test&quot;&quot;&quot;" name="value"/>
 			<field name="col1" ref="crm.field_crm_case_name"/>
-		</record>
+		</record -->
     </data>
 
 	
