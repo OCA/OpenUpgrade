@@ -101,7 +101,6 @@ dm_customer_order()
 
 class dm_customer_gender(osv.osv):
     _name = "dm.customer.gender"
-
     def _customer_gender_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
@@ -119,7 +118,7 @@ class dm_customer_gender(osv.osv):
                     code='_'.join(['from', cust_gender.from_gender_id.name, 'to', cust_gender.to_gender_id.name])
             result[id]=code
         return result
-    
+
     _columns = {
         'name' : fields.char('Name', size=16),
         'code' : fields.function(_customer_gender_code,string='Code',type='char',method=True,readonly=True),
@@ -128,7 +127,6 @@ class dm_customer_gender(osv.osv):
         'lang_id' : fields.many2one('res.lang', 'Language'),
         'description' : fields.text('Description'),
     }
-    
 dm_customer_gender()
 
 class dm_workitem(osv.osv):
@@ -141,12 +139,41 @@ class dm_workitem(osv.osv):
         'action_time' : fields.datetime('Action Time', required=True),
         'error_msg' : fields.text('Error Message'),
 #        'state' : fields.selection([('running','Running'),('error','Error')], 'Status', readonly=True),
-        'state' : fields.selection([('pending','Pending'),('processing','Processing'),('done','Done')], 'Status', readonly=True),
+        'state' : fields.selection([('pending','Pending'),('error','Error'),('done','Done')], 'Status', readonly=True),
     }
     _defaults = {
 #        'state': lambda *a: 'running',
         'state': lambda *a: 'pending',
     }
+    def run(self, cr, uid, wi, context={}):
+        context['active_id'] = wi.id
+        done = False
+        try:
+            # processing ? Not usefull
+            res = obj.run(cr, uid, [wi.step_id.action_id.id], context)
+            self.write(cr, uid, [wi.id], {'state': 'done'})
+            done = True
+        except:
+            self.write(cr, uid, [wi.id], {'state': 'error'})
+        if done:
+            pass
+            # Create next auto workitems
+        return True
+
+    def __init__(self, *args):
+        self.ir_running = False
+        return super(dm_workitem, self).__init__(*args)
+
+    def check_all(self, cr, uid, context={}):
+        if not self.is_running:
+            self.is_running = True
+            ids = self.search(cr, uid, [('state','=','pending'),
+                ('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
+            obj = self.pool.get('ir.actions.server')
+            for wi in self.browse(cr, uid, ids, context=context):
+                self.run(cr, uid, wi, context=context)
+            self.is_running = False
+        return True
 dm_workitem()
 
 """
