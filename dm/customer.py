@@ -140,8 +140,8 @@ class dm_workitem(osv.osv):
         'customer_id' : fields.many2one('res.partner', 'Customer', required=True, ondelete="cascade"),
         'action_time' : fields.datetime('Action Time', required=True),
         'error_msg' : fields.text('Error Message'),
-        'state' : fields.selection([('Running','running'),('Error','error')], 'Status', readonly=True),
-#        'state' : fields.selection([('pending','Pending'),('processing','Processing'),('done','Done')], 'Status', readonly=True),
+#        'state' : fields.selection([('Running','running'),('Error','error')], 'Status', readonly=True),
+        'state' : fields.selection([('pending','Pending'),('processing','Processing'),('done','Done')], 'Status', readonly=True),
     }
     _defaults = {
         'state': lambda *a: 'running',
