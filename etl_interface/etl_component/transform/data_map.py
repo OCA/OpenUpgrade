@@ -64,15 +64,15 @@ class etl_component_transform_map(osv.osv):
             'preprocess' : fields.text('Preprocess'), 
     }
     
-    def create_instance(self, cr, uid, id, context={}):        
+    def create_instance(self, cr, uid, id, context={}, data={}):        
         obj_transformer = self.pool.get('etl.transformer')        
         cmp=self.browse(cr, uid, id)
-        val=super(etl_component_transform_map, self).create_instance(cr, uid, id, context)
+        val=super(etl_component_transform_map, self).create_instance(cr, uid, id, context, data)
         if cmp.type_id.name == 'transform.map':
             trans_instance=False
             map_criteria={}
             if cmp.transformer_id:                
-                trans_instance=obj_transformer.create_instance(cr, uid, cmp.transformer_id.id, context)      
+                trans_instance=obj_transformer.create_instance(cr, uid, cmp.transformer_id.id, context, data)      
             for line in cmp.map_line_ids:
                 fields={}
                 for field in line.map_field_ids:

@@ -31,7 +31,7 @@ class job(signal):
     """
        Base class of ETL job.
     """
-    def action_start(self,key,signal_data={},data={}):        
+    def action_start(self,key,signal_data={},data={}):
         self.status='start'        
         self.logger.notifyChannel("job", logger.LOG_INFO, 
                      'the '+str(self)+' is start now...')

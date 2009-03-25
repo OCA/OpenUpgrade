@@ -46,8 +46,8 @@ class etl_connector_openobject(osv.osv):
             val['con_type']= 'xmlrpc'                
         return {'value':val}
         
-    def create_instance(self, cr, uid, id , context={}):
-        val = super(etl_connector_openobject, self).create_instance(cr, uid, id, context)
+    def create_instance(self, cr, uid, id , context={}, data={}):
+        val = super(etl_connector_openobject, self).create_instance(cr, uid, id, context, data)
         con=self.browse(cr, uid, id)
         if con.type == 'openobject_connector':
             val = etl.connector.openobject_connector(con.uri, cr.dbname, con.login, con.passwd, con.obj, con.con_type) 

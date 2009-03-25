@@ -32,17 +32,17 @@ class etl_component_vcard_in(osv.osv):
             'connector_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=',localfile)]"), 
     }
     
-    def create_instance(self, cr, uid, id, context={}):
-        val=super(etl_component_vcard_in, self).create_instance(cr, uid, id, context)
+    def create_instance(self, cr, uid, id, context={}, data={}):
+        val=super(etl_component_vcard_in, self).create_instance(cr, uid, id, context, data)
         obj_connector=self.pool.get('etl.connector')
         obj_transformer = self.pool.get('etl.transformer')
         cmp=self.browse(cr, uid, id)
         if cmp.type_id.name=='input.vcard_in':      
             conn_instance=trans_instance=False            
             if cmp.connector_id:                
-                conn_instance=obj_connector.get_instance(cr, uid, cmp.connector_id.id , context)                
+                conn_instance=obj_connector.get_instance(cr, uid, cmp.connector_id.id , context, data)                
             if cmp.transformer_id:                
-                trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context)
+                trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
 
             val =etl.component.input.vcard_in(conn_instance, 'component.input.vcard_in')        
             

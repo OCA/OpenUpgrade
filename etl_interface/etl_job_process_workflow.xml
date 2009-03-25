@@ -85,7 +85,7 @@
 		<record id="trans_open_start" model="workflow.transition">
 			<field name="act_from" ref="act_open" />
 			<field name="act_to" ref="act_start" />
-			<field name="signal">action_start_process</field>
+			<field name="signal">start_process</field>
 		</record>
 
 
@@ -134,7 +134,7 @@
 		<record id="trans_pause_start" model="workflow.transition">
 			<field name="act_from" ref="act_pause" />
 			<field name="act_to" ref="act_start" />
-			<field name="signal">action_start_process</field>
+			<field name="signal">start_process</field>
 		</record>
 
 		<record id="trans_exception_cancel" model="workflow.transition">
@@ -146,7 +146,7 @@
 		<record id="trans_exception_start" model="workflow.transition">
 			<field name="act_from" ref="act_exception" />
 			<field name="act_to" ref="act_start" />
-			<field name="signal">action_start_process</field>
+			<field name="signal">start_process</field>
 		</record>
 
 	</data>

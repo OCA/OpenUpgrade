@@ -432,7 +432,7 @@
 							<field name="log" />
 						</group>
 					<notebook colspan="4">
-						<page string="Statistics">
+						<page string="Statistics" attrs="{'invisible':[('statistics','=',False)]}">
 							<separator string="Statistics" colspan="4" />
 							<group colspan="4" col="6">
 								<field name="start_date" />
@@ -442,8 +442,8 @@
 								<field name="output_records" />
 							</group>
 							<field name="component_ids" colspan="4"
-								nolabel="1" widget="one2many_list" editable="bottom">
-								<tree string="Components">
+								nolabel="1" widget="one2many_list">
+								<tree string="Component's Statistics"  editable="bottom">
 									<field name="name" select="1" />
 									<field name="signal" />
 									<field name="start_date" select="1" />
@@ -473,30 +473,14 @@
 									</notebook>
 								</form>
 							</field>
-							<separator string="Status" colspan="4" />
-							<group colspan="4" col="11" >
-							<field name="state"/>
-								<button name="action_open"	string="Open" states="draft" icon="gtk-yes"/>
-								<button name="action_cancel_draft"	string="Set to Draft" states="cancel" type="object" icon="gtk-convert"/>
-								<button name="action_start_process" string="Start" states="open,pause" icon="gtk-execute"/>
-								<button name="action_pause" string="Pause" states="start" icon="gtk-media-pause"/>
-								<button name="action_restart_process"	string="Retry" type="object" states="exception" icon="gtk-ok"/>
-								<button name="action_stop" string="Stop" states="start,pause" icon="gtk-no"/>
-								<button name="action_restart_process"	string="Restart" type="object" states="stop" icon="gtk-refresh"/>
-								<button name="cancel" string="Cancel" states="draft,open,exception,pause" icon="gtk-cancel"/>
-							</group>
 						</page>
-						<page string="Other Details">
-							<field name="error_msg"/>
-							<field name="log_ids" colspan="4"
-								nolabel="1" widget="one2many_list" editable="bottom">
-								<tree string="Logs">
-									<field name="name" select="1" />
+						<page string="Log Details" attrs="{'invisible':[('log','=',False)]}">
+							<field name="log_ids" colspan="4"	 nolabel="1" widget="one2many_list">
+								<tree string="Logs" editable="bottom">
 									<field name="date_time" />
 									<field name="desc" />
 								</tree>
 								<form string="Logs/Messages">
-									<field name="name" select="1" />
 									<field name="date_time" />
 									<separator string="Description"
 										colspan="4" />
@@ -505,7 +489,23 @@
 								</form>
 							</field>
 						</page>
+					<page string="Other Details">
+							<separator string="Error Message" colspan="4" />
+							<field name="error_msg" nolabel="1"/>
+					</page>
 					</notebook>
+					<separator string="Status" colspan="4" />
+							<group colspan="4" col="11" >
+							<field name="state"/>
+								<button name="action_open"	string="Open" states="draft" icon="gtk-yes"/>
+								<button name="action_cancel_draft"	string="Set to Draft" states="cancel" type="object" icon="gtk-convert"/>
+								<button name="start_process" string="Start" states="open,pause" icon="gtk-execute"/>
+								<button name="action_pause" string="Pause" states="start" icon="gtk-media-pause"/>
+								<button name="action_restart_process"	string="Retry" type="object" states="exception" icon="gtk-ok"/>
+								<button name="action_stop" string="Stop" states="start,pause" icon="gtk-no"/>
+								<button name="action_restart_process"	string="Restart" type="object" states="stop" icon="gtk-refresh"/>
+								<button name="cancel" string="Cancel" states="draft,open,exception,pause" icon="gtk-cancel"/>
+							</group>
 				</form>
 			</field>
 		</record>
