@@ -79,6 +79,15 @@
         <field name="domain">[('forecast_id.state','=','draft')]</field>
     </record>
     
+    <record id="act_hr_timesheet_sheet_my_dept" model="ir.actions.act_window">
+            <field name="name">My Departments' Timesheets To Validate</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr_timesheet_sheet.sheet</field>
+            <field name="domain">[('user_id','child_of',(uid,))]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+    </record>
+        
     <!-- Dashboard View -->   
         
     <record id="board_service_weekly_form" model="ir.ui.view">
@@ -90,13 +99,14 @@
         		<hpaned>
         			<child1>
             			<action colspan="4" name="%(action_view_forecast)d" string="Draft Sales Forecast Lines" width="500"/>
-            			<button colspan="4" icon="terp-purchase" name="%(hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_validate)d" string="My Departments' Timesheets to Validate" type="action" width="300"/>
-            			<action colspan="4" name="%(report_sale.action_turnover_month_tree)d" string="Turnover Per Month"/>
+            			<action colspan="4" name="%(act_hr_timesheet_sheet_my_dept)d" string="My Departments' Timesheets to Validate" width="300"/>
             			<action colspan="4" name="%(report_crm.action_report_crm_case_section_tree)d" string="Cases By Section"/>
+            			<action colspan="4" name="%(report_analytic_planning.action_account_analytic_planning_stat_my_manager_form)d" string="My Planning Statistics" />
             		</child1>
             		<child2>
+            			<action colspan="4" name="%(report_sale.action_turnover_month_tree)d" string="Turnover Per Month"/>
+            			<action colspan="4" name="%(report_sale.action_turnover_product_tree)d" string="Turnover Per Product"/>
             			<action colspan="4" name="%(report_sale.action_so_pipeline)d" string="Sales Pipeline"/>
-            			<action colspan="4" name="%(report_analytic_planning.action_account_analytic_planning_stat_my_manager_form)d" string="My Planning Statistics" />
             			<action colspan="4" name="%(report_account.action_aged_receivable_graph)d" string="Aged Receivables" />
             		</child2>
             	</hpaned>
