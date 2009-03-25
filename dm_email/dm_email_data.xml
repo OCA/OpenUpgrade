@@ -33,5 +33,13 @@
             <field eval="&quot;&quot;&quot;html&quot;&quot;&quot;" name="code"/>
         </record>
     </data>
-
+    
+	<!-- Offer Step type -->
+    <data noupdate="1">
+        <record id="offer_step_type_generate0" model="dm.offer.step.type">
+            <field eval="&quot;&quot;&quot;Acknowledgement of Delivered Email&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;ACKEMAIL&quot;&quot;&quot;" name="code"/>              
+        </record>
+    </data>
+    
 </openerp>
