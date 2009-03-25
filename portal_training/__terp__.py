@@ -37,7 +37,7 @@
     'demo_xml' : [
     ],
     'update_xml' : [
-        'portal_training_view.xml',
+        #'portal_training_view.xml',
     ],
     'active' : False,
     'installable' : True,
