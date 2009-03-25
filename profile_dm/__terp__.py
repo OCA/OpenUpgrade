@@ -24,7 +24,7 @@
     "version":"0.1",
     "author":"Tiny",
     "category":"Profile",
-    "depends":["dm", "board_dm"],
+    "depends":["board_dm", "dm_crm", "dm_email", "dm_website"],
     "demo_xml":[],
     "update_xml":[],
     "active":False,
