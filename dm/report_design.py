@@ -14,6 +14,43 @@ from osv import osv
 import time
 from customer_function import customer_function
 
+
+def generate_reports(cr,uid,obj,report_type,context):
+    customer_id = obj.customer_id.id
+    step_id = obj.step_id.id
+    pool = pooler.get_pool(cr.dbname)
+    dm_doc_obj = pool.get('dm.offer.document') 
+    report_xml = pool.get('ir.actions.report.xml')
+
+    document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
+
+    type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',report_type)])
+
+    vals={'segment_id': obj.segment_id.id, 'name': obj.step_id.code + "_" +str(obj.customer_id.id), 'type_id': type_id[0]}
+
+    camp_doc  = pool.get('dm.campaign.document').create(cr,uid,vals)
+    
+    if document_id :
+        report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
+        document_name = dm_doc_obj.read(cr,uid,document_id,['name'])[0]['name']
+        if report_ids :
+            attachment_obj = pool.get('ir.attachment')
+            for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
+                srv = netsvc.LocalService('report.'+report.report_name)
+                context['customer_id'] = customer_id
+                context['document_id'] = document_id[0]
+                pdf,pdftype = srv.create(cr, uid, [], {},context)
+                attach_vals={'name' : document_name+ "_" +str(obj.customer_id.id),
+                             'datas_fname' : 'report.'+report.report_name+pdftype ,
+                             'res_model' : 'dm.campaign.document',
+                             'res_id' : camp_doc,
+                             'datas': base64.encodestring(pdf),
+                             }
+                attachment_obj.create(cr,uid,attach_vals)
+    return True
+
+
+
 def generate_plugin_value(cr, uid, document_id, customer_id, context={}):
     if not document_id :
         return False
