@@ -40,53 +40,6 @@ class dm_ddf_plugin(osv.osv):
             return plugin_ids
         return super(dm_ddf_plugin, self).search(cr, uid, args, offset, limit, order, context, count)
 
-    
-    def _check_plugin(self, cr, uid, ids=False, context={}):
-        dm_document = self.pool.get('dm.offer.document')
-        dm_plugins_value = self.pool.get('dm.plugins.value')
-        ddf_plugin = self.pool.get('dm.ddf.plugin')
-        dm_customer_order = self.pool.get('dm.customer.order')
-        
-        document_ids = dm_document.search(cr, uid, [])
-        documents = dm_document.browse(cr, uid, document_ids, ['document_template_id', 'step_id'])
-        for d in documents:
-            order_id = dm_customer_order.search(cr, uid, [('offer_step_id', '=', d.step_id.id)])
-            order = dm_customer_order.browse(cr, uid, order_id)
-            customer_ids = map(lambda x:x.customer_id.id, order)
-            plugins = d.document_template_id.plugin_ids or []
-            for plugin in plugins:
-                args = {}
-                if plugin.type == 'fields':
-                    res  = self.pool.get('ir.model').browse(cr, uid, plugin.model_id.id)
-                    args['model_name'] = res.model
-                    args['field_name'] = str(plugin.field_id.name)
-                    args['field_type'] = str(plugin.field_id.ttype)
-                    args['field_relation'] = str(plugin.field_id.relation)
-    
-                    path = os.path.join(os.getcwd(), "addons/dm/")
-                    plugin_name = 'customer_function'
-                else :
-                    arguments = plugin.argument_ids
-                    for a in arguments:
-                        args[str(a.name)]=str(a.value)
-                    path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
-                    plugin_name = plugin.file_fname.split('.')[0]
-                
-                sys.path.append(path)
-                X =  __import__(plugin_name)
-                plugin_func = getattr(X, plugin_name)
-                plugin_value = plugin_func(cr, uid, customer_ids, **args)
-
-                if plugin.store_value : 
-                    map(lambda x :dm_plugins_value.create(cr, uid,
-                                {'date':time.strftime('%Y-%m-%d'),
-                                 'customer_id':x[0],
-                                 'plugin_id':plugin.id,
-                                 'value' : x[1]}),
-                                plugin_value
-                                )
-        return True
-    
     def _data_get(self, cr, uid, ids, name, arg, context):
         result = {}
         cr.execute('select id, file_fname from dm_ddf_plugin where id in ('+','.join(map(str, ids))+')')
@@ -263,3 +216,5 @@ class dm_offer_document(osv.osv):
         return True
   
 dm_offer_document()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
