@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+	<record model="product.category" id="cat_shipping_cost">
+		<field name="parent_id" ref="null"/>
+		<field name="name">Shipping Cost</field>
+	</record>
+        <record model="product.product" id="product_product_shipping_Cost">
+		<field name="list_price">0.00</field>
+		<field name="standard_price">0.00</field>
+		<field name="default_code">SHC</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="type">service</field>
+		<field name="name">Shipping Cost</field>
+		<field name="categ_id" ref="cat_shipping_cost"/>
+	</record>
+</data>
+</openerp>

@@ -38,7 +38,7 @@ class etl_component_excel_in(osv.osv):
             }
     
 #    def create_instance(self, cr, uid, id, context={}):
-#        val=super(etl_component_excel_in, self).create_instance(cr, uid, id, context)
+#        val=super(etl_component_excel_in, self).create_instance(cr, uid, id, context, data)
 #        obj_connector=self.pool.get('etl.connector')
 #        obj_transformer = self.pool.get('etl.transformer')
 #        cmp=self.browse(cr, uid, id)

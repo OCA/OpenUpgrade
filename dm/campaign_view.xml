@@ -5,6 +5,8 @@
     <menuitem name="Campaigns" id="menu_dm_config_campaign" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
     <menuitem name="Customers Lists" id="menu_dm_config_camp_custlist" parent="dm.menu_dm_config_campaign" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
     <menuitem name="Campaigns" id="menu_dm_campaign" parent="menu_dm" sequence="4"/>
+    <menuitem name="Low Level" id="menu_dm_config_lowlevel" parent="dm.menu_dm_config" groups="res_groups_dmadmin" sequence="0"/>
+    <menuitem name="Campaign Documents" id="menu_dm_config_lowlevel_campaign_doc" parent="dm.menu_dm_config_lowlevel" groups="res_groups_dmadmin" sequence="1"/>
 
     <!--
     =======================================================
@@ -1055,12 +1057,13 @@
                 <field name="trademark_id" select="1"/>
                 <field name="dealer_id" select="2"/>
                 <field name="bank_account_id" select="2"/>
+				<separator string="Payment Method Rules" colspan="4"/>
+                <field name="payment_method_rule_ids" colspan="4" nolabel="1"/>
                 <separator string="Countries" colspan="4"/>
                 <field name="country_ids" colspan="4" nolabel="1"/>
             </form>
         </field>
     </record>
-
     <record model="ir.ui.view" id="view_dm_overlay_tree">
         <field name="name">dm.overlay.tree</field>
         <field name="model">dm.overlay</field>
@@ -1071,10 +1074,10 @@
                 <field name="trademark_id"/>
                 <field name="dealer_id"/>
                 <field name="bank_account_id"/>
+                <field name="payment_method_rule_ids"/>
             </tree>
         </field>
     </record>
-
     <record model="ir.actions.act_window" id="action_dm_overlay_form">
         <field name="name">All Overlays</field>
         <field name="type">ir.actions.act_window</field>
@@ -1083,8 +1086,8 @@
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_dm_overlay_tree"/>
     </record>
-
     <menuitem id="menu_action_dm_overlay_form" parent="dm.menu_dm_config_campaign" action="action_dm_overlay_form"/>
+
 
     <record model="ir.actions.act_window" id="action_campaign_dealer_form">
         <field name="name">All Dealers</field>
@@ -1390,6 +1393,90 @@
 
     <!--
     =======================================================
+    CAMPAIGN DOCUMENT TYPE
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_campaign_document_type_form">
+        <field name="name">dm.campaign.document.type.form</field>
+        <field name="model">dm.campaign.document.type</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Campaign Document Type">
+                <separator string="Campaign Document Type" colspan="4"/>
+                <field name="name" select="1"/>
+                <field name="code" select="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_campaign_document_type_tree">
+        <field name="name">dm.campaign.document.type.tree</field>
+        <field name="model">dm.campaign.document.type</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Campaign Document Types">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_campaign_document_type">
+        <field name="name">All Campaign Document Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.document.type</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_campaign_document_type_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_campaign_document_type" parent="menu_dm_config_lowlevel_campaign_doc" action="action_dm_campaign_document_type" sequence="0" />
+
+    <!--
+    =======================================================
+    CAMPAIGN DOCUMENT
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_campaign_document_form">
+        <field name="name">dm.campaign.document.form</field>
+        <field name="model">dm.campaign.document</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Campaign Document">
+                <separator string="Campaign Document" colspan="4"/>
+                <field name="name" select="1"/>
+                <field name="type_id" select="2"/>
+                <field name="segment_id" select="2"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_campaign_document_tree">
+        <field name="name">dm.campaign.document.tree</field>
+        <field name="model">dm.campaign.document</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Campaign Documents">
+                <field name="name"/>
+                <field name="type_id"/>
+                <field name="segment_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_campaign_document">
+        <field name="name">All Campaign Documents</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.document</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_campaign_document_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_campaign_document" parent="menu_dm_config_lowlevel_campaign_doc" action="action_dm_campaign_document" sequence="1" />
+
+    <!--
+    =======================================================
     CUSTOMERS FILE
     =======================================================
     -->
@@ -1498,6 +1585,58 @@
             </notebook>
         </field>
     </record>
+
+<!--
+    =======================================================
+        OVERLAY PAYMENT RULE
+    =======================================================
+    -->
+
+	<record model="ir.ui.view" id="view_overlay_payment_rule_form">
+        <field name="name">dm.overlay.payment_rule.form</field>
+        <field name="model">dm.overlay.payment_rule</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Overlay Payment">
+                <field name="journal_id" select="1"/>
+                <field name="move" select="1"/>
+                <field name="currency_id" />
+                <field name="country_id" />
+                <field name="account_id" />
+                <field name="country_default" select="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_overlay_payment_rule_tree">
+        <field name="name">dm.overlay.payment_rule.tree</field>
+        <field name="model">dm.overlay.payment_rule</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Overlay Payment">
+                <field name="journal_id" select="1"/>
+                <field name="move" select="1"/>
+                <field name="currency_id" />
+                <field name="country_id" />
+                <field name="account_id" />
+                <field name="country_default"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_overlay_payment_rule_form">
+        <field name="name">Overlay Payment Rule</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.overlay.payment_rule</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_overlay_payment_rule_tree"/>
+    </record>
+
+    <menuitem id="menu_action_overlay_payment_rule_form" parent="dm.menu_dm_config_campaign" action="action_overlay_payment_rule_form"/>
+
+
+
 
     <!--
     =======================================================

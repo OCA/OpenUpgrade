@@ -87,6 +87,15 @@ cube table and cube table line
         <field name="table_id" ref="table_crm_case"/>
         <field name="active">True</field>
     </record>
+    <record model="olap.database.columns" id="crm_case_partner_id">
+        <field name="name">parnter_id</field>
+        <field name="column_db_name">partner_id</field>
+        <field name="type">float8</field>
+        <field name="table_id" ref="table_crm_case"/>
+        <field name="active">True</field>
+        <field name="related_to" ref="table_res_partner"/>
+    </record>
+ 
     <record model="olap.database.columns" id="crm_case_planned_cost">
         <field name="name">id</field>
         <field name="column_db_name">id</field>
@@ -212,6 +221,12 @@ cube table and cube table line
         <field name='schema_id' ref='schema_crm'/>
         <field name='column_link_id' ref='crm_case_stage_id'/>
     </record>
+    <record model="olap.cube.table" id="crm_cube_parnter_table">
+        <field name="name">crm_cube_parnter</field>
+        <field name='schema_id' ref='schema_crm'/>
+        <field name='column_link_id' ref='crm_case_partner_id'/>
+    </record>
+
 
     <record model="olap.cube.table" id="crm_cube_categ_table">
         <field name="name">crm_cube_categ</field>
@@ -351,7 +366,7 @@ Category
         <field name="name">Customer</field>
         <field name="dimension_id" ref="dimension_crm_customer"/>
         <field name="primary_key_table">crm_case</field>
-        <field name="table_id" ref="crm_cube_stage_table"/>
+        <field name="table_id" ref="crm_cube_parnter_table"/>
     </record>
 
     <record model="olap.level" id="level_crm_category">

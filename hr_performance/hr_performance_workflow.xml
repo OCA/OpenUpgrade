@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="hr_review" model="res.roles">
+            <field name="name">Human Resources - Review</field>
+        </record>
+        
+        <record id="wkf_performance" model="workflow">
+            <field name="name">hr.performance.basic</field>
+            <field name="osv">hr.performance</field>
+            <field name="on_create">True</field>
+        </record>
+        
+        <record id="act_new" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_performance"/>
+            <field name="name">new</field>
+            <field name="flow_start">True</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state': 'new'})</field>
+        </record>
+        
+        <record id="act_saved" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_performance"/>
+            <field name="name">saved</field>
+            <field name="kind">function</field>
+            <field name="action">fill_employee_list()</field>
+        </record>
+        
+        <record id="act_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_performance"/>
+            <field name="name">done</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">change_sate()</field>
+        </record>
+        
+        <record id="t1" model="workflow.transition">
+            <field name="act_from" ref="act_new"/>
+            <field name="act_to" ref="act_saved"/>
+            <field name="signal">get_employee_list</field>
+            <field name="role_id" ref="hr_review"/>
+        </record>
+        
+        <record id="t2" model="workflow.transition">
+            <field name="act_from" ref="act_saved"/>
+            <field name="act_to" ref="act_done"/>
+            <field name="signal">confirm_review</field>
+            <field name="role_id" ref="hr_review"/>
+        </record>
+	</data>
+</openerp>

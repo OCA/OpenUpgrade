@@ -423,29 +423,41 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Job Process">
-					<group colspan="4">
-						<field name="name" select="1" />
-					</group>
-
+						<field name="name" select="1"/>
+						<field name="job_id" select="1"/>
+						<field name="schedule_date" select="1"/>
+						<newline/>
+						<group colspan="2" col="4">
+							<field name="statistics" />
+							<field name="log" />
+						</group>
 					<notebook colspan="4">
-						<page string="Job Detail">
-							<field name="job_id" colspan="4" />
-							<separator string="Components" colspan="4" />
+						<page string="Statistics" attrs="{'invisible':[('statistics','=',False)]}">
+							<separator string="Statistics" colspan="4" />
+							<group colspan="4" col="6">
+								<field name="start_date" />
+								<field name="end_date" />
+								<field name="compute_time" />
+								<field name="input_records" />
+								<field name="output_records" />
+							</group>
 							<field name="component_ids" colspan="4"
-								nolabel="1" widget="one2many_list" editable="bottom">
-								<tree string="Components">
+								nolabel="1" widget="one2many_list">
+								<tree string="Component's Statistics"  editable="bottom">
 									<field name="name" select="1" />
-									<field name="state" />
-									<field name="records_in" />
-									<field name="records_out" />
+									<field name="signal" />
 									<field name="start_date" select="1" />
 									<field name="end_date" select="1" />
 									<field name="compute_time" />
+									<field name="records_in" />
+									<field name="records_out" />
 									<field name="seconds_par_record" />
+									<field name="state" />
 								</tree>
 								<form string="Component">
 									<group colspan="4">
 										<field name="name" select="1" />
+										<field name="signal" />
 									</group>
 									<notebook colspan="4">
 										<page string="Details">
@@ -461,17 +473,14 @@
 									</notebook>
 								</form>
 							</field>
-							<field name="log_ids" colspan="4"
-								nolabel="1" widget="one2many_list" editable="bottom">
-								<tree string="Logs">
-									<field name="name" select="1" />
-									<field name="component_id" />
+						</page>
+						<page string="Log Details" attrs="{'invisible':[('log','=',False)]}">
+							<field name="log_ids" colspan="4"	 nolabel="1" widget="one2many_list">
+								<tree string="Logs" editable="bottom">
 									<field name="date_time" />
 									<field name="desc" />
 								</tree>
 								<form string="Logs/Messages">
-									<field name="name" select="1" />
-									<field name="component_id" />
 									<field name="date_time" />
 									<separator string="Description"
 										colspan="4" />
@@ -479,30 +488,24 @@
 										nolabel="1" />
 								</form>
 							</field>
-							<separator string="Status" colspan="4" />
-							<field name="state" />
-							<group colspan="2">
-								<button name="action_open_process"
-									string="Open" type="object" states="draft" />
-								<button name="action_start_process"
-									string="Start" type="object" states="open,pause" />
-								<button name="action_pause_process"
-									string="Pause" type="object" states="start" />
-								<button name="action_stop_process"
-									string="Stop" type="object" states="start" />
-							</group>
 						</page>
-						<page string="Statictics">
-							<group col="6" colspan="4">
-								<field name="start_date" />
-								<field name="end_date" />
-								<field name="compute_time" />
-								<field name="input_records" />
-								<field name="output_records" />
-							</group>
-
-						</page>
+					<page string="Other Details">
+							<separator string="Error Message" colspan="4" />
+							<field name="error_msg" nolabel="1"/>
+					</page>
 					</notebook>
+					<separator string="Status" colspan="4" />
+							<group colspan="4" col="11" >
+							<field name="state"/>
+								<button name="action_open"	string="Open" states="draft" icon="gtk-yes"/>
+								<button name="action_cancel_draft"	string="Set to Draft" states="cancel" type="object" icon="gtk-convert"/>
+								<button name="start_process" string="Start" states="open,pause" icon="gtk-execute"/>
+								<button name="action_pause" string="Pause" states="start" icon="gtk-media-pause"/>
+								<button name="action_restart_process"	string="Retry" type="object" states="exception" icon="gtk-ok"/>
+								<button name="action_stop" string="Stop" states="start,pause" icon="gtk-no"/>
+								<button name="action_restart_process"	string="Restart" type="object" states="stop" icon="gtk-refresh"/>
+								<button name="cancel" string="Cancel" states="draft,open,exception,pause" icon="gtk-cancel"/>
+							</group>
 				</form>
 			</field>
 		</record>
@@ -518,6 +521,7 @@
 					<field name="job_id" select="1" />
 					<field name="start_date" select="1" />
 					<field name="end_date" select="1" />
+					<field name="state" select="1" />
 					<field name="compute_time" />
 					<field name="input_records" />
 					<field name="output_records" />

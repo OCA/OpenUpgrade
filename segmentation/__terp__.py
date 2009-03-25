@@ -30,7 +30,7 @@
     In this version the new concept of questionnaire allow you to regroup questions into a questionnaire and directly use it on a partner.
 
 
-NOTICE: This Module is Deprecated. Please install crm_profiling in order to have access to the latest functionnalities.
+NOTICE: This Module is Deprecated. Please install crm_profiling in order to have access to the latest functionalities.
     """,
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Project & Services",

@@ -17,7 +17,7 @@
 						<field name="directory_id"/>
 						<field name="date_type"/>
 						<field name="filename"/>
-						<field name="server_act"/>
+
 		  		</page>
 		  		<page string="Actions">
 		  			<separator colspan="4" string="Directory Actions"/>
@@ -26,6 +26,8 @@
 					<separator colspan="4" string="Assign To"/>
 					<field name="act_assign_user_id"/>
 					<field name="act_assign_partner_id"/>
+					<separator colspan="4" string="Server Action"/>
+					<field name="server_act"/>
 		  		</page>
 		</notebook>
 		</form>

@@ -29,6 +29,20 @@ from osv import fields
 from osv import osv
 
 
+class dm_overlay_payment_rule(osv.osv):
+    _name = 'dm.overlay.payment_rule'
+    _rec_name = 'journal_id'
+    _columns = {
+        'journal_id': fields.many2one('account.journal','Journal'),
+        'move': fields.selection([('Credit','credit'),('Debit','debit')],'Move'),
+        'currency_id':fields.many2one('res.currency','Currency'),
+        'country_id':fields.many2one('res.country','Country'),
+        'account_id':fields.many2one('account.account','Account'),
+        'country_default':fields.boolean('Default for Country')
+    }
+
+dm_overlay_payment_rule()
+
 class dm_campaign_group(osv.osv):
     _name = "dm.campaign.group"
     
@@ -180,6 +194,7 @@ class dm_overlay(osv.osv):
         'dealer_id' : fields.many2one('res.partner', 'Dealer', domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
         'country_ids' : fields.many2many('res.country', 'overlay_country_rel', 'overlay_id', 'country_id', 'Country', required=True),
         'bank_account_id' : fields.many2one('account.account', 'Account'),
+        'payment_method_rule_ids':fields.many2many('dm.overlay.payment_rule','overlay_payment_method_rule_rel','overlay_id','payment_rule_id','Payment Method Rules')
     }
 dm_overlay()
 
@@ -1912,6 +1927,22 @@ class dm_campaign_proposition_prices_progression(osv.osv):
     }
 dm_campaign_proposition_prices_progression()
 
+class dm_campaign_document_type(osv.osv):
+    _name = 'dm.campaign.document.type'
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=64, required=True),
+    }
+dm_campaign_document_type()
+
+class dm_campaign_document(osv.osv):
+    _name = 'dm.campaign.document'
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'type_id' : fields.many2one('dm.campaign.document.type','Format',required=True),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment',required=True),
+    }
+dm_campaign_document()
 
 class Country(osv.osv):
     _name = 'res.country'
@@ -2013,6 +2044,7 @@ class project_task(osv.osv):
     }
 
 project_task()
+
 
 
 #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

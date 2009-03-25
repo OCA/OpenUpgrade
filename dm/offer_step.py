@@ -88,8 +88,8 @@ class dm_offer_step_action(osv.osv):
         return act_id
 
     def _wi_check(self, cr, uid, action_id, srv_action_id, context={}):
-
-        witems = self.pool.get('dm.workitem').search(cr, uid, [('step_id.action_id','=',action_id),
+        wi_object = self.pool.get('dm.workitem')
+        witems = wi_object.search(cr, uid, [('step_id.action_id','=',action_id),
               ('state','=','pending'),('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
 
         print "Action ID : ",action_id
@@ -98,7 +98,7 @@ class dm_offer_step_action(osv.osv):
 
         obj = self.pool.get('ir.actions.server')
         for wi in witems:
-            context['active_id']=wi
+            context['active_id'] = wi
             res = obj.run(cr, uid, [srv_action_id], context)
             print "RES Server Action : ",res
 
@@ -110,13 +110,21 @@ class dm_offer_step(osv.osv):
 
     def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
+        step_type = self.pool.get('dm.offer.step.type') 
+        type_ids = step_type.search(cr,uid,[])
+        type = step_type.read(cr,uid,type_ids,['code'])
+        type_no = {}
+        for t in type : 
+            t_ids = self.search(cr,uid,[('type_id','=',t['id'])])
+            type_no[t['code']]={'len':len(t_ids),'n':1}
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
             res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
                     context.get('lang', False) or 'en_US',[offer_step.type_id.id])
-            type_code = res_trans[offer_step.type_id.id] or offer_step.type_id.code
-            code = '_'.join([offer_step.offer_id.code,(type_code or '')])
+            type_code = offer_step.type_id.code+str(type_no[offer_step.type_id.code]['n'])
+            type_no[offer_step.type_id.code]['n'] = type_no[offer_step.type_id.code]['n']+1
+            code = '_'.join([offer_step.offer_id.code,type_code])
             result[id]=code
         return result
 
@@ -139,7 +147,7 @@ class dm_offer_step(osv.osv):
         'planning_note' : fields.text('Planning Notes', states={'closed':[('readonly',True)]}),
         'purchase_note' : fields.text('Purchase Notes', states={'closed':[('readonly',True)]}),
         'mailing_at_dates' : fields.boolean('Mailing at dates', states={'closed':[('readonly',True)]}),
-        'floating date' : fields.boolean('Floating date', states={'closed':[('readonly',True)]}),
+        'floating_date' : fields.boolean('Floating date', states={'closed':[('readonly',True)]}),
         'interactive' : fields.boolean('Interactive', states={'closed':[('readonly',True)]}),
         'notes' : fields.text('Notes'),
         'document_ids' : fields.one2many('dm.offer.document', 'step_id', 'DTP Documents'),

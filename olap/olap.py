@@ -621,7 +621,6 @@ class olap_cube_table(osv.osv):
                 id = self.pool.get('olap.cube.table.line').create(cr, uid, val, context=context)
         return cube_table_id
 
-
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
         if context and context.has_key('parent_schema_id'):
@@ -772,7 +771,7 @@ class olap_dimension(osv.osv):
     }
     _defaults = {
                  'cube_id':_set_cube,
-                 }
+    }
     
 olap_dimension()
 

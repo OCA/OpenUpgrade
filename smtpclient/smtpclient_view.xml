@@ -7,7 +7,6 @@
 			<field name="type">graph</field>
 			<field name="arch" type="xml">
 				<graph string="Server Statistics" type="bar">
-					<field name="model" />
 					<field name="no" operator="+" />
 					<field name="history" operator="+" group="True" />
 				</graph>
@@ -19,7 +18,6 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Server Statistics">
-					<field name="model" />
 					<field name="no" />
 					<field name="history" />
 				</tree>
@@ -31,7 +29,6 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Server Statistics">
-					<field name="model" select="1" />
 					<field name="no" />
 					<field name="history" select="1" />
 				</form>
@@ -71,15 +68,15 @@
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="email_smtpclient_form">
+		<record model="ir.ui.view" id="email_smtpclient_form_new">
 			<field name="name">email.smtpclient.form</field>
 			<field name="model">email.smtpclient</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="SMTP Server">
-					<field name="name" select="1" />
-					<field name="date_create" select="1" />
-						<notebook colspan="4">
+				    <field name="name" select="1" />
+				    <field name="date_create" select="1" />
+					<notebook colspan="4">
 						<page string="Configuration">
 							<separator string="User Information"
 								colspan="4" />
@@ -103,22 +100,16 @@
 						</page>
 
 						<page string="Messages">
-							<!--<vpaned>
-								<child1>-->
 							<separator string="Verification Message" colspan="4" />
 							<field name="verify_email" select="2" colspan="4" nolabel="1" />
 							<label string="__code__ for Verification Code" />
 							<separator string="Test Message" colspan="4" />
 							<field name="test_email" select="2" colspan="4" nolabel="1" />
-								<!--</child1>
-								<child2>-->
 							<separator string="Message" colspan="4" />
 							<field name="body" select="2" colspan="4" nolabel="1" />
 							<label string="__name__ for Customer Name" />
 							<label string="__number__ for Invoice / Sales Number" />
 							<label string="__user__ for User Name" />
-								<!--</child2>
-							</vpaned>-->
 						</page>
 
 						<page string="Permission">
@@ -128,33 +119,10 @@
 								colspan="4" nolabel="1" />
 						</page>
 
-						<page string="Statistics">
+						<!--page string="Statistics">
 							<field name="server_statistics"
 								mode="graph,tree" colspan="4" nolabel="1" />
-						</page>
-
-<!--						<page string="History">-->
-<!--							<field name="history_line" select="2"-->
-<!--								colspan="4" nolabel="1">-->
-<!--								<tree string="Server History">-->
-<!--									<field name="user_id" />-->
-<!--									<field name="date_create" />-->
-<!--									<field name="name" />-->
-<!--									<field name="email" />-->
-<!--									<field name="model" />-->
-<!--									<field name="resource_id" />-->
-<!--								</tree>-->
-<!--								<form string="Server History">-->
-<!--									<field name="user_id" />-->
-<!--									<field name="date_create" />-->
-<!--									<field name="name" colspan="4" />-->
-<!--									<field name="email" />-->
-<!--									<newline />-->
-<!--									<field name="model" />-->
-<!--									<field name="resource_id" />-->
-<!--								</form>-->
-<!--							</field>-->
-<!--						</page>-->
+						</page-->
 					</notebook>
 				</form>
 			</field>
@@ -200,8 +168,6 @@
 					<field name="server_id" />
 					<field name="user_id" />
 					<field name="date_create" />
-					<field name="model" />
-					<field name="resource_id" />
 					<field name="name" />
 				</tree>
 			</field>
@@ -214,15 +180,24 @@
 			<field name="arch" type="xml">
 				<form string="Server History">
 					<field name="server_id"
-						domain="[('id','=',parent.id)]" />
-					<field name="date_create" />
-					<field name="model" />
-					<field name="resource_id" />
-					<field name="name" colspan="4" />
+						domain="[('id','=',parent.id)]" select="1"/>
+					<field name="date_create" select="1"/>
+					<field name="name" colspan="4" select="1"/>
 				</form>
 			</field>
 		</record>
 		
+		<record model="ir.actions.act_window"
+			id="action_email_smtpclient_history_tree">
+			<field name="name">Email Server History</field>
+			<field name="res_model">email.smtpclient.history</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="email_smtpclient_history_tree" />
+		</record>
+		
+		<menuitem name="Email Server History" id="menu_smtpclient_administration_server_history" parent="menu_smtpclient_administration_server" action="action_email_smtpclient_history_tree"/>
+	
 		<act_window context="{'server_id': active_id}" domain="[('server_id', '=', active_id)]" id="act_mail_server_2_mail_history" name="Email History" res_model="email.smtpclient.history" src_model="email.smtpclient"/>
 		
 		

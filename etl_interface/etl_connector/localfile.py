@@ -33,8 +33,8 @@ class etl_connector_localfile(osv.osv):
               'bufsize' : fields.integer('Buffer Size'), 
     }
     
-    def create_instance(self, cr, uid, id , context={}):  
-        val =  super(etl_connector_localfile, self).create_instance(cr, uid, id, context)      
+    def create_instance(self, cr, uid, id , context={}, data={}):  
+        val =  super(etl_connector_localfile, self).create_instance(cr, uid, id, context, data)      
         con=self.browse(cr, uid, id)
         if con.type == 'localfile':            
             val =  etl.connector.localfile(tools.config['addons_path']+con.uri, con.bufsize, encoding='utf-8')

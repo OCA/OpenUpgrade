@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+<!--OScommerce website related wizards-->
+		<wizard string="Sync. products and stocks" model="esale.oscom.web" name="esale.oscom.products"
+			id="wizard_esale_oscom_products"/>
+		<wizard string="Update stocks" model="esale.oscom.web" name="esale.oscom.stocks"
+			id="wizard_esale_oscom_stocks"/>
+		<wizard string="Import sale orders" model="esale.oscom.web" name="esale.oscom.saleorders"
+			id="wizard_esale_oscom_saleorders"/>
+		<menuitem
+			name="Synchronize products and stocks to all OScommerce web shops" parent="menu_esale_oscom_root"
+			action="wizard_esale_oscom_products" type="wizard" id="menu_esale_oscom_products" />
+		<menuitem
+			name="Update stocks to all OScommerce web shops" parent="menu_esale_oscom_root"
+			action="wizard_esale_oscom_stocks" type="wizard" id="menu_esale_oscom_stocks" />
+
+<!--Product related wizards-->
+		<wizard string="Sync. products and stocks" model="product.product" name="esale.oscom.select.products"
+			id="wizard_esale_oscom_select_products"/>
+
+		<wizard string="Update stocks" model="product.product" name="esale.oscom.select.stocks"
+			id="wizard_esale_oscom_select_stocks"/>
+	</data>
+</openerp>
+

@@ -38,8 +38,8 @@ class etl_connector_sql(osv.osv):
               'sslmode' : fields.boolean('Allow SSL Mode'), 
     }
     
-    def create_instance(self, cr, uid, id , context={}):
-        val=super(etl_connector_sql, self).create_instance(cr, uid, id, context)
+    def create_instance(self, cr, uid, id , context={}, data={}):
+        val=super(etl_connector_sql, self).create_instance(cr, uid, id, context, data)
         con=self.browse(cr, uid, id)        
         if con.type == 'sql_connector':
             if con.sslmode: sslmode = 'allow'

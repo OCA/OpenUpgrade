@@ -1,35 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
-        <record id="comp_transform_sort" model="etl.component.type">
+	<data noupdate="1">
+		<record id="comp_transform_sort" model="etl.component.type">
 			<field name="name">transform.sort</field>
 			<field name="code">transform.sort</field>
 		</record>
-    </data>
+	</data>
 	<data>
 
 		<record id="etl_component_sort_form" model="ir.ui.view">
 			<field name="name">etl.component.sort.form</field>
 			<field name="model">etl.component</field>
-			<field name="type">form</field>            
+			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Sort Component">
-                    <group colspan="4">
-					    <field name="name" select="1" />
-					    <field name="type_id" domain="[('name','=','transform.sort')]"/>
-                        <field name="transformer_id" invisible="1" colspan="4"/>
-                    </group>                    
-                    <notebook colspan="4">                                                
-                        <page string="Transitions Detail">
-					        <separator string="Incomming Transitions" colspan="4" />
-					        <field name="trans_in_ids" nolabel="1" colspan="4" readonly="1" />
-					        <separator string="Outgoing Transitions" colspan="4" />
-					        <field name="trans_out_ids" nolabel="1" colspan="4" readonly="1" />
-                        </page>
-                    </notebook>
-				</form>						
+					<group colspan="4">
+						<field name="name" select="1" />
+						<field name="type_id"
+							domain="[('name','=','transform.sort')]" />
+						<field name="transformer_id" invisible="1"
+							colspan="4" />
+					</group>
+					<notebook colspan="4">
+						<page string="Transitions Detail">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
 			</field>
-		</record> 
+		</record>
 
 		<record id="action_etl_component_sort_tree"
 			model="ir.actions.act_window">
@@ -53,20 +59,25 @@
 			model="ir.actions.act_window.view">
 			<field eval="1" name="sequence" />
 			<field name="view_mode">tree</field>
-			<field name="view_id" ref="etl_interface.etl_component_tree" />
-			<field name="act_window_id" ref="action_etl_component_sort_tree" />
+			<field name="view_id"
+				ref="etl_interface.etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_sort_tree" />
 		</record>
-		<record id="action_etl_component_sort_view2" model="ir.actions.act_window.view">
+		<record id="action_etl_component_sort_view2"
+			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
 			<field name="view_mode">form</field>
 			<field name="view_id" ref="etl_component_sort_form" />
-			<field name="act_window_id" ref="action_etl_component_sort_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_sort_tree" />
 		</record>
 
 
-		<menuitem name="Sort process" parent="etl_interface.menu_etl_jd_c_pec_form"
-            action="action_etl_component_sort_tree"
-			id="menu_etl_jd_c_pec__sort_form" />		
+		<menuitem name="Sort process"
+			parent="etl_interface.menu_etl_jd_c_pec_form"
+			action="action_etl_component_sort_tree"
+			id="menu_etl_jd_c_pec__sort_form" />
 
 	</data>
 </openerp>

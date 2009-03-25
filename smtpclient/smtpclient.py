@@ -35,14 +35,13 @@ from email.MIMEBase import MIMEBase
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 from email.Utils import COMMASPACE, formatdate
-
 import netsvc
 import random
 import sys
-if sys.version[0:3] > '2.4':
-    from hashlib import md5
-else:
-    from md5 import md5
+#if sys.version[0:3] > '2.4':
+#    from hashlib import md5
+#else:
+#    from md5 import md5
 
 class SmtpClient(osv.osv):
     _name = 'email.smtpclient'
@@ -67,11 +66,10 @@ class SmtpClient(osv.osv):
         'test_email' : fields.text('Test Message'),
         'body' : fields.text('Message', help="The message text that will be send along with the email which is send through this server"),
         'verify_email' : fields.text('Verify Message', readonly=True, states={'new':[('readonly',False)]}),
-        'code' : fields.char('Verification Code', size=256),
+        'code' : fields.char('Verification Code', size=1024),
         'type' : fields.selection([("default", "Default"),("account", "Account"),("sale","Sale"),("stock","Stock")], "Server Type",required=True),
         'history_line': fields.one2many('email.smtpclient.history', 'server_id', 'History'),
         'server_statistics': fields.one2many('report.smtp.server', 'server_id', 'Statistics')
-        
     }
     
     _defaults = {
@@ -81,6 +79,17 @@ class SmtpClient(osv.osv):
     }
     server = {}
     smtpServer = {}
+    
+#    def read(self,cr, uid, ids, fields=None, context=None, load='_classic_read'):
+#        def override_password(o):
+#            for field in o[0]:
+#                if field == 'password':
+#                    o[0][field] = '********'
+#            return o
+#        
+#        result = super(SmtpClient, self).read(cr, uid, ids, fields, context, load)
+#        result = override_password(result)
+#        return result
         
     def change_email(self, cr, uid, ids, email):
         if len(email) > 0 and email.index('@'):
@@ -97,6 +106,20 @@ class SmtpClient(osv.osv):
         
         return True
     
+    def gen_private_key(self, cr, uid, ids):
+        new_key = []
+        for i in time.strftime('%Y-%m-%d %H:%M:%S'):
+            ky = i
+            if ky in (' ', '-', ':'):
+                keys = random.random()
+                key = str(keys).split('.')[1]
+                ky = key
+                
+            new_key.append(ky)
+        new_key.sort()
+        key = ''.join(new_key)
+        return key
+        
     def test_verify_email(self, cr, uid, ids, toemail, test=False, code=False):
         
         serverid = ids[0]
@@ -106,15 +129,14 @@ class SmtpClient(osv.osv):
             pooler.get_pool(cr.dbname).get('email.smtpclient.history').create \
                 (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':_('Please verify Email Server, without verification you can not send Email(s).')})
             raise osv.except_osv(_('Server Error!'), _('Please verify Email Server, without verification you can not send Email(s).'))
-        
+        key = False
         if test and self.server[serverid]['state'] == 'confirm':
             body = str(self.server[serverid]['test_email'])
         else:
             body = str(self.server[serverid]['verify_email'])
-            if code:
-                key = code
-            else:
-                key = md5(time.strftime('%Y-%m-%d %H:%M:%S') + toemail).hexdigest();
+            #ignore the code
+            key = self.gen_private_key(cr, uid, ids)
+            #md5(time.strftime('%Y-%m-%d %H:%M:%S') + toemail).hexdigest();
                 
             body = body.replace("__code__", key)
             
@@ -144,6 +166,7 @@ class SmtpClient(osv.osv):
                 'body':body,
                 'serialized_message':message,
             })
+        self.write(cr, uid, ids, {'state':'waiting', 'code':key})
         return True
         
     def open_connection(self, cr, uid, ids, serverid=False, permission=True):
@@ -155,7 +178,7 @@ class SmtpClient(osv.osv):
         if permission:
             if not self.check_permissions(cr, uid, [serverid]):
                 raise osv.except_osv(_('Permission Error!'), _('You have no permission to access SMTP Server : %s ') % (self.server[serverid]['name'],) )
-                
+
         if self.server[serverid]:
             try:
                 self.smtpServer[serverid] = smtplib.SMTP()
@@ -203,8 +226,10 @@ class SmtpClient(osv.osv):
         return ids[0]
 
     def send_email(self, cr, uid, server_id, emailto, subject, body=False, attachments=[]):
-        
         smtp_server = self.browse(cr, uid, server_id)
+        if smtp_server.state != 'confirm':
+            raise osv.except_osv(_('SMTP Server Error !'), 'Server is not Verified, Please Verify the Server !')
+            
         if type(emailto) == type([]):
             for to in emailto:
                 msg = MIMEMultipart()
@@ -258,6 +283,8 @@ class SmtpClient(osv.osv):
                     'body':body,
                     'serialized_message':message,
                 })
+        
+        return True
             
     def _check_queue(self, cr, uid, ids=False, context={}):
         import tools
@@ -276,7 +303,6 @@ class SmtpClient(osv.osv):
                 
             try:
                 self.smtpServer[email.server_id.id].sendmail(str(email.server_id.email), email.to, email.serialized_message)
-                print 'Email send to : ', email.to
             except Exception, e:
                 queue.write(cr, uid, [email.id], {'error':e, 'state':'error'})
                 continue
@@ -348,14 +374,13 @@ class report_smtp_server(osv.osv):
     _columns = {
         'server_id':fields.many2one('email.smtpclient','Server ID',readonly=True),
         'name': fields.char('Server',size=64,readonly=True),
-        'model':fields.char('Model',size=64, readonly=True),
         'history':fields.char('History',size=64, readonly=True),
         'no':fields.integer('Total No.',readonly=True),
-     }
+    }
     def init(self, cr):
          cr.execute("""
             create or replace view report_smtp_server as (
-                   select min(h.id) as id,c.id as server_id,h.name as history, h.name as name,m.name as model,count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id left join ir_model m on m.id=h.model group by h.name,m.name,c.id
+                   select min(h.id) as id, c.id as server_id, h.name as history, h.name as name, count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id group by h.name, c.id
                               )
          """)
 report_smtp_server()

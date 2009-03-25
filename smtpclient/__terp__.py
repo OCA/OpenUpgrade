@@ -38,11 +38,12 @@
     ],
     "update_xml" : [
         "smtpclient_view.xml",
+        "serveraction_view.xml",
         "smtpclient_wizard.xml",
         "security/ir.model.access.csv",
         "smtpclient_data.xml",
     ],
-    "active": False,
+    "active": True,
     "installable": True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -891,18 +891,18 @@
         </record>
             <workflow action="state_open_set" model="dm.offer" ref="dm_offer_openerpondemandfreetrial2009"/>
         <record id="dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
-            <field eval="0" name="floating date"/>
+            <field eval="0" name="floating_date"/>
             <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
             <field eval="0" name="mailing_at_dates"/>
             <field eval="&quot;&quot;&quot;Propose a 1 month free trial for an OnDemand offer&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
-            <field name="media_id" ref="dm.media_email"/>
+            <field name="media_id" ref="dm.media_paper"/>
             <field eval="&quot;&quot;&quot;
 The Starting Mailing proposes to the prospect to subscribe for a 1 month free trial for an OnDemand offer.&quot;&quot;&quot;" name="desc"/>
             <field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
@@ -912,23 +912,23 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
         </record>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
-            <field eval="0" name="floating date"/>
+            <field eval="0" name="floating_date"/>
             <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
             <field eval="&quot;&quot;&quot;Check availibility of the commercials for the phone calls&quot;&quot;&quot;" name="planning_note"/>
             <field eval="0" name="mailing_at_dates"/>
-            <field name="media_id" ref="dm.media_phone"/>
+            <field name="media_id" ref="dm.media_paper"/>
             <field eval="&quot;&quot;&quot;Propose to buy the Open ERP Book&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;The Intermediate mail thanks the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
             <field name="type_id" ref="dm.dm_offer_step_type_intermediatemailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_crm_case_create0"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_piforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="2" name="doc_number"/>
-            <field eval="0" name="floating date"/>
+            <field eval="0" name="floating_date"/>
             <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
             <field eval="&quot;&quot;&quot;Get confirmation of the OpenERP Discovery Day&quot;&quot;&quot;" name="planning_note"/>
             <field eval="0" name="mailing_at_dates"/>
@@ -944,39 +944,39 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
         </record>
         <record id="dm_offer_step_alpiforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
-            <field eval="0" name="floating date"/>
+            <field eval="0" name="floating_date"/>
             <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
             <field eval="0" name="mailing_at_dates"/>
-            <field name="media_id" ref="dm.media_email"/>
+            <field name="media_id" ref="dm.media_paper"/>
             <field eval="&quot;&quot;&quot;Thanks for subscribing to the Open ERP Discovery Day&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;The Accompanying Letter of the Package Insert thanks the client to have subscribed to the OpenERP Discovery Day.&quot;&quot;&quot;" name="desc"/>
             <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletterofthepackageinsert0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_alimforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
-            <field eval="0" name="floating date"/>
+            <field eval="0" name="floating_date"/>
             <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
             <field eval="0" name="mailing_at_dates"/>
-            <field name="media_id" ref="dm.media_email"/>
+            <field name="media_id" ref="dm.media_paper"/>
             <field eval="&quot;&quot;&quot;Thanks for buying the Open ERP book&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;open&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;The Accompanying Letter of the Intermediate mailing thanks the client to have bought to OpenERP Book and confirm that it will be delivered shortly.&quot;&quot;&quot;" name="desc"/>
             <field name="type_id" ref="dm.dm_offer_step_type_accompanyingletteroftheintermediatemailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2009"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
         </record>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="&quot;&quot;&quot;The Intermediate mailing is a phone by a commercial call to thank the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
         </record>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
-            <field name="media_id" ref="dm.media_phone"/>
+            <field name="media_id" ref="dm.media_paper"/>
         </record>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="&quot;&quot;&quot;Check availability of the commercials for the phone calls&quot;&quot;&quot;" name="planning_note"/>
@@ -1034,18 +1034,18 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
         </record>
         
         <record id="dm_offer_step_smforopenerpondemandfreetrial2010" model="dm.offer.step">
-            <field eval="0" name="floating date"/>
+            <field eval="0" name="floating_date"/>
             <field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
             <field eval="0" name="mailing_at_dates"/>
             <field eval="&quot;&quot;&quot;Propose a 1 month free trial for an OnDemand offer 2010&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="media_id" ref="dm.media_email"/>
+            <field name="media_id" ref="dm.media_paper"/>
             <field eval="&quot;&quot;&quot;
 The Starting Mailing proposes to the prospect to subscribe for a 1 month free trial for an OnDemand offer2010.&quot;&quot;&quot;" name="desc"/>
             <field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2010"/>
             <field eval="0" name="interactive"/>
-            <field name="action_id" ref="dm.ir_actions_server_html_doc_generate0"/>
+            <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
         </record>
     </data>
     <!-- Trademark -->
@@ -1209,6 +1209,7 @@ qOITjKqgV1HFNoCqoFdRxTaAqqBXUcU2gKqgV1HFNoCqoFdRxTaA/w9GN6sZ5hQ9SwAAAABJRU5E
 rkJggg==
 &quot;&quot;&quot;" name="logo"/>
             <field name="partner_id" ref="base.main_partner"/>
+            <field name="media_id" ref="dm.media_phone"/>
         </record>
     </data>
     <data noupdate="1">

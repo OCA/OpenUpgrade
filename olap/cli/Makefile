@@ -1,4 +1,4 @@
-DATABASE = 'bi'
+DATABASE = 'test1'
 
 all: simple sale date where sublevels calc_meas cross
 
@@ -47,6 +47,7 @@ calc_meas:
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select {[City].[all],[City].children} on rows, {[measures].[Calculated Measure]} on columns from Sales"
 
 cross:	
+	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select  crossjoin ({[Order Date].[all],[Order Date].children} , {[All Products].[all]}) on rows from Sales"
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin({[City].[all]},{[Users].[all]}) on rows, {[measures].[Total Sales]} on columns from Sales"
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin({[City].[all],[Users].[all]},{[Order Date].[all]}) on rows, {[measures].[Calculated Measure]} on columns from Sales"
 	./tinybi.py -d ${DATABASE} -H localhost -U admin -W admin -p 8069 -s "OpenERPSales" -c "select crossjoin({[City].[all],[Users].[all]},{[Order Date].[all]}) on rows, {[measures].[Calculated Measure]} on columns from Sales"

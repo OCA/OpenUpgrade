@@ -12,8 +12,94 @@ import netsvc
 from report import interface ,report_sxw
 from osv import osv
 import time
-from document import dm_ddf_plugin
 from customer_function import customer_function
+
+
+def generate_reports(cr,uid,obj,report_type,context):
+    customer_id = obj.customer_id.id
+    step_id = obj.step_id.id
+    pool = pooler.get_pool(cr.dbname)
+    dm_doc_obj = pool.get('dm.offer.document') 
+    report_xml = pool.get('ir.actions.report.xml')
+
+    document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
+
+    type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',report_type)])
+
+    vals={'segment_id': obj.segment_id.id, 'name': obj.step_id.code + "_" +str(obj.customer_id.id), 'type_id': type_id[0]}
+
+    camp_doc  = pool.get('dm.campaign.document').create(cr,uid,vals)
+    
+    if document_id :
+        report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
+        document_name = dm_doc_obj.read(cr,uid,document_id,['name'])[0]['name']
+        if report_ids :
+            attachment_obj = pool.get('ir.attachment')
+            for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
+                srv = netsvc.LocalService('report.'+report.report_name)
+                context['customer_id'] = customer_id
+                context['document_id'] = document_id[0]
+                pdf,pdftype = srv.create(cr, uid, [], {},context)
+                attach_vals={'name' : document_name+ "_" +str(obj.customer_id.id),
+                             'datas_fname' : 'report.'+report.report_name+pdftype ,
+                             'res_model' : 'dm.campaign.document',
+                             'res_id' : camp_doc,
+                             'datas': base64.encodestring(pdf),
+                             }
+                attachment_obj.create(cr,uid,attach_vals)
+    return True
+
+
+
+def generate_plugin_value(cr, uid, document_id, customer_id, context={}):
+    if not document_id :
+        return False
+    if not customer_id :
+        return False
+    vals = {}
+
+    pool = pooler.get_pool(cr.dbname)
+    def compute_customer_plugin(cr, uid, p, cid):
+        args = {}
+        res  = pool.get('ir.model').browse(cr, uid, p.model_id.id)
+        args['model_name'] = res.model
+        args['field_name'] = str(p.field_id.name)
+        args['field_type'] = str(p.field_id.ttype)
+        args['field_relation'] = str(p.field_id.relation)
+        return customer_function(cr,uid, [cid], **args)
+
+    dm_document = pool.get('dm.offer.document')
+    dm_plugins_value = pool.get('dm.plugins.value')
+    ddf_plugin = pool.get('dm.ddf.plugin')
+
+    plugins = dm_document.browse(cr, uid, document_id, ['document_template_plugin_ids' ])['document_template_plugin_ids']
+
+    for p in plugins :
+        args = {}
+        if p.type == 'fields':
+            plugin_value = compute_customer_plugin(cr, uid, p, customer_id)
+
+        else :
+            arguments = p.argument_ids
+            for a in arguments:
+                if not a.stored_plugin :
+                    args[str(a.name)]=str(a.value)
+                else :
+                    args[str(a.name)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, customer_id)
+            path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
+            plugin_name = p.file_fname.split('.')[0]
+            sys.path.append(path)
+            X =  __import__(plugin_name)
+            plugin_func = getattr(X, plugin_name)
+            plugin_value = plugin_func(cr, uid, customer_id, **args)
+
+        if p.store_value : 
+            dm_plugins_value.create(cr, uid,{'date':time.strftime('%Y-%m-%d'),
+                                             'customer_id':customer_id,
+                                             'plugin_id':p.id,
+                                             'value' : plugin_value})
+        vals[str(p.id)] = plugin_value
+    return vals
 
 class offer_document(rml_parse):
     def __init__(self, cr, uid, name, context):
@@ -24,50 +110,18 @@ class offer_document(rml_parse):
         })
         self.context = context        
     def document(self):
-        dm_document = self.pool.get('dm.offer.document')
-        dm_plugins_value = self.pool.get('dm.plugins.value')
-        ddf_plugin = self.pool.get('dm.ddf.plugin')
-        customer_id = self.datas['form']['customer_id']
-        document = dm_document.browse(self.cr,self.uid,self.ids,['document_template_id','step_id'])[0]
-        plugins = document.document_template_id.plugin_ids or []
-        vals={}
-        for plugin in plugins:
-            args={}
-            if plugin.type=='fields':
-                 res  = self.pool.get('ir.model').browse(self.cr,self.uid,plugin.model_id.id)
-                 args['model_name']=str(res.model)
-                 args['field_name']=str(plugin.field_id.name)
-                 args['field_type']=str(plugin.field_id.ttype)
-                 args['field_relation']=str(plugin.field_id.relation)
-                 plugin_value = customer_function(self.cr,self.uid,[customer_id],**args)
-                 for p in plugin_value : 
-                      vals[str(plugin.id)]=p[1]
-            else :                
-                arguments = plugin.argument_ids
-                for a in arguments:
-                    if not a.stored_plugin :
-                        args[str(a.name)]=str(a.value)
-                    else :
-                         res  = self.pool.get('ir.model').browse(self.cr,self.uid,a.custome_plugin_id.model_id.id)
-                         arg = {'model_name':str(res.model),
-                                     'field_name':str(a.custome_plugin_id.field_id.name),
-                                     'field_type':str(a.custome_plugin_id.field_id.ttype),
-                                     'field_relation' : str(a.custome_plugin_id.field_id.relation)}
-                         plugin_value = customer_function(self.cr,self.uid,[customer_id],**arg)
-                         for p in plugin_value : 
-                             args[str(a.name)]=p[1]                        
-                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins",self.cr.dbname)
-                plugin_name = plugin.file_fname.split('.')[0]
-                
-                sys.path.append(path)
-                X =  __import__(plugin_name)
-                plugin_func = getattr(X,plugin_name)
-                plugin_values = plugin_func(self.cr,self.uid,[customer_id],**args)
-                for p in plugin_values:
-                    vals[str(plugin.id)]=p[1]
-        return [vals]
+        if 'form' not in self.datas :
+            customer_id = self.context['customer_id']
+            document_id = self.context['document_id']
+        else :
+            customer_id = self.datas['form']['customer_id']
+            document_id = self.ids[0]
+        values = generate_plugin_value(self.cr,self.uid,document_id,customer_id)
+        print values
+        return [values]
 
 from report.report_sxw import report_sxw
+
 
 def my_register_all(db,report=False):
     opj = os.path.join
@@ -125,5 +179,7 @@ class report_xml(osv.osv):
         cr.commit()
         db = pooler.get_db_only(cr.dbname)
         interface.register_all(db)
-        return True    
+        return True
 report_xml()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
