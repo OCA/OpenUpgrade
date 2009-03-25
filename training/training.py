@@ -261,7 +261,7 @@ class training_catalog(osv.osv):
                                     ('validated', 'Validated'),
                                     ('inprogress', 'In Progress'),
                                     ('deprecated', 'Deprecated'),
-                                    ('canceled','Cancelled'),
+                                    ('cancelled','Cancelled'),
                                    ],
                                    'State',
                                    required=True,
