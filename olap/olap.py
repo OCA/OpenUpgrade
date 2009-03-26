@@ -971,6 +971,7 @@ class olap_saved_query(osv.osv):
                 'query': fields.text('Query', required = True),
                 'cube_id': fields.many2one('olap.cube', 'Cube',required=True),
                 'schema_id': fields.many2one('olap.schema', 'Schema',required=True),
+                'time':fields.datetime('Time',required=True),
                 }
 olap_saved_query()
 # Wizard for the Load Data Structure
