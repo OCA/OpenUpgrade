@@ -32,5 +32,7 @@ from data import data
 from csv_in import csv_in
 from sql_in import sql_in
 from openobject_in import openobject_in
+from facebook_in import facebook_in
 from vcard_in import vcard_in
+from gmail_in import gmail_in
 

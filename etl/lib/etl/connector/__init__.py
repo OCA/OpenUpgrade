@@ -30,3 +30,4 @@ from connector import connector
 from localfile import localfile 
 from sql_connector import sql_connector 
 from openobject_connector import openobject_connector  
+from facebook_connector import facebook_connector 

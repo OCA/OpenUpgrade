@@ -22,7 +22,7 @@
 
 from etl.component import component
 import csv
-import vobject  
+#import vobject 
 
 class vcard_in(component):
 
@@ -33,6 +33,7 @@ class vcard_in(component):
         self.reader=None
 
     def action_start(self,key,singal_data={},data={}):
+        import vobject 
         super(vcard_in, self).action_start(key,singal_data,data)
         self.fp=self.fileconnector.open('r')
         #self.reader=csv.DictReader(self.fp,**self.csv_params)
