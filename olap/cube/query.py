@@ -51,7 +51,9 @@ class query(object):
         cross_all = []
         for ax in self.axis:
             if ax.name == 'cross':
+                cross = True
                 cross = ax.run(metadata)
+                print " \n This is the cross made ",cross
                 cube_size[-1] = cube_size[-1] * len(cross)
                 temp = axis_result[0][:] 
                 cross_all.append(cross)
@@ -66,19 +68,36 @@ class query(object):
                 axis_result[-1]=final_axis[:]
                 final_axis=[]
                 d = 0 
+                
                 for data in common.xcombine(axis[-1],cross):
-                    data_temp = copy.copy(data[0])
+                    flag = False
+                    make_where = []
+                    temp_where = []
+                    if 'whereclause' in data[0]['query'].keys():
+                        flag = True
+                        temp_where = data[0]['query']['whereclause'][0] 
+                        data[0]['query']['whereclause']=str(data[0]['query']['whereclause'][0])
+                    data_temp = copy.deepcopy(data[0])
                     if 'whereclause' in data[1]['query'].keys():
-                        if 'whereclause' in data_temp.keys():
-                            data_temp['query']['whereclause'].append(data[1]['query']['whereclause'])
+                        if 'whereclause' in data_temp['query'].keys():
+                            make_where.append(data[1]['query']['whereclause'][0])
                         else:
-                            data_temp['query']['whereclause'] = data[1]['query']['whereclause']
+                            make_where.append(data[1]['query']['whereclause'][0])
                     data_temp['delta'] = d
                     d= d + 1
                     final_axis.append(data_temp)
+                    if flag:
+                        data[0]['query']['whereclause']=[temp_where]
+                        data_temp['query']['whereclause'] = [temp_where]
+                    if make_where:
+                        if 'whereclause' in data_temp['query'].keys():
+                            data_temp['query']['whereclause'].append(make_where[0])
+                        else:
+                            data_temp['query']['whereclause'] = make_where
                 axis[-1] = []
                 axis[-1] = final_axis
             else:
+                cross = False
                 result = ax.run(metadata)
                 length = 0
                 axis_result2 = []
@@ -112,6 +131,7 @@ class query(object):
 #            metadata.bind.echo = True
             query = select.execute()
             result = query.fetchall()
+
             for record in result:
                 cube = cube_data
                 r = list(record)
