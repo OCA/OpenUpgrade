@@ -53,7 +53,6 @@ class query(object):
             if ax.name == 'cross':
                 cross = True
                 cross = ax.run(metadata)
-                print " \n This is the cross made ",cross
                 cube_size[-1] = cube_size[-1] * len(cross)
                 temp = axis_result[0][:] 
                 cross_all.append(cross)
