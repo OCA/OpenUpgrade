@@ -19,8 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import etl_interface
-import etl_component
-import etl_connector
-import scheduler
-import wizard
+
+import wizard_launch_process
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -158,10 +158,10 @@ class etl_component(osv.osv):
 
     def _post_process(self, cr, uid, id, context={}, data={}):
         obj_transition=self.pool.get('etl.transition')
-        cmp=self.browse(cr, uid, id, context=context)          
+        cmp=self.browse(cr, uid, id, context)          
         for tran_in in cmp.trans_in_ids: 
             if tran_in.state=='open':           
-                obj_transition.get_instance(cr, uid, tran_in.id, context, data)                                
+                obj_transition.get_instance(cr, uid, tran_in.id, context, data)                  
         for tran_out in cmp.trans_out_ids:
             if tran_out.state=='open':
                 obj_transition.get_instance(cr, uid, tran_out.id, context, data)                
@@ -199,7 +199,12 @@ class etl_transition(osv.osv):
     
     def get_instance(self, cr, uid, id, context={}, data={}):
         if (cr.dbname, uid, id) not in self._cache:
-            self._cache[(cr.dbname, uid, id)]=self.create_instance(cr, uid, id, context, data)
+            self._cache[(cr.dbname, uid, id)]  =self.create_instance(cr, uid, id, context, data)
+        val = self._cache[(cr.dbname, uid, id)]
+        if context.get('action_start_transition', False):
+            val.signal_connect({'id':id, 'instance':val}, 'start', context['action_start_transition'], data)
+        if context.get('action_end_transtiton', False):
+            val.signal_connect({'id':id, 'instance':val}, 'end', context['action_end_transtiton'], data)
         return self._cache[(cr.dbname, uid, id)]
 
     def create_instance(self, cr, uid, id, context={}, data={}):
@@ -210,11 +215,6 @@ class etl_transition(osv.osv):
         if (cr.dbname, uid, id) in self._cache:
             return self._cache[(cr.dbname, uid, id)]              
         val=etl.transition(cmp_in, cmp_out, channel_source=trans.channel_source, channel_destination=trans.channel_destination, type=trans.type)
-#    TODO
-        if context.get('action_start_transition', False):
-            val.signal_connect({'id':id, 'instance':val}, 'start', context['action_start_transition'], data)
-        if context.get('action_end_transtiton', False):
-            val.signal_connect({'id':id, 'instance':val}, 'end', context['action_end_transtiton'], data)
         return val
 
     def action_open_transition(self, cr, uid, ids, context={}):
@@ -265,15 +265,7 @@ class etl_job(osv.osv):
     def get_instance(self, cr, uid, id, context={}, data={}):
         if (cr.dbname, uid, id) not in self._cache:
             self._cache[(cr.dbname, uid, id)]=self.create_instance(cr, uid, id, context, data)
-        return self._cache[(cr.dbname, uid, id)]
-
-    def create_instance(self, cr, uid, id, context={}, data={}):
-        obj_component=self.pool.get('etl.component')   
-        res = self.read(cr, uid, id, ['component_ids'])
-        output_cmps=[]
-        for cmp_id in res['component_ids']:            
-            output_cmps.append(obj_component.get_instance(cr, uid, cmp_id, context, data))
-        job=etl.job(output_cmps)
+        job = self._cache[(cr.dbname, uid, id)]
         if context.get('action_start_job', False):
             job.signal_connect({'id':id, 'instance':job}, 'start', context['action_start_job'], data)
         if context.get('action_restart_job', False):
@@ -284,6 +276,15 @@ class etl_job(osv.osv):
             job.signal_connect({'id':id, 'instance':job}, 'end', context['action_end_job'], data)
         if context.get('action_pause_job', False):
             job.signal_connect({'id':id, 'instance':job}, 'pause', context['action_pause_job'], data)
+        return self._cache[(cr.dbname, uid, id)]
+
+    def create_instance(self, cr, uid, id, context={}, data={}):
+        obj_component=self.pool.get('etl.component')   
+        res = self.read(cr, uid, id, ['component_ids'])
+        output_cmps=[]
+        for cmp_id in res['component_ids']:            
+            output_cmps.append(obj_component.get_instance(cr, uid, cmp_id, context, data))
+        job=etl.job(output_cmps)
         return job
     
     def action_open_job(self, cr, uid, ids, context={}):
@@ -291,14 +292,16 @@ class etl_job(osv.osv):
     def action_close_job(self, cr, uid, ids, context={}):
         return self.write(cr, uid, ids, {'state':'close'})
     
-    def action_launch_process(self, cr, uid, ids, context={}):
-        obj_process=self.pool.get('etl.job.process')
-        for id in ids:                    
-            process_id=obj_process.create(cr, uid, {'name':self.pool.get('ir.sequence').get(cr, uid, 'etl.job.process'), 'job_id':id})
-            wf_service = netsvc.LocalService("workflow")
-            wf_service.trg_validate(uid, 'etl.job.process', process_id, 'action_open', cr)
-        return True
-        
+#    def action_launch_process(self, cr, uid, ids, context={}):
+#        obj_process=self.pool.get('etl.job.process')
+#        for id in ids:                    
+#            process_id=obj_process.create(cr, uid, {'name':self.pool.get('ir.sequence').get(cr, uid, 'etl.job.process'), 'job_id':id})
+#            wf_service = netsvc.LocalService("workflow")
+#            wf_service.trg_validate(uid, 'etl.job.process', process_id, 'action_open', cr)
+#        cr.execute('select id,name from ir_ui_view where model=%s and type=%s', ('etl.job.process', 'form'))
+#        view_res = cr.fetchone()
+#        return True
+
 etl_job()
 
 
@@ -329,8 +332,8 @@ class etl_job_process(osv.osv):
               'input_records' : fields.integer('Total Input Records', readonly=True), 
               'output_records' : fields.integer('Total Output Records', readonly=True), 
               'state' : fields.selection([('draft', 'Draft'), ('open', 'Open'), ('start', 'Started'), ('pause', 'Paused'), ('stop', 'Stop'), ('exception', 'Exception'), ('cancel', 'Cancel'), ('end', 'Done')], 'State', readonly=True), 
-              'component_ids' : fields.one2many('etl.job.process.component', 'job_process_id', 'Components'), 
-              'log_ids' :  fields.one2many('etl.job.log', 'job_process_id', 'Logs'), 
+              'component_ids' : fields.one2many('etl.job.process.statistics', 'job_process_id', 'Components'), 
+              'log_ids' :  fields.one2many('etl.job.process.log', 'job_process_id', 'Logs'), 
               'statistics' : fields.boolean('Statistics Details'), 
               'log' : fields.boolean('Log Details'), 
               'error_msg' : fields.text('Error Message', readonly=True), 
@@ -341,10 +344,6 @@ class etl_job_process(osv.osv):
             'state': lambda *a: 'draft', 
     }
     
-    def action_hook_component(self, cr, uid, process, component):
-        cid = self.pool.get('etl.job.process.component').create(cr, uid, {'name' : component, 'start_date' :time.strftime('%Y-%m-%d %H:%M:%S'), 'state' : 'start', 'job_process_id' : process})
-        cr.commit()
-        return cid
     
     def action_start_component(self, key, signal_data={}, data={}):
         print 'component is started...', key, signal_data, data
@@ -354,11 +353,10 @@ class etl_job_process(osv.osv):
         process_obj = pool.get('etl.job.process')
         process = process_obj.browse(cr, uid, data['process_id'], context={})
         if process.statistics:
-            cid = pool.get('etl.job.process.component').create(cr, uid, {'name' : key['id'], 'start_date' :time.strftime('%Y-%m-%d %H:%M:%S'), 'state' : 'start', 'job_process_id' : data['process_id']})
-            cr.commit()
+            cid = pool.get('etl.job.process.statistics').create(cr, uid, {'name' : key['id'], 'signal':'start','start_date' :time.strftime('%Y-%m-%d %H:%M:%S'), 'state' : 'start', 'job_process_id' : data['process_id']})
         if process.log:
-            lid = pool.get('etl.job.log').create(cr, uid, {'date_time' :time.strftime('%Y-%m-%d %H:%M:%S'), 'desc' : str(key)+'component is started...' })
-            cr.commit()
+            lid = pool.get('etl.job.process.log').create(cr, uid, {'date_time' :time.strftime('%Y-%m-%d %H:%M:%S'), 'desc' : str(key)+'component is started...' })
+        cr.commit()
         return True
   
 
@@ -370,22 +368,37 @@ class etl_job_process(osv.osv):
         process_obj = pool.get('etl.job.process')
         process = process_obj.browse(cr, uid, data['process_id'], context={})
         if process.statistics:
-            comp_obj = pool.get('etl.job.process.component')
+            comp_obj = pool.get('etl.job.process.statistics')
             comp_ids = comp_obj.search(cr, uid, [('job_process_id', '=', data['process_id']), ('name', '=', key['id'])])
             cid = comp_obj.write(cr, uid, comp_ids, {'end_date' :time.strftime('%Y-%m-%d %H:%M:%S'), 'state' : 'end'})
-            cr.commit()
         if process.log:
-            lid = pool.get('etl.job.log').create(cr, uid, {'date_time' :time.strftime('%Y-%m-%d %H:%M:%S'), 'desc' : str(key)+'component is started...' ,'job_process_id': data['process_id']})
-            cr.commit()
+            lid = pool.get('etl.job.process.log').create(cr, uid, {'date_time' :time.strftime('%Y-%m-%d %H:%M:%S'), 'desc' : 'Component' + str(key)+' is started...' , 'job_process_id': data['process_id']})
+        cr.commit()
         return True
     
             
     def action_start_transition(self, key, signal_data={}, data={}):
         print 'transition is started...', key, signal_data, data
+        cr = pooler.get_db(data['dbname']).cursor()
+        pool = pooler.get_pool(cr.dbname)
+        uid = data['uid']
+        process_obj = pool.get('etl.job.process')
+        process = process_obj.browse(cr, uid, data['process_id'], context={})
+        if process.log:
+            lid = pool.get('etl.job.process.log').create(cr, uid, {'date_time' :time.strftime('%Y-%m-%d %H:%M:%S'), 'desc' : 'Transition'+ str(key)+' is started...' , 'job_process_id': data['process_id']})
+        cr.commit()
         return True
     
     def action_end_transition(self, key, signal_data={}, data={}):
         print 'transition is end...', key, data
+        cr = pooler.get_db(data['dbname']).cursor()
+        pool = pooler.get_pool(cr.dbname)
+        uid = data['uid']
+        process_obj = pool.get('etl.job.process')
+        process = process_obj.browse(cr, uid, data['process_id'], context={})
+        if process.log:
+            lid = pool.get('etl.job.process.log').create(cr, uid, {'date_time' :time.strftime('%Y-%m-%d %H:%M:%S'), 'desc' : 'Transition'+ str(key)+' is started...' , 'job_process_id': data['process_id']})
+        cr.commit()
         return True
   
     def action_stop_component(self, key, signal_data={}, data={}):
@@ -434,41 +447,41 @@ class etl_job_process(osv.osv):
 
     def get_job_instance(self, cr, uid, process_id, context={}, data={}):
         obj_job=self.pool.get('etl.job')
-        process=self.browse(cr, uid, process_id, context=context)
+        context = {}
+        process=self.browse(cr, uid, process_id, context)
+        context.update({
+                        'action_start_component':self.action_start_component, 
+                        'action_end_component':self.action_end_component, 
+                        'action_start_input_component':self.action_start_input_component, 
+                        'action_start_output_component':self.action_start_output_component, 
+                        'action_no_input_component':self.action_no_input_component, 
+                        'action_stop_component':self.action_stop_component, 
+                        'action_start_job':self.action_start_job, 
+                        'action_end_job':self.action_end_job, 
+                        'action_stop_job':self.action_stop_job, 
+                        'action_restart_job':self.action_restart_job, 
+                        'action_pause_job':self.action_pause_job, 
+                        'action_start_transition':self.action_start_transition, 
+                        'action_end_transition':self.action_end_transition, 
+                        })
         if (cr, uid, process.id) not in self._cache:
-            context.update({
-                            'action_start_component':self.action_start_component, 
-                            'action_end_component':self.action_end_component, 
-                            'action_start_input_component':self.action_start_input_component, 
-                            'action_start_output_component':self.action_start_output_component, 
-                            'action_no_input_component':self.action_no_input_component, 
-                            'action_stop_component':self.action_stop_component, 
-                            'action_start_job':self.action_start_job, 
-                            'action_end_job':self.action_end_job, 
-                            'action_stop_job':self.action_stop_job, 
-                            'action_restart_job':self.action_restart_job, 
-                            'action_pause_job':self.action_pause_job, 
-                            'action_start_transition':self.action_start_transition, 
-                            'action_end_transition':self.action_end_transition, 
-                            })
-            data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
             job=obj_job.get_instance(cr, uid, process.job_id.id, context, data)
         self._cache[(cr.dbname, uid, process.id)]=job
         return self._cache[(cr.dbname, uid, process.id)]
 
     def action_open_process(self, cr, uid, ids, context={}):
-        for process in self.browse(cr, uid, ids, context=context):
+        for process in self.browse(cr, uid, ids, context):
             self.write(cr, uid, process.id, {'state':'open'})
 
     def action_start_process(self, cr, uid, ids, context={}, data={}):
-        for process in self.browse(cr, uid, ids, context=context):
+        for process in self.browse(cr, uid, ids, context):
             try:
                 data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
                 job=self.get_job_instance(cr, uid, process.id, context, data)
                 job.pickle_file=tools.config['root_path']+'/save_job.p'
-                if process.state in ('open'):
+                if process.state in ('open','exception'):
                     job.run()
-                elif process.state in ('pause', 'exception'):
+                elif process.state in ('pause'):
                     self.write(cr, uid, process.id, {'state':'start', 'start_date':time.strftime('%Y-%m-%d %H:%M:%S')})
                     job.signal('restart')
                 else:
@@ -479,7 +492,7 @@ class etl_job_process(osv.osv):
         return True
     
     def action_restart_process(self, cr, uid, ids, context={}, data={}):
-        for process in self.browse(cr, uid, ids, context=context):
+        for process in self.browse(cr, uid, ids, context):
             data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
             job=self.get_job_instance(cr, uid, process.id, context, data)
             try:
@@ -495,15 +508,14 @@ class etl_job_process(osv.osv):
             
             
     def action_pause_process(self, cr, uid, ids, context={}, data={}):
-        for process in self.browse(cr, uid, ids, context=context):
+        for process in self.browse(cr, uid, ids, context):
             data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
             job=self.get_job_instance(cr, uid, process.id, context, data) 
             job.signal('pause')
             self.write(cr, uid, process.id, {'state':'pause'})
     
     def test_process(self, cr, uid, ids, context={}):
-        for process in self.browse(cr, uid, ids, context=context):
-            print process.state
+        for process in self.browse(cr, uid, ids, context):
             if process.state == 'end':
                 return True
             else:
@@ -511,14 +523,14 @@ class etl_job_process(osv.osv):
             
 
     def action_stop_process(self, cr, uid, ids, context={}, data={}):     
-        for process in self.browse(cr, uid, ids, context=context):
+        for process in self.browse(cr, uid, ids, context):
             data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
             job=self.get_job_instance(cr, uid, process.id, context, data) 
             job.signal('stop')
             self.write(cr, uid, process.id, {'state':'stop'})
     
     def action_cancel_process(self, cr, uid, ids, context={}, data={}):
-        for process in self.browse(cr, uid, ids, context=context):
+        for process in self.browse(cr, uid, ids, context):
             data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
             job=self.get_job_instance(cr, uid, process.id, context, data) 
             job.signal('stop')
@@ -540,9 +552,9 @@ class etl_job_process(osv.osv):
 etl_job_process()
 
 
-class etl_job_process_component(osv.osv):
-    _name = 'etl.job.process.component'
-    _description = "This defines components in  ETL Job Process"
+class etl_job_process_statistics(osv.osv):
+    _name = 'etl.job.process.statistics'
+    _description = "This defines Statitics of  ETL Job Process"
     _cache={}
     
     def _get_computation_time(self, cr, uid, ids, name, args, context=None):
@@ -574,11 +586,11 @@ class etl_job_process_component(osv.osv):
             'state': lambda *a: 'draft', 
     }
       
-etl_job_process_component()
+etl_job_process_statistics()
 
-class etl_job_log(osv.osv):
-    _name = 'etl.job.log'
-    _description = "Logs"
+class etl_job_process_log(osv.osv):
+    _name = 'etl.job.process.log'
+    _description = "Job Process Logs"
     _cache={}
     
     _columns = {
@@ -587,6 +599,6 @@ class etl_job_log(osv.osv):
               'job_process_id' : fields.many2one('etl.job.process', 'Job Process'), 
     }
     
-etl_job_log()
+etl_job_process_log()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
