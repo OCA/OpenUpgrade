@@ -85,10 +85,10 @@ class dm_offer_step(osv.osv):
             offer_step = self.browse(cr,uid,[id])[0]
             res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
                     context.get('lang', False) or 'en_US',[offer_step.type_id.id])
-            type_code = offer_step.type_id.code+str(type_no[offer_step.type_id.code]['n'])
+            type_code = str(offer_step.type_id.code) + str(type_no[offer_step.type_id.code]['n'])
             type_no[offer_step.type_id.code]['n'] = type_no[offer_step.type_id.code]['n']+1
-            code = '_'.join([offer_step.offer_id.code,type_code])
-            result[id]=code
+            code = str(offer_step.offer_id.code)+'_'+type_code
+            result[id] = str(code)
         return result
 
     _columns = {
@@ -96,7 +96,7 @@ class dm_offer_step(osv.osv):
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade", states={'closed':[('readonly',True)]}),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32, states={'closed':[('readonly',True)]}),
-        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,readonly=True, states={'closed':[('readonly',True)]}),
+        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,size=64),
         'quotation' : fields.char('Quotation', size=16, states={'closed':[('readonly',True)]}),
         'media_id' : fields.many2one('dm.media', 'Media', ondelete="cascade",required=True, states={'closed':[('readonly',True)]}),
         'type_id' : fields.many2one('dm.offer.step.type','Type',required=True, states={'closed':[('readonly',True)]}),
@@ -190,7 +190,7 @@ dm_offer_step_transition_trigger()
 
 class dm_offer_step_transition(osv.osv):
     _name = "dm.offer.step.transition"
-    _rec_name = 'condition'
+    _rec_name = 'condition_id'
     _columns = {
         'condition_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
         'delay' : fields.integer('Offer Delay' ,required=True),

@@ -32,7 +32,8 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-                    "dm_email_data.xml"
+                    "dm_email_data.xml",
+                    "dm_email_demo.xml"
                     ],
     "active": False,
     "installable": True,
