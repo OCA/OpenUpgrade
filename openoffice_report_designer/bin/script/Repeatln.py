@@ -194,10 +194,14 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         else:
             sItem=self.win.getComboBoxText("cmbVariable")
             for var in self.aVariableList:
-		if var[:8]=='List of ' and var[:8] == sItem[:8]:
-		    sItem = var
-	    self.win.setEditText("txtName",sItem[sItem.rfind(".")+1:])
-	    self.win.setEditText("txtUName","|-."+sItem[sItem.rfind(".")+1:]+".-|")
+                if var[:8]=='List of ' and var[:8] == sItem[:8]:
+                    sItem = var
+            if sItem.find(".")==-1:
+                temp=sItem[sItem.rfind("x_"):]
+            else:
+                temp=sItem[sItem.rfind(".")+1:]
+            self.win.setEditText("txtName",temp)
+            self.win.setEditText("txtUName","|-."+temp+".-|")
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
             self.win.selectListBoxItemPos("lstFields", 0, True )
 
