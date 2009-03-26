@@ -133,9 +133,9 @@ class dm_workitem(osv.osv):
     _name = "dm.workitem"
     _description = "workitem"
     _columns = {
-        'step_id' : fields.many2one('dm.offer.step', 'Offer Step',required=True, ondelete="cascade"),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', required=True, ondelete="cascade"),
-        'customer_id' : fields.many2one('res.partner', 'Customer', required=True, ondelete="cascade"),
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step',required=True, select="1", ondelete="cascade"),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', required=True, select="1", ondelete="cascade"),
+        'customer_id' : fields.many2one('res.partner', 'Customer', required=True, select="1", ondelete="cascade"),
         'action_time' : fields.datetime('Action Time', required=True),
         'error_msg' : fields.text('Error Message'),
 #        'state' : fields.selection([('running','Running'),('error','Error')], 'Status', readonly=True),

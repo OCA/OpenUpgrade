@@ -103,9 +103,9 @@ class dm_offer_step(osv.osv):
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
         'desc' : fields.text('Description', states={'closed':[('readonly',True)]}),
         'dtp_note' : fields.text('DTP Notes', states={'closed':[('readonly',True)]}),
-        'dtp_category_ids' : fields.many2many('dm.offer.category','dm_offer_dtp_category','offer_id','offer_dtp_categ_id', 'DTP Categories') ,# domain="[('domain','=','production')]"),
+        'dtp_category_ids' : fields.many2many('dm.offer.category','dm_offer_dtp_category','offer_id','offer_dtp_categ_id', 'DTP Categories'),
         'trademark_note' : fields.text('Trademark Notes', states={'closed':[('readonly',True)]}),
-        'trademark_category_ids' : fields.many2many('dm.offer.category','dm_offer_trademark_category','offer_id','offer_trademark_categ_id','Trademark Categories'),# domain="[('domain','=','purchase')]"),
+        'trademark_category_ids' : fields.many2many('dm.offer.category','dm_offer_trademark_category','offer_id','offer_trademark_categ_id','Trademark Categories'),
         'production_note' : fields.text('Production Notes', states={'closed':[('readonly',True)]}),
         'planning_note' : fields.text('Planning Notes', states={'closed':[('readonly',True)]}),
         'purchase_note' : fields.text('Purchase Notes', states={'closed':[('readonly',True)]}),
@@ -122,8 +122,6 @@ class dm_offer_step(osv.osv):
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
-#        use this line if step action wont wrk
-#        'action' : fields.many2one('ir.actions.server', string="Action", required=True, domain="[('dm_action','=',True)]"),
          'action_id' : fields.many2one('dm.offer.step.action', string="Action", required=True, domain="[('dm_action','=',True)]"),
     }
 
@@ -131,7 +129,7 @@ class dm_offer_step(osv.osv):
         'state': lambda *a : 'draft',
         'split_mode' : lambda *a : 'or',
     }
-    
+
     def onchange_type(self,cr,uid,ids,type_id,offer_id,context):
         step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type_id])[0]
         value = {
@@ -150,7 +148,7 @@ class dm_offer_step(osv.osv):
 #                offer_name = res_offer[offer.id] or offer.name
                 value['name'] = "%s for %s"% (type_code,offer.name) 
         return {'value':value}
-    
+
     def state_close_set(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state':'closed'})
         return True
@@ -180,11 +178,10 @@ dm_offer_step()
 
 class dm_offer_step_transition_trigger(osv.osv):
     _name = "dm.offer.step.transition.trigger"
-    _inherits = {'ir.actions.server':'server_action_id'}
     _columns = {
-        'server_action_id' : fields.many2one('ir.actions.server','Server Action'),
-#        'name' : fields.char('Trigger Name',size=64,required=True),
-#        'code' : fields.char('Code' ,size=64,required=True),
+        'name' : fields.char('Trigger Name',size=64,required=True),
+        'code' : fields.char('Code' ,size=64,required=True),
+        'type' : fields.selection([('action', 'Action'),('noaction','No Action'),('auto','Auto')], 'Trigger Type', required=True),
     }
 dm_offer_step_transition_trigger()
 
@@ -231,7 +228,7 @@ class product_product(osv.osv):
         'country_ids': _default_all_country,
         'state_ids': _default_all_state,
     }
-    
+
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
             result = super(product_product,self).search(cr,uid,args,offset,limit,order,context,count)
             if 'offer_id' in context and context['offer_id']:
@@ -249,10 +246,7 @@ class actions_server(osv.osv):
     _columns = {
         'dm_action' : fields.boolean('Action')
     }
-    
 actions_server()
 
-
-    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

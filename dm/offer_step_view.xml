@@ -188,12 +188,11 @@
     <menuitem id="menu_action_offer_step_form" parent="dm.menu_dm_config_offer_steps" action="action_offer_step_form"/>
 
     <!--
-
         =======================================================
         OFFER STEP TRANSITION TRIGGER VIEWS
         =======================================================
-
         -->
+
         <record model="ir.ui.view" id="view_offer_step_transition_trigger_form">
                 <field name="name">dm.offer.step.transition.trigger.form</field>
                 <field name="model">dm.offer.step.transition.trigger</field>
@@ -202,12 +201,11 @@
                         <form string="Transition Trigger">
                                 <field name="name"/>
                                 <field name="code"/>
-                                <field name="model_id"/>
-                                <field name="state"/>
-                                <field name="condition"/>
+                                <field name="type"/>
                         </form>
                 </field>
         </record>
+
         <record model="ir.ui.view" id="view_offer_step_transition_trigger_tree">
                 <field name="name">dm.offer.step.transition.trigger.tree</field>
                 <field name="model">dm.offer.step.transition.trigger</field>
@@ -215,7 +213,8 @@
                 <field name="arch" type="xml">
                         <tree string="Transition Trigger">
                                 <field name="name"/>
-                                <!--field name="code"/-->
+                                <field name="code"/>
+                                <field name="type"/>
                         </tree>
                 </field>
         </record>

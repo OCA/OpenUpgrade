@@ -68,7 +68,6 @@
                     "offer_sequence.xml",
                     "dm_data.xml",
                     "dm_workflow.xml",
-#                    "dm_action_engine_workflow.xml",
                     "dm_document_view.xml",
                     "document_data.xml",
                     "mail_service_view.xml",
