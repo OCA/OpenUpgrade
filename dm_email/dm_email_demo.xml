@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data noupdate="1">
+		<record id="dm_offer_step_emailstartingmailingofferforanondemandoffer0" model="dm.offer.step">
+			<field eval="[(6,0,[])]" name="manufacturing_constraint_ids"/>
+			<field name="media_id" ref="dm.media_email"/>
+			<field name="type_id" ref="dm.dm_offer_step_type_startingmailing0"/>
+			<field eval="&quot;&quot;&quot;or&quot;&quot;&quot;" name="split_mode"/>
+			<field eval="0" name="mailing_at_dates"/>
+			<field name="action_id" ref="dm_email.ir_actions_server_html_doc_generate0"/>
+			<field eval="&quot;&quot;&quot;Email Starting Mailing offer for an OnDemand offer 2010&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="item_ids"/>
+			<field eval="0" name="floating_date"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field name="offer_id" ref="dm.dm_offer_openerpondemandfreetrial2010"/>
+			<field eval="0" name="interactive"/>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="dm_offer_document_emaildocumentondemandoffer0" model="dm.offer.document">
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field eval="&quot;&quot;&quot;Email Document Ondemand Offer-10&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm.dm_ddf_plugin_code0'),ref('dm.dm_ddf_plugin_language0')])]" name="document_template_plugin_ids"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;email_ondemand10&quot;&quot;&quot;" name="code"/>
+			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
+			<field name="step_id" ref="dm_offer_step_emailstartingmailingofferforanondemandoffer0"/>
+			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+		</record>
+	</data>
+</openerp>
