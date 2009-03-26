@@ -24,8 +24,8 @@
 						domain="[('name','=','input.openobject_in')]" />
 					<notebook colspan="4">
 						<page string="Fields To Load">
-								<field name="field_ids" colspan="4" nolabel="1" widget="one2many_list" editable="bottom">
-									<tree string="Fields">
+								<field name="field_ids" colspan="4" nolabel="1" widget="one2many_list">
+									<tree string="Fields" editable="bottom">
 										<field name="source_field" string="Openobject Field"/>
 										<field name="dest_field" string="New Field Name(empty for same)"/>
 									</tree>

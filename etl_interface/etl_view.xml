@@ -2,7 +2,6 @@
 <openerp>
 	<data>
 
-
 		<menuitem name="ETL" id="menu_etl_root" icon="STOCK_PROPERTIES" />
 
 		<menuitem name="Configuration" parent="menu_etl_root"
@@ -15,8 +14,14 @@
             name="etl.launch.job.process"
             multi="True"
             string="Launch Process"/>
-            
-		<!-- Project -->
+           
+	<wizard id="wizard_run_scheduled_process" model="etl.job.process" multi="True"
+			string="Run All Scheduled Processes" name="etl.run.scheduled.job.processes" />
+			
+	<menuitem action="wizard_run_scheduled_process" id="etl_run_process_scheduler"
+		parent="menu_etl_root" type="wizard" sequence="100" />
+	
+	<!-- Project -->
 
 		<record id="etl_proj_form" model="ir.ui.view">
 			<field name="name">view_etl_proj_form</field>

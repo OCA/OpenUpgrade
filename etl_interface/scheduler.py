@@ -44,7 +44,7 @@ class etl_job_process(osv.osv):
         for process in process_obj.browse(cr, uid,ids):
             if process.schedule_date:
                 if maxdate.strftime('%Y-%m-%d %H:%M:%S')>=process.schedule_date:
-                    wf_service.trg_validate(uid, 'etl.job.process', process.id, 'action_start', cr)
+                    wf_service.trg_validate(uid, 'etl.job.process', process.id, 'start_process', cr)
         if use_new_cursor:
             cr.commit()
 

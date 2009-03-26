@@ -33,7 +33,6 @@ class etl_component_transform_sort(osv.osv):
         cmp =self.browse(cr, uid, id,context=context)
         if cmp.type_id.name == 'transform.sort':
             val = etl.component.transform.sort('name')
-            print 'vvvvvvv',val, data
         return val
     
 etl_component_transform_sort()
