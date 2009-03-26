@@ -30,10 +30,11 @@
             """,
     "depends" : ["crm","dm"],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : [
+                   "dm_crm_demo.xml",
+                  ],
     "update_xml" : [
                     "dm_crm_data.xml",
-                    "dm_crm_demo.xml"
                     ],
     "active": False,
     "installable": True,
