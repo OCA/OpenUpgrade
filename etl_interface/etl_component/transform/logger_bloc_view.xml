@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="comp_transform_logger_bloc" model="etl.component.type">
+			<field name="name">transform.logger_bloc</field>
+			<field name="code">transform.logger_bloc</field>
+	</record>	
+    </data>
+   <data>
+	<record id="etl_component_logger_bloc_form" model="ir.ui.view">
+	        <field name="name">etl.component.loggerbloc.form</field>
+		<field name="model">etl.component</field>
+		<field name="type">form</field>            
+		<field name="arch" type="xml">
+        	<form string="Logger Bloc Component">
+                <group colspan="4">
+		    		<field name="name" select="1" />
+		    		<field name="type_id"  domain="[('name','=','transform.logger_bloc')]"/>
+                    <field name="transformer_id" invisible="1" colspan="4"/>
+                </group>                    
+                <notebook colspan="4">  
+                  <page string="Property">
+   						<field name="output_id"  domain="[('type','=','localfile')]"/>										        					         					   
+                  </page>                                              
+                  <page string="Transitions Detail">
+			        <separator string="Incomming Transitions" colspan="4" />
+			        <field name="trans_in_ids" nolabel="1" colspan="4" readonly="1" />
+			        <separator string="Outgoing Transitions" colspan="4" />
+			        <field name="trans_out_ids" nolabel="1" colspan="4" readonly="1" />
+                  </page>
+             </notebook>
+		</form>								
+		</field>
+	</record>
+
+		<record id="action_etl_component_logger_bloc_tree"
+			model="ir.actions.act_window">
+			<field name="name">Logger Bloc Component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type_id.name','=','transform.logger_bloc')]</field>
+		</record>
+
+		<record id="action_etl_component_logger_bloc_from"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type_id.name','=','transform.logger_bloc')]</field>
+			<field name="view_id" ref="etl_component_logger_bloc_form" />
+		</record>
+
+		<record id="action_etl_component_logger_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_interface.etl_component_tree" />
+			<field name="act_window_id" ref="action_etl_component_logger_bloc_tree" />
+		</record>
+		<record id="action_etl_component_logger_view2" model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_logger_bloc_form" />
+			<field name="act_window_id" ref="action_etl_component_logger_bloc_tree" />
+		</record>
+
+
+		<menuitem name="Logger Bloc" parent="etl_interface.menu_etl_jd_c_pec_form"
+            action="action_etl_component_logger_bloc_tree"
+			id="menu_etl_jd_c_pec__logger_bloc_tree" />	
+
+	</data>
+</openerp>
+

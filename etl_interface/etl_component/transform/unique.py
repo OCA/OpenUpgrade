@@ -1,7 +1,8 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,10 +20,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import logger
-import data_map
-import sort
-import data_filter
-import merge
-import schema_validator
-import unique
+import etl
+import tools
+from osv import osv, fields
+
+
+class etl_component_unique(osv.osv):
+     _name='etl.component.unique'
+     _rec_neme='key'
+     _columns={
+      'key' : fields.char('Key', size=30),
+      'key_id' : fields.many2one('etl.component', 'property'),
+
+    }
+
+etl_component_unique()
+
+class etl_component_transform_unique(osv.osv):
+     _name='etl.component'
+     _inherit = 'etl.component'
+   
+     _columns={
+      'properties' : fields.one2many('etl.component.unique','key_id', 'Property'), 
+     }
+
+etl_component_transform_unique()
+
+
+
+
