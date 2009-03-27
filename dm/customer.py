@@ -161,10 +161,11 @@ class dm_workitem(osv.osv):
         return True
 
     def __init__(self, *args):
-        self.ir_running = False
+        self.is_running = False
         return super(dm_workitem, self).__init__(*args)
 
     def check_all(self, cr, uid, context={}):
+        print dir(self)
         if not self.is_running:
             self.is_running = True
             ids = self.search(cr, uid, [('state','=','pending'),
