@@ -66,8 +66,11 @@ class query(object):
                         final_axis.append(tuple(t))
                 axis_result[-1]=final_axis[:]
                 final_axis=[]
-                d = 0 
-                
+                d = 0
+                len_axis = len(axis[-1])
+                len_cross = len(cross)
+                delta_count = 0 
+                d = len_axis  
                 for data in common.xcombine(axis[-1],cross):
                     flag = False
                     make_where = []
@@ -82,9 +85,11 @@ class query(object):
                             make_where.append(data[1]['query']['whereclause'][0])
                         else:
                             make_where.append(data[1]['query']['whereclause'][0])
-                    data_temp['delta'] = d
-                    d= d + 1
-                    final_axis.append(data_temp)
+                    delta_count = delta_count + 1
+                    if delta_count >= len_cross and len_cross!=1:
+                        delta_count = 0 
+                        data_temp['delta'] = d
+                        d = d + 1
                     if flag:
                         data[0]['query']['whereclause']=[temp_where]
                         data_temp['query']['whereclause'] = [temp_where]
@@ -93,6 +98,7 @@ class query(object):
                             data_temp['query']['whereclause'].append(make_where[0])
                         else:
                             data_temp['query']['whereclause'] = make_where
+                    final_axis.append(data_temp)
                 axis[-1] = []
                 axis[-1] = final_axis
             else:
