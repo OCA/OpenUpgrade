@@ -60,7 +60,7 @@
 	 'etl_interface/etl_component/transform/merge_view.xml',
 	 'etl_interface/etl_component/transform/schema_validator_view.xml',
 	 'etl_interface/etl_component/transform/sort_view.xml',
-	 'etl_interface/etl_component/transform/unique_view.xml
+	 'etl_interface/etl_component/transform/unique_view.xml',
          'etl_connector/localfile_view.xml',
          'etl_connector/openobject_connector_view.xml',
          'etl_connector/sql_connector_view.xml',     
