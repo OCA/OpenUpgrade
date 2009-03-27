@@ -90,7 +90,6 @@ class bom_customization_configurator(osv.osv_memory):
         def_fields = super(osv.osv_memory, self).default_get(cr, uid, fields_list, context)
         
         sol_id = context.get('sol_id', False)
-        #TODO rajouter une jolie erreur disant qu'il manque un produit dans la sol
         
         product_id = self.pool.get('sale.order.line').read(cr, uid, sol_id,['product_id'])['product_id'][0]
 
