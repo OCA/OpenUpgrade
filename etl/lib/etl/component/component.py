@@ -81,9 +81,7 @@ class component(signal, statistic):
 
     def __init__(self, name='', transformer=None, *args, **argv):
         super(component, self).__init__(*args, **argv)   
-        self.name=name 
-    if not self.name:
-        name=''
+        self.name=name
         self.trans_in = []
         self.trans_out = []
         self.is_output = False
@@ -106,7 +104,7 @@ class component(signal, statistic):
     def __str__(self):
         if not self.name:
             self.name=''
-            return '<Component : '+self.name+'>'
+    	return '<Component : '+self.name+'>'
 
     def generator_get(self, transition):
         """ Get generator list of transition
