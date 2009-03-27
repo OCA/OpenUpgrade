@@ -20,7 +20,11 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to write data to csv file.
+csv_out
+*  Use to write data to csv file.
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
 """
 
 from etl.component import component
@@ -39,7 +43,17 @@ class csv_out(component):
         * main : return all data
     """   
 
-    def __init__(self,fileconnector,name='component.output.csv_out',transformer=None,row_limit=0, csv_params={}):
+    def __init__(self,fileconnector,transformer=None,name='component.output.csv_out',row_limit=0, csv_params={}):
+
+	""" 
+    Paramters ::
+
+	fileconnector : Provides  localfile connector to connect with file
+	transformer   : Provides transformer object to transform string data into  particular object
+	row_limit     : Limited records send to destination if row limit specified. If row 	limit is 0,all records are send.
+	csv_param     : To specify other csv parameter like fieldnames , restkey , restval etc. 
+
+	"""
         super(csv_out, self).__init__(name,transformer=transformer)      
           
         self.fileconnector = fileconnector 
@@ -72,3 +86,19 @@ class csv_out(component):
                         yield d, 'main'
                     except IOError,e:  
                         self.action_error(e)
+
+
+
+def test():
+    from etl_test import etl_test
+    import etl
+    file_conn=etl.connector.file_connector('http://localhost:8069', 'dms_20090204', 'admin', 		              
+    'admin',con_type='xmlrpc')
+    test=etl_test.etl_component_test(csv_out('test',file_conn,'res.partner'))
+    test.check_input({'main':[{'name':'OpenERP1'},{'name':'Fabien1'}]})
+    test.check_output([{'name':'OpenERP1'},{'name':'Fabien1'}],'main')
+    res=test.output()
+if __name__ == '__main__':
+    test()
+
+

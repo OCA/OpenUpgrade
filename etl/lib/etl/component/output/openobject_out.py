@@ -20,7 +20,12 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to write data into openobject model.
+ openobject_out
+
+* Use to write data into openobject model.
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
 """
 
 from etl.component import component
@@ -40,6 +45,17 @@ class openobject_out(component):
     """
 
     def __init__(self,openobject_connector,model,fields=None,name='component.output.openobject_out',transformer=None):
+
+	""" 
+	Paramters ::
+
+	openobject_connector : Provides  openobject connector to connect with file
+	transformer          : Provides transformer object to transform string data into particular object.
+	fields               : TODO
+	model                : It is used to provide a openobject model name.
+
+	"""
+	
         super(openobject_out, self).__init__(name,transformer=transformer)
         self.fields = fields
         self.openobject_connector = openobject_connector

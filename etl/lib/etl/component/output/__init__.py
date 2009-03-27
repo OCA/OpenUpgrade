@@ -21,11 +21,12 @@
 ##############################################################################
 
 """
-ETL Input Components:
-* csv_out : write data in csv file
-* sql_out : insert, update, delete data in sql database
-* openobject_out : create, write, unlink  data in openobject 
-* xml_out : write data in xml file
+ETL Output Components:
+=====================
+* It use to load/store data into destinaton system
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
 
 """
 from csv_out import csv_out

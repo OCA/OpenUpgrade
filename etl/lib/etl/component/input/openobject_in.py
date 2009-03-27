@@ -20,7 +20,12 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to read data from open object model.
+openobject_in
+
+*  Use to read data from open object model.
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
 """
 
 from etl.component import component
@@ -40,7 +45,18 @@ class openobject_in(component):
         * .* : return the main flow with data from csv file
     """    
 
-    def __init__(self,openobject_connector,model,domain=[],fields=[],context={},name='component.input.sql_in',transformer=None,row_limit=0):
+    def __init__(self,openobject_connector,model,name='component.input.sql_in',domain=[],fields=[],context={},transformer=None,row_limit=0):
+
+	"""
+	Parameters::
+
+	openobject_connector :  provides  openobject connector to connect with file.
+	model                :  used to provide a model name.
+	transformer          :  provides transformer object to transform string data into particular object.
+	row_limit            :  Limited records send to destination if row  limit specified.If row limit is 0,all records are 
+			        send.
+                      
+        """
         super(openobject_in, self).__init__(name,transformer=transformer)      
         self.openobject_connector = openobject_connector  
         self.model=model
@@ -77,6 +93,16 @@ class openobject_in(component):
         except xmlrpclib.ProtocolError,e:            
             self.action_error(e)
             
-               
-        
+def test():
+    from etl_test import etl_test
+    import etl
+    file_conn=etl.connector.openobject_connector('http://localhost:8069', 'dms_20090204', 'admin', 	
+    'admin',con_type='xmlrpc')
+    test=etl_test.etl_component_test(openobject_in('test',file_conn,'res.partner'))
+    test.check_input({'main':[{'name':'OpenERP1'},{'name':'Fabien1'}]})
+    test.check_output([{'name':'OpenERP1'},{'name':'Fabien1'}],'main')
+    res=test.output()
+    print res
+if __name__ == '__main__':
+	test()
 

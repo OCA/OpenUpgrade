@@ -32,6 +32,13 @@ class data_filter(component):
     """   
 
     def __init__(self,filter_criteria,name='component.transfer.data_filter',transformer=None):
+
+        """ 
+        Parameters ::
+
+        transformer      :  provides transformer object to transform string data into  particular object
+        filter_crtiteria :  TODO
+        """
         super(data_filter, self).__init__(name,transformer=transformer)         
         self.filter_criteria = filter_criteria          
 
