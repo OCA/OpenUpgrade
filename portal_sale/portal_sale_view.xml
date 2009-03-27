@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+    <record id="view_portal_order_tree" model="ir.ui.view">
+            <field name="name">portal order</field>
+            <field name="model">sale.order</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sales orders">
+                    <field name="date_order"/>
+                    <field name="name" string="Reference"/>
+                    <field name="partner_id" />
+                    <field name="picked_rate" widget="progressbar"/>
+                    <field name="invoiced_rate" widget="progressbar"/>
+                    <field name="amount_untaxed"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+    
+     <record id="view_portal_order_form" model="ir.ui.view">
+            <field name="name">portal order</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Sales order">
+                    <group col="6" colspan="4">
+                        <field name="name" select="1"/>
+                        <field name="client_order_ref" select="2"/>
+                        <field name="date_order" select="1"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Sale Order">
+                            <field name="partner_id" on_change="onchange_partner_id(partner_id)" required="1" select="1"/>
+                            <field domain="[('partner_id','=',partner_id)]" name="partner_order_id"/>
+                            <field domain="[('partner_id','=',partner_id)]" name="partner_invoice_id"/>
+                            <field domain="[('partner_id','=',partner_id)]" name="partner_shipping_id"/>
+                            <newline/>
+                            <field colspan="4" mode="tree,graph" name="order_line" nolabel="1" widget="one2many_list">
+                                <form string="Sale Order Lines">
+                                    <notebook>
+                                        <page string="Order Line">
+                                            <separator colspan="4" string="Automatic Declaration"/>
+                                            <field colspan="4"
+                                                context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
+                                                name="product_id"
+                                                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], True, parent.date_order, product_packaging, parent.fiscal_position)"
+                                                select="1"/>
+                                            <field
+                                                context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
+                                                name="product_uom_qty"
+                                                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order, product_packaging, parent.fiscal_position)"
+                                                select="1"/>
+                                            <field name="product_uom"
+                                                on_change="product_uom_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order)"/>
+                                            <field
+                                                name="product_packaging"
+                                                context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
+                                                on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order, product_packaging, parent.fiscal_position)"
+                                                domain="[('product_id','=',product_id)]"
+                                                groups="base.group_extended"/>
+                                            <separator colspan="4" string="Manual Description"/>
+                                            <field colspan="4" name="name" select="2"/>
+                                            <field name="price_unit" select="2"/>
+                                            <field name="discount"/>
+                                            <field name="type"/>
+                                            <field name="delay" select="2"/>
+                                            <newline/>
+                                            <field colspan="4" name="tax_id" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]"/>
+                                            <separator colspan="4" string="States"/>
+                                            <field name="state" select="2"/>
+                                        </page>
+                                    </notebook>
+                                </form>
+                                <tree string="Sales order lines">
+                                    <field colspan="4" name="name"/>
+                                    <field name="product_uom_qty" string="Qty"/>
+                                    <field name="product_uom" string="UoM"/>
+                                    <field name="discount"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_net"/>
+                                    <field name="price_subtotal"/>
+                                </tree>
+                            </field>
+                            <newline/>
+                            <group col="7" colspan="4">
+                                <field name="amount_untaxed" sum="Untaxed amount"/>
+                                <field name="amount_tax"/>
+                                <field name="amount_total" sum="Total amount"/>
+                                <field name="state"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        
+	<record model="ir.actions.act_window" id="portal_action_sale_order">
+		<field name="name">Sale Order</field>
+		<field name="res_model">sale.order</field>
+		<field name="view_mode">form</field>
+		<field name="domain">[('state','&lt;&gt;','cancel'),('state','&lt;&gt;','draft')]</field>
+	</record>
+	
+	<record model="ir.actions.act_window.view" id="window_view_tree_sale">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_portal_order_tree"/>
+		<field name="act_window_id" ref="portal_action_sale_order"/>
+	</record>
+	
+	<record model="ir.actions.act_window.view" id="window_view_form_sale">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_portal_order_form"/>
+		<field name="act_window_id" ref="portal_action_sale_order"/>
+	</record>  
+
+	<menuitem name="Order" id="menu_portal_customer_order" parent="portal.menu_portal_customer"/>
+	<menuitem name="Sale Order" id="menu_portal_customer_order_sale" parent="menu_portal_customer_order"  action="portal_action_sale_order"/>
+	
+    </data>
+</openerp>

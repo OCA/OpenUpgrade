@@ -29,8 +29,13 @@
     "description": """
      """,
     "init_xml" : [],
-    "update_xml" : ["portal_conf_data.xml"],
-    "demo_xml" : ["portal_sale_data.xml"],
+    "update_xml" : [
+                    "portal_sale_view.xml",
+                    "portal_conf_data.xml",
+                    "portal_sale_data.xml",
+                    "security/ir.model.access.csv",
+                ],
+    "demo_xml" : [],
     "active": False,
     "installable": True
 }

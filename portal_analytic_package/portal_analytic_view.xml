@@ -1,7 +1,14 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-
+	
+	<menuitem name="Operations" id="menu_operations" parent="portal.menu_portal_customer"/>
+	
+	<menuitem name="Analytic Operations" 
+			action="account_analytic_package.action_account_analytic_line_package_tree_simplified"
+			parent="menu_operations"
+			id="menu_analytic_operation"/>
+	
 	<act_window name="All Operations"
 		domain="[('account_id', '=', active_id)]"
 		res_model="account.analytic.line.package"
