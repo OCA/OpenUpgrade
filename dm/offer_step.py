@@ -229,7 +229,7 @@ class product_product(osv.osv):
         'state_ids': _default_all_state,
     }
 
-    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context={}, count=False):
             result = super(product_product,self).search(cr,uid,args,offset,limit,order,context,count)
             if 'offer_id' in context and context['offer_id']:
                 result = []
