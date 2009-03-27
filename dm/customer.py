@@ -133,23 +133,21 @@ class dm_workitem(osv.osv):
     _name = "dm.workitem"
     _description = "workitem"
     _columns = {
-        'step_id' : fields.many2one('dm.offer.step', 'Offer Step',required=True, select="1", ondelete="cascade"),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', required=True, select="1", ondelete="cascade"),
-        'customer_id' : fields.many2one('res.partner', 'Customer', required=True, select="1", ondelete="cascade"),
-        'action_time' : fields.datetime('Action Time', required=True),
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', select="1", ondelete="cascade"),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', select="1", ondelete="cascade"),
+        'customer_id' : fields.many2one('res.partner', 'Customer', select="1", ondelete="cascade"),
+        'action_time' : fields.datetime('Action Time'),
         'error_msg' : fields.text('Error Message'),
-#        'state' : fields.selection([('running','Running'),('error','Error')], 'Status', readonly=True),
-        'state' : fields.selection([('pending','Pending'),('error','Error'),('done','Done')], 'Status', readonly=True),
+        'state' : fields.selection([('pending','Pending'),('error','Error'),('cancel','Cancel'),('done','Done')], 'Status', readonly=True),
     }
     _defaults = {
-#        'state': lambda *a: 'running',
         'state': lambda *a: 'pending',
     }
+
     def run(self, cr, uid, wi, context={}):
         context['active_id'] = wi.id
         done = False
         try:
-            # processing ? Not usefull
             res = obj.run(cr, uid, [wi.step_id.action_id.id], context)
             self.write(cr, uid, [wi.id], {'state': 'done'})
             done = True
@@ -158,6 +156,7 @@ class dm_workitem(osv.osv):
         if done:
             pass
             # Create next auto workitems
+
         return True
 
     def __init__(self, *args):
@@ -177,31 +176,6 @@ class dm_workitem(osv.osv):
         return True
 dm_workitem()
 
-"""
-class dm_workitem_action(osv.osv):
-    _name = "dm.workitem.action"
-
-    def crm_case_create(self, cr, uid, ids):
-        return True
-
-    def action_done(self, cr, uid, ids):
-        return True
-
-    def plugin_value_compute(self, cr, uid, ids):
-        return False
-
-    def pdf_document_fusion(self, cr, uid, ids):
-        return True
-
-    def dms_document_store(self, cr, uid, ids):
-        return True
-
-    _columns = {
-        'workitem_id' : fields.many2one('dm.workitem', 'Workitem', ondelete='cascade'),
-        'error_msg' : fields.text('Error Message'),
-    }
-dm_workitem_action()
-"""
 class dm_customer_segmentation(osv.osv):
     _name = "dm.customer.segmentation"
     _description = "Segmentation"

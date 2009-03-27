@@ -1226,13 +1226,13 @@ rkJggg==
 			<field name="partner_id" ref="res_partner_print_send0"/>
 			<field name="media_id" ref="dm.media_paper"/>
 			<field eval="1" name="default_for_media"/>
-            <field eval="5" name="sequence"/>
+<!--            <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_offer_step"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
             <field eval="1" name="dm_action"/>
-            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>-->
 		</record>
 		
 		<record id="dm_mail_service_phone0" model="dm.mail_service">
@@ -1240,13 +1240,13 @@ rkJggg==
 			<field name="partner_id" ref="res_partner_print_send0"/>
 			<field name="media_id" ref="dm.media_phone"/>
 			<field eval="1" name="default_for_media"/>
-            <field eval="5" name="sequence"/>
+<!--            <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_offer_step"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
             <field eval="1" name="dm_action"/>
-            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>-->
 		</record>
 		
 		<record id="dm_mail_service_email0" model="dm.mail_service">
@@ -1254,14 +1254,14 @@ rkJggg==
 			<field name="partner_id" ref="res_partner_print_send0"/>
 			<field name="media_id" ref="dm.media_email"/>
 			<field eval="1" name="default_for_media"/>
-            <field eval="5" name="sequence"/>
+<!--            <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_offer_step"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
             <field eval="1" name="dm_action"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
-		</record>
+		</record>-->
 	</data>
 
 	<!-- Campaign -->
