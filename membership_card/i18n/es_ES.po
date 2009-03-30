@@ -1,22 +1,44 @@
 # Translation of OpenERP Server.
-# This file contains the translation of the following modules:
+# This file containt the translation of the following modules:
 #	* membership_card
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.0_rc2\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 13:58:02+0000\n"
-"PO-Revision-Date: 2009-02-06 13:58:02+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2008-12-28 20:40:03+0000\n"
+"PO-Revision-Date: 2009-01-10 19:17+0100\n"
+"Last-Translator: Jordi Esteve <jesteve@zikzakmedia.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
 #. module: membership_card
-#: model:ir.module.module,shortdesc:membership_card.module_meta_information
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "¡XML inválido para la definición de la vista!"
+
+#. module: membership_card
+#: field:res.partner.address,photo:0
+msgid "Photo"
+msgstr "Foto"
+
+#. module: membership_card
+#: model:ir.actions.report.xml,name:membership_card.membership_card_address_report
+#: model:ir.actions.report.xml,name:membership_card.membership_card_report
 msgid "Membership card"
-msgstr ""
+msgstr "Carné socio"
+
+#. module: membership_card
+#: rml:membership.card.address:0
+#: rml:membership.card:0
+msgid "Num:"
+msgstr "Número:"
+
+#. module: membership_card
+#: help:res.partner.address,photo:0
+msgid "Photograph of the contact"
+msgstr "Fotografía del contacto"
 
