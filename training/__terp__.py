@@ -21,11 +21,20 @@
 ##############################################################################
 
 {
-    'name' : 'Training',
+    'name' : 'Training Management',
     'version' : '0.0.1',
     'author' : 'Tiny SPRL',
     'website' : 'http://www.openerp.com',
-    'description' : 'Training',
+    'description' : """
+From the conception of a project to the elaboration of your catalog, our training management allows you to create easily courses and to organize the sessions.
+With the analytic account support, you can know the costs of your trainings.
+
+* Manage the subscriptions
+* Manage the courses
+* Manage the offers (for a planning)
+* Manage the sessions
+* Manage the support of course
+""",
     'depends' : [
         'account',
         'base_contact_team',

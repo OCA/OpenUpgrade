@@ -25,7 +25,7 @@
     'author' : 'Tiny SPRL',
     'version' : '0.0.2',
     'website' : 'http://www.openerp.com',
-    'description' : 'IFBL Profile',
+    'description' : 'Profile for the IFBL project',
     'category' : 'Profile',
     'depends' : [
         'training',

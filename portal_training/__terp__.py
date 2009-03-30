@@ -25,7 +25,7 @@
     'version' : '0.0.1',
     'author' : 'Tiny SPRL',
     'website' : 'http://www.openerp.com',
-    'description' : 'Portal Training',
+    'description' : 'Supplier Portal',
     'depends' : [
         'portal',
         'board',

@@ -25,7 +25,7 @@
     'version' : '0.0.1',
     'author' : 'Tiny SPRL',
     'website' : 'http://www.openerp.com',
-    'description' : 'Training Room',
+    'description' : """The module training_room helps the user to manage the training's location""",
     'depends' : [
         'training',
     ],

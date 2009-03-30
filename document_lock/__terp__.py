@@ -21,11 +21,11 @@
 ##############################################################################
 
 {
-    'name' : 'Document Look',
+    'name' : 'Document Lock',
     'author' : 'Tiny SPRL',
     'version' : '0.0.2',
     'website' : 'http://www.openerp.com',
-    'description' : '',
+    'description' : """The document_lock adds a status on the attachment, allowing you to lock attachments or not.""",
     'category' : '',
     'depends' : [
         'document',

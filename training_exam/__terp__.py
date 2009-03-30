@@ -25,7 +25,7 @@
     'version' : '0.0.1',
     'author' : 'Tiny SPRL',
     'website' : 'http://www.openerp.com',
-    'description' : 'Training Exam',
+    'description' : """This module adds the exam management for the training management"""
     'depends' : [
         'training',
     ],

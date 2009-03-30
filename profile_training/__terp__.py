@@ -25,7 +25,9 @@
     'version' : '0.0.1',
     'author' : 'Tiny SPRL',
     'website' : 'http://www.openerp.com',
-    'description' : 'Profile Training',
+    'description' : """Profile for the training management.
+With this profile the training management will be installed and you can have 
+the choice to install the examn management and the room management""",
     'depends' : [
         'training',
         'document_lock',
