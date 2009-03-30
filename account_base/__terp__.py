@@ -10,6 +10,6 @@
                     'partner_view.xml',
                     'base_setup/base_setup_data.xml',
                     'base_setup/base_setup_wizard.xml'],
-    "active": True,
+    "active": False,
     "installable": True
 }

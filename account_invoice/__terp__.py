@@ -15,7 +15,7 @@
     """,
     "category" : "Generic Modules/Accounting",
     "website" : "http://tinyerp.com",
-    "depends" : ["base","account"],
+    "depends" : ["base","account","account_base"],
     "init_xml" : [
     ],
 

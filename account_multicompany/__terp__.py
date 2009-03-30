@@ -25,19 +25,9 @@
     "name" : "Account For Multicompany",
     "version" : "1.1",
     "author" : "Tiny",
-    "description" : """OpenERP Stock Management module can manage multi-warehouses, multi and structured stock locations.
-Thanks to the double entry management, the inventory controlling is powerful and flexible:
-* Moves history and planning,
-* Different inventory methods (FIFO, LIFO, ...)
-* Stock valuation (standard or average price, ...)
-* Robustness faced with Inventory differences
-* Automatic reordering rules (stock level, JIT, ...)
-* Bar code supported
-* Rapid detection of mistakes through double entry system
-* Traceability (upstream/downstream, production lots, serial number, ...)
-    """,
+    "description" : """    """,
     "website" : "http://www.openerp.com",
-    "depends" : ['profile_indian_account'],
+    "depends" : [],
     "category" : "Generic Modules/account_multicompany",
     "init_xml" : [],
     "demo_xml" : [],
