@@ -28,6 +28,7 @@
     'description' : 'Profile Training',
     'depends' : [
         'training',
+        'document_lock',
     ],
     'init_xml' : [
     ],
