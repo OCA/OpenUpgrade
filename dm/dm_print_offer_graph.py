@@ -49,6 +49,11 @@ def graph_get(cr, uid, graph, offer_id):
     offer_obj = pooler.get_pool(cr.dbname).get('dm.offer')
     offer = offer_obj.browse(cr, uid, offer_id)[0]
     nodes = {}
+    step_type = pooler.get_pool(cr.dbname).get('dm.offer.step.type')·
+    type_ids = step_type.search(cr,uid,[])
+    type = step_type.read(cr,uid,type_ids,['code'])
+    for t in type :
+        type_no[t['code']]=1
     for step in offer.step_ids:
         args = {}
 
@@ -66,8 +71,8 @@ def graph_get(cr, uid, graph, offer_id):
 #        media_code = media_trans[step.media_id.id] or step.media_id.code
 
 #        args['label'] = type_code + '\\n' + media_code
-        args['label'] = translate_accent(type_code + '\\n' + step.media_id.code)
-        print "XXXXXXXXXXXxxxxx",args
+        args['label'] = translate_accent(type_code + str(type_no[step.type_id.code]) +'\\n' + step.media_id.code)
+        type_no[step.type_id.code] = type_no[step.type_id.code] +1
         graph.add_node(pydot.Node(step.id, **args))
 
     for step in offer.step_ids:
