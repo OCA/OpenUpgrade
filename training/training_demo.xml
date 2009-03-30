@@ -47,6 +47,7 @@
             <field eval="[(6,0,[])]" name="complementary_course_ids"/>
         </record>
         <record id="training_course_0" model="training.course">
+            <field name="name">OpenERP - Install</field>
             <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
             <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
@@ -54,6 +55,7 @@
             <field eval="2.0" name="duration"/>
         </record>
         <record id="training_course_1" model="training.course">
+            <field name="name">OpenERP - Administration</field>
             <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
             <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
@@ -61,6 +63,7 @@
             <field eval="4.0" name="duration"/>
         </record>
         <record id="training_course_2" model="training.course">
+            <field name="name">OpenERP - Object</field>
             <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
             <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
@@ -68,6 +71,7 @@
             <field eval="8.0" name="duration"/>
         </record>
         <record id="training_course_3" model="training.course">
+            <field name="name">OpenERP - View</field>
             <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
             <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
@@ -75,6 +79,7 @@
             <field eval="8.0" name="duration"/>
         </record>
         <record id="training_course_4" model="training.course">
+            <field name="name">OpenERP - Workflow</field>
             <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
             <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
@@ -82,6 +87,7 @@
             <field eval="4.0" name="duration"/>
         </record>
         <record id="training_course_5" model="training.course">
+            <field name="name">OpenERP - Report</field>
             <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
             <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
@@ -89,6 +95,7 @@
             <field eval="4.0" name="duration"/>
         </record>
         <record id="training_course_6" model="training.course">
+            <field name="name">OpenERP - Wizard</field> 
             <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
             <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>
@@ -96,6 +103,7 @@
             <field eval="4.0" name="duration"/>
         </record>
         <record id="training_course_7" model="training.course">
+            <field name="name">OpenERP - RAD</field>
             <field name="course_type_id" ref="training_course_type_technicaltraining0"/>
             <field name="p_id" ref="training_course_openerptechnicaltraining0"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state_course"/>

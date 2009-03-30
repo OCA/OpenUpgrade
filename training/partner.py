@@ -40,7 +40,7 @@ class res_partner_contact(osv.osv):
     _inherit = 'res.partner.contact'
 
     _columns = {
-        'matricule' : fields.char( 'Matricule', size=32 ),
+        'matricule' : fields.char( 'Matricule', size=32, required=True ),
         'birthplace' : fields.char( 'BirthPlace', size=64 ),
         'education_level' : fields.char( 'Education Level', size=128 ),
         'technical_skill_ids' : fields.many2many('res.partner.contact_technical_skill',
@@ -49,6 +49,11 @@ class res_partner_contact(osv.osv):
                                                  'skill_id',
                                                  'Technical Skill'),
     }
+
+    _defaults = {
+        'matricule' : lambda *a: '',
+    }
+
 res_partner_contact()
 
 class res_partner_job(osv.osv):

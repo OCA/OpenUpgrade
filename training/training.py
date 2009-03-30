@@ -197,6 +197,7 @@ class training_course(osv.osv):
 
     _defaults = {
         'state_course' : lambda *a: 'draft',
+        'duration' : lambda *a: 0.0,
     }
 
 training_course()
