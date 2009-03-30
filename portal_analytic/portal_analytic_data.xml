@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
+
 	<record model="ir.rule.group" id="analytic_account_rule_group">
 		<field name="name">Portal analytic account rule</field>
 		<field name="model_id" search="[('model','=','account.analytic.account')]" model="ir.model"/>
@@ -15,73 +16,34 @@
 
 
 	<record model="portal.model" id="model_analytic_account">
-				<field name="name" >Analytic Account Model</field>
-				<field name="model_id" search="[('model','=','account.analytic.account')]"/>
-				<field name="rule_group_id" ref="analytic_account_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[ref('account.view_account_analytic_account_tree'),ref('account.view_account_analytic_account_form')])]"/>
+		<field name="name" >Analytic Account Model</field>
+		<field name="model_id" search="[('model','=','account.analytic.account')]"/>
+		<field name="rule_group_id" ref="analytic_account_rule_group"/>
+		<field name="view_ids" eval="[(6,0,[ref('account.view_account_analytic_account_tree'),ref('view_portal_account_analytic_account_form')])]"/>
 	</record>
 
 </data>
 <data noupdate="1">
 
-	<record model="res.groups" id="portal.portal_group">
+	<record model="res.groups" id="portal_analytic_group">
+		<field name="name">Portal Analytic group</field>
 		<field name="rule_groups" eval="[(4,ref('analytic_account_rule_group'))]"/>
 	</record>
-
+	
+	<record model="portal.portal" id="portal_account_analytic">
+		<field name="name">Portal Analytic</field>
+		<field name="group_id" ref="portal_analytic_group"/>
+		<field name="menu_id" ref="menu_portal_configuration_contract"/>
+		<field name="company_id" ref="base.main_company"/>
+		<field name="menu_action_id" ref="portal.portal_customer_action_menu"/>
+	</record>
+	
 	<record model="ir.model.access" id="model_access_analytic_account">
 		<field name="name">Analytic Account Access</field>
 		<field name="perm_read">True</field>
-		<field name="group_id" ref="portal.portal_group"/>
+		<field name="group_id" ref="portal_analytic_group"/>
 		<field name="model_id" search="[('model','=','account.analytic.account')]"/>
 	</record>
-
-
-	<record model="ir.actions.act_window" id="portal_action_analytic_account_opened">
-		<field name="name">Opened Contracts</field>
-		<field name="res_model">account.analytic.account</field>
-		<field name="view_type">form</field>
-<!-- 		<field name="view_mode">tree,form</field> -->
-<!-- 		<field name="view_id" ref="account.view_account_analytic_account_tree"/> -->
-		<field name="domain">[('state','&lt;&gt;','close'),('state','&lt;&gt;','draft')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_aa_o">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="account.view_account_analytic_account_tree"/>
-		<field name="act_window_id" ref="portal_action_analytic_account_opened"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_aa_o">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="account.view_account_analytic_account_form"/>
-		<field name="act_window_id" ref="portal_action_analytic_account_opened"/>
-	</record>
-
-	<menuitem name="Contracts" id="menu_portal_configuration_contract" parent="portal.menu_portal_customer"/>
-	<menuitem name="Open Contracts" id="menu_portal_configuration_contract_open" parent="menu_portal_configuration_contract" action="portal_action_analytic_account_opened"/>
-
-	<record model="ir.actions.act_window" id="portal_action_analytic_account_closed">
-		<field name="name">Closed Contracts</field>
-		<field name="res_model">account.analytic.account</field>
-		<field name="view_type">form</field>
-<!-- 		<field name="view_mode">tree,form</field> -->
-<!-- 		<field name="view_id" ref="account.view_account_analytic_account_tree"/> -->
-		<field name="domain">[('state','=','close')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_aa_c">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="account.view_account_analytic_account_tree"/>
-		<field name="act_window_id" ref="portal_action_analytic_account_closed"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_aa_c">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="account.view_account_analytic_account_form"/>
-		<field name="act_window_id" ref="portal_action_analytic_account_closed"/>
-	</record>
-
-	<menuitem name="Closed Contracts" id="menu_portal_configuration_contract_close" parent="menu_portal_configuration_contract" action="portal_action_analytic_account_closed"/>
-
+	
 </data>
 </openerp>

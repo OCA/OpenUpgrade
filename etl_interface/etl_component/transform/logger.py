@@ -39,7 +39,6 @@ class etl_component_transform_logger(osv.osv):
         if cmp.type_id.name == 'transform.logger':  
             conn_instance=trans_instance=False
             if cmp.output_id:    
-                print 'component ma connector 6', cmp.output_id.type
                 conn_instance=obj_connector.get_instance(cr, uid, cmp.output_id.id , context, data)         
             val = etl.component.transform.logger(cmp.name)
         return val

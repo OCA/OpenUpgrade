@@ -43,7 +43,7 @@ class signal(object):
     
     def signal(self, signal, signal_data=None):
         for fnct,data,key in self.__connects.get(signal, []):
-            fnct(self, signal_data, *data)
+            fnct(key, signal_data, *data)
         
 
     def signal_connect(self, key, signal, fnct, *data):

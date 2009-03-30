@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate="1">
+	
+		<!-- Partner Gender -->
+		<record id="partner_gender_male" model="partner.gender">
+            <field name="code">male</field>
+            <field name="name">Male</field>
+    	</record>
+    	<record id="partner_gender_female" model="partner.gender">
+            <field name="code">female</field>
+            <field name="name">Female</field>
+    	</record>
+    	<record id="partner_gender_neuter" model="partner.gender">
+            <field name="code">neuter</field>
+            <field name="name">Neuter</field>
+    	</record>
+    	
+	</data>
+</openerp>

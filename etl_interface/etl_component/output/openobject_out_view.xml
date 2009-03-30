@@ -29,16 +29,15 @@
 							<field name="model_id" required="1" />
 							<separator string="Fields To Load"
 								colspan="4" />
-							<field name="openobject_field_ids" colspan="4" nolabel="1" widget="one2many_list"
-								editable="bottom">
+							<field name="openobject_field_ids" colspan="4" nolabel="1" widget="one2many_list" >
+								<tree string="Fields lines" editable="bottom">
+									<field name='source_field' />
+									<field name='dest_field' />
+								</tree>
 								<form string="Fields lines">
 									<field name='source_field' />
 									<field name='dest_field' />
 								</form>
-								<tree string="Fields lines">
-									<field name='source_field' />
-									<field name='dest_field' />
-								</tree>
 							</field>
 						</page>
 						<page string="Transitions Detail">

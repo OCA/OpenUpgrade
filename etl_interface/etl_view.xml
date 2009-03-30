@@ -2,13 +2,26 @@
 <openerp>
 	<data>
 
-
 		<menuitem name="ETL" id="menu_etl_root" icon="STOCK_PROPERTIES" />
 
 		<menuitem name="Configuration" parent="menu_etl_root"
 			sequence="5" id="menu_etl_configure" />
-
-		<!-- Project -->
+	
+	<wizard
+          id="wizard_launch_job_process"
+            keyword="client_action_multi"
+            model="etl.job"
+            name="etl.launch.job.process"
+            multi="True"
+            string="Launch Process"/>
+           
+	<wizard id="wizard_run_scheduled_process" model="etl.job.process" multi="True"
+			string="Run All Scheduled Processes" name="etl.run.scheduled.job.processes" />
+			
+	<menuitem action="wizard_run_scheduled_process" id="etl_run_process_scheduler"
+		parent="menu_etl_root" type="wizard" sequence="100" />
+	
+	<!-- Project -->
 
 		<record id="etl_proj_form" model="ir.ui.view">
 			<field name="name">view_etl_proj_form</field>
@@ -188,8 +201,8 @@
 					<group colspan="2">
 						<button name="action_open_job" string="Open"
 							type="object" states="draft,close" />
-						<button name="action_launch_process"
-							string="Launch a Process" type="object" states="open" />
+						<button name="%(wizard_launch_job_process)d"
+							string="Launch a Process" type="action" states="open" />
 						<button name="action_close_job" string="Close"
 							type="object" states="open" />
 					</group>
@@ -342,8 +355,8 @@
 
 		<record id="view_etl_job_process_component_form"
 			model="ir.ui.view">
-			<field name="name">etl.job.process.component.form</field>
-			<field name="model">etl.job.process.component</field>
+			<field name="name">etl.job.process.statistics.form</field>
+			<field name="model">etl.job.process.statistics</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Component">
@@ -367,8 +380,8 @@
 
 
 		<record id="view_etl_job_process_tree" model="ir.ui.view">
-			<field name="name">etl.job.process.component.tree</field>
-			<field name="model">etl.job.process.component</field>
+			<field name="name">etl.job.process.statistics.tree</field>
+			<field name="model">etl.job.process.statistics</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="etl_job">
@@ -385,10 +398,10 @@
 		</record>
 
 
-		<record id="view_etl_job_process_component_form"
+		<record id="view_etl_job_process_log_form"
 			model="ir.ui.view">
-			<field name="name">etl.job.log.form</field>
-			<field name="model">etl.job.log</field>
+			<field name="name">etl.job.process.log.form</field>
+			<field name="model">etl.job.process.log</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Logs/Messages">
@@ -403,8 +416,8 @@
 
 
 		<record id="view_etl_job_process_tree" model="ir.ui.view">
-			<field name="name">etl.job.log.tree</field>
-			<field name="model">etl.job.log</field>
+			<field name="name">etl.job.process.log.tree</field>
+			<field name="model">etl.job.process.log</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="etl_job">

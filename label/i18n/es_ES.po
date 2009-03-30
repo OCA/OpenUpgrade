@@ -1,22 +1,297 @@
 # Translation of OpenERP Server.
-# This file contains the translation of the following modules:
+# This file containt the translation of the following modules:
 #	* label
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.0-alpha\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 13:58:02+0000\n"
-"PO-Revision-Date: 2009-02-06 13:58:02+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2008-11-24 12:36:37+0000\n"
+"PO-Revision-Date: 2008-11-24 14:13+0100\n"
+"Last-Translator: Jordi Esteve <jesteve@zikzakmedia.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
 
 #. module: label
-#: model:ir.module.module,shortdesc:label.module_meta_information
-msgid "Partner labels"
-msgstr ""
+#: wizard_field:res.partner.address.label,init,printer_top:0
+msgid "Top"
+msgstr "Superior"
 
+#. module: label
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "¡El nombre del objeto debe empezar con x_ y no contener ningún carácter especial!"
+
+#. module: label
+#: wizard_view:res.partner.address.label,init:0
+msgid "Label Char Font"
+msgstr "Letra de las etiquetas"
+
+#. module: label
+#: constraint:report.label:0
+msgid "Error! Some sizes do not have the unit (cm or in) at the end."
+msgstr "¡Error! Algunas medidas no tienen la unidad (cm o in) al final."
+
+#. module: label
+#: wizard_view:res.partner.address.label,notify_bottom:0
+#: wizard_view:res.partner.address.label,notify_right:0
+#: wizard_view:res.partner.address.label,notify_top:0
+#: wizard_view:res.partner.address.label,notify_left:0
+msgid "Notification"
+msgstr "Aviso"
+
+#. module: label
+#: field:report.label,cols:0
+msgid "Number of Columns"
+msgstr "Núm. columnas"
+
+#. module: label
+#: help:report.label,landscape:0
+msgid "No check -> Portrait. Check -> Landscape"
+msgstr "No seleccionado -> Vertical. Seleccionado -> Horizontal"
+
+#. module: label
+#: field:report.pagesize,width:0
+msgid "Width"
+msgstr "Anchura"
+
+#. module: label
+#: model:ir.model,name:label.model_report_pagesize
+msgid "report.pagesize"
+msgstr "informe.tamañopágina"
+
+#. module: label
+#: field:report.label,pagesize_id:0
+msgid "Page Size"
+msgstr "Formato página"
+
+#. module: label
+#: wizard_button:res.partner.address.label,init,check:0
+msgid "Print"
+msgstr "Imprimir"
+
+#. module: label
+#: field:report.label,label_width:0
+msgid "Label Width"
+msgstr "Anchura etiqueta"
+
+#. module: label
+#: wizard_field:res.partner.address.label,init,printer_bottom:0
+msgid "Bottom"
+msgstr "Inferior"
+
+#. module: label
+#: field:report.label.manufacturer,name:0
+#: field:report.label,name:0
+#: field:report.pagesize,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: label
+#: field:report.label,description:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: label
+#: field:report.label,margin_top:0
+msgid "Top Margin"
+msgstr "Margen superior"
+
+#. module: label
+#: help:report.pagesize,height:0
+msgid "Numeric height of the page ended with the unit (cm or in). For example, A4 is 29.7cm and letter is 11in"
+msgstr "Valor numérico de la altura de la página terminado con la unidad (cm o in). Por ejemplo, A4 es 29.7cm y letter es 11in"
+
+#. module: label
+#: wizard_field:res.partner.address.label,init,printer_right:0
+msgid "Right"
+msgstr "Derecho"
+
+#. module: label
+#: wizard_view:res.partner.address.label,init:0
+msgid "Label Report Options"
+msgstr "Opciones impresión de etiquetas"
+
+#. module: label
+#: help:report.label,label_height:0
+#: help:report.label,label_width:0
+#: help:report.label,margin_left:0
+#: help:report.label,margin_top:0
+msgid "Numeric value ended with the unit (cm or in). For example 29.7cm or 11in"
+msgstr "Valor numérico terminado con la unidad (cm o in). Por ejemplo 29.7cm o 11in"
+
+#. module: label
+#: help:report.pagesize,width:0
+msgid "Numeric width of the page ended with the unit (cm or in). For example, A4 is 21cm and letter is 8.5in"
+msgstr "Valor numérico de la anchura de la página terminado con la unidad (cm o in). Por ejemplo, A4 es 21cm y letter es 8.5in"
+
+#. module: label
+#: wizard_field:res.partner.address.label,init,first_col:0
+msgid "First Column"
+msgstr "Primera columna"
+
+#. module: label
+#: wizard_view:res.partner.address.label,notify_bottom:0
+msgid "Printer bottom margin bigger than (bottom label margin + label height). Try again."
+msgstr "Margen inferior de la impresora mayor que (margen inferior de la etiqueta + altura etiqueta). Pruebe de nuevo."
+
+#. module: label
+#: help:report.label,height_incr:0
+msgid "Height between start positions of 2 labels. Numeric value ended with the unit (cm or in). For example 29.7cm or 11in"
+msgstr "Altura entre el inicio de 2 etiquetas. Valor numérico terminado con la unidad (cm o in). Por ejemplo 29.7cm o 11in"
+
+#. module: label
+#: wizard_field:res.partner.address.label,init,label_format:0
+msgid "Label Format"
+msgstr "Formato de etiqueta"
+
+#. module: label
+#: model:ir.actions.act_window,name:label.action_report_label_manufacturer_form
+#: model:ir.ui.menu,name:label.menu_report_label_manufacturer_form
+msgid "Label Manufacturers"
+msgstr "Fabricantes etiquetas"
+
+#. module: label
+#: field:report.label,label_height:0
+msgid "Label Height"
+msgstr "Altura etiqueta"
+
+#. module: label
+#: wizard_field:res.partner.address.label,init,font_type:0
+msgid "Font Type"
+msgstr "Tipo de letra"
+
+#. module: label
+#: field:report.label,manufacturer_id:0
+msgid "Manufacturer"
+msgstr "Fabricante"
+
+#. module: label
+#: model:ir.model,name:label.model_report_label
+msgid "report.label"
+msgstr "informe.etiqueta"
+
+#. module: label
+#: wizard_button:res.partner.address.label,notify_bottom,end:0
+#: wizard_button:res.partner.address.label,notify_right,end:0
+#: wizard_button:res.partner.address.label,notify_top,end:0
+#: wizard_button:res.partner.address.label,notify_left,end:0
+msgid "Ok"
+msgstr "Ok"
+
+#. module: label
+#: field:report.label,height_incr:0
+msgid "Height Increment"
+msgstr "Incremento vertical"
+
+#. module: label
+#: model:ir.actions.act_window,name:label.action_report_pagesize_form
+#: model:ir.ui.menu,name:label.menu_report_pagesize_form
+#: view:report.pagesize:0
+msgid "Page Sizes"
+msgstr "Formatos página"
+
+#. module: label
+#: wizard_field:res.partner.address.label,init,printer_left:0
+msgid "Left"
+msgstr "Izquierdo"
+
+#. module: label
+#: wizard_view:res.partner.address.label,notify_right:0
+msgid "Printer right margin bigger than (right label margin + label width). Try again."
+msgstr "Margen derecho de la impresora mayor que (margen derecho de la etiqueta + anchura etiqueta). Pruebe de nuevo."
+
+#. module: label
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "¡XML inválido para la definición de la vista!"
+
+#. module: label
+#: constraint:report.pagesize:0
+msgid "Error! The page sizes do not have the unit (cm or in) at the end."
+msgstr "¡Error! Las medidas de la página no tienen la unidad (cm o in) al final."
+
+#. module: label
+#: wizard_view:res.partner.address.label,init:0
+msgid "First Label"
+msgstr "Primera etiqueta"
+
+#. module: label
+#: wizard_view:res.partner.address.label,notify_left:0
+msgid "Printer left margin bigger than (left label margin + label width). Try again."
+msgstr "Margen izquierdo de la impresora mayor que (margen izquierdo de la etiqueta + anchura etiqueta). Pruebe de nuevo."
+
+#. module: label
+#: field:report.label,rows:0
+msgid "Number of Rows"
+msgstr "Núm. filas"
+
+#. module: label
+#: help:report.label,width_incr:0
+msgid "Width between start positions of 2 labels. Numeric value ended with the unit (cm or in). For example 29.7cm or 11in"
+msgstr "Anchura entre el inicio de 2 etiquetas. Valor numérico terminado con la unidad (cm o in). Por ejemplo 29.7cm o 11in"
+
+#. module: label
+#: wizard_view:res.partner.address.label,init:0
+msgid "Printer Margins"
+msgstr "Márgenes impresora"
+
+#. module: label
+#: model:ir.actions.act_window,name:label.action_report_label_form
+#: model:ir.ui.menu,name:label.menu_report_label_form
+#: view:report.label:0
+msgid "Label Formats"
+msgstr "Formatos etiquetas"
+
+#. module: label
+#: wizard_field:res.partner.address.label,init,first_row:0
+msgid "First Row"
+msgstr "Primera fila"
+
+#. module: label
+#: wizard_field:res.partner.address.label,init,font_size:0
+msgid "Font Size"
+msgstr "Tamaño de letra"
+
+#. module: label
+#: model:ir.actions.wizard,name:label.res_partner_address_report
+msgid "Labels"
+msgstr "Etiquetas"
+
+#. module: label
+#: field:report.label,margin_left:0
+msgid "Left Margin"
+msgstr "Margen izquierdo"
+
+#. module: label
+#: field:report.pagesize,height:0
+msgid "Height"
+msgstr "Altura"
+
+#. module: label
+#: field:report.label,width_incr:0
+msgid "Width Increment"
+msgstr "Incremento horizontal"
+
+#. module: label
+#: model:ir.model,name:label.model_report_label_manufacturer
+msgid "report.label.manufacturer"
+msgstr "informe.etiqueta.fabricante"
+
+#. module: label
+#: wizard_button:res.partner.address.label,init,end:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: label
+#: wizard_view:res.partner.address.label,notify_top:0
+msgid "Printer top margin bigger than (top label margin + label height). Try again."
+msgstr "Margen superior de la impresora mayor que (margen superior de la etiqueta + altura etiqueta). Pruebe de nuevo."
+
+#. module: label
+#: field:report.label,landscape:0
+msgid "Landscape"
+msgstr "Horizontal"

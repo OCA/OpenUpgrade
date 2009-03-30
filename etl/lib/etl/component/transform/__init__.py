@@ -21,11 +21,11 @@
 ##############################################################################
 
 """
-ETL Components:
-* diff
-* sort
-* logger_bloc
-* logger
+ETL Transformer:
+* It transform string data into perticular type.
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
 """
 from diff import diff
 from sort import sort

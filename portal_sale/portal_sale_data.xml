@@ -1,11 +1,13 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
+
 	<record model="ir.rule.group" id="sale_rule_group">
 		<field name="name">Portal sale rule</field>
 		<field name="model_id" search="[('model','=','sale.order')]" model="ir.model"/>
 		<field name="global" eval="False"/>
 	</record>
+	
 	<record model="ir.rule" id="sale_rule">
 		<field name="field_id" search="[('model','=','sale.order'),('name','=','partner_id')]" model="ir.model.fields"/>
 		<field name="operator">=</field>
@@ -14,47 +16,35 @@
 	</record>
 
 	<record model="portal.model" id="model_sale">
-				<field name="name">Sale Model</field>
-				<field name="model_id" search="[('model','=','sale.order')]"/>
-				<field name="rule_group_id" ref="sale_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[ref('sale.view_order_form'),ref('sale.view_order_tree')])]"/>
+		<field name="name">Sale Model</field>
+		<field name="model_id" search="[('model','=','sale.order')]"/>
+		<field name="rule_group_id" ref="sale_rule_group"/>
+		<field name="view_ids" eval="[(6,0,[ref('view_portal_order_form'),ref('view_portal_order_tree')])]"/>
 	</record>
-
+	
 </data>
+
 <data noupdate="1">
-	<record model="res.groups" id="portal.portal_group">
+
+	<record model="res.groups" id="portal_customer_group">
+		<field name="name">Portal Customer group</field>
 		<field name="rule_groups" eval="[(4,ref('sale_rule_group'))]"/>
+	</record>
+	
+	<record model="portal.portal" id="portal_sale_customer">
+		<field name="name">Portal Customer Sale</field>
+		<field name="group_id" ref="portal_customer_group"/>
+		<field name="menu_id" ref="menu_portal_customer_order"/>
+		<field name="company_id" ref="base.main_company"/>
+		<field name="menu_action_id" ref="portal.portal_customer_action_menu"/>
 	</record>
 
 	<record model="ir.model.access" id="model_access_sale_order">
 		<field name="name">Sale Order Access</field>
 		<field name="perm_read">True</field>
-		<field name="group_id" ref="portal.portal_group"/>
+		<field name="group_id" ref="portal_customer_group"/>
 		<field name="model_id" search="[('model','=','sale.order')]"/>
 	</record>
-
-
-	<record model="ir.actions.act_window" id="portal_action_sale_order">
-		<field name="name">Sale Order</field>
-		<field name="res_model">sale.order</field>
-		<field name="view_type">form</field>
-		<field name="domain">[('state','&lt;&gt;','cancel'),('state','&lt;&gt;','draft')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_sale">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="sale.view_order_tree"/>
-		<field name="act_window_id" ref="portal_action_sale_order"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_sale">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="sale.view_order_form"/>
-		<field name="act_window_id" ref="portal_action_sale_order"/>
-	</record>
-
-	<menuitem name="Order" id="menu_portal_customer_order" parent="portal.menu_portal_customer"/>
-	<menuitem name="Sale Order" id="menu_portal_customer_order_sale" parent="menu_portal_customer_order"  action="portal_action_sale_order"/>
 
 </data>
 </openerp>

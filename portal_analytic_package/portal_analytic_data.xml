@@ -6,6 +6,7 @@
 		<field name="model_id" search="[('model','=','account.analytic.line.package')]" model="ir.model"/>
 		<field name="global" eval="False"/>
 	</record>
+	
 	<record model="ir.rule" id="analytic_package_rule">
 		<field name="field_id" search="[('model','=','account.analytic.line.package'),('name','=','partner_id')]" model="ir.model.fields"/>
 		<field name="operator">=</field>
@@ -13,13 +14,35 @@
 		<field name="rule_group" ref="analytic_package_rule_group"/>
 	</record>
 
-
 	<record model="portal.model" id="model_analytic_package">
-			<field name="name" >Analytic Package Line</field>
-			<field name="model_id" search="[('model','=','account.analytic.line.package')]"/>
-			<field name="rule_group_id" ref="analytic_package_rule_group"/>
+		<field name="name" >Analytic Package Line</field>
+		<field name="model_id" search="[('model','=','account.analytic.line.package')]"/>
+		<field name="rule_group_id" ref="analytic_package_rule_group"/>
+		<field name="view_ids" eval="[(6,0,[ref('account_analytic_package.view_account_analytic_line_package_tree_simplified'),ref('account_analytic_package.view_account_analytic_line_package_form')])]"/>
 	</record>
-
-
+	
+</data>															
+<data noupdate="1">
+	
+	<record model="res.groups" id="portal_analytic_package_group">
+		<field name="name">Portal Analytic Package group</field>
+		<field name="rule_groups" eval="[(4,ref('analytic_package_rule_group'))]"/>
+	</record>
+	
+	<record model="portal.portal" id="portal_account_analytic_package">
+		<field name="name">Portal Analytic Package</field>
+		<field name="group_id" ref="portal_analytic_package_group"/>
+		<field name="menu_id" ref="menu_operations"/>
+		<field name="company_id" ref="base.main_company"/>
+		<field name="menu_action_id" ref="portal.portal_customer_action_menu"/>
+	</record>
+	
+	<record model="ir.model.access" id="model_portal_access_analytic_account">
+		<field name="name">Package Analytic Account Access</field>
+		<field name="perm_read">True</field>
+		<field name="group_id" ref="portal_analytic_package_group"/>
+		<field name="model_id" search="[('model','=','account.analytic.line.package')]"/>
+	</record>
+	
 </data>
 </openerp>

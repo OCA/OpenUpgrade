@@ -438,6 +438,7 @@ Wizard view for the Auto Configuring the data
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Olap Saved Query">
+                <field name="time"/>
                 <field name="query"/>
                 <field name="user_id"/>
                 <field name="cube_id"/>

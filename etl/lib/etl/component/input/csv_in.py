@@ -20,7 +20,12 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to read data from csv file.
+csv_in
+
+* Use to read data from csv file.
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
 """
 
 
@@ -30,10 +35,8 @@ import csv
 
 class csv_in(component):
     """
-        This is an ETL Component that use to read data from csv file.
-
-        Type: Data Component
-        Computing Performance: Streamline
+        This is an ETL Component that use to read data from csv file.Its type is data component.
+	Its computing peformance is streamline.It has two flows ::
         Input Flows: 0
         * .* : nothing
         Output Flows: 0-x
@@ -41,6 +44,16 @@ class csv_in(component):
     """
 
     def __init__(self,fileconnector,name='component.input.csv_in',transformer=None,row_limit=0, csv_params={}):
+
+	
+	"""	
+        Parameters::
+	fileconnector :  provides  localfile connector to connect with file
+	transformer   :  provides transformer object to transform string data into  particular object
+	row_limit     :  Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+	csv_param     :  To specify other csv parameter like fieldnames , restkey , restval etc. 
+
+	"""
         super(csv_in, self).__init__(name,transformer=transformer)
         self.fileconnector = fileconnector
         self.csv_params=csv_params
@@ -78,5 +91,18 @@ class csv_in(component):
         except IOError,e:
             self.action_error(e)
 
+    
+def test():
+    from etl_test import etl_test
+    import etl
+    file_conn=etl.connector.file_connector('http://localhost:8069', 'dms_20090204', 'admin', 	
+    'admin',con_type='xmlrpc')
+    test=etl_test.etl_component_test(csv_in('test',file_conn,'res.partner'))
+    test.check_input({'main':[{'name':'OpenERP1'},{'name':'Fabien1'}]})
+    test.check_output([{'name':'OpenERP1'},{'name':'Fabien1'}],'main')
+    res=test.output()
+    print res
+if __name__ == '__main__':
+	test()
 
 

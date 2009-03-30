@@ -66,6 +66,7 @@
                 <field name="name"/>
                 <field name="code"/>
                 <field name="offer_id"/>
+                <field name="media_id"/>
                 <field name="state"/>
             </tree>
         </field>
@@ -108,7 +109,6 @@
                             <form string="Transition">
                                 <field name="step_from_id" colspan="4" readonly="1"/>
                                 <field name="step_to_id" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>
-<!--                                <field name="condition" select="1" widget="selection"/>-->
                                 <field name="condition_id" select="1"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
@@ -120,6 +120,7 @@
                                 <field name="step_from_id"/>
                                 <field name="step_to_id"/>
                                 <field name="condition_id"/>
+                                <field name="delay"/>
                                 <field name="delay_type"/>
                             </tree>
                         </field>
@@ -187,12 +188,11 @@
     <menuitem id="menu_action_offer_step_form" parent="dm.menu_dm_config_offer_steps" action="action_offer_step_form"/>
 
     <!--
-
         =======================================================
         OFFER STEP TRANSITION TRIGGER VIEWS
         =======================================================
-
         -->
+
         <record model="ir.ui.view" id="view_offer_step_transition_trigger_form">
                 <field name="name">dm.offer.step.transition.trigger.form</field>
                 <field name="model">dm.offer.step.transition.trigger</field>
@@ -200,13 +200,12 @@
                 <field name="arch" type="xml">
                         <form string="Transition Trigger">
                                 <field name="name"/>
-                                <!--field name="code"/-->
-                                <field name="model_id"/>
-                                <field name="state"/>
-                                <field name="condition"/>
+                                <field name="code"/>
+                                <field name="type"/>
                         </form>
                 </field>
         </record>
+
         <record model="ir.ui.view" id="view_offer_step_transition_trigger_tree">
                 <field name="name">dm.offer.step.transition.trigger.tree</field>
                 <field name="model">dm.offer.step.transition.trigger</field>
@@ -214,7 +213,8 @@
                 <field name="arch" type="xml">
                         <tree string="Transition Trigger">
                                 <field name="name"/>
-                                <!--field name="code"/-->
+                                <field name="code"/>
+                                <field name="type"/>
                         </tree>
                 </field>
         </record>

@@ -20,7 +20,12 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to perform Schema Validation.
+schema_validator 
+
+*  use to perform Schema Validation.
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
 """
 import types
 from etl.component import component
@@ -100,7 +105,9 @@ class schema_validator(component):
                             
                         yield d,channel
                            
-if __name__ == '__main__':
+
+
+def test():
     from etl_test import etl_test
     from etl import transformer
     input_part = [
@@ -119,4 +126,6 @@ if __name__ == '__main__':
     test.check_input({'main':input_part})
     print test.output()
 
+if __name__ == '__main__':
+    test()
 

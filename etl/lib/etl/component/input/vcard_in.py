@@ -20,19 +20,35 @@
 #
 ##############################################################################
 
+"""
+vcard_in
+* use to import data from vcard
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License 
+"""
+
 from etl.component import component
 import csv
-import vobject  
+#import vobject 
 
 class vcard_in(component):
 
     def __init__(self,fileconnector,name='component.input.csv_in'):
+
+	"""
+	Parameters ::
+
+	fileconnector : It is a required field and it provides  local file connector to connect with file.
+	"""
+
         super(vcard_in, self).__init__(name)
         self.fileconnector = fileconnector
         self.fp=None
         self.reader=None
 
     def action_start(self,key,singal_data={},data={}):
+        import vobject
         super(vcard_in, self).action_start(key,singal_data,data)
         self.fp=self.fileconnector.open('r')
         #self.reader=csv.DictReader(self.fp,**self.csv_params)

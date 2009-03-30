@@ -23,10 +23,6 @@
 		</field>
 	</record>
 
-
-
-
-
 	<record model="ir.ui.view" id="portal_crm_case_tree_view_simplified">
 		<field name="name">Available Cases List</field>
 		<field name="model">crm.case</field>
@@ -79,6 +75,71 @@
 			</field>
 		</field>
 	</record>
+	
+	<record model="ir.actions.act_window" id="portal_action_crm_case_all">
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_case_a">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm.crm_case_tree-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_all"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_case_a">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm.crm_case-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_all"/>
+	</record>
+
+	<menuitem name="Support" id="menu_portal_customer_support" parent="portal.menu_portal_customer"/>
+	<menuitem name="All Support Cases" id="menu_portal_customer_all_cases" parent="menu_portal_customer_support" action="portal_action_crm_case_all"/>
+
+	<record model="ir.actions.act_window" id="portal_action_crm_case_open">
+		<field name="name">My opened cases</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('state','&lt;&gt;','done'),('state','&lt;&gt;','cancel'),('state','&lt;&gt;','pending')]</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_case_o">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm.crm_case_tree-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_open"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_case_o">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm.crm_case-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_open"/>
+	</record>
+
+	<menuitem name="Opened Cases" id="menu_portal_customer_all_cases_open" parent="menu_portal_customer_all_cases" action="portal_action_crm_case_open"/>
+
+	<record model="ir.actions.act_window" id="portal_action_crm_case_closed">
+		<field name="name">My closed cases</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('state','=','done')]</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_case_c">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm.crm_case_tree-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_closed"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_case_c">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm.crm_case-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_closed"/>
+	</record>
+
+	<menuitem name="Closed Cases" id="menu_portal_customer_all_cases_close" parent="menu_portal_customer_all_cases" action="portal_action_crm_case_closed"/>
+	
 
 	<!--<record model="ir.ui.view" id="new_support_form">
 		<field name="name">new support form</field>

@@ -36,7 +36,7 @@ class mrp_bom(osv.osv):
     _inherit = 'mrp.bom'
     
     _columns = { 
-        'bom_customization_keys': fields.many2many('bom_customization.bom_customization_keys', 'mrp_bom_bom_customizations_keys_rel','bom_id','bom_customization_key_id', 'BoM Customizations'),
+        'bom_customization_keys': fields.many2many('bom_customization.bom_customization_keys', 'mrp_bom_bom_customizations_keys_rel', 'bom_id', 'bom_customization_key_id', 'BoM Customizations'),
     }
     
     
@@ -44,20 +44,20 @@ class mrp_bom(osv.osv):
     def _bom_explode(self, cr, uid, bom, factor, properties, addthis=False, level=0):
         factor = factor / (bom.product_efficiency or 1.0)
         factor = rounding(factor, bom.product_rounding)
-        if factor<bom.product_rounding:
+        if factor < bom.product_rounding:
             factor = bom.product_rounding
         result = []
         result2 = []
-        phantom=False
-        if bom.type=='phantom' and not bom.bom_lines:
+        phantom = False
+        if bom.type == 'phantom' and not bom.bom_lines:
             newbom = self._bom_find(cr, uid, bom.product_id.id, bom.product_uom.id, properties)
             if newbom:
-                res = self._bom_explode(cr, uid, self.browse(cr, uid, [newbom])[0], factor*bom.product_qty, properties, addthis=True, level=level+10)
+                res = self._bom_explode(cr, uid, self.browse(cr, uid, [newbom])[0], factor * bom.product_qty, properties, addthis=True, level=level + 10)
                 result = result + res[0]
                 result2 = result2 + res[1]
-                phantom=True
+                phantom = True
             else:
-                phantom=False
+                phantom = False
         if not phantom:
             if addthis and not bom.bom_lines:
                 result.append(
@@ -79,12 +79,12 @@ class mrp_bom(osv.osv):
                     result2.append({
                         'name': bom.routing_id.name,
                         'workcenter_id': wc.id,
-                        'sequence': level+(wc_use.sequence or 0),
+                        'sequence': level + (wc_use.sequence or 0),
                         'cycle': cycle,
-                        'hour': float(wc_use.hour_nbr*mult + (wc.time_start+wc.time_stop+cycle*wc.time_cycle) * (wc.time_efficiency or 1.0)),
+                        'hour': float(wc_use.hour_nbr * mult + (wc.time_start + wc.time_stop + cycle * wc.time_cycle) * (wc.time_efficiency or 1.0)),
                     })
             for bom2 in bom.bom_lines:
-                res = self._bom_explode(cr, uid, bom2, factor, properties, addthis=True, level=level+10)
+                res = self._bom_explode(cr, uid, bom2, factor, properties, addthis=True, level=level + 10)
                 result = result + res[0]
                 result2 = result2 + res[1]
         return result, result2
@@ -97,14 +97,14 @@ class mrp_production(osv.osv):
     
     _columns = { 
         'sale_order_line_id': fields.many2one('sale.order.line', 'Related Sale Order Line', readonly=True),
-        'dimension_customizations':fields.one2many('sale.order.line.dimension_custom_values','mrp_production_id', string="Dimension Custom Values"),
+        'dimension_customizations':fields.one2many('sale.order.line.dimension_custom_values', 'mrp_production_id', string="Dimension Custom Values"),
 
     }
     
     def action_confirm(self, cr, uid, ids):
         super(mrp_production, self).action_confirm(cr, uid, ids)
         for production in self.browse(cr, uid, ids):
-            for move_line, product_line in zip(production.move_lines,production.product_lines):
+            for move_line, product_line in zip(production.move_lines, production.product_lines):
                 if move_line.product_id.id != product_line.product_id.id:
                     print "product_id mismatch !"
                 else:
@@ -138,11 +138,8 @@ class mrp_procurement(osv.osv):
             
             ## Smile's changes
             ## FIXME sale order line could be copied natively to the production order
-            sale_order_line_id=self.pool.get('sale.order.line').search(cr, uid, [('procurement_id', '=', procurement.id)])
+            sale_order_line_id = self.pool.get('sale.order.line').search(cr, uid, [('procurement_id', '=', procurement.id)])
             
-            if len(sale_order_line_id)>1:
-                print "Something strange going on:"
-                print  "len(sale_order_line_id):", len(sale_order_line_id)
             if sale_order_line_id:
                  sale_order_line_id = sale_order_line_id[0]
             else:

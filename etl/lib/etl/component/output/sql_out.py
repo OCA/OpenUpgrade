@@ -20,7 +20,12 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to write data into sql table.
+ sql_out
+ * Use to write data into sql table.
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
+
 """
 
 from etl.component import component
@@ -39,6 +44,15 @@ class sql_out(component):
     """   
 
     def __init__(self,sqlconnector,sqltable,name='component.output.sql_out',transformer=None,row_limit=0):
+
+	""" 
+    Parameters ::
+    
+	sql_connector : Provides  sql connector to connect with file
+	sqltable      : Provides the name of the sql table
+	transformer   : Provides transformer object to transform string data into   particular object
+	row_limit     : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+        """
         super(sql_out, self).__init__(name,transformer=transformer)      
           
         self.sqlconnector = sqlconnector 
@@ -70,7 +84,9 @@ class sql_out(component):
                         yield d, 'main'
                     except IOError,e:                          
                         self.action_error(e)
-if __name__ == '__main__':    
+  
+
+def test():
     from etl_test import etl_test
     import etl
     sql_conn=etl.connector.sql_connector.sql_connector('localhost',5432, 'dms_20090204', 'postgres', 'postgres')
@@ -78,3 +94,6 @@ if __name__ == '__main__':
     test.check_input({'main':[{'name':'OpenERP11'},{'name':'Fabien11'}]})
     test.check_output([{'name':'OpenERP11'},{'name':'Fabien11'}],'main')
     res=test.output()
+
+if __name__ == '__main__':  
+    test()

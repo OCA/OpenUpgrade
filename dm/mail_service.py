@@ -25,7 +25,7 @@ from osv import osv
 
 class dm_mail_service(osv.osv):
     _name = "dm.mail_service"
-    _inherits = {'ir.actions.server':'mail_action_id'}
+#    _inherits = {'ir.actions.server':'mail_action_id'}
     def _default_name(self, cr, uid, ids, name, args, context={}):
         res = {}
         for rec in self.browse(cr, uid, ids):
@@ -40,9 +40,8 @@ class dm_mail_service(osv.osv):
         'unit_interval': fields.selection( [('minutes', 'Minutes'),
             ('hours', 'Hours'), ('work_days','Work Days'), ('days', 'Days'),\
             ('weeks', 'Weeks'), ('months', 'Months')], 'Interval Unit'),
-#        'cron_id' : fields.many2one('ir.cron','Scheduler'),
         'default_for_media' : fields.boolean('Default Mail Service for Media'),
-        'mail_action_id' : fields.many2one('ir.actions.server','Server Action'),
+        'action_id' : fields.many2one('ir.actions.server','Server Action'),
     }
 
     def _check_unique_mail_service(self, cr, uid, ids, media_id, default_for_media):
@@ -76,6 +75,5 @@ class dm_campaign_mail_service(osv.osv):
         'mail_service_id' : fields.many2one('dm.mail_service','Mail Service'),
         'campaign_id' : fields.many2one('dm.campaign','Campaign'),
         'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
-#        'action_id' : fields.many2one('ir.actions.server','Action'),
     }
 dm_campaign_mail_service()
