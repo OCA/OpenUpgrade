@@ -21,19 +21,9 @@
 ##############################################################################
 
 """
-ETL Input Components:
-====================
-* Use to extract data from the source systems.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
-
+Provide sugarcrm API
 """
-from data import data
-from csv_in import csv_in
-from sql_in import sql_in
-from openobject_in import openobject_in
-from facebook_in import facebook_in
-from vcard_in import vcard_in
-from gmail_in import gmail_in
-from sugarcrm_in import sugarcrm_in
+from sugarsoap_services_types import *
+from sugarsoap_services import *
+
+
