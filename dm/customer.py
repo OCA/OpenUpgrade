@@ -50,7 +50,6 @@ class dm_order(osv.osv):
     }
 
     def set_confirm(self, cr, uid, ids, *args):
-
         return True
 
     def onchange_rawdatas(self,cr,uid,ids,raw_datas):
@@ -96,6 +95,9 @@ class dm_customer_order(osv.osv):
         'picking_policy': lambda *a: 'one',
 #        'state': lambda *a: 'draft',
     }
+    def set_confirm(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state': 'done'})
+        return True
 
 dm_customer_order()
 
