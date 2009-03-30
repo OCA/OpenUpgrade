@@ -79,8 +79,8 @@ class facebook_in(component):
             rows = self.facebook.users.getInfo(friends, self.fields)
         if self.method=='get_user_events':
             rows = self.facebook.events.get(self.facebook.uid)
-            for event in event_ids:# can be used
-                rows_member = self.facebook.events.getMembers(event)
+#            for event in event_ids:# can be used
+#                rows_member = self.facebook.events.getMembers(event)
         if self.method=='get_user_groups':
             rows = self.facebook.groups.get()
             group_ids = map(lambda x: x['gid'], rows)
