@@ -36,5 +36,5 @@ from openobject_in import openobject_in
 from facebook_in import facebook_in
 from vcard_in import vcard_in
 from gmail_in import gmail_in
-from sugarcrm_in import sugarcrm_in
+#from sugarcrm_in import sugarcrm_in
 
