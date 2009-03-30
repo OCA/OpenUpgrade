@@ -45,8 +45,9 @@ class facebook_connector(connector):
         self.facebook = Facebook(api_key=self.api_key, secret_key=self.secret_key)
         self.auth_token = self.facebook.auth.createToken()                       
         self.login(self.email)
+        import time
         time.sleep(self.delay_time)
-        self.session = f.auth.getSession()
+        self.session = self.facebook.auth.getSession()
         return self.facebook
 
     def login(self, email, password=False):

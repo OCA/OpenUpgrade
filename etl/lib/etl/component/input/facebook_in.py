@@ -43,6 +43,11 @@ class facebook_in(component):
                 'get_user_notification'=> Returns information on outstanding Facebook notifications for current session user
                 'get_user_profile'=> Returns the specified user's application info section for the calling application.
                 'get_user_pages'=> Returns all visible pages to the filters specified.
+                'get_user_photos'=> Returns all visible photos according to the filters specified.
+                'get_user_albums'=> Returns metadata about all of the photo albums uploaded by the specified user.
+                'get_user_status'=> Returns the user's current and most recent statuses
+                'get_user_links'=> Returns all links the user has posted on their profile through your application.
+
     """
 
     def __init__(self,facebook_connector,method,domain=[],fields=['name'],name='component.input.facebook_in',transformer=None,row_limit=0):
@@ -74,8 +79,7 @@ class facebook_in(component):
             rows = self.facebook.users.getInfo(friends, self.fields)
         if self.method=='get_user_events':
             rows = self.facebook.events.get(self.facebook.uid)
-            event_ids = map(lambda x: x['eid'], rows)
-            for event in event_ids:
+            for event in event_ids:# can be used
                 rows_member = self.facebook.events.getMembers(event)
         if self.method=='get_user_groups':
             rows = self.facebook.groups.get()
@@ -91,7 +95,18 @@ class facebook_in(component):
             rows = self.facebook.profile.getInfo(self.facebook.uid)
         if self.method=='get_user_pages':
             rows = self.facebook.pages.getInfo(uid=self.facebook.uid, fields=['name','written_by']) #Todo : add more fields
-        # Todo : upload photos: photos.get, photos.getAlbums, status.get , links.get
+        #  fields_pages = 'name', 'written_by', 'website', 'location (street, city, state, country, zip)', 'founded', 'products', 'produced_by'...etc
+
+        # tobe test :  photos.get, photos.getAlbums, status.get , links.get
+        if self.method=='get_user_photos':
+            rows = self.facebook.photos.get(subj_id=self.facebook.uid)
+        if self.method=='get_user_albums':
+            rows = self.facebook.photos.getAlbums(uid=self.facebook.uid)
+        if self.method=='get_user_status':# Beta
+            rows = self.facebook.status.get()
+        if self.method=='get_user_links':
+            rows = self.facebook.links.get()
+
         for row in rows:
             if self.transformer:
                 row=self.transformer.transform(row)
@@ -105,7 +120,7 @@ def test():
     from etl_test import etl_test
     import etl
     facebook_conn=etl.connector.facebook_connector('http://facebook.com', 'modiinfo@gmail.com')
-    test1=etl_test.etl_component_test(facebook_in(facebook_conn,'get_friends', fields=['name', 'birthday']))
+    test1=etl_test.etl_component_test(facebook_in(facebook_conn,'get_user_events'))
     res=test1.output()
 
 if __name__ == '__main__':
