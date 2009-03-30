@@ -49,7 +49,7 @@ def graph_get(cr, uid, graph, offer_id):
     offer_obj = pooler.get_pool(cr.dbname).get('dm.offer')
     offer = offer_obj.browse(cr, uid, offer_id)[0]
     nodes = {}
-    step_type = pooler.get_pool(cr.dbname).get('dm.offer.step.type')·
+    step_type = pooler.get_pool(cr.dbname).get('dm.offer.step.type')
     type_ids = step_type.search(cr,uid,[])
     type = step_type.read(cr,uid,type_ids,['code'])
     for t in type :
