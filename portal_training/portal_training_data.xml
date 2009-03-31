@@ -67,13 +67,13 @@
         <record model="ir.actions.act_window.view" id="window_view_tree_inv">
             <field name="sequence" eval="1"/>
             <field name="view_mode">tree</field>
-            <field name="view_id" ref="account.invoice_tree"/>
+            <field name="view_id" ref="purchase.purchase_order_line_tree"/>
             <field name="act_window_id" ref="portal_supplier_purchase_order_lines_action" />
         </record>
         <record model="ir.actions.act_window.view" id="window_view_form_inv">
             <field name="sequence" eval="2"/>
             <field name="view_mode">form</field>
-            <field name="view_id" ref="account.invoice_form"/>
+            <field name="view_id" ref="purchase_order_line_form_portal"/>
             <field name="act_window_id" ref="portal_supplier_purchase_order_lines_action" />
         </record>
 
