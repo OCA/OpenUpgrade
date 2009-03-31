@@ -1015,6 +1015,7 @@ class dm_customers_file(osv.osv):
         'code' : fields.char('Code', size=16, required=True),
         'customers_list_id' : fields.many2one('dm.customers_list', 'Customers List'),
         'delivery_date' : fields.date('Delivery Date'),
+        'address_ids' : fields.many2many('res.partner.address','dm_cust_file_address_rel','cust_file_id','address_id','Customers File Addresses'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'customers_file_id', 'Segments', readonly=True),
     }
 dm_customers_file()

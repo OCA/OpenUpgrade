@@ -76,9 +76,9 @@ class dm_offer_step(osv.osv):
         for id in ids:
             offer_step = self.browse(cr,uid,[id])[0]
             step_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type_id.id])
-            type_code = step_code[offer_step.type_id.id] or offer_step.type_id.code  + str(offer_step.seq)
+            type_code = (step_code[offer_step.type_id.id] or offer_step.type_id.code) + str(offer_step.seq)
             offer_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,code', 'model', context.get('lang', False) or 'en_US',[offer_step.offer_id.id])
-            code = offer_code[offer_step.offer_id.id] or offer_step.offer_id.code +'_'+type_code
+            code = (offer_code[offer_step.offer_id.id] or offer_step.offer_id.code) + '_' + type_code
             result[id] = str(code)
         return result
 

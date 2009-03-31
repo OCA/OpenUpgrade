@@ -143,13 +143,14 @@
                                 <field name="delay_type"/>
                             </tree>
                         </field>
+                        <field name="seq"/>
                     </page>
                     <page string="Products">
                         <separator string="Offer Step Product"  colspan="4"/>
                         <field name="item_ids" colspan="4" nolabel="1" readonly="0" select="2"/>
                     </page>
                     <page string="Advises">
-                    	<group groups="base.group_extended">
+                        <group groups="base.group_extended">
                         <field name="mailing_at_dates" select="2"/>
                         <field name="floating_date" select="2"/>
                         <field name="interactive" select="2"/>
@@ -219,7 +220,7 @@
                 </field>
         </record>
         <record model="ir.actions.act_window" id="action_offer_step_transition_trigger">
-        		<field name="name">All Transition Triggers</field>
+                <field name="name">All Transition Triggers</field>
                 <field name="type">ir.actions.act_window</field>
                 <field name="res_model">dm.offer.step.transition.trigger</field>
                 <field name="view_type">form</field>
@@ -419,22 +420,22 @@
         domain = "[('step_id','=',active_id)]"/>
 -->
 
-	<record id="view_dm_offer_step_action_form" model="ir.ui.view">
+    <record id="view_dm_offer_step_action_form" model="ir.ui.view">
         <field name="name">dm.offer.step.action.form</field>
         <field name="model">dm.offer.step.action</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
              <form string="Offer Action">
-            	<group col="6" colspan="4">
-                	<field name="name" />
-                	<field name="media_id"/>
-                	<field name="state" />
-                	<field name="condition" />
-                	<field name="model_id" />
+                <group col="6" colspan="4">
+                    <field name="name" />
+                    <field name="media_id"/>
+                    <field name="state" />
+                    <field name="condition" />
+                    <field name="model_id" />
                 </group>
                 <notebook colspan="4">
-                	<page string="Action to Launch" attrs="{'invisible':[('state','!=','client_action')]}">
-                       	<separator colspan="4" string="Client Action Configuration"/>
+                    <page string="Action to Launch" attrs="{'invisible':[('state','!=','client_action')]}">
+                           <separator colspan="4" string="Client Action Configuration"/>
                         <field name="action_id" select="2" attrs="{'required':[('state','=','client_action')]}"/>
                     </page>
                     <page string="Python Code" attrs="{'invisible':[('state','!=','code')]}">
