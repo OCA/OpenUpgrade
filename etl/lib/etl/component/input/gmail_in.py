@@ -64,7 +64,6 @@ class gmail_in(component):
                 'phone_numbers':phone_numbers,
                 'postal_addresses':postal_addresses
             }
-            print d
             yield d,'main'
 
 def test():

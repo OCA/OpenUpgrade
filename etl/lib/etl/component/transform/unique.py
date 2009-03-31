@@ -20,7 +20,12 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to perform unique operation.
+unique :
+
+*  use to perform unique operation.
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
 """
 
 from etl.component import component
@@ -57,8 +62,8 @@ class unique(component):
         
 
 
-                           
-if __name__ == '__main__':
+def test():                           
+
     from etl_test import etl_test
     from etl import transformer
     input_part = [
@@ -78,3 +83,5 @@ if __name__ == '__main__':
     test.check_output(duplicate_part,'duplicate')
     print test.output()
 
+if __name__ == '__main__':
+    test()

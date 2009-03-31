@@ -20,7 +20,12 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to read data from sql db.
+sql_in
+
+* Use to read data from sql db.
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
 """
 
 from etl.component import component
@@ -40,6 +45,14 @@ class sql_in(component):
     """
 
     def __init__(self,sqlconnector,sqlquery,name='component.input.sql_in',transformer=None,row_limit=0):
+
+	""" 
+	Parameters
+	sqlconnector :  Provides  sqlconnector connector to connect with file
+	sqlquery     : TODO
+	transformer  :  Provides transformer object to transform string data into  particular object
+	row_limit    :  Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+	"""
         super(sql_in, self).__init__(name,transformer=transformer)
 
         self.sqlconnector = sqlconnector
@@ -79,7 +92,6 @@ class sql_in(component):
                     yield d,'main'
         except TypeError,e:
             self.action_error(e)
-
 
 
 

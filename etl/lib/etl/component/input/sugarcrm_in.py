@@ -20,35 +20,29 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to read data from csv file.
+This is an ETL Component that use to read data from sugarcrm.
 """
 
-#
-#import component
-#import elt
-#import sugarcrm_connector
-
-#from sugarcrm_connector import sugarcrm_connector
+from etl.component import component
 class sugarcrm_in(component):
     """
         This is an ETL Component that use to read data from Sugar CRM
 
     """
-    def __init__(self,sugarcrm_connector,username,password,module,method,name='componet.input.sugarcrm_in',transformer=False,row_limit=0):
+    def __init__(self,sugarcrm_connector,module,name='componet.input.sugarcrm_in',transformer=False,row_limit=0):
         super(sugarcrm_in, self).__init__(name,transformer=transformer)
         self.module=module
         self.sugarcrm_connector=sugarcrm_connector
         self.row_count=0
         self.row_limit=row_limit
-        self.method=method
-    def action_start(self):
-        super(sugarcrm_in, self).action_start()
+
+    def action_start(self,key,singal_data={},data={}):
+        super(sugarcrm_in, self).action_start(key,singal_data,data)
         self.connector = self.sugarcrm_connector.open()
 
     def process(self):
         res=[]
-        if self.method=='search':
-            res=self.connector.search()
+        res=self.sugarcrm_connector.search(self.module)
         for data in res:
             self.row_count+=1
             if self.row_limit and self.row_count > self.row_limit:

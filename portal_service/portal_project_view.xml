@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<record model="ir.actions.act_window" id="portal_action_project">
+		<field name="name">Projects</field>
+		<field name="res_model">project.project</field>
+		<field name="view_type">tree</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_project_t">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="project.view_project"/>
+		<field name="act_window_id" ref="portal_action_project"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_project_f">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="project.edit_project"/>
+		<field name="act_window_id" ref="portal_action_project"/>
+	</record>
+	
+	<menuitem name="Your Projects" id="menu_portal_customer_your" parent="portal.menu_portal_customer"/>
+	<menuitem name="Your Projects" id="menu_portal_customer_your_projects" parent="menu_portal_customer_your" action="portal_service.portal_action_project"/>
+	
+
+</data>
+</openerp>

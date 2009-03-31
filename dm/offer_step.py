@@ -179,8 +179,8 @@ dm_offer_step()
 class dm_offer_step_transition_trigger(osv.osv):
     _name = "dm.offer.step.transition.trigger"
     _columns = {
-        'name' : fields.char('Trigger Name',size=64,required=True),
-        'code' : fields.char('Code' ,size=64,required=True),
+        'name' : fields.char('Trigger Name', size=64, required=True, translate=True),
+        'code' : fields.char('Code' , size=64, required=True, translate=True),
         'type' : fields.selection([('action', 'Action'),('noaction','No Action'),('auto','Auto')], 'Trigger Type', required=True),
     }
 dm_offer_step_transition_trigger()
@@ -229,7 +229,7 @@ class product_product(osv.osv):
         'state_ids': _default_all_state,
     }
 
-    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context={}, count=False):
             result = super(product_product,self).search(cr,uid,args,offset,limit,order,context,count)
             if 'offer_id' in context and context['offer_id']:
                 result = []

@@ -30,9 +30,12 @@
     "category" : "Generic Modules/Others",
     "description": "Potal Management - Service company specific data.",
     "init_xml" : [],
-    "update_xml" : ["portal_project_data.xml",
+    "update_xml" : [
+                    "portal_project_view.xml",
+                    "portal_project_data.xml",
                     "portal_crm_view.xml","portal_crm_data.xml",
                     "portal_scrum_view.xml","portal_scrum_data.xml",
+                    "security/ir.model.access.csv"
                     ],
     "demo_xml" : [],
     "active": False,

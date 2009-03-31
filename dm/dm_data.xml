@@ -921,5 +921,16 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;auto&quot;&quot;&quot;" name="type"/>
         </record>
     </data>
+    <data noupdate="0">
+        <record model="ir.cron" id="ir_cron_campaign_proposition">
+            <field name="name">Check  Workitem</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'dm.workitem'"/>
+            <field name="function" eval="'check_all'"/>
+            <field name="args" eval="'()'"/>
+        </record>
+    </data>
 </openerp>
-

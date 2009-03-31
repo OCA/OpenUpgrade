@@ -22,10 +22,11 @@
 
 """
 ETL Input Components:
-* csv_in : read data from csv file
-* sql_in : read data from sql database
-* openobject_in : read data from openobject
-* xml_in : read data from xml file
+====================
+* Use to extract data from the source systems.
+
+: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+: GNU General Public License
 
 """
 from data import data
@@ -36,4 +37,3 @@ from facebook_in import facebook_in
 from vcard_in import vcard_in
 from gmail_in import gmail_in
 from sugarcrm_in import sugarcrm_in
-

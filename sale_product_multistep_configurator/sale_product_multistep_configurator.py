@@ -88,21 +88,24 @@ class ir_actions_act_window(osv.osv):
          
         result = super(ir_actions_act_window, self).read(cr, uid, read_ids, ['context'], context, load)[0]
 
-        if eval(result['context']).get('multistep_wizard_dispatch', False):
-            configurator_context = eval(result['context'])
-            
-            list_of_step_ids = self.pool.get('sale_product_multistep_configurator.configurator.step').search(cr, uid, [])
-            list_of_steps = self.pool.get('sale_product_multistep_configurator.configurator.step').read(cr, uid, list_of_step_ids)
-            model_names = [i['model_id'][1] for i in list_of_steps]
-            action_id = self.search(cr, uid, [('res_model', '=', model_names[0])])[0]
-            
-            result = super(ir_actions_act_window, self).read(cr, uid, action_id, fields, context, load)
-            configurator_context.update(eval(result['context']))#used to pass active_id_object_type and make sure we will dispatch here again eventually, see corresponding act_window      
-            configurator_context.update({'next_step':1})#TODO have a back system + TODO be dynamic here
-            configurator_context.update({'step_list': model_names})
-            result['context'] = unicode(configurator_context)
-            return result
-        else:
+        try:
+            if eval(result['context']).get('multistep_wizard_dispatch', False):
+                configurator_context = eval(result['context'])
+                
+                list_of_step_ids = self.pool.get('sale_product_multistep_configurator.configurator.step').search(cr, uid, [])
+                list_of_steps = self.pool.get('sale_product_multistep_configurator.configurator.step').read(cr, uid, list_of_step_ids)
+                model_names = [i['model_id'][1] for i in list_of_steps]
+                action_id = self.search(cr, uid, [('res_model', '=', model_names[0])])[0]
+                
+                result = super(ir_actions_act_window, self).read(cr, uid, action_id, fields, context, load)
+                configurator_context.update(eval(result['context']))#used to pass active_id_object_type and make sure we will dispatch here again eventually, see corresponding act_window      
+                configurator_context.update({'next_step':1})#TODO have a back system + TODO be dynamic here
+                configurator_context.update({'step_list': model_names})
+                result['context'] = unicode(configurator_context)
+                return result
+            else:
+                return super(ir_actions_act_window, self).read(cr, uid, ids, fields, context, load)
+        except Exception, e:
             return super(ir_actions_act_window, self).read(cr, uid, ids, fields, context, load)
 
 ir_actions_act_window()

@@ -20,7 +20,9 @@
 #
 ##############################################################################
 """
-   This is ETL Component to put job process in sleep.
+sleep 
+
+ *  Puts job process in sleep.
 """
 from etl.component import component
 import time

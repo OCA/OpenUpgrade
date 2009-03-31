@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+		<record id="comp_input_gmail_in"
+			model="etl.component.type">
+			<field name="name">input.gmail_in</field>
+			<field name="code">input.gmail_in</field>
+		</record>
+	</data>
+	<data>
+
+		<record id="etl_component_gmail_in_form"
+			model="ir.ui.view">
+			<field name="name">view.etl.component.openobject.in.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Gmail-IN Component">
+					<field name="name" select="1" required="1" />
+					<field name="type_id" domain="[('name','=','input.gmail_in')]" />
+					<notebook colspan="4">
+						<page string="Properties">
+							<separator string="Login Details"
+								colspan="4" />
+							<field name="user" select="1" required="1" />
+							<field name="passwd"  password="True" required="1" />
+						</page>
+						<page string="Transitions">
+							<separator string="Incomming Transitions"
+								colspan="4" />
+							<field name="trans_in_ids" nolabel="1"
+								colspan="4" readonly="1" />
+							<separator string="Outgoing Transitions"
+								colspan="4" />
+							<field name="trans_out_ids" nolabel="1"
+								colspan="4" readonly="1" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_etl_component_gmail_in_tree"
+			model="ir.actions.act_window">
+			<field name="name">gmail In component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type_id.name','=','input.gmail_in')]</field>
+		</record>
+
+		<record id="action_etl_component_gmail_in_from"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type_id.name','=','input.gmail_in')]</field>
+			<field name="view_id"
+				ref="etl_component_gmail_in_form" />
+		</record>
+
+		<record id="action_etl_component_gmail_in_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id"
+				ref="etl_interface.etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_gmail_in_tree" />
+		</record>
+
+		<record id="action_etl_component_gmail_in_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id"
+				ref="etl_component_gmail_in_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_gmail_in_tree" />
+		</record>
+
+		<menuitem name="Gmail File Data Input"
+			action="action_etl_component_gmail_in_tree"
+			parent="etl_interface.menu_etl_component_input_form"
+			id="menu_etl_jd_c_ic_gmail_form" />
+
+
+	</data>
+</openerp>
+
+

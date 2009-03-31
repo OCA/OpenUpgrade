@@ -21,3 +21,6 @@
 ##############################################################################
 import csv_out
 import openobject_out
+import excel_out
+import xml_out
+import vcard_out

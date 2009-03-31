@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+     <data noupdate="1">
+        <record id="comp_transform_filter" model="etl.component.type">
+			<field name="name">transform.flter</field>
+			<field name="code">transform.filter</field>
+	</record>
+    </data>
+
+<data>		
+		<record id="etl_transform_filter_form" model="ir.ui.view">
+			<field name="name">etl.component.filter.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>            
+			<field name="arch" type="xml">
+               <form string="Filter Component">
+                 <group colspan="4">
+		    		<field name="name" select="1" />
+		    		<field name="type_id"  domain="[('name','=','transform.filter')]"/>
+                    <field name="transformer_id" invisible="1" colspan="4"/>
+                </group>
+             <notebook colspan="4">  
+             <page string="Property">
+								<field name="criteria_ids" colspan="4" nolabel="1" widget="one2many_list">
+									<tree string="Criteria"  editable="bottom">
+										<field name="sequence" />
+										<field name="field_name" />
+										<field name="operator" />
+										<field name="operand" />
+										<field name="condition" />
+									</tree>
+									<form string="Fields">
+										<field name="sequence" />
+										<field name="field_name" />
+										<field name="operator" />
+										<field name="operand" />
+										<field name="condition" />
+									</form>
+								</field>
+						</page>
+                   <page string="Transition Details">
+					  <separator string="Input Transitions" colspan="4" />
+			        	<field name="trans_in_ids" nolabel="1" colspan="4" readonly="1" />
+			        	<separator string="Output Transitions" colspan="4" />
+			        	<field name="trans_out_ids" nolabel="1" colspan="4" readonly="1" />
+					</page>
+				</notebook> 
+				</form>
+			</field>
+		</record>
+				
+                       			 
+
+	<record id="action_etl_component_filter_tree" model="ir.actions.act_window">
+            <field name="name">Filter component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type_id.name','=','transform.filter')]</field>
+		</record>
+
+		<record id="action_etl_component_filter_from" 	model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type_id.name','=','transform.filter')]</field>
+			<field name="view_id" ref="etl_transform_filter_form" />
+		</record>
+
+		<record id="action_etl_component_filter_view1" model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_interface.etl_component_tree" />
+			<field name="act_window_id" ref="action_etl_component_filter_tree" />
+		</record>
+		
+		<record id="action_etl_component_filter_view2" 	model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_transform_filter_form" />
+			<field name="act_window_id" ref="action_etl_component_filter_tree" />
+		</record>
+
+	<menuitem name="Filter in Transform" action="action_etl_component_filter_tree" parent="etl_interface.menu_etl_jd_c_pec_form" id="menu_etl_jd_c_ic_filter_form" />
+
+
+	</data>
+</openerp>
+

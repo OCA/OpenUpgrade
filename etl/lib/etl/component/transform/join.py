@@ -34,6 +34,13 @@ class join(map):
     """
 
     def __init__(self,map_criteria,join_keys={},name='component.transfer.join',transformer=None):
+
+        """
+        Parameters ::
+        
+        map_criteria  :TODO 
+        transformer   :  provides transformer object to transform string data into  particular object
+        """
         super(map, self).__init__(name,transformer=transformer)
         self.map_criteria = map_criteria
         def preprocess(self, channels):            
@@ -50,7 +57,7 @@ class join(map):
     
 
 
-if __name__ == '__main__':
+def test():
     from etl_test import etl_test
     input_part = [
         {'id': 1, 'name': 'Fabien', 'country_id': 3},
@@ -69,4 +76,7 @@ if __name__ == '__main__':
     test=etl_test.etl_component_test(join(map_keys, join_keys))
     test.check_input({'partner':input_part, 'countries': input_cty})
     print test.output()
+
+if __name__ == '__main__':
+    test()
 
