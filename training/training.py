@@ -33,9 +33,9 @@ class training_course_category(osv.osv):
 
     def _get_child_ids(self, cr, uid, ids, name, args, context):
         res = {}
-        for object in self.browse(cr, uid, ids):
-            child_ids = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', '=', object.analytic_account_id.id)])
-            res[object.id] = self.search(cr, uid, [('analytic_account_id', 'in', child_ids)])
+        for obj in self.browse(cr, uid, ids):
+            child_ids = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', '=', obj.analytic_account_id.id)])
+            res[obj.id] = self.search(cr, uid, [('analytic_account_id', 'in', child_ids)])
 
         return res
 
