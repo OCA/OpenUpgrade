@@ -20,20 +20,43 @@
 #
 ##############################################################################
 """
-        Base class of ETL Connector.
+ETL Connector.
 """
-class connector(object):
+from etl import signal
+from etl import logger
+import datetime
+class connector(signal):
     """
-        Base class of ETL Connector.
+    Base class of ETL Connector.
     """
-    def __init__(self):        
-        self.connector=None      
+    def action_open(self, key, signal_data={}, data={}):
+        self.logger.notifyChannel("connector", logger.LOG_INFO, 
+                     'the '+str(self)+' is open now...')
+        return True
+    def action_close(self, key, signal_data={}, data={}):
+        self.logger.notifyChannel("connector", logger.LOG_INFO, 
+                    'the '+str(self)+' is close now...')
+        return True
+    def action_error(self, key, signal_data={}, data={}):
+        self.logger.notifyChannel("connector", logger.LOG_ERROR, 
+                    str(self)+' : '+data.get('error',False))
+        return True
+    def __init__(self,name='connector'): 
+        super(connector, self).__init__()  
+        self.name=name     
+        self.connector=None  
+        self.logger = logger.logger()
+        
+        self.signal_connect(self, 'open', self.action_open)
+        self.signal_connect(self, 'close', self.action_close)    
     def open(self):
-        pass
+        self.signal('open')
     def close(self):
-        pass 
+        self.signal('close') 
     def execute(self):
         pass   
     def __str__(self):        
-        return self.uri
+        if not self.name:
+            self.name=''
+    	return '<Connector : '+self.name+'>'
     
