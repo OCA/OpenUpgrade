@@ -73,25 +73,17 @@ class dm_offer_step(osv.osv):
 
     def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
-        step_type = self.pool.get('dm.offer.step.type') 
-        type_ids = step_type.search(cr,uid,[])
-        type = step_type.read(cr,uid,type_ids,['code'])
-        type_no = {}
-        for t in type : 
-            t_ids = self.search(cr,uid,[('type_id','=',t['id'])])
-            type_no[t['code']]={'len':len(t_ids),'n':1}
         for id in ids:
-            code=''
             offer_step = self.browse(cr,uid,[id])[0]
-            res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
-                    context.get('lang', False) or 'en_US',[offer_step.type_id.id])
-            type_code = str(offer_step.type_id.code) + str(type_no[offer_step.type_id.code]['n'])
-            type_no[offer_step.type_id.code]['n'] = type_no[offer_step.type_id.code]['n']+1
-            code = str(offer_step.offer_id.code)+'_'+type_code
+            step_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type_id.id])
+            type_code = step_code[offer_step.type_id.id] or offer_step.type_id.code  + str(offer_step.seq)
+            offer_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,code', 'model', context.get('lang', False) or 'en_US',[offer_step.offer_id.id])
+            code = offer_code[offer_step.offer_id.id] or offer_step.offer_id.code +'_'+type_code
             result[id] = str(code)
         return result
 
     _columns = {
+        'seq' : fields.integer('Step Type Sequence'),
         'name' : fields.char('Name',size=64, required=True, states={'closed':[('readonly',True)]}),
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade", states={'closed':[('readonly',True)]}),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
@@ -122,7 +114,7 @@ class dm_offer_step(osv.osv):
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
-         'action_id' : fields.many2one('dm.offer.step.action', string="Action", required=True, domain="[('dm_action','=',True)]"),
+        'action_id' : fields.many2one('dm.offer.step.action', string="Action", required=True, domain="[('dm_action','=',True)]"),
     }
 
     _defaults = {
@@ -148,6 +140,20 @@ class dm_offer_step(osv.osv):
 #                offer_name = res_offer[offer.id] or offer.name
                 value['name'] = "%s for %s"% (type_code,offer.name) 
         return {'value':value}
+
+    def create(self,cr,uid,vals,context={}):
+        type_seq = self.search(cr,uid,[('type_id','=',vals['type_id']),('offer_id','=',vals['offer_id'])])
+        vals['seq'] = len(type_seq) and len(type_seq)+1 or 1
+        return super(dm_offer_step,self).create(cr,uid,vals,context)
+
+    def write(self,cr,uid,ids,vals,context={}):
+        if 'type_id' in vals :
+            step  = self.browse(cr,uid,ids)[0]
+            if vals['type_id'] != step.type_id.id :
+                type_seq = self.search(cr,uid,[('type_id','=',vals['type_id']),('offer_id','=',step.offer_id.id)])
+                vals['seq'] = len(type_seq) and len(type_seq)+1 or 1
+        return super(dm_offer_step,self).write(cr,uid,ids,vals,context)
+
 
     def state_close_set(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state':'closed'})
