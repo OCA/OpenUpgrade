@@ -195,7 +195,7 @@
                             <field name="internal_note" nolabel="1" colspan="4" />
                         </page>
                     </notebook>
-                    <group colspan="4" col="6">
+                    <group colspan="4" col="7">
                         <field name="state_course" />
                         <button string="Draft" type="workflow" name="signal_draft" attrs="{'invisible':[('state_course', '!=', 'pending')]}"/>
                         <button string="Pending" type="workflow" name="signal_pending" attrs="{'invisible' : [('state_course', '!=', 'draft')]}" />
@@ -290,18 +290,13 @@
                             <field name="note" nolabel="1" />
                         </page>
                     </notebook>
-                    <group colspan="4" col="6">
+                    <group colspan="4" col="7">
                         <field name="state" />
-                        <button name="draft" string="Draft" 
-                            type="workflow" states="validated" />
-                        <button name="signal_validate" string="Validate" 
-                            type="workflow" states="draft"/>
-                        <button name="signal_cancel" string="Cancel" 
-                            type="workflow" states="validated,inprogress"/>
-                        <button name="signal_inprogress" string="In Progress" 
-                            type="workflow" states="validated"/>
-                        <button name="signal_deprecate" string="Deprecate" 
-                            type="workflow" states="inprogress" />
+                        <button name="draft" string="Draft" type="workflow" states="validated" />
+                        <button name="signal_validate" string="Validate" type="workflow" states="draft"/>
+                        <button name="signal_cancel" string="Cancel" type="workflow" states="validated,inprogress"/>
+                        <button name="signal_inprogress" string="In Progress" type="workflow" states="validated"/>
+                        <button name="signal_deprecate" string="Deprecate" type="workflow" states="inprogress" />
                     </group>
                 </form>
             </field>
@@ -388,18 +383,12 @@
                     </notebook>
                     <group colspan="4" col="8">
                         <field name="state" />
-                        <button name="signal_open" string="Opened" 
-                            type="workflow" states="draft" />
-                        <button name="signal_open_confirm" string="Opened Confirmed" 
-                            type="workflow" states="opened" />
-                        <button name="signal_close_confirm" string="Closed Confirmed"
-                            type="workflow" states="opened_confirmed" />
-                        <button name="signal_inprogress" string="In Progress" 
-                            type="workflow" states="closed_confirmed"/>
-                        <button name="signal_close" string="Close" 
-                            type="workflow" states="inprogress" />
-                        <button name="signal_cancel" string="Cancel" 
-                            type="workflow" states="draft,opened,opened_confirmed,closed_confirmed"/>
+                        <button name="signal_open" string="Open" type="workflow" states="draft" />
+                        <button name="signal_open_confirm" string="Open &eactue; Confirm" type="workflow" states="opened" />
+                        <button name="signal_close_confirm" string="Close &eacute; Confirm" type="workflow" states="opened_confirmed" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" states="closed_confirmed"/>
+                        <button name="signal_close" string="Close" type="workflow" states="inprogress" />
+                        <button name="signal_cancel" string="Cancel" type="workflow" states="draft,opened,opened_confirmed,closed_confirmed"/>
                     </group>
                 </form>
             </field>
@@ -583,18 +572,12 @@
                     </notebook>
                     <group colspan="4" col="8">
                         <field name="state" />
-                        <button name="signal_open" string="Opened" 
-                            type="workflow" states="draft" />
-                        <button name="signal_open_confirm" string="Opened Confirmed" 
-                            type="workflow" states="opened" />
-                        <button name="signal_close_confirm" string="Closed Confirmed"
-                            type="workflow" states="opened_confirmed" />
-                        <button name="signal_inprogress" string="In Progress" 
-                            type="workflow" states="closed_confirmed"/>
-                        <button name="signal_close" string="Close" 
-                            type="workflow" states="inprogress" />
-                        <button name="signal_cancel" string="Cancel" 
-                            type="workflow" states="draft,opened,opened_confirmed,closed_confirmed"/>
+                        <button name="signal_open" string="Open" type="workflow" states="draft" />
+                        <button name="signal_open_confirm" string="Open &eacute; Confirm" type="workflow" states="opened" />
+                        <button name="signal_close_confirm" string="Close &eacute; Confirm" type="workflow" states="opened_confirmed" />
+                        <button name="signal_inprogress" string="In Progress" type="workflow" states="closed_confirmed"/>
+                        <button name="signal_close" string="Close" type="workflow" states="inprogress" />
+                        <button name="signal_cancel" string="Cancel" type="workflow" states="draft,opened,opened_confirmed,closed_confirmed"/>
                     </group>
                 </form>
             </field>
@@ -687,13 +670,9 @@
                     <separator colspan="4"/>
                     <group colspan="4" col="6">
                         <field name="state" />
-                        <button string="Confirm" type="workflow" name="signal_confirm"
-                            states="draft,cancelled" />
-                        <button string="Cancel" type="workflow" name="signal_cancel"
-                            states="confirmed" />
-                        <button string="Cancel to Invoice" type="workflow"
-                            name="signal_confirm_to_cancel_with_invoice" 
-                            states="confirmed" />
+                        <button string="Confirm" type="workflow" name="signal_confirm" states="draft,cancelled" />
+                        <button string="Cancel" type="workflow" name="signal_cancel" states="confirmed" />
+                        <button string="Cancel to Invoice" type="workflow" name="signal_confirm_to_cancel_with_invoice" states="confirmed" />
                         <button string="Done" type="workflow" name="signal_done" states="confirmed" />
                     </group>
                 </form>
