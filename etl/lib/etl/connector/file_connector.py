@@ -19,10 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 """
-ETL Connectors:
-* File Access
+To provide connectivity with file
+
+Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+GNU General Public License
 """
 from etl.connector import connector
 
@@ -33,13 +34,23 @@ class file_connector(connector):
         self.encoding=encoding
         self.uri = uri
 
-    def open(self, mode='r'):
-        # TODO : pass encoding in file
+    def open(self, mode='r'):        
         super(file_connector, self).open()
-        self.connector=file(self.uri, mode)
-        #self.file.encoding=self.encoding
-        return self.connector
+        return file(self.uri, mode)        
+        
 
-    def close(self):
-        super(file_connector, self).close()
-        self.connector.close()
+    def close(self,connector):
+        super(file_connector, self).close(connector)
+        return connector.close()
+    
+    def __copy__(self): 
+        res=file_connector(self.uri,self.bufsize,self.encoding)
+        return res
+
+def test():    
+    file_conn=file_connector('test.txt')
+    con=file_conn.open()
+    file_conn.close(con)
+
+if __name__ == '__main__':
+    test()

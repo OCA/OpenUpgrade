@@ -24,10 +24,7 @@ from etl.connector import connector
 class sugarcrm_connector(connector):
     def __init__(self,username,password,url='http://localhost/sugarcrm',encoding='utf-8'):
         super(sugarcrm_connector, self).__init__()
-        self.url=url
-        self.request = False
-        self.uauth = False
-        self.sessionid=False
+        self.url=url                
         self.username = username
         self.password = password
         self.encoding=encoding
@@ -37,38 +34,32 @@ class sugarcrm_connector(connector):
         super(sugarcrm_connector, self).open()
         from sugarcrm.sugarsoap_services_types import *
         from sugarcrm.sugarsoap_services import *
-        self.loc = sugarsoapLocator();
-        self.request = loginRequest();
-        self.uauth = ns0.user_auth_Def(self.request);
-        self.request._user_auth =self. uauth;
-        self.uauth._user_name = self.username;
-        self.uauth._password = md5.new(self.password).hexdigest();
-        self.uauth._version = '1.1';
-        self.portType = self.loc.getsugarsoapPortType(self.url);
-        (self.portType,self.sessionid)=self.login()
-        return self.connector
+        loc = sugarsoapLocator();
+        request = loginRequest();
+        uauth = ns0.user_auth_Def(self.request);
+        request._user_auth =self. uauth;
+        uauth._user_name = self.username;
+        uauth._password = md5.new(self.password).hexdigest();
+        uauth._version = '1.1';
+        portType = loc.getsugarsoapPortType(self.url);
+        response = portType.login(self.request);
+        if -1 == response._return._id:
+            raise LoginError(response._return._error._description);
+        return (self.portType, response._return._id);                 
 
-    def login(self):
-        from sugarcrm.sugarsoap_services_types import *
-        from sugarcrm.sugarsoap_services import *
-        self.response = self.portType.login(self.request);
-        if -1 == self.response._return._id:
-            raise LoginError(self.response._return._error._description);
-        return (self.portType, self.response._return._id);
-
-    def search(self,module,search=None):
+    def search(self,portType,session_id,module,offset=0,row_limit=0,query=None):
         from sugarcrm.sugarsoap_services_types import *
         from sugarcrm.sugarsoap_services import *
         se_req = get_entry_listRequest()
-        se_req._session =self.response._return._id;
-        se_req._module_name ='Contacts'
-        se_req._offset = 0;
-        se_req._max_results = 20;
+        se_req._session =session_id;
+        se_req._module_name =module
+        se_req._offset = offset;
+        se_req._max_results = row_limit;
         #se_req._order_by = 'id';
-        if search != None:
-            se_req._query = search;
+        if query != None:
+            se_req._query = query;
         #end if
-        se_resp = self.portType.get_entry_list(se_req);
+        se_resp = portType.get_entry_list(se_req);
         list = se_resp._return._entry_list;
 
         ans_list = [];
@@ -82,15 +73,15 @@ class sugarcrm_connector(connector):
         #end for
         return ans_list;
 
-    def edit(self,module,values):
+    def edit(self,portType,session_id,module,values):
         from sugarcrm.sugarsoap_services_types import *
         from sugarcrm.sugarsoap_services import *
         gui_req = get_user_idRequest();
-        gui_req._session = self.response._return._id;
-        user_id =self.portType.get_user_id(gui_req)._return;
+        gui_req._session = session_id;
+        user_id =portType.get_user_id(gui_req)._return;
 
         se_req = set_entryRequest();
-        se_req._session = self.response._return._id;
+        se_req._session = session_id;
         se_req._module_name =module;
         se_req._name_value_list = [];
         name =[];
@@ -101,6 +92,21 @@ class sugarcrm_connector(connector):
             nvl._value = v;
             se_req._name_value_list.append(nvl);
         #end for
-        se_resp = self.portType.set_entry(se_req);
+        se_resp = portType.set_entry(se_req);
         account_id = se_resp._return._id;
         return account_id;
+
+    def close(self,connector):  
+        super(sugarcrm_connector, self).close()          
+        return connector.close()
+
+    def __copy__(self): 
+        res=sugarcrm_connector(self.username,self.password,self.url,self.encoding)                
+        return res
+
+def test():    
+    #TODO
+    pass
+
+if __name__ == '__main__':
+    test()

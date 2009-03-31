@@ -21,6 +21,9 @@
 ##############################################################################
 """
 ETL Component.
+
+Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+GNU General Public License
 """
 import datetime
 from etl import signal
@@ -30,47 +33,47 @@ from etl import logger
 
 class component(signal):
     """
-       Base class of ETL Component.
+    Base class of ETL Component.
     """   
     def action_start(self, key, signal_data={}, data={}):
-         self.logger.notifyChannel("component", logger.LOG_INFO, 
+        self.logger.notifyChannel("component", logger.LOG_INFO, 
                      'the '+str(self)+' is start now...')
-         return True
+        return True
 
     def action_start_input(self, key, signal_data={}, data={}):
-         self.logger.notifyChannel("component", logger.LOG_INFO, 
+        self.logger.notifyChannel("component", logger.LOG_INFO, 
                      'the '+str(self)+' is start to taken input...')
-         return True
+        return True
 
     def action_start_output(self, key, signal_data={}, data={}):
-         self.logger.notifyChannel("component", logger.LOG_INFO, 
+        self.logger.notifyChannel("component", logger.LOG_INFO, 
                      'the '+str(self)+' is start to give output...')
-         return True
+        return True
 
     def action_no_input(self, key, signal_data={}, data={}): 
-         self.logger.notifyChannel("component", logger.LOG_WARNING, 
+        self.logger.notifyChannel("component", logger.LOG_WARNING, 
                      'the '+str(self)+' has no input data...')   
-         return True
+        return True
 
     def action_stop(self, key, signal_data={}, data={}):   
-         # TODO : stop all IN_trans and OUT_trans  related this component
-         self.logger.notifyChannel("component", logger.LOG_INFO, 
+        # TODO : stop all IN_trans and OUT_trans  related this component
+        self.logger.notifyChannel("component", logger.LOG_INFO, 
                      'the '+str(self)+' is stop now...')
-         return True
+        return True
 
    
 
     def action_end(self, key, signal_data={}, data={}): 
-         self.logger.notifyChannel("component", logger.LOG_INFO, 
+        self.logger.notifyChannel("component", logger.LOG_INFO, 
                      'the '+str(self)+' is end now...') 
-         return True
+        return True
 
 
-    def action_error(self, key, signal_data={}, data={}):   
-         self.logger.notifyChannel("component", logger.LOG_ERROR, 
-                     str(self)+' : '+data.get('error',False))
-         #yield {'error_msg':'Error  :'+str(e), 'error_date':datetime.datetime.today()}, 'error'
-         return True
+    def action_error(self, key, signal_data={}, data={}):            
+        self.logger.notifyChannel("component", logger.LOG_ERROR, 
+                     str(self)+' : '+data.get('error','False'))
+        #yield {'error_msg':'Error  :'+str(e), 'error_date':datetime.datetime.today()}, 'error'
+        return True
 
     def __init__(self, name='', transformer=None, *args, **argv):
         super(component, self).__init__(*args, **argv)  
@@ -90,7 +93,21 @@ class component(signal):
         self.signal_connect(self, 'stop', self.action_stop)
         self.signal_connect(self, 'end', self.action_end)
 
-
+    def __copy__(self):
+        res=component(name=self.name,transformer=self.transformer)
+        trans_in=[]
+        for tran_in in self.trans_in:
+            new_tran_in=tran_in.copy()
+            new_tran_in.destination=res
+            trans_in.append(new_tran_in)   
+        trans_out=[]
+        for tran_out in self.trans_out:
+            new_tran_out=tran_out.copy()
+            new_tran_out.source=res
+            trans_out.append(new_tran_out) 
+        res.trans_in=trans_in
+        res.trans_out=trans_out
+        return res
 
 
     def __str__(self):

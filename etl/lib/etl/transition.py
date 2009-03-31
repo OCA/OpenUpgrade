@@ -19,10 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-""" ETL Process.
+""" 
+ETL transition.
 
-    The class for ETL transition.
-
+Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+GNU General Public License
 """
 from signal import signal
 import logger
@@ -81,7 +82,9 @@ class transition(signal):
         self.signal_connect(self,'stop',self.action_stop)
         self.signal_connect(self,'end',self.action_end)
 
-
+    def __copy__(self):                
+        res=transition(self.source,self.destination,self.channel_source, self.channel_destination, self.type)        
+        return res
 
 
 

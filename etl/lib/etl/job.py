@@ -21,6 +21,9 @@
 ##############################################################################
 """
 ETL job.
+
+Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+GNU General Public License
 """
 from signal import signal
 import logger
@@ -79,22 +82,29 @@ class job(signal):
         #TODO : return complete print of the job (all components and transitions)
         return str(self.name)
     
+    def __copy__(self):
+        """
+        Copy job instance
+        """
+        outputs=[]
+        for output in self.outputs:
+            outputs.append(output.copy())   
+        res=job(outputs,self.name)        
+        return res
     
-    def import_job(self):
+    def write(self):
         """
         Store job instance into pickle object
-        """
-        #TODO : read job instance from file
-        connector=open('save.p', 'wb')
-        pickle.dump(self, connector)
+        """        
+        return pickle.dumps(self)
         
-    def export_job(self):   
+    def read(self,value):   
         """
-        Reab job instance from pickle object
+        Read job instance value from pickle object
+        Parameter :
+        value - pickle value  
         """     
-        #TODO : write job instance in file
-        connector=open('save.p', 'rb')
-        return pickle.load(connector)
+        return pickle.load(value)
       
     def pause(self):         
         for output in self.outputs:

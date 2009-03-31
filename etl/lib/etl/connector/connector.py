@@ -21,6 +21,9 @@
 ##############################################################################
 """
 ETL Connector.
+
+Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+GNU General Public License
 """
 from etl import signal
 from etl import logger
@@ -40,21 +43,31 @@ class connector(signal):
     def action_error(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("connector", logger.LOG_ERROR, 
                     str(self)+' : '+data.get('error',False))
-        return True
+        return True    
+
     def __init__(self,name='connector'): 
         super(connector, self).__init__()  
-        self.name=name     
-        self.connector=None  
+        self.name=name               
         self.logger = logger.logger()
-        
+
+        self.status = 'close'
         self.signal_connect(self, 'open', self.action_open)
         self.signal_connect(self, 'close', self.action_close)    
+
     def open(self):
+        self.status='open'
         self.signal('open')
-    def close(self):
+    def close(self,connector=False):
+        self.status='close'
         self.signal('close') 
+
+    def __copy__(self):           
+        res=connector(name=self.name)        
+        return res
+
     def execute(self):
-        pass   
+        return True
+   
     def __str__(self):        
         if not self.name:
             self.name=''
