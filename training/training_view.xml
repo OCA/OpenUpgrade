@@ -384,8 +384,8 @@
                     <group colspan="4" col="8">
                         <field name="state" />
                         <button name="signal_open" string="Open" type="workflow" states="draft" />
-                        <button name="signal_open_confirm" string="Open &eactue; Confirm" type="workflow" states="opened" />
-                        <button name="signal_close_confirm" string="Close &eacute; Confirm" type="workflow" states="opened_confirmed" />
+                        <button name="signal_open_confirm" string="Open &amp; Confirm" type="workflow" states="opened" />
+                        <button name="signal_close_confirm" string="Close &amp; Confirm" type="workflow" states="opened_confirmed" />
                         <button name="signal_inprogress" string="In Progress" type="workflow" states="closed_confirmed"/>
                         <button name="signal_close" string="Close" type="workflow" states="inprogress" />
                         <button name="signal_cancel" string="Cancel" type="workflow" states="draft,opened,opened_confirmed,closed_confirmed"/>
@@ -573,8 +573,8 @@
                     <group colspan="4" col="8">
                         <field name="state" />
                         <button name="signal_open" string="Open" type="workflow" states="draft" />
-                        <button name="signal_open_confirm" string="Open &eacute; Confirm" type="workflow" states="opened" />
-                        <button name="signal_close_confirm" string="Close &eacute; Confirm" type="workflow" states="opened_confirmed" />
+                        <button name="signal_open_confirm" string="Open &amp; Confirm" type="workflow" states="opened" />
+                        <button name="signal_close_confirm" string="Close &amp; Confirm" type="workflow" states="opened_confirmed" />
                         <button name="signal_inprogress" string="In Progress" type="workflow" states="closed_confirmed"/>
                         <button name="signal_close" string="Close" type="workflow" states="inprogress" />
                         <button name="signal_cancel" string="Cancel" type="workflow" states="draft,opened,opened_confirmed,closed_confirmed"/>
