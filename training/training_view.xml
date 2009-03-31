@@ -33,7 +33,7 @@
             <field name="res_model">training.course</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('analytic_account_id', '=', active_id)]</field>
+            <field name="domain">[('parent_id', '=', active_id)]</field>
         </record>
 
         <record model="ir.values" id="ir_action_course_by_category">
@@ -361,13 +361,13 @@
                     <field name="catalog_id" />
                     <newline />
                     <notebook colspan="4">
-                        <page string="Events">
+                        <page string="Seances">
                             <field name="event_ids" readonly="true" colspan="4" nolabel="1">
                                 <tree string="Events">
                                     <field name="name" />
                                     <field name="date" />
                                     <field name="duration" widget="float_time" />
-                                    <field name="support_ok" />
+                                    <field name="support_ok" string="Support Received" />
                                 </tree>
                             </field>
                         </page>
