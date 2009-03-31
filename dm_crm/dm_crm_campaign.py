@@ -28,12 +28,13 @@ class dm_campaign(osv.osv):
     
     def create(self, cr, uid, vals, context={}):
         crm_obj = self.pool.get('crm.case.section')
-        crm_id = crm_obj.search(cr, uid, [('code','ilike','DM')])[0]
-        section_vals = {
-                'name' : vals['name'],
-                'parent_id' : crm_id,
-        }
-        crm_obj.create(cr,uid,section_vals)
+        crm_id = crm_obj.search(cr, uid, [('code','ilike','DM')])
+        if crm_id:
+            section_vals = {
+                    'name' : vals['name'],
+                    'parent_id' : crm_id[0],
+            }
+            crm_obj.create(cr,uid,section_vals)
         return super(dm_campaign,self).create(cr, uid, vals, context)
     
 dm_campaign()
@@ -44,12 +45,13 @@ class dm_campaign_proposition(osv.osv):
     def create(self, cr, uid, vals, context={}):
         crm_obj = self.pool.get('crm.case.section')
         camp_id = self.pool.get('dm.campaign').browse(cr,uid,[vals['camp_id']])[0]
-        crm_id = crm_obj.search(cr, uid, [('name','=',camp_id.name)])[0]
-        section_vals = {
-                'name' : vals['name'],
-                'parent_id' : crm_id,
-        }
-        crm_obj.create(cr,uid,section_vals)
+        crm_id = crm_obj.search(cr, uid, [('name','=',camp_id.name)])
+        if crm_id:
+            section_vals = {
+                    'name' : vals['name'],
+                    'parent_id' : crm_id[0],
+            }
+            crm_obj.create(cr,uid,section_vals)
         return super(dm_campaign_proposition,self).create(cr, uid, vals, context)
     
 dm_campaign_proposition()

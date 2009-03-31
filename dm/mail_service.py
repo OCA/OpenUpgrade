@@ -34,7 +34,7 @@ class dm_mail_service(osv.osv):
 
     _columns = {
         'name' : fields.function(_default_name, method=True, string='Name',store=True ,type='char' ,size=128),
-        'partner_id' : fields.many2one('res.partner','Partner',domain=[('category_id','=','Mail Service')]),
+        'partner_id' : fields.many2one('res.partner','Partner',domain=[('category_id','ilike','Mail Service')],context={'category':'Mail Service'}),
         'media_id' : fields.many2one('dm.media','Media'),
         'action_interval': fields.integer('Interval'),
         'unit_interval': fields.selection( [('minutes', 'Minutes'),
