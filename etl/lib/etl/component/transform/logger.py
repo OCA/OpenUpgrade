@@ -53,3 +53,11 @@ class logger(component):
                     yield d, 'main'
         super(logger, self).process()
 
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=logger(self.name, self.output)
+        return res
+    

@@ -51,6 +51,7 @@ class openobject_out(component):
         self.fields = fields
         self.openobject_connector = openobject_connector
         self.model=model
+        self.name = name
 
     def process(self):        
         datas = []
@@ -74,7 +75,14 @@ class openobject_out(component):
                         yield d, 'main'
                     except Exception,e:
                         yield {'data':d,'type':'exception','message':str(e)}, 'error'
-
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=openobject_out(self.openobject_connector, self.model, self.fields, self.name, self.transformer)
+        return res
+    
 
 def test():
     from etl_test import etl_test

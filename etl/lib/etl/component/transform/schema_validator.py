@@ -52,7 +52,7 @@ class schema_validator(component):
     def __init__(self,schema,name='component.transform.schema_validator'):
         super(schema_validator, self).__init__(name )
         self.schema = schema
-
+        self.name = name
 
 
     def process(self):        
@@ -103,7 +103,14 @@ class schema_validator(component):
                             
                         yield d,channel
                            
-
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=schema_validator(self.schema, self.name)
+        return res
+    
 
 def test():
     from etl_test import etl_test

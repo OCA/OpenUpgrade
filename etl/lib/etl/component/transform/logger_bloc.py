@@ -55,3 +55,12 @@ class logger_bloc(component):
         for d in datas:
             self.output.write('\tBloc Log '+self.name+str(d)+'\n')
             yield d, 'main'
+        
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=logger_bloc(self.name, self.output)
+        return res
+    

@@ -59,6 +59,7 @@ class csv_out(component):
         self.row_count=0                                
         self.fp=None
         self.writer=None   
+        self.name = name
 
     def action_end(self,key,singal_data={},data={}):        
         super(csv_out, self).action_end(key,singal_data,data)
@@ -84,7 +85,12 @@ class csv_out(component):
                     except IOError,e:  
                         self.action_error(e)
 
-
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res= csv_out(self.fileconnector , self.name, self.transformer, self.row_limit, self.csv_params)
+        return res
 
 def test():
     from etl_test import etl_test

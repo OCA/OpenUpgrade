@@ -51,6 +51,7 @@ class diff(component):
         self.row = {}
         self.diff = []
         self.same = []
+        self.name = name
         super(diff, self).__init__(name)
 
     # Return the key of a row
@@ -89,6 +90,14 @@ class diff(component):
                 yield v,channel
 
 
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=diff(self.key, self.name)
+        return res
+    
+    
 def test():                      
     from etl_test import etl_test
     from etl import transformer

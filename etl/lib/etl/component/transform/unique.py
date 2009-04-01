@@ -57,7 +57,13 @@ class unique(component):
                        unique_datas.append(d)
         for d in unique_datas:
             yield d, "main"
-        
+             
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=sort(self.name)
+        return res   
 
 
 def test():                           

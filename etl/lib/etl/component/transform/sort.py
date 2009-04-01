@@ -60,7 +60,14 @@ class sort(component):
         datas.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
         for d in datas:
             yield d, 'main'
-
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=sort(self.fieldname, self.name)
+        return res
+    
 
 
 def test():
