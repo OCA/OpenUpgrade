@@ -41,7 +41,7 @@ class openobject_out(component):
 
     def __init__(self,openobject_connector,model,fields=None,name='component.output.openobject_out',transformer=None):
         """ 
-        Paramters :
+        Parameters ::
         openobject_connector : openobject connector to connect with openerp server
         transformer          : transformer object to transform string data into particular object.
         fields               : a fields of openobject model.

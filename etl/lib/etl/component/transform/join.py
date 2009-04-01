@@ -36,8 +36,7 @@ class join(map):
     def __init__(self,map_criteria,join_keys={},name='component.transfer.join',transformer=None):
 
         """
-        Parameters ::
-        
+        Parameters ::        
         map_criteria  :TODO 
         transformer   :  provides transformer object to transform string data into  particular object
         """

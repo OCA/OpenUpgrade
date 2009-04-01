@@ -24,17 +24,17 @@
     This is the main file of ETL which includes several test functions
 
 """
-# TODO :      
+# TODO :
 #     - make good documentation and test with doctest
 #     - Integrate profiler in the job code: cProfile
-#     - do a unittest system and implement unit tests on components file                
-        
-        
+#     - do a unittest system and implement unit tests on components file
 
-def test1():    
+
+
+def test1():
     #TODO : avoid using .CSV files, povide stringIO with string directly in the __main__
     fileconnector=etl.connector.localfile('demo/data/invoice.csv')
-    transformer.description= {'id':etl.transformer.LONG,'name':etl.transformer.STRING,'invoice_date':etl.transformer.DATE,'invoice_amount':etl.transformer.FLOAT,'is_paid':etl.transformer.BOOLEAN}    
+    transformer.description= {'id':etl.transformer.LONG,'name':etl.transformer.STRING,'invoice_date':etl.transformer.DATE,'invoice_amount':etl.transformer.FLOAT,'is_paid':etl.transformer.BOOLEAN}
     transformer=etl.transformer(transformer.description)
     csv_in1= etl.component.input.csv_in.csv_in(fileconnector=fileconnector,transformer=transformer)
     log1=etl.component.transform.logger.logger(name='Read Invoice File')

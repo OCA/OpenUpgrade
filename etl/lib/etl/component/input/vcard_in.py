@@ -37,7 +37,6 @@ class vcard_in(component):
 
 	"""
 	Parameters ::
-
 	fileconnector : It is a required field and it provides  local file connector to connect with file.
 	"""
 

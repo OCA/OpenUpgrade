@@ -21,7 +21,8 @@
 ##############################################################################
 
 """
- URL Access: http, ftp, https, gopher
+ETL Connectors:
+* URL Access: http, ftp, https, gopher
 """
 from etl.connector import connector
 import urllib

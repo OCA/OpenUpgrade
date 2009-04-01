@@ -45,8 +45,7 @@ class sql_out(component):
     def __init__(self,sqlconnector,sqltable,name='component.output.sql_out',transformer=None,row_limit=0):
 
 	""" 
-    Parameters ::
-    
+    Parameters ::    
 	sql_connector : Provides  sql connector to connect with file
 	sqltable      : Provides the name of the sql table
 	transformer   : Provides transformer object to transform string data into   particular object

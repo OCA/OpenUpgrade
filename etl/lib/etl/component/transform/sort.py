@@ -43,7 +43,6 @@ class sort(component):
     def __init__(self, fieldname,name='component.process.sort'):
         """ 
         Parameters ::
-
         fieldname : specifies the fieldname according to which sorting process will be done
         """
 

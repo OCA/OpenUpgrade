@@ -45,13 +45,11 @@ class csv_out(component):
     def __init__(self,fileconnector,transformer=None,name='component.output.csv_out',row_limit=0, csv_params={}):
 
 	""" 
-    Paramters ::
-
+    Parameters ::
 	fileconnector : Provides  localfile connector to connect with file
 	transformer   : Provides transformer object to transform string data into  particular object
 	row_limit     : Limited records send to destination if row limit specified. If row 	limit is 0,all records are send.
 	csv_param     : To specify other csv parameter like fieldnames , restkey , restval etc. 
-
 	"""
         super(csv_out, self).__init__(name,transformer=transformer)      
           

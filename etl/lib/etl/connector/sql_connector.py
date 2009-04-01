@@ -21,10 +21,11 @@
 ##############################################################################
 
 """
- Provide connection with database  from postgres , mySql, Oracle, etc.. database server
-
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
- GNU General Public License
+To provide connectivity with sql database server. 
+supported connection with :
+postgres server
+mysql server
+oracle server
 """
 from etl.connector import connector
 class sql_connector(connector):    

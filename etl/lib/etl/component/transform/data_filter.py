@@ -35,7 +35,6 @@ class data_filter(component):
 
         """ 
         Parameters ::
-
         transformer      :  provides transformer object to transform string data into  particular object
         filter_crtiteria :  TODO
         """
