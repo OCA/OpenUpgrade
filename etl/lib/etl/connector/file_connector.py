@@ -28,8 +28,18 @@ GNU General Public License
 from etl.connector import connector
 
 class file_connector(connector):
-    def __init__(self,uri,bufsize=-1,encoding='utf-8'):
-        super(file_connector, self).__init__()
+    """
+    This is an ETL connector that use to provide connectivity with file.
+    """
+    def __init__(self,uri,bufsize=-1,encoding='utf-8',name='file_connector'):
+        """ 
+        Paramters :-
+        uri      : Path of file
+        bufsize  : Bufsize for reading data
+        encoding : Encoding format
+        name     : Name of connector
+        """    
+        super(file_connector, self).__init__(name)
         self.bufsize=bufsize
         self.encoding=encoding
         self.uri = uri
@@ -44,7 +54,7 @@ class file_connector(connector):
         return connector.close()
     
     def __copy__(self): 
-        res=file_connector(self.uri,self.bufsize,self.encoding)
+        res=file_connector(self.uri,self.bufsize,self.encoding,self.name)
         return res
 
 def test():    

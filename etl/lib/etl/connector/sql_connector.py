@@ -29,8 +29,8 @@ oracle server
 """
 from etl.connector import connector
 class sql_connector(connector):    
-    def __init__(self, host,port, db, uid, passwd,sslmode='allow',con_type='postgres'):
-        super(sql_connector, self).__init__()
+    def __init__(self, host,port, db, uid, passwd,sslmode='allow',con_type='postgres',name='sql_connector'):
+        super(sql_connector, self).__init__(name)
         self.uri = host+':'+str(port)
         self.host=host
         self.port=port

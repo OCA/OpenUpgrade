@@ -26,9 +26,20 @@ import datetime
 import time
 from etl.connector import connector
 
-class facebook_connector(connector):    
-    def __init__(self, facebook_uri, email, password=False, delay_time=20):
-        super(facebook_connector, self).__init__()
+class facebook_connector(connector):   
+    """
+    This is an ETL connector that use to provide connectivity with Facebook server.
+    """ 
+    def __init__(self, facebook_uri, email, password=False, delay_time=20,name='facebook_connector'):
+        """ 
+        Paramters :-
+        facebook_uri: URI of Facebook server
+        email       : Email Address of Facebook User 
+        password    : Password
+        delay_time  : Time in sec which is use to wait for login when open login page in browser      
+        name        : Name of connector
+        """
+        super(facebook_connector, self).__init__(name)
         self.email = email
         self.delay_time = delay_time
         self.uid = False        
@@ -48,20 +59,23 @@ class facebook_connector(connector):
         return facebook 
 
     def execute(self,facebook,method,fields):
-        """
-		method - 
-        		'get_user_info'=> Returns information of current user
-                'get_friends'=> Returns all the friends and its information for current user
-                'get_user_events'=> Returns all the events related to current user and members of events
-                'get_user_groups'=> Returns all the groups and its members
-                'get_user_notes'=> Returns notes created by user
-                'get_user_notification'=> Returns information on outstanding Facebook notifications for current session user
-                'get_user_profile'=> Returns the specified user's application info section for the calling application.
-                'get_user_pages'=> Returns all visible pages to the filters specified.
-                'get_user_photos'=> Returns all visible photos according to the filters specified.
-                'get_user_albums'=> Returns metadata about all of the photo albums uploaded by the specified user.
-                'get_user_status'=> Returns the user's current and most recent statuses
-                'get_user_links'=> Returns all links the user has posted on their profile through your application.
+        """ 
+        Paramters :-
+        facebook : Facebook Object
+		method   : Method name like
+            		'get_user_info'=> Returns information of current user
+                    'get_friends'=> Returns all the friends and its information for current user
+                    'get_user_events'=> Returns all the events related to current user and members of events
+                    'get_user_groups'=> Returns all the groups and its members
+                   'get_user_notes'=> Returns notes created by user
+                    'get_user_notification'=> Returns information on outstanding Facebook notifications for current session user
+                    'get_user_profile'=> Returns the specified user's application info section for the calling application.
+                    'get_user_pages'=> Returns all visible pages to the filters specified.
+                    'get_user_photos'=> Returns all visible photos according to the filters specified.
+                    'get_user_albums'=> Returns metadata about all of the photo albums uploaded by the specified user.
+                    'get_user_status'=> Returns the user's current and most recent statuses
+                    'get_user_links'=> Returns all links the user has posted on their profile through your application.
+        fields  : Fields List
         """
         if method=='get_user_info':
             rows = facebook.users.getInfo(facebook.uid, fields)
@@ -103,7 +117,7 @@ class facebook_connector(connector):
         return rows
 
     def __copy__(self): 
-        res=facebook_connector(self.facebook_uri, self.email, self.password, self.delay_time)        
+        res=facebook_connector(self.facebook_uri, self.email, self.password, self.delay_time,self.name)
         return res
     
 def test():    
