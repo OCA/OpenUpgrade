@@ -220,7 +220,7 @@
         <act_window 
             src_model="training.course" 
             res_model="training.seance" 
-            domain="[('course_id', '=', active_id)]" 
+            domain="[('course_id', '=', active_id),('date', '>=', time.strftime('%Y-%m-%d'))]" 
             name="Planned Courses" 
             id="training_course_planned" />
 
@@ -504,7 +504,7 @@
             <field name="domain">[('state', '=', 'draft')]</field>
         </record>
         <record model="ir.actions.act_window" id="training_session_resume_act">
-            <field name="name">Sessions (Resume)</field>
+            <field name="name">Sessions - Report</field>
             <field name="res_model">training.session</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -696,7 +696,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         <record model="ir.actions.act_window" id="training_seance_resume_act">
-            <field name="name">Seances (Resume)</field>
+            <field name="name">Seances - Report</field>
             <field name="res_model">training.seance</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -806,11 +806,11 @@
         </record>
 
         <record model="ir.actions.act_window" id="training_subscription_problematic_act">
-            <field name="name">Subscriptions (A traiter)</field>
+            <field name="name">Subscriptions to Treat</field>
             <field name="res_model">training.subscription</field>
             <field name="view_type">form</field>
             <field name="view_id" ref="training_subscription_tree_with_problem" />
-            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="domain">[('state', '=', 'draft'),('date', '>=', time.strftime("%Y-%m-%d"))]</field>
         </record>
 
         <record model="ir.actions.act_window" id="training_subscription_to_invoice_act">

@@ -30,6 +30,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Question">
+                    <separator string="Question Description" colspan="4" />
                     <field name="type" />
                     <field name="kind" />
                     <separator string="Question" colspan="4"/>
@@ -90,6 +91,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Questionnaire">
+                    <separator string="Questionnaire" colspan="4" />
                     <field name="name" />
                     <field name="course_id" />
                     <notebook colspan="4">
@@ -160,6 +162,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Exam">
+                    <separator string="Exam Description" colspan="4" />
                     <field name="name" />
                     <field name="questionnaire_id" />
                     <notebook colspan="4">

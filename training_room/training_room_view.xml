@@ -44,6 +44,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Location">
+                    <separator string="Location Description" colspan="4" />
                     <field name="name" />
                     <field name="address_id" />
                 </form>

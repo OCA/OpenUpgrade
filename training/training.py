@@ -355,8 +355,8 @@ class training_session(osv.osv):
                                               help="The supplier commands will create a purchase order for each command for the session"
                                              ),
         'user_id' : fields.many2one('res.users', 'Responsible', required=True),
-        'nbr_place_dispo' : fields.integer('Place Disponible'),
-        'nbr_place_draft' : fields.integer('Place Draft'),
+        'nbr_place_dispo' : fields.integer('Available Places'),
+        'nbr_place_draft' : fields.integer('Draft Places'),
     }
 
     def _find_catalog_id(self, cr, uid, context=None):
@@ -574,8 +574,8 @@ class training_seance(osv.osv):
         'evaluation' : fields.boolean('Evaluation'),
         'invoice' : fields.boolean('Invoice'),
         'user_id' : fields.many2one('res.users', 'Responsible', required=True),
-        'nbr_place_dispo' : fields.integer('Place Disponible'),
-        'nbr_place_draft' : fields.integer('Place Draft'),
+        'nbr_place_dispo' : fields.integer('Available Places'),
+        'nbr_place_draft' : fields.integer('Draft Places'),
     }
 
     def on_change_course_id(self, cr, uid, course_id):
