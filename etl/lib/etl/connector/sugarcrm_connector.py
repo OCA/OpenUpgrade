@@ -19,27 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-"""
-To provide connectivity with SugarCRM server 
 
-Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
-GNU General Public License
-"""
 from etl.connector import connector
 class sugarcrm_connector(connector):
-    """
-    This is an ETL connector that use to provide connectivity with SugarCRM server.
-    """
-    def __init__(self,username,password,url='http://localhost/sugarcrm',encoding='utf-8',name='sugarcrm_connector'):
-        """ 
-        Paramters :-
-        username: Userid of SugarCRM server
-        password: Password 
-        url     : URL of SugarCRM server
-        encoding: Encoding format        
-        name    : Name of connector
-        """
-        super(sugarcrm_connector, self).__init__(name)
+    def __init__(self,username,password,url='http://localhost/sugarcrm',encoding='utf-8'):
+        super(sugarcrm_connector, self).__init__()
         self.url=url                
         self.username = username
         self.password = password
@@ -52,16 +36,16 @@ class sugarcrm_connector(connector):
         from sugarcrm.sugarsoap_services import *
         loc = sugarsoapLocator();
         request = loginRequest();
-        uauth = ns0.user_auth_Def(request);
-        request._user_auth = uauth;
+        uauth = ns0.user_auth_Def(self.request);
+        request._user_auth =self. uauth;
         uauth._user_name = self.username;
         uauth._password = md5.new(self.password).hexdigest();
         uauth._version = '1.1';
         portType = loc.getsugarsoapPortType(self.url);
-        response = portType.login(request);
+        response = portType.login(self.request);
         if -1 == response._return._id:
             raise LoginError(response._return._error._description);
-        return (portType, response._return._id);                 
+        return (self.portType, response._return._id);                 
 
     def search(self,portType,session_id,module,offset=0,row_limit=0,query=None):
         from sugarcrm.sugarsoap_services_types import *
@@ -117,7 +101,7 @@ class sugarcrm_connector(connector):
         return connector.close()
 
     def __copy__(self): 
-        res=sugarcrm_connector(self.username,self.password,self.url,self.encoding,self.name)                
+        res=sugarcrm_connector(self.username,self.password,self.url,self.encoding)                
         return res
 
 def test():    

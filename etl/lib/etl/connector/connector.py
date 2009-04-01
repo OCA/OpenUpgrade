@@ -46,7 +46,7 @@ class connector(signal):
         return True    
 
     def __init__(self,name='connector'): 
-        super(connector, self).__init__()
+        super(connector, self).__init__()  
         self.name=name               
         self.logger = logger.logger()
 

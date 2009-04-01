@@ -20,12 +20,10 @@
 #
 ##############################################################################
 """
-logger_bloc
+  To display log detail in end of process.
 
-*  use to display log detail in end of process.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component

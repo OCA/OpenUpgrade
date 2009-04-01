@@ -20,7 +20,10 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to read data from csv file.
+ This component is used to read data.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 

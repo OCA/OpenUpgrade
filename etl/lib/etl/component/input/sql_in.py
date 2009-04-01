@@ -20,12 +20,10 @@
 #
 ##############################################################################
 """
-sql_in
+  To read data from sql db.
 
-* Use to read data from sql db.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -92,6 +90,5 @@ class sql_in(component):
                     yield d,'main'
         except TypeError,e:
             self.action_error(e)
-
 
 

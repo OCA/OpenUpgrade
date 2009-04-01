@@ -19,17 +19,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 """
-To provide connectivity with sql database server. 
-supported connection with :
-postgres server
-mysql server
-oracle server
+ Provide connection with database  from postgres , mySql, Oracle, etc.. database server
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 from etl.connector import connector
 class sql_connector(connector):    
-    def __init__(self, host,port, db, uid, passwd,sslmode='allow',con_type='postgres',name='sql_connector'):
-        super(sql_connector, self).__init__(name)
+    def __init__(self, host,port, db, uid, passwd,sslmode='allow',con_type='postgres'):
+        super(sql_connector, self).__init__()
         self.uri = host+':'+str(port)
         self.host=host
         self.port=port

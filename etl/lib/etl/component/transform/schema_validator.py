@@ -20,12 +20,10 @@
 #
 ##############################################################################
 """
-schema_validator 
+  To perform Schema Validation.
 
-*  use to perform Schema Validation.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 import types
 from etl.component import component

@@ -21,11 +21,10 @@
 ##############################################################################
 
 """
-vcard_in
-* use to import data from vcard
+  To import data from vcard
 
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License 
+  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+  GNU General Public License
 """
 
 from etl.component import component
@@ -75,5 +74,4 @@ class vcard_in(component):
                 yield row,'main'
         except IOError,e:
             self.action_error(e) 
-
 

@@ -20,12 +20,10 @@
 #
 ##############################################################################
 """
-openobject_in
+ To read data from open object model.
 
-*  Use to read data from open object model.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -36,7 +34,6 @@ import datetime
 class openobject_in(component):
     """
         This is an ETL Component that use to read data from open object model.
-       
         Type: Data Component
         Computing Performance: Streamline
         Input Flows: 0

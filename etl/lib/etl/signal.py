@@ -19,9 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-""" ETL Process.
+""" 
+  To handle ETL signal.
 
-    The class handle ETL signal.
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 
 """
 class signal(object):

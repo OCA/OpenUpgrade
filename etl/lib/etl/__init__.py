@@ -19,8 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 """
-I{ETL} (Extract, transform, and load) is a module for python 2.5 or greater 
-that implements ETL concepts for data import,export and also perform some operation 
+{ETL} (Extract, transform, and load) is a module for python 2.5 or greater 
+that implements ETL concepts for data import,export and also perform some operations 
 beween import/export.  
 
 This packages has different sub-packages to define ETL job process, 

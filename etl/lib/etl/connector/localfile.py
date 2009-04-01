@@ -19,27 +19,26 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-"""
-To provide connectivity with Local File 
 
-Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
-GNU General Public License
+"""
+ To provide connection with local file
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 from etl.connector import connector
 
 class localfile(connector):
-    """
-    This is an ETL connector that use to provide connectivity with Local File.
-    """ 
-    def __init__(self,uri,bufsize=-1,encoding='utf-8',name='localfile'):
+    def __init__(self,uri,bufsize=-1,encoding='utf-8'):
         """ 
-        Paramters :-
-        uri      : Path of file
-        bufsize  : Bufsize for reading data
-        encoding : Encoding format
-        name     : Name of connector
-        """    
-        super(localfile, self).__init__(name)
+        Parameters ::
+        uri     :specifies path of localfile
+        bufsize	:specifies buffer size in file object which is used as a connector
+        encoding:provide encoding method to read/write file
+
+        """
+    
+        super(localfile, self).__init__()
         self.bufsize=bufsize
         self.encoding=encoding
         self.uri = uri
@@ -47,14 +46,10 @@ class localfile(connector):
     def open(self, mode='r'):
         # TODO : pass encoding in file
         super(localfile, self).open()
-        return file(self.uri, mode)
+        self.connector=file(self.uri, mode)
         #self.file.encoding=self.encoding
-        
+        return self.connector
 
-    def close(self,connector):
+    def close(self):
         super(localfile, self).close()
-        connector.close()
-
-    def __copy__(self): 
-        res=localfile(self.uri, self.bufsize, self.encoding, self.name)        
-        return res
+        self.connector.close()

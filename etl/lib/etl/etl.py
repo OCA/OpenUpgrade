@@ -21,7 +21,7 @@
 ##############################################################################
 """ ETL Process.
 
-    The module provides process of ETL.
+    This is the main file of ETL which includes several test functions
 
 """
 # TODO :      

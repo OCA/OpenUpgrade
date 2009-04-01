@@ -21,14 +21,12 @@
 ##############################################################################
 
 """
-ETL Output Components:
-=====================
-* It use to load/store data into destinaton system
+ To load/store data into destinaton system
 
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
-
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
+
 from csv_out import csv_out
 from sql_out import sql_out
 from openobject_out import openobject_out

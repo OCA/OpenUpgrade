@@ -20,9 +20,7 @@
 #
 ##############################################################################
 """
-Data Count Control Component:
-
-* Calculate total Count of Data while tranfering ...
+ Calculate total count of data while tranfering .
 
 : Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 : GNU General Public License
