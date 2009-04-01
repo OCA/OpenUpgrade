@@ -385,7 +385,7 @@ class training_session(osv.osv):
                 'course_id' : course.id,
                 'min_limit' : course.course_type_id.min_limit,
                 'max_limit' : course.course_type_id.max_limit,
-                'user_id' : session.user_id,
+                'user_id' : session.user_id.id,
             })
             event_id = seance_proxy.read(cr,
                                          uid,
