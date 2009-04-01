@@ -49,6 +49,8 @@ With the analytic account support, you can know the costs of your trainings.
         'training_demo.xml',
     ],
     'update_xml' : [
+        'security/training_security.xml',
+        'security/ir.model.access.csv',
         'partner_view.xml',
         'base_contact_view.xml',
         'training_view.xml',
@@ -62,8 +64,6 @@ With the analytic account support, you can know the costs of your trainings.
         'workflow/subscription_workflow.xml',
         'process/plan_course_process.xml',
         'process/course_subscription_process.xml',
-        'security/training_security.xml',
-        'security/ir.model.access.csv',
     ],
     'active' : False,
     'installable' : True,
