@@ -19,17 +19,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 """
-ETL Connectors:
-* URL Access: http, ftp, https, gopher
+To provide connectivity with URL Access like  http, ftp, https, gopher
+
+Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+GNU General Public License
 """
 from etl.connector import connector
 import urllib
 
 class url_connector(connector):
-    def __init__(self,uri,bufsize=-1,encoding='utf-8'):
-        super(url_connector, self).__init__()
+    """
+    This is an ETL connector that use to provide connectivity URL Access like  http, ftp, https, gopher.
+    """ 
+    def __init__(self,uri,bufsize=-1,encoding='utf-8',name='url_connector'):
+        """ 
+        Paramters :-
+        uri      : Path of file
+        bufsize  : Bufsize for reading data
+        encoding : Encoding format
+        name     : Name of connector
+        """ 
+        super(url_connector, self).__init__(name)
         self.bufsize=bufsize
         self.encoding=encoding
         self.uri = uri
@@ -37,11 +48,15 @@ class url_connector(connector):
     def open(self):
         # TODO : pass encoding in file
         super(url_connector, self).open()
-        self.connector=urllib.URLopener().open(self.uri)
+        connector=urllib.URLopener().open(self.uri)
         #self.file.encoding=self.encoding
-        return self.connector
+        return connector
 
     def close(self):
         super(url_connector, self).close()
-        self.connector.close()
+        connector.close().
+
+    def __copy__(self): 
+        res=url_connector(self.uri, self.bufsize, self.encoding, self.name)        
+        return res
 
