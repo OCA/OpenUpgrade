@@ -18,55 +18,58 @@
 
 	<!-- shop form view -->
 	<record model="ir.ui.view" id="view_shop_basic_form">
-		<field name="name">Ecommerce Shop Basic Info</field>
+		<field name="name">Web Shop</field>
 		<field name="model">ecommerce.shop</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="General Information">
-				<notebook>
-					<page string="Basic Information">
-						<separator string="Shop Information" colspan="4"/>
-						<newline/>
-						<field name="name" select="1"/>
-						<field name="company_id" select="1"/>
-						<field name="shop_id" select="1"></field>
-						<newline/>
-						<separator string="Payment Methods" colspan="4"/>
+			 	<group colspan="4" col="4">
+			 		<separator string="WebShop Description" colspan="4"/>
+			 		<newline/>
+           			<field name="name" select="1"/><newline/>
+					<field name="company_id" select="1"/>
+					<field name="shop_id" select="1"></field>
+                </group>
+				<notebook colspan="4">
+					<page string="Payment Methods">
 						<field name="payment_method_ids" colspan="4" nolabel='1'>
-							<tree  string="Payment">
+							<tree string="Payment">
 								<field name="name" select="1"/>
 							</tree>
 						</field>
 					</page>
 					<page string="Categories">
-					<field colspan="4" name="category_ids" nolabel="1" >
-						<tree  string="Categories" editable="bottom">
-							<field name="name"/>
-							<field name="category_id"/>
-							<field name="parent_category_id"/>
-						</tree>
-					</field>
+						<field colspan="4" name="category_ids" nolabel="1" >
+							<tree  string="Categories" editable="bottom">
+								<field name="name"/>
+								<field name="category_id"/>
+								<field name="parent_category_id"/>
+							</tree>
+						</field>
 					</page>
 					<page string="Setting">
-					<separator string="Add Currency" colspan="4"/>
-					<field name="currency_ids" colspan="4" nolabel='1'/>
-					<separator string="Add Languages" colspan="4"/>
-					<field name="language_ids" colspan="4" nolabel='1'/>
-					<newline/>
-					<separator string="Add Product Row,Column" colspan="4"/>
-					<field name="row_configuration"/>
-					<field name="column_configuration"/>
-					<separator string="Add Image Size" colspan="4"/>
-					<field name="image_height"/>
-					<field name="image_width"/>
+						<separator string="Add Currency" colspan="4"/>
+						<field name="currency_ids" colspan="4" nolabel='1'/>
+						<separator string="Add Languages" colspan="4"/>
+						<field name="language_ids" colspan="4" nolabel='1'/>
+						 <group colspan="2" col="2">
+                                <separator string="Add Product Row,Column" colspan="2"/>
+                               	<field name="row_configuration"/>
+								<field name="column_configuration"/>
+                         </group>
+                         <group colspan="2" col="2">
+                               <separator string="Add Image Size" colspan="2"/>
+                               <field name="image_height"/>
+							<field name="image_width"/>
+                         </group>
 					</page>
 					<page string="Delivery">
-					<separator string="Add Carriers" colspan="4"/>
-					<field name="delivery_ids" colspan="4" nolabel="1"/>
+						<separator string="Add Carriers" colspan="4"/>
+						<field name="delivery_ids" colspan="4" nolabel="1"/>
 					</page>
 					<page string="Search">
-					<separator string="Add Search Parameters" colspan="4"/>
-					<field name="search_ids"  colspan="4" nolabel="1"/>
+						<separator string="Add Search Parameters" colspan="4"/>
+						<field name="search_ids"  colspan="4" nolabel="1"/>
 					</page>
 				</notebook>
 			</form>
@@ -74,7 +77,7 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="action_shop_basic_form">
-		<field name="name">Ecommerce Shop Basic Info</field>
+		<field name="name">Web Shop</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">ecommerce.shop</field>
 		<field name="view_type">form</field>
