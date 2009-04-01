@@ -663,8 +663,8 @@
                     <field name="name" />
                     <field name="state" />
                     <field name="partner_ids" />
-                    <field name="evaluation" />
                     <field name="invoice" />
+                    <field name="evaluation" />
                     <field name="nbr_place_dispo" />
                     <field name="nbr_place_draft" />
                     <field name="user_id" />
@@ -978,7 +978,7 @@
     <data>
         <menuitem 
             id="training_mi" 
-            name="Trainings" />
+            name="Trainings" sequence="2" />
         <menuitem id="training_config_mi" 
             parent="training_mi" 
             name="Configuration" 
@@ -1079,7 +1079,8 @@
         <menuitem 
             id="training_planning_session_resume_mi" 
             parent="training_planning_session_all_mi" 
-            action="training_session_resume_act" />
+            action="training_session_resume_act" 
+            sequence="1" />
         <menuitem 
             id="training_planning_session_validate_mi" 
             parent="training_planning_session_all_mi" 
@@ -1100,7 +1101,9 @@
         <menuitem 
             id="training_planning_seances_resume_mi" 
             parent="training_planning_seances_mi" 
-            action="training_seance_resume_act" />
+            action="training_seance_resume_act" 
+            sequence="1"
+            />
         <menuitem 
             id="training_planning_seances_planning_mi" 
             parent="training_planning_seances_mi" 
