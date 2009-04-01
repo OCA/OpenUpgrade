@@ -80,9 +80,6 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_shop_basic_tree"/>
 	</record>
-	
-<!--	<menuitem icon="terp-sale" id="menu_sale_root" name="Sales Management"-->
-<!--            groups="group_sale_user"/>-->
             
 	<menuitem icon="terp-purchase" id="menu_ecommerce" name="Ecommerce"/>
 	<menuitem id="menu_ecommerce_configuration" name="Configuration" parent="menu_ecommerce"/>
@@ -176,6 +173,8 @@
 						<newline/>
 						<field name="return_url" select="2" />
 						<field name="cancel_url" select="2" />
+					</page>
+					<page string="History" attrs="{'invisible':[('name','!=','paypal')]}">
 						<field name="transaction_dtl_ids" colspan="4" nolabel="1" />
 					</page>
 					<page string="Credit Cards Accepted" attrs="{'invisible':[('name','!=','creditcard')]}">
