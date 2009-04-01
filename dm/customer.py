@@ -150,10 +150,11 @@ class dm_workitem(osv.osv):
         context['active_id'] = wi.id
         done = False
         try:
-            res = obj.run(cr, uid, [wi.step_id.action_id.id], context)
+            server_obj = self.pool.get('ir.actions.server')
+            res = server_obj.run(cr, uid, [wi.step_id.action_id.server_action_id.id], context)
             self.write(cr, uid, [wi.id], {'state': 'done'})
             done = True
-        except:
+        except :
             self.write(cr, uid, [wi.id], {'state': 'error'})
         if done:
             pass
@@ -166,12 +167,10 @@ class dm_workitem(osv.osv):
         return super(dm_workitem, self).__init__(*args)
 
     def check_all(self, cr, uid, context={}):
-        print dir(self)
         if not self.is_running:
             self.is_running = True
             ids = self.search(cr, uid, [('state','=','pending'),
                 ('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
-            obj = self.pool.get('ir.actions.server')
             for wi in self.browse(cr, uid, ids, context=context):
                 self.run(cr, uid, wi, context=context)
             self.is_running = False

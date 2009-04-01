@@ -36,7 +36,7 @@
         <record id="ir_server_object_lines_0" model="ir.server.object.lines">
 			<field name="server_id"  model="ir.actions.server" search="[('name','=','Create CRM Case')]"/>
 			<field eval="&quot;&quot;&quot;value&quot;&quot;&quot;" name="type"/>
-			<field eval="&quot;&quot;&quot;1&quot;&quot;&quot;" name="value"/>
+            <field model="crm.case.section" name="value" search="[('code','=','DM')]"/>
 			<field name="col1" ref="crm.field_crm_case_section_id"/>
 		</record>
 		<record id="ir_server_object_lines_1" model="ir.server.object.lines">
