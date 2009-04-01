@@ -81,7 +81,7 @@ class product_template(osv.osv):
     
     _columns = {
         'dimension_type_ids':fields.one2many('product.variant.dimension.type', 'product_tmpl_id', 'Dimension Types'),
-        'variants':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
+        'variant_ids':fields.one2many('product.product', 'product_tmpl_id', 'Variants'),
     }
 
     def button_generate_variants(self, cr, uid, ids, context={}):
