@@ -34,6 +34,7 @@ class data_count(component):
 
     """   
     def __init__(self,name='component.control.data_count'):
+        self.name = name
         super(data_count, self).__init__(name)
     def process(self):
         datas = {}
@@ -46,3 +47,10 @@ class data_count(component):
         for d in datas:
             yield {'channel': d, 'count': datas[d]}, 'main'
 
+
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=data_count(name=self.name)
+        return res

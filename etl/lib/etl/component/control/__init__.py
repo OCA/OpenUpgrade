@@ -21,7 +21,7 @@
 ##############################################################################
 
 """
-ETL Control components
+ ETL Control components
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License

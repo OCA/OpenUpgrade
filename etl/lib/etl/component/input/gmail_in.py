@@ -24,21 +24,23 @@ from etl.component import component
 
 class gmail_in(component):
 
-    def __init__(self,user,password,name='component.input.gmail_in',row_limit=0):
+    def __init__(self, user, password, name='component.input.gmail_in', row_limit=0):
         super(gmail_in, self).__init__(name)
         self.fp=None
         self.connector=None
         self.user=user
         self.pwd=password
+        self.name = name
+        self.row_limit = row_limit
 
-    def action_start(self,key,singal_data={},data={}):
+    def action_start(self, key, singal_data={}, data={}):
         import gdata.contacts.service
-        super(gmail_in, self).action_start(key,singal_data,data)
+        super(gmail_in, self).action_start(key, singal_data, data)
         self.connector = gdata.contacts.service.ContactsService()
         self.connector.ClientLogin(self.user, self.pwd)
 
 
-    def action_end(self,key,singal_data={},data={}):   
+    def action_end(self, key, singal_data={}, data={}):   
         self.connector=False
         
     
@@ -59,17 +61,24 @@ class gmail_in(component):
             for postal_address in feed.postal_address:
                 postal_addresses.append(postal_address.text)
             d={
-                'title':feed.title and feed.title.text or False,
-                'emails':emails,
-                'phone_numbers':phone_numbers,
+                'title':feed.title and feed.title.text or False, 
+                'emails':emails, 
+                'phone_numbers':phone_numbers, 
                 'postal_addresses':postal_addresses
             }
-            yield d,'main'
-
+            yield d, 'main'
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=gmail_in(self.user, self.password, self.name, self.row_limit)
+        return res
+    
 def test():
     from etl_test import etl_test
     import etl    
-    test=etl_test.etl_component_test(gmail_in('',''))    
+    test=etl_test.etl_component_test(gmail_in('', ''))    
     res=test.output()
     
 if __name__ == '__main__':

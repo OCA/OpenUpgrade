@@ -44,6 +44,7 @@ class vcard_in(component):
         self.fileconnector = fileconnector
         self.fp=None
         self.reader=None
+        self.name = name
 
     def action_start(self,key,singal_data={},data={}):
         import vobject
@@ -74,3 +75,10 @@ class vcard_in(component):
         except IOError,e:
             self.action_error(e) 
 
+
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=vcard_in(self.fileconnector, self.name)
+        return res

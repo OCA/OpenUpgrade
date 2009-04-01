@@ -40,30 +40,38 @@ class facebook_in(component):
     * .* : return the main flow with data
     """
 
-    def __init__(self,facebook_connector,method,domain=[],fields=['name'],name='component.input.facebook_in',transformer=None,row_limit=0):
-        super(facebook_in, self).__init__(name,transformer=transformer)
+    def __init__(self, facebook_connector, method, domain=[], fields=['name'], name='component.input.facebook_in', transformer=None, row_limit=0):
+        super(facebook_in, self).__init__(name, transformer=transformer)
         self.facebook_connector = facebook_connector
         self.method=method
         self.domain=domain
         self.fields=fields
         self.row_limit=row_limit
+        self.name = name
 
     def process(self):        
         facebook=self.facebook_connector.open()
-        rows=self.facebook_connector.execute(facebook,self.method,fields=self.fields)
+        rows=self.facebook_connector.execute(facebook, self.method, fields=self.fields)
         for row in rows:
             if self.transformer:
                 row=self.transformer.transform(row)
             if row:
-                yield row,'main'
-
+                yield row, 'main'
+            
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=facebook_in(self.facebook_connector, self.method, self.domain, self.fields, self.name, self.transformer, self.row_limit)
+        return res
+    
 # fields = ['uid', 'name', 'birthday', 'about_me', 'activities', 'affiliations', 'books', 'current_location', 'education_history', 'email_hashes', 'first_name','has_added_app', 'hometown_location', 'hs_info', 'hs_info', 'hs_info', 'hs_info', 'hs_info', 'meeting_for', 'meeting_sex', 'movies', 'music','notes_count', 'pic', 'pic_with_logo', 'pic_big', 'pic_big_with_logo', 'pic_small', 'pic_small_with_logo', 'pic_square', 'pic_square_with_logo','political', 'profile_update_time', 'profile_url', 'proxied_email', 'quotes', 'relationship_status', 'religion', 'sex', 'significant_other_id']
 
 def test():
     from etl_test import etl_test
     import etl
     facebook_conn=etl.connector.facebook_connector('http://facebook.com', 'modiinfo@gmail.com')
-    test1=etl_test.etl_component_test(facebook_in(facebook_conn,'get_user_events'))
+    test1=etl_test.etl_component_test(facebook_in(facebook_conn, 'get_user_events'))
     res=test1.output()
 
 if __name__ == '__main__':
