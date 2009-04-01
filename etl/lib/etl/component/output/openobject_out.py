@@ -40,12 +40,12 @@ class openobject_out(component):
     """
 
     def __init__(self,openobject_connector,model,fields=None,name='component.output.openobject_out',transformer=None):
-        """ 
-        Parameters ::
-        openobject_connector : openobject connector to connect with openerp server
-        transformer          : transformer object to transform string data into particular object.
-        fields               : a fields of openobject model.
-        model                : a openobject model name.
+        """
+        Paramters :-
+        openobject_connector : Openobject connector to connect with openerp server
+        transformer          : Transformer object to transform string data into particular object.
+        fields               : Fields of openobject model.
+        model                : Openobject model name.        
         """    
         super(openobject_out, self).__init__(name,transformer=transformer)
         self.fields = fields
@@ -67,14 +67,12 @@ class openobject_out(component):
                         self.fields_keys = self.fields.keys()
                     try:
                         if self.transformer:
-                            d=self.transformer.transform(d)
-                        print d
+                            d=self.transformer.transform(d)                        
                         connector=self.openobject_connector.open()
                         self.openobject_connector.execute(connector,'execute', self.model, 'import_data', self.fields_keys, [map(lambda x: d[self.fields[x]], self.fields_keys)])
                         self.openobject_connector.close(connector)
                         yield d, 'main'
                     except Exception,e:
-                        print 'error',e
                         yield {'data':d,'type':'exception','message':str(e)}, 'error'
 
 
