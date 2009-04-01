@@ -49,6 +49,7 @@
         <record model="workflow.transition" id="transition_subscription_confirm">
             <field name="act_from" ref="activity_subscription_draft" />
             <field name="act_to" ref="activity_subscription_confirm" />
+            <field name="role_id" ref="role_subscription_manager" />
             <field name="signal">signal_confirm</field>
         </record>
 
