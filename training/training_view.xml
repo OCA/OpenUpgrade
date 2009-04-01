@@ -7,6 +7,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Product Line">
+                    <separator string="Product Line Description" colspan="4" />
                     <field name="name" string="Code" select="1" />
                     <field name="parent_id" string="Parent" />
                     <separator string="Description" colspan="4" />
@@ -76,8 +77,9 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Type">
+                    <separator string="Course Type Description" colspan="4" />
                     <field name="name" />
-                    <separator string="Limit" colspan="4" />
+                    <separator string="Limits" colspan="4" />
                     <field name="min_limit" />
                     <field name="max_limit" />
                     <separator string="Description" colspan="4"/>
@@ -115,6 +117,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Course">
+                    <separator string="Course Description" colspan="4" />
                     <group colspan="4" col='6'>
                         <field name="name" string="Designation" select="1" required="True"/>
                         <field name="parent_id" string="Product Line" required="True" />
@@ -214,6 +217,13 @@
             name="Attachments" 
             id="training_course_attachment" />
 
+        <act_window 
+            src_model="training.course" 
+            res_model="training.seance" 
+            domain="[('course_id', '=', active_id)]" 
+            name="Planned Courses" 
+            id="training_course_planned" />
+
         <record model="ir.ui.view" id="training_course_tree">
             <field name="name">training.course.tree</field>
             <field name="model">training.course</field>
@@ -226,6 +236,7 @@
                     <field name="description" />
                     <field name="duration" widget="float_time" />
                     <field name="state_course" />
+                    <field name="has_support" />
                 </tree>
             </field>
         </record>
@@ -274,6 +285,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Catalog">
+                    <separator string="Catalog Description" colspan="4" />
                     <field name="year" />
                     <notebook colspan="4">
                         <page string="Sessions">
@@ -349,11 +361,16 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Session">
+                    <separator string="Session Description" colspan="4" />
                     <field name="name" />
+                    <field name="user_id" />
                     <field name="date" />
                     <newline />
                     <field name="offer_id" /> 
                     <field name="catalog_id" />
+                    <field name="nbr_place_dispo" />
+                    <field name="nbr_place_draft" />
+                    <field name="user_id" />
                     <newline />
                     <notebook colspan="4">
                         <page string="Seances">
@@ -415,6 +432,23 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="training_session_tree_resume">
+            <field name="name">training.session.tree</field>
+            <field name="model">training.session</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sessions">
+                    <field name="date" />
+                    <field name="catalog_id" />
+                    <field name="name" />
+                    <field name="state" />
+                    <field name="nbr_place_dispo" />
+                    <field name="nbr_place_draft" />
+                    <field name="user_id" />
+                </tree>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="training_session_tree_without_state">
             <field name="name">training.session.tree</field>
             <field name="model">training.session</field>
@@ -469,6 +503,13 @@
             <field name="view_id" ref="training_session_tree_without_state" />
             <field name="domain">[('state', '=', 'draft')]</field>
         </record>
+        <record model="ir.actions.act_window" id="training_session_resume_act">
+            <field name="name">Sessions (Resume)</field>
+            <field name="res_model">training.session</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="training_session_tree_resume" />
+        </record>
 
 
         <record model="ir.ui.view" id="training_event_form">
@@ -477,10 +518,12 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Event">
+                    <separator string="Event Description" colspan="4" />
                     <field name="name" />
                     <field name="date" />
                     <field name="duration" widget="float_time" />
                     <field name="session_ids" colspan="4"/>
+                    <field name="state" />
                 </form>
             </field>
         </record>
@@ -495,6 +538,7 @@
                     <field name="date" />
                     <field name="duration" widget="float_time" />
                     <field name="session_ids" />
+                    <field name="state" />
                 </tree>
             </field>
         </record>
@@ -524,11 +568,15 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Seance">
+                    <separator string="Seance Description" colspan="4" />
                     <field name="name" />
-                    <field name="duration" widget="float_time" />
+                    <field name="course_id" />
                     <field name="date" />
-                    <newline />
-
+                    <field name="duration" widget="float_time" />
+                    <field name="user_id" />
+                    <separator string="Limits" colspan="4" />
+                    <field name="min_limit" />
+                    <field name="max_limit" />
                     <notebook colspan="4">
                         <page string="General">
                             <!--<field name="limit" />-->
@@ -605,6 +653,26 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="training_seance_tree_resume">
+            <field name="name">training.seance.tree</field>
+            <field name="model">training.seance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="seances">
+                    <field name="date" />
+                    <field name="name" />
+                    <field name="state" />
+                    <field name="partner_ids" />
+                    <field name="evaluation" />
+                    <field name="invoice" />
+                    <field name="nbr_place_dispo" />
+                    <field name="nbr_place_draft" />
+                    <field name="user_id" />
+                    <field name="place" />
+                </tree>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="training_seance_calendar">
             <field name="name">training.seance.calendar</field>
             <field name="model">training.seance</field>
@@ -626,6 +694,13 @@
             <field name="res_model">training.seance</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+        </record>
+        <record model="ir.actions.act_window" id="training_seance_resume_act">
+            <field name="name">Seances (Resume)</field>
+            <field name="res_model">training.seance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="training_seance_tree_resume" />
         </record>
         <record model="ir.actions.act_window" id="training_seance_calendar_all_act">
             <field name="name">Calendar of Seances</field>
@@ -655,6 +730,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="subscription">
+                    <separator string="Subscription Description" colspan="4" />
                     <field name="name" />
                     <field name="date" />
                     <separator string="Invoicing" colspan="4" />
@@ -696,18 +772,44 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="training_subscription_tree_with_problem">
+            <field name="name">training.subscription.tree</field>
+            <field name="model">training.subscription</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Subscriptions">
+                    <field name="name" />
+                    <field name="contact_id" />
+                    <field name="partner_id" />
+                    <field name="session_id" />
+                    <field name="rest_place" />
+                    <field name="max_place" />
+                    <field name="draft_place" />
+                </tree>
+            </field>
+        </record>
+
         <record model="ir.actions.act_window" id="training_subscription_all_act">
-            <field name="name">All Subscriptions</field>
+            <field name="name">Subscriptions</field>
             <field name="res_model">training.subscription</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
+
 
         <record model="ir.actions.act_window" id="training_subscription_to_validate_act">
             <field name="name">Subscriptions to Validate</field>
             <field name="res_model">training.subscription</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_subscription_problematic_act">
+            <field name="name">Subscriptions (A traiter)</field>
+            <field name="res_model">training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="training_subscription_tree_with_problem" />
             <field name="domain">[('state', '=', 'draft')]</field>
         </record>
 
@@ -773,6 +875,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Offer" col="6">
+                    <separator string="Offer Description" colspan="4" />
                     <field name="name" colspan="2"/>
                     <field name="product_id" colspan="2"/>
                     <notebook colspan="4">
@@ -869,30 +972,6 @@
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
-        </record>
-
-        <record id="training_exam_answer_form" model="ir.ui.view">
-            <field name="name">training.exam_answer.form</field>
-            <field name="model">training.exam_answer</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Examen Answer">
-                    <field name="name" />
-                    <field name="is_response" />
-                </form>
-            </field>
-        </record>
-
-        <record id="training_exam_answer_tree" model="ir.ui.view">
-            <field name="name">training.exam_answer.tree</field>
-            <field name="model">training.exam_answer</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Examen Answer">
-                    <field name="name" />
-                    <field name="is_response" />
-                </tree>
-            </field>
         </record>
     </data>
 
@@ -998,6 +1077,10 @@
             parent="training_planning_session_all_mi" 
             action="training_session_draft_act" />
         <menuitem 
+            id="training_planning_session_resume_mi" 
+            parent="training_planning_session_all_mi" 
+            action="training_session_resume_act" />
+        <menuitem 
             id="training_planning_session_validate_mi" 
             parent="training_planning_session_all_mi" 
             action="training_session_validate_act" />
@@ -1014,6 +1097,10 @@
             id="training_planning_seances_mi" 
             parent="training_planning_mi" 
             action="training_seance_all_act" />
+        <menuitem 
+            id="training_planning_seances_resume_mi" 
+            parent="training_planning_seances_mi" 
+            action="training_seance_resume_act" />
         <menuitem 
             id="training_planning_seances_planning_mi" 
             parent="training_planning_seances_mi" 
@@ -1040,6 +1127,12 @@
             id="training_subscription_management_subscription_validate_mi" 
             parent="training_subscription_management_subscription_mi" 
             action="training_subscription_to_validate_act" />
+
+        <menuitem 
+            id="training_subscription_management_subscription_problematic_mi" 
+            parent="training_subscription_management_mi" 
+            action="training_subscription_problematic_act" />
+
         <menuitem 
             id="training_subscription_management_subscription_invoice_mi" 
             parent="training_subscription_management_subscription_mi" 

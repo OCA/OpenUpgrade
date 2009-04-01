@@ -31,7 +31,7 @@ class training_course_category(osv.osv):
         'account.analytic.account' : 'analytic_account_id',
     }
 
-    def _get_child_ids(self, cr, uid, ids, name, args, context):
+    def _get_child_ids(self, cr, uid, ids, name, args, context=None):
         res = {}
         for obj in self.browse(cr, uid, ids):
             child_ids = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', '=', obj.analytic_account_id.id)])
@@ -67,6 +67,16 @@ class training_course_type(osv.osv):
                                      select=2,
                                      help="The maximum threshold is the maximum for this type of course"),
     }
+
+    def _check_limits(self, cr, uid, ids, context=None):
+        obj = self.browse(cr, uid, ids)[0]
+        return obj.min_limit <= obj.max_limit
+
+    _constraints = [
+        (_check_limits,
+         'The minimum limit is greater than the maximum limit',
+         ['min_limit', 'max_limit']),
+    ]
 
 training_course_type()
 
@@ -107,6 +117,17 @@ class training_course(osv.osv):
             for child in course.children:
                 res[course.id] = res[course.id] + child.duration
 
+        return res
+
+    def _has_support(self, cr, uid, ids, name, args, context=None):
+        res = dict.fromkeys(ids, 0)
+        cr.execute("SELECT res_id, count(1) FROM %s WHERE res_id in (%s) and res_model = '%s' GROUP BY res_id" % (
+            self.pool.get('ir.attachment')._table,
+            ','.join(map(str, ids)),
+            self._name,)
+        )
+        for x in cr.fetchall():
+            res[x[0]] = x[1]
         return res
 
     _columns = {
@@ -193,6 +214,7 @@ class training_course(osv.osv):
                                                       'course_id',
                                                       'cpl_course_id',
                                                       'Complementary Courses'),
+        'has_support' : fields.function(_has_support, method=True, type="boolean", string="Has Support"),
     }
 
     _defaults = {
@@ -207,8 +229,9 @@ class training_offer(osv.osv):
     _description = 'Offer'
     _columns = {
         'name' : fields.char('Name', size=64, required=True, select=1, help="The name's offer"),
-        'product_id' : fields.many2one('product.product', 
-                                       'Product', 
+        'product_id' : fields.many2one('product.product',
+                                       'Product',
+                                       #required=True,
                                        help="An offer can be a product for invoicing",
                                       ),
         'course_ids' : fields.many2many('training.course',
@@ -331,6 +354,9 @@ class training_session(osv.osv):
                                               'Supplier Commands',
                                               help="The supplier commands will create a purchase order for each command for the session"
                                              ),
+        'user_id' : fields.many2one('res.users', 'Responsible', required=True),
+        'nbr_place_dispo' : fields.integer('Place Disponible'),
+        'nbr_place_draft' : fields.integer('Place Draft'),
     }
 
     def _find_catalog_id(self, cr, uid, context=None):
@@ -345,6 +371,7 @@ class training_session(osv.osv):
     _defaults = {
         'catalog_id' : _find_catalog_id,
         'state' : lambda *a: 'draft',
+        'user_id' : lambda obj,cr,uid,context: uid,
     }
 
     def action_create_seance(self, cr, uid, ids, context=None):
@@ -356,6 +383,9 @@ class training_session(osv.osv):
             seance_id = seance_proxy.create(cr, uid, {
                 'name' : 'Seance - %s' % (session.name,),
                 'course_id' : course.id,
+                'min_limit' : course.course_type_id.min_limit,
+                'max_limit' : course.course_type_id.max_limit,
+                'user_id' : session.user_id,
             })
             event_id = seance_proxy.read(cr,
                                          uid,
@@ -530,7 +560,7 @@ class training_seance(osv.osv):
     _columns = {
         'partner_ids' : fields.many2many('res.partner', 'training_seance_partner_rel', 'seance_id', 'partner_id', 'StakeHolders'),
         'event_id' : fields.many2one('training.event', 'Event'),
-        'course_id' : fields.many2one('training.course', 'Course', required=True),
+        'course_id' : fields.many2one('training.course', 'Course', required=True, readonly=True),
         #'copies' : fields.integer('Copies'),
         #'printed' : fields.boolean('Printed'),
         'reserved' : fields.boolean('Reserved'),
@@ -539,6 +569,41 @@ class training_seance(osv.osv):
         'room' : fields.char('Room', size=32),
         #'limit' : fields.integer('Limit'), 
         'purchase_line_ids' : fields.one2many('training.seance.purchase_line', 'seance_id', 'Supplier Commands'),
+        'min_limit' : fields.integer("Minimum Limit"),
+        'max_limit' : fields.integer("Maximum Limit"),
+        'evaluation' : fields.boolean('Evaluation'),
+        'invoice' : fields.boolean('Invoice'),
+        'user_id' : fields.many2one('res.users', 'Responsible', required=True),
+        'nbr_place_dispo' : fields.integer('Place Disponible'),
+        'nbr_place_draft' : fields.integer('Place Draft'),
+    }
+
+    def on_change_course_id(self, cr, uid, course_id):
+        course = self.pool.get('training.course').browse(cr, uid, course_id)
+        return {
+            'value' : {
+                'min_limit' : course.course_type_id.min_limit,
+                'max_limit' : course.course_type_id.max_limit,
+            }
+        }
+
+    def _check_limits(self, cr, uid, ids, context=None):
+        obj = self.browse(cr, uid, ids)[0]
+        return obj.min_limit <= obj.max_limit
+
+    _constraints = [
+        (_check_limits,
+         'The minimum limit is greater than the maximum limit',
+         ['min_limit', 'max_limit']),
+    ]
+
+    _defaults = {
+        'reserved' : lambda *a: False,
+        'min_limit' : lambda *a: 0,
+        'max_limit' : lambda *a: 0,
+        'evaluation' : lambda *a: 0,
+        'invoice' : lambda *a: 0,
+        'user_id' : lambda obj,cr,uid,context: uid, 
     }
 
     def action_validate(self, cr, uid, ids, context=None):
@@ -632,12 +697,18 @@ class training_subscription(osv.osv):
                                    select=1),
         'price' : fields.float('Price', digits=(16,2), required=True),
         'paid' : fields.boolean('Paid'),
+
+        'rest_place' : fields.integer('Rest Place'),
+        'max_place' : fields.integer('Maximum Place'),
+        'draft_place' : fields.integer('Draft Place'),
     }
 
     _defaults = {
         'state' : lambda *a: 'draft',
         'paid' : lambda *a: False,
         'name' : lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'training.subscription'),
+        'max_place' : lambda *a: 0,
+        'draft_place' : lambda *a: 0,
     }
 
 
