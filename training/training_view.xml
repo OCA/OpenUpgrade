@@ -889,7 +889,7 @@
                             <field name="course_ids" colspan="4" widget="many2many" nolabel="1" />
                         </page>
                     </notebook>
-                    <group col="4" colspan="4">
+                    <group col="5" colspan="4">
                         <field name="state" />
                         <button name="signal_validate" string="Validate" type="workflow" states="draft" /> 
                         <button name="signal_deprecate" string="Deprecate" type="workflow" states="draft" />
