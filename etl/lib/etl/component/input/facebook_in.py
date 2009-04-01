@@ -21,6 +21,9 @@
 ##############################################################################
 """
 This is an ETL Component that use to read data from facebook.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component

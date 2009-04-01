@@ -27,11 +27,12 @@ class sugarcrm_connector(connector):
     """
     def __init__(self,username,password,url='http://localhost/sugarcrm',encoding='utf-8',name='sugarcrm_connector'):
         """ 
-        Paramters :-
+        Required Parameters ::
         username: Userid of SugarCRM server
         password: Password 
+        Extra Parameters ::
         url     : URL of SugarCRM server
-        encoding: Encoding format        
+        encoding: Encoding format
         name    : Name of connector
         """
         super(sugarcrm_connector, self).__init__(name)

@@ -23,7 +23,7 @@
 """
   To import data from vcard
 
-  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
   GNU General Public License
 """
 

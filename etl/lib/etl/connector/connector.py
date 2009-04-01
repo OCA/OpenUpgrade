@@ -22,8 +22,8 @@
 """
 ETL Connector.
 
-Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
-GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 from etl import signal
 from etl import logger
@@ -44,22 +44,11 @@ class connector(signal):
         return True
 
     def action_close(self, key, signal_data={}, data={}):
-        """
-        Parameters::
-        key :  Provides Key for connector
-        signal_data   :  Data sent by signal
-        data     :  Other common data between all methods
-        """
         self.logger.notifyChannel("connector", logger.LOG_INFO,
                     'the '+str(self)+' is close now...')
         return True
+    
     def action_error(self, key, signal_data={}, data={}):
-        """
-        Parameters::
-        key :  Provides Key for connector
-        signal_data   :  Data sent by signal
-        data     :  Other common data between all methods
-        """
         self.logger.notifyChannel("connector", logger.LOG_ERROR,
                     str(self)+' : '+data.get('error',False))
         return True
@@ -86,16 +75,19 @@ class connector(signal):
         connector :  Connector that is to be closed
         """
         self.status='close'
-        self.signal('close') 
+        self.signal('close')
 
-    def __copy__(self):           
-        res=connector(name=self.name)        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=connector(name=self.name)
         return res
 
     def execute(self):
         return True
-   
-    def __str__(self):        
+
+    def __str__(self):
         if not self.name:
             self.name=''
     	return '<Connector : '+self.name+'>'

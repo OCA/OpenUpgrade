@@ -26,10 +26,25 @@ supported connection with :
 postgres server
 mysql server
 oracle server
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 from etl.connector import connector
 class sql_connector(connector):    
     def __init__(self, host,port, db, uid, passwd,sslmode='allow',con_type='postgres',name='sql_connector'):
+        """
+        Required Parameters ::
+        host : Database server host name
+        port : Database serverPort
+        db : Database name
+        uid : User name to login into Database
+        passwd : Password of the user
+        Extra Parameters ::
+        sslmode :  For SSL connection
+        con_type : Type of connection (postgres,mysql, oracle)
+        name: Name of the conector
+        """
         super(sql_connector, self).__init__(name)
         self.uri = host+':'+str(port)
         self.host=host
@@ -42,6 +57,9 @@ class sql_connector(connector):
         
          
     def open(self):
+        """ 
+        Opens a connection to Database server
+        """ 
         super(sql_connector, self).open()
         connector=False
         if self.con_type=='postgres':
@@ -60,10 +78,16 @@ class sql_connector(connector):
         return connector    
 
     def close(self,connector):  
+        """ 
+        Closes a connection to Database Server
+        """ 
         super(sql_connector, self).close()          
         return connector.close()
 
     def __copy__(self): 
+        """
+        Overrides copy method
+        """
         res=sql_connector(self.host,self.port, self.db, self.uid, self.passwd,self.sslmode,self.con_type)        
         return res
 

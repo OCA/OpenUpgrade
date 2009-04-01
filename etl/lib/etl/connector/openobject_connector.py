@@ -27,8 +27,19 @@ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 GNU General Public License
 """
 from etl.connector import connector
+
 class openobject_connector(connector):    
     def __init__(self, uri, db, login, passwd, obj='/xmlrpc/object',con_type='xmlrpc'):
+        """   
+        Required Parameters ::
+        uri : URI path of OpenObject server with port
+        db : OpenObject Database name
+        login : User name to login into OpenObject Database
+        passwd : Password of the user
+        Extra Parameters ::
+        obj : object name
+        con_type : Type of connection to OpenObject
+        """
         super(openobject_connector, self).__init__()
         self.db = db
         self.user_login = login
@@ -39,6 +50,9 @@ class openobject_connector(connector):
         self.uri = uri
 
     def open(self):
+        """ 
+        Opens a connection to OpenObject Database
+        """ 
         import xmlrpclib
         from etl import etl_socket
         connector=False
@@ -66,7 +80,10 @@ class openobject_connector(connector):
         else:
             return result 
     
-    def login(self,uid, passwd):         
+    def login(self,uid, passwd):
+        """ 
+        Provides login to OpenObject Database
+        """ 
         import xmlrpclib
         from etl import etl_socket    
         if self.con_type=='xmlrpc':            
@@ -98,10 +115,16 @@ class openobject_connector(connector):
             raise Exception('Not Supported') 
 
     def close(self,connector):
+        """ 
+        Closes the connection to OpenObject Database
+        """ 
         super(openobject_connector, self).close(connector)
         return True#connector.close()
     
     def __copy__(self): 
+        """
+        Overrides copy method
+        """
         res=openobject_connector(self.uri, self.db, self.login, self.passwd, self.obj,self.con_type) 
         res.uid=self.uid 
         return res

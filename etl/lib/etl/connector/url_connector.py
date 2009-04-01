@@ -35,8 +35,9 @@ class url_connector(connector):
     """ 
     def __init__(self,uri,bufsize=-1,encoding='utf-8',name='url_connector'):
         """ 
-        Paramters :-
+        Required Parameters ::
         uri      : Path of file
+        Extra Parameters ::
         bufsize  : Bufsize for reading data
         encoding : Encoding format
         name     : Name of connector
@@ -47,6 +48,9 @@ class url_connector(connector):
         self.uri = uri
 
     def open(self):
+        """
+        Opens the specified URL
+        """
         # TODO : pass encoding in file
         super(url_connector, self).open()
         connector=urllib.URLopener().open(self.uri)

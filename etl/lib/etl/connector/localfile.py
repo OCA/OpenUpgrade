@@ -34,8 +34,9 @@ class localfile(connector):
     """ 
     def __init__(self,uri,bufsize=-1,encoding='utf-8',name='localfile'):
         """ 
-        Paramters :-
+        Required Parameters ::
         uri      : Path of file
+        Extra Parameters ::
         bufsize  : Bufsize for reading data
         encoding : Encoding format
         name     : Name of connector
@@ -46,15 +47,24 @@ class localfile(connector):
         self.uri = uri
 
     def open(self, mode='r'):
+        """
+        Opens a file connection
+        """
         # TODO : pass encoding in file
         super(localfile, self).open()
 	return file(self.uri, mode)
         #self.file.encoding=self.encoding
 
     def close(self,connector):
+        """
+        Closes a file connection
+        """
         super(localfile, self).close()
         connector.close()
 
     def __copy__(self): 
+        """
+        Overrides copy method
+        """
         res=localfile(self.uri, self.bufsize, self.encoding, self.name)        
         return res

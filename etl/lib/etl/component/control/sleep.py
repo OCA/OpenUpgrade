@@ -22,8 +22,8 @@
 """
  Puts job process in sleep.
 
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).All Rights Reserved 
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 
 """
 from etl.component import component

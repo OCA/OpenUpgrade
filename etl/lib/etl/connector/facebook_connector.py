@@ -21,6 +21,9 @@
 ##############################################################################
 """
 To provide connectivity with Facebook
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 import datetime
 import time
@@ -32,9 +35,10 @@ class facebook_connector(connector):
     """ 
     def __init__(self, facebook_uri, email, password=False, delay_time=20,name='facebook_connector'):
         """ 
-        Paramters :-
+        Required Parameters ::
         facebook_uri: URI of Facebook server
         email       : Email Address of Facebook User 
+        Extra Parameters ::
         password    : Password
         delay_time  : Time in sec which is use to wait for login when open login page in browser      
         name        : Name of connector
@@ -48,6 +52,9 @@ class facebook_connector(connector):
         self.facebook_uri = facebook_uri        
 
     def open(self):
+        """
+        Opens connection to facebook
+        """
         from facebook import Facebook        
         super(facebook_connector, self).open()
         facebook = Facebook(api_key=self.api_key, secret_key=self.secret_key)
@@ -60,7 +67,7 @@ class facebook_connector(connector):
 
     def execute(self,facebook,method,fields):
         """ 
-        Paramters :-
+        Required Parameters ::
         facebook : Facebook Object
 		method   : Method name like
             		'get_user_info'=> Returns information of current user
@@ -116,11 +123,17 @@ class facebook_connector(connector):
             rows = facebook.links.get()
         return rows
 
-    def __copy__(self): 
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
         res=facebook_connector(self.facebook_uri, self.email, self.password, self.delay_time,self.name)
         return res
     
-def test():    
+def test():
+    """
+    Test function
+    """
     #TODO
     pass
 
