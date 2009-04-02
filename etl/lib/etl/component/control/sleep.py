@@ -34,6 +34,11 @@ class sleep(component):
        put job process in sleep.
     """
     def __init__(self, delay=1,name='component.control.sleep'):
+        """ 
+        Parametrs ::
+        delay          : Delay in Seconds 
+        name          : Name of Component. 
+        """
         self.delay = delay
         self.name = name
         super(sleep, self).__init__(name)

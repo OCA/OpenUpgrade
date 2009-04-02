@@ -40,17 +40,19 @@ class openobject_in(component):
     * .* : return the main flow with data from open object model
     """    
 
-    def __init__(self, openobject_connector, model, domain=[], fields=[], context={}, row_limit=0, name='component.input.openerp_in', transformer=None):        
+    def __init__(self, openobject_connector, model, domain=[], fields=[], context={}, row_limit=0, name='component.input.openerp_in', transformer=None):      
         """
-        Parameters:-
-        openobject_connector :  Openobject connector to connect with file.
-        model                :  Name of Open Object model.        
-        domain               :  Domain List to put domain.
-        fields               :  Fields List.
-        context              :  Context Values.
-        row_limit            :  Row Limit.If row limit is 0,all records are fetch.
-        name                 :  Name of Component.
-        transformer          :  Transformer object to transform string data into particular type.                              
+        Required Parameters ::
+        openobject_connector : Object of Openobject connector.
+        model                : Name of Open Object model.        
+        domain               : Domain List to put domain.
+        fields               : Fields List.
+        context              : Context Values.
+        
+        Extra Parameters ::
+        row_limit            : Row Limit.If row limit is 0,all records are fetch.
+        name                 : Name of Component.
+        transformer          : Transformer object to transform string data into particular type.                              
         """
         super(openobject_in, self).__init__(name, transformer=transformer)      
         self.openobject_connector = openobject_connector  
@@ -64,24 +66,24 @@ class openobject_in(component):
     def __copy__(self): 
         res=openobject_in(self.openobject_connector, self.model, self.domain, self.fields, self.context, self.row_limit, self.name, self.transformer)        
         return res
-    def process(self):        
+    def process(self):      
         import socket
         import xmlrpclib
         rows=[]
-        try:                       
+        try:                     
             connector=self.openobject_connector.open()
             ids = self.openobject_connector.execute(connector, 'execute', self.model, 'search', self.domain, 0, self.row_limit, False, self.context, False)
             rows = self.openobject_connector.execute(connector, 'execute', self.model, 'read', ids, self.fields, self.context) 
             self.openobject_connector.close(connector)                        
-            for row in rows:                           
+            for row in rows:                         
                 if self.transformer:
                     row=self.transformer.transform(row)
                 if row:
                     yield row, 'main'                                                                            
         
-        except socket.error, e:            
+        except socket.error, e:          
             yield {'data':rows, 'type':'exception', 'message':str(e)}, 'error'
-        except xmlrpclib.ProtocolError, e:            
+        except xmlrpclib.ProtocolError, e:          
             yield {'data':rows, 'type':'exception', 'message':str(e)}, 'error'
         
     def __copy__(self):

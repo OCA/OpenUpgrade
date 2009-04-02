@@ -33,22 +33,22 @@ class transition(signal):
     """
     
 
-    def action_start(self,key,signal_data={},data={}):        
+    def action_start(self,key,signal_data={},data={}):       
         self.logger.notifyChannel("transition", logger.LOG_INFO, 
                      'the '+str(self)+' is start now...')
         return True 
 
-    def action_pause(self,key,signal_data={},data={}):        
+    def action_pause(self,key,signal_data={},data={}):       
         self.logger.notifyChannel("transition", logger.LOG_INFO, 
                      'the '+str(self)+' is pause now...')
         return True 
 
-    def action_stop(self,key,signal_data={},data={}):        
+    def action_stop(self,key,signal_data={},data={}):       
         self.logger.notifyChannel("transition", logger.LOG_INFO, 
                      'the '+str(self)+' is stop now...')
         return True 
   
-    def action_end(self,key,signal_data={},data={}):        
+    def action_end(self,key,signal_data={},data={}):       
         self.logger.notifyChannel("transition", logger.LOG_INFO, 
                      'the '+str(self)+' is end now...')        
         return True     
@@ -82,7 +82,7 @@ class transition(signal):
         self.signal_connect(self,'stop',self.action_stop)
         self.signal_connect(self,'end',self.action_end)
 
-    def __copy__(self):                
+    def __copy__(self):               
         res=transition(self.source,self.destination,self.channel_source, self.channel_destination, self.type)        
         return res
 

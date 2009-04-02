@@ -50,39 +50,46 @@ class schema_validator(component):
     """    
 
     def __init__(self,schema,name='component.transform.schema_validator'):
+        """ 
+        Reqiured Paraamters ::
+        schema  : the name of schema
+                
+        Extra Parameters ::
+        name          : Name of Component.
+        """
         super(schema_validator, self).__init__(name )
         self.schema = schema
         self.name = name
 
 
-    def process(self):        
+    def process(self):       
         for channel,trans in self.input_get().items():
-            for iterator in trans:       
+            for iterator in trans:      
                 keys=[]                         
-                for d in iterator:                                        
-                    if len(d.keys())!=len(self.schema.keys()):                        
+                for d in iterator:                                       
+                    if len(d.keys())!=len(self.schema.keys()):                       
                         yield d,'invalid_field'
                     else:
                         channel='main'                                            
-                        for f in d:                        
+                        for f in d:                       
                             if f not in self.schema:
                                 channel='invalid_name'                        
                                 break
-                            if self.schema[f].get('key',False):                                
+                            if self.schema[f].get('key',False):                               
                                 if not d[f]:
                                     channel="invalid_key"
                                     break
-                                if d[f] in keys:                                                               
+                                if d[f] in keys:                                                              
                                     channel="invalid_key"
                                     break                                
                                 keys.append(d[f])
 
-                            if self.schema[f].get('Is_NULL',False):                                    
+                            if self.schema[f].get('Is_NULL',False):                                   
                                 if not d[f]:
                                     channel="invalid_null"                            
                                     break
 
-                            if self.schema[f].get('type',False):                                
+                            if self.schema[f].get('type',False):                               
                                 if type(d[f]) != eval(self.schema[f]['type']):
                                     channel='invalid_type'
                                     break
@@ -96,7 +103,7 @@ class schema_validator(component):
                                     except ValueError ,e:
                                         channel="invalid_format"						
                                         break
-                            if self.schema[f].get('size',False):                                
+                            if self.schema[f].get('size',False):                               
                                 if len(d[f]) > int(self.schema[f]['size']):
                                     channel='invalid_size'
                                     break

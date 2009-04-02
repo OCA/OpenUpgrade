@@ -53,7 +53,7 @@ def init_logger():
 
 
 class logger(object):
-    def notifyChannel(self, name, level, msg):        
+    def notifyChannel(self, name, level, msg):      
         log = logging.getLogger(name)
         level_method = getattr(log, level)        
         msg = unicode(msg)

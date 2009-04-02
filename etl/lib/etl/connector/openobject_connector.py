@@ -27,7 +27,7 @@ GNU General Public License
 """
 from etl.connector import connector
 
-class openobject_connector(connector):    
+class openobject_connector(connector):  
     """
     This is an ETL connector that use to provide connectivity with OpenERP server.
     """    
@@ -38,6 +38,7 @@ class openobject_connector(connector):
         db : OpenObject Database name
         login : User name to login into OpenObject Database
         passwd : Password of the user
+                
         Extra Parameters ::
         obj : object name
         con_type : Type of connection to OpenObject
@@ -88,26 +89,26 @@ class openobject_connector(connector):
         """ 
         import xmlrpclib
         from etl import etl_socket    
-        if self.con_type=='xmlrpc':            
+        if self.con_type=='xmlrpc':          
             xg = xmlrpclib.ServerProxy(self.uri+'/xmlrpc/common') 
             return xg.login(self.db, uid,passwd)
-        elif self.con_type=='socket':            
+        elif self.con_type=='socket':          
             xg = xmlrpclib.ServerProxy(self.uri+'/xmlrpc/common') 
             return xg.login(self.db, uid,passwd)
             raise Exception('Not Implemented')
         else:
             raise Exception('Not Supported')
   
-    def execute(self,connector,method, *args):     
+    def execute(self,connector,method, *args):   
         import xmlrpclib
         from etl import etl_socket
         super(openobject_connector, self).execute()
         if not self.uid:
             raise Exception('Not login')        
-        if self.con_type=='xmlrpc':        
+        if self.con_type=='xmlrpc':      
             result = getattr(connector,method)(self.db,self.uid,self.passwd, *args)
             return self.__convert(result)
-        elif self.con_type=='socket':            
+        elif self.con_type=='socket':          
             connector.connect(self.uri)                 
             connector.mysend((self.obj, method, self.db,self.uid,self.passwd)+args)
             res = connector.myreceive()  
@@ -128,7 +129,7 @@ class openobject_connector(connector):
         res.uid=self.uid 
         return res
 
-def test():    
+def test():  
     #TODO
     pass
 

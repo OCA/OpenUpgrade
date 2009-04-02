@@ -37,6 +37,14 @@ class data(component):
     """
 
     def __init__(self, datas, name='component.input.data', transformer=None):
+        """    
+        Required  Parameters ::
+        datas : Input datas
+        
+        Extra Parameters ::
+        name          : Name of Component.
+        transformer   : Transformer object to transform string data into  particular object
+       """
         super(data, self).__init__(name=name, transformer=transformer)
         self.datas = datas
         self.name = name

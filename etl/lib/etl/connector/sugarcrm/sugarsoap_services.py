@@ -146,7 +146,7 @@ class sugarsoapBindingSOAP:
         return response
 
     # op: login
-    def login(self, request):        
+    def login(self, request):       
         if isinstance(request, loginRequest) is False:
             raise TypeError, "%s incorrect request type" % (request.__class__)
         kw = {}
@@ -182,7 +182,7 @@ class sugarsoapBindingSOAP:
         return response
 
     # op: get_entry_list
-    def get_entry_list(self, request):        
+    def get_entry_list(self, request):       
         if isinstance(request, get_entry_listRequest) is False:
             raise TypeError, "%s incorrect request type" % (request.__class__)
         kw = {}

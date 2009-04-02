@@ -24,7 +24,17 @@ from etl.component import component
 
 class gmail_in(component):
 
-    def __init__(self, user, password, row_limit=0, name='component.input.gmail_in'):
+    def __init__(self, user, password, name='component.input.gmail_in', row_limit=0):
+        """    
+        Required  Parameters ::
+        user     : user name 
+        password : password of the user
+        
+        Extra Parameters ::
+        name          : Name of Component.
+        row_limit     : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+        """
+
         super(gmail_in, self).__init__(name)
         self.fp=None
         self.connector=None
@@ -40,7 +50,7 @@ class gmail_in(component):
         self.connector.ClientLogin(self.user, self.pwd)
 
 
-    def action_end(self, key, singal_data={}, data={}):   
+    def action_end(self, key, singal_data={}, data={}): 
         self.connector=False
         
     

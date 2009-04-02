@@ -44,12 +44,15 @@ class sql_out(component):
 
     def __init__(self, sqlconnector, sqltable, row_limit=0, name='component.output.sql_out', transformer=None):
 
-	""" 
-    Parameters ::    
-	sql_connector : Provides  sql connector to connect with file
-	sqltable      : Provides the name of the sql table
-	transformer   : Provides transformer object to transform string data into   particular object
-	row_limit     : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+    	""" 
+        Required  Parameters ::   
+    	sql_connector :  sql connector.
+    	sqltable      : the name of the sql table
+
+        Extra Parameters ::
+        name          : Name of Component.
+    	transformer   : transformer object to transform string data into   particular object
+    	row_limit     : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
         """
         super(sql_out, self).__init__(name, transformer=transformer)      
           
@@ -59,18 +62,18 @@ class sql_out(component):
         self.row_count=0                                
         self.connector=False 
 
-    def action_end(self, key, singal_data={}, data={}):        
+    def action_end(self, key, singal_data={}, data={}):       
         super(sql_out, self).action_end(key, singal_data, data)        
-        if self.sqlconnector:             
+        if self.sqlconnector:            
              self.sqlconnector.close()        
 
-    def process(self):  
+    def process(self): 
         #TODO : proper handle exception. not use generic Exception class      
         datas = []        
         for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
-                    try:                    
+                    try:                   
                         if not self.connector:
                             self.connector=self.sqlconnector.open()
                         if self.transformer:
@@ -80,7 +83,7 @@ class sql_out(component):
                         cr.execute(insert_query)                     
                         self.connector.commit()                       
                         yield d, 'main'
-                    except IOError, e:                          
+                    except IOError, e:                         
                         self.action_error(e)
                         
     def __copy__(self):
@@ -100,5 +103,5 @@ def test():
     test.check_output([{'name':'OpenERP11'}, {'name':'Fabien11'}], 'main')
     res=test.output()
 
-if __name__ == '__main__':  
+if __name__ == '__main__': 
     test()

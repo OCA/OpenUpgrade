@@ -39,7 +39,7 @@ class logger(component):
 		Output Flows: 0-y
 		* .* : return the main flow 
     """    
-    def __init__(self, output=sys.stdout, name='component.output.logger'):        
+    def __init__(self, output=sys.stdout, name='component.output.logger'):       
         self.output = output
         self.is_end = 'main'
         super(logger, self).__init__(name)
@@ -48,7 +48,7 @@ class logger(component):
         #TODO : proper handle exception
         for channel,trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:                    
+                for d in iterator:                   
                     self.output.write('Log '+self.name+' '+str(d)+'\n')
                     yield d, 'main'
         super(logger, self).process()

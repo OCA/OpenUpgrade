@@ -42,8 +42,11 @@ class sort(component):
 
     def __init__(self, fieldname,name='component.process.sort'):
         """ 
-        Parameters ::
+        Required Parameters ::
         fieldname : specifies the fieldname according to which sorting process will be done
+       
+        Extra Parametrs ::
+        name          : name of the component 
         """
 
         super(sort, self).__init__(name )

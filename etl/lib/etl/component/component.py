@@ -55,7 +55,7 @@ class component(signal):
                      'the '+str(self)+' has no input data...')   
         return True
 
-    def action_stop(self, key, signal_data={}, data={}):   
+    def action_stop(self, key, signal_data={}, data={}): 
         # TODO : stop all IN_trans and OUT_trans  related this component
         self.logger.notifyChannel("component", logger.LOG_INFO, 
                      'the '+str(self)+' is stop now...')
@@ -69,7 +69,7 @@ class component(signal):
         return True
 
 
-    def action_error(self, key, signal_data={}, data={}):                   
+    def action_error(self, key, signal_data={}, data={}):                 
         self.logger.notifyChannel("component", logger.LOG_ERROR, 
                      str(self)+' : '+signal_data.get('error','False'))
         #yield {'error_msg':'Error  :'+str(e), 'error_date':datetime.datetime.today()}, 'error'
@@ -113,7 +113,7 @@ class component(signal):
 
     def __str__(self):
         if not self.name:
-            self.name=''        
+            self.name=''
     	return '<Component : '+self.name+'>'
 
     def generator_get(self, transition):
@@ -152,7 +152,7 @@ class component(signal):
                 elif self.data[trans] is None:
                     self.signal('no_input')   
                     raise StopIteration
-                if not self._cache['start_input'][trans]:   
+                if not self._cache['start_input'][trans]: 
                     self._cache['start_input'][trans]=datetime.datetime.today()
                     self.signal('start_input', {'trans':trans, 'start_input_date':datetime.datetime.today()})
                 self.signal('get_input', {'trans':trans, 'get_input_date':datetime.datetime.today()})
@@ -164,7 +164,7 @@ class component(signal):
                     if (t == chan) or (not t) or (not chan):
                         self.data.setdefault(t2, [])
                         self.data[t2].append(data)   
-        except StopIteration, e:              
+        except StopIteration, e:            
             if trans:
                 trans.status='end'
                 trans.signal('end') 

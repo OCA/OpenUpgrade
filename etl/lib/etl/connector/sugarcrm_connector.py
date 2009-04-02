@@ -32,6 +32,7 @@ class sugarcrm_connector(connector):
         Required Parameters ::
         username: Userid of SugarCRM server
         password: Password 
+                
         Extra Parameters ::
         url     : URL of SugarCRM server
         encoding: Encoding format
@@ -105,7 +106,7 @@ class sugarcrm_connector(connector):
         account_id = se_resp._return._id;
         return account_id;
 
-    def close(self, connector):  
+    def close(self, connector): 
         super(sugarcrm_connector, self).close()          
         return connector.close()
 
@@ -113,7 +114,7 @@ class sugarcrm_connector(connector):
         res=sugarcrm_connector(self.username, self.password, self.url, self.encoding, self.name)
         return res
 
-def test():    
+def test(): 
     #TODO
     pass
 

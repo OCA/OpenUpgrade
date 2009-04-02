@@ -32,7 +32,6 @@ class facebook_out(component):
     """
 
     def __init__(self,facebook_connector,method,domain=[],fields=['name'],name='component.input.facebook_out',transformer=None,row_limit=0):
-        print "!!!!!!!@@#"
         super(facebook_out, self).__init__(name,transformer=transformer)
         self.facebook_connector = facebook_connector
         self.method=method
@@ -40,14 +39,13 @@ class facebook_out(component):
         self.fields=fields
         self.row_limit=row_limit # to be check
 
-    def process(self):  
+    def process(self): 
         for channel,trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:    
+                for d in iterator:  
                     try:
                         if self.transformer:
                             d=self.transformer.transform(d)
-                        print d
                         connector=self.facebook_connector.open()
                         self.facebook_connector.execute(connector,self.method,fields=self.fields)
                         self.facebook_connector.close(connector)
