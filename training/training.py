@@ -487,8 +487,13 @@ class training_participation(osv.osv):
     _name = 'training.participation'
     _description = 'Participation'
     _columns = {
-        'event_id' : fields.many2one('training.event', 'Event'),
+        'event_id' : fields.many2one('training.event', 'Event', select=True, required=True),
         'subscription_id' : fields.many2one('training.subscription', 'Subscription', select=True, required=True),
+        'present' : fields.boolean('Present'),
+    }
+
+    _defaults = {
+        'present' : lambda *a: 0,
     }
 
 training_participation()
