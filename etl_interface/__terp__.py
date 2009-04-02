@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,21 +20,21 @@
 #
 ##############################################################################
 {
-    'name': 'ETL system', 
-    'version': '1.0', 
-    'category': 'Generic Modules/Others', 
+    'name': 'ETL system',
+    'version': '1.0',
+    'category': 'Generic Modules/Others',
     'description': """
 	ETL system- Extract Transfer Load system
-	    """, 
-    'author': 'Tiny', 
-    'website': 'http://openerp.com', 
-    'depends': ['base'], 
-    'init_xml': [], 
+	    """,
+    'author': 'Tiny',
+    'website': 'http://openerp.com',
+    'depends': ['base'],
+    'init_xml': [],
     'update_xml': [
          'etl_sequence.xml',
-         'etl_view.xml', 
+         'etl_view.xml',
          'etl_component_view.xml',
-         'etl_connector_view.xml', 
+         'etl_connector_view.xml',
          'etl_job_process_workflow.xml',
          'etl_component/control/data_count_view.xml',
          'etl_component/control/sleep_view.xml',
@@ -59,9 +59,10 @@
          'etl_component/transform/schema_validator_view.xml',
          'etl_connector/localfile_view.xml',
          'etl_connector/openobject_connector_view.xml',
-         'etl_connector/sql_connector_view.xml',     
-         ], 
-     'demo_xml': ['etl_demo.xml'], 
-    'installable': True, 
-    'active': False, 
+         'etl_connector/sql_connector_view.xml',
+         'etl_connector/facebook_connector_view.xml',
+         ],
+     'demo_xml': ['etl_demo.xml'],
+    'installable': True,
+    'active': False,
 }

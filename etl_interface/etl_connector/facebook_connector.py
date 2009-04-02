@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
@@ -19,7 +20,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import localfile
-import openobject_connector
-import sql_connector
-import facebook_connector
+import etl
+import tools
+from osv import osv, fields
+
+class facebook_connector(osv.osv):
+    _name = 'etl.connector'
+    _inherit = 'etl.connector'
+
+    _columns={
+              'uri' : fields.char('Facebool URL', size=124),
+              'email' : fields.char('Email', size=64),
+              'passwd' : fields.char('Password', size=64),
+              'delay' : fields.integer('Delay time'),
+    }
+
+    def create_instance(self, cr, uid, id , context={}, data={}):
+        val =  super(facebook_connector, self).create_instance(cr, uid, id, context, data)
+        con = self.browse(cr, uid, id)
+        if con.type == 'localfile':
+            val =  etl.connector.facebook_connector('http://facebook.com', 'modiinfo@gmail.com')
+        return val
+
+facebook_connector()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
