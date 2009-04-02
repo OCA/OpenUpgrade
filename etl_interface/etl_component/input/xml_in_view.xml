@@ -11,31 +11,17 @@
 		<record id="etl_component_xml_in_form" model="ir.ui.view">
 			<field name="name">view.etl.component.xml.in.form</field>
 			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
-				<form string="XML In Component">
-					<field name="name" select="1" />
-					<field name="type_id"
-						domain="[('name','=','input.xml_in')]" />
-					<notebook colspan="4">
-						<page string="Property">
+					<notebook position='inside'>
+						 <page string="Property" attrs="{'invisible':[('type_id','!=','input.xml_in')]}">
 							<field name="connector_id" select="1" domain="[('type','=','localfile')]"/>
 							<field name="transformer_id" />
 							<field name="row_limit" />
 							<field name="xml_params" />
 						</page>
-						<page string="Transition Detail">
-							<separator string="Incomming Transitions"
-								colspan="4" />
-							<field name="trans_in_ids" nolabel="1"
-								colspan="4" readonly="1" />
-							<separator string="Outgoing Transitions"
-								colspan="4" />
-							<field name="trans_out_ids" nolabel="1"
-								colspan="4" readonly="1" />
-						</page>
 					</notebook>
-				</form>
-
 			</field>
 		</record>
 
