@@ -37,16 +37,10 @@
             <field name="signal">signal_validate</field>
         </record>
 
-        <record model="workflow.transition" id="transition_offer_draft_to_deprecated">
-            <field name="act_from" ref="activity_offer_draft" />
+        <record model="workflow.transition" id="transition_offer_validated_to_deprecated">
+            <field name="act_from" ref="activity_offer_validated" />
             <field name="act_to" ref="activity_offer_deprecated" />
             <field name="signal">signal_deprecate</field>
-        </record>
-        
-        <record model="workflow.transition" id="transition_offer_validated_to_draft">
-            <field name="act_from" ref="activity_offer_validated" />
-            <field name="act_to" ref="activity_offer_draft" />
-            <field name="signal">signal_draft</field>
         </record>
 
         <record model="workflow.transition" id="transition_offer_deprecated_to_draft">

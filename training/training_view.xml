@@ -858,8 +858,8 @@
                     <group col="5" colspan="4">
                         <field name="state" />
                         <button name="signal_validate" string="Validate" type="workflow" states="draft" /> 
-                        <button name="signal_deprecate" string="Deprecate" type="workflow" states="draft" />
-                        <button name="signal_draft" string="Draft" type="workflow" states="validated,deprecated" />
+                        <button name="signal_deprecate" string="Deprecate" type="workflow" states="validated" />
+                        <button name="signal_draft" string="Draft" type="workflow" states="deprecated" />
                     </group>
                 </form>
             </field>
