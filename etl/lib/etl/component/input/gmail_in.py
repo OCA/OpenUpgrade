@@ -24,7 +24,7 @@ from etl.component import component
 
 class gmail_in(component):
 
-    def __init__(self, user, password, name='component.input.gmail_in', row_limit=0):
+    def __init__(self, user, password, row_limit=0, name='component.input.gmail_in'):
         super(gmail_in, self).__init__(name)
         self.fp=None
         self.connector=None
@@ -72,7 +72,7 @@ class gmail_in(component):
         """
         Overrides copy method
         """
-        res=gmail_in(self.user, self.password, self.name, self.row_limit)
+        res=gmail_in(self.user, self.password, self.row_limit, self.name)
         return res
     
 def test():

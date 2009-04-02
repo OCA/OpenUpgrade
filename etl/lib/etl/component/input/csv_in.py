@@ -39,9 +39,9 @@ class csv_in(component):
 
     def __init__(self,fileconnector,row_limit=0, csv_params={},name='component.input.csv_in',transformer=None):    
         """    
-        Parameters:-
-        fileconnector :  File connector is a L{localfile} to connect with file
-        transformer   :  Provides transformer object to transform string data into  particular object
+        Parameters::
+        fileconnector :  provides  localfile connector to connect with file
+        transformer   :  provides transformer object to transform string data into  particular object
         row_limit     :  Limited records send to destination if row limit specified. If row limit is 0,all records are send.
         csv_param     :  To specify other csv parameter like fieldnames , restkey , restval etc. 
         """
@@ -53,8 +53,8 @@ class csv_in(component):
     def process(self):
         try:
             import csv
-            fp=self.fileconnector.open()            
-            reader=csv.DictReader(fp,**self.csv_params)             
+            fp=self.fileconnector.open()
+            reader=csv.DictReader(fp,**self.csv_params) 
             row_count=0           
             for data in reader:
                 row_count+=1
@@ -63,9 +63,12 @@ class csv_in(component):
                 if self.transformer:
                     data=self.transformer.transform(data)
                 if data:
-                    yield data,'main'            
-            self.fileconnector.close(fp)        
-        except Exception,e:
+                    yield data,'main'
+
+        except StopIteration,e:
+            self.fileconnector.close(fp)
+            self.signal('end')
+        except TypeError,e:
             self.signal('error',{'data':self.data,'type':'exception','error':str(e)})            
         except IOError,e:
             self.signal('error',{'data':self.data,'type':'exception','error':str(e)}) 
