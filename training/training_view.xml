@@ -827,47 +827,6 @@
             <field name="view_mode">form</field>
         </record>
 
-        <record model="ir.ui.view" id="training_participation_form">
-            <field name="name">training.participation.form</field>
-            <field name="model">training.participation</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="participation">
-                    <field name="partner_id" />
-                    <field name="event_id" />
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="training_participation_tree">
-            <field name="name">training.participation.tree</field>
-            <field name="model">training.participation</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="participations">
-                    <field name="partner_id" />
-                    <field name="event_id" />
-                </tree>
-            </field>
-        </record>
-
-        <!--
-        <record model="ir.actions.act_window" id="training_participation_all_act">
-            <field name="name">Participations</field>
-            <field name="res_model">training.participation</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        -->
-        <!--
-        <record model="ir.actions.act_window" id="training_participation_new_act">
-            <field name="name">New Participation</field>
-            <field name="res_model">training.participation</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-        </record>
-        -->
-
         <record model="ir.ui.view" id="training_offer_form">
             <field name="name">training.offer.form</field>
             <field name="model">training.offer</field>
@@ -1148,5 +1107,72 @@
             id="training_subscription_management_subscription_mass_mi" 
             parent="training_subscription_management_mi" 
             action="training_session_mass_subscription_act" />
+    </data>
+
+    <data>
+        <record model="ir.ui.view" id="view_training_participation_form">
+            <field name="name">training.participation.form</field>
+            <field name="model">training.participation</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Participation">
+                    <separator string="Participation Description" colspan="4"/>
+                    <field name="event_id" />
+                    <field name="date" />
+                    <field name="subscription_id" />
+                    <separator string="Contact Information" colspan="4" />
+                    <field name="contact_id" />
+                    <field name="partner_id" />
+                    <field name="present" />
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_training_participation_tree">
+            <field name="name">training.participation.tree</field>
+            <field name="model">training.participation</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Participation" editable="bottom">
+                    <field name="event_id" />
+                    <field name="subscription_id" />
+                    <field name="present" />
+                    <field name="date" />
+                    <field name="contact_id" />
+                    <field name="partner_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_training_participation_all">
+            <field name="name">Participations</field>
+            <field name="res_model">training.participation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem 
+            id="training_participation_mi"
+            action="action_training_participation_all"
+            parent="training_subscription_management_mi" />
+
+        
+    
+    </data>
+    <data>
+        <!--
+        <record model="ir.ui.view" id="">
+            <field name="name"></field>
+            <field name="model">training.participation.skateholder</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Participation">
+                    <separator string="Participation Description" />
+                    <field name="seance_id" />
+                    <field name="skateholder_id" />
+                </form>
+            </field>
+        </record>
+        -->
     </data>
 </openerp>

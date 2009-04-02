@@ -487,9 +487,21 @@ class training_participation(osv.osv):
     _name = 'training.participation'
     _description = 'Participation'
     _columns = {
-        'event_id' : fields.many2one('training.event', 'Event', select=True, required=True),
-        'subscription_id' : fields.many2one('training.subscription', 'Subscription', select=True, required=True),
-        'present' : fields.boolean('Present'),
+        'event_id' : fields.many2one('training.event', 'Event', select=True,
+                                     required=True,
+                                     readonly=True),
+        'subscription_id' : fields.many2one('training.subscription', 'Subscription', select=True,
+                                            required=True, 
+                                            readonly=True),
+        'present' : fields.boolean('Present', help="Allows to know if a participant was present or not", select=1),
+        'contact_id' : fields.related('subscription_id', 'contact_id',
+                                      type='many2one',relation='res.partner.contact',
+                                      string='Contact', readonly=True, select=1),
+        'partner_id' : fields.related('subscription_id', 'partner_id', 
+                                      type='many2one', relation='res.partner',
+                                      string='Partner', readonly=True, select=2),
+        'date' : fields.related('event_id', 'date', type='datetime', string='Date', 
+                                readonly=True, select=1),
     }
 
     _defaults = {
@@ -733,5 +745,17 @@ class training_subscription(osv.osv):
         return {'value' : {'address_id':ids[0]} }
 
 training_subscription()
+
+class training_participation_skateholder(osv.osv):
+
+    _name = 'training.participation.skateholder'
+
+    _columns = {
+        'seance_id' : fields.many2one('training.seance', 'Seance', required=True),
+        'skateholder_id' : fields.many2one('res.partner.contact', 'Contact', required=True),
+        'evaluation' : fields.integer('Evaluation'),
+    }
+
+training_participation_skateholder()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
