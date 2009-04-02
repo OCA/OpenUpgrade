@@ -73,6 +73,13 @@
 			<field name="con_type">xmlrpc</field>
 		</record>
 
+		<record id="facebook_connector" model="etl.connector">
+			<field name="name">Facebook connector</field>
+			<field name="type">facebook</field>
+			<field name="uri">http://facebook.com</field>
+			<field name="email">modiinfo@gmail.com</field>
+		</record>
+
 		<!--	COMPONENTS-->
 
 		<record id="component_csv_in1" model="etl.component">
@@ -127,6 +134,13 @@
 			<field name="name">vcard_in1</field>
 			<field name="type_id" ref="comp_input_vcard_in" />
 			<field name="connector_id" ref="fileconnector_filevcard" />
+		</record>
+
+		<record id="component_facebook_in" model="etl.component">
+			<field name="name">Facebook in</field>
+			<field name="type_id" ref="comp_input_facebook_in" />
+			<field name="connector_id" ref="facebook_connector" />
+			<field name="method">get_friends</field>
 		</record>
 
 		<record id="component_oo_out" model="etl.component">
@@ -373,10 +387,10 @@
 		<!--			<field name="component_ids"-->
 		<!--				eval="[(6,0,[ref('component_oo_out2'),ref('component_log_job2')])]" />-->
 		<!--		</record>-->
-		
-		
+
+
 <!--				SCHEDULER-->
-		
+
 	    <record forcecreate="True" id="ir_cron_scheduler_action" model="ir.cron">
             <field name="name">Run Job Process</field>
             <field eval="False" name="active"/>

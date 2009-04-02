@@ -46,7 +46,7 @@ class etl_component_facebook_in(osv.osv):
             if cmp.transformer_id:
                 trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
 
-            val =etl.component.input.facebook_in(conn_instance, 'component.input.facebook_in')
+            val =etl.component.input.facebook_in(conn_instance, 'get_friends','component.input.facebook_in')
         return val
 etl_component_facebook_in()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

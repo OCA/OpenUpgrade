@@ -61,8 +61,9 @@
          'etl_connector/openobject_connector_view.xml',
          'etl_connector/sql_connector_view.xml',
          'etl_connector/facebook_connector_view.xml',
+         'etl_demo.xml'
          ],
-     'demo_xml': ['etl_demo.xml'],
+     'demo_xml': [],#'etl_demo.xml'
     'installable': True,
     'active': False,
 }
