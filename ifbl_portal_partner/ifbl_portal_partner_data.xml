@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.rule.group" id="portal_partner_invoice_rule_group">
+            <field name="name">Portal Partner Invoice Rule</field>
+            <field name="model_id" search="[('model', '=', 'account.invoice')]" model="ir.model" />
+            <field name="global" eval="False" />
+        </record>
+
+        <record model="ir.rule" id="portal_partner_account_invoice">
+            <field name="field_id" search="[('model', '=', 'account.invoice'),('name', '=', 'partner_id')]" model="ir.model.fields" />
+            <field name="operator">=</field>
+            <field name="operand">user.address_id.partner_id.id</field>
+            <field name="rule_group" ref="portal_partner_invoice_rule_group"/>
+        </record>
+
+        <record model="portal.model" id="portal_model_invoice">
+            <field name="name">Invoices</field>
+            <field name="model_id" search="[('model', '=', 'account.invoice')]"/>
+            <field name="rule_group_id" ref="portal_partner_invoice_rule_group" />
+        </record>
+
+        <record model="ir.rule.group" id="portal_partner_subscription_rule_group">
+            <field name="name">Portal Partner Subscription Rule</field>
+            <field name="model_id" search="[('model', '=', 'training.subscription')]" model="ir.model" />
+            <field name="global" eval="False" />
+        </record>
+
+        <record model="ir.rule" id="portal_partner_subscription">
+            <field name="field_id" search="[('model', '=', 'training.subscription'),('name', '=', 'partner_id')]" model="ir.model.fields" />
+            <field name="operator">=</field>
+            <field name="operand">user.address_id.partner_id.id</field>
+            <field name="rule_group" ref="portal_partner_subscription_rule_group"/>
+        </record>
+
+        <record model="portal.model" id="portal_model_subscription">
+            <field name="name">Subscriptions</field>
+            <field name="model_id" search="[('model', '=', 'training.subscription')]"/>
+            <field name="rule_group_id" ref="portal_partner_subscription_rule_group" />
+        </record>
+
+        <record model="ir.rule.group" id="portal_partner_portal_subscription_rule_group">
+            <field name="name">Portal Partner Old Subscription</field>
+            <field name="model_id" search="[('model', '=', 'portal.training.subscription')]" model="ir.model" />
+            <field name="global" eval="False" />
+        </record>
+
+        <record model="ir.rule" id="portal_partner_portal_subscription">
+            <field name="field_id" search="[('model', '=', 'portal.training.subscription'),('name', '=', 'partner_id')]" model="ir.model.fields" />
+            <field name="operator">=</field>
+            <field name="operand">user.address_id.partner_id.id</field>
+            <field name="rule_group" ref="portal_partner_portal_subscription_rule_group"/>
+        </record>
+
+        <record model="portal.model" id="portal_model_portal_subscription">
+            <field name="name">Invoices</field>
+            <field name="model_id" search="[('model', '=', 'portal.training.subscription')]"/>
+            <field name="rule_group_id" ref="portal_partner_portal_subscription_rule_group" />
+        </record>
+
+
+        <record model="res.groups" id="res_groups_portal_partner">
+            <field name="name">Portal Partner Group</field>
+            <field name="rule_groups" eval="[(6, 0,
+                [ref('portal_partner_invoice_rule_group'),ref('portal_partner_subscription_rule_group'),ref('portal_partner_portal_subscription_rule_group')])]" />
+        </record>
+
+        <record model="ir.model.access" id="model_access_invoice">
+            <field name="name">Invoices</field>
+            <field name="perm_read">True</field>
+            <field name="group_id" ref="res_groups_portal_partner" />
+            <field name="model_id" search="[('model', '=', 'account.invoice')]" />
+        </record>
+
+        <record model="ir.model.access" id="model_access_subscription">
+            <field name="name">Subscriptions</field>
+            <field name="perm_read">True</field>
+            <field name="perm_create">True</field>
+            <field name="group_id" ref="res_groups_portal_partner" />
+            <field name="model_id" search="[('model', '=', 'training.subscription')]" />
+        </record>
+
+        <record model="ir.model.access" id="model_access_portal_subscription">
+            <field name="name">Portal Old Subscriptions</field>
+            <field name="perm_read">True</field>
+            <field name="group_id" ref="res_groups_portal_partner" />
+            <field name="model_id" search="[('model', '=', 'portal.training.subscription')]" />
+        </record>
+
+        <menuitem name="Partner Portal" id="menu_portal_partner" parent="portal.menu_portal_root" />
+        <menuitem name="Training" id="menu_portal_partner_training" parent="menu_portal_partner" />
+
+        <record model="ir.actions.act_window" id="portal_partner_subscription_all_act">
+            <field name="name">Subscriptions</field>
+            <field name="res_model">training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem
+            parent="menu_portal_partner_training"
+            id="portal_partner_subscription_all_mi"
+            action="portal_partner_subscription_all_act" />
+
+        <menuitem 
+            parent="portal_partner_subscription_all_mi"
+            id="portal_partner_subscription_new_mi"
+            action="training.training_subscription_new_act" />
+
+        <menuitem 
+            parent="menu_portal_partner_training"
+            id="portal_partner_subscription_mass_mi"
+            action="training.training_session_mass_subscription_act"/>
+
+        <record model="ir.ui.view" id="view_portal_partner_subscription_tree">
+            <field name="name">view.portal.partner.subscription.tree</field>
+            <field name="model">portal.training.subscription</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Element">
+                    <field name="date" />
+                    <field name="seance_id" />
+                    <field name="session_id" />
+                    <field name="contact_id" />
+                    <field name="examen" />
+                    <field name="note" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="portal_partner_subscription_act">
+            <field name="name">Old Subscriptions</field>
+            <field name="res_model">portal.training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Survey" id="portal_partner_survey_mi" parent="menu_portal_partner" />
+        <menuitem id="portal_partner_survey_old_subscription_mi" parent="portal_partner_survey_mi"
+            action="portal_partner_subscription_act" />
+
+        <menuitem 
+            name="Financial Management" 
+            id="portal_partner_financial_management_mi" 
+            parent="menu_portal_partner"/>
+        <menuitem 
+            id="portal_partner_financial_management_incoice_all_mi"
+            parent="portal_partner_financial_management_mi" 
+            action="account.action_invoice_tree1" />
+
+
+    </data>
+</openerp>
