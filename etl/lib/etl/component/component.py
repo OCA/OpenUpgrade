@@ -69,14 +69,14 @@ class component(signal):
         return True
 
 
-    def action_error(self, key, signal_data={}, data={}):            
+    def action_error(self, key, signal_data={}, data={}):                   
         self.logger.notifyChannel("component", logger.LOG_ERROR, 
-                     str(self)+' : '+data.get('error','False'))
+                     str(self)+' : '+signal_data.get('error','False'))
         #yield {'error_msg':'Error  :'+str(e), 'error_date':datetime.datetime.today()}, 'error'
         return True
 
-    def __init__(self, name='', transformer=None, *args, **argv):
-        super(component, self).__init__(*args, **argv)  
+    def __init__(self, name='', transformer=None):
+        super(component, self).__init__()  
         self._cache={} 
         self.name=name
         self.trans_in = []
@@ -92,6 +92,7 @@ class component(signal):
         self.signal_connect(self, 'no_input', self.action_no_input)
         self.signal_connect(self, 'stop', self.action_stop)
         self.signal_connect(self, 'end', self.action_end)
+        self.signal_connect(self, 'error', self.action_error)
 
     def __copy__(self):
         res=component(name=self.name,transformer=self.transformer)
@@ -112,7 +113,7 @@ class component(signal):
 
     def __str__(self):
         if not self.name:
-            self.name=''
+            self.name=''        
     	return '<Component : '+self.name+'>'
 
     def generator_get(self, transition):
@@ -161,7 +162,7 @@ class component(signal):
                     if (t == chan) or (not t) or (not chan):
                         self.data.setdefault(t2, [])
                         self.data[t2].append(data)   
-        except StopIteration, e:  
+        except StopIteration, e:              
             if trans:
                 trans.signal('end')  
             self.signal('end')
