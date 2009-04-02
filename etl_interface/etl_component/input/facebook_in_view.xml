@@ -18,6 +18,7 @@
 			<field name="arch" type="xml">
 				<notebook position='inside'>
 					<page string="Property" attrs="{'invisible':[('type_id','!=','input.facebook_in')]}">
+							<field name="connector_id" />
 							<field name="method" required="1"/>
 							<field name="domain" />
 						<separator string="Fields Mapping" colspan="4" />
