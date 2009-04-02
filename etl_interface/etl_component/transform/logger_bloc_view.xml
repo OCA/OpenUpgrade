@@ -14,7 +14,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
                 <notebook position='inside'>
-                   <page string="Property" attrs="{'invisible':[('type_id','!=','transform.logger_bloc')]}"
+                   <page string="Property" attrs="{'invisible':[('type_id','!=','transform.logger_bloc')]}">
    						<field name="output_id"  domain="[('type','=','localfile')]"/>
                   </page>
              </notebook>
