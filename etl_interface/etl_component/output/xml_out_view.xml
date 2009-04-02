@@ -2,8 +2,8 @@
 <openerp>
 	<data noupdate="1">
 		<record id="comp_input_xml_out" model="etl.component.type">
-			<field name="name">output.xml_out</field>
-			<field name="code">output.xml_out</field>
+			<field name="name">input.xml_out</field>
+			<field name="code">input.xml_out</field>
 		</record>
 	</data>
 
@@ -13,8 +13,9 @@
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
 			<field name="inherit_id" ref="etl_component_form"/>
+			<field name="arch" type="xml">
 					<notebook position='inside'>
-						<page string="Property" attrs="{'invisible':[('type_id','!=','output.xml_out')]}">
+						<page string="Property" attrs="{'invisible':[('type_id','!=','input.xml_out')]}">
 							<field name="connector_id" select="1" domain="[('type','=','localfile')]"/>
 							<field name="transformer_id" />
 							<field name="row_limit" />
