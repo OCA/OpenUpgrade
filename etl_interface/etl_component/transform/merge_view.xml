@@ -5,34 +5,10 @@
         <record id="comp_transform_schema_validation" model="etl.component.type">
 			<field name="name">transform.merge</field>
 			<field name="code">transform.merge</field>
-	</record>	
+	</record>
     </data>
 
 	<data>
-
-		<record id="etl_component_merge_form" model="ir.ui.view">
-			<field name="name">view.etl.component.merge.form</field>
-			<field name="model">etl.component</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Merge Component">
-					<field name="name" select="1" />
-					<field name="type_id" domain="[('name','=','transform.merge')]"/>
-					<notebook colspan="4" >
-						<page string="Transitions">
-							<separator string="Incomming Transitions"
-								colspan="4" />
-							<field name="trans_in_ids" nolabel="1"
-								colspan="4" readonly="1" />
-							<separator string="Outgoing Transitions"
-								colspan="4" />
-							<field name="trans_out_ids" nolabel="1"
-								colspan="4" readonly="1" />
-						</page>
-					</notebook>
-				</form>
-			</field>
-		</record>
 
 		<record id="action_etl_component_merge_tree"
 			model="ir.actions.act_window">
@@ -44,16 +20,16 @@
 		</record>
 
 
-		<record id="etl_component_merge_form"
+		<record id="etl_component_form"
 			model="ir.actions.act_window">
 			<field name="name">Merge</field>
 			<field name="res_model">etl.component</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','transform.merge')]</field>
-			<field name="view_id" ref="etl_component_merge_form" />
+			<field name="view_id" ref="etl_component_form" />
 		</record>
-		
+
 		<record id="action_etl_component_merge_view1"
 			model="ir.actions.act_window.view">
 			<field eval="1" name="sequence" />
@@ -61,12 +37,12 @@
 			<field name="view_id" ref="etl_component_tree" />
 			<field name="act_window_id" ref="action_etl_component_merge_tree" />
 		</record>
-		
+
 		<record id="action_etl_component_merge_view2"
 			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
 			<field name="view_mode">form</field>
-			<field name="view_id" ref="etl_component_merge_form" />
+			<field name="view_id" ref="etl_component_form" />
 			<field name="act_window_id" ref="action_etl_component_merge_tree" />
 		</record>
 
@@ -74,9 +50,9 @@
 		<menuitem name="Merge Process" parent="menu_etl_jd_c_pec_form"
 			action="action_etl_component_merge_tree"
 			id="menu_etl_jd_c_pec__mp_form" />
-		
+
 
 	</data>
 </openerp>
-	
+
 

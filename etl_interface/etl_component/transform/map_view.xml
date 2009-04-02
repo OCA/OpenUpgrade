@@ -11,18 +11,11 @@
 		<record id="etl_component_trans_map_form" model="ir.ui.view">
 			<field name="name">view.etl.component.transform.map.form</field>
 			<field name="model">etl.component</field>
+			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Map Component">
-					<group colspan="4">
-						<field name="name" select="1" />
-						<field name="type_id"
-							domain="[('name','=','transform.map')]" />
-						<field name="transformer_id" invisible="1"
-							colspan="4" />
-					</group>
-					<notebook colspan="4">
-						<page string="Property">
+					 <notebook position='inside'>
+						<page string="Property" attrs="{'invisible':[('type_id','!=','transform.map')]}">
 							<separator string="Fields Mapping" colspan="4" />
 							<field name="map_line_ids" nolabel="1" colspan="4" widget="one2many_list">
 								<tree string="Fields lines" editable="bottom">
@@ -47,18 +40,7 @@
 							<field name="preprocess" nolabel="1"
 								colspan="4" />
 						</page>
-						<page string="Transitions Detail">
-							<separator string="Incomming Transitions"
-								colspan="4" />
-							<field name="trans_in_ids" nolabel="1"
-								colspan="4" readonly="1" />
-							<separator string="Outgoing Transitions"
-								colspan="4" />
-							<field name="trans_out_ids" nolabel="1"
-								colspan="4" readonly="1" />
-						</page>
 					</notebook>
-				</form>
 			</field>
 		</record>
 

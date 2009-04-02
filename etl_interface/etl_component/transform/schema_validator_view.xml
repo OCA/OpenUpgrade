@@ -4,7 +4,7 @@
         <record id="comp_transform_schema_validation" model="etl.component.type">
 			<field name="name">schema.validation</field>
 			<field name="code">schema.validation</field>
-	</record>	
+	</record>
     </data>
 
 	<data>
@@ -12,13 +12,11 @@
 		<record id="etl_component_schema_validation_form" model="ir.ui.view">
 			<field name="name">view.etl.component.schema.validation.form</field>
 			<field name="model">etl.component</field>
+			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Schema Validation">
-					<field name="name" select="1" />
-					<field name="type_id"  domain="[('name','=','schema.validation')]"/>
-					<notebook colspan="4" >
-						<page string="Tests  to perform">
+					<notebook position='inside'>
+						<page string="Tests  to perform" attrs="{'invisible':[('type_id','!=','schema.validation')]}">
 							<field name="field_name" />
 							<field name="field_extra"/>
 							<field name="field_size"/>
@@ -26,18 +24,7 @@
 							<field name="not_null"/>
 							<field name="field_type" />
 						</page>
-						<page string="Transitions">
-							<separator string="Incomming Transitions"
-								colspan="4" />
-							<field name="trans_in_ids" nolabel="1"
-								colspan="4" readonly="1" />
-							<separator string="Outgoing Transitions"
-								colspan="4" />
-							<field name="trans_out_ids" nolabel="1"
-								colspan="4" readonly="1" />
-						</page>
 					</notebook>
-				</form>
 			</field>
 		</record>
 
@@ -58,7 +45,7 @@
 			<field name="domain">[('type_id.name','=','schema.validation')]</field>
 			<field name="view_id" ref="etl_component_schema_validation_form" />
 		</record>
-		
+
 		<record id="action_etl_component_schema_validation_view1"
 			model="ir.actions.act_window.view">
 			<field eval="1" name="sequence" />
@@ -66,7 +53,7 @@
 			<field name="view_id" ref="etl_component_tree" />
 			<field name="act_window_id" ref="action_etl_component_schema_validation_tree" />
 		</record>
-		
+
 		<record id="action_etl_component_schema_validation_view2"
 			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
@@ -74,12 +61,12 @@
 			<field name="view_id" ref="etl_component_schema_validation_form" />
 			<field name="act_window_id" ref="action_etl_component_schema_validation_tree" />
 		</record>
-		
+
 		<menuitem name="Schema Validation"
 			action="action_etl_component_schema_validation_tree"
 			parent="menu_etl_jd_c_pec_form" id="menu_etl_jd_c_pec__sv_form" />
 
 	</data>
 </openerp>
-	
+
 
