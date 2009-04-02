@@ -68,10 +68,10 @@
 			<field name="arch" type="xml">
 				<xpath expr="/form/notebook" position="inside">
 					<page string="Customization">
-						<field name="bom_customizations" widget="many2many">
+						<field name="bom_customization_keys" widget="many2many">
 							<tree string="BoM Customizations" editable="bottom">
-								<field name="customization_key_id"/>
-								<field name="customization_value_id"/>
+								<field name="group_id"/>
+								<field name="name"/>
 							</tree>
 						</field>
 					</page>

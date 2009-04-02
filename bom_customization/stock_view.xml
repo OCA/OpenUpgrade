@@ -10,7 +10,7 @@
 			<field name="arch" type="xml">
 			
 				<field name="state" position='after'>
-					<field name="list_customizations"/>
+					<field name="list_customizations" select='0'/>
 				</field>
 				
 			</field>
