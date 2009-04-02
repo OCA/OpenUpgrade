@@ -27,12 +27,13 @@
 <data noupdate="1">
 
 	<record model="res.groups" id="portal_customer_group">
-		<field name="name">Portal Customer group</field>
+		<field name="name">Portal Sale group</field>
 		<field name="rule_groups" eval="[(4,ref('sale_rule_group'))]"/>
+		<field name="menu_access" eval="[(6,0,[ref('menu_portal_customer_order'),ref('menu_portal_customer_order_sale')])]"/>
 	</record>
 	
 	<record model="portal.portal" id="portal_sale_customer">
-		<field name="name">Portal Customer Sale</field>
+		<field name="name">Portal Sale</field>
 		<field name="group_id" ref="portal_customer_group"/>
 		<field name="menu_id" ref="menu_portal_customer_order"/>
 		<field name="company_id" ref="base.main_company"/>
