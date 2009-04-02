@@ -64,10 +64,7 @@ class csv_in(component):
                     data=self.transformer.transform(data)
                 if data:
                     yield data,'main'
-
-        except StopIteration,e:
-            self.fileconnector.close(fp)
-            self.signal('end')
+            self.fileconnector.close(fp)        
         except TypeError,e:
             self.signal('error',{'data':self.data,'type':'exception','error':str(e)})            
         except IOError,e:
