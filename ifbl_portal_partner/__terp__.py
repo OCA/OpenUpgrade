@@ -33,6 +33,7 @@
     ],
     'init_xml' : [
         'ifbl_portal_partner_data.xml',
+        #'portal_menu_data.xml',
     ],
     'demo_xml' : [
     ],

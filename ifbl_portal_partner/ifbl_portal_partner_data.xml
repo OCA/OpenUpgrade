@@ -148,6 +148,18 @@
             parent="portal_partner_financial_management_mi" 
             action="account.action_invoice_tree1" />
 
-
+        <!--
+        <record id="action_menu_portal" model="ir.actions.act_window">
+            <field name="groups_id" eval="[(6, 0, [ref('res_groups_portal_partner')])]" />
+            <field name="domain" eval="[('parent_id', '=', ref('menu_portal_partner'))]" />
+            <field name="target">current</field>
+            <field name="view_type">tree</field>
+            <field name="res_model">ir.ui.menu</field>
+            <field name="view_id" ref="base.view_menu" />
+            <field name="name">Menu Partner Portal</field>
+            <field name="portal_visible">1</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        -->
     </data>
 </openerp>
