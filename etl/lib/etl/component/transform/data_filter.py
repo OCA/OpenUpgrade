@@ -74,5 +74,5 @@ class data_filter(component):
         """
         Overrides copy method
         """
-        res=data_filter(filter_criteria, self.name, self.transformer)
+        res=data_filter(self.filter_criteria, self.name, self.transformer)
         return res
