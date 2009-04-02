@@ -85,7 +85,7 @@ class component(signal):
         self.generator = None
         self.transformer=transformer
         self.logger = logger.logger()
-        
+        self.status = False
         self.signal_connect(self, 'start', self.action_start)
         self.signal_connect(self, 'start_input', self.action_start_input)
         self.signal_connect(self, 'start_output', self.action_start_output)
@@ -136,7 +136,9 @@ class component(signal):
         self._cache['start_input']={trans:False}        
         gen = self.generator_get(trans) or []  
         if trans:
+            trans.status='start'
             trans.signal('start')
+        self.status='start'
         self.signal('start')
         try: 
             while True:
@@ -164,7 +166,9 @@ class component(signal):
                         self.data[t2].append(data)   
         except StopIteration, e:              
             if trans:
-                trans.signal('end')  
+                trans.status='end'
+                trans.signal('end') 
+            self.status='end' 
             self.signal('end')
 
     def process(self):
