@@ -19,7 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 """
 To provide connectivity with OpenERP server 
 
@@ -29,10 +28,13 @@ GNU General Public License
 from etl.connector import connector
 
 class openobject_connector(connector):    
-    def __init__(self, uri, db, login, passwd, obj='/xmlrpc/object',con_type='xmlrpc'):
+    """
+    This is an ETL connector that use to provide connectivity with OpenERP server.
+    """    
+    def __init__(self, uri, db, login, passwd, obj='/xmlrpc/object',con_type='xmlrpc',name='openobject_connector'):
         """   
         Required Parameters ::
-        uri : URI path of OpenObject server with port
+        uri: URI path of OpenObject server with port
         db : OpenObject Database name
         login : User name to login into OpenObject Database
         passwd : Password of the user
@@ -40,7 +42,7 @@ class openobject_connector(connector):
         obj : object name
         con_type : Type of connection to OpenObject
         """
-        super(openobject_connector, self).__init__()
+        super(openobject_connector, self).__init__(name)
         self.db = db
         self.user_login = login
         self.obj = obj
@@ -102,7 +104,7 @@ class openobject_connector(connector):
         super(openobject_connector, self).execute()
         if not self.uid:
             raise Exception('Not login')        
-        if self.con_type=='xmlrpc':            
+        if self.con_type=='xmlrpc':        
             result = getattr(connector,method)(self.db,self.uid,self.passwd, *args)
             return self.__convert(result)
         elif self.con_type=='socket':            
@@ -122,10 +124,7 @@ class openobject_connector(connector):
         return True#connector.close()
     
     def __copy__(self): 
-        """
-        Overrides copy method
-        """
-        res=openobject_connector(self.uri, self.db, self.login, self.passwd, self.obj,self.con_type) 
+        res=openobject_connector(self.uri, self.db, self.login, self.passwd, self.obj,self.con_type,self.name)        
         res.uid=self.uid 
         return res
 
