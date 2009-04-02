@@ -753,8 +753,9 @@ class training_participation_skateholder(osv.osv):
     _name = 'training.participation.skateholder'
 
     _columns = {
-        'seance_id' : fields.many2one('training.seance', 'Seance', required=True),
-        'skateholder_id' : fields.many2one('res.partner.contact', 'Contact', required=True),
+        'seance_id' : fields.many2one('training.seance', 'Seance'),
+        'partner_id' : fields.many2one('res.partner', 'Partner'),
+        'skateholder_id' : fields.many2one('res.partner.contact', 'Contact'),
         'evaluation' : fields.integer('Evaluation'),
     }
 

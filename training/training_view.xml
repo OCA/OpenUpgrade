@@ -1115,6 +1115,7 @@
             id="training_subscription_management_subscription_mass_mi" 
             parent="training_subscription_management_mi" 
             action="training_session_mass_subscription_act" />
+
     </data>
 
     <data>
@@ -1159,28 +1160,51 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <menuitem name="Participation" id="training_participation_mi" parent="training_mi" />
         <menuitem 
-            id="training_participation_mi"
+            id="training_participation_all_mi"
             action="action_training_participation_all"
-            parent="training_subscription_management_mi" />
+            parent="training_participation_mi" />
 
-        
-    
-    </data>
-    <data>
-        <!--
-        <record model="ir.ui.view" id="">
-            <field name="name"></field>
+        <record model="ir.ui.view" id="view_training_participation_skateholder_form">
+            <field name="name">training.participation.skateholder.form</field>
             <field name="model">training.participation.skateholder</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Participation">
-                    <separator string="Participation Description" />
-                    <field name="seance_id" />
+                    <separator string="Participation Description" colspan="4"/>
                     <field name="skateholder_id" />
+                    <field name="partner_id" />
+                    <field name="seance_id" />
+                    <field name="evaluation" />
                 </form>
             </field>
         </record>
-        -->
+
+        <record model="ir.ui.view" id="view_training_participation_skateholder_tree">
+            <field name="name">training.participation.skateholder.tree</field>
+            <field name="model">training.participation.skateholder</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Participation">
+                    <field name="skateholder_id" />
+                    <field name="partner_id" />
+                    <field name="seance_id" />
+                    <field name="evaluation" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_training_participation_skateholder_all">
+            <field name="name">Evaluation Form</field>
+            <field name="res_model">training.participation.skateholder</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <menuitem action="action_training_participation_skateholder_all"
+            id="training_participation_skateholder_mi"
+            parent="training_participation_mi" />
     </data>
 </openerp>
