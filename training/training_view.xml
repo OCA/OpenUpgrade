@@ -567,15 +567,23 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Seance">
-                    <separator string="Seance Description" colspan="4" />
-                    <field name="name" />
-                    <field name="course_id" />
-                    <field name="date" />
-                    <field name="duration" widget="float_time" />
-                    <field name="user_id" />
-                    <separator string="Limits" colspan="4" />
-                    <field name="min_limit" />
-                    <field name="max_limit" />
+                    <group colspan="4" col="4">
+                        <separator string="Seance Description" colspan="4" />
+                        <field name="name" />
+                        <field name="course_id" />
+                        <field name="date" />
+                        <field name="duration" widget="float_time" />
+                        <field name="user_id" />
+                    </group>
+                    <group col="2" colspan="2">
+                        <separator string="Limits" colspan="2" />
+                        <field name="min_limit" />
+                        <field name="max_limit" />
+                    </group>
+                    <group col="2" colspan="2">
+                        <separator string="Presence Form" colspan="2"/>
+                        <field name="presence_form" />
+                    </group>
                     <notebook colspan="4">
                         <page string="General">
                             <!--<field name="limit" />-->
@@ -647,7 +655,7 @@
                     <field name="date" />
                     <field name="duration" widget="float_time" />
                     <field name="state" />
-                    <!--<field name="session_ids" />-->
+                    <field name="presence_form" />
                 </tree>
             </field>
         </record>

@@ -593,6 +593,7 @@ class training_seance(osv.osv):
         'user_id' : fields.many2one('res.users', 'Responsible', required=True),
         'nbr_place_dispo' : fields.integer('Available Places'),
         'nbr_place_draft' : fields.integer('Draft Places'),
+        'presence_form' : fields.boolean('Presence Form'),
     }
 
     def on_change_course_id(self, cr, uid, course_id):
@@ -621,6 +622,7 @@ class training_seance(osv.osv):
         'evaluation' : lambda *a: 0,
         'invoice' : lambda *a: 0,
         'user_id' : lambda obj,cr,uid,context: uid, 
+        'presence_form' : lambda *a: 0,
     }
 
     def action_validate(self, cr, uid, ids, context=None):
