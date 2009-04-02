@@ -39,12 +39,12 @@ def generate_reports(cr,uid,obj,report_type,context):
                 srv = netsvc.LocalService('report.'+report.report_name)
                 context['customer_id'] = customer_id
                 context['document_id'] = document_id[0]
-                pdf,pdftype = srv.create(cr, uid, [], {},context)
+                report_data,report_type = srv.create(cr, uid, [], {},context)
                 attach_vals={'name' : document_name+ "_" +str(obj.customer_id.id),
-                             'datas_fname' : 'report.'+report.report_name+pdftype ,
+                             'datas_fname' : 'report.'+report.report_name+'.'+report_type ,
                              'res_model' : 'dm.campaign.document',
                              'res_id' : camp_doc,
-                             'datas': base64.encodestring(pdf),
+                             'datas': base64.encodestring(report_data),
                              }
                 attachment_obj.create(cr,uid,attach_vals)
     return True
@@ -117,11 +117,15 @@ class offer_document(rml_parse):
             customer_id = self.datas['form']['customer_id']
             document_id = self.ids[0]
         values = generate_plugin_value(self.cr,self.uid,document_id,customer_id)
-        print values
         return [values]
 
 from report.report_sxw import report_sxw
 
+#class my_report_sxw(report_sxw):
+#    print "Tessssssssssssssssssssssss"
+#    def create_single(self, cr, uid, ids, data, report_xml, context={}):
+#        print "----------------------------my method"
+#        report_sxw.create_single(self, cr, uid, ids, data, report_xml, context)
 
 def my_register_all(db,report=False):
     opj = os.path.join

@@ -20,12 +20,10 @@
 #
 ##############################################################################
 """
-sql_in
+  To read data from sql db.
 
-* Use to read data from sql db.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -44,7 +42,7 @@ class sql_in(component):
         * .* : return the main flow with data from csv file
     """
 
-    def __init__(self,sqlconnector,sqlquery,name='component.input.sql_in',transformer=None,row_limit=0):
+    def __init__(self, sqlconnector, sqlquery, name='component.input.sql_in', transformer=None, row_limit=0):
 
 	""" 
 	Parameters
@@ -53,21 +51,22 @@ class sql_in(component):
 	transformer  :  Provides transformer object to transform string data into  particular object
 	row_limit    :  Limited records send to destination if row limit specified. If row limit is 0,all records are send.
 	"""
-        super(sql_in, self).__init__(name,transformer=transformer)
+        super(sql_in, self).__init__(name, transformer=transformer)
 
         self.sqlconnector = sqlconnector
         self.sqlquery=sqlquery
         self.row_limit=row_limit
         self.row_count=0
+        self.name = name
 
 
-    def action_start(self,key,signal_data={},data={}):
-        super(sql_in, self).action_start(key,signal_data,data)
+    def action_start(self, key, signal_data={}, data={}):
+        super(sql_in, self).action_start(key, signal_data, data)
         self.connector=self.sqlconnector.open()
 
 
-    def action_end(self,key,signal_data={},data={}):
-        super(sql_in, self).action_end(key,signal_data,data)
+    def action_end(self, key, signal_data={}, data={}):
+        super(sql_in, self).action_end(key, signal_data, data)
         self.sqlconnector.close()
 
     def process(self):
@@ -89,9 +88,15 @@ class sql_in(component):
                 if self.transformer:
                     d=self.transformer.transform(d)
                 if d:
-                    yield d,'main'
-        except TypeError,e:
+                    yield d, 'main'
+        except TypeError, e:
             self.action_error(e)
-
-
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=sql_in(self.sqlconnector, self.sqlquery, self.name, self.transformer, self.row_limit)
+        return res
+    
 

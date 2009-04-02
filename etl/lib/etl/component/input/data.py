@@ -20,7 +20,10 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to read data from csv file.
+ This component is used to read data.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 
@@ -33,11 +36,19 @@ class data(component):
         This is an ETL Component that return python data from a list of dict
     """
 
-    def __init__(self,datas,name='component.input.data',transformer=None):
-        super(data, self).__init__(name=name,transformer=transformer)
+    def __init__(self, datas, name='component.input.data', transformer=None):
+        super(data, self).__init__(name=name, transformer=transformer)
         self.datas = datas
+        self.name = name
+        self.transformer = transformer
 
     def process(self):
         for d in self.datas:
-            yield d,'main'
-
+            yield d, 'main'
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=data(self.datas, self.name, self.transformer)
+        return res

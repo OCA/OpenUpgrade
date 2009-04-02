@@ -20,12 +20,10 @@
 #
 ##############################################################################
 """
-unique :
+  To perform unique operation.
 
-*  use to perform unique operation.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -59,7 +57,13 @@ class unique(component):
                        unique_datas.append(d)
         for d in unique_datas:
             yield d, "main"
-        
+             
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=sort(self.name)
+        return res   
 
 
 def test():                           

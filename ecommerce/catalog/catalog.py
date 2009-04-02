@@ -41,12 +41,12 @@ class ecommerce_search(osv.osv):
     _name = "ecommerce.search"
     _description = "search parameters"
     _columns = {
-        'name': fields.char('Search Parameter Name', size=56, required= True),
-        'code': fields.char('Search Parameter Code', size=28, required=True)
+        'name': fields.char('Name', size=56, required= True, help="Search parameter name which you want to display at website"),
+        'code': fields.many2one('ir.model.fields','Product fields', required=True, domain=[('model','=','product.template')])
     }
           
     def searchproducts(self, cr, uid, search_code):
-        
+
         prd_ids = []
         final_list = []
         send_ids = []
@@ -66,7 +66,7 @@ class ecommerce_search(osv.osv):
                     prd_ids.extend(ids)
         for item in prd_ids:
             if not item in send_ids:
-                send_ids.append(item)   
+                send_ids.append(item) 
         return send_ids
     
 ecommerce_search()

@@ -21,8 +21,10 @@
 ##############################################################################
 
 """ 
+ To  provide internal logging system.
 
-    The module provides internal logging system.
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 
 """
 import logging

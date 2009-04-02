@@ -17,18 +17,4 @@
 			<field eval="0" name="interactive"/>
 		</record>
 	</data>
-	<data noupdate="1">
-		<record id="dm_offer_document_phonedocumentforondemand0" model="dm.offer.document">
-			<field name="copywriter_id" ref="base.main_partner"/>
-			<field eval="&quot;&quot;&quot;Phone Document for OnDemand-10&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm.dm_ddf_plugin_code0'),ref('dm.dm_ddf_plugin_language0')])]" name="document_template_plugin_ids"/>
-			<field name="lang_id" ref="base.lang_en"/>
-			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
-			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-			<field eval="&quot;&quot;&quot;phone_ondemand10&quot;&quot;&quot;" name="code"/>
-			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
-			<field name="step_id" ref="dm_offer_step_phoneintermediatemailingofferforanondemandoffer0"/>
-			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
-		</record>
-	</data>
 </openerp>

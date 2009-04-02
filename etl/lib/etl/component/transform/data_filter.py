@@ -31,22 +31,23 @@ class data_filter(component):
         Data filter component
     """   
 
-    def __init__(self,filter_criteria,name='component.transfer.data_filter',transformer=None):
+    def __init__(self, filter_criteria, name='component.transfer.data_filter', transformer=None):
 
         """ 
         Parameters ::
-
         transformer      :  provides transformer object to transform string data into  particular object
         filter_crtiteria :  TODO
         """
-        super(data_filter, self).__init__(name,transformer=transformer)         
+        super(data_filter, self).__init__(name, transformer=transformer)         
         self.filter_criteria = filter_criteria          
+        self.transformer = transformer
+        self.name = name
 
     def process(self):  
         #TODO : proper handle exception. not use generic Exception class      
         datas = []  
         
-        for channel,trans in self.input_get().items():
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     try:
@@ -55,10 +56,10 @@ class data_filter(component):
                         filter=''
                         for filter_data in self.filter_criteria: 
                              val = d[filter_data['name']]                                                                                                             
-                             _filter = filter_data.get('filter',False)                             
+                             _filter = filter_data.get('filter', False)                             
                              if val and _filter:
                                  val=eval((_filter) % d)                                
-                             filter += " %s %s %s %s" % (repr(val),filter_data['operator'],filter_data['operand'],filter_data.get('condition',''))
+                             filter += " %s %s %s %s" % (repr(val), filter_data['operator'], filter_data['operand'], filter_data.get('condition', ''))
                         
                         if self.transformer:
                             d=self.transformer.transform(d)
@@ -66,5 +67,12 @@ class data_filter(component):
                            yield d, 'main'
                         else:
                            yield d, 'invalid'
-                    except NameError,e:                          
+                    except NameError, e:                          
                         self.action_error(e)
+
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=data_filter(filter_criteria, self.name, self.transformer)
+        return res

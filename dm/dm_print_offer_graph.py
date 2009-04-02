@@ -72,7 +72,8 @@ def graph_get(cr, uid, graph, offer_id):
 #        media_code = media_trans[step.media_id.id] or step.media_id.code
 
 #        args['label'] = type_code + '\\n' + media_code
-        args['label'] = translate_accent(type_code + str(type_seq[step.type_id.code]) +'\\n' + step.media_id.code)
+#        args['label'] = translate_accent(type_code + str(type_seq[step.type_id.code]) +'\\n' + step.media_id.code)
+        args['label'] = translate_accent(type_code + str(step.seq) +'\\n' + step.media_id.code)
         type_seq[step.type_id.code] = type_seq[step.type_id.code] +1
         graph.add_node(pydot.Node(step.id, **args))
 

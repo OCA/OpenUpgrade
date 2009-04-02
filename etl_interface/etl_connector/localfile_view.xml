@@ -12,21 +12,14 @@
 			<field name="name">etl.connector.localfile.form</field>
 			<field name="model">etl.connector</field>
 			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_connector_basic_form"/>
 			<field name="arch" type="xml">
-				<form string="Localfile Connector">
-					<group colspan="4">
-						<field name="name" select="1" />
-						<field name="type" invisible="1"
-							domain="[('type','=','localfile')]"
-							on_change="onchange_type(type)" />
-					</group>
-					<notebook colspan="4">
-						<page string="Property">
-							<field name="uri" select="1" required="1" />
-							<field name="bufsize" required="1" />
-						</page>
-					</notebook>
-				</form>
+				<notebook position='inside'>
+					<page string="Property" attrs="{'invisible':[('type','!=','localfile')]}">
+						<field name="uri" required="1" select="1"/>
+						<field name="bufsize" required="1"/>
+					</page>
+				</notebook>
 			</field>
 		</record>
 

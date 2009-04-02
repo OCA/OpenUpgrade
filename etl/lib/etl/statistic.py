@@ -19,9 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-""" ETL Process.
+""" 
+  Provides statistic info of ETL process.
 
-    The module provides statistic info of ETL process.
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>)
+ GNU General Public License
 
 """
 import datetime

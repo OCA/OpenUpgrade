@@ -80,6 +80,7 @@ crm_case()
 class account_analytic_line_package(osv.osv):
     _name = "account.analytic.line.package"
     _auto = False
+    _order = 'date desc'
     def init(self, cr):
         cr.execute("""
             CREATE OR REPLACE VIEW account_analytic_line_package AS (

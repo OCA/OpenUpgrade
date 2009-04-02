@@ -54,6 +54,9 @@
 						<field name="type" select="1"
 							on_change="onchange_type(type)" />
 					</group>
+					<notebook colspan="4">
+						<page string="Property"  attrs="{'invisible':[('type','!=',False)]}"/>
+                    </notebook>
 				</form>
 			</field>
 		</record>

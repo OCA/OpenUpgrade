@@ -21,11 +21,10 @@
 ##############################################################################
 
 """
-vcard_in
-* use to import data from vcard
+  To import data from vcard
 
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License 
+  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+  GNU General Public License
 """
 
 from etl.component import component
@@ -38,7 +37,6 @@ class vcard_in(component):
 
 	"""
 	Parameters ::
-
 	fileconnector : It is a required field and it provides  local file connector to connect with file.
 	"""
 
@@ -46,6 +44,7 @@ class vcard_in(component):
         self.fileconnector = fileconnector
         self.fp=None
         self.reader=None
+        self.name = name
 
     def action_start(self,key,singal_data={},data={}):
         import vobject
@@ -77,3 +76,9 @@ class vcard_in(component):
             self.action_error(e) 
 
 
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=vcard_in(self.fileconnector, self.name)
+        return res

@@ -20,12 +20,10 @@
 #
 ##############################################################################
 """
-logger_bloc
+  To display log detail in end of process.
 
-*  use to display log detail in end of process.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -57,3 +55,12 @@ class logger_bloc(component):
         for d in datas:
             self.output.write('\tBloc Log '+self.name+str(d)+'\n')
             yield d, 'main'
+        
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=logger_bloc(self.name, self.output)
+        return res
+    

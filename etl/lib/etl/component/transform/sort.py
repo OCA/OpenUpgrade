@@ -20,12 +20,10 @@
 #
 ##############################################################################
 """
-sort
+ To perform sort operation.
 
-* use to perform sort operation.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -45,7 +43,6 @@ class sort(component):
     def __init__(self, fieldname,name='component.process.sort'):
         """ 
         Parameters ::
-
         fieldname : specifies the fieldname according to which sorting process will be done
         """
 
@@ -63,7 +60,14 @@ class sort(component):
         datas.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
         for d in datas:
             yield d, 'main'
-
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=sort(self.fieldname, self.name)
+        return res
+    
 
 
 def test():

@@ -20,12 +20,10 @@
 #
 ##############################################################################
 """
-logger
+ To display log detail in streamline.
 
-* use to display log detail in streamline.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -55,3 +53,11 @@ class logger(component):
                     yield d, 'main'
         super(logger, self).process()
 
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=logger(self.name, self.output)
+        return res
+    

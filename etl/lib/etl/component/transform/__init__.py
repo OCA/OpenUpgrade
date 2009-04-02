@@ -21,11 +21,10 @@
 ##############################################################################
 
 """
-ETL Transformer:
-* It transform string data into perticular type.
+ To transform string data into particular type.
 
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License
 """
 from diff import diff
 from sort import sort

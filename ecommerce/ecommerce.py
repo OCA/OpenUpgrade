@@ -65,7 +65,7 @@ class ecommerce_payment(osv.osv):
         'state_id': fields.many2one('res.country.state', 'State',
                                     required=False),
         'country_id': fields.many2one('res.country', 'Country', required=False),
-        'biz_account': fields.char('Your Business E-mail Id', required=False, 
+        'biz_account': fields.char('Business E-mail Id', required=False, 
                                    size=128, help="Paypal business account Id."),
         'return_url': fields.char('Return URL', required=False, size=128,
                                    help="Return url which is set at the paypal account."),

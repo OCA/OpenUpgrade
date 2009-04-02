@@ -21,13 +21,10 @@
 ##############################################################################
 
 """
-ETL Input Components:
-====================
-* Use to extract data from the source systems.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
-
+  To extract data from the source systems.
+  
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License
 """
 from data import data
 from csv_in import csv_in

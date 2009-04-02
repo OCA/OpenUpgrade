@@ -631,14 +631,15 @@ class dm_campaign(osv.osv):
         mail_service_obj = self.pool.get('dm.mail_service')
         for step_id in data_cam.offer_id.step_ids :
             mail_service_id = mail_service_obj.search(cr,uid,[('media_id','=',step_id.media_id.id),('default_for_media','=',True)])
-            mail_service = mail_service_obj.browse(cr,uid,mail_service_id)[0]
-            mail_vals = {
-                         'campaign_id'      : id_camp,
-                         'offer_step_id'    : step_id.id,
-                         'mail_service_id'  : mail_service.id,
-#                         'action_id'        : mail_service.action_id.id
-                         }        
-            self.pool.get('dm.campaign.mail_service').create(cr,uid,mail_vals)           
+            mail_service = mail_service_obj.browse(cr,uid,mail_service_id)
+            for mail in mail_service:
+                mail_vals = {
+                             'campaign_id'      : id_camp,
+                             'offer_step_id'    : step_id.id,
+                             'mail_service_id'  : mail.id,
+    #                         'action_id'        : mail_service.action_id.id
+                             }
+                self.pool.get('dm.campaign.mail_service').create(cr,uid,mail_vals)           
         # In campaign, if no forwarding_charge is given, it gets the 'forwarding_charge' from offer
         write_vals = {}
 #        if not data_cam.forwarding_charge:
@@ -1014,6 +1015,7 @@ class dm_customers_file(osv.osv):
         'code' : fields.char('Code', size=16, required=True),
         'customers_list_id' : fields.many2one('dm.customers_list', 'Customers List'),
         'delivery_date' : fields.date('Delivery Date'),
+        'address_ids' : fields.many2many('res.partner.address','dm_cust_file_address_rel','cust_file_id','address_id','Customers File Addresses'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'customers_file_id', 'Segments', readonly=True),
     }
 dm_customers_file()

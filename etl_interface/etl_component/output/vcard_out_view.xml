@@ -6,21 +6,21 @@
 			<field name="code">input.vcard_out</field>
 		</record>
     </data>
-	<data>	
-		
+	<data>
+
 		<record id="etl_component_vcard_out_form" model="ir.ui.view">
 			<field name="name">view.etl.component.vcard.in.form</field>
-			<field name="model">etl.component</field>			
+			<field name="model">etl.component</field>
 			<field name="arch" type="xml">
                 <form string="Vcard Out Component">
                     <group colspan="4">
 					    <field name="name" select="1" />
 					    <field name="type_id" domain="[('name','=','input.vcard_out')]"/>
                         <field name="transformer_id" colspan="4"/>
-                    </group>                    
-                    <notebook colspan="4">                        
+                    </group>
+                    <notebook colspan="4">
                         <page string="Property">
-                            <field name="connector_id" domain="[('type','=','localfile')]" />	    					   
+                            <field name="connector_id" domain="[('type','=','localfile')]" />
                         </page>
                         <page string="Transitions Detail">
 					        <separator string="Incomming Transitions" colspan="4" />
@@ -29,8 +29,8 @@
 					        <field name="trans_out_ids" nolabel="1" colspan="4" readonly="1" />
                         </page>
                     </notebook>
-				</form>								
-				
+				</form>
+
 			</field>
 		</record>
 
@@ -56,7 +56,7 @@
 			<field name="view_id" ref="etl_interface.etl_component_tree" />
 			<field name="act_window_id" ref="action_etl_component_vcard_out_tree" />
 		</record>
-		
+
 		<record id="action_etl_component_vcard_out_view2"
 			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
@@ -65,11 +65,11 @@
 			<field name="act_window_id" ref="action_etl_component_vcard_out_tree" />
 		</record>
 
-		<menuitem name="VCard Data Output"
+		<menuitem name="VCard"
 			action="action_etl_component_vcard_out_tree"
 			parent="etl_interface.menu_etl_jd_c_oc_form" id="menu_etl_vcard_out_tree" />
 
-        
+
 
 
 

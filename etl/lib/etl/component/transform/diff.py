@@ -20,12 +20,10 @@
 #
 ##############################################################################
 """
-diff
+   Used to find difference between Data.
 
-*  use to find diff.
-
-: Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-: GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -53,6 +51,7 @@ class diff(component):
         self.row = {}
         self.diff = []
         self.same = []
+        self.name = name
         super(diff, self).__init__(name)
 
     # Return the key of a row
@@ -91,6 +90,14 @@ class diff(component):
                 yield v,channel
 
 
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=diff(self.key, self.name)
+        return res
+    
+    
 def test():                      
     from etl_test import etl_test
     from etl import transformer
