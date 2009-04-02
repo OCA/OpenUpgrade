@@ -2,7 +2,7 @@
 <openerp>
 <data>
 
-    <menuitem name="Offer Steps" id="menu_dm_config_offer_steps" parent="dm.menu_dm_config" sequence="3"/>
+    <menuitem name="Offer Steps" id="menu_dm_config_offer_offer_steps" parent="dm.menu_dm_config_offer" sequence="3"/>
 
     <!--
     =======================================================
@@ -48,7 +48,7 @@
         <field name="view_id" ref="view_offer_step_type_tree"/>
     </record>
 
-    <menuitem id="menu_action_step_type_form" parent="dm.menu_dm_config_offer_steps" action="action_step_type_form" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager,res_groups_offermanager"/>
+    <menuitem id="menu_action_step_type_form" parent="dm.menu_dm_config_offer_offer_steps" action="action_step_type_form" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager,res_groups_offermanager"/>
 
     <!--
     =======================================================
@@ -186,7 +186,7 @@
         <field name="view_id" ref="view_offer_step_tree"/>
     </record>
 
-    <menuitem id="menu_action_offer_step_form" parent="dm.menu_dm_config_offer_steps" action="action_offer_step_form"/>
+    <menuitem id="menu_action_offer_step_form" parent="dm.menu_dm_config_offer_offer_steps" action="action_offer_step_form"/>
 
     <!--
         =======================================================
@@ -226,7 +226,7 @@
                 <field name="view_type">form</field>
                 <field name="view_id" ref="view_offer_step_transition_trigger_tree"/>
         </record>
-        <menuitem parent="dm.menu_dm_config_offer_steps" id="menu_offer_step_transition_trigger" action="action_offer_step_transition_trigger"/>
+        <menuitem parent="dm.menu_dm_config_offer_offer_steps" id="menu_offer_step_transition_trigger" action="action_offer_step_transition_trigger"/>
 
 
     <!--
@@ -273,7 +273,7 @@
         <field name="view_id" ref="view_offer_step_manufacturing_constraint_tree"/>
     </record>
 
-    <menuitem id="menu_action_step_manufacturing_constraint_form" parent="dm.menu_dm_config_offer_steps" action="action_step_manufacturing_constraint_form" groups="res_groups_offeradmin,res_groups_campaignadmin"/>
+    <menuitem id="menu_action_step_manufacturing_constraint_form" parent="dm.menu_dm_config_offer_offer_steps" action="action_step_manufacturing_constraint_form" groups="res_groups_offeradmin,res_groups_campaignadmin"/>
 -->
 
     <!--
@@ -314,7 +314,7 @@
         <field name="view_id" ref="view_dm_media_tree"/>
     </record>
 
-    <menuitem id="menu_action_dm_media_form" parent="dm.menu_dm_config_offer_steps" action="action_dm_media_form" sequence="2" />
+    <menuitem id="menu_action_dm_media_form" parent="dm.menu_dm_config_offer_offer_steps" action="action_dm_media_form" sequence="2" />
 
     <!--
     =======================================================
@@ -521,7 +521,7 @@
         <field name="view_id" ref="view_dm_offer_step_action_tree"/>
     </record>
 
-<menuitem id="menu_action_dm_offer_step_action_form" parent="dm.menu_dm_config_offer_steps" action="action_dm_offer_step_action_form" sequence="2" />
+<menuitem id="menu_action_dm_offer_step_action_form" parent="dm.menu_dm_config_offer_offer_steps" action="action_dm_offer_step_action_form" sequence="2" />
 
 
 </data>

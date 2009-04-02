@@ -933,4 +933,17 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="args" eval="'()'"/>
         </record>
     </data>
+    <data>
+        <record id="dm_customers_file_source_address" model="dm.customers_file.source">
+            <field eval="&quot;&quot;&quot;Partner Addresses&quot;&quot;&quot;" name="name"/>
+             <field eval="&quot;&quot;&quot;partner_addresses&quot;&quot;&quot;" name="code"/>
+        </record>
+    </data>
+    <data>
+        <record id="dm_customers_file_source_etls" model="dm.customers_file.source">
+            <field eval="&quot;&quot;&quot;ETLS&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;etls&quot;&quot;&quot;" name="code"/>
+        </record>
+    </data>
+
 </openerp>

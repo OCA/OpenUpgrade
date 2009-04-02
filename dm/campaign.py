@@ -1007,6 +1007,17 @@ class dm_customers_list(osv.osv):
     }
 dm_customers_list()
 
+class dm_customers_file_source(osv.osv):
+    _name = "dm.customers_file.source"
+    _description = "Customer File Source"
+    _columns = {
+            'name' : fields.char('Name', size=64 ,required=True),
+            'code' : fields.char('code', size=64 ,required=True),
+            'desc' : fields.text('Description'),
+            }
+dm_customers_file_source()
+
+
 class dm_customers_file(osv.osv):
     _name = "dm.customers_file"
     _description = "A File of addresses delivered by an addresses broker"
@@ -1017,6 +1028,7 @@ class dm_customers_file(osv.osv):
         'delivery_date' : fields.date('Delivery Date'),
         'address_ids' : fields.many2many('res.partner.address','dm_cust_file_address_rel','cust_file_id','address_id','Customers File Addresses'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'customers_file_id', 'Segments', readonly=True),
+        'source_id' :fields.many2one('dm.customers_file.source', 'Customers File Source'),
     }
 dm_customers_file()
 
