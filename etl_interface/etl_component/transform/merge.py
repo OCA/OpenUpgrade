@@ -28,6 +28,7 @@ from osv import osv, fields
 class etl_component_merge(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'
-    
 
 etl_component_merge()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

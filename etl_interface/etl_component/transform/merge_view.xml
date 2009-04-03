@@ -5,11 +5,10 @@
         <record id="comp_transform_schema_validation" model="etl.component.type">
 			<field name="name">transform.merge</field>
 			<field name="code">transform.merge</field>
-	</record>
+		</record>
     </data>
 
 	<data>
-
 		<record id="action_etl_component_merge_tree"
 			model="ir.actions.act_window">
 			<field name="name">Merge</field>
@@ -46,13 +45,9 @@
 			<field name="act_window_id" ref="action_etl_component_merge_tree" />
 		</record>
 
-
 		<menuitem name="Merge Process" parent="menu_etl_jd_c_pec_form"
 			action="action_etl_component_merge_tree"
 			id="menu_etl_jd_c_pec__mp_form" />
 
-
 	</data>
 </openerp>
-
-

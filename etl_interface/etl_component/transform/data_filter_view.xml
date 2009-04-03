@@ -7,7 +7,7 @@
 	</record>
     </data>
 
-<data>
+	<data>
 		<record id="etl_transform_filter_form" model="ir.ui.view">
 			<field name="name">etl.component.filter.form</field>
 			<field name="model">etl.component</field>
@@ -36,8 +36,6 @@
 				</notebook>
 			</field>
 		</record>
-
-
 
 	<record id="action_etl_component_filter_tree" model="ir.actions.act_window">
             <field name="name">Filter component</field>
@@ -71,7 +69,5 @@
 
 	<menuitem name="Filter in Transform" action="action_etl_component_filter_tree" parent="etl_interface.menu_etl_jd_c_pec_form" id="menu_etl_jd_c_ic_filter_form" />
 
-
 	</data>
 </openerp>
-

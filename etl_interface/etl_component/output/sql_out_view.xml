@@ -7,7 +7,6 @@
 		</record>
 	</data>
 	<data>
-
 		<record id="etl_component_sql_out_form" model="ir.ui.view">
 			<field name="name">etl.component.sql.out.form</field>
 			<field name="model">etl.component</field>
@@ -50,6 +49,7 @@
 			<field name="act_window_id"
 				ref="action_etl_component_sql_out_tree" />
 		</record>
+
 		<record id="action_etl_component_sql_out_view2"
 			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
@@ -59,7 +59,6 @@
 				ref="action_etl_component_sql_out_tree" />
 		</record>
 
-
 		<menuitem name="SQL"
 			parent="etl_interface.menu_etl_jd_c_oc_form"
 			action="action_etl_component_sql_out_tree"
@@ -67,4 +66,3 @@
 
 	</data>
 </openerp>
-

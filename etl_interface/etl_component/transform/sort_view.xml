@@ -7,7 +7,6 @@
 		</record>
 	</data>
 	<data>
-
 		<record id="etl_component_sort_form" model="ir.ui.view">
 			<field name="name">etl.component.sort.form</field>
 			<field name="model">etl.component</field>
@@ -63,12 +62,9 @@
 				ref="action_etl_component_sort_tree" />
 		</record>
 
-
 		<menuitem name="Sort process"
 			parent="etl_interface.menu_etl_jd_c_pec_form"
 			action="action_etl_component_sort_tree"
 			id="menu_etl_jd_c_pec__sort_form" />
-
 	</data>
 </openerp>
-

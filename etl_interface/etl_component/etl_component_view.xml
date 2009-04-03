@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 	<data>
-
 		<record id="view_etl_component_type_form" model="ir.ui.view">
 			<field name="name">view.etl.component.type.form</field>
 			<field name="model">etl.component.type</field>
@@ -15,7 +14,6 @@
 			</field>
 		</record>
 
-
 		<record id="view_etl_component_type_tree" model="ir.ui.view">
 			<field name="name">view.etl.component.type.tree</field>
 			<field name="model">etl.component.type</field>
@@ -24,11 +22,10 @@
 				<tree string="Component Type">
 					<field name="name" />
 					<field name="code" />
-                    
+
 				</tree>
 			</field>
 		</record>
-
 
 		<record id="action_etl_component_type_tree"
 			model="ir.actions.act_window">
@@ -38,7 +35,6 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_etl_component_type_tree" />
 		</record>
-
 
 		<!--
 			<menuitem name="Component types"
@@ -55,8 +51,8 @@
 				<form string="Component">
 					<group col="6" colspan="4">
 						<field name="name" select="1" />
-						<field name="type_id" select="1" />	
-                        <field name="connector_id" colspan="4" select="1" />					
+						<field name="type_id" select="1" />
+                        <field name="connector_id" colspan="4" select="1" />
 					</group>
 					<notebook colspan="4">
 						<page string="Transitions Detail">
@@ -74,7 +70,6 @@
 			</field>
 		</record>
 
-
 		<record id="etl_component_tree" model="ir.ui.view">
 			<field name="name">view.etl.component.tree</field>
 			<field name="model">etl.component</field>
@@ -88,7 +83,6 @@
 				</tree>
 			</field>
 		</record>
-
 
 		<record id="action_etl_component_tree"
 			model="ir.actions.act_window">
@@ -131,7 +125,5 @@
 		<menuitem name="Control ETL Component"
 			parent="menu_etl_job_def_components" id="menu_etl_jd_c_control_form" />
 
-
 	</data>
 </openerp>
-

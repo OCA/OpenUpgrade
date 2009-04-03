@@ -2,11 +2,11 @@
 <openerp>
 	<data>
 
-		<menuitem name="ETL" id="menu_etl_root" icon="STOCK_PROPERTIES" />
+	<menuitem name="ETL" id="menu_etl_root" icon="STOCK_PROPERTIES" />
 
-		<menuitem name="Configuration" parent="menu_etl_root"
-			sequence="5" id="menu_etl_configure" />
-	
+	<menuitem name="Configuration" parent="menu_etl_root"
+		sequence="5" id="menu_etl_configure" />
+
 	<wizard
           id="wizard_launch_job_process"
             keyword="client_action_multi"
@@ -14,13 +14,13 @@
             name="etl.launch.job.process"
             multi="True"
             string="Launch Process"/>
-           
+
 	<wizard id="wizard_run_scheduled_process" model="etl.job.process" multi="True"
 			string="Run All Scheduled Processes" name="etl.run.scheduled.job.processes" />
-			
+
 	<menuitem action="wizard_run_scheduled_process" id="etl_run_process_scheduler"
 		parent="menu_etl_root" type="wizard" sequence="100" />
-	
+
 	<!-- Project -->
 
 		<record id="etl_proj_form" model="ir.ui.view">
@@ -112,16 +112,6 @@
 			</field>
 		</record>
 
-
-		<record id="action_etl_channel_all_tree"
-			model="ir.actions.act_window">
-			<field name="name">Channels</field>
-			<field name="res_model">etl.channel</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-			<field name="view_id" ref="etl_channel_tree" />
-		</record>
-
 		<record id="action_etl_channel_log_tree"
 			model="ir.actions.act_window">
 			<field name="name">Log Channels</field>
@@ -152,9 +142,8 @@
 		</record>
 
 		<menuitem name="Channels" parent="menu_etl_configure"
-			action="action_etl_channel_all_tree" sequence="6"
+			sequence="6"
 			id="menu_etl_channel_def" />
-
 
 		<menuitem name="Log Channels" parent="menu_etl_channel_def"
 			action="action_etl_channel_log_tree" id="menu_etl_log_channel_form" />
@@ -168,7 +157,6 @@
 			sequence="11" action="action_etl_channel_form"
 			id="etl_menu_new_log_channel" />
 
-
 		<!--	Jobs -->
 
 		<record id="view_etl_job_form" model="ir.ui.view">
@@ -179,7 +167,7 @@
 				<form string="etl_job">
 					<field name="name" select="1" />
 					<field name="project_id" select="1" />
-					<field name="user_id" select="1" />					
+					<field name="user_id" select="1" />
 					<newline />
 					<notebook colspan="4">
 						<page string="Job's Components">
@@ -221,7 +209,6 @@
 			</field>
 		</record>
 
-
 		<record id="action_etl_job_all_tree"
 			model="ir.actions.act_window">
 			<field name="name">Jobs</field>
@@ -230,7 +217,6 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_etl_job_all_tree" />
 		</record>
-
 
 		<record id="action_etl_job_open_tree"
 			model="ir.actions.act_window">
@@ -244,7 +230,6 @@
 
 		<menuitem name="Jobs" parent="menu_etl_root"
 			action="action_etl_job_all_tree" sequence="11" id="menu_etl_job_def" />
-
 
 		<menuitem name="Open Jobs" parent="menu_etl_job_def"
 			action="action_etl_job_open_tree" id="menu_etl_jd_j_rj_form" />
@@ -261,8 +246,6 @@
 
 		<menuitem name="New Job" parent="menu_etl_job_def" sequence="11"
 			action="action_etl_job_form" id="menu_etl_jd_j_nj_form" />
-
-
 
 		<!--  Transitions -->
 
@@ -293,7 +276,6 @@
 			</field>
 		</record>
 
-
 		<record id="view_etl_transition_tree" model="ir.ui.view">
 			<field name="name">view_etl_transition_tree</field>
 			<field name="model">etl.transition</field>
@@ -309,15 +291,6 @@
 					<field name="state" />
 				</tree>
 			</field>
-		</record>
-
-		<record id="action_etl_trans_tree"
-			model="ir.actions.act_window">
-			<field name="name">Transitions</field>
-			<field name="res_model">etl.transition</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-			<field name="view_id" ref="view_etl_transition_tree" />
 		</record>
 
 		<record id="action_etl_trans_data_tree"
@@ -340,9 +313,8 @@
 			<field name="view_id" ref="view_etl_transition_tree" />
 		</record>
 
-
 		<menuitem name="Transitions" parent="menu_etl_configure"
-			sequence="12" action="action_etl_trans_tree" id="menu_etl_t_form" />
+			sequence="12" id="menu_etl_t_form" />
 
 
 		<menuitem name="Data Transitions" parent="menu_etl_t_form"
@@ -376,7 +348,6 @@
 			</field>
 		</record>
 
-
 		<record id="view_etl_job_process_tree" model="ir.ui.view">
 			<field name="name">etl.job.process.statistics.tree</field>
 			<field name="model">etl.job.process.statistics</field>
@@ -395,7 +366,6 @@
 			</field>
 		</record>
 
-
 		<record id="view_etl_job_process_log_form"
 			model="ir.ui.view">
 			<field name="name">etl.job.process.log.form</field>
@@ -411,7 +381,6 @@
 				</form>
 			</field>
 		</record>
-
 
 		<record id="view_etl_job_process_tree" model="ir.ui.view">
 			<field name="name">etl.job.process.log.tree</field>
@@ -506,21 +475,20 @@
 					</page>
 					</notebook>
 					<separator string="Status" colspan="4" />
-							<group colspan="4" col="11" >
-							<field name="state"/>
-								<button name="action_open"	string="Open" states="draft" icon="gtk-yes"/>
-								<button name="action_cancel_draft"	string="Set to Draft" states="cancel" type="object" icon="gtk-convert"/>
-								<button name="start_process" string="Start" states="open,pause" icon="gtk-execute"/>
-								<button name="action_pause" string="Pause" states="start" icon="gtk-media-pause"/>
-								<button name="action_restart_process"	string="Retry" type="object" states="exception" icon="gtk-ok"/>
-								<button name="action_stop" string="Stop" states="start,pause" icon="gtk-no"/>
-								<button name="action_restart_process"	string="Restart" type="object" states="stop" icon="gtk-refresh"/>
-								<button name="cancel" string="Cancel" states="draft,open,exception,pause" icon="gtk-cancel"/>
-							</group>
+						<group colspan="4" col="11" >
+						<field name="state"/>
+							<button name="action_open"	string="Open" states="draft" icon="gtk-yes"/>
+							<button name="action_cancel_draft"	string="Set to Draft" states="cancel" type="object" icon="gtk-convert"/>
+							<button name="start_process" string="Start" states="open,pause" icon="gtk-execute"/>
+							<button name="action_pause" string="Pause" states="start" icon="gtk-media-pause"/>
+							<button name="action_restart_process"	string="Retry" type="object" states="exception" icon="gtk-ok"/>
+							<button name="action_stop" string="Stop" states="start,pause" icon="gtk-no"/>
+							<button name="action_restart_process"	string="Restart" type="object" states="stop" icon="gtk-refresh"/>
+							<button name="cancel" string="Cancel" states="draft,open,exception,pause" icon="gtk-cancel"/>
+						</group>
 				</form>
 			</field>
 		</record>
-
 
 		<record id="view_etl_job_process_tree" model="ir.ui.view">
 			<field name="name">etl.job.process.tree</field>
@@ -550,7 +518,6 @@
 			<field name="view_id" ref="view_etl_job_process_tree" />
 		</record>
 
-
 		<record id="action_etl_job_process_running_tree"
 			model="ir.actions.act_window">
 			<field name="name">Running Processes</field>
@@ -560,6 +527,7 @@
 			<field name="view_id" ref="view_etl_job_process_tree" />
 			<field name="domain">[('state','=','start')]</field>
 		</record>
+
 		<act_window
 			domain="[('job_id','=',active_id),('state','=','open')]"
 			id="action_open_job_process_tree" name="Open Process"
@@ -591,5 +559,6 @@
 		<menuitem name="Running Process" parent="menu_etl_job_processes"
 			action="action_etl_job_process_running_tree"
 			id="menu_etl_proc_rp_form" />
+
 	</data>
 </openerp>

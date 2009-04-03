@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>	
+<openerp>
 	<data>
 		<record id="action_etl_component_data_count_tree"
 			model="ir.actions.act_window">
@@ -30,6 +30,7 @@
 			<field name="act_window_id"
 				ref="action_etl_component_data_count_tree" />
 		</record>
+
 		<record id="action_etl_component_data_count_view2"
 			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
@@ -38,7 +39,6 @@
 			<field name="act_window_id"
 				ref="action_etl_component_data_count_tree" />
 		</record>
-
 
 		<menuitem name="Data Count"
 			parent="etl_interface.menu_etl_jd_c_control_form"

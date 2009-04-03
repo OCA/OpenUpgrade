@@ -7,7 +7,6 @@
 		</record>
 	</data>
 	<data>
-
 		<record id="etl_component_logger_form" model="ir.ui.view">
 			<field name="name">etl.component.logger.form</field>
 			<field name="model">etl.component</field>
@@ -60,7 +59,6 @@
 				ref="action_etl_component_logger_tree" />
 		</record>
 
-
 		<menuitem name="Logger"
 			parent="etl_interface.menu_etl_jd_c_pec_form"
 			action="action_etl_component_logger_tree"
@@ -68,4 +66,3 @@
 
 	</data>
 </openerp>
-

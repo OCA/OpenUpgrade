@@ -37,6 +37,7 @@
     'update_xml': [
          'etl_component/control/control_data.xml',
          'etl_component/input/input_data.xml',
+
          'etl_interface_sequence.xml',
          'etl_interface_view.xml',
          'etl_component/etl_component_view.xml',
@@ -55,9 +56,9 @@
          #'etl_component/input/excel_in_view.xml',
          #'etl_component/input/xml_in_view.xml',
          #'etl_component/input/openobject_in_view.xml',
-         
+
 	     #'etl_component/input/gmail_in_view.xml',
-	     
+
 	     #'etl_component/output/csv_out_view.xml',
          #'etl_component/output/sql_out_view.xml',
          #'etl_component/output/openobject_out_view.xml',
@@ -69,7 +70,7 @@
          #'etl_component/transform/logger_view.xml',
          #'etl_component/transform/logger_bloc_view.xml',
          #'etl_component/transform/schema_validator_view.xml',
-                  
+
          ],
      'demo_xml': ['etl_demo.xml'],
     'installable': True,

@@ -20,27 +20,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-
 import etl
 import tools
 from osv import osv, fields
 
 class etl_component_excel_in(osv.osv):
     _name='etl.component'
-    _inherit = 'etl.component'    
+    _inherit = 'etl.component'
 
     _columns={
-            'connector_id' :  fields.many2one('etl.connector', 'Connector'), 
-            'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'), 
-            'row_limit' : fields.integer('Limit'), 
-            'excel_params' : fields.char('EXCEL Parameters', size=64), 
-            }  
+            'connector_id' :  fields.many2one('etl.connector', 'Connector'),
+            'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'),
+            'row_limit' : fields.integer('Limit'),
+            'excel_params' : fields.char('EXCEL Parameters', size=64),
+            }
 
-        
-        
 etl_component_excel_in()
 
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

@@ -29,7 +29,7 @@ class etl_component_filter_criteria(osv.osv):
      _name='etl.component.filter.criteria'
      _rec_neme='sequence'
      _columns={
-      'sequence' : fields.integer('Sequence'), 
+      'sequence' : fields.integer('Sequence'),
       'field_name' : fields.char('Field Name', size=30),
       'operator': fields.selection([('equal','='), ('not_equal','<>'),('less_equalto','<='),('greater_equalto','>='),('in','in')], 'Operator' ),
       'operand' : fields.char('Operand', size=30),
@@ -43,13 +43,11 @@ etl_component_filter_criteria()
 class etl_component_transform_filter(osv.osv):
      _name='etl.component'
      _inherit = 'etl.component'
-   
+
      _columns={
-      'criteria_ids' : fields.one2many('etl.component.filter.criteria','component_id', 'Filter Criteria'), 
+      'criteria_ids' : fields.one2many('etl.component.filter.criteria','component_id', 'Filter Criteria'),
      }
 
 etl_component_transform_filter()
 
-
-
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

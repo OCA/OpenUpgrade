@@ -24,7 +24,6 @@ import etl
 import tools
 from osv import osv, fields
 
-
 class etl_component_unique(osv.osv):
      _name='etl.component.unique'
      _rec_neme='key'
@@ -39,13 +38,11 @@ etl_component_unique()
 class etl_component_transform_unique(osv.osv):
      _name='etl.component'
      _inherit = 'etl.component'
-   
+
      _columns={
-      'properties' : fields.one2many('etl.component.unique','key_id', 'Property'), 
+      'properties' : fields.one2many('etl.component.unique','key_id', 'Property'),
      }
 
 etl_component_transform_unique()
 
-
-
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

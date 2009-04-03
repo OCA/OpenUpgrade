@@ -26,34 +26,30 @@ from osv import osv, fields
 
 class etl_component_csv_in(osv.osv):
     _name='etl.component'
-    _inherit = 'etl.component'    
+    _inherit = 'etl.component'
 
-    _columns={            
-            'row_limit' : fields.integer('Limit'), 
-            'csv_params' : fields.char('CSV Parameters', size=64), 
+    _columns={
+            'row_limit' : fields.integer('Limit'),
+            'csv_params' : fields.char('CSV Parameters', size=64),
      }
     _defaults={
             'csv_params':lambda *x:'{}'
      }
-    
-         
-    def create_instance(self, cr, uid, id, context={}, data={}):      
+
+    def create_instance(self, cr, uid, id, context={}, data={}):
         val=super(etl_component_csv_in, self).create_instance(cr, uid, id, context, data)
         obj_connector=self.pool.get('etl.connector')
         obj_transformer = self.pool.get('etl.transformer')
         cmp=self.browse(cr, uid, id)
-        if cmp.type_id.name=='input.csv_in':      
-            conn_instance=trans_instance=False            
-            if cmp.connector_id:                
-                conn_instance=obj_connector.get_instance(cr, uid, cmp.connector_id.id , context, data)                
-            if cmp.transformer_id:                
+        if cmp.type_id.name=='input.csv_in':
+            conn_instance=trans_instance=False
+            if cmp.connector_id:
+                conn_instance=obj_connector.get_instance(cr, uid, cmp.connector_id.id , context, data)
+            if cmp.transformer_id:
                 trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
 
             val =etl.component.input.csv_in(conn_instance, cmp.row_limit, cmp.csv_params and eval(cmp.csv_params) or {},'component.input.csv_in', trans_instance)
-        
-            
         return val
-        
+
 etl_component_csv_in()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

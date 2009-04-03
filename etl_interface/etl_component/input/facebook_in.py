@@ -27,12 +27,12 @@ from osv import osv, fields
 class etl_component_facebook_in(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'
-
-    _columns={              
-              'field_ids': fields.one2many('etl.component.field', 'component_id', 'Fields'),
-              'method': fields.char('Method', size=32),
-              'domain': fields.char('Domain', size=32),
+    _columns={
+          'field_ids': fields.one2many('etl.component.field', 'component_id', 'Fields'),
+          'method': fields.char('Method', size=32),
+          'domain': fields.char('Domain', size=32),
      }
+
     def create_instance(self, cr, uid, id, context={}, data={}):
         val=super(etl_component_facebook_in, self).create_instance(cr, uid, id, context, data)
         obj_connector=self.pool.get('etl.connector')
@@ -47,5 +47,6 @@ class etl_component_facebook_in(osv.osv):
 
             val =etl.component.input.facebook_in(conn_instance, self.method,name='component.input.facebook_in')
         return val
+
 etl_component_facebook_in()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

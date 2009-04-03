@@ -26,16 +26,12 @@ from osv import osv, fields
 
 class etl_component_vcard_out(osv.osv):
     _name='etl.component'
-    _inherit = 'etl.component'    
+    _inherit = 'etl.component'
 
     _columns={
-            'connector_id' :  fields.many2one('etl.connector', 'Connector'), 
-    } 
-    
-        
-        
+            'connector_id' :  fields.many2one('etl.connector', 'Connector'),
+    }
+
 etl_component_vcard_out()
 
-
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

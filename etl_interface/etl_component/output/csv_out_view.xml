@@ -7,7 +7,6 @@
 		</record>
 	</data>
 	<data>
-
 		<record id="etl_component_csv_out_form" model="ir.ui.view">
 			<field name="name">view.etl.component.csv.out.form</field>
 			<field name="model">etl.component</field>
@@ -61,8 +60,6 @@
 				ref="action_etl_component_csv_out_tree" />
 		</record>
 
-
-
 		<menuitem name="CSVFile"
 			action="action_etl_component_csv_out_tree"
 			parent="etl_interface.menu_etl_jd_c_oc_form"
@@ -71,4 +68,3 @@
 
 	</data>
 </openerp>
-

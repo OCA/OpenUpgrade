@@ -7,7 +7,6 @@
 	</record>
     </data>
 
-
 	<data>
 		<record id="etl_transform_unique_form" model="ir.ui.view">
 			<field name="name">etl.component.unique.form</field>
@@ -29,8 +28,6 @@
 		</notebook>
 	    </field>
 	</record>
-
-
 
 	<record id="action_etl_component_unique_tree" model="ir.actions.act_window">
             <field name="name">Unique component</field>
@@ -64,7 +61,5 @@
 
 	<menuitem name="Unique Transform" action="action_etl_component_unique_tree" parent="etl_interface.menu_etl_jd_c_pec_form" id="menu_etl_jd_c_ic_unique_form" />
 
-
 	</data>
 </openerp>
-

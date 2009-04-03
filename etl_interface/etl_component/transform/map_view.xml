@@ -7,7 +7,6 @@
 		</record>
 	</data>
 	<data>
-
 		<record id="etl_component_trans_map_form" model="ir.ui.view">
 			<field name="name">view.etl.component.transform.map.form</field>
 			<field name="model">etl.component</field>
@@ -53,7 +52,6 @@
 			<field name="domain">[('type_id.name','=','transform.map')]</field>
 		</record>
 
-
 		<record id="action_etl_component_trans_map_from"
 			model="ir.actions.act_window">
 			<field name="res_model">etl.component</field>
@@ -82,7 +80,6 @@
 				ref="action_etl_component_trans_map_tree" />
 		</record>
 
-
 		<menuitem name="Field Mapping Process"
 			action="action_etl_component_trans_map_tree"
 			parent="etl_interface.menu_etl_jd_c_pec_form"
@@ -90,4 +87,3 @@
 
 	</data>
 </openerp>
-
