@@ -37,7 +37,7 @@ class csv_in(component):
     * .* : return the main flow with data from csv file
     """
 
-    def __init__(self,fileconnector,name='component.input.csv_in',transformer=None,row_limit=0, csv_params={}):    
+    def __init__(self,fileconnector,row_limit=0, csv_params={},name='component.input.csv_in',transformer=None):    
         """    
         Parameters::
         fileconnector :  provides  localfile connector to connect with file
@@ -72,6 +72,10 @@ class csv_in(component):
             self.signal('error',{'data':self.data,'type':'exception','error':str(e)})            
         except IOError,e:
             self.signal('error',{'data':self.data,'type':'exception','error':str(e)}) 
+
+    def __copy__(self):        
+        res= csv_in(self.fileconnector , self.row_limit, self.csv_params,self.name, self.transformer)
+        return res
 
     
 def test():

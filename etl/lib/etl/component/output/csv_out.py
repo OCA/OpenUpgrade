@@ -27,7 +27,6 @@
 """
 
 from etl.component import component
-import csv
 import datetime
 
 class csv_out(component):
@@ -42,7 +41,7 @@ class csv_out(component):
     * main : return all data
     """   
 
-    def __init__(self,fileconnector,transformer=None,name='component.output.csv_out',row_limit=0, csv_params={}):
+    def __init__(self, fileconnector, row_limit=0, csv_params={}, name='component.output.csv_out', transformer=None):
         """ 
         Parameters ::
         fileconnector : Provides  localfile connector to connect with file
@@ -50,7 +49,7 @@ class csv_out(component):
         row_limit     : Limited records send to destination if row limit specified. If row     limit is 0,all records are send.
         csv_param     : To specify other csv parameter like fieldnames , restkey , restval etc. 
         """
-        super(csv_out, self).__init__(name,transformer=transformer)      
+        super(csv_out, self).__init__(name, transformer=transformer)      
           
         self.fileconnector = fileconnector 
         self.csv_params=csv_params       
@@ -59,29 +58,28 @@ class csv_out(component):
     
 
     def process(self):  
-        #TODO : proper handle exception. not use generic Exception class      
+        #TODO : proper handle exception. not use generic Exception class
+        import csv      
         datas = []        
         fp=False
         writer=False
-        for channel,trans in self.input_get().items():
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
-                    try:                    
+                    try:                 
                         if not fp:
                             fp=self.fileconnector.open('wb+')
                             fieldnames = d.keys()
                             writer = csv.DictWriter(fp, fieldnames)
-                            writer.writerow(dict(map(lambda x: (x,x), fieldnames)))
+                            writer.writerow(dict(map(lambda x: (x, x), fieldnames)))
                         writer.writerow(d)
-                        yield d, 'main'
-                    except StopIteration,e:
-                        self.fileconnector.close(fp)
-                        self.signal('end')
-                    except IOError,e:  
-                        self.signal('error',{'data':self.data,'type':'exception','error':str(e)})
+                        yield d, 'main'                    
+                    except IOError, e:  
+                        self.signal('error', {'data':self.data, 'type':'exception', 'error':str(e)})
+        self.fileconnector.close(fp)        
 
     def __copy__(self):        
-        res= csv_out(self.fileconnector , self.name, self.transformer, self.row_limit, self.csv_params)
+        res= csv_out(self.fileconnector , self.row_limit, self.csv_params, self.name, self.transformer)
         return res
 
 def test():

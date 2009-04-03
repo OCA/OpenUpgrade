@@ -32,7 +32,7 @@ oracle server
 """
 from etl.connector import connector
 class sql_connector(connector):    
-    def __init__(self, host,port, db, uid, passwd,sslmode='allow',con_type='postgres',name='sql_connector'):
+    def __init__(self, host, port, db, uid, passwd, sslmode='allow', con_type='postgres', name='sql_connector'):
         """
         Required Parameters ::
         host : Database server host name
@@ -65,10 +65,10 @@ class sql_connector(connector):
         if self.con_type=='postgres':
             import psycopg2
             connector = psycopg2.connect("dbname=%s user=%s host=%s port=%s password=%s sslmode=%s" \
-                                % (self.db,self.uid,self.host,self.port,self.passwd,self.sslmode))
+                                % (self.db, self.uid, self.host, self.port, self.passwd, self.sslmode))
         elif self.con_type=='mysql':
             import MySQLdb
-            connector = MySQLdb.Connection(db=self.db, host=self.host,port=self.port, user=self.uid,passwd=self.pwd)
+            connector = MySQLdb.Connection(db=self.db, host=self.host, port=self.port, user=self.uid, passwd=self.pwd)
         elif self.con_type=='oracle':
             import cx_Oracle
             dsn_tns = cx_Oracle.makedsn(self.host, self.port, self.db)
@@ -77,7 +77,7 @@ class sql_connector(connector):
             raise Exception('Not Supported')           
         return connector    
 
-    def close(self,connector):  
+    def close(self, connector):  
         """ 
         Closes a connection to Database Server
         """ 
@@ -88,7 +88,7 @@ class sql_connector(connector):
         """
         Overrides copy method
         """
-        res=sql_connector(self.host,self.port, self.db, self.uid, self.passwd,self.sslmode,self.con_type)        
+        res=sql_connector(self.host, self.port, self.db, self.uid, self.passwd, self.sslmode, self.con_type, self.name)        
         return res
 
 def test():    

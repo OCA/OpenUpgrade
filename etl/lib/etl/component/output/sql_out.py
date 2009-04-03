@@ -42,7 +42,7 @@ class sql_out(component):
         * main : return all data
     """   
 
-    def __init__(self, sqlconnector, sqltable, name='component.output.sql_out', transformer=None, row_limit=0):
+    def __init__(self, sqlconnector, sqltable, row_limit=0, name='component.output.sql_out', transformer=None):
 
 	""" 
     Parameters ::    
@@ -87,7 +87,7 @@ class sql_out(component):
         """
         Overrides copy method
         """
-        res=sql_out(self.sqlconnector, self.sqlquery, self.name, self.transformer, self.row_limit)
+        res=sql_out(self.sqlconnector, self.sqlquery, self.row_limit, self.name, self.transformer)
         return res
     
 

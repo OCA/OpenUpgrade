@@ -45,7 +45,8 @@
 
 	<record model="res.groups" id="portal_account_group">
 		<field name="name">Portal Account group</field>
-		<field name="rule_groups" eval="[(4,[ref('invoice_rule_group'),ref('move_line_rule_group')])]"/>
+		<field name="rule_groups" eval="[(6,0,[ref('invoice_rule_group'),ref('move_line_rule_group')])]"/>
+		<field name="menu_access" eval="[(6,0,[ref('menu_portal_configuration_account'),ref('menu_portal_configuration_account_invoice'),ref('menu_portal_configuration_account_your'),ref('menu_portal_configuration_account_refund'),ref('menu_portal_configuration_account_payable')])]"/>
 	</record>
 	
 	<record model="portal.portal" id="portal_account">

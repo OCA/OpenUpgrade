@@ -28,6 +28,7 @@
 	<record model="res.groups" id="portal_analytic_group">
 		<field name="name">Portal Analytic group</field>
 		<field name="rule_groups" eval="[(4,ref('analytic_account_rule_group'))]"/>
+		<field name="menu_access" eval="[(6,0,[ref('menu_portal_configuration_contract'),ref('menu_portal_configuration_contract_open'),ref('menu_portal_configuration_contract_close')])]"/>
 	</record>
 	
 	<record model="portal.portal" id="portal_account_analytic">

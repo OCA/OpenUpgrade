@@ -32,7 +32,7 @@ class file_connector(connector):
     """
     This is an ETL connector that use to provide connectivity with file.
     """
-    def __init__(self,uri,bufsize=-1,encoding='utf-8',name='file_connector'):
+    def __init__(self, uri, bufsize=-1, encoding='utf-8', name='file_connector'):
         """ 
         Required Parameters ::
         uri      : Path of file
@@ -54,7 +54,7 @@ class file_connector(connector):
         return file(self.uri, mode)        
         
 
-    def close(self,connector):
+    def close(self, connector):
         """
         Closes file connections
         """
@@ -65,7 +65,7 @@ class file_connector(connector):
         """
         Overrides copy method
         """
-        res=file_connector(self.uri,self.bufsize,self.encoding,self.name)
+        res=file_connector(self.uri, self.bufsize, self.encoding, self.name)
         return res
 
 def test():

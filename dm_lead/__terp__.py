@@ -20,19 +20,22 @@
 #
 ##############################################################################
 {
-    "name" : "Portal Management - Analytic Entries",
-    "version" : "0.1",
+    "name" : "Direct Marketing For Leads",
+    "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://www.openerp.com",
-    "depends" : ["portal", "account_analytic_package", "account_analytic_analysis","hr_timesheet_invoice" ],
-    "category" : "Generic Modules/Others",
-    "description": "Potal Management - Service company specific data for analytic accounting.",
+    "category" : "Generic Modules/Direct Marketing",
+    "description": """
+            This module deals with lead generation.
+            """,
+    "depends" : ["crm_configuration","dm"],
     "init_xml" : [],
-    "update_xml" : ["portal_analytic_package_view.xml","portal_analytic_package_data.xml",
-                    "security/ir.model.access.csv" ],
     "demo_xml" : [],
+    "update_xml" : [
+                    "dm_lead_data.xml",
+                    ],
     "active": False,
-    "installable": True
+    "installable": True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

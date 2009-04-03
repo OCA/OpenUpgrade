@@ -27,6 +27,7 @@
 	<record model="res.groups" id="portal_analytic_package_group">
 		<field name="name">Portal Analytic Package group</field>
 		<field name="rule_groups" eval="[(4,ref('analytic_package_rule_group'))]"/>
+		<field name="menu_access" eval="[(6,0,[ref('menu_operations'),ref('menu_analytic_operation')])]"/>
 	</record>
 	
 	<record model="portal.portal" id="portal_account_analytic_package">

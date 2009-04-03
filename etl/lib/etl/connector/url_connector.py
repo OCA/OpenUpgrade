@@ -33,7 +33,7 @@ class url_connector(connector):
     """
     This is an ETL connector that use to provide connectivity URL Access like  http, ftp, https, gopher.
     """ 
-    def __init__(self,uri,bufsize=-1,encoding='utf-8',name='url_connector'):
+    def __init__(self, uri, bufsize=-1, encoding='utf-8', name='url_connector'):
         """ 
         Required Parameters ::
         uri      : Path of file

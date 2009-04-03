@@ -22,7 +22,7 @@
 """
 This is an ETL Component that use to read data from facebook.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License
 """
 
@@ -46,10 +46,9 @@ class facebook_in(component):
         self.method=method
         self.domain=domain
         self.fields=fields
-        self.row_limit=row_limit
-        self.name = name
+        self.row_limit=row_limit # to be check
 
-    def process(self):        
+    def process(self):
         facebook=self.facebook_connector.open()
         rows=self.facebook_connector.execute(facebook, self.method, fields=self.fields)
         for row in rows:
@@ -57,14 +56,11 @@ class facebook_in(component):
                 row=self.transformer.transform(row)
             if row:
                 yield row, 'main'
-            
+
     def __copy__(self):
-        """
-        Overrides copy method
-        """
         res=facebook_in(self.facebook_connector, self.method, self.domain, self.fields, self.name, self.transformer, self.row_limit)
         return res
-    
+
 # fields = ['uid', 'name', 'birthday', 'about_me', 'activities', 'affiliations', 'books', 'current_location', 'education_history', 'email_hashes', 'first_name','has_added_app', 'hometown_location', 'hs_info', 'hs_info', 'hs_info', 'hs_info', 'hs_info', 'meeting_for', 'meeting_sex', 'movies', 'music','notes_count', 'pic', 'pic_with_logo', 'pic_big', 'pic_big_with_logo', 'pic_small', 'pic_small_with_logo', 'pic_square', 'pic_square_with_logo','political', 'profile_update_time', 'profile_url', 'proxied_email', 'quotes', 'relationship_status', 'religion', 'sex', 'significant_other_id']
 
 def test():

@@ -39,7 +39,7 @@ class logger_bloc(component):
 		Output Flows: 0-y
 		* .* : return the main flow 
     """    
-    def __init__(self, name='component.output.logger_bloc', output=sys.stdout):
+    def __init__(self, output=sys.stdout, name='component.output.logger_bloc'):
         self.name = name
         self.output = output
         self.is_end = 'main'
@@ -48,7 +48,7 @@ class logger_bloc(component):
     def process(self):
         #TODO : proper handle exception
         datas=[]
-        for channel,trans in self.input_get().items():
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     datas.append(d)
@@ -61,6 +61,6 @@ class logger_bloc(component):
         """
         Overrides copy method
         """
-        res=logger_bloc(self.name, self.output)
+        res=logger_bloc(self.output, self.name)
         return res
     

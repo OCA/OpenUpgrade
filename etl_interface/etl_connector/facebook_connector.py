@@ -1,7 +1,8 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    ETL system- Extract Transfer Load system
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,16 +20,27 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import etl
+import tools
+from osv import osv, fields
 
-"""
- To load/store data into destinaton system
+class facebook_connector(osv.osv):
+    _name = 'etl.connector'
+    _inherit = 'etl.connector'
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
- GNU General Public License
-"""
+    _columns={
+              'uri' : fields.char('Facebool URL', size=124),
+              'email' : fields.char('Email', size=64),
+              'passwd' : fields.char('Password', size=64),
+              'delay' : fields.integer('Delay time'),
+    }
 
-from csv_out import csv_out
-from sql_out import sql_out
-from openobject_out import openobject_out
-from facebook_out import facebook_out
+    def create_instance(self, cr, uid, id , context={}, data={}):
+        val =  super(facebook_connector, self).create_instance(cr, uid, id, context, data)
+        con = self.browse(cr, uid, id)
+        if con.type == 'localfile':
+            val =  etl.connector.facebook_connector('http://facebook.com', 'modiinfo@gmail.com')
+        return val
 
+facebook_connector()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

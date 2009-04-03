@@ -42,7 +42,7 @@ class sql_in(component):
         * .* : return the main flow with data from csv file
     """
 
-    def __init__(self, sqlconnector, sqlquery, name='component.input.sql_in', transformer=None, row_limit=0):
+    def __init__(self, sqlconnector, sqlquery, row_limit=0, name='component.input.sql_in', transformer=None):
 
 	""" 
 	Parameters
@@ -96,7 +96,7 @@ class sql_in(component):
         """
         Overrides copy method
         """
-        res=sql_in(self.sqlconnector, self.sqlquery, self.name, self.transformer, self.row_limit)
+        res=sql_in(self.sqlconnector, self.sqlquery, self.row_limit, self.name, self.transformer)
         return res
     
 

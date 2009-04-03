@@ -46,6 +46,12 @@ class stock_move(osv.osv):
             
             sol_id = res[0][0]
             
+            if not sol_id:
+#                raise osv.except_osv(_('No sale order line found !'),
+#                              _('Save your quotation first.'))
+                result[id] = False
+                continue
+            
             req = """ SELECT cus.customization_key_id, grp.name, val.name 
                         FROM bom_customization_sale_order_line_customizations cus,
                              bom_customization_bom_customization_values val,
@@ -79,6 +85,6 @@ class stock_move(osv.osv):
     _columns = { 
         'bom_id': fields.many2one('mrp.bom', 'Origin bom line'),
         'production_orders': fields.many2many('mrp.production', 'mrp_production_move_ids', 'move_id', 'production_id', 'Production Order'),
-        'list_customizations': fields.function(list_customizations, string="List of Customizations", method=True, type="char", store=True, size=64),
+        'list_customizations': fields.function(list_customizations, string="List of Customizations", method=True, type="char", store=True, size=64, select=True),
     }
 stock_move()

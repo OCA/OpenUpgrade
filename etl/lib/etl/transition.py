@@ -54,7 +54,7 @@ class transition(signal):
         return True     
 
     def __str__(self):
-        return str(self.source)+' to '+str(self.destination)
+        return '<Transition : '+str(self.source)+' to '+str(self.destination)+'>'
 
     def open(self):
         self.status='open'

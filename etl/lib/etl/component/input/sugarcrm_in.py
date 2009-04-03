@@ -29,7 +29,7 @@ class sugarcrm_in(component):
         This is an ETL Component that use to read data from Sugar CRM
 
     """
-    def __init__(self, sugarcrm_connector, module, name='componet.input.sugarcrm_in', transformer=False, row_limit=0):
+    def __init__(self, sugarcrm_connector, module, row_limit=0, name='componet.input.sugarcrm_in', transformer=False):
         super(sugarcrm_in, self).__init__(name, transformer=transformer)
         self.module=module
         self.sugarcrm_connector=sugarcrm_connector
@@ -57,7 +57,7 @@ class sugarcrm_in(component):
         """
         Overrides copy method
         """
-        res=sugarcrm_in(self.sugarcrm_connector, self.module, self.name, self.transformer, self.row_limit)
+        res=sugarcrm_in(self.sugarcrm_connector, self.module, self.row_limit, self.name, self.transformer)
         return res
     
 

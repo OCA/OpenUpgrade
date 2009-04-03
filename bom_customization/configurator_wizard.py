@@ -28,9 +28,9 @@ class bom_customization_configurator_line(osv.osv_memory):
     
     _columns = {
                 'configurator_id': fields.many2one('bom_customization.configurator', 'Configurator'),
-                'customization_key_id': fields.many2one('bom_customization.bom_customization_keys', 'Customization Key', domain = "[('group_id','=', customization_group_id)]"),
+                'customization_key_id': fields.many2one('bom_customization.bom_customization_keys', 'Customization Key', domain="[('group_id','=', customization_group_id)]"),
                 'customization_group_id': fields.many2one('bom_customization.bom_customization_groups', 'Customization Group', required=True),
-                'customization_value_id': fields.many2one('bom_customization.bom_customization_values', 'Customization Value', domain = "[('group_id','=', customization_group_id)]"),
+                'customization_value_id': fields.many2one('bom_customization.bom_customization_values', 'Customization Value', domain="[('group_id','=', customization_group_id)]"),
                 }
     
     def onchange_customization_key_id(self, cr, uid, ids, customization_key_id):
@@ -48,23 +48,23 @@ class bom_customization_configurator(osv.osv_memory):
         sol_id = context.get('sol_id', False)
         
         if not sol_id:
-            raise osv.except_osv( _('No sale order line found in the context !'),
+            raise osv.except_osv(_('No sale order line found in the context !'),
                               _('A product chooser creating a sale order line must be called before this wizard.'))
         
-        prod = self.pool.get('sale.order.line').read(cr, uid, sol_id,['product_id'])['product_id']
+        prod = self.pool.get('sale.order.line').read(cr, uid, sol_id, ['product_id'])['product_id']
         
         if not prod:
-            raise osv.except_osv( _('No product found on this sale order line !'),
+            raise osv.except_osv(_('No product found on this sale order line !'),
                               _('A product chooser creating a sale order line must be called before this wizard.'))
         
         product_id = prod[0]
-        bom_ids = self.pool.get('mrp.bom').search(cr, uid, [('product_id','=',product_id)])
+        bom_ids = self.pool.get('mrp.bom').search(cr, uid, [('product_id', '=', product_id)])
         
-        list_property_values= []
+        list_property_values = []
         if bom_ids:
             req = """ SELECT rel.property_id, prop.name 
                     FROM mrp_bom_property_rel rel, mrp_property prop
-                    WHERE rel.bom_id IN %s AND prop.id=rel.property_id """ % (str(tuple(bom_ids)),)
+                    WHERE rel.bom_id IN %s AND prop.id=rel.property_id """ % ("("+",".join(map(str,bom_ids))+")")
             cr.execute(req)
             list_property_values = cr.fetchall()
 
@@ -72,7 +72,7 @@ class bom_customization_configurator(osv.osv_memory):
     
     
     _columns = {
-                'bom_property_id_selection': fields.selection(_list_properties, "BoM Option", required = True),
+                'bom_property_id_selection': fields.selection(_list_properties, "BoM Option"),
                 'configurator_line_ids': fields.one2many("bom_customization.configurator_line", 'configurator_id', "Bom Options"),
                 'product_id': fields.many2one('product.product', "Product", invisible=True),
                 'property_bom_customization_main_property_group': fields.property('mrp.property.group',
@@ -91,13 +91,13 @@ class bom_customization_configurator(osv.osv_memory):
         
         sol_id = context.get('sol_id', False)
         
-        product_id = self.pool.get('sale.order.line').read(cr, uid, sol_id,['product_id'])['product_id'][0]
+        product_id = self.pool.get('sale.order.line').read(cr, uid, sol_id, ['product_id'])['product_id'][0]
 
         def_fields.update({'product_id':product_id})
         
         
         if context.get('active_id_object_type', False) == 'sale.order.line':
-            property_ids = self.pool.get('sale.order.line').read(cr, uid, sol_id,['property_ids'])['property_ids']
+            property_ids = self.pool.get('sale.order.line').read(cr, uid, sol_id, ['property_ids'])['property_ids']
             
             for property in self._list_properties(cr, uid, context):
                 for prop_id in property_ids:
@@ -111,19 +111,19 @@ class bom_customization_configurator(osv.osv_memory):
         # sale.order.line, default_values have to be loaded
         load_values_from_sol = False
         if not product_id:
-            product_id = self.pool.get('sale.order.line').read(cr, uid, sol_id,['product_id'])['product_id'][0]
+            product_id = self.pool.get('sale.order.line').read(cr, uid, sol_id, ['product_id'])['product_id'][0]
             load_values_from_sol = True
             
         
         req = """ SELECT b.id FROM mrp_bom b, mrp_bom_property_rel rel 
-                    WHERE product_id = %d AND rel.bom_id= b.id AND rel.property_id = %d """ % (product_id,bom_property_id_selection)
+                    WHERE product_id = %d AND rel.bom_id= b.id AND rel.property_id = %d """ % (product_id, bom_property_id_selection)
         cr.execute(req)
         res = cr.fetchall()
         if not res:
             return {'warning': {'title': "Warning", 'message': "No BoM found !"}}
              
         main_bom_id = res[0][0]
-        bom_ids= self.pool.get('mrp.bom').search(cr, uid, [('bom_id', '=', main_bom_id)])
+        bom_ids = self.pool.get('mrp.bom').search(cr, uid, [('bom_id', '=', main_bom_id)])
         
         req = """ SELECT DISTINCT bom_customization_key_id
                     FROM mrp_bom_bom_customizations_keys_rel
@@ -131,18 +131,18 @@ class bom_customization_configurator(osv.osv_memory):
         cr.execute(req)
         keys = cr.fetchall()
         
-        group_ids = self.pool.get('bom_customization.bom_customization_keys').read(cr, uid, [k[0] for k in keys], ['group_id'] )
+        group_ids = self.pool.get('bom_customization.bom_customization_keys').read(cr, uid, [k[0] for k in keys], ['group_id'])
         
         line_ids = []
-        for k,g in zip(keys,group_ids):
+        for k, g in zip(keys, group_ids):
             vals = {'customization_key_id': k[0], 'customization_value_id':None, 'customization_group_id':g['group_id']}
             if load_values_from_sol:
                 sol_custom_obj = self.pool.get('bom_customization.sale_order_line_customizations')
-                customization_ids = sol_custom_obj.search(cr, uid, [('sale_order_line_id','=',sol_id),('customization_key_id','=',k[0])])
+                customization_ids = sol_custom_obj.search(cr, uid, [('sale_order_line_id', '=', sol_id), ('customization_key_id', '=', k[0])])
                 if customization_ids:
                     vals['customization_value_id'] = sol_custom_obj.read(cr, uid, customization_ids[0], ['customization_value_id'])['customization_value_id']
             
-            line_ids.append( self.pool.get('bom_customization.configurator_line').create(cr, uid, vals) )
+            line_ids.append(self.pool.get('bom_customization.configurator_line').create(cr, uid, vals))
         
         return {'value':{'configurator_line_ids':line_ids}}
     
@@ -153,13 +153,18 @@ class bom_customization_configurator(osv.osv_memory):
     
     def create(self, cr, uid, vals, context=None):
         id = super(osv.osv_memory, self).create(cr, uid, vals, context)
-        line_ids=[i[1] for i in vals['configurator_line_ids']]
-        self.pool.get('bom_customization.configurator_line').write(cr, uid, line_ids, {'configurator_id':id})
+        line_ids = [i[1] for i in vals['configurator_line_ids']]
+        if line_ids:
+            self.pool.get('bom_customization.configurator_line').write(cr, uid, line_ids, {'configurator_id':id})
         return id
         
     def configure_line(self, cr, uid, ids, context={}):
-        res = self.read(cr,uid,ids,['bom_property_id_selection','configurator_line_ids'])[0]
+        res = self.read(cr, uid, ids, ['bom_property_id_selection', 'configurator_line_ids'])[0]
         sol_id = context.get('sol_id', False)
+        
+        if len(self._list_properties(cr, uid, context)) == 0:
+            return sale_product_multistep_configurator.sale_product_multistep_configurator.next_step(context)
+        
         if not res['bom_property_id_selection'] or not sol_id:
             return False
         for line in self.pool.get('bom_customization.configurator_line').read(cr, uid, res['configurator_line_ids']):
@@ -167,15 +172,15 @@ class bom_customization_configurator(osv.osv_memory):
                 return False
         
         
-        self.pool.get('sale.order.line').write(cr, uid, sol_id, {'property_ids': [(6,0,[res['bom_property_id_selection']])] })
+        self.pool.get('sale.order.line').write(cr, uid, sol_id, {'property_ids': [(6, 0, [res['bom_property_id_selection']])] })
         
         if context.get('active_id_object_type', False) == 'sale.order.line':
             for line in self.pool.get('bom_customization.configurator_line').read(cr, uid, res['configurator_line_ids']):
-                customization_ids = self.pool.get('bom_customization.sale_order_line_customizations').search(cr, uid, [('sale_order_line_id','=',sol_id),('customization_key_id','=',line['customization_key_id'])])
+                customization_ids = self.pool.get('bom_customization.sale_order_line_customizations').search(cr, uid, [('sale_order_line_id', '=', sol_id), ('customization_key_id', '=', line['customization_key_id'])])
                 if customization_ids:
                     self.pool.get('bom_customization.sale_order_line_customizations').write(cr, uid, customization_ids[0], {'customization_value_id': line['customization_value_id']})
                 else:
-                    vals={
+                    vals = {
                           'sale_order_line_id': sol_id,
                           'customization_value_id': line['customization_value_id'],
                           'customization_key_id': line['customization_key_id'],
@@ -183,7 +188,7 @@ class bom_customization_configurator(osv.osv_memory):
                     self.pool.get('bom_customization.sale_order_line_customizations').create(cr, uid, vals)
         else:
             for line in self.pool.get('bom_customization.configurator_line').read(cr, uid, res['configurator_line_ids']):
-                vals={
+                vals = {
                       'sale_order_line_id': sol_id,
                       'customization_value_id': line['customization_value_id'],
                       'customization_key_id': line['customization_key_id'],
@@ -191,5 +196,14 @@ class bom_customization_configurator(osv.osv_memory):
                 self.pool.get('bom_customization.sale_order_line_customizations').create(cr, uid, vals)
             
         return sale_product_multistep_configurator.sale_product_multistep_configurator.next_step(context)
-        
+    
+    def _check_selection(self, cr, uid, ids):
+        for configurator in self.browse(cr, uid, ids):
+            if len(self._list_properties(cr, uid, {})) and not configurator.bom_property_id_selection:
+                return False
+        return True
+    
+    
+#    _constraints = [ (_check_selection, 'Error ! Choose a bom customization.', ['bom_property_id_selection']) ]
+           
 bom_customization_configurator()
