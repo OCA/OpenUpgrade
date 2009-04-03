@@ -151,7 +151,7 @@
 			<field name="view_id" ref="etl_channel_form" />
 		</record>
 
-		<menuitem name="All Channels" parent="menu_etl_configure"
+		<menuitem name="Channels" parent="menu_etl_configure"
 			action="action_etl_channel_all_tree" sequence="6"
 			id="menu_etl_channel_def" />
 
@@ -179,9 +179,7 @@
 				<form string="etl_job">
 					<field name="name" select="1" />
 					<field name="project_id" select="1" />
-					<field name="user_id" select="1" />
-					<field name="author" />
-					<field name="is_start" />
+					<field name="user_id" select="1" />					
 					<newline />
 					<notebook colspan="4">
 						<page string="Job's Components">
@@ -343,7 +341,7 @@
 		</record>
 
 
-		<menuitem name="Transitions" parent="menu_etl_root"
+		<menuitem name="Transitions" parent="menu_etl_configure"
 			sequence="12" action="action_etl_trans_tree" id="menu_etl_t_form" />
 
 
@@ -437,7 +435,7 @@
 			<field name="arch" type="xml">
 				<form string="Job Process">
 						<field name="name" select="1"/>
-						<field name="job_id" select="1"/>
+						<field name="job_id" attrs="{'readonly':[('state','!=','draft')]}" select="1"/>
 						<field name="schedule_date" select="1"/>
 						<newline/>
 						<group colspan="2" col="4">

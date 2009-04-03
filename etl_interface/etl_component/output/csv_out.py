@@ -29,7 +29,7 @@ class etl_component_csv_out(osv.osv):
     _inherit = 'etl.component'    
     
     _columns={
-          'connector_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=','localfile')]"),
+          'connector_id' :  fields.many2one('etl.connector', 'Connector'),
           'row_limit' : fields.integer('Limit'), 
           'csv_params' : fields.char('CSV Parameters', size=64), 
      }

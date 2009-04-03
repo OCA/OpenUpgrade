@@ -23,14 +23,9 @@
 import etl
 import tools
 from osv import osv, fields
-
-
-
-
 class etl_component_control_sleep(osv.osv):
     _name='etl.component'
-    _inherit = 'etl.component'    
-
+    _inherit = 'etl.component'
     _columns={
             'delay' :  fields.float('Delay'), 
     }

@@ -2,20 +2,20 @@
 <openerp>
 	<data noupdate="1">
 		<record id="comp_input_xml_out" model="etl.component.type">
-			<field name="name">input.xml_out</field>
-			<field name="code">input.xml_out</field>
+			<field name="name">output.xml_out</field>
+			<field name="code">output.xml_out</field>
 		</record>
 	</data>
 
 	<data>
 		<record id="etl_component_xml_out_form" model="ir.ui.view">
-			<field name="name">view.etl.component.xml.in.form</field>
+			<field name="name">view.etl.component.xml.out.form</field>
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
 					<notebook position='inside'>
-						<page string="Property" attrs="{'invisible':[('type_id','!=','input.xml_out')]}">
+						<page string="Property" attrs="{'invisible':[('type_id','!=','output.xml_out')]}">
 							<field name="connector_id" select="1" domain="[('type','=','localfile')]"/>
 							<field name="transformer_id" />
 							<field name="row_limit" />
@@ -31,7 +31,7 @@
 			<field name="res_model">etl.component</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-			<field name="domain">[('type_id.name','=','input.xml_out')]</field>
+			<field name="domain">[('type_id.name','=','output.xml_out')]</field>
 		</record>
 
 		<record id="action_etl_component_xml_out_from"
@@ -40,7 +40,7 @@
 			<field name="name">XML Out component</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
-			<field name="domain">[('type_id.name','=','input.xml_out')]</field>
+			<field name="domain">[('type_id.name','=','output.xml_out')]</field>
 			<field name="view_id" ref="etl_component_xml_out_form" />
 		</record>
 

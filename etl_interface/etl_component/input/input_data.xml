@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="comp_input_csv_in" model="etl.component.type">
+    		<field name="name">input.csv_in</field>
+    		<field name="code">input.csv_in</field>
+    	</record>
+        <record id="comp_input_vcard_in" model="etl.component.type">
+			<field name="name">input.vcard_in</field>
+			<field name="code">input.vcard_in</field>
+		</record>
+        <record id="comp_input_facebook_in" model="etl.component.type">
+			<field name="name">input.facebook_in</field>
+			<field name="code">input.facebook_in</field>
+		</record>
+    </data>
+</openerp>
+

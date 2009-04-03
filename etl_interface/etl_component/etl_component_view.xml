@@ -8,8 +8,9 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Component Type">
-					<field name="name" select="1" colspan="4" />
+					<field name="name" select="1"/>
 					<field name="code" />
+                    <field name="connector_type_id" colspan="4" select="1" />
 				</form>
 			</field>
 		</record>
@@ -23,6 +24,7 @@
 				<tree string="Component Type">
 					<field name="name" />
 					<field name="code" />
+                    
 				</tree>
 			</field>
 		</record>
@@ -53,8 +55,8 @@
 				<form string="Component">
 					<group col="6" colspan="4">
 						<field name="name" select="1" />
-						<field name="type_id" select="1" />
-						<field name="transformer_id" colspan="4" />
+						<field name="type_id" select="1" />	
+                        <field name="connector_id" colspan="4" select="1" />					
 					</group>
 					<notebook colspan="4">
 						<page string="Transitions Detail">

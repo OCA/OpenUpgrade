@@ -9,7 +9,7 @@
 
 	<data>
 		<record id="etl_component_excel_out_form" model="ir.ui.view">
-			<field name="name">view.etl.component.excel.in.form</field>
+			<field name="name">view.etl.component.excel.out.form</field>
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
 			<field name="inherit_id" ref="etl_component_form"/>
@@ -31,7 +31,7 @@
 			<field name="res_model">etl.component</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-			<field name="domain">[('type_id.name','=','input.excel_out')]</field>
+			<field name="domain">[('type_id.name','=','output.excel_out')]</field>
 		</record>
 
 		<record id="action_etl_component_excel_out_from"
@@ -40,7 +40,7 @@
 			<field name="name">Excel Out component</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
-			<field name="domain">[('type_id.name','=','input.excel_out')]</field>
+			<field name="domain">[('type_id.name','=','output.excel_out')]</field>
 			<field name="view_id" ref="etl_component_excel_out_form" />
 		</record>
 

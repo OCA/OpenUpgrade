@@ -26,11 +26,7 @@ from osv import osv, fields
 
 class etl_component_vcard_in(osv.osv):
     _name='etl.component'
-    _inherit = 'etl.component'    
-
-    _columns={
-            'connector_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=',localfile)]"), 
-    }
+    _inherit = 'etl.component'        
     
     def create_instance(self, cr, uid, id, context={}, data={}):
         val=super(etl_component_vcard_in, self).create_instance(cr, uid, id, context, data)

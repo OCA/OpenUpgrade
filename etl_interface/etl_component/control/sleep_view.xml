@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-	<data noupdate="1">
-		<record id="comp_control_sleep" model="etl.component.type">
-			<field name="name">control.sleep</field>
-			<field name="code">control.sleep</field>
-		</record>
-	</data>
+<openerp>	
 	<data>
-
 		<record id="etl_component_sleep_form" model="ir.ui.view">
 			<field name="name">etl.component.sleep.form</field>
 			<field name="model">etl.component</field>
@@ -18,7 +11,6 @@
 						<page string="Property" attrs="{'invisible':[('type_id','!=','control.sleep')]}">
 							<field name="delay" />
 						</page>
-
 					</notebook>
 			</field>
 		</record>
@@ -30,6 +22,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','control.sleep')]</field>
+            <field name="context">{'type_id':'control.sleep'}</field>
 		</record>
 
 		<record id="action_etl_component_sleep_from"
@@ -38,17 +31,18 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','control.sleep')]</field>
+            <field name="context">{'type_id':'control.sleep'}</field>
 			<field name="view_id" ref="etl_component_sleep_form" />
+             
 		</record>
 
 		<record id="action_etl_component_sleep_view1"
 			model="ir.actions.act_window.view">
 			<field eval="1" name="sequence" />
 			<field name="view_mode">tree</field>
-			<field name="view_id"
-				ref="etl_interface.etl_component_tree" />
-			<field name="act_window_id"
-				ref="action_etl_component_sleep_tree" />
+			<field name="view_id" ref="etl_interface.etl_component_tree" />
+			<field name="act_window_id" ref="action_etl_component_sleep_tree" />
+            
 		</record>
 		<record id="action_etl_component_sleep_view2"
 			model="ir.actions.act_window.view">
@@ -56,7 +50,7 @@
 			<field name="view_mode">form</field>
 			<field name="view_id" ref="etl_component_sleep_form" />
 			<field name="act_window_id"
-				ref="action_etl_component_sleep_tree" />
+				ref="action_etl_component_sleep_tree" />            
 		</record>
 
 

@@ -28,8 +28,7 @@ class etl_component_csv_in(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'    
 
-    _columns={
-            'connector_id' :  fields.many2one('etl.connector', 'Connector', domain="[('type','=','localfile')]"), 
+    _columns={            
             'row_limit' : fields.integer('Limit'), 
             'csv_params' : fields.char('CSV Parameters', size=64), 
      }
@@ -50,7 +49,7 @@ class etl_component_csv_in(osv.osv):
             if cmp.transformer_id:                
                 trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
 
-            val =etl.component.input.csv_in(conn_instance, 'component.input.csv_in', trans_instance, cmp.row_limit, cmp.csv_params and eval(cmp.csv_params) or {})
+            val =etl.component.input.csv_in(conn_instance, cmp.row_limit, cmp.csv_params and eval(cmp.csv_params) or {},'component.input.csv_in', trans_instance)
         
             
         return val

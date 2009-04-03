@@ -29,21 +29,22 @@ class etl_connector_sql(osv.osv):
     _inherit='etl.connector'
     
     _columns={
-              'host' : fields.char('Host', size=64), 
-              'port' : fields.char('Port', size=64), 
-              'db' : fields.char('Database', size=64), 
-              'uid' : fields.char('User  ID', size=64), 
-              'passwd' : fields.char('Password', size=64), 
-              'con_type' : fields.char('Connection Type', size=64), 
-              'sslmode' : fields.boolean('Allow SSL Mode'), 
+          'host' : fields.char('Host', size=64), 
+          'port' : fields.char('Port', size=64), 
+          'db' : fields.char('Database', size=64), 
+          'uid' : fields.char('User  ID', size=64), 
+          'passwd' : fields.char('Password', size=64), 
+          'sql_con_type' : fields.selection([('postgres','Postgres'),('mysql','MySQL'),('oracle','Oracle')], 'Connection Type'),
+          'sslmode' : fields.boolean('Allow SSL Mode'), 
     }
     
     def create_instance(self, cr, uid, id , context={}, data={}):
         val=super(etl_connector_sql, self).create_instance(cr, uid, id, context, data)
         con=self.browse(cr, uid, id)        
-        if con.type == 'sql_connector':
+        if con.type == 'sql':
+            sslmode=False
             if con.sslmode: sslmode = 'allow'
-            val = connector.sql_connector(con.host, con.port, con.db, con.uid, con.passwd, sshmode , con.con_type)            
+            val = connector.sql_connector(con.host, con.port, con.db, con.uid, con.passwd, sslmode , con.sql_con_type)            
         return val
         
 etl_connector_sql()
