@@ -81,10 +81,10 @@ class transformer(object):
                      str(self)+' : '+str(e))
         return None
 
-    def transform(self,data):                
+    def transform(self,data):               
         # TODO : TO check : data and description should have same keys.        
-        try:                    
-            for column in data:                
+        try:                   
+            for column in data:               
                 if column in self.description:
                     transform_method=self.description[column] and self._transform_method[self.description[column]]                    
                     data[column]=data[column] and transform_method(data[column]) or data[column]                   

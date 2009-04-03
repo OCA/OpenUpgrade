@@ -3,7 +3,7 @@
 <data>
 
     <menuitem name="Campaigns" id="menu_dm_config_campaign" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
-    <menuitem name="Customers Lists" id="menu_dm_config_camp_custlist" parent="dm.menu_dm_config_campaign" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
+    <menuitem name="Customers Lists" id="menu_dm_config_custlist" parent="dm.menu_dm_config" groups="res_groups_offeradmin,res_groups_campaignadmin" sequence="1"/>
     <menuitem name="Campaigns" id="menu_dm_campaign" parent="menu_dm" sequence="4"/>
     <menuitem name="Low Level" id="menu_dm_config_lowlevel" parent="dm.menu_dm_config" groups="res_groups_dmadmin" sequence="0"/>
     <menuitem name="Campaign Documents" id="menu_dm_config_lowlevel_campaign_doc" parent="dm.menu_dm_config_lowlevel" groups="res_groups_dmadmin" sequence="1"/>
@@ -1113,7 +1113,7 @@
         <field name="context">{'category':'Broker'}</field>
     </record>
 
-    <menuitem id="menu_action_campaign_broker_form" parent="dm.menu_dm_config_camp_custlist" action="action_campaign_broker_form" sequence="0"/>
+    <menuitem id="menu_action_campaign_broker_form" parent="dm.menu_dm_config_custlist" action="action_campaign_broker_form" sequence="0"/>
 
     <record model="ir.actions.act_window" id="action_campaign_duplicator_form">
         <field name="name">All Deduplicator</field>
@@ -1125,7 +1125,7 @@
         <field name="domain">[('category_id','like','Deduplicator')]</field>
         <field name="context">{'category':'Deduplicator'}</field>
     </record>
-    <menuitem id="menu_action_campaign_duplicator_form" parent="dm.menu_dm_config_camp_custlist" action="action_campaign_duplicator_form"/>
+    <menuitem id="menu_action_campaign_duplicator_form" parent="dm.menu_dm_config_custlist" action="action_campaign_duplicator_form"/>
 
 
     <!--
@@ -1307,7 +1307,7 @@
         <field name="view_id" ref="view_dm_customers_list_tree"/>
     </record>
 
-    <menuitem id="menu_action_dm_customers_list" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_list" sequence="1" />
+    <menuitem id="menu_action_dm_customers_list" parent="dm.menu_dm_config_custlist" action="action_dm_customers_list" sequence="1" />
 
     <!--
     =======================================================
@@ -1348,7 +1348,7 @@
         <field name="view_id" ref="view_dm_customers_list_type_tree"/>
     </record>
 
-    <menuitem id="menu_action_dm_customers_list_type" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_list_type" sequence="1" />
+    <menuitem id="menu_action_dm_customers_list_type" parent="dm.menu_dm_config_custlist" action="action_dm_customers_list_type" sequence="1" />
 
     <!--
     =======================================================
@@ -1389,7 +1389,7 @@
         <field name="view_id" ref="view_dm_customers_list_recruit_origin_tree"/>
     </record>
 
-    <menuitem id="menu_action_dm_customers_list_recruit_origin" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_list_recruit_origin" sequence="1" />
+    <menuitem id="menu_action_dm_customers_list_recruit_origin" parent="dm.menu_dm_config_custlist" action="action_dm_customers_list_recruit_origin" sequence="1" />
 
     <!--
     =======================================================
@@ -1476,6 +1476,47 @@
     <menuitem id="menu_action_dm_campaign_document" parent="menu_dm_config_lowlevel_campaign_doc" action="action_dm_campaign_document" sequence="1" />
 
     <!--
+        =======================================================
+        customer file source
+         =======================================================
+    -->
+    <record model="ir.ui.view" id="dm_customers_file_source_form">
+        <field name="name">dm.customers_file.source.form</field>
+        <field name="model">dm.customers_file.source</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Customer File Source">
+                <field name="name" select="1"/>
+                <field name="code" select="1"/>
+                <field name="desc" select="1"/>
+            </form>
+        </field>
+    </record>
+    
+    <record model="ir.ui.view" id="view_dm_customers_file_source_tree">
+        <field name="name">dm.customers_file.source.tree</field>
+        <field name="model">dm.customers_file.source</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Customer File Sources">
+                <field name="name" />
+                <field name="code" />
+            </tree>
+        </field>
+    </record>
+    
+    <record model="ir.actions.act_window" id="action_dm_customers_file_source_form">
+        <field name="name">All Customer File Sources</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.customers_file.source</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_customers_file_source_tree"/>
+    </record>
+
+
+    <menuitem id="menu_action_view_dm_customers_file_source_form" parent="dm.menu_dm_config_custlist" action="action_dm_customers_file_source_form"/>
+
+    <!--
     =======================================================
     CUSTOMERS FILE
     =======================================================
@@ -1515,7 +1556,10 @@
                     </field>
                     </page>
                     <page string="Addresses">
-                        <field name="address_ids" colspan="4" nolabel="1"/>
+                        <field name="source_id" widget="selection"/>
+                        <group colspan="4" attrs="{'invisible':[('source_id','!=','Partner Addresses')]}">
+                            <field name="address_ids" colspan="4" nolabel="1"/>
+                        </group>
                     </page>
                 </notebook>
             </form>
@@ -1544,7 +1588,9 @@
         <field name="view_id" ref="view_dm_customers_file_tree"/>
     </record>
 
-    <menuitem id="menu_action_dm_customers_file" parent="dm.menu_dm_config_camp_custlist" action="action_dm_customers_file" sequence="2" />
+    <menuitem id="menu_action_dm_customers_file" parent="dm.menu_dm_config_custlist" action="action_dm_customers_file" sequence="2" />
+
+
 
     <!--
     =======================================================
@@ -1650,6 +1696,7 @@
         RELATES
     =======================================================
     -->
+
 
     <act_window name="Commercial Propositions"
         res_model="dm.campaign.proposition"

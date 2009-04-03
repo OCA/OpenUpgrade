@@ -29,7 +29,18 @@ class sugarcrm_in(component):
         This is an ETL Component that use to read data from Sugar CRM
 
     """
-    def __init__(self, sugarcrm_connector, module, row_limit=0, name='componet.input.sugarcrm_in', transformer=False):
+    def __init__(self, sugarcrm_connector, module, name='componet.input.sugarcrm_in', transformer=False, row_limit=0):
+        """ 
+        Required Parameters ::
+    	sugarcrm_connector :  sugarcrm connector.
+        module             : name of the module
+        
+        Extra Parameters ::
+        name        : Name of Component.
+    	transformer  : Transformer object to transform string data into particular type.
+    	row_limit    : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+        """
+
         super(sugarcrm_in, self).__init__(name, transformer=transformer)
         self.module=module
         self.sugarcrm_connector=sugarcrm_connector

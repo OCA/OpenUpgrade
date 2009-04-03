@@ -12,33 +12,16 @@
 			<field name="name">view.etl.component.csv.out.form</field>
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
-				<form string="Csv Out Component">
-					<group colspan="4">
-						<field name="name" select="1" />
-						<field name="type_id"
-							domain="[('name','=','output.csv_out')]" />
-						<field name="transformer_id" colspan="4" />
-					</group>
-					<notebook colspan="4">
-						<page string="Property">
+					<notebook position='inside'>
+						<page string="Property" attrs="{'invisible':[('type_id','!=','output.csv_out')]}">
 							<field name="connector_id" colspan="4"
 								domain="[('type','=','localfile')]" />
 							<field name="row_limit" />
 							<field name="csv_params" />
 						</page>
-						<page string="Transitions Detail">
-							<separator string="Incomming Transitions"
-								colspan="4" />
-							<field name="trans_in_ids" nolabel="1"
-								colspan="4" readonly="1" />
-							<separator string="Outgoing Transitions"
-								colspan="4" />
-							<field name="trans_out_ids" nolabel="1"
-								colspan="4" readonly="1" />
-						</page>
 					</notebook>
-				</form>
 			</field>
 		</record>
 

@@ -20,7 +20,7 @@
 #
 ##############################################################################
 """
-  To perform unique operation.
+ To perform unique operation.
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
  GNU General Public License
@@ -49,9 +49,9 @@ class unique(component):
         unique_datas=[]
         duplicate_datas=[]
         for channel,trans in self.input_get().items():
-            for iterator in trans:                
+            for iterator in trans:             
                 for d in iterator:
-                   if d in unique_datas:                       
+                   if d in unique_datas:                    
                        yield d, "duplicate"		                    
                    else :
                        unique_datas.append(d)
@@ -66,7 +66,7 @@ class unique(component):
         return res   
 
 
-def test():                           
+def test():                        
 
     from etl_test import etl_test
     from etl import transformer

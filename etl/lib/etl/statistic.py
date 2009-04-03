@@ -52,7 +52,7 @@ class statistic(object):
         stat=self.statistics[input_channel]        
         stat['end']=stat_time
         stat['total_time']=stat['end']-stat['start']
-        if total_record:      
+        if total_record:    
             stat['total_records']+=total_record
             stat['record_time']=stat['total_time']/stat['total_records']
             stat['memory']+=0 # TODO : Calculate size of data

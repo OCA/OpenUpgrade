@@ -31,7 +31,7 @@ oracle server
  GNU General Public License
 """
 from etl.connector import connector
-class sql_connector(connector):    
+class sql_connector(connector):   
     def __init__(self, host, port, db, uid, passwd, sslmode='allow', con_type='postgres', name='sql_connector'):
         """
         Required Parameters ::
@@ -40,8 +40,9 @@ class sql_connector(connector):
         db : Database name
         uid : User name to login into Database
         passwd : Password of the user
+                
         Extra Parameters ::
-        sslmode :  For SSL connection
+        sslmode : For SSL connection
         con_type : Type of connection (postgres,mysql, oracle)
         name: Name of the conector
         """
@@ -77,7 +78,7 @@ class sql_connector(connector):
             raise Exception('Not Supported')           
         return connector    
 
-    def close(self, connector):  
+    def close(self, connector): 
         """ 
         Closes a connection to Database Server
         """ 
@@ -91,7 +92,7 @@ class sql_connector(connector):
         res=sql_connector(self.host, self.port, self.db, self.uid, self.passwd, self.sslmode, self.con_type, self.name)        
         return res
 
-def test():    
+def test():   
     #TODO
     pass
 

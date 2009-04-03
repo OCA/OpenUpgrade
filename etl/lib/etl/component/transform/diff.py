@@ -47,6 +47,13 @@ class diff(component):
         * added: return all elements from the second flow that are not in main channel
     """
     def __init__(self, keys,name='component.process.diff'):
+        """
+        Required  Parameters ::
+        keys  : Keys to differenciate
+           
+        Extra Parameters ::
+        name          : Name of Component.
+        """ 
         self.keys = keys
         self.row = {}
         self.diff = []
@@ -98,7 +105,7 @@ class diff(component):
         return res
     
     
-def test():                      
+def test():                     
     from etl_test import etl_test
     from etl import transformer
     input_part = [

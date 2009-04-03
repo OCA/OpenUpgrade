@@ -8,35 +8,6 @@
 		</record>
 	</data>
 	<data>
-		<record id="etl_component_data_count_form" model="ir.ui.view">
-			<field name="name">etl.component.data_count.form</field>
-			<field name="model">etl.component</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Data Count component">
-					<group colspan="4">
-						<field name="name" select="1" />
-						<field name="type_id"
-							domain="[('name','=','control.data_count')]" />
-						<field name="transformer_id" invisible="1"
-							colspan="4" />
-					</group>
-					<notebook colspan="4">
-						<page string="Transitions Detail">
-							<separator string="Incomming Transitions"
-								colspan="4" />
-							<field name="trans_in_ids" nolabel="1"
-								colspan="4" readonly="1" />
-							<separator string="Outgoing Transitions"
-								colspan="4" />
-							<field name="trans_out_ids" nolabel="1"
-								colspan="4" readonly="1" />
-						</page>
-					</notebook>
-				</form>
-			</field>
-		</record>
-
 		<record id="action_etl_component_data_count_tree"
 			model="ir.actions.act_window">
 			<field name="name">Data Count Component</field>
@@ -52,7 +23,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','control.data_count')]</field>
-			<field name="view_id" ref="etl_component_data_count_form" />
+			<field name="view_id" ref="etl_component_form" />
 		</record>
 
 		<record id="action_etl_component_data_count_view1"
@@ -68,7 +39,7 @@
 			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
 			<field name="view_mode">form</field>
-			<field name="view_id" ref="etl_component_data_count_form" />
+			<field name="view_id" ref="etl_component_form" />
 			<field name="act_window_id"
 				ref="action_etl_component_data_count_tree" />
 		</record>

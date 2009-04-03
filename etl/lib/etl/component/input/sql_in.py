@@ -45,11 +45,14 @@ class sql_in(component):
     def __init__(self, sqlconnector, sqlquery, row_limit=0, name='component.input.sql_in', transformer=None):
 
 	""" 
-	Parameters
-	sqlconnector :  Provides  sqlconnector connector to connect with file
-	sqlquery     : TODO
-	transformer  :  Provides transformer object to transform string data into  particular object
-	row_limit    :  Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+	Required Parameters ::
+	sqlconnector :  sqlconnector connector.
+	sqlquery     : SQL Query
+    
+    Extra Parameters ::
+    name        : Name of Component.
+	transformer  : Transformer object to transform string data into particular type.
+	row_limit    : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
 	"""
         super(sql_in, self).__init__(name, transformer=transformer)
 

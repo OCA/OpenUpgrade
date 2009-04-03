@@ -502,7 +502,25 @@ class etl_component(osv.osv):
 
     def create_instance(self, cr, uid, id, context={}, data={}):
         return True
-
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
+        result = super(osv.osv, self).fields_view_get(cr, uid, view_id,view_type,context,toolbar=toolbar)
+        fields=result['fields']
+        from xml import dom, xpath
+        from lxml import etree
+        mydom = dom.minidom.parseString(result['arch'].encode('utf-8'))
+        child_node=mydom.childNodes[0].childNodes
+        for i in range(1,len(child_node)):
+            for node in child_node[i].childNodes:
+                if node.localName=='page':
+                    if node.getAttribute('attrs'):
+                        for key,value in eval(node.getAttribute('attrs')).items():
+                            if result['fields'][ value[0][0]]['type']=='many2one':
+                                obj=result['fields'][ value[0][0]]['relation']
+                                id=self.pool.get(obj).name_search(cr, uid, value[0][2])[0][0]
+                                newattr={key:[(str(value[0][0]),str(value[0][1]),id)]}
+                                node.setAttribute('attrs',str(newattr))
+        result['arch']=mydom.toxml()
+        return result
 etl_component()
 
 

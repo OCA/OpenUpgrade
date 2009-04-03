@@ -43,6 +43,10 @@ class openobject_out(component):
         """
         Paramters :-
         openobject_connector : Openobject connector to connect with openerp server
+        model                : Openobject model name.    
+                
+        Extra Parameters ::
+        name                : Name of Component.
         transformer          : Transformer object to transform string data into particular object.
         fields               : Fields of openobject model.
         model                : Openobject model name.        
@@ -53,7 +57,7 @@ class openobject_out(component):
         self.model=model
         self.name = name
 
-    def process(self):        
+    def process(self):       
         datas = []
         self.fields_keys = None
         for channel, trans in self.input_get().items():

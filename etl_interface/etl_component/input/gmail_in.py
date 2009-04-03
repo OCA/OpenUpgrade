@@ -27,25 +27,24 @@ from osv import osv, fields
 
 class etl_component_gmail_in(osv.osv):
     _name='etl.component'
-    _inherit = 'etl.component'    
+    _inherit = 'etl.component'
 
     _columns={
-              'user' : fields.char('User ID', size=30), 
-              'passwd' : fields.char('Password', size=30, invisible=True), 
-    
+              'user' : fields.char('User ID', size=30),
+              'passwd' : fields.char('Password', size=30, invisible=True),
+
      }
-    
-    def create_instance(self, cr, uid, id, context={}, data={}):     
+
+    def create_instance(self, cr, uid, id, context={}, data={}):
         val=super(etl_component_gmail_in, self).create_instance(cr, uid, id, context, data)
         obj=self.browse(cr, uid, id)
-        print obj.type_id.name 
         if obj.type_id.name=='input.gmail_in':
             usr = obj.user
             passwd =obj.passwd
             val= etl.component.input.gmail_in(usr, passwd, 'component.input.gmail_in'  or {})
         return val
-    
-           
+
+
 etl_component_gmail_in()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

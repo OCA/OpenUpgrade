@@ -34,16 +34,19 @@ class data_filter(component):
     def __init__(self, filter_criteria, name='component.transfer.data_filter', transformer=None):
 
         """ 
-        Parameters ::
-        transformer      :  provides transformer object to transform string data into  particular object
-        filter_crtiteria :  TODO
+        Required Parameters ::
+        filter_crtiteria : Dictonary of Filtering Criteria
+        
+        Extra Parameters ::
+        name             : Name of component
+        transformer      : Transformer object to transform string data into particular type.
         """
         super(data_filter, self).__init__(name, transformer=transformer)         
         self.filter_criteria = filter_criteria          
         self.transformer = transformer
         self.name = name
 
-    def process(self):  
+    def process(self): 
         #TODO : proper handle exception. not use generic Exception class      
         datas = []  
         
@@ -63,11 +66,11 @@ class data_filter(component):
                         
                         if self.transformer:
                             d=self.transformer.transform(d)
-                        if eval(filter):                        
+                        if eval(filter):                       
                            yield d, 'main'
                         else:
                            yield d, 'invalid'
-                    except NameError, e:                          
+                    except NameError, e:                         
                         self.action_error(e)
 
     def __copy__(self):

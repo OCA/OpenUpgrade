@@ -14,42 +14,26 @@
 			<field name="name">view.etl.component.facebook.in.form</field>
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
-				<form string="Facebook -IN Component">
-					<field name="name" select="1" required="1" />
-					<field name="type_id" domain="[('name','=','input.facebook_in')]" />
-					<field name="connector_id" />
-					<field name="transformer_id" />
-					<notebook colspan="4">
-					    <page string="Property">
-					           <separator string="Fields Mapping" colspan="4" />
-								<field name="field_ids" colspan="4" nolabel="1" widget="one2many_list">
-									<tree string="Fields" editable="bottom">
-										<field name="source_field" string="facebook Field"/>
-										<field name="dest_field" string="New Field Name(empty for same)"/>
-									</tree>
-									<form string="Fields">
-										<field name="source_field" string="facebook Field"/>
-										<field name="dest_field" string="New Field Name(empty for same)"/>
-									</form>
-								</field>
-							<separator string="Method" colspan="4" />
-							  <field name="method" nolabel="1" />
-							  <field name="domain" nolabel="0" />
-						</page>
-
-						<page string="Transitions">
-							<separator string="Incomming Transitions"
-								colspan="4" />
-							<field name="trans_in_ids" nolabel="1"
-								colspan="4" readonly="1" />
-							<separator string="Outgoing Transitions"
-								colspan="4" />
-							<field name="trans_out_ids" nolabel="1"
-								colspan="4" readonly="1" />
-						</page>
-					</notebook>
-			</form>
+				<notebook position='inside'>
+					<page string="Property" attrs="{'invisible':[('type_id','!=','input.facebook_in')]}">
+							<field name="connector_id" />
+							<field name="method" required="1"/>
+							<field name="domain" />
+						<separator string="Fields Mapping" colspan="4" />
+							<field name="field_ids" colspan="4" nolabel="1" widget="one2many_list">
+								<tree string="Fields" editable="bottom">
+									<field name="source_field" string="facebook Field"/>
+									<field name="dest_field" string="New Field Name(empty for same)"/>
+								</tree>
+								<form string="Fields">
+									<field name="source_field" string="facebook Field"/>
+									<field name="dest_field" string="New Field Name(empty for same)"/>
+								</form>
+							</field>
+					</page>
+				</notebook>
 			</field>
 		</record>
 

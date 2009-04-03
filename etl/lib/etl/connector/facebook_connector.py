@@ -38,6 +38,7 @@ class facebook_connector(connector):
         Required Parameters ::
         facebook_uri: URI of Facebook server
         email       : Email Address of Facebook User
+                
         Extra Parameters ::
         password    : Password
         delay_time  : Time in sec which is use to wait for login when open login page in browser
@@ -112,7 +113,7 @@ class facebook_connector(connector):
             rows = facebook.pages.getInfo(uid=facebook.uid, fields=['name','written_by']) #Todo : add more fields
         #  fields_pages = 'name', 'written_by', 'website', 'location (street, city, state, country, zip)', 'founded', 'products', 'produced_by'...etc
 
-        # tobe test :  photos.get, photos.getAlbums, status.get , links.get
+        # tobe test : photos.get, photos.getAlbums, status.get , links.get
         if method=='get_user_photos':
             rows = facebook.photos.get(subj_id=facebook.uid)
         if method=='get_user_albums':

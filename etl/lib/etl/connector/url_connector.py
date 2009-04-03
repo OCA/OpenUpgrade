@@ -37,6 +37,7 @@ class url_connector(connector):
         """ 
         Required Parameters ::
         uri      : Path of file
+                
         Extra Parameters ::
         bufsize  : Bufsize for reading data
         encoding : Encoding format

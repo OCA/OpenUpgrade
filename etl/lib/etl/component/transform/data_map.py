@@ -34,9 +34,13 @@ class map(component):
 
     def __init__(self, map_criteria, preprocess=None, name='component.transfer.map', transformer=None):
         """ 
-        Parameters ::        transformer   :  provides transformer object to transform string data into  particular object
-        map_criteria  :  TODO
-        preprocess    :  TODO
+        Required Parameters ::   
+        map_criteria  :  Mapping criteria
+        
+        Extra Parameters ::
+        name          : name of the component
+        transformer   : Transformer object to transform string data into  particular object
+        preprocess    : TODO
         """
         
         super(map, self).__init__(name, transformer=transformer)

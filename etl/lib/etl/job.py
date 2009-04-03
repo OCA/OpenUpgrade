@@ -32,17 +32,17 @@ class job(signal):
     """
     Base class of ETL job.
     """
-    def action_start(self,key,signal_data={},data={}):                
+    def action_start(self,key,signal_data={},data={}):              
         self.logger.notifyChannel("job", logger.LOG_INFO, 
                      'the '+str(self)+' is start now...')
         return True
   
-    def action_restart(self,key,signal_data={},data={}):            
+    def action_restart(self,key,signal_data={},data={}):          
         self.logger.notifyChannel("job", logger.LOG_INFO, 
                      'the '+str(self)+' is start now...')
         return True
 
-    def action_pause(self,key,signal_data={},data={}):        
+    def action_pause(self,key,signal_data={},data={}):      
         self.logger.notifyChannel("job", logger.LOG_INFO, 
                      'the '+str(self)+' is pause now...')        
         return True
@@ -52,13 +52,13 @@ class job(signal):
                      'the '+str(self)+' is stop now...')    
         return True
 
-    def action_end(self,key,signal_data={},data={}):        
+    def action_end(self,key,signal_data={},data={}):      
         self.logger.notifyChannel("job", logger.LOG_INFO, 
                      'the '+str(self)+' is end now...')              
         
         return True
 
-    def action_copy(self,key,signal_data={},data={}):        
+    def action_copy(self,key,signal_data={},data={}):      
         self.logger.notifyChannel("job", logger.LOG_INFO, 
                      'the '+str(self)+' is coping now...')
         return True
@@ -78,7 +78,7 @@ class job(signal):
         self.signal_connect(self,'copy',self.action_copy)
         self.logger = logger.logger()
 
-    def __str__(self):     
+    def __str__(self):   
         #TODO : return complete print of the job (all components and transitions)
         return str(self.name)
     
@@ -98,7 +98,7 @@ class job(signal):
         """        
         return pickle.dumps(self)
         
-    def read(self,value):   
+    def read(self,value): 
         """
         Read job instance value from pickle object
         Parameter :
@@ -106,7 +106,7 @@ class job(signal):
         """     
         return pickle.load(value)
       
-    def pause(self):         
+    def pause(self):       
         for output in self.outputs:
             output.action_stop(self)        
         self.status='stop'
@@ -133,7 +133,7 @@ class job(signal):
         self.status='start'
         self.signal('start')
         for c in self.outputs:
-            for a in c.channel_get():                
+            for a in c.channel_get():              
                 pass 
         self.status='end'
         self.signal('end')

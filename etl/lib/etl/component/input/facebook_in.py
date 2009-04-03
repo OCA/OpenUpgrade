@@ -41,12 +41,25 @@ class facebook_in(component):
     """
 
     def __init__(self, facebook_connector, method, domain=[], fields=['name'], name='component.input.facebook_in', transformer=None, row_limit=0):
+        """ 
+        Required  Parameters ::
+        facebook_connector : Facebook connector
+        method        : Name of the method which is going to be called to connector to fetch data from facebook.
+        domain             : Domain List to put domain.
+        fields             : Fields List.
+        
+        Extra Parameters ::
+        name         : Name of Component
+        transformer   : Transformer object to transform string data into  particular object
+        row_limit     : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+        """
         super(facebook_in, self).__init__(name, transformer=transformer)
         self.facebook_connector = facebook_connector
         self.method=method
         self.domain=domain
         self.fields=fields
-        self.row_limit=row_limit # to be check
+        self.row_limit=row_limit
+        self.name = name
 
     def process(self):
         facebook=self.facebook_connector.open()
@@ -58,6 +71,9 @@ class facebook_in(component):
                 yield row, 'main'
 
     def __copy__(self):
+        """
+        Overrides copy method
+        """
         res=facebook_in(self.facebook_connector, self.method, self.domain, self.fields, self.name, self.transformer, self.row_limit)
         return res
 

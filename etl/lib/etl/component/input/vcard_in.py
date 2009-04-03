@@ -30,10 +30,14 @@ GNU General Public License
 from etl.component import component
 
 class vcard_in(component):
-    def __init__(self,fileconnector,name='component.input.vcard_in'):
-        """
-        Parameters ::
-        fileconnector : It is a required field and it provides  local file connector to connect with file.
+
+    def __init__(self,fileconnector,name='component.input.csv_in'):
+    	"""
+    	Required Parameters ::
+    	fileconnector : Local file connector to connect with file.
+
+        Extra Parameters ::
+        name          : Name of Component.
         """
         super(vcard_in, self).__init__(name)
         self.fileconnector = fileconnector             

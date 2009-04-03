@@ -37,15 +37,18 @@ class csv_in(component):
     * .* : return the main flow with data from csv file
     """
 
-    def __init__(self,fileconnector,row_limit=0, csv_params={},name='component.input.csv_in',transformer=None):    
+    def __init__(self,fileconnector,row_limit=0, csv_params={},name='component.input.csv_in',transformer=None):   
         """    
-        Parameters::
-        fileconnector :  provides  localfile connector to connect with file
-        transformer   :  provides transformer object to transform string data into  particular object
-        row_limit     :  Limited records send to destination if row limit specified. If row limit is 0,all records are send.
-        csv_param     :  To specify other csv parameter like fieldnames , restkey , restval etc. 
+        Required  Parameters ::
+        fileconnector :  localfile connector.
+        
+        Extra Parameters ::
+        name          : Name of Component.
+        transformer   : Transformer object to transform string data into  particular object
+        row_limit     : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+        csv_param     : To specify other csv parameter like fieldnames , restkey , restval etc. 
         """
-        super(csv_in, self).__init__(name,transformer=transformer)
+        super(csv_in, self).__init__(name, transformer=transformer)
         self.fileconnector = fileconnector
         self.csv_params=csv_params
         self.row_limit=row_limit           
@@ -64,16 +67,13 @@ class csv_in(component):
                     data=self.transformer.transform(data)
                 if data:
                     yield data,'main'
-
-        except StopIteration,e:
-            self.fileconnector.close(fp)
-            self.signal('end')
+            self.fileconnector.close(fp)        
         except TypeError,e:
             self.signal('error',{'data':self.data,'type':'exception','error':str(e)})            
         except IOError,e:
             self.signal('error',{'data':self.data,'type':'exception','error':str(e)}) 
 
-    def __copy__(self):        
+    def __copy__(self):       
         res= csv_in(self.fileconnector , self.row_limit, self.csv_params,self.name, self.transformer)
         return res
 

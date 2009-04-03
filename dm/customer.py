@@ -137,7 +137,7 @@ class dm_workitem(osv.osv):
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step', select="1", ondelete="cascade"),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', select="1", ondelete="cascade"),
-        'customer_id' : fields.many2one('res.partner', 'Customer', select="1", ondelete="cascade"),
+        'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
         'action_time' : fields.datetime('Action Time'),
         'error_msg' : fields.text('Error Message'),
         'state' : fields.selection([('pending','Pending'),('error','Error'),('cancel','Cancel'),('done','Done')], 'Status', readonly=True),
@@ -242,7 +242,6 @@ class dm_customer_segmentation(osv.osv):
         return id
 
 dm_customer_segmentation()
-
 
 TEXT_OPERATORS = [
     ('like','like'),

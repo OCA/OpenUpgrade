@@ -14,17 +14,11 @@
 			<field name="name">view.etl.component.openobject.in.form</field>
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
-				<form string="Open Object-IN Component">
-					<field name="name" select="1" required="1" />
-					<field name="connector_id" required="1" />
-					<field name="model_id" required="1" />
-					<field name="transformer_id" />
-					<field name="type_id"
-						domain="[('name','=','input.openobject_in')]" />
-					<notebook colspan="4">
-						<page string="Fields To Load">
-								<field name="field_ids" colspan="4" nolabel="1" widget="one2many_list">
+				<notebook position='inside'>
+						<page string="Property" attrs="{'invisible':[('type_id','!=','input.openobject_in')]}">
+							<field name="field_ids" colspan="4" nolabel="1" widget="one2many_list">
 									<tree string="Fields" editable="bottom">
 										<field name="source_field" string="Openobject Field"/>
 										<field name="dest_field" string="New Field Name(empty for same)"/>
@@ -35,18 +29,7 @@
 									</form>
 								</field>
 						</page>
-						<page string="Transitions">
-							<separator string="Incomming Transitions"
-								colspan="4" />
-							<field name="trans_in_ids" nolabel="1"
-								colspan="4" readonly="1" />
-							<separator string="Outgoing Transitions"
-								colspan="4" />
-							<field name="trans_out_ids" nolabel="1"
-								colspan="4" readonly="1" />
-						</page>
 					</notebook>
-				</form>
 			</field>
 		</record>
 

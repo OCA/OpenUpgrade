@@ -34,10 +34,10 @@ class connector(signal):
     """
     def action_open(self, key, signal_data={}, data={}):
         """
-        Parameters::
-        key :  Provides Key for connector
-        signal_data   :  Data sent by signal
-        data     :  Other common data between all methods
+        Parameters ::
+        key : Key for connector
+        signal_data   : Data sent by signal
+        data     : Other common data between all methods
         """
         self.logger.notifyChannel("connector", logger.LOG_INFO,
                      'the '+str(self)+' is open now...')
@@ -55,8 +55,8 @@ class connector(signal):
 
     def __init__(self,name='connector'):
         """
-        Parameters::
-        name :  Name of the connector
+        Parameters ::
+        name : Name of the connector
         """
         super(connector, self).__init__()
         self.name=name
@@ -71,8 +71,8 @@ class connector(signal):
         self.signal('open')
     def close(self,connector=False):
         """
-        Parameters::
-        connector :  Connector that is to be closed
+        Parameters ::
+        connector : Connector that is to be closed
         """
         self.status='close'
         self.signal('close')

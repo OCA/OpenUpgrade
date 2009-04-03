@@ -36,9 +36,13 @@ class join(map):
     def __init__(self, map_criteria, join_keys={}, name='component.transfer.join', transformer=None):
 
         """
-        Parameters ::        
-        map_criteria  :TODO 
-        transformer   :  provides transformer object to transform string data into  particular object
+        Required Parameters ::      
+        map_criteria  :  Mapping criteria
+        
+        Extra Parametrs  ::
+        name          : name of the component 
+        join_keys     :
+        transformer   : Transformer object to transform string data into  particular object
         """
         super(map, self).__init__(name, transformer=transformer)
         self.map_criteria = map_criteria
@@ -46,12 +50,12 @@ class join(map):
         self.transformer = transformer
         self.name = name
         
-        def preprocess(self, channels):            
+        def preprocess(self, channels):          
             res={}
             for chn in join_keys:
                 cdict = {}
                 for iterator in channels[chn]:
-                    for d in iterator:                                                
+                    for d in iterator:                                              
                         cdict[d[join_keys[chn]]] = d
                     res[chn]=cdict            
             return res
