@@ -35,6 +35,7 @@
         'portal_ifbl_data.xml',
     ],
     'demo_xml' : [
+        'portal_ifbl_demo.xml',
     ],
     'update_xml' : [
         'portal_ifbl_view.xml',
