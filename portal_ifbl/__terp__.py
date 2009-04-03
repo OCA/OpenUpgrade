@@ -32,12 +32,12 @@
         'training',
     ],
     'init_xml' : [
-        'portal_training_data.xml',
+        'portal_ifbl_data.xml',
     ],
     'demo_xml' : [
     ],
     'update_xml' : [
-        #'portal_training_view.xml',
+        'portal_ifbl_view.xml',
     ],
     'active' : False,
     'installable' : True,

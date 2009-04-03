@@ -29,7 +29,6 @@
     'category' : 'Profile',
     'depends' : [
         'training',
-        'portal_training',
         'training_exam',
         'training_room',
         'crm',
@@ -40,7 +39,7 @@
         'portal',
         'hr_expense',
         'hr_holidays',
-        'ifbl_portal_partner',
+        'portal_ifbl',
     ],
     'init_xml' : [],
     'update_xml' : [
