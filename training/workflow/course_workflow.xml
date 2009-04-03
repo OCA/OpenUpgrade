@@ -45,34 +45,15 @@
             <field name="flow_stop">True</field>
         </record>
 
-
-        <record model="workflow.transition" id="transition_course_pending">
-            <field name="act_from" ref="activity_course_draft" />
-            <field name="act_to" ref="activity_course_pending" />
-            <field name="signal">signal_pending</field>
-        </record>
-
-        <record model="workflow.transition" id="transition_course_inprogress">
-            <field name="act_from" ref="activity_course_pending" />
-            <field name="act_to" ref="activity_course_inprogress" />
-            <field name="signal">signal_inprogress</field>
-        </record>
-
-        <record model="workflow.transition" id="transition_course_deprecated">
-            <field name="act_from" ref="activity_course_inprogress" />
-            <field name="act_to" ref="activity_course_deprecated" />
-            <field name="signal">signal_deprecate</field>
-        </record>
-
         <record model="res.roles" id="role_course_manager">
             <field name="name">Training - Course Manager</field>
         </record>
 
-        <record model="workflow.transition" id="transition_course_validate">
-            <field name="act_from" ref="activity_course_inprogress" />
+        <record model="workflow.transition" id="transition_course_draft_to_validated">
+            <field name="act_from" ref="activity_course_draft" />
             <field name="act_to" ref="activity_course_validated" />
-            <field name="signal">signal_validate</field>
             <field name="role_id" ref="role_course_manager" />
+            <field name="signal">signal_validate</field>
         </record>
 
         <record model="workflow.transition" id="transition_course_validated_to_pending">
@@ -81,20 +62,26 @@
             <field name="signal">signal_pending</field>
         </record>
 
-        <record model="workflow.transition" id="transition_course_deprecated_to_pending">
-            <field name="act_from" ref="activity_course_deprecated" />
-            <field name="act_to" ref="activity_course_pending" />
-            <field name="signal">signal_pending</field>
-        </record>
-
-        <record model="workflow.transition" id="transition_course_inprogress_to_pending">
-            <field name="act_from" ref="activity_course_inprogress" />
-            <field name="act_to" ref="activity_course_pending" />
-            <field name="signal">signal_pending</field>
-        </record>
-
-        <record model="workflow.transition" id="transition_course_pending_to_draft">
+        <record model="workflow.transition" id="transition_course_pending_to_inprogress">
             <field name="act_from" ref="activity_course_pending" />
+            <field name="act_to" ref="activity_course_inprogress" />
+            <field name="signal">signal_inprogress</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_course_inprogress_to_validated">
+            <field name="act_from" ref="activity_course_inprogress" />
+            <field name="act_to" ref="activity_course_validated" />
+            <field name="signal">signal_validate</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_course_validated_to_deprecated">
+            <field name="act_from" ref="activity_course_validated" />
+            <field name="act_to" ref="activity_course_deprecated" />
+            <field name="signal">signal_deprecate</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_course_deprecated_to_draft">
+            <field name="act_from" ref="activity_course_deprecated" />
             <field name="act_to" ref="activity_course_draft" />
             <field name="signal">signal_draft</field>
         </record>
