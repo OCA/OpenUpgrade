@@ -1020,7 +1020,12 @@ dm_customers_file_source()
 
 class dm_customers_file(osv.osv):
     _name = "dm.customers_file"
-    _description = "A File of addresses delivered by an addresses broker"
+    _description = "A File of addresses"
+
+    _FILE_SOURCES = [
+        ('addresses','Partner Addresses'),
+    ]
+
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
@@ -1028,8 +1033,20 @@ class dm_customers_file(osv.osv):
         'delivery_date' : fields.date('Delivery Date'),
         'address_ids' : fields.many2many('res.partner.address','dm_cust_file_address_rel','cust_file_id','address_id','Customers File Addresses'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'customers_file_id', 'Segments', readonly=True),
-        'source_id' :fields.many2one('dm.customers_file.source', 'Customers File Source'),
+#        'source_id' :fields.many2one('dm.customers_file.source', 'Customers File Source'),
+        'source' : fields.selection(_FILE_SOURCES, 'Source', required=True),
+#        'source_name_id' :fields.related('source_id','name', string='Customers File Source Name', type="char"),
     }
+    _defaults =  {
+        'source': lambda *a: 'addresses',
+    }
+
+#    def onchange_source(self, cr, uid, ids, source_id, context=None):
+#        obj = self.pool.get('dm.customers_file.source').browse(cr,uid,source_id,context=context)
+#        print "XXXXX",obj
+#        print "XXXXX",obj.name
+#        return {'value':{'source_name_id':obj.name}}
+
 dm_customers_file()
 
 class dm_campaign_proposition_segment(osv.osv):

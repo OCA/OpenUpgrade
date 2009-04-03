@@ -134,23 +134,30 @@ dm_customer_gender()
 class dm_workitem(osv.osv):
     _name = "dm.workitem"
     _description = "workitem"
+
+    _SOURCES = [('address_id','Partner Address')]
+
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step', select="1", ondelete="cascade"),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', select="1", ondelete="cascade"),
         'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
         'action_time' : fields.datetime('Action Time'),
+        'source' : fields.selection(_SOURCES, 'Source', required=True),
         'error_msg' : fields.text('Error Message'),
-        'state' : fields.selection([('pending','Pending'),('error','Error'),('cancel','Cancel'),('done','Done')], 'Status', readonly=True),
+        'state' : fields.selection([('pending','Pending'),('error','Error'),('cancel','Cancel'),('done','Done')], 'Status'),
     }
     _defaults = {
+        'source': lambda *a: 'address_id',
         'state': lambda *a: 'pending',
     }
 
     def run(self, cr, uid, wi, context={}):
+        print "Calling run"
         context['active_id'] = wi.id
         done = False
         try:
             server_obj = self.pool.get('ir.actions.server')
+            print "Calling run for : ",wi.step_id.action_id.server_action_id.name
             res = server_obj.run(cr, uid, [wi.step_id.action_id.server_action_id.id], context)
             self.write(cr, uid, [wi.id], {'state': 'done'})
             done = True
@@ -167,10 +174,12 @@ class dm_workitem(osv.osv):
         return super(dm_workitem, self).__init__(*args)
 
     def check_all(self, cr, uid, context={}):
+        print "Calling check all"
         if not self.is_running:
             self.is_running = True
             ids = self.search(cr, uid, [('state','=','pending'),
                 ('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
+            print "WI to process : ",ids
             for wi in self.browse(cr, uid, ids, context=context):
                 self.run(cr, uid, wi, context=context)
             self.is_running = False

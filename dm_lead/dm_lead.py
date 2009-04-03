@@ -19,11 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import time
-import datetime
-import warnings
-import netsvc
-from mx import DateTime
 
 from osv import fields
 from osv import osv
@@ -32,18 +27,24 @@ from osv import osv
 class dm_customers_file(osv.osv):
     _inherit = "dm.customers_file"
 
-    _columns = {
-                'case_ids' : fields.many2many('crm.case','crm_case_customer_file_rel','lead_id','cust_file_id','CRM Leads')
-            }
+    def __init__(self, *args):
+        self._FILE_SOURCES.append(('crm_cases','CRM Cases'))
+        return super(dm_customers_file, self).__init__(*args)
 
+    _columns = {
+                'case_ids' : fields.many2many('crm.case','crm_case_customer_file_rel','case','cust_file_id','CRM Cases')
+            }
 dm_customers_file()
 
 class dm_workitem(osv.osv):
     _inherit = "dm.workitem"
 
-    _columns = {
-                'case_id' : fields.many2one('crm.case','CRM Leads')
-            }
+    def __init__(self, *args):
+        self._SOURCES.append(('case_id','CRM Case'))
+        return super(dm_workitem, self).__init__(*args)
 
+    _columns = {
+                'case_id' : fields.many2one('crm.case','CRM Case')
+            }
 dm_workitem()
 
