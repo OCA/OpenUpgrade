@@ -29,28 +29,28 @@ class etl_connector_openobject(osv.osv):
     _inherit='etl.connector'
     
     _columns={
-              'uri' : fields.char('URL Path', size=64), 
-              'db' : fields.char('Database', size=64), 
-              'login' : fields.char('Login Name', size=64), 
-              'passwd' : fields.char('Password', size=64), 
-              'obj' : fields.char('Object', size=64), 
-              'con_type' : fields.char('Connection Type', size=64), 
+          'uri' : fields.char('URL Path', size=64), 
+          'db' : fields.char('Database', size=64), 
+          'login' : fields.char('Login Name', size=64), 
+          'passwd' : fields.char('Password', size=64), 
+          'obj' : fields.char('Object', size=64), 
+          'openobject_con_type' : fields.selection([('xmlrpc','XML-RPC'),('socket','Socket')], 'Connection Type') 
     }
     
     
-    def onchange_type(self, cr, uid,ids, type):
-        res=super(etl_connector_openobject, self).onchange_type(cr,uid,ids,type)
+    def onchange_type(self, cr, uid, ids, type):
+        res=super(etl_connector_openobject, self).onchange_type(cr,uid, ids, type)
         val=res.get('value',{})
-        if type and type=='openobject_connector':
+        if type and type=='openobject':
             val['obj']= '/xmlrpc/object'
-            val['con_type']= 'xmlrpc'                
+            val['openobject_con_type']= 'xmlrpc'                
         return {'value':val}
         
     def create_instance(self, cr, uid, id , context={}, data={}):
         val = super(etl_connector_openobject, self).create_instance(cr, uid, id, context, data)
         con=self.browse(cr, uid, id)
-        if con.type == 'openobject_connector':
-            val = etl.connector.openobject_connector(con.uri, cr.dbname, con.login, con.passwd, con.obj, con.con_type) 
+        if con.type == 'openobject':
+            val = etl.connector.openobject_connector(con.uri, cr.dbname, con.login, con.passwd, con.obj, con.openobject_con_type) 
         return val
         
 etl_connector_openobject()

@@ -1556,9 +1556,16 @@
                     </field>
                     </page>
                     <page string="Addresses">
-                        <field name="source_id" widget="selection"/>
-                        <group colspan="4" attrs="{'invisible':[('source_id','!=','Partner Addresses')]}">
+                        <group colspan="4">
+                            <field name="source" colspan="2"/>
+                        </group>
+                        <group colspan="4" attrs="{'invisible':[('source','!=','addresses')]}">
+                            <separator string="Partner Addresses" colspan="4"/>
                             <field name="address_ids" colspan="4" nolabel="1"/>
+                        </group>
+                        <group colspan="4" attrs="{'invisible':[('source','!=','crm_cases')]}">
+                            <separator string="CRM Cases" colspan="4"/>
+                            <field name="case_ids" colspan="4" nolabel="1"/>
                         </group>
                     </page>
                 </notebook>

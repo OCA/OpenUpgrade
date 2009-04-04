@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
-        <record id="comp_input_sql_in" model="etl.component.type">
-			<field name="name">input.sql_in</field>
-			<field name="code">input.sql_in</field>
-		</record>
-    </data>
 	<data>
-
 		<record id="etl_component_sql_in_form" model="ir.ui.view">
 			<field name="name">etl.component.sql.in.form</field>
 			<field name="model">etl.component</field>
@@ -16,7 +9,6 @@
 			<field name="arch" type="xml">
 					<notebook position='inside'>
                        <page string="Property" attrs="{'invisible':[('type_id','!=','input.sql_in')]}">
-                            <field name="connector_id"  domain="[('type','=','sql_connector')]"/>
     					    <field name="row_limit" />
                         </page>
                     </notebook>
@@ -30,6 +22,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','input.sql_in')]</field>
+			<field name="context">{'type_id':'input.sql_in'}</field>
 		</record>
 
 		<record id="action_etl_component_sql_in_form" model="ir.actions.act_window">
@@ -38,6 +31,7 @@
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','input.sql_in')]</field>
 			<field name="view_id" ref="etl_component_sql_in_form" />
+			<field name="context">{'type_id':'input.sql_in'}</field>
 		</record>
 
 		<record id="action_etl_component_sql_in_view1" model="ir.actions.act_window.view">
@@ -55,11 +49,9 @@
 				ref="action_etl_component_sql_in_tree" />
 		</record>
 
-
 		<menuitem name="SQL" parent="etl_interface.menu_etl_component_input_form"
 			action="action_etl_component_sql_in_tree"
 			id="menu_etl_jd_c_ic_sid_form" />
 
 	</data>
 </openerp>
-

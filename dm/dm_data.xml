@@ -100,6 +100,7 @@
             <field name="code" eval="&quot;Phone&quot;"/>
         </record>
 
+
         <!-- Campaign Types -->
 
         <record id="dm_campaign_type_loyalty" model="dm.campaign.type">
@@ -933,6 +934,8 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="args" eval="'()'"/>
         </record>
     </data>
+
+<!--
     <data>
         <record id="dm_customers_file_source_address" model="dm.customers_file.source">
             <field eval="&quot;&quot;&quot;Partner Addresses&quot;&quot;&quot;" name="name"/>
@@ -941,9 +944,19 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     </data>
     <data>
         <record id="dm_customers_file_source_etls" model="dm.customers_file.source">
-            <field eval="&quot;&quot;&quot;ETLS&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;etls&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;ETL&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;etl&quot;&quot;&quot;" name="code"/>
         </record>
     </data>
+-->
 
+    <!-- Workitem Source -->
+<!--
+    <data>
+        <record model="dm.workitem.source" id="wi_source_address">
+            <field name="name" eval="&quot;Partner Address&quot;"/>
+            <field name="code" eval="&quot;address_id&quot;"/>
+        </record>
+    </data>
+-->
 </openerp>

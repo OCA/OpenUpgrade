@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data noupdate="1">
-		<record id="comp_input_facebook_in"
-			model="etl.component.type">
-			<field name="name">input.facebook_in</field>
-			<field name="code">input.facebook_in</field>
-		</record>
-	</data>
 	<data>
-
 		<record id="etl_component_facebook_in_form"
 			model="ir.ui.view">
 			<field name="name">view.etl.component.facebook.in.form</field>
@@ -18,20 +10,19 @@
 			<field name="arch" type="xml">
 				<notebook position='inside'>
 					<page string="Property" attrs="{'invisible':[('type_id','!=','input.facebook_in')]}">
-							<field name="connector_id" />
-							<field name="method" required="1"/>
-							<field name="domain" />
+						<field name="method" attrs="{'required':[('type_id','=','input.facebook_in')]}"/>
+						<field name="domain"/>
 						<separator string="Fields Mapping" colspan="4" />
-							<field name="field_ids" colspan="4" nolabel="1" widget="one2many_list">
-								<tree string="Fields" editable="bottom">
-									<field name="source_field" string="facebook Field"/>
-									<field name="dest_field" string="New Field Name(empty for same)"/>
-								</tree>
-								<form string="Fields">
-									<field name="source_field" string="facebook Field"/>
-									<field name="dest_field" string="New Field Name(empty for same)"/>
-								</form>
-							</field>
+						<field name="field_ids" colspan="4" nolabel="1" widget="one2many_list">
+							<tree string="Fields" editable="bottom">
+								<field name="source_field" string="facebook Field"/>
+								<field name="dest_field" string="New Field Name(empty for same)"/>
+							</tree>
+							<form string="Fields">
+								<field name="source_field" string="facebook Field"/>
+								<field name="dest_field" string="New Field Name(empty for same)"/>
+							</form>
+						</field>
 					</page>
 				</notebook>
 			</field>
@@ -44,6 +35,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','input.facebook_in')]</field>
+            <field name="context">{'type_id':'input.facebook_in'}</field>
 		</record>
 
 		<record id="action_etl_component_facebook_in_from"
@@ -52,6 +44,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','input.facebook_in')]</field>
+            <field name="context">{'type_id':'input.facebook_in'}</field>
 			<field name="view_id"
 				ref="etl_component_facebook_in_form" />
 		</record>
@@ -81,7 +74,5 @@
 			parent="etl_interface.menu_etl_component_input_form"
 			id="menu_etl_jd_c_ic_facebook_form" />
 
-
 	</data>
 </openerp>
-

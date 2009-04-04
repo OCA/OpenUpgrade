@@ -10,43 +10,52 @@ from base_report_designer.wizard.tiny_sxw2rml import sxw2rml
 import os
 import netsvc
 from report import interface ,report_sxw
-from osv import osv
 import time
 from customer_function import customer_function
 
-
 def generate_reports(cr,uid,obj,report_type,context):
-    customer_id = obj.customer_id.id
+
+    print "Calling generate_reports from wi : ", obj.id
+    print "Calling generate_reports source code : ", obj.source
+    customer_id = getattr(obj, obj.source).id
+    print "customer_id : ",customer_id
+
     step_id = obj.step_id.id
     pool = pooler.get_pool(cr.dbname)
     dm_doc_obj = pool.get('dm.offer.document') 
     report_xml = pool.get('ir.actions.report.xml')
 
-    document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
-
     type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',report_type)])
-
-    vals={'segment_id': obj.segment_id.id, 'name': obj.step_id.code + "_" +str(obj.customer_id.id), 'type_id': type_id[0]}
-
+    vals={'segment_id': obj.segment_id.id, 'name': obj.step_id.code + "_" +str(customer_id), 'type_id': type_id[0]}
     camp_doc  = pool.get('dm.campaign.document').create(cr,uid,vals)
-    
+
+    document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
+    print "Doc id : ",document_id
+
     if document_id :
         report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
+        print "report_ids : ",report_ids
         document_name = dm_doc_obj.read(cr,uid,document_id,['name'])[0]['name']
+        print "Doc name : ",document_name
         if report_ids :
             attachment_obj = pool.get('ir.attachment')
             for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
-                srv = netsvc.LocalService('report.'+report.report_name)
+                print "Report name : ",report.report_name
+                srv = netsvc.LocalService('report.' + report.report_name)
+                print "Report test srv: ", srv
                 context['customer_id'] = customer_id
                 context['document_id'] = document_id[0]
                 report_data,report_type = srv.create(cr, uid, [], {},context)
-                attach_vals={'name' : document_name+ "_" +str(obj.customer_id.id),
-                             'datas_fname' : 'report.'+report.report_name+'.'+report_type ,
+                print "Report data : ",report_data
+                print "Report type : ",report_type
+                attach_vals={'name' : document_name + "_" + str(customer_id),
+                             'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
                              'res_model' : 'dm.campaign.document',
                              'res_id' : camp_doc,
                              'datas': base64.encodestring(report_data),
                              }
-                attachment_obj.create(cr,uid,attach_vals)
+                attach_id = attachment_obj.create(cr,uid,attach_vals)
+                print "Attachement : ",attach_id
     return True
 
 
@@ -103,13 +112,19 @@ def generate_plugin_value(cr, uid, document_id, customer_id, context={}):
 
 class offer_document(rml_parse):
     def __init__(self, cr, uid, name, context):
+        print "Calling offer_document __init__"
+        print "context : ",context
         super(offer_document, self).__init__(cr, uid, name, context)
+        print "Calling offer_document super"
         self.localcontext.update({
             'time': time,
             'document':self.document,
         })
-        self.context = context        
+        print "Calling offer_document localcontext"
+        self.context = context
+
     def document(self):
+        print "Calling document"
         if 'form' not in self.datas :
             customer_id = self.context['customer_id']
             document_id = self.context['document_id']

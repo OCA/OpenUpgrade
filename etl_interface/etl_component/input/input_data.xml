@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="comp_input_csv_in" model="etl.component.type">
+    		<field name="name">input.csv_in</field>
+    		<field name="code">input.csv_in</field>
+    	</record>
+
+        <record id="comp_input_vcard_in" model="etl.component.type">
+			<field name="name">input.vcard_in</field>
+			<field name="code">input.vcard_in</field>
+		</record>
+
+        <record id="comp_input_facebook_in" model="etl.component.type">
+			<field name="name">input.facebook_in</field>
+			<field name="code">input.facebook_in</field>
+		</record>
+
+		<record id="comp_input_excel_in" model="etl.component.type">
+			<field name="name">input.excel_in</field>
+			<field name="code">input.excel_in</field>
+		</record>
+
+		<record id="comp_input_gmail_in" model="etl.component.type">
+			<field name="name">input.gmail_in</field>
+			<field name="code">input.gmail_in</field>
+		</record>
+
+		<record id="comp_input_openobject_in" model="etl.component.type">
+			<field name="name">input.openobject_in</field>
+			<field name="code">input.openobject_in</field>
+		</record>
+
+		<record id="comp_input_sql_in" model="etl.component.type">
+			<field name="name">input.sql_in</field>
+			<field name="code">input.sql_in</field>
+		</record>
+
+		<record id="comp_input_xml_in" model="etl.component.type">
+			<field name="name">input.xml_in</field>
+			<field name="code">input.xml_in</field>
+		</record>
+
+
+    </data>
+</openerp>

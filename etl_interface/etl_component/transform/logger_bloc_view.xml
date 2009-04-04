@@ -1,25 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
-        <record id="comp_transform_logger_bloc" model="etl.component.type">
-			<field name="name">transform.logger_bloc</field>
-			<field name="code">transform.logger_bloc</field>
-	</record>
-    </data>
    <data>
-	<record id="etl_component_logger_bloc_form" model="ir.ui.view">
-	    <field name="name">etl.component.loggerbloc.form</field>
-		<field name="model">etl.component</field>
-		<field name="inherit_id" ref="etl_component_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-                <notebook position='inside'>
-                   <page string="Property" attrs="{'invisible':[('type_id','!=','transform.logger_bloc')]}">
-   						<field name="output_id"  domain="[('type','=','localfile')]"/>
-                  </page>
-             </notebook>
-		</field>
-	</record>
+		<record id="etl_component_logger_bloc_form" model="ir.ui.view">
+		    <field name="name">etl.component.loggerbloc.form</field>
+			<field name="model">etl.component</field>
+			<field name="inherit_id" ref="etl_component_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+	                <notebook position='inside'>
+	                   <page string="Property" attrs="{'invisible':[('type_id','!=','transform.logger_bloc')]}">
+	   						<field name="output_id"  domain="[('type','=','localfile')]"/>
+	                  </page>
+	             </notebook>
+			</field>
+		</record>
 
 		<record id="action_etl_component_logger_bloc_tree"
 			model="ir.actions.act_window">
@@ -53,11 +47,9 @@
 			<field name="act_window_id" ref="action_etl_component_logger_bloc_tree" />
 		</record>
 
-
 		<menuitem name="Logger Bloc" parent="etl_interface.menu_etl_jd_c_pec_form"
             action="action_etl_component_logger_bloc_tree"
 			id="menu_etl_jd_c_pec__logger_bloc_tree" />
 
 	</data>
 </openerp>
-

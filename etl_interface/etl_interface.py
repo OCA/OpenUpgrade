@@ -109,6 +109,17 @@ class etl_connector(osv.osv):
         # logic for super create_instance
         return False
 
+    def search(self,cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
+        if not context:
+            context = {}
+        if 'comp_type' in context and context['comp_type']:
+            cmptype_data = self.pool.get('etl.component.type').browse(cr, user, [context['comp_type']])
+            connector_type = cmptype_data[0].connector_type_id.code or False
+            if connector_type:
+                args.append(('type', '=', connector_type))
+        res=super(etl_connector, self).search(cr, user, args, offset, limit, order, context, count)
+        return res
+
 etl_connector()
 
 
@@ -119,6 +130,7 @@ class etl_component_type(osv.osv):
     _columns={
               'name' : fields.char('Name', size=64, required=True),
               'code' : fields.char('Code', size=24),
+              'connector_type_id' :  fields.many2one('etl.connector.type', 'Connector Type'),
 
     }
 etl_component_type()
@@ -148,8 +160,6 @@ class etl_job(osv.osv):
               'name' : fields.char('Name', size=24, required=True),
               'project_id' : fields.many2one('etl.project', 'ETL Project'),
               'user_id' : fields.many2one('res.users', 'Responsible', size=64),
-              'author' : fields.char('Author', size =50),
-              'is_start' : fields.boolean('Starting Job'),
               'notes' : fields.text('Notes'),
               'component_ids' : fields.one2many('etl.component','job_id','Components'),
               'state' : fields.selection([('draft', 'Draft'), ('open', 'Open'), ('close', 'Close')], 'State', readonly=True),
@@ -214,7 +224,7 @@ class etl_job_process(osv.osv):
 
     _columns = {
               'name' : fields.char('Name', size=64, required=True, readonly=True),
-              'job_id' : fields.many2one('etl.job', 'Job', readonly=True, required=True),
+              'job_id' : fields.many2one('etl.job', 'Job', required=True),
               'start_date' : fields.datetime('Start Date', readonly=True),
               'end_date' : fields.datetime('End Date', readonly=True),
               'schedule_date' : fields.datetime('Scheduled Date', states={'done':[('readonly', True)]}),
@@ -380,20 +390,17 @@ class etl_job_process(osv.osv):
 
     def action_start_process(self, cr, uid, ids, context={}, data={}):
         for process in self.browse(cr, uid, ids, context):
-            try:
-                data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
-                job=self.get_job_instance(cr, uid, process.id, context, data)
-                job.pickle_file=tools.config['root_path']+'/save_job.p'
-                if process.state in ('open', 'exception'):
-                    job.run()
-                elif process.state in ('pause'):
-                    self.write(cr, uid, process.id, {'state':'start', 'start_date':time.strftime('%Y-%m-%d %H:%M:%S')})
-                    job.signal('restart')
-                else:
-                    raise osv.except_osv(_('Error !'), _('Cannot start process in %s state !'%process.state))
-            except Exception, e:
-                self.write(cr, uid, [process.id], {'state' : 'exception', 'error_msg' : e})
-                cr.commit()
+            data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
+            job=self.get_job_instance(cr, uid, process.id, context, data)
+            job.pickle_file=tools.config['root_path']+'/save_job.p'
+            if process.state in ('open', 'exception'):
+                job.run()
+            elif process.state in ('pause'):
+                self.write(cr, uid, process.id, {'state':'start', 'start_date':time.strftime('%Y-%m-%d %H:%M:%S')})
+                job.signal('restart')
+            else:
+                raise osv.except_osv(_('Error !'), _('Cannot start process in %s state !'%process.state))
+
         return True
 
     def action_restart_process(self, cr, uid, ids, context={}, data={}):
@@ -460,14 +467,27 @@ class etl_component(osv.osv):
     _name='etl.component'
     _description = "ETL Component"
     _cache={}
+
+    def _get_type(self,cr,uid,context={}):
+        type_name=context.get('type_id',False)
+        if type_name:
+            obj_type=self.pool.get('etl.component.type')
+            cmp_ids=obj_type.search(cr, uid, [('name','=',type_name)])
+            return len(cmp_ids) and cmp_ids[0] or False
+        return False
+
     _columns={
             'name' : fields.char('Name', size=64, required=True),
             'type_id' : fields.many2one('etl.component.type', 'Component Type', required=True),
+            'connector_id' :  fields.many2one('etl.connector', 'Connector'),
             'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'),
             'trans_in_ids' : fields.one2many('etl.transition', 'destination_component_id', 'Source ID'),
             'trans_out_ids' : fields.one2many('etl.transition', 'source_component_id', 'Destination ID'),
             'job_id' :  fields.many2one('etl.job', 'Job'),
      }
+    _defaults = {
+        'type_id':_get_type,
+    }
 
 
     def get_instance(self, cr, uid, id, context={}, data={}):
@@ -503,7 +523,7 @@ class etl_component(osv.osv):
     def create_instance(self, cr, uid, id, context={}, data={}):
         return True
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
-        result = super(osv.osv, self).fields_view_get(cr, uid, view_id,view_type,context,toolbar=toolbar)
+        result = super(osv.osv, self).fields_view_get(cr, uid, view_id,view_type,context,toolbar)
         fields=result['fields']
         from xml import dom, xpath
         from lxml import etree

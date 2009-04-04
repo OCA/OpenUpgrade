@@ -29,14 +29,12 @@ class etl_component_schema_validation(osv.osv):
     _name='etl.component'
     _inherit='etl.component'
     _columns={
-              'field_name' : fields.boolean('Check Field Name'), 
-              'field_extra' : fields.boolean('Refuse Extra Fields'), 
-              'field_type' : fields.boolean('Check Field Type'), 
-              'field_size' : fields.boolean('Check Field Size'), 
-              'field_format' : fields.boolean('Check Format'), 
-              'not_null' : fields.boolean('Check NOT NULL'), 
-            
+          'field_name' : fields.boolean('Check Field Name'),
+          'field_extra' : fields.boolean('Refuse Extra Fields'),
+          'field_type' : fields.boolean('Check Field Type'),
+          'field_size' : fields.boolean('Check Field Size'),
+          'field_format' : fields.boolean('Check Format'),
+          'not_null' : fields.boolean('Check NOT NULL'),
               }
-
 etl_component_schema_validation()
-
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-	<data noupdate="1">
-		<record id="conn_openobject_connector"
-			model="etl.connector.type">
-			<field name="name">Openobject</field>
-			<field name="code">openobject_connector</field>
-		</record>
-	</data>
+<openerp>	
 	<data>
 
 		<record id="etl_connector_openobject_form" model="ir.ui.view">
@@ -16,13 +9,13 @@
 			<field name="inherit_id" ref="etl_connector_basic_form"/>
 			<field name="arch" type="xml">
 				<notebook position='inside'>
-						<page string="Property" attrs="{'invisible':[('type','!=','openobject_connector')]}">
-							<field name="uri" required="1" select="1"/>
-							<field name="db" required="1"/>
-							<field name="login" required="1"/>
-							<field name="passwd" password="True" required="1"/>
-							<field name="obj" required="1"/>
-							<field name="con_type" required="1"/>
+						<page string="Property" attrs="{'invisible':[('type','!=','openobject')]}">
+							<field name="uri" attrs="{'required':[('type','=','openobject')]}"/>
+							<field name="db" attrs="{'required':[('type','=','openobject')]}"/>
+							<field name="login" attrs="{'required':[('type','=','openobject')]}"/>
+							<field name="passwd" password="True" attrs="{'required':[('type','=','openobject')]}"/>
+							<field name="obj" attrs="{'required':[('type','=','openobject')]}"/>
+							<field name="openobject_con_type" attrs="{'required':[('type','=','openobject')]}"/>
 						</page>
 					</notebook>
 			</field>
@@ -36,7 +29,7 @@
 			<field name="res_model">etl.connector</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-			<field name="domain">[('type','=','openobject_connector')]</field>
+			<field name="domain">[('type','=','openobject')]</field>
 			<field name="view_id"
 				ref="etl_interface.etl_connector_basic_tree" />
 		</record>

@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data noupdate="1">
-		<record id="comp_control_data_count"
-			model="etl.component.type">
-			<field name="name">control.data_count</field>
-			<field name="code">control.data_count</field>
-		</record>
-	</data>
 	<data>
 		<record id="action_etl_component_data_count_tree"
 			model="ir.actions.act_window">
@@ -15,6 +8,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','control.data_count')]</field>
+            <field name="context">{'type_id':'control.data_count'}</field>
 		</record>
 
 		<record id="action_etl_component_data_count_from"
@@ -23,6 +17,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','control.data_count')]</field>
+            <field name="context">{'type_id':'control.data_count'}</field>
 			<field name="view_id" ref="etl_component_form" />
 		</record>
 
@@ -35,6 +30,7 @@
 			<field name="act_window_id"
 				ref="action_etl_component_data_count_tree" />
 		</record>
+
 		<record id="action_etl_component_data_count_view2"
 			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
@@ -43,7 +39,6 @@
 			<field name="act_window_id"
 				ref="action_etl_component_data_count_tree" />
 		</record>
-
 
 		<menuitem name="Data Count"
 			parent="etl_interface.menu_etl_jd_c_control_form"

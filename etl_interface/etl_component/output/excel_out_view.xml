@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data noupdate="1">
-		<record id="comp_input_excel_out" model="etl.component.type">
-			<field name="name">output.excel_out</field>
-			<field name="code">output.excel_out</field>
-		</record>
-	</data>
-
 	<data>
+
 		<record id="etl_component_excel_out_form" model="ir.ui.view">
-			<field name="name">view.etl.component.excel.in.form</field>
+			<field name="name">view.etl.component.excel.out.form</field>
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
 					<notebook position='inside'>
 						<page string="Property" attrs="{'invisible':[('type_id','!=','output.excel_out')]}">
-							<field name="connector_id" select="1" domain="[('type','=','localfile')]"/>
 							<field name="transformer_id" />
 							<field name="row_limit" />
 							<field name="excel_params" />
@@ -31,7 +24,8 @@
 			<field name="res_model">etl.component</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-			<field name="domain">[('type_id.name','=','input.excel_out')]</field>
+			<field name="domain">[('type_id.name','=','output.excel_out')]</field>
+			<field name="context">{'type_id':'output.excel_out'}</field>
 		</record>
 
 		<record id="action_etl_component_excel_out_from"
@@ -40,7 +34,8 @@
 			<field name="name">Excel Out component</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
-			<field name="domain">[('type_id.name','=','input.excel_out')]</field>
+			<field name="domain">[('type_id.name','=','output.excel_out')]</field>
+			<field name="context">{'type_id':'output.excel_out'}</field>
 			<field name="view_id" ref="etl_component_excel_out_form" />
 		</record>
 
@@ -67,7 +62,6 @@
 			action="action_etl_component_excel_out_tree"
 			parent="etl_interface.menu_etl_jd_c_oc_form"
 			id="menu_etl_excel_out_tree" />
-
 
 	</data>
 </openerp>

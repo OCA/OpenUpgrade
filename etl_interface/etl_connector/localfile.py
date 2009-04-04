@@ -29,7 +29,7 @@ class etl_connector_localfile(osv.osv):
     _inherit='etl.connector'
         
     _columns={
-              'uri' : fields.char('URL Path', size=124), 
+              'uri' : fields.char('File Path',size=124), 
               'bufsize' : fields.integer('Buffer Size'), 
     }
     
@@ -37,7 +37,7 @@ class etl_connector_localfile(osv.osv):
         val =  super(etl_connector_localfile, self).create_instance(cr, uid, id, context, data)      
         con=self.browse(cr, uid, id)
         if con.type == 'localfile':            
-            val =  etl.connector.localfile(tools.config['addons_path']+con.uri, con.bufsize, encoding='utf-8')
+            val =  etl.connector.localfile(con.uri, con.bufsize, encoding='utf-8')
         return val
   
 etl_connector_localfile()

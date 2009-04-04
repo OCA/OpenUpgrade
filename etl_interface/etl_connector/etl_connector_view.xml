@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 	<data>
-
 		<record id="etl_connector_type_form" model="ir.ui.view">
 			<field name="name">view.etl.connector.type.form</field>
 			<field name="model">etl.connector.type</field>
@@ -74,7 +73,7 @@
 			</field>
 		</record>
 
-		<record id="action_etl_connector_basic_tree"
+		<!--<record id="action_etl_connector_basic_tree"
 			model="ir.actions.act_window">
 			<field name="name">Connectors</field>
 			<field name="res_model">etl.connector</field>
@@ -99,12 +98,11 @@
 			<field name="view_id" ref="etl_connector_basic_form" />
 			<field name="act_window_id"
 				ref="action_etl_connector_basic_tree" />
-		</record>
+		</record> -->
 
 		<menuitem name="Connectors"
 			parent="etl_interface.menu_etl_configure" sequence="9"
-			action="action_etl_connector_basic_tree" id="etl_connector_all_tree" />
-
+			id="etl_connector_all_tree" />
 
 	</data>
 </openerp>

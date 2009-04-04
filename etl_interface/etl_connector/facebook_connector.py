@@ -38,7 +38,7 @@ class facebook_connector(osv.osv):
     def create_instance(self, cr, uid, id , context={}, data={}):
         val =  super(facebook_connector, self).create_instance(cr, uid, id, context, data)
         con = self.browse(cr, uid, id)
-        if con.type == 'localfile':
+        if con.type == 'facebook':
             val =  etl.connector.facebook_connector('http://facebook.com', 'modiinfo@gmail.com')
         return val
 

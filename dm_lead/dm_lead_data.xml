@@ -1,19 +1,29 @@
 <?xml version="1.0"?>
 <openerp>
 
-	<!-- Transition Trigger -->
+    <!-- Transition Trigger -->
     <data>
-    	<record id="dm_offer_step_transition_new_crm_lead" model="dm.offer.step.transition.trigger">
+        <record id="dm_offer_step_transition_new_crm_lead" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;New CRM Lead&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;crm_lead&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;action&quot;&quot;&quot;" name="type"/>
         </record>
     </data>
+<!--
     <data>
-        <record id="dm_customers_file_source_crm_lead" model="dm.customers_file.source">
-            <field eval="&quot;&quot;&quot;CRM Leads&quot;&quot;&quot;" name="name"/>
-            <field eval="&quot;&quot;&quot;crm_leads&quot;&quot;&quot;" name="code"/>
+        <record id="dm_customers_file_source_crm_case" model="dm.customers_file.source">
+            <field eval="&quot;&quot;&quot;CRM Cases&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;crm_cases&quot;&quot;&quot;" name="code"/>
          </record>
     </data>
+
+
+    <data>
+         <record model="dm.workitem.source" id="wi_source_crm_case">
+            <field name="name" eval="&quot;CRM Case&quot;"/>
+            <field name="code" eval="&quot;case_id&quot;"/>
+         </record>
+   </data>
+   -->
 
 </openerp>
