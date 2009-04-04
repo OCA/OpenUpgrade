@@ -25,6 +25,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','input.excel_in')]</field>
+			<field name="context">{'type_id':'input.excel_in'}</field>
 		</record>
 
 		<record id="action_etl_component_excel_in_from"
@@ -34,6 +35,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','input.excel_in')]</field>
+			<field name="context">{'type_id':'input.excel_in'}</field>
 			<field name="view_id" ref="etl_component_excel_in_form" />
 		</record>
 

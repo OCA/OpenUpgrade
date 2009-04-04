@@ -25,6 +25,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','output.excel_out')]</field>
+			<field name="context">{'type_id':'output.excel_out'}</field>
 		</record>
 
 		<record id="action_etl_component_excel_out_from"
@@ -34,6 +35,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','output.excel_out')]</field>
+			<field name="context">{'type_id':'output.excel_out'}</field>
 			<field name="view_id" ref="etl_component_excel_out_form" />
 		</record>
 

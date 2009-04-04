@@ -52,7 +52,7 @@
 					<group col="6" colspan="4">
 						<field name="name" select="1" />
 						<field name="type_id" select="1" />
-                        <field name="connector_id" colspan="4" select="1" />
+                        <field name="connector_id" context="{'comp_type':type_id}" colspan="4" select="1" />
 					</group>
 					<notebook colspan="4">
 						<page string="Transitions Detail">

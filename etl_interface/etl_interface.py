@@ -108,14 +108,17 @@ class etl_connector(osv.osv):
     def create_instance(self, cr, uid, ids, context={}, data={}):
         # logic for super create_instance
         return False
- 
-    #def search(self,cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
-    #    if not context:
-    #        context = {}        
-    #    if context.get('type',False):
-    #        args.append(('type','=',context['type']))        
-    #    res=super(etl_connector, self).search(cr, user, args, offset, limit, order, context, count)        
-    #    return res
+
+    def search(self,cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
+        if not context:
+            context = {}
+        if 'comp_type' in context and context['comp_type']:
+            cmptype_data = self.pool.get('etl.component.type').browse(cr, user, [context['comp_type']])
+            connector_type = cmptype_data[0].connector_type_id.code or False
+            if connector_type:
+                args.append(('type', '=', connector_type))
+        res=super(etl_connector, self).search(cr, user, args, offset, limit, order, context, count)
+        return res
 
 etl_connector()
 
@@ -127,7 +130,7 @@ class etl_component_type(osv.osv):
     _columns={
               'name' : fields.char('Name', size=64, required=True),
               'code' : fields.char('Code', size=24),
-              'connector_type_id' :  fields.many2one('etl.connector.type', 'Connector Type'), 
+              'connector_type_id' :  fields.many2one('etl.connector.type', 'Connector Type'),
 
     }
 etl_component_type()
@@ -386,7 +389,7 @@ class etl_job_process(osv.osv):
             self.write(cr, uid, process.id, {'state':'open'})
 
     def action_start_process(self, cr, uid, ids, context={}, data={}):
-        for process in self.browse(cr, uid, ids, context):            
+        for process in self.browse(cr, uid, ids, context):
             data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
             job=self.get_job_instance(cr, uid, process.id, context, data)
             job.pickle_file=tools.config['root_path']+'/save_job.p'
@@ -397,7 +400,7 @@ class etl_job_process(osv.osv):
                 job.signal('restart')
             else:
                 raise osv.except_osv(_('Error !'), _('Cannot start process in %s state !'%process.state))
-            
+
         return True
 
     def action_restart_process(self, cr, uid, ids, context={}, data={}):
@@ -476,7 +479,7 @@ class etl_component(osv.osv):
     _columns={
             'name' : fields.char('Name', size=64, required=True),
             'type_id' : fields.many2one('etl.component.type', 'Component Type', required=True),
-            'connector_id' :  fields.many2one('etl.connector', 'Connector'), 
+            'connector_id' :  fields.many2one('etl.connector', 'Connector'),
             'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'),
             'trans_in_ids' : fields.one2many('etl.transition', 'destination_component_id', 'Source ID'),
             'trans_out_ids' : fields.one2many('etl.transition', 'source_component_id', 'Destination ID'),

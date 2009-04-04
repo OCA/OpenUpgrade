@@ -21,6 +21,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','input.vcard_out')]</field>
+			<field name="context">{'type_id':'output.vcard_out'}</field>
 		</record>
 
 		<record id="action_etl_component_vcard_out_from" model="ir.actions.act_window">
@@ -28,6 +29,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','input.vcard_out')]</field>
+			<field name="context">{'type_id':'output.vcard_out'}</field>
 			<field name="view_id" ref="etl_component_form" />
 		</record>
 

@@ -35,6 +35,7 @@
 			<field name="res_model">etl.component</field>
 			<field name="view_mode">tree</field>
 			<field name="domain">[('type_id.name','=','output.openobject_out')]</field>
+			<field name="context">{'type_id':'output.openobject_out'}</field>
 		</record>
 
 		<record id="action_etl_component_open_object_out_form"
@@ -44,6 +45,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','output.openobject_out')]</field>
+			<field name="context">{'type_id':'output.openobject_out'}</field>
 		</record>
 
 		<record id="action_etl_component_open_object_out_view1"
