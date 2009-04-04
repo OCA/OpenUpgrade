@@ -37,11 +37,10 @@ etl_component_openobject_lines()
 class etl_component_open_object_out(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'
-    _columns={
-              'openobject_field_ids' : fields.one2many('etl.component.openobject.lines', 'component_id', 'Fields'),
-              'model_id' : fields.many2one('ir.model', 'Model'),
-              'connector_id' : fields.many2one('etl.connector', 'Connector'),
-    }
+    _columns = {
+          'openobject_field_ids' : fields.one2many('etl.component.openobject.lines', 'component_id', 'Fields'),
+          'model_id' : fields.many2one('ir.model', 'Model'),
+              }
 
     def create_instance(self, cr, uid, id, context={}, data={}):
         val=super(etl_component_open_object_out, self).create_instance(cr, uid, id, context, data)

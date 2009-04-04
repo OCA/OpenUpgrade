@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-     <data noupdate="1">
-        <record id="comp_transform_filter" model="etl.component.type">
-			<field name="name">transform.filter</field>
-			<field name="code">transform.filter</field>
-	</record>
-    </data>
-
 	<data>
 		<record id="etl_transform_filter_form" model="ir.ui.view">
 			<field name="name">etl.component.filter.form</field>

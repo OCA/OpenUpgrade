@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-
-  <data noupdate="1">
-        <record id="comp_transform_schema_validation" model="etl.component.type">
-			<field name="name">transform.merge</field>
-			<field name="code">transform.merge</field>
-		</record>
-    </data>
-
 	<data>
 		<record id="action_etl_component_merge_tree"
 			model="ir.actions.act_window">
@@ -17,7 +9,6 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','transform.merge')]</field>
 		</record>
-
 
 		<record id="action_etl_component_merge_form"
 			model="ir.actions.act_window">

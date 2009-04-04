@@ -32,11 +32,15 @@
     'init_xml': [
          'etl_connector/etl_connector_data.xml',
          'etl_component/control/control_data.xml',
-         'etl_component/input/input_data.xml'
+         'etl_component/input/input_data.xml',
+         'etl_component/output/output_data.xml',
+         'etl_component/transform/transform_data.xml'
      ],
     'update_xml': [
-         'etl_component/control/control_data.xml',
-         'etl_component/input/input_data.xml',
+         'etl_component/control/control_data.xml', #to be remove
+         'etl_component/input/input_data.xml',#to be remove
+         'etl_component/output/output_data.xml',#to be remove
+         'etl_component/transform/transform_data.xml',#to be remove
 
          'etl_interface_sequence.xml',
          'etl_interface_view.xml',
@@ -52,19 +56,21 @@
          'etl_component/input/csv_in_view.xml',
          'etl_component/input/vcard_in_view.xml',
          'etl_component/input/facebook_in_view.xml',
-         #'etl_component/input/sql_in_view.xml',
-         #'etl_component/input/excel_in_view.xml',
-         #'etl_component/input/xml_in_view.xml',
-         #'etl_component/input/openobject_in_view.xml',
+         'etl_component/input/sql_in_view.xml',
+         'etl_component/input/excel_in_view.xml',
+         'etl_component/input/xml_in_view.xml',
+         'etl_component/input/openobject_in_view.xml',
 
-	     #'etl_component/input/gmail_in_view.xml',
+	     'etl_component/input/gmail_in_view.xml',
 
-	     #'etl_component/output/csv_out_view.xml',
-         #'etl_component/output/sql_out_view.xml',
-         #'etl_component/output/openobject_out_view.xml',
-         #'etl_component/output/excel_out_view.xml',
-         #'etl_component/output/xml_out_view.xml',
-         #'etl_component/output/vcard_out_view.xml',
+	     'etl_component/output/csv_out_view.xml',
+         'etl_component/output/sql_out_view.xml',
+         'etl_component/output/openobject_out_view.xml',
+         'etl_component/output/excel_out_view.xml',
+         'etl_component/output/xml_out_view.xml',
+         'etl_component/output/vcard_out_view.xml',
+
+         #'etl_component/transform/data_filter_view.xml',
          #'etl_component/transform/sort_view.xml',
          #'etl_component/transform/map_view.xml',
          #'etl_component/transform/logger_view.xml',

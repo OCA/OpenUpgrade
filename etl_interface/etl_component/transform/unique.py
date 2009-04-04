@@ -26,12 +26,11 @@ from osv import osv, fields
 
 class etl_component_unique(osv.osv):
      _name='etl.component.unique'
-     _rec_neme='key'
+     _rec_name='key'
      _columns={
-      'key' : fields.char('Key', size=30),
-      'key_id' : fields.many2one('etl.component', 'property'),
-
-    }
+          'key' : fields.char('Key', size=30),
+          'key_id' : fields.many2one('etl.component', 'property'),
+              }
 
 etl_component_unique()
 

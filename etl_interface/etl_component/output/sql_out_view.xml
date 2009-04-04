@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data noupdate="1">
-		<record id="comp_output_sql_out" model="etl.component.type">
-			<field name="name">output.sql_out</field>
-			<field name="code">output.sql_out</field>
-		</record>
-	</data>
 	<data>
 		<record id="etl_component_sql_out_form" model="ir.ui.view">
 			<field name="name">etl.component.sql.out.form</field>
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
-					<notebook position='inside'>
-						<page string="Property" attrs="{'invisible':[('type_id','!=','output.excel_out')]}">
-							<field name="connector_id"
-								domain="[('type','=','sql_connector')]" />
-							<field name="row_limit" />
-						</page>
-					</notebook>
+				<notebook position='inside'>
+					<page string="Property" attrs="{'invisible':[('type_id','!=','output.sql_out')]}">
+						<field name="row_limit" />
+					</page>
+				</notebook>
 			</field>
 		</record>
 

@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data noupdate="1">
-		<record id="comp_input_excel_in" model="etl.component.type">
-			<field name="name">input.excel_in</field>
-			<field name="code">input.excel_in</field>
-		</record>
-	</data>
-
 	<data>
+
 		<record id="etl_component_excel_in_form" model="ir.ui.view">
 			<field name="name">view.etl.component.excel.in.form</field>
 			<field name="model">etl.component</field>
@@ -16,7 +10,6 @@
 			<field name="arch" type="xml">
 				<notebook position='inside'>
 					<page string="Property" attrs="{'invisible':[('type_id','!=','input.excel_in')]}">
-						<field name="connector_id" select="1" domain="[('type','=','localfile')]"/>
 						<field name="transformer_id" />
 						<field name="row_limit" />
 						<field name="excel_params" />

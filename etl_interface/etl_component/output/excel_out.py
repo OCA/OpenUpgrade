@@ -29,12 +29,10 @@ from osv import osv, fields
 class etl_component_excel_out(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'
-
     _columns={
-            'connector_id' :  fields.many2one('etl.connector', 'Connector'),
-            'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'),
-            'row_limit' : fields.integer('Limit'),
-            'excel_params' : fields.char('EXCEL Parameters', size=64),
+        'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'),
+        'row_limit' : fields.integer('Limit'),
+        'excel_params' : fields.char('EXCEL Parameters', size=64),
             }
 
 etl_component_excel_out()

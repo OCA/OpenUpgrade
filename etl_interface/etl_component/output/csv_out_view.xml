@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data noupdate="1">
-		<record id="comp_output_csv_out" model="etl.component.type">
-			<field name="name">output.csv_out</field>
-			<field name="code">output.csv_out</field>
-		</record>
-	</data>
 	<data>
+
 		<record id="etl_component_csv_out_form" model="ir.ui.view">
 			<field name="name">view.etl.component.csv.out.form</field>
 			<field name="model">etl.component</field>
@@ -15,8 +10,6 @@
 			<field name="arch" type="xml">
 					<notebook position='inside'>
 						<page string="Property" attrs="{'invisible':[('type_id','!=','output.csv_out')]}">
-							<field name="connector_id" colspan="4"
-								domain="[('type','=','localfile')]" />
 							<field name="row_limit" />
 							<field name="csv_params" />
 						</page>

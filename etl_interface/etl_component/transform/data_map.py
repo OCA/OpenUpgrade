@@ -26,11 +26,13 @@ from osv import osv, fields
 
 class etl_component_transform_map_lines(osv.osv):
     _name='etl.component.transform.map_lines'
+
     def _get_channels(self, cr, uid, context={}):
         c_obj = self.pool.get('etl.channel')
         ch_ids = c_obj.search(cr, uid, [('type', '=', 'transition')])
         result = c_obj.read(cr, uid, ch_ids, ['code', 'name'], context)
         return [(r['code'], r['name']) for r in result]
+
     _columns={
               'name' : fields.selection(_get_channels, 'Source Channel'),
               'map_field_ids' : fields.one2many('etl.component.transform.map_fields', 'map_line_id', 'Map Fields'),

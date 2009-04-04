@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
-        <record id="comp_input_vcard_out" model="etl.component.type">
-			<field name="name">output.vcard_out</field>
-			<field name="code">output.vcard_out</field>
-		</record>
-    </data>
 	<data>
-		<record id="etl_component_vcard_out_form" model="ir.ui.view">
+		<!--<record id="etl_component_vcard_out_form" model="ir.ui.view">
 			<field name="name">view.etl.component.vcard.in.form</field>
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
@@ -19,7 +13,7 @@
                         </page>
                     </notebook>
 			</field>
-		</record>
+		</record>-->
 
 		<record id="action_etl_component_vcard_out_tree" model="ir.actions.act_window">
             <field name="name">Vcard Out component</field>
@@ -34,7 +28,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','input.vcard_out')]</field>
-			<field name="view_id" ref="etl_component_vcard_out_form" />
+			<field name="view_id" ref="etl_component_form" />
 		</record>
 
 		<record id="action_etl_component_vcard_out_view1" model="ir.actions.act_window.view">
@@ -48,7 +42,7 @@
 			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
 			<field name="view_mode">form</field>
-			<field name="view_id" ref="etl_component_vcard_out_form" />
+			<field name="view_id" ref="etl_component_form" />
 			<field name="act_window_id" ref="action_etl_component_vcard_out_tree" />
 		</record>
 

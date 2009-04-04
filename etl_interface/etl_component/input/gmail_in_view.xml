@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data noupdate="1">
-		<record id="comp_input_gmail_in"
-			model="etl.component.type">
-			<field name="name">input.gmail_in</field>
-			<field name="code">input.gmail_in</field>
-		</record>
-	</data>
-
 	<data>
+
 		<record id="etl_component_gmail_in_form"
 			model="ir.ui.view">
 			<field name="name">view.etl.component.gmail.in.form</field>
@@ -18,10 +11,9 @@
 			<field name="arch" type="xml">
 				<notebook position='inside'>
 					<page string="Property" attrs="{'invisible':[('type_id','!=','input.gmail_in')]}">
-							<separator string="Login Details"
-								colspan="4" />
-							<field name="user" select="1" required="1" />
-							<field name="passwd"  password="True" required="1" />
+						<separator string="Login Details" colspan="4" />
+						<field name="user" attrs="{'required':[('type_id','=','input.gmail_in')]}" />
+						<field name="passwd"  password="True" attrs="{'required':[('type_id','=','input.gmail_in')]}" />
 					</page>
 				</notebook>
 			</field>

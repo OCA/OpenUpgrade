@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data noupdate="1">
-		<record id="comp_transform_logger" model="etl.component.type">
-			<field name="name">transform.logger</field>
-			<field name="code">transform.logger</field>
-		</record>
-	</data>
 	<data>
 		<record id="etl_component_logger_form" model="ir.ui.view">
 			<field name="name">etl.component.logger.form</field>
