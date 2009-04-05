@@ -19,12 +19,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import bom_customization
-import mrp
-import configurator_wizard
-import sale
-import stock
-
+{
+    "name" : "BoM Customization",
+    "description":"""TODO!""",
+    "version" : "0.5",
+    "author" : "Smile.fr",
+    "website": "http://www.smile.fr",
+    "category" : "Generic Modules/Sales",
+    #TODO not sure it should really depend on product_variant_multi (while demo data currently depend on it)
+    "depends" : ["mrp", "sale", "product_variant_multi", "sale_product_multistep_configurator"],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : ['mrp_bom_customization_view.xml',
+                    'configurator_view.xml',
+                    'sale_view.xml',
+                    'stock_view.xml',
+                    'mrp_view.xml',
+                    'demo_data.xml',],
+    "active": False,
+    "installable": True
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

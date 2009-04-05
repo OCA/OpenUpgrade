@@ -19,23 +19,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Customization of BoM",
-    "version" : "0.5",
-    "author" : "Smile.fr",
-    "website": "http://www.smile.fr",
-    "category" : "Generic Modules/Sales",
-    "depends" : ["mrp", "sale", "product_variant_multi", "sale_product_multistep_configurator"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ['bom_customization_view.xml',
-                    'configurator_view.xml',
-                    'sale_view.xml',
-                    'stock_view.xml',
-                    'mrp_view.xml',
-                    'demo_data.xml',],
-    "active": False,
-    "installable": True
-}
+
+import mrp_bom_customization
+import mrp
+import configurator_wizard
+import sale
+import stock
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

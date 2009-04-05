@@ -53,9 +53,9 @@ class stock_move(osv.osv):
                 continue
             
             req = """ SELECT cus.customization_key_id, grp.name, val.name 
-                        FROM bom_customization_sale_order_line_customizations cus,
-                             bom_customization_bom_customization_values val,
-                             bom_customization_bom_customization_groups grp
+                        FROM mrp_bom_customization_sale_order_line_customizations cus,
+                             mrp_bom_customization_mrp_bom_customization_values val,
+                             mrp_bom_customization_mrp_bom_customization_groups grp
                         WHERE cus.sale_order_line_id = %d AND cus.customization_value_id = val.id AND grp.id=val.group_id """ % sol_id
                         
             cr.execute(req)
@@ -65,7 +65,7 @@ class stock_move(osv.osv):
             
             
             req = """ SELECT bom_customization_key_id 
-                        FROM  mrp_bom_bom_customizations_keys_rel rel INNER JOIN stock_move sm ON rel.bom_id = sm.bom_id
+                        FROM  mrp_bom_mrp_bom_customizations_keys_rel rel INNER JOIN stock_move sm ON rel.bom_id = sm.bom_id
                         WHERE sm.id = %d """ % id
             cr.execute(req)
             res = cr.fetchall()

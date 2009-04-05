@@ -95,46 +95,46 @@
 	
 		<!-- BoM Customizations -->
 		
-		<record id="bom_customization.group_0" model="bom_customization.bom_customization_groups">
+		<record id="mrp_bom_customization.group_0" model="mrp_bom_customization.mrp_bom_customization_groups">
 			<field name="name">Couleur</field>
 		</record>
 		
-		<record id="bom_customization.value_0" model="bom_customization.bom_customization_values">
+		<record id="mrp_bom_customization.value_0" model="mrp_bom_customization.mrp_bom_customization_values">
 			<field name="name">Red</field>
-			<field name="group_id" ref="bom_customization.group_0"/>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
 		</record>
 		
-		<record id="bom_customization.value_1" model="bom_customization.bom_customization_values">
+		<record id="mrp_bom_customization.value_1" model="mrp_bom_customization.mrp_bom_customization_values">
 			<field name="name">Green</field>
-			<field name="group_id" ref="bom_customization.group_0"/>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
 		</record>
 		
-		<record id="bom_customization.value_2" model="bom_customization.bom_customization_values">
+		<record id="mrp_bom_customization.value_2" model="mrp_bom_customization.mrp_bom_customization_values">
 			<field name="name">Blue</field>
-			<field name="group_id" ref="bom_customization.group_0"/>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
 		</record>
 		
-		<record id="bom_customization.key_0" model="bom_customization.bom_customization_keys">
+		<record id="mrp_bom_customization.key_0" model="mrp_bom_customization.mrp_bom_customization_keys">
 			<field name="name">Bloc</field>
-			<field name="group_id" ref="bom_customization.group_0"/>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
 		</record>
 		
-		<record id="bom_customization.key_1" model="bom_customization.bom_customization_keys">
+		<record id="mrp_bom_customization.key_1" model="mrp_bom_customization.mrp_bom_customization_keys">
 			<field name="name">Tiroir</field>
-			<field name="group_id" ref="bom_customization.group_0"/>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
 		</record>
 		
-		<record id="bom_customization.key_2" model="bom_customization.bom_customization_keys">
+		<record id="mrp_bom_customization.key_2" model="mrp_bom_customization.mrp_bom_customization_keys">
 			<field name="name">Trappe</field>
-			<field name="group_id" ref="bom_customization.group_0"/>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
 		</record>
 		
 		<!-- BoM example -->
-		
+		<!-- TODO those demo data depend on the product_variant_multi demo data; fix that! -->
 		<record id="mrp.mrp_bom_custom_0" model="mrp.bom">
 			<field eval="[(6,0,[ref('mrp_property_A')])]" name="property_ids"/>
 			<field name="product_uom" ref="product.product_uom_unit"/>
-			<field eval="[(6,0,[])]" name="bom_customization_keys"/>
+			<field eval="[(6,0,[])]" name="mrp_bom_customization_keys"/>
 			<field eval="3.0" name="product_qty"/>
 			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
 			<field eval="1" name="active"/>
@@ -147,7 +147,7 @@
 		<record id="mrp_bom_custom_0_0" model="mrp.bom">
 			<field eval="[(6,0,[])]" name="property_ids"/>
 			<field name="product_uom" ref="product.product_uom_unit"/>
-			<field eval="[(6,0,[ref('bom_customization.key_0')])]" name="bom_customization_keys"/>
+			<field eval="[(6,0,[ref('mrp_bom_customization.key_0')])]" name="mrp_bom_customization_keys"/>
 			<field eval="1.0" name="product_qty"/>
 			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
 			<field name="bom_id" ref="mrp.mrp_bom_custom_0"/>
@@ -160,7 +160,7 @@
 		<record id="mrp_bom_custom_0_1" model="mrp.bom">
 			<field eval="[(6,0,[])]" name="property_ids"/>
 			<field name="product_uom" ref="product.product_uom_unit"/>
-			<field eval="[(6,0,[ref('bom_customization.key_1')])]" name="bom_customization_keys"/>
+			<field eval="[(6,0,[ref('mrp_bom_customization.key_1')])]" name="mrp_bom_customization_keys"/>
 			<field eval="1.0" name="product_qty"/>
 			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
 			<field name="bom_id" ref="mrp.mrp_bom_custom_0"/>
@@ -174,7 +174,7 @@
 		<record id="mrp.mrp_bom_custom_1" model="mrp.bom">
 			<field eval="[(6,0,[ref('mrp_property_B')])]" name="property_ids"/>
 			<field name="product_uom" ref="product.product_uom_unit"/>
-			<field eval="[(6,0,[])]" name="bom_customization_keys"/>
+			<field eval="[(6,0,[])]" name="mrp_bom_customization_keys"/>
 			<field eval="3.0" name="product_qty"/>
 			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
 			<field eval="1" name="active"/>
@@ -187,7 +187,7 @@
 		<record id="mrp_bom_custom_1_2" model="mrp.bom">
 			<field eval="[(6,0,[])]" name="property_ids"/>
 			<field name="product_uom" ref="product.product_uom_unit"/>
-			<field eval="[(6,0,[ref('bom_customization.key_0')])]" name="bom_customization_keys"/>
+			<field eval="[(6,0,[ref('mrp_bom_customization.key_0')])]" name="mrp_bom_customization_keys"/>
 			<field eval="1.0" name="product_qty"/>
 			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
 			<field name="bom_id" ref="mrp.mrp_bom_custom_1"/>
@@ -200,7 +200,7 @@
 		<record id="mrp_bom_custom_1_3" model="mrp.bom">
 			<field eval="[(6,0,[])]" name="property_ids"/>
 			<field name="product_uom" ref="product.product_uom_unit"/>
-			<field eval="[(6,0,[ref('bom_customization.key_2')])]" name="bom_customization_keys"/>
+			<field eval="[(6,0,[ref('mrp_bom_customization.key_2')])]" name="mrp_bom_customization_keys"/>
 			<field eval="1.0" name="product_qty"/>
 			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
 			<field name="bom_id" ref="mrp.mrp_bom_custom_1"/>

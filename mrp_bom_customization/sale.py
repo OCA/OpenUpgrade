@@ -28,6 +28,6 @@ class sale_order_line(osv.osv):
     
     _columns = {
         'mrp_production_id': fields.many2one('mrp.production', 'Related Production Order'),
-        'sale_order_line_customizations': fields.one2many('bom_customization.sale_order_line_customizations', 'sale_order_line_id', "Sale order line customization"),
+        'sale_order_line_customizations': fields.one2many('mrp_bom_customization.sale_order_line_customizations', 'sale_order_line_id', "Sale order line customization"),
     }
 sale_order_line()
