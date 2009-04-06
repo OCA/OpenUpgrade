@@ -208,10 +208,8 @@ class GCHandler (gnccontent.GCDbgHandler):
 		
 	def end_invoice(self,act,par):
 		self.decCount('gnc:GncInvoice')
-		print "Invoice owner:", act.dic['owner']
 		try:
 			if (act.dic['owner'][1]):
-			    print "Trying to locate address"
 			    adre =act.dic['owner'][1]
 			    if adre['model'] != 'res.partner':
 				    self.warn('invalid model in partner ref: %s' % adre['model'])
@@ -219,7 +217,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    addrs=self.pool.get('res.partner.address').search(self.cr, self.uid,
 				[ ('partner_id','=',adre['res_id']), ('active','=','t')])
 			    if addrs:
-				print "Located addresses:", addrs
+				# print "Located addresses:", addrs
 				act.dic['address']=addrs[0]	# arbitrarily select the first
 			    else:
 				self.warn("No address for partner id=%s" % str(act.dic['owner'][1]))
@@ -235,6 +233,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    ('state','active', lambda c,a,s: (c and 'open') or 'cancel'),
 			    ('currency_id', 'currency', lambda c,a,s: c['ref'], get_first),
 			    ('address_invoice_id', 'address', None, get_first),
+			    ('account_id', 'postacc', cas_get_res_id, get_first ),
 			    ('date_invoice','posted', fnc_date_only ),
 			    ])
 
