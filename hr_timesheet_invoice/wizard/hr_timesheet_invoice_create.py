@@ -146,9 +146,9 @@ class invoice_create(wizard.interface):
                         details.append(line['name'])
                     #if data['form']['price']:
                     #   details.append(abs(line['amount']))
-                    note.append(u' - '.join(map(unicode,details)))
+                    note.append(u' - '.join(map(lambda x: unicode(x) or '',details)))
 
-                curr_line['note'] = "\n".join(map(unicode,note))
+                curr_line['note'] = "\n".join(map(lambda x: unicode(x) or '',note))
                 pool.get('account.invoice.line').create(cr, uid, curr_line)
                 strids = ','.join(map(str, data['ids']))
                 cr.execute("update account_analytic_line set invoice_id=%%s WHERE account_id = %%s and id IN (%s)" % strids, (last_invoice,account.id,))
