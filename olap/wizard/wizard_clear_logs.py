@@ -24,15 +24,12 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
-import psycopg
+import time
+
 import wizard
-import threading
 import pooler
 from osv import osv
-import optparse
-import xmlrpclib
-import time
-import netsvc
+
 
 info = '''<?xml version="1.0"?>
 <form string="Load Data">

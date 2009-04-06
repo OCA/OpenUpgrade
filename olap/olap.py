@@ -24,23 +24,17 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
+import psycopg2
+import sqlalchemy
+import time
 
-from osv import fields, osv
-
-import cube
-from cube import levels
-
-import psycopg
 import wizard
-import threading
 import pooler
 from osv import osv
-import optparse
-import xmlrpclib
-import time
+from osv import fields, osv
 import netsvc
-
-import sqlalchemy
+import cube
+from cube import levels
 
 class olap_fact_database(osv.osv):
     _name = "olap.fact.database"
@@ -67,7 +61,7 @@ class olap_fact_database(osv.osv):
                 password = obj.db_password
                 type = obj.type
                 if type == 'postgres':
-                    tdb = psycopg.connect('host=%s port=%s dbname=%s user=%s password=%s' % (host, port, db_name, user, password), serialize=0, maxconn=64)
+                    tdb = psycopg2.connect('host=%s port=%s dbname=%s user=%s password=%s' % (host, port, db_name, user, password))
                 elif type == 'mysql':
                     try:
                         import MySQLdb
@@ -178,7 +172,7 @@ class olap_schema(osv.osv):
                 name = schema.database_id.db_name and "dbname=%s" % schema.database_id.db_name or ''
                 user = schema.database_id.db_login and "user=%s" % schema.database_id.db_login or ''
                 password = schema.database_id.db_password and "password=%s" % schema.database_id.db_password or ''
-                tdb = psycopg.connect('%s %s %s %s %s' % (host, port, name, user, password), serialize=0, maxconn=maxconn)
+                tdb = psycopg2.connect('%s %s %s %s %s' % (host, port, name, user, password))
                 
             elif type == 'mysql':
                 try:
@@ -1017,7 +1011,7 @@ class bi_load_db_wizard(osv.osv_memory):
                 name = lines.database_id.db_name and "dbname=%s" % lines.database_id.db_name or ''
                 user = lines.database_id.db_login and "user=%s" % lines.database_id.db_login or ''
                 password = lines.database_id.db_password and "password=%s" % lines.database_id.db_password or ''
-                tdb = psycopg.connect('%s %s %s %s %s' % (host, port, name, user, password), serialize=0)
+                tdb = psycopg2.connect('%s %s %s %s %s' % (host, port, name, user, password))
                 cr_db = tdb.cursor()
                 cr.execute('select table_db_name,id from olap_database_tables where fact_database_id=%d', (id_db,))
                 tables = dict(cr.fetchall())

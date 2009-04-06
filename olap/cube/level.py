@@ -113,7 +113,8 @@ class level(object):
         result = query.fetchall()
         def _tuple_define(x):
             y=list(x)
-            return ([self.level]+y[:-1],y[-1])
+            return ([self.level]+y[:-1]),y[-1]
+#            return ([self.level]+map(lambda x: str(x).split(".")[0],y[:-1]),str(y[-1]).split(".")[0])
         axis = map(_tuple_define, result)
         # Gives the mapping
 
@@ -154,6 +155,12 @@ class level(object):
 #       result_axis['axis_mapping'] = maps
 #       print '*'*50
 #       print table, result, result_axis
+        print " \n\n ######################################"
+        print table 
+        print axis
+        print result
+        print result_axis
+        print " \n\n ######################################" 
         return table, axis, result ,result_axis
 
     def _run_star(self, metadata):

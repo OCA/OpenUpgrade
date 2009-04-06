@@ -1,4 +1,4 @@
-import psycopg
+import psycopg2
 
 import wizard
 import pooler
@@ -19,7 +19,7 @@ def _test_connection(self,cr,uid,part,context={}):
     return_str = "Connection Successful"
     try:	
         if type == 'postgres':
-            tdb = psycopg.connect('host=%s port=%s dbname=%s user=%s password=%s' % (host, port, db_name, user, password), serialize=0, maxconn=64)
+            tdb = psycopg2.connect('host=%s port=%s dbname=%s user=%s password=%s' % (host, port, db_name, user, password))
 
         elif type == 'mysql':
             import MySQLdb
