@@ -37,7 +37,7 @@ class csv_in(component):
     * .* : return the main flow with data from csv file
     """
 
-    def __init__(self,fileconnector,row_limit=0, csv_params={},name='component.input.csv_in',transformer=None):   
+    def __init__(self, fileconnector, row_limit=0, csv_params={}, name='component.input.csv_in', transformer=None):   
         """    
         Required  Parameters ::
         fileconnector :  localfile connector.
@@ -51,36 +51,41 @@ class csv_in(component):
         super(csv_in, self).__init__(name, transformer=transformer)
         self.fileconnector = fileconnector
         self.csv_params=csv_params
-        self.row_limit=row_limit           
+        self.row_limit=row_limit  
 
     def process(self):
         try:
             import csv
             fp=self.fileconnector.open()
-            reader=csv.DictReader(fp,**self.csv_params) 
-            row_count=0           
+            reader=csv.DictReader(fp, **self.csv_params) 
+            row_count=0
             for data in reader:
                 row_count+=1
-                if self.row_limit and row_count > row_limit:
+                if self.row_limit and row_count > self.row_limit:
                      raise StopIteration
                 if self.transformer:
                     data=self.transformer.transform(data)
                 if data:
-                    yield data,'main'
+                    yield data, 'main'
             self.fileconnector.close(fp)        
-        except TypeError,e:
-            self.signal('error',{'data':self.data,'type':'exception','error':str(e)})            
-        except IOError,e:
-            self.signal('error',{'data':self.data,'type':'exception','error':str(e)}) 
+        except TypeError, e:
+            self.signal('error', {'data':self.data, 'type':'exception', 'error':str(e)})            
+        except IOError, e:
+            self.signal('error', {'data':self.data, 'type':'exception', 'error':str(e)}) 
 
     def __copy__(self):       
-        res= csv_in(self.fileconnector , self.row_limit, self.csv_params,self.name, self.transformer)
+        res= csv_in(self.fileconnector , self.row_limit, self.csv_params, self.name, self.transformer)
         return res
 
     
 def test():
-    pass
+    from etl_test import etl_test
+    import etl
+    file_conn = etl.connector.localfile('../../../demo/input/partner1.csv')
+    test = etl_test.etl_component_test(csv_in(file_conn, 'csv test'))
+    test.check_output([{'tel': '+32.81.81.37.00', 'id': '11', 'name': 'Fabien'}])
+    res=test.output()
+    print res
+    
 if __name__ == '__main__':
     test()
-
-
