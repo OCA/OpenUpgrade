@@ -26,13 +26,14 @@
  GNU General Public License
 """
 from etl.component import component
+from SimpleXMLRPCServer import SimpleXMLRPCServer
+from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
 
 class xmlrpc_request(component):
     """
     To connect server with xmlrpc request
 
     """
-
     def __init__(self, job, host='localhost', port=5000, uid='admin', password='admin',name='xmlrpc', transformer=None):
         """
         To be update
@@ -41,28 +42,28 @@ class xmlrpc_request(component):
         self.job = job
         self.host=host
         self.port=port
-        self.uid=uid
-        self.password=password
+        self.server = False
 
     def process(self):
-        import xmlrpclib
-        server = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
-        login1 = xmlrpclib.ServerProxy(self.host+'/xmlrpc/common')
-        login1.login('etl', 'admin','admin')
-        res = getattr(server,'get_data')('etl','admin','admin', *args) # get data!!!
-        if res:
-            self.job.action_start(key,signal_data={},data={})
-        else:
-            self.job.action_pause(key,signal_data={},data={})
-        print server
+        server = SimpleXMLRPCServer((self.host, self.port))
+        server.register_introspection_functions()
+        server.register_function(self.import_data)
+        server.register_function(self.export_data)
+        server.serve_forever()
+        self.server = server
         return True
 
-def test():
-    from etl_test import etl_test
-    import etl
-#    facebook_conn=etl.connector.facebook_connector('http://facebook.com', 'modiinfo@gmail.com')
-    test1=etl_test.etl_component_test(xmlrpc_request('job','localhost', 5000))
-    res=test1.output()
+    def import_data(self, data):#to be check
+        if data:
+            self.job.action_start(key, signal_data=data, data={})
+        else:
+            self.job.action_pause(key, signal_data={}, data={})
 
+    def export_data(self, data):
+        pass
+
+def test():
+    pass
 if __name__ == '__main__':
-    test()
+#    test()
+    pass
