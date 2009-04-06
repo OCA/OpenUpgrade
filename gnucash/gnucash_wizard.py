@@ -380,11 +380,11 @@ class GCHandler (gnccontent.GCDbgHandler):
 			split.dic['period_id']=trn.dic['period_id']
 			split.dic['move_id'] = mid
 			if split.dic['value'] >= 0.0:
-				split.dic['ocredit'] =  split.dic['value']
-				split.dic['odebit'] = 0.0
-			else:
 				split.dic['ocredit'] = 0.0
-				split.dic['odebit'] = 0.0 - split.dic['value']
+				split.dic['odebit'] = split.dic['value']
+			else:
+				split.dic['ocredit'] = 0.0 - split.dic['value']
+				split.dic['odebit'] = 0.0
 			split.dic['date_created'] = trn.dic.get('date-entered',None)
 			#self.debug_lim('split',str(split.dic))
 			self.sync('account','account.move.line',split,
