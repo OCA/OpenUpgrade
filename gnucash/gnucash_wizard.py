@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
@@ -52,7 +51,10 @@ def get_first(tup):
 	return tup[0]
 
 def fnc_date_only(val,gnco,gnself):
-	return val.date().isoformat()
+	try:
+		return val.date().isoformat()
+	except:
+		return None
 
 def cas_get_ref(c, a, s):
 	if c:
@@ -61,10 +63,10 @@ def cas_get_ref(c, a, s):
 		return None
 
 def cas_get_res_id(c, a, s):
-	if c:
+	try:
 		return c[1]['res_id']
-	else:
-		return None
+	except:
+		raise Exception("No ref")
 
 class GCHandler (gnccontent.GCDbgHandler):
 	"""This backend syncs the Gnucash object into the OpenERP ones.
@@ -207,25 +209,22 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    ])
 		
 	def end_invoice(self,act,par):
-		self.decCount('gnc:GncInvoice')
 		try:
-			if (act.dic['owner'][1]):
-			    adre =act.dic['owner'][1]
-			    if adre['model'] != 'res.partner':
-				    self.warn('invalid model in partner ref: %s' % adre['model'])
-				    raise Exception()
-			    addrs=self.pool.get('res.partner.address').search(self.cr, self.uid,
+			if (not act.dic['owner'][1]):
+				raise Exception("No partner id=%s " % (str(act.dic['owner'][0])))
+			adre =act.dic['owner'][1]
+			if adre['model'] != 'res.partner':
+				raise Exception('invalid model in partner ref: %s' % adre['model'])
+			addrs=self.pool.get('res.partner.address').search(self.cr, self.uid,
 				[ ('partner_id','=',adre['res_id']), ('active','=','t')])
-			    if addrs:
+			if addrs:
 				# print "Located addresses:", addrs
 				act.dic['address']=addrs[0]	# arbitrarily select the first
-			    else:
-				self.warn("No address for partner id=%s" % str(act.dic['owner'][1]))
-		except:
-			self.warn("Cannot get address for partner id=%s" % str(act.dic['owner'][1]))
+			else:
+				raise Exception("No address for partner id=%s " % str(act.dic['owner'][1]))
 	
-		self.sync('invoice','account.invoice',act,
-			[('name','name'),
+			self.sync('invoice','account.invoice',act, [
+			    ('name','name'),
 			    ('number','inv_ref'),
 			    ('comment','notes'),
 			    ('reference', 'billing_id'),
@@ -236,9 +235,13 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    ('account_id', 'postacc', cas_get_res_id, get_first ),
 			    ('date_invoice','posted', fnc_date_only ),
 			    ])
+			self.decCount('gnc:GncInvoice')
+		except Exception, ex:
+			self.warn("%s, skipping invoice \"%s\"" % (str(ex),act.dic['inv_ref']))
+			return
 
 	def end_entry(self,act,par):
-		self.decCount('gnc:GncEntry')
+	    try:
 		self.sync('entry','account.invoice.line',act,
 			[('name','description'),
 			    ('invoice_id', 'invoice', cas_get_res_id, get_first ),
@@ -248,6 +251,10 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    ('price_unit', 'i-price'),
 			    #('note', '', lambda c,a,s: unicode(a.dic))
 			])
+		self.decCount('gnc:GncEntry')
+	    except Exception, ex:
+			self.warn("%s, skipping entry." % str(ex))
+			return
 
 	def get_parent(self, oo_model, fldt, gnc):
 		if not fldt or fldt == None:
@@ -304,34 +311,36 @@ class GCHandler (gnccontent.GCDbgHandler):
 			
 			    ooit= obj.read(self.cr,self.uid,gos[0]['res_id'],map(lambda x: x[0], fields))
 			    #for ooit in oos:
-			    if True:
-				if ooit['id'] == gos[0]['res_id']:
-					found = True
-					if gos[0]['noupdate']:
-						self.debug("record %s[%s] is \"noupdate\", won't sync" % (gos[0]['model'], gos[0]['res_id']))
-						return ooit['id']
-					oocp = {}
-					for fld in fields:
-						if len(fld)>2 and fld[2]:
-							fnc= fld[2]
-						else:
-							fnc = lambda a,b,c: a
-						if len(fld)>3 and fld[3]:
-							fno= fld[3]
-						else:
-							fno= lambda a: a
-						val=None
-						if fld[1] in gnco.dic:
-							val = gnco.dic[fld[1]]
-						if fno(ooit[fld[0]]) != fnc(val,gnco,self):
-							oocp[fld[0]] = fnc(val,gnco,self)
-					if oocp:
-						#self.upd+=1
-						self.sync_mark=self.sync_mark+1
-						self.debug_lim(oo_model,"Must update: %s" % str(oocp))
-						obj.write(self.cr,self.uid, [ooit['id']],oocp)
-						
+			    if not ooit:
+				self.warn("Skip sync of %s[%d] because object is missing"%(gos[0]['model'],gos[0]['res_id']))
+				return False
+			    if ooit['id'] == gos[0]['res_id']:
+				found = True
+				if gos[0]['noupdate']:
+					self.debug("record %s[%s] is \"noupdate\", won't sync" % (gos[0]['model'], gos[0]['res_id']))
 					return ooit['id']
+				oocp = {}
+				for fld in fields:
+					if len(fld)>2 and fld[2]:
+						fnc= fld[2]
+					else:
+						fnc = lambda a,b,c: a
+					if len(fld)>3 and fld[3]:
+						fno= fld[3]
+					else:
+						fno= lambda a: a
+					val=None
+					if fld[1] in gnco.dic:
+						val = gnco.dic[fld[1]]
+					if fno(ooit[fld[0]]) != fnc(val,gnco,self):
+						oocp[fld[0]] = fnc(val,gnco,self)
+				if oocp:
+					#self.upd+=1
+					self.sync_mark=self.sync_mark+1
+					self.debug_lim(oo_model,"Must update: %s" % str(oocp))
+					obj.write(self.cr,self.uid, [ooit['id']],oocp)
+					
+				return ooit['id']
 	
 		if not found:
 			#self.new+=1
@@ -394,7 +403,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 			return False
 	
 	def _end_partner(self, act, mfields=[]):
-		fields= [('name','name'), ('active','active')]
+		fields= [('name','name'), ('active','active',lambda c,a,s: (c == '1' ) )]
 		fields.extend(mfields)
 		self.sync('base','res.partner',act, fields, [('name','name')])
 		
@@ -413,7 +422,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 		
 		per=self.pool.get('res.currency').\
 			search(self.cr, self.uid,[('code','=',com['id'])] )
-		print "Currency located:", per
+		#print "Currency located:", per
 		if per:
 			return per[0]
 		else:
