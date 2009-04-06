@@ -66,11 +66,11 @@
 			<field name="name">OpenObject Connector</field>
 			<field name="type">openobject</field>
 			<field name="uri">http://localhost:8069</field>
-			<field name="db">etl</field>
-			<field name="login">admin</field>
+			<!--field name="db">etl</field-->
+			<field name="uid">admin</field>
 			<field name="passwd">admin</field>
 			<field name="obj">/xmlrpc/object</field>
-			<field name="con_type">xmlrpc</field>
+			<!--field name="con_type">xmlrpc</field-->
 		</record>
 
 		<record id="facebook_connector" model="etl.connector">

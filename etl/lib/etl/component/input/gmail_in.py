@@ -87,8 +87,11 @@ class gmail_in(component):
     
 def test():
     from etl_test import etl_test
-    import etl    
-    test=etl_test.etl_component_test(gmail_in('', ''))    
+    import etl
+    user = raw_input('Enter gmail username: ')
+    user = user + '@gmail.com'
+    password = raw_input('Enter correct password for user %s: ' % user)
+    test=etl_test.etl_component_test(gmail_in(user, password))
     res=test.output()
     
 if __name__ == '__main__':

@@ -54,7 +54,14 @@
 							on_change="onchange_type(type)" />
 					</group>
 					<notebook colspan="4">
-						<page string="Property"  attrs="{'invisible':[('type','!=',False)]}"/>
+						<page string="Property">
+							<field name="uri"/>
+							<field name="host"/>
+							<field name="port"/>
+							<field name="uid"/>
+							<field name="passwd"/>
+						</page>
+						<page string="Other Information"  attrs="{'invisible':[('type','!=',False)]}"/>
                     </notebook>
 				</form>
 			</field>

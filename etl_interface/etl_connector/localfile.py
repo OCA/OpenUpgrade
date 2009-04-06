@@ -27,19 +27,18 @@ from osv import osv, fields
 class etl_connector_localfile(osv.osv):
     _name='etl.connector'
     _inherit='etl.connector'
-        
+
     _columns={
-              'uri' : fields.char('File Path',size=124), 
-              'bufsize' : fields.integer('Buffer Size'), 
+              'bufsize' : fields.integer('Buffer Size'),
     }
-    
-    def create_instance(self, cr, uid, id , context={}, data={}):  
-        val =  super(etl_connector_localfile, self).create_instance(cr, uid, id, context, data)      
+
+    def create_instance(self, cr, uid, id , context={}, data={}):
+        val =  super(etl_connector_localfile, self).create_instance(cr, uid, id, context, data)
         con=self.browse(cr, uid, id)
-        if con.type == 'localfile':            
+        if con.type == 'localfile':
             val =  etl.connector.localfile(con.uri, con.bufsize, encoding='utf-8')
         return val
-  
+
 etl_connector_localfile()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -97,6 +97,12 @@ class etl_connector(osv.osv):
     _columns={
               'name' : fields.char('Connector Name', size=64, required=True),
               'type' : fields.selection(_get_connector_type, 'Connector Type', size=64, required=True),
+              'uri' : fields.char('URL', size=124),
+              'host' : fields.char('Host', size=64),
+              'port' : fields.char('Port', size=64),
+              'uid' : fields.char('User  ID', size=64),
+              'passwd' : fields.char('Password', size=64),
+
     }
     def onchange_type(self, cr, uid, ids, type):
         return {'value':{}}
