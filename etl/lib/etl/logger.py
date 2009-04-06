@@ -21,8 +21,10 @@
 ##############################################################################
 
 """ 
+ To  provide internal logging system.
 
-    The module provides internal logging system.
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 
 """
 import logging
@@ -51,7 +53,7 @@ def init_logger():
 
 
 class logger(object):
-    def notifyChannel(self, name, level, msg):        
+    def notifyChannel(self, name, level, msg):      
         log = logging.getLogger(name)
         level_method = getattr(log, level)        
         msg = unicode(msg)

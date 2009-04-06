@@ -33,34 +33,55 @@ class join(map):
         Data Join component
     """
 
-    def __init__(self,map_criteria,join_keys={},name='component.transfer.join',transformer=None):
-        super(map, self).__init__(name,transformer=transformer)
+    def __init__(self, map_criteria, join_keys={}, name='component.transfer.join', transformer=None):
+
+        """
+        Required Parameters ::      
+        map_criteria  :  Mapping criteria
+        
+        Extra Parametrs  ::
+        name          : name of the component 
+        join_keys     :
+        transformer   : Transformer object to transform string data into  particular object
+        """
+        super(map, self).__init__(name, transformer=transformer)
         self.map_criteria = map_criteria
-        def preprocess(self, channels):            
+        self.join_keys = join_keys          
+        self.transformer = transformer
+        self.name = name
+        
+        def preprocess(self, channels):          
             res={}
             for chn in join_keys:
                 cdict = {}
                 for iterator in channels[chn]:
-                    for d in iterator:                                                
+                    for d in iterator:                                              
                         cdict[d[join_keys[chn]]] = d
                     res[chn]=cdict            
             return res
         self.preprocess = preprocess
 
     
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=join(self.map_criteria, self.join_keys, self.name, self.transformer)
+        return res
+    
 
 
-if __name__ == '__main__':
+def test():
     from etl_test import etl_test
     input_part = [
-        {'id': 1, 'name': 'Fabien', 'country_id': 3},
-        {'id': 2, 'name': 'Luc', 'country_id': 3},
+        {'id': 1, 'name': 'Fabien', 'country_id': 3}, 
+        {'id': 2, 'name': 'Luc', 'country_id': 3}, 
         {'id': 3, 'name': 'Henry', 'country_id': 1}
     ]
-    input_cty = [{'id': 1, 'name': 'Belgium'},{'id': 3, 'name': 'France'}]
+    input_cty = [{'id': 1, 'name': 'Belgium'}, {'id': 3, 'name': 'France'}]
     map_keys = {'main': {
-        'id': "main['id']",
-        'name': "main['id'].upper()",
+        'id': "main['id']", 
+        'name': "main['id'].upper()", 
         'country': "country[main['country_id']]['name']"
     }}
     join_keys = {
@@ -69,4 +90,7 @@ if __name__ == '__main__':
     test=etl_test.etl_component_test(join(map_keys, join_keys))
     test.check_input({'partner':input_part, 'countries': input_cty})
     print test.output()
+
+if __name__ == '__main__':
+    test()
 

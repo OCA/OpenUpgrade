@@ -21,11 +21,10 @@
 ##############################################################################
 
 """
-ETL Components:
-* Input Components
-* Output Components
-* Transform Components
-* Control Components
+ Use to get data from any sources like files, database, etc..,transform data and store in any destinations like files, database etc.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 from component import component
 import input

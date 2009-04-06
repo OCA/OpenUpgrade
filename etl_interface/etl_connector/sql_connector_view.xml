@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>	
+	<data>
+
+		<record id="etl_connector_sql_form" model="ir.ui.view">
+			<field name="name">etl.connector.sql.form</field>
+			<field name="model">etl.connector</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_connector_basic_form"/>
+			<field name="arch" type="xml">
+				<notebook position='inside'>
+					<page string="Property" attrs="{'invisible':[('type','!=','sql')]}" >
+						<field name="host" attrs="{'required':[('type','=','sql')]}" />
+						<field name="port" attrs="{'required':[('type','=','sql')]}"/>												
+						<field name="uid" attrs="{'required':[('type','=','sql')]}"/>
+						<field name="passwd" password="True" attrs="{'required':[('type','=','sql')]}"/>
+						<field name="sql_con_type" attrs="{'required':[('type','=','sql')]}"/>
+                        <field name="sslmode"/>
+				</page>
+				</notebook>
+
+			</field>
+		</record>
+
+
+
+
+		<record id="action_etl_connector_sql_tree"
+			model="ir.actions.act_window">
+			<field name="name">SQL Connectors</field>
+			<field name="res_model">etl.connector</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','sql')]</field>
+			<field name="view_id"
+				ref="etl_interface.etl_connector_basic_tree" />
+		</record>
+
+		<record id="action_etl_connector_sql_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id"
+				ref="etl_interface.etl_connector_basic_tree" />
+			<field name="act_window_id"
+				ref="action_etl_connector_sql_tree" />
+		</record>
+
+		<record id="action_etl_connector_sql_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_connector_sql_form" />
+			<field name="act_window_id"
+				ref="action_etl_connector_sql_tree" />
+		</record>
+
+		<menuitem name="SQL Connector"
+			parent="etl_interface.etl_connector_all_tree"
+			action="action_etl_connector_sql_tree" id="etl_connector_sql" />
+
+
+	</data>
+</openerp>
+

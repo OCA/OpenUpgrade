@@ -825,26 +825,23 @@
 		</record>
 		
 		<!-- Search Parameters -->
-		<record id="ecommerce_search_productname0" model="ecommerce.search">
-			<field name="code">name</field>
-			<field name="name">Product Name</field>
-		</record>
-
-		<record id="ecommerce_search_productcolor0" model="ecommerce.search">
-			<field name="code">variants</field>
-			<field name="name">Product Color</field>
+	
+		<record id="ecommerce_search_price0" model="ecommerce.search">
+			<field name="code" ref="product.field_product_template_list_price"/>
+			<field name="name">Price</field>
 		</record>
 	
-		<record id="ecommerce_search_productprice0" model="ecommerce.search">
-			<field name="code">list_price</field>
-			<field name="name">Product Price</field>
+		<record id="ecommerce_search_name0" model="ecommerce.search">
+			<field name="code" ref="product.field_product_template_name"/>
+			<field name="name">Name</field>
 		</record>
+	
 		
 		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
 			<field eval="[(6,0,[ref('base.EUR'),ref('res_currency_aud0'),ref('base.EUR'),ref('base.CAD'),ref('base.USD')])]" name="currency_ids"/>
 			<field eval="[(6,0,[ref('ecommerce_payment'),ref('ecommerce_payment1')])]" name="payment_method_ids"/>
 			<field eval="[(6,0,[ref('base.lang_en')])]" name="language_ids"/>
-			<field eval="[(6,0,[ref('ecommerce_search_productname0'),ref('ecommerce_search_productcolor0'),ref('ecommerce_search_productprice0')])]" name="search_ids"/>
+			<field eval="[(6,0,[ref('ecommerce_search_name0'),ref('ecommerce_search_price0')])]" name="search_ids"/>
 			<field eval="[(6,0,[ref('delivery.delivery_grid')])]" name="delivery_ids"/>
 		</record>
 </data>

@@ -6,13 +6,13 @@
 		<field name="model_id" search="[('model','=','project.project')]" model="ir.model"/>
 		<field name="global" eval="False"/>
 	</record>
+	
 	<record model="ir.rule" id="project_rule">
 		<field name="field_id" search="[('model','=','project.project'),('name','=','partner_id')]" model="ir.model.fields"/>
 		<field name="operator">=</field>
 		<field name="operand">user.address_id.partner_id.id</field>
 		<field name="rule_group" ref="project_rule_group"/>
 	</record>
-
 
 	<record model="portal.model" id="model_project">
 		<field name="name" >Project Model</field>
@@ -22,40 +22,26 @@
 	</record>
 
 
-</data>
-<data noupdate="1">
-
-	<record model="res.groups" id="portal.portal_group">
+	<record model="res.groups" id="portal_service_group">
+		<field name="name">Portal Service group</field>
 		<field name="rule_groups" eval="[(4,ref('project_rule_group'))]"/>
+		<field name="menu_access" eval="[(6,0,[ref('menu_portal_customer_your'),ref('menu_portal_customer_your_projects')])]"/>
+	</record>
+	
+	<record model="portal.portal" id="portal_service">
+		<field name="name">Portal Service</field>
+		<field name="group_id" ref="portal_service_group"/>
+		<field name="menu_id" ref="menu_portal_customer_your"/>
+		<field name="menu_action_id" ref="portal.portal_customer_action_menu"/>
+		<field name="company_id" ref="base.main_company"/>
 	</record>
 
 	<record model="ir.model.access" id="model_access_project">
 		<field name="name">Project Access</field>
 		<field name="perm_read">True</field>
-		<field name="group_id" ref="portal.portal_group"/>
+		<field name="group_id" ref="portal_service_group"/>
 		<field name="model_id" search="[('model','=','project.project')]"/>
 	</record>
-
-	<record model="ir.actions.act_window" id="portal_action_project">
-		<field name="name">Projects</field>
-		<field name="res_model">project.project</field>
-		<field name="view_type">tree</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_project_t">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="project.view_project"/>
-		<field name="act_window_id" ref="portal_action_project"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_project_f">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="project.edit_project"/>
-		<field name="act_window_id" ref="portal_action_project"/>
-	</record>
-
-	<menuitem name="Your Projects" id="menu_portal_customer_your" parent="portal.menu_portal_customer"/>
-	<menuitem name="Your Projects" id="menu_portal_customer_your_projects" parent="menu_portal_customer_your" action="portal_service.portal_action_project"/>
 
 </data>
 </openerp>

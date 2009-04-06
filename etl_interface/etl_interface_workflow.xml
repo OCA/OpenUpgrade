@@ -1,0 +1,153 @@
+<openerp>
+	<data>
+		<record id="wkf_job_process" model="workflow">
+			<field name="name">etl.job.process.workflow</field>
+			<field name="osv">etl.job.process</field>
+			<field name="on_create">True</field>
+		</record>
+
+		<!-- ACTIVITY -->
+
+		<record id="act_draft" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_job_process" />
+			<field name="flow_start">True</field>
+			<field name="name">draft</field>
+		</record>
+
+		<record id="act_open" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_job_process" />
+			<field name="name">open</field>
+			<field name="kind">function</field>
+			<field name="action">action_open_process()</field>
+		</record>
+
+		<record id="act_start" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_job_process" />
+			<field name="name">start</field>
+			<field name="kind">function</field>
+			<field name="action">action_start_process()</field>
+		</record>
+
+		<record id="act_pause" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_job_process" />
+			<field name="name">pause</field>
+			<field name="kind">function</field>
+			<field name="action">action_pause_process()</field>
+		</record>
+
+		<record id="act_cancel" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_job_process" />
+			<field name="name">cancel</field>
+			<field name="kind">function</field>
+			<field name="action">action_cancel_process()</field>
+		</record>
+
+		<record id="act_exception" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_job_process" />
+			<field name="name">exception</field>
+			<field name="kind">function</field>
+			<field name="action">test_process()</field>
+		</record>
+
+		<record id="act_stop" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_job_process" />
+			<field name="name">stop</field>
+			<field name="kind">function</field>
+			<field name="action">action_stop_process()</field>
+		</record>
+
+		<record id="act_end" model="workflow.activity">
+			<field name="wkf_id" ref="wkf_job_process" />
+			<field name="name">end</field>
+			<field name="flow_stop">True</field>
+		</record>
+
+		<!-- TRANSISTIONS -->
+
+
+		<record id="trans_draft_open" model="workflow.transition">
+			<field name="act_from" ref="act_draft" />
+			<field name="act_to" ref="act_open" />
+			<field name="signal">action_open</field>
+		</record>
+
+		<record id="trans_draft_cancel" model="workflow.transition">
+			<field name="act_from" ref="act_draft" />
+			<field name="act_to" ref="act_cancel" />
+			<field name="signal">cancel</field>
+		</record>
+
+		<record id="trans_cancel_draft" model="workflow.transition">
+			<field name="act_from" ref="act_cancel" />
+			<field name="act_to" ref="act_draft" />
+		</record>
+
+		<record id="trans_open_start" model="workflow.transition">
+			<field name="act_from" ref="act_open" />
+			<field name="act_to" ref="act_start" />
+			<field name="signal">start_process</field>
+		</record>
+
+
+		<record id="trans_open_cancel" model="workflow.transition">
+			<field name="act_from" ref="act_open" />
+			<field name="act_to" ref="act_cancel" />
+			<field name="signal">cancel</field>
+		</record>
+
+		<record id="trans_start_pause" model="workflow.transition">
+			<field name="act_from" ref="act_start" />
+			<field name="act_to" ref="act_pause" />
+			<field name="signal">action_pause</field>
+		</record>
+
+		<record id="trans_start_end" model="workflow.transition">
+			<field name="act_from" ref="act_start" />
+			<field name="act_to" ref="act_end" />
+			<field name="condition">test_process()</field>
+		</record>
+		
+		<record id="trans_start_exception" model="workflow.transition">
+			<field name="act_from" ref="act_start" />
+			<field name="act_to" ref="act_exception" />
+			<field name="condition">not (test_process())</field>
+		</record>
+
+		<record id="trans_start_stop" model="workflow.transition">
+			<field name="act_from" ref="act_start" />
+			<field name="act_to" ref="act_stop" />
+			<field name="signal">action_stop</field>
+		</record>
+
+		<record id="trans_pause_cancel" model="workflow.transition">
+			<field name="act_from" ref="act_pause" />
+			<field name="act_to" ref="act_cancel" />
+			<field name="signal">cancel</field>
+		</record>
+
+		<record id="trans_pause_stop" model="workflow.transition">
+			<field name="act_from" ref="act_pause" />
+			<field name="act_to" ref="act_stop" />
+			<field name="signal">action_stop</field>
+		</record>
+
+		<record id="trans_pause_start" model="workflow.transition">
+			<field name="act_from" ref="act_pause" />
+			<field name="act_to" ref="act_start" />
+			<field name="signal">start_process</field>
+		</record>
+
+		<record id="trans_exception_cancel" model="workflow.transition">
+			<field name="act_from" ref="act_exception" />
+			<field name="act_to" ref="act_cancel" />
+			<field name="signal">cancel</field>
+		</record>
+
+		<record id="trans_exception_start" model="workflow.transition">
+			<field name="act_from" ref="act_exception" />
+			<field name="act_to" ref="act_start" />
+			<field name="signal">start_process</field>
+		</record>
+
+	</data>
+</openerp>

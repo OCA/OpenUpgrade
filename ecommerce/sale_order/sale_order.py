@@ -72,8 +72,7 @@ class ecommerce_saleorder(osv.osv):
                     'lang':order.epartner_id.lang,
                     'category_id': [(6, 0, search_categ)]
                    })
-                order.epartner_id.address
-                for addr_type in order.epartner_id.address:
+                for addr_type in order.epartner_id.address_ids:
                     addid = self.pool.get('res.partner.address').create(cr, uid, {
                     'name': addr_type.username,
                     'type':addr_type.type,
@@ -89,11 +88,12 @@ class ecommerce_saleorder(osv.osv):
                     'fax':addr_type.fax,
                     'mobile':addr_type.mobile
                 })
-            data_partner = res_prt.browse(cr, uid, partner_id)
+            
             address_contact = False
             address_invoice = False
             address_delivery = False
-
+            
+            data_partner = res_prt.browse(cr, uid, partner_id)
             for tmp_addr_var in data_partner.address:
                 if tmp_addr_var.type == 'contact':
                     address_contact = tmp_addr_var.id
@@ -118,7 +118,7 @@ class ecommerce_saleorder(osv.osv):
 
             pricelist_id = order.pricelist_id.id
             order_lines = []
-            for line in order.order_lines:
+            for line in order.orderline_ids:
                 val = {
                     'name': line.name,
                     'product_uom_qty': line.product_qty,
@@ -206,7 +206,7 @@ class ecommerce_saleorder(osv.osv):
         journal_id = acc_journal.search(cr, uid, [('type', '=', 'cash'), ('code', '=', 'BNK')])
 
         journal = acc_journal.browse(cr, uid, journal_id, context)
-        acc_id =  journal[0].default_credit_account_id and journal[0].default_credit_account_id.id
+        acc_id = journal[0].default_credit_account_id and journal[0].default_credit_account_id.id
         if not acc_id:
             raise wizard.except_wizard(_('Error !'), _('Your journal must have a default credit and debit account.'))
         period_id = self.pool.get('account.period').find(cr, uid)

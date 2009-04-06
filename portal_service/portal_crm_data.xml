@@ -41,114 +41,51 @@
 
 </data>
 <data noupdate="1">
-	<record model="res.groups" id="portal.portal_group">
+
+	<record model="res.groups" id="portal_service_group">
 		<field name="rule_groups" eval="[(4,ref('case_rule_group'))]"/>
+		<field name="menu_access" eval="[(6,0,[ref('menu_portal_customer_support'),ref('menu_portal_customer_all_cases'),ref('menu_portal_customer_all_cases_open'),ref('menu_portal_customer_all_cases_close')])]"/>
 	</record>
 
 
 	<record model="ir.model.access" id="model_access_case">
 		<field name="name">Crm Case Access</field>
 		<field name="perm_read">True</field>
-		<field name="group_id" ref="portal.portal_group"/>
+		<field name="group_id" ref="portal_service_group"/>
 		<field name="model_id" search="[('model','=','crm.case')]"/>
 	</record>
 
-
-
-	<record model="ir.actions.act_window" id="portal_action_crm_case_all">
-		<field name="res_model">crm.case</field>
-		<field name="view_type">form</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_case_a">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="crm.crm_case_tree-view"/>
-		<field name="act_window_id" ref="portal_action_crm_case_all"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_case_a">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="crm.crm_case-view"/>
-		<field name="act_window_id" ref="portal_action_crm_case_all"/>
-	</record>
-
-	<menuitem name="Support" id="menu_portal_customer_support" parent="portal.menu_portal_customer"/>
-	<menuitem name="All Support Cases" id="menu_portal_customer_all_cases" parent="menu_portal_customer_support" action="portal_action_crm_case_all"/>
-
-	<record model="ir.actions.act_window" id="portal_action_crm_case_open">
-		<field name="name">My opened cases</field>
-		<field name="res_model">crm.case</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('state','&lt;&gt;','done'),('state','&lt;&gt;','cancel'),('state','&lt;&gt;','pending')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_case_o">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="crm.crm_case_tree-view"/>
-		<field name="act_window_id" ref="portal_action_crm_case_open"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_case_o">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="crm.crm_case-view"/>
-		<field name="act_window_id" ref="portal_action_crm_case_open"/>
-	</record>
-
-	<menuitem name="Opened Cases" id="menu_portal_customer_all_cases_open" parent="menu_portal_customer_all_cases" action="portal_action_crm_case_open"/>
-
-	<record model="ir.actions.act_window" id="portal_action_crm_case_closed">
-		<field name="name">My closed cases</field>
-		<field name="res_model">crm.case</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('state','=','done')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_case_c">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="crm.crm_case_tree-view"/>
-		<field name="act_window_id" ref="portal_action_crm_case_closed"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_case_c">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="crm.crm_case-view"/>
-		<field name="act_window_id" ref="portal_action_crm_case_closed"/>
-	</record>
-
-	<menuitem name="Closed Cases" id="menu_portal_customer_all_cases_close" parent="menu_portal_customer_all_cases" action="portal_action_crm_case_closed"/>
-
 	<record model="ir.model.access" id="model_access_employee">
 		<field name="name">Employee Portal</field>
-		<field name="group_id" ref="portal.portal_group"/>
+		<field name="group_id" ref="portal_service_group"/>
 		<field name="model_id" search="[('model','=','hr.employee')]"/>
 	</record>
+	
 	<record model="ir.model.access" id="model_access_employee_user">
 		<field name="name">Employee Users</field>
-		<field name="group_id" ref="base.group_user"/>
+		<field name="group_id" ref="portal_service_group"/>
 		<field name="model_id" search="[('model','=','hr.employee')]"/>
 		<field name="perm_read" eval="True"/>
-		<field name="perm_write" eval="True"/>
-		<field name="perm_create" eval="True"/>
-		<field name="perm_unlink" eval="True"/>
+		<field name="perm_write" eval="False"/>
+		<field name="perm_create" eval="False"/>
+		<field name="perm_unlink" eval="False"/>
 	</record>
 
 
 	<record model="ir.model.access" id="model_access_case_category">
 		<field name="name">Case category Portal</field>
-		<field name="group_id" ref="portal.portal_group"/>
+		<field name="group_id" ref="portal_service_group"/>
 		<field name="model_id" search="[('model','=','crm.case.categ')]"/>
 		<field name="perm_read" eval="True"/>
 	</record>
 	<record model="ir.model.access" id="model_access_case_category_user">
 		<field name="name">Case category Users</field>
-		<field name="group_id" ref="base.group_user"/>
+		<field name="group_id" ref="portal_service_group"/>
 		<field name="model_id" search="[('model','=','crm.case.categ')]"/>
 		<field name="perm_read" eval="True"/>
-		<field name="perm_write" eval="True"/>
-		<field name="perm_create" eval="True"/>
-		<field name="perm_unlink" eval="True"/>
+		<field name="perm_write" eval="False"/>
+		<field name="perm_create" eval="False"/>
+		<field name="perm_unlink" eval="False"/>
 	</record>
 
 

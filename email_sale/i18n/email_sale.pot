@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
-# This file contains the translation of the following modules:
+# This file containt the translation of the following modules:
 #	* email_sale
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.0-rc1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 13:58:47+0000\n"
-"PO-Revision-Date: 2009-02-06 13:58:47+0000\n"
+"POT-Creation-Date: 2008-12-13 18:11:42+0000\n"
+"PO-Revision-Date: 2008-12-13 18:11:42+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,16 +16,125 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: email_sale
-#: model:ir.module.module,description:email_sale.module_meta_information
-msgid "Use Email client module to send to customers\n"
-"the selected sale orders attached by Email.\n"
-"\n"
-"  * The invoice and contact emails addresses are proposed\n"
-"  * An email subject and text with the user signature are proposed\n"
-"  * Later, the emails addresses, subject and text can be modified\n"
-"  * A partner event is created with information of the email (partner,\n"
-"    description, channel, document, user)\n"
-"  * Historical and statistical data is recorded in the smtpclient module\n"
-""
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "No SMTP Server has been defined!"
+msgstr ""
+
+#. module: email_sale
+#: wizard_button:sale.order.email_send_2,send,end:0
+msgid "End"
+msgstr ""
+
+#. module: email_sale
+#: wizard_view:sale.order.email_send_2,init:0
+msgid "Message:"
+msgstr ""
+
+#. module: email_sale
+#: wizard_field:sale.order.email_send_2,init,to:0
+msgid "To"
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "\n\nSubject: "
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "\n\nText:\n"
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "Please check the Server Configuration!"
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "You have selected documents for different partners."
+msgstr ""
+
+#. module: email_sale
+#: wizard_button:sale.order.email_send_2,init,send:0
+msgid "Send Email"
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "To: "
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid ". Num."
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "Warning"
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "Sale_Order"
+msgstr ""
+
+#. module: email_sale
+#: wizard_field:sale.order.email_send_2,send,email_sent:0
+msgid "Quantity of Emails sent"
+msgstr ""
+
+#. module: email_sale
+#: model:ir.actions.wizard,name:email_sale.sale_order_email_send_wizard_2
+msgid "Send by Email"
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "Error"
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "Email sent through sale order wizard"
+msgstr ""
+
+#. module: email_sale
+#: wizard_view:sale.order.email_send_2,init:0
+#: wizard_view:sale.order.email_send_2,send:0
+msgid "Send sale order/s by Email"
+msgstr ""
+
+#. module: email_sale
+#: code:addons/email_sale/wizard/wizard_send_email.py:0
+#, python-format
+msgid "Error sending email"
+msgstr ""
+
+#. module: email_sale
+#: wizard_button:sale.order.email_send_2,init,end:0
+msgid "Cancel"
+msgstr ""
+
+#. module: email_sale
+#: wizard_field:sale.order.email_send_2,init,text:0
+msgid "Message"
+msgstr ""
+
+#. module: email_sale
+#: wizard_field:sale.order.email_send_2,init,subject:0
+msgid "Subject"
 msgstr ""
 

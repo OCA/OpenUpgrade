@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="etl_component_trans_map_form" model="ir.ui.view">
+			<field name="name">view.etl.component.transform.map.form</field>
+			<field name="model">etl.component</field>
+			<field name="inherit_id" ref="etl_component_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+					 <notebook position='inside'>
+						<page string="Property" attrs="{'invisible':[('type_id','!=','transform.map')]}">
+							<separator string="Fields Mapping" colspan="4" />
+							<field name="map_line_ids" nolabel="1" colspan="4" widget="one2many_list">
+								<tree string="Fields lines" editable="bottom">
+									<field name="map_field_ids" nolabel="1" colspan="4" widget="one2many_list">
+										<tree string="Fields lines" editable="bottom">
+										<field name='source_field' />
+										<field name='dest_field' />
+										</tree>
+									</field>
+								</tree>
+								<form string="Fields lines">
+									<field name="map_field_ids" nolabel="1" colspan="4" widget="one2many_list">
+										<form string="Fields lines">
+										<field name='source_field' />
+										<field name='dest_field' />
+										</form>
+									</field>
+								</form>
+							</field>
+							<separator string="Pre-Process Py-Function"
+								colspan="4" />
+							<field name="preprocess" nolabel="1"
+								colspan="4" />
+						</page>
+					</notebook>
+			</field>
+		</record>
+
+		<record id="action_etl_component_trans_map_tree"
+			model="ir.actions.act_window">
+			<field name="name">Field Mapping component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type_id.name','=','transform.map')]</field>
+			<field name="context">{'type_id':'transform.map'}</field>
+		</record>
+
+		<record id="action_etl_component_trans_map_from"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type_id.name','=','transform.map')]</field>
+			<field name="context">{'type_id':'transform.map'}</field>
+			<field name="view_id" ref="etl_component_trans_map_form" />
+		</record>
+
+		<record id="action_etl_component_trans_map_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id"
+				ref="etl_interface.etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_trans_map_tree" />
+		</record>
+
+		<record id="action_etl_component_trans_map_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_trans_map_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_trans_map_tree" />
+		</record>
+
+		<menuitem name="Field Mapping Process"
+			action="action_etl_component_trans_map_tree"
+			parent="etl_interface.menu_etl_jd_c_pec_form"
+			id="etl_jd_c_pec__fmp_form" />
+
+	</data>
+</openerp>

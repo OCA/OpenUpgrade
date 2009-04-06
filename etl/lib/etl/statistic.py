@@ -19,9 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-""" ETL Process.
+""" 
+  Provides statistic info of ETL process.
 
-    The module provides statistic info of ETL process.
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>)
+ GNU General Public License
 
 """
 import datetime
@@ -50,7 +52,7 @@ class statistic(object):
         stat=self.statistics[input_channel]        
         stat['end']=stat_time
         stat['total_time']=stat['end']-stat['start']
-        if total_record:      
+        if total_record:    
             stat['total_records']+=total_record
             stat['record_time']=stat['total_time']/stat['total_records']
             stat['memory']+=0 # TODO : Calculate size of data

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -25,9 +25,10 @@
     "name" : "Account For Multicompany",
     "version" : "1.1",
     "author" : "Tiny",
-    "description" : """    """,
+    "description" : """Multicompany Report
+    """,
     "website" : "http://www.openerp.com",
-    "depends" : [],
+    "depends" : ['account'],
     "category" : "Generic Modules/account_multicompany",
     "init_xml" : [],
     "demo_xml" : [],

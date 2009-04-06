@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!-- Product form -->
+    <record model="ir.ui.view" id="product_normal_form_view_wop1">
+        <field name="name">product.normal.form.wop1</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <page string="Prices &amp; Suppliers" position="replace">
+                <page string="Prices &amp; Suppliers" groups="sale.group_sale_manager">
+                    <separator string="Base Prices" colspan="4"/>
+                    <field name="standard_price"/>
+                    <field name="list_price"/>
+                    <field groups="base.group_extended" name="cost_method"/>
+                    <newline/>
+                    <field colspan="4" name="seller_ids" nolabel="1"/>
+                </page>
+            </page>
+        </field>
+    </record>
+
+    <!--<record model="ir.ui.view" id="product_normal_form_view_wop1">
+        <field name="name">product.normal.form.wop1</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="list_price" position="replace">
+                <field name="list_price" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_normal_form_view_wop2">
+        <field name="name">product.normal.form.wop2</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="replace">
+                <field name="standard_price" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_normal_form_view_wop3">
+        <field name="name">product.normal.form.wop3</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <field colspan="4" name="seller_ids" nolabel="1" position="replace">
+                <field colspan="4" name="seller_ids" nolabel="1" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+    </record>-->
+
+<!-- Product list -->
+    <record model="ir.ui.view" id="product_product_tree_view_wop1">
+        <field name="name">product.product.tree.wop1</field>
+        <field name="model">product.product</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <field invisible="'partner_id' not in context" name="price" position="replace">
+                <field invisible="'partner_id' not in context" name="price" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="product_product_tree_view_wop2">
+        <field name="name">product.product.tree.wop2</field>
+        <field name="model">product.product</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="lst_price" position="replace">
+                <field name="lst_price" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="product_product_tree_view_wop3">
+        <field name="name">product.product.tree.wop3</field>
+        <field name="model">product.product</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="product.product_product_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="standard_price" position="replace">
+                <field name="standard_price" groups="sale.group_sale_manager"/>
+            </field>
+        </field>
+        </record>
+
+    </data>
+</openerp>

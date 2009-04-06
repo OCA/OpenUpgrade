@@ -48,7 +48,7 @@
         <td>
           <para style="P5">Name : [[o.name]]</para>
           <para style="P5">Code : [[o.code]]</para>
-          <para style="P5">Recommended Trademark : [[o.recommended_trademark and o.recommended_trademark.name]]</para>
+          <para style="P5">Recommended Trademark : [[o.recommended_trademark_id and o.recommended_trademark_id.name]]</para>
           <para style="P5">Original Offer : [[o.offer_origin_id and o.offer_origin_id.name]]</para>
           <para style="P6">Preoffer : [[o.preoffer_original_id and o.preoffer_original_id.name]]</para>
           <para style="P6">
@@ -61,7 +61,7 @@
           <para style="P5">Fixed Date : [[o.fixed_date]]</para>
         </td>
         <td>
-          <para style="P6">Original Language: [[o.lang_orig and o.lang_orig.name]]</para>
+          <para style="P6">Original Language: [[o.lang_orig_id and o.lang_orig_id.name]]</para>
           <para style="P6">Copywriter : [[o.copywriter_id and o.copywriter_id.name]]</para>
           <para style="P6">Legal State : [[o.legal_state]]</para>
           <para style="P6">Responsible : [[o.offer_responsible_id and o.offer_responsible_id.name]]</para>
@@ -123,10 +123,10 @@
           <para style="P4">[[ ','.join(map(lambda x : x['product_id'].name ,step.product_ids ) ) ]]</para>
         </td>
         <td>
-          <para style="P4">[[ ','.join(map(lambda x : x['step_from'].code ,step.incoming_transition_ids) ) ]]</para>
+          <para style="P4">[[ ','.join(map(lambda x : x['step_from_id'].code ,step.incoming_transition_ids) ) ]]</para>
         </td>
         <td>
-          <para style="P4">[[ ','.join(map(lambda x : x['step_to'].code ,step.outgoing_transition_ids) ) ]]</para>
+          <para style="P4">[[ ','.join(map(lambda x : x['step_to_id'].code ,step.outgoing_transition_ids) ) ]]</para>
         </td>
         <td>
           <para style="P4">[[offer_step_docs(step.id)]]</para>

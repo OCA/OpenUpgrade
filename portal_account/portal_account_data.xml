@@ -6,20 +6,20 @@
 		<field name="model_id" search="[('model','=','account.invoice')]" model="ir.model"/>
 		<field name="global" eval="False"/>
 	</record>
+	
 	<record model="ir.rule" id="invoice_rule">
 		<field name="field_id" search="[('model','=','account.invoice'),('name','=','partner_id')]" model="ir.model.fields"/>
 		<field name="operator">=</field>
 		<field name="operand">user.address_id.partner_id.id</field>
 		<field name="rule_group" ref="invoice_rule_group"/>
 	</record>
+	
 	<record model="portal.model" id="model_invoice">
 		<field name="name" >Invoice Model</field>
 		<field name="model_id" search="[('model','=','account.invoice')]"/>
 		<field name="rule_group_id" ref="invoice_rule_group"/>
-		<field name="view_ids" eval="[(6,0,[ref('account.invoice_tree'),ref('account.invoice_form')])]"/>
+		<field name="view_ids" eval="[(6,0,[ref('portal_account_invoice_tree'),ref('portal_account_invoice_form')])]"/>
 	</record>
-
-
 
 	<record model="ir.rule.group" id="move_line_rule_group">
 		<field name="name">Portal Move Line rule</field>
@@ -34,115 +34,51 @@
 	</record>
 
 	<record model="portal.model" id="model_move_line">
-				<field name="name" >MoveLine Model</field>
-				<field name="model_id" search="[('model','=','account.move.line')]"/>
-				<field name="rule_group_id" ref="move_line_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[ref('account.view_move_line_tree'),ref('account.view_move_line_form')])]"/>
+		<field name="name" >MoveLine Model</field>
+		<field name="model_id" search="[('model','=','account.move.line')]"/>
+		<field name="rule_group_id" ref="move_line_rule_group"/>
+		<field name="view_ids" eval="[(6,0,[ref('account.view_move_line_tree'),ref('account.view_move_line_form')])]"/>
 	</record>
 </data>
+
 <data noupdate="1">
 
-	<record model="res.groups" id="portal.portal_group">
-		<field name="rule_groups" eval="[(4,ref('invoice_rule_group'))]"/>
+	<record model="res.groups" id="portal_account_group">
+		<field name="name">Portal Account group</field>
+		<field name="rule_groups" eval="[(6,0,[ref('invoice_rule_group'),ref('move_line_rule_group')])]"/>
+		<field name="menu_access" eval="[(6,0,[ref('menu_portal_configuration_account'),ref('menu_portal_configuration_account_invoice'),ref('menu_portal_configuration_account_your'),ref('menu_portal_configuration_account_refund'),ref('menu_portal_configuration_account_payable')])]"/>
 	</record>
-
-	<record model="res.groups" id="portal.portal_group">
-		<field name="rule_groups" eval="[(4,ref('move_line_rule_group'))]"/>
+	
+	<record model="portal.portal" id="portal_account">
+		<field name="name">Portal Account</field>
+		<field name="group_id" ref="portal_account_group"/>
+		<field name="menu_id" ref="menu_portal_configuration_account"/>
+		<field name="menu_action_id" ref="portal.portal_customer_action_menu"/>
+		<field name="company_id" ref="base.main_company"/>
 	</record>
-
-
 
 	<record model="ir.model.access" id="model_access_invoice">
 		<field name="name">Invoice Access</field>
 		<field name="perm_read">True</field>
-		<field name="group_id" ref="portal.portal_group"/>
+		<field name="group_id" ref="portal_account_group"/>
 		<field name="model_id" search="[('model','=','account.invoice')]"/>
 	</record>
 
 	<record model="ir.model.access" id="model_access_move_line">
 		<field name="name">Account Move Line Access</field>
 		<field name="perm_read">True</field>
-		<field name="group_id" ref="portal.portal_group"/>
+		<field name="group_id" ref="portal_account_group"/>
 		<field name="model_id" search="[('model','=','account.move.line')]"/>
 	</record>
 
-
-
-
-	<record model="ir.actions.act_window" id="portal_action_customer_invoice">
-		<field name="name">Your Invoices</field>
-		<field name="res_model">account.invoice</field>
-		<field name="view_type">form</field>
-		<field name="domain">[('type','=','out_invoice')]</field>
-		<field name="context">{'type':'out_invoice'}</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_inv">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="account.invoice_tree"/>
-		<field name="act_window_id" ref="portal_action_customer_invoice"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_inv">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="account.invoice_form"/>
-		<field name="act_window_id" ref="portal_action_customer_invoice"/>
-	</record>
-
-	<menuitem name="Account" id="menu_portal_configuration_account" parent="portal.menu_portal_customer"/>
-	<menuitem name="Invoices" id="menu_portal_configuration_account_invoice" parent="menu_portal_configuration_account"/>
-	<menuitem name="Your Invoices" id="menu_portal_configuration_account_your" parent="menu_portal_configuration_account_invoice" action="portal_action_customer_invoice"/>
-
-	<record model="ir.actions.act_window" id="portal_action_refund_invoice">
-		<field name="name">Your Refunds</field>
-		<field name="res_model">account.invoice</field>
-		<field name="view_type">form</field>
-		<field name="domain">[('type','=','out_refund')]</field>
-		<field name="context">{'type':'out_refund'}</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_ref">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="account.invoice_tree"/>
-		<field name="act_window_id" ref="portal_action_refund_invoice"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_ref">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="account.invoice_form"/>
-		<field name="act_window_id" ref="portal_action_refund_invoice"/>
-	</record>
-
-	<menuitem name="Customer Refund" id="menu_portal_configuration_account_refund" parent="menu_portal_configuration_account_invoice" action="portal_action_refund_invoice"/>
-
-	<record model="ir.actions.act_window" id="portal_action_account_move">
-		<field name="name">Payables &amp; Receivables</field>
-		<field name="res_model">account.move.line</field>
-		<field name="domain">[('reconcile_id','=',False),('account_id.type','in',('receivable','payable'))]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_move">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="account.view_move_line_tree"/>
-		<field name="act_window_id" ref="portal_action_account_move"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_move">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="account.view_move_line_form"/>
-		<field name="act_window_id" ref="portal_action_account_move"/>
-	</record>
-
-	<menuitem name="Payables &amp; Receivables" id="menu_portal_configuration_account_payable" parent="menu_portal_configuration_account" action="portal_action_account_move"/>
-
 	<record model="ir.model.access" id="model_access_journal">
 		<field name="name">Journal Portal</field>
-		<field name="group_id" ref="portal.portal_group"/>
+		<field name="group_id" ref="portal_account_group"/>
 		<field name="model_id" search="[('model','=','account.journal')]"/>
 	</record>
 	<record model="ir.model.access" id="model_access_journal_user">
 		<field name="name">Journal Users</field>
-		<field name="group_id" ref="base.group_user"/>
+		<field name="group_id" ref="portal_account_group"/>
 		<field name="model_id" search="[('model','=','account.journal')]"/>
 		<field name="perm_read" eval="True"/>
 		<field name="perm_write" eval="True"/>
@@ -155,13 +91,13 @@
 	#
 
 	<record id="account.wizard_invoice_pay" model="ir.actions.wizard" >
-		<field name="portal_visible" eval="True" />
+		<field name="portal_visible" eval="False" />
 	</record>
 	<record id="account.wizard_invoice_refund" model="ir.actions.wizard" >
-		<field name="portal_visible" eval="True" />
+		<field name="portal_visible" eval="False" />
 	</record>
 	<record id="account.account_invoices" model="ir.actions.report.xml" >
-		<field name="portal_visible" eval="True" />
+		<field name="portal_visible" eval="False" />
 	</record>
 
 </data>

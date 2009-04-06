@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
-# This file contains the translation of the following modules:
+# This file containt the translation of the following modules:
 #	* partner_spam
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Project-Id-Version: OpenERP Server 5.0.0-rc1\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-02-06 13:58:47+0000\n"
-"PO-Revision-Date: 2009-02-06 13:58:47+0000\n"
+"POT-Creation-Date: 2008-12-13 18:12:40+0000\n"
+"PO-Revision-Date: 2008-12-13 18:12:40+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,352 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: partner_spam
-#: model:ir.module.module,shortdesc:partner_spam.module_meta_information
-msgid "SMS and Email spam to partner"
+#: wizard_field:res.partner.address.spam_send,init,name1:0
+#: wizard_field:res.partner.spam_send_2,init,name1:0
+msgid "File name 1"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,name2:0
+#: wizard_field:res.partner.spam_send_2,init,name2:0
+msgid "File name 2"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,name3:0
+#: wizard_field:res.partner.spam_send_2,init,name3:0
+msgid "File name 3"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_button:res.partner.address.spam_send,send,end:0
+#: wizard_button:res.partner.address.sms_send,send,end:0
+#: wizard_button:res.partner.spam_send_2,send,end:0
+#: wizard_button:res.partner.sms_send_2,send,end:0
+msgid "End"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "Message:"
+msgstr ""
+
+#. module: partner_spam
+#: model:ir.actions.act_window,name:partner_spam.act_partner_2_contacts
+msgid "Contacts"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[country_id]] -> Country"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[fax]] -> Fax"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,other:0
+#: wizard_field:res.partner.spam_send_2,init,other:0
+msgid "Other"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+msgid "Only send to addresses:"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.sms_send,init,text:0
+#: wizard_field:res.partner.sms_send_2,init,text:0
+msgid "SMS Message"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[name]] -> Contact name"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[birthdate]] -> Birthday"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_button:res.partner.address.sms_send,init,send:0
+#: model:ir.actions.wizard,name:partner_spam.res_partner_address_send_sms_wizard
+#: wizard_button:res.partner.sms_send_2,init,send:0
+#: model:ir.actions.wizard,name:partner_spam.res_partner_send_sms_wizard_2
+msgid "Send SMS"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[title]] -> Title"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[city]] -> City"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_button:res.partner.address.spam_send,init,send:0
+#: model:ir.actions.wizard,name:partner_spam.res_partner_address_mass_mailing_wizard
+#: wizard_button:res.partner.spam_send_2,init,send:0
+msgid "Send Email"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.sms_send,send,sms_sent:0
+#: wizard_field:res.partner.sms_send_2,send,sms_sent:0
+msgid "Quantity of SMS sent"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "Bulk SMS send"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[email]] -> Email"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,delivery:0
+#: wizard_field:res.partner.spam_send_2,init,delivery:0
+msgid "Delivery"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[state_id]] -> State"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.sms_send,init,default:0
+#: wizard_field:res.partner.sms_send_2,init,default:0
+msgid "Only send to default addresses"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.sms_send,send:0
+#: wizard_view:res.partner.sms_send_2,send:0
+msgid "SMS"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[zip]] -> Zip code"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,send,email_sent:0
+#: wizard_field:res.partner.spam_send_2,send,email_sent:0
+msgid "Quantity of Emails sent"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[phone]] -> Phone"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[mobile]] -> Mobile"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,invoice:0
+#: wizard_field:res.partner.spam_send_2,init,invoice:0
+msgid "Invoice"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.spam_send,send:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.spam_send_2,send:0
+#: model:ir.actions.wizard,name:partner_spam.res_partner_mass_mailing_wizard_2
+msgid "Mass Mailing"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,default:0
+#: wizard_field:res.partner.spam_send_2,init,default:0
+msgid "Default"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.sms_send,init,app_id:0
+#: wizard_field:res.partner.sms_send_2,init,app_id:0
+msgid "API ID"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[street2]] -> Street 2"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.sms_send,init,email_http:0
+#: wizard_field:res.partner.sms_send_2,init,email_http:0
+msgid "Email connection"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,contact:0
+#: wizard_field:res.partner.spam_send_2,init,contact:0
+msgid "Contact"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "The following tags can be included in the message. They will be replaced to the corresponding values of each partner contact:"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,file1:0
+#: wizard_field:res.partner.spam_send_2,init,file1:0
+msgid "File 1"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,file2:0
+#: wizard_field:res.partner.spam_send_2,init,file2:0
+msgid "File 2"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,file3:0
+#: wizard_field:res.partner.spam_send_2,init,file3:0
+msgid "File 3"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "SMS - Gateway: clickatell"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.sms_send,init,user:0
+#: wizard_field:res.partner.sms_send_2,init,user:0
+msgid "Login"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.sms_send,init,password:0
+#: wizard_field:res.partner.sms_send_2,init,password:0
+msgid "Password"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,from:0
+#: wizard_field:res.partner.address.sms_send,init,email:0
+#: wizard_field:res.partner.spam_send_2,init,from:0
+#: wizard_field:res.partner.sms_send_2,init,email:0
+msgid "Sender's email"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[street]] -> Street"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+msgid "Attached files:"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_button:res.partner.address.spam_send,init,end:0
+#: wizard_button:res.partner.address.sms_send,init,end:0
+#: wizard_button:res.partner.spam_send_2,init,end:0
+#: wizard_button:res.partner.sms_send_2,init,end:0
+msgid "Cancel"
+msgstr ""
+
+#. module: partner_spam
+#: model:ir.actions.act_window,name:partner_spam.act_contact_2_partner
+msgid "Partner"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,text:0
+#: wizard_field:res.partner.spam_send_2,init,text:0
+msgid "Message"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[function]] -> Function"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_view:res.partner.address.spam_send,init:0
+#: wizard_view:res.partner.address.sms_send,init:0
+#: wizard_view:res.partner.spam_send_2,init:0
+#: wizard_view:res.partner.sms_send_2,init:0
+msgid "[[partner_id]] -> Partner name"
+msgstr ""
+
+#. module: partner_spam
+#: wizard_field:res.partner.address.spam_send,init,subject:0
+#: wizard_field:res.partner.spam_send_2,init,subject:0
+msgid "Subject"
 msgstr ""
 

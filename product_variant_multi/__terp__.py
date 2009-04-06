@@ -43,11 +43,10 @@
     """,
     "depends" : ["base", "product", "sale"],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : ["demo_data.xml"],
     "update_xml" : [
         "security/ir.model.access.csv",
         "product_variant_multi.xml",
-        "demo_data.xml"
     ],
     "active": False,
     "installable": True

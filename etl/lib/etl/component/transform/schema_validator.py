@@ -20,7 +20,10 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to perform Schema Validation.
+  To perform Schema Validation.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 import types
 from etl.component import component
@@ -47,39 +50,46 @@ class schema_validator(component):
     """    
 
     def __init__(self,schema,name='component.transform.schema_validator'):
+        """ 
+        Reqiured Paraamters ::
+        schema  : the name of schema
+                
+        Extra Parameters ::
+        name          : Name of Component.
+        """
         super(schema_validator, self).__init__(name )
         self.schema = schema
+        self.name = name
 
 
-
-    def process(self):        
+    def process(self):       
         for channel,trans in self.input_get().items():
-            for iterator in trans:       
+            for iterator in trans:      
                 keys=[]                         
-                for d in iterator:                                        
-                    if len(d.keys())!=len(self.schema.keys()):                        
+                for d in iterator:                                       
+                    if len(d.keys())!=len(self.schema.keys()):                       
                         yield d,'invalid_field'
                     else:
                         channel='main'                                            
-                        for f in d:                        
+                        for f in d:                       
                             if f not in self.schema:
                                 channel='invalid_name'                        
                                 break
-                            if self.schema[f].get('key',False):                                
+                            if self.schema[f].get('key',False):                               
                                 if not d[f]:
                                     channel="invalid_key"
                                     break
-                                if d[f] in keys:                                                               
+                                if d[f] in keys:                                                              
                                     channel="invalid_key"
                                     break                                
                                 keys.append(d[f])
 
-                            if self.schema[f].get('Is_NULL',False):                                    
+                            if self.schema[f].get('Is_NULL',False):                                   
                                 if not d[f]:
                                     channel="invalid_null"                            
                                     break
 
-                            if self.schema[f].get('type',False):                                
+                            if self.schema[f].get('type',False):                               
                                 if type(d[f]) != eval(self.schema[f]['type']):
                                     channel='invalid_type'
                                     break
@@ -93,14 +103,23 @@ class schema_validator(component):
                                     except ValueError ,e:
                                         channel="invalid_format"						
                                         break
-                            if self.schema[f].get('size',False):                                
+                            if self.schema[f].get('size',False):                               
                                 if len(d[f]) > int(self.schema[f]['size']):
                                     channel='invalid_size'
                                     break
                             
                         yield d,channel
                            
-if __name__ == '__main__':
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=schema_validator(self.schema, self.name)
+        return res
+    
+
+def test():
     from etl_test import etl_test
     from etl import transformer
     input_part = [
@@ -119,4 +138,6 @@ if __name__ == '__main__':
     test.check_input({'main':input_part})
     print test.output()
 
+if __name__ == '__main__':
+    test()
 

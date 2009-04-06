@@ -3,14 +3,14 @@
 	<data>
 				
 		<wizard 
-			string="Account Detail (Company Wise)"
+			string="Account Detail (Group By Company)"
 			model="account.account"
 			name="account.detail"
 			menu="False"
 			id="wizard_account_multi_company_report"/>
 			
 		<menuitem
-			name="Financial Management/Reporting/Account Detail (Company Vice)"
+			name="Financial Management/Reporting/Account Detail (Group By Company)"
 			action="wizard_account_multi_company_report"
 			type="wizard"
 			id="menu_account_multi_company_report"/>

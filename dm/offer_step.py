@@ -64,9 +64,8 @@ class dm_offer_step_action(osv.osv):
     _inherits = {'ir.actions.server':'server_action_id'}
     _columns = {
         'server_action_id' : fields.many2one('ir.actions.server','Server Action'),
-        'media_id' : fields.many2one('dm.media','Media')
+        'media_id' : fields.many2one('dm.media','Media',required=True)
     }
-    
 dm_offer_step_action()
 
 class dm_offer_step(osv.osv):
@@ -75,58 +74,56 @@ class dm_offer_step(osv.osv):
     def _offer_step_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
-            code=''
             offer_step = self.browse(cr,uid,[id])[0]
-            res_trans = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model',
-                    context.get('lang', False) or 'en_US',[offer_step.type.id])
-            type_code = res_trans[offer_step.type.id] or offer_step.type.code
-            code = '_'.join([offer_step.offer_id.code,(type_code or '')])
-            result[id]=code
+            step_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type_id.id])
+            type_code = (step_code[offer_step.type_id.id] or offer_step.type_id.code) + str(offer_step.seq)
+            offer_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,code', 'model', context.get('lang', False) or 'en_US',[offer_step.offer_id.id])
+            code = (offer_code[offer_step.offer_id.id] or offer_step.offer_id.code) + '_' + type_code
+            result[id] = str(code)
         return result
 
     _columns = {
+        'seq' : fields.integer('Step Type Sequence'),
         'name' : fields.char('Name',size=64, required=True, states={'closed':[('readonly',True)]}),
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade", states={'closed':[('readonly',True)]}),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32, states={'closed':[('readonly',True)]}),
-        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,readonly=True, states={'closed':[('readonly',True)]}),
+        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,size=64),
         'quotation' : fields.char('Quotation', size=16, states={'closed':[('readonly',True)]}),
         'media_id' : fields.many2one('dm.media', 'Media', ondelete="cascade",required=True, states={'closed':[('readonly',True)]}),
-        'type' : fields.many2one('dm.offer.step.type','Type',required=True, states={'closed':[('readonly',True)]}),
+        'type_id' : fields.many2one('dm.offer.step.type','Type',required=True, states={'closed':[('readonly',True)]}),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
         'desc' : fields.text('Description', states={'closed':[('readonly',True)]}),
         'dtp_note' : fields.text('DTP Notes', states={'closed':[('readonly',True)]}),
-        'dtp_category_ids' : fields.many2many('dm.offer.category','dm_offer_dtp_category','offer_id','offer_dtp_categ_id', 'DTP Categories') ,# domain="[('domain','=','production')]"),
+        'dtp_category_ids' : fields.many2many('dm.offer.category','dm_offer_dtp_category','offer_id','offer_dtp_categ_id', 'DTP Categories'),
         'trademark_note' : fields.text('Trademark Notes', states={'closed':[('readonly',True)]}),
-        'trademark_category_ids' : fields.many2many('dm.offer.category','dm_offer_trademark_category','offer_id','offer_trademark_categ_id','Trademark Categories'),# domain="[('domain','=','purchase')]"),
+        'trademark_category_ids' : fields.many2many('dm.offer.category','dm_offer_trademark_category','offer_id','offer_trademark_categ_id','Trademark Categories'),
         'production_note' : fields.text('Production Notes', states={'closed':[('readonly',True)]}),
         'planning_note' : fields.text('Planning Notes', states={'closed':[('readonly',True)]}),
         'purchase_note' : fields.text('Purchase Notes', states={'closed':[('readonly',True)]}),
         'mailing_at_dates' : fields.boolean('Mailing at dates', states={'closed':[('readonly',True)]}),
-        'floating date' : fields.boolean('Floating date', states={'closed':[('readonly',True)]}),
+        'floating_date' : fields.boolean('Floating date', states={'closed':[('readonly',True)]}),
         'interactive' : fields.boolean('Interactive', states={'closed':[('readonly',True)]}),
         'notes' : fields.text('Notes'),
         'document_ids' : fields.one2many('dm.offer.document', 'step_id', 'DTP Documents'),
         'flow_start' : fields.boolean('Flow Start'),
         'item_ids' : fields.many2many('product.product','dm_offer_step_product_rel','product_id','offer_step_id','Items', states={'closed':[('readonly',True)]}),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
-        'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',readonly=True),
-        'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition', states={'closed':[('readonly',True)]}),
+        'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to_id', 'Incoming Transition',readonly=True),
+        'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from_id', 'Outgoing Transition', states={'closed':[('readonly',True)]}),
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
-#        use this line if step action wont wrk
-#        'action' : fields.many2one('ir.actions.server', string="Action", required=True, domain="[('dm_action','=',True)]"),
-         'action_id' : fields.many2one('dm.offer.step.action', string="Action", required=True, domain="[('dm_action','=',True)]"),
+        'action_id' : fields.many2one('dm.offer.step.action', string="Action", required=True, domain="[('dm_action','=',True)]"),
     }
 
     _defaults = {
         'state': lambda *a : 'draft',
         'split_mode' : lambda *a : 'or',
     }
-    
-    def onchange_type(self,cr,uid,ids,type,offer_id,context):
-        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type])[0]
+
+    def onchange_type(self,cr,uid,ids,type_id,offer_id,context):
+        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type_id])[0]
         value = {
                     'flow_start':step_type['flow_start'],
                 }
@@ -143,7 +140,21 @@ class dm_offer_step(osv.osv):
 #                offer_name = res_offer[offer.id] or offer.name
                 value['name'] = "%s for %s"% (type_code,offer.name) 
         return {'value':value}
-    
+
+    def create(self,cr,uid,vals,context={}):
+        type_seq = self.search(cr,uid,[('type_id','=',vals['type_id']),('offer_id','=',vals['offer_id'])])
+        vals['seq'] = len(type_seq) and len(type_seq)+1 or 1
+        return super(dm_offer_step,self).create(cr,uid,vals,context)
+
+    def write(self,cr,uid,ids,vals,context={}):
+        if 'type_id' in vals :
+            step  = self.browse(cr,uid,ids)[0]
+            if vals['type_id'] != step.type_id.id :
+                type_seq = self.search(cr,uid,[('type_id','=',vals['type_id']),('offer_id','=',step.offer_id.id)])
+                vals['seq'] = len(type_seq) and len(type_seq)+1 or 1
+        return super(dm_offer_step,self).write(cr,uid,ids,vals,context)
+
+
     def state_close_set(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state':'closed'})
         return True
@@ -173,32 +184,31 @@ dm_offer_step()
 
 class dm_offer_step_transition_trigger(osv.osv):
     _name = "dm.offer.step.transition.trigger"
-    _inherits = {'ir.actions.server':'server_action_id'}
     _columns = {
-        'server_action_id' : fields.many2one('ir.actions.server','Server Action'),
-#        'name' : fields.char('Trigger Name',size=64,required=True),
-#        'code' : fields.char('Code' ,size=64,required=True),
+        'name' : fields.char('Trigger Name', size=64, required=True, translate=True),
+        'code' : fields.char('Code' , size=64, required=True, translate=True),
+        'type' : fields.selection([('action', 'Action'),('noaction','No Action'),('auto','Auto')], 'Trigger Type', required=True),
     }
 dm_offer_step_transition_trigger()
 
 class dm_offer_step_transition(osv.osv):
     _name = "dm.offer.step.transition"
-    _rec_name = 'condition'
+    _rec_name = 'condition_id'
     _columns = {
-        'condition' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
+        'condition_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
         'delay' : fields.integer('Offer Delay' ,required=True),
         'delay_type' : fields.selection([('minutes', 'Minutes'),('hour','Hours'),('day','Days'),('month','Months')], 'Delay type', required=True),
-        'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
-        'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
+        'step_from_id' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
+        'step_to_id' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
     }
     _defaults = {
         'delay_type': lambda *a: 'day',
     }
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
-        if context.has_key('type'):
+        if context.has_key('type_id'):
             data['delay']='0'
-            data[context['type']] = context['step_id']
+            data[context['type_id']] = context['step_id']
         return data
 
 dm_offer_step_transition()
@@ -224,8 +234,8 @@ class product_product(osv.osv):
         'country_ids': _default_all_country,
         'state_ids': _default_all_state,
     }
-    
-    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context={}, count=False):
             result = super(product_product,self).search(cr,uid,args,offset,limit,order,context,count)
             if 'offer_id' in context and context['offer_id']:
                 result = []
@@ -242,10 +252,7 @@ class actions_server(osv.osv):
     _columns = {
         'dm_action' : fields.boolean('Action')
     }
-    
 actions_server()
 
-
-    
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

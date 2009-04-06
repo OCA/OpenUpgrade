@@ -27,11 +27,12 @@
     "description": """ This is  module of document management system with
      Implementation of document rule """,
     "depends" : ["base","process","document"],
-    "init_xml" : [],
+    "init_xml" : ["document_data.xml"],
     "demo_xml" : [],
     "update_xml" : ["document_rule.xml"],
     "active": False,
     "installable": True,
+    'certificate': '',
 
 }
 

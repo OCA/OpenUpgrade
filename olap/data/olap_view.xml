@@ -2,55 +2,55 @@
 <openerp>
 <data>
 
-	
-	<menuitem
-		name="Businesss Intelligence"
-		id="menu_bi"
-		icon="terp-account"/>
-		
+    
+    <menuitem
+        name="Businesss Intelligence"
+        id="menu_bi"
+        icon="terp-account"/>
+        
 
-	<menuitem
-		name="Configuration"
-		id="menu_bi_configuration"
-		parent="menu_bi" />
+    <menuitem
+        name="Configuration"
+        id="menu_bi_configuration"
+        parent="menu_bi" />
 
-	<menuitem
-		name="Fact Databases"
-		sequence="10"
-		id="menu_bi_conf_fact" 
-		parent="menu_bi_configuration"/>
+    <menuitem
+        name="Fact Databases"
+        sequence="10"
+        id="menu_bi_conf_fact" 
+        parent="menu_bi_configuration"/>
 
-	<menuitem
-		name="Known Application"
-		sequence="20"
-		id="menu_bi_conf_known_application"
-		parent="menu_bi_configuration"/>
+    <menuitem
+        name="Known Application"
+        sequence="20"
+        id="menu_bi_conf_known_application"
+        parent="menu_bi_configuration"/>
 
-	<menuitem
-		name="Olap Cubes"
-		sequence="30"
-		id="menu_bi_conf_cubes" 
-		parent="menu_bi_configuration"/>
+    <menuitem
+        name="Olap Cubes"
+        sequence="30"
+        id="menu_bi_conf_cubes" 
+        parent="menu_bi_configuration"/>
 
-	<menuitem
-		name="Tools"
-		sequence="40"
-		id="menu_bi_conf_tools" 
-		parent="menu_bi_configuration"/>
+    <menuitem
+        name="Tools"
+        sequence="40"
+        id="menu_bi_conf_tools" 
+        parent="menu_bi_configuration"/>
 
-	<record model="ir.actions.url" id="menu_url_cube_browser">
+    <record model="ir.actions.url" id="menu_url_cube_browser">
             <field name="name">name_menu_url_cube_browser</field>
             <field name="url">http://localhost:8080/browser</field>
             <!--<field name="url">/tinybi/index</field>-->
-	</record>
-	<menuitem name="Cube Browser" sequence="50" id="menu_browser_url" type="url" action="menu_url_cube_browser" parent="menu_bi_configuration"/>
+    </record>
+    <menuitem name="Cube Browser" sequence="50" id="menu_browser_url" type="url" action="menu_url_cube_browser" parent="menu_bi_configuration"/>
 
-	<record model="ir.actions.url" id="menu_url_cube_designer">
+    <record model="ir.actions.url" id="menu_url_cube_designer">
             <field name="name">name_menu_url_cube_designer</field>
             <field name="url">http://localhost:8080/designer</field>
             <!--<field name="url">/tinybi_design/index</field>-->
-	</record>
-	<menuitem name="Cube Designer" sequence="60" action="menu_url_cube_designer" type="url" id="menu_designer_url" parent="menu_bi_configuration"/>
+    </record>
+    <menuitem name="Cube Designer" sequence="60" action="menu_url_cube_designer" type="url" id="menu_designer_url" parent="menu_bi_configuration"/>
 
 </data>
 </openerp>

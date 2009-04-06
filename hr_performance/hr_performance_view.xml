@@ -29,8 +29,8 @@
 					</field>
 					<group col="4" colspan="4">
 						<field name="state"/>
-						<button string="Get Employee List" type="object" name="fill_employee_list" states="new"/>
-						<button string="Confirm" type="object" name="change_sate" states="saved" confirm="Are you sure to confirm this record." />
+						<button string="Get Employee List" name="get_employee_list" states="new"/>
+						<button string="Confirm" name="confirm_review" states="saved" confirm="Are you sure to confirm this record." />
 					</group>
 				</form>
 			</field>

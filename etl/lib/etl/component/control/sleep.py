@@ -20,7 +20,11 @@
 #
 ##############################################################################
 """
-   This is ETL Component to put job process in sleep.
+ Puts job process in sleep.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
+
 """
 from etl.component import component
 import time
@@ -30,7 +34,13 @@ class sleep(component):
        put job process in sleep.
     """
     def __init__(self, delay=1,name='component.control.sleep'):
+        """ 
+        Parametrs ::
+        delay          : Delay in Seconds 
+        name          : Name of Component. 
+        """
         self.delay = delay
+        self.name = name
         super(sleep, self).__init__(name)
 
     def process(self):
@@ -40,3 +50,10 @@ class sleep(component):
                     time.sleep(self.delay)
                     yield d, 'main'
 
+
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=sleep(self.delay, name=self.name)
+        return res

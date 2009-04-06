@@ -28,7 +28,12 @@
     "category" : "Generic Modules/Others",
     "description": "Portal Management - Account specific data.",
     "init_xml" : [],
-    "update_xml" : ["portal_account_data.xml", "portal_conf_data.xml"],
+    "update_xml" : [
+                "portal_account_view.xml",
+                "portal_conf_data.xml",
+                "portal_account_data.xml", 
+                "security/ir.model.access.csv",
+                ],
     "demo_xml" : [],
     "active": False,
     "installable": True

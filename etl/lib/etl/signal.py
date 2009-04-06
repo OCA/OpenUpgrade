@@ -19,9 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-""" ETL Process.
+""" 
+  To handle ETL signal.
 
-    The class handle ETL signal.
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 
 """
 class signal(object):
@@ -43,7 +45,7 @@ class signal(object):
     
     def signal(self, signal, signal_data=None):
         for fnct,data,key in self.__connects.get(signal, []):
-            fnct(self, signal_data, *data)
+            fnct(key, signal_data, *data)
         
 
     def signal_connect(self, key, signal, fnct, *data):

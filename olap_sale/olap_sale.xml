@@ -740,10 +740,10 @@ Measures
     </record>
 
     <record model="olap.measure" id="measure_sql_expression">
-        <field name="name">Calculated Measure</field>
+        <field name="name">Units Sold</field>
         <field name="cube_id" ref="cube_sales_order_line"/>
         <field name="measure_type">sql_expr</field>
-        <field name="value_sql">sum(sale_order_line.product_uom_qty+sale_order.amount_total)</field>
+        <field name="value_sql">count(sale_order.id)</field>
     </record>
 
 

@@ -20,7 +20,10 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to perform sort operation.
+ To perform sort operation.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -38,6 +41,14 @@ class sort(component):
     """    
 
     def __init__(self, fieldname,name='component.process.sort'):
+        """ 
+        Required Parameters ::
+        fieldname : specifies the fieldname according to which sorting process will be done
+       
+        Extra Parametrs ::
+        name          : name of the component 
+        """
+
         super(sort, self).__init__(name )
         self.fieldname = fieldname
 
@@ -52,11 +63,21 @@ class sort(component):
         datas.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
         for d in datas:
             yield d, 'main'
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=sort(self.fieldname, self.name)
+        return res
+    
 
 
-if __name__ == '__main__':
+def test():
     from etl_test import etl_test
     test=etl_test.etl_component_test(sort('sort','name'))
     test.check_input({'main':[{'id':1, 'name':'OpenERP'},{'id':2,'name':'Fabien'}]})
     test.check_output([{'id':2, 'name':'OpenERP'},{'id':1,'name':'Fabien'}],'main')
     res=test.output()
+if __name__ == '__main__':
+    test()

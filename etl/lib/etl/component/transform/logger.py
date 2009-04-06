@@ -20,7 +20,10 @@
 #
 ##############################################################################
 """
-   This is an ETL Component that use to display log detail in streamline.
+ To display log detail in streamline.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -36,7 +39,7 @@ class logger(component):
 		Output Flows: 0-y
 		* .* : return the main flow 
     """    
-    def __init__(self, name='component.output.logger', output=sys.stdout):        
+    def __init__(self, output=sys.stdout, name='component.output.logger'):       
         self.output = output
         self.is_end = 'main'
         super(logger, self).__init__(name)
@@ -45,8 +48,16 @@ class logger(component):
         #TODO : proper handle exception
         for channel,trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:                    
+                for d in iterator:                   
                     self.output.write('Log '+self.name+' '+str(d)+'\n')
                     yield d, 'main'
         super(logger, self).process()
 
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=logger(self.output, self.name)
+        return res
+    

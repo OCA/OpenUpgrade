@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="etl_component_excel_out_form" model="ir.ui.view">
+			<field name="name">view.etl.component.excel.out.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_component_form"/>
+			<field name="arch" type="xml">
+					<notebook position='inside'>
+						<page string="Property" attrs="{'invisible':[('type_id','!=','output.excel_out')]}">
+							<field name="transformer_id" />
+							<field name="row_limit" />
+							<field name="excel_params" />
+						</page>
+					</notebook>
+			</field>
+		</record>
+
+		<record id="action_etl_component_excel_out_tree"
+			model="ir.actions.act_window">
+			<field name="name">Excel Out component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type_id.name','=','output.excel_out')]</field>
+			<field name="context">{'type_id':'output.excel_out'}</field>
+		</record>
+
+		<record id="action_etl_component_excel_out_from"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="name">Excel Out component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type_id.name','=','output.excel_out')]</field>
+			<field name="context">{'type_id':'output.excel_out'}</field>
+			<field name="view_id" ref="etl_component_excel_out_form" />
+		</record>
+
+		<record id="action_etl_component_excel_out_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id"
+				ref="etl_interface.etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_excel_out_tree" />
+		</record>
+
+		<record id="action_etl_component_excel_out_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_excel_out_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_excel_out_tree" />
+		</record>
+
+		<menuitem name="Excel"
+			action="action_etl_component_excel_out_tree"
+			parent="etl_interface.menu_etl_jd_c_oc_form"
+			id="menu_etl_excel_out_tree" />
+
+	</data>
+</openerp>

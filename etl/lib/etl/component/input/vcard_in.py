@@ -20,44 +20,55 @@
 #
 ##############################################################################
 
+"""
+To import data from vcard
+
+Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+GNU General Public License
+"""
+
 from etl.component import component
-import csv
-import vobject  
 
 class vcard_in(component):
 
     def __init__(self,fileconnector,name='component.input.csv_in'):
+    	"""
+    	Required Parameters ::
+    	fileconnector : Local file connector to connect with file.
+
+        Extra Parameters ::
+        name          : Name of Component.
+        """
         super(vcard_in, self).__init__(name)
-        self.fileconnector = fileconnector
-        self.fp=None
-        self.reader=None
-
-    def action_start(self,key,singal_data={},data={}):
-        super(vcard_in, self).action_start(key,singal_data,data)
-        self.fp=self.fileconnector.open('r')
-        #self.reader=csv.DictReader(self.fp,**self.csv_params)
-        self.s = "".join(self.fp.readlines())
-        self.reader = vobject.readComponents(self.s)
-
-
-    def action_end(self,key,singal_data={},data={}):
-       
-        super(vcard_in, self).action_end(key,singal_data,data)
-        if self.fp:
-            self.fp.close()
-           
-        if self.fileconnector:
-            self.fileconnector.close()
+        self.fileconnector = fileconnector             
+    
     
     def process(self):
         try:
+            import vobject 
+            fp=self.fileconnector.open('r')        
+            s = "".join(fp.readlines())
+            reader = vobject.readComponents(s)
             while True:
                 row={}
-                data=self.reader.next()
+                data=reader.next()
                 for d in data.contents:
                     row[unicode(d)]=eval('data.'+unicode(d)+'.value')                    
                 yield row,'main'
+            self.fileconnector.close(fp)
         except IOError,e:
-            self.action_error(e) 
+            self.signal('error',{'data':self.data,'type':'exception','error':str(e)})
 
 
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=vcard_in(self.fileconnector, self.name)
+        return res
+
+def test():
+    pass
+
+if __name__ == '__main__':
+    test() 

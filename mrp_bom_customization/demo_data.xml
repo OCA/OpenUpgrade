@@ -1,0 +1,215 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data noupdate="1">
+
+		<!-- Parts List -->
+		<record id="product_product_piece0" model="product.product">
+			<field eval="&quot;&quot;&quot;produce&quot;&quot;&quot;" name="supply_method"/>
+			<field eval="1.0" name="list_price"/>
+			<field eval="1.0" name="standard_price"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+			<field name="uom_id" ref="product.product_uom_unit"/>
+			<field eval="1.0" name="uos_coeff"/>
+			<field eval="1" name="sale_ok"/>
+			<field eval="1" name="purchase_ok"/>
+			<field eval="0" name="track_outgoing"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="&quot;&quot;&quot;Piece 0&quot;&quot;&quot;" name="name"/>
+			<field eval="1.0" name="produce_delay"/>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+			<field eval="&quot;&quot;&quot;product&quot;&quot;&quot;" name="type"/>
+			<field eval="0" name="track_incoming"/>
+			<field name="property_stock_production" ref="stock.location_production"/>
+			<field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+			<field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+			<field name="property_stock_inventory" ref="stock.location_inventory"/>
+			<field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+			<field eval="1" name="seller_delay"/>
+			<field eval="7.0" name="sale_delay"/>
+			<field eval="1.0" name="price_margin"/>
+			<field name="categ_id" ref="product.cat1"/>
+			<field eval="0" name="track_production"/>
+			<field name="property_stock_procurement" ref="stock.location_procurement"/>
+			<field eval="[(6,0,[])]" name="taxes_id"/>
+			<field eval="0" name="rental"/>
+		</record>
+		<record id="product_product_piece1" model="product.product">
+			<field eval="&quot;&quot;&quot;produce&quot;&quot;&quot;" name="supply_method"/>
+			<field eval="1.0" name="list_price"/>
+			<field eval="1.0" name="standard_price"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;fixed&quot;&quot;&quot;" name="mes_type"/>
+			<field name="uom_id" ref="product.product_uom_unit"/>
+			<field eval="1.0" name="uos_coeff"/>
+			<field eval="1" name="sale_ok"/>
+			<field eval="1" name="purchase_ok"/>
+			<field eval="0" name="track_outgoing"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="&quot;&quot;&quot;Piece 1&quot;&quot;&quot;" name="name"/>
+			<field eval="1.0" name="produce_delay"/>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+			<field eval="&quot;&quot;&quot;product&quot;&quot;&quot;" name="type"/>
+			<field eval="0" name="track_incoming"/>
+			<field name="property_stock_production" ref="stock.location_production"/>
+			<field eval="[(6,0,[])]" name="supplier_taxes_id"/>
+			<field eval="&quot;&quot;&quot;make_to_stock&quot;&quot;&quot;" name="procure_method"/>
+			<field name="property_stock_inventory" ref="stock.location_inventory"/>
+			<field eval="&quot;&quot;&quot;standard&quot;&quot;&quot;" name="cost_method"/>
+			<field eval="1" name="seller_delay"/>
+			<field eval="7.0" name="sale_delay"/>
+			<field eval="1.0" name="price_margin"/>
+			<field name="categ_id" ref="product.cat1"/>
+			<field eval="0" name="track_production"/>
+			<field name="property_stock_procurement" ref="stock.location_procurement"/>
+			<field eval="[(6,0,[])]" name="taxes_id"/>
+			<field eval="0" name="rental"/>
+		</record>
+		
+		<!-- BoM Properties -->
+		
+		<record id="mrp_property_group_0" model="mrp.property.group">
+			<field name="name">Organisation Couleur</field>
+		</record>
+		
+		<record id="mrp_property_A" model="mrp.property">
+			<field name="name">A</field>
+			<field name="composition">min</field>
+			<field name="group_id" ref="mrp_property_group_0"/>
+		</record>
+		<record id="mrp_property_B" model="mrp.property">
+			<field name="name">B</field>
+			<field name="composition">min</field>
+			<field name="group_id" ref="mrp_property_group_0"/>
+		</record>
+		<record id="mrp_property_C" model="mrp.property">
+			<field name="name">C</field>
+			<field name="composition">min</field>
+			<field name="group_id" ref="mrp_property_group_0"/>
+		</record>
+		<record id="mrp_property_D" model="mrp.property">
+			<field name="name">D</field>
+			<field name="composition">min</field>
+			<field name="group_id" ref="mrp_property_group_0"/>
+		</record>
+	
+		<!-- BoM Customizations -->
+		
+		<record id="mrp_bom_customization.group_0" model="mrp_bom_customization.mrp_bom_customization_groups">
+			<field name="name">Couleur</field>
+		</record>
+		
+		<record id="mrp_bom_customization.value_0" model="mrp_bom_customization.mrp_bom_customization_values">
+			<field name="name">Red</field>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
+		</record>
+		
+		<record id="mrp_bom_customization.value_1" model="mrp_bom_customization.mrp_bom_customization_values">
+			<field name="name">Green</field>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
+		</record>
+		
+		<record id="mrp_bom_customization.value_2" model="mrp_bom_customization.mrp_bom_customization_values">
+			<field name="name">Blue</field>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
+		</record>
+		
+		<record id="mrp_bom_customization.key_0" model="mrp_bom_customization.mrp_bom_customization_keys">
+			<field name="name">Bloc</field>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
+		</record>
+		
+		<record id="mrp_bom_customization.key_1" model="mrp_bom_customization.mrp_bom_customization_keys">
+			<field name="name">Tiroir</field>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
+		</record>
+		
+		<record id="mrp_bom_customization.key_2" model="mrp_bom_customization.mrp_bom_customization_keys">
+			<field name="name">Trappe</field>
+			<field name="group_id" ref="mrp_bom_customization.group_0"/>
+		</record>
+		
+		<!-- BoM example -->
+		<!-- TODO those demo data depend on the product_variant_multi demo data; fix that! -->
+		<record id="mrp.mrp_bom_custom_0" model="mrp.bom">
+			<field eval="[(6,0,[ref('mrp_property_A')])]" name="property_ids"/>
+			<field name="product_uom" ref="product.product_uom_unit"/>
+			<field eval="[(6,0,[])]" name="mrp_bom_customization_keys"/>
+			<field eval="3.0" name="product_qty"/>
+			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
+			<field eval="1" name="active"/>
+			<field eval="1.0" name="product_efficiency"/>
+			<field eval="&quot;&quot;&quot;Test Bom&quot;&quot;&quot;" name="name"/>
+			<field eval="1.0" name="product_rounding"/>
+			<field name="product_id" ref="product_variant_multi.product_product_mezzanine0"/>
+		</record>
+		
+		<record id="mrp_bom_custom_0_0" model="mrp.bom">
+			<field eval="[(6,0,[])]" name="property_ids"/>
+			<field name="product_uom" ref="product.product_uom_unit"/>
+			<field eval="[(6,0,[ref('mrp_bom_customization.key_0')])]" name="mrp_bom_customization_keys"/>
+			<field eval="1.0" name="product_qty"/>
+			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
+			<field name="bom_id" ref="mrp.mrp_bom_custom_0"/>
+			<field eval="1" name="active"/>
+			<field eval="1.0" name="product_efficiency"/>
+			<field eval="&quot;&quot;&quot;Piece 0&quot;&quot;&quot;" name="name"/>
+			<field eval="1.0" name="product_rounding"/>
+			<field name="product_id" ref="product_product_piece0"/>
+		</record>
+		<record id="mrp_bom_custom_0_1" model="mrp.bom">
+			<field eval="[(6,0,[])]" name="property_ids"/>
+			<field name="product_uom" ref="product.product_uom_unit"/>
+			<field eval="[(6,0,[ref('mrp_bom_customization.key_1')])]" name="mrp_bom_customization_keys"/>
+			<field eval="1.0" name="product_qty"/>
+			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
+			<field name="bom_id" ref="mrp.mrp_bom_custom_0"/>
+			<field eval="1" name="active"/>
+			<field eval="1.0" name="product_efficiency"/>
+			<field eval="&quot;&quot;&quot;Piece 1&quot;&quot;&quot;" name="name"/>
+			<field eval="1.0" name="product_rounding"/>
+			<field name="product_id" ref="product_product_piece1"/>
+		</record>
+				
+		<record id="mrp.mrp_bom_custom_1" model="mrp.bom">
+			<field eval="[(6,0,[ref('mrp_property_B')])]" name="property_ids"/>
+			<field name="product_uom" ref="product.product_uom_unit"/>
+			<field eval="[(6,0,[])]" name="mrp_bom_customization_keys"/>
+			<field eval="3.0" name="product_qty"/>
+			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
+			<field eval="1" name="active"/>
+			<field eval="1.0" name="product_efficiency"/>
+			<field eval="&quot;&quot;&quot;Test Bom 2&quot;&quot;&quot;" name="name"/>
+			<field eval="1.0" name="product_rounding"/>
+			<field name="product_id" ref="product_variant_multi.product_product_mezzanine0"/>
+		</record>
+		
+		<record id="mrp_bom_custom_1_2" model="mrp.bom">
+			<field eval="[(6,0,[])]" name="property_ids"/>
+			<field name="product_uom" ref="product.product_uom_unit"/>
+			<field eval="[(6,0,[ref('mrp_bom_customization.key_0')])]" name="mrp_bom_customization_keys"/>
+			<field eval="1.0" name="product_qty"/>
+			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
+			<field name="bom_id" ref="mrp.mrp_bom_custom_1"/>
+			<field eval="1" name="active"/>
+			<field eval="1.0" name="product_efficiency"/>
+			<field eval="&quot;&quot;&quot;Piece 0&quot;&quot;&quot;" name="name"/>
+			<field eval="1.0" name="product_rounding"/>
+			<field name="product_id" ref="product_product_piece0"/>
+		</record>
+		<record id="mrp_bom_custom_1_3" model="mrp.bom">
+			<field eval="[(6,0,[])]" name="property_ids"/>
+			<field name="product_uom" ref="product.product_uom_unit"/>
+			<field eval="[(6,0,[ref('mrp_bom_customization.key_2')])]" name="mrp_bom_customization_keys"/>
+			<field eval="1.0" name="product_qty"/>
+			<field eval="&quot;&quot;&quot;normal&quot;&quot;&quot;" name="type"/>
+			<field name="bom_id" ref="mrp.mrp_bom_custom_1"/>
+			<field eval="1" name="active"/>
+			<field eval="1.0" name="product_efficiency"/>
+			<field eval="&quot;&quot;&quot;Piece 1&quot;&quot;&quot;" name="name"/>
+			<field eval="1.0" name="product_rounding"/>
+			<field name="product_id" ref="product_product_piece1"/>
+		</record>
+
+	</data>
+</openerp>

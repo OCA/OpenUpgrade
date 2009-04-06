@@ -21,11 +21,10 @@
 ##############################################################################
 
 """
-ETL Components:
-* diff
-* sort
-* logger_bloc
-* logger
+ To transform string data into particular type.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License
 """
 from diff import diff
 from sort import sort

@@ -21,10 +21,13 @@
 ##############################################################################
 
 """
-ETL Control Components:
-* data_count : calculate total of tranfering data
-* sleep : put job process in sleep
+ ETL Control components
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License
 """
 from data_count import data_count
 from sleep import sleep
+from xmlrpc_server import xmlrpc_server
+from xmlrpc_client import xmlrpc_client
 

@@ -86,7 +86,6 @@ class abstract_quality_check(object):
         '''
         this method should do the test and fill the score, result and result_details var
         '''
-
         raise osv.except_osv(_('Programming Error'), _('Test Is Not Implemented'))
 
     def get_objects(self, cr, uid, module):

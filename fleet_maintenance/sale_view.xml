@@ -60,7 +60,6 @@
 			<field name="type">form</field>
       <field name="arch" type="xml">
 				<xpath expr="/form/notebook/page/field/form/notebook/page/field[@name='product_uom_qty']" position="replace">
-						<!-- TODO adapt to new fiscal_position parameter -->
             <field
                 context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
                 name="product_uom_qty"
@@ -77,7 +76,6 @@
 			<field name="type">form</field>
       <field name="arch" type="xml">
 				<xpath expr="/form/notebook/page/field/form/notebook/page/field[@name='product_id']" position="replace">
-					<!-- TODO adapt to new fiscal_position parameter -->
 	        <field colspan="4"
 	            context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
 	            name="product_id"

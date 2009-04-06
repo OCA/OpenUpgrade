@@ -20,7 +20,10 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to find diff.
+   Used to find difference between Data.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -44,10 +47,18 @@ class diff(component):
         * added: return all elements from the second flow that are not in main channel
     """
     def __init__(self, keys,name='component.process.diff'):
+        """
+        Required  Parameters ::
+        keys  : Keys to differenciate
+           
+        Extra Parameters ::
+        name          : Name of Component.
+        """ 
         self.keys = keys
         self.row = {}
         self.diff = []
         self.same = []
+        self.name = name
         super(diff, self).__init__(name)
 
     # Return the key of a row
@@ -84,3 +95,48 @@ class diff(component):
             channel= todo.pop()
             for v in self.row[k].values():
                 yield v,channel
+
+
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=diff(self.key, self.name)
+        return res
+    
+    
+def test():                     
+    from etl_test import etl_test
+    from etl import transformer
+    input_part = [
+    {'id': 1L, 'name': 'Fabien','address':'france'},
+    {'id': 1L, 'name': 'Fabien','address': 'belgium'},
+    {'id': 3L, 'name': 'harshad','address': 'india'},
+    ]   
+    modify = [
+    {'id': 1L, 'name': 'Fabien','address':'india'},        
+    {'id': 1L, 'name': 'Fabien','address': 'belgium'},
+    {'id': 3L, 'name': 'harshad','address': 'india'},
+    ] 
+
+    add = [
+    {'id': 4L, 'name': 'henry','address':'spain'}
+    ]
+
+
+    modify = [
+    {'id': 1L, 'name': 'Fabien','address':'india'}               
+    ]     
+
+    remove = [
+    {'id': 1L, 'name': 'Fabien','address': 'belgium'},
+    ]
+    test=etl_test.etl_component_test(diff())
+    test.check_input({'main':input_part})    
+    test.check_output(duplicate_part,'duplicate')
+    print test.output()
+
+if __name__ == '__main__':
+    test()
+
+

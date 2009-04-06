@@ -77,7 +77,7 @@ class account_multi_company(rml_parse.rml_parse):
             list=self.cr.dictfetchall()
             r[comp.name]=list
             comp_name.append(comp.name)
-        self.cr.execute("select a.id as id,a.level as level,a.name as name, abs(sum(l.debit)-sum(l.credit)) as balance "\
+        self.cr.execute("select a.name as name, a.id as id, a.level as level, abs(sum(l.debit)-sum(l.credit)) as balance "\
                         "from account_account a LEFT JOIN account_move_line l on (a.id = l.account_id) "\
                         "where a.id IN (" +','.join(map(str, account_ids))+ ") GROUP BY a.id,a.level,a.name ")
         res_list=self.cr.dictfetchall()
@@ -100,35 +100,37 @@ class account_multi_company(rml_parse.rml_parse):
             value = lst[0]
             td = len(value)
             type = ['string'] * (td + 1)
+            spcl = td
+            self.c_value = value
         elif name == 'o1':
             value = lst[0]
-            td = len(value)
-            type += ['float'] * (td - 1)
+            td = len(value) -2
+            type += ['float'] * (td)
+            spcl = td-2 
         else:
             return super(account_multi_company,self).repeatIn(lst, name, nodes_parent=False)    
-        
         if not lst:
             lst.append(1)
-            
         for ns in node.childNodes :
             if ns and ns.nodeName!='#text' and ns.tagName=='blockTable' and td :
                 width_str = ns._attrs['colWidths'].nodeValue
                 ns.removeAttribute('colWidths')
-                if not width:
-                    for v in value:
-                        width.append(int(649/td))
+                for v in range(spcl):
+                    width.append(int(649/spcl))
                 for v in range(len(width)):
                     width_str +=',%d'%width[v]
-                
                 ns.setAttribute('colWidths',width_str)
                 child_list =  ns.childNodes
                 for child in child_list:
                     if child.nodeName=='tr':
                         lc = child.childNodes[1]
                         i=0
+                        if name == 'o1':
+                            value_new = self.c_value
+                            for k,v in value_new.items():
+                                value_new[k]=value[k] 
+                            value = value_new
                         for v in value:
-                            if v in ['balance','name','level','id']:
-                                continue
                             newnode = lc.cloneNode(1)
                             if type[i] == 'float':
                                 t1="[[ '%.2f' % " + "%s['%s'] ]]"%(name,v)

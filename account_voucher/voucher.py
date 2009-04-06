@@ -85,7 +85,7 @@ class account_voucher(osv.osv):
         'account_id':fields.many2one('account.account', 'Account', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'payment_ids':fields.one2many('account.voucher.line','voucher_id','Voucher Lines', readonly=False, states={'proforma':[('readonly',True)]}),
         'period_id': fields.many2one('account.period', 'Period', required=True, states={'posted':[('readonly',True)]}),
-        'narration':fields.text('Narration', readonly=True, states={'draft':[('readonly',False)]}),
+        'narration':fields.text('Narration', readonly=True, states={'draft':[('readonly',False)]}, required=True),
         'currency_id': fields.many2one('res.currency', 'Currency', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'state':fields.selection(
@@ -168,7 +168,7 @@ class account_voucher(osv.osv):
         self.write(cr, uid, ids, {'state':'draft'})
         return True
 
-    def unlink(self, cr, uid, ids):
+    def unlink(self, cr, uid, ids, context={}):
         vouchers = self.read(cr, uid, ids, ['state'])
         unlink_ids = []
         for t in vouchers:

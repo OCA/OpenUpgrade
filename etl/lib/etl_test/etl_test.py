@@ -111,14 +111,3 @@ class etl_component_test(object):
                 value_count+=1
             count+=1
 
-            
-               
-
-
-
-
-
-
-
-
-

@@ -53,6 +53,27 @@ class document_rule(osv.osv):
     _defaults = {
         'active': lambda *a: 1,
         }
+    def _check(self, cr, uid, ids=False, context={}):
+        '''
+        Function called by the scheduler to document rule
+
+        '''
+        try:
+            cr.execute('select rule.id, attach.datas_fname from ir_attachment attach, document_rule rule \
+                        where attach.partner_id = rule.partner_id \
+                        and rule.directory_id = attach.parent_id')
+            ids2 = map(lambda x: x[0], cr.fetchall() or [])
+            for x in ids2:
+                state = self.browse(cr, uid, [x], context=context)[0]
+                cr.execute('select  partner_id ,server_act from document_rule where partner_id=%s', (state.partner_id.id,))
+                res=cr.fetchall()
+                temp=x
+                context= {'active_id':temp, 'active_ids':x}
+                obj = pooler.get_pool(cr.dbname).get('ir.actions.server')
+
+            return obj.run(cr, uid, [res[0][1]], context=context)
+        except Exception, e:
+            pass
 
 document_rule()
 

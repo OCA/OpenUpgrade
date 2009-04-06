@@ -54,13 +54,37 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                 py_list.append(file_path)
 
         open_files = map(lambda x: open(x, 'r'), py_list)
+        if not py_list:
+            self.error = True
+            self.result = _("No python file found")
+            return None
+
+        #below functions check:
+
+        #1. Imports should usually be on separate lines
+        #2. Imports are always put at the top of the file, just after any module comments and docstrings, and before module globals and constants
         self.check_import(open_files)
+
+        #1. there should be a one space after , : ;
         self.check_space(open_files)
+
+        #1. Have all the .py files a copyright?
         self.check_licence(open_files)
+
+        #1. Does the module avoid unecessary queries like when we put a browse into a loop?
         self.check_loop(open_files)
-        self.check_space_operator(open_files)
+
+        #1.More than one space around an assignment (or other) operator to align it with another.
+#        self.check_space_operator(open_files)
+
+        #1. For sequences, (strings, lists, tuples), use the fact that empty sequences are false
+        #for e.g : if seq: => good  & if len(seq): => not good
         self.check_len(open_files)
+
+        #  below function checks
+        #  1. Don't compare boolean values to True or False using == and !=
         self.check_boolean(open_files)
+
         self.score = self.good_standard and float(self.good_standard) / float(self.good_standard + self.bad_standard)
         self.result = self.get_result({ module_path: [int(self.score * 100)]})
         self.result_details += self.get_result_general(self.result_py)
@@ -221,7 +245,7 @@ PEP-8 Test , copyright of py files check, method can not call from loops
                     if (line.find(':') > -1) and not line.find('<') > -1 and not line.find('>') > -1 and not line.find('=') > -1 and not line.find('!') > -1 :
                         self.bad_standard += 1
                         self.result_py[file_name + str(line_counter)] = [file_name, line_counter, ' For sequences, (strings, lists, tuples), use the fact that empty sequences are false']
-                        
+
 
     def check_boolean(self, open_files):
         for py in open_files:
@@ -253,4 +277,3 @@ PEP-8 Test , copyright of py files check, method can not call from loops
         return ""
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

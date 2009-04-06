@@ -32,24 +32,36 @@ class map(component):
         Data map component
     """
 
-    def __init__(self,map_criteria,preprocess=None,name='component.transfer.map',transformer=None):
-        super(map, self).__init__(name,transformer=transformer)
+    def __init__(self, map_criteria, preprocess=None, name='component.transfer.map', transformer=None):
+        """ 
+        Required Parameters ::   
+        map_criteria  :  Mapping criteria
+        
+        Extra Parameters ::
+        name          : name of the component
+        transformer   : Transformer object to transform string data into  particular object
+        preprocess    : TODO
+        """
+        
+        super(map, self).__init__(name, transformer=transformer)
         self.map_criteria = map_criteria
         self.preprocess = preprocess
+        self.transformer = transformer
+        self.name = name
 
     def process(self):
         #TODO : proper handle exception. not use generic Exception class
         channels = self.input_get()
         datas = {}
         if self.preprocess:
-            datas = self.preprocess(self,channels)
+            datas = self.preprocess(self, channels)
 
-        for channel,trans in channels.items():
+        for channel, trans in channels.items():
             for iterator in trans:
                 for d in iterator:
-                    for channel_dest,channel_value in self.map_criteria.items():
+                    for channel_dest, channel_value in self.map_criteria.items():
                         result = {}
-                        for key,val in channel_value.items():
+                        for key, val in channel_value.items():
                             if val:
                                 datas['main'] = d
                                 datas['tools'] = tools
@@ -60,28 +72,37 @@ class map(component):
                             result=self.transformer.transform(result)
                         yield result, channel_dest
 
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=data_map(self.map_criteria, self.preprocess, self.name, self.transformer)
+        return res
+    
+def test():
 
-if __name__ == '__main__':
     from etl_test import etl_test
     input_part = [
-        {'id': 1, 'name': 'Fabien', 'country_id': 3},
-        {'id': 2, 'name': 'Luc', 'country_id': 3},
-        {'id': 3, 'name': 'Henry', 'country_id': 1}
+    {'id': 1, 'name': 'Fabien', 'country_id': 3}, 
+    {'id': 2, 'name': 'Luc', 'country_id': 3}, 
+    {'id': 3, 'name': 'Henry', 'country_id': 1}
     ]
-    input_cty = [{'id': 1, 'name': 'Belgium'},{'id': 3, 'name': 'France'}]
+    input_cty = [{'id': 1, 'name': 'Belgium'}, {'id': 3, 'name': 'France'}]
     map_keys = {'main': {
-        'id': "main['id']",
-        'name': "main['id'].upper()",
-        'country': "country_var[main['country_id']]['name']"
+    'id': "main['id']", 
+    'name': "main['id'].upper()", 
+    'country': "country_var[main['country_id']]['name']"
     }}
     def preprocess(self, channels):
         cdict = {}
-        for trans in channels['country']:
-            for iterator in trans:
-                for d in iterator:
-                    cdict[d['id']] = d
-        return {'country_var': cdict}
+    for trans in channels['country']:
+        for iterator in trans:
+            for d in iterator:
+                cdict[d['id']] = d
+    return {'country_var': cdict}
     test=etl_test.etl_component_test(map(map_keys, preprocess))
     test.check_input({'partner':input_part, 'countries': input_cty})
     print test.output()
 
+if __name__ == '__main__':
+	test()

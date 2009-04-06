@@ -24,15 +24,12 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
-import psycopg
+import time
+
 import wizard
-import threading
 import pooler
 from osv import osv
-import optparse
-import xmlrpclib
-import time
-import netsvc
+
 
 info = '''<?xml version="1.0"?>
 <form string="Load Data">
@@ -57,7 +54,6 @@ def clear_logs(self,cr,uid,part,context={}):
     return {}
 
 def _getdata(self,cr,uid,part,context={}):
-    print "In getdata>>>>>>>>>>>>",uid
     ids=pooler.get_pool(cr.dbname).get('res.users').browse(cr,uid,uid)
     part['form']['user_name']=ids['name']
 #    part['form']['db_name']=lines.database_id.db_name

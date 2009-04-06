@@ -28,7 +28,8 @@
     "category" : "Generic Modules/Others",
     "description": "Potal Management - Service company specific data for analytic accounting.",
     "init_xml" : [],
-    "update_xml" : ["portal_analytic_view.xml","portal_analytic_data.xml" ],
+    "update_xml" : ["portal_analytic_package_view.xml","portal_analytic_package_data.xml",
+                    "security/ir.model.access.csv" ],
     "demo_xml" : [],
     "active": False,
     "installable": True

@@ -44,6 +44,11 @@ This test checks the speed of the module. Note that at least 5 demo data is need
         pool = pooler.get_pool(cr.dbname)
         module_name = module_path.split('/')[-1]
         obj_list = self.get_objects(cr, uid, module_name)
+        result_dict2 = {}
+        if not obj_list:
+            self.error = True
+            self.result += _("Given module has no objects.Speed test can work only when new objects are created in the module along with demo data")
+            return None
         obj_counter = 0
         score = 0.0
         obj_ids = self.get_ids(cr, uid, obj_list)

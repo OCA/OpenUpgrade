@@ -20,7 +20,10 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to perform unique operation.
+ To perform unique operation.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -46,19 +49,25 @@ class unique(component):
         unique_datas=[]
         duplicate_datas=[]
         for channel,trans in self.input_get().items():
-            for iterator in trans:                
+            for iterator in trans:             
                 for d in iterator:
-                   if d in unique_datas:                       
+                   if d in unique_datas:                    
                        yield d, "duplicate"		                    
                    else :
                        unique_datas.append(d)
         for d in unique_datas:
             yield d, "main"
-        
+             
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=sort(self.name)
+        return res   
 
 
-                           
-if __name__ == '__main__':
+def test():                        
+
     from etl_test import etl_test
     from etl import transformer
     input_part = [
@@ -78,3 +87,5 @@ if __name__ == '__main__':
     test.check_output(duplicate_part,'duplicate')
     print test.output()
 
+if __name__ == '__main__':
+    test()

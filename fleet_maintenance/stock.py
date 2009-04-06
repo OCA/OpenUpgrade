@@ -14,8 +14,8 @@ class stock_location(osv.osv):
             view_id = self.pool.get('ir.ui.view').search(cr,uid,[('name','=','stock.location.fleet.form.sub_fleet_maintenance')])[0]
         elif view_type == 'form' and context.get('fleet_type', False) == 'fleet':
             view_id = self.pool.get('ir.ui.view').search(cr,uid,[('name','=','stock.location.fleet.form.fleet_maintenance')])[0]
-        #elif view_type == 'tree' and context.get('fleet_type', False) == 'sub_fleet':
-        #    pass
+        elif view_type == 'tree' and context.get('fleet_type', False) == 'sub_fleet':
+            view_id = self.pool.get('ir.ui.view').search(cr,uid,[('name','=','sub_fleet.tree')])[0]
         #elif view_type == 'tree' and context.get('fleet_type', False) == 'fleet':
         #    pass
         return  super(stock_location, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)

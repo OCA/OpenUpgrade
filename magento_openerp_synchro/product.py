@@ -39,7 +39,7 @@ class product_product(osv.osv):
         'exportable': fields.boolean('Export to website'),
         'updated': fields.boolean('Product updated on Magento'),
         'magento_tax_class_id': fields.integer('Magento tax class id'),
-        'image': fields.binary('Image', help='Image of the product (jpg or png)'),
+        'image': fields.binary('Image', help='Image of the product (jpg or png). The same image will be set as thumbnail, small image and normal image. To change the product image, first delete the old one and save the product and then add the new one and save the product. Note that this image is optional, it can be left empty and manage the product images from Magento.'),
         'image_name': fields.char('Image name', size=64, help="Image name created by Magento"),
         'image_label': fields.char('Image label', size=64, help="Image label in the website. Left empty to take the product name as image label."),
     }

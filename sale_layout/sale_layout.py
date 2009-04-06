@@ -20,6 +20,7 @@
 #
 ##############################################################################
 from osv import fields,osv
+from tools import config
 
 class sale_order_line(osv.osv):
 
@@ -95,7 +96,10 @@ class sale_order_line(osv.osv):
                 ('line','Separator Line'),
                 ('break','Page Break'),]
             ,'Layout Type', select=True, required=True),
-        'sequence': fields.integer('Sequence Number'),        
+        'sequence': fields.integer('Sequence Number'), 
+        'price_unit': fields.float('Unit Price', digits=(16, int(config['price_accuracy']))),
+        'product_uom_qty': fields.float('Quantity (UoM)', digits=(16,2)),
+        'product_uom': fields.many2one('product.uom', 'Product UoM'),       
     }   
 
     _defaults = {

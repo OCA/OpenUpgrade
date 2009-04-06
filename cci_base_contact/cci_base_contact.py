@@ -41,7 +41,7 @@ class res_partner_contact(osv.osv):
         'link_ids':fields.one2many('res.partner.contact.link','current_contact_id','Contact Link'),
         'canal_id': fields.many2one('res.partner.canal', 'Favourite Channel'),
         'national_number' : fields.char( 'National Number',size=15), 
-        'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
+        'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personal'), ('postal','Postal')], "Magazine subscription"),
         'magazine_subscription_source':fields.char('Mag. Subscription Source',size=30),
         'old_id':fields.integer('Old Datman ID'),
     }

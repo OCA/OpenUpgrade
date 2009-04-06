@@ -5,7 +5,6 @@ import level
 
 class cross(object):
     def __init__(self, cross):
-        print ">>>>>>>>>In the cross init >>>>>>>>>>>",cross
     	self.cross = cross
         self.name = False 
         self.object = False
@@ -26,7 +25,6 @@ class cross(object):
         
     def run(self, metadata):
         print '*'*40
-        print self.cross,len(self.cross)
         for obj in self.cross:
             result = obj.run(metadata)
         return result

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<!-- should be check! -->
+		<record id="etl_component_sort_form" model="ir.ui.view">
+			<field name="name">etl.component.sort.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_component_form"/>
+			<field name="arch" type="xml">
+				<notebook position='inside'>
+			 		<page string="Property" attrs="{'invisible':[('type_id','!=','transform.sort')]}">
+						<!--<field name="name" select="1" />-->
+						<field name="transformer_id" invisible="1" colspan="4" />
+					</page>
+					</notebook>
+
+			</field>
+		</record>
+
+		<record id="action_etl_component_sort_tree"
+			model="ir.actions.act_window">
+			<field name="name">Sort component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type_id.name','=','transform.sort')]</field>
+			<field name="context">{'type_id':'transform.sort'}</field>
+		</record>
+
+		<record id="action_etl_component_sort_from"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type_id.name','=','transform.sort')]</field>
+			<field name="context">{'type_id':'transform.sort'}</field>
+			<field name="view_id" ref="etl_component_sort_form" />
+		</record>
+
+		<record id="action_etl_component_sort_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id"
+				ref="etl_interface.etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_sort_tree" />
+		</record>
+		<record id="action_etl_component_sort_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_sort_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_sort_tree" />
+		</record>
+
+		<menuitem name="Sort process"
+			parent="etl_interface.menu_etl_jd_c_pec_form"
+			action="action_etl_component_sort_tree"
+			id="menu_etl_jd_c_pec__sort_form" />
+	</data>
+</openerp>

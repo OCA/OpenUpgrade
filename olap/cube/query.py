@@ -48,44 +48,60 @@ class query(object):
         axis_result = []
         cube_size = []
         cross = False
-
-
+        cross_all = []
         for ax in self.axis:
             if ax.name == 'cross':
+                cross = True
                 cross = ax.run(metadata)
-                '''
-                    It is assumed the result will be made and the 
-                    the cross comes after in the seqence 
-
-                    crossjoin({[City].[all],[city].children},{[Users].children}) on rows / columns 
-                    Following this as the syntax 
-                    crossjoin ({axis},{crossjoin element})
-
-                    We here try to combine the values of  the axis got with the crossjoin lement 
-                    We make the result with the cross + adding the where clause needed and modifying the values
-                '''
-                
-                res = [(item0,item1) for item0 in result for item1 in cross]
-                count = 0 
-                value = []
-                for r,r1 in res:
-                    value.append([(item0[0],[item0[1],str(item1[1])])for item0 in r['value'] for item1 in r1['value']])
-#                axis[0]= r
-                index = 0
-                for r,r1 in res:
-                    r['value'] = value[index]
-                    index = index + 1
-#                result = res[0]
-#                x = axis.pop()
-#                print "\n\n\n This is what poped >>>>>>>>>>>>>>>>>",x
-#                print "\n\n\n This is what to be appended >>>>>>",result
-#                print x
-#                axis_result.pop()
-#                axis_result.append(value)
-#                axis.append(result)
-#                print x
+                cube_size[-1] = cube_size[-1] * len(cross)
+                temp = axis_result[0][:] 
+                cross_all.append(cross)
+                final_axis = []
+                for cr in cross:
+                    for el in axis_result[-1]:
+                        t = copy.deepcopy(el)
+                        t = list(t)
+                        t[0].append(cr['value'][0][0])
+                        t.append(cr['value'][0][1])
+                        final_axis.append(tuple(t))
+                axis_result[-1]=final_axis[:]
+                final_axis=[]
+                len_axis = len(axis[-1])
+                len_cross = len(cross)
+                delta_count = 0 
+                d = len_axis  
+                for data in common.xcombine(axis[-1],cross):
+                    flag = False
+                    make_where = []
+                    temp_where = []
+                    if 'whereclause' in data[0]['query'].keys():
+                        flag = True
+                        temp_where = data[0]['query']['whereclause'][0] 
+                        data[0]['query']['whereclause']=str(data[0]['query']['whereclause'][0])
+                    data_temp = copy.deepcopy(data[0])
+                    if 'whereclause' in data[1]['query'].keys():
+                        if 'whereclause' in data_temp['query'].keys():
+                            make_where.append(data[1]['query']['whereclause'][0])
+                        else:
+                            make_where.append(data[1]['query']['whereclause'][0])
+                    delta_count = delta_count + 1
+                    if delta_count >= len_cross and len_cross!=1:
+                        delta_count = 0 
+                        data_temp['delta'] = d
+                        d = d + 1
+                    if flag:
+                        data[0]['query']['whereclause']=[temp_where]
+                        data_temp['query']['whereclause'] = [temp_where]
+                    if make_where:
+                        if 'whereclause' in data_temp['query'].keys():
+                            data_temp['query']['whereclause'].append(make_where[0])
+                        else:
+                            data_temp['query']['whereclause'] = make_where
+                    final_axis.append(data_temp)
+                axis[-1] = []
+                axis[-1] = final_axis
             else:
-		
+                cross = False
                 result = ax.run(metadata)
                 length = 0
                 axis_result2 = []
@@ -95,20 +111,15 @@ class query(object):
                 axis_result.append(axis_result2)
                 axis.append(result)
                 cube_size.append(length)
-
+            
         cube_data = self._cube_create(cube_size)
         cr = []
-#        if cross:
-#            cr = cross.run(metadata)
         slice = self.slicer.run(metadata)
         position = 0
         ax = []
         for subset in common.xcombine(*axis):
-#            print "\n\n in the subset >>>>>>>>>",subset
             select,table_fact = self.cube.run(metadata)
             for s in subset+slice:
-#                s['value']
-#                'value': [(['Order Date', 2008.0], 2008.0)],
                 for key,val in s['query'].items():
                     for v in val:
                         if key=='column':
@@ -121,10 +132,10 @@ class query(object):
                             select.append_group_by(v)
                         else:
                             raise 'Error, %s not implemented !'% (key,)
-            #metadata.bind.echo = True
-
+#            metadata.bind.echo = True
             query = select.execute()
             result = query.fetchall()
+            
             for record in result:
                 cube = cube_data
                 r = list(record)
@@ -134,7 +145,6 @@ class query(object):
                     value = s['axis_mapping'].value_set(r) or value
                 for s in slice:
                     value = s['axis_mapping'].value_set(r) or value
-
                 if value:
                     assert not cube[0], 'Already a value in cube, this is a bug !'
                     cube[0] = value

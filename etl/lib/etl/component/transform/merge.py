@@ -20,7 +20,10 @@
 #
 ##############################################################################
 """
-   This is an ETL Component that use to display log detail in streamline.
+ To merge all input flows.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component

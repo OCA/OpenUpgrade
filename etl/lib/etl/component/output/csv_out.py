@@ -20,55 +20,74 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to write data to csv file.
+ To write data to csv file.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
-import csv
 import datetime
 
 class csv_out(component):
     """
-        This is an ETL Component that use to write data to csv file.
+    This is an ETL Component that use to write data to csv file.
 
-        Type: Data Component
-        Computing Performance: Streamline
-        Input Flows: 0-x
-        * .* : the main data flow with input data
-        Output Flows: 0-1
-        * main : return all data
+    Type: Data Component
+    Computing Performance: Streamline
+    Input Flows: 0-x
+    * .* : the main data flow with input data
+    Output Flows: 0-1
+    * main : return all data
     """   
 
-    def __init__(self,fileconnector,transformer=None,name='component.output.csv_out',row_limit=0, csv_params={}):
-        super(csv_out, self).__init__(name,transformer=transformer)      
+    def __init__(self, fileconnector, row_limit=0, csv_params={}, name='component.output.csv_out', transformer=None):
+        """ 
+        Required  Parameters ::
+        fileconnector :  localfile connector.
+        
+        Extra Parameters ::
+        name          : Name of Component.
+        transformer   : Transformer object to transform string data into  particular object
+        row_limit     : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+        csv_param     : To specify other csv parameter like fieldnames , restkey , restval etc. 
+        """
+        super(csv_out, self).__init__(name, transformer=transformer)      
           
         self.fileconnector = fileconnector 
         self.csv_params=csv_params       
-        self.row_limit=row_limit 
-        self.row_count=0                                
-        self.fp=None
-        self.writer=None   
+        self.row_limit=row_limit                                  
 
-    def action_end(self,key,singal_data={},data={}):        
-        super(csv_out, self).action_end(key,singal_data,data)
-        if self.fp:     
-             self.fp.close() 
-        if self.fileconnector:    
-             self.fileconnector.close()        
+    
 
-    def process(self):  
-        #TODO : proper handle exception. not use generic Exception class      
+    def process(self): 
+        #TODO : proper handle exception. not use generic Exception class
+        import csv      
         datas = []        
-        for channel,trans in self.input_get().items():
+        fp=False
+        writer=False
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
-                    try:                    
-                        if not self.fp:
-                            self.fp=self.fileconnector.open('wb+')
+                    try:               
+                        if not fp:
+                            fp=self.fileconnector.open('wb+')
                             fieldnames = d.keys()
-                            self.writer = csv.DictWriter(self.fp, fieldnames)
-                            self.writer.writerow(dict(map(lambda x: (x,x), fieldnames)))
-                        self.writer.writerow(d)
-                        yield d, 'main'
-                    except IOError,e:  
-                        self.action_error(e)
+                            writer = csv.DictWriter(fp, fieldnames)
+                            writer.writerow(dict(map(lambda x: (x, x), fieldnames)))
+                        writer.writerow(d)
+                        yield d, 'main'                    
+                    except IOError, e: 
+                        self.signal('error', {'data':self.data, 'type':'exception', 'error':str(e)})
+        self.fileconnector.close(fp)        
+
+    def __copy__(self):      
+        res= csv_out(self.fileconnector , self.row_limit, self.csv_params, self.name, self.transformer)
+        return res
+
+def test():
+    pass
+if __name__ == '__main__':
+    test()
+
+

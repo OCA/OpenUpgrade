@@ -21,15 +21,32 @@
 ##############################################################################
 
 """
-ETL Connectors:
-* sql connector
+To provide connectivity with sql database server. 
+supported connection with :
+postgres server
+mysql server
+oracle server
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 from etl.connector import connector
-
-
-class sql_connector(connector):    
-    def __init__(self, host,port, db, uid, passwd,sslmode='allow',con_type='postgres'):
-        super(sql_connector, self).__init__()
+class sql_connector(connector):   
+    def __init__(self, host, port, db, uid, passwd, sslmode='allow', con_type='postgres', name='sql_connector'):
+        """
+        Required Parameters ::
+        host : Database server host name
+        port : Database serverPort
+        db : Database name
+        uid : User name to login into Database
+        passwd : Password of the user
+                
+        Extra Parameters ::
+        sslmode : For SSL connection
+        con_type : Type of connection (postgres,mysql, oracle)
+        name: Name of the conector
+        """
+        super(sql_connector, self).__init__(name)
         self.uri = host+':'+str(port)
         self.host=host
         self.port=port
@@ -41,24 +58,44 @@ class sql_connector(connector):
         
          
     def open(self):
+        """ 
+        Opens a connection to Database server
+        """ 
         super(sql_connector, self).open()
+        connector=False
         if self.con_type=='postgres':
             import psycopg2
-            self.connector = psycopg2.connect("dbname=%s user=%s host=%s port=%s password=%s sslmode=%s" \
-                                % (self.db,self.uid,self.host,self.port,self.passwd,self.sslmode))
+            connector = psycopg2.connect("dbname=%s user=%s host=%s port=%s password=%s sslmode=%s" \
+                                % (self.db, self.uid, self.host, self.port, self.passwd, self.sslmode))
         elif self.con_type=='mysql':
             import MySQLdb
-            self.connector = MySQLdb.Connection(db=self.db, host=self.host,port=self.port, user=self.uid,passwd=self.pwd)
+            connector = MySQLdb.Connection(db=self.db, host=self.host, port=self.port, user=self.uid, passwd=self.pwd)
         elif self.con_type=='oracle':
             import cx_Oracle
             dsn_tns = cx_Oracle.makedsn(self.host, self.port, self.db)
-            self.connector = cx_Oracle.connect(self.uid, self.passwd, dsn_tns)    
+            connector = cx_Oracle.connect(self.uid, self.passwd, dsn_tns)    
         else:
             raise Exception('Not Supported')           
-        return self.connector    
+        return connector    
 
-    def close(self):    
-        self.connector.commit()
-        self.connector.close()
+    def close(self, connector): 
+        """ 
+        Closes a connection to Database Server
+        """ 
+        super(sql_connector, self).close()          
+        return connector.close()
 
+    def __copy__(self): 
+        """
+        Overrides copy method
+        """
+        res=sql_connector(self.host, self.port, self.db, self.uid, self.passwd, self.sslmode, self.con_type, self.name)        
+        return res
+
+def test():   
+    #TODO
+    pass
+
+if __name__ == '__main__':
+    test()
 

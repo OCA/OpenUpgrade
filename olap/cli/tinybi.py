@@ -65,22 +65,22 @@ ROWSPAN = 18
 
 print
 if len(axis)>1:
-	for i in range(8):
-		ok = False
-		for x in axis[1]:
-			if len(x[0])==i:
-				ok = True
-		if not ok:
-			continue
-		print ' '*COLSPAN,
-		print (('%-'+str(ROWSPAN)+'s ' ) * len(axis[1])) % tuple(map(lambda x: str(len(x[0])==i and x[1] or ''),axis[1]))
+    for i in range(8):
+        ok = False
+        for x in axis[1]:
+            if len(x[0])==i:
+                ok = True
+        if not ok:
+            continue
+        print ' '*COLSPAN,
+        print (('%-'+str(ROWSPAN)+'s ' ) * len(axis[1])) % tuple(map(lambda x: str(len(x[0])==i and x[1] or ''),axis[1]))
 for col in data:
-	print ('%-'+str(COLSPAN)+'s')% (' '*(len(axis[0][0][0])-1)*2 + str(axis[0].pop(0)[1]),),
-	for row in col:
-		if row==[False]:
-			print ('%-'+str(ROWSPAN)+'s')%('',),
-		else:
-			print ('%-'+str(ROWSPAN)+'s')%(row,),
-	print
+    print ('%-'+str(COLSPAN)+'s')% (' '*(len(axis[0][0][0])-1)*2 + str(axis[0].pop(0)[1]),),
+    for row in col:
+        if row==[False]:
+            print ('%-'+str(ROWSPAN)+'s')%('',),
+        else:
+            print ('%-'+str(ROWSPAN)+'s')%(row,),
+    print
 print
 

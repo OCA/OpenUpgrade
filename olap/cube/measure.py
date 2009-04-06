@@ -31,12 +31,13 @@ class measure(object):
         else:
             scalar = Word(alphanums+"_"+" "+".") 
             sql_func = ["sum","max","min","count","avg"]
+            arith_operator = ["-","*","/","+"]
+            
             sql_function = oneOf(' '.join(sql_func))
             leftRdBr = Literal("(").suppress()
             rightRdBr = Literal(")").suppress()
-            arith_operator = ["-","*","/","+"]
             operator_arith = oneOf(' '.join(arith_operator))
-            sqlexpression = sql_function("sql_func") + leftRdBr + delimitedList(scalar,",",combine=False) + rightRdBr | sql_function("sql_func") + leftRdBr +  scalar + ZeroOrMore( operator_arith("arithmetic") + scalar) + rightRdBr 
+            sqlexpression = sql_function.setResultsName('sql_func') + leftRdBr + delimitedList(scalar,",",combine=False) + rightRdBr | sql_function + leftRdBr +  scalar + ZeroOrMore(operator_arith.setResultsName('arithmetic') + scalar) + rightRdBr 
             res = sqlexpression.parseString(self.object.value_sql)
             operators = []
             cols = []

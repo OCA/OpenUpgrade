@@ -37,10 +37,11 @@ This test checks if the module satisfy tiny structure
         self.ponderation = 1.0
         self.result_dict = {}
         self.module_score = 0.0
-        self.counter = 0
+        self.count = 0
+        self.recur = True
         return None
 
-    def run_test(self, cr, uid, module_path):
+    def run_test_struct(self, cr, uid, module_path):
         len_module = len(module_path.split('/'))
         module_name = module_path.split('/')
         module_name = module_name[len_module-1]
@@ -49,7 +50,7 @@ This test checks if the module satisfy tiny structure
         f_list = []
         module_dict = {}
         module_dict['module'] = []
-        count = 0
+#        count = 0
         final_score = 0.0
 
         if not module_name.islower():
@@ -66,6 +67,7 @@ This test checks if the module satisfy tiny structure
                 elif file_struct == 'process' and os.path.isdir(path):
                     module_dict[file_struct] = []
                 elif file_struct != 'i18n' and os.path.isdir(path):
+#                    self.counter += 1
                     self.run_test(cr, uid, path)
                 module_dict['module'].append(file_struct)
                 f_list.append(file_struct)
@@ -84,7 +86,7 @@ This test checks if the module satisfy tiny structure
         com_list.extend(main_file)
         module_dict['module'] = filter(lambda x: len(x.split(".")) > 1, module_dict['module'])
         score = self.get_score(module_dict['module'], com_list)
-        count = count + 1
+        self.count = self.count + 1
         final_score += score
 
         # report folder checking...
@@ -98,7 +100,7 @@ This test checks if the module satisfy tiny structure
                     org_list_rep.append(pys + report)
             org_list_rep.append('__init__.py')
             score_report = self.get_score(module_dict['report'], org_list_rep, 'report/')
-            count = count + 1
+            self.count = self.count + 1
             final_score += score_report
 
         # wizard folder checking...
@@ -112,7 +114,7 @@ This test checks if the module satisfy tiny structure
                     org_list_wiz.append(pys + report)
             org_list_wiz.append('__init__.py')
             score_wizard = self.get_score(module_dict['wizard'], org_list_wiz, 'wizard/')
-            count = count + 1
+            self.count = self.count + 1
             final_score += score_wizard
 
         # security folder checking...
@@ -120,24 +122,29 @@ This test checks if the module satisfy tiny structure
             security = [module_name + '_security.xml']
             security.extend(['ir.model.access.csv'])
             score_security = self.get_score(module_dict['security'], security, 'security/')
-            count = count + 1
+            self.count = self.count + 1
             final_score += score_security
 
         # process folder checking...
         if module_dict.has_key('process'):
             process = [module_name + '_process.xml']
             score_process = self.get_score(module_dict['process'], process, 'process/')
-            count = count + 1
+            self.count = self.count + 1
             final_score += score_process
 
         # final score
         self.module_score +=  final_score
-        self.counter += 1
-        self.score = self.module_score / (self.counter + count)
-#        self.score = float(final_score) / count
+        self.score = self.module_score / (self.count)
         self.result = self.get_result({ module_name: [module_name, int(self.score*100)]})
-        self.result_details += self.get_result_details(self.result_dict)
+#        self.result_details += self.get_result_details(self.result_dict)
         return None
+    
+    def run_test(self, cr, uid, module_path):
+        self.run_test_struct(cr, uid, module_path)
+        if self.score != 1:
+            self.result_details = self.get_result_details(self.result_dict)
+        return None
+    
 
     def get_result(self, dict_struct):
         header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-10s \n', [_('Module Name'), _('Result in %')])
@@ -160,7 +167,7 @@ This test checks if the module satisfy tiny structure
         return score
 
     def get_result_details(self, dict_struct):
-        str_html = '''<html><head></head><body><table border="1">'''
+        str_html = '''<html><head></head><body><table>'''
         header = ('<tr><th>%s</th><th>%s</th></tr>', [_('File Name'), _('Feedback about structure of module')])
         if not self.error:
             res = str_html + self.format_html_table(header, data_list=dict_struct) + '</table></body></html>'

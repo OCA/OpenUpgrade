@@ -1,22 +1,22 @@
 <?xml version="1.0" ?>
 <openerp>
     <data noupdate="1">
-	
-		<!-- Countries -->
+    
+        <!-- Countries -->
 
-		<record id="base.be" model="res.country">
+        <record id="base.be" model="res.country">
             <field name="main_language" ref="base.lang_en"/>
             <field name="main_currency" ref="base.EUR"/>
         </record>
-		<record id="base.in" model="res.country">
+        <record id="base.in" model="res.country">
             <field name="main_language" ref="base.lang_en"/>
             <field name="main_currency" ref="base.INR"/>
         </record>
-		<record id="base.fr" model="res.country">
+        <record id="base.fr" model="res.country">
             <field name="main_language" ref="base.lang_en"/>
             <field name="main_currency" ref="base.EUR"/>
         </record>
-		<record id="base.us" model="res.country">
+        <record id="base.us" model="res.country">
             <field name="main_language" ref="base.lang_en"/>
             <field name="main_currency" ref="base.USD"/>
         </record>
@@ -75,14 +75,14 @@
             <field name="name" eval="&quot;Item Supplier&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
-		<record model="res.partner.category" id="cat_mail_service">
+        <record model="res.partner.category" id="cat_mail_service">
             <field name="name" eval="&quot;Mail Service&quot;"/>
             <field name="parent_id" ref="res_partner_category_directmarketing0" />
         </record>
         <record id="dtp_preview_customers" model="res.partner.category">
-			<field name="parent_id" ref="dm.res_partner_category_directmarketing0"/>
-			<field eval="&quot;&quot;&quot;DTP Preview Customers&quot;&quot;&quot;" name="name"/>
-		</record>
+            <field name="parent_id" ref="dm.res_partner_category_directmarketing0"/>
+            <field eval="&quot;&quot;&quot;DTP Preview Customers&quot;&quot;&quot;" name="name"/>
+        </record>
 
         <!-- Media -->
 
@@ -99,6 +99,7 @@
             <field name="name" eval="&quot;Phone&quot;"/>
             <field name="code" eval="&quot;Phone&quot;"/>
         </record>
+
 
         <!-- Campaign Types -->
 
@@ -599,7 +600,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         -->
     </data>
 
-    <!-- Document Categories -->
+    <!-- Offer Document Categories -->
 
     <data>
         <record id="dm_offer_document_category_test0" model="dm.offer.document.category">
@@ -612,7 +613,18 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         </record>
     </data>
 
+    <!-- Campaign Document Types -->
+
+    <data>
+        <record id="dm_campaign_document_type_pdf0" model="dm.campaign.document.type">
+            <field eval="&quot;&quot;&quot;PDF&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;pdf&quot;&quot;&quot;" name="code"/>
+        </record>
+    </data>
+
     <!-- DMS Directories -->
+
+    <!-- Offers -->
 
     <data noupdate="1">
         <record id="document_directory_directmarketing0" model="document.directory">
@@ -673,164 +685,278 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         </record>
     </data>
 
-	<!-- Default Shop in Customer Order -->
-	
-	<data noupdate="1">
-		<record id="shop1" model="sale.shop">
+    <!-- Campaigns -->
+
+    <data noupdate="1">
+        <record id="document_directory_campaigns0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Campaigns&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field name="parent_id" ref="document_directory_directmarketing0"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_propo0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Commercial Propositions&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('camp_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_proposition"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_segment0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Segments&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('proposition_id','in',[active_id])]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_proposition"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_proposition_segment"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_campaign_document_type0" model="document.directory">
+            <field eval="1" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents by Type&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_proposition_segment"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_document_type"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="document_directory_campaign_documents0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('type_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_campaign_document_type"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_document"/>
+        </record>
+    </data>
+
+    <!--
+    <data noupdate="1">
+        <record id="document_directory_documents0" model="document.directory">
+            <field eval="0" name="ressource_tree"/>
+            <field eval="[(6,0,[])]" name="group_ids"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field eval="&quot;&quot;&quot;Documents&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;[('category_id','=',active_id)]&quot;&quot;&quot;" name="domain"/>
+            <field name="ressource_parent_type_id" ref="dm.model_dm_offer_document_category"/>
+            <field eval="&quot;&quot;&quot;ressource&quot;&quot;&quot;" name="type"/>
+            <field name="ressource_type_id" ref="dm.model_dm_campaign_document"/>
+        </record>
+    </data>
+    -->
+
+    <!-- Default Shop in Customer Order -->
+    
+    <data noupdate="1">
+        <record id="shop1" model="sale.shop">
             <field model="res.company" name="name" search="[]" use="name"/>
             <field model="account.payment.term" name="payment_default_id" search="[]"/>
         </record>
-		<function eval="('default',False,'shop_id', [('dm.customer.order', False)], shop1, True, False, False, False, True)" id="shop_default_set" model="ir.values" name="set"/>
-	</data>
+        <function eval="('default',False,'shop_id', [('dm.customer.order', False)], shop1, True, False, False, False, True)" id="shop_default_set" model="ir.values" name="set"/>
+    </data>
 
-	<!-- Default Category in DTP Documents -->
-	
-	<data noupdate="1">
-		<function eval="('default',False,'category_id', [('dm.offer.document', False)], dm_offer_document_category_production0, True, False, False, False, True)" id="category_default_set" model="ir.values" name="set"/>
-	</data>
-	
-    <!-- Server Action -->
-    
-	<data noupdate="1">
-		<record id="ir_actions_server_none0" model="dm.offer.step.action">
-			<field eval="&quot;&quot;&quot;# You can use the following variables
-#    - object
-#    - object2
-#    - time
-#    - cr
-#    - uid
-#    - ids
-# If you plan to return an action, assign: action = {...}
-&quot;&quot;&quot;" name="code"/>
-			<field eval="5" name="sequence"/>
-			<field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
-			<field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
-			<field name="model_id" ref="dm.model_dm_offer_step"/>
-			<field eval="[(6,0,[])]" name="child_ids"/>
-			<field eval="1" name="dm_action"/>
-			<field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
-			<field eval="&quot;&quot;&quot;None&quot;&quot;&quot;" name="name"/>
-		</record>
-	</data>
-    <!-- ACCOUNT JOURNAL -->
+    <!-- Default Category in DTP Documents -->
     
     <data noupdate="1">
-	    <record id="paypal_journal" model="account.journal">
-		    <field name="name">Paypal Journal</field>
-		    <field name="code">PAJ</field>
-		    <field name="type">cash</field>
-		    <field name="view_id" ref="account.account_journal_bank_view"/>
-		    <field name="sequence_id" ref="account.sequence_journal"/>
-		    <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
-		    <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
-		    <field name="user_id" ref="base.user_root"/>
-	    </record>
-	    <record id="visa_journal" model="account.journal">
-		    <field name="name">Visa Journal</field>
-		    <field name="code">VIJ</field>
-		    <field name="type">cash</field>
-		    <field name="view_id" ref="account.account_journal_bank_view"/>
-		    <field name="sequence_id" ref="account.sequence_journal"/>
-		    <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
-		    <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
-		    <field name="user_id" ref="base.user_root"/>
-	    </record>
-	    <record id="mastercard_journal" model="account.journal">
-		    <field name="name">Mastercard Journal</field>
-		    <field name="code">MAJ</field>
-		    <field name="type">cash</field>
-		    <field name="view_id" ref="account.account_journal_bank_view"/>
-		    <field name="sequence_id" ref="account.sequence_journal"/>
-		    <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
-		    <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
-		    <field name="user_id" ref="base.user_root"/>
-	    </record>
-	    <record id="ae_journal" model="account.journal">
-		    <field name="name">American Express Journal</field>
-		    <field name="code">AEJ</field>
-		    <field name="type">cash</field>
-		    <field name="view_id" ref="account.account_journal_bank_view"/>
-		    <field name="sequence_id" ref="account.sequence_journal"/>
-		    <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
-		    <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
-		    <field name="user_id" ref="base.user_root"/>
-	    </record>
+        <function eval="('default',False,'category_id', [('dm.offer.document', False)], dm_offer_document_category_production0, True, False, False, False, True)" id="category_default_set" model="ir.values" name="set"/>
     </data>
     
-    <!-- PLUGINS -->
+    <!-- Server Action -->
     
+    <data noupdate="0">
+        <record id="ir_actions_server_pdf_doc_generate0" model="dm.offer.step.action">
+            <field eval="5" name="sequence"/>
+            <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
+            <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+            <field name="model_id" ref="dm.model_dm_workitem"/>
+            <field name="media_id" ref="dm.media_paper"/>
+            <field eval="[(6,0,[])]" name="child_ids"/>
+            <field eval="1" name="dm_action"/>
+            <field eval="&quot;&quot;&quot;from dm import report_design \nreport_design.generate_reports(cr,uid,obj,'pdf',context)&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+            <field eval="&quot;&quot;&quot;Generate PDF Document&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+
+    <!-- ACCOUNT JOURNAL -->
+<!--
     <data noupdate="1">
-		<record id="dm_ddf_plugin_name0" model="dm.ddf.plugin">
-			<field eval="&quot;&quot;&quot;name&quot;&quot;&quot;" name="code"/>
-			<field eval="&quot;&quot;&quot;Name&quot;&quot;&quot;" name="name"/>
-			<field eval="0" name="store_value"/>
-			<field name="model_id" ref="base.model_res_partner"/>
-			<field eval="&quot;&quot;&quot;Partner's Name&quot;&quot;&quot;" name="note"/>
-			<field name="field_id" ref="base.field_res_partner_name"/>
-			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
-		</record>
-		<record id="dm_ddf_plugin_code0" model="dm.ddf.plugin">
-			<field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="code"/>
-			<field eval="&quot;&quot;&quot;Code&quot;&quot;&quot;" name="name"/>
-			<field eval="0" name="store_value"/>
-			<field name="model_id" ref="base.model_res_partner"/>
-			<field eval="&quot;&quot;&quot;Partner's Code&quot;&quot;&quot;" name="note"/>
-			<field name="field_id" ref="base.field_res_partner_ref"/>
-			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
-		</record>
-		<record id="dm_ddf_plugin_language0" model="dm.ddf.plugin">
-			<field eval="&quot;&quot;&quot;language&quot;&quot;&quot;" name="code"/>
-			<field eval="&quot;&quot;&quot;Language&quot;&quot;&quot;" name="name"/>
-			<field eval="0" name="store_value"/>
-			<field name="model_id" ref="base.model_res_partner"/>
-			<field eval="&quot;&quot;&quot;Partner's Language&quot;&quot;&quot;" name="note"/>
-			<field name="field_id" ref="base.field_res_partner_lang"/> 
-			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
-		</record>
-		<record id="dm_ddf_plugin_usedforcampaigns0" model="dm.ddf.plugin">
-			<field eval="&quot;&quot;&quot;used_campaigns&quot;&quot;&quot;" name="code"/>
-			<field eval="&quot;&quot;&quot;Used for Campaigns&quot;&quot;&quot;" name="name"/>
-			<field eval="0" name="store_value"/>
-			<field name="model_id" ref="base.model_res_partner"/>
-			<field eval="&quot;&quot;&quot;Define if this Decoy can be used campaigns&quot;&quot;&quot;" name="note"/>
-			<field name="field_id" ref="dm.field_res_partner_decoy_for_campaign"/>
-			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
-		</record>
-		<record id="dm_ddf_plugin_usedforfilerenting0" model="dm.ddf.plugin">
-			<field eval="&quot;&quot;&quot;used_file_renting&quot;&quot;&quot;" name="code"/>
-			<field eval="&quot;&quot;&quot;Used for File Renting&quot;&quot;&quot;" name="name"/>
-			<field eval="0" name="store_value"/>
-			<field name="model_id" ref="base.model_res_partner"/>
-			<field name="field_id" ref="dm.field_res_partner_decoy_for_renting"/>
-			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
-		</record>
-		<record id="dm_ddf_plugin_usedforfilerenting0" model="dm.ddf.plugin">
-				<field eval="&quot;&quot;&quot;Define if this decoy address can be used with customer file renting&quot;&quot;&quot;" name="note"/>
-		</record>
-	</data>
-	<!-- TEMPLATE -->
-	<data>
-		<record id="dm_document_template_partner0" model="dm.document.template">
-			<field eval="[(6,0,[ref('dm_ddf_plugin_name0'),ref('dm_ddf_plugin_code0'),ref('dm_ddf_plugin_language0'),])]" name="plugin_ids"/>
-			<field eval="&quot;&quot;&quot;Partner&quot;&quot;&quot;" name="name"/>
-		</record>
-	</data>
-	<!-- GENDER -->
-	<data noupdate="1">
-		<record id="dm_customer_gender_sir0" model="dm.customer.gender">
-			<field name="to_gender" ref="base.res_partner_title_sir"/>
-			<field eval="&quot;&quot;&quot;Sir&quot;&quot;&quot;" name="description"/>
-			<field eval="&quot;&quot;&quot;Sir&quot;&quot;&quot;" name="name"/>
-		</record>
-		<record id="dm_customer_gender_madam0" model="dm.customer.gender">
-			<field name="to_gender" ref="base.res_partner_title_madam"/>
-			<field eval="&quot;&quot;&quot;Madam&quot;&quot;&quot;" name="description"/>
-			<field eval="&quot;&quot;&quot;Madam&quot;&quot;&quot;" name="name"/>
-		</record>
-		<record id="dm_customer_gender_miss0" model="dm.customer.gender">
-			<field name="to_gender" ref="base.res_partner_title_miss"/>
-			<field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="description"/>
-			<field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="name"/>
-		</record>
-	</data>
+        <record id="paypal_journal" model="account.journal">
+            <field name="name">Paypal Journal</field>
+            <field name="code">PAJ</field>
+            <field name="type">cash</field>
+            <field name="view_id" ref="account.account_journal_bank_view"/>
+            <field name="sequence_id" ref="account.sequence_journal"/>
+            <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
+            <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
+            <field name="user_id" ref="base.user_root"/>
+        </record>
+        <record id="visa_journal" model="account.journal">
+            <field name="name">Visa Journal</field>
+            <field name="code">VIJ</field>
+            <field name="type">cash</field>
+            <field name="view_id" ref="account.account_journal_bank_view"/>
+            <field name="sequence_id" ref="account.sequence_journal"/>
+            <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
+            <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
+            <field name="user_id" ref="base.user_root"/>
+        </record>
+        <record id="mastercard_journal" model="account.journal">
+            <field name="name">Mastercard Journal</field>
+            <field name="code">MAJ</field>
+            <field name="type">cash</field>
+            <field name="view_id" ref="account.account_journal_bank_view"/>
+            <field name="sequence_id" ref="account.sequence_journal"/>
+            <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
+            <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
+            <field name="user_id" ref="base.user_root"/>
+        </record>
+        <record id="ae_journal" model="account.journal">
+            <field name="name">American Express Journal</field>
+            <field name="code">AEJ</field>
+            <field name="type">cash</field>
+            <field name="view_id" ref="account.account_journal_bank_view"/>
+            <field name="sequence_id" ref="account.sequence_journal"/>
+            <field model="account.account" name="default_debit_account_id" ref="account.cash"/>
+            <field model="account.account" name="default_credit_account_id" ref="account.cash"/>
+            <field name="user_id" ref="base.user_root"/>
+        </record>
+    </data>
+-->    
+
+    <!-- PLUGINS -->
+
+    <data noupdate="1">
+        <record id="dm_ddf_plugin_name0" model="dm.ddf.plugin">
+            <field eval="&quot;&quot;&quot;name&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Name&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field eval="&quot;&quot;&quot;Partner's Name&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="base.field_res_partner_name"/>
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_ddf_plugin_code0" model="dm.ddf.plugin">
+            <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Code&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field eval="&quot;&quot;&quot;Partner's Code&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="base.field_res_partner_ref"/>
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_ddf_plugin_language0" model="dm.ddf.plugin">
+            <field eval="&quot;&quot;&quot;language&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Language&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field eval="&quot;&quot;&quot;Partner's Language&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="base.field_res_partner_lang"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+    </data>
+
+    <!-- TEMPLATE -->
+
+    <data>
+        <record id="dm_document_template_partner0" model="dm.document.template">
+            <field eval="[(6,0,[ref('dm_ddf_plugin_name0'),ref('dm_ddf_plugin_code0'),ref('dm_ddf_plugin_language0'),])]" name="plugin_ids"/>
+            <field eval="&quot;&quot;&quot;Partner&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+
+    <!-- GENDER -->
+
+    <data noupdate="1">
+        <record id="dm_customer_gender_sir0" model="dm.customer.gender">
+            <field name="to_gender_id" ref="base.res_partner_title_sir"/>
+            <field eval="&quot;&quot;&quot;Sir&quot;&quot;&quot;" name="description"/>
+            <field eval="&quot;&quot;&quot;Sir&quot;&quot;&quot;" name="name"/>
+        </record>
+        <record id="dm_customer_gender_madam0" model="dm.customer.gender">
+            <field name="to_gender_id" ref="base.res_partner_title_madam"/>
+            <field eval="&quot;&quot;&quot;Madam&quot;&quot;&quot;" name="description"/>
+            <field eval="&quot;&quot;&quot;Madam&quot;&quot;&quot;" name="name"/>
+        </record>
+        <record id="dm_customer_gender_miss0" model="dm.customer.gender">
+            <field name="to_gender_id" ref="base.res_partner_title_miss"/>
+            <field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="description"/>
+            <field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="name"/>
+        </record>
+    </data>
+
+    <!-- TRIGGER -->
+
+    <data noupdate="O">
+        <record id="dm_offer_step_transition_purchase" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;Purchase&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;purchase&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;action&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_offer_step_transition_not_purchase" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;Not Purchase&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;noaction&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_offer_step_transition_automatic" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;Automatic&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;automatic&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;auto&quot;&quot;&quot;" name="type"/>
+        </record>
+    </data>
+    <data noupdate="0">
+        <record model="ir.cron" id="ir_cron_campaign_proposition">
+            <field name="name">Check  Workitem</field>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'dm.workitem'"/>
+            <field name="function" eval="'check_all'"/>
+            <field name="args" eval="'()'"/>
+        </record>
+    </data>
+
+<!--
+    <data>
+        <record id="dm_customers_file_source_address" model="dm.customers_file.source">
+            <field eval="&quot;&quot;&quot;Partner Addresses&quot;&quot;&quot;" name="name"/>
+             <field eval="&quot;&quot;&quot;partner_addresses&quot;&quot;&quot;" name="code"/>
+        </record>
+    </data>
+    <data>
+        <record id="dm_customers_file_source_etls" model="dm.customers_file.source">
+            <field eval="&quot;&quot;&quot;ETL&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;etl&quot;&quot;&quot;" name="code"/>
+        </record>
+    </data>
+-->
+
+    <!-- Workitem Source -->
+<!--
+    <data>
+        <record model="dm.workitem.source" id="wi_source_address">
+            <field name="name" eval="&quot;Partner Address&quot;"/>
+            <field name="code" eval="&quot;address_id&quot;"/>
+        </record>
+    </data>
+-->
 </openerp>

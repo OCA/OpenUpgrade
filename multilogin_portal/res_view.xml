@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+
+		<record model="ir.ui.view" id="view_company_form">
+			<field name="name">res.company.form</field>
+			<field name="model">res.company</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_company_form" />
+			<field name="arch" type="xml">
+				<field name="rml_footer2" position="after">
+					<field name="user_provider"/>
+					<field name="user_customer"/>
+					<field name="user_computer"/>
+				</field>
+			</field>
+		</record>
+
+		<record model='ir.ui.view' id='view_computer_tree'>
+			<field name='name'>res.computer.tree</field>
+			<field name='model'>res.computer</field>
+			<field name='type'>tree</field>
+			<field name='arch' type='xml'>
+				<tree string='Computers' editable='bottom'>
+					<field name='active'/>
+					<field name='name'/>
+					<field name='ip_address'/>
+					<field name='state'/>
+				</tree>
+			</field>
+		</record>
+		<record model='ir.actions.act_window' id='action_computer'>
+			<field name='res_model'>res.computer</field>
+			<field name='view_type'>form</field>
+			<field name='view_mode'>tree</field>
+		</record>
+		<menuitem name="Administration/Configuration/Computers" id="menu_computer" action="action_computer"/>
+
+	</data>
+</terp>

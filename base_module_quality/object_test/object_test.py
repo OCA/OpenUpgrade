@@ -41,106 +41,109 @@ Test checks for fields, views, security rules, dependancy level
         return None
 
     def run_test(self, cr, uid, module_path):
+
         pool = pooler.get_pool(cr.dbname)
         module_name = module_path.split('/')[-1]
         obj_list = self.get_objects(cr, uid, module_name)
         ids_model = self.get_model_ids(cr, uid, obj_list)
-
-        field_obj = pool.get('ir.model.fields')
-        view_obj = pool.get('ir.ui.view')
-        access_obj = pool.get('ir.model.access')
-        module_obj = pool.get('ir.module.module')
-
-        field_ids = field_obj.search(cr, uid, [('model', 'in', obj_list)])
-        view_ids = view_obj.search(cr, uid, [('model', 'in', obj_list), ('type', 'in', ['tree', 'form'])])
-        access_ids = access_obj.search(cr, uid, [('model_id', 'in', ids_model)])
-        module_ids = module_obj.search(cr, uid, [('name', '=', module_name)])
-
-
-        field_data = field_obj.browse(cr, uid, field_ids)
-        view_data = view_obj.browse(cr, uid, view_ids)
-        access_data = access_obj.browse(cr, uid, access_ids)
-        module_data = module_obj.browse(cr, uid, module_ids)
-
-        result_dict = {}
-        result_view = {}
         result_security = {}
-        good_field = 0
-        total_field = 0
-        # field test .....
-        for field in field_data:
-            result_dict[field.model] = []
-        for field in field_data:
-            ttype = field.ttype
-            name = field.name
-            total_field += 1
-            check_str = re.compile('[a-z]+[\w_]*$') #re.compile('[a-z]+[_]?[a-z]+$')
-            if ttype == 'many2one':
-                if name.split('_')[-1] == 'id':
+
+        if obj_list: # if module has no new created classes skipp fields, views, security tests
+            field_obj = pool.get('ir.model.fields')
+            view_obj = pool.get('ir.ui.view')
+            access_obj = pool.get('ir.model.access')
+
+            field_ids = field_obj.search(cr, uid, [('model', 'in', obj_list)])
+            view_ids = view_obj.search(cr, uid, [('model', 'in', obj_list), ('type', 'in', ['tree', 'form'])])
+            access_ids = access_obj.search(cr, uid, [('model_id', 'in', ids_model)])
+
+            field_data = field_obj.browse(cr, uid, field_ids)
+            view_data = view_obj.browse(cr, uid, view_ids)
+            access_data = access_obj.browse(cr, uid, access_ids)
+
+            result_dict = {}
+            result_view = {}
+            good_field = 0
+            total_field = 0
+
+            # field test .....
+            for field in field_data:
+                result_dict[field.model] = []
+            for field in field_data:
+                ttype = field.ttype
+                name = field.name
+                total_field += 1
+                check_str = re.compile('[a-z]+[\w_]*$') #re.compile('[a-z]+[_]?[a-z]+$')
+                if ttype == 'many2one':
+                    if name.split('_')[-1] == 'id':
+                        good_field += 1
+                    else:
+                        data = 'many2one field should end with _id'
+                        result_dict[field.model].append([field.model, name, data])
+                elif ttype in ['many2many', 'one2many']:
+                    if name.split('_')[-1] == 'ids':
+                        good_field += 1
+                    else:
+                        data = '%s field should end with _ids'% (ttype)
+                        result_dict[field.model].append([field.model, name, data])
+                elif check_str.match(name):
                     good_field += 1
                 else:
-                    data = 'many2one field should end with _id'
+                    data = 'Field name should be in lower case or it should follow python standard'
                     result_dict[field.model].append([field.model, name, data])
-            elif ttype in ['many2many', 'one2many']:
-                if name.split('_')[-1] == 'ids':
-                    good_field += 1
-                else:
-                    data = '%s field should end with _ids'% (ttype)
-                    result_dict[field.model].append([field.model, name, data])
-            elif check_str.match(name):
-                good_field += 1
-            else:
-                data = 'Field name should be in lower case or it should follow python standard'
-                result_dict[field.model].append([field.model, name, data])
 
-        #views tests
-        for res in result_dict.keys():
-            if not result_dict[res]:
-                del result_dict[res]
-        view_dict = {}
-        total_views = len(obj_list) * 2
-        model_views = 0
-        for view in view_data:
-            view_dict[view.model] = []
-            model_views += 1
-        for view in view_data:
-            ttype = view.type
-            view_dict[view.model].append(ttype)
-        for view in view_dict:
-            if len(view_dict[view]) < 2:
-                model_views -= 1
-                result_view[view] = [view, 'You should have atleast form/tree view of an object']
+            #views tests
+            for res in result_dict.keys():
+                if not result_dict[res]:
+                    del result_dict[res]
+            view_dict = {}
+            total_views = len(obj_list) * 2
+            model_views = 0
+            for view in view_data:
+                view_dict[view.model] = []
+                model_views += 1
+            for view in view_data:
+                ttype = view.type
+                view_dict[view.model].append(ttype)
+            for view in view_dict:
+                if len(view_dict[view]) < 2:
+                    model_views -= 1
+                    result_view[view] = [view, 'You should have atleast form/tree view of an object']
+            if model_views > total_views:
+                model_views = total_views
 
-        #security rules test...
-        list_files = os.listdir(module_path)
-        security_folder = False
-        for file_sec in list_files:
-            if file_sec == 'security':
-                path = os.path.join(module_path, file_sec)
-                if os.path.isdir(path):
-                    security_folder = True
-        if not security_folder:
-            result_security[module_name] = [module_name, 'Security folder is not available (All security rules and groups should define in security folder)']
-        access_list = []
-        good_sec = len(obj_list)
-        bad_sec = 0
-        for access in access_data:
-            access_list.append(access.model_id.model)
-            if not access.group_id:
-                result_security[access.model_id.model] = [access.model_id.model, 'Specified object has no related group define on access rules']
-                bad_sec += 1 # to be check
-        not_avail_access = filter(lambda x: not x in access_list, obj_list)
-        for obj in not_avail_access:
-            bad_sec += 1
-            result_security[obj] = [obj, 'Object should have at least one security rule defined on it']
+            #security rules test...
+            list_files = os.listdir(module_path)
+            security_folder = False
+            for file_sec in list_files:
+                if file_sec == 'security':
+                    path = os.path.join(module_path, file_sec)
+                    if os.path.isdir(path):
+                        security_folder = True
+            if not security_folder:
+                result_security[module_name] = [module_name, 'Security folder is not available (All security rules and groups should define in security folder)']
+            access_list = []
+            good_sec = len(obj_list)
+            bad_sec = 0
+            for access in access_data:
+                access_list.append(access.model_id.model)
+                if not access.group_id:
+                    result_security[access.model_id.model] = [access.model_id.model, 'Specified object has no related group define on access rules']
+                    bad_sec += 1 # to be check
+            not_avail_access = filter(lambda x: not x in access_list, obj_list)
+            for obj in not_avail_access:
+                bad_sec += 1
+                result_security[obj] = [obj, 'Object should have at least one security rule defined on it']
 
         #  Dependacy test of module
+        module_obj = pool.get('ir.module.module')
+        module_ids = module_obj.search(cr, uid, [('name', '=', module_name)])
+        module_data = module_obj.browse(cr, uid, module_ids)
         depend_list = []
         depend_check = []
         remove_list = []
         for depend in module_data[0].dependencies_id:
             depend_list.append(depend.name)
-        good_depend = len(depend_list)
         module_ids = module_obj.search(cr, uid, [('name', 'in', depend_list)])
         module_data = module_obj.browse(cr, uid, module_ids)
         for data in module_data:
@@ -153,12 +156,18 @@ Test checks for fields, views, security rules, dependancy level
             result_security[module_name] = [remove_list, 'Unnecessary dependacy should be removed please Provide only highest requirement level']
         bad_depend = len(remove_list)
 
+        if not obj_list:
+            score_depend = (100 - (bad_depend * 5)) / 100.0 #  note : score is calculated based on if you have for e.g. two module extra in dependancy it will score -10 out of 100
+            self.score = score_depend
+            self.result = self.get_result({ module_name: ['No object found', 'No object found', 'No object found', int(score_depend * 100)]})
+            self.result_details += self.get_result_general(result_security, name="General")
+            return None
+
         score_view = total_views and float(model_views) / float(total_views)
         score_field = total_field and float(good_field) / float(total_field)
-        score_depend = good_depend and float(good_depend) / float(good_depend + bad_depend)
+        score_depend = (100 - (bad_depend * 5)) / 100.0 #  note : score is calculated based on if you have for e.g. two module extra in dependancy it will score -10 out of 100
         score_security = good_sec and float(good_sec - bad_sec) / float(good_sec)
         self.score = (score_view + score_field + score_security + score_depend) / 4
-
         self.result = self.get_result({ module_name: [int(score_field * 100), int(score_view * 100), int(score_security * 100), int(score_depend * 100)]})
         self.result_details += self.get_result_details(result_dict)
         self.result_details += self.get_result_general(result_view, name="View")

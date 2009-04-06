@@ -20,7 +20,10 @@
 #
 ##############################################################################
 """
-This is an ETL Component that use to display log detail in end of process.
+  To display log detail in end of process.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License
 """
 
 from etl.component import component
@@ -36,7 +39,7 @@ class logger_bloc(component):
 		Output Flows: 0-y
 		* .* : return the main flow 
     """    
-    def __init__(self, name='component.output.logger_bloc', output=sys.stdout):
+    def __init__(self, output=sys.stdout, name='component.output.logger_bloc'):
         self.name = name
         self.output = output
         self.is_end = 'main'
@@ -45,10 +48,19 @@ class logger_bloc(component):
     def process(self):
         #TODO : proper handle exception
         datas=[]
-        for channel,trans in self.input_get().items():
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     datas.append(d)
         for d in datas:
             self.output.write('\tBloc Log '+self.name+str(d)+'\n')
             yield d, 'main'
+        
+        
+    def __copy__(self):
+        """
+        Overrides copy method
+        """
+        res=logger_bloc(self.output, self.name)
+        return res
+    

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="etl_connector_type_form" model="ir.ui.view">
+			<field name="name">view.etl.connector.type.form</field>
+			<field name="model">etl.connector.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="etl.connector.type">
+					<field name="name" />
+					<field name="code" />
+				</form>
+			</field>
+		</record>
+
+
+		<record id="etl_connector_type_tree" model="ir.ui.view">
+			<field name="name">view.etl.connector.type.tree</field>
+			<field name="model">etl.connector.type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="etl.connector.type">
+					<field name="name" />
+					<field name="code" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_etl_connector_type_tree"
+			model="ir.actions.act_window">
+			<field name="name">Connector Types</field>
+			<field name="res_model">etl.connector.type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="etl_connector_type_tree" />
+		</record>
+
+		<!--
+			<menuitem name="Connector Types" parent="menu_etl_configure"
+			sequence="8" action="action_etl_connector_type_tree"
+			id="menu_etl_connector_type" /> -->
+
+
+
+		<record id="etl_connector_basic_form" model="ir.ui.view">
+			<field name="name">etl.connector.basic.form</field>
+			<field name="model">etl.connector</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="etl.connector">
+					<group colspan="4">
+						<field name="name" select="1" />
+						<field name="type" select="1"
+							on_change="onchange_type(type)" />
+					</group>
+					<notebook colspan="4">
+						<page string="Property"  attrs="{'invisible':[('type','!=',False)]}"/>
+                    </notebook>
+				</form>
+			</field>
+		</record>
+
+
+		<record id="etl_connector_basic_tree" model="ir.ui.view">
+			<field name="name">etl.connector.basic.tree</field>
+			<field name="model">etl.connector</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Connector">
+					<field name="name" select="1" />
+					<field name="type" select="1" />
+				</tree>
+			</field>
+		</record>
+
+		<!--<record id="action_etl_connector_basic_tree"
+			model="ir.actions.act_window">
+			<field name="name">Connectors</field>
+			<field name="res_model">etl.connector</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="etl_connector_basic_tree" />
+		</record>
+
+		<record id="action_etl_connector_basic_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_connector_basic_tree" />
+			<field name="act_window_id"
+				ref="action_etl_connector_basic_tree" />
+		</record>
+
+		<record id="action_etl_connector_basic_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_connector_basic_form" />
+			<field name="act_window_id"
+				ref="action_etl_connector_basic_tree" />
+		</record> -->
+
+		<menuitem name="Connectors"
+			parent="etl_interface.menu_etl_configure" sequence="9"
+			id="etl_connector_all_tree" />
+
+	</data>
+</openerp>
