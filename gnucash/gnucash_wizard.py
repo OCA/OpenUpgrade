@@ -290,14 +290,14 @@ class GCHandler (gnccontent.GCDbgHandler):
 				if fld[1] in gnco.dic:
 					val = gnco.dic[fld[1]]
 				match_arr.append( (fld[0],'=',fnc(val,gnco,self)) )
-			print "Retrying match with: ", match_arr
+			self.dprint("Retrying match with: "+str(match_arr))
 			res = obj.search(self.cr, self.uid, match_arr)
 			if res:
 				gos= self.iobj.create(self.cr,self.uid, {'guid': guid, 'parent_book': self.cur_book['res_id'], 'module': oo_module,'model':oo_model,'res_id': res[0]})
 				goi= [gos,]
 		
 		if goi:
-		    gos = self.iobj.read(self.cr,self.uid,goi,['guid','parent_book','module','model','res_id'])
+		    gos = self.iobj.read(self.cr,self.uid,goi,['guid','parent_book','module','model','res_id', 'noupdate'])
 		    if gos:
 			    #assert(gos[0]['module'] == 'account', gos[0]['module'])
 			    #assert(gos[0]['parent_book'] == self.cur_book['res_id'],str(gos[0]['parent_book'])+" != "+str(self.cur_book['res_id']))
@@ -307,6 +307,8 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    if True:
 				if ooit['id'] == gos[0]['res_id']:
 					found = True
+					if gos[0]['noupdate']:
+						return ooit['id']
 					oocp = {}
 					for fld in fields:
 						if len(fld)>2 and fld[2]:
