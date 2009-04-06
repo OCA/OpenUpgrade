@@ -82,7 +82,8 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         self.win.addFixedText("lblResourceType", 2 , 60, 50, 15, "Select Rpt. Type :")
         self.win.addComboListBox("lstResourceType", -5, 58, 123, 15,True,itemListenerProc=self.lstbox_selected)
         self.lstResourceType = self.win.getControl( "lstResourceType" )
-
+        self.txtReportName=self.win.getControl( "txtReportName" )
+        self.txtReportName.Enable=False
         for kind in self.Kind.keys():
             self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
 
