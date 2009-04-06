@@ -241,12 +241,12 @@ class GCHandler (gnccontent.GCDbgHandler):
 		self.decCount('gnc:GncEntry')
 		self.sync('entry','account.invoice.line',act,
 			[('name','description'),
-			    ('invoice_id', 'invoice', cas_get_ref, get_first ),
+			    ('invoice_id', 'invoice', cas_get_res_id, get_first ),
 			    ('quantity','qty'),
 			    ('discount', 'i-discount'),
-			    ('account_id', 'i_acct', cas_get_ref, get_first ),
+			    ('account_id', 'i-acct', cas_get_res_id, get_first ),
 			    ('price_unit', 'i-price'),
-			    ('notes', '', lambda c,a,s: unicode(a))
+			    #('note', '', lambda c,a,s: unicode(a.dic))
 			])
 
 	def get_parent(self, oo_model, fldt, gnc):
@@ -308,6 +308,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 				if ooit['id'] == gos[0]['res_id']:
 					found = True
 					if gos[0]['noupdate']:
+						self.debug("record %s[%s] is \"noupdate\", won't sync" % (gos[0]['model'], gos[0]['res_id']))
 						return ooit['id']
 					oocp = {}
 					for fld in fields:
