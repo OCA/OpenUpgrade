@@ -44,6 +44,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','transform.map')]</field>
+			<field name="context">{'type_id':'transform.map'}</field>
 		</record>
 
 		<record id="action_etl_component_trans_map_from"
@@ -52,6 +53,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','transform.map')]</field>
+			<field name="context">{'type_id':'transform.map'}</field>
 			<field name="view_id" ref="etl_component_trans_map_form" />
 		</record>
 

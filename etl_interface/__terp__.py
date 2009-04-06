@@ -70,12 +70,14 @@
          'etl_component/output/xml_out_view.xml',
          'etl_component/output/vcard_out_view.xml',
 
-         #'etl_component/transform/data_filter_view.xml',
-         #'etl_component/transform/sort_view.xml',
-         #'etl_component/transform/map_view.xml',
-         #'etl_component/transform/logger_view.xml',
-         #'etl_component/transform/logger_bloc_view.xml',
-         #'etl_component/transform/schema_validator_view.xml',
+         'etl_component/transform/data_filter_view.xml',
+         'etl_component/transform/sort_view.xml',
+         'etl_component/transform/map_view.xml',
+         'etl_component/transform/logger_view.xml',
+         'etl_component/transform/logger_bloc_view.xml',
+         'etl_component/transform/merge_view.xml', # To be check
+         'etl_component/transform/schema_validator_view.xml',
+         'etl_component/transform/unique_view.xml',
 
          ],
      'demo_xml': ['etl_demo.xml'],

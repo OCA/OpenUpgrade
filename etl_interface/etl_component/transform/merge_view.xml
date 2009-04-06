@@ -8,6 +8,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','transform.merge')]</field>
+			<field name="context">{'type_id':'transform.merge'}</field>
 		</record>
 
 		<record id="action_etl_component_merge_form"
@@ -17,6 +18,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','transform.merge')]</field>
+			<field name="context">{'type_id':'transform.merge'}</field>
 			<field name="view_id" ref="etl_component_form" />
 		</record>
 

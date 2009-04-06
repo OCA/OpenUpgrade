@@ -28,6 +28,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','transform.unique')]</field>
+			<field name="context">{'type_id':'transform.unique'}</field>
 		</record>
 
 		<record id="action_etl_component_unique_from" 	model="ir.actions.act_window">
@@ -35,6 +36,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','transform.unique')]</field>
+			<field name="context">{'type_id':'transform.unique'}</field>
 			<field name="view_id" ref="etl_transform_unique_form" />
 		</record>
 

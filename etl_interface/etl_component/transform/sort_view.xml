@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 	<data>
+		<!-- should be check! -->
 		<record id="etl_component_sort_form" model="ir.ui.view">
 			<field name="name">etl.component.sort.form</field>
 			<field name="model">etl.component</field>
@@ -8,12 +9,9 @@
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
 				<notebook position='inside'>
-			 		<page string="Sort Component" attrs="{'invisible':[('type_id','!=','transform.sort')]}">
-						<field name="name" select="1" />
-						<field name="type_id"
-							domain="[('name','=','transform.sort')]" />
-						<field name="transformer_id" invisible="1"
-							colspan="4" />
+			 		<page string="Property" attrs="{'invisible':[('type_id','!=','transform.sort')]}">
+						<!--<field name="name" select="1" />-->
+						<field name="transformer_id" invisible="1" colspan="4" />
 					</page>
 					</notebook>
 
@@ -27,6 +25,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','transform.sort')]</field>
+			<field name="context">{'type_id':'transform.sort'}</field>
 		</record>
 
 		<record id="action_etl_component_sort_from"
@@ -35,6 +34,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','transform.sort')]</field>
+			<field name="context">{'type_id':'transform.sort'}</field>
 			<field name="view_id" ref="etl_component_sort_form" />
 		</record>
 

@@ -45,8 +45,7 @@
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','input.facebook_in')]</field>
             <field name="context">{'type_id':'input.facebook_in'}</field>
-			<field name="view_id"
-				ref="etl_component_facebook_in_form" />
+			<field name="view_id" ref="etl_component_facebook_in_form" />
 		</record>
 
 		<record id="action_etl_component_facebook_in_view1"
