@@ -29,9 +29,7 @@ class facebook_connector(osv.osv):
     _inherit = 'etl.connector'
 
     _columns={
-              'uri' : fields.char('URL', size=124),
               'email' : fields.char('Email', size=64),
-              'passwd' : fields.char('Password', size=64),
               'delay' : fields.integer('Delay time'),
     }
 
