@@ -58,7 +58,6 @@ def get_cube(self, cr, uid, context):
         return res
 
 def get_details(self, cr, uid,data, context):
-         print "Do i get schema id ",data['form']['cube_schema']
          """
          To Fetch dimension of selected schema
          """
@@ -79,7 +78,6 @@ def get_details(self, cr, uid,data, context):
 
          id_dimension=pool.search(cr,uid,[('cube_id','=',ids[0])])
          res=pool.read(cr,uid,id_dimension,['id','name'],context)
-         print "Res ...............",res
          log_d=Log()
          for r in res:
              log_d.add(r['name'])
@@ -173,7 +171,6 @@ def _execute_mdx(self, cr, uid, data, context):
     """
     r=data['form']['mdx_query']
     n=res1[0]['name']
-    print "n------------------",res1[0]['name']
     service=netsvc.LocalService("object_proxy")
     axis,data1=service.execute(cr.dbname,uid,'olap.schema','request',n,r,context={})
     output=''

@@ -139,7 +139,6 @@ class query(object):
             for record in result:
                 cube = cube_data
                 r = list(record)
-                print "This is the computation >>>>>",r
                 value = False
                 for s in subset:
                     cube = s['axis_mapping'].cube_set(cube, r, s['delta'])

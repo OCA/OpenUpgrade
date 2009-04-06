@@ -283,7 +283,6 @@ class olap_schema(osv.osv):
 
         print 'Running MDX...'
         data = mdx.run()
-        print 'Running Done...'
         print 'Formatting Output...'
         if cubex.query_log:
             mdx.log(cr,uid,cubex,request,context)

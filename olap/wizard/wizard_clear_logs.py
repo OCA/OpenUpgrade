@@ -54,7 +54,6 @@ def clear_logs(self,cr,uid,part,context={}):
     return {}
 
 def _getdata(self,cr,uid,part,context={}):
-    print "In getdata>>>>>>>>>>>>",uid
     ids=pooler.get_pool(cr.dbname).get('res.users').browse(cr,uid,uid)
     part['form']['user_name']=ids['name']
 #    part['form']['db_name']=lines.database_id.db_name

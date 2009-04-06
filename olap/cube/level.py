@@ -155,12 +155,6 @@ class level(object):
 #       result_axis['axis_mapping'] = maps
 #       print '*'*50
 #       print table, result, result_axis
-        print " \n\n ######################################"
-        print table 
-        print axis
-        print result
-        print result_axis
-        print " \n\n ######################################" 
         return table, axis, result ,result_axis
 
     def _run_star(self, metadata):

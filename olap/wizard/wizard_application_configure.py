@@ -97,7 +97,6 @@ class wizard_application_configure(wizard.interface):
             for apcol in appfield_res:
                 appcol_name.append(apcol.name)
                 
-            print ">>>>>>>> in database id >>>>>>>>",ids.database_id.id
             id_tables=pooler.get_pool(cr.dbname).get('olap.database.tables').search(cr,uid,[('fact_database_id','=',ids.database_id.id),('table_db_name','not in',['inherit','res_roles','user_rule_group_rel','res_roles_users_rel','group_rule_group_rel'])])
             tables=pooler.get_pool(cr.dbname).get('olap.database.tables').read(cr,uid,id_tables,[])
             
