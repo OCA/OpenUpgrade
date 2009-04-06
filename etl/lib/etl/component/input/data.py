@@ -60,3 +60,19 @@ class data(component):
         """
         res=data(self.datas, self.name, self.transformer)
         return res
+    
+def test():
+    from etl_test import etl_test
+    import etl
+    inp_data = etl.component.input.data([
+        {'id': 1, 'name': 'Fabien', 'country_id': 3},
+        {'id': 2, 'name': 'Luc', 'country_id': 3},
+        {'id': 3, 'name': 'Henry', 'country_id': 1}
+    ])
+    test = etl_test.etl_component_test(inp_data)
+    test.check_output([{'country_id': 3, 'id': 1, 'name': 'Fabien'}, {'country_id': 3, 'id': 2, 'name': 'Luc'}, {'country_id': 1, 'id': 3, 'name': 'Henry'}] )
+    res=test.output()
+    print res
+    
+if __name__ == '__main__':
+    test()
