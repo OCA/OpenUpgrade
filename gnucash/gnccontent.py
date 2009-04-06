@@ -643,7 +643,6 @@ class gnc_elem_var_ref2(gnc_elem_dict):
 		self.ref=None
 		self.rname=rname
 		self.rtype=None
-		self.dic['ref'] = None
 	
 	def create(self,oh,name):
 		(tbl, key) = name.split(':')
@@ -652,12 +651,13 @@ class gnc_elem_var_ref2(gnc_elem_dict):
 		if key == 'type':
 			return gnc_elem_var(name)
 		elif key == "id":
-			return gnc_elem_var_id(name)
+			return gnc_elem_var_ref(name)
 		return gnc_unk_elem(name,self.name)
 	
 	def end(self,oh,parent):
 		# todo: verify dic['type'] = model..
-		parent.setDict(oh,self.name.split(':')[1],(self.dic['id'],self.dic['ref'] ))
+		# print "End var_ref2",self.dic['id']
+		parent.setDict(oh,self.name.split(':')[1],self.dic['id'])
 		#oh.print_item(self.name,self)
 
 class GCContent(sax.handler.ContentHandler):

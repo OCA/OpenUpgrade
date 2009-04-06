@@ -60,6 +60,12 @@ def cas_get_ref(c, a, s):
 	else:
 		return None
 
+def cas_get_res_id(c, a, s):
+	if c:
+		return c[1]['res_id']
+	else:
+		return None
+
 class GCHandler (gnccontent.GCDbgHandler):
 	"""This backend syncs the Gnucash object into the OpenERP ones.
 	   It should have a lifetime within the import process.
@@ -202,14 +208,33 @@ class GCHandler (gnccontent.GCDbgHandler):
 		
 	def end_invoice(self,act,par):
 		self.decCount('gnc:GncInvoice')
+		print "Invoice owner:", act.dic['owner']
+		try:
+			if (act.dic['owner'][1]):
+			    print "Trying to locate address"
+			    adre =act.dic['owner'][1]
+			    if adre['model'] != 'res.partner':
+				    self.warn('invalid model in partner ref: %s' % adre['model'])
+				    raise Exception()
+			    addrs=self.pool.get('res.partner.address').search(self.cr, self.uid,
+				[ ('partner_id','=',adre['res_id']), ('active','=','t')])
+			    if addrs:
+				print "Located addresses:", addrs
+				act.dic['address']=addrs[0]	# arbitrarily select the first
+			    else:
+				self.warn("No address for partner id=%s" % str(act.dic['owner'][1]))
+		except:
+			self.warn("Cannot get address for partner id=%s" % str(act.dic['owner'][1]))
+	
 		self.sync('invoice','account.invoice',act,
 			[('name','name'),
 			    ('number','inv_ref'),
 			    ('comment','notes'),
 			    ('reference', 'billing_id'),
-			    ('partner_id', 'owner', cas_get_ref, get_first ),
+			    ('partner_id', 'owner', cas_get_res_id, get_first ),
 			    ('state','active', lambda c,a,s: (c and 'open') or 'cancel'),
 			    ('currency_id', 'currency', lambda c,a,s: c['ref'], get_first),
+			    ('address_invoice_id', 'address', None, get_first),
 			    ('date_invoice','posted', fnc_date_only ),
 			    ])
 
