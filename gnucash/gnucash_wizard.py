@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
@@ -208,7 +209,7 @@ class GCHandler (gnccontent.GCDbgHandler):
 			    ('reference', 'billing_id'),
 			    ('partner_id', 'owner', cas_get_ref, get_first ),
 			    ('state','active', lambda c,a,s: (c and 'open') or 'cancel'),
-			    ('currency_id', 'currency', cas_get_ref, get_first),
+			    ('currency_id', 'currency', lambda c,a,s: c['ref'], get_first),
 			    ('date_invoice','posted', fnc_date_only ),
 			    ])
 
@@ -377,6 +378,19 @@ class GCHandler (gnccontent.GCDbgHandler):
 	def end_customer(self,act,par):
 		self.decCount('gnc:GncCustomer')
 		self._end_partner(act,[('customer',None,lambda c,a,s: True)])
+
+	def find_commodity(self,com):
+		self.decCount('commodity')
+		if com['space'] != 'ISO4217' : #commodity is a currency
+			return
+		
+		per=self.pool.get('res.currency').\
+			search(self.cr, self.uid,[('code','=',com['id'])] )
+		print "Currency located:", per
+		if per:
+			return per[0]
+		else:
+			return False
 
 class wizard_import_gnucash(wizard.interface):
 

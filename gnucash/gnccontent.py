@@ -98,6 +98,9 @@ class GCDbgHandler (object):
 	def end_vendor(self,act,par):
 		self.decCount('gnc:GncVendor')
 		self.print_item('vendor',act)
+		
+	def find_commodity(self,dic):
+		return False
 
 	def end_customer(self,act,par):
 		self.decCount('gnc:GncCustomer')
@@ -334,11 +337,13 @@ class gnc_elem_commodity(gnc_elem_dict):
 	def create(self,oh,name):
 		if ':' in name:
 			(tbl,key)=name.split(':')
-			if tbl == 'cmdty' and (key in [ 'id', 'name', 'space','fraction']):
+			if tbl == 'cmdty' and (key in [ 'id', 'name', 'space','fraction',
+				'get_quotes','quote_tz','quote_source']):
 				#id is a normal string, too.
 				return gnc_elem_var(name)
 		return gnc_unk_elem(name,self.name)
 	def end(self,oh,parent):
+		self.dic['ref']= oh.find_commodity(self.dic)
 		parent.get_commodity(oh,self)
 
 class gnc_elem_slots(gnc_elem):
@@ -568,7 +573,7 @@ class gnc_elem_invoice(gnc_elem_dict):
 	def get_slots(self,slots):
 		self.slots.extend(slots)
 	def get_commodity(self,oh,com):
-		self.commodity=com.dic
+		self.dic['currency']=com.dic
 
 class gnc_elem_entry(gnc_elem_dict):
 	def __init__(self,name=''):
