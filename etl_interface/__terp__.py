@@ -37,11 +37,6 @@
          'etl_component/transform/transform_data.xml'
      ],
     'update_xml': [
-         'etl_component/control/control_data.xml', #to be remove
-         'etl_component/input/input_data.xml',#to be remove
-         'etl_component/output/output_data.xml',#to be remove
-         'etl_component/transform/transform_data.xml',#to be remove
-
          'etl_interface_sequence.xml',
          'etl_interface_view.xml',
          'etl_component/etl_component_view.xml',
@@ -80,7 +75,7 @@
          'etl_component/transform/unique_view.xml',
 
          ],
-     'demo_xml': ['etl_demo.xml'],
+     'demo_xml': ['etl_interface_demo.xml'],
     'installable': True,
     'active': False,
 }
