@@ -257,10 +257,21 @@ class training_offer(osv.osv):
                                    select=1,
                                    help="The status of the course",
                                   ),
+        'kind' : fields.selection([('standard', 'Standard'),
+                                   ('intra', 'Intra')],
+                                  'Kind',
+                                  required=True,
+                                 ),
+        'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic Account'),
+        'sale_price' : fields.float('Sale Price'),
+        'total_cost' : fields.float('Total Cost'),
+        'margin' : fields.float('Margin'),
+        'margin_rate' : fields.float('Margin Rate'),
     }
 
     _defaults = {
         'state' : lambda *a: 'draft',
+        'kind' : lambda *a: 'standard',
     }
 
 training_offer()
@@ -309,6 +320,14 @@ training_event()
 class training_session(osv.osv):
     _name = 'training.session'
     _description = 'Session'
+
+    def _is_intra(self, cr, uid, ids, name, args, context=None):
+        res = dict.fromkeys(ids, 0)
+        for obj in self.browse(cr, uid, ids):
+            if obj.offer_id:
+                res[obj.id] = (obj.offer_id.kind == 'intra')
+        return res
+
     _columns = {
         'name' : fields.char('Name',
                              size=64,
@@ -357,6 +376,7 @@ class training_session(osv.osv):
         'user_id' : fields.many2one('res.users', 'Responsible', required=True),
         'nbr_place_dispo' : fields.integer('Available Places'),
         'nbr_place_draft' : fields.integer('Draft Places'),
+        'is_intra' : fields.function(_is_intra, method=True, store=True, type="boolean", string="Is Intra"),
     }
 
     def _find_catalog_id(self, cr, uid, context=None):
@@ -574,10 +594,16 @@ class training_seance(osv.osv):
     _description = 'Seance'
     _inherits = { 'training.event' : 'event_id' }
 
+    def _participant_count(self, cr, uid, ids, name, args, context=None):
+        res = dict.fromkeys(ids, 0)
+        for obj in self.browse(cr, uid, ids, context=context):
+            res[obj.id] = len(obj.participant_ids)
+        return res
+
     _columns = {
         'partner_ids' : fields.many2many('res.partner', 'training_seance_partner_rel', 'seance_id', 'partner_id', 'StakeHolders'),
         'event_id' : fields.many2one('training.event', 'Event'),
-        'course_id' : fields.many2one('training.course', 'Course', required=True, readonly=True),
+        'course_id' : fields.many2one('training.course', 'Course', required=True),
         #'copies' : fields.integer('Copies'),
         #'printed' : fields.boolean('Printed'),
         'reserved' : fields.boolean('Reserved'),
@@ -594,6 +620,8 @@ class training_seance(osv.osv):
         'nbr_place_dispo' : fields.integer('Available Places'),
         'nbr_place_draft' : fields.integer('Draft Places'),
         'presence_form' : fields.boolean('Presence Form'),
+        'participant_count' : fields.function(_participant_count, method=True, store=True,
+                                              type="integer", string="Number of Participants"),
     }
 
     def on_change_course_id(self, cr, uid, course_id):
@@ -720,6 +748,7 @@ class training_subscription(osv.osv):
         'rest_place' : fields.integer('Rest Place'),
         'max_place' : fields.integer('Maximum Place'),
         'draft_place' : fields.integer('Draft Place'),
+        'nbr_to_subscribe' : fields.integer('Number to subscribe'),
     }
 
     _defaults = {
@@ -728,6 +757,7 @@ class training_subscription(osv.osv):
         'name' : lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'training.subscription'),
         'max_place' : lambda *a: 0,
         'draft_place' : lambda *a: 0,
+        'nbr_to_subscribe' : lambda *a: 1,
     }
 
 

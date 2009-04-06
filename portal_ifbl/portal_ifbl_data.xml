@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-
     <data>
+        <!-- We define the main menu -->
+        <menuitem name="IFBL Portals" id="menu_portal_ifbl" parent="portal.menu_portal_root" />
+
+        <!-- 
+        Portal Supplier 
+        -->
         <record model="ir.rule.group" id="portal_supplier_rule_group">
             <field name="name">Portal Supplier Rule</field>
             <field name="model_id" search="[('model', '=', 'purchase.order.line')]" model="ir.model" />
@@ -77,11 +82,15 @@
             <field name="act_window_id" ref="portal_supplier_purchase_order_lines_action" />
         </record>
 
-        <menuitem name="IFBL Portals" id="menu_portal_ifbl" parent="portal.menu_portal_root" />
+
         <menuitem name="Supplier Portal" id="menu_supplier_portal_ifbl" parent="menu_portal_ifbl" />
         <menuitem name="Purchase Management" id="menu_portal_purchase_order_lines"
             parent="menu_supplier_portal_ifbl" />
         <menuitem parent="menu_portal_purchase_order_lines" action="portal_supplier_purchase_order_lines_action" id="menu_portal_your_purchase_order_line_mi" />
+
+        <!-- 
+        Partner Portal 
+        -->
 
         <record model="ir.rule.group" id="portal_partner_invoice_rule_group">
             <field name="name">Portal Partner Invoice Rule</field>
@@ -231,21 +240,6 @@
             parent="portal_partner_financial_management_mi" 
             action="account.action_invoice_tree1" />
 
-        <!--
-        <record id="action_menu_portal" model="ir.actions.act_window">
-            <field name="groups_id" eval="[(6, 0, [ref('res_groups_portal_partner')])]" />
-            <field name="domain" eval="[('parent_id', '=', ref('menu_partner_portal_ifbl'))]" />
-            <field name="target">current</field>
-            <field name="view_type">tree</field>
-            <field name="res_model">ir.ui.menu</field>
-            <field name="view_id" ref="base.view_menu" />
-            <field name="name">Menu Partner Portal</field>
-            <field name="portal_visible">1</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        -->
-
-        <menuitem name="SkateHolder Portal" id="menu_skateholder_portal_ifbl" parent="menu_portal_ifbl" />
     </data>
 
     <data noupdate="1">
@@ -279,5 +273,10 @@
             <field eval="&quot;&quot;&quot;menu&quot;&quot;&quot;" name="usage"/>
             <field eval="&quot;&quot;&quot;Portal Partner Menu&quot;&quot;&quot;" name="name"/>
         </record>
+    </data>
+
+    <data>
+        <!-- SkateHolder Portal -->
+        <menuitem name="SkateHolder Portal" id="menu_skateholder_portal_ifbl" parent="menu_portal_ifbl" />
     </data>
 </openerp>

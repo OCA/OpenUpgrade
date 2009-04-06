@@ -381,6 +381,7 @@
                                     <field name="support_ok" string="Support Received" />
                                 </tree>
                             </field>
+                            <button name="" string="Create the Seances" type="object" />
                         </page>
                         <page string="Supplier Commands">
                             <field name="purchase_line_ids" nolabel="1" colspan="4">
@@ -573,30 +574,22 @@
                         <field name="course_id" />
                         <field name="date" />
                         <field name="duration" widget="float_time" />
-                        <field name="user_id" />
-                    </group>
-                    <group col="2" colspan="2">
-                        <separator string="Limits" colspan="2" />
-                        <field name="min_limit" />
-                        <field name="max_limit" />
-                    </group>
-                    <group col="2" colspan="2">
-                        <separator string="Presence Form" colspan="2"/>
-                        <field name="presence_form" />
                     </group>
                     <notebook colspan="4">
                         <page string="General">
-                            <!--<field name="limit" />-->
+                            <group col="2" colspan="2">
+                                <separator string="Presence Form" colspan="2"/>
+                                <field name="presence_form" />
+                            </group>
+                            <group col="2" colspan="2">
+                                <separator string="Responsible" colspan="2" />
+                                <field name="user_id" />
+                            </group>
                             <separator string="Location" colspan="4" />
                             <field name="place" />
                             <field name="room" />
                             <field name="layout" />
                             <field name="reserved" />
-                            <!--
-                            <separator string="Supports" colspan="4" />
-                            <field name="copies" />
-                            <field name="printed" />
-                            -->
                             <separator string="Supplier Commands" colspan="4" />
                             <field name="purchase_line_ids" nolabel="1" colspan="4">
                                 <form string="Command">
@@ -612,16 +605,38 @@
                             </field>
                         </page>
                         <page string="Sessions">
-                            <field name="session_ids" colspan="4" nolabel="1"/>
+                            <separator string="Sessions" colspan="4" />
+                            <field name="session_ids" colspan="4" nolabel="1">
+                                <tree string="Sessions">
+                                    <field name="name" />
+                                    <field name="state" />
+                                    <field name="offer_id" />
+                                    <field name="catalog_id" />
+                                    <field name="is_intra" />
+                                </tree>
+                            </field>
                         </page>
                         <page string="Participants">
-                            <field name="group_id" />
+                            <group col="2" colspan="4">
+                                <group col="2">
+                                    <separator string="Limits" colspan="2" />
+                                    <field name="min_limit" />
+                                    <field name="max_limit" />
+                                </group>
+                                <group col="2">
+                                    <separator string="Group" colspan="2" />
+                                    <field name="group_id" />
+                                    <field name="participant_count" />
+                                </group>
+                            </group>
+                            <separator string="Participants" colspan="4" />
                             <field name="participant_ids" 
                                 colspan="4" 
                                 nolabel="1" 
                                 domain="[('group_id', '=', group_id), ('session_ids', 'in', [ session_id ])]" />
                         </page>
                         <page string="StakeHolders">
+                            <separator string="StakeHolders" colspan="4" />
                             <field name="partner_ids" nolabel="1"/>
                         </page>
                     </notebook>
@@ -731,6 +746,13 @@
             <field name="domain">[('state', '=', 'draft')]</field>
         </record>
 
+        <record model="ir.actions.act_window" id="training_seance_new_act">
+            <field name="name">New Seance</field>
+            <field name="res_model">training.seance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+        </record>
+
         <record model="ir.ui.view" id="training_subscription_form">
             <field name="name">training.subscription.form</field>
             <field name="model">training.subscription</field>
@@ -749,6 +771,7 @@
                     <field name="paid" />
                     <separator string="Participant" colspan="4" />
                     <field name="contact_id" />
+                    <field name="nbr_to_subscribe" />
                     <field name="group_id" />
                     <separator colspan="4"/>
                     <group colspan="4" col="6">
@@ -840,10 +863,11 @@
             <field name="model">training.offer</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Offer" col="6">
+                <form string="Offer" col="4">
                     <separator string="Offer Description" colspan="4" />
-                    <field name="name" colspan="2"/>
-                    <field name="product_id" colspan="2"/>
+                    <field name="name" />
+                    <field name="product_id" />
+                    <field name="kind" />
                     <notebook colspan="4">
                         <page string="Description">
                             <separator string="Objective" colspan="4" />
@@ -853,6 +877,14 @@
                         </page>
                         <page string="Courses">
                             <field name="course_ids" colspan="4" widget="many2many" nolabel="1" />
+                        </page>
+                        <page string="Intra" attrs="{'invisible':[('kind', '=', 'standard')]}">
+                            <field name="analytic_account_id" />
+                            <field name="sale_price" />
+                            <field name="total_cost" />
+                            <separator string="Margins" colspan="4" />
+                            <field name="margin" />
+                            <field name="margin_rate" />
                         </page>
                     </notebook>
                     <group col="5" colspan="4">
@@ -1082,6 +1114,10 @@
             id="training_planning_seances_deduplicate_mi" 
             parent="training_planning_seances_mi" 
             name="Seances to Deduplicate" />
+        <menuitem 
+            id="training_planning_seances_new_mi" 
+            parent="training_planning_seances_mi" 
+            action="training_seance_new_act" />
 
         <menuitem 
             id="training_subscription_management_mi" 
