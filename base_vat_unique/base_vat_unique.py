@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution	
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,20 +20,18 @@
 #
 ##############################################################################
 
-from osv import fields
 from osv import osv
+from osv import fields
 
-class partner_gender(osv.osv):
-    _name = 'partner.gender'
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=32, required=True),
-    }
-partner_gender()
+class res_partner(osv.osv):
+    _name = "res.partner"
+    _inherit = "res.partner"
 
-class res_partner_title(osv.osv):
-    _inherit = 'res.partner.title'
-    _columns = {
-        'gender_id' : fields.many2one('partner.gender', 'Gender', ondelete='cascade')
-    }
-res_partner_title()
+    _sql_constraints = [
+        ('vat_uniq', 'unique (vat)', 'Error! Specified VAT Number already exists for any other registered partner.')
+    ]
+
+res_partner()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

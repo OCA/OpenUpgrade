@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution	
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,20 +20,6 @@
 #
 ##############################################################################
 
-from osv import fields
-from osv import osv
+import base_vat_unique
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
-class partner_gender(osv.osv):
-    _name = 'partner.gender'
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=32, required=True),
-    }
-partner_gender()
-
-class res_partner_title(osv.osv):
-    _inherit = 'res.partner.title'
-    _columns = {
-        'gender_id' : fields.many2one('partner.gender', 'Gender', ondelete='cascade')
-    }
-res_partner_title()

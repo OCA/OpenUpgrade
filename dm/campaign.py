@@ -477,7 +477,6 @@ class dm_campaign(osv.osv):
         self.items_state_inprogress_set(cr, uid, ids, *args)
         self.write(cr, uid, ids, {'state':'pending'})
         return True
-  
 
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
@@ -488,12 +487,15 @@ class dm_campaign(osv.osv):
             raise osv.except_osv(
                 _('Could not open this Campaign !'),
                 _('You must first close all states related to this campaign.'))
-        
+
         if (camp.date_start > time.strftime('%Y-%m-%d')):
             raise osv.except_osv("Error!!","Campaign cannot be opened before drop date!!!")
 
+
+
+
         self.write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
-        
+
         ''' create offer history'''
         history_vals={
               'offer_id' : camp.offer_id.id,
@@ -701,7 +703,7 @@ class dm_campaign(osv.osv):
         default['responsible_id'] = uid
         self.copy(cr,uid,ids[0],default)
         return True
-    
+
     def copy(self, cr, uid, id, default=None, context={}):
         cmp_id = super(dm_campaign, self).copy(cr, uid, id, default, context=context)
         data = self.browse(cr, uid, cmp_id, context)
@@ -1007,15 +1009,15 @@ class dm_customers_list(osv.osv):
     }
 dm_customers_list()
 
-class dm_customers_file_source(osv.osv):
-    _name = "dm.customers_file.source"
-    _description = "Customer File Source"
-    _columns = {
-            'name' : fields.char('Name', size=64 ,required=True),
-            'code' : fields.char('code', size=64 ,required=True),
-            'desc' : fields.text('Description'),
-            }
-dm_customers_file_source()
+#class dm_customers_file_source(osv.osv):
+#    _name = "dm.customers_file.source"
+#    _description = "Customer File Source"
+#    _columns = {
+#            'name' : fields.char('Name', size=64 ,required=True),
+#            'code' : fields.char('code', size=64 ,required=True),
+#            'desc' : fields.text('Description'),
+#            }
+#dm_customers_file_source()
 
 
 class dm_customers_file(osv.osv):
@@ -1035,17 +1037,11 @@ class dm_customers_file(osv.osv):
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'customers_file_id', 'Segments', readonly=True),
 #        'source_id' :fields.many2one('dm.customers_file.source', 'Customers File Source'),
         'source' : fields.selection(_FILE_SOURCES, 'Source', required=True),
-#        'source_name_id' :fields.related('source_id','name', string='Customers File Source Name', type="char"),
+        'note' : fields.text('Notes'),
     }
     _defaults =  {
         'source': lambda *a: 'addresses',
     }
-
-#    def onchange_source(self, cr, uid, ids, source_id, context=None):
-#        obj = self.pool.get('dm.customers_file.source').browse(cr,uid,source_id,context=context)
-#        print "XXXXX",obj
-#        print "XXXXX",obj.name
-#        return {'value':{'source_name_id':obj.name}}
 
 dm_customers_file()
 
@@ -1093,10 +1089,11 @@ class dm_campaign_proposition_segment(osv.osv):
         return False
 
     _columns = {
-        'code1' : fields.function(_segment_code,string='Code',type="char",size="64",method=True,readonly=True),
+        'code1' : fields.function(_segment_code, string='Code', type="char", size="64", method=True, readonly=True),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
-        'customers_list_id': fields.many2one('dm.customers_list','Customers List',required=True),
-        'customers_file_id': fields.many2one('dm.customers_file','Customers File',readonly=True),
+        'type_src' : fields.selection([('internal','Internal'),('external','External')], 'Type'),
+        'customers_list_id': fields.many2one('dm.customers_list','Customers List'),
+        'customers_file_id': fields.many2one('dm.customers_file','Customers File'),
         'quantity_real' : fields.integer('Real Quantity',
                     help='The real quantity is the number of addresses that are really in the customers file (by counting).'),
         'quantity_planned' : fields.integer('planned Quantity',
@@ -1139,6 +1136,7 @@ class dm_campaign_proposition_segment(osv.osv):
     _defaults =  {
         'all_add_avail': lambda *a: True,
         'type_census': lambda *a: 'day',
+        'type_src': lambda *a: 'internal',
     }
 
 dm_campaign_proposition_segment()
