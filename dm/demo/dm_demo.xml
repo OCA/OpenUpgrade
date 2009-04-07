@@ -1398,4 +1398,63 @@ rkJggg==
             <field name="category_id" ref="dm.dm_offer_document_category_production0"/>
         </record>
     </data>
+    
+    <!-- Documents for Offer-09  -->
+    <data noupdate="1">
+		<record id="dm_offer_document_startingmailingdocument0" model="dm.offer.document">
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field eval="&quot;&quot;&quot;Starting Mailing Document-09&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;start_mail_doc09&quot;&quot;&quot;" name="code"/>
+			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
+			<field name="step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2009"/>
+			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="dm_offer_document_packageinsertdocument0" model="dm.offer.document">
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field eval="&quot;&quot;&quot;Package Insert Document&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;pkg_insert_doc09&quot;&quot;&quot;" name="code"/>
+			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
+			<field name="step_id" ref="dm.dm_offer_step_piforopenerpondemandfreetrial2009"/>
+			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="dm_offer_document_accompanyingletterdocument0" model="dm.offer.document">
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field eval="&quot;&quot;&quot;Accompanying Letter Document-09&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;acc_letter_doc09&quot;&quot;&quot;" name="code"/>
+			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
+			<field name="step_id" ref="dm.dm_offer_step_alpiforopenerpondemandfreetrial2009"/>
+			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="dm_offer_document_accompanyingletterforopenerpbookdocument0" model="dm.offer.document">
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field eval="&quot;&quot;&quot;Accompanying Letter for OpenERP book Document&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;acc_let_oerp_doc&quot;&quot;&quot;" name="code"/>
+			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
+			<field name="step_id" ref="dm.dm_offer_step_alimforopenerpondemandfreetrial2009"/>
+			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+		</record>
+	</data>
 </openerp>
