@@ -40,6 +40,7 @@
         'hr_expense',
         'hr_holidays',
         'portal_ifbl',
+        'ifbl_budget',
     ],
     'init_xml' : [],
     'update_xml' : [
