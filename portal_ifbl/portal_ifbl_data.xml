@@ -309,8 +309,33 @@
 
     <data>
         <!-- SkateHolder Portal -->
+
         <menuitem name="SkateHolder Portal" id="menu_skateholder_portal_ifbl" parent="menu_portal_ifbl" />
 
+        <menuitem name="Training Management" parent="menu_skateholder_portal_ifbl"
+            id="training_management_skateholder_portal_mi" />
 
+        <record model="ir.actions.act_window" id="participation_skateholder_portal_act">
+            <field name="name">Participations</field>
+            <field name="res_model">training.participation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem parent="training_management_skateholder_portal_mi"
+            id="participation_training_management_skateholder_portal_mi"
+            action="participation_skateholder_portal_act" />
+
+        <record model="res.groups" id="res_groups_portal_skateholder">
+            <field name="name">Portal SkateHolder Group</field>
+        </record>
+
+        <record model="ir.model.access" id="model_access_participation">
+            <field name="name">Participations</field>
+            <field name="perm_read">True</field>
+            <field name="perm_write">True</field>
+            <field name="group_id" ref="res_groups_portal_skateholder" />
+            <field name="model_id" search="[('model', '=', 'training.participation')]" />
+        </record>
     </data>
 </openerp>
