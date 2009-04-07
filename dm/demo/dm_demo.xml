@@ -1461,4 +1461,18 @@ rkJggg==
 			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
 		</record>
 	</data>
+	
+	<!-- Document Report -->
+	<data noupdate="1">
+		<record id="accompanyinhg_letter_for_openerp_book_report" model="ir.actions.report.xml">
+			<field name="name">Package Insert Report</field>
+			<field name="type">ir.actions.report.xml</field>
+			<field name="model">dm.offer.document</field>
+			<field name="report_name">dm.offer.document.rndMQ8Sf</field>
+			<field name="report_rml">dm/reportdm/Package Insert Document-09.rml</field>
+			<field name="report_type">pdf</field>
+			<field name="document_id" ref="dm_offer_document_packageinsertdocument0"/>
+		</record>
+	</data>
+
 </openerp>
