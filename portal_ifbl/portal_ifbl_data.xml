@@ -82,11 +82,42 @@
             <field name="act_window_id" ref="portal_supplier_purchase_order_lines_action" />
         </record>
 
+        <record model="ir.model.access" id="model_access_training_seance_supplier">
+            <field name="name">Training - Seances</field>
+            <field name="perm_read">True</field>
+            <field name="group_id" ref="res_groups_portal_supplier" />
+            <field name="model_id" search="[('model', '=', 'training.seance')]" />
+        </record>
+
+        <record model="ir.ui.view" id="view_portal_supplier_training_seance_list">
+            <field name="name">view.portal.supplier.training.seance.list</field>
+            <field name="model">training.seance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Seances">
+                    <field name="name" />
+                    <field name="date" />
+                    <field name="participant_count" />
+                    <field name="course_id" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="portal_supplier_seance_action">
+            <field name="name">Seances</field>
+            <field name="res_model">training.seance</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_portal_supplier_training_seance_list" />
+            <field name="domain">[('date', '>=', time.strftime('%Y-%m-%d 00:00:00'))]</field>
+        </record>
+
 
         <menuitem name="Supplier Portal" id="menu_supplier_portal_ifbl" parent="menu_portal_ifbl" />
         <menuitem name="Purchase Management" id="menu_portal_purchase_order_lines"
             parent="menu_supplier_portal_ifbl" />
         <menuitem parent="menu_portal_purchase_order_lines" action="portal_supplier_purchase_order_lines_action" id="menu_portal_your_purchase_order_line_mi" />
+        <menuitem name="Training Management" id="menu_training_supplier_portal" parent="menu_supplier_portal_ifbl"/>
+        <menuitem id="menu_training_seance_supplier_portal" parent="menu_training_supplier_portal" action="portal_supplier_seance_action" />
 
         <!-- 
         Partner Portal 
@@ -179,7 +210,7 @@
         </record>
 
         <menuitem name="Partner Portal" id="menu_partner_portal_ifbl" parent="menu_portal_ifbl" />
-        <menuitem name="Training" id="menu_portal_partner_training" parent="menu_partner_portal_ifbl" />
+        <menuitem name="Training Management" id="menu_portal_partner_training" parent="menu_partner_portal_ifbl" />
 
         <record model="ir.actions.act_window" id="portal_partner_subscription_all_act">
             <field name="name">Subscriptions</field>
@@ -278,5 +309,7 @@
     <data>
         <!-- SkateHolder Portal -->
         <menuitem name="SkateHolder Portal" id="menu_skateholder_portal_ifbl" parent="menu_portal_ifbl" />
+
+
     </data>
 </openerp>
