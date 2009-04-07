@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
-#    Copyright (C) 2009 Smile.fr. All Rights Reserved
-#    authors: Raphaël Valyi, Xavier Fernandez
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -19,15 +19,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
 
+from osv import osv
+from osv import fields
 
-class sale_order_line(osv.osv):
-    _name = 'sale.order.line'
-    _inherit = 'sale.order.line'
-    
-    _columns = {
-        'mrp_production_id': fields.many2one('mrp.production', 'Related Production Order'),
-        'sale_order_line_customizations': fields.one2many('bom_customization.sale_order_line_customizations', 'sale_order_line_id', "Sale order line customization"),
-    }
-sale_order_line()
+class res_partner(osv.osv):
+    _name = "res.partner"
+    _inherit = "res.partner"
+
+    _sql_constraints = [
+        ('vat_uniq', 'unique (vat)', 'Error! Specified VAT Number already exists for any other registered partner.')
+    ]
+
+res_partner()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -21,44 +21,44 @@
 ##############################################################################
 from osv import fields, osv
 
-class bom_customization_groups(osv.osv):
-    _name = "bom_customization.bom_customization_groups"
+class mrp_bom_customization_groups(osv.osv):
+    _name = "mrp_bom_customization.mrp_bom_customization_groups"
     
     _columns = {
                 'name': fields.char('Group Name', size=64, select=1),
-                'key_ids': fields.one2many("bom_customization.bom_customization_keys", 'group_id', "Keys"),
-                'value_ids': fields.one2many("bom_customization.bom_customization_values", 'group_id', "Values"),
+                'key_ids': fields.one2many("mrp_bom_customization.mrp_bom_customization_keys", 'group_id', "Keys"),
+                'value_ids': fields.one2many("mrp_bom_customization.mrp_bom_customization_values", 'group_id', "Values"),
     }
-bom_customization_groups()
+mrp_bom_customization_groups()
 
-class bom_customization_keys(osv.osv):
-    _name = "bom_customization.bom_customization_keys"
+class mrp_bom_customization_keys(osv.osv):
+    _name = "mrp_bom_customization.mrp_bom_customization_keys"
     
     _columns = {
                 'name': fields.char('Key Name', size=64, select=1),
-                'group_id': fields.many2one('bom_customization.bom_customization_groups', "Customization Group", required = True),
+                'group_id': fields.many2one('mrp_bom_customization.mrp_bom_customization_groups', "Customization Group", required = True),
     }
-bom_customization_keys()
+mrp_bom_customization_keys()
 
-class bom_customization_values(osv.osv):
-    _name = "bom_customization.bom_customization_values"
+class mrp_bom_customization_values(osv.osv):
+    _name = "mrp_bom_customization.mrp_bom_customization_values"
     
     _columns = {
                 'name': fields.char('Value Name', size=64, select=1),
-                'group_id': fields.many2one('bom_customization.bom_customization_groups', "Customization Group", required = True),
+                'group_id': fields.many2one('mrp_bom_customization.mrp_bom_customization_groups', "Customization Group", required = True),
     }
-bom_customization_values()
+mrp_bom_customization_values()
 
 
 class sale_order_line_customization(osv.osv):
-    _name = "bom_customization.sale_order_line_customizations"
+    _name = "mrp_bom_customization.sale_order_line_customizations"
     
     #TODO get rid of name
     _columns = {
                 'name': fields.related('customization_key_id','name', type="char", string="Name"),
-                #'bom_ids': fields.many2many('mrp.bom','mrp_bom_bom_customizations_rel','bom_customization_id','bom_id',"BoM's"),
+                #'bom_ids': fields.many2many('mrp.bom','mrp_bom_mrp_bom_customizations_rel','mrp_bom_customization_id','bom_id',"BoM's"),
                 'sale_order_line_id': fields.many2one('sale.order.line', "Sale order line"),
-                'customization_value_id': fields.many2one('bom_customization.bom_customization_values', 'Customization Value'),
-                'customization_key_id': fields.many2one('bom_customization.bom_customization_keys', 'Customization Key'),
+                'customization_value_id': fields.many2one('mrp_bom_customization.mrp_bom_customization_values', 'Customization Value'),
+                'customization_key_id': fields.many2one('mrp_bom_customization.mrp_bom_customization_keys', 'Customization Key'),
     }
 sale_order_line_customization()

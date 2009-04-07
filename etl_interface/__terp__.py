@@ -37,11 +37,6 @@
          'etl_component/transform/transform_data.xml'
      ],
     'update_xml': [
-         'etl_component/control/control_data.xml', #to be remove
-         'etl_component/input/input_data.xml',#to be remove
-         'etl_component/output/output_data.xml',#to be remove
-         'etl_component/transform/transform_data.xml',#to be remove
-
          'etl_interface_sequence.xml',
          'etl_interface_view.xml',
          'etl_component/etl_component_view.xml',
@@ -70,15 +65,17 @@
          'etl_component/output/xml_out_view.xml',
          'etl_component/output/vcard_out_view.xml',
 
-         #'etl_component/transform/data_filter_view.xml',
-         #'etl_component/transform/sort_view.xml',
-         #'etl_component/transform/map_view.xml',
-         #'etl_component/transform/logger_view.xml',
-         #'etl_component/transform/logger_bloc_view.xml',
-         #'etl_component/transform/schema_validator_view.xml',
+         'etl_component/transform/data_filter_view.xml',
+         'etl_component/transform/sort_view.xml',
+         'etl_component/transform/map_view.xml',
+         'etl_component/transform/logger_view.xml',
+         'etl_component/transform/logger_bloc_view.xml',
+         'etl_component/transform/merge_view.xml', # To be check
+         'etl_component/transform/schema_validator_view.xml',
+         'etl_component/transform/unique_view.xml',
 
          ],
-     'demo_xml': ['etl_demo.xml'],
+     'demo_xml': ['etl_interface_demo.xml'],
     'installable': True,
     'active': False,
 }

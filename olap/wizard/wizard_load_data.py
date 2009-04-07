@@ -24,14 +24,11 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
-import psycopg
-import wizard
-import threading
-import pooler
-from osv import osv
-import optparse
-import xmlrpclib
+import psycopg2
 import time
+
+import wizard
+import pooler
 import netsvc
 
 info = '''<?xml version="1.0"?>
@@ -74,7 +71,7 @@ def olap_db_connect(self,cr,uid,part,context={}):
         name = lines.database_id.db_name and "dbname=%s" % lines.database_id.db_name or ''
         user = lines.database_id.db_login and "user=%s" % lines.database_id.db_login or ''
         password = lines.database_id.db_password and "password=%s" % lines.database_id.db_password or ''
-        tdb = psycopg.connect('%s %s %s %s %s' % (host, port, name, user, password), serialize=0)
+        tdb = psycopg2.connect('%s %s %s %s %s' % (host, port, name, user, password))
         cr_db = tdb.cursor()
         cr.execute('select table_db_name,id from olap_database_tables where fact_database_id=%d', (id_db,))
         tables = dict(cr.fetchall())

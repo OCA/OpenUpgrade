@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
-		<record id="bom_customization.mrp_production_form_view" model="ir.ui.view">
-			<field name="name">bom_customization.mrp.production.form</field>
+		<record id="mrp_bom_customization.mrp_production_form_view" model="ir.ui.view">
+			<field name="name">mrp_bom_customization.mrp.production.form</field>
 			<field name="model">mrp.production</field>
 			<field name="type">form</field>
 			<field name="inherit_id" ref="mrp.mrp_production_form_view" />
@@ -13,8 +13,8 @@
 			</field>
 		</record>
 		
-		<record id="bom_customization.mrp_production_form_view2" model="ir.ui.view">
-			<field name="name">bom_customization.mrp.production.form2</field>
+		<record id="mrp_bom_customization.mrp_production_form_view2" model="ir.ui.view">
+			<field name="name">mrp_bom_customization.mrp.production.form2</field>
 			<field name="model">mrp.production</field>
 			<field name="type">form</field>
 			<field name="inherit_id" ref="mrp.mrp_production_form_view" />

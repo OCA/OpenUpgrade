@@ -8,9 +8,8 @@
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
 					<notebook position='inside'>
-						<page string="Property" attrs="{'invisible':[('type_id','!=','transform.logger')]}">
-							<field name="output_id"
-								domain="[('type','=','localfile')]" />
+						<page string="Other Information" attrs="{'invisible':[('type_id','!=','transform.logger')]}">
+							<field name="output_id" />
 						</page>
 					</notebook>
 
@@ -24,6 +23,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','transform.logger')]</field>
+			<field name="context">{'type_id':'transform.logger'}</field>
 		</record>
 
 		<record id="action_etl_component_logger_from"
@@ -32,6 +32,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','transform.logger')]</field>
+			<field name="context">{'type_id':'transform.logger'}</field>
 			<field name="view_id" ref="etl_component_logger_form" />
 		</record>
 

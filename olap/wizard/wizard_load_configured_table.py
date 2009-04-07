@@ -24,16 +24,11 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
-import psycopg
-import wizard
-import threading
-import pooler
-from osv import osv
-import optparse
-import xmlrpclib
 import time
-import netsvc
 
+import wizard
+import pooler
+import netsvc
 
 class wizard_load_configured_table(wizard.interface):
     def _get_table_data(self, cr, uid, data, context={}):

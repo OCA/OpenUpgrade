@@ -8,7 +8,7 @@
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
              	<notebook position='inside'>
-             			<page string="Property" attrs="{'invisible':[('type_id','!=','transform.filter')]}">
+             			<page string="Other Information" attrs="{'invisible':[('type_id','!=','transform.filter')]}">
 								<field name="criteria_ids" colspan="4" nolabel="1" widget="one2many_list">
 									<tree string="Criteria"  editable="bottom">
 										<field name="sequence" />
@@ -30,12 +30,13 @@
 			</field>
 		</record>
 
-	<record id="action_etl_component_filter_tree" model="ir.actions.act_window">
+		<record id="action_etl_component_filter_tree" model="ir.actions.act_window">
             <field name="name">Filter component</field>
 			<field name="res_model">etl.component</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','transform.filter')]</field>
+			<field name="context">{'type_id':'transform.filter'}</field>
 		</record>
 
 		<record id="action_etl_component_filter_from" 	model="ir.actions.act_window">
@@ -43,6 +44,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','transform.filter')]</field>
+			<field name="context">{'type_id':'transform.filter'}</field>
 			<field name="view_id" ref="etl_transform_filter_form" />
 		</record>
 

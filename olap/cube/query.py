@@ -66,7 +66,6 @@ class query(object):
                         final_axis.append(tuple(t))
                 axis_result[-1]=final_axis[:]
                 final_axis=[]
-                d = 0
                 len_axis = len(axis[-1])
                 len_cross = len(cross)
                 delta_count = 0 
@@ -136,7 +135,7 @@ class query(object):
 #            metadata.bind.echo = True
             query = select.execute()
             result = query.fetchall()
-
+            
             for record in result:
                 cube = cube_data
                 r = list(record)

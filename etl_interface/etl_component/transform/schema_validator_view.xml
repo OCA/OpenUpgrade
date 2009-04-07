@@ -8,7 +8,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 					<notebook position='inside'>
-						<page string="Tests  to perform" attrs="{'invisible':[('type_id','!=','schema.validation')]}">
+						<page string="Other Information" attrs="{'invisible':[('type_id','!=','schema.validation')]}">
 							<field name="field_name" />
 							<field name="field_extra"/>
 							<field name="field_size"/>
@@ -26,15 +26,17 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','schema.validation')]</field>
+			<field name="context">{'type_id':'schema.validation'}</field>
 		</record>
 
 
-		<record id="etl_component_schema_validation_form"
+		<record id="action_etl_component_schema_validation_form"
 			model="ir.actions.act_window">
 			<field name="res_model">etl.component</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','schema.validation')]</field>
+			<field name="context">{'type_id':'schema.validation'}</field>
 			<field name="view_id" ref="etl_component_schema_validation_form" />
 		</record>
 

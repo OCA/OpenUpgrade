@@ -29,8 +29,6 @@ class etl_component_xml_out(osv.osv):
     _inherit = 'etl.component'
 
     _columns={
-        'transformer_id':  fields.many2one('etl.transformer', 'Transformer'),
-        'row_limit': fields.integer('Limit'),
         'xml_params': fields.char('XML Parameters', size=64),
      }
 

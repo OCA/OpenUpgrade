@@ -36,11 +36,11 @@ class mrp_bom(osv.osv):
     _inherit = 'mrp.bom'
     
     _columns = { 
-        'bom_customization_keys': fields.many2many('bom_customization.bom_customization_keys', 'mrp_bom_bom_customizations_keys_rel', 'bom_id', 'bom_customization_key_id', 'BoM Customizations'),
+        'mrp_bom_customization_keys': fields.many2many('mrp_bom_customization.mrp_bom_customization_keys', 'mrp_bom_mrp_bom_customizations_keys_rel', 'bom_id', 'mrp_bom_customization_key_id', 'BoM Customizations'),
     }
     
     
-    #FIXME do a cleaner overloading with use of super
+    #FIXME do a cleaner overloading with use of super if possible
     def _bom_explode(self, cr, uid, bom, factor, properties, addthis=False, level=0):
         factor = factor / (bom.product_efficiency or 1.0)
         factor = rounding(factor, bom.product_rounding)

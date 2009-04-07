@@ -97,6 +97,12 @@ class etl_connector(osv.osv):
     _columns={
               'name' : fields.char('Connector Name', size=64, required=True),
               'type' : fields.selection(_get_connector_type, 'Connector Type', size=64, required=True),
+              'uri' : fields.char('URL', size=124),
+              'host' : fields.char('Host', size=64),
+              'port' : fields.char('Port', size=64),
+              'uid' : fields.char('User  ID', size=64),
+              'passwd' : fields.char('Password', size=64),
+
     }
     def onchange_type(self, cr, uid, ids, type):
         return {'value':{}}
@@ -484,6 +490,9 @@ class etl_component(osv.osv):
             'trans_in_ids' : fields.one2many('etl.transition', 'destination_component_id', 'Source ID'),
             'trans_out_ids' : fields.one2many('etl.transition', 'source_component_id', 'Destination ID'),
             'job_id' :  fields.many2one('etl.job', 'Job'),
+            'row_limit':  fields.integer('Limit'),
+            'encoding':  fields.char('Encoding',size=64),
+
      }
     _defaults = {
         'type_id':_get_type,

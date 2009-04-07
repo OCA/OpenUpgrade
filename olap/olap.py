@@ -24,27 +24,25 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
+import psycopg2
+import sqlalchemy
+import time
+from pyparsing import *
 
+import wizard
+import pooler
+from osv import osv
 from osv import fields, osv
-
+import netsvc
 import cube
 from cube import levels
 
-import psycopg
-import wizard
-import threading
-import pooler
-from osv import osv
-import optparse
-import xmlrpclib
-import time
-import netsvc
-
-import sqlalchemy
 
 class olap_fact_database(osv.osv):
     _name = "olap.fact.database"
     _description = "Olap Fact Database"
+
+
     
     def _connection_get(self, cr, uid, ids, field_name, arg, context={}):
         """
@@ -67,7 +65,7 @@ class olap_fact_database(osv.osv):
                 password = obj.db_password
                 type = obj.type
                 if type == 'postgres':
-                    tdb = psycopg.connect('host=%s port=%s dbname=%s user=%s password=%s' % (host, port, db_name, user, password), serialize=0, maxconn=64)
+                    tdb = psycopg2.connect('host=%s port=%s dbname=%s user=%s password=%s' % (host, port, db_name, user, password))
                 elif type == 'mysql':
                     try:
                         import MySQLdb
@@ -178,7 +176,7 @@ class olap_schema(osv.osv):
                 name = schema.database_id.db_name and "dbname=%s" % schema.database_id.db_name or ''
                 user = schema.database_id.db_login and "user=%s" % schema.database_id.db_login or ''
                 password = schema.database_id.db_password and "password=%s" % schema.database_id.db_password or ''
-                tdb = psycopg.connect('%s %s %s %s %s' % (host, port, name, user, password), serialize=0, maxconn=maxconn)
+                tdb = psycopg2.connect('%s %s %s %s %s' % (host, port, name, user, password))
                 
             elif type == 'mysql':
                 try:
@@ -1017,7 +1015,7 @@ class bi_load_db_wizard(osv.osv_memory):
                 name = lines.database_id.db_name and "dbname=%s" % lines.database_id.db_name or ''
                 user = lines.database_id.db_login and "user=%s" % lines.database_id.db_login or ''
                 password = lines.database_id.db_password and "password=%s" % lines.database_id.db_password or ''
-                tdb = psycopg.connect('%s %s %s %s %s' % (host, port, name, user, password), serialize=0)
+                tdb = psycopg2.connect('%s %s %s %s %s' % (host, port, name, user, password))
                 cr_db = tdb.cursor()
                 cr.execute('select table_db_name,id from olap_database_tables where fact_database_id=%d', (id_db,))
                 tables = dict(cr.fetchall())
@@ -1500,5 +1498,68 @@ class bi_auto_configure_wizard(osv.osv_memory):
 
 bi_auto_configure_wizard()
 
+class olap_parameters_config_wizard(osv.osv_memory):
+    _name = "olap.parameters.config.wizard"
+    _description = "Olap Server Parameters"
+
+    def _get_host(self,cr,uid,context=None):
+        obj=self.pool.get('olap')
+        objid=self.pool.get('ir.model.data')
+        aid = objid._get_id(cr, uid, 'olap', 'menu_url_cube_browser')
+        aid = objid.browse(cr, uid, aid, context=context).res_id
+        aid = self.pool.get('ir.actions.url').browse(cr,uid,aid,context=context)
+        s_p = Literal("http://").suppress() + Word(alphanums+"_"+".") + Literal(":").suppress() + Word(nums) + Literal("/").suppress() +Word(alphanums+"_"+" ").suppress()
+        return s_p.parseString(aid.url)[0]
+
+    def _get_port(self,cr,uid,context=None):
+        obj=self.pool.get('olap')
+        objid=self.pool.get('ir.model.data')
+        aid = objid._get_id(cr, uid, 'olap', 'menu_url_cube_browser')
+        aid = objid.browse(cr, uid, aid, context=context).res_id
+        aid = self.pool.get('ir.actions.url').browse(cr,uid,aid,context=context)
+        s_p = Literal("http://").suppress() + Word(alphanums+"_"+".") + Literal(":").suppress() + Word(nums) + Literal("/").suppress() +Word(alphanums+"_"+" ").suppress()    
+        return s_p.parseString(aid.url)[1]
+    
+    _columns = {
+        'host_name' : fields.char('Server Name',size=64, help="Put here the server address or IP \
+                Put localhost if its not clear.",required=True),
+        'host_port' : fields.char('Port',size=4, help="Put the port for the server. Put 8080 if \
+                its not clear.",required=True),
+            }
+
+    _defaults = {
+        'host_name': _get_host,
+        'host_port': _get_port,
+        }
+
+    def action_cancel(self,cr,uid,ids,conect=None):
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': 'ir.actions.configuration.wizard',
+                'type': 'ir.actions.act_window',
+                'target':'new',
+         }
+
+    def action_config(self,cr,uid,ids,context=None):
+        conf = self.browse(cr, uid, ids[0], context)
+        obj=self.pool.get('olap')
+        objid=self.pool.get('ir.model.data')
+        aid = objid._get_id(cr, uid, 'olap', 'menu_url_cube_browser')
+        aid = objid.browse(cr, uid, aid, context=context).res_id
+        self.pool.get('ir.actions.url').write(cr, uid, [aid], {'url': 'http://'+(conf.host_name or 'localhost')+':' + (conf.host_port or '8080') + '/browser'})
+        
+        aid = objid._get_id(cr, uid, 'olap', 'menu_url_cube_designer')
+        aid = objid.browse(cr, uid, aid, context=context).res_id
+        self.pool.get('ir.actions.url').write(cr, uid, [aid], {'url': 'http://'+(conf.host_name or 'localhost')+':' + (conf.host_port or '8080') + '/designer'})
+
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': 'ir.actions.configuration.wizard',
+                'type': 'ir.actions.act_window',
+                'target':'new',
+        }
+olap_parameters_config_wizard()
 
 # vim: ts=4 sts=4 sw=4 si et

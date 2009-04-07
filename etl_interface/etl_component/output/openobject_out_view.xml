@@ -10,7 +10,7 @@
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
 					<notebook position='inside'>
-						<page string="Property" attrs="{'invisible':[('type_id','!=','output.openobject_out')]}">
+						<page string="Other Information" attrs="{'invisible':[('type_id','!=','output.openobject_out')]}">
 							<field name="model_id" attrs="{'required':[('type_id','=','output.openobject_out')]}" />
 							<separator string="Fields To Load"
 								colspan="4" />

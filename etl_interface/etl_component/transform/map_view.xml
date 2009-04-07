@@ -8,7 +8,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 					 <notebook position='inside'>
-						<page string="Property" attrs="{'invisible':[('type_id','!=','transform.map')]}">
+						<page string="Other Information" attrs="{'invisible':[('type_id','!=','transform.map')]}">
 							<separator string="Fields Mapping" colspan="4" />
 							<field name="map_line_ids" nolabel="1" colspan="4" widget="one2many_list">
 								<tree string="Fields lines" editable="bottom">
@@ -44,6 +44,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('type_id.name','=','transform.map')]</field>
+			<field name="context">{'type_id':'transform.map'}</field>
 		</record>
 
 		<record id="action_etl_component_trans_map_from"
@@ -52,6 +53,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[('type_id.name','=','transform.map')]</field>
+			<field name="context">{'type_id':'transform.map'}</field>
 			<field name="view_id" ref="etl_component_trans_map_form" />
 		</record>
 
