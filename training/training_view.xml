@@ -888,11 +888,20 @@
                         </page>
                         <page string="Intra" attrs="{'invisible':[('kind', '=', 'standard')]}">
                             <field name="analytic_account_id" />
+                            <field name="costs" />
+                            <label string="" colspan="2" />
+                            <field name="revenues" />
+                            <!--
                             <field name="sale_price" />
                             <field name="total_cost" />
+                            -->
                             <separator string="Margins" colspan="4" />
+                            <field name="profit" />
+                            <field name="profit_margin" />
+                            <!--
                             <field name="margin" />
                             <field name="margin_rate" />
+                            -->
                         </page>
                     </notebook>
                     <group col="5" colspan="4">

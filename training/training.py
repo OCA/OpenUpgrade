@@ -263,10 +263,20 @@ class training_offer(osv.osv):
                                   required=True,
                                  ),
         'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic Account'),
-        'sale_price' : fields.float('Sale Price'),
-        'total_cost' : fields.float('Total Cost'),
-        'margin' : fields.float('Margin'),
-        'margin_rate' : fields.float('Margin Rate'),
+
+        #'sale_price' : fields.float('Sale Price'),
+        #'total_cost' : fields.float('Total Cost'),
+        #'margin' : fields.float('Margin'),
+        #'margin_rate' : fields.float('Margin Rate'),
+
+        'costs' : fields.related('analytic_account_id', 'costs', type='float', string='Costs',
+                                 readonly=True),
+        'revenues' : fields.related('analytic_account_id', 'revenues', type='float',
+                                    string='Revenues', readonly=True),
+        'profit' : fields.related('analytic_account_id', 'profit', type='float', string='Profit',
+                                  readonly=True),
+        'profit_margin' : fields.related('analytic_account_id', 'profit_margin',
+                                         type='float',string='Profit Margin', readonly=True),
     }
 
     _defaults = {
