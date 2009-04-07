@@ -374,8 +374,8 @@ class training_session(osv.osv):
                                               help="The supplier commands will create a purchase order for each command for the session"
                                              ),
         'user_id' : fields.many2one('res.users', 'Responsible', required=True),
-        'nbr_place_dispo' : fields.integer('Available Places'),
-        'nbr_place_draft' : fields.integer('Draft Places'),
+        'available_seats' : fields.integer('Available Seats'),
+        'draft_seats' : fields.integer('Draft Seats'),
         'is_intra' : fields.function(_is_intra, method=True, store=True, type="boolean", string="Is Intra"),
     }
 
@@ -559,10 +559,10 @@ class training_event(osv.osv):
                                              'Participants',
                                              domain="[('group_id', '=', group_id)]" ),
         'group_id' : fields.many2one('training.group', 'Group'),
-        'support_ok' : fields.function(_support_ok_get,
+        'support_received' : fields.function(_support_ok_get,
                                        method=True,
                                        type="boolean",
-                                       string="Support OK",
+                                       string="Support Received",
                                        readonly=True),
         'state' : fields.selection([('draft', 'Draft'),
                                     ('opened', 'Opened'),
@@ -608,7 +608,7 @@ class training_seance(osv.osv):
         #'printed' : fields.boolean('Printed'),
         'reserved' : fields.boolean('Reserved'),
         'layout' : fields.char('Layout', size=32),
-        'place' : fields.char('Place', size=32),
+        'location' : fields.char('Location', size=32),
         'room' : fields.char('Room', size=32),
         #'limit' : fields.integer('Limit'), 
         'purchase_line_ids' : fields.one2many('training.seance.purchase_line', 'seance_id', 'Supplier Commands'),
@@ -617,8 +617,8 @@ class training_seance(osv.osv):
         'evaluation' : fields.boolean('Evaluation'),
         'invoice' : fields.boolean('Invoice'),
         'user_id' : fields.many2one('res.users', 'Responsible', required=True),
-        'nbr_place_dispo' : fields.integer('Available Places'),
-        'nbr_place_draft' : fields.integer('Draft Places'),
+        'available_seats' : fields.integer('Available Seats'),
+        'draft_seats' : fields.integer('Draft Seats'),
         'presence_form' : fields.boolean('Presence Form'),
         'participant_count' : fields.function(_participant_count, method=True, store=True,
                                               type="integer", string="Number of Participants"),
@@ -676,6 +676,21 @@ class training_seance(osv.osv):
             wf_service.trg_validate(uid, 'mrp.procurement', procurement_id, 'button_confirm', cr)
 
         return self.write(cr, uid, ids, {'state':'validated'}, context=context)
+
+    def search(self, cr, user, domain, offset=0, limit=None, order=None,context=None, count=False):
+        session_id = context and context.get('session_id', False) or False
+
+        if session_id:
+            cr.execute('SELECT s.id FROM training_session_event_rel rel, training_seance s where rel.session_id = %s and rel.event_id = s.event_id', (session_id,))
+            return [x[0] for x in cr.fetchall()]
+        else:
+            return super(training_seance, self).search(cr, user,
+                                                       domain,
+                                                       offset=offset,
+                                                       limit=limit,
+                                                       order=order,
+                                                       context=context,
+                                                       count=count)
 
 training_seance()
 
