@@ -30,6 +30,7 @@
         "account_voucher_wizard.xml",
         "voucher_view.xml",
     ],
+    'certificate': '0037580727101',
     "active": False,
     "installable": True,
 }
