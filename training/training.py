@@ -770,9 +770,9 @@ class training_subscription(osv.osv):
         'price' : fields.float('Price', digits=(16,2), required=True),
         'paid' : fields.boolean('Paid'),
 
-        'rest_place' : fields.integer('Rest Place'),
-        'max_place' : fields.integer('Maximum Place'),
-        'draft_place' : fields.integer('Draft Place'),
+        'rest_seats' : fields.integer('Rest Seats'),
+        'max_seats' : fields.integer('Maximum Seats'),
+        'draft_seats' : fields.integer('Draft Seats'),
         'nbr_to_subscribe' : fields.integer('Number to subscribe'),
     }
 
@@ -780,8 +780,8 @@ class training_subscription(osv.osv):
         'state' : lambda *a: 'draft',
         'paid' : lambda *a: False,
         'name' : lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'training.subscription'),
-        'max_place' : lambda *a: 0,
-        'draft_place' : lambda *a: 0,
+        'max_seats' : lambda *a: 0,
+        'draft_seats' : lambda *a: 0,
         'nbr_to_subscribe' : lambda *a: 1,
     }
 
