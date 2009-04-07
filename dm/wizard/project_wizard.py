@@ -35,28 +35,34 @@ parameter_fields = {
     'project_id': {'string':'Project', 'type':'many2one', 'required':True, 'relation':'project.project', 'domain': [('active','<>',False)]},
 }
 
+def _check_date(self, cr, uid, data, context):
+    camp_obj = pooler.get_pool(cr.dbname).get(data['model']).browse(cr, uid, data['id'])
+    if not camp_obj.date_start:
+        raise wizard.except_wizard(_('UserError'),_('Drop Date should not be empty !!!'))
+    return {}
+    
 def _create_duplicate(self, cr, uid, data, context):
     campaign_obj=pooler.get_pool(cr.dbname).get('dm.campaign')
     project_obj = pooler.get_pool(cr.dbname).get('project.project')
     campaign = campaign_obj.browse(cr, uid, data['id'])
     tasks_obj = pooler.get_pool(cr.dbname).get('project.task')
 #    tasks_ids = tasks_obj.search(cr, uid, [('project_id','=',data['form']['project_id'])])
-    duplicate_project_id= project_obj.copy(cr, uid,data['form']['project_id'], {'active': True, 'parent_id':data['form']['project_id']})
+    duplicate_project_id= project_obj.copy(cr, uid,data['form']['project_id'], {'active': True, 'parent_id':data['form']['project_id'], 'date_end':campaign.date_start})
     tasks_ids = tasks_obj.search(cr, uid, [('project_id','=',duplicate_project_id)])
     for task in tasks_obj.browse(cr, uid, tasks_ids):
         if task.type:
             if task.type.name == 'DTP' and campaign.dtp_responsible_id:
-                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.dtp_responsible_id.id,'state':'open'})
+                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.dtp_responsible_id.id,'state':'open','date_deadline':campaign.date_start})
             elif task.type.name == 'Mailing Manufacturing' and campaign.manufacturing_responsible_id:
-                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.manufacturing_responsible_id.id,'state':'open'})
+                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.manufacturing_responsible_id.id,'state':'open','date_deadline':campaign.date_start})
             elif task.type.name == 'Customers List' and campaign.files_responsible_id:
-                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.files_responsible_id.id,'state':'open'})
+                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.files_responsible_id.id,'state':'open','date_deadline':campaign.date_start})
             elif task.type.name == 'Items Procurement' and campaign.item_responsible_id:
-                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.item_responsible_id.id,'state':'open'})
+                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'user_id':campaign.item_responsible_id.id,'state':'open','date_deadline':campaign.date_start})
             else:
-                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'state':'open'})
+                new_tasks_id = tasks_obj.write(cr, uid, task.id, {'state':'open','date_deadline':campaign.date_start})
         else:
-            new_tasks_id = tasks_obj.write(cr, uid, task.id, {'state':'open'})
+            new_tasks_id = tasks_obj.write(cr, uid, task.id, {'state':'open','date_deadline':campaign.date_start})
     project_obj.write(cr, uid, duplicate_project_id, {'name': project_obj.browse(cr, uid, duplicate_project_id, context).name + " for " + campaign.name})
     campaign_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
     return {}
@@ -64,7 +70,7 @@ def _create_duplicate(self, cr, uid, data, context):
 class wizard_campaign_project(wizard.interface):
     states = {
         'init': {
-            'actions': [],
+            'actions': [_check_date],
             'result': {'type': 'form', 'arch':parameter_form, 'fields': parameter_fields, 'state':[('end','Cancel'),('done', 'Ok')]}
 
         },
