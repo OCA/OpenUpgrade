@@ -1185,12 +1185,14 @@ rkJggg==
             <field eval="&quot;&quot;&quot;net&quot;&quot;&quot;" name="invoice_base"/>
         </record>
     </data>
+
     <!-- SEGMENT -->
 
     <data noupdate="1">
         <record id="dm_campaign_proposition_segment_naleusbookstoreslist0" model="dm.campaign.proposition.segment">
             <field eval="23" name="quantity_cleaned_cleaner"/>
             <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;external&quot;&quot;&quot;" name="type_src"/>
             <field eval="2000" name="quantity_planned"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
             <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_nale_us0"/>
@@ -1207,6 +1209,7 @@ rkJggg==
     <data noupdate="1">
         <record id="dm_campaign_proposition_segment_naleusbookstoreslist1" model="dm.campaign.proposition.segment">
             <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;external&quot;&quot;&quot;" name="type_src"/>
             <field eval="37" name="quantity_dedup_cleaner"/>
             <field eval="30" name="start_census"/>
             <field eval="1600" name="quantity_planned"/>
@@ -1226,6 +1229,7 @@ rkJggg==
         <record id="dm_campaign_proposition_segment_naleusassociationslist1" model="dm.campaign.proposition.segment">
             <field eval="1" name="active"/>
             <field eval="39" name="quantity_dedup_cleaner"/>
+            <field eval="&quot;&quot;&quot;external&quot;&quot;&quot;" name="type_src"/>
             <field eval="0" name="start_census"/>
             <field eval="1600" name="quantity_planned"/>
             <field name="proposition_id" ref="dm.dm_campaign_proposition_ondemandfreetrialassociationoffer0"/>

@@ -32,7 +32,7 @@ class dm_customers_file(osv.osv):
         return super(dm_customers_file, self).__init__(*args)
 
     _columns = {
-                'case_ids' : fields.many2many('crm.case','crm_case_customer_file_rel','case','cust_file_id','CRM Cases')
+                'case_ids' : fields.many2many('crm.case','crm_case_customer_file_rel','case_id','cust_file_id','CRM Cases')
             }
 dm_customers_file()
 
