@@ -58,6 +58,11 @@ def get_name(self, cr, uid, data, context={}):
         'credit_name':name + ' - Payable', 'name':name,
         'company_id':company_id,
     }
+    rec_res_ids = account.search(cr,uid,[('type','=','receivable')])
+    dates_fields['debit_parent']['domain'] = "[('id','in', ["+','.join(map(str,rec_res_ids))+"])]"
+    pay_res_ids = account.search(cr,uid,[('type','=','payable')])
+    dates_fields['credit_parent']['domain'] = "[('id','in', ["+','.join(map(str,pay_res_ids))+"])]"
+
     id1 = False
     id2 = False
     try:

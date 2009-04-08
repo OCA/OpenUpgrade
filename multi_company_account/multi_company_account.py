@@ -103,19 +103,29 @@ class account_invoice_line(osv.osv):
         result = {}
         res = self.pool.get('product.product').browse(cr, uid, product, context=context)
         if company_id:
-            in_acc = res.product_tmpl_id.property_account_income 
-            in_acc_cate = res.categ_id.property_account_income_categ
-            ex_acc = res.product_tmpl_id.property_account_expense
-            ex_acc_cate = res.categ_id.property_account_expense_categ
-            if in_acc or ex_acc:
-                app_acc_in = in_acc
-                app_acc_exp = ex_acc
+            in_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_income'),('res_id','=','product.template,'+str(res.product_tmpl_id.id)+''),('company_id','=',company_id)])
+            if not in_pro_id:
+                in_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_income_categ'),('res_id','=','product.template,'+str(res.categ_id.id)+''),('company_id','=',company_id)])
+            exp_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_expense'),('res_id','=','product.template,'+str(res.product_tmpl_id.id)+''),('company_id','=',company_id)])
+            if not exp_pro_id:
+                exp_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_expense'),('res_id','=','product.template,'+str(res.categ_id.id)+''),('company_id','=',company_id)])
+            if not in_pro_id and not exp_pro_id:
+                in_acc = res.product_tmpl_id.property_account_income 
+                in_acc_cate = res.categ_id.property_account_income_categ
+                ex_acc = res.product_tmpl_id.property_account_expense
+                ex_acc_cate = res.categ_id.property_account_expense_categ
+                if in_acc or ex_acc:
+                    app_acc_in = in_acc
+                    app_acc_exp = ex_acc
+                else:
+                    app_acc_in = in_acc_cate
+                    app_acc_exp = ex_acc_cate
             else:
-                app_acc_in = in_acc_cate
-                app_acc_exp = ex_acc_cate
+                app_acc_in = self.pool.get('account.account').browse(cr,uid,in_pro_id)[0]
+                app_acc_exp = self.pool.get('account.account').browse(cr,uid,exp_pro_id)[0]
             if app_acc_in.company_id.id != company_id and app_acc_exp.company_id.id != company_id:
-                in_res_id=self.pool.get('account.account').search(cr,1,[('name','=',app_acc_in.name),('company_id','=',company_id)])
-                exp_res_id=self.pool.get('account.account').search(cr,1,[('name','=',app_acc_exp.name),('company_id','=',company_id)])
+                in_res_id=self.pool.get('account.account').search(cr,uid,[('name','=',app_acc_in.name),('company_id','=',company_id)])
+                exp_res_id=self.pool.get('account.account').search(cr,uid,[('name','=',app_acc_exp.name),('company_id','=',company_id)])
                 if not in_res_id and not exp_res_id:
                     raise osv.except_osv(_('Configration Error !'),
                         _('Can not find account chart for this company, Please Create account.'))
@@ -172,7 +182,6 @@ class account_invoice(osv.osv):
     _name = "account.invoice"
     _inherit = "account.invoice"
 
-
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
         invoice_addr_id = False
         contact_addr_id = False
@@ -190,13 +199,21 @@ class account_invoice(osv.osv):
             p = self.pool.get('res.partner').browse(cr, uid, partner_id)
             if company_id:
                 if p.property_account_receivable.company_id.id != company_id and p.property_account_payable.company_id.id != company_id:
-                    rec_res_id=self.pool.get('account.account').search(cr,1,[('name','=',p.property_account_receivable.name),('company_id','=',company_id)])
-                    pay_res_id=self.pool.get('account.account').search(cr,1,[('name','=',p.property_account_payable.name),('company_id','=',company_id)])
+                    rec_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_receivable'),('res_id','=','res.partner,'+str(partner_id)+''),('company_id','=',company_id)])
+                    pay_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_payable'),('res_id','=','res.partner,'+str(partner_id)+''),('company_id','=',company_id)])
+                    if not rec_pro_id: 
+                        rec_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_receivable'),('company_id','=',company_id)])
+                    if not pay_pro_id:
+                        pay_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_payable'),('company_id','=',company_id)])
+                    rec_line_data = self.pool.get('ir.property').read(cr,uid,rec_pro_id,['name','value','res_id'])
+                    pay_line_data = self.pool.get('ir.property').read(cr,uid,pay_pro_id,['name','value','res_id'])
+                    rec_res_id = int(rec_line_data[0]['value'].split(',')[1]) or False
+                    pay_res_id = int(pay_line_data[0]['value'].split(',')[1]) or False
                     if not rec_res_id and not pay_res_id:
                         raise osv.except_osv(_('Configration Error !'),
                             _('Can not find account chart for this company, Please Create account.'))
-                    rec_obj_acc=self.pool.get('account.account').browse(cr,uid,rec_res_id)
-                    pay_obj_acc=self.pool.get('account.account').browse(cr,uid,pay_res_id)
+                    rec_obj_acc=self.pool.get('account.account').browse(cr,uid,[rec_res_id])
+                    pay_obj_acc=self.pool.get('account.account').browse(cr,uid,[pay_res_id])
                     p.property_account_receivable = rec_obj_acc[0]
                     p.property_account_payable = pay_obj_acc[0]
             if type in ('out_invoice', 'out_refund'):
@@ -232,24 +249,59 @@ class account_invoice(osv.osv):
         return result
     
     _columns = {
-        #'company_id': fields.many2one('res.company', 'Company', required=True),
+        'company_id': fields.many2one('res.company', 'Company', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner', change_default=True, readonly=True, required=True, states={'draft':[('readonly',False)]}),
     }
-#    _defaults = {
-#        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
-#    }
-#    
-#    def onchange_company_id(self, cr, uid, ids, company_id, part_id):
-#        val={}
-#        if company_id and part_id:
-#            print "company_id,part_id:::",company_id,part_id
-#            partner_obj = self.pool.get('res.partner').browse(cr,uid,part_id)
-#            print "curr_obj--->>",partner_obj
-#            if partner_obj.property_account_payable and partner_obj.property_account_receivable:
-#                print "--->>",partner_obj.property_account_payable,partner_obj.property_account_receivable
-#                
-#        return {'value': val}
-
+    _defaults = {
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+    }
+    
+    def onchange_company_id(self, cr, uid, ids, company_id, part_id, type, invoice_line):
+        val={}
+        if company_id and part_id and type:
+            acc_id = False
+            partner_obj = self.pool.get('res.partner').browse(cr,uid,part_id)
+            if partner_obj.property_account_payable and partner_obj.property_account_receivable:
+                if partner_obj.property_account_payable.company_id.id != company_id and partner_obj.property_account_receivable.company_id.id != company_id:
+                    rec_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_receivable'),('res_id','=','res.partner,'+str(part_id)+''),('company_id','=',company_id)])
+                    pay_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_payable'),('res_id','=','res.partner,'+str(part_id)+''),('company_id','=',company_id)])
+                    if not rec_pro_id: 
+                        rec_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_receivable'),('company_id','=',company_id)])
+                    if not pay_pro_id:
+                        pay_pro_id = self.pool.get('ir.property').search(cr,uid,[('name','=','property_account_payable'),('company_id','=',company_id)])
+                    rec_line_data = self.pool.get('ir.property').read(cr,uid,rec_pro_id,['name','value','res_id'])
+                    pay_line_data = self.pool.get('ir.property').read(cr,uid,pay_pro_id,['name','value','res_id'])
+                    rec_res_id = int(rec_line_data[0]['value'].split(',')[1]) or False
+                    rec_res_id = int(pay_line_data[0]['value'].split(',')[1]) or False
+                    if not rec_res_id and not rec_res_id:
+                        raise osv.except_osv(_('Configration Error !'),
+                            _('Can not find account chart for this company, Please Create account.'))
+                    if type in ('out_invoice', 'out_refund'):
+                        acc_id = rec_res_id
+                    else:
+                        acc_id = pay_res_id
+                    val= {'account_id': acc_id}
+            if ids:
+                if company_id:
+                    inv_obj = self.browse(cr,uid,ids)
+                    for line in inv_obj[0].invoice_line:
+                        if line.account_id:
+                            if line.account_id.company_id.id != company_id:
+                                result_id = self.pool.get('account.account').search(cr,uid,[('name','=',line.account_id.name),('company_id','=',company_id)])
+                                if not result_id:
+                                    raise osv.except_osv(_('Configration Error !'),
+                                        _('Can not find account chart for this company in invoice line account, Please Create account.'))
+                                r_id = self.pool.get('account.invoice.line').write(cr,uid,[line.id],{'account_id': result_id[0]})
+            else:
+                if invoice_line:
+                    for inv_line in invoice_line:
+                        obj_l = self.pool.get('account.account').browse(cr,uid,inv_line[2]['account_id'])
+                        if obj_l.company_id.id != company_id:
+                            raise osv.except_osv(_('Configration Error !'),
+                                _('invoice line account company is not match with invoice company.'))
+                        else:
+                            continue
+        return {'value' : val }
 account_invoice()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
