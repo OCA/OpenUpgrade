@@ -26,8 +26,10 @@
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Base",
     "description": """
-    
-        This module allows you to load different languages. 
+This module allows you to load all existing languages in the world.
+You can install this module only if you still not installed any other
+languages, otherwise you may have a conflict with languages codes that
+must be unique.
 
     """,
     "depends" : ["base"],
