@@ -2,7 +2,7 @@
 <openerp>
 <data>
 
-    <menuitem name="Offer Steps" id="menu_dm_config_offer_offer_steps" parent="dm.menu_dm_config_offer" sequence="3"/>
+    <menuitem name="Offer Steps" id="menu_dm_config_offer_offer_steps" parent="dm.menu_dm_config_offer" sequence="1"/>
 
     <!--
     =======================================================
@@ -87,7 +87,7 @@
                     <page string="General">
                         <field name="name" select="1" />
 <!--                       <field name="type_id" select="2" widget="selection" on_change="onchange_type(type_id,offer_id,context)"/>-->
-                        <field name="type_id" select="2" widget="selection"/>
+                        <field name="type_id" select="2" widget="selection" on_change="onchange_code(type_id)"/>
 <!--                        <field name="type_id" select="2"/>-->
                         <field name="media_id" select="1"/>
                         <field name="action_id" select="1" domain="[('media_id','=',media_id)]"/>

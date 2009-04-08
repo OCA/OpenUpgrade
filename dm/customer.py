@@ -24,6 +24,8 @@ import time
 from osv import fields
 from osv import osv
 import pooler
+import sys
+import datetime
 
 class dm_order(osv.osv):
     _name = "dm.order"
@@ -159,13 +161,33 @@ class dm_workitem(osv.osv):
             server_obj = self.pool.get('ir.actions.server')
             print "Calling run for : ",wi.step_id.action_id.server_action_id.name
             res = server_obj.run(cr, uid, [wi.step_id.action_id.server_action_id.id], context)
-            self.write(cr, uid, [wi.id], {'state': 'done'})
+            self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
             done = True
         except :
-            self.write(cr, uid, [wi.id], {'state': 'error'})
+            self.write(cr, uid, [wi.id], {'state': 'error','error_msg':sys.exc_info()})
         if done:
-            pass
-            # Create next auto workitems
+            """ Create next auto workitems """
+            for tr in wi.step_id.outgoing_transition_ids:
+                if tr.condition_id.type == "auto":
+                    print "Creating auto workitem"
+                    print "Delay : ",tr.delay
+                    print "Delay Type: ",tr.delay_type
+                    wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
+                    if tr.delay_type == 'minute':
+                        next_action_time = wi_action_time + datetime.timedelta(minutes=tr.delay)
+                    elif tr.delay_type == 'hour':
+                        next_action_time = wi_action_time + datetime.timedelta(hours=tr.delay)
+                    elif tr.delay_type == 'day':
+                        next_action_time = wi_action_time + datetime.timedelta(days=tr.delay)
+                    elif tr.delay_type == 'week':
+                        next_action_time = wi_action_time + datetime.timedelta(weeks=tr.delay)
+                    elif tr.delay_type == 'month':
+                        next_action_time = wi_action_time + datetime.timedelta(months=tr.delay)
+
+                    print "Next action date : ",next_action_time
+
+                    aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time})
+                    print "auto wi : ",aw_id
 
         return True
 

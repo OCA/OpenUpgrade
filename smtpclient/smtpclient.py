@@ -92,7 +92,7 @@ class SmtpClient(osv.osv):
 #        return result
         
     def change_email(self, cr, uid, ids, email):
-        if len(email) > 0 and email.index('@'):
+        if len(email) > 0 and email.index('@') > 0:
             user = email[0:email.index('@')]
             return {'value':{'user':user}}
         else:

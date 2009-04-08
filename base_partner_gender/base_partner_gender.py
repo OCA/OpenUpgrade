@@ -36,4 +36,4 @@ class res_partner_title(osv.osv):
     _columns = {
         'gender_id' : fields.many2one('partner.gender', 'Gender', ondelete='cascade')
     }
-res_partner_title()    
+res_partner_title()

@@ -27,10 +27,6 @@ from osv import osv, fields
 class etl_component_gmail_in(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'
-    _columns = {
-          'user' : fields.char('User ID', size=30),
-          'passwd' : fields.char('Password', size=30, invisible=True),
-              }
 
     def create_instance(self, cr, uid, id, context={}, data={}):
         val = super(etl_component_gmail_in, self).create_instance(cr, uid, id, context, data)

@@ -25,7 +25,7 @@
     "update_xml" : [
         "account_sequence.xml",
         "account_invoice_view.xml",
-        "account_inv_report.xml"
+        #"account_inv_report.xml"
 
     ],
     "active": False,

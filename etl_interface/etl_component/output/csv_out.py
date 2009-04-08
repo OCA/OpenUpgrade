@@ -28,7 +28,6 @@ class etl_component_csv_out(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'
     _columns={
-          'row_limit' : fields.integer('Limit'),
           'csv_params' : fields.char('CSV Parameters', size=64),
      }
     _defaults={

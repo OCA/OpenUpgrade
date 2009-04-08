@@ -9,7 +9,7 @@
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
 				<notebook position='inside'>
-					<page string="Property" attrs="{'invisible':[('type_id','!=','input.openobject_in')]}">
+					<page string="Other Information" attrs="{'invisible':[('type_id','!=','input.openobject_in')]}">
 						<field name="field_ids" colspan="4" nolabel="1" widget="one2many_list">
 							<tree string="Fields" editable="bottom">
 								<field name="source_field" string="Openobject Field"/>

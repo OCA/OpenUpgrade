@@ -490,6 +490,9 @@ class etl_component(osv.osv):
             'trans_in_ids' : fields.one2many('etl.transition', 'destination_component_id', 'Source ID'),
             'trans_out_ids' : fields.one2many('etl.transition', 'source_component_id', 'Destination ID'),
             'job_id' :  fields.many2one('etl.job', 'Job'),
+            'row_limit':  fields.integer('Limit'),
+            'encoding':  fields.char('Encoding',size=64),
+
      }
     _defaults = {
         'type_id':_get_type,

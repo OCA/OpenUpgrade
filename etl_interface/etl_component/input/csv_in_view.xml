@@ -9,8 +9,7 @@
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
 				<notebook position='inside'>
-					<page string="Property" attrs="{'invisible':[('type_id','!=','input.csv_in')]}">
-						<field name="row_limit" />
+					<page string="Other Information" attrs="{'invisible':[('type_id','!=','input.csv_in')]}">
 						<field name="csv_params" />
 					</page>
                	</notebook>

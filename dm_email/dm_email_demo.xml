@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <openerp>
+
+	<!-- Offer Steps -->
 	<data noupdate="1">
 		<record id="dm_offer_step_emailstartingmailingofferforanondemandoffer0" model="dm.offer.step">
 			<field eval="[(6,0,[])]" name="manufacturing_constraint_ids"/>
@@ -14,6 +16,7 @@
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
 			<field name="offer_id" ref="dm.dm_offer_openerpondemandfreetrial2010"/>
 			<field eval="0" name="interactive"/>
+			<field eval="&quot;&quot;&quot;Starting Mailing&quot;&quot;&quot;" name="code"/>
 		</record>
 	</data>
 	
@@ -30,5 +33,22 @@
 			<field name="step_id" ref="dm_offer_step_emailstartingmailingofferforanondemandoffer0"/>
 			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
 		</record>
+	</data>
+	
+	<data>
+	<record id="dm.dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
+		<field name="media_id" ref="dm.media_email"/>
+		<field name="action_id" ref="dm_email.ir_actions_server_html_doc_generate0"/>
+	</record>
+	
+	<record id="dm.dm_offer_step_alpiforopenerpondemandfreetrial2009" model="dm.offer.step">
+		<field name="media_id" ref="dm.media_email"/>
+		<field name="action_id" ref="dm_email.ir_actions_server_html_doc_generate0"/>
+	</record>
+	
+	<record id="dm.dm_offer_step_alimforopenerpondemandfreetrial2009" model="dm.offer.step">
+		<field name="media_id" ref="dm.media_email"/>
+		<field name="action_id" ref="dm_email.ir_actions_server_html_doc_generate0"/>
+	</record>
 	</data>
 </openerp>

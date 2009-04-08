@@ -844,8 +844,13 @@
                     <separator string="Segment Description" colspan="4"/>
                     <field name="name" string="Name" select="1"/>
                     <field name="code1" string="Code" select="1"/>
-                    <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
-                    <field name="customers_file_id" select="1" groups="base.group_extended"/>
+                    <group colspan="2">
+                        <field name="type_src"/>
+                    </group>
+                    <group colspan="2" col="2">
+                        <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)" attrs="{'invisible':[('type_src','=','internal')],'readonly':[('type_src','=','internal')]}" />
+                        <field name="customers_file_id" select="1" groups="base.group_extended" attrs="{'invisible':[('type_src','=','external')],'readonly':[('type_src','=','external')]}"/>
+                    </group>
                 </group>
                 <notebook colspan="4">
                     <page string="General">
@@ -906,6 +911,7 @@
             <tree string="Segments">
                 <field name="name" string="Name"/>
                 <field name="code1" string="Code"/>
+                <field name="type_src"/>
                 <field name="quantity_planned" select="2"/>
                 <field name="quantity_wanted" select="2"/>
                 <field name="quantity_delivered" select="2"/>
@@ -1480,6 +1486,7 @@
         customer file source
          =======================================================
     -->
+<!--
     <record model="ir.ui.view" id="dm_customers_file_source_form">
         <field name="name">dm.customers_file.source.form</field>
         <field name="model">dm.customers_file.source</field>
@@ -1515,7 +1522,7 @@
 
 
     <menuitem id="menu_action_view_dm_customers_file_source_form" parent="dm.menu_dm_config_custlist" action="action_dm_customers_file_source_form"/>
-
+-->
     <!--
     =======================================================
     CUSTOMERS FILE
@@ -1530,43 +1537,51 @@
             <form string="Customer File">
                 <notebook>
                     <page string="General">
-                    <separator string="Customers Lists Description" colspan="4"/>
+                    <separator string="Customers File Description" colspan="4"/>
                     <field name="name" select="1"/>
                     <field name="code" select="2"/>
-                    <field name="customers_list_id" select="1"/>
-                    <field name="delivery_date" select="1"/>
-                    <field name="segment_ids" colspan="4" nolabel="1">
-                    <form>
-                        <field name="name" string="Name" select="1"/>
-                        <field name="code1" string="Code"/>
-                        <field name="proposition_id" />
-                        <field name="active" />
-                        <newline/>
-                        <field name="split_id" />
-                        <field name="reuse_id" />
-                        <field name="start_census"/>
-                        <field name="end_census"/>
-                        <field name="deduplication_level"/>
-                        <field name="note" colspan="4" widget="text_wiki"/>
-                    </form>
-                    <tree string="Segments">
-                        <field name="name" string="Name"/>
-                        <field name="code1" string="Code"/>
-                    </tree>
-                    </field>
+<!--                    <field name="customers_list_id" select="1"/>-->
+                    <field name="delivery_date"  string="Extraction Date" select="1"/>
+                    <separator string="Description" colspan="4"/>
+                    <field name="note" colspan="4" nolabel="1"/>
                     </page>
                     <page string="Addresses">
-                        <group colspan="4">
-                            <field name="source" colspan="2"/>
-                        </group>
-                        <group colspan="4" attrs="{'invisible':[('source','!=','addresses')]}">
+                        <separator string="Addresses Source" colspan="4"/>
+                        <field name="source" />
+                        <group colspan="4" attrs="{'invisible':[('source','!=','address_id')]}">
                             <separator string="Partner Addresses" colspan="4"/>
                             <field name="address_ids" colspan="4" nolabel="1"/>
                         </group>
-                        <group colspan="4" attrs="{'invisible':[('source','!=','crm_cases')]}">
+                        <group colspan="4" attrs="{'invisible':[('source','!=','case_id')]}">
                             <separator string="CRM Cases" colspan="4"/>
-                            <field name="case_ids" colspan="4" nolabel="1"/>
+                            <field name="case_ids" colspan="4" nolabel="1">
+                                <tree string="CRM Cases">
+                                    <field name="description"/>
+                                    <field name="date"/>
+                                </tree>
+                            </field>
                         </group>
+                    </page>
+                    <page string="Segments">
+                        <field name="segment_ids" colspan="4" nolabel="1">
+                        <form>
+                            <field name="name" string="Name" select="1"/>
+                            <field name="code1" string="Code"/>
+                            <field name="proposition_id" />
+                            <field name="active" />
+                            <newline/>
+                            <field name="split_id" />
+                            <field name="reuse_id" />
+                            <field name="start_census"/>
+                            <field name="end_census"/>
+                            <field name="deduplication_level"/>
+                            <field name="note" colspan="4" widget="text_wiki"/>
+                        </form>
+                        <tree string="Segments">
+                            <field name="name" string="Name"/>
+                            <field name="code1" string="Code"/>
+                        </tree>
+                        </field>
                     </page>
                 </notebook>
             </form>

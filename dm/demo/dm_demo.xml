@@ -502,6 +502,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;Starting Mailing&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
@@ -523,6 +524,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;Intermediate Mailing&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_piforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="2" name="doc_number"/>
@@ -539,6 +541,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;Package Insert&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_alpiforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
@@ -554,6 +557,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;Accompanying Letter of the Package Insert&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_alimforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
@@ -569,6 +573,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;Accompanying Letter of the Intermediate Mailing&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="&quot;&quot;&quot;The Intermediate mailing is a phone by a commercial call to thank the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
@@ -644,6 +649,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2010"/>
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="&quot;&quot;&quot;Starting Mailing&quot;&quot;&quot;" name="code"/>
         </record>
     </data>
     <!-- Trademark -->
@@ -1185,12 +1191,14 @@ rkJggg==
             <field eval="&quot;&quot;&quot;net&quot;&quot;&quot;" name="invoice_base"/>
         </record>
     </data>
+
     <!-- SEGMENT -->
 
     <data noupdate="1">
         <record id="dm_campaign_proposition_segment_naleusbookstoreslist0" model="dm.campaign.proposition.segment">
             <field eval="23" name="quantity_cleaned_cleaner"/>
             <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;external&quot;&quot;&quot;" name="type_src"/>
             <field eval="2000" name="quantity_planned"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
             <field name="customers_list_id" ref="dm.dm_customers_list_bookstore_nale_us0"/>
@@ -1207,6 +1215,7 @@ rkJggg==
     <data noupdate="1">
         <record id="dm_campaign_proposition_segment_naleusbookstoreslist1" model="dm.campaign.proposition.segment">
             <field eval="1" name="active"/>
+            <field eval="&quot;&quot;&quot;external&quot;&quot;&quot;" name="type_src"/>
             <field eval="37" name="quantity_dedup_cleaner"/>
             <field eval="30" name="start_census"/>
             <field eval="1600" name="quantity_planned"/>
@@ -1226,6 +1235,7 @@ rkJggg==
         <record id="dm_campaign_proposition_segment_naleusassociationslist1" model="dm.campaign.proposition.segment">
             <field eval="1" name="active"/>
             <field eval="39" name="quantity_dedup_cleaner"/>
+            <field eval="&quot;&quot;&quot;external&quot;&quot;&quot;" name="type_src"/>
             <field eval="0" name="start_census"/>
             <field eval="1600" name="quantity_planned"/>
             <field name="proposition_id" ref="dm.dm_campaign_proposition_ondemandfreetrialassociationoffer0"/>
@@ -1398,4 +1408,77 @@ rkJggg==
             <field name="category_id" ref="dm.dm_offer_document_category_production0"/>
         </record>
     </data>
+    
+    <!-- Documents for Offer-09  -->
+    <data noupdate="1">
+		<record id="dm_offer_document_startingmailingdocument0" model="dm.offer.document">
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field eval="&quot;&quot;&quot;Starting Mailing Document-09&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;start_mail_doc09&quot;&quot;&quot;" name="code"/>
+			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
+			<field name="step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2009"/>
+			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="dm_offer_document_packageinsertdocument0" model="dm.offer.document">
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field eval="&quot;&quot;&quot;Package Insert Document&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;pkg_insert_doc09&quot;&quot;&quot;" name="code"/>
+			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
+			<field name="step_id" ref="dm.dm_offer_step_piforopenerpondemandfreetrial2009"/>
+			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="dm_offer_document_accompanyingletterdocument0" model="dm.offer.document">
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field eval="&quot;&quot;&quot;Accompanying Letter Document-09&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;acc_letter_doc09&quot;&quot;&quot;" name="code"/>
+			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
+			<field name="step_id" ref="dm.dm_offer_step_alpiforopenerpondemandfreetrial2009"/>
+			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="dm_offer_document_accompanyingletterforopenerpbookdocument0" model="dm.offer.document">
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field eval="&quot;&quot;&quot;Accompanying Letter for OpenERP book Document&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field name="gender_id" ref="dm.dm_customer_gender_sir0"/>
+			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;acc_let_oerp_doc&quot;&quot;&quot;" name="code"/>
+			<field name="document_template_id" ref="dm.dm_document_template_partner0"/>
+			<field name="step_id" ref="dm.dm_offer_step_alimforopenerpondemandfreetrial2009"/>
+			<field name="category_id" ref="dm.dm_offer_document_category_production0"/>
+		</record>
+	</data>
+	
+	<!-- Document Report -->
+	<data noupdate="1">
+		<record id="accompanyinhg_letter_for_openerp_book_report" model="ir.actions.report.xml">
+			<field name="name">Package Insert Report</field>
+			<field name="type">ir.actions.report.xml</field>
+			<field name="model">dm.offer.document</field>
+			<field name="report_name">dm.offer.document.pdf</field>
+			<field name="report_rml">dm/reportdm/Package Insert Document-09.rml</field>
+			<field name="report_type">pdf</field>
+			<field name="document_id" ref="dm_offer_document_packageinsertdocument0"/>
+		</record>
+	</data>
+
 </openerp>

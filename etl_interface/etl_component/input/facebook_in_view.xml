@@ -9,7 +9,7 @@
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
 				<notebook position='inside'>
-					<page string="Property" attrs="{'invisible':[('type_id','!=','input.facebook_in')]}">
+					<page string="Other Information" attrs="{'invisible':[('type_id','!=','input.facebook_in')]}">
 						<field name="method" attrs="{'required':[('type_id','=','input.facebook_in')]}"/>
 						<field name="domain"/>
 						<separator string="Fields Mapping" colspan="4" />

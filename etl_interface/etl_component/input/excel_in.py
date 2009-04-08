@@ -29,8 +29,6 @@ class etl_component_excel_in(osv.osv):
     _inherit = 'etl.component'
 
     _columns={
-            'transformer_id' :  fields.many2one('etl.transformer', 'Transformer'),
-            'row_limit' : fields.integer('Limit'),
             'excel_params' : fields.char('EXCEL Parameters', size=64),
             }
 
