@@ -848,8 +848,8 @@
                         <field name="type_src"/>
                     </group>
                     <group colspan="2" col="2">
-                        <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)" attrs="{'invisible':[('type','=','internal')]}" />
-                        <field name="customers_file_id" select="1" groups="base.group_extended" attrs="{'invisible':[('type','=','external')]}"/>
+                        <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)" attrs="{'invisible':[('type_src','=','internal')]}" />
+                        <field name="customers_file_id" select="1" groups="base.group_extended" attrs="{'invisible':[('type_src','=','external')]}"/>
                     </group>
                 </group>
                 <notebook colspan="4">
