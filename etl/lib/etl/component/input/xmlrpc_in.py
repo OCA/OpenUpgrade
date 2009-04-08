@@ -28,6 +28,15 @@
 from etl.component import component
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
+import threading
+
+class xmlrpc_server_thread(threading.Thread):
+
+    def run(self):
+        server = SimpleXMLRPCServer((self.host, self.port))
+        server.register_introspection_functions()
+        server.register_function(self.import_data)
+        server.serve_forever()
 
 class xmlrpc_in(component):
     """
@@ -35,7 +44,6 @@ class xmlrpc_in(component):
 
     """
     def __init__(self, job, host='localhost', port=5000, name='control.xmlrpc_in', transformer=None):
-        print ">>>>>>>>>>>>>>>>>>"
         """
         To be update
         """
@@ -46,16 +54,22 @@ class xmlrpc_in(component):
         self.datas=[]
         self.isStarted=False
 
-    def start(self):
-        self.isStarted=True
-        server = SimpleXMLRPCServer((self.host, self.port))
-        server.register_introspection_functions()
-        server.register_function(self.import_data)
-        server.serve_forever()
+#    def start(self):
+#        self.isStarted=True
+#        server = SimpleXMLRPCServer((self.host, self.port))
+#        server.register_introspection_functions()
+#        server.register_function(self.import_data)
+#        server.serve_forever()
 
     def process(self):
         if not self.isStarted:
-            self.start()
+            xml_server = xmlrpc_server_thread()
+            xml_server.host = self.host
+            xml_server.port = self.port
+            xml_server.import_data = self.import_data
+            xml_server.start()
+#        if not self.isStarted:
+#            self.start()
 
 
     def data_iterator(self,datas):
