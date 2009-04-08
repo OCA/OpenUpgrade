@@ -315,8 +315,8 @@
         <menuitem name="Training Management" parent="menu_skateholder_portal_ifbl"
             id="training_management_skateholder_portal_mi" />
 
-        <record model="ir.actions.act_window" id="participation_skateholder_portal_act">
-            <field name="name">Participations</field>
+        <record model="ir.actions.act_window" id="participation_participant_skateholder_portal_act">
+            <field name="name">Participations of the Participants</field>
             <field name="res_model">training.participation</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
@@ -324,18 +324,31 @@
 
         <menuitem parent="training_management_skateholder_portal_mi"
             id="participation_training_management_skateholder_portal_mi"
-            action="participation_skateholder_portal_act" />
+            action="participation_participant_skateholder_portal_act" />
 
         <record model="res.groups" id="res_groups_portal_skateholder">
             <field name="name">Portal SkateHolder Group</field>
         </record>
 
         <record model="ir.model.access" id="model_access_participation">
-            <field name="name">Participations</field>
+            <field name="name">Participations of the Participants</field>
             <field name="perm_read">True</field>
             <field name="perm_write">True</field>
             <field name="group_id" ref="res_groups_portal_skateholder" />
             <field name="model_id" search="[('model', '=', 'training.participation')]" />
         </record>
+
+        <menuitem parent="training_management_skateholder_portal_mi"
+            id="participation_skateholder_portal_mi"
+            action="training.action_training_participation_skateholder_all" />
+
+        <record model="ir.model.access" id="model_access_participation_skateholder">
+            <field name="name">Participations of the SkateHolders</field>
+            <field name="perm_read">True</field>
+            <field name="perm_write">True</field>
+            <field name="group_id" ref="res_groups_portal_skateholder" />
+            <field name="model_id" search="[('model', '=', 'training.participation.skateholder')]"/>
+        </record>
+
     </data>
 </openerp>
