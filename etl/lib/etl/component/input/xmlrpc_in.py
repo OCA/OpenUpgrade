@@ -20,7 +20,7 @@
 #
 ##############################################################################
 """
- to connect server with xmlrpc request
+ to run xmlrpc server
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License
@@ -29,38 +29,49 @@ from etl.component import component
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
 
-class xmlrpc_request(component):
+class xmlrpc_server(component):
     """
     To connect server with xmlrpc request
 
     """
-    def __init__(self, job, host='localhost', port=5000, uid='admin', password='admin',name='xmlrpc', transformer=None):
+    def __init__(self, job, host='localhost', port=5000, name='control.xmlrpc_server', transformer=None):
         """
         To be update
         """
-        super(xmlrpc_request, self).__init__(name, transformer=transformer)
+        super(xmlrpc_server, self).__init__(name, transformer=transformer)
         self.job = job
         self.host=host
         self.port=port
-        self.server = False
+        self.datas=[]
+        self.isStarted=False
 
-    def process(self):
+    def start(self):
+        self.isStarted=True
         server = SimpleXMLRPCServer((self.host, self.port))
         server.register_introspection_functions()
-        server.register_function(self.import_data)
-        server.register_function(self.export_data)
-        server.serve_forever()
-        self.server = server
-        return True
+        server.register_function(self.import_data)        
+        server.serve_forever()        
 
-    def import_data(self, data):#to be check
-        if data:
-            self.job.action_start(key, signal_data=data, data={})
+    def process(self):        
+        if not self.isStarted:
+            self.start()                
+    
+
+    def data_iterator(self,datas):
+        for d in datas:
+            yield d,'main'
+
+    def import_data(self, datas):#to be check              
+        if not self.job:
+            return
+        job=self.job.copy()                              
+        if datas:                
+            self.generator=self.data_iterator(datas)
+            job.run()
         else:
-            self.job.action_pause(key, signal_data={}, data={})
-
-    def export_data(self, data):
-        pass
+            if job.status in ('start'):
+                job.pause()        
+        return True    
 
 def test():
     pass

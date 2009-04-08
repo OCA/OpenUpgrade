@@ -85,7 +85,7 @@ class component(signal):
         self.generator = None
         self.transformer=transformer
         self.logger = logger.logger()
-        self.status = False
+        self.status = 'open'
         self.signal_connect(self, 'start', self.action_start)
         self.signal_connect(self, 'start_input', self.action_start_input)
         self.signal_connect(self, 'start_output', self.action_start_output)
@@ -94,28 +94,56 @@ class component(signal):
         self.signal_connect(self, 'end', self.action_end)
         self.signal_connect(self, 'error', self.action_error)
 
-    def __copy__(self):
-        res=component(name=self.name,transformer=self.transformer)
-        trans_in=[]
-        for tran_in in self.trans_in:
+    def copy(self):
+        #TODO : it's not work properly
+        res=self.__copy__()                               
+        trans_in=[]                
+        for channel,tran_in in self.trans_in:                       
             new_tran_in=tran_in.copy()
+            #new_tran_in.source=tran_in.source.copy()              
             new_tran_in.destination=res
-            trans_in.append(new_tran_in)   
+            trans_in.append((channel,new_tran_in))
+        res.trans_in=trans_in
+        
         trans_out=[]
-        for tran_out in self.trans_out:
+        for channel,tran_out in self.trans_out:            
             new_tran_out=tran_out.copy()
             new_tran_out.source=res
-            trans_out.append(new_tran_out) 
-        res.trans_in=trans_in
+            #new_tran_out.destination=tran_out.destination.copy()
+            trans_out.append((channel,new_tran_out))         
         res.trans_out=trans_out
         return res
 
+    def __copy__(self):
+        res=component(name=self.name,transformer=self.transformer)        
+        return res
+
+    def pause(self):        
+        for channel,tran_in in self.trans_in:  
+            tran_in.pause()          
+            tran_in.source.pause()                    
+        for channel,tran_out in self.trans_out: 
+            tran_out.pause()           
+            tran_out.destination.pause()
+        self.status='pause'            
+        self.signal('pause')
+ 
+    def stop(self):        
+        for channel,tran_in in self.trans_in:  
+            tran_in.stop()          
+            tran_in.source.stop()                    
+        for channel,tran_out in self.trans_out: 
+            tran_out.stop()           
+            tran_out.destination.stop()
+        self.status='stop'            
+        self.signal('stop')
 
     def __str__(self):
         if not self.name:
             self.name=''
     	return '<Component : '+self.name+'>'
 
+    
     def generator_get(self, transition):
         """ 
         Get generator list of transition
@@ -128,13 +156,13 @@ class component(signal):
     def channel_get(self, trans=None):
         """ 
         Get channel list of transition
-        """
-        if trans and trans.status=='close':
+        """              
+        if self.status in ('end','stop') or (trans and trans.type=='data' and trans.status in ('end','stop','close')):
             return
-        self.data.setdefault(trans, [])
+        self.data.setdefault(trans, [])        
         self._cache['start_output']={trans:False}
-        self._cache['start_input']={trans:False}        
-        gen = self.generator_get(trans) or []  
+        self._cache['start_input']={trans:False}                
+        gen = self.generator_get(trans) or None          
         if trans:
             trans.status='start'
             trans.signal('start')
@@ -155,7 +183,8 @@ class component(signal):
                 if not self._cache['start_input'][trans]: 
                     self._cache['start_input'][trans]=datetime.datetime.today()
                     self.signal('start_input', {'trans':trans, 'start_input_date':datetime.datetime.today()})
-                self.signal('get_input', {'trans':trans, 'get_input_date':datetime.datetime.today()})
+                self.signal('get_input', {'trans':trans, 'get_input_date':datetime.datetime.today()})                
+                    
                 data, chan = gen.next() 
                 if data is None:
                     self.signal('no_input')   
@@ -176,7 +205,9 @@ class component(signal):
         process method of ETL component
         """
         pass
-
+    
+    def get_trigger_data(self,channel,trigger):
+        return None
 
     def input_get(self):
         """ 
@@ -185,5 +216,9 @@ class component(signal):
         result = {}
         for channel, trans in self.trans_in:
             result.setdefault(channel, [])
-            result[channel].append(trans.source.channel_get(trans))
+            if trans=='trigger':
+                data=trans.source.get_trigger_data(channel,trans.trigger)
+            else:
+                data=trans.source.channel_get(trans) 
+            result[channel].append(data)
         return result

@@ -56,9 +56,9 @@ class map(component):
         if self.preprocess:
             datas = self.preprocess(self, channels)
 
-        for channel, trans in channels.items():
-            for iterator in trans:
-                for d in iterator:
+        for channel, trans in channels.items():            
+            for iterator in trans:                
+                for d in iterator:                    
                     for channel_dest, channel_value in self.map_criteria.items():
                         result = {}
                         for key, val in channel_value.items():
@@ -76,7 +76,7 @@ class map(component):
         """
         Overrides copy method
         """
-        res=data_map(self.map_criteria, self.preprocess, self.name, self.transformer)
+        res=map(self.map_criteria, self.preprocess, self.name, self.transformer)
         return res
     
 def test():

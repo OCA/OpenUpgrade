@@ -69,7 +69,7 @@ class job(signal):
         self.name=name
         self.outputs=outputs
         self.status='open' # open,start,pause,stop,close
-        
+        self.pickle=False
         
         self.signal_connect(self,'start',self.action_start)
         self.signal_connect(self,'pause',self.action_pause)
@@ -81,6 +81,9 @@ class job(signal):
     def __str__(self):   
         #TODO : return complete print of the job (all components and transitions)
         return str(self.name)
+ 
+    def copy(self):
+        return self.__copy__()
     
     def __copy__(self):
         """
@@ -89,7 +92,7 @@ class job(signal):
         outputs=[]
         for output in self.outputs:
             outputs.append(output.copy())   
-        res=job(outputs,self.name)        
+        res=job(outputs,self.name)
         return res
     
     def write(self):
@@ -106,11 +109,11 @@ class job(signal):
         """     
         return pickle.load(value)
       
-    def pause(self):       
-        for output in self.outputs:
-            output.action_stop(self)        
-        self.status='stop'
+    def pause(self):                    
+        self.pickle=self.write()
+        self.status='pause'
         self.signal('pause')
+        return self.pickle
         #TODO
         
     def open(self):
@@ -120,19 +123,20 @@ class job(signal):
         self.status='close'
 
     def stop(self):
-        #TODO
-        self.export_job()    
-        for output in self.outputs:
-            output.action_pause(self)              
+        for c in self.outputs:
+            c.stop()                
         self.status='stop'
         self.signal('stop')
           
     
     def run(self):
-        # run job process
-        self.status='start'
-        self.signal('start')
-        for c in self.outputs:
+        # run job process        
+        job=self        
+        if self.pickle:
+            job=self.read(self.pickle)
+        job.status='start'            
+        job.signal('start')            
+        for c in job.outputs:
             for a in c.channel_get():              
                 pass 
         self.status='end'
