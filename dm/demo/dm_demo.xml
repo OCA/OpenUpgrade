@@ -502,6 +502,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_papermailingus0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;Starting Mailing&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_smforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
@@ -523,6 +524,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;Intermediate Mailing&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_piforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="2" name="doc_number"/>
@@ -539,6 +541,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;Package Insert&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_alpiforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
@@ -554,6 +557,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpdiscoverydayonmay0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;Accompanying Letter of the Package Insert&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_alimforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="1" name="doc_number"/>
@@ -569,6 +573,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
             <field eval="[(6,0,[ref('dm.product_product_openerpuserbook0')])]" name="item_ids"/>
+            <field eval="&quot;&quot;&quot;Accompanying Letter of the Intermediate Mailing&quot;&quot;&quot;" name="code"/>
         </record>
         <record id="dm_offer_step_imforopenerpondemandfreetrial2009" model="dm.offer.step">
             <field eval="&quot;&quot;&quot;The Intermediate mailing is a phone by a commercial call to thank the client to have subscribed to the offer and propose to buy the OpenERP Book&quot;&quot;&quot;" name="desc"/>
@@ -644,6 +649,7 @@ The Starting Mailing proposes to the prospect to subscribe for a 1 month free tr
             <field name="offer_id" ref="dm_offer_openerpondemandfreetrial2010"/>
             <field eval="0" name="interactive"/>
             <field name="action_id" ref="dm.ir_actions_server_pdf_doc_generate0"/>
+            <field eval="&quot;&quot;&quot;Starting Mailing&quot;&quot;&quot;" name="code"/>
         </record>
     </data>
     <!-- Trademark -->
