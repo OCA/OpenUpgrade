@@ -62,5 +62,80 @@
             </field>
         </record>
         
+        <record id="view_invoice_line_gen_form_multi_company" model="ir.ui.view">
+            <field name="name">account.invoice.line.form</field>
+            <field name="model">account.invoice.line</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_invoice_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field[@name='product_id']" position="replace">
+                    <field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.address_invoice_id,parent.company_id)"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_invoice_supplier_form_multi_company" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace">
+                    <field name="partner_id" on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank,company_id)" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_invoice_line_supplier_form_multi_company" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field[@name='invoice_line']/tree/field[@name='product_id']" position="replace">
+                    <field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.address_invoice_id,parent.company_id)"/>
+                </xpath>
+            </field>
+        </record>
+       
+        <record id="view_invoice_gen_form_multi_company" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="replace">
+                    <field name="partner_id" on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank,company_id)" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_invoice_change_company_form" model="ir.ui.view">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="replace">
+                    <field name="company_id" on_change="onchange_company_id(company_id,partner_id,type,invoice_line)" select="1"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_invoice_supplier_change_company_form" model="ir.ui.view">
+            <field name="name">account.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="type">form</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="company_id" position="replace">
+                    <field name="company_id" on_change="onchange_company_id(company_id,partner_id,type,invoice_line)" select="1"/>
+                </field>
+            </field>
+        </record>
+
     </data>
 </openerp>
