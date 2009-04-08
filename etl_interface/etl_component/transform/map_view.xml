@@ -8,7 +8,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 					 <notebook position='inside'>
-						<page string="Property" attrs="{'invisible':[('type_id','!=','transform.map')]}">
+						<page string="Other Information" attrs="{'invisible':[('type_id','!=','transform.map')]}">
 							<separator string="Fields Mapping" colspan="4" />
 							<field name="map_line_ids" nolabel="1" colspan="4" widget="one2many_list">
 								<tree string="Fields lines" editable="bottom">

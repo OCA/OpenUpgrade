@@ -60,9 +60,10 @@ class openobject_out(component):
     def process(self):       
         datas = []
         self.fields_keys = None
+        connector=False
         for channel, trans in self.input_get().items():
-            for iterator in trans:
-                for d in iterator:
+            for iterator in trans:                
+                for d in iterator:                    
                     if not self.fields:
                         self.fields = dict(map(lambda x: (x, x), d.keys()))
                     if type(self.fields)==type([]):
@@ -72,14 +73,14 @@ class openobject_out(component):
                         self.fields_keys = self.fields.keys()
                     try:
                         if self.transformer:
-                            d=self.transformer.transform(d)                        
+                            d=self.transformer.transform(d)
+                                                
                         connector=self.openobject_connector.open()
-                        self.openobject_connector.execute(connector, 'execute', self.model, 'import_data', self.fields_keys, [map(lambda x: d[self.fields[x]], self.fields_keys)])
+                        self.openobject_connector.execute(connector, 'execute', self.model, 'import_data', self.fields_keys, [map(lambda x: d[self.fields[x]], self.fields_keys)])                        
                         self.openobject_connector.close(connector)
                         yield d, 'main'
                     except Exception, e:
-                        yield {'data':d, 'type':'exception', 'message':str(e)}, 'error'
-        
+                        yield {'data':d, 'type':'exception', 'message':str(e)}, 'error'        
     def __copy__(self):
         """
         Overrides copy method

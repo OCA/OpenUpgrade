@@ -8,7 +8,7 @@
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
              	<notebook position='inside'>
-             			<page string="Property" attrs="{'invisible':[('type_id','!=','transform.filter')]}">
+             			<page string="Other Information" attrs="{'invisible':[('type_id','!=','transform.filter')]}">
 								<field name="criteria_ids" colspan="4" nolabel="1" widget="one2many_list">
 									<tree string="Criteria"  editable="bottom">
 										<field name="sequence" />

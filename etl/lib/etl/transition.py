@@ -62,11 +62,23 @@ class transition(signal):
     def close(self):
         self.status='close'
 
+    def stop(self):
+        self.status='stop'
+        self.signal('stop')
+
+    def pause(self):
+        self.status='pause'
+        self.signal('pause')
+
+    def start(self):
+        self.status='start'
+        self.signal('start')
     
 
-    def __init__(self, source, destination, channel_source='main', channel_destination='main', type='data'):
+    def __init__(self, source, destination, channel_source='main', channel_destination='main', type='data',trigger=None):
         super(transition, self).__init__() 
         self.type = type
+        self.trigger=trigger
         self.source = source
         self.destination = destination
         self.channel_source = channel_source
@@ -82,9 +94,12 @@ class transition(signal):
         self.signal_connect(self,'stop',self.action_stop)
         self.signal_connect(self,'end',self.action_end)
 
-    def __copy__(self):               
-        res=transition(self.source,self.destination,self.channel_source, self.channel_destination, self.type)        
+    def __copy__(self):                               
+        res=transition(self.source,self.destination,self.channel_source, self.channel_destination, self.type)               
         return res
+
+    def copy(self):
+        return self.__copy__()
 
 
 

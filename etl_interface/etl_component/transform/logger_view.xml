@@ -8,7 +8,7 @@
 			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
 					<notebook position='inside'>
-						<page string="Property" attrs="{'invisible':[('type_id','!=','transform.logger')]}">
+						<page string="Other Information" attrs="{'invisible':[('type_id','!=','transform.logger')]}">
 							<field name="output_id" />
 						</page>
 					</notebook>

@@ -53,7 +53,7 @@
                  ],
     "init_xml" : [ ],
     "demo_xml" : [
-                    "dm_demo.xml"
+                    "demo/dm_demo.xml"
                   ],
     "update_xml" : [
                     "security/dm_security.xml",
@@ -66,10 +66,10 @@
                     "trademark_view.xml",
                     "dm_report.xml",
                     "offer_sequence.xml",
-                    "dm_data.xml",
+                    "demo/dm_data.xml",
                     "dm_workflow.xml",
                     "dm_document_view.xml",
-                    "document_data.xml",
+                    "demo/document_data.xml",
                     "mail_service_view.xml",
                     ],
     "active": False,

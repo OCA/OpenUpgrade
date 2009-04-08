@@ -259,7 +259,7 @@
 					<field name="type" select="1" />
 					<separator string="Transition property" colspan="4" />
 					<newline />
-					<field name="source_component_id" select="1" />
+					<field name="source_component_id" select="1" readonly="1" />
 					<field name="destination_component_id" select="1" />
 					<field name="channel_source" select="1" />
 					<field name="channel_destination" select="1" />
@@ -559,6 +559,48 @@
 		<menuitem name="Running Process" parent="menu_etl_job_processes"
 			action="action_etl_job_process_running_tree"
 			id="menu_etl_proc_rp_form" />
+
+		<!--Transformer-->
+
+		<record id="view_etl_transformer_form" model="ir.ui.view">
+			<field name="name">etl.transformer.form</field>
+			<field name="model">etl.transformer</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Transformer">
+					<field name="name" />
+					<field name="tranformer_line_ids" colspan="4" nolabel="1" widget="one2many_list">
+						<tree string="Transformers">
+							<field name="name"/>
+							<field name="type"/>
+						</tree>
+						<form string="Transformers">
+							<field name="name"/>
+							<field name="type"/>
+						</form>
+					</field>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_etl_transformer_tree" model="ir.ui.view">
+			<field name="name">etl.transformer.tree</field>
+			<field name="model">etl.transformer</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Transformer">
+					<field name="name" select="1" />
+					<field name="tranformer_line_ids" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="action_etl_transformer_tree" model="ir.actions.act_window">
+			<field name="name">Transformer</field>
+			<field name="res_model">etl.transformer</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
 
 	</data>
 </openerp>

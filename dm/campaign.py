@@ -307,14 +307,9 @@ class dm_campaign(osv.osv):
             quantity=0
             numeric=True
             for propo in campaign.proposition_ids:
-                if propo.quantity_planned.isdigit():
-                    quantity += int(propo.quantity_planned)
-                else:
-                    result[campaign.id]='Check Segments'
-                    numeric=False
-                    break
-            if numeric:
-                result[campaign.id]=str(quantity)
+                if propo.quantity_planned:
+                    quantity += propo.quantity_planned
+            result[campaign.id]=str(quantity)
         return result
 
     def _quantity_wanted_total(self, cr, uid, ids, name, args, context={}):
@@ -477,7 +472,6 @@ class dm_campaign(osv.osv):
         self.items_state_inprogress_set(cr, uid, ids, *args)
         self.write(cr, uid, ids, {'state':'pending'})
         return True
-  
 
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
@@ -488,12 +482,27 @@ class dm_campaign(osv.osv):
             raise osv.except_osv(
                 _('Could not open this Campaign !'),
                 _('You must first close all states related to this campaign.'))
-        
+
         if (camp.date_start > time.strftime('%Y-%m-%d')):
             raise osv.except_osv("Error!!","Campaign cannot be opened before drop date!!!")
 
+        """ Create Flow Start Workitems """
+        print "Starting Campaign"
+        start_type_ids = self.pool.get('dm.offer.step.type').search(cr, uid, [('flow_start','=',True)])
+        print "start_type_ids : ",start_type_ids
+        step_ids = self.pool.get('dm.offer.step').search(cr, uid, [('offer_id','=',camp.offer_id.id),('type_id','in',start_type_ids)])
+        print "step_ids : ",step_ids
+
+        for step in step_ids:
+            for propo in camp.proposition_ids:
+                for seg in propo.segment_ids:
+                    if seg.type_src == 'internal' and seg.customers_file_id:
+                        res = self.pool.get('dm.workitem').create(cr, uid, {'segment_id':seg.id, 'step_id':step,
+                            'source':seg.customers_file_id.source, 'action_time': time.strftime("%Y-%m-%d %H:%M:%S")})
+                        print "created wi :",res
+
         self.write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
-        
+
         ''' create offer history'''
         history_vals={
               'offer_id' : camp.offer_id.id,
@@ -701,7 +710,7 @@ class dm_campaign(osv.osv):
         default['responsible_id'] = uid
         self.copy(cr,uid,ids[0],default)
         return True
-    
+
     def copy(self, cr, uid, id, default=None, context={}):
         cmp_id = super(dm_campaign, self).copy(cr, uid, id, default, context=context)
         data = self.browse(cr, uid, cmp_id, context)
@@ -1007,15 +1016,15 @@ class dm_customers_list(osv.osv):
     }
 dm_customers_list()
 
-class dm_customers_file_source(osv.osv):
-    _name = "dm.customers_file.source"
-    _description = "Customer File Source"
-    _columns = {
-            'name' : fields.char('Name', size=64 ,required=True),
-            'code' : fields.char('code', size=64 ,required=True),
-            'desc' : fields.text('Description'),
-            }
-dm_customers_file_source()
+#class dm_customers_file_source(osv.osv):
+#    _name = "dm.customers_file.source"
+#    _description = "Customer File Source"
+#    _columns = {
+#            'name' : fields.char('Name', size=64 ,required=True),
+#            'code' : fields.char('code', size=64 ,required=True),
+#            'desc' : fields.text('Description'),
+#            }
+#dm_customers_file_source()
 
 
 class dm_customers_file(osv.osv):
@@ -1023,7 +1032,7 @@ class dm_customers_file(osv.osv):
     _description = "A File of addresses"
 
     _FILE_SOURCES = [
-        ('addresses','Partner Addresses'),
+        ('address_id','Partner Addresses'),
     ]
 
     _columns = {
@@ -1035,17 +1044,11 @@ class dm_customers_file(osv.osv):
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'customers_file_id', 'Segments', readonly=True),
 #        'source_id' :fields.many2one('dm.customers_file.source', 'Customers File Source'),
         'source' : fields.selection(_FILE_SOURCES, 'Source', required=True),
-#        'source_name_id' :fields.related('source_id','name', string='Customers File Source Name', type="char"),
+        'note' : fields.text('Notes'),
     }
     _defaults =  {
-        'source': lambda *a: 'addresses',
+        'source': lambda *a: 'address_id',
     }
-
-#    def onchange_source(self, cr, uid, ids, source_id, context=None):
-#        obj = self.pool.get('dm.customers_file.source').browse(cr,uid,source_id,context=context)
-#        print "XXXXX",obj
-#        print "XXXXX",obj.name
-#        return {'value':{'source_name_id':obj.name}}
 
 dm_customers_file()
 
@@ -1071,15 +1074,25 @@ class dm_campaign_proposition_segment(osv.osv):
         result ={}
         for id in ids:
             seg = self.browse(cr,uid,[id])[0]
-            segment_list = self.search(cr,uid,[('customers_list_id','=',seg.customers_list_id.id)])
-            i = 1 
-            for s in segment_list:  
-                country_code = seg.customers_list_id.country_id.code or ''
-                cust_list_code =  seg.customers_list_id.code
-                seq = '%%0%sd' % 2 % i
-                code1='-'.join([country_code[:3], cust_list_code[:3], seq[:4]])
-                result[s]=code1
-                i +=1
+            if seg.customers_list_id:
+                segment_list = self.search(cr,uid,[('customers_list_id','=',seg.customers_list_id.id)])
+                i = 1 
+                for s in segment_list:
+                    country_code = seg.customers_list_id.country_id.code or ''
+                    cust_list_code =  seg.customers_list_id.code
+                    seq = '%%0%sd' % 2 % i
+                    code1='-'.join([country_code[:3], cust_list_code[:3], seq[:4]])
+                    result[s]=code1
+                    i +=1
+            elif seg.customers_file_id:
+                segment_list = self.search(cr,uid,[('customers_file_id','=',seg.customers_file_id.id)])
+                i = 1 
+                for s in segment_list:
+                    cust_file_code =  seg.customers_file_id.code
+                    seq = '%%0%sd' % 2 % i
+                    code1='-'.join([cust_file_code[:3], seq[:4]])
+                    result[s]=code1
+                    i +=1
         return result
 
     def onchange_list(self, cr, uid, ids, customers_list, start_census, end_census):
@@ -1093,10 +1106,11 @@ class dm_campaign_proposition_segment(osv.osv):
         return False
 
     _columns = {
-        'code1' : fields.function(_segment_code,string='Code',type="char",size="64",method=True,readonly=True),
+        'code1' : fields.function(_segment_code, string='Code', type="char", size="64", method=True, readonly=True),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
-        'customers_list_id': fields.many2one('dm.customers_list','Customers List',required=True),
-        'customers_file_id': fields.many2one('dm.customers_file','Customers File',readonly=True),
+        'type_src' : fields.selection([('internal','Internal'),('external','External')], 'Type'),
+        'customers_list_id': fields.many2one('dm.customers_list','Customers List'),
+        'customers_file_id': fields.many2one('dm.customers_file','Customers File'),
         'quantity_real' : fields.integer('Real Quantity',
                     help='The real quantity is the number of addresses that are really in the customers file (by counting).'),
         'quantity_planned' : fields.integer('planned Quantity',
@@ -1139,6 +1153,7 @@ class dm_campaign_proposition_segment(osv.osv):
     _defaults =  {
         'all_add_avail': lambda *a: True,
         'type_census': lambda *a: 'day',
+        'type_src': lambda *a: 'internal',
     }
 
 dm_campaign_proposition_segment()
@@ -2016,6 +2031,16 @@ class res_partner(osv.osv):
         'state_ids': _default_all_state,
     }
 res_partner()
+
+class res_partner_address(osv.osv):
+    _inherit = 'res.partner.address'
+    _columns = {
+        'firstname' : fields.char('First Name',size=64),
+        'name_complement' : fields.char('Name Complement',size=64),
+        'street3' : fields.char('Street3',size=32),
+        'street4' : fields.char('Street4',size=32),
+    }
+res_partner_address()
 
 class purchase_order(osv.osv):
     _name = 'purchase.order'

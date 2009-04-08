@@ -2,9 +2,12 @@
 {
     "name" : "India",
     "version" : "1.0",
+    "description":"""
+    Indian Accounting : chart of Account
+    """,
     "author" : "Tiny",
     "category" : "Localisation/Account charts",
-    "depends" : ["account", "account_chart"],
+    "depends" : ["account", "account_chart", "account_voucher"],
     "demo_xml" : [],
     "update_xml" : [
         "account_chart.xml",

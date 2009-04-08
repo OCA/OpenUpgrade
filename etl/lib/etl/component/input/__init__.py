@@ -34,3 +34,4 @@ from facebook_in import facebook_in
 from vcard_in import vcard_in
 from gmail_in import gmail_in
 from sugarcrm_in import sugarcrm_in
+from xmlrpc_in import xmlrpc_in

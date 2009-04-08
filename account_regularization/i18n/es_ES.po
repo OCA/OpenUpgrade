@@ -1,0 +1,201 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_regularization
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-03-31 18:32:18+0000\n"
+"PO-Revision-Date: 2009-04-01 01:14+0100\n"
+"Last-Translator: Évitrum <sistemas@evitrum.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+
+#. module: account_regularization
+#: wizard_button:account.regularization.regularize,dates,regularize:0
+#: wizard_button:account.regularization.regularize,periods,regularize:0
+msgid "Regularize"
+msgstr "Regularizar"
+
+#. module: account_regularization
+#: field:account.move,regularization_id:0
+#: view:account.regularization:0
+msgid "Regularization"
+msgstr "Regularización"
+
+#. module: account_regularization
+#: help:account.regularization.regularize,dates,journal_id:0
+#: help:account.regularization.regularize,periods,journal_id:0
+msgid "Journal for the move"
+msgstr "Diario para el movimiento"
+
+#. module: account_regularization
+#: help:account.regularization.regularize,dates,date_move:0
+#: help:account.regularization.regularize,periods,date_move:0
+msgid "Date for the move."
+msgstr "Fecha de movimiento"
+
+#. module: account_regularization
+#: field:account.regularization,account_ids:0
+msgid "Accounts to balance"
+msgstr "Cuentas a balancear"
+
+#. module: account_regularization
+#: model:ir.actions.wizard,name:account_regularization.accounts_regularize
+msgid "Accounts Regularization"
+msgstr "Regularización de cuentas"
+
+#. module: account_regularization
+#: model:ir.module.module,shortdesc:account_regularization.module_meta_information
+msgid "Account Regularizations"
+msgstr "Regularizaciones de cuenta"
+
+#. module: account_regularization
+#: constraint:ir.model:0
+msgid "The Object name must start with x_ and not contain any special character !"
+msgstr "¡El nombre del objeto debe empezar con x_ y no contener ningún carácter especial!"
+
+#. module: account_regularization
+#: view:account.regularization:0
+msgid "Main"
+msgstr "General"
+
+#. module: account_regularization
+#: help:account.regularization.regularize,periods,periods:0
+msgid "Periods to regularize"
+msgstr "Periodo a regularizar"
+
+#. module: account_regularization
+#: wizard_field:account.regularization.regularize,dates,journal_id:0
+#: wizard_field:account.regularization.regularize,periods,journal_id:0
+msgid "Journal"
+msgstr "Diario"
+
+#. module: account_regularization
+#: selection:account.regularization,balance_calc:0
+#: wizard_field:account.regularization.regularize,dates,date_move:0
+#: wizard_field:account.regularization.regularize,periods,date_move:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: account_regularization
+#: wizard_field:account.regularization.regularize,dates,period_id:0
+#: wizard_field:account.regularization.regularize,periods,period_id:0
+msgid "Move Period"
+msgstr "Periodo de movimiento"
+
+#. module: account_regularization
+#: field:account.regularization,debit_account_id:0
+msgid "Result account, debit"
+msgstr "Cuenta resultado debe"
+
+#. module: account_regularization
+#: constraint:ir.ui.view:0
+msgid "Invalid XML for View Architecture!"
+msgstr "¡XML inválido para la definición de la vista!"
+
+#. module: account_regularization
+#: field:account.regularization,balance_calc:0
+msgid "Regularization time calculation"
+msgstr "Tiempo de cálculo de la regularización"
+
+#. module: account_regularization
+#: field:account.regularization,name:0
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_regularization
+#: help:account.regularization.regularize,dates,period_id:0
+#: help:account.regularization.regularize,periods,period_id:0
+msgid "Period for the move"
+msgstr "Periodo movimiento"
+
+#. module: account_regularization
+#: help:account.regularization.regularize,dates,fiscalyear:0
+msgid "Keep empty for all open fiscal year"
+msgstr "Mantener vacias para todos los años fiscales abiertos"
+
+#. module: account_regularization
+#: model:ir.actions.act_window,name:account_regularization.action_account_regularization_form
+#: model:ir.ui.menu,name:account_regularization.menu_action_account_regularization_form
+msgid "Regularizations"
+msgstr "Regularizaciones"
+
+#. module: account_regularization
+#: help:account.regularization.regularize,periods,fiscalyear:0
+msgid "Fiscal Year for the write move"
+msgstr "Año fiscal para el movimiento"
+
+#. module: account_regularization
+#: wizard_view:account.regularization.regularize,dates:0
+#: wizard_view:account.regularization.regularize,periods:0
+msgid "Select period"
+msgstr "Seleccionar periodo"
+
+#. module: account_regularization
+#: model:ir.module.module,description:account_regularization.module_meta_information
+msgid ""
+" This module creates a new object in accounting, \n"
+"	very similar to the account models named account.regularization. \n"
+"	Within this object you can define regularization moves, \n"
+"	This is, accounting moves that will automatically calculate the balance of a set of accounts, \n"
+"	Set it to 0 and transfer the difference to a new account. This is used, for example with tax declarations or in some countries to create the 'Profit and Loss' regularization\n"
+msgstr ""
+" Este módulo crea un nuevo objeto en contabilidad, \n"
+"	muy similar a los modelos contables llamados account.regularization. \n"
+"	En este objeto podrás definir movimientos de regularización, \n"
+"	esto es, movimientos contables que automáticamente calcularán el saldo de un conjunto de cuentas, \n"
+"	asociando a 0 y transfiriendo la diferencia a una nueva cuenta. Esto es usado, por ejemplo en las declaraciones de impuestos o en algunos paises para regularizar las \"Perdidas y ganancias\"\n"
+
+#. module: account_regularization
+#: model:ir.model,name:account_regularization.model_account_regularization
+msgid "Account Regularization Model"
+msgstr "Modelo de regularización contable"
+
+#. module: account_regularization
+#: wizard_field:account.regularization.regularize,dates,fiscalyear:0
+#: wizard_field:account.regularization.regularize,periods,fiscalyear:0
+msgid "Fiscal year"
+msgstr "Año fiscal"
+
+#. module: account_regularization
+#: field:account.regularization,credit_account_id:0
+msgid "Result account, credit"
+msgstr "Cuenta resultado haber"
+
+#. module: account_regularization
+#: selection:account.regularization,balance_calc:0
+#: wizard_field:account.regularization.regularize,periods,periods:0
+msgid "Periods"
+msgstr "Periodos"
+
+#. module: account_regularization
+#: wizard_field:account.regularization.regularize,dates,date_to:0
+msgid "Date To:"
+msgstr "Fecha:"
+
+#. module: account_regularization
+#: wizard_button:account.regularization.regularize,dates,end:0
+#: wizard_button:account.regularization.regularize,periods,end:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_regularization
+#: view:account.regularization:0
+msgid "Moves"
+msgstr "Movimientos"
+
+#. module: account_regularization
+#: help:account.regularization.regularize,dates,date_to:0
+msgid "Include movements up to this date"
+msgstr "Incluir movimientos hasta la fecha"
+
+#. module: account_regularization
+#: field:account.regularization,move_ids:0
+msgid "Regularization Moves"
+msgstr "Movimientos regularización"
+

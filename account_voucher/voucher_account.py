@@ -41,7 +41,6 @@ class Account(osv.osv):
         'open_bal' : fields.float('Opening Balance',digits=(16,2)),
         'level': fields.function(_get_level, string='Level', method=True, store=True, type='integer'),
         'type1':fields.selection([('dr','Debit'),('cr','Credit'),('none','None')], 'Dr/Cr',store=True),
-
     }
     
     def compute_total(self, cr, uid, ids, yr_st_date, yr_end_date, st_date, end_date, field_names, context={}, query=''):

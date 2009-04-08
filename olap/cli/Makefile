@@ -1,4 +1,4 @@
-DATABASE = 'test2'
+DATABASE = 'bi'
 
 all: simple sale date where sublevels calc_meas cross
 

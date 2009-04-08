@@ -2,23 +2,6 @@
 <openerp>
 	<data>
 
-		<record id="etl_component_gmail_in_form"
-			model="ir.ui.view">
-			<field name="name">view.etl.component.gmail.in.form</field>
-			<field name="model">etl.component</field>
-			<field name="type">form</field>
-			<field name="inherit_id" ref="etl_component_form"/>
-			<field name="arch" type="xml">
-				<notebook position='inside'>
-					<page string="Property" attrs="{'invisible':[('type_id','!=','input.gmail_in')]}">
-						<separator string="Login Details" colspan="4" />
-						<field name="user" attrs="{'required':[('type_id','=','input.gmail_in')]}" />
-						<field name="passwd"  password="True" attrs="{'required':[('type_id','=','input.gmail_in')]}" />
-					</page>
-				</notebook>
-			</field>
-		</record>
-
 		<record id="action_etl_component_gmail_in_tree"
 			model="ir.actions.act_window">
 			<field name="name">gmail In component</field>
@@ -37,7 +20,7 @@
 			<field name="domain">[('type_id.name','=','input.gmail_in')]</field>
 			<field name="context">{'type_id':'input.gmail_in'}</field>
 			<field name="view_id"
-				ref="etl_component_gmail_in_form" />
+				ref="etl_component_form" />
 		</record>
 
 		<record id="action_etl_component_gmail_in_view1"
@@ -55,7 +38,7 @@
 			<field eval="2" name="sequence" />
 			<field name="view_mode">form</field>
 			<field name="view_id"
-				ref="etl_component_gmail_in_form" />
+				ref="etl_component_form" />
 			<field name="act_window_id"
 				ref="action_etl_component_gmail_in_tree" />
 		</record>

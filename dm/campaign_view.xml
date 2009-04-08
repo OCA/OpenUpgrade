@@ -844,8 +844,13 @@
                     <separator string="Segment Description" colspan="4"/>
                     <field name="name" string="Name" select="1"/>
                     <field name="code1" string="Code" select="1"/>
-                    <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
-                    <field name="customers_file_id" select="1" groups="base.group_extended"/>
+                    <group colspan="2">
+                        <field name="type_src"/>
+                    </group>
+                    <group colspan="2" col="2">
+                        <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)" attrs="{'invisible':[('type','=','internal')]}" />
+                        <field name="customers_file_id" select="1" groups="base.group_extended" attrs="{'invisible':[('type','=','external')]}"/>
+                    </group>
                 </group>
                 <notebook colspan="4">
                     <page string="General">
@@ -906,6 +911,7 @@
             <tree string="Segments">
                 <field name="name" string="Name"/>
                 <field name="code1" string="Code"/>
+                <field name="type_src"/>
                 <field name="quantity_planned" select="2"/>
                 <field name="quantity_wanted" select="2"/>
                 <field name="quantity_delivered" select="2"/>
@@ -1480,6 +1486,7 @@
         customer file source
          =======================================================
     -->
+<!--
     <record model="ir.ui.view" id="dm_customers_file_source_form">
         <field name="name">dm.customers_file.source.form</field>
         <field name="model">dm.customers_file.source</field>
@@ -1515,7 +1522,7 @@
 
 
     <menuitem id="menu_action_view_dm_customers_file_source_form" parent="dm.menu_dm_config_custlist" action="action_dm_customers_file_source_form"/>
-
+-->
     <!--
     =======================================================
     CUSTOMERS FILE
@@ -1530,43 +1537,42 @@
             <form string="Customer File">
                 <notebook>
                     <page string="General">
-                    <separator string="Customers Lists Description" colspan="4"/>
+                    <separator string="Customers File Description" colspan="4"/>
                     <field name="name" select="1"/>
                     <field name="code" select="2"/>
-                    <field name="customers_list_id" select="1"/>
-                    <field name="delivery_date" select="1"/>
-                    <field name="segment_ids" colspan="4" nolabel="1">
-                    <form>
-                        <field name="name" string="Name" select="1"/>
-                        <field name="code1" string="Code"/>
-                        <field name="proposition_id" />
-                        <field name="active" />
-                        <newline/>
-                        <field name="split_id" />
-                        <field name="reuse_id" />
-                        <field name="start_census"/>
-                        <field name="end_census"/>
-                        <field name="deduplication_level"/>
-                        <field name="note" colspan="4" widget="text_wiki"/>
-                    </form>
-                    <tree string="Segments">
-                        <field name="name" string="Name"/>
-                        <field name="code1" string="Code"/>
-                    </tree>
-                    </field>
+<!--                    <field name="customers_list_id" select="1"/>-->
+                    <field name="delivery_date"  string="Extraction Date" select="1"/>
+                    <separator string="Description" colspan="4"/>
+                    <field name="note" colspan="4" nolabel="1"/>
                     </page>
                     <page string="Addresses">
-                        <group colspan="4">
-                            <field name="source" colspan="2"/>
-                        </group>
-                        <group colspan="4" attrs="{'invisible':[('source','!=','addresses')]}">
+                        <separator string="Addresses Source" colspan="4"/>
+                        <field name="source" />
+                        <group colspan="4" attrs="{'invisible':[('source','!=','address_id')]}">
                             <separator string="Partner Addresses" colspan="4"/>
                             <field name="address_ids" colspan="4" nolabel="1"/>
                         </group>
-                        <group colspan="4" attrs="{'invisible':[('source','!=','crm_cases')]}">
-                            <separator string="CRM Cases" colspan="4"/>
-                            <field name="case_ids" colspan="4" nolabel="1"/>
-                        </group>
+                    </page>
+                    <page string="Segments">
+                        <field name="segment_ids" colspan="4" nolabel="1">
+                        <form>
+                            <field name="name" string="Name" select="1"/>
+                            <field name="code1" string="Code"/>
+                            <field name="proposition_id" />
+                            <field name="active" />
+                            <newline/>
+                            <field name="split_id" />
+                            <field name="reuse_id" />
+                            <field name="start_census"/>
+                            <field name="end_census"/>
+                            <field name="deduplication_level"/>
+                            <field name="note" colspan="4" widget="text_wiki"/>
+                        </form>
+                        <tree string="Segments">
+                            <field name="name" string="Name"/>
+                            <field name="code1" string="Code"/>
+                        </tree>
+                        </field>
                     </page>
                 </notebook>
             </form>
@@ -1628,7 +1634,7 @@
     =======================================================
     -->
 
-    <record id="view_partner_property_form1" model="ir.ui.view">
+    <record id="view_partner_form_inherit1" model="ir.ui.view">
         <field name="name">res.partner.form.inherit</field>
         <field name="model">res.partner</field>
         <field name="type">form</field>
@@ -1645,7 +1651,103 @@
             </notebook>
         </field>
     </record>
+    
+    <record id="view_partner_form_inherit2" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+        	<field colspan="4" mode="form,tree" name="address" nolabel="1" select="1" position="replace">
+        		<field colspan="4" mode="form,tree" name="address" nolabel="1" select="1">
+	        		<form string="Partner Contacts">
+	        			<field name="firstname"/>
+		                <field name="name" select="2" string="Last Name"/>
+		                <field name="name_complement"/>
+		                <field domain="[('domain', '=', 'contact')]" name="title" string="Type"/>
+		                <field name="function"/>
+		                <field name="type" select="2"/>
+		                <field name="street" select="2"/>
+		                <field name="street2"/>
+		                <field name="street3"/>
+		                <field name="street4"/>
+		                <field name="zip" select="2"/>
+		                <field name="city" select="2"/>
+		                <field completion="1" name="country_id" select="2"/>
+		                <field name="state_id" select="2"/>
+		                <field name="phone"/>
+		                <field name="fax"/>
+		                <field name="mobile"/>
+		                <field name="email" select="2" widget="email"/>
+		            </form>
+		            <tree string="Partner Contacts">
+		            	<field name="firstname"/>
+		                <field name="name" string="Last Name"/>
+		                <field name="zip"/>
+		                <field name="city"/>
+		                <field name="country_id"/>
+		                <field name="phone"/>
+		                <field name="email"/>
+		            </tree>
+		    	</field>
+        	</field>
+        </field>
+	</record>
+    
+    <!--
+    =======================================================
+    PARTNER ADDRESS EXTENSIONS
+    =======================================================
+    -->
+	<record id="view_partner_address_form_inherit1" model="ir.ui.view">
+        <field name="name">res.partner.address.form.inherit</field>
+        <field name="model">res.partner.address</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+        	<field name="name" position="replace">
+        		<field name="name" string="Last Name"/>
+        	</field>
+        </field>
+	</record>
 
+	<record id="view_partner_address_form_inherit2" model="ir.ui.view">
+        <field name="name">res.partner.address.form.inherit</field>
+        <field name="model">res.partner.address</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+        	<field name="name" position="before">
+        		<field name="firstname"/>
+        	</field>
+        </field>
+	</record>
+	
+	<record id="view_partner_address_form_inherit3" model="ir.ui.view">
+        <field name="name">res.partner.address.form.inherit</field>
+        <field name="model">res.partner.address</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+        	<field name="name" position="after">
+        		<field name="name_complement"/>
+        	</field>
+        </field>
+	</record>
+	
+	<record id="view_partner_address_form_inherit4" model="ir.ui.view">
+        <field name="name">res.partner.address.form.inherit</field>
+        <field name="model">res.partner.address</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+        	<field name="street2" position="after">
+        		<field name="street3"/>
+        		<field name="street4"/>
+        	</field>
+        </field>
+	</record>
+	
 <!--
     =======================================================
         OVERLAY PAYMENT RULE

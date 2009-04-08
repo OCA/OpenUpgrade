@@ -28,11 +28,11 @@ class dm_customers_file(osv.osv):
     _inherit = "dm.customers_file"
 
     def __init__(self, *args):
-        self._FILE_SOURCES.append(('crm_cases','CRM Cases'))
+        self._FILE_SOURCES.append(('case_id','CRM Cases'))
         return super(dm_customers_file, self).__init__(*args)
 
     _columns = {
-                'case_ids' : fields.many2many('crm.case','crm_case_customer_file_rel','case','cust_file_id','CRM Cases')
+                'case_ids' : fields.many2many('crm.case','crm_case_customer_file_rel','case_id','cust_file_id','CRM Cases')
             }
 dm_customers_file()
 

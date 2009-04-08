@@ -8,7 +8,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 					<notebook position='inside'>
-						<page string="Tests  to perform" attrs="{'invisible':[('type_id','!=','schema.validation')]}">
+						<page string="Other Information" attrs="{'invisible':[('type_id','!=','schema.validation')]}">
 							<field name="field_name" />
 							<field name="field_extra"/>
 							<field name="field_size"/>

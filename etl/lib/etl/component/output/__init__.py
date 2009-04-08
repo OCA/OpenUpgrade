@@ -23,7 +23,7 @@
 """
  To load/store data into destinaton system
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License
 """
 
@@ -31,4 +31,5 @@ from csv_out import csv_out
 from sql_out import sql_out
 from openobject_out import openobject_out
 from facebook_out import facebook_out
+#from xmlrpc_out import xmlrpc_out
 

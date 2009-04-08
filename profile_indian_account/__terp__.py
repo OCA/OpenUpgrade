@@ -26,9 +26,7 @@
     "category":"Profile",
     "depends":[
         "account_base",
-        "account_voucher",
         "account_invoice",
-        "l10n_chart_in",
         "account_voucher",
         "account_india",
         "account_report_india",

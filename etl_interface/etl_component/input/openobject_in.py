@@ -40,7 +40,7 @@ class etl_component_openobject_in(osv.osv):
     _columns={
           'field_ids': fields.one2many('etl.component.field', 'component_id', 'Fields'),
           'model_id': fields.many2one('ir.model', 'Model'),
-          'transformer_id': fields.many2one('etl.transformer', 'Transformer'),
+
      }
 
     def create_instance(self, cr, uid, id, context={}, data={}):

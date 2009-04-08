@@ -11,6 +11,15 @@
             id="bi_conf_cube_query_builder"/>
         <menuitem name="Query Builder" action="bi_conf_cube_query_builder" type="wizard"  id="menu_bi_conf_cube_query_builder" sequence="40" parent="menu_bi_conf_tools"/>
 
+    <wizard
+            string="Load Tables"
+            model="olap.schema"
+            name="olap.load.table"
+            menu= "False"
+            multi="True"
+            id="bi_menu_olap_load_table"/>
+
+
         <wizard
             string="Load Tables"
             model="olap.schema"
@@ -57,5 +66,7 @@
             menu="True"
             id="bi_clear_logs"/>    
         <menuitem name="Clear Logs" action="bi_clear_logs" type="wizard"  id="menu_bi_clear_logs" sequence="30" parent="menu_bi_conf_tools"/>
+
+
     </data>
 </openerp>

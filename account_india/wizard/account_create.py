@@ -31,6 +31,8 @@ import pooler
 
 dates_form = '''<?xml version="1.0"?>
 <form string="Partner Account">
+    <field name="company_id" colspan="4"/>
+    <newline/>
     <field name="debit_name"/><newline/>
     <field name="debit_parent" colspan="4"/>
     <field name="credit_name"/><newline/>
@@ -38,6 +40,7 @@ dates_form = '''<?xml version="1.0"?>
 </form>'''
 
 dates_fields = {
+    'company_id': {'string': 'Company', 'type': 'many2one', 'relation': 'res.company', 'required': True},
     'debit_name': {'string':'Receivable Account', 'type':'char', 'size':64, 'required':True},
     'credit_name': {'string':'Payable Account', 'type':'char', 'size':64,  'required':True},
     'debit_parent': {'string':'Account Receivable', 'type':'many2one', 'relation': 'account.account', 'required':True},
@@ -47,29 +50,32 @@ dates_fields = {
 def get_name(self, cr, uid, data, context={}):
     partner = pooler.get_pool(cr.dbname).get('res.partner')
     account = pooler.get_pool(cr.dbname).get('account.account')
-    
     name = partner.read(cr, uid, [data['id']], ['name'])[0]['name']
-    
-    
+    user = pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, uid,context)
+    company_id = user.company_id.id
     res = {
         'debit_name':name + ' - Receivable', 
-        'credit_name':name + ' - Payable', 'name':name
+        'credit_name':name + ' - Payable', 'name':name,
+        'company_id':company_id,
     }
-    
+    rec_res_ids = account.search(cr,uid,[('type','=','receivable')])
+    dates_fields['debit_parent']['domain'] = "[('id','in', ["+','.join(map(str,rec_res_ids))+"])]"
+    pay_res_ids = account.search(cr,uid,[('type','=','payable')])
+    dates_fields['credit_parent']['domain'] = "[('id','in', ["+','.join(map(str,pay_res_ids))+"])]"
+
     id1 = False
     id2 = False
     try:
-        id1 = account.search(cr, uid, [('type','=','receivable')])[0]
+        id1 = account.search(cr, uid, [('type','=','receivable'), ('company_id','=',res['company_id'])])[0]
         res['debit_parent'] = id1
     except:
         pass
     
     try:
-        id2 = account.search(cr, uid, [('type','=','payable')])[0]
+        id2 = account.search(cr, uid, [('type','=','payable'), ('company_id','=',res['company_id'])])[0]
         res['credit_parent'] = id2
     except:
         pass
-    
     return res
 
     
@@ -92,7 +98,8 @@ def create_accout(self, cr, uid, data, context={}):
         'parent_id':dacc,
         'type':'receivable',
         'reconcile':True,
-        'user_type':ass_id[0]
+        'user_type':ass_id[0],
+        'company_id':data['form']['company_id'],
     })
     
     code = account.read(cr, uid, [cacc], ['code'])[0]['code']    
@@ -102,7 +109,8 @@ def create_accout(self, cr, uid, data, context={}):
         'parent_id':cacc,
         'type':'payable',
         'reconcile':True,
-        'user_type':lia_id[0]
+        'user_type':lia_id[0],
+        'company_id':data['form']['company_id'],
     })
     
     partner = pooler.get_pool(cr.dbname).get('res.partner')
