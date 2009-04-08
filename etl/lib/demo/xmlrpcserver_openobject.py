@@ -5,7 +5,7 @@ sys.path.append('..')
 import etl
 
 
-ooconnector = etl.connector.openobject_connector('http://localhost:8069', 'trunk', 'admin', 'a', con_type='xmlrpc')
+ooconnector = etl.connector.openobject_connector('http://localhost:8069', 'etl', 'admin', 'admin', con_type='xmlrpc')
 
 map = etl.component.transform.map({'main':{
     'id': "tools.uniq_id(main.get('org', 'anonymous'), prefix='partner_')",
@@ -44,8 +44,8 @@ tran=etl.transition(count, log2)
 
 job1=etl.job([oo_out2, log2],'Sub job')
 
-xmlrpc_server= etl.component.control.xmlrpc_server(job1)
-tran=etl.transition(xmlrpc_server,map)
-job2=etl.job([xmlrpc_server])
+xmlrpc_in= etl.component.input.xmlrpc_in(job1)
+tran=etl.transition(xmlrpc_in,map)
+job2=etl.job([xmlrpc_in])
 job2.run()
 

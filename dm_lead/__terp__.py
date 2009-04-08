@@ -32,6 +32,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
+                    "dm_lead_view.xml",
                     "dm_lead_data.xml",
                     ],
     "active": False,
