@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    ETL system- Extract Transfer Load system
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,18 +20,25 @@
 #
 ##############################################################################
 
-"""
-  To extract data from the source systems.
-  
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
- GNU General Public License
-"""
-from data import data
-from csv_in import csv_in
-from sql_in import sql_in
-from openobject_in import openobject_in
-from facebook_in import facebook_in
-from vcard_in import vcard_in
-from gmail_in import gmail_in
-from sugarcrm_in import sugarcrm_in
-from xmlrpc_in import xmlrpc_in
+{
+    "name" : "Invoice Payment through Voucher",
+    "version" : "1.0",
+    "author" : "Tiny",
+    "description": """
+        This module includes :
+        * It is used to pay the invoice amount through 
+          voucher
+    """,
+    "category" : "Generic Modules/Accounting",
+    "website" : "http://tinyerp.com",
+    "depends" : ["base", "account"],
+    "init_xml" : [
+    ],
+    
+    "demo_xml" : [],
+    "update_xml" : ["account_voucher_payment_view.xml"],
+    "active": False,
+    "installable": True,
+}
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

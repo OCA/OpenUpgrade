@@ -19,43 +19,58 @@ def generate_reports(cr,uid,obj,report_type,context):
     print "Calling generate_reports source code : ", obj.source
     customer_id = getattr(obj, obj.source).id
     print "customer_id : ",customer_id
+    customer_ids = []
+
+    if not customer_id:
+        """ if segment workitem """
+        print "source fields : ",getattr(obj.segment_id.customers_file_id, obj.source + "s")
+        for cust_id in getattr(obj.segment_id.customers_file_id, obj.source + "s"):
+            print "cust_id : ",cust_id
+            customer_ids.append(cust_id.id)
+    else:
+        """ if customer workitem """
+        customer_ids.append(customer_id)
+
+    print "customer_ids : ", customer_ids
 
     step_id = obj.step_id.id
     pool = pooler.get_pool(cr.dbname)
     dm_doc_obj = pool.get('dm.offer.document') 
     report_xml = pool.get('ir.actions.report.xml')
 
-    type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',report_type)])
-    vals={'segment_id': obj.segment_id.id, 'name': obj.step_id.code + "_" +str(customer_id), 'type_id': type_id[0]}
-    camp_doc  = pool.get('dm.campaign.document').create(cr,uid,vals)
+    for customer_id in customer_ids:
 
-    document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
-    print "Doc id : ",document_id
+        type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',report_type)])
+        vals={'segment_id': obj.segment_id.id, 'name': obj.step_id.code + "_" +str(customer_id), 'type_id': type_id[0]}
+        camp_doc  = pool.get('dm.campaign.document').create(cr,uid,vals)
 
-    if document_id :
-        report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
-        print "report_ids : ",report_ids
-        document_name = dm_doc_obj.read(cr,uid,document_id,['name'])[0]['name']
-        print "Doc name : ",document_name
-        if report_ids :
-            attachment_obj = pool.get('ir.attachment')
-            for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
-                print "Report name : ",report.report_name
-                srv = netsvc.LocalService('report.' + report.report_name)
-                print "Report test srv: ", srv
-                context['customer_id'] = customer_id
-                context['document_id'] = document_id[0]
-                report_data,report_type = srv.create(cr, uid, [], {},context)
-                print "Report data : ",report_data
-                print "Report type : ",report_type
-                attach_vals={'name' : document_name + "_" + str(customer_id),
-                             'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
-                             'res_model' : 'dm.campaign.document',
-                             'res_id' : camp_doc,
-                             'datas': base64.encodestring(report_data),
-                             }
-                attach_id = attachment_obj.create(cr,uid,attach_vals)
-                print "Attachement : ",attach_id
+        document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
+        print "Doc id : ",document_id
+
+        if document_id :
+            report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
+            print "report_ids : ",report_ids
+            document_name = dm_doc_obj.read(cr,uid,document_id,['name'])[0]['name']
+            print "Doc name : ",document_name
+            if report_ids :
+                attachment_obj = pool.get('ir.attachment')
+                for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
+                    print "Report name : ",report.report_name
+                    srv = netsvc.LocalService('report.' + report.report_name)
+                    print "Report test srv: ", srv
+                    context['customer_id'] = customer_id
+                    context['document_id'] = document_id[0]
+                    report_data,report_type = srv.create(cr, uid, [], {},context)
+                    print "Report data : ",report_data
+                    print "Report type : ",report_type
+                    attach_vals={'name' : document_name + "_" + str(customer_id),
+                                 'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
+                                 'res_model' : 'dm.campaign.document',
+                                 'res_id' : camp_doc,
+                                 'datas': base64.encodestring(report_data),
+                                 }
+                    attach_id = attachment_obj.create(cr,uid,attach_vals)
+                    print "Attachement : ",attach_id
     return True
 
 

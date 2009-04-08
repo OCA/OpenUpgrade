@@ -307,14 +307,9 @@ class dm_campaign(osv.osv):
             quantity=0
             numeric=True
             for propo in campaign.proposition_ids:
-                if propo.quantity_planned.isdigit():
-                    quantity += int(propo.quantity_planned)
-                else:
-                    result[campaign.id]='Check Segments'
-                    numeric=False
-                    break
-            if numeric:
-                result[campaign.id]=str(quantity)
+                if propo.quantity_planned:
+                    quantity += propo.quantity_planned
+            result[campaign.id]=str(quantity)
         return result
 
     def _quantity_wanted_total(self, cr, uid, ids, name, args, context={}):
@@ -491,8 +486,20 @@ class dm_campaign(osv.osv):
         if (camp.date_start > time.strftime('%Y-%m-%d')):
             raise osv.except_osv("Error!!","Campaign cannot be opened before drop date!!!")
 
+        """ Create Flow Start Workitems """
+        print "Starting Campaign"
+        start_type_ids = self.pool.get('dm.offer.step.type').search(cr, uid, [('flow_start','=',True)])
+        print "start_type_ids : ",start_type_ids
+        step_ids = self.pool.get('dm.offer.step').search(cr, uid, [('offer_id','=',camp.offer_id.id),('type_id','in',start_type_ids)])
+        print "step_ids : ",step_ids
 
-
+        for step in step_ids:
+            for propo in camp.proposition_ids:
+                for seg in propo.segment_ids:
+                    if seg.type_src == 'internal' and seg.customers_file_id:
+                        res = self.pool.get('dm.workitem').create(cr, uid, {'segment_id':seg.id, 'step_id':step,
+                            'source':seg.customers_file_id.source, 'action_time': time.strftime("%Y-%m-%d %H:%M:%S")})
+                        print "created wi :",res
 
         self.write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
 
@@ -1025,7 +1032,7 @@ class dm_customers_file(osv.osv):
     _description = "A File of addresses"
 
     _FILE_SOURCES = [
-        ('addresses','Partner Addresses'),
+        ('address_id','Partner Addresses'),
     ]
 
     _columns = {
@@ -1040,7 +1047,7 @@ class dm_customers_file(osv.osv):
         'note' : fields.text('Notes'),
     }
     _defaults =  {
-        'source': lambda *a: 'addresses',
+        'source': lambda *a: 'address_id',
     }
 
 dm_customers_file()
@@ -1067,15 +1074,25 @@ class dm_campaign_proposition_segment(osv.osv):
         result ={}
         for id in ids:
             seg = self.browse(cr,uid,[id])[0]
-            segment_list = self.search(cr,uid,[('customers_list_id','=',seg.customers_list_id.id)])
-            i = 1 
-            for s in segment_list:  
-                country_code = seg.customers_list_id.country_id.code or ''
-                cust_list_code =  seg.customers_list_id.code
-                seq = '%%0%sd' % 2 % i
-                code1='-'.join([country_code[:3], cust_list_code[:3], seq[:4]])
-                result[s]=code1
-                i +=1
+            if seg.customers_list_id:
+                segment_list = self.search(cr,uid,[('customers_list_id','=',seg.customers_list_id.id)])
+                i = 1 
+                for s in segment_list:
+                    country_code = seg.customers_list_id.country_id.code or ''
+                    cust_list_code =  seg.customers_list_id.code
+                    seq = '%%0%sd' % 2 % i
+                    code1='-'.join([country_code[:3], cust_list_code[:3], seq[:4]])
+                    result[s]=code1
+                    i +=1
+            elif seg.customers_file_id:
+                segment_list = self.search(cr,uid,[('customers_file_id','=',seg.customers_file_id.id)])
+                i = 1 
+                for s in segment_list:
+                    cust_file_code =  seg.customers_file_id.code
+                    seq = '%%0%sd' % 2 % i
+                    code1='-'.join([cust_file_code[:3], seq[:4]])
+                    result[s]=code1
+                    i +=1
         return result
 
     def onchange_list(self, cr, uid, ids, customers_list, start_census, end_census):
@@ -2014,6 +2031,16 @@ class res_partner(osv.osv):
         'state_ids': _default_all_state,
     }
 res_partner()
+
+class res_partner_address(osv.osv):
+    _inherit = 'res.partner.address'
+    _columns = {
+        'firstname' : fields.char('First Name',size=64),
+        'name_complement' : fields.char('Name Complement',size=64),
+        'street3' : fields.char('Street3',size=32),
+        'street4' : fields.char('Street4',size=32),
+    }
+res_partner_address()
 
 class purchase_order(osv.osv):
     _name = 'purchase.order'

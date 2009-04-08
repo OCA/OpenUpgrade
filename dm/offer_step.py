@@ -71,16 +71,16 @@ dm_offer_step_action()
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
 
-    def _offer_step_code(self, cr, uid, ids, name, args, context={}):
-        result ={}
-        for id in ids:
-            offer_step = self.browse(cr,uid,[id])[0]
-            step_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type_id.id])
-            type_code = (step_code[offer_step.type_id.id] or offer_step.type_id.code) + str(offer_step.seq)
-            offer_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,code', 'model', context.get('lang', False) or 'en_US',[offer_step.offer_id.id])
-            code = (offer_code[offer_step.offer_id.id] or offer_step.offer_id.code) + '_' + type_code
-            result[id] = str(code)
-        return result
+#    def _offer_step_code(self, cr, uid, ids, name, args, context={}):
+#        result ={}
+#        for id in ids:
+#            offer_step = self.browse(cr,uid,[id])[0]
+#            step_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type_id.id])
+#            type_code = (step_code[offer_step.type_id.id] or offer_step.type_id.code) + str(offer_step.seq)
+#            offer_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,code', 'model', context.get('lang', False) or 'en_US',[offer_step.offer_id.id])
+#            code = (offer_code[offer_step.offer_id.id] or offer_step.offer_id.code) + '_' + type_code
+#            result[id] = str(code)
+#        return result
 
     _columns = {
         'seq' : fields.integer('Step Type Sequence'),
@@ -88,7 +88,8 @@ class dm_offer_step(osv.osv):
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade", states={'closed':[('readonly',True)]}),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32, states={'closed':[('readonly',True)]}),
-        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,size=64),
+#        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,size=64),
+        'code' : fields.char('Code',size=64,required=True),
         'quotation' : fields.char('Quotation', size=16, states={'closed':[('readonly',True)]}),
         'media_id' : fields.many2one('dm.media', 'Media', ondelete="cascade",required=True, states={'closed':[('readonly',True)]}),
         'type_id' : fields.many2one('dm.offer.step.type','Type',required=True, states={'closed':[('readonly',True)]}),
@@ -122,6 +123,13 @@ class dm_offer_step(osv.osv):
         'split_mode' : lambda *a : 'or',
     }
 
+    def onchange_code(self,cr,uid,ids,type_id):
+        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type_id])[0]
+        value = {
+                    'code':step_type['name'],
+                }
+        return {'value':value}
+    
     def onchange_type(self,cr,uid,ids,type_id,offer_id,context):
         step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type_id])[0]
         value = {
@@ -197,7 +205,7 @@ class dm_offer_step_transition(osv.osv):
     _columns = {
         'condition_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
         'delay' : fields.integer('Offer Delay' ,required=True),
-        'delay_type' : fields.selection([('minutes', 'Minutes'),('hour','Hours'),('day','Days'),('month','Months')], 'Delay type', required=True),
+        'delay_type' : fields.selection([('minute', 'Minutes'),('hour','Hours'),('day','Days'),('month','Months')], 'Delay type', required=True),
         'step_from_id' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to_id' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
     }
