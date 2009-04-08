@@ -848,8 +848,8 @@
                         <field name="type_src"/>
                     </group>
                     <group colspan="2" col="2">
-                        <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)" attrs="{'invisible':[('type_src','=','internal')]}" />
-                        <field name="customers_file_id" select="1" groups="base.group_extended" attrs="{'invisible':[('type_src','=','external')]}"/>
+                        <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)" attrs="{'invisible':[('type_src','=','internal')],'readonly':[('type_src','=','internal')]}" />
+                        <field name="customers_file_id" select="1" groups="base.group_extended" attrs="{'invisible':[('type_src','=','external')],'readonly':[('type_src','=','external')]}"/>
                     </group>
                 </group>
                 <notebook colspan="4">
@@ -1552,6 +1552,15 @@
                             <separator string="Partner Addresses" colspan="4"/>
                             <field name="address_ids" colspan="4" nolabel="1"/>
                         </group>
+                        <group colspan="4" attrs="{'invisible':[('source','!=','case_id')]}">
+                            <separator string="CRM Cases" colspan="4"/>
+                            <field name="case_ids" colspan="4" nolabel="1">
+                                <tree string="CRM Cases">
+                                    <field name="description"/>
+                                    <field name="date"/>
+                                </tree>
+                            </field>
+                        </group>
                     </page>
                     <page string="Segments">
                         <field name="segment_ids" colspan="4" nolabel="1">
@@ -1634,7 +1643,7 @@
     =======================================================
     -->
 
-    <record id="view_partner_form_inherit1" model="ir.ui.view">
+    <record id="view_partner_property_form1" model="ir.ui.view">
         <field name="name">res.partner.form.inherit</field>
         <field name="model">res.partner</field>
         <field name="type">form</field>
@@ -1651,103 +1660,7 @@
             </notebook>
         </field>
     </record>
-    
-    <record id="view_partner_form_inherit2" model="ir.ui.view">
-        <field name="name">res.partner.form.inherit</field>
-        <field name="model">res.partner</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
-        <field name="arch" type="xml">
-        	<field colspan="4" mode="form,tree" name="address" nolabel="1" select="1" position="replace">
-        		<field colspan="4" mode="form,tree" name="address" nolabel="1" select="1">
-	        		<form string="Partner Contacts">
-	        			<field name="firstname"/>
-		                <field name="name" select="2" string="Last Name"/>
-		                <field name="name_complement"/>
-		                <field domain="[('domain', '=', 'contact')]" name="title" string="Type"/>
-		                <field name="function"/>
-		                <field name="type" select="2"/>
-		                <field name="street" select="2"/>
-		                <field name="street2"/>
-		                <field name="street3"/>
-		                <field name="street4"/>
-		                <field name="zip" select="2"/>
-		                <field name="city" select="2"/>
-		                <field completion="1" name="country_id" select="2"/>
-		                <field name="state_id" select="2"/>
-		                <field name="phone"/>
-		                <field name="fax"/>
-		                <field name="mobile"/>
-		                <field name="email" select="2" widget="email"/>
-		            </form>
-		            <tree string="Partner Contacts">
-		            	<field name="firstname"/>
-		                <field name="name" string="Last Name"/>
-		                <field name="zip"/>
-		                <field name="city"/>
-		                <field name="country_id"/>
-		                <field name="phone"/>
-		                <field name="email"/>
-		            </tree>
-		    	</field>
-        	</field>
-        </field>
-	</record>
-    
-    <!--
-    =======================================================
-    PARTNER ADDRESS EXTENSIONS
-    =======================================================
-    -->
-	<record id="view_partner_address_form_inherit1" model="ir.ui.view">
-        <field name="name">res.partner.address.form.inherit</field>
-        <field name="model">res.partner.address</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="base.view_partner_address_form1"/>
-        <field name="arch" type="xml">
-        	<field name="name" position="replace">
-        		<field name="name" string="Last Name"/>
-        	</field>
-        </field>
-	</record>
 
-	<record id="view_partner_address_form_inherit2" model="ir.ui.view">
-        <field name="name">res.partner.address.form.inherit</field>
-        <field name="model">res.partner.address</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="base.view_partner_address_form1"/>
-        <field name="arch" type="xml">
-        	<field name="name" position="before">
-        		<field name="firstname"/>
-        	</field>
-        </field>
-	</record>
-	
-	<record id="view_partner_address_form_inherit3" model="ir.ui.view">
-        <field name="name">res.partner.address.form.inherit</field>
-        <field name="model">res.partner.address</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="base.view_partner_address_form1"/>
-        <field name="arch" type="xml">
-        	<field name="name" position="after">
-        		<field name="name_complement"/>
-        	</field>
-        </field>
-	</record>
-	
-	<record id="view_partner_address_form_inherit4" model="ir.ui.view">
-        <field name="name">res.partner.address.form.inherit</field>
-        <field name="model">res.partner.address</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="base.view_partner_address_form1"/>
-        <field name="arch" type="xml">
-        	<field name="street2" position="after">
-        		<field name="street3"/>
-        		<field name="street4"/>
-        	</field>
-        </field>
-	</record>
-	
 <!--
     =======================================================
         OVERLAY PAYMENT RULE
