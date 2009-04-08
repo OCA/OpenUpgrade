@@ -51,7 +51,7 @@
 								<field name="state"/>
 								<button name="open_voucher" string="Pro-forma" states="draft"/>
 								<button name="proforma_voucher" string="Create" states="proforma"/>
-								<button name="cancel_voucher" string="Cancel" states="draft,proforma"/>
+								<button name="cancel_voucher" string="Cancel" states="draft,proforma,post"/>
 								<button name="action_cancel_draft" states="cancel" type="object" string="Set to Draft"/>
 							</group>
 						</page>
