@@ -1196,18 +1196,18 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Participation" editable="bottom">
-                    <field name="event_id" />
-                    <field name="subscription_id" />
-                    <field name="present" />
-                    <field name="date" />
-                    <field name="contact_id" />
                     <field name="partner_id" />
+                    <field name="contact_id" />
+                    <field name="event_id" />
+                    <field name="date" />
+                    <field name="present" />
+                    <field name="subscription_id" />
                 </tree>
             </field>
         </record>
 
         <record model="ir.actions.act_window" id="action_training_participation_all">
-            <field name="name">Participations</field>
+            <field name="name">Participations of the Participants</field>
             <field name="res_model">training.participation</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
@@ -1228,8 +1228,13 @@
                     <separator string="Participation Description" colspan="4"/>
                     <field name="skateholder_id" />
                     <field name="partner_id" />
+                    <separator string="Seance Information" colspan="4" />
                     <field name="seance_id" />
+                    <field name="course_id" />
+                    <field name="date" />
                     <field name="evaluation" />
+                    <separator string="Payment Mode" colspan="4" />
+                    <field name="payment_mode" />
                 </form>
             </field>
         </record>
@@ -1243,7 +1248,10 @@
                     <field name="skateholder_id" />
                     <field name="partner_id" />
                     <field name="seance_id" />
+                    <field name="course_id" />
+                    <field name="date" />
                     <field name="evaluation" />
+                    <field name="payment_mode" />
                 </tree>
             </field>
         </record>

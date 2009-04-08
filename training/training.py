@@ -812,6 +812,12 @@ class training_participation_skateholder(osv.osv):
         'partner_id' : fields.many2one('res.partner', 'Partner'),
         'skateholder_id' : fields.many2one('res.partner.contact', 'Contact'),
         'evaluation' : fields.integer('Evaluation'),
+        'payment_mode' : fields.selection([('contract','Contract'),('invoice','Invoice')],
+                                          'Payment Mode'),
+        'date' : fields.related('seance_id', 'date', type='datetime', string='Date', readonly=True),
+        'course_id' : fields.related('seance_id', 'course_id',
+                                     type='many2one', relation='training.course',
+                                     string='Course', readonly=True),
     }
 
 training_participation_skateholder()
