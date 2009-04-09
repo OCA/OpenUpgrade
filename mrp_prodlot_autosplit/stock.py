@@ -94,7 +94,7 @@ stock_picking()
 class stock_production_lot(osv.osv):
     _inherit = "stock.production.lot"
 
-    def _last_location(self, cr, uid, ids, field_name, arg, context={}):
+    def _last_location_id(self, cr, uid, ids, field_name, arg, context={}):
         res = {}
         for prodlot_id in ids:
             cr.execute("select location_dest_id from stock_move where stock_move.prodlot_id = %s and stock_move.state='done' order by stock_move.date_planned ASC LIMIT 1" % prodlot_id)
@@ -106,7 +106,7 @@ class stock_production_lot(osv.osv):
         return res
     
     _columns = {
-        'last_location': fields.function(_last_location, method=True, type="many2one", relation="stock.location", string="Last Location"),
+        'last_location_id': fields.function(_last_location_id, method=True, type="many2one", relation="stock.location", string="Last Location"),
     }
 
 stock_production_lot()
