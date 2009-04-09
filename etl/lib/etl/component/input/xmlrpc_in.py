@@ -29,63 +29,43 @@ from etl.component import component
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
 import threading
-
-class xmlrpc_server_thread(threading.Thread):
-
-    def run(self):
-        server = SimpleXMLRPCServer((self.host, self.port))
-        server.register_introspection_functions()
-        server.register_function(self.import_data)
-        server.serve_forever()
-
+#
 class xmlrpc_in(component):
     """
     To connect server with xmlrpc request
 
     """
-    def __init__(self, job, host='localhost', port=5000, name='control.xmlrpc_in', transformer=None):
+    _register_functions=[]
+
+    def __init__(self, xmlrpc_connector,  name='control.xmlrpc_in', transformer=None):
         """
         To be update
         """
         super(xmlrpc_in, self).__init__(name, transformer=transformer)
-        self.job = job
-        self.host=host
-        self.port=port
+        self.xmlrpc_connector = xmlrpc_connector
         self.datas=[]
         self.isStarted=False
+        self.register_functions(self.import_data)
 
-#    def start(self):
-#        self.isStarted=True
-#        server = SimpleXMLRPCServer((self.host, self.port))
-#        server.register_introspection_functions()
-#        server.register_function(self.import_data)
-#        server.serve_forever()
+    def register_functions(self,fun):
+        self._register_functions.append(fun)
 
     def process(self):
-        if not self.isStarted:
-            xml_server = xmlrpc_server_thread()
-            xml_server.host = self.host
-            xml_server.port = self.port
-            xml_server.import_data = self.import_data
-            xml_server.start()
-#        if not self.isStarted:
-#            self.start()
-
-
-    def data_iterator(self,datas):
-        for d in datas:
+        self.xmlrpc_connector.start(self.import_data)
+        for d in self.datas:
             yield d,'main'
 
-    def import_data(self, datas):#to be check
-        if not self.job:
-            return
-        job=self.job.copy()
-        if datas:
-            self.generator=self.data_iterator(datas)
-            job.run()
-#        else:
-#            if job.status in ('start'):
-#                job.pause()
+    def iterator(self,datas=[]):
+        if self.transformer:
+            row=self.transformer.transform(self.datas)
+        for d in datas:
+            yield d, 'main'
+
+    def data_iterator(self,datas):
+        pass
+
+    def import_data(self, datas):
+        self.generator=self.data_iterator(datas)
         return True
 
 def test():
