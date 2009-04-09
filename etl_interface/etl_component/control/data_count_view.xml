@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="action_etl_component_data_count_tree"
+			model="ir.actions.act_window">
+			<field name="name">Data Count Component</field>
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type_id.name','=','control.data_count')]</field>
+            <field name="context">{'type_id':'control.data_count'}</field>
+		</record>
+
+		<record id="action_etl_component_data_count_from"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type_id.name','=','control.data_count')]</field>
+            <field name="context">{'type_id':'control.data_count'}</field>
+			<field name="view_id" ref="etl_component_form" />
+		</record>
+
+		<record id="action_etl_component_data_count_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id"
+				ref="etl_interface.etl_component_tree" />
+			<field name="act_window_id"
+				ref="action_etl_component_data_count_tree" />
+		</record>
+
+		<record id="action_etl_component_data_count_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_form" />
+			<field name="act_window_id"
+				ref="action_etl_component_data_count_tree" />
+		</record>
+
+		<menuitem name="Data Count"
+			parent="etl_interface.menu_etl_jd_c_control_form"
+			action="action_etl_component_data_count_tree"
+			id="menu_etl_jd_c_pec__data_count_form" />
+
+	</data>
+</openerp>
+

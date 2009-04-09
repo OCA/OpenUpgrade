@@ -3,193 +3,193 @@
 <data>
 
 <!-- res.partner.country.relation views -->
-	<record model="ir.ui.view" id="view_partner_country_relation_tree">
-		<field name="name">res.partner.country.relation.tree</field>
-		<field name="model">res.partner.country.relation</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Partner Country Relation">
-				<field name="type"/>
-				<field name="frequency"/>
-				<field name="country_id"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_country_relation_tree">
+        <field name="name">res.partner.country.relation.tree</field>
+        <field name="model">res.partner.country.relation</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Partner Country Relation">
+                <field name="type"/>
+                <field name="frequency"/>
+                <field name="country_id"/>
+            </tree>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_partner_country_relation_form">
-		<field name="name">res.partner.country.relation.form</field>
-		<field name="model">res.partner.country.relation</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Partner Country Relation">
-				<field name="type"/>
-				<field name="frequency"/>
-				<field name="country_id"/>
-			</form>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_country_relation_form">
+        <field name="name">res.partner.country.relation.form</field>
+        <field name="model">res.partner.country.relation</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Partner Country Relation">
+                <field name="type"/>
+                <field name="frequency"/>
+                <field name="country_id"/>
+            </form>
+        </field>
+    </record>
 
 
 <!-- res.partner.contact -->
-	<record model="ir.ui.view" id="view_partner_contact_tree_inherit">
-		<field name="name">res.partner.contact.tree2</field>
-		<field name="model">res.partner.contact</field>
-		<field name="inherit_id" ref="base_contact.view_partner_contact_tree"/>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<field name="lang_id" position="replace">
-				<field name="job_ids"/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_contact_tree_inherit">
+        <field name="name">res.partner.contact.tree2</field>
+        <field name="model">res.partner.contact</field>
+        <field name="inherit_id" ref="base_contact.view_partner_contact_tree"/>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <field name="lang_id" position="replace">
+                <field name="job_ids"/>
+            </field>
+        </field>
+    </record>
 
 <!-- Remove page from parent view (make it blank) because here this page take different position... -->
--	<record model="ir.ui.view" id="view_partner_contact_form_inherit_1">
-		<field name="name">res.partner.contact.form</field>
-		<field name="model">res.partner.contact</field>
-		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<page string="Extra Information" position="replace">
-			</page>
-		</field>
-	</record>
+-    <record model="ir.ui.view" id="view_partner_contact_form_inherit_1">
+        <field name="name">res.partner.contact.form</field>
+        <field name="model">res.partner.contact</field>
+        <field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <page string="Extra Information" position="replace">
+            </page>
+        </field>
+    </record>
 
 <!-- Add new page in parent notebook -->
-	<record model="ir.ui.view" id="view_partner_contact_form_inherit_2">
-		<field name="name">res.partner.contact.form</field>
-		<field name="model">res.partner.contact</field>
-		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<notebook position="inside">
-				<page string="Who's Who">
-					<separator string="Who's who subscription" colspan="4"/>
-					<field name="who_date_last"/>
-					<field name="who_date_accept"/>
-					<field name="who_date_publication"/>
-					<field name="who_presence"/>
-					<newline/>
-					<separator string="Who's who text" colspan="4"/>
-					<field name="who_description" colspan="4" />
-				</page>
-				<page string="Known Countries">
-					<field name="country_ids" />
-				</page>
-				<page string="Personnal Links">
-					<field name="link_ids" nolabel="1">
-						<form string="Contact Link">
-							<field name="name" />
-							<field name="type_id" select="1"/>
-							<field name="contact_id" select="1"/>
-						</form>
-						<tree string="Contact Link">
-							<field name="name" />
-							<field name="type_id"/>
-							<field name="contact_id"/>
-						</tree>
-					</field>
-				</page>
-				<page string="Extra Information">
-					<field name="country_id" select="1"/>
-					<field name="birthdate" select="1"/>
-					<field name="canal_id"/>
-					<field name="national_number"/>
-					<separator string="FSE Personal Data" colspan="4"/>
-					<field name="fse_work_status" select="2"/>
-					<field name="fse_work_experience" select="2"/>
-					<field name="fse_studies" select="2" />
-				</page>
-			</notebook>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_contact_form_inherit_2">
+        <field name="name">res.partner.contact.form</field>
+        <field name="model">res.partner.contact</field>
+        <field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Who's Who">
+                    <separator string="Who's who subscription" colspan="4"/>
+                    <field name="who_date_last"/>
+                    <field name="who_date_accept"/>
+                    <field name="who_date_publication"/>
+                    <field name="who_presence"/>
+                    <newline/>
+                    <separator string="Who's who text" colspan="4"/>
+                    <field name="who_description" colspan="4" />
+                </page>
+                <page string="Known Countries">
+                    <field name="country_ids" />
+                </page>
+                <page string="Personal Links">
+                    <field name="link_ids" nolabel="1">
+                        <form string="Contact Link">
+                            <field name="name" />
+                            <field name="type_id" select="1"/>
+                            <field name="contact_id" select="1"/>
+                        </form>
+                        <tree string="Contact Link">
+                            <field name="name" />
+                            <field name="type_id"/>
+                            <field name="contact_id"/>
+                        </tree>
+                    </field>
+                </page>
+                <page string="Extra Information">
+                    <field name="country_id" select="1"/>
+                    <field name="birthdate" select="1"/>
+                    <field name="canal_id"/>
+                    <field name="national_number"/>
+                    <separator string="FSE Personal Data" colspan="4"/>
+                    <field name="fse_work_status" select="2"/>
+                    <field name="fse_work_experience" select="2"/>
+                    <field name="fse_studies" select="2" />
+                </page>
+            </notebook>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_partner_contact_form_inherit_3">
-		<field name="name">res.partner.contact.form</field>
-		<field name="model">res.partner.contact</field>
-		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="active" position="replace">
-			    <field name="data_private" select="2"/>
-				<field name="active"/>
-				<field name="self_sufficent" select="1"/>
-				<newline/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_contact_form_inherit_3">
+        <field name="name">res.partner.contact.form</field>
+        <field name="model">res.partner.contact</field>
+        <field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="active" position="replace">
+                <field name="data_private" select="2"/>
+                <field name="active"/>
+                <field name="self_sufficent" select="1"/>
+                <newline/>
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_partner_contact_form_inherit_4">
-		<field name="name">res.partner.contact.form</field>
-		<field name="model">res.partner.contact</field>
-		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="birthdate" position="after">
-			    <field name="origin" select="1"/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_contact_form_inherit_4">
+        <field name="name">res.partner.contact.form</field>
+        <field name="model">res.partner.contact</field>
+        <field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="birthdate" position="after">
+                <field name="origin" select="1"/>
+            </field>
+        </field>
+    </record>
 
 <!-- add a menu entry for contact link types -->
-		<record model="ir.ui.view" id="view_link_type_tree">
-			<field name="name">res.partner.contact.link.type.tree</field>
-			<field name="model">res.partner.contact.link.type</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Link Type">
-					<field name="name" select="1"/>
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="view_link_type_tree">
+            <field name="name">res.partner.contact.link.type.tree</field>
+            <field name="model">res.partner.contact.link.type</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Link Type">
+                    <field name="name" select="1"/>
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="view_link_type_form">
-			<field name="name">res.partner.contact.link.type.form</field>
-			<field name="model">res.partner.contact.link.type</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Link Type">
-					<field name="name" select="1"/>
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="view_link_type_form">
+            <field name="name">res.partner.contact.link.type.form</field>
+            <field name="model">res.partner.contact.link.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Link Type">
+                    <field name="name" select="1"/>
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_link_type">
-			<field name="name">Link Type</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">res.partner.contact.link.type</field>
-			<field name="view_type">form</field>
-			<field name="view_id" ref="view_link_type_tree"/>
-		</record>
-		<menuitem name="Link Type" id="menu_link" parent="base.menu_base_config"/>
-		<menuitem name="Contact Link Type" action="action_link_type" id="menu_link_type" parent="menu_link"/>
+        <record model="ir.actions.act_window" id="action_link_type">
+            <field name="name">Link Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner.contact.link.type</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_link_type_tree"/>
+        </record>
+        <menuitem name="Link Type" id="menu_link" parent="base.menu_base_config"/>
+        <menuitem name="Contact Link Type" action="action_link_type" id="menu_link_type" parent="menu_link"/>
 
 <!-- view for project form -->
-	<record model="ir.ui.view" id="view_project_form_inherit">
-		<field name="name">project.project.form.inherit</field>
-		<field name="model">project.project</field>
-		<field name="inherit_id" ref="project.edit_project"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="contact_id" position="after">
-				<field name="contact_id2"/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_project_form_inherit">
+        <field name="name">project.project.form.inherit</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="contact_id" position="after">
+                <field name="contact_id2"/>
+            </field>
+        </field>
+    </record>
 <!-- res.partner.job.. -->
-	<record model="ir.ui.view" id="view_job_form_inherit">
-		<field name="name">res.partner.job.form.inherit</field>
-		<field name="model">res.partner.job</field>
-		<field name="inherit_id" ref="base_contact.view_partner_job_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="name" position="after">
-				<field name="token"/>
-				<field name="password"/>
-				<field name="login_name"/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_job_form_inherit">
+        <field name="name">res.partner.job.form.inherit</field>
+        <field name="model">res.partner.job</field>
+        <field name="inherit_id" ref="base_contact.view_partner_job_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="login_name"/>
+                <field name="password"/>
+                <field name="token"/>
+            </field>
+        </field>
+    </record>
 
 </data>
 </openerp>

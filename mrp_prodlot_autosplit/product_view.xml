@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_normal_unique_production_number_form" model="ir.ui.view">
+            <field name="name">product.normal.stock.form.unique_production_number.inherit</field>
+            <field name="model">product.product</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="stock.view_normal_stock_property_form"/>
+            <field name="arch" type="xml">
+                <field name="track_outgoing" position="after">
+                		<field name="unique_production_number" />
+                </field>
+            </field>
+        </record>
+        
+     </data>
+</openerp>

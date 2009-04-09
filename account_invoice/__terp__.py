@@ -15,7 +15,7 @@
     """,
     "category" : "Generic Modules/Accounting",
     "website" : "http://tinyerp.com",
-    "depends" : ["base","account"],
+    "depends" : ["base","account","account_base"],
     "init_xml" : [
     ],
 
@@ -25,7 +25,7 @@
     "update_xml" : [
         "account_sequence.xml",
         "account_invoice_view.xml",
-        "account_inv_report.xml"
+        #"account_inv_report.xml"
 
     ],
     "active": False,

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report id="sale_forecast_report1"
+        		string="Sale Forecast"
+        		model="sale.forecast"
+        		name="sale.forecast.detail"
+        		rml="sale_forecast/report/sale_forecast_report.rml"
+        		auto="False"/>
+
+         <report id="report_sale_forecast_salesman"
+			 	string="Sales Forecast By Salesman"
+			 	model="sale.forecast.line"
+			 	name="sale.forecast.salesman"
+			 	rml="sale_forecast/report/sale_forecast_salesman.rml"
+			 	menu="False"
+			 	auto="False"/>
+
+
+    </data>
+</openerp>

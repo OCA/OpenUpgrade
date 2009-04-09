@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
-
 	<!-- Add Product Images,Attribute to product.product -->
 	<record model="ir.ui.view" id="view_product">
 		<field name="name">product.form</field>
@@ -12,66 +11,95 @@
 			<notebook position="inside">
 				<page string="Extra Info">
 					<field name="product_logo" widget="image"/>
-					<newline/>
-					<separator string="Web Shop" colspan="4"/>
-					<field name="shop_ids" colspan="4" nolabel="1"></field>
 				</page>
 			</notebook>
 		</field>
 	</record>
 
 	<!--  Special Offers -->
-		<record model="ir.ui.view" id="ecommerce_pricelist_version">
-		<field name="name">ecommerce.pricelist.version</field>
-		<field name="model">product.pricelist.version</field>
-		<field name="inherit_id" ref="product.product_pricelist_version_form_view"/>
+	<record model="ir.ui.view" id="ecommerce_pricelist_version">
+	<field name="name">ecommerce.pricelist.version</field>
+	<field name="model">product.pricelist.version</field>
+	<field name="inherit_id" ref="product.product_pricelist_version_form_view"/>
+	<field name="type">form</field>
+	<field name="arch" type="xml">
+		<field name="date_end" position="after">
+			<field name="offer_name"/>
+		</field>
+	</field>
+    </record>
+	    
+	   <!--  Reviews -->
+	<record model="ir.ui.view" id="ecommerce_reviews_view_tree">
+	 <field name="name">ecommerce.reviews.tree</field>
+	 <field name="model">ecommerce.product.reviews</field>
+	 <field name="type">tree</field>
+	 <field name="arch" type="xml">
+		<tree string="Reviews">
+			<field name="product_id" select="1"></field>
+		    <field name="customer_id" select="1"></field>
+		    <field name="reviewdate"></field>
+		    <field name="rating"></field>
+      		</tree>
+	 </field>
+    </record>
+
+    <record model="ir.ui.view" id="ecommerce_reviews_view_form">
+		<field name="name">ecommerce.reviews.form</field>
+		<field name="model">ecommerce.product.reviews</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<field name="date_end" position="after">
-				<field name="offer_name"/>
-			</field>
+			<form string="Product Reviews">
+			    <field name="product_id" select="1"></field>
+			    <field name="customer_id" select="1"></field>
+			    <field name="reviewdate"></field>
+			    <field name="rating"></field>
+			    <field name="review" colspan="4"/>
+			</form>
 		</field>
-	    </record>
+	</record>
 
-	   <!--  Reviews -->
-		<record model="ir.ui.view" id="ecommerce_reviews_view_tree">
-		 <field name="name">ecommerce.reviews.tree</field>
-		 <field name="model">ecommerce.product.reviews</field>
-		 <field name="type">tree</field>
-		 <field name="arch" type="xml">
-			<tree string="Reviews Tree">
-                     <field name="product_id" select="1"></field>
-				    <field name="customer_id" select="1"></field>
-				    <field name="reviewdate"></field>
-				    <field name="rating"></field>
-				    <field name="review"/>
-       		</tree>
-		 </field>
-	    </record>
+     <record model="ir.actions.act_window" id="action_ecommerce_reviews_view_form">
+		<field name="res_model">ecommerce.product.reviews</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="ecommerce_reviews_view_tree"/>
+	</record>
+    <menuitem name="Product Reviews" id="menu_action_ecommerce_reviews_view_form" parent="ecommerce.menu_ecommerce_products" action="action_ecommerce_reviews_view_form"/>
+    
+	    <!-- For Products Search Parameters -->		
 
-	    <record model="ir.ui.view" id="ecommerce_reviews_view_form">
-			<field name="name">ecommerce.reviews.form</field>
-			<field name="model">ecommerce.product.reviews</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Product Reviews">
-
-				    <field name="product_id" select="1"></field>
-				    <field name="customer_id" select="1"></field>
-				    <field name="reviewdate"></field>
-				    <field name="rating"></field>
-				    <field name="review" colspan="4"/>
-				</form>
-			</field>
-		</record>
-
-	     <record model="ir.actions.act_window" id="action_ecommerce_reviews_view_form">
-			<field name="res_model">ecommerce.product.reviews</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-			<field name="view_id" ref="ecommerce_reviews_view_tree"/>
-		</record>
-	    <menuitem name="ecommerce/Catalog/Reviews" id="menu_action_ecommerce_reviews_view_form" action="action_ecommerce_reviews_view_form"/>
-
+	<record model="ir.ui.view" id="view_ecommerce_search">
+		<field name="name">ecommerce.search.tree</field>
+		<field name="model">ecommerce.search</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Search Parameters">
+				<field name="name" select="1"/>
+				<field name="code" select="1"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_ecommerce_search_form">
+		<field name="name">ecommerce.search.form</field>
+		<field name="model">ecommerce.search</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Search Parameters">
+				<field name="name" select="1"/>
+				<field name="code" search="[('model','=','ir.model.fields'), ('model','=','product.template'), ('name','=','name')]"></field>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_ecommerce_search_form">
+		<field name="name">Search Parameters</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">ecommerce.search</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_ecommerce_search"/>
+	</record>
+	<menuitem name="Search Parameters" parent="ecommerce.menu_ecommerce_products" action="action_ecommerce_search_form" id="menu_ecommerce_search_form"/>				
+	  
 	</data>
 </openerp>

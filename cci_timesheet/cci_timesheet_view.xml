@@ -3,6 +3,7 @@
     <data>
         <menuitem name="Timesheet" id="menu_hr_root"/>
         <menuitem name="Configuration" id="menu_time_configuration" parent="menu_hr_root"/>
+        <menuitem name="Timesheet" id="menu_timesheet" parent="menu_hr_root"/>
 
     <!-- Timesheet Grant -->
         <record model="ir.ui.view" id="view_cci_timesheet_grant_form">
@@ -36,7 +37,7 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Grant" id="menu_time_config_grant" parent="menu_hr_root" action="action_grant_tree" />
+        <menuitem name="Grant" id="menu_time_config_grant" parent="menu_time_configuration" action="action_grant_tree" />
 
     <!-- Timesheet -->
         <record model="ir.ui.view" id="view_cci_timesheet_form">
@@ -120,7 +121,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem name="Timesheet" id="menu_time_timesheet" parent="menu_hr_root" action="action_timesheet_tree"/>
+        <menuitem name="Timesheet" id="menu_time_timesheet" parent="menu_timesheet" action="action_timesheet_tree"/>
 
     <!-- Timesheet Lines -->
 
@@ -180,7 +181,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem name="Timesheet Lines" id="menu_time_line" parent="menu_hr_root" action="action_cci_timesheet_line_tree" />
+        <menuitem name="Timesheet Lines" id="menu_time_line" parent="menu_timesheet" action="action_cci_timesheet_line_tree" />
 
 
     <!-- Timesheet Affectation -->
@@ -228,7 +229,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <menuitem name="Timesheet Affectation" id="menu_time_timesheet_affect" parent="menu_hr_root" action="action_timesheet_affectation_tree"/>
+        <menuitem name="Timesheet Affectation" id="menu_time_timesheet_affect" parent="menu_timesheet" action="action_timesheet_affectation_tree"/>
 
 <!-- Timesheet reporting -->
 
@@ -308,30 +309,30 @@
 
 
 <!-- view for crm.case inherit -->
-	    <record model="ir.ui.view" id="crm_case-view_inherit2">
-	        <field name="name">crm.case.form.confidential2</field>
-	        <field name="type">form</field>
-	        <field name="model">crm.case</field>
-	        <field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
-	        <field name="arch" type="xml">
-	            <field name="partner_address_id" position="after">
-	                <field name="zip_id" select="2" />
-	                <field name="grant_id" select="1"/>
-	            </field>
-	        </field>
-	    </record>
+        <record model="ir.ui.view" id="crm_case-view_inherit2">
+            <field name="name">crm.case.form.confidential2</field>
+            <field name="type">form</field>
+            <field name="model">crm.case</field>
+            <field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
+            <field name="arch" type="xml">
+                <field name="partner_address_id" position="after">
+                    <field name="zip_id" select="2" />
+                    <field name="grant_id" select="1"/>
+                </field>
+            </field>
+        </record>
 
-	    <record model="ir.ui.view" id="crm_case-view_inherit3">
-	        <field name="name">crm.case.form.confidential3</field>
-	        <field name="type">form</field>
-	        <field name="model">crm.case</field>
-	        <field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
-	        <field name="arch" type="xml">
-	            <field name="date_deadline" position="after">
-	                <field name="timesheet_line_id" select="2"/>
-	            </field>
-	        </field>
-	   </record>
+        <record model="ir.ui.view" id="crm_case-view_inherit3">
+            <field name="name">crm.case.form.confidential3</field>
+            <field name="type">form</field>
+            <field name="model">crm.case</field>
+            <field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
+            <field name="arch" type="xml">
+                <field name="date_deadline" position="after">
+                    <field name="timesheet_line_id" select="2"/>
+                </field>
+            </field>
+       </record>
 
 
 <!-- view for project task work done -->
@@ -342,10 +343,10 @@
             <field name="inherit_id" ref="project.view_task_work_form"/>
             <field name="arch" type="xml">
                 <field name="user_id" position="after">
-                    <field name="grant_id" select="1"/>
-                    <field name="partner_id" select="1"/>
-                    <field name="zip_id"/>
                     <field name="contact_id" select="2"/>
+                    <field name="zip_id"/>
+                    <field name="partner_id" select="1"/>
+                    <field name="grant_id" select="1"/>
                 </field>
             </field>
         </record>
@@ -357,7 +358,7 @@
             <field name="inherit_id" ref="project.view_task_work_form"/>
             <field name="arch" type="xml">
                 <field name="user_id" position="after">
-                	<field name="timesheet_line_id" select="2"/>
+                    <field name="timesheet_line_id" select="2"/>
                 </field>
             </field>
         </record>
@@ -369,10 +370,10 @@
             <field name="inherit_id" ref="project.view_task_work_tree"/>
             <field name="arch" type="xml">
                 <field name="user_id" position="after">
-                    <field name="grant_id" select="1"/>
-                    <field name="partner_id" select="1"/>
-                    <field name="zip_id"/>
                     <field name="contact_id" select="2"/>
+                    <field name="zip_id"/>
+                    <field name="partner_id" select="1"/>
+                    <field name="grant_id" select="1"/>
                 </field>
             </field>
         </record>

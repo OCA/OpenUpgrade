@@ -70,10 +70,3 @@ report_sxw.report_sxw(
     'addons/account_voucher/report/report_voucher.rml',
     parser=report_voucher,header=False
 )
-
-report_sxw.report_sxw(
-    'report.move.cash_receipt',
-    'account.move',
-    'addons/account_voucher/report/report_voucher.rml',
-    parser=report_voucher,header=False
-)

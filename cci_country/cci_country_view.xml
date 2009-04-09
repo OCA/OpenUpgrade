@@ -2,8 +2,8 @@
 	<data>
         <!-- Forms for the countries and areas -->
 		<record model="ir.ui.view" id="cci_country.cci_country_form">
-			<field name="name">cci_country.cci_country.form</field>
-			<field name="model">cci_country.cci_country</field>
+			<field name="name">cci_country.form</field>
+			<field name="model">cci.country</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Countries and Areas">
@@ -12,7 +12,7 @@
 					<field name="official_name" select="2" colspan="4" />
 					<field name="postalabbrev" string="Postal Abbreviation" />
 					<field name="phoneprefix" string="Phone prefix" />
-                    <field name="iscountry" string="Active" select="2" />
+                    <field name="iscountry" string="IsCountry" select="2" />
                     <field name="active" string="Active" />
 					<field name="description" string="Description"/>
 					<separator string="Valid for use in these modules" colspan="4"/>
@@ -25,8 +25,8 @@
 			</field>
 		</record>
 		<record model="ir.ui.view" id="cci_country.cci_country_tree">
-			<field name="name">cci_country.cci_country.tree</field>
-			<field name="model">cci_country.cci_country</field>
+			<field name="name">cci_country.tree</field>
+			<field name="model">cci.country</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Countries and Areas">
@@ -70,7 +70,7 @@
 		<record model="ir.actions.act_window" id="action_cci_country">
 			<field name="name">Country and Area</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_country.cci_country</field>
+			<field name="res_model">cci.country</field>
 			<field name="view_type">form</field>
 		</record>
 		<menuitem parent="base.menu_base_config" groups="base.group_system" action="action_cci_country" id="menu_cci_country" />

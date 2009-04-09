@@ -2,6 +2,31 @@
 <openerp>
 <data noupdate="True">
 
+        <!-- Currencies -->
+        <record id="BEF" model="res.currency">
+            <field name="name">BEF</field>
+            <field name="code">BEF</field>
+            <field name="rounding">0.01</field>
+            <field name="accuracy">4</field>
+        </record>
+        <record id="FRF" model="res.currency">
+            <field name="name">FRF</field>
+            <field name="code">FRF</field>
+            <field name="rounding">0.01</field>
+            <field name="accuracy">4</field>
+        </record>
+        <record id="LUF" model="res.currency">
+            <field name="name">LUF</field>
+            <field name="code">LUF</field>
+            <field name="rounding">0.01</field>
+            <field name="accuracy">4</field>
+        </record>
+        <record id="DEM" model="res.currency">
+            <field name="name">DEM</field>
+            <field name="code">DEM</field>
+            <field name="rounding">0.01</field>
+            <field name="accuracy">4</field>
+        </record>
 
         <!--
         Account Type
@@ -17,27 +42,27 @@
             <field name="close_method">balance</field>
         </record>
         <record id="account_type_liability" model="account.account.type">
-            <field name="name">Liability</field> 
+            <field name="name">Liability</field>
             <field name="code">liability</field>
             <field name="close_method">balance</field>
         </record>
         <record id="account_type_cash_equity" model="account.account.type">
-            <field name="name">Equity</field> 
+            <field name="name">Equity</field>
             <field name="code">equity</field>
             <field name="close_method">balance</field>
         </record>
         <record id="account_type_income" model="account.account.type">
-            <field name="name">Income</field> 
+            <field name="name">Income</field>
             <field name="code">income</field>
             <field name="close_method">unreconciled</field>
         </record>
         <record id="account_type_expense" model="account.account.type">
-            <field name="name">Expense</field> 
+            <field name="name">Expense</field>
             <field name="code">expense</field>
             <field name="close_method">unreconciled</field>
         </record>
         <record id="account_type_cash_moves" model="account.account.type">
-            <field name="name">Cash</field> 
+            <field name="name">Cash</field>
             <field name="code">cash</field>
             <field name="close_method">balance</field>
         </record>
@@ -49,39 +74,28 @@
 	<record id="account_bob_0" model="account.account">
 		<field name="code">0</field>
 		<field name="name">Plan comptable importé de Bob</field>
-		<!--<field name="parent_id" eval="[]"/>-->
-		<field name="type">view</field> <!-- TODO: replace by root -->
+		<field name="type">view</field>
 		<field name="user_type" ref="l10n_be.user_type_view"/>
 	</record>
 
 
     <!-- partner missing -->
-	<!--<record id="res_partner_destroyed" model="res.partner">
-		<field eval="0" name="alert_legalisations"/>
-		<field eval="0" name="alert_events"/>
-		<field eval="0" name="invoice_special"/>
-		<field eval="1" name="dir_presence"/>
-		<field eval="&quot;prospect&quot;" name="magazine_subscription"/>
-		<field eval="0" name="domiciliation_bool"/>
+	<record id="res_partner_destroyed" model="res.partner">
 		<field eval="1" name="active"/>
-		<field eval="0" name="wall_exclusion"/>
 		<field eval="&quot;Missing Partner&quot;" name="name"/>
-		<field eval="0" name="alert_advertising"/>
-		<field eval="0" name="alert_membership"/>
-		<field eval="0" name="invoice_public"/>
-		<field eval="0" name="dir_exclude"/>
-	</record>-->
+	</record>
 
 	<!-- address of missing partner -->
-	<!--<record id="res_partner_address_bob" model="res.partner.address">
+	<record id="res_partner_address_bob" model="res.partner.address">
             <field name="name">Missing Partners Address</field>
             <field name="type">default</field>
             <field name="partner_id" ref="res_partner_destroyed"/>
-     </record>-->
+     </record>
 
 	<!-- function missing -->
 	<record id="res_partner_function_bob" model="res.partner.function">
 		<field eval="&quot;Unknown Function&quot;" name="name"/>
+		<field eval="&quot;UF&quot;" name="code"/>
 	</record>
 
 </data>

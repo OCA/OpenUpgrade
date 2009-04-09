@@ -1,30 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id: sale.py 1005 2005-07-25 08:41:42Z nicoe $
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -149,14 +141,14 @@ class account_invoice_line_wh_rebate(osv.osv):
         tax_grouped = {}
         tax_obj = self.pool.get('account.tax')
 #TODO: rewrite using browse instead of the manual SQL queries
-        cr.execute('SELECT * FROM account_invoice_line WHERE invoice_id=%d', (invoice_id,))
+        cr.execute('SELECT * FROM account_invoice_line WHERE invoice_id=%s', (invoice_id,))
         lines = cr.dictfetchall()
         rebate_percent = invoice.rebate_percent
         rebate_amount = 0.0
         for line in lines:
             price_unit = line['price_unit'] * (100.0 - rebate_percent) / 100.0
             res.append({'type':'src', 'name':line['name'], 'price_unit':price_unit, 'quantity':line['quantity'], 'price':round(line['quantity']*price_unit, 2), 'account_id':line['account_id']})
-            cr.execute('SELECT tax_id FROM account_invoice_line_tax WHERE invoice_line_id=%d', (line['id'],))
+            cr.execute('SELECT tax_id FROM account_invoice_line_tax WHERE invoice_line_id=%s', (line['id'],))
             rebate_amount += (line['price_unit'] * rebate_percent / 100.0) * line['quantity']
             for (tax_id,) in cr.fetchall():
                 # even though we pass only one tax id at a time to compute, it can return several results
@@ -174,7 +166,7 @@ class account_invoice_line_wh_rebate(osv.osv):
                     else:
                         tax_grouped[key]['amount'] += tax['amount']
         # delete automatic tax lines for this invoice
-        cr.execute("DELETE FROM account_invoice_tax WHERE NOT manual AND invoice_id=%d", (invoice_id,))
+        cr.execute("DELETE FROM account_invoice_tax WHERE NOT manual AND invoice_id=%s", (invoice_id,))
         
         # (re)create them
         ait = self.pool.get('account.invoice.tax')

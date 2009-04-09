@@ -1,28 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -48,7 +42,7 @@ first_form = '''<?xml version="1.0"?>
     <field name="mail_from"/>
     <newline/>
     <field name="mail"/>
-    </group>    
+    </group>
 </form>'''
 first_fields = {
     'portal_id': {'string':'Portal', 'type':'many2one', 'required':True, 'relation': 'portal.portal'},
@@ -73,7 +67,7 @@ second_fields = {
 def genpasswd():
     chars = string.letters + string.digits
     return ''.join([choice(chars) for i in range(6)])
-    
+
 
 def _create_user(self, cr, uid, data, context):
     pool= pooler.get_pool(cr.dbname)
@@ -102,18 +96,18 @@ def _create_user(self, cr, uid, data, context):
 
             passwd= genpasswd()
             out+= addr.email+','+passwd+'\n'
-            user_ref.create(cr,uid,{'name': addr.name or 'Unknown', 
+            user_ref.create(cr,uid,{'name': addr.name or 'Unknown',
                                     'login': addr.email,
                                     'password': passwd,
                                     'address_id': addr.id,
-                                    'action_id': portal.home_action_id and portal.home_action_id.id or portal.menu_action_id.id, 
-                                    'menu_id': portal.menu_action_id.id, 
-                                    'groups_id': [(4,portal.group_id)],
+                                    'action_id': portal.home_action_id and portal.home_action_id.id or portal.menu_action_id.id,
+                                    'menu_id': portal.menu_action_id.id,
+                                    'groups_id': [(4,portal.group_id.id)],
                                     'company_id': portal.company_id.id,
                                    })
             mail= data['form']['mail']%{'login':addr.email, 'passwd':passwd}
             if data['form']['send_mail']:
-                if not data['form']['mail_from']: raise wizard.except_wizard('Error !', 'Please provide a "from" email address.')           
+                if not data['form']['mail_from']: raise wizard.except_wizard('Error !', 'Please provide a "from" email address.')
                 tools.email_send(data['form']['mail_from'],[addr.email] ,data['form']['mail_subject'] ,mail )
             created+= "- %s (Login: %s,  Password: %s)\n"%(addr.name or 'Unknown',addr.email,passwd)
 
@@ -128,14 +122,14 @@ def _create_user(self, cr, uid, data, context):
 
 class wizard_report(wizard.interface):
     states = {
-        'init': {'actions': [], 
+        'init': {'actions': [],
                  'result': {'type':'form',
                             'arch':first_form,
                             'fields':first_fields,
                             'state':[('end','_Cancel'),('create','_Next')]}
                  },
-        
-        'create':{'actions': [_create_user], 
+
+        'create':{'actions': [_create_user],
                'result': {'type':'form',
                           'arch':second_form,
                           'fields':second_fields,

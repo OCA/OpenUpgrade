@@ -1,854 +1,854 @@
 ﻿<?xml version="1.0" ?>
 <openerp>
-	<data>
+    <data>
 
-		<menuitem name="Missions" id="menu_mission"/>
+        <menuitem name="Missions" id="menu_mission"/>
 
-		<record model="ir.ui.view" id="view_partner_form_inherit_mission">
-			<field name="name">res.partner.form</field>
-			<field name="type">form</field>
-			<field name="model">res.partner</field>
-			<field name="inherit_id" ref="cci_partner.view_partner_form_inherit2"/>
-			<field name="arch" type="xml">
-				<field name="canal_id" position="after">
-					<field name="insurer_id" />
-					<separator string="ATA infos" colspan="4"/>
-					<field name="sender_name"/>
-					<separator string="Sender Info" colspan="4"/>
-					<newline/>
-					<field name="asker_zip_id"/>
-					<newline/>
-					<field name="asker_address"/>
-					<newline/>
-					<field name="asker_name" select="2"/>
-					<separator string="Asker Info" colspan="4"/>
-				</field>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="view_partner_form_inherit_mission">
+            <field name="name">res.partner.form</field>
+            <field name="type">form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="cci_partner.view_partner_form_inherit2"/>
+            <field name="arch" type="xml">
+                <field name="canal_id" position="after">
+                    <separator string="Asker Info" colspan="4"/>
+                    <field name="asker_name" select="2"/>
+                    <newline/>
+                    <field name="asker_address"/>
+                    <newline/>
+                    <field name="asker_zip_id"/>
+                    <newline/>
+                    <separator string="Sender Info" colspan="4"/>
+                    <field name="sender_name"/>
+                    <separator string="ATA infos" colspan="4"/>
+                    <field name="insurer_id" />
+                </field>
+            </field>
+        </record>
 
 <!-- view for cci_missions_dosser_type -->
-		<record model="ir.ui.view" id="cci_missions_dossier_type_form">
-			<field name="name">cci_missions.dossier_type.form</field>
-			<field name="model">cci_missions.dossier_type</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Dossier Type">
-					<field name="name" select="1"/>
-					<field name="code" select="1"/>
-					<field name="sequence_id"/>
-					<field name="site_id" select="1"/>
-					<field name="original_product_id" />
-					<field name="copy_product_id" />
-					<field name="section" select="2"/>
-					<field name="id_letter"/>
-					<field name="warranty_product_1" />
-					<field name="warranty_product_2" />
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_dossier_type_form">
+            <field name="name">cci_missions.dossier_type.form</field>
+            <field name="model">cci_missions.dossier_type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Dossier Type">
+                    <field name="name" select="1"/>
+                    <field name="code" select="1"/>
+                    <field name="sequence_id"/>
+                    <field name="site_id" select="1"/>
+                    <field name="original_product_id" />
+                    <field name="copy_product_id" />
+                    <field name="section" select="2"/>
+                    <field name="id_letter"/>
+                    <field name="warranty_product_1" />
+                    <field name="warranty_product_2" />
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_dossier_type_tree">
-			<field name="name">cci_missions.dossier_type.tree</field>
-			<field name="model">cci_missions.dossier_type</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Dossier Type">
-					<field name="name"/>
-					<field name="code"/>
-					<field name="site_id"/>
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_dossier_type_tree">
+            <field name="name">cci_missions.dossier_type.tree</field>
+            <field name="model">cci_missions.dossier_type</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Dossier Type">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="site_id"/>
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_dossier_type">
-			<field name="name">Dossier Type</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.dossier_type</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_cci_missions_dossier_type">
+            <field name="name">Dossier Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.dossier_type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem name="Missions/Configuration/Dossier Types" action="action_cci_missions_dossier_type" id="menu_cci_missions_dossier_type"/>
+        <menuitem name="Missions/Configuration/Dossier Types" action="action_cci_missions_dossier_type" id="menu_cci_missions_dossier_type"/>
 
 <!-- view for cci_missions_site -->
-		<record model="ir.ui.view" id="cci_missions_site_form">
-			<field name="name">cci_missions.site.form</field>
-			<field name="model">cci_missions.site</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Site">
-					<field name="name" select="1"/>
-					<separator string="ATA infos" colspan="4"/>
-					<field name="official_name_1" select="1" colspan="4"/>
-					<newline/>
-					<field name="official_name_2" select="2" colspan="4"/>
-					<newline/>
-					<field name="official_name_3" select="2" colspan="4"/>
-					<newline/>
-					<field name="official_name_4" select="2" />
-					<newline/>
-					<field name="embassy_sequence_id"/>
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_site_form">
+            <field name="name">cci_missions.site.form</field>
+            <field name="model">cci_missions.site</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Site">
+                    <field name="name" select="1"/>
+                    <separator string="ATA infos" colspan="4"/>
+                    <field name="official_name_1" select="1" colspan="4"/>
+                    <newline/>
+                    <field name="official_name_2" select="2" colspan="4"/>
+                    <newline/>
+                    <field name="official_name_3" select="2" colspan="4"/>
+                    <newline/>
+                    <field name="official_name_4" select="2" />
+                    <newline/>
+                    <field name="embassy_sequence_id"/>
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_site_tree">
-			<field name="name">cci_missions.site.tree</field>
-			<field name="model">cci_missions.site</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Site">
-					<field name="name"/>
-					<field name="official_name_1"/>
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_site_tree">
+            <field name="name">cci_missions.site.tree</field>
+            <field name="model">cci_missions.site</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Site">
+                    <field name="name"/>
+                    <field name="official_name_1"/>
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_site">
-			<field name="name">Site</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.site</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_cci_missions_site">
+            <field name="name">Site</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.site</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem name="Missions/Configuration/Site" action="action_cci_missions_site" id="menu_action_cci_missions_site"/>
+        <menuitem name="Missions/Configuration/Site" action="action_cci_missions_site" id="menu_action_cci_missions_site"/>
 
 <!-- view for cci_missions_dossier -->
-		<record model="ir.ui.view" id="cci_missions_dossier_form">
-			<field name="name">cci_missions.dossier.form</field>
-			<field name="model">cci_missions.dossier</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Dossier">
-					<field name="name" select="1"/>
-					<field name="date" select="1"/>
-					<field name="type_id" select="1"/>
-					<field name="order_partner_id" on_change="get_partner_details(order_partner_id)" select="1"/>
-					<field name="asker_name"/>
-					<field name="sender_name"/>
-					<field name="quantity_copies" />
-					<field name="quantity_original"/>
-					<field name="to_bill" />
-					<field name="invoice_id" />
-					<newline/>
-					<field name="goods" colspan="4" />
-					<newline/>
-					<field name="goods_value" select="2"/>
-					<!--<field name="total"/>-->
-					<newline/>
-					<field name="destination_id" select="1" />
-					<newline/>
-					<field name="embassy_folder_id" />
-					<newline/>
-					<field name="state" select="2"/>
-					<newline/>
-					<separator colspan="4" string="Note to Display on the Invoice"/>
-					<field name="text_on_invoice" colspan="4" nolabel="1"/>
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_dossier_form">
+            <field name="name">cci_missions.dossier.form</field>
+            <field name="model">cci_missions.dossier</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Dossier">
+                    <field name="name" select="1"/>
+                    <field name="date" select="1"/>
+                    <field name="type_id" select="1"/>
+                    <field name="order_partner_id" on_change="get_partner_details(order_partner_id)" select="1"/>
+                    <field name="asker_name"/>
+                    <field name="sender_name"/>
+                    <field name="quantity_copies" />
+                    <field name="quantity_original"/>
+                    <field name="to_bill" />
+                    <field name="invoice_id" />
+                    <newline/>
+                    <field name="goods" colspan="4" />
+                    <newline/>
+                    <field name="goods_value" select="2"/>
+                    <!--<field name="total"/>-->
+                    <newline/>
+                    <field name="destination_id" select="1" />
+                    <newline/>
+                    <field name="embassy_folder_id" />
+                    <newline/>
+                    <field name="state" select="2"/>
+                    <newline/>
+                    <separator colspan="4" string="Note to Display on the Invoice"/>
+                    <field name="text_on_invoice" colspan="4" nolabel="1"/>
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_dossier_tree">
-			<field name="name">cci_missions.dossier.tree</field>
-			<field name="model">cci_missions.dossier</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="dossier">
-					<field name="name"/>
-					<field name="date"/>
-					<field name="type_id"/>
-					<field name="order_partner_id"/>
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_dossier_tree">
+            <field name="name">cci_missions.dossier.tree</field>
+            <field name="model">cci_missions.dossier</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="dossier">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="type_id"/>
+                    <field name="order_partner_id"/>
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_dossier">
-			<field name="name">Dossier</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.dossier</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_cci_missions_dossier">
+            <field name="name">Dossier</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.dossier</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem name="Missions/Configuration/Search Entries/Dossier" action="action_cci_missions_dossier" id="menu_action_cci_missions_dossier"/>
+        <menuitem name="Missions/Configuration/Search Entries/Dossier" action="action_cci_missions_dossier" id="menu_action_cci_missions_dossier"/>
 
-		<record model="crm.case.section" id="case_section_embassy_folder">
-			<field name="name">Embassy Folder</field>
-		</record>
+        <record model="crm.case.section" id="case_section_embassy_folder">
+            <field name="name">Embassy Folder</field>
+        </record>
 
 <!-- view for cci_missions_embassy_folder -->
-		<record model="ir.ui.view" id="cci_missions_embassy_folder_form">
-			<field name="name">cci_missions.embassy_folder.form</field>
-			<field name="model">cci_missions.embassy_folder</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Embassy folder">
-					<notebook>
-					<page string="General">
-						<field name="name" select="1" />
-						<field name="section_id"  readonly="1" />
-						<newline/>
-						<group colspan="2">
-							<field name="date" string=" Creation Date" select="1" readonly="1"/>
-							<field name="invoice_date" />
-						</group>
-						<field name="priority" select="1"/>
-						<newline/>
-						<field name="partner_id" string="Partner to Invoice" on_change="onchange_partner_id(partner_id)"/>
-						<field name="partner_address_id"/>
-						<newline/>
-						<field name="site_id" select="2"/>
-						<field name="customer_reference" select="2"/>
-						<newline/>
-						<field name="destination_id"/>
-						<field name="member_price"/>
-						<newline/>
-						<field name="embassy_folder_line_ids" nolabel="1" colspan="4">
-							<tree string="Embassy Foder Lines">
-								<field name="name"/>
-								<field name="courier_cost"/>
-								<field name="customer_amount"/>
-								<field name="tax_rate"/>
-							</tree>
-							<form string="Embassy Foder Lines">
-								<field name="type" on_change="onchange_line_type(type)" />
-								<newline/>
-								<field name="name" />
-								<newline/>
-								<field name="courier_cost"/>
-								<newline/>
-								<field name="customer_amount"/>
-								<newline/>
-								<field name="tax_rate" />
-								<newline/>
-								<field name="awex_amount"/>
-								<field name="awex_eligible"/>
-							</form>
-						</field>
-						<newline/>
-						<separator colspan="4" string="Note to Display on the Invoice"/>
-						<field name="invoice_note" nolabel="1" colspan="4"/>
-						<newline/>
-						<field name="state" readonly="1" />
-						<group col="8" colspan="2">
-							<button name="pending" string="Send" states="draft"/>
-							<button name="open" string="gotback" states="pending"/>
-						</group>
-					</page>
-					<page string="Extra Info">
-						<field name="id" />
-						<field name="active" />
-						<field name="email_cc" />
-						<field name="invoice_id" />
-						<separator colspan="4" string="Links"/>
-						<field name="link_ids" colspan="4"/>
-					</page>
-					<page string="Notes">
-						<field name="internal_note" />
-						<newline/>
-						<field name="history_line">
-							<form string="Communication history">
-								<field name="date"/>
-								<field name="som"/>
-								<newline/>
-								<field name="canal_id"/>
-								<field name="email"/>
-								<newline/>
-								<field name="description" colspan="4"/>
-							</form>
-							<tree string="Communication history">
-								<field name="date"/>
-								<field name="description"/>
-								<field name="som"/>
-								<field name="user_id"/>
-							</tree>
-						</field>
-					</page>
-					<page string="History">
-						<field name="log_ids" readonly="1"/>
-					</page>
-				</notebook>
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_embassy_folder_form">
+            <field name="name">cci_missions.embassy_folder.form</field>
+            <field name="model">cci_missions.embassy_folder</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Embassy folder">
+                    <notebook>
+                    <page string="General">
+                        <field name="name" select="1" />
+                        <field name="section_id"  readonly="1" />
+                        <newline/>
+                        <group colspan="2">
+                            <field name="date" string=" Creation Date" select="1" readonly="1"/>
+                            <field name="invoice_date" />
+                        </group>
+                        <field name="priority" select="1"/>
+                        <newline/>
+                        <field name="partner_id" string="Partner to Invoice" on_change="onchange_partner_id(partner_id)"/>
+                        <field name="partner_address_id"/>
+                        <newline/>
+                        <field name="site_id" select="2"/>
+                        <field name="customer_reference" select="2"/>
+                        <newline/>
+                        <field name="destination_id"/>
+                        <field name="member_price"/>
+                        <newline/>
+                        <field name="embassy_folder_line_ids" nolabel="1" colspan="4">
+                            <tree string="Embassy Foder Lines">
+                                <field name="name"/>
+                                <field name="courier_cost"/>
+                                <field name="customer_amount"/>
+                                <field name="tax_rate"/>
+                            </tree>
+                            <form string="Embassy Foder Lines">
+                                <field name="type" on_change="onchange_line_type(type)" />
+                                <newline/>
+                                <field name="name" />
+                                <newline/>
+                                <field name="courier_cost"/>
+                                <newline/>
+                                <field name="customer_amount"/>
+                                <newline/>
+                                <field name="tax_rate" />
+                                <newline/>
+                                <field name="awex_amount"/>
+                                <field name="awex_eligible"/>
+                            </form>
+                        </field>
+                        <newline/>
+                        <separator colspan="4" string="Note to Display on the Invoice"/>
+                        <field name="invoice_note" nolabel="1" colspan="4"/>
+                        <newline/>
+                        <field name="state" readonly="1" />
+                        <group col="8" colspan="2">
+                            <button name="pending" string="Send" states="draft"/>
+                            <button name="open" string="gotback" states="pending"/>
+                        </group>
+                    </page>
+                    <page string="Extra Info">
+                        <field name="id" />
+                        <field name="active" />
+                        <field name="email_cc" />
+                        <field name="invoice_id" />
+                        <separator colspan="4" string="Links"/>
+                        <field name="link_ids" colspan="4"/>
+                    </page>
+                    <page string="Notes">
+                        <field name="internal_note" />
+                        <newline/>
+                        <field name="history_line">
+                            <form string="Communication history">
+                                <field name="date"/>
+                                <field name="som"/>
+                                <newline/>
+                                <field name="canal_id"/>
+                                <field name="email"/>
+                                <newline/>
+                                <field name="description" colspan="4"/>
+                            </form>
+                            <tree string="Communication history">
+                                <field name="date"/>
+                                <field name="description"/>
+                                <field name="som"/>
+                                <field name="user_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="History">
+                        <field name="log_ids" readonly="1"/>
+                    </page>
+                </notebook>
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_embassy_folder_tree">
-			<field name="name">cci_missions.embassy_folder.tree</field>
-			<field name="model">cci_missions.embassy_folder</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="embassy folder">
-					<field name="name"/>
-					<field name="date" string=" Creation Date" />
-					<field name="invoice_date" />
-					<field name="priority" />
-					<field name="site_id" />
-					<field name="invoice_id" />
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_embassy_folder_tree">
+            <field name="name">cci_missions.embassy_folder.tree</field>
+            <field name="model">cci_missions.embassy_folder</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="embassy folder">
+                    <field name="name"/>
+                    <field name="date" string=" Creation Date" />
+                    <field name="invoice_date" />
+                    <field name="priority" />
+                    <field name="site_id" />
+                    <field name="invoice_id" />
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_embassy_folder">
-			<field name="name">Embassy Folder</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.embassy_folder</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_cci_missions_embassy_folder">
+            <field name="name">Embassy Folder</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.embassy_folder</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem name="Missions/Embassy Folder" action="action_cci_missions_embassy_folder" id="menu_action_cci_missions_embassy_folder"/>
+        <menuitem name="Missions/Embassy Folder" action="action_cci_missions_embassy_folder" id="menu_action_cci_missions_embassy_folder"/>
 
 
 <!-- view for cci_missions_embassy_folder_line -->
-		<record model="ir.ui.view" id="cci_missions_embassy_folder_line_form">
-			<field name="name">cci_missions.embassy_folder_line.form</field>
-			<field name="model">cci_missions.embassy_folder_line</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Embassy Folder Line">
-					<field name="name" select="1" />
-					<newline/>
-					<field name="folder_id" select="2"/>
-					<field name="type" select="1" on_change="onchange_line_type(type)"/>
-					<newline/>
-					<field name="courier_cost" select="2"/>
-					<newline/>
-					<field name="customer_amount" select="2" />
-					<newline/>
-					<field name="tax_rate" />
-					<field name="account_id" />
-					<newline/>
-					<field name="awex_amount"/>
-					<field name="awex_eligible"/>
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_embassy_folder_line_form">
+            <field name="name">cci_missions.embassy_folder_line.form</field>
+            <field name="model">cci_missions.embassy_folder_line</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Embassy Folder Line">
+                    <field name="name" select="1" />
+                    <newline/>
+                    <field name="folder_id" select="2"/>
+                    <field name="type" select="1" on_change="onchange_line_type(type)"/>
+                    <newline/>
+                    <field name="courier_cost" select="2"/>
+                    <newline/>
+                    <field name="customer_amount" select="2" />
+                    <newline/>
+                    <field name="tax_rate" />
+                    <field name="account_id" />
+                    <newline/>
+                    <field name="awex_amount"/>
+                    <field name="awex_eligible"/>
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_embassy_folder_line_tree">
-			<field name="name">cci_missions.embassy_folder_line.tree</field>
-			<field name="model">cci_missions.embassy_folder_line</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Embassy Folder Line">
-					<field name="name" />
-					<field name="folder_id" />
-					<field name="type" />
-					<field name="customer_amount" />
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_embassy_folder_line_tree">
+            <field name="name">cci_missions.embassy_folder_line.tree</field>
+            <field name="model">cci_missions.embassy_folder_line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Embassy Folder Line">
+                    <field name="name" />
+                    <field name="folder_id" />
+                    <field name="type" />
+                    <field name="customer_amount" />
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_embassy_folder_line">
-			<field name="name">Embassy Folder Line</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.embassy_folder_line</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
-		<menuitem name="Missions/Configuration/Search Entries/Embassy Folder Lines" action="action_cci_missions_embassy_folder_line" id="menu_action_cci_missions_embassy_folder_line"/>
+        <record model="ir.actions.act_window" id="action_cci_missions_embassy_folder_line">
+            <field name="name">Embassy Folder Line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.embassy_folder_line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Missions/Configuration/Search Entries/Embassy Folder Lines" action="action_cci_missions_embassy_folder_line" id="menu_action_cci_missions_embassy_folder_line"/>
 
 
 
 <!-- view for cci_missions_custom_code -->
-		<record model="ir.ui.view" id="cci_missions_custom_code_form">
-			<field name="name">cci_missions.custom_code.form</field>
-			<field name="model">cci_missions.custom_code</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Custome code">
-					<field name="name" select="1" />
-					<field name="meaning" select="1"/>
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_custom_code_form">
+            <field name="name">cci_missions.custom_code.form</field>
+            <field name="model">cci_missions.custom_code</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Custome code">
+                    <field name="name" select="1" />
+                    <field name="meaning" select="1"/>
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_custom_code_tree">
-			<field name="name">cci_missions.custom_code.tree</field>
-			<field name="model">cci_missions.custom_code</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Custome code">
-					<field name="name" />
-					<field name="meaning" />
-					<field name="official" select="2"/> <!-- select="2" doesn't work but it doesn't matter since official is a boolean and we can use the sort function -->
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_custom_code_tree">
+            <field name="name">cci_missions.custom_code.tree</field>
+            <field name="model">cci_missions.custom_code</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Custome code">
+                    <field name="name" />
+                    <field name="meaning" />
+                    <field name="official" select="2"/> <!-- select="2" doesn't work but it doesn't matter since official is a boolean and we can use the sort function -->
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_custom_code">
-			<field name="name">Custome code</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.custom_code</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
-		<menuitem name="Missions/Configuration/Custom Codes" action="action_cci_missions_custom_code" id="menu_action_action_cci_missions_custom_code"/>
+        <record model="ir.actions.act_window" id="action_cci_missions_custom_code">
+            <field name="name">Custome code</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.custom_code</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Missions/Configuration/Custom Codes" action="action_cci_missions_custom_code" id="menu_action_action_cci_missions_custom_code"/>
 
 <!-- view for cci_missions_legalization -->
-		<record model="ir.ui.view" id="cci_missions_legalization_form">
-			<field name="name">cci_missions.legalization.form</field>
-			<field name="model">cci_missions.legalization</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Legalization">
-					<notebook>
-					<page string="Legalization Details">
-						<field name="name" select="1" />
-						<field name="date" select="2" />
-						<field name="type_id" select="1" domain="[('section','=','legalization')]"/>
-						<field name="destination_id" select="1"/>
-						<field name="order_partner_id" select="1" on_change="get_legalization_details(order_partner_id)" />
-						<newline/>
-						<field name="asker_name" select="1"/>
-						<field name="sender_name" select="1"/>
-						<field name="partner_member_state"/>
-						<field name="member_price"/>
-						<field name="goods" select="1" />
-						<newline/>
-						<field name="goods_value" />
-						<field name="to_bill" />
-						<field name="quantity_original" select="2"/>
-						<field name="quantity_copies" select="2" />
-						<field name="state" readonly="1"/>
-						<group col="4" colspan="2">
-							<button string="Cancelled by the CCI" name="cancel_cci" states="invoiced" />
-							<button string="Cancelled by the Customer" name="cancel_customer" states="invoiced" />
-						</group>
-						<newline/>
-						<group colspan="2"/>
-						<field name="total" />
-						<newline/>
-						<separator colspan="4" string="Note to Display on the Invoice"/>
-						<field name="text_on_invoice" colspan="4" nolabel="1"/>
-					</page>
-					<page string="Extra Products">
-						<vpaned position="300">
-						<child1>
-							<field name="product_ids" nolabel="1" colspan="4" >
-								<form string="Product Line">
-										<field name="name" select="1" colspan="4"/>
-										<newline/>
-										<field name="product_id" select="1" on_change="product_id_change(product_id)"/>
-										<field name="quantity" select="1"/>
-										<field name="uos_id"/>
-										<field name="price_unit" select="1"/>
-								</form>
-							</field>
-						</child1>
-						<child2>
-						<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
-						</child2>
-						</vpaned>
-					</page>
-					<page string="Links">
-						<field name="embassy_folder_id" />
-						<newline/>
-						<field name="certificate_id" />
-						<newline/>
-						<field name="invoice_id" />
-					</page>
-				</notebook>
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_legalization_form">
+            <field name="name">cci_missions.legalization.form</field>
+            <field name="model">cci_missions.legalization</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Legalization">
+                    <notebook>
+                    <page string="Legalization Details">
+                        <field name="name" select="1" />
+                        <field name="date" select="2" />
+                        <field name="type_id" select="1" domain="[('section','=','legalization')]"/>
+                        <field name="destination_id" select="1"/>
+                        <field name="order_partner_id" select="1" on_change="get_legalization_details(order_partner_id)" />
+                        <newline/>
+                        <field name="asker_name" select="1"/>
+                        <field name="sender_name" select="1"/>
+                        <field name="partner_member_state"/>
+                        <field name="member_price"/>
+                        <field name="goods" select="1" />
+                        <newline/>
+                        <field name="goods_value" />
+                        <field name="to_bill" />
+                        <field name="quantity_original" select="2"/>
+                        <field name="quantity_copies" select="2" />
+                        <field name="state" readonly="1"/>
+                        <group col="4" colspan="2">
+                            <button string="Cancelled by the CCI" name="cancel_cci" states="invoiced" />
+                            <button string="Cancelled by the Customer" name="cancel_customer" states="invoiced" />
+                        </group>
+                        <newline/>
+                        <group colspan="2"/>
+                        <field name="total" />
+                        <newline/>
+                        <separator colspan="4" string="Note to Display on the Invoice"/>
+                        <field name="text_on_invoice" colspan="4" nolabel="1"/>
+                    </page>
+                    <page string="Extra Products">
+                        <vpaned position="300">
+	                        <child1>
+	                            <field name="product_ids" nolabel="1" colspan="4" >
+	                                <form string="Product Line">
+	                                        <field name="name" select="1" colspan="4"/>
+	                                        <newline/>
+	                                        <field name="product_id" select="1" on_change="product_id_change(product_id)"/>
+	                                        <field name="quantity" select="1"/>
+	                                        <field name="uos_id"/>
+	                                        <field name="price_unit" select="1"/>
+	                                </form>
+	                            </field>
+	                        </child1>
+                        	<child2>
+                        		<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
+                        	</child2>
+                        </vpaned>
+                    </page>
+                    <page string="Links">
+                        <field name="embassy_folder_id" />
+                        <newline/>
+                        <field name="certificate_id" />
+                        <newline/>
+                        <field name="invoice_id" />
+                    </page>
+                </notebook>
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_legalization_tree">
-			<field name="name">cci_missions.legalization.tree</field>
-			<field name="model">cci_missions.legalization</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Legalization">
-					<field name="name"/>
-					<field name="order_partner_id"/>
-					<field name="destination_id"/>
-					<field name="invoice_id" />
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_legalization_tree">
+            <field name="name">cci_missions.legalization.tree</field>
+            <field name="model">cci_missions.legalization</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Legalization">
+                    <field name="name"/>
+                    <field name="order_partner_id"/>
+                    <field name="destination_id"/>
+                    <field name="invoice_id" />
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_legalization">
-			<field name="name">Legalization</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.legalization</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_cci_missions_legalization">
+            <field name="name">Legalization</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.legalization</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem name="Missions/Legalizations" action="action_cci_missions_legalization" id="menu_action_cci_missions_legalization"/>
+        <menuitem name="Missions/Legalizations" action="action_cci_missions_legalization" id="menu_action_cci_missions_legalization"/>
 
 <!-- view for cci_missions_certificate -->
-		<record model="ir.ui.view" id="cci_missions_certificate_form">
-			<field name="name">cci_missions.certificate.form</field>
-			<field name="model">cci_missions.certificate</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Certificate">
-					<notebook>
-					<page string="Certificate Details">
-						<field name="name" select="1"/>
-						<field name="date" select="2"/>
-						<field name="type_id" select="1" domain="[('section','=','certificate')]"/>
-						<field name="destination_id" select="1" />
-						<field name="order_partner_id" on_change="get_certification_details(order_partner_id)" select="1"/>
-						<newline/>
-						<field name="asker_name" />
-						<newline/>
-						<field name="asker_address"/>
-						<newline/>
-						<field name="asker_zip_id"/>
-						<newline/>
-						<field name="sender_name" />
-						<field name="special_reason"/>
-						<newline/>
-						<field name="goods" select="2"/>
-						<field name="to_bill" />
-						<newline/>
-						<field name="goods_value" />
-						<field name="quantity_copies" />
-						<field name="state" readonly="1"/>
-						<group col="4" colspan="2">
-							<button string="Cancelled by the CCI" name="cancel_cci" states="invoiced" />
-							<button string="Cancelled by the Customer" name="cancel_customer" states="invoiced" />
-						</group>
-						<newline/>
-						<group colspan="2"/>
-						<field name="total" />
-						<separator colspan="4" string="Note to Display on the Invoice"/>
-						<field name="text_on_invoice" nolabel="1" colspan="4"/>
-					</page>
-					<page string="Extra Products">
-						<vpaned position="300">
-						<child1>
-							<field name="product_ids" nolabel="1" colspan="4">
-								<form string="Product Line">
-									<field name="name" select="1" colspan="4"/>
-									<newline/>
-									<field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
-									<field name="quantity" select="1"/>
-									<field name="uos_id"/>
-									<field name="price_unit" select="1"/>
-								</form>
-							</field>
-						</child1>
-						<child2>
-						<label string="" colspan="2"/><field name="sub_total" coslpan="2"/>
-						</child2>
-						</vpaned>
-					</page>
-					<page string="Links">
-						<field name="embassy_folder_id" />
-						<field name="invoice_id" />
-						<newline/>
-						<field name="sending_spf" readonly="1"/>
-						<newline/>
-						<field name="origin_ids" />
-						<field name="customs_ids"/>
-						<field name="legalization_ids" colspan="4"/>
-					</page>
-				</notebook>
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_certificate_form">
+            <field name="name">cci_missions.certificate.form</field>
+            <field name="model">cci_missions.certificate</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Certificate">
+                    <notebook>
+                    <page string="Certificate Details">
+                        <field name="name" select="1"/>
+                        <field name="date" select="2"/>
+                        <field name="type_id" select="1" domain="[('section','=','certificate')]"/>
+                        <field name="destination_id" select="1" />
+                        <field name="order_partner_id" on_change="get_certification_details(order_partner_id)" select="1"/>
+                        <newline/>
+                        <field name="asker_name" />
+                        <newline/>
+                        <field name="asker_address"/>
+                        <newline/>
+                        <field name="asker_zip_id"/>
+                        <newline/>
+                        <field name="sender_name" />
+                        <field name="special_reason"/>
+                        <newline/>
+                        <field name="goods" select="2"/>
+                        <field name="to_bill" />
+                        <newline/>
+                        <field name="goods_value" />
+                        <field name="quantity_copies" />
+                        <field name="state" readonly="1"/>
+                        <group col="4" colspan="2">
+                            <button string="Cancelled by the CCI" name="cancel_cci" states="invoiced" />
+                            <button string="Cancelled by the Customer" name="cancel_customer" states="invoiced" />
+                        </group>
+                        <newline/>
+                        <group colspan="2"/>
+                        <field name="total" />
+                        <separator colspan="4" string="Note to Display on the Invoice"/>
+                        <field name="text_on_invoice" nolabel="1" colspan="4"/>
+                    </page>
+                    <page string="Extra Products">
+                        <vpaned position="300">
+	                        <child1>
+	                            <field name="product_ids" nolabel="1" colspan="4">
+	                                <form string="Product Line">
+	                                    <field name="name" select="1" colspan="4"/>
+	                                    <newline/>
+	                                    <field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
+	                                    <field name="quantity" select="1"/>
+	                                    <field name="uos_id"/>
+	                                    <field name="price_unit" select="1"/>
+	                                </form>
+	                            </field>
+	                        </child1>
+                       		<child2>
+                        		<label string="" colspan="2"/><field name="sub_total" coslpan="2"/>
+                        	</child2>
+                        </vpaned>
+                    </page>
+                    <page string="Links">
+                        <field name="embassy_folder_id" />
+                        <field name="invoice_id" />
+                        <newline/>
+                        <field name="sending_spf" readonly="1"/>
+                        <newline/>
+                        <field name="origin_ids" />
+                        <field name="customs_ids"/>
+                        <field name="legalization_ids" colspan="4"/>
+                    </page>
+                </notebook>
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_certificate_tree">
-			<field name="name">cci_missions.certificate.tree</field>
-			<field name="model">cci_missions.certificate</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Certificate">
-					<field name="name" />
-					<field name="order_partner_id"/>
-					<field name="destination_id" />
-					<field name="type_id" />
-					<field name="invoice_id" />
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_certificate_tree">
+            <field name="name">cci_missions.certificate.tree</field>
+            <field name="model">cci_missions.certificate</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Certificate">
+                    <field name="name" />
+                    <field name="order_partner_id"/>
+                    <field name="destination_id" />
+                    <field name="type_id" />
+                    <field name="invoice_id" />
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_certificate">
-			<field name="name">Certificate</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.certificate</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_cci_missions_certificate">
+            <field name="name">Certificate</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.certificate</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem name="Missions/Certificates" action="action_cci_missions_certificate" id="menu_action_cci_missions_certificate"/>
+        <menuitem name="Missions/Certificates" action="action_cci_missions_certificate" id="menu_action_cci_missions_certificate"/>
 
 <!-- view for cci_missions_area -->
-		<record model="ir.ui.view" id="cci_missions_area_form">
-			<field name="name">cci_missions.area.form</field>
-			<field name="model">cci_missions.area</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Area">
-					<field name="name" select="1"/>
-					<newline />
-					<field name="country_ids" select="1"/>
-				</form>
-			</field>
-		</record>
+<!--        <record model="ir.ui.view" id="cci_missions_area_form">
+            <field name="name">cci_missions.area.form</field>
+            <field name="model">cci_missions.area</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Area">
+                    <field name="name" select="1"/>
+                    <newline />
+                    <field name="country_ids" select="1"/>
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_area_tree">
-			<field name="name">cci_missions.area.tree</field>
-			<field name="model">cci_missions.area</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Area">
-					<field name="name"/>
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_area_tree">
+            <field name="name">cci_missions.area.tree</field>
+            <field name="model">cci_missions.area</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Area">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_area">
-			<field name="name">Area</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.area</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_cci_missions_area">
+            <field name="name">Area</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.area</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem name="Missions/Configuration/Area" action="action_cci_missions_area" id="menu_action_cci_missions_area"/>
+        <menuitem name="Missions/Configuration/Area" action="action_cci_missions_area" id="menu_action_cci_missions_area"/>-->
 
 <!-- view for cci_missions_ata_usage -->
-		<record model="ir.ui.view" id="cci_missions_ata_usage_form">
-			<field name="name">cci_missions.ata_usage.form</field>
-			<field name="model">cci_missions.ata_usage</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="ATA Usage">
-					<field name="name" select="1"/>
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_ata_usage_form">
+            <field name="name">cci_missions.ata_usage.form</field>
+            <field name="model">cci_missions.ata_usage</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="ATA Usage">
+                    <field name="name" select="1"/>
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_ata_usage_tree">
-			<field name="name">cci_missions.ata_usage.tree</field>
-			<field name="model">cci_missions.ata_usage</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="ATA Usage">
-					<field name="name"/>
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_ata_usage_tree">
+            <field name="name">cci_missions.ata_usage.tree</field>
+            <field name="model">cci_missions.ata_usage</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="ATA Usage">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_ata_usage">
-			<field name="name">ATA Usage</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.ata_usage</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_cci_missions_ata_usage">
+            <field name="name">ATA Usage</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.ata_usage</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem name="Missions/Configuration/ATA Usage" action="action_cci_missions_ata_usage" id="menu_action_cci_missions_ata_usage"/>
+        <menuitem name="Missions/Configuration/ATA Usage" action="action_cci_missions_ata_usage" id="menu_action_cci_missions_ata_usage"/>
 
 <!-- view for cci_missions_letters_log -->
-		<record model="ir.ui.view" id="cci_missions_letters_log_form">
-			<field name="name">cci_missions.letters_log.form</field>
-			<field name="model">cci_missions.letters_log</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Letter Log">
-					<field name="ata_carnet_id" select="1" />
-					<field name="letter_type" select="1"/>
-					<field name="date" select="2" />
-				</form>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_letters_log_form">
+            <field name="name">cci_missions.letters_log.form</field>
+            <field name="model">cci_missions.letters_log</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Letter Log">
+                    <field name="ata_carnet_id" select="1" />
+                    <field name="letter_type" select="1"/>
+                    <field name="date" select="2" />
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="cci_missions_letters_log_tree">
-			<field name="name">cci_missions.letters_log.tree</field>
-			<field name="model">cci_missions.letters_log</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Letter Log">
-					<field name="ata_carnet_id" />
-					<field name="letter_type"/>
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="cci_missions_letters_log_tree">
+            <field name="name">cci_missions.letters_log.tree</field>
+            <field name="model">cci_missions.letters_log</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Letter Log">
+                    <field name="ata_carnet_id" />
+                    <field name="letter_type"/>
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_letters_log">
-			<field name="name">Letter Log</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.letters_log</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_cci_missions_letters_log">
+            <field name="name">Letter Log</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.letters_log</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem name="Missions/Configuration/Search Entries/Letters Log" action="action_cci_missions_letters_log" id="menu_action_cci_missions_letters_log"/>
+        <menuitem name="Missions/Configuration/Search Entries/Letters Log" action="action_cci_missions_letters_log" id="menu_action_cci_missions_letters_log"/>
 
 
 <!-- View for cci_missions.ata_carnet  -->
-		<record model="ir.ui.view" id="cci_missions_ata_carnet_form">
-			<field name="name">cci_missions.ata_carnet.form</field>
-			<field name="model">cci_missions.ata_carnet</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="ATA Carnet">
-				<notebook>
-					<page string="General">
-						<field name="name" select="1"/>
-						<field name="type_id" domain="[('section','=','ATA')]" on_change="onchange_type_carnet(type_id,own_risk)"/>
-						<field name="creation_date" select="2"/>
-						<field name="validity_date" select="2"/>
-						<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id)"/>
-						<field name="partner_insurer_id" />
-						<field name="partner_member_state" />
-						<field name="member_price" />
-						<newline/>
-						<separator string="Holder Information" colspan="4"/>
-						<field name="holder_name" />
-						<newline/>
-						<field name="holder_address" />
-						<field name="holder_city" />
-						<newline/>
-						<separator string="Representer Information" colspan="4"/>
-						<field name="representer_name" />
-						<newline/>
-						<field name="representer_address" />
-						<field name="representer_city" />
-						<newline/>
-						<field name="usage_id" />
-						<field name="goods" select="2"/>
-						<field name="area_id" select="2"/>
-						<field name="goods_value" />
-						<field name="double_signature" />
-						<field name="initial_pages" />
-						<field name="insurer_agreement" />
-						<field name="own_risk" on_change="onchange_own_risk(type_id,own_risk)"/>
-						<newline/>
-						<field name="warranty" />
-						<!--<field name="warranty_product_id" on_change="onchange_warranty_product_id(warranty_product_id)" />-->
-						<newline/>
-						<field name="state" colspan="2" select="2"/>
-						<group colspan="2">
-							<button string="Brought Uncertain" name="button_uncertain" states="created,dispute" type="object"/>
-							<button string="Brought Correct" name="button_correct" states="created,dispute" type="object"/>
-							<button string="Dispute Starting" name="button_dispute" states="pending,correct" type="object"/>
-							<button string="Close ATA Carnet" name="button_closed" states="correct" type="object"/>
-						</group>
-					</page>
-					<page string="Follow-up">
-						<field name="additional_pages" />
-						<field name="return_date" />
-						<field name="ok_state_date" />
-						<field name="federation_sending_date" />
-						<newline/>
-						<field name="invoice_id" colspan="2"/>
-						<newline/>
-						<separator string="Letters" colspan="4"/>
-						<field name="letter_ids" nolabel="1" widget="one2many_list" colspan="4">
-							<tree string="Letters">
-								<field name="letter_type"/>
-								<field name="date" />
-							</tree>
-							<form string="Letters">
-								<field name="letter_type"/>
-								<field name="date" />
-							</form>
-						</field>
-					</page>
-					<page string="Extra Products">
-						<vpaned position="300">
-						<child1>
-							<field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
-						</child1>
-						<child2>
-						<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
-						</child2>
-						</vpaned>
-					</page>
-				</notebook>
-				</form>
+        <record model="ir.ui.view" id="cci_missions_ata_carnet_form">
+            <field name="name">cci_missions.ata_carnet.form</field>
+            <field name="model">cci_missions.ata_carnet</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="ATA Carnet">
+                <notebook>
+                    <page string="General">
+                        <field name="name" select="1"/>
+                        <field name="type_id" domain="[('section','=','ATA')]" on_change="onchange_type_carnet(type_id,own_risk)"/>
+                        <field name="creation_date" select="2"/>
+                        <field name="validity_date" select="2"/>
+                        <field name="partner_id" select="1" on_change="onchange_partner_id(partner_id)"/>
+                        <field name="partner_insurer_id" />
+                        <field name="partner_member_state" />
+                        <field name="member_price" />
+                        <newline/>
+                        <separator string="Holder Information" colspan="4"/>
+                        <field name="holder_name" />
+                        <newline/>
+                        <field name="holder_address" />
+                        <field name="holder_city" />
+                        <newline/>
+                        <separator string="Representer Information" colspan="4"/>
+                        <field name="representer_name" />
+                        <newline/>
+                        <field name="representer_address" />
+                        <field name="representer_city" />
+                        <newline/>
+                        <field name="usage_id" />
+                        <field name="goods" select="2"/>
+                        <field name="area_id" select="2"/>
+                        <field name="goods_value" />
+                        <field name="double_signature" />
+                        <field name="initial_pages" />
+                        <field name="insurer_agreement" />
+                        <field name="own_risk" on_change="onchange_own_risk(type_id,own_risk)"/>
+                        <newline/>
+                        <field name="warranty" />
+                        <!--<field name="warranty_product_id" on_change="onchange_warranty_product_id(warranty_product_id)" />-->
+                        <newline/>
+                        <field name="state" colspan="2" select="2"/>
+                        <group colspan="2">
+                            <button string="Brought Uncertain" name="button_uncertain" states="created,dispute" type="object"/>
+                            <button string="Brought Correct" name="button_correct" states="created,dispute" type="object"/>
+                            <button string="Dispute Starting" name="button_dispute" states="pending,correct" type="object"/>
+                            <button string="Close ATA Carnet" name="button_closed" states="correct" type="object"/>
+                        </group>
+                    </page>
+                    <page string="Follow-up">
+                        <field name="additional_pages" />
+                        <field name="return_date" />
+                        <field name="ok_state_date" />
+                        <field name="federation_sending_date" />
+                        <newline/>
+                        <field name="invoice_id" colspan="2"/>
+                        <newline/>
+                        <separator string="Letters" colspan="4"/>
+                        <field name="letter_ids" nolabel="1" widget="one2many_list" colspan="4">
+                            <tree string="Letters">
+                                <field name="letter_type"/>
+                                <field name="date" />
+                            </tree>
+                            <form string="Letters">
+                                <field name="letter_type"/>
+                                <field name="date" />
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Extra Products">
+                        <vpaned position="300">
+	                        <child1>
+	                            <field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
+	                        </child1>
+	                        <child2>
+	                       		<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
+	                        </child2>
+                        </vpaned>
+                    </page>
+                </notebook>
+                </form>
 
-			</field>
-	</record>
-	<record model="ir.ui.view" id="cci_missions_ata_carnet_tree">
-			<field name="name">cci_missions.ata_carnet.tree</field>
-			<field name="model">cci_missions.ata_carnet</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="ATA Carnet">
-					<field name="name"/>
-					<field name="partner_id"/>
-					<field name="creation_date" />
-					<field name="type_id"/>
-					<field name="goods" />
-					<field name="invoice_id"/>
-				</tree>
-			</field>
-		</record>
+            </field>
+    </record>
+    <record model="ir.ui.view" id="cci_missions_ata_carnet_tree">
+            <field name="name">cci_missions.ata_carnet.tree</field>
+            <field name="model">cci_missions.ata_carnet</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="ATA Carnet">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="creation_date" />
+                    <field name="type_id"/>
+                    <field name="goods" />
+                    <field name="invoice_id"/>
+                </tree>
+            </field>
+        </record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_ata_carnet">
-			<field name="name">ATA Carnet</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.ata_carnet</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_cci_missions_ata_carnet">
+            <field name="name">ATA Carnet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_missions.ata_carnet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem name="Missions/ATA Carnet" action="action_cci_missions_ata_carnet" id="menu_action_cci_missions_ata_carnet"/>
+        <menuitem name="Missions/ATA Carnet" action="action_cci_missions_ata_carnet" id="menu_action_cci_missions_ata_carnet"/>
 
-	<record model="ir.ui.view" id="view_product_line_tree">
-			<field name="name">product.lines.tree</field>
-			<field name="model">product.lines</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Product Line">
-					<field name="name"/>
-					<field name="product_id" />
-					<field name="quantity"/>
-					<field name="uos_id"/>
-					<field name="price_unit"/>
-					<field name="price_subtotal"/>
-				</tree>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_product_line_form">
-			<field name="name">product.lines.form</field>
-			<field name="model">product.lines</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Product Line">
-							<field name="name" select="1" colspan="4"/>
-							<newline/>
-							<field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
-							<field name="quantity" select="1"/>
-							<field name="uos_id"/>
-							<field name="price_unit" select="1"/>
-							<newline/>
-							<!--<field name="price_subtotal"/>-->
-				</form>
-			</field>
-		</record>
-		<!-- VUES PARTICULIERES SUR LES CERTIFICATS  -->
+    <record model="ir.ui.view" id="view_product_line_tree">
+            <field name="name">product.lines.tree</field>
+            <field name="model">product.lines</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Product Line">
+                    <field name="name"/>
+                    <field name="product_id" />
+                    <field name="quantity"/>
+                    <field name="uos_id"/>
+                    <field name="price_unit"/>
+                    <field name="price_subtotal"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_product_line_form">
+            <field name="name">product.lines.form</field>
+            <field name="model">product.lines</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Product Line">
+                            <field name="name" select="1" colspan="4"/>
+                            <newline/>
+                            <field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
+                            <field name="quantity" select="1"/>
+                            <field name="uos_id"/>
+                            <field name="price_unit" select="1"/>
+                            <newline/>
+                            <!--<field name="price_subtotal"/>-->
+                </form>
+            </field>
+        </record>
+        <!-- VUES PARTICULIERES SUR LES CERTIFICATS  -->
 
-		<record model="ir.actions.act_window" id="action_certificates_incompleted">
-			<field name="name">Incompleted Certificates</field>
-			<field name="res_model">cci_missions.certificate</field>
-			<!--<field name="domain">[('goods_value', '=', 0),('destination_id', '=', 0),('goods','=','')]</field>  HOWTO MAKE ONE 'OR' CONDITION ??? -->
-			<field name="domain">[('goods_value', '=', 0)]</field>
-		</record>
+        <record model="ir.actions.act_window" id="action_certificates_incompleted">
+            <field name="name">Incompleted Certificates</field>
+            <field name="res_model">cci_missions.certificate</field>
+            <!--<field name="domain">[('goods_value', '=', 0),('destination_id', '=', 0),('goods','=','')]</field>  HOWTO MAKE ONE 'OR' CONDITION ??? -->
+            <field name="domain">[('goods_value', '=', 0)]</field>
+        </record>
 
-		<record model="ir.actions.act_window.view" id="action_certificates_incompleted_tree">
-			<field name="sequence" eval="1"/>
-			<field name="view_mode">tree</field>
-			<field name="view_id" ref="cci_missions_certificate_tree"/>
-			<field name="act_window_id" ref="action_certificates_incompleted"/>
-		</record>
+        <record model="ir.actions.act_window.view" id="action_certificates_incompleted_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="cci_missions_certificate_tree"/>
+            <field name="act_window_id" ref="action_certificates_incompleted"/>
+        </record>
 
-		<record model="ir.actions.act_window.view" id="action_certificates_incompleted_form">
-			<field name="sequence" eval="2"/>
-			<field name="view_mode">form</field>
-			<field name="act_window_id" ref="action_certificates_incompleted"/>
-		</record>
+        <record model="ir.actions.act_window.view" id="action_certificates_incompleted_form">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="act_window_id" ref="action_certificates_incompleted"/>
+        </record>
 
-		<menuitem name="Missions/Incompleted Certificates"
-			id="menu_incompleted_certificates"
-			action="action_certificates_incompleted"/>
+        <menuitem name="Missions/Incompleted Certificates"
+            id="menu_incompleted_certificates"
+            action="action_certificates_incompleted"/>
 
-	</data>
+    </data>
 </openerp>

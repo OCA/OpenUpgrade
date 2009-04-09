@@ -1,883 +1,651 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-	<!--
-	<record id="res_groups_developer" model="res.groups">
-		<field name="name">Developer</field>
-	</record>
-	<record model="res.users" id="user_dev">
-		<field name="login">dev</field>
-		<field name="password">dev</field>
-		<field name="name">Develoeper</field>
-		<field name="signature">Developer</field>
-		<field name="action_id" ref="action_menu_admin"/>
-		<field name="menu_id" ref="action_menu_admin"/>
-		<field name="address_id" ref="main_address"/>
-		<field name="groups_id" eval="[(6,0,[res_groups_dev])]"/>
-		<field name="company_id" ref="main_company"/>
-		</record>
-	-->
-	<menuitem name="Direct Marketing/Offers" id="menu_dm_offer" sequence="2"/>
-	<!--
-	=======================================================
-	Offer Views
-	=======================================================
-	-->
-	<record model="ir.ui.view" id="view_offer_list">
-		<field name="name">dm.offer.list</field>
-		<field name="model">dm.offer</field>
-		<field name="type">tree</field>
-		<field name="priority" eval="6"/>
-<!--		<field name="field_parent">child_ids</field>-->
-<!--		<field name="field_parent">step_ids</field>-->
-		<field name="arch" type="xml">
-			<tree string="Steps By Offers">
-				<field name="name"/>
-			</tree>
-		</field>
-	</record>
 
-	<record model="ir.ui.view" id="view_offer_tree">
-		<field name="name">dm.offer.tree</field>
-		<field name="model">dm.offer</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Offers" colors="blue:state=='draft'">
-				<field name="name"/>
-				<field name="copywriter_id"/>
-				<field name="quotation"/>
-				<field name="state"/>
-			</tree>
-		</field>
-	</record>
+    <menuitem name="Direct Marketing" icon="terp-crm" id="menu_dm"/>
+    <menuitem name="Configuration" id="menu_dm_config" parent="menu_dm" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager,res_groups_dtpmanager" sequence="0"/>
+    <menuitem name="Offers" id="menu_dm_offer" parent="menu_dm" sequence="2"/>
+    <menuitem name="Offers" id="menu_dm_config_offer" parent="dm.menu_dm_config" sequence="2"/>
 
-	<record model="ir.ui.view" id="view_offer_form">
-		<field name="name">dm.offer.form</field>
-		<field name="model">dm.offer</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Offers">
-				<group colspan="4" col="4">
-					<field name="name" select="1"/>
-					<field name="code"/>
-				</group>
-				<notebook>
-					<page string="General">
-						<field name="lang_orig"/>
-<!--						<field name="copywriter_id"  select="2"  on_change="change_code(type,copywriter_id)" />-->
-						<field name="copywriter_id"  select="2" />
-						<field name="recommended_trademark"/>
-<!--						<field name="type" select="2" on_change="change_code(type,copywriter_id)" />-->
-						<field name="type" select="2"  />
-						<field name="preoffer_original_id" context="{'offer_type':'Preoffer'}"/>
-						<field name="offer_origin_id"/>
-						<field name="offer_responsible_id" select="2"/>
-						<field name="version" select="2"/>
-						<field name="active" select="2"/>
-						<newline/>
-						<field name="quotation"/>
-						<field name="legal_state"/>
-						<separator string="Categories" colspan="4"/>
-						<field name="category_ids" colspan="4" nolabel="1"/>
-						<separator string="Notes" colspan="4"/>
-						<field name="notes" colspan="4"  nolabel="1"/>
-						<separator string="Status" colspan="4"/>
-						<group col="8" colspan="4">
-							<field name="state" nolabel="1" select="1"/>
-							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
-							<button name="state_freeze_set" string="Freeze" states="open" type="object"/>
-							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
-							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
-						</group>
-					</page>
-					<page string="History">
-						<separator string="History" />
-						<field name="history_ids" nolabel="1" colspan="4"/>
-						<field name="translation_ids" nolabel="1" colspan="4">
-							<form string="Translation">
-								<field name="language_id"/>
-								<field name="translator_id"/>
-								<field name="date"/>
-								<field name="notes" nolabel="1" colspan="4"/>
-							</form>
-							<tree string="Translations">
-								<field name="language_id"/>
-								<field name="translator_id"/>
-								<field name="date"/>
-							</tree>
-						</field>
-					</page>
-					<page string="Dates">
-						<field name="order_date"/>
-						<field name="last_modification_date"/>
-						<field name="planned_delivery_date"/>
-						<field name="delivery_date"/>
-						<newline />
-<!--						<field name="fixed_date"/>-->
-<!--						<field name="buffer_delay"/>-->
-					</page>
-					<page string="Criteria">
-						<separator string="Geographical Criteria" colspan="4"/>
-						<field name="forbidden_country_ids" colspan="4"/>
-						<field name="forbidden_state_ids" colspan="4" />
-					</page>
-					<page string="Keywords" >
-						<separator string="Keywords" colspan="4"/>
-						<field name="keywords" colspan="4"  nolabel="1" select="1"/>
-					</page>
-<!--					<page string="Statistics" >-->
-<!--						still not define -->
-<!--					</page>-->
-				</notebook>
-			</form>
-		</field>
-	</record>
+    <!--
+    =======================================================
+    OFFER VIEWS
+    =======================================================
+    -->
+    <record model="ir.ui.view" id="view_offer_list">
+        <field name="name">dm.offer.list</field>
+        <field name="model">dm.offer</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="6"/>
+        <field name="arch" type="xml">
+            <tree string="Steps By Offers">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
 
-        <!-- All Offers -->
-	<record model="ir.actions.act_window" id="action_offer_form">
-		<field name="name">All Offers</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_offer_tree" />
-		<field name="domain">[('type','!=','model'),('type','!=','preoffer')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_offer_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_offer_tree"/>
-		<field name="act_window_id" ref="action_offer_form"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_offer_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_offer_form"/>
-		<field name="act_window_id" ref="action_offer_form"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/All Offers" id="menu_action_offer_form" action="action_offer_form"/>
+    <record model="ir.ui.view" id="view_offer_tree">
+        <field name="name">dm.offer.tree</field>
+        <field name="model">dm.offer</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Offers" colors="blue:state=='draft'">
+                <field name="name"/>
+                <field name="copywriter_id"/>
+                <field name="quotation"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
 
+    <record model="ir.ui.view" id="view_offer_form">
+        <field name="name">dm.offer.form</field>
+        <field name="model">dm.offer</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Offers">
+                <group colspan="3" col="4">
+                    <separator string="Offer Description" colspan="5"/>
+                    <field name="name" select="1" />
+                    <field name="code" select="1" />
+                </group>
+                <notebook colspan="4">
+                    <page string="General">
+                        <group colspan="2" col="2">
+                            <separator string="Global Information" colspan="2"/>
+                            <field name="type" select="1"  />
+                            <field name="copywriter_id"  select="2" />
+                            <field name="recommended_trademark_id" select="2"/>
+                            <field name="offer_responsible_id" select="2"/>
+                        </group>
+                        <group colspan="2" col="2">
+                            <separator string="Origin" colspan="2"/>
+                            <group attrs="{'invisible':[('type','!=','rewrite')]}" colspan="2">
+                            <field name="offer_origin_id" select="2"/>
+                            <newline />
+                            <field name="version" select="2"/>
+                            </group>
+                            <field name="preoffer_original_id"  select="2" context="{'type':'preoffer'}"/>
+                            <field name="lang_orig_id" select="2"/>
+                            <newline />
+                            <separator string="" colspan="2"/>
+                            <field name="legal_state" select="2" groups="base.group_extended"/>
+                            <field name="quotation" select="2"/>
+                            <field name="active" select="2"/>
+                        </group>
+                        <separator string="Categories" colspan="4"/>
+                        <field name="category_ids" colspan="4" nolabel="1" select="1"/>
+                        <separator string="Notes" colspan="4"/>
+                        <field name="notes" colspan="4"  nolabel="1" widget="text_wiki"/>
+                        <separator string="Offer Status" colspan="4"/>
+                        <group col="8" colspan="4">
+                            <field name="state" nolabel="1" select="1"/>
+                            <button name="state_ready_set" string="Ready To Plan" states="draft,freeze"/>
+                            <button name="state_open_set" string="Open" states="draft,ready,freeze"/>
+                            <button name="state_freeze_set" string="Freeze" states="open"/>
+                            <button name="state_close_set" string="Close" states="open,draft,freeze"/>
+                            <button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
+                        </group>
+                    </page>
+                    <page string="History">
+                        <separator string="History" />
+                        <field name="history_ids" nolabel="1" colspan="4"/>
+                        <field name="translation_ids" nolabel="1" colspan="4">
+                            <form string="Translation">
+                                <field name="language_id"/>
+                                <field name="translator_id"/>
+                                <field name="date"/>
+                                <field name="notes" nolabel="1" colspan="4" widget="text_wiki"/>
+                            </form>
+                            <tree string="Translations">
+                                <field name="language_id"/>
+                                <field name="translator_id"/>
+                                <field name="date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Dates" groups="base.group_extended">
+                        <group colspan="2" col="2">
+                            <separator string="Order Dates" colspan="2"/>
+                            <field name="order_date" select="2"/>
+                            <field name="planned_delivery_date"/>
+                            <field name="delivery_date" select="2"/>
+                        </group>
+                        <group colspan="2" col="2">
+                            <separator string="Offer Dates" colspan="2"/>
+                            <field name="last_modification_date"/>
+                        </group>
+                    </page>
+                    <page string="Georgraphical Criteria">
+                        <separator string="Forbiden Countries" colspan="4"/>
+                        <field name="forbidden_country_ids" colspan="4" nolabel="1"/>
+                        <separator string="Forbiden States" colspan="4"/>
+                        <field name="forbidden_state_ids" colspan="4" nolabel="1"/>
+                    </page>
+                    <page string="Keywords" >
+                        <separator string="Keywords" colspan="4"/>
+                        <field name="keywords" colspan="4"  nolabel="1" select="1"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_offer_form_all1">
-		<field name="name">Open Offer</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_offer_tree" />
-		<field name="domain">[('state','=','open'),('type','!=','model'),('type','!=','preoffer')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_open_offer_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_offer_tree"/>
-		<field name="act_window_id" ref="action_offer_form_all1"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_open_offer_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_offer_form"/>
-		<field name="act_window_id" ref="action_offer_form_all1"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/All Offers/Open Offers" id="menu_action_offer_form_all1" action="action_offer_form_all1"/>
+        <!-- ALL OFFERS -->
+
+    <record model="ir.actions.act_window" id="action_offer_form">
+        <field name="name">All Offers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_offer_tree" />
+        <field name="domain">[('type','!=','model'),('type','!=','preoffer')]</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_offer_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_tree"/>
+        <field name="act_window_id" ref="action_offer_form"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_offer_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_offer_form"/>
+        <field name="act_window_id" ref="action_offer_form"/>
+    </record>
+
+    <menuitem id="menu_action_offer_form" parent="dm.menu_dm_offer" action="action_offer_form"/>
 
 
+    <record model="ir.actions.act_window" id="action_offer_form_all1">
+        <field name="name">Open Offers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_offer_tree" />
+        <field name="domain">[('state','=','open'),('type','!=','model'),('type','!=','preoffer')]</field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_offer_form_all2">
-		<field name="name">Draft Offer</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_offer_tree" />
-		<field name="domain">[('state','=','draft'),('type','!=','model'),('type','!=','preoffer')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_draft_offer_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_offer_tree"/>
-		<field name="act_window_id" ref="action_offer_form_all2"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_draft_offer_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_offer_form"/>
-		<field name="act_window_id" ref="action_offer_form_all2"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/All Offers/Draft Offers" id="menu_action_offer_form_all2" action="action_offer_form_all2"/>
+    <record model="ir.actions.act_window.view" id="action_open_offer_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_tree"/>
+        <field name="act_window_id" ref="action_offer_form_all1"/>
+    </record>
 
+    <record model="ir.actions.act_window.view" id="action_open_offer_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_offer_form"/>
+        <field name="act_window_id" ref="action_offer_form_all1"/>
+    </record>
 
-
-	<record model="ir.actions.act_window" id="action_offer_form_all3">
-		<field name="name">Closed Offer</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_offer_tree" />
-		<field name="domain">[('state','=','closed'),('type','!=','model'),('type','!=','preoffer')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_closed_offer_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_offer_tree"/>
-		<field name="act_window_id" ref="action_offer_form_all3"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_closed_offer_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_offer_form"/>
-		<field name="act_window_id" ref="action_offer_form_all3"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/All Offers/Closed Offers" id="menu_action_offer_form_all3" action="action_offer_form_all3"/>
+    <menuitem id="menu_action_offer_form_all1" parent="dm.menu_action_offer_form" action="action_offer_form_all1"/>
 
 
-        <!-- My Offers -->
+    <record model="ir.actions.act_window" id="action_offer_form_all2">
+        <field name="name">Draft Offers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_offer_tree" />
+        <field name="domain">[('state','=','draft'),('type','!=','model'),('type','!=','preoffer')]</field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_offer_form_my">
-		<field name="name">My Offers</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_offer_tree" />
-		<field name="domain">[('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_offer_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_offer_tree"/>
-		<field name="act_window_id" ref="action_offer_form_my"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_offer_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_offer_form"/>
-		<field name="act_window_id" ref="action_offer_form_my"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/My Offers" id="menu_action_offer_form_my" action="action_offer_form_my"/>
+    <record model="ir.actions.act_window.view" id="action_draft_offer_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_tree"/>
+        <field name="act_window_id" ref="action_offer_form_all2"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_draft_offer_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_offer_form"/>
+        <field name="act_window_id" ref="action_offer_form_all2"/>
+    </record>
+
+    <menuitem id="menu_action_offer_form_all2" parent="dm.menu_action_offer_form" action="action_offer_form_all2"/>
 
 
 
-	<record model="ir.actions.act_window" id="action_offer_form_my1">
-		<field name="name">My Open Offer</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_offer_tree" />
-		<field name="domain">[('state','=','open'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_open_offer_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_offer_tree"/>
-		<field name="act_window_id" ref="action_offer_form_my1"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_open_offer_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_offer_form"/>
-		<field name="act_window_id" ref="action_offer_form_my1"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/My Offers/Open Offers" id="menu_action_offer_form_my1" action="action_offer_form_my1"/>
+    <record model="ir.actions.act_window" id="action_offer_form_all3">
+        <field name="name">Closed Offers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_offer_tree" />
+        <field name="domain">[('state','=','closed'),('type','!=','model'),('type','!=','preoffer')]</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_closed_offer_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_tree"/>
+        <field name="act_window_id" ref="action_offer_form_all3"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_closed_offer_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_offer_form"/>
+        <field name="act_window_id" ref="action_offer_form_all3"/>
+    </record>
+
+    <menuitem id="menu_action_offer_form_all3" parent="dm.menu_action_offer_form"  action="action_offer_form_all3"/>
+
+
+        <!-- MY OFFERS -->
+
+    <record model="ir.actions.act_window" id="action_offer_form_my">
+        <field name="name">My Offers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_offer_tree" />
+        <field name="domain">[('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_my_offer_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_tree"/>
+        <field name="act_window_id" ref="action_offer_form_my"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_my_offer_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_offer_form"/>
+        <field name="act_window_id" ref="action_offer_form_my"/>
+    </record>
+
+    <menuitem id="menu_action_offer_form_my" parent="dm.menu_dm_offer" groups="res_groups_offeradmin,res_groups_offermanager" action="action_offer_form_my"/>
+
+
+    <record model="ir.actions.act_window" id="action_offer_form_my1">
+        <field name="name">My Open Offers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_offer_tree" />
+        <field name="domain">[('state','=','open'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_my_open_offer_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_tree"/>
+        <field name="act_window_id" ref="action_offer_form_my1"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_my_open_offer_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_offer_form"/>
+        <field name="act_window_id" ref="action_offer_form_my1"/>
+    </record>
+
+    <menuitem id="menu_action_offer_form_my1" parent="dm.menu_action_offer_form_my" action="action_offer_form_my1"/>
 
 
 
-	<record model="ir.actions.act_window" id="action_offer_form_my2">
-		<field name="name">My Draft Offer</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_offer_tree" />
-		<field name="domain">[('state','=','draft'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_draft_offer_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_offer_tree"/>
-		<field name="act_window_id" ref="action_offer_form_my2"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_draft_offer_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_offer_form"/>
-		<field name="act_window_id" ref="action_offer_form_my2"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/My Offers/Draft Offers" id="menu_action_offer_form_my2" action="action_offer_form_my2"/>
+    <record model="ir.actions.act_window" id="action_offer_form_my2">
+        <field name="name">My Draft Offers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_offer_tree" />
+        <field name="domain">[('state','=','draft'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_my_draft_offer_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_tree"/>
+        <field name="act_window_id" ref="action_offer_form_my2"/>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="action_my_draft_offer_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_offer_form"/>
+        <field name="act_window_id" ref="action_offer_form_my2"/>
+    </record>
+
+    <menuitem id="menu_action_offer_form_my2" parent="dm.menu_action_offer_form_my" action="action_offer_form_my2"/>
 
 
 
-	<record model="ir.actions.act_window" id="action_offer_form_my3">
-		<field name="name">My Closed Offer</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_offer_tree" />
-		<field name="domain">[('state','=','closed'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_closed_offer_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_offer_tree"/>
-		<field name="act_window_id" ref="action_offer_form_my3"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_closed_offer_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_offer_form"/>
-		<field name="act_window_id" ref="action_offer_form_my3"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/My Offers/Closed Offers" id="menu_action_offer_form_my3" action="action_offer_form_my3"/>
+    <record model="ir.actions.act_window" id="action_offer_form_my3">
+        <field name="name">My Closed Offers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_offer_tree" />
+        <field name="domain">[('state','=','closed'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
+    </record>
 
-	<!--
-	=======================================================
-	Offer Model Views
-	=======================================================
-	-->
-	<record model="ir.ui.view" id="view_offer_model_tree">
-		<field name="name">dm.offer.model.tree</field>
-		<field name="model">dm.offer</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Offers">
-				<field name="name"/>
-				<field name="code"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.actions.act_window.view" id="action_my_closed_offer_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_tree"/>
+        <field name="act_window_id" ref="action_offer_form_my3"/>
+    </record>
 
-	<record model="ir.ui.view" id="view_offer_model_form">
-		<field name="name">dm.offer.model.form</field>
-		<field name="model">dm.offer</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Offers">
-				<notebook>
-					<page string="General">
-						<group col="8" colspan="4">
-						<field name="name" select="1"/>
-						<field name="code" colspan="2"/>
-						</group>
-						<separator string="Notes" colspan="4"/>
-						<field name="notes" colspan="4"  nolabel="1"/>
-						<button name="go_to_offer" string="Create Offers" type="object"/>
-					</page>
-					<!--
-					<page string="Description">
-						<separator string="Description" colspan="4"/>
-						<field name="desc" nolabel="1"/>
-					</page>
-					-->
-					<page string="History">
-						<separator string="History" />
-						<field name="history_ids" nolabel="1" colspan="4"/>
-					</page>
-				</notebook>
-			</form>
-		</field>
-	</record>
+    <record model="ir.actions.act_window.view" id="action_my_closed_offer_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_offer_form"/>
+        <field name="act_window_id" ref="action_offer_form_my3"/>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_offer_model_form">
-		<field name="name">Offers Model</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('type','=','model')]</field>
-		<field name="context">{'type':'model'}</field>
-	</record>
+    <menuitem id="menu_action_offer_form_my3" parent="dm.menu_action_offer_form_my" action="action_offer_form_my3"/>
 
-	<record model="ir.actions.act_window.view" id="action_offer_model_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_offer_model_tree"/>
-		<field name="act_window_id" ref="action_offer_model_form"/>
-	</record>
 
-	<record model="ir.actions.act_window.view" id="action_offer_model_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_offer_model_form"/>
-		<field name="act_window_id" ref="action_offer_model_form"/>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Offers/All Offers Model" id="menu_action_offer_model_form" action="action_offer_model_form"/>
+    <!--
+    =======================================================
+    OFFER MODEL VIEWS
+    =======================================================
+    -->
 
-	<record model="ir.actions.act_window" id="action_offer_copywriter_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">res.partner</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="base.view_partner_tree"/>
-		<field name="domain">[('category_id','like','Copywriter')]</field>
-		<field name="context">{'category':'Copywriter'}</field>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Offers/All Copywriters" id="menu_action_offer_copywriter_form" action="action_offer_copywriter_form"/>
+    <record model="ir.ui.view" id="view_offer_model_tree">
+        <field name="name">dm.offer.model.tree</field>
+        <field name="model">dm.offer</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Offers">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
 
-	<!--
-	=======================================================
-	Pre-Offer Views
-	=======================================================
-	-->
-	<record model="ir.ui.view" id="view_preoffer_form">
-		<field name="name">dm.preoffer.form</field>
-		<field name="model">dm.offer</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Offers">
-				<notebook>
-					<page string="General">
-						<field name="name" select="1"/>
-						<field name="code"/>
-						<field name="lang_orig"/>
-<!--						<field name="copywriter_id"  select="2" on_change="change_code(preoffer_type,copywriter_id)"/>-->
-						<field name="copywriter_id" select="2"/>
-						<field name="recommended_trademark"/>
-						<field name="preoffer_type" select="2"/>
-						<field name="preoffer_offer_id" select="2"/>
-						<field name="active" select="2"/>
-						<newline/>
-						<separator string="Categories" colspan="4"/>
-						<field name="category_ids" colspan="4" nolabel="1"/>
-						<separator string="Notes" colspan="4"/>
-						<field name="notes" colspan="4"  nolabel="1"/>
-						<separator string="Status" colspan="4"/>
-						<group col="8" colspan="4">
-							<field name="state" nolabel="1" select="1"/>
-							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
-							<button name="state_freeze_set" string="Freeze" states="open" type="object"/>
-							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
-							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
-<!--						<button name="go_to_offer" string="Create Offers" states="draft" type="object"/> -->
-						</group>
-					</page>
-					<!--
-					<page string="Description">
-						<separator string="Description" colspan="4"/>
-						<field name="desc" nolabel="1"/>
-					</page>
-					-->
-					<page string="Keywords" >
-						<separator string="Keywords" colspan="4"/>
-						<field name="keywords" colspan="4"  nolabel="1" select="1"/>
-					</page>
-					<page string="Dates">
-						<field name="order_date"/>
-						<field name="last_modification_date"/>
-						<field name="planned_delivery_date"/>
-						<field name="delivery_date"/>
-						<newline />
-<!--						<field name="fixed_date"/>-->
-<!--						<field name="buffer_delay"/>-->
-					</page>
-				</notebook>
-			</form>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_offer_model_form">
+        <field name="name">dm.offer.model.form</field>
+        <field name="model">dm.offer</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Offers">
+                <notebook>
+                    <page string="General">
+                        <group col="8" colspan="4">
+                        <field name="name" select="1"/>
+                        <field name="code" colspan="2"/>
+                        </group>
+                        <separator string="Notes" colspan="4"/>
+                        <field name="notes" colspan="4"  nolabel="1" widget="text_wiki"/>
+                        <button name="go_to_offer" string="Create Offers" type="object"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_preoffer_form">
-		<field name="name">PreOffers</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('type','=','preoffer')]</field>
-		<field name="context">{'type':'preoffer'}</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_preoffer_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_offer_tree"/>
-		<field name="act_window_id" ref="action_preoffer_form"/>
-	</record>
+    <record model="ir.actions.act_window" id="action_offer_model_form">
+        <field name="name">All Offer Models</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type','=','model')]</field>
+        <field name="context">{'type':'model'}</field>
+    </record>
 
-	<record model="ir.actions.act_window.view" id="action_preoffer_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_preoffer_form"/>
-		<field name="act_window_id" ref="action_preoffer_form"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/All PreOffers" id="menu_action_preoffer_form" action="action_preoffer_form"/>
+    <record model="ir.actions.act_window.view" id="action_offer_model_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_model_tree"/>
+        <field name="act_window_id" ref="action_offer_model_form"/>
+    </record>
 
-	<!--
-	======================
-	Categories
-	======================
-	-->
-	<record model="ir.ui.view" id="view_offer_category_form">
-		<field name="name">dm.offer.category.form</field>
-		<field name="model">dm.offer.category</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Offer Category">
-				<field name="name" select="1"/>
-				<field name="parent_id"/>
-			</form>
-		</field>
-	</record>
+    <record model="ir.actions.act_window.view" id="action_offer_model_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_offer_model_form"/>
+        <field name="act_window_id" ref="action_offer_model_form"/>
+    </record>
 
-	<record model="ir.ui.view" id="view_offer_category_list">
-		<field name="name">dm.offer.category.list</field>
-		<field name="model">dm.offer.category</field>
-		<field name="type">tree</field>
-		<field name="priority" eval="6"/>
-		<field name="arch" type="xml">
-			<tree string="Offer Category">
-				<field name="complete_name"/>
-			</tree>
-		</field>
-	</record>
+    <menuitem id="menu_action_offer_model_form" parent="dm.menu_dm_config_offer" action="action_offer_model_form"/>
 
-	<record model="ir.ui.view" id="view_offer_category_tree">
-		<field name="name">dm.offer.category.tree</field>
-		<field name="model">dm.offer.category</field>
-		<field name="type">tree</field>
-		<field name="field_parent">child_ids</field>
-		<field name="arch" type="xml">
-			<tree string="Offer Category">
-				<field name="name"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.actions.act_window" id="action_offer_copywriter_form">
+        <field name="name">All Copywriters</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="base.view_partner_tree"/>
+        <field name="domain">[('category_id','like','Copywriter')]</field>
+        <field name="context">{'category':'Copywriter'}</field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_offer_categ_main">
-		<field name="name">Offer Categories</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer.category</field>
-		<field name="view_type">tree</field>
-		<field name="view_id" ref="view_offer_category_tree"/>
-		<field name="domain">[('parent_id','=',False)]</field>
-	</record>
-	<!--
-	<menuitem name="Direct Marketing/Configuration/Offer's Category" id="menu_action_offer_categ_main" action="action_offer_categ_main"/>
-	-->
+    <menuitem id="menu_action_offer_copywriter_from" parent="dm.menu_dm_config_offer" action="action_offer_copywriter_form"/>
 
-	<record model="ir.actions.act_window" id="action_offer_categ_form">
-		<field name="name">All Offers</field>
-		<field name="name">Edit Categories</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer.category</field>
-		<field name="view_type">form</field>
-	</record>
+    <!--
+    =======================================================
+    PRE-OFFER VIEWS
+    =======================================================
+    -->
+    <record model="ir.ui.view" id="view_preoffer_form">
+        <field name="name">dm.preoffer.form</field>
+        <field name="model">dm.offer</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Offers">
+                <notebook>
+                    <page string="General">
+                        <field name="name" select="1"/>
+                        <field name="code"/>
+                        <field name="lang_orig_id"/>
+<!--                        <field name="copywriter_id"  select="2" on_change="change_code(preoffer_type,copywriter_id)"/>-->
+                        <field name="copywriter_id" select="2"/>
+                        <field name="recommended_trademark_id"/>
+                        <field name="preoffer_type" select="2"/>
+                        <field name="preoffer_offer_id" select="2"/>
+                        <field name="offer_responsible_id"/>
+                        <field name="active" select="2"/>
+                        <newline/>
+                        <separator string="Categories" colspan="4"/>
+                        <field name="category_ids" colspan="4" nolabel="1"/>
+                        <separator string="Notes" colspan="4"/>
+                        <field name="notes" colspan="4"  nolabel="1" widget="text_wiki"/>
+                        <separator string="Status" colspan="4"/>
+                        <group col="8" colspan="4">
+                            <field name="state" nolabel="1" select="1"/>
+                            <button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
+                            <button name="state_freeze_set" string="Freeze" states="open" type="object"/>
+                            <button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
+                            <button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
+<!--                        <button name="go_to_offer" string="Create Offers" states="draft" type="object"/> -->
+                        </group>
+                    </page>
+                    <page string="Keywords" >
+                        <separator string="Keywords" colspan="4"/>
+                        <field name="keywords" colspan="4"  nolabel="1" select="1"/>
+                    </page>
+                    <page string="Dates">
+                        <field name="order_date"/>
+                        <field name="last_modification_date"/>
+                        <field name="planned_delivery_date"/>
+                        <field name="delivery_date"/>
+                        <newline />
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
 
-	<menuitem name="Direct Marketing/Configuration/Offers/Edit Categories" sequence="1" id="menu_action_offer_categ_main_form" action="action_offer_categ_form"/>
+    <record model="ir.actions.act_window" id="action_preoffer_form">
+        <field name="name">All Offer Ideas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type','=','preoffer')]</field>
+        <field name="context">{'type':'preoffer'}</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_preoffer_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_tree"/>
+        <field name="act_window_id" ref="action_preoffer_form"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_preoffer_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_preoffer_form"/>
+        <field name="act_window_id" ref="action_preoffer_form"/>
+    </record>
+    <menuitem id="menu_action_preoffer_form" parent="dm.menu_dm_offer" action="action_preoffer_form"/>
 
-	<record model="ir.actions.act_window" id="action_offer_by_category">
-		<field name="name">Offer by Categories</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('category_ids','child_of', [active_id])]</field>
-	</record>
+    <record model="ir.actions.act_window" id="action_mypreoffer_form">
+        <field name="name">My Offer Ideas</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('type','=','preoffer'), ('offer_responsible_id','=',uid)]</field>
+        <field name="context">{'type':'preoffer'}</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_mypreoffer_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_offer_tree"/>
+        <field name="act_window_id" ref="action_mypreoffer_form"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_mypreoffer_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">2</field>
+        <field name="view_id" ref="view_preoffer_form"/>
+        <field name="act_window_id" ref="action_mypreoffer_form"/>
+    </record>
+    <menuitem id="menu_action_mypreoffer_form" parent="dm.menu_dm_offer" groups="res_groups_offeradmin,res_groups_offermanager" action="action_mypreoffer_form"/>
 
-	<record model="ir.values" id="ir_action_offer_by_category">
-		<field name="key2" eval="'tree_but_open'"/>
-		<field name="model" eval="'dm.offer.category'"/>
-		<field name="name">Open Offer</field>
-		<field name="value" eval="'ir.actions.act_window,%d'%action_offer_by_category"/>
-		<field name="object" eval="True"/>
-	</record>
+    <!--
+    ======================
+    OFFER CATEGORY
+    ======================
+    -->
+    <record model="ir.ui.view" id="view_offer_category_form">
+        <field name="name">dm.offer.category.form</field>
+        <field name="model">dm.offer.category</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Offer Category">
+                <field name="name" select="1"/>
+                <field name="parent_id"/>
+            </form>
+        </field>
+    </record>
 
-	<menuitem name="Direct Marketing/Offers/Offers By Category" id="menu_action_offer_by_category" action="action_offer_categ_main"/>
+    <record model="ir.ui.view" id="view_offer_category_list">
+        <field name="name">dm.offer.category.list</field>
+        <field name="model">dm.offer.category</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="6"/>
+        <field name="arch" type="xml">
+            <tree string="Offer Category">
+                <field name="complete_name"/>
+            </tree>
+        </field>
+    </record>
 
-	<!--
-	======================
-	Steps by Offers
-	======================
-	-->
-	<!--
-	<record model="ir.actions.act_window" id="action_step_by_offer_tree">
-		<field name="name">Offers By Steps</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">tree</field>
-		<field name="view_id" ref="view_offer_list"/>
-		<field name="domain">[('offer_origin_id','=',False)]</field>
-	</record>
+    <record model="ir.ui.view" id="view_offer_category_tree">
+        <field name="name">dm.offer.category.tree</field>
+        <field name="model">dm.offer.category</field>
+        <field name="type">tree</field>
+        <field name="field_parent">child_ids</field>
+        <field name="arch" type="xml">
+            <tree string="Offer Category">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_steps_by_offer_form">
-		<field name="name">Offer Steps</field>
-		<field name="res_model">dm.offer.step</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('offer_id','child_of', [active_id])]</field>
-	</record>
+    <record model="ir.actions.act_window" id="action_offer_categ_main">
+        <field name="name">Offer Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer.category</field>
+        <field name="view_type">tree</field>
+        <field name="view_id" ref="view_offer_category_tree"/>
+        <field name="domain">[('parent_id','=',False)]</field>
+    </record>
 
-	<record model="ir.values" id="ir_action_offer_by_step">
-		<field name="key2" eval="'tree_but_open'"/>
-		<field name="model" eval="'dm.offer'"/>
-		<field name="name">Open Step</field>
-		<field name="value" eval="'ir.actions.act_window,%d'%action_steps_by_offer_form"/>
-		<field name="object" eval="True"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/Steps By Offers" id="menu_action_step_by_offer" action="action_step_by_offer_tree"/>
-	-->
-	<!--
-	======================
-	History
-	======================
-	-->
+    <record model="ir.actions.act_window" id="action_offer_categ_form">
+        <field name="name">All Offer Categories</field>
+        <field name="name">Edit Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer.category</field>
+        <field name="view_type">form</field>
+    </record>
 
-	<record model="ir.ui.view" id="view_offer_history_form">
-		<field name="name">dm.offer.history.form</field>
-		<field name="model">dm.offer.history</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Actions">
-				<field name="offer_id"/>
-				<field name="date"/>
-				<field name="user_id"/>
-				<field name="state"/>
-			</form>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_offer_history_tree">
-		<field name="name">dm.offer.history.tree</field>
-		<field name="model">dm.offer.history</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Actions">
-				<field name="date"/>
-				<field name="user_id"/>
-				<field name="state"/>
-			</tree>
-		</field>
-	</record>
+    <menuitem id="menu_action_offer_categ_main_form" parent="dm.menu_dm_config_offer" action="action_offer_categ_form" sequence="2"/>
 
-	<!--
-	======================
-	Customer
-	======================
-	-->
+    <record model="ir.actions.act_window" id="action_offer_by_category">
+        <field name="name">Offers by Category</field>
+        <field name="res_model">dm.offer</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('category_ids','child_of', [active_id])]</field>
+    </record>
 
-	<record model="ir.ui.view" id="view_dm_customer_form">
-		<field name="name">dm.customer.form</field>
-		<field name="model">dm.customer</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Customer">
-			<notebook>
-				<page string="General">
-					<field name="name" select="1" colspan="4"/>
-					<field name="customer_number" string="Number" select="1"/>
-					<field name="language_id"  select="2"/>
-					<separator string="Other Languages" colspan="4"/>
-					<field name="language_ids" colspan="4" nolabel="1"/>
-					<separator string="Prospect for Media" colspan="4"/>
-					<field name="prospect_media_ids" colspan="4" nolabel="1"/>
-					<separator string="Client for Media" colspan="4"/>
-					<field name="client_media_ids" colspan="4" nolabel="1"/>
-				</page>
-				<page string="Address">
-<!--					<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
-						<form string="Customer contacts">
-							<field name="name" select="2"/>
-							<field name="title" domain="[('domain', '=', 'contact')]"/>
-							<field name="function"/>
-							<field name="type" select="2"/>
-							<field name="street" select="2"/>
-							<field name="street2"/>
-							<newline/>
-							<field name="zip" select="2"/>
-							<field name="city" select="2"/>
-							<newline/>
-							<field name="country_id" select="2" completion="1"/>
-							<field name="state_id" select="2"/>
-							<newline/>
-							<field name="phone"/>
-							<field name="fax"/>
-							<newline/>
-							<field name="mobile"/>
-							<field name="email" select="2" widget="email" />
-						</form>
-						<tree string="Partner contacts">
-							<field name="name" />
-							<field name="zip"/>
-							<field name="city"/>
-							<field name="country_id"/>
-						</tree>
-					</field>-->
-				</page>
-			</notebook>
-			</form>
-		</field>
-	</record>
+    <record model="ir.values" id="ir_action_offer_by_category">
+        <field name="key2" eval="'tree_but_open'"/>
+        <field name="model" eval="'dm.offer.category'"/>
+        <field name="name">Open Offer</field>
+        <field name="value" eval="'ir.actions.act_window,%d'%action_offer_by_category"/>
+        <field name="object" eval="True"/>
+    </record>
 
-	<record model="ir.ui.view" id="view_dm_customer_tree">
-		<field name="name">dm.customer.tree</field>
-		<field name="model">dm.customer</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Customers">
-				<field name="customer_number" select="1"/>
-				<field name="name" colspan="4" select="1"/>
-				<field name="language_id"  select="2"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="action_dm_customer_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.customer</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="view_dm_customer_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/Customers" groups="res_groups_offeradmin" id="menu_dm_customer_menu" sequence="1" />
-	<menuitem name="Direct Marketing/Offers/Customers/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>
+    <menuitem id="menu_action_offer_by_category" parent="dm.menu_dm_offer" action="action_offer_categ_main" sequence="1"/>
 
-	<!--
-	=======================================================
-	Customer Order Views
-	=======================================================
-	-->
+    <!--
+    ======================
+    HISTORY
+    ======================
+    -->
 
-	<record model="ir.ui.view" id="view_dm_customer_offer_form">
-		<field name="name">dm.customer.offer.form</field>
-		<field name="model">dm.customer.offer</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Customer Order">
-				<field name="raw_datas" colspan="4" on_change="onchange_rawdatas(raw_datas)"/>
-				<field name="customer_id"/>
-				<field name="customer_number" select="1"/>
-				<field name="action_code"/>
-				<field name="offer_step"/>
-				<field name="distribution_office"/>
-				<field name="title"/>
-				<field name="customer_firstname" select="1"/>
-				<field name="customer_lastname" select="2"/>
-				<newline/>
-				<field name="customer_add1"/>
-				<field name="customer_add2"/>
-				<field name="customer_add3"/>
-				<field name="customer_add4"/>
-				<field name="country" select="2" colspan="4"/>
-				<field name="zip"/>
-				<field name="zip_summary"/>
-				<field name="note" colspan="4"/>
-				<field name="state"/>
-				<button string="Confirm" name="set_confirm" type="object" states="draft" colspan="2"/>
-			</form>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_dm_customer_offer_tree">
-		<field name="name">dm.customer.offer.tree</field>
-		<field name="model">dm.customer.offer</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Customer Order">
-				<field name="customer_number"/>
-				<field name="customer_firstname"/>
-				<field name="customer_lastname"/>
-				<field name="country"/>
-				<field name="distribution_office"/>
-				<field name="state"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="action_dm_customer_offer_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.customer.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="view_dm_customer_offer_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Offers/Customers/All Customer Orders" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>
+    <record model="ir.ui.view" id="view_offer_history_form">
+        <field name="name">dm.offer.history.form</field>
+        <field name="model">dm.offer.history</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Actions">
+            	<field name="campaign_id"/>
+                <field name="code"/>
+                <field name="offer_id"/>
+                <field name="date"/>
+                <field name="responsible_id"/>
+<!--                <field name="state"/>-->
+            </form>
+        </field>
+    </record>
 
-	<!--
-	=======================================================
-	Offer Media Views
-	=======================================================
-	-->
+    <record model="ir.ui.view" id="view_offer_history_tree">
+        <field name="name">dm.offer.history.tree</field>
+        <field name="model">dm.offer.history</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Actions">
+                <field name="campaign_id"/>
+                <field name="code"/>
+                <field name="date"/>
+                <field name="responsible_id"/>
+<!--                <field name="state"/>-->
+            </tree>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_dm_media_form">
-		<field name="name">dm.media.form</field>
-		<field name="model">dm.media</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Offer Media">
-				<field name="name" select="1"/>
-			</form>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_dm_media_tree">
-		<field name="name">dm.meida.tree</field>
-		<field name="model">dm.media</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="All Offer Medias">
-				<field name="name"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="action_dm_media_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.media</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="view_dm_media_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Medias" id="menu_action_dm_media_form" sequence="2" action="action_dm_media_form"/>
-
-	<!--
-	=======================================================
-	Customers List
-	=======================================================
-	-->
-<!--
-	<record model="ir.ui.view" id="view_dm.customers_list_form">
-		<field name="name">dm.customers_list.form</field>
-		<field name="model">dm.customers_list</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Customer File">
-				<field name="name" select="1"/>
-				<field name="code" select="2"/>
-				<field name="broker_id" select="1"/>
-				<field name="delivery_date" select="2"/>
-				<field name="segment_ids" colspan="4">
-				<form>
-					<field name="name" string="Name" select="1"/>
-					<field name="code" string="Action Code"/>
-					<field name="proposition_id" />
-					<field name="active" />
-					<field name="quantity" select="2"/>
-					<newline/>
-					<field name="split_id" />
-					<field name="reuse_id" />
-					<field name="start_census"/>
-					<field name="end_census"/>
-					<field name="deduplication_level"/>
-					<field name="note" colspan="4"/>
-				</form>
-				<tree string="Segments">
-					<field name="name" string="Name"/>
-					<field name="code" string="Action Code"/>
-					<field name="quantity"/>
-				</tree>
-				</field>
-			</form>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_dm.customers_list_tree">
-		<field name="name">dm.customers_list.tree</field>
-		<field name="model">dm.customers_list</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Customer Files">
-				<field name="name"/>
-				<field name="code"/>
-				<field name="broker_id"/>
-				<field name="delivery_date"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="action_dm.customers_list">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.customers_list</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="view_dm.customers_list_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/Customers Lists/All Customers Lists" id="menu_action_dm.customers_list" sequence="1" action="action_dm.customers_list"/>
--->
-	</data>
+    </data>
 </openerp>

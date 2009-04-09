@@ -1,17 +1,37 @@
 # -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 from osv import fields,osv
 from mx import DateTime
 
 
-class report_auction_adjudication(osv.osv):
-    _name = "report.auction.adjudication"
+class report_auction_adjudication1(osv.osv):
+    _name = "report.auction.adjudication1"
     _description = "report_auction_adjudication"
     _auto = False
     def _adjudication_get(self, cr, uid, ids, prop, unknow_none,unknow_dict):
         tmp={}
         for id in ids:
             tmp[id]=0.0
-            cr.execute("select sum(obj_price) from auction_lots where auction_id=%d", (id,))
+            cr.execute("select sum(obj_price) from auction_lots where auction_id=%s", (id,))
             sum = cr.fetchone()
             if sum:
                 tmp[id]=sum[0]
@@ -23,11 +43,11 @@ class report_auction_adjudication(osv.osv):
                 'buyer_costs': fields.many2many('account.tax', 'auction_buyer_taxes_rel', 'auction_id', 'tax_id', 'Buyer Costs'),
                 'seller_costs': fields.many2many('account.tax', 'auction_seller_taxes_rel', 'auction_id', 'tax_id', 'Seller Costs'),
                 'adj_total': fields.float('Total Adjudication',select=True),
-                'state': fields.selection((('draft','Draft'),('close','Closed')),'State', select=True),
+#                'state': fields.selection((('draft','Draft'),('close','Closed')),'State', select=True),
     }
     def init(self, cr):
         cr.execute("""
-            create or replace view report_auction_adjudication as (
+            create or replace view report_auction_adjudication1 as (
                 select
                     l.id as id,
                     l.name as name,
@@ -42,7 +62,7 @@ class report_auction_adjudication(osv.osv):
 
             )
         """)
-report_auction_adjudication()
+report_auction_adjudication1()
 
 class report_per_seller_customer(osv.osv):
         _name = "report.per.seller.customer"
@@ -51,6 +71,7 @@ class report_per_seller_customer(osv.osv):
         _columns = {
                     'name': fields.char('Seller', size=64, required=True,select=True),
                     'no_of_buyer': fields.integer('Buyer'),
+                    'partner_id' : fields.many2one('res.partner', 'Partner')
         }
         def init(self, cr):
             cr.execute("""
@@ -148,8 +169,8 @@ report_latest_objects()
 def _type_get(self, cr, uid,ids):
     cr.execute('select name, name from auction_lot_category order by name')
     return cr.fetchall()
-class report_auction_object_date(osv.osv):
-    _name = "report.auction.object.date"
+class report_auction_object_date1(osv.osv):
+    _name = "report.auction.object.date1"
     _description = "Objects per day"
     _auto = False
     _columns = {
@@ -169,7 +190,7 @@ class report_auction_object_date(osv.osv):
 
     def init(self, cr):
         cr.execute("""
-            create or replace view report_auction_object_date as (
+            create or replace view report_auction_object_date1 as (
                 select
                    min(l.id) as id,
                    to_char(l.create_date, 'YYYY-MM-DD') as date,
@@ -181,10 +202,10 @@ class report_auction_object_date(osv.osv):
                     to_char(l.create_date, 'YYYY-MM-DD'),l.id,l.state
             )
         """)
-report_auction_object_date()
+report_auction_object_date1()
 
-class report_auction_estimation_adj_category(osv.osv):
-    _name = "report.auction.estimation.adj.category"
+class report_auction_estimation_adj_category1(osv.osv):
+    _name = "report.auction.estimation.adj.category1"
     _description = "comparison estimate/adjudication "
     _auto = False
     _columns = {
@@ -208,7 +229,7 @@ class report_auction_estimation_adj_category(osv.osv):
 
     def init(self, cr):
         cr.execute("""
-            create or replace view report_auction_estimation_adj_category as (
+            create or replace view report_auction_estimation_adj_category1 as (
                 select
                     min(l.id) as id,
                    to_char(l.create_date, 'YYYY-MM-01') as date,
@@ -224,9 +245,10 @@ class report_auction_estimation_adj_category(osv.osv):
                     to_char(l.create_date, 'YYYY-MM-01'),l.state,lot_type
             )
         """)
-report_auction_estimation_adj_category()
-class report_auction_user_pointing(osv.osv):
-    _name = "report.auction.user.pointing"
+report_auction_estimation_adj_category1()
+
+class report_auction_user_pointing1(osv.osv):
+    _name = "report.auction.user.pointing1"
     _description = "user pointing "
     _auto = False
     _columns = {
@@ -238,7 +260,7 @@ class report_auction_user_pointing(osv.osv):
 
     def init(self, cr):
         cr.execute("""
-            create or replace view report_auction_user_pointing as (
+            create or replace view report_auction_user_pointing1 as (
                 select r.name as user_id,
                         l.id as id,
                         l.total_timesheet as total_timesheet
@@ -254,7 +276,7 @@ class report_auction_user_pointing(osv.osv):
 
             )
         """)
-report_auction_user_pointing()
+report_auction_user_pointing1()
 
 # Report for Seller and Buyer Reporting Menu
 

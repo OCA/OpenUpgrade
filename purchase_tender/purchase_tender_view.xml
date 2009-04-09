@@ -26,7 +26,6 @@
         </field>
     </record>
 
-<!-- view for  purchase.tender  -->
         <record model="ir.ui.view" id="view_purchase_tender_form">
             <field name="name">purchase.tender.form</field>
             <field name="type">form</field>
@@ -34,17 +33,18 @@
             <field name="arch" type="xml">
                 <form string="Purchase Tender">
                     <field name="name" select="1"/>
-                    <field name="description" select="2" colspan="4"/>
-                    <separator string="Purchase Orders" colspan="4"/>
-                    <field name="purchase_ids" nolabel="1" colspan="4">
-                        <tree string="Purchase Order">
-                            <field name="name"/>
-                            <field name="date_order"/>
-                            <field name="partner_id"/>
-                            <field name="state"/>
-                            <field name="notes"/>
-                        </tree>
-                    </field>
+                    <field name="user_id" select="1"/>
+                    <field name="date_start" select="2"/>
+                    <field name="date_end" select="2"/>
+                    <notebook colspan="4">
+                        <page string="Description">
+                            <field name="description" colspan="4" nolabel="1" select="2"/>
+                        </page>
+                        <page string="Quotations">
+                            <field name="purchase_ids" nolabel="1" colspan="4"/>
+                        </page>
+                    </notebook>
+                    <field name="state" select="1"/>
                 </form>
             </field>
         </record>
@@ -55,18 +55,48 @@
             <field name="arch" type="xml">
                 <tree string="Purchase Tender">
                     <field name="name"/>
-                    <field name="description"/>
+                    <field name="user_id"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
         <record model="ir.actions.act_window" id="action_purchase_tender">
-            <field name="name">Purchase Tender</field>
+            <field name="name">Purchase Tenders</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">purchase.tender</field>
             <field name="view_type">form</field>
-            <field name="view_id" ref="view_purchase_tender_tree"/>
         </record>
         <menuitem name="Purchase Tenders" id="menu_purchase_tender" parent="purchase.menu_purchase_root"/>
-        <menuitem name="Purchase Tender" id="menu_purchase_Tender1" parent="menu_purchase_tender" action="action_purchase_tender"/>
+        <menuitem id="menu_purchase_Tender1" parent="menu_purchase_tender" action="action_purchase_tender"/>
+
+        <record model="ir.actions.act_window" id="action_purchase_tender_draft">
+            <field name="name">Draft Purchase Tenders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.tender</field>
+            <field name="domain">[('state','=','draft')]</field>
+            <field name="view_type">form</field>
+        </record>
+        <menuitem id="menu_purchase_Tender1_draft" parent="menu_purchase_Tender1" action="action_purchase_tender_draft"/>
+
+        <record model="ir.actions.act_window" id="action_purchase_tender_open">
+            <field name="name">Open Purchase Tenders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.tender</field>
+            <field name="domain">[('state','=','open')]</field>
+            <field name="view_type">form</field>
+        </record>
+        <menuitem id="menu_purchase_Tender1_open" parent="menu_purchase_Tender1" action="action_purchase_tender_open"/>
+
+        <record model="ir.actions.act_window" id="action_purchase_tender_new">
+            <field name="name">New Purchase Tenders</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.tender</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+        </record>
+        <menuitem id="menu_purchase_Tender1_new" parent="menu_purchase_tender" action="action_purchase_tender_new"/>
+
     </data>
 </openerp>

@@ -1,443 +1,683 @@
 <openerp>
-	<data>
+    <data>
 <!-- event.event form view (not inherited) -->
-		<record model="ir.ui.view" id="event.view_event_form">
-			<field name="name">Events</field>
-			<field name="model">event.event</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Events">
-					<notebook>
-					<page string="Information">
-						<separator string="Event Description" colspan="4"/>
-						<field name="name" string="Event" select="1" colspan="4"/>
-						<field name="parent_id" domain="[('parent_id','child_of','Event')]" string="Category"/>
-						<field name="type" select="1" on_change="onchange_check_type(type)"/>
-						<field name="user_id" select="1"/>
-						<field name="active" select="2"/>
-						<field name="date_begin" select="2"/>
-						<field name="date_end" select="2"/>
-						<field name="register_min" select="2"/>
-						<field name="register_max" select="2"/>
-						<field name="budget_id"/>
-						<field name="product_id" required="1"/>
-						<separator string="Tasks management" colspan="4"/>
-						<field name="project_id"/>
-						<button string="Create Retro-Planning" name="%(event.event_wiz)d" type="action"/>
-						<separator string="Status" colspan="4"/>
-						<field name="state" select="1"/>
-						<group col="4" colspan="2">
-							<button string="Cancel Event" name="cci_event_cancel" states="fixed,open" type="object"/>
-							<button string="Confirm Date" name="cci_event_fixed" states="draft" type="object"/>
-							<button string="Open Event" name="cci_event_open" states="fixed" type="object"/>
-							<button string="Confirm Event" name="cci_event_confirm" states="open" type="object"/>
-							<button string="Event is Running" name="cci_event_running" states="confirm" type="object"/>
-							<button string="Event Done" name="cci_event_done" states="running" type="object"/>
-							<button string="Close Event" name="cci_event_closed" states="done" type="object"/>
-						</group>
-					</page>
-					<page string="Extra Info">
-						<field name="fse_code" />
-						<field name="fse_hours" />
-						<field name="signet_type" select="2"/>
-						<field name="account_analytic_id"/>
-						<newline/>
-						<field name="agreement_nbr"/>
-						<field name="check_type"/>
-						<newline/>
-						<field name="note" colspan="4"/>
-					</page>
-					<page string="Mailing">
-						<field name="mail_auto_registr"/>
-						<newline/><newline/>
-						<field name="mail_registr"/>
-						<newline/>
-						<field name="mail_auto_confirm"/>
-						<newline/><newline/>
-						<field name="mail_confirm"/>
-						<newline/>
-					</page>
-					<page string="Statistics">
-						<separator string="Registrations" colspan="4"/>
-						<field name="register_current"/>
-						<field name="register_prospect"/>
-						<separator string="Remaining Tasks" colspan="4"/>
-						<field name="task_ids" colspan="4" nolabel="1" widget="one2many_list" >
-							<tree string="All tasks" colors="red:date_deadline&lt;current_date and state=='draft';blue:date_deadline==current_date and state=='draft';grey:state=='cancel' or state=='close'">
-								<field name="sequence"/>
-								<field name="name"/>
-								<field name="user_id" />
-								<field name="date_deadline" />
-								<field name="planned_hours" widget="float_time"/>
-								<field name="effective_hours" widget="float_time"/>
-								<field name="state" />
-							</tree>
-						</field>
-					</page>
-					</notebook>
-				</form>
-			</field>
-		</record>
+<!--        <record model="ir.ui.view" id="event.view_event_form">
+            <field name="name">Events</field>
+            <field name="model">event.event</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Events">
+                    <notebook>
+                    <page string="Information">
+                        <separator string="Event Description" colspan="4"/>
+                        <field name="name" string="Event" select="1" colspan="4"/>
+                        <field name="parent_id" domain="[('parent_id','child_of','Event')]" string="Category"/>
+                        <field name="type" select="1" on_change="onchange_check_type(type)"/>
+                        <field name="user_id" select="1"/>
+                        <field name="active" select="2"/>
+                        <field name="date_begin" select="2"/>
+                        <field name="date_end" select="2"/>
+                        <field name="register_min" select="2"/>
+                        <field name="register_max" select="2"/>
+                        <field name="budget_id"/>
+                        <field name="product_id" required="1"/>
+                        <separator string="Tasks management" colspan="4"/>
+                        <field name="project_id"/>
+                        <button string="Create Retro-Planning" name="%(event_project.event_wiz)d" type="action"/>
+                        <separator string="Status" colspan="4"/>
+                        <field name="state" select="1"/>
+                        <group col="4" colspan="2">
+                            <button string="Cancel Event" name="cci_event_cancel" states="fixed,open" type="object"/>
+                            <button string="Confirm Date" name="cci_event_fixed" states="draft" type="object"/>
+                            <button string="Open Event" name="cci_event_open" states="fixed" type="object"/>
+                            <button string="Confirm Event" name="cci_event_confirm" states="open" type="object"/>
+                            <button string="Event is Running" name="cci_event_running" states="confirm" type="object"/>
+                            <button string="Event Done" name="cci_event_done" states="running" type="object"/>
+                            <button string="Close Event" name="cci_event_closed" states="done" type="object"/>
+                        </group>
+                    </page>
+                    <page string="Extra Info">
+                        <field name="fse_code" />
+                        <field name="fse_hours" />
+                        <field name="signet_type" select="2"/>
+                        <field name="account_analytic_id"/>
+                        <newline/>
+                        <field name="agreement_nbr"/>
+                        <field name="check_type"/>
+                        <newline/>
+                        <field name="note" colspan="4"/>
+                    </page>
+                    <page string="Mailing">
+                        <field name="mail_auto_registr"/>
+                        <newline/><newline/>
+                        <field name="mail_registr"/>
+                        <newline/>
+                        <field name="mail_auto_confirm"/>
+                        <newline/><newline/>
+                        <field name="mail_confirm"/>
+                        <newline/>
+                    </page>
+                    <page string="Statistics">
+                        <separator string="Registrations" colspan="4"/>
+                        <field name="register_current"/>
+                        <field name="register_prospect"/>
+                        <separator string="Remaining Tasks" colspan="4"/>
+                        <field name="task_ids" colspan="4" nolabel="1" widget="one2many_list" >
+                            <tree string="All tasks" colors="red:date_deadline&lt;current_date and state=='draft';blue:date_deadline==current_date and state=='draft';grey:state=='cancel' or state=='close'">
+                                <field name="sequence"/>
+                                <field name="name"/>
+                                <field name="user_id" />
+                                <field name="date_deadline" />
+                                <field name="planned_hours" widget="float_time"/>
+                                <field name="effective_hours" widget="float_time"/>
+                                <field name="state" />
+                            </tree>
+                        </field>
+                    </page>
+                    </notebook>
+                </form>
+            </field>
+        </record> -->
 
-<!-- event.event tree view -->
-	<record model="ir.ui.view" id="view_event_tree">
-		<field name="name">event.event.tree</field>
+<!-- start event here -->
+	<record model="ir.ui.view" id="event_event_form_inherit1">
+		<field name="name">event.event.form.cci</field>
+		<field name="type">form</field>
 		<field name="model">event.event</field>
-		<field name="type">tree</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
 		<field name="arch" type="xml">
-			<tree string="Events" colors="red:register_min>register_current">
-				<field name="name" string="Name"/>
-				<field name="user_id"/>
-				<field name="date_begin"/>
-				<field name="register_min"/>
-				<field name="register_current"/>
-				<field name="state"/>
-			</tree>
+			<notebook position="inside">
+                <page string="Extra Info">
+                    <field name="fse_code" />
+                    <field name="fse_hours" />
+                    <field name="signet_type" select="2"/>
+                    <newline/>
+                    <field name="agreement_nbr"/>
+                    <field name="check_type"/>
+                    <newline/>
+                    <field name="note" colspan="4"/>
+                </page>
+			</notebook>
 		</field>
 	</record>
 
-<!-- event.type view (inherit) -->
-	<record model="ir.ui.view" id="view_event_type_form_inherit">
-		  <field name="name">Event type</field>
-		  <field name="model">event.type</field>
-		  <field name="type">form</field>
-		  <field name="inherit_id" ref="event.view_event_type_form"/>
-		  <field name="arch" type="xml">
-			<form string="Event Type">
-				<field name="check_type"/>
-			</form>
-		  </field>
-		</record>
-
-	<record model="ir.ui.view" id="view_event_type_tree_inherit">
-		  <field name="name">Event type</field>
-		  <field name="model">event.type</field>
-		  <field name="type">tree</field>
-		  <field name="inherit_id" ref="event.view_event_type_tree"/>
-		  <field name="arch" type="xml">
-			<field name="name" position="after">
-				<field name="check_type"/>
+	<record model="ir.ui.view" id="event_event_form_inherit2">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<field name="parent_id" domain="[('parent_id','child_of','Event')]" string="Parent Category" position="replace">
+				<field name="parent_id" domain="[('parent_id','child_of','Event')]" string="Category"/>
 			</field>
-		  </field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="event_event_form_inherit3">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<button string="Confirm Event" name="button_confirm" states="draft" type="object" position="replace"/>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_event_form_inherit4">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<button string="Cancel Event" name="button_cancel" states="draft,confirm" type="object" position="replace"/>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_event_form_inherit5">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<button string="Event Done" name="button_done" states="confirm" type="object" position="replace"/>
+		</field>
 		</record>
+	<record model="ir.ui.view" id="event_event_form_inherit6">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<button string="Set To Draft" name="button_draft" states="confirm,cancel,done" type="object" position="replace"/>
+	</field>
+	</record>
+	<record model="ir.ui.view" id="event_event_form_inherit7">
+		<field name="name">event.event.form</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<field name="state" select="1" position="replace">
+				 <field name="state" select="1"/>
+                    <group col="4" colspan="2">
+                        <button string="Cancel Event" name="cci_event_cancel" states="fixed,open" type="object"/>
+                        <button string="Confirm Date" name="cci_event_fixed" states="draft" type="object"/>
+                        <button string="Open Event" name="cci_event_open" states="fixed" type="object"/>
+                        <button string="Confirm Event" name="cci_event_confirm" states="open" type="object"/>
+                        <button string="Event is Running" name="cci_event_running" states="confirm" type="object"/>
+                        <button string="Event Done" name="cci_event_done" states="running" type="object"/>
+                        <button string="Close Event" name="cci_event_closed" states="done" type="object"/>
+					</group>
+			</field>
+	</field>
+	</record>
+<!-- end event form -->
+
+<!-- event.event tree view -->
+    <record model="ir.ui.view" id="view_event_tree">
+        <field name="name">event.event.tree</field>
+        <field name="model">event.event</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Events" colors="red:register_min>register_current">
+                <field name="name" string="Name"/>
+                <field name="user_id"/>
+                <field name="date_begin"/>
+                <field name="register_min"/>
+                <field name="register_current"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+<!-- event.type view (inherit) -->
+    <record model="ir.ui.view" id="view_event_type_form_inherit">
+          <field name="name">Event type</field>
+          <field name="model">event.type</field>
+          <field name="type">form</field>
+          <field name="inherit_id" ref="event.view_event_type_form"/>
+          <field name="arch" type="xml">
+            <form string="Event Type">
+                <field name="check_type"/>
+            </form>
+          </field>
+        </record>
+
+    <record model="ir.ui.view" id="view_event_type_tree_inherit">
+          <field name="name">Event type</field>
+          <field name="model">event.type</field>
+          <field name="type">tree</field>
+          <field name="inherit_id" ref="event.view_event_type_tree"/>
+          <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="check_type"/>
+            </field>
+          </field>
+        </record>
 
 <!-- view for event.group -->
-		<record model="ir.ui.view" id="view_event_group_form">
-			<field name="name">event.group.form</field>
-			<field name="type">form</field>
-			<field name="model">event.group</field>
-			<field name="arch" type="xml">
-				<form string="Event Group">
-					<field name="name" select="1"/>
-					<newline/>
-					<field name="bookmark_name" select="1"/>
-					<newline/>
-					<field name="picture" widget="image" />
-					<newline/>
-					<field name="type" select="1"/>
-				</form>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_event_group_tree">
-			<field name="name">event.group.tree</field>
-			<field name="type">tree</field>
-			<field name="model">event.group</field>
-			<field name="arch" type="xml">
-				<tree string="Event Group">
-					<field name="name"/>
-					<field name="bookmark_name"/>
-					<field name="type"/>
-				</tree>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_event_group">
-			<field name="name">Event Group</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">event.group</field>
-			<field name="view_type">form</field>
-		</record>
-		<menuitem name="Groups" id="menu_group" parent="event.menu_event_config"/>
-		<menuitem parent="menu_group" action="action_event_group" id="menu_event_group"/>
+        <record model="ir.ui.view" id="view_event_group_form">
+            <field name="name">event.group.form</field>
+            <field name="type">form</field>
+            <field name="model">event.group</field>
+            <field name="arch" type="xml">
+                <form string="Event Group">
+                    <field name="name" select="1"/>
+                    <newline/>
+                    <field name="bookmark_name" select="1"/>
+                    <newline/>
+                    <field name="picture" widget="image" />
+                    <newline/>
+                    <field name="type" select="1"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_event_group_tree">
+            <field name="name">event.group.tree</field>
+            <field name="type">tree</field>
+            <field name="model">event.group</field>
+            <field name="arch" type="xml">
+                <tree string="Event Group">
+                    <field name="name"/>
+                    <field name="bookmark_name"/>
+                    <field name="type"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_event_group">
+            <field name="name">Event Group</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">event.group</field>
+            <field name="view_type">form</field>
+        </record>
+        <menuitem name="Groups" id="menu_group" parent="event.menu_event_config"/>
+        <menuitem parent="menu_group" action="action_event_group" id="menu_event_group"/>
 
 <!-- view for event.check -->
-		<record model="ir.ui.view" id="view_event_check_form">
-			<field name="name">event.check.form</field>
-			<field name="type">form</field>
-			<field name="model">event.check</field>
-			<field name="arch" type="xml">
-				<form string="Event Check">
-					<field name="name" select="1"/>
-					<field name="code" select="1"/>
-					<field name="unit_nbr" select="1"/>
-					<newline/>
-					<field name="type_id" select="1" />
-					<field name="reg_id" select="1" />
-					<newline/>
-					<field name="date_reception" select="2"/>
-					<field name="date_limit" select="2"/>
-					<field name="date_submission" select="2"/>
-					<newline/>
-					<field name="state" select="1"/>
-					<group col="8" colspan="2">
-						<button string="Confirm" name="button_confirm" states="block"/>
-						<button string="Block" name="button_block" states="draft"/>
-						<button string="Cancel" name="button_cancel" states="block" />
-					</group>
-				</form>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_event_check_tree">
-			<field name="name">event.check.tree</field>
-			<field name="type">tree</field>
-			<field name="model">event.check</field>
-			<field name="arch" type="xml">
-				<tree string="Event Check">
-					<field name="name"/>
-					<field name="code"/>
-					<field name="reg_id"/>
-					<field name="date_reception"/>
-					<field name="date_limit"/>
-					<field name="date_submission"/>
-					<field name="state"/>
-				</tree>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_event_check">
-			<field name="name">Event Check</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">event.check</field>
-			<field name="view_type">form</field>
-		</record>
-		<!-- menu should be check if it right place or not -->
-		<menuitem parent="event.menu_event_main" action="action_event_check" id="menu_event_check"/>
+        <record model="ir.ui.view" id="view_event_check_form">
+            <field name="name">event.check.form</field>
+            <field name="type">form</field>
+            <field name="model">event.check</field>
+            <field name="arch" type="xml">
+                <form string="Event Check">
+                    <field name="name" select="1"/>
+                    <field name="code" select="1"/>
+                    <field name="unit_nbr" select="1"/>
+                    <newline/>
+                    <field name="type_id" select="1" />
+                    <field name="reg_id" select="1" />
+                    <newline/>
+                    <field name="date_reception" select="2"/>
+                    <field name="date_limit" select="2"/>
+                    <field name="date_submission" select="2"/>
+                    <newline/>
+                    <field name="state" select="1"/>
+                    <group col="8" colspan="2">
+                        <button string="Confirm" name="button_confirm" states="block"/>
+                        <button string="Block" name="button_block" states="draft"/>
+                        <button string="Cancel" name="button_cancel" states="block" />
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_event_check_tree">
+            <field name="name">event.check.tree</field>
+            <field name="type">tree</field>
+            <field name="model">event.check</field>
+            <field name="arch" type="xml">
+                <tree string="Event Check">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="reg_id"/>
+                    <field name="date_reception"/>
+                    <field name="date_limit"/>
+                    <field name="date_submission"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_event_check">
+            <field name="name">Event Check</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">event.check</field>
+            <field name="view_type">form</field>
+        </record>
+        <!-- menu should be check if it right place or not -->
+        <menuitem parent="event.menu_event_main" action="action_event_check" id="menu_event_check"/>
 
 
 <!-- view for event.check.type -->
-		<record model="ir.ui.view" id="view_event_check_type_form">
-			<field name="name">event.check.type.form</field>
-			<field name="type">form</field>
-			<field name="model">event.check.type</field>
-			<field name="arch" type="xml">
-				<form string="Check Type">
-					<field name="name" select="1"/>
-				</form>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_event_check_type_tree">
-			<field name="name">event.check.type.tree</field>
-			<field name="type">tree</field>
-			<field name="model">event.check.type</field>
-			<field name="arch" type="xml">
-				<tree string="Check Type">
-					<field name="name"/>
-				</tree>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_event_check_type">
-			<field name="name">Check Type</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">event.check.type</field>
-			<field name="view_type">form</field>
-		</record>
-		<menuitem name="Event Check"  id="menu_event_check_main" parent="event.menu_event_config"/>
-		<menuitem parent="menu_event_check_main" action="action_event_check_type" id="menu_event_check_type"/>
+        <record model="ir.ui.view" id="view_event_check_type_form">
+            <field name="name">event.check.type.form</field>
+            <field name="type">form</field>
+            <field name="model">event.check.type</field>
+            <field name="arch" type="xml">
+                <form string="Check Type">
+                    <field name="name" select="1"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_event_check_type_tree">
+            <field name="name">event.check.type.tree</field>
+            <field name="type">tree</field>
+            <field name="model">event.check.type</field>
+            <field name="arch" type="xml">
+                <tree string="Check Type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_event_check_type">
+            <field name="name">Check Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">event.check.type</field>
+            <field name="view_type">form</field>
+        </record>
+        <menuitem name="Event Check"  id="menu_event_check_main" parent="event.menu_event_config"/>
+        <menuitem parent="menu_event_check_main" action="action_event_check_type" id="menu_event_check_type"/>
 
 
 <!-- event.registration form.. change name crm.case to event.registration -->
 
-	<record model="ir.ui.view" id="event.event_registration_form">
-		<field name="name">cci.event.registration.form.1</field>
-		<field name="model">event.registration</field>
+<!--    <record model="ir.ui.view" id="event.event_registration_form">
+        <field name="name">cci.event.registration.form.1</field>
+        <field name="model">event.registration</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Registration">
+                <notebook>
+                <page string="General">
+                    <field name="name" select="1" colspan="4"/>
+                    <newline/>
+                    <field name="event_id" colspan="2" on_change="onchange_event(event_id, partner_invoice_id)"/>
+                    <field name="nb_register"/>
+                    <newline/>
+                    <field name="date" select="1"/>
+                    <field name="priority"/>
+                    <newline/>
+                    <field name="partner_id" select="1" on_change="onchange_partner_id(partner_id,event_id, email_from)" colspan="2"/>
+                    <field name="partner_invoice_id" on_change="onchange_partner_invoice_id(event_id, partner_invoice_id)"/>
+                    <newline/>
+
+                    <field name="partner_address_id" select="2" on_change="onchange_contact_id(partner_address_id)" colspan="2"/>
+                    <newline/>
+                    <field name="email_from" select="2" colspan="2"/>
+                    <button name="remind_partner" string="Send Reminder" states="open,pending" type="object"/>
+                    <newline/>
+                    <field name="user_id" select="1" colspan="2"/>
+                    <button name="remind_user" string="Send Reminder" states="open,pending" type="object"/>
+
+                    <separator colspan="6"/>
+                    <field name="unit_price" select="2"/>
+
+                    <separator string="Badge" colspan="4"/>
+                    <field name="badge_title" select="2"/>
+                    <field name="badge_name" select="2" on_change="onchange_badge_name(badge_name)"/>
+                    <field name="badge_partner" select="2"/>
+                    <newline/>
+                    <separator colspan="4"/>
+
+                    <field name="group_id"/>
+                    <field name="cavalier"/>
+                    <separator colspan="4"/>
+
+                    <group col="8" colspan="4">
+                        <field name="state" select="1"/>
+                        <button name="cci_event_reg_done" string="Close" states="open" type="object"/>
+                        <button name="cci_event_reg_open" string="Open" states="draft" type="object"/>
+                        <button name="cci_event_reg_cancel" string="Cancel" states="draft,open" type="object"/>
+                    </group>
+                </page>
+                <page string="Communication">
+                    <field name="history_line" colspan="2" nolabel="1" mode="tree,form">
+                        <form string="Communication history">
+                            <group col="6" colspan="4">
+                                <field name="date" select="1"/>
+                                <field name="email" select="1"/>
+                                <field name="canal_id" select="2"/>
+                            </group>
+                            <newline/>
+                            <field name="description" colspan="4" nolabel="1" select="2"/>
+                        </form>
+                        <tree string="Communication history">
+                            <field name="description"/>
+                            <field name="email"/>
+                            <field name="date"/>
+                        </tree>
+                    </field>
+                    <group col="2" colspan="2" expand="1">
+                        <field name="canal_id"/>
+                        <field name="som" select="2"/>
+                        <button name="add_reply" string="Add Last Mail for Replying"
+                            states="open" type="object" colspan="2"/>
+                        <field name="description" colspan="2" select="2" nolabel="1"/>
+                        <button name="case_log_reply"
+                            string="Send Partner &amp; Historize" states="open"
+                            type="object"/>
+                        <button name="case_log" string="Historize" states="open"
+                            type="object"/>
+                    </group>
+                </page>
+                <page string="Extra Info">
+                    <field name="id" select="1"/>
+                    <field name="active" select="2"/>
+                    <field name="email_cc" colspan="4"/>
+                    <field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)"/>
+                    <separator colspan="4" string="Dates"/>
+                    <field name="create_date"/>
+                    <field name="date_closed"/>
+                    <field name="date_action_last"/>
+                    <field name="date_action_next"/>
+                    <separator colspan="4" string="Estimates"/>
+                    <field name="planned_revenue"/>
+                    <field name="planned_cost"/>
+                    <field name="probability"/>
+                    <separator colspan="4" string="References"/>
+                    <field name="ref" colspan="4"/>
+                    <field name="ref2" colspan="4"/>
+                </page>
+                <page string="History">
+                    <field name="log_ids" nolabel="1" colspan="4">
+                        <form string="Actions">
+                            <separator string="Action Information" colspan="4"/>
+                            <field name="name" colspan="4"/>
+                            <field name="date" select="2"/>
+                            <field name="user_id" select="2"/>
+                            <field name="som" select="2"/>
+                            <field name="canal_id"/>
+                        </form>
+                    </field>
+                </page>
+                <page string="Payments">
+                    <field name="invoice_label" select="1"/>
+                    <field name="tobe_invoiced" select="1"/>
+                    <field name="payment_mode" />
+                    <field name="invoice_id"/>
+                    <newline/>
+                    <field name="training_authorization"/>
+                    <newline/>
+                    <field name="check_mode"/>
+                    <field name="check_amount" select="2"/>
+                    <newline/>
+                    <field name="check_ids" colspan="4" mode="tree, form" select="2">
+                        <tree string="Event Check">
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="unit_nbr"/>
+                        </tree>
+                        <form string="Event Check">
+                            <field name="name" select="1"/>
+                            <field name="code" select="1"/>
+                            <field name="unit_nbr" select="1"/>
+                            <field name="type_id" select="1" />
+                            <newline/>
+                            <field name="date_reception" select="2"/>
+                            <field name="date_limit" select="2"/>
+                            <field name="date_submission" select="2"/>
+                        </form>
+                    </field>
+                    <field name="payment_ids" colspan="4" select="2"/>
+                </page>
+                </notebook>
+            </form>
+        </field>
+    </record> -->
+<!-- start reg here -->
+	<record model="ir.ui.view" id="event_registration_inherit6">
+		<field name="name">event.registration.form</field>
 		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
 		<field name="arch" type="xml">
-			<form string="Registration">
-				<notebook>
-				<page string="General">
-					<field name="name" select="1" colspan="4"/>
-					<newline/>
-					<field name="event_id" colspan="2" on_change="onchange_event(event_id, partner_invoice_id)"/>
-					<field name="nb_register"/>
-					<newline/>
-					<field name="date" select="1"/>
-					<field name="priority"/>
-					<newline/>
-					<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id,event_id, email_from)" colspan="2"/>
-					<field name="partner_invoice_id" on_change="onchange_partner_invoice_id(event_id, partner_invoice_id)"/>
-					<newline/>
-
-					<field name="partner_address_id" select="2" on_change="onchange_contact_id(partner_address_id)" colspan="2"/>
-					<newline/>
-					<field name="email_from" select="2" colspan="2"/>
-					<button name="remind_partner" string="Send Reminder" states="open,pending" type="object"/>
-					<newline/>
-					<field name="user_id" select="1" colspan="2"/>
-					<button name="remind_user" string="Send Reminder" states="open,pending" type="object"/>
-
-					<separator colspan="6"/>
-					<field name="unit_price" select="2"/>
-
-					<separator string="Badge" colspan="4"/>
-					<field name="badge_title" select="2"/>
-					<field name="badge_name" select="2" on_change="onchange_badge_name(badge_name)"/>
-					<field name="badge_partner" select="2"/>
-					<newline/>
-					<separator colspan="4"/>
-
-					<field name="group_id"/>
-					<field name="cavalier"/>
-					<separator colspan="4"/>
-
-					<group col="8" colspan="4">
-						<field name="state" select="1"/>
-						<button name="cci_event_reg_done" string="Close" states="open" type="object"/>
-						<button name="cci_event_reg_open" string="Open" states="draft" type="object"/>
-						<button name="cci_event_reg_cancel" string="Cancel" states="draft,open" type="object"/>
-					</group>
-				</page>
-				<page string="Communication">
-					<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
-						<form string="Communication history">
-							<group col="6" colspan="4">
-								<field name="date" select="1"/>
-								<field name="email" select="1"/>
-								<field name="canal_id" select="2"/>
-							</group>
-							<newline/>
-							<field name="description" colspan="4" nolabel="1" select="2"/>
-						</form>
-						<tree string="Communication history">
-							<field name="description"/>
-							<field name="email"/>
-							<field name="date"/>
-						</tree>
-					</field>
+			<button name="button_reg_close" string="Registration Invoiced" states="open" type="object" position="replace"/>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit7">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<button name="button_reg_cancel" string="Cancel Registration" states="draft,open" type="object" position="replace"/>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit8">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<button name="%(event.event_confirm_registration)d" string="Confirm Registration" states="draft" type="action" position="replace"/>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<field name="date_action_next" position="after">
+				<separator colspan="4" string="Estimates"/>
+				<field name="planned_revenue"/>
+                <field name="planned_cost"/>
+                <field name="probability"/>
+			</field>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="event_registration_inherit2">
+		<field name="name">event.registration.form.cci</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+                <page string="Communication">
 					<group col="2" colspan="2" expand="1">
-						<field name="canal_id"/>
-						<field name="som" select="2"/>
-						<button name="add_reply" string="Add Last Mail for Replying"
-							states="open" type="object" colspan="2"/>
-						<field name="description" colspan="2" select="2" nolabel="1"/>
-						<button name="case_log_reply"
-							string="Send Partner &amp; Historize" states="open"
-							type="object"/>
-						<button name="case_log" string="Historize" states="open"
-							type="object"/>
-					</group>
-				</page>
-				<page string="Extra Info">
-					<field name="id" select="1"/>
-					<field name="active" select="2"/>
-					<field name="email_cc" colspan="4"/>
-					<field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)"/>
-					<separator colspan="4" string="Dates"/>
-					<field name="create_date"/>
-					<field name="date_closed"/>
-					<field name="date_action_last"/>
-					<field name="date_action_next"/>
-					<separator colspan="4" string="Estimates"/>
-					<field name="planned_revenue"/>
-					<field name="planned_cost"/>
-					<field name="probability"/>
-					<separator colspan="4" string="References"/>
-					<field name="ref" colspan="4"/>
-					<field name="ref2" colspan="4"/>
-				</page>
-				<page string="History">
-					<field name="log_ids" nolabel="1" colspan="4">
-						<form string="Actions">
-							<separator string="Action Information" colspan="4"/>
-							<field name="name" colspan="4"/>
-							<field name="date" select="2"/>
-							<field name="user_id" select="2"/>
-							<field name="som" select="2"/>
-							<field name="canal_id"/>
-						</form>
-					</field>
-				</page>
-				<page string="Payments">
-					<field name="invoice_label" select="1"/>
-					<field name="tobe_invoiced" select="1"/>
-					<field name="payment_mode" />
-					<field name="invoice_id"/>
-					<newline/>
-					<field name="training_authorization"/>
-					<newline/>
-					<field name="check_mode"/>
-					<field name="check_amount" select="2"/>
-					<newline/>
-					<field name="check_ids" colspan="4" mode="tree, form" select="2">
-						<tree string="Event Check">
-							<field name="name"/>
-							<field name="code"/>
-							<field name="unit_nbr"/>
-						</tree>
-						<form string="Event Check">
-							<field name="name" select="1"/>
-							<field name="code" select="1"/>
-							<field name="unit_nbr" select="1"/>
-							<field name="type_id" select="1" />
-							<newline/>
-							<field name="date_reception" select="2"/>
-							<field name="date_limit" select="2"/>
-							<field name="date_submission" select="2"/>
-						</form>
-					</field>
-					<field name="payment_ids" colspan="4" select="2"/>
-				</page>
-				</notebook>
-			</form>
+                        <field name="canal_id"/>
+                        <field name="som" select="2"/>
+                        <button name="add_reply" string="Add Last Mail for Replying"
+                            states="open" type="object" colspan="2"/>
+                        <field name="description" colspan="2" select="2" nolabel="1"/>
+                        <button name="case_log_reply"
+                            string="Send Partner &amp; Historize" states="open"
+                            type="object"/>
+                        <button name="case_log" string="Historize" states="open"
+                            type="object"/>
+                    </group>
+                </page>
+			</notebook>
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="event_registration_inherit3">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<field name="invoice_id" position="after">
+                    <field name="payment_mode" />
+                    <newline/>
+                    <field name="training_authorization"/>
+                    <newline/>
+                    <field name="check_mode"/>
+                    <field name="check_amount" select="2"/>
+                    <newline/>
+                    <field name="check_ids" colspan="4" mode="tree, form" select="2">
+                        <tree string="Event Check">
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="unit_nbr"/>
+                        </tree>
+                        <form string="Event Check">
+                            <field name="name" select="1"/>
+                            <field name="code" select="1"/>
+                            <field name="unit_nbr" select="1"/>
+                            <field name="type_id" select="1" />
+                            <newline/>
+                            <field name="date_reception" select="2"/>
+                            <field name="date_limit" select="2"/>
+                            <field name="date_submission" select="2"/>
+                        </form>
+                    </field>
+                    <field name="payment_ids" colspan="4" select="2"/>
+			</field>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit4">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<field name="email_from" position="after">
+                <field name="date" select="1"/>
+                <field name="priority"/>
+			</field>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit5">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<field name="badge_partner" position="after">
+				<separator colspan="4" string=""/>
+                <field name="group_id"/>
+                <field name="cavalier"/>
+			</field>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="event_registration_inherit9">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="inherit_id" ref="event.event_registration_form"/>
+		<field name="arch" type="xml">
+			<field name="state" select="1" position="replace">
+				 <field name="state" select="1"/>
+                    <group col="4" colspan="2">
+                        <button name="cci_event_reg_done" string="Close" states="open" type="object"/>
+                        <button name="cci_event_reg_open" string="Open" states="draft" type="object"/>
+                        <button name="cci_event_reg_cancel" string="Cancel" states="draft,open" type="object"/>
+					</group>
+			</field>
+	</field>
+	</record>
+<!-- end event
+
+-->
+<!-- end reg form here -->
+
 <!-- view for  event.meeting.table -->
-		<record model="ir.ui.view" id="view_event_meeting_table_form">
-			<field name="name">event.meeting.table.form</field>
-			<field name="type">form</field>
-			<field name="model">event.meeting.table</field>
-			<field name="arch" type="xml">
-				<form string="Event Meeting">
-					<field name="partner_id1" select="2"/>
-					<field name="partner_id2" select="2"/>
-					<field name="contact_id1" select="2"/>
-					<field name="contact_id2" select="2"/>
-					<field name="event_id" select="1"/>
-					<field name="service" select="1"/>
-					<field name="table" select="1"/>
-				</form>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_event_meeting_table_tree">
-			<field name="name">event.meeting.table.tree</field>
-			<field name="type">tree</field>
-			<field name="model">event.meeting.table</field>
-			<field name="arch" type="xml">
-				<tree string="Event Meeting">
-					<field name="event_id" />
-					<field name="table" />
-				</tree>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_event_meeting_table">
-			<field name="name">Event Meeting</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">event.meeting.table</field>
-			<field name="view_type">form</field>
-		</record>
-		<menuitem parent="event.menu_event_main" action="action_event_meeting_table" id="menu_event_meeting_table"/>
+        <record model="ir.ui.view" id="view_event_meeting_table_form">
+            <field name="name">event.meeting.table.form</field>
+            <field name="type">form</field>
+            <field name="model">event.meeting.table</field>
+            <field name="arch" type="xml">
+                <form string="Event Meeting">
+                    <field name="partner_id1" select="2"/>
+                    <field name="partner_id2" select="2"/>
+                    <field name="contact_id1" select="2"/>
+                    <field name="contact_id2" select="2"/>
+                    <field name="event_id" select="1"/>
+                    <field name="service" select="1"/>
+                    <field name="table" select="1"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_event_meeting_table_tree">
+            <field name="name">event.meeting.table.tree</field>
+            <field name="type">tree</field>
+            <field name="model">event.meeting.table</field>
+            <field name="arch" type="xml">
+                <tree string="Event Meeting">
+                    <field name="event_id" />
+                    <field name="table" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_event_meeting_table">
+            <field name="name">Event Meeting</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">event.meeting.table</field>
+            <field name="view_type">form</field>
+        </record>
+        <menuitem parent="event.menu_event_main" action="action_event_meeting_table" id="menu_event_meeting_table"/>
 
 
 
 <!-- account.move.line view (inherit) -->
-		<record model="ir.ui.view" id="view_account_move_line_form_inherit">
-			<field name="name">account.move.line.form</field>
-			<field name="model">account.move.line</field>
-			<field name="type">form</field>
-			<field name="inherit_id" ref="account.view_move_line_form"/>
-			<field name="arch" type="xml">
-				<field name="analytics_id" position="after">
-					<field name="case_id"/>
-				</field>
-			</field>
-		</record>
-	</data>
+        <record model="ir.ui.view" id="view_account_move_line_form_inherit">
+            <field name="name">account.move.line.form</field>
+            <field name="model">account.move.line</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account.view_move_line_form"/>
+            <field name="arch" type="xml">
+                <field name="analytics_id" position="after">
+                    <field name="case_id"/>
+                </field>
+            </field>
+        </record>
+    </data>
 </openerp>

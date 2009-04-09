@@ -1,30 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id: account.py 1005 2005-07-25 08:41:42Z nicoe $
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -37,7 +29,7 @@ class product_index(osv.osv):
         res={}
         date = context.get('date', time.strftime('%Y-%m-%d'))
         for id in ids:
-            cr.execute("SELECT index_id, rate FROM product_index_rate WHERE index_id = %d AND name <= '%s' ORDER BY name desc LIMIT 1" % (id, date))
+            cr.execute("SELECT index_id, rate FROM product_index_rate WHERE index_id = %s AND name <= '%s' ORDER BY name desc LIMIT 1" % (id, date))
             if cr.rowcount:
                 id, rate=cr.fetchall()[0]
                 res[id]=rate
@@ -69,9 +61,9 @@ class product_index(osv.osv):
     def compute(self, cr, uid, index, amount, date_from, date_to=None, round=True, context={}):
         if not date_to:
             date_to = time.strftime('%Y-%m-%d')
-        cr.execute('select rate from product_index_rate where name<=%s and index_id=%d order by name desc limit 1', (date_from, index.id))
+        cr.execute('select rate from product_index_rate where name<=%s and index_id=%s order by name desc limit 1', (date_from, index.id))
         ifrom = cr.rowcount and cr.fetchone()[0] or 1.0
-        cr.execute('select rate from product_index_rate where name<=%s and index_id=%d order by name desc limit 1', (date_to, index.id))
+        cr.execute('select rate from product_index_rate where name<=%s and index_id=%s order by name desc limit 1', (date_to, index.id))
         ito = cr.rowcount and cr.fetchone()[0] or 1.0
         val = amount * ito / ifrom
         if round:
@@ -108,7 +100,7 @@ class product_index(osv.osv):
             else:
                 ifields = product.index_purchase
             for i in ifields:
-                val = i.compute(cr, uid, i, val, product.index_date)
+                val = self.pool.get('product.index').compute(cr, uid, i, val, product.index_date)
             res[product.id] = val
         return res
     _columns = {

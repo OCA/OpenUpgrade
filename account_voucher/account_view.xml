@@ -20,10 +20,11 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="user_type" position="after">
+<!--					<field name="diff" select="2" />-->
 					<field name="balance" string="Closing Balance" select="2"/>
 					<field name="type1" select="2" />
 					<field name="open_bal" select="2"/>
-					<field name="journal_id" invisible="1"/>
+					<field name="journal_id"/>
 				</field>
 			</field>
 		</record>
@@ -40,67 +41,31 @@
 			</field>
 		</record>
 		
-		<record model="ir.ui.view" id="view_account_new_tree1">
-			<field name="name">view.account.new.tree1</field>
+		<record model="ir.ui.view" id="account_form3">
+			<field name="name">account.form</field>
 			<field name="inherit_id" ref="account.view_account_tree"/>
 			<field name="model">account.account</field>
-			<field name="type">tree</field>
-			<field name="priority">10</field>
+			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="balance" position="replace"/>
-						
+				<field name="name" position="after">
+						<field name="open_bal" select="1"/>
+				</field>
 			</field>
 		</record>
-		<record model="ir.ui.view" id="view_account_new_tree2">
-			<field name="name">view.account.new.tree2</field>
+		
+		<record model="ir.ui.view" id="account_form4">
+			<field name="name">account.form</field>
 			<field name="inherit_id" ref="account.view_account_tree"/>
 			<field name="model">account.account</field>
-			<field name="type">tree</field>
-			<field name="priority">10</field>
+			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="debit" position="replace"/>
-						
+				<field name="balance" position="replace">
+						<field name="balance" />
+				<field name="type1"/>
+				</field>
 			</field>
 		</record>
-		<record model="ir.ui.view" id="view_account_new_tree3">
-			<field name="name">view.account.new.tree3</field>
-			<field name="inherit_id" ref="account.view_account_tree"/>
-			<field name="model">account.account</field>
-			<field name="type">tree</field>
-			<field name="priority">10</field>
-			<field name="arch" type="xml">
-				<field name="credit" position="replace"/>
-						
-			</field>
-		</record>
-
-        <record id="view_account_tree_old" model="ir.ui.view">
-            <field name="name">account.account.tree</field>
-            <field name="model">account.account</field>
-            <field name="type">tree</field>
-            <field name="field_parent">child_id</field>
-            <field name="priority">20</field>
-            <field name="arch" type="xml">
-                <tree string="Chart of accounts" toolbar="1" colors="blue:type=='view'">
-                    <field name="code"/>
-                    <field name="name"/>
-                    <field name="debit"/>
-                    <field name="credit"/>
-                    <field name="balance"/>
-                    <field name="company_currency_id"/>
-                    <field name="type" invisible="1"/>
-                </tree>
-            </field>
-        </record>
-        <record id="account.action_account_tree" model="ir.actions.act_window">
-            <field name="name">Chart of Accounts</field>
-            <field name="res_model">account.account</field>
-            <field name="view_type">tree</field>
-            <field name="view_id" ref="view_account_tree_old"/>
-            <field name="domain">[('parent_id','=',False)]</field>
-        </record>
-
-
+	
 <!--	sub_currency	-->
 		<record model="ir.ui.view" id="sub_currency_form">
 			<field name="name">sub.currency.form</field>

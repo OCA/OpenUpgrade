@@ -1,23 +1,25 @@
 <?xml version="1.0" ?>
 <openerp>
 	<data>
+	
 		<!-- <record id="portal_analytic_package.act_portal_analytic_operations" model="ir.actions.act_window">
-			<field eval="0" name="portal_visible"/>
+			<field eval="1" name="portal_visible"/>
 		</record> -->
+		
 		<record id="sale.wizard_sale_order_make_invoice" model="ir.actions.wizard">
-			<field eval="0" name="portal_visible"/>
+			<field eval="1" name="portal_visible"/>
 		</record>
 		<record id="sale.wizard_sale_order_line_invoice" model="ir.actions.wizard">
-			<field eval="0" name="portal_visible"/>
+			<field eval="1" name="portal_visible"/>
 		</record>
 		<record id="purchase.report_purchase_order" model="ir.actions.report.xml">
-			<field eval="0" name="portal_visible"/>
+			<field eval="1" name="portal_visible"/>
 		</record>
 		<record id="sale.report_sale_order" model="ir.actions.report.xml">
-			<field eval="0" name="portal_visible"/>
+			<field eval="1" name="portal_visible"/>
 		</record>
 		<record id="stock.wizard_invoice_onshipping" model="ir.actions.wizard">
-			<field eval="0" name="portal_visible"/>
+			<field eval="1" name="portal_visible"/>
 		</record>
 	</data>
 </openerp>

@@ -1,29 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -44,19 +37,22 @@ class sale_order_line(osv.osv):
         }
 
     def button_confirm(self, cr, uid, ids, context={}):
-
         lines = self.pool.get('sale.order.line').browse(cr,uid,ids)
         l_id= 0
         for line in lines:
-            if line.production_lot_id : continue
+            if line.production_lot_id:
+                continue
             l_id += 1
-            production_lot_id = self.pool.get('stock.production.lot').create(cr,uid,{
-                'name': line.order_id and (str(line.order_id.name)+('/%02d'%(l_id,))) or False
-                })
+            production_lot_dico = {
+                'name': line.order_id and (str(line.order_id.name)+('/%02d'%(l_id,))) or False,
+                'product_id': line.product_id.id
+            }
+            production_lot_id = self.pool.get('stock.production.lot').create(cr, uid, production_lot_dico)
             self.pool.get('sale.order.line').write(cr,uid,[line.id],{'production_lot_id':production_lot_id})
 
         super(sale_order_line,self).button_confirm(cr,uid,ids,context)
         return
+
     def copy(self, cr, uid, id, default=None,context={}):
         if not default:
             default = {}
@@ -98,7 +94,6 @@ class sale_order(osv.osv):
                             'type': 'out',
                             'state': 'auto',
                             'move_type': order.picking_policy,
-                            'loc_move_id': loc_dest_id,
                             'sale_id': order.id,
                             'address_id': order.partner_shipping_id.id,
                             'note': order.note,

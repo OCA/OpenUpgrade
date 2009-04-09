@@ -1,3 +1,24 @@
+# -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 from osv import fields, osv
 from osv import orm
 import time
@@ -31,7 +52,7 @@ class config_bob_import(osv.osv_memory):
         'company_id':fields.many2one('res.company','Company', required=True),
         'location': fields.selection([('locally','Locally(This Machine is the Server)'),('remotely','Remotely(This Machine is the Client)')], 'Location', required=True,help="If this machine is the server, select 'locally' as the location.If this is the client machine, create a zip of the 'Bob' folder placed in Root(Drive Letter)://Program Files/Bob.Upload it and follow the further instructions."),
         'path':fields.char('Path for BOB Folder',size=200,help="Supply a path that is a Bob Installation Folder."),
-        'zipped_file': fields.binary('Upload a Zip File',filters=['*.zip'],help="Upload a .zip file containing information of BOB Installation'"),
+        'zipped_file': fields.binary('Upload a Zip File',filters='*.zip',help="Upload a .zip file containing information of BOB Installation'"),
 #        'zipped_file': fields.binary('Upload a Zip File',filters=['*.zip','*.tar','*.tar.gz','*.tar.bz2','*.ar','*.ear','*.jar','*.war']),
     }
 
@@ -53,8 +74,8 @@ class config_bob_import(osv.osv_memory):
             if not os.path.exists(path_bob):
                 raise osv.except_osv(_('User Error'), _('The Path "%s" doesn''\'t exist.Please provide a valid one.') % path[-1]['path'] )
 
-            if 'bob.exe' not in os.listdir(path_bob):
-                raise osv.except_osv(_('User Error'), _('The Path "%s" is not a valid BOB Folder.It doesn''\'t have bob.exe.') % path[-1]['path'] )
+            #if 'Bob.exe' not in os.listdir(path_bob):
+            #    raise osv.except_osv(_('User Error'), _('The Path "%s" is not a valid BOB Folder.It doesn''\'t have Bob.exe.') % path[-1]['path'] )
         else:
             zipped_file=path[-1]['zipped_file']
             file_contents=base64.decodestring(zipped_file)
@@ -64,8 +85,8 @@ class config_bob_import(osv.osv_memory):
             fname = fdata.namelist()
             module_name=fname[0].split("/")[0]
 
-            if 'Bob/bob.exe' not in fname:
-                raise osv.except_osv(_('User Error'), _('The Zip file doesn''\'t contain a valid Bob folder.It doesn''\'t have bob.exe.'))
+            #if 'Bob/Bob.exe' not in fname:
+            #    raise osv.except_osv(_('User Error'), _('The Zip file doesn''\'t contain a valid Bob folder.It doesn''\'t have Bob.exe.'))
 
             root_path=tools.config['root_path']
             rt_path=root_path+'/'+'bob_'+str(time.strftime('%d-%m-%y-%H:%M:%S'))
@@ -111,7 +132,7 @@ def _folders_get(self, cr, uid, context={}):
 
 #        The structure of BOB folder has non DDHMOT Files as codes
 #        Data,Documents, Help, Message,Office, Tools.
-        main_folders=['Data','Documents', 'Help', 'Message','Office', 'Tools']
+        main_folders=['DATA','Documents', 'Help', 'Message','Office', 'Tools']
 
         for item in list_folders:
             if item not in main_folders:
@@ -147,10 +168,12 @@ class config_path_folder(osv.osv_memory):
         path =  self.pool.get('config.path.folder').read(cr, uid, ids[0],['folder'],context)[0]['folder']
         tmp = path.split('/')
         folder_name = tmp[len(tmp)-1]
-        for file in ['DBK.DB','ACCOUN.DB','COMPAN.DB','contacts.DB','period.DB','vatcas.DB','vat.DB','ahisto.db']:
+        for file in ['DBK.DB','ACCOUN.DB','COMPAN.DB','CONTACTS.DB','PERIOD.DB','VATCAS.DB','VAT.DB','AHISTO.DB']:
+
+            #TODO: improve for using either the capital letters or no
             cmd = 'pxview '+path+'/'+folder_name+file+' -c > ' + config['addons_path']+'/account_bob_import/original_csv/'+file.split('.')[0].lower()+'.csv'
             res = os.system(cmd)
-            if res != 0 and file != 'contacts.DB':
+            if res != 0 and file != 'CONTACTS.DB':
                 raise osv.except_osv(_('Error Occured'), _('An error occured when importing the file "%s". Please check that pxview is correclty installed on the server.')% file)
         import bob_import_step_2
         bob_import_step_2.run()
@@ -176,12 +199,21 @@ class config_path_folder(osv.osv_memory):
         convert.convert_csv_import(cr, 'account_bob_import', 'account.fiscalyear.csv', tools.file_open(filename).read())
         filename = config['addons_path']+'/account_bob_import/account.period.csv'
         convert.convert_csv_import(cr, 'account_bob_import', 'account.period.csv', tools.file_open(filename).read())
+        filename = config['addons_path']+'/account_bob_import/account.move.reconcile-1.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.move.reconcile-1.csv', tools.file_open(filename).read())
+        filename = config['addons_path']+'/account_bob_import/account.move.reconcile-2.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.move.reconcile-2.csv', tools.file_open(filename).read())
+
         filename = config['addons_path']+'/account_bob_import/account.move.csv'
         convert.convert_csv_import(cr, 'account_bob_import', 'account.move.csv', tools.file_open(filename).read())
+
+        filename = config['addons_path']+'/account_bob_import/account.move.line.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.move.line.csv', tools.file_open(filename).read())
         self.pool._init = False
 
         #TODO: modify the name of account_bob_import.account_bob_0 into the name of company
         #TODO: some check to prevent errors: is file empty? add try-catch statements?
+        #TODO: chisto and ahisto_matching .csv file
 
         return {
                 'view_type': 'form',

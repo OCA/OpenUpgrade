@@ -30,20 +30,28 @@
     "version" : "1.0",
     "author" : "Simon JAILLET - CrysaLEAD",
     "website": "http://www.crysalead.com",
-    "category" : "Localisation/Account charts",
-    "depends" : ["base", "account","l10n_fr", "account_chart"],
+    "category" : "Localisation/Account Charts",
+    "description": """This module is deprecated... Please use l10n_fr from the addons instead.
+
+Thanks.
+
+""",
+    "depends" : ['base', 'account', 'account_chart', 'base_vat'],
     "init_xml" : [
-        "report.xml",
-        "pcg.xml"
     ],
     "update_xml" : [
+        "report.xml",
+        "pcg.xml",
+        "l10n_fr_pcg_taxes.xml",
+        "tax.xml",
+        "fiscal_templates_fr.xml",
         "l10n_fr_pcg_report.xml",
-                "l10n_fr_pcg_wizard.xml",
+        "l10n_fr_pcg_wizard.xml",
         "l10n_fr_pcg_view.xml"
     ],
     "demo_xml" : [],
     "active": False,
-    "installable": True
+    "installable": False
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -3,7 +3,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com/module_sale.html",
-    "depends" : ["purchase"],
+    "depends" : ["purchase","account_base"],
     "category" : "Generic Modules/Sales & Purchases",
     "description": """
     Remove the drawback of the purchase numbering, 

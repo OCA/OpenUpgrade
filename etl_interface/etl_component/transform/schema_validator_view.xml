@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="etl_component_schema_validation_form" model="ir.ui.view">
+			<field name="name">view.etl.component.schema.validation.form</field>
+			<field name="model">etl.component</field>
+			<field name="inherit_id" ref="etl_component_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+					<notebook position='inside'>
+						<page string="Other Information" attrs="{'invisible':[('type_id','!=','schema.validation')]}">
+							<field name="field_name" />
+							<field name="field_extra"/>
+							<field name="field_size"/>
+							<field name="field_format"/>
+							<field name="not_null"/>
+							<field name="field_type" />
+						</page>
+					</notebook>
+			</field>
+		</record>
+
+		<record id="action_etl_component_schema_validation_tree"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type_id.name','=','schema.validation')]</field>
+			<field name="context">{'type_id':'schema.validation'}</field>
+		</record>
+
+
+		<record id="action_etl_component_schema_validation_form"
+			model="ir.actions.act_window">
+			<field name="res_model">etl.component</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="domain">[('type_id.name','=','schema.validation')]</field>
+			<field name="context">{'type_id':'schema.validation'}</field>
+			<field name="view_id" ref="etl_component_schema_validation_form" />
+		</record>
+
+		<record id="action_etl_component_schema_validation_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="etl_component_tree" />
+			<field name="act_window_id" ref="action_etl_component_schema_validation_tree" />
+		</record>
+
+		<record id="action_etl_component_schema_validation_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_component_schema_validation_form" />
+			<field name="act_window_id" ref="action_etl_component_schema_validation_tree" />
+		</record>
+
+		<menuitem name="Schema Validation"
+			action="action_etl_component_schema_validation_tree"
+			parent="menu_etl_jd_c_pec_form" id="menu_etl_jd_c_pec__sv_form" />
+
+	</data>
+</openerp>

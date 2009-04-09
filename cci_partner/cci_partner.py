@@ -1,28 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -33,7 +27,20 @@ from osv import fields, osv
 class res_company(osv.osv):
     _inherit = 'res.company'
     _description = 'res.company'
-    
+
+    def _get_default_ad(self, addresses):
+        city = post_code = address = False
+        for ads in addresses:
+            if ads.type == 'default':
+                if ads.zip_id:
+                    city = ads.zip_id.city
+                    post_code = ads.zip_id.name
+                if ads.street:
+                    address = ads.street
+                if ads.street2:
+                    address += ads.street2
+        return city, post_code, address
+
     _columns = {
         'federation_key' : fields.char('ID for the Federation',size=50,help="ID key for the sending of data to the belgian CCI's Federation"),
     }
@@ -232,7 +239,7 @@ class res_partner(osv.osv):
         'dir_date_publication':fields.date('Publication Date'),
         'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
 
-        'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
+        'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personal'), ('postal','Postal')], "Magazine subscription"),
         'magazine_subscription_source':fields.char('Mag. Subscription Source',size=30),
         'country_relation':fields.one2many('res.partner.country.relation','partner_id','Country Relation'),
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
@@ -251,6 +258,7 @@ class res_partner(osv.osv):
         'magazine_subscription': lambda *a: 'prospect',
         'state_id': _get_partner_state,
         'state_id2': _get_customer_state,
+        'invoice_special' :lambda *a: 1,
         }
     _constraints = [(check_address, 'Only One default address is allowed!', ['address']),(_check_activity, 'Partner Should have only one Main Activity!', ['activity_code_ids'])]
 
@@ -308,6 +316,7 @@ class res_partner_zip(osv.osv):
             zip_city = str(r['name'] or '')
             if r['name'] and r['city']:
                 zip_city += ' '
+            r['city'] = r['city'].encode('utf-8')
             zip_city += str(r['city'] or '')
             res.append((r['id'], zip_city))
         return res
@@ -348,7 +357,7 @@ class res_partner_job(osv.osv):
                 res = self.pool.get('res.partner.function').search(cr, uid, [('code','=', letter)])
                 if res:
                     temp += self.pool.get('res.partner.function').browse(cr, uid,res)[0].code
-            vals['function_code_label'] = temp
+            vals['function_code_label'] = temp or vals['function_code_label']
         vals['function_id'] = self.pool.get('res.partner.function').search(cr, uid, [])[0]
         return super(res_partner_job,self).create(cr, uid, vals, *args, **kwargs)
 
@@ -359,7 +368,7 @@ class res_partner_job(osv.osv):
                 res = self.pool.get('res.partner.function').search(cr, uid, [('code','=', letter)])
                 if res:
                     temp += self.pool.get('res.partner.function').browse(cr, uid,res)[0].code
-            vals['function_code_label'] = temp
+            vals['function_code_label'] = temp or vals['function_code_label']
         vals['function_id'] = self.pool.get('res.partner.function').search(cr, uid, [])[0]
         return super(res_partner_job,self).write(cr, uid, ids,vals, *args, **kwargs)
 
@@ -400,6 +409,8 @@ class res_partner_address(osv.osv):
             vals['city'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id']).city
         return super(res_partner_address,self).write(cr, uid, ids,vals, *args, **kwargs)
 
+    def get_city(self, cr, uid, id):
+        return self.browse(cr, uid, id).zip_id.city
 #que faire du name?
 
 #    def _get_name(self, cr, uid, ids, name, arg, context={}):
@@ -547,7 +558,7 @@ class res_partner_country_relation(osv.osv):
     _columns = {
         'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
         'partner_id':fields.many2one('res.partner','Partner'),
-        'country_id':fields.many2one('cci_country.cci_country','Country'),
+        'country_id':fields.many2one('cci.country','Country'),
         'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon'),('representation','Representation'),('expert','Expert')],'Types'),
     }
 res_partner_country_relation()

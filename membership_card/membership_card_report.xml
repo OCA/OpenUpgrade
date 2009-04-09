@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+
+    <report id="membership_card_report"
+            string="Membership card"
+            model="res.partner"
+            name="membership.card"
+            rml="membership_card/report/membership_card.rml"
+            auto="True"
+            menu="True"
+            header="False"/>
+    <report id="membership_card_address_report"
+            string="Membership card"
+            model="res.partner.address"
+            name="membership.card.address"
+            rml="membership_card/report/membership_card_address.rml"
+            auto="True"
+            menu="True"
+            header="False"/>
+
+  </data>
+</openerp>

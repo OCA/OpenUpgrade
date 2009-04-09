@@ -1,0 +1,34 @@
+<?xml version='1.0'?>
+<openerp>
+	<data>
+		<record id='view_account_regularization_form' model='ir.ui.view'>
+			<field name='name'>account.regularization.form</field>
+			<field name='model'>account.regularization</field>
+			<field name='type'>form</field>
+			<field name='arch' type='xml'>
+				<form string='Regularization'>
+			<notebook>
+				<page string="Main">
+					<field name='name' select='1'/>
+					<field name="balance_calc"/>
+					<field name='debit_account_id'/>
+					<field name='credit_account_id'/>
+					<field colspan="4" name='account_ids' select='1'/>
+				</page>
+				<page string="Moves">
+					<field name="move_ids" />
+				</page>
+			</notebook>
+				</form>
+			</field>
+		</record>
+		<record id='action_account_regularization_form' model='ir.actions.act_window'>
+			<field name='name'>Regularizations</field>
+			<field name='res_model'>account.regularization</field>
+			<field name='view_type'>form</field>
+			<field name='view_mode'>tree,form</field>
+		</record>
+		<menuitem name='Financial Management/Periodical Processing/Regularizations' action='action_account_regularization_form' id='menu_action_account_regularization_form'/>
+
+	</data>
+</openerp>

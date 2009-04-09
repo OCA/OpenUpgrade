@@ -1,29 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -51,7 +44,7 @@ class huissier_dossier(osv.osv):
         res = {}
         for id in ids:
             res[id]=0.0
-            cr.execute("select sum(adj_price) from huissier_lots where dossier_id=%d", (id,))
+            cr.execute("select sum(adj_price) from huissier_lots where dossier_id=%s", (id,))
             sum = cr.fetchone()
             res[id] = sum and sum[0] or 0.0
         return res
@@ -62,17 +55,17 @@ class huissier_dossier(osv.osv):
         for d in dossiers:
             costs = [l.amount_costs for l in d.lot_id]
             cost_amount = reduce(lambda x, y: x+y, costs, 0.0)
-            res[d.id] = cost_amount 
+            res[d.id] = cost_amount
         return res
 
     def _total_get(self, cr, uid, ids, field_name=None, arg=None, context={}):
         res = {}
         for id in ids:
-            adj = self._adjudication_get(cr, uid, [id])[id] 
+            adj = self._adjudication_get(cr, uid, [id])[id]
             costs = self._costs_get(cr, uid, [id])[id]
             res[id] = adj + costs
         return res
-        
+
     def _room_costs_get(self, cr, uid, ids, prop=None, unknown_none=None, unknown_dict={}):
         res={}
         lots=self.browse(cr,uid,ids)
@@ -84,7 +77,7 @@ class huissier_dossier(osv.osv):
             amount_total=0.0
             if lot.room_cost_id:
                 taxes.append(lot.room_cost_id)
-            costs =pt_tax.compute(cr, uid, taxes, total, 1) 
+            costs =pt_tax.compute(cr, uid, taxes, total, 1)
             for t in taxes:
                 amount_total+=t['amount']
             res[lot.id]=amount_total
@@ -131,20 +124,20 @@ class huissier_dossier(osv.osv):
         'deposit_id': fields.one2many('huissier.deposit', 'dossier_id', u'Garde meuble'),
     }
     _defaults = {
-        'toinvoice': lambda *a: True, 
-        'tolist': lambda *a: True, 
+        'toinvoice': lambda *a: True,
+        'tolist': lambda *a: True,
         'state': lambda *a: 'draft',
         'date_creation': lambda *a: time.strftime('%Y-%m-%d'),
         'date_prevue': lambda *a: time.strftime('%Y-%m-%d'),
         'date_reelle': lambda *a: time.strftime('%Y-%m-%d'),
     }
-    
-    # check 
+
+    # check
     def _constraint_num_exists(self, cr, uid, ids):
         dossiers = self.read(cr, uid, ids, ['num_vignette'])
         dossier = dossiers and dossiers[0] or False
         num = dossier and dossier['num_vignette'] or 0
-        
+
         res = self.pool.get('huissier.vignettes').search(cr, uid, [('first', '<=', num), ('last', '>=', num)])
         return bool(res)
 
@@ -152,7 +145,7 @@ class huissier_dossier(osv.osv):
         dossiers = self.read(cr, uid, ids, ['num_vignette'])
         dossier = dossiers and dossiers[0] or False
         num = dossier and dossier['num_vignette'] or 0
-        
+
         prev_dossiers = self.search(cr, uid, [('num_vignette','=',num)]) #, ('state','<>','canceled')])
         return len(prev_dossiers)==1
 
@@ -160,22 +153,22 @@ class huissier_dossier(osv.osv):
         (_constraint_num_exists, "Ce numero de vignette n'existe pas!", []), # ['num_vignette']) # .encode('utf8')
         (_constraint_num_unique, 'Ce numero de vignette a deja ete utilise pour un autre dossier!', []) # ['num_vignette']) # .encode('utf8')
     ]
-    
+
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
             return []
-        
+
         res = []
         for r in self.browse(cr, uid, ids):
             name = r.num_vignette and u'%d: ' % r.num_vignette or u''
             name += r.etude_id.name
-            name += r.debiteur and u' (%s)' % r.debiteur.name.decode('utf8') or u''
+            name += r.debiteur and u' (%s)' % r.debiteur.name or u''
             res.append((r['id'], name))
         return res
 
     def name_search(self, cr, user, name='', args=[], operator='ilike', context={}):
         try:
-            num_vignette = int(name) 
+            num_vignette = int(name)
             ids = self.search(cr, user, [('num_vignette','=',num_vignette)] + args)
         except:
             if name:
@@ -183,9 +176,9 @@ class huissier_dossier(osv.osv):
             else:
                 ids = self.search(cr, user, args)
         return self.name_get(cr, user, ids, context)
-    
+
     def onchange_num_vignette(self, cr, uid, ids, num):
-        cr.execute("select id,name from res_partner where id=(select etude_id from huissier_vignettes where %d >= first and %d <= last)", (num,num))
+        cr.execute("select id,name from res_partner where id=(select etude_id from huissier_vignettes where %s >= first and %s <= last)", (num,num))
         res = cr.dictfetchall()
         return res and {'value': {'etude_id': (res[0]['id'],res[0]['name'])}} or {}
 
@@ -194,14 +187,14 @@ class huissier_dossier(osv.osv):
             Create an invoice for one dossier
         """
         assert len(ids)==1
-            
+
         dt = time.strftime('%Y-%m-%d')
-            
+
         frais_salle_str = {
             'fr': u'Frais de salle',
             'nl': u'Zaalkosten',
         }
-        
+
         frais_voirie_str = {
             'fr': u'Frais de voirie',
             'nl': u'Vuilniskosten',
@@ -225,15 +218,15 @@ class huissier_dossier(osv.osv):
                 invoice_desc += ' (%d)' % dossier.num_vignette
                 line_desc += ' (%d)' % dossier.num_vignette
             if dossier.debiteur:
-                line_desc += u' %s' % dossier.debiteur.name.decode('utf8')
-                
+                line_desc += u' %s' % dossier.debiteur.name
+
 #CHECKME: fo des taxes pour les factures de salle?
             lines.append((0,False, {'name':line_desc, 'quantity':1, 'account_id':dossier.salle_account_id.id, 'price_unit':dossier.amount_room_costs}))
 
             if dossier.amount_voirie:
                 line_desc = frais_voirie_str[lang]
                 lines.append((0,False, {'name':line_desc, 'quantity':1, 'account_id':dossier.voirie_account_id.id, 'price_unit':dossier.amount_voirie}))
-                    
+
             addr = self.pool.get('res.partner').address_get(cr, uid, [etude.id], ['contact','invoice'])
             number = self.pool.get('ir.sequence').get(cr, uid, 'huissier.invoice.salle')
 
@@ -250,7 +243,8 @@ class huissier_dossier(osv.osv):
                 'invoice_line': lines,
                 'type': 'out_invoice',
                 'account_id': account_receive_id,
-                'comment': acquis and acquis_strings.get(lang, 'Pour acquit') or False
+                'comment': acquis and acquis_strings.get(lang, 'Pour acquit') or False,
+                'fiscal_position': etude.property_account_position and etude.property_account_position.id or False
             }
             invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
             self.write(cr, uid, ids, {'invoice_id':invoice_id})
@@ -258,7 +252,7 @@ class huissier_dossier(osv.osv):
             wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_open', cr)
             invoice_ids.append(invoice_id)
         return invoice_ids
-        
+
 #   def create_invoice_and_cancel_old(self, cr, uid, ids):
     def create_invoice_and_refund_old(self, cr, uid, ids, acquis=False):
         assert len(ids)==1
@@ -273,7 +267,7 @@ class huissier_dossier(osv.osv):
             # cancel old invoice
 #           wf_service = netsvc.LocalService("workflow")
 #           wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_cancel', cr)a
-            
+
             # refund old invoice
             refund_id = self.pool.get('account.invoice').refund(cr, uid, [invoice_id])[0]
             wf_service = netsvc.LocalService("workflow")
@@ -281,7 +275,7 @@ class huissier_dossier(osv.osv):
         # create a new invoice
         invoice_id = self.invoice(cr, uid, ids, acquis)[0]
         return (refund_id, invoice_id)
-        
+
     def close(self, cr, uid, ids, frais_voirie=False, acquis=False):
         assert len(ids)==1
         if isinstance(frais_voirie, float):
@@ -296,17 +290,17 @@ class huissier_dossier(osv.osv):
         amount_adj = self.read(cr, uid, ids, ['amount_adj_calculated'])[0]['amount_adj_calculated']
         self.write(cr, uid, ids, {'state':'closed', 'amount_adj':amount_adj,'refund_id':refund_id})
         return (refund_id, invoice_id)
-    
+
     def cancel(self, cr, uid, ids,context):
         self.write(cr, uid, ids, {'state':'canceled'})
         return True
-            
+
 huissier_dossier()
 
 def _lang_get(self, cr, user,ids):
     cr.execute('select code, name from res_lang order by name')
     return cr.fetchall() or [(False, '/')]
-    
+
 #----------------------------------------------------------
 # Lots
 #----------------------------------------------------------
@@ -355,7 +349,7 @@ class huissier_lots(osv.osv):
 
     def button_emporte(self,cr,uid,ids,*a):
         return self.write(cr,uid,ids, {'state':'emporte'})
- 
+
     def button_bought(self,cr,uid,ids,*a):
         return self.write(cr,uid,ids, {'state':'vendu'})
 
@@ -397,10 +391,10 @@ class huissier_lots(osv.osv):
     # returns the highest lot number used in dossiers created this year
     def _get_yearly_max_lot_number(self, cr, uid):
         year = time.strftime('%Y')
-        # Ceci aura un comportement "inattendu" si le dossier est créé fin 
+        # Ceci aura un comportement "inattendu" si le dossier est créé fin
         # d'année, réellement vendu au début de l'année suivante et
-        # que la date réelle du dossier n'a pas été mise à jour. 
-        # Peut être qu'a chaque nouveau lot pour ce dossier, je devrais 
+        # que la date réelle du dossier n'a pas été mise à jour.
+        # Peut être qu'a chaque nouveau lot pour ce dossier, je devrais
         # mettre a jour la date réelle?
         cr.execute(
             "select max(number) as number " \
@@ -413,7 +407,7 @@ class huissier_lots(osv.osv):
     def _get_next_lot_number(self, cr, uid):
 #       return int(self.pool.get('ir.sequence').get(cr, uid, 'huissier.lots'))
         return self._get_yearly_max_lot_number(cr, uid)+1
-    
+
     # returns the vat used in the lot with the highest number in dossiers created this year
     def _get_lot_default_vat(self, cr, uid):
         lot_number = self._get_yearly_max_lot_number(cr, uid)
@@ -430,7 +424,7 @@ class huissier_lots(osv.osv):
     def get_costs_amount(self, cr, uid, ids, dossier_id, adj_price):
         res={}
 #       dossier = self.pool.get('huissier.dossier').read(cr, uid, [dossier_id], ['cost_id'])[0]
-        
+
         pt_tax=self.pool.get('account.tax')
         taxes=[]
         amount_total=0.0
@@ -443,10 +437,10 @@ class huissier_lots(osv.osv):
         #res[obj_lot.id]=amount_total
 #       cost_amount = reduce(lambda x, y: x+y['amount'], costs, 0.0)
         return amount_total
-    
+
     def onchange_adj_price(self, cr, uid, ids, dossier_id, adj_price):
         return {'value':{'price_wh_costs': adj_price + self.get_costs_amount(cr, uid, ids, dossier_id, adj_price)}}
-        
+
     def onchange_buyer_ref(self, cr, uid, ids, buyer_id):
 #       cr.execute('select id from res_partner where ref=%s', (buyer_ref,)) # and category = client
 #       res = cr.dictfetchall()
@@ -464,7 +458,7 @@ class huissier_lots(osv.osv):
             'value': {'buyer_name':partner.name, 'buyer_address':address.street, 'buyer_zip':address.zip, 'buyer_city':address.city, 'buyer_birthdate':address.birthdate, 'buyer_vat':partner.vat, 'buyer_lang':partner.lang},
             'readonly': {'buyer_name':True, 'buyer_address':True, 'buyer_zip':True, 'buyer_city':True, 'buyer_birthdate':True, 'buyer_vat':True, 'buyer_lang':True}
         }
-        
+
 
 huissier_lots()
 
@@ -472,7 +466,7 @@ class huissier_vignettes(osv.osv):
     _name = "huissier.vignettes"
     _auto = True
     _order = "first"
-    
+
     def _get_range_value(self, cr, uid, ids, name, arg, context):
         res = {}
         cr.execute("select id, price, quantity from huissier_vignettes where id in ("+','.join([str(id) for id in ids])+")")
@@ -482,7 +476,7 @@ class huissier_vignettes(osv.osv):
 #               price = 0.0
             res[id] = price * quantity
         return res
-        
+
     #   'etude_id': fields.many2one('res.partner', u'Etude', domain="[('category_id', '=', 'Etudes')]", required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
     _columns = {
         'etude_id': fields.many2one('res.partner', u'Etude', domain="[('category_id', '=', 'Etudes')]", states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
@@ -515,10 +509,10 @@ class huissier_vignettes(osv.osv):
         res = cr.dictfetchall()
         return res[0]['number'] or 1
 #       return int(self.pool.get('ir.sequence').get(cr, uid, 'huissier.vignettes'))
-        
+
     def onchange_quantity(self, cr, uid, ids, quantity, first):
         return {'value':{'last':first + quantity - 1}}
-        
+
     def onchange_last(self, cr, uid, ids, first, last):
         if last < first:
             return {}
@@ -529,7 +523,7 @@ class huissier_vignettes(osv.osv):
 #       label_ranges = self.browse(cr, uid, ids)
 #       if not len(label_ranges):
 #           return []
-#       
+#
 #       for lr in label_ranges:
 #           partner_id = lr.etude_id.id
 #           account_src_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], (partner_id or []) and [('id',str(partner_id))] )[0][2]
@@ -544,9 +538,9 @@ class huissier_vignettes(osv.osv):
 #           }
 #       #   transfer_id = self.pool.get('account.transfer').create(cr, uid, transfer)
 #       #   self.pool.get('account.transfer').pay_validate(cr,uid,[transfer_id])
-#           
+#
 #       #   self.write(cr, uid, [lr.id], {'transfer_id':transfer_id, 'state':'paid'})
-#           
+#
     def invoice(self, cr, uid, ids,context):
         """
             Create an invoice for selected range of 'vignettes' (ids)
@@ -566,12 +560,12 @@ class huissier_vignettes(osv.osv):
             if not lr.etude_id in label_ranges_etude:
                 label_ranges_etude[lr.etude_id] = []
             label_ranges_etude[lr.etude_id].append(lr)
-            
+
         line_descs = {
             'fr': u'vignette(s) (%d --> %d)',
             'nl': u'vignette(n) (%d --> %d)'
         }
-        
+
         invoice_descs = {
             'fr': u'Facture de vignettes (%d vignette(s))',
             'nl': u'Vignetten faktuur (%d vignette(n))'
@@ -587,7 +581,7 @@ class huissier_vignettes(osv.osv):
             for lr in label_ranges:
                 line_desc = line_descs[lang] % (lr.first, lr.last)
                 lines.append((0,False, {'name':line_desc, 'quantity':lr.quantity, 'account_id':lr.income_account_id.id, 'price_unit':lr.price}))
-                
+
             addr = self.pool.get('res.partner').address_get(cr, uid, [etude.id], ['contact','invoice'])
 
             # get the number from the sequence (we set it manually)
@@ -605,7 +599,8 @@ class huissier_vignettes(osv.osv):
                 'invoice_line': lines,
                 'type': 'out_invoice',
                 'account_id': account_receive_id,
-                'comment': lr.acquis and acquis_strings[lang] or False
+                'comment': lr.acquis and acquis_strings[lang] or False,
+                'fiscal_position': etude.property_account_position and etude.property_account_position.id or False
             }
 
             invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
@@ -641,7 +636,7 @@ class huissier_deposit(osv.osv):
     _defaults = {
         'state': lambda *a: 'draft',
     }
-    
+
     def invoice(self, cr, uid, ids):
         dt = time.strftime('%Y-%m-%d')
 
@@ -649,29 +644,29 @@ class huissier_deposit(osv.osv):
             'fr': u'Forfait pour véhicule',
             'nl': u'Voertuig Forfait'
         }
-        
+
         line_descs_expo = {
             'fr': u"Frais d'exposition",
             'nl': u'Expositie kosten'
         }
-        
+
         invoice_descs = {
             'fr': u'Facture de garde meuble',
             'nl': u'Faktuur meubelbewaring'
         }
-        
+
 
         invoice_ids = []
         for deposit in self.browse(cr, uid, ids):
             partner = deposit.billing_partner_id
-            
+
             dossier_id = deposit.dossier_id.id
             lang = partner.lang or 'fr'
-            
+
             invoice_desc = invoice_descs.get(lang, invoice_descs['fr'])
-            
+
             #account_receive_id = ir.ir_get(cr, uid, [('meta','res.partner'),('name','account.receivable')], [('id',str(partner.id))] )[0][2]
-        
+
             lines = []
             line_desc = deposit.line_desc
             lines.append((0, False, {'name':deposit.line_desc, 'quantity':deposit.cubage, 'account_id':deposit.income_account_id.id, 'price_unit':deposit.prix_garde_meuble}))
@@ -683,7 +678,7 @@ class huissier_deposit(osv.osv):
             if deposit.nombre_expo:
                 line_desc = line_descs_expo[lang]
                 lines.append((0, False, {'name':line_desc, 'quantity':deposit.nombre_expo, 'account_id':deposit.income_account_id.id, 'price_unit':deposit.forfait_expo}))
-                
+
             addr = self.pool.get('res.partner').address_get(cr, uid, [partner.id], ['contact','invoice'])
 
             # get the number from the sequence (we set it manually)
@@ -700,15 +695,16 @@ class huissier_deposit(osv.osv):
                 'invoice_line': lines,
                 'type': 'out_invoice',
                 'account_id': deposit.billing_partner_id.property_account_receivable.id,
-                'comment': deposit.acquis and acquis_strings[lang] or False
+                'comment': deposit.acquis and acquis_strings[lang] or False,
+                'fiscal_position': partner.property_account_position and partner.property_account_position.id or False
             }
             invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
 #           'invoice_id': fields.many2many('account.invoice', 'huissier_deposit_invoice_rel', 'deposit_id', 'invoice_id', u'Factures'),
-            cr.execute('insert into huissier_deposit_invoice_rel (deposit_id, invoice_id) values (%d, %d)', (deposit.id, invoice_id))
+            cr.execute('insert into huissier_deposit_invoice_rel (deposit_id, invoice_id) values (%s, %s)', (deposit.id, invoice_id))
 #           self.write(cr, uid, ids, {'invoice_id':invoice_id})
             invoice_ids.append(invoice_id)
         return invoice_ids
-            
+
     def start_periodic_invoice(self, cr, uid, ids,context):
         self.write(cr, uid, ids, {'state':'running'})
         return True
@@ -724,15 +720,15 @@ class huissier_deposit(osv.osv):
         wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_open', cr)
         self.write(cr, uid, ids, {'state':'closed'})
         return invoice_id
-        
+
     def reopen(self, cr, uid, ids,context):
         self.write(cr, uid, ids, {'state':'draft'})
         return True
-        
+
     def invoice_running_deposits(self, cr, uid, *args):
         ids = self.search(cr, uid, [('state','=','running')])
         self.invoice(cr, uid, ids)
-        
+
     def onchange_dossier(self, cr, uid, ids, dossier_id):
         dossier = self.pool.get('huissier.dossier').read(cr, uid, [dossier_id], ['etude_id'])[0]
         return {'value':{'billing_partner_id':dossier['etude_id']}}

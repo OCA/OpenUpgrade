@@ -1,0 +1,1722 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<record id="res_partner_title_madam" model="res.partner.title">
+			<field name="domain">contact</field>
+			<field name="name">Madame</field>
+			<field name="shortcut">Mme</field>
+		</record>
+		<record id="res_partner_title_miss" model="res.partner.title">
+			<field name="domain">contact</field>
+			<field name="name">Mademoiselle</field>
+			<field name="shortcut">Mlle</field>
+		</record>
+		<record id="res_partner_title_sir" model="res.partner.title">
+			<field name="domain">contact</field>
+			<field name="name">Monsieur</field>
+			<field name="shortcut">M.</field>
+		</record>
+		<record id="res_partner_title_sarl" model="res.partner.title">
+			<field name="domain">partner</field>
+			<field name="name">S.A.R.L.</field>
+			<field name="shortcut">sarl</field>
+		</record>
+		<record id="res_partner_title_sa" model="res.partner.title">
+			<field name="domain">partner</field>
+			<field name="name">S.A.</field>
+			<field name="shortcut">sa</field>
+		</record>
+		<record id="res_partner_title_eurl" model="res.partner.title">
+			<field name="domain">partner</field>
+			<field name="name">E.U.R.L.</field>
+			<field name="shortcut">eurl</field>
+		</record>
+		<record id="res_partner_title_asso" model="res.partner.title">
+			<field name="domain">partner</field>
+			<field name="name">Association</field>
+			<field name="shortcut">asso</field>
+		</record>
+		<record id="res_partner_title_part" model="res.partner.title">
+			<field name="domain">partner</field>
+			<field name="name">Particulier</field>
+			<field name="shortcut">part</field>
+		</record>
+		<record id="res_partner_title_madame" model="res.partner.title">
+			<field name="domain">partner</field>
+			<field name="name">Madame</field>
+			<field name="shortcut">Ms.</field>
+		</record>
+		<record id="res_partner_title_mademoiselle" model="res.partner.title">
+			<field name="domain">partner</field>
+			<field name="name">Mademoiselle</field>
+			<field name="shortcut">Mss</field>
+		</record>
+		<record id="res_partner_title_monsieur" model="res.partner.title">
+			<field name="domain">partner</field>
+			<field name="name">Monsieur</field>
+			<field name="shortcut">M.</field>
+		</record>
+		<record id="res_partner_category_0" model="res.partner.category">
+			<field name="name">Client</field>
+		</record>
+
+		<record id="res_partner_category_1" model="res.partner.category">
+			<field name="name">Postulant</field>
+		</record>
+		<record id="res_partner_category_20" model="res.partner.category">
+			<field name="name">MEDECINS</field>
+		</record>
+		<record id="res_partner_category_21" model="res.partner.category">
+			<field name="name">PARAMEDICAL</field>
+		</record>
+		<record id="res_partner_category_22" model="res.partner.category">
+			<field name="name">ETABLISSEMENTS</field>
+		</record>
+		<record id="res_partner_category_23" model="res.partner.category">
+			<field name="name">TRANSPORTEURS</field>
+		</record>
+		<record id="res_partner_category_24" model="res.partner.category">
+			<field name="name">FAMILLE</field>
+		</record>
+		<record id="res_partner_category_2" model="res.partner.category">
+			<field name="name">Fournisseurs</field>
+		</record>
+		<record id="res_partner_category_3" model="res.partner.category">
+			<field name="name">Resident</field>
+			<field name="parent_id" ref="res_partner_category_0"/>
+		</record>
+		<record id="res_partner_category_8" model="res.partner.category">
+			<field name="name">PHARMACIES</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_9" model="res.partner.category">
+			<field name="name">KINESITHERAPEUTES</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_10" model="res.partner.category">
+			<field name="name">PSYCHOLOGUES</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_11" model="res.partner.category">
+			<field name="name">ERGONOMES</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_12" model="res.partner.category">
+			<field name="name">LABORATOIRES</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_13" model="res.partner.category">
+			<field name="name">HOPITAUX</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_14" model="res.partner.category">
+			<field name="name">AMBULANCES</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_15" model="res.partner.category">
+			<field name="name">CAISSE PRIMAIRES</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_16" model="res.partner.category">
+			<field name="name">MUTUELLES</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_17" model="res.partner.category">
+			<field name="name">C.M.U.</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_as" model="res.partner.category">
+			<field name="name">AIDES SOCIALES</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_al" model="res.partner.category">
+			<field name="name">AIDES LOGEMENT</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_category_apa" model="res.partner.category">
+			<field name="name">APA DEPARTEMENTS</field>
+			<field name="parent_id" ref="res_partner_category_2"/>
+		</record>
+		<record id="res_partner_function_0" model="res.partner.function">
+			<field name="name">Dirigeant</field>
+			<field name="code">DG</field>
+		</record>
+		<record id="res_partner_function_1" model="res.partner.function">
+			<field name="name">Comptable</field>
+			<field name="code">COMP</field>
+		</record>
+		<record id="res_partner_function_2" model="res.partner.function">
+			<field name="name">Commercial</field>
+			<field name="code">COM</field>
+		</record>
+		<record id="res_partner_function_3" model="res.partner.function">
+			<field name="name">Responsable Informatique</field>
+			<field name="code">RI</field>
+		</record>
+		<record id="res_partner_function_4" model="res.partner.function">
+			<field name="name">Gérant</field>
+			<field name="code">GT</field>
+		</record>
+		<record id="res_partner_function_5" model="res.partner.function">
+			<field name="name">Econome</field>
+			<field name="code">EC</field>
+		</record>
+		<record id="res_partner_function_6" model="res.partner.function">
+			<field name="name">D.R.H.</field>
+			<field name="code">DRH</field>
+		</record>
+		<record id="res_partner_function_7" model="res.partner.function">
+			<field name="name">Assistante de Direction</field>
+			<field name="code">AD</field>
+		</record>
+		<record id="res_partner_function_8" model="res.partner.function">
+			<field name="name">Responsable Achats</field>
+			<field name="code">RA</field>
+		</record>
+		<record id="res_partner_function_9" model="res.partner.function">
+			<field name="name">Responsable Logistique</field>
+			<field name="code">RL</field>
+		</record>
+		<record id="res_partner_function_10" model="res.partner.function">
+			<field name="name">Président</field>
+			<field name="code">PR</field>
+		</record>
+
+		<record id="res_partner_apa_1" model="res.partner">
+			<field name="name">APA - Ain</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_2" model="res.partner">
+			<field name="name">APA - Aisne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_3" model="res.partner">
+			<field name="name">APA - Allier</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_4" model="res.partner">
+			<field name="name">APA - Alpes de Hautes-Provence</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_5" model="res.partner">
+			<field name="name">APA - Hautes-Alpes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_6" model="res.partner">
+			<field name="name">APA - Alpes-Maritimes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_7" model="res.partner">
+			<field name="name">APA - Ardèche</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_8" model="res.partner">
+			<field name="name">APA - Ardennes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_9" model="res.partner">
+			<field name="name">APA - Ariège</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_10" model="res.partner">
+			<field name="name">APA - Aube</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_11" model="res.partner">
+			<field name="name">APA - Aude</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_12" model="res.partner">
+			<field name="name">APA - Aveyron</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_13" model="res.partner">
+			<field name="name">APA - Bouches-du-Rhône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_14" model="res.partner">
+			<field name="name">APA - Calvados</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_15" model="res.partner">
+			<field name="name">APA - Cantal</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_16" model="res.partner">
+			<field name="name">APA - Charente</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_17" model="res.partner">
+			<field name="name">APA - Charente-Maritime</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_18" model="res.partner">
+			<field name="name">APA - Cher</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_19" model="res.partner">
+			<field name="name">APA - Corrèze</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_20" model="res.partner">
+			<field name="name">APA - Corse-du-Sud</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_21" model="res.partner">
+			<field name="name">APA - Haute-Corse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_22" model="res.partner">
+			<field name="name">APA - Côte-d'Or</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_23" model="res.partner">
+			<field name="name">APA - Côtes d'Armor</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_24" model="res.partner">
+			<field name="name">APA - Creuse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_25" model="res.partner">
+			<field name="name">APA - Dordogne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_26" model="res.partner">
+			<field name="name">APA - Doubs</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_27" model="res.partner">
+			<field name="name">APA - Drôme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_28" model="res.partner">
+			<field name="name">APA - Eure</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_29" model="res.partner">
+			<field name="name">APA - Eure-et-Loir</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_30" model="res.partner">
+			<field name="name">APA - Finistère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_31" model="res.partner">
+			<field name="name">APA - Gard</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_32" model="res.partner">
+			<field name="name">APA - Haute-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_33" model="res.partner">
+			<field name="name">APA - Gers</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_34" model="res.partner">
+			<field name="name">APA - Gironde</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_35" model="res.partner">
+			<field name="name">APA - Hérault</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_36" model="res.partner">
+			<field name="name">APA - Ille-et-Vilaine</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_37" model="res.partner">
+			<field name="name">APA - Indre</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_38" model="res.partner">
+			<field name="name">APA - Indre-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_39" model="res.partner">
+			<field name="name">APA - Isère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_40" model="res.partner">
+			<field name="name">APA - Jura</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_41" model="res.partner">
+			<field name="name">APA - Landes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_42" model="res.partner">
+			<field name="name">APA - Loir-et-Cher</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_43" model="res.partner">
+			<field name="name">APA - Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_44" model="res.partner">
+			<field name="name">APA - Haute-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_45" model="res.partner">
+			<field name="name">APA - Loire-Atlantique</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_46" model="res.partner">
+			<field name="name">APA - Loiret</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_47" model="res.partner">
+			<field name="name">APA - Lot</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_48" model="res.partner">
+			<field name="name">APA - Lot-et-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_49" model="res.partner">
+			<field name="name">APA - Lozère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_50" model="res.partner">
+			<field name="name">APA - Maine-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_51" model="res.partner">
+			<field name="name">APA - Manche</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_52" model="res.partner">
+			<field name="name">APA - Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_53" model="res.partner">
+			<field name="name">APA - Haute-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_54" model="res.partner">
+			<field name="name">APA - Mayenne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_55" model="res.partner">
+			<field name="name">APA - Meurthe-et-Moselle</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_56" model="res.partner">
+			<field name="name">APA - Meuse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_57" model="res.partner">
+			<field name="name">APA - Morbihan</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_58" model="res.partner">
+			<field name="name">APA - Moselle</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_59" model="res.partner">
+			<field name="name">APA - Nièvre</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_60" model="res.partner">
+			<field name="name">APA - Nord</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_61" model="res.partner">
+			<field name="name">APA - Oise</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_62" model="res.partner">
+			<field name="name">APA - Orne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_63" model="res.partner">
+			<field name="name">APA - Pas-de-Calais</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_64" model="res.partner">
+			<field name="name">APA - Puy-de-Dôme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_65" model="res.partner">
+			<field name="name">APA - Pyrénées-Atlantiques</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_66" model="res.partner">
+			<field name="name">APA - Hautes-Pyrénées</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_67" model="res.partner">
+			<field name="name">APA - Pyrénées-Orientales</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_68" model="res.partner">
+			<field name="name">APA - Bas-Rhin</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_69" model="res.partner">
+			<field name="name">APA - Haut-Rhin</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_70" model="res.partner">
+			<field name="name">APA - Rhône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_71" model="res.partner">
+			<field name="name">APA - Haute-Saône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_72" model="res.partner">
+			<field name="name">APA - Saône-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_73" model="res.partner">
+			<field name="name">APA - Sarthe</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_74" model="res.partner">
+			<field name="name">APA - Savoie</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_75" model="res.partner">
+			<field name="name">APA - Haute-Savoie</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_76" model="res.partner">
+			<field name="name">APA - Paris</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_77" model="res.partner">
+			<field name="name">APA - Seine-Maritime</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_78" model="res.partner">
+			<field name="name">APA - Seine-et-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_79" model="res.partner">
+			<field name="name">APA - Yvelines</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_80" model="res.partner">
+			<field name="name">APA - Deux-Sèvres</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_81" model="res.partner">
+			<field name="name">APA - Somme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_82" model="res.partner">
+			<field name="name">APA - Tarn</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_83" model="res.partner">
+			<field name="name">APA - Tarn-et-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_84" model="res.partner">
+			<field name="name">APA - Var</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_85" model="res.partner">
+			<field name="name">APA - Vaucluse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_86" model="res.partner">
+			<field name="name">APA - Vendée</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_87" model="res.partner">
+			<field name="name">APA - Vienne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_88" model="res.partner">
+			<field name="name">APA - Haute-Vienne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_89" model="res.partner">
+			<field name="name">APA - Vosges</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_90" model="res.partner">
+			<field name="name">APA - Yonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_91" model="res.partner">
+			<field name="name">APA - Territoire-de-Belfort</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_92" model="res.partner">
+			<field name="name">APA - Essonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_93" model="res.partner">
+			<field name="name">APA - Hauts-de-Seine</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_94" model="res.partner">
+			<field name="name">APA - Seine-Saint-Denis</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_95" model="res.partner">
+			<field name="name">APA - Val-de-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_apa_96" model="res.partner">
+			<field name="name">APA - Val-d'Oise</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_apa')])]" />
+		</record>
+		<record id="res_partner_cg_1" model="res.partner">
+			<field name="name">Conseil Général - Ain</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_2" model="res.partner">
+			<field name="name">Conseil Général - Aisne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_3" model="res.partner">
+			<field name="name">Conseil Général - Allier</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_4" model="res.partner">
+			<field name="name">Conseil Général - Alpes de Hautes-Provence</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_5" model="res.partner">
+			<field name="name">Conseil Général - Hautes-Alpes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_6" model="res.partner">
+			<field name="name">Conseil Général - Alpes-Maritimes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_7" model="res.partner">
+			<field name="name">Conseil Général - Ardèche</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_8" model="res.partner">
+			<field name="name">Conseil Général - Ardennes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_9" model="res.partner">
+			<field name="name">Conseil Général - Ariège</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_10" model="res.partner">
+			<field name="name">Conseil Général - Aube</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_11" model="res.partner">
+			<field name="name">Conseil Général - Aude</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_12" model="res.partner">
+			<field name="name">Conseil Général - Aveyron</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_13" model="res.partner">
+			<field name="name">Conseil Général - Bouches-du-Rhône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_14" model="res.partner">
+			<field name="name">Conseil Général - Calvados</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_15" model="res.partner">
+			<field name="name">Conseil Général - Cantal</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_16" model="res.partner">
+			<field name="name">Conseil Général - Charente</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_17" model="res.partner">
+			<field name="name">Conseil Général - Charente-Maritime</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_18" model="res.partner">
+			<field name="name">Conseil Général - Cher</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_19" model="res.partner">
+			<field name="name">Conseil Général - Corrèze</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_20" model="res.partner">
+			<field name="name">Conseil Général - Corse-du-Sud</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_21" model="res.partner">
+			<field name="name">Conseil Général - Haute-Corse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_22" model="res.partner">
+			<field name="name">Conseil Général - Côte-d'Or</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_23" model="res.partner">
+			<field name="name">Conseil Général - Côtes d'Armor</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_24" model="res.partner">
+			<field name="name">Conseil Général - Creuse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_25" model="res.partner">
+			<field name="name">Conseil Général - Dordogne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_26" model="res.partner">
+			<field name="name">Conseil Général - Doubs</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_27" model="res.partner">
+			<field name="name">Conseil Général - Drôme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_28" model="res.partner">
+			<field name="name">Conseil Général - Eure</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_29" model="res.partner">
+			<field name="name">Conseil Général - Eure-et-Loir</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_30" model="res.partner">
+			<field name="name">Conseil Général - Finistère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_31" model="res.partner">
+			<field name="name">Conseil Général - Gard</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_32" model="res.partner">
+			<field name="name">Conseil Général - Haute-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_33" model="res.partner">
+			<field name="name">Conseil Général - Gers</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_34" model="res.partner">
+			<field name="name">Conseil Général - Gironde</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_35" model="res.partner">
+			<field name="name">Conseil Général - Hérault</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_36" model="res.partner">
+			<field name="name">Conseil Général - Ille-et-Vilaine</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_37" model="res.partner">
+			<field name="name">Conseil Général - Indre</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_38" model="res.partner">
+			<field name="name">Conseil Général - Indre-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_39" model="res.partner">
+			<field name="name">Conseil Général - Isère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_40" model="res.partner">
+			<field name="name">Conseil Général - Jura</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_41" model="res.partner">
+			<field name="name">Conseil Général - Landes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_42" model="res.partner">
+			<field name="name">Conseil Général - Loir-et-Cher</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_43" model="res.partner">
+			<field name="name">Conseil Général - Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_44" model="res.partner">
+			<field name="name">Conseil Général - Haute-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_45" model="res.partner">
+			<field name="name">Conseil Général - Loire-Atlantique</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_46" model="res.partner">
+			<field name="name">Conseil Général - Loiret</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_47" model="res.partner">
+			<field name="name">Conseil Général - Lot</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_48" model="res.partner">
+			<field name="name">Conseil Général - Lot-et-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_49" model="res.partner">
+			<field name="name">Conseil Général - Lozère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_50" model="res.partner">
+			<field name="name">Conseil Général - Maine-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_51" model="res.partner">
+			<field name="name">Conseil Général - Manche</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_52" model="res.partner">
+			<field name="name">Conseil Général - Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_53" model="res.partner">
+			<field name="name">Conseil Général - Haute-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_54" model="res.partner">
+			<field name="name">Conseil Général - Mayenne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_55" model="res.partner">
+			<field name="name">Conseil Général - Meurthe-et-Moselle</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_56" model="res.partner">
+			<field name="name">Conseil Général - Meuse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_57" model="res.partner">
+			<field name="name">Conseil Général - Morbihan</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_58" model="res.partner">
+			<field name="name">Conseil Général - Moselle</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_59" model="res.partner">
+			<field name="name">Conseil Général - Nièvre</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_60" model="res.partner">
+			<field name="name">Conseil Général - Nord</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_61" model="res.partner">
+			<field name="name">Conseil Général - Oise</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_62" model="res.partner">
+			<field name="name">Conseil Général - Orne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_63" model="res.partner">
+			<field name="name">Conseil Général - Pas-de-Calais</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_64" model="res.partner">
+			<field name="name">Conseil Général - Puy-de-Dôme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_65" model="res.partner">
+			<field name="name">Conseil Général - Pyrénées-Atlantiques</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_66" model="res.partner">
+			<field name="name">Conseil Général - Hautes-Pyrénées</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_67" model="res.partner">
+			<field name="name">Conseil Général - Pyrénées-Orientales</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_68" model="res.partner">
+			<field name="name">Conseil Général - Bas-Rhin</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_69" model="res.partner">
+			<field name="name">Conseil Général - Haut-Rhin</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_70" model="res.partner">
+			<field name="name">Conseil Général - Rhône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_71" model="res.partner">
+			<field name="name">Conseil Général - Haute-Saône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_72" model="res.partner">
+			<field name="name">Conseil Général - Saône-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_73" model="res.partner">
+			<field name="name">Conseil Général - Sarthe</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_74" model="res.partner">
+			<field name="name">Conseil Général - Savoie</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_75" model="res.partner">
+			<field name="name">Conseil Général - Haute-Savoie</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_76" model="res.partner">
+			<field name="name">Conseil Général - Paris</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_77" model="res.partner">
+			<field name="name">Conseil Général - Seine-Maritime</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_78" model="res.partner">
+			<field name="name">Conseil Général - Seine-et-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_79" model="res.partner">
+			<field name="name">Conseil Général - Yvelines</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_80" model="res.partner">
+			<field name="name">Conseil Général - Deux-Sèvres</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_81" model="res.partner">
+			<field name="name">Conseil Général - Somme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_82" model="res.partner">
+			<field name="name">Conseil Général - Tarn</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_83" model="res.partner">
+			<field name="name">Conseil Général - Tarn-et-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_84" model="res.partner">
+			<field name="name">Conseil Général - Var</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_85" model="res.partner">
+			<field name="name">Conseil Général - Vaucluse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_86" model="res.partner">
+			<field name="name">Conseil Général - Vendée</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_87" model="res.partner">
+			<field name="name">Conseil Général - Vienne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_88" model="res.partner">
+			<field name="name">Conseil Général - Haute-Vienne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_89" model="res.partner">
+			<field name="name">Conseil Général - Vosges</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_90" model="res.partner">
+			<field name="name">Conseil Général - Yonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_91" model="res.partner">
+			<field name="name">Conseil Général - Territoire-de-Belfort</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_92" model="res.partner">
+			<field name="name">Conseil Général - Essonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_93" model="res.partner">
+			<field name="name">Conseil Général - Hauts-de-Seine</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_94" model="res.partner">
+			<field name="name">Conseil Général - Seine-Saint-Denis</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_95" model="res.partner">
+			<field name="name">Conseil Général - Val-de-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cg_96" model="res.partner">
+			<field name="name">Conseil Général - Val-d'Oise</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_as'),ref('res_partner_category_apa')])]"/>
+		</record>
+		<record id="res_partner_cpam_1" model="res.partner">
+			<field name="name">C.P.A.M. - Ain</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_2" model="res.partner">
+			<field name="name">C.P.A.M. - Aisne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_3" model="res.partner">
+			<field name="name">C.P.A.M. - Allier</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_4" model="res.partner">
+			<field name="name">C.P.A.M. - Alpes de Hautes-Provence</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_5" model="res.partner">
+			<field name="name">C.P.A.M. - Hautes-Alpes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_6" model="res.partner">
+			<field name="name">C.P.A.M. - Alpes-Maritimes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_7" model="res.partner">
+			<field name="name">C.P.A.M. - Ardèche</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_8" model="res.partner">
+			<field name="name">C.P.A.M. - Ardennes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_9" model="res.partner">
+			<field name="name">C.P.A.M. - Ariège</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_10" model="res.partner">
+			<field name="name">C.P.A.M. - Aube</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_11" model="res.partner">
+			<field name="name">C.P.A.M. - Aude</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_12" model="res.partner">
+			<field name="name">C.P.A.M. - Aveyron</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_13" model="res.partner">
+			<field name="name">C.P.A.M. - Bouches-du-Rhône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_14" model="res.partner">
+			<field name="name">C.P.A.M. - Calvados</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_15" model="res.partner">
+			<field name="name">C.P.A.M. - Cantal</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_16" model="res.partner">
+			<field name="name">C.P.A.M. - Charente</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_17" model="res.partner">
+			<field name="name">C.P.A.M. - Charente-Maritime</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_18" model="res.partner">
+			<field name="name">C.P.A.M. - Cher</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_19" model="res.partner">
+			<field name="name">C.P.A.M. - Corrèze</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_20" model="res.partner">
+			<field name="name">C.P.A.M. - Corse-du-Sud</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_21" model="res.partner">
+			<field name="name">C.P.A.M. - Haute-Corse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_22" model="res.partner">
+			<field name="name">C.P.A.M. - Côte-d'Or</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_23" model="res.partner">
+			<field name="name">C.P.A.M. - Côtes d'Armor</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_24" model="res.partner">
+			<field name="name">C.P.A.M. - Creuse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_25" model="res.partner">
+			<field name="name">C.P.A.M. - Dordogne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_26" model="res.partner">
+			<field name="name">C.P.A.M. - Doubs</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_27" model="res.partner">
+			<field name="name">C.P.A.M. - Drôme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_28" model="res.partner">
+			<field name="name">C.P.A.M. - Eure</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_29" model="res.partner">
+			<field name="name">C.P.A.M. - Eure-et-Loir</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_30" model="res.partner">
+			<field name="name">C.P.A.M. - Finistère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_31" model="res.partner">
+			<field name="name">C.P.A.M. - Gard</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_32" model="res.partner">
+			<field name="name">C.P.A.M. - Haute-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_33" model="res.partner">
+			<field name="name">C.P.A.M. - Gers</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_34" model="res.partner">
+			<field name="name">C.P.A.M. - Gironde</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_35" model="res.partner">
+			<field name="name">C.P.A.M. - Hérault</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_36" model="res.partner">
+			<field name="name">C.P.A.M. - Ille-et-Vilaine</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_37" model="res.partner">
+			<field name="name">C.P.A.M. - Indre</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_38" model="res.partner">
+			<field name="name">C.P.A.M. - Indre-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_39" model="res.partner">
+			<field name="name">C.P.A.M. - Isère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_40" model="res.partner">
+			<field name="name">C.P.A.M. - Jura</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_41" model="res.partner">
+			<field name="name">C.P.A.M. - Landes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_42" model="res.partner">
+			<field name="name">C.P.A.M. - Loir-et-Cher</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_43" model="res.partner">
+			<field name="name">C.P.A.M. - Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_44" model="res.partner">
+			<field name="name">C.P.A.M. - Haute-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_45" model="res.partner">
+			<field name="name">C.P.A.M. - Loire-Atlantique</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_46" model="res.partner">
+			<field name="name">C.P.A.M. - Loiret</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_47" model="res.partner">
+			<field name="name">C.P.A.M. - Lot</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_48" model="res.partner">
+			<field name="name">C.P.A.M. - Lot-et-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_49" model="res.partner">
+			<field name="name">C.P.A.M. - Lozère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_50" model="res.partner">
+			<field name="name">C.P.A.M. - Maine-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_51" model="res.partner">
+			<field name="name">C.P.A.M. - Manche</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_52" model="res.partner">
+			<field name="name">C.P.A.M. - Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_53" model="res.partner">
+			<field name="name">C.P.A.M. - Haute-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_54" model="res.partner">
+			<field name="name">C.P.A.M. - Mayenne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_55" model="res.partner">
+			<field name="name">C.P.A.M. - Meurthe-et-Moselle</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_56" model="res.partner">
+			<field name="name">C.P.A.M. - Meuse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_57" model="res.partner">
+			<field name="name">C.P.A.M. - Morbihan</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_58" model="res.partner">
+			<field name="name">C.P.A.M. - Moselle</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_59" model="res.partner">
+			<field name="name">C.P.A.M. - Nièvre</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_60" model="res.partner">
+			<field name="name">C.P.A.M. - Nord</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_61" model="res.partner">
+			<field name="name">C.P.A.M. - Oise</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_62" model="res.partner">
+			<field name="name">C.P.A.M. - Orne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_63" model="res.partner">
+			<field name="name">C.P.A.M. - Pas-de-Calais</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_64" model="res.partner">
+			<field name="name">C.P.A.M. - Puy-de-Dôme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_65" model="res.partner">
+			<field name="name">C.P.A.M. - Pyrénées-Atlantiques</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_66" model="res.partner">
+			<field name="name">C.P.A.M. - Hautes-Pyrénées</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_67" model="res.partner">
+			<field name="name">C.P.A.M. - Pyrénées-Orientales</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_68" model="res.partner">
+			<field name="name">C.P.A.M. - Bas-Rhin</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_69" model="res.partner">
+			<field name="name">C.P.A.M. - Haut-Rhin</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_70" model="res.partner">
+			<field name="name">C.P.A.M. - Rhône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_71" model="res.partner">
+			<field name="name">C.P.A.M. - Haute-Saône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_72" model="res.partner">
+			<field name="name">C.P.A.M. - Saône-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_73" model="res.partner">
+			<field name="name">C.P.A.M. - Sarthe</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_74" model="res.partner">
+			<field name="name">C.P.A.M. - Savoie</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_75" model="res.partner">
+			<field name="name">C.P.A.M. - Haute-Savoie</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_76" model="res.partner">
+			<field name="name">C.P.A.M. - Paris</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_77" model="res.partner">
+			<field name="name">C.P.A.M. - Seine-Maritime</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_78" model="res.partner">
+			<field name="name">C.P.A.M. - Seine-et-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_79" model="res.partner">
+			<field name="name">C.P.A.M. - Yvelines</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_80" model="res.partner">
+			<field name="name">C.P.A.M. - Deux-Sèvres</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_81" model="res.partner">
+			<field name="name">C.P.A.M. - Somme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_82" model="res.partner">
+			<field name="name">C.P.A.M. - Tarn</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_83" model="res.partner">
+			<field name="name">C.P.A.M. - Tarn-et-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_84" model="res.partner">
+			<field name="name">C.P.A.M. - Var</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_85" model="res.partner">
+			<field name="name">C.P.A.M. - Vaucluse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_86" model="res.partner">
+			<field name="name">C.P.A.M. - Vendée</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_87" model="res.partner">
+			<field name="name">C.P.A.M. - Vienne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_88" model="res.partner">
+			<field name="name">C.P.A.M. - Haute-Vienne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_89" model="res.partner">
+			<field name="name">C.P.A.M. - Vosges</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_90" model="res.partner">
+			<field name="name">C.P.A.M. - Yonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_91" model="res.partner">
+			<field name="name">C.P.A.M. - Territoire-de-Belfort</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_92" model="res.partner">
+			<field name="name">C.P.A.M. - Essonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_93" model="res.partner">
+			<field name="name">C.P.A.M. - Hauts-de-Seine</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_94" model="res.partner">
+			<field name="name">C.P.A.M. - Seine-Saint-Denis</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_95" model="res.partner">
+			<field name="name">C.P.A.M. - Val-de-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_cpam_96" model="res.partner">
+			<field name="name">C.P.A.M. - Val-d'Oise</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_15')])]" />
+		</record>
+		<record id="res_partner_caf_1" model="res.partner">
+			<field name="name">C.A.F. - Ain</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_2" model="res.partner">
+			<field name="name">C.A.F. - Aisne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_3" model="res.partner">
+			<field name="name">C.A.F. - Allier</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_4" model="res.partner">
+			<field name="name">C.A.F. - Alpes de Hautes-Provence</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_5" model="res.partner">
+			<field name="name">C.A.F. - Hautes-Alpes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_6" model="res.partner">
+			<field name="name">C.A.F. - Alpes-Maritimes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_7" model="res.partner">
+			<field name="name">C.A.F. - Ardèche</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_8" model="res.partner">
+			<field name="name">C.A.F. - Ardennes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_9" model="res.partner">
+			<field name="name">C.A.F. - Ariège</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_10" model="res.partner">
+			<field name="name">C.A.F. - Aube</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_11" model="res.partner">
+			<field name="name">C.A.F. - Aude</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_12" model="res.partner">
+			<field name="name">C.A.F. - Aveyron</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_13" model="res.partner">
+			<field name="name">C.A.F. - Bouches-du-Rhône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_14" model="res.partner">
+			<field name="name">C.A.F. - Calvados</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_15" model="res.partner">
+			<field name="name">C.A.F. - Cantal</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_16" model="res.partner">
+			<field name="name">C.A.F. - Charente</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_17" model="res.partner">
+			<field name="name">C.A.F. - Charente-Maritime</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_18" model="res.partner">
+			<field name="name">C.A.F. - Cher</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_19" model="res.partner">
+			<field name="name">C.A.F. - Corrèze</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_20" model="res.partner">
+			<field name="name">C.A.F. - Corse-du-Sud</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_21" model="res.partner">
+			<field name="name">C.A.F. - Haute-Corse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_22" model="res.partner">
+			<field name="name">C.A.F. - Côte-d'Or</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_23" model="res.partner">
+			<field name="name">C.A.F. - Côtes d'Armor</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_24" model="res.partner">
+			<field name="name">C.A.F. - Creuse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_25" model="res.partner">
+			<field name="name">C.A.F. - Dordogne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_26" model="res.partner">
+			<field name="name">C.A.F. - Doubs</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_27" model="res.partner">
+			<field name="name">C.A.F. - Drôme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_28" model="res.partner">
+			<field name="name">C.A.F. - Eure</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_29" model="res.partner">
+			<field name="name">C.A.F. - Eure-et-Loir</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_30" model="res.partner">
+			<field name="name">C.A.F. - Finistère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_31" model="res.partner">
+			<field name="name">C.A.F. - Gard</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_32" model="res.partner">
+			<field name="name">C.A.F. - Haute-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_33" model="res.partner">
+			<field name="name">C.A.F. - Gers</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_34" model="res.partner">
+			<field name="name">C.A.F. - Gironde</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_35" model="res.partner">
+			<field name="name">C.A.F. - Hérault</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_36" model="res.partner">
+			<field name="name">C.A.F. - Ille-et-Vilaine</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_37" model="res.partner">
+			<field name="name">C.A.F. - Indre</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_38" model="res.partner">
+			<field name="name">C.A.F. - Indre-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_39" model="res.partner">
+			<field name="name">C.A.F. - Isère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_40" model="res.partner">
+			<field name="name">C.A.F. - Jura</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_41" model="res.partner">
+			<field name="name">C.A.F. - Landes</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_42" model="res.partner">
+			<field name="name">C.A.F. - Loir-et-Cher</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_43" model="res.partner">
+			<field name="name">C.A.F. - Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_44" model="res.partner">
+			<field name="name">C.A.F. - Haute-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_45" model="res.partner">
+			<field name="name">C.A.F. - Loire-Atlantique</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_46" model="res.partner">
+			<field name="name">C.A.F. - Loiret</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_47" model="res.partner">
+			<field name="name">C.A.F. - Lot</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_48" model="res.partner">
+			<field name="name">C.A.F. - Lot-et-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_49" model="res.partner">
+			<field name="name">C.A.F. - Lozère</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_50" model="res.partner">
+			<field name="name">C.A.F. - Maine-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_51" model="res.partner">
+			<field name="name">C.A.F. - Manche</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_52" model="res.partner">
+			<field name="name">C.A.F. - Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_53" model="res.partner">
+			<field name="name">C.A.F. - Haute-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_54" model="res.partner">
+			<field name="name">C.A.F. - Mayenne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_55" model="res.partner">
+			<field name="name">C.A.F. - Meurthe-et-Moselle</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_56" model="res.partner">
+			<field name="name">C.A.F. - Meuse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_57" model="res.partner">
+			<field name="name">C.A.F. - Morbihan</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_58" model="res.partner">
+			<field name="name">C.A.F. - Moselle</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_59" model="res.partner">
+			<field name="name">C.A.F. - Nièvre</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_60" model="res.partner">
+			<field name="name">C.A.F. - Nord</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_61" model="res.partner">
+			<field name="name">C.A.F. - Oise</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_62" model="res.partner">
+			<field name="name">C.A.F. - Orne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_63" model="res.partner">
+			<field name="name">C.A.F. - Pas-de-Calais</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_64" model="res.partner">
+			<field name="name">C.A.F. - Puy-de-Dôme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_65" model="res.partner">
+			<field name="name">C.A.F. - Pyrénées-Atlantiques</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_66" model="res.partner">
+			<field name="name">C.A.F. - Hautes-Pyrénées</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_67" model="res.partner">
+			<field name="name">C.A.F. - Pyrénées-Orientales</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_68" model="res.partner">
+			<field name="name">C.A.F. - Bas-Rhin</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_69" model="res.partner">
+			<field name="name">C.A.F. - Haut-Rhin</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_70" model="res.partner">
+			<field name="name">C.A.F. - Rhône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_71" model="res.partner">
+			<field name="name">C.A.F. - Haute-Saône</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_72" model="res.partner">
+			<field name="name">C.A.F. - Saône-et-Loire</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_73" model="res.partner">
+			<field name="name">C.A.F. - Sarthe</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_74" model="res.partner">
+			<field name="name">C.A.F. - Savoie</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_75" model="res.partner">
+			<field name="name">C.A.F. - Haute-Savoie</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_76" model="res.partner">
+			<field name="name">C.A.F. - Paris</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_77" model="res.partner">
+			<field name="name">C.A.F. - Seine-Maritime</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_78" model="res.partner">
+			<field name="name">C.A.F. - Seine-et-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_79" model="res.partner">
+			<field name="name">C.A.F. - Yvelines</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_80" model="res.partner">
+			<field name="name">C.A.F. - Deux-Sèvres</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_81" model="res.partner">
+			<field name="name">C.A.F. - Somme</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_82" model="res.partner">
+			<field name="name">C.A.F. - Tarn</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_83" model="res.partner">
+			<field name="name">C.A.F. - Tarn-et-Garonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_84" model="res.partner">
+			<field name="name">C.A.F. - Var</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_85" model="res.partner">
+			<field name="name">C.A.F. - Vaucluse</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_86" model="res.partner">
+			<field name="name">C.A.F. - Vendée</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_87" model="res.partner">
+			<field name="name">C.A.F. - Vienne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_88" model="res.partner">
+			<field name="name">C.A.F. - Haute-Vienne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_89" model="res.partner">
+			<field name="name">C.A.F. - Vosges</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_90" model="res.partner">
+			<field name="name">C.A.F. - Yonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_91" model="res.partner">
+			<field name="name">C.A.F. - Territoire-de-Belfort</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_92" model="res.partner">
+			<field name="name">C.A.F. - Essonne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_93" model="res.partner">
+			<field name="name">C.A.F. - Hauts-de-Seine</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_94" model="res.partner">
+			<field name="name">C.A.F. - Seine-Saint-Denis</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_95" model="res.partner">
+			<field name="name">C.A.F. - Val-de-Marne</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+		<record id="res_partner_caf_96" model="res.partner">
+			<field name="name">C.A.F. - Val-d'Oise</field>
+			<field name="category_id" eval="[(6, 0, [ref('res_partner_category_al')])]" />
+		</record>
+	</data>
+</openerp>

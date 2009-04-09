@@ -1,4 +1,24 @@
 # -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 from osv import fields,osv
 from osv import orm
 import pooler
@@ -110,14 +130,14 @@ class profile(osv.osv):
         return ids_to_check
 
     def process_continue(self, cr, uid, ids, state=False):
-        cr.execute('delete from partner_profile_rel where profile_id=%d', (ids[0],))
+        cr.execute('delete from partner_profile_rel where profile_id=%s', (ids[0],))
 
         cr.execute('select id from res_partner order by id ')
         partners = [x[0] for x in cr.fetchall()]
         to_remove_list=[]
         for pid in partners:
 
-            cr.execute('select distinct(answer) from partner_question_rel where partner=%d' % pid)
+            cr.execute('select distinct(answer) from partner_question_rel where partner=%s' % pid)
             answers_ids = [x[0] for x in cr.fetchall()]
             if (not test_prof(self, cr, uid, ids[0], pid, answers_ids)):
                 to_remove_list.append(pid)
@@ -126,7 +146,7 @@ class profile(osv.osv):
             partners.remove(pid)
 
         for partner_id in partners:
-            cr.execute('insert into partner_profile_rel (profile_id,partner_id) values (%d,%d)', (ids[0],partner_id))
+            cr.execute('insert into partner_profile_rel (profile_id,partner_id) values (%s,%s)', (ids[0],partner_id))
         cr.commit()
 
         cr.commit()

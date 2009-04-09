@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+    <record model="game.scenario" id="retail_phase1">
+        <field name="name">Retail: From Quotation to Invoice</field>
+        <field name="note">
+Description of the scenario.
+        </field>
+        <field name="state">draft</field>
+    </record>
+
+	<record model="game.scenario.step" id="step_invoice_print">
+		<field name="name">Print Invoice</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="account.menu_action_invoice_tree1"/>
+        <field name="description">
+In this phase, you must print Invoice.
+        </field>
+        <field name="tip">
+You can use the menu: Financial Management / Invoices / Customer Invoices
+        </field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+In this phase, you must print Invoice.
+        </field>
+
+        <field name="pre_process_object">profile.game.phase1</field>
+        <field name="pre_process_method">pre_process_invoice_print</field>
+
+        <field name="post_process_object">profile.game.phase1</field>
+        <field name="post_process_method">post_process_invoice_print</field>
+        <field name="state">draft</field>
+
+    </record>
+
+	<record model="game.scenario.step" id="step_invoice_create">
+		<field name="name">Confirm Invoice</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="account.menu_action_invoice_tree1"/>
+        <field name="description">
+In this phase, you must confirm Invoice.
+        </field>
+        <field name="tip">
+You can use the menu: Financial Management / Invoices / Customer Invoices
+        </field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+In this phase, you must confirm Invoice.
+        </field>
+
+        <field name="pre_process_object">profile.game.phase1</field>
+        <field name="pre_process_method">pre_process_invoice_create</field>
+
+        <field name="post_process_object">profile.game.phase1</field>
+        <field name="post_process_method">post_process_invoice_create</field>
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_invoice_print')])]"/>
+    </record>
+
+   <record model="game.scenario.step" id="step_deliver">
+		<field name="name">Deliver Products</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="stock.menu_action_picking_tree"/>
+        <field name="description">
+In this phase, you must deliver Products.
+        </field>
+        <field name="tip">
+You can use the menu: Stock Management / Sending Products
+        </field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+In this phase, you must deliver Products.
+        </field>
+
+        <field name="pre_process_object">profile.game.phase1</field>
+        <field name="pre_process_method">pre_process_deliver</field>
+
+        <field name="post_process_object">profile.game.phase1</field>
+        <field name="post_process_method">post_process_deliver</field>
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_invoice_create')])]"/>
+    </record>
+
+
+	<record model="game.scenario.step" id="step_receive">
+		<field name="name">Receive Products</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="stock.menu_action_picking_tree4"/>
+        <field name="description">
+In this phase, you must receive Products.
+        </field>
+        <field name="tip">
+You can use the menu: Stock Management / Getting Products
+        </field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+In this phase, you must receive Products.
+        </field>
+
+        <field name="pre_process_object">profile.game.phase1</field>
+        <field name="pre_process_method">pre_process_receive</field>
+
+        <field name="post_process_object">profile.game.phase1</field>
+        <field name="post_process_method">post_process_receive</field>
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_deliver')])]"/>
+    </record>
+
+
+	<record model="game.scenario.step" id="step_confirm_po">
+		<field name="name">Confirm Purchase Order</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="purchase.menu_purchase_form_action"/>
+        <field name="description">
+In this phase, you must confirm Purchase Order.
+        </field>
+        <field name="tip">
+You can use the menu: Purchase Management / Purchase Orders
+		</field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+In this phase, you must confirm Purchase Order.
+        </field>
+
+        <field name="pre_process_object">profile.game.phase1</field>
+        <field name="pre_process_method">pre_process_confirm_po</field>
+
+        <field name="post_process_object">profile.game.phase1</field>
+        <field name="post_process_method">post_process_confirm_po</field>
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_receive')])]"/>
+    </record>
+
+
+
+
+	<record model="game.scenario.step" id="step_modify_price">
+		<field name="name">Modify Price RfQ</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="purchase.menu_purchase_form_action"/>
+        <field name="description">
+In this phase, you must modify price of Request for Quotation.
+        </field>
+        <field name="tip"></field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+In this phase, you must modify price Request for Quotation.
+        </field>
+
+        <field name="pre_process_object">profile.game.phase1</field>
+        <field name="pre_process_method">pre_process_modify_price</field>
+
+        <field name="post_process_object">profile.game.phase1</field>
+        <field name="post_process_method">post_process_modify_price</field>
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_confirm_po')])]"/>
+    </record>
+
+
+	<record model="game.scenario.step" id="step_print_rfq">
+		<field name="name">Print Request for Quotation</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="purchase.menu_purchase_form_action"/>
+        <field name="description">
+In this phase, you must print Request for Quotation.
+        </field>
+        <field name="tip">
+You can use the menu: Purchase Management / Purchase Orders
+        </field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+In this phase, you must print Request for Quotation.
+        </field>
+
+        <field name="pre_process_object">profile.game.phase1</field>
+        <field name="pre_process_method">pre_process_print_rfq</field>
+
+        <field name="post_process_object">profile.game.phase1</field>
+        <field name="post_process_method">post_process_print_rfq</field>
+        <field name="state">draft</field>
+        <field name="step_next_ids" eval="[(6,0,[ref('step_modify_price')])]"/>
+    </record>
+
+
+	<record model="game.scenario.step" id="step_sale">
+		<field name="name">Confirm the order</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="sale.menu_sale_order"/>
+        <field name="description">
+In this phase, you must confirm the order.
+        </field>
+        <field name="tip">
+You can use the menu: Sales Management / Sales Orders
+        </field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+In this phase, you must confirm the order.
+        </field>
+
+        <field name="pre_process_object">profile.game.phase1</field>
+        <field name="pre_process_method">pre_process_sale</field>
+
+        <field name="post_process_object">profile.game.phase1</field>
+        <field name="post_process_method">post_process_sale</field>
+        <field name="state">draft</field>
+		<field name="step_next_ids" eval="[(6,0,[ref('step_print_rfq')])]"/>
+    </record>
+
+    <record model="game.scenario.step" id="step_print_quote">
+		<field name="name">Print the quotation</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="sale.menu_sale_order"/>
+        <field name="description">
+In this phase, you must print the quotation you just created.
+        </field>
+        <field name="tip">
+You can use the menu: Sales Management / Sales Orders
+		</field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+In this phase, you must print the quotation you just created.
+        </field>
+
+        <field name="pre_process_object">profile.game.phase1</field>
+        <field name="pre_process_method">pre_process_print_quote</field>
+
+        <field name="post_process_object">profile.game.phase1</field>
+        <field name="post_process_method">post_process_print_quote</field>
+        <field name="state">draft</field>
+		<field name="step_next_ids" eval="[(6,0,[ref('step_sale')])]"/>
+    </record>
+
+
+    <record model="game.scenario.step" id="step_quotation">
+		<field name="name">Create a Quotation</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="menu_id" ref="sale.menu_sale_order"/>
+        <field name="description">
+In this first phase, the <i>Sales Manager</i> must create a quotation for the
+customer <i>China Sound Electronic</i>. This quotation must include two products, with the
+following configuration:
+* One LU1200: form stock, at 450 EUR
+* One HT-SF2000: on order, at 350 EUR
+        </field>
+        <field name="tip">
+You can use the menu: Sales Management / Sales Order / New Quotation
+        </field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+You should now create a sale order with two products:
+* One LU1200
+* One HT-SF2000
+
+I suggest you to click on the home button on the top right corner to go
+back to the main dashboard.
+        </field>
+
+        <field name="pre_process_object">profile.game.phase1</field>
+        <field name="pre_process_method">pre_process_quotation</field>
+
+        <field name="post_process_object">profile.game.phase1</field>
+        <field name="post_process_method">post_process_quotation</field>
+        <field name="state">draft</field>
+
+        <field name="step_next_ids" eval="[(6,0,[ref('step_print_quote')])]"/>
+    </record>
+
+    </data>
+</openerp>

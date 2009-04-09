@@ -2,627 +2,617 @@
 <openerp>
 <data>
 
-		<record model="ir.ui.view" id="product_product_tree_view">
-			<field name="name">product.product.tree</field>
-			<field name="model">product.product</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Products" colors="red:state in ['draft', 'end', 'obsolete']">
-					<field name="virtual_available"/>
-					<field name="name"/>
-					<field name="ean13"/>
-					<field name="state" />
-					<field name="default_code"/>
-				</tree>
-			</field>
-		</record>
-
-
-	<record model="ir.ui.view" id="author_form">
-		<field name="name">library.author.form</field>
-		<field name="model">library.author</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Authors">
-				<notebook>
-					<page string="General Informations">
-
-					<field name="name" select="1"/>
- 					<field name="first_name" select="1"/> 
-					<separator string="Books" colspan="4"/>
-					<field name="book_ids" nolabel="1" colspan="4" select="1"/>
-					</page>
-
-					<page string="More info">
-					<separator string="Editors" colspan="4"/>
-					<field name="editor_ids"  nolabel="1" colspan="4" select="1"/>
-					<separator string="Notes" colspan="4"/>
-					<field name="note"  nolabel="1" colspan="4"/>
-					<separator string="Biography" colspan="4"/>
-					<field name="biography" nolabel="1"   colspan="4"/>
-
-
-					</page>
-				</notebook>
-
-
-			</form>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="author_tree">
-		<field name="name">library.author.tree</field>
-		<field name="model">library.author</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Authors">
-					<field name="name" select="1"/>
- 					<field name="first_name" select="1"/> 
-			</tree>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="rack_form">
-		<field name="name">Library Rack</field>
-		<field name="model">library.rack</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Authors">
-					<field name="name" select="1"/>
- 					<field name="code" select="1"/> 
- 					<field name="active" select="1"/> 
-			</form>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="action_book_rack">
-		<field name="name">Racks</field>
-		<field name="res_model">library.rack</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="view_type">form</field>
-	</record>
-	<record model="ir.actions.act_window" id="action_author_form">
-		<field name="name">Authors</field>
-		<field name="res_model">library.author</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="view_type">form</field>
-	</record>
-<!-- 	<menuitem name="Authors" id="menu_action_author_form" action="action_author_form" sequence="6" parent_id="product.menu_main_product"/> -->
-	<record model="ir.ui.menu" id="author_menu">
-		<field name="name">Authors</field>
-		<field name="parent_id" ref="product.menu_main_product"/>
-		<field name="icon">STOCK_INDENT</field>
-		<field name="sequence">6</field>
-		<field name="action" eval="'ir.actions.act_window,'+str(ref('action_author_form'))"/>
-	</record>
-
-	<record model="ir.actions.act_window" id="action_author_new_form">
-		<field name="name">New Author</field>
-		<field name="res_model">library.author</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">form,tree</field>
-	</record>
-
-
-	<record model="ir.ui.view" id="view_product_book_tree">
-		<field name="name">product.book.tree.view</field>
-		<field name="type">tree</field>
-		<field name="model">product.product</field>
-		<field name="priority" eval="1"/> <!-- ?? -->
-		<field name="arch" type="xml">
-		<tree string="Books">
-			<field name="name"  width="300"/>
-			<field name="ean13" />
-			<field name="catalog_num"/>
-			<field name="list_price" />
-			<field name="virtual_available"/>
-			<field name="date_retour" />
-	   </tree>
-	   </field>
-	</record>
-
-
-	<record model="ir.ui.view" id="view_product_book_form">
-		<field name="name">product.book.form.view</field>
-		<field name="type">form</field>
-		<field name="model">product.product</field>
-		<field name="priority" eval="1"/> <!-- ?? -->
-		<field name="arch" type="xml">
-		<form string="Books">
-					<notebook>
-						<page string="Information">
-							<field name="name" select="1" colspan="4" />
-							<field name="default_code" select="2"/>
-							<field name="ean13" select="1"/>
-							<field name="catalog_num" select="2"/>
-							<field name="isbn" select="2"/>
-							<field name="rack" select="2"/>
-
- 							<field name="categ_id" select="2"/> 
-							<field name="editor" select="1"/>
-							<field name="online" select="2"/>
-							<field name="collection" select="2"/>
-							<field name="num_pocket"/>
-							<newline/>
-							 <field name="author_om_ids" colspan="1" select="1">
-							 	<tree string="Authors" editable="bottom">
-									<field name="author_id"/>
-								</tree>
-							 </field>
-							<group colspan="2" col="2">
-							<field name="list_price" select="2"/>
-							 <field name="virtual_available"/>
-							 <field name="qty_available"/>
-							</group>
-
-
-						</page>
-						<page string="Details">
-							<field name="state"/>
-							<field name="nbpage"/>
-							<field name="date_parution" select="2"/>
-							<field name="creation_date" select="2"/>
-							<field name="date_retour" select="2"/>
-							<field name="tome"/>
-							<field name="format"/>
-							<field name="weight"/>
-							<field name="back"/>
-							<field name="num_edition"/>
-  							<field name="intrastat_id"/>
-							<field name="price_cat" select="2"/>
-							<newline/>
-							<field name="lang"/>
-							<field name="link_ids" colspan="1" />
-							<field name="taxes_id" colspan="1"/>
-							<field name="supplier_taxes_id" colspan="1"/>
-						</page>
-
-						<page string="Descriptions">
-							<separator string="Description" />
-							<field name="description" colspan="4" nolabel="1" />
-							<separator string="Sale Description"/>
-							<field name="description_sale" colspan="4" nolabel="1"/>
-							<separator string="Purchase Description"/>
-							<field name="description_purchase" colspan="4" nolabel="1"/>
-						</page>
-
-						<page string="Procurement (days)">
-							<field name="supply_method" />
-							<field name="active" select="2"/>
-							<newline/>
-							<field name="sale_delay" />
-							<field name="sale_ok" />
-							<field name="produce_delay" />
-							<field name="purchase_ok" />
-							<field name="warranty"/>
-							<field name="rental" />
-							<!-- 
-							<field name="price_margin"/>
-							<field name="price_extra"/>
-							-->
-							<field name="uos_id" />
-							<field name="uos_coeff" />
-							<field name="cost_method"/>
-							<field name="procure_method" />
-							<field name="standard_price"/>
-							<newline />
-							<field name="seller_ids" colspan="4" select="2" nolabel="1"  widget="one2many_list"/>
-						</page>
-						<page string="Other">
-
-							<field name="type" />
-							<field name="uom_id"/>
-							<field name="uom_po_id"/>
-							<field name="product_manager"/>
-							<properties/>
-						</page>
-					</notebook>
-	   </form>
-	   </field>
-	</record>
-
-	<record model="ir.actions.act_window" id="action_product_book_form">
-		<field name="name">Books</field>
-		<field name="res_model">product.product</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="view_type">form</field>
-	</record>
-<!-- 	<menuitem name="Books" parent_id= "product.menu_main_product" id="menu_action_book_form" action="action_product_book_form" sequence="7"/> -->
-
-	<record model="ir.ui.menu" id="menu_action_book_form">
-		<field name="name">Books</field>
-		<field name="parent_id" ref="product.menu_main_product"/>
-		<field name="icon">STOCK_JUSTIFY_FILL</field>
-		<field name="sequence">7</field>
-		<field name="action" eval="'ir.actions.act_window,'+str(ref('action_product_book_form'))"/>
-	</record>
-
-	<record model="ir.actions.act_window" id="action_product_book_new_form">
-		<field name="name">New Book</field>
-		<field name="res_model">product.product</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">form,tree</field>
-	</record>
-
-
-
-	<record model="ir.actions.act_window.view" id="action_view_book">
-	  <field name="sequence" eval="2"/>
-	  <field name="view_mode">form</field>
-	  <field name="view_id" ref="view_product_book_form"/>
-	  <field name="act_window_id" ref="action_product_book_form"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_view_book2">
-	  <field name="sequence" eval="1"/>
-	  <field name="view_mode">tree</field>
-	  <field name="view_id" ref="view_product_book_tree"/>
-	  <field name="act_window_id" ref="action_product_book_form"/>
-	</record>
-
-
-	<record model="ir.actions.act_window" id="action_product_book_30days">
-		<field name="name">product.book.form.view</field>
-		<field name="res_model">product.product</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="view_id" ref="view_product_book_tree"/>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('date_retour','&lt;=', (datetime.datetime.today() + datetime.timedelta(days=30)).strftime('%Y-%m-%d')),('date_retour','&gt;=', (datetime.datetime.today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]</field>
-
-	</record>
-
-<!-- 	<menuitem name="Books to return before 30 days" id="menu_action_book_30days" parent_id="menu_action_book_form" -->
-<!-- 	action="action_product_book_30days" sequence="7"/> -->
-
-	<record model="ir.ui.menu" id="boock_return_menu">
-		<field name="name">Books to return before 30 days</field>
-		<field name="parent_id" ref="menu_action_book_form"/>
-		<field name="icon">STOCK_INDENT</field>
-		<field name="sequence">7</field>
-		<field name="action" eval="'ir.actions.act_window,'+str(ref('action_product_book_30days'))"/>
-	</record>
-
-
-	<record model="ir.ui.view" id="view_order_tree">
-		<field name="name">sale.order.tree</field>
-		<field name="model">sale.order</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Sales Orders">
-				<field name="date_order"/>
-				<field name="name"/>
-				<field name="partner_id"/>
-				<field name="partner_shipping_id"/>
-				<field name="shipped"/>
-				<field name="invoiced"/>
-				<field name="amount_untaxed"/>
-			</tree>
-		</field>
-	</record>
-
-
-	<record model="ir.actions.act_window" id="action_order_today_tree">
-		<field name="name">sale.order</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">sale.order</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_order_tree"/>
-		<field name="domain">[('date_order','=', time.strftime('%Y-%m-%d') )]</field>
-	</record>
-	<menuitem name="Sales Management/Orders of the day" action="action_order_today_tree" sequence="2"/>
-
-	<record model="ir.actions.act_window" id="action_order_today_user_tree">
-		<field name="name">sale.order</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">sale.order</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_order_tree"/>
-		<field name="domain">[('user_id','=', uid ),('date_order','=', time.strftime('%Y-%m-%d'))]</field>
-	</record>
-
-	<menuitem name="Sales Management/Orders of the day/My orders of the day" action="action_order_today_user_tree" id="order_today_user_Menuitem" />
-
-
-
-	<record model="ir.ui.view" id="invoice_tree">
-		<field name="name">account.invoice.tree</field>
-		<field name="model">account.invoice</field>
-		<field name="type">tree</field>
-		<field name="priority" eval="1"/>
-		<field name="arch" type="xml">
-			<tree string="Invoice" colors="grey:state=='draft'">
-				<field name="name"/>
-				<field name="type"/>
-				<field name="number"/>
-				<field name="date_invoice"/>
-				<field name="date_due"/>
-				<field name="partner_id"/>
-				<field name="amount_untaxed"/>
-				<field name="amount_total"/>
-				<field name="currency_id"/>
-				<field name="state"/>
-			</tree>
-		</field>
-	</record>
-
-
-	<record model="ir.ui.view" id="vpicktree">
-		<field name="name">stock.picking.tree</field>
-		<field name="model">stock.picking</field>
-		<field name="priority" eval="1"/>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Picking List">
-				<field name="name"  colspan="3"/>
-				<field name="date" />
-				<field name="origin" />
-				<field name="loc_move_id" />
-				<field name="address_id" />
-				<field name="state" readonly="1"/>
-				<field name="date" />
-				<field name="date_done" />
-			</tree>
-		</field>
-	</record>
-
-
-
-
-	<record model="ir.ui.view" id="library_price_category_tree">
-		<field name="name">library.price.category</field>
-		<field name="model">library.price.category</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Price Categories">
-				<field name="name" select="1" />
-				<field name="price" select="1"/>
-			</tree>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="library_price_category_form">
-		<field name="name">library.price.category</field>
-		<field name="model">library.price.category</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Price Category">
-				<field name="name" select="1" />
-				<field name="price" select="1" />
-				<field name="product_ids" select="1" colspan="4"/>
-			</form>
-		</field>
-	</record>
-
-	<record model="ir.actions.act_window" id="action_price_category">
-		<field name="name">library.price.category</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">library.price.category</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-	</record>
-
-
-
-	<record model="ir.ui.view" id="library_editor_supplier_form">
-		<field name="name">library.editor.supplier</field>
-		<field name="model">library.editor.supplier</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Editor and suppliers relations">
-				<field name="name" select="1" />
-				<newline/>
-				<field name="supplier_id" select="1"/>
-			</form>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="library_editor_supplier_tree">
-		<field name="name">Editor - supplier realtions</field>
-		<field name="model">library.editor.supplier</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Editor and suppliers relations">
-				<field name="name"/>
-				<field name="supplier_id"/>
-			</tree>
-		</field>
-	</record>
-
-	<record model="ir.actions.act_window" id="action_editor_supplier">
-		<field name="name">Partner relations</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">library.editor.supplier</field>
- 		<field name="view_mode">tree,form</field> 
-		<field name="view_type">form</field>
-	</record>
-
-	<menuitem name="Partners/Editor - Suppliers Relations" id="menu_editor_supplier" action="action_editor_supplier" />
-
-
-	<record model="ir.ui.view" id="mrp_procurement_form_view">
-		<field name="name">mrp.procurement.form</field>
-		<field name="model">mrp.procurement</field>
-		<field name="inherit_id" ref="mrp.mrp_procurement_form_view"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-				<field name="move_id" position= "after">
-				<field name="production_lot_id"/>
-				<field name="customer_ref" />
-		</field>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_picking_form_library">
-		<field name="name">Stock packing</field>
-		<field name="model">stock.picking</field>
-		<field name="inherit_id" ref="stock.view_picking_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-				<field name="prodlot_id" position= "after">
-				<field name="customer_ref" />
-		</field>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_picking_form_library2">
-		<field name="name">Stock packing</field>
-		<field name="model">stock.picking</field>
-		<field name="inherit_id" ref="stock.view_picking_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-				<field name="sale_id" position= "after">
-				<field name="date_done" />
-		</field>
-		</field>
-	</record>
-
-
-
-	<record model="ir.ui.view" id="stock.view_move_tree">
-		<field name="name">stock.move.tree</field>
-		<field name="model">stock.move</field>
-		<field name="type">tree</field>
-		<field name="priority" eval="6"/>
-		<field name="arch" type="xml">
-			<tree string="Moves" editable="bottom" color="grey:state=='cancel'">
-				<field name="product_id" />
-				<field name="product_qty"  on_change="onchange_qty(product_qty)"/>
-				<field name="product_uos_qty" invisible="True" on_change="onchange_qty(product_uos_qty)"/>
-				<field name="prodlot_id" />
-				<field name="location_id" />
-				<field name="location_dest_id" />
-				<field name="lot_id" />
-				<field name="date" />
-				<field name="date_planned" />
-				<field name="state"/>
-			</tree>
-		</field>
-	</record>
-
-
-	<record model="ir.ui.view" id="purchase_order_line_form">
-		<field name="name">purchase.order.line.form</field>
-		<field name="model">purchase.order.line</field>
-		<field name="inherit_id" ref="purchase.purchase_order_line_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="product_id" position="after">
-						<field name="production_lot_id" />
-						<field name="customer_ref" />
-		</field>
-		</field>
-	</record>
-
-
-<!-- 	Inherit the sale order to add fields on the sale line view -->
-	<record model="ir.ui.view" id="view_order_form">
-		<field name="name">sale.order.form</field>
-		<field name="model">sale.order</field>
-		<field name="inherit_id" ref="sale.view_order_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="product_id" position="after">
-						<field name="production_lot_id" />
-						<field name="customer_ref" />
-		</field>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_order_line_form2">
-		<field name="name">Sale line</field>
-		<field name="model">sale.order.line</field>
-		<field name="type">form</field>
-		<field name="inherit_id" ref="sale.view_order_line_form2"/>
-		<field name="arch" type="xml">
-			<field name="product_id" position="after">
-				<field name="production_lot_id" select="1"/>
-				<field name="customer_ref" select="1"/>
-			</field>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_order_line_tree2">
-		<field name="name">Sale Lines</field>
-		<field name="model">sale.order.line</field>
-		<field name="type">tree</field>
-		<field name="inherit_id" ref="sale.view_order_line_tree"/>
-		<field name="arch" type="xml">
-			<field name="discount" position="after">
-				<field name="production_lot_id" select="1"/>
-				<field name="customer_ref" select="1"/>
-			</field>
-		</field>
-	</record>
-
-
-
-		<record model="ir.ui.view" id="product_supplierinfo_form_view">
-			<field name="name">product.supplierinfo.form.view</field>
-			<field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
-			<field name="model">product.supplierinfo</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-			<field name="name" position="replace">
-				<field name="name" domain="[('category_id','=','Fournisseur')]" />
-			</field>
-			</field>
-		</record>
-
-
-	<record model="ir.ui.view" id="purchase_order_line_tree">
-		<field name="name">purchase.order.line.tree</field>
-		<field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
-		<field name="model">purchase.order.line</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<field name="product_id" position="replace"/>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_invoice_line_form">
-		<field name="name">account.invoice.line.form</field>
-		<field name="inherit_id" ref="account.view_invoice_line_form"/>
-		<field name="model">account.invoice.line</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="discount" position="after">
-			<field name="production_lot_id" select="1"/>
-			<field name="customer_ref" select="1"/>
-		</field>
-		</field>
-	</record>
-
-	<act_window name="Packing list"
-		domain="[('sale_id', '=', active_id)]"
-		res_model="stock.picking"
-		src_model="sale.order"
-		id="act_sale_picking"/>
-
-	<record model="ir.ui.menu" id="menu_action_book_form_new">
-		<field name="name">New Book</field>
-		<field name="parent_id" ref="menu_action_book_form"/>
-		<field name="icon">STOCK_JUSTIFY_FILL</field>
-		<field name="sequence">7</field>
-		<field name="action" eval="'ir.actions.act_window,'+str(ref('action_product_book_new_form'))"/>
-	</record>
-
-
-	<record model="ir.ui.menu" id="menu_action_book_form_new">
-		<field name="name">New Author</field>
-		<field name="parent_id" ref="author_menu"/>
-		<field name="icon">STOCK_JUSTIFY_FILL</field>
-		<field name="sequence">7</field>
-		<field name="action" eval="'ir.actions.act_window,'+str(ref('action_author_new_form'))"/>
-	</record>
-
-
-	<!--
-	<menuitem name="Books/Configuration/Racks" id="rack_menu" action="action_book_rack"/>
-	<menuitem name="Books/Configuration/Price Categories" id="menu_price_category" action="action_price_category"/>
-	-->
+        <record model="ir.ui.view" id="product_product_tree_view">
+            <field name="name">product.product.tree</field>
+            <field name="model">product.product</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Products" colors="red:state in ['draft', 'end', 'obsolete']">
+                    <field name="virtual_available"/>
+                    <field name="name"/>
+                    <field name="ean13"/>
+                    <field name="state" />
+                    <field name="default_code"/>
+                </tree>
+            </field>
+        </record>
+
+
+    <record model="ir.ui.view" id="author_form">
+        <field name="name">library.author.form</field>
+        <field name="model">library.author</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Authors">
+                <notebook>
+                    <page string="General Informations">
+
+                    <field name="name" select="1"/>
+                     <field name="first_name" select="1"/> 
+                    <separator string="Books" colspan="4"/>
+                    <field name="book_ids" nolabel="1" colspan="4" select="1"/>
+                    </page>
+
+                    <page string="More info">
+                    <separator string="Editors" colspan="4"/>
+                    <field name="editor_ids"  nolabel="1" colspan="4" select="1"/>
+                    <separator string="Notes" colspan="4"/>
+                    <field name="note"  nolabel="1" colspan="4"/>
+                    <separator string="Biography" colspan="4"/>
+                    <field name="biography" nolabel="1"   colspan="4"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="author_tree">
+        <field name="name">library.author.tree</field>
+        <field name="model">library.author</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Authors">
+        <field name="name" select="1"/>
+        <field name="first_name" select="1"/> 
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="rack_form">
+        <field name="name">Library Rack</field>
+        <field name="model">library.rack</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Authors">
+        <field name="name" select="1"/>
+        <field name="code" select="1"/> 
+        <field name="active" select="1"/> 
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_book_rack">
+        <field name="name">Racks</field>
+        <field name="res_model">library.rack</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+    </record>
+    <record model="ir.actions.act_window" id="action_author_form">
+        <field name="name">Authors</field>
+        <field name="res_model">library.author</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+    </record>
+<!--     <menuitem name="Authors" id="menu_action_author_form" action="action_author_form" sequence="6" parent_id="product.menu_main_product"/> -->
+    <record model="ir.ui.menu" id="author_menu">
+        <field name="name">Authors</field>
+        <field name="parent_id" ref="product.menu_main_product"/>
+        <field name="icon">STOCK_INDENT</field>
+        <field name="sequence">6</field>
+        <field name="action" eval="'ir.actions.act_window,'+str(ref('action_author_form'))"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_author_new_form">
+        <field name="name">New Author</field>
+        <field name="res_model">library.author</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_product_book_tree">
+        <field name="name">product.book.tree.view</field>
+        <field name="type">tree</field>
+        <field name="model">product.product</field>
+        <field name="priority" eval="1"/> <!-- ?? -->
+        <field name="arch" type="xml">
+        <tree string="Books">
+            <field name="name"  width="300"/>
+            <field name="ean13" />
+            <field name="catalog_num"/>
+            <field name="list_price" />
+            <field name="virtual_available"/>
+            <field name="date_retour" />
+       </tree>
+       </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_product_book_form">
+        <field name="name">product.book.form.view</field>
+        <field name="type">form</field>
+        <field name="model">product.product</field>
+        <field name="priority" eval="1"/> <!-- ?? -->
+        <field name="arch" type="xml">
+        <form string="Books">
+                    <notebook>
+                        <page string="Information">
+                            <field name="name" select="1" colspan="4" />
+                            <field name="default_code" select="2"/>
+                            <field name="ean13" select="1"/>
+                            <field name="catalog_num" select="2"/>
+                            <field name="isbn" select="2"/>
+                            <field name="rack" select="2"/>
+
+                             <field name="categ_id" select="2"/> 
+                            <field name="editor" select="1"/>
+                            <field name="online" select="2"/>
+                            <field name="collection" select="2"/>
+                            <field name="num_pocket"/>
+                            <newline/>
+                             <field name="author_om_ids" colspan="1" select="1">
+                                 <tree string="Authors" editable="bottom">
+                                    <field name="author_id"/>
+                                </tree>
+                             </field>
+                            <group colspan="2" col="2">
+                            <field name="list_price" select="2"/>
+                             <field name="virtual_available"/>
+                             <field name="qty_available"/>
+                            </group>
+                        </page>
+                        <page string="Details">
+                            <field name="state"/>
+                            <field name="nbpage"/>
+                            <field name="date_parution" select="2"/>
+                            <field name="creation_date" select="2"/>
+                            <field name="date_retour" select="2"/>
+                            <field name="tome"/>
+                            <field name="format"/>
+                            <field name="weight"/>
+                            <field name="back"/>
+                            <field name="num_edition"/>
+                              <field name="intrastat_id"/>
+                            <field name="price_cat" select="2"/>
+                            <newline/>
+                            <field name="lang"/>
+                            <field name="link_ids" colspan="1" />
+                            <field name="taxes_id" colspan="1"/>
+                            <field name="supplier_taxes_id" colspan="1"/>
+                        </page>
+                        <page string="Descriptions">
+                            <separator string="Description" />
+                            <field name="description" colspan="4" nolabel="1" />
+                            <separator string="Sale Description"/>
+                            <field name="description_sale" colspan="4" nolabel="1"/>
+                            <separator string="Purchase Description"/>
+                            <field name="description_purchase" colspan="4" nolabel="1"/>
+                        </page>
+
+                        <page string="Procurement (days)">
+                            <field name="supply_method" />
+                            <field name="active" select="2"/>
+                            <newline/>
+                            <field name="sale_delay" />
+                            <field name="sale_ok" />
+                            <field name="produce_delay" />
+                            <field name="purchase_ok" />
+                            <field name="warranty"/>
+                            <field name="rental" />
+                            <!-- 
+                            <field name="price_margin"/>
+                            <field name="price_extra"/>
+                            -->
+                            <field name="uos_id" />
+                            <field name="uos_coeff" />
+                            <field name="cost_method"/>
+                            <field name="procure_method" />
+                            <field name="standard_price"/>
+                            <newline />
+                            <field name="seller_ids" colspan="4" select="2" nolabel="1"  widget="one2many_list"/>
+                        </page>
+                        <page string="Other">
+                            <field name="type" />
+                            <field name="uom_id"/>
+                            <field name="uom_po_id"/>
+                            <field name="product_manager"/>
+                            <properties/>
+                        </page>
+                    </notebook>
+         </form>
+       </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_product_book_form">
+        <field name="name">Books</field>
+        <field name="res_model">product.product</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+    </record>
+<!--     <menuitem name="Books" parent_id= "product.menu_main_product" id="menu_action_book_form" action="action_product_book_form" sequence="7"/> -->
+
+    <record model="ir.ui.menu" id="menu_action_book_form">
+        <field name="name">Books</field>
+        <field name="parent_id" ref="product.menu_main_product"/>
+        <field name="icon">STOCK_JUSTIFY_FILL</field>
+        <field name="sequence">7</field>
+        <field name="action" eval="'ir.actions.act_window,'+str(ref('action_product_book_form'))"/>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_product_book_new_form">
+        <field name="name">New Book</field>
+        <field name="res_model">product.product</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form,tree</field>
+    </record>
+
+
+
+    <record model="ir.actions.act_window.view" id="action_view_book">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">form</field>
+      <field name="view_id" ref="view_product_book_form"/>
+      <field name="act_window_id" ref="action_product_book_form"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_view_book2">
+      <field name="sequence" eval="1"/>
+      <field name="view_mode">tree</field>
+      <field name="view_id" ref="view_product_book_tree"/>
+      <field name="act_window_id" ref="action_product_book_form"/>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_product_book_30days">
+        <field name="name">product.book.form.view</field>
+        <field name="res_model">product.product</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_id" ref="view_product_book_tree"/>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('date_retour','&lt;=', (datetime.datetime.today() + datetime.timedelta(days=30)).strftime('%Y-%m-%d')),('date_retour','&gt;=', (datetime.datetime.today() - datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]</field>
+
+    </record>
+
+<!--     <menuitem name="Books to return before 30 days" id="menu_action_book_30days" parent_id="menu_action_book_form" -->
+<!--     action="action_product_book_30days" sequence="7"/> -->
+
+    <record model="ir.ui.menu" id="boock_return_menu">
+        <field name="name">Books to return before 30 days</field>
+        <field name="parent_id" ref="menu_action_book_form"/>
+        <field name="icon">STOCK_INDENT</field>
+        <field name="sequence">7</field>
+        <field name="action" eval="'ir.actions.act_window,'+str(ref('action_product_book_30days'))"/>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_order_tree">
+        <field name="name">sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Orders">
+                <field name="date_order"/>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="partner_shipping_id"/>
+                <field name="shipped"/>
+                <field name="invoiced"/>
+                <field name="amount_untaxed"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="action_order_today_tree">
+        <field name="name">sale.order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_order_tree"/>
+        <field name="domain">[('date_order','=', time.strftime('%Y-%m-%d') )]</field>
+    </record>
+    <menuitem name="Orders of the day" action="action_order_today_tree" id="sale_order_day" parent="sale.menu_sale_root" sequence="2"/>
+
+    <record model="ir.actions.act_window" id="action_order_today_user_tree">
+        <field name="name">sale.order</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_order_tree"/>
+        <field name="domain">[('user_id','=', uid ),('date_order','=', time.strftime('%Y-%m-%d'))]</field>
+    </record>
+
+    <menuitem name="My orders of the day" action="action_order_today_user_tree" id="order_today_user_Menuitem" parent="sale_order_day"/>
+
+
+
+    <record model="ir.ui.view" id="invoice_tree">
+        <field name="name">account.invoice.tree</field>
+        <field name="model">account.invoice</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <tree string="Invoice" colors="grey:state=='draft'">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="number"/>
+                <field name="date_invoice"/>
+                <field name="date_due"/>
+                <field name="partner_id"/>
+                <field name="amount_untaxed"/>
+                <field name="amount_total"/>
+                <field name="currency_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="vpicktree">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="priority" eval="1"/>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Picking List">
+                <field name="name"  colspan="3"/>
+                <field name="date" />
+                <field name="origin" />
+                <field name="address_id" />
+                <field name="state" readonly="1"/>
+                <field name="date_done" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="library_price_category_tree">
+        <field name="name">library.price.category</field>
+        <field name="model">library.price.category</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Price Categories">
+                <field name="name" select="1" />
+                <field name="price" select="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="library_price_category_form">
+        <field name="name">library.price.category</field>
+        <field name="model">library.price.category</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Price Category">
+                <field name="name" select="1" />
+                <field name="price" select="1" />
+                <field name="product_ids" select="1" colspan="4"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_price_category">
+        <field name="name">library.price.category</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">library.price.category</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <record model="ir.ui.view" id="library_editor_supplier_form">
+        <field name="name">library.editor.supplier</field>
+        <field name="model">library.editor.supplier</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Editor and suppliers relations">
+                <field name="name" select="1" />
+                <newline/>
+                <field name="supplier_id" select="1"/>
+                <newline/>
+                <field name="sequence" />
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="library_editor_supplier_tree">
+      <field name="name">Editor - supplier realtions</field>
+      <field name="model">library.editor.supplier</field>
+      <field name="type">tree</field>
+      <field name="arch" type="xml">
+        <tree string="Editor and suppliers relations">
+          <field name="name"/>
+          <field name="supplier_id"/>
+          <field name="sequence"/>
+          <field name="junk"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_editor_supplier">
+        <field name="name">Partner relations</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">library.editor.supplier</field>
+         <field name="view_mode">tree,form</field> 
+        <field name="view_type">form</field>
+    </record>
+
+    <menuitem name="Editor - Suppliers Relations" id="menu_editor_supplier" action="action_editor_supplier" parent="base.menu_base_partner"/>
+
+
+    <record model="ir.ui.view" id="mrp_procurement_form_view">
+        <field name="name">mrp.procurement.form</field>
+        <field name="model">mrp.procurement</field>
+        <field name="inherit_id" ref="mrp.mrp_procurement_form_view"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="move_id" position= "after">
+                <field name="customer_ref" />
+                <field name="production_lot_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_picking_form_library">
+        <field name="name">Stock packing</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="prodlot_id" position= "after">
+                <field name="customer_ref" />
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_picking_form_library2">
+        <field name="name">Stock packing</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="sale_id" position= "after">
+                <field name="date_done" />
+            </field>
+        </field>
+    </record>
+
+
+
+    <record model="ir.ui.view" id="stock.view_move_tree">
+        <field name="name">stock.move.tree</field>
+        <field name="model">stock.move</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="6"/>
+        <field name="arch" type="xml">
+            <tree string="Moves" editable="bottom" color="grey:state=='cancel'">
+                <field name="product_id" />
+                <field name="product_qty"  on_change="onchange_qty(product_qty)"/>
+                <field name="product_uos_qty" invisible="True" on_change="onchange_qty(product_uos_qty)"/>
+                <field name="prodlot_id" />
+                <field name="location_id" />
+                <field name="location_dest_id" />
+                <field name="date" />
+                <field name="date_planned" />
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="purchase_order_line_form">
+        <field name="name">purchase.order.line.form</field>
+        <field name="model">purchase.order.line</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="customer_ref" />
+                <field name="production_lot_id" />
+            </field>
+        </field>
+    </record>
+
+
+<!--     Inherit the sale order to add fields on the sale line view -->
+    <record model="ir.ui.view" id="view_order_form">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="customer_ref" />
+                <field name="production_lot_id" />
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_order_line_form2">
+        <field name="name">Sale line</field>
+        <field name="model">sale.order.line</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_line_form2"/>
+        <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="customer_ref" select="1"/>
+                <field name="production_lot_id" select="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_order_line_tree2">
+        <field name="name">Sale Lines</field>
+        <field name="model">sale.order.line</field>
+        <field name="type">tree</field>
+        <field name="inherit_id" ref="sale.view_order_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="discount" position="after">
+                <field name="customer_ref" select="1"/>
+                <field name="production_lot_id" select="1"/>
+            </field>
+        </field>
+    </record>
+
+
+
+        <record model="ir.ui.view" id="product_supplierinfo_form_view">
+            <field name="name">product.supplierinfo.form.view</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+            <field name="model">product.supplierinfo</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="name" domain="[('category_id','=','Fournisseur')]" />
+            </field>
+            </field>
+        </record>
+
+
+    <record model="ir.ui.view" id="purchase_order_line_tree">
+        <field name="name">purchase.order.line.tree</field>
+        <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
+        <field name="model">purchase.order.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <field name="product_id" position="replace"/>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_invoice_line_form">
+        <field name="name">account.invoice.line.form</field>
+        <field name="inherit_id" ref="account.view_invoice_line_form"/>
+        <field name="model">account.invoice.line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="discount" position="after">
+                <field name="customer_ref" select="1"/>
+                <field name="production_lot_id" select="1"/>
+            </field>
+        </field>
+    </record>
+
+    <act_window name="Packing list"
+        domain="[('sale_id', '=', active_id)]"
+        res_model="stock.picking"
+        src_model="sale.order"
+        id="act_sale_picking"/>
+
+    <record model="ir.ui.menu" id="menu_action_book_form_new">
+        <field name="name">New Book</field>
+        <field name="parent_id" ref="menu_action_book_form"/>
+        <field name="icon">STOCK_JUSTIFY_FILL</field>
+        <field name="sequence">7</field>
+        <field name="action" eval="'ir.actions.act_window,'+str(ref('action_product_book_new_form'))"/>
+    </record>
+
+
+    <record model="ir.ui.menu" id="menu_action_book_form_new">
+        <field name="name">New Author</field>
+        <field name="parent_id" ref="author_menu"/>
+        <field name="icon">STOCK_JUSTIFY_FILL</field>
+        <field name="sequence">7</field>
+        <field name="action" eval="'ir.actions.act_window,'+str(ref('action_author_new_form'))"/>
+    </record>
+
+
+    <!--
+    <menuitem name="Books/Configuration/Racks" id="rack_menu" action="action_book_rack"/>
+    <menuitem name="Books/Configuration/Price Categories" id="menu_price_category" action="action_price_category"/>
+    -->
+    <menuitem name="Books/Configuration/Price Categories" id="menu_price_category" action="action_price_category"/>
 
 </data>
 </openerp>

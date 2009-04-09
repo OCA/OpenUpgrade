@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<!-- MEMBERSHIP CARD -->
+
+		<!-- PARTNER CONTACTS-->
+		<record model="ir.ui.view" id="view_partner_address_form1_mcard">
+			<field name="name">res.partner.address.form1.mcard</field>
+			<field name="inherit_id" ref="base.view_partner_address_form1"/>
+			<field name="model">res.partner.address</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="email" position="after">
+					<field name="photo" widget="image"/>
+				</field>
+			</field>
+		</record>
+
+		<!-- PARTNER. OpenERP 4.2.3 doesn't work fine: Every time we change a partner the client ask to save the form -->
+		<record model="ir.ui.view" id="view_partner_form_mcard">
+			<field name="name">res.partner.form.mcard</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="email" position="after">
+					<field name="photo" widget="image"/>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

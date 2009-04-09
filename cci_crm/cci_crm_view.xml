@@ -1,142 +1,142 @@
 <?xml version="1.0" ?>
 <openerp>
-	<data>
+    <data>
 
 <!-- view for crm.case inherit -->
-	<record model="ir.ui.view" id="crm_case-view_inherit">
-			<field name="name">crm.case.form.confidential</field>
-			<field name="type">form</field>
-			<field name="model">crm.case</field>
-			<field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
-			<field name="arch" type="xml">
-				<field name="note" position="after">
-					<field name="meeting_id" select="2" colspan="4"/>
-				</field>
-			</field>
-		</record>
+    <record model="ir.ui.view" id="crm_case-view_inherit">
+            <field name="name">crm.case.form.confidential</field>
+            <field name="type">form</field>
+            <field name="model">crm.case</field>
+            <field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
+            <field name="arch" type="xml">
+                <field name="note" position="after">
+                    <field name="meeting_id" select="2" colspan="4"/>
+                </field>
+            </field>
+        </record>
 
-	<record model="ir.ui.view" id="view_case_form_inherit2">
-			<field name="name">crm.case.form.inherit</field>
-			<field name="type">form</field>
-			<field name="model">crm.case</field>
-			<field name="inherit_id" ref="crm.crm_case-view"/>
-			<field name="arch" type="xml">
-				<notebook position="inside">
-					<page string="Sponsoring">
-						<separator string="Events" colspan="4"/>
-						<field name="event_ids" colspan="4" nolabel="1"/>
-					</page>
-				</notebook>
-			</field>
-		</record>
+    <record model="ir.ui.view" id="view_case_form_inherit2">
+            <field name="name">crm.case.form.inherit</field>
+            <field name="type">form</field>
+            <field name="model">crm.case</field>
+            <field name="inherit_id" ref="crm.crm_case-view"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Sponsoring">
+                        <separator string="Events" colspan="4"/>
+                        <field name="event_ids" colspan="4" nolabel="1"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
 
 <!-- view for event.event inherit -->
-	<record model="ir.ui.view" id="view_event_form_inherit">
-		<field name="name">event.event.form.inherit</field>
-		<field name="type">form</field>
-		<field name="model">event.event</field>
-		<field name="inherit_id" ref="event.view_event_form"/>
-		<field name="arch" type="xml">
-			<notebook position="inside">
-				<page string="Sponsoring">
-					<separator string="Cases" colspan="4"/>
-					<field name="case_ids" colspan="4" nolabel="1" domain="[('section_id.name','=','Sponsoring')]"/>
-				</page>
-			</notebook>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_event_form_inherit">
+        <field name="name">event.event.form.inherit</field>
+        <field name="type">form</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Sponsoring">
+                    <separator string="Cases" colspan="4"/>
+                    <field name="case_ids" colspan="4" nolabel="1" domain="[('section_id.name','=','Sponsoring')]"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
 
 <!-- view for meeting.confidential.info -->
-		<record model="ir.ui.view" id="meeting_confidential_info_form">
-			<field name="name">meeting.confidential.info.form</field>
-			<field name="type">form</field>
-			<field name="model">meeting.confidential.info</field>
-			<field name="arch" type="xml">
-				<form string="Confidential Info">
-					<field name="group" select="1"/>
-					<newline/>
-					<field name="description" select="1"/>
-				</form>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="meeting_confidential_info_tree">
-			<field name="name">meeting.confidential.info.tree</field>
-			<field name="type">tree</field>
-			<field name="model">meeting.confidential.info</field>
-			<field name="arch" type="xml">
-				<tree string="Confidential Info">
-					<field name="group"/>
-					<field name="description"/>
-				</tree>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_meeting_confidential_info">
-			<field name="name">Confidential Info</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">meeting.confidential.info</field>
-			<field name="view_type">form</field>
-		</record>
-		<menuitem name="Meeting Confidential Info" action="action_meeting_confidential_info" id="menu_meeting_confidential_info" parent="crm.menu_crm"/>
+        <record model="ir.ui.view" id="meeting_confidential_info_form">
+            <field name="name">meeting.confidential.info.form</field>
+            <field name="type">form</field>
+            <field name="model">meeting.confidential.info</field>
+            <field name="arch" type="xml">
+                <form string="Confidential Info">
+                    <field name="group" select="1"/>
+                    <newline/>
+                    <field name="description" select="1"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="meeting_confidential_info_tree">
+            <field name="name">meeting.confidential.info.tree</field>
+            <field name="type">tree</field>
+            <field name="model">meeting.confidential.info</field>
+            <field name="arch" type="xml">
+                <tree string="Confidential Info">
+                    <field name="group"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_meeting_confidential_info">
+            <field name="name">Confidential Info</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">meeting.confidential.info</field>
+            <field name="view_type">form</field>
+        </record>
+        <menuitem name="Meeting Confidential Info" action="action_meeting_confidential_info" id="menu_meeting_confidential_info" parent="crm.menu_crm"/>
 
 <!-- Act window defining a shorcut on partners to open directly a new RSF -->
-		<act_window name="Open a New RSF"
-			domain="[('partner_id', '=', active_id)]"
-			context="{'partner_id':active_id,'section_id':ref('case_section_rsf')}"
-			res_model="crm.case"
-			src_model="res.partner"
-			view_mode='form'
-			id="act_res_partner_2_new_rsf"/>
+        <act_window name="Open a New RSF"
+            domain="[('partner_id', '=', active_id)]"
+            context="{'section_id':ref('case_section_rsf')}"
+            res_model="crm.case"
+            src_model="res.partner"
+            view_mode='form'
+            id="act_res_partner_2_new_rsf"/>
 
-			<!-- context="{'partner_id':active_id,'section_id':ref('case_section_rsf')}" -->
+            <!-- context="{'partner_id':active_id,'section_id':ref('case_section_rsf')}" -->
 
 
 <!-- view for Agenda -->
-		<record model="ir.ui.view" id="agenda_form">
-			<field name="name">meeting.confidential.info.form</field>
-			<field name="type">form</field>
-			<field name="model">meeting.confidential.info</field>
-			<field name="arch" type="xml">
-				<form string="Confidential Info">
-					<field name="group" select="1"/>
-					<newline/>
-					<field name="description" select="1"/>
-				</form>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="agenda_tree">
-			<field name="name">meeting.confidential.info.tree</field>
-			<field name="type">tree</field>
-			<field name="model">meeting.confidential.info</field>
-			<field name="arch" type="xml">
-				<tree string="Confidential Info">
-					<field name="group"/>
-					<field name="description"/>
-				</tree>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="agenda_form">
+            <field name="name">meeting.confidential.info.form</field>
+            <field name="type">form</field>
+            <field name="model">meeting.confidential.info</field>
+            <field name="arch" type="xml">
+                <form string="Confidential Info">
+                    <field name="group" select="1"/>
+                    <newline/>
+                    <field name="description" select="1"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="agenda_tree">
+            <field name="name">meeting.confidential.info.tree</field>
+            <field name="type">tree</field>
+            <field name="model">meeting.confidential.info</field>
+            <field name="arch" type="xml">
+                <tree string="Confidential Info">
+                    <field name="group"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
 
 
 <!--
-		<record model="ir.actions.act_window" id="act_res_partner_2_new_RSF">
-		context="{'section_id':(ref('case_section_rsf'),'RSF')}"
-			<field name="name">Open aa New RSF</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">crm.case</field>
-			<field name="domain" eval="[('section_id','=',ref('case_section_rsf'))]"/>
-			--><!--<field name="domain">[('partner_id', '=', active_id), ('section_id', '=',ref('eval=['']')]</field>-->
-<!--			<field name="view_type">form</field>
-			<field name="view_mode">form,tree</field>
-		</record>
-		<ir_set>
-			<field name="key" eval="'action'"/>
-			<field name="key2" eval="'client_action_multi'"/>
-			<field name="models" eval="['res.partner']"/>
-			<field name="name">Open aaa New RSF</field>
-			<field name="value" eval="'ir.actions.act_window,'+str(act_res_partner_2_new_RSF)"/>
-			--><!--<field name="isobject" eval="True"/>
-			<field name="replace" eval="True"/>-->
-<!--		</ir_set>-->
+        <record model="ir.actions.act_window" id="act_res_partner_2_new_RSF">
+        context="{'section_id':(ref('case_section_rsf'),'RSF')}"
+            <field name="name">Open aa New RSF</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.case</field>
+            <field name="domain" eval="[('section_id','=',ref('case_section_rsf'))]"/>
+            --><!--<field name="domain">[('partner_id', '=', active_id), ('section_id', '=',ref('eval=['']')]</field>-->
+<!--            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+        </record>
+        <ir_set>
+            <field name="key" eval="'action'"/>
+            <field name="key2" eval="'client_action_multi'"/>
+            <field name="models" eval="['res.partner']"/>
+            <field name="name">Open aaa New RSF</field>
+            <field name="value" eval="'ir.actions.act_window,'+str(act_res_partner_2_new_RSF)"/>
+            --><!--<field name="isobject" eval="True"/>
+            <field name="replace" eval="True"/>-->
+<!--        </ir_set>-->
 
 
-	</data>
+    </data>
 </openerp>

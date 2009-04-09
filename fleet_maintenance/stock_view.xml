@@ -1,0 +1,441 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<menuitem icon="terp-product" id="menu_main_fleets" name="Fleets" />
+		<menuitem icon="terp-sale" id="menu_fleet_maintenance" name="Fleet Maintenance Contracts" parent="fleet_maintenance.menu_main_fleets" />
+		<menuitem icon="terp-product" id="menu_fleet" name="Fleets" parent="fleet_maintenance.menu_main_fleets" />
+		<menuitem icon="terp-product" id="menu_fleet_extensions" name="Fleet Extensions" parent="fleet_maintenance.menu_main_fleets" />
+
+		<menuitem action="stock.action_production_lot_form" id="menu_action_fleet_serial_tracking" parent="fleet_maintenance.menu_main_fleets" />
+
+
+
+
+		<!-- Fleet -->
+		<record model="ir.ui.view" id="view_location_fleet_form">
+			<field name="name">stock.location.fleet.form.fleet_maintenance</field>
+			<field name="model">stock.location</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<form string="Fleet">
+					<field name="fleet_type" invisible="1" />
+					<field name="name" select="1" string="Name" />
+					<field name="partner_id" attrs="{'required':[('fleet_type','=','fleet')]}" domain="[('customer','=', True)]" />
+					<field context="{'context_display':'partner'}" name="address_id" />
+					<field name="active" select="2" />
+					<separator string="Maintenance Dates" colspan="4" />
+					<field name="intrinsic_anniversary_time" string="Anniversary Time"
+						on_change="intrinsic_anniversary_time_change(intrinsic_anniversary_time)" />
+											
+
+					<notebook colspan="4">
+						<page string="Fleet Extensions">
+							<field colspan="4" mode="tree, form" context="{'fleet_type':'sub_fleet'}" name="child_ids" nolabel="1" on_change="sub_fleet_change(active_id or False)">
+								<tree string="Sub Fleets">
+									<field name="name" />
+									<field name="is_expired" />
+									<field name="time_to_expire" />
+									<field name="expire_time" />
+								</tree>
+							
+								<!-- FIXME: the following form is supposed to be exactly the stock.location.fleet.form.sub_fleet_maintenance arch
+									but due to an OpenERP v5 GTK client limitation where the context is not passed in one2many widgets,
+									we couldn't let the server appropriately select the right view so we just wrapped it here to make it work anyway -->
+								<form string="Sub Fleet">
+									<field name="fleet_type" invisible="1" />
+									<field name="name" select="1" string="Name" />
+									<field name="address_id" context="{'context_display':'partner'}" />
+									<field name="active" select="2" />
+									<separator string="Maintenance Dates" colspan="4" />
+									<field name="is_expired" />
+									<field name="time_to_expire" />
+									<field name="expire_time" />
+									<field name="anniversary_time" />
+									<newline />
+									<notebook colspan="4">
+										<page string="Invoice Lines">
+											<field nolabel="1" mode="tree,form,calendar" name="account_invoice_lines">
+												<tree string="Invoice Lines">
+													<field name="invoice_id" />
+													<field name="quantity" />
+													<field name="maintenance_start_date" string="Start" />
+													<field name="maintenance_end_date" string="End" />
+													<field name="price_subtotal" />
+												</tree>
+											</field>
+										</page>
+										<page string="Orders Lines">
+											<field nolabel="1" name="sale_order_lines">
+												<tree string="Sale Order Lines">
+													<field name="order_id" />
+													<field name="product_uos_qty" />
+													<field name="maintenance_start_date" string="Start" />
+													<field name="maintenance_end_date" string="End" />
+													<field name="price_subtotal" />
+												</tree>
+											</field>
+										</page>
+										<page string="Events">
+											<field nolabel="1" name="crm_cases">
+												<tree string="Incidents">
+													<field name="incident_ref" />
+													<field name="prodlot_id" />
+													<field name="section_id" />
+													<field name="state" />
+													<field name="name" />
+												</tree>
+											</field>
+										</page>
+									</notebook>
+								</form>
+							
+							</field>		
+						</page>
+						
+						
+					
+						<!-- Almost like for sub-fleets but at the fleet level -->
+						<page string="Fleet Invoice Lines">
+							<field nolabel="1" mode="tree,form,calendar" name="fleet_account_invoice_lines">
+								<tree string="Invoice Lines">
+									<field name="invoice_id" />
+									<field name="quantity" />
+									<field name="maintenance_start_date" string="Start" />
+									<field name="maintenance_end_date" string="End" />
+									<field name="price_subtotal" />
+								</tree>
+							</field>
+						</page>
+						<page string="Fleet Orders Lines">
+							<field nolabel="1" name="fleet_sale_order_lines">
+								<tree string="Sale Order Lines">
+									<field name="order_id" />
+									<field name="product_uos_qty" />
+									<field name="maintenance_start_date" string="Start" />
+									<field name="maintenance_end_date" string="End" />
+									<field name="price_subtotal" />
+								</tree>
+							</field>
+						</page>
+						<page string="Fleet Events">
+							<field nolabel="1" name="fleet_crm_cases">
+								<tree string="Incidents">
+									<field name="incident_ref" />
+									<field name="prodlot_id" />
+									<field name="section_id" />
+									<field name="state" />
+									<field name="name" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
+
+				</form>
+			</field>
+		</record>
+
+
+
+
+
+		<!-- Sub Fleet -->
+		<record model="ir.ui.view" id="view_location_sub_fleet_form">
+			<field name="name">stock.location.fleet.form.sub_fleet_maintenance</field>
+			<field name="model">stock.location</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<form string="Sub Fleet">
+					<field name="fleet_type" invisible="1" />
+					<field name="name" select="1" string="Name" />
+					<field name="location_id" context="{'fleet_type':'fleet', 'partner_id':context.get('partner_id', False)}"
+									domain="[('fleet_type','=','fleet')]" required="1" />
+					<field name="address_id" context="{'context_display':'partner'}" />
+					<field name="active" select="2" />
+					<separator string="Maintenance Dates" colspan="4" />
+					<field name="is_expired" />
+					<field name="time_to_expire" />
+					<field name="expire_time" />
+					<field name="anniversary_time" />
+					<newline />
+					<notebook colspan="4">
+						<page string="Invoice Lines">
+							<field nolabel="1" mode="tree,form,calendar" name="account_invoice_lines">
+								<tree string="Invoice Lines">
+									<field name="invoice_id" />
+									<field name="quantity" />
+									<field name="maintenance_start_date" string="Start" />
+									<field name="maintenance_end_date" string="End" />
+									<field name="price_subtotal" />
+								</tree>
+							</field>
+						</page>
+						<page string="Orders Lines">
+							<field nolabel="1" name="sale_order_lines">
+								<tree string="Sale Order Lines">
+									<field name="order_id" />
+									<field name="product_uos_qty" />
+									<field name="maintenance_start_date" string="Start" />
+									<field name="maintenance_end_date" string="End" />
+									<field name="price_subtotal" />
+								</tree>
+							</field>
+						</page>
+						<page string="Events">
+							<field nolabel="1" name="crm_cases">
+								<tree string="Incidents">
+									<field name="incident_ref" />
+									<field name="prodlot_id" />
+									<field name="section_id" />
+									<field name="state" />
+									<field name="name" />
+								</tree>
+							</field>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+
+
+
+
+
+		<record id="fleet_maintenance.view_location_tree_fleet" model="ir.ui.view">
+			<field name="name">fleet_maintenance.tree</field>
+			<field name="model">stock.location</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Stock location">
+					<field name="complete_name" />
+					<field name="partner_id" />
+					<field name="stock_real" />
+					<field name="stock_virtual" />
+				</tree>
+			</field>
+		</record>
+
+
+
+		<record id="fleet_normal_action" model="ir.actions.act_window">
+			<field name="name">All Fleets</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.location</field>
+			<field name="view_type">form</field>
+			<field name="domain">[('fleet_type','=','fleet')]</field>
+			<field name="context">{'fleet_type':'fleet','location_id':8}</field>
+		</record>
+		<menuitem action="fleet_normal_action" id="all_fleets" parent="fleet_maintenance.menu_fleet" />
+
+		<record id="ir_actions_act_window_view_0" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_maintenance.fleet_normal_action" />
+			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
+			<field name="view_id" ref="fleet_maintenance.view_location_tree_fleet" />
+			<field eval="0" name="sequence" />
+		</record>
+		<record id="ir_actions_act_window_view_1" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_maintenance.fleet_normal_action" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+			<field name="view_id" ref="fleet_maintenance.view_location_fleet_form" />
+			<field eval="1" name="sequence" />
+		</record>
+
+
+		<record id="action_fleet_new" model="ir.actions.act_window">
+			<field name="name">New Fleet</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.location</field>
+			<field name="view_type">form</field>
+			<!-- FIXME: location_id = 8 for customers is subject to changes according to your database data -->
+			<field name="context">{'fleet_type':'fleet','location_id':8}</field>
+			<field name="view_mode">form, tree</field>
+		</record>
+		<menuitem action="action_fleet_new" id="menu_action_fleet_new" parent="fleet_maintenance.menu_fleet" />
+
+		<record id="ir_actions_act_window_view_4" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_maintenance.action_fleet_new" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+			<field name="view_id" ref="view_location_fleet_form" />
+		</record>
+
+
+
+
+
+
+
+		<!-- Fleet extension -->
+
+		<record id="fleet_maintenance.view_location_tree_sub_fleet" model="ir.ui.view"><!-- TODO improve that override -->
+			<field name="name">sub_fleet.tree</field>
+			<field name="model">stock.location</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Stock location" colors="red:is_expired==True;">
+					<field name="parent_partner_id" />
+					<field name="complete_name" />
+					<field name="is_expired" />
+					<field name="time_to_expire" />
+					<field name="stock_real" />
+					<field name="stock_virtual" />
+				</tree>
+			</field>
+		</record>
+
+
+		<record id="view_fleet_maintenance_location_tree_bis" model="ir.ui.view">
+			<field name="name">stock.location.tree</field>
+			<field name="model">stock.location</field>
+			<field name="type">tree</field>
+			<field name="field_parent">child_ids</field>
+			<field name="inherit_id" ref="stock.view_location_tree" />
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+					<field name="partner_id" />
+				</field>
+			</field>
+		</record>
+
+
+		<record id="sub_fleet_normal_action" model="ir.actions.act_window">
+			<field name="name">All Sub Fleets</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.location</field>
+			<field name="view_type">form</field>
+			<field name="domain">[('fleet_type','=','sub_fleet')]</field>
+			<field name="context">{'fleet_type':'sub_fleet'}</field>
+		</record>
+		<menuitem action="sub_fleet_normal_action" id="all_sub_fleets" parent="fleet_maintenance.menu_fleet_extensions" />
+
+		<record id="ir_actions_act_window_view_6" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_maintenance.sub_fleet_normal_action" />
+			<field eval="0" name="multi" />
+			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
+			<field name="view_id" ref="fleet_maintenance.view_location_tree_sub_fleet" />
+			<field eval="0" name="sequence" />
+		</record>
+		<record id="ir_actions_act_window_view_7" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_maintenance.sub_fleet_normal_action" />
+			<field eval="0" name="multi" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+			<field name="view_id" ref="view_location_sub_fleet_form" />
+			<field eval="1" name="sequence" />
+		</record>
+
+
+
+		<record id="action_fleet_extension_new" model="ir.actions.act_window">
+			<field name="name">New Fleet Extension</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.location</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="context">{'fleet_type':'sub_fleet','location_id':8}</field>
+		</record>
+		<menuitem action="action_fleet_extension_new" id="menu_action_fleet_extension_new" parent="menu_fleet_extensions" />
+
+
+		<record id="ir_actions_act_window_view_fleet_new" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="action_fleet_extension_new" />
+			<field eval="1" name="multi" />
+			<field name="view_id" ref="view_location_fleet_form" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+
+
+
+
+
+		<!-- Fleet Maintenance orders -->
+
+
+
+
+		<record id="all_maintenances" model="ir.actions.act_window">
+			<field name="name">All Maintenance Orders</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,calendar,graph</field>
+		</record>
+		<menuitem action="all_maintenances" id="menu_action_all_maintenances" parent="menu_fleet_maintenance" />
+
+		<record id="action_maintenance_new" model="ir.actions.act_window">
+			<field name="name">New Maintenance quotation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree,calendar,graph</field>
+		</record>
+		<menuitem action="action_maintenance_new" id="menu_action_maintenance_new" parent="menu_fleet_maintenance" />
+
+
+		<record id="ir_actions_act_window_view_maintenance_new" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="action_maintenance_new" />
+			<field eval="0" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.sale_order_form_fleet_maintenance" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+
+
+		<!-- Incident Picking (CRM) -->
+		<record id="view_picking_incident_form" model="ir.ui.view">
+			<field name="name">stock.picking.incident.form</field>
+			<field name="model">stock.picking</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Packing list">
+					<group colspan="4" col="6">
+						<field name="type" />
+						<field name="name" readonly="1" />
+						<field name="date" />
+					</group>
+
+					<field colspan="4" name="move_lines" nolabel="1" default_get="{'move_line':move_lines}" context="{'location_id_usage':context.get('location_id_usage', 'internal'),'location_dest_id_usage':context.get('location_dest_id_usage', 'customer'),'product_id':context.get('product_id', False),'location_id':context.get('location_id', False),'location_dest_id':context.get('location_dest_id', False),'prodlot_id':context.get('prodlot_id', False)}">
+						<form string="Stock Moves">
+							<separator colspan="4" string="Move Information" />
+							<field name="location_id" select="1"/><!-- TODO filter domain using location_id_usage form context-->
+							<field name="location_dest_id" select="1"/><!-- TODO filter domain using location_dest_id_usage form context-->
+							<field colspan="4" context="location=location_id" name="product_id"
+								on_change="onchange_product_id(product_id, location_id, location_dest_id)" select="1" />
+							<field name="product_qty" select="1" />
+							<field name="product_uom" select="1" />
+							<field name="name" invisible="1" />
+							<field groups="product.group_uos" name="product_uos" />
+							<field groups="product.group_uos" name="product_uos_qty" />
+							<field colspan="4" invisible="1" name="name" select="1" />
+							<field invisible="1" name="date" />
+							<field name="date_planned" />
+							<field name="address_id" select="1" context="{'context_display':'partner'}" />
+							<field groups="base.group_extended" name="product_packaging" />
+							<field name="prodlot_id" select="2" context="{'location_id':location_id, 'product_id':product_id}" domain="[('product_id','=',product_id)]"
+								on_change="onchange_lot_id(prodlot_id,product_qty, location_id)" />
+							<field groups="base.group_extended" name="tracking_id" select="2" />
+							<newline />
+							<separator colspan="4" string="Move State" />
+							<field name="state" select="1" />
+							<group>
+								<button name="force_assign" states="confirmed" string="Force Availability" type="object" />
+								<button name="cancel_assign" states="assigned" string="Cancel Availability" type="object" />
+								<button name="action_cancel" states="assigned" string="Cancel" type="object" />
+							</group>
+						</form>
+					</field>
+					<group col="10" colspan="4">
+						<field name="state" readonly="1" />
+						<button name="draft_force_assign" states="draft" string="Process Later" type="object" />
+						<button name="draft_validate" states="draft" string="Process Now" type="object" />
+						<button name="action_assign" states="confirmed" string="Check Availability" type="object" />
+						<button name="force_assign" states="confirmed" string="Force Availability" type="object" />
+						<button name="button_cancel" states="assigned,confirmed,draft" string="Cancel" />
+					</group>
+
+				</form>
+			</field>
+		</record>
+
+	</data>
+</openerp>

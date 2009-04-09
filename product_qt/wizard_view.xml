@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+          <wizard id="qty_test_id" model="stock.picking" multi="True" name="qty_test" string="Quality Testing"/>
+          <wizard id="qty_test_prod_id" model="mrp.production.workcenter.line" multi="True" name="qty_test_prod" string="Quality Testing"/>
+          <wizard id="qty_test_finish_id" model="mrp.production" multi="True" name="qty_test_finish" string="Quality Testing"/>
+    </data>
+</openerp>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<!--
+ Users Groups
+-->
+    <record model="res.groups" id="group_cci_membership_user">
+        <field name="name">CCI Membership Billing one by one</field>
+    </record>
+    
+    <record model="res.groups" id="group_cci_membership_supervisor">
+        <field name="name">CCI Membership Yearly operations</field>
+    </record>
+
+	<!-- Set accesses to menu -->
+	
+	<!-- Redefinition of the accesses to the menu defined in the event module -->
+<!--TO see with Philmer: needed?
+	<record id="menu_event_config" model="ir.ui.menu">
+		<field name="groups_id" eval="[(6,0,[ref('group_cci_event_manager')])]"/>
+	</record>
+
+	<record id="menu_report_event" model="ir.ui.menu">
+		<field name="groups_id" eval="[(6,0,[ref('group_cci_event_user'),ref('group_cci_event_supervisor'),ref('group_cci_event_manager')])]"/>
+	</record>
+-->
+
+	<!-- Definition of the accesses to the new menus in the cci_event module -->
+<!--TO see with Philmer: needed?
+
+	<record model="ir.ui.menu" id="menu_event_group">
+		<field name="groups_id" eval="[(6,0, [ref('group_cci_mission_manager')])]"/>
+	</record>
+-->
+</data>
+</openerp>
+

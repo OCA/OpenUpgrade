@@ -1,30 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2008 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id$
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -41,24 +33,25 @@ class discount_campaign(osv.osv):
         'line_ids': fields.one2many('discount.campaign.line','discount_id', 'Discount Lines'),
         'state' : fields.selection([('draft','Draft'),('open','Open'),('cancel','Canceled'),('done','Done')],'State',readonly=True)
     }
-    
+
     _defaults = {
         'state': lambda *args: 'draft'
-    }   
-    
-    
+    }
+
+
     def action_open(self, cr, uid, ids, *args):
         return True
-    
+
     def action_done(self, cr, uid, ids,group=True,type='out_refund', context=None):
         # need to make perfect checking
         # remaining to check sale condition
         # need Improvement
         invoice_obj = self.pool.get('account.invoice')
         invoice_line_obj = self.pool.get('account.invoice.line')
-        tax_obj=self.pool.get('account.invoice.tax')        
+        tax_obj=self.pool.get('account.invoice.tax')
+        partner_obj = self.pool.get('res.partner')
         res = {}
-        for campaign in self.browse(cr, uid, ids):	
+        for campaign in self.browse(cr, uid, ids):
             invoices_group = {}
             invoices_line_group={}
             res[campaign.id]=[]
@@ -67,8 +60,8 @@ class discount_campaign(osv.osv):
                  left join res_partner partner on invoice.partner_id=partner.id
                  where partner.discount_campaign=%d and (invoice.date_invoice BETWEEN %s AND %s) AND invoice.type = 'out_invoice' AND state = 'open'
                  """ , (campaign.id,campaign.date_start,campaign.date_stop,))
-            invoice_ids = map(lambda x:x[0],cr.fetchall())           
-            
+            invoice_ids = map(lambda x:x[0],cr.fetchall())
+
             for invoice in invoice_obj.browse(cr, uid, invoice_ids):
                 for line in invoice.invoice_line:
                     if group and line.product_id.id in invoices_line_group:
@@ -78,30 +71,31 @@ class discount_campaign(osv.osv):
                     else:
                         quantity=line.quantity
                     cr.execute("""
-                        SELECT discount_line.discount from discount_campaign_line discount_line	where 
+                        SELECT discount_line.discount from discount_campaign_line discount_line	where
                         (discount_line.discount_id = %d ) and
-                        (discount_line.condition_product_id is null or discount_line.condition_product_id=%d ) and 
+                        (discount_line.condition_product_id is null or discount_line.condition_product_id=%d ) and
                         (discount_line.condition_category_id is null or discount_line.condition_category_id=%d ) and
                         (discount_line.condition_quantity is null or discount_line.condition_quantity <=%f ) ORDER BY sequence
                         """ , (campaign.id,line.product_id.id,line.product_id.categ_id.id,quantity))
                     res_discount = cr.dictfetchone()
-                    discount=res_discount and res_discount['discount'] or False        
-                    
-                    if discount:	  
+                    discount=res_discount and res_discount['discount'] or False
+
+                    if discount:
                         if group and invoice.partner_id.id in invoices_group:
-                            invoice_id = invoices_group[invoice.partner_id.id]									
+                            invoice_id = invoices_group[invoice.partner_id.id]
                         else:
-                            new_invoice = invoice_obj.read(cr, uid, invoice.id, ['name', 'type', 'number', 'reference', 'comment', 'date_due', 'partner_id', 'address_contact_id', 'address_invoice_id', 'partner_contact', 'partner_insite', 'partner_ref', 'payment_term', 'account_id', 'currency_id',  'journal_id'])							
-                            del new_invoice['id']                            
+                            new_invoice = invoice_obj.read(cr, uid, invoice.id, ['name', 'type', 'number', 'reference', 'comment', 'date_due', 'partner_id', 'address_contact_id', 'address_invoice_id', 'partner_contact', 'partner_insite', 'partner_ref', 'payment_term', 'account_id', 'currency_id',  'journal_id'])
+                            del new_invoice['id']
+                            fpos = partner_obj.browse(cr, uid, new_invoice['partner_id'][0]).account_fiscal_position
                             new_invoice.update({
                                 'type': type,
                                 'date_invoice': time.strftime('%Y-%m-%d'),
                                 'state': 'draft',
-                                'number': False,					                
-                                
+                                'number': False,
+                                'fiscal_position': fpos and fpos.id or False
                             })
                             for field in ('address_contact_id', 'address_invoice_id', 'partner_id','account_id', 'currency_id', 'payment_term', 'journal_id'):
-                                new_invoice[field] = new_invoice[field] and new_invoice[field][0]                            
+                                new_invoice[field] = new_invoice[field] and new_invoice[field][0]
                             invoice_id = invoice_obj.create(cr, uid, new_invoice,context=context)
                             invoices_group[invoice.partner_id.id] = invoice_id
                             res[campaign.id] += [invoice_id]
@@ -122,8 +116,8 @@ class discount_campaign(osv.osv):
 		                    'account_analytic_id': line.account_analytic_id.id,
 		                 }, context=context)
                             invoices_line_group[line.product_id.id]=invoice_line_id
-						
-                               
+
+
         return res
 discount_campaign()
 
@@ -139,8 +133,8 @@ class discount_campaign_line(osv.osv):
         'discount' : fields.float('Discount'),
         'discount_id': fields.many2one('discount.campaign', 'Discount Lines'),
     }
-    _defaults = {                
-        'sequence': lambda *a: 5,        
+    _defaults = {
+        'sequence': lambda *a: 5,
     }
     _order = "sequence, condition_quantity desc"
 discount_campaign_line()
@@ -158,7 +152,7 @@ class sale_order(osv.osv):
     _columns = {
         'discount_campaign': fields.many2one('discount.campaign', 'Discount Campaign'),
     }
-    
+
     def onchange_partner_id(self, cr, uid, ids, part):
         if not part:
             return {'value':{'partner_invoice_id': False, 'partner_shipping_id':False, 'partner_order_id':False, 'payment_term' : False, 'discount_campaign' : False}}
@@ -167,5 +161,5 @@ class sale_order(osv.osv):
         result['discount_campaign'] = campaign
         return {'value': result}
 
-    
+
 sale_order()

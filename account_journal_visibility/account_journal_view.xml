@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-	<data>
-	#--------------------------------------
-	# Account Jounal form view
-	#--------------------------------------
-	<record model="ir.ui.view" id="view_account_journal_form_inherited">
-		<field name="name">account.journal.form.inherit</field>
-		<field name="model">account.journal</field>
-		<field name="type">form</field>
-		<field name="inherit_id" ref="account.view_account_journal_form"/>
-		<field name="arch" type="xml">
-			<field name="account_control_ids" colspan="4" nolabel="1" position="after">
-				<field name="group_ids" colspan="4" nolabel="1"/>
-				<separator string="Groups Allowed (empty for no control)" colspan="4"/>
-			</field>
-		</field>
-	</record>
+    <data>
+    #--------------------------------------
+    # Account Jounal form view
+    #--------------------------------------
+    <record model="ir.ui.view" id="view_account_journal_form_inherited">
+        <field name="name">account.journal.form.inherit</field>
+        <field name="model">account.journal</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <field name="account_control_ids" colspan="4" nolabel="1" position="after">
+                <separator string="Groups Allowed (empty for no control)" colspan="4"/>
+                <field name="group_ids" colspan="4" nolabel="1"/>
+            </field>
+        </field>
+    </record>
 
 
 
-	</data>
-
+    </data>
 </openerp>

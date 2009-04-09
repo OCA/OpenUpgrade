@@ -23,105 +23,25 @@
 		</field>
 	</record>
 
-
-	<record model="ir.ui.view" id="portal_crm_case_tree_view">
-		<field name="name">crm.case.tree</field>
-		<field name="model">crm.case</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Cases"  colors="red:date_deadline&lt;current_date and state=='open'" link="0">
-				<field name="id"/>
-				<field name="date"/>
-				<field name="date_deadline"/>
-				<field name="name"/>
-				<field name="partner_id"/>
-				<field name="user_id"/>
-				<field name="priority"/>
-				<field name="planned_revenue"/>
-				<field name="planned_cost"/>
-				<field name="state"/>
-			</tree>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="portal_crm_case_view">
-		<field name="name">crm.case.form</field>
-		<field name="model">crm.case</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Cases" link="0">
-				<notebook>
-				<page string="General Information">
-					<field name="name" select="1"/>
-					<field name="section_id"/>
-					<field name="date" select="1"/>
-					<field name="priority"/>
-					<field name="user_id" select="1" readonly="1"/>
-					<field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)"/>
-					<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id, email_from)" readonly="1"/>
-					<field name="partner_address_id" on_change="onchange_partner_address_id(partner_address_id, email_from)" readonly="1"/>
-					<field name="email_from"/>
-					<field name="canal_id"/>
-					<field name="date_deadline" select="2"/>
-					<field name="description" colspan="4" select="2" nolabel="1"/>
-					<field name="history_line" nolabel="1" colspan="4">
-						<form string="Actions">
-							<separator string="Action Information" colspan="4"/>
-							<field name="name" colspan="4"/>
-							<field name="date" select="2"/>
-							<field name="user_id" select="2"/>
-							<field name="canal_id"/>
-							<field name="description" colspan="4"/>
-						</form>
-						<tree string="Actions">
-							<field name="date"/>
-							<field name="user_id"/>
-							<field name="description"/>
-						</tree>
-					</field>
-					<field name="state" select="1"/>
-				</page><page string="Other Info">
-					<field name="id" select="1"/>
-					<field name="date_closed"/>
-					<field name="active" select="2"/>
-					<newline/>
-					<field name="date_action_last"/>
-					<field name="date_action_next"/>
-
-					<field name="email_cc" colspan="4"/>
-					<field name="email_last" colspan="4"/>
-				</page>
-				</notebook>
-			</form>
-		</field>
-	</record>
-
-
 	<record model="ir.ui.view" id="portal_crm_case_tree_view_simplified">
 		<field name="name">Available Cases List</field>
 		<field name="model">crm.case</field>
 		<field name="type">tree</field>
+		<field name="inherit_id" ref="crm.crm_case_tree-view"/>
 		<field name="arch" type="xml">
-			<tree string="Cases" link="0">
-				<field name="id"/>
-				<field name="date"/>
-				<field name="name"/>
-				<field name="priority"/>
-				<field name="planned_revenue"/>
-				<field name="planned_cost"/>
-				<field name="state"/>
-				<button 
+			<field name="state" position="after">
+				<button
 					name="case_open"
 					string="Get this Case"
 					states="draft,pending,open"
 					icon="STOCK_YES"
 					type="object"/>
-				<button name="%(wizard_case_get_open)d" 
-					states="draft,pending,open" 
-					string="Get this Case and Open It" 
+				<button name="%(wizard_case_get_open)d"
+					states="draft,pending,open"
+					string="Get this Case and Open It"
 					icon="STOCK_OPEN"
 					type="action"/>
-			</tree>
+			</field>
 		</field>
 	</record>
 
@@ -129,45 +49,106 @@
 		<field name="name">Available Case</field>
 		<field name="model">crm.case</field>
 		<field name="type">form</field>
+		<field name="inherit_id" ref="crm.crm_case-view"/>
 		<field name="arch" type="xml">
-			<form string="Cases" link="0">
-				<field name="name" select="1" readonly="1" />
-				<field name="section_id" readonly="1"/>
-				<field name="date" select="1" readonly="1"/>
-				<field name="priority" readonly="1"/>
-				<field name="state" select="1" readonly="1"/>
+			<field name="state" select="1" position="after">
 				<group col="2" colspan="2">
-					<button 
+					<button
 						name="case_open"
 						string="Get this Case"
 						states="draft,pending"
 						type="object"/>
-					<button name="%(wizard_case_get_open)d" 
-						states="draft,pending" 
-						string="Get this Case and Open It" 
+					<button name="%(wizard_case_get_open)d"
+						states="draft,pending"
+						string="Get this Case and Open It"
 						type="action"/>
 				</group>
 				<separator string="Information" colspan="4"/>
-				<label 
-					string="Click on 'Get this Case' to acquire the case." 
+				<label
+					string="Click on 'Get this Case' to acquire the case."
 					align="0.0"
 					colspan="4"/>
-				<label 
-					string="The list of all your acquired cases are in your leads menu." 
+				<label
+					string="The list of all your acquired cases are in your leads menu."
 					align="0.0"
 					colspan="4"/>
-			</form>
+			</field>
 		</field>
 	</record>
+	
+	<record model="ir.actions.act_window" id="portal_action_crm_case_all">
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_case_a">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm.crm_case_tree-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_all"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_case_a">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm.crm_case-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_all"/>
+	</record>
 
-	<record model="ir.ui.view" id="new_support_form">
+	<menuitem name="Support" id="menu_portal_customer_support" parent="portal.menu_portal_customer"/>
+	<menuitem name="All Support Cases" id="menu_portal_customer_all_cases" parent="menu_portal_customer_support" action="portal_action_crm_case_all"/>
+
+	<record model="ir.actions.act_window" id="portal_action_crm_case_open">
+		<field name="name">My opened cases</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('state','&lt;&gt;','done'),('state','&lt;&gt;','cancel'),('state','&lt;&gt;','pending')]</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_case_o">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm.crm_case_tree-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_open"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_case_o">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm.crm_case-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_open"/>
+	</record>
+
+	<menuitem name="Opened Cases" id="menu_portal_customer_all_cases_open" parent="menu_portal_customer_all_cases" action="portal_action_crm_case_open"/>
+
+	<record model="ir.actions.act_window" id="portal_action_crm_case_closed">
+		<field name="name">My closed cases</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('state','=','done')]</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_case_c">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm.crm_case_tree-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_closed"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_case_c">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm.crm_case-view"/>
+		<field name="act_window_id" ref="portal_action_crm_case_closed"/>
+	</record>
+
+	<menuitem name="Closed Cases" id="menu_portal_customer_all_cases_close" parent="menu_portal_customer_all_cases" action="portal_action_crm_case_closed"/>
+	
+
+	<!--<record model="ir.ui.view" id="new_support_form">
 		<field name="name">new support form</field>
 		<field name="model">crm.case</field>
 		<field name="type">form</field>
+		<field name="inherit_id" ref="crm.crm_case-view"/>
 		<field name="arch" type="xml">
-			<form link="0" string="Cases">
-				<notebook>
-				<page string="General Information">
+			<notebook>
+				<page string="General Information" position="replace">
 					<field name="name" select="1"/>
 					<field name="section_id" domain="[('id','=',6)]"/>
 					<field name="date" readonly="1" select="1"/>
@@ -193,7 +174,7 @@
 						</tree>
 					</field>
 					<field name="state" select="1"/>
-				</page><page string="Other Info">
+				</page><page string="Other Info" position="replace">
 					<field name="id" select="1"/>
 					<field name="date_closed"/>
 					<newline/>
@@ -204,23 +185,21 @@
 					<field colspan="4" name="email_last"/>
 				</page>
 				</notebook>
-			</form>
 		</field>
-	</record>
+	</record>-->
 
-	<record model="ir.ui.view" id="new_bug_form">
+	<!--<record model="ir.ui.view" id="new_bug_form">
 		<field name="name">New Bug Form</field>
 		<field name="model">crm.case</field>
 		<field name="type">form</field>
+		<field name="inherit_id" ref="crm.crm_case-view"/>
 		<field name="arch" type="xml">
-			<form string="Cases" link="0">
-				<notebook>
-				<page string="General">
+			<notebook>
+				<page string="General" position="replace">
 					<group col="8" colspan="4">
 						<field colspan="4" name="name" select="1"/>
 						<field colspan="3" name="section_id" domain="[('id','=',15)]" />
 						<field name="date" colspan="4" select="1"/>
-
 						<field colspan="3" name="priority"/>
 						<field colspan="4" name="partner_id" on_change="onchange_partner_id(partner_id, email_from)" select="1"/>
 						<field colspan="3" name="partner_address_id" on_change="onchange_partner_address_id(partner_address_id, email_from)" select="2"/>
@@ -287,18 +266,17 @@
 					</field>
 				</page>
 				</notebook>
-			</form>
 		</field>
-	</record>
+	</record>-->
 
 
-	<record model="ir.ui.view" id="portal_leads_form">
+	<!--<record model="ir.ui.view" id="portal_leads_form">
 		<field name="name">Portal Leads Form</field>
 		<field name="model">crm.case</field>
 		<field name="type">form</field>
+		<field name="inherit_id" ref="crm.crm_case-view"/>
 		<field name="arch" type="xml">
-			<form link="0" string="Cases">
-				<notebook>
+			<notebook position="replace">
 				<page string="General">
 					<group col="8" colspan="4">
 						<field name="name" select="1" colspan="4"/>
@@ -384,12 +362,9 @@
 						</form>
 					</field>
 				</page>
-				</notebook>
-
-			</form>
+			</notebook>
 		</field>
-	</record>
-
+	</record>-->
 
 
 </data>

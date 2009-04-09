@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_purchase_order_tree_direct_delivery">
+			<field name="name">purchase.order.tree.direct_delivery</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_tree" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<field name="partner_id" position="after">
+					<field name="has_supplier_direct_delivery" />
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_purchase_order_line_form_direct_delivery">
+			<field name="name">purchase.order.line.form.direct_delivery</field>
+			<field name="model">purchase.order.line</field>
+			<field name="inherit_id" ref="purchase.purchase_order_line_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook" position="inside">
+					<page string="Supplier Direct Delivery">
+						<field name="is_supplier_direct_delivery" />
+						<field name="sale_order_line" readonly="1" />
+						<field name="partner_address_id" readonly="1" />
+						<separator colspan="4" string="Supplier Delivery Moves" />
+						<field name="move_ids" colspan="4" nolabel="1" />
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_purchase_order_line_tree_direct_delivery">
+			<field name="name">purchase.order.line.tree.direct_delivery</field>
+			<field name="model">purchase.order.line</field>
+			<field name="inherit_id" ref="purchase.purchase_order_line_tree" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<field name="price_subtotal" position="after">
+					<field name="is_supplier_direct_delivery" />
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

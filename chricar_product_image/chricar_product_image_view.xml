@@ -1,0 +1,17 @@
+<openerp>
+  <data>
+    <record model="ir.ui.view" id="product_image_form_view1">
+        <field name="name">product.image.form.view1</field>
+        <field name="model">product.product</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <notebook position="inside" >
+                <page string="Image">
+                    <field name="picture" colspan="4" img_width="600" img_height="600" width="600" height="600" widget="image" nolabel="1"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+  </data>
+</openerp>

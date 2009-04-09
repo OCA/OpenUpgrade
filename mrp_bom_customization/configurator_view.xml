@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<!-- Configurator inscription -->
+		
+		<record id="step_mrp_bom_customization_configurator" model="sale_product_multistep_configurator.configurator.step">
+			<field name="name">mrp_bom_customization_configurator</field>
+			<field name="model_id"	search="[('model','=','mrp_bom_customization.configurator')]"/>
+			<field name="sequence"	eval="2"/>
+		</record>
+		
+		<record id="mrp_bom_customization_configurator_action" model="ir.actions.act_window">
+			<field name="name">mrp_bom_customization_configurator_action</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">mrp_bom_customization.configurator</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<record id="mrp_bom_customization.configurator" model="ir.ui.view">
+			<field name="name">mrp_bom_customization.configurator</field>
+			<field name="model">mrp_bom_customization.configurator</field>
+			<field name="type">form</field>
+
+			<field name="arch" type="xml">
+				<form string="BOM Configurator">
+					<field name="product_id" invisible='1' />
+					<field name="bom_property_id_selection" on_change="onchange_bom_property_id_selection(bom_property_id_selection, product_id, 'sol_id' in context and context['sol_id'])"/><!-- domain="[('group_id','=',13)]"  -->
+					<field name="configurator_line_ids" widget="one2many_list" on_change="onchange_configurator_line_ids(configurator_line_ids, bom_property_id_selection, product_id)">
+						<form string="Key / Value" editable="bottom">
+							<field name="customization_group_id"/>
+							<field name="customization_key_id" on_change="onchange_customization_key_id(customization_key_id)"/>
+							<field name="customization_value_id" />
+						</form>
+						<tree string="Key / Value" editable="bottom">
+							<field name="customization_group_id"/>
+							<field name="customization_key_id"/>
+							<field name="customization_value_id"/>
+						</tree>
+					</field>
+					<group col="2" colspan="2">
+						<button icon="gtk-cancel" special="cancel" string="Cancel" />
+						<button icon="gtk-ok" name="configure_line" string="Validate" type="object" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+	</data>
+</openerp>

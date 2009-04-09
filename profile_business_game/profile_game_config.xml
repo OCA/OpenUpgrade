@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+		<record id="sale.config_wizard_step_sale_picking_policy" model="ir.actions.todo">
+            <field name="name">Sale Configure Wizard</field>
+			<field name="active" eval="False"/>
+			<field eval="'skip'" name="state"/>
+			<field name="action_id" ref="sale.action_config_picking_policy"/>
+		</record>
+
+		<record id="account.config_fiscalyear" model="ir.actions.todo">
+		    <field name="name">Fiscal Year Configure Wizard</field>
+			<field name="active" eval="False"/>
+            <field eval="'skip'" name="state"/>
+            <field name="action_id" ref="account.action_account_config_wizard_form"/>
+		</record>
+		<record id="l10n_fr.config_call_account_template_fr_pcg" model="ir.actions.todo">
+		    <field name="name">l10n_fr Configure Wizard</field>
+			<field name="active" eval="False"/>
+            <field eval="'skip'" name="state"/>
+            <field name="action_id" ref="account.action_wizard_multi_chart"/>
+		</record>
+
+		<record id="base.config_wizard_step_user" model="ir.actions.todo">
+		    <field name="name">Base User Configure Wizard </field>
+			<field name="active" eval="False"/>
+            <field eval="'skip'" name="state"/>
+            <field name="action_id" ref="base.action_config_user_form"/>
+		</record>
+		<record id="base.config_wizard_simple_view" model="ir.actions.todo">
+		    <field name="name">Base View Configure Wizard</field>
+			<field name="active" eval="False"/>
+            <field eval="'skip'" name="state"/>
+            <field name="action_id" ref="base.action_config_simple_view_form"/>
+		</record>
+
+		<record id="crm_configuration.config_wizard_step_case_section_menu" model="ir.actions.todo">
+		    <field name="name">Crm Configure Wizard</field>
+			<field name="active" eval="False"/>
+            <field eval="'skip'" name="state"/>
+            <field name="action_id" ref="crm_configuration.action_view_config_crm_menu"/>
+		</record>
+    </data>
+</openerp>

@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="sale_forecast_view_tree">
+            <field name="name">sale_forecast.tree</field>
+            <field name="model">sale.forecast</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Sales Forecast">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="state"/>
+                    <field name="forecast_rate" widget="progressbar"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_forecast_view_form">
+            <field name="name">sale_forecast.form</field>
+            <field name="model">sale.forecast</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Sales Forecast">
+                    <field name="name" select="1"/>
+                    <field name="user_id" select="1"/>
+                    <field name="date_from" select="2"/>
+                    <field name="date_to"/>
+                    <notebook colspan="4">
+                    <page string="Sales Forecast">
+                        <field name="line_ids" widget="one2many_list" colspan="4" nolabel="1" mode="tree,form">
+                            <form string="Forecast Lines" >
+                                <group col="4" colspan="2">
+                                    <separator string="Forecasts" colspan="4"/>
+                                    <field name="user_id"/>
+                                    <field name="computation_type"/>
+                                    <newline/>
+                                    <field name="amount"/>
+                                </group>
+                                <group col="2" colspan="2">
+                                    <separator string="Results" colspan="2"/>
+                                    <field name="computed_amount"/>
+                                    <field name="final_evolution"/>
+                                </group>
+                                <notebook colspan="4">
+                                    <page string="Forecast Details">
+					<group col="8" colspan="8">
+                                        <separator string="Filter on States" colspan="8"/>
+                                        <field name="state_draft" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
+                                        <field name="state_confirmed" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
+                                        <field name="state_cancel" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
+                                        <field name="state_done" attrs="{'readonly':[('computation_type','=','cases'),]}"/>
+					</group>
+                                        <separator string="Filter on Cases Sections" colspan="2"/>
+                                        <separator string="Filter on Cases Categories" colspan="2"/>
+                                        <field name="crm_case_section" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','!=','cases'),]}"/>
+                                        <field name="crm_case_categ" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','!=','cases'),]}"/>
+                                        <separator string="Filter on Products" colspan="2"/>
+                                        <separator string="Filter on Product Categories" colspan="2"/>
+	                                    <field name="product_product" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','=','cases'),('computation_type','=','invoice_fix'),('computation_type','=','number_of_sale_order')]}"/>
+	                                    <field name="product_categ" colspan="2" nolabel="1" attrs="{'readonly':[('computation_type','=','cases'),('computation_type','=','invoice_fix'),('computation_type','=','number_of_sale_order')]}"/>
+                                    </page>
+                                    <page string="Notes">
+                                        <field name="note" colspan="4" nolabel="1"/>
+                                    </page>
+                                    <page string="Feedback">
+                                        <field name="feedback" colspan="4" nolabel="1"/>
+                                    </page>
+                                </notebook>
+                            </form>
+                            <tree string="Forecast Lines" >
+                                <field name="user_id"/>
+                                <field name="computation_type"/>
+                                <field name="amount"/>
+                                <field name="computed_amount"/>
+                                <field name="final_evolution"/>
+                                <field name="forecast_rate" widget="progressbar"/>
+                            </tree>
+                        </field>
+                        <separator string="States" colspan="4"/>
+                        <field name="state"/>
+                    </page>
+                    <page string="Notes">
+                        <field name="note" nolabel="1" colspan="4"/>
+                    </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_sale_forecast_view_form">
+            <field name="name">New Sales Forecasts</field>
+            <field name="res_model">sale.forecast</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+        </record>
+        <menuitem
+            name="Sales Forecasts"
+            id="menu_sale_forecast"
+            parent="sale.menu_sale_root"/>
+
+        <menuitem id="menu_sale_forecast_new" parent="menu_sale_forecast" action="action_sale_forecast_view_form"/>
+
+        <record model="ir.actions.act_window" id="action_invoice_salesman_forecast_view_form_my">
+            <field name="res_model">sale.forecast</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('user_id','=',uid)]</field>
+        </record>
+
+        <menuitem name="My Managing Sales Forecast" id="menu_sale_forecast_my_managing" parent="menu_sale_forecast" action="action_invoice_salesman_forecast_view_form_my"/>
+
+        <record model="ir.actions.act_window" id="sale_forecast_view_form_current">
+            <field name="name">Current Sales Forecast</field>
+            <field name="res_model">sale.forecast</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+        </record>
+
+        <menuitem name="Current Sales Forecast" id="menu_sale_forecast_current" parent="menu_sale_forecast" action="sale_forecast_view_form_current"/>
+
+    <record model="ir.ui.view" id="sale_forecast_line_graph">
+        <field name="name">sale.forecast.line.graph</field>
+        <field name="model">sale.forecast.line</field>
+        <field name="type">graph</field>
+        <field name="arch" type="xml">
+            <graph string="Forecast Reports" color="user_id" type="bar">
+                <field name="user_id" />
+                <field name="amount"/>
+                <field name="computed_amount"/>
+            </graph>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="sale_forecast_line_graph_invoice_fix">
+        <field name="name">Forecasting base on Number of Invoice done</field>
+        <field name="res_model">sale.forecast.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,graph</field>
+        <field name="domain">[('computation_type','=','invoice_fix')]</field>
+        <field name="view_id" ref="sale_forecast_line_graph"/>
+    </record>
+
+    <menuitem name="Forecast Reports" id="menu_sale_forecast_report" parent="menu_sale_forecast"/>
+    <menuitem name="Number Of Invoice" id="menu_sale_forecast_no_invoice" parent="menu_sale_forecast_report" action="sale_forecast_line_graph_invoice_fix"/>
+
+    <record model="ir.actions.act_window" id="sale_forecast_line_graph_amount_invoiced">
+        <field name="name">Forecasting base on Amount Invoiced Report</field>
+        <field name="res_model">sale.forecast.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,graph</field>
+        <field name="domain">[('computation_type','=','amount_invoiced')]</field>
+        <field name="view_id" ref="sale_forecast_line_graph"/>
+    </record>
+
+    <menuitem name="Amount Invoiced" id="menu_sale_forecast_amount_invoice" parent="menu_sale_forecast_report" action="sale_forecast_line_graph_amount_invoiced"/>
+
+    <record model="ir.actions.act_window" id="sale_forecast_line_graph_cases">
+        <field name="name">Forecasting base on Number of Cases </field>
+        <field name="res_model">sale.forecast.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,graph</field>
+        <field name="domain">[('computation_type','=','cases')]</field>
+        <field name="view_id" ref="sale_forecast_line_graph"/>
+    </record>
+
+    <menuitem name="Cases" id="menu_sale_forecast_cases" parent="menu_sale_forecast_report" action="sale_forecast_line_graph_cases"/>
+
+    <record model="ir.actions.act_window" id="sale_forecast_line_graph_amount_sales">
+        <field name="name">Forecasting base on Amount Sales</field>
+        <field name="res_model">sale.forecast.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,graph</field>
+        <field name="domain">[('computation_type','=','amount_sales')]</field>
+        <field name="view_id" ref="sale_forecast_line_graph"/>
+    </record>
+
+    <menuitem name="Amount Sales" id="menu_sale_forecast_amount_sales" parent="menu_sale_forecast_report" action="sale_forecast_line_graph_amount_sales"/>
+
+    <record model="ir.actions.act_window" id="sale_forecast_line_graph_no_sale_order">
+        <field name="name">Forecasting base on Number of sales order done</field>
+        <field name="res_model">sale.forecast.line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,graph</field>
+        <field name="domain">[('computation_type','=','number_of_sale_order')]</field>
+        <field name="view_id" ref="sale_forecast_line_graph"/>
+    </record>
+
+    <menuitem name="Number of Sales order" id="menu_sale_forecast_no_sales_order" parent="menu_sale_forecast_report" action="sale_forecast_line_graph_no_sale_order"/>
+
+</data>
+</openerp>

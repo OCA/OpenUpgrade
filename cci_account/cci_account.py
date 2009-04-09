@@ -1,4 +1,24 @@
 # -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 from osv import fields, osv
 import time
 
@@ -26,10 +46,10 @@ class account_invoice(osv.osv):
         'invoice_special':fields.boolean('Special Invoice'),
         'internal_note': fields.text('Internal Note'),
     }
-
-
+   
     def action_move_create(self, cr, uid, ids, context=None):
-        flag = False
+        flag = membership_flag = False
+        product_ids = []
         move_obj = self.pool.get('account.move')
         move_line_obj = self.pool.get('account.move.line')
         data_invoice = self.browse(cr,uid,ids[0])
@@ -40,6 +60,17 @@ class account_invoice(osv.osv):
         if flag:
             raise osv.except_osv('Error!','Invoice line should have Analytic Distribution to create Analytic Entries.')
         super(account_invoice, self).action_move_create(cr, uid, ids, context)
+
+        for lines in data_invoice.abstract_line_ids:
+            if lines.product_id:
+                product_ids.append(lines.product_id.id)
+        if product_ids:
+            data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
+            for product in data_product:
+                if product.membership:
+                    membership_flag = True
+        if data_invoice.partner_id.alert_membership and membership_flag:
+            raise osv.except_osv('Error!',data_invoice.partner_id.alert_explanation or 'Partner is not valid')
 
         #create other move lines if the invoice_line is related to a check payment or an AWEX credence
         for inv in self.browse(cr, uid, ids):
@@ -123,58 +154,6 @@ class account_invoice(osv.osv):
         data['value']['invoice_special']=inv_special
         return data
 
-    #raise an error when we try to invoice a membership product to a partner with the 'alert_membership' warning set to TRUE
-    def create(self, cr, uid, vals, *args, **kwargs):
-        product_ids = []
-        line_ids = []
-        flag = False
-        inv_line_obj = self.pool.get('account.invoice.line')
-        if 'invoice_line' in vals and vals['invoice_line']:
-            for line in vals['invoice_line']:
-                if type(line[2])==type([]):
-                    data_lines = inv_line_obj.browse(cr, uid, line[2])
-                    for line in data_lines:
-                        if line.product_id:
-                            product_ids.append(line.product_id.id)
-                else:
-                    if line[2].has_key('product_id') and line[2]['product_id']:
-                        product_ids.append(line[2]['product_id'])
-        if 'abstract_line_ids' in vals:
-            for lines in vals['abstract_line_ids']:
-                line_ids.append(lines[1])
-            data_lines = inv_line_obj.browse(cr, uid, line_ids)
-            for line in data_lines:
-                    if line.product_id:
-                        product_ids.append(line.product_id.id)
-        if product_ids:
-            data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
-            for product in data_product:
-                if product.membership:
-                    flag = True
-        if vals['partner_id']:
-            data_partner = self.pool.get('res.partner').browse(cr,uid,vals['partner_id'])
-            if data_partner.alert_membership and flag:
-                raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
-        return super(account_invoice,self).create(cr, uid, vals, *args, **kwargs)
-
-    #raise an error when we try to invoice a membership product to a partner with the 'alert_membership' warning set to TRUE
-    def write(self, cr, uid, ids,vals, *args, **kwargs):
-        product_ids = []
-        a = super(account_invoice,self).write(cr, uid, ids,vals, *args, **kwargs)
-        flag = False
-        data_inv = self.browse(cr,uid,ids[0])
-        for lines in data_inv.abstract_line_ids:
-            if lines.product_id:
-                product_ids.append(lines.product_id.id)
-        if product_ids:
-            data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
-            for product in data_product:
-                if product.membership:
-                    flag = True
-        if data_inv.partner_id.alert_membership and flag:
-            raise osv.except_osv('Error!',data_inv.partner_id.alert_explanation or 'Partner is not valid')
-        return a
-
 account_invoice()
 
 
@@ -185,7 +164,6 @@ class sale_order(osv.osv):
     }
 
 sale_order()
-
 
 
 class account_invoice_line(osv.osv):

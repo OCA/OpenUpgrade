@@ -10,7 +10,7 @@
 			<tree string="Server Configuration">
 				<field name="name"/>
 				<field name="user_name"/>
-				<field name="password"/>				
+				<field name="password" password="True"/>				
 				<field name="iserver_name"/>
 				<field name="iserver_type"/>
 				<field name="iconn_type"/>
@@ -31,7 +31,7 @@
 				<field name="name" colspan="2"/>
 				<newline/>
 				<field name="user_name"/>				
-				<field name="password"/>
+				<field name="password" password="True"/>
 				<separator string="Incoming Server Setting" colspan="4"/>
 				<group col="4" colspan="4">
 					<field name="iserver_name"/>
@@ -60,7 +60,7 @@
 			<form string="Mail Account Configuration">
 				<field name="user_id" colspan="4"/>
 				<separator string="Server Configuration " colspan="4"/>
-				<field name="server_conf_id" nolabel="1" colspan="4"/>				
+				<field name="server_conf_id" nolabel="1" colspan="4"/>
 			</form>
 		</field>
 	</record>
@@ -73,11 +73,18 @@
 		<field name="domain">[('user_id','=',uid)]</field>		
 	</record>
 	
+	<record model="ir.actions.act_window" id="action_webmail_tiny_server">		
+		<field name="res_model">webmail.server</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+	</record>
+	
 	<menuitem name="Webmail" id="menu_action_webmail_tiny_user"/>
 	
 	<menuitem name="Configuration" id="menu_action_configuration_tiny_user" parent="webmail.menu_action_webmail_tiny_user"/>
-	 
-	<menuitem name="Server" id="menu_action_server_tiny_user" parent="webmail.menu_action_configuration_tiny_user" action="action_webmail_tiny_user"/>
+	
+<!--	<menuitem name="Users" id="menu_action_server_tiny_user" parent="webmail.menu_action_configuration_tiny_user" action="action_webmail_tiny_user"/>-->
+	<menuitem name="Server" id="menu_action_server_tiny_server" parent="webmail.menu_action_configuration_tiny_user" action="action_webmail_tiny_server"/>
 	
 	<!-- 
 	<record model="ir.ui.view" id="view_webmail_mailacc_form">

@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+	<record model="ir.ui.view" id="view_gnucash_index_form">
+		<field name="name">gnucash.index.form</field>
+		<field name="model">gnucash.index</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Mappings">
+				<field name="guid" />
+				<field name="model" />
+				<field name="module" />
+				<field name="res_id" />
+				<field name="noupdate" />
+				<field name="date_init" />
+				<field name="date_update" />
+			</form>
+		</field>
+	</record>
+        
+	<record id="view_gnucash_index_tree" model="ir.ui.view">
+            <field name="name">gnucash.index.tree</field>
+            <field name="model">gnucash.index</field>
+            <field name="type">tree</field>
+            <field name="field_parent">parent_book</field>
+            <field name="arch" type="xml">
+			<tree string="Module Category">
+				<field name="guid"/>
+				<field name="model"/>
+				<field name="res_id"/>
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="view_gnucash_index_tree_form">
+		<field name="name">Gnucash Mappings</field>
+		<field name="res_model">gnucash.index</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	
+	<menuitem id="menu_gnucash" name="GnuCash" parent="base.menu_administration" sequence="12"/>
+	<menuitem action="view_gnucash_index_tree_form" id="menu_gnucash_index" parent="menu_gnucash"/>
+	<!-- <menuitem name="All Prints" id="menu_account_fiscalgr_print_tree_form" action="view_account_fiscalgr_print_tree_form" parent="menu_account_fiscalgr"/> -->
+
+	</data>
+</openerp>

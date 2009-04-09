@@ -1,16 +1,15 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
-	<!-- Sale Order -->
+	<!-- Sales Orders -->
 
 	<record model="ir.ui.view" id="sale_order_form">
 		<field name="name">saleorder.form</field>
 		<field name="model">ecommerce.saleorder</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Sale Order">
+			<form string="Sales Orders">
 				<notebook>
-				<separator string="Sale Order" colspan="4"/>
 					<page string="Order Line">
 							<field name="name" select="1"/>
 							<field name="date_order" select="1"/>
@@ -20,9 +19,9 @@
 							<field name="epartner_invoice_id" select="1"/>
 							<field name="web_id"/>
 							<field name="pricelist_id"/>
-							<field name="order_lines" widget="one2many_list" colspan="4" nolabel="1"/>
+							<field name="orderline_ids" widget="one2many_list" colspan="4" nolabel="1"/>
 					</page>
-					<page string="Others data">
+					<page string="Other data">
 						<field name="order_id" colspan="3"/>
 						<field name="note" colspan="3"/>
 					</page>
@@ -35,7 +34,7 @@
 		<field name="model">ecommerce.saleorder</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Sale Order">
+			<tree string="Sales Orders">
 				<field name="name"/>
 				<field name="date_order"/>
 			</tree>
@@ -47,22 +46,22 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="sale_order_tree"/>
 	</record>
-	<menuitem name="ecommerce/Sale Order/sale order" id="menu_sale_order_form" action="action_sale_order_form"/>
-
-	<!-- Sale Order Line -->
-
+	<menuitem id="menu_ecommerce_saleorder" name="Sales Orders" parent="ecommerce.menu_ecommerce"/>	
+	<menuitem name="Ecommerce Sales Orders" id="menu_sale_order_form" parent="menu_ecommerce_saleorder" action="action_sale_order_form"/>  
+	
+	<!-- Sales Orders Line -->	
+	  
 	<record model="ir.ui.view" id="order_line_form">
 		<field name="name">orderline.form</field>
 		<field name="model">ecommerce.order.line</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Sale Order">
-				<separator string="Sale Order" colspan="4"/>
+			<form string="Sales Orders">
+				<separator string="Sales Orders" colspan="4"/>
 				<newline/>
+				<field name="product_id" on_change="onchange_product(product_id)" colspan="4"/>
 				<field name="name"/>
-				<field name="order_id"/>
 				<field name="product_qty"/>
-				<field name="product_id"/>
 				<field name="product_uom_id"/>
 				<field name="price_unit"/>
 			</form>
@@ -73,9 +72,8 @@
 		<field name="model">ecommerce.order.line</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Sale Order">
+			<tree string="Sales Orders">
 				<field name="name"/>
-				<field name="order_id"/>
 				<field name="product_qty"/>
 				<field name="product_id"/>
 				<field name="product_uom_id"/>

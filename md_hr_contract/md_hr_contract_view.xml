@@ -1,189 +1,188 @@
 <?xml version="1.0"?>
 <openerp>
-	<data>
-		***********************************************************************************************************
-		md_hr_contract
-		***********************************************************************************************************
-		<record model="ir.ui.view" id="md_hr_contract_form_1">
-			<field name="name">md.hr.contract.form1</field>
-			<field name="model">hr.contract</field>
-			<field name="type">form</field>
-			<field name="inherit_id"
-				ref="hr_contract.hr_contract_view_form" />
-			<field name="arch" type="xml">
-				<field name="function" position="after">
-					<field name="bank_account_nbr" />
-					<field name="form_of_employment" />
-					<field name="department_id" />
-				</field>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="md_hr_contract_form_2">
-			<field name="name">md.hr.contract.form2</field>
-			<field name="model">hr.contract</field>
-			<field name="type">form</field>
-			<field name="inherit_id"
-				ref="hr_contract.hr_contract_view_form" />
-			<field name="arch" type="xml">
-				<field name="date_end" select="1" position="after">
-					<field name="extend_appointment_date" />
-					<field name="trial_period_review" />
-				</field>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="md_hr_contract_form_3">
-			<field name="name">md.hr.contract.form3</field>
-			<field name="model">hr.contract</field>
-			<field name="type">form</field>
-			<field name="inherit_id"
-				ref="hr_contract.hr_contract_view_form" />
-			<field name="arch" type="xml">
-				<field name="wage_type_id" position="after">
-					<field name="fulltime_salary" />
-					<field name="salary_level" />
-					<field name="salary_grade" />
-					<field name="fte_hrs" />
-					<field name="fte"/>
-				</field>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="md_hr_contract_form_4">
-			<field name="name">md.hr.contract.form4</field>
-			<field name="model">hr.contract</field>
-			<field name="type">form</field>
-			<field name="inherit_id"
-				ref="hr_contract.hr_contract_view_form" />
-			<field name="arch" type="xml">
-				<field name="wage" position="after">
-					<field name="availability_per_week"
-						widget="one2many_list" colspan="4" nolabel="1" />
-				</field>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="md_hr_contract_form_5">
-			<field name="name">md.hr.contract.form5</field>
-			<field name="model">hr.contract</field>
-			<field name="type">form</field>
-			<field name="inherit_id"
-				ref="hr_contract.hr_contract_view_form" />
-			<field name="arch" type="xml">
-				<field name="name" select="1" position="after">
-					<field name="code" />
-				</field>
-			</field>
-		</record>
-		
-		
-		
-		***********************************************************************************************************
-		md_hr_employee
-		***********************************************************************************************************
-		<record model="ir.ui.view" id="md_hr_employee_form_1">
-			<field name="name">md.hr.employee.form1</field>
-			<field name="model">hr.employee</field>
-			<field name="type">form</field>
-			<field name="inherit_id"
-				ref="hr_contract.hr_hr_employee_view_form2" />
-			<field name="arch" type="xml">
-				<field name="contract_ids" colspan="4" nolabel="1"
-					position="replace">
-					<field name="contract_ids" colspan="4"
-						nolabel="1">
-						<tree string="Contracts">
-							<field name="name" />
-							<field name="function" />
-							<field name="date_start" />
-							<field name="date_end" />
-							<field name="working_hours_per_day" />
-							<field name="wage_type_id" />
-							<field name="wage" />
-						</tree>
-						<form string="Contract">
-							<separator string="Generalities"
-								colspan="4" />
-							<field name="name" select="1" />
-							<field name="code" />
-							<newline />
-							<separator string="Contract Duration"
-								colspan="4" />
-							<field name="function" />
-							<field name="bank_account_nbr" />
-							<field name="form_of_employment" />
-							<field name="department_id" />
-							<field name="working_hours_per_day" />
-							<field name="date_start" select="1" />
-							<field name="date_end" select="1" />
-							<field name="extend_appointment_date" />
-							<field name="trial_period_review" />
-							<separator string="Salary" colspan="4" />
-							<field name="wage_type_id" />
-							<field name="fulltime_salary" />
-							<field name="salary_level" />
-							<field name="salary_grade" />
-							<field name="fte" />
-							<field name="fte_hrs" />
-							<field name="wage" />
-							<field name="availability_per_week"
-								widget="one2many_list" colspan="4" nolabel="1" />
-							<separator string="Notes" colspan="4" />
-							<field name="notes" colspan="4" nolabel="1" />
-						</form>
-					</field>
-				</field>
-			</field>
-		</record>
+    <data>
+        ***********************************************************************************************************
+        md_hr_contract
+        ***********************************************************************************************************
+        <record model="ir.ui.view" id="md_hr_contract_form_1">
+            <field name="name">md.hr.contract.form1</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form" />
+            <field name="arch" type="xml">
+                <field name="function" position="after">
+                    <field name="department_id" />
+                    <field name="form_of_employment" />
+                    <field name="bank_account_nbr" />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="md_hr_contract_form_2">
+            <field name="name">md.hr.contract.form2</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id"
+                ref="hr_contract.hr_contract_view_form" />
+            <field name="arch" type="xml">
+                <field name="date_end" select="1" position="after">
+                    <field name="trial_period_review" />
+                    <field name="extend_appointment_date" />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="md_hr_contract_form_3">
+            <field name="name">md.hr.contract.form3</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id"
+                ref="hr_contract.hr_contract_view_form" />
+            <field name="arch" type="xml">
+                <field name="wage_type_id" position="after">
+                    <field name="fte"/>
+                    <field name="fte_hrs" />
+                    <field name="salary_grade" />
+                    <field name="salary_level" />
+                    <field name="fulltime_salary" />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="md_hr_contract_form_4">
+            <field name="name">md.hr.contract.form4</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id"
+                ref="hr_contract.hr_contract_view_form" />
+            <field name="arch" type="xml">
+                <field name="wage" position="after">
+                    <field name="availability_per_week"
+                        widget="one2many_list" colspan="4" nolabel="1" />
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="md_hr_contract_form_5">
+            <field name="name">md.hr.contract.form5</field>
+            <field name="model">hr.contract</field>
+            <field name="type">form</field>
+            <field name="inherit_id"
+                ref="hr_contract.hr_contract_view_form" />
+            <field name="arch" type="xml">
+                <field name="name" select="1" position="after">
+                    <field name="code" />
+                </field>
+            </field>
+        </record>
+        
+        
+        
+        ***********************************************************************************************************
+        md_hr_employee
+        ***********************************************************************************************************
+        <record model="ir.ui.view" id="md_hr_employee_form_1">
+            <field name="name">md.hr.employee.form1</field>
+            <field name="model">hr.employee</field>
+            <field name="type">form</field>
+            <field name="inherit_id"
+                ref="hr_contract.hr_hr_employee_view_form2" />
+            <field name="arch" type="xml">
+                <field name="contract_ids" colspan="4" nolabel="1"
+                    position="replace">
+                    <field name="contract_ids" colspan="4"
+                        nolabel="1">
+                        <tree string="Contracts">
+                            <field name="name" />
+                            <field name="function" />
+                            <field name="date_start" />
+                            <field name="date_end" />
+                            <field name="working_hours_per_day" />
+                            <field name="wage_type_id" />
+                            <field name="wage" />
+                        </tree>
+                        <form string="Contract">
+                            <separator string="Generalities"
+                                colspan="4" />
+                            <field name="name" select="1" />
+                            <field name="code" />
+                            <newline />
+                            <separator string="Contract Duration"
+                                colspan="4" />
+                            <field name="function" />
+                            <field name="bank_account_nbr" />
+                            <field name="form_of_employment" />
+                            <field name="department_id" />
+                            <field name="working_hours_per_day" />
+                            <field name="date_start" select="1" />
+                            <field name="date_end" select="1" />
+                            <field name="extend_appointment_date" />
+                            <field name="trial_period_review" />
+                            <separator string="Salary" colspan="4" />
+                            <field name="wage_type_id" />
+                            <field name="fulltime_salary" />
+                            <field name="salary_level" />
+                            <field name="salary_grade" />
+                            <field name="fte" />
+                            <field name="fte_hrs" />
+                            <field name="wage" />
+                            <field name="availability_per_week"
+                                widget="one2many_list" colspan="4" nolabel="1" />
+                            <separator string="Notes" colspan="4" />
+                            <field name="notes" colspan="4" nolabel="1" />
+                        </form>
+                    </field>
+                </field>
+            </field>
+        </record>
 
-		***********************************************************************************************************
-									md_hr_contract_availability
-		***********************************************************************************************************
-		<record model="ir.ui.view" id="md_hr_contract_availability_form">
-			<field name="name">md.hr.contract.availability.form</field>
-			<field name="model">md.hr.contract.availability</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Employee Availability">
-					<field name="day" />
-					<newline />
-					<field name="from_hour" />
-					<field name="to_hour" />
-				</form>
-			</field>
-		</record>
+        ***********************************************************************************************************
+                                    md_hr_contract_availability
+        ***********************************************************************************************************
+        <record model="ir.ui.view" id="md_hr_contract_availability_form">
+            <field name="name">md.hr.contract.availability.form</field>
+            <field name="model">md.hr.contract.availability</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Employee Availability">
+                    <field name="day" />
+                    <newline />
+                    <field name="from_hour" />
+                    <field name="to_hour" />
+                </form>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="md_hr_contract_availability_tree">
-			<field name="name">md.hr.contract.availability.tree</field>
-			<field name="model">md.hr.contract.availability</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Employee Availability">
-					<field name="day" />
-					<field name="from_hour" />
-					<field name="to_hour" />
-				</tree>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_md_hr_contract_availability_form">
-			<field name="res_model">md.hr.contract.availability</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">form,tree</field>
-			<field name="view_id" ref="md_hr_contract_availability_form" />
-		</record>
-	
-		***********************************************************************************************************
-									hr_department
-		***********************************************************************************************************
-		<record model="ir.ui.view" id="hr_department_form">
-			<field name="name">hr.department.form</field>
-			<field name="model">hr.department</field>
-			<field name="type">form</field>
-			<field name="inherit_id"
-				ref="hr.view_department_form" />
-			<field name="arch" type="xml">
-				<field name="manager_id" select="1" colspan="4" position="after">
-					<field name="max_temp_contract"/>
-				</field>
-			</field>
-		</record>
-	
-	</data>
+        <record model="ir.ui.view" id="md_hr_contract_availability_tree">
+            <field name="name">md.hr.contract.availability.tree</field>
+            <field name="model">md.hr.contract.availability</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Employee Availability">
+                    <field name="day" />
+                    <field name="from_hour" />
+                    <field name="to_hour" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_md_hr_contract_availability_form">
+            <field name="res_model">md.hr.contract.availability</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="md_hr_contract_availability_form" />
+        </record>
+    
+        ***********************************************************************************************************
+                                    hr_department
+        ***********************************************************************************************************
+        <record model="ir.ui.view" id="hr_department_form">
+            <field name="name">hr.department.form</field>
+            <field name="model">hr.department</field>
+            <field name="type">form</field>
+            <field name="inherit_id"
+                ref="hr.view_department_form" />
+            <field name="arch" type="xml">
+                <field name="manager_id" select="1" colspan="4" position="after">
+                    <field name="max_temp_contract"/>
+                </field>
+            </field>
+        </record>
+    
+    </data>
 </openerp>

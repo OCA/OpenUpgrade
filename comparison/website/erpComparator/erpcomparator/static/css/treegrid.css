@@ -1,0 +1,96 @@
+table.tree-grid {
+    background-color:#99CCCC;
+    border-collapse: collapse;
+    width:100%;
+}
+
+table.tree-grid th,
+table.tree-grid td {
+    text-align: left;
+    padding: 2px 5px;
+    white-space: nowrap;
+    border: 1px solid #99CCCC;
+}
+
+table.tree-grid td {
+    border-top: none;
+}
+
+table.tree-grid .tree-field td {
+    padding: 0 2px;
+    border: none;
+}
+
+table.tree-grid .header th {
+    padding: 4px 5px;
+    background-image: url(/static/images/factor_bg.png);
+}
+
+table.tree-grid .row {
+    background-color: #FFFFFF;
+}
+
+table.tree-grid .row:hover {
+    background-color: #F3F3F3;
+}
+
+table.tree-grid .row.selected{
+    background-color: #E0E0E0;
+}
+
+table.tree-grid .float,
+table.tree-grid .integer {
+    text-align: right;
+}
+
+table.tree-grid .indent,
+table.tree-grid .expand,
+table.tree-grid .collapse,
+table.tree-grid .loading {
+    float: left;
+    width: 1.5em;
+    min-height: 18px;
+
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+table.tree-grid .expand {
+    background-image: url("/static/images/treegrid/expand.png");
+}
+
+table.tree-grid .expand:hover {
+    background-image: url("/static/images/treegrid/expandh.png");
+}
+
+table.tree-grid .collapse {
+    background-image: url("/static/images/treegrid/collapse.png");
+}
+
+table.tree-grid .collapse:hover {
+    background-image: url("/static/images/treegrid/collapseh.png");
+}
+
+table.tree-grid .loading {
+    background-image: url("/static/images/treegrid/loading.gif");
+}
+
+table.tree-grid a,
+table.tree-grid a:active,
+table.tree-grid a:hover {
+    text-decoration: none;
+}
+
+table.tree-grid .requiredfield {
+     background-color: #CCD9FF;
+}
+
+table.tree-grid a:hover {
+    color: blue;
+    border: none;
+}
+
+/**
+ * vim: sts=4 st=4 et 
+ *
+ */

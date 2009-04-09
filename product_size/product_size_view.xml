@@ -1,49 +1,49 @@
-<?xml version="1.0" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
-	<data>
-		<record model="ir.ui.view" id="view_move_form_expiry">
-			<field name="name">stock.production.lot.form</field>
-			<field name="model">stock.production.lot</field>
-			<field name="inherit_id" ref="stock.view_production_lot_form" />
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<field name="date" position="after">
-					<field name="thickness" select="2"/>
-					<field name="length"  select="2"/>
-					<field name="width"  select="2"/>
-				</field>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_move_tree_expiry">
-			<field name="name">stock.production.lot.tree</field>
-			<field name="model">stock.production.lot</field>
-			<field name="inherit_id" ref="stock.view_production_lot_tree" />
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<field name="date" position="after">
-					<field name="thickness" />
-					<field name="length" />
-					<field name="width" />
-				</field>
-			</field>
-		</record>
+    <data>
+        <record model="ir.ui.view" id="view_move_form_expiry">
+            <field name="name">stock.production.lot.form</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="width"  select="2"/>
+                    <field name="length"  select="2"/>
+                    <field name="thickness" select="2"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_move_tree_expiry">
+            <field name="name">stock.production.lot.tree</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_tree" />
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="width" />
+                    <field name="length" />
+                    <field name="thickness" />
+                </field>
+            </field>
+        </record>
 
 
-		<record model="ir.ui.view" id="view_product_form_expiry">
-			<field name="name">product.normal.form</field>
-			<field name="model">product.product</field>
-			<field name="inherit_id" ref="product.product_normal_form_view" />
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<notebook position="inside">
-					<page string="Dimensions">
-						<field name="thickness" />
-						<field name="length" />
-						<field name="width" />
-					</page>
-				</notebook>
-			</field>
-		</record>
-	</data>
+        <record model="ir.ui.view" id="view_product_form_expiry">
+            <field name="name">product.normal.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Dimensions">
+                        <field name="thickness" />
+                        <field name="length" />
+                        <field name="width" />
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
 </openerp>
 

@@ -3,35 +3,40 @@
 <data noupdate="True">
 
 #
-# Tax Code Definitions
+# Tax Code Template Definitions
 #
-
-	<record model="account.tax.code" id="vat_code_balance_net">
-		<field name="name">Tax balance to pay</field>
+	<record model="account.tax.code.template" id="vat_code_tax">
+		<field name="name">Tax</field>
 	</record>
 
-	<record model="account.tax.code" id="vat_code_due_tva">
+	<record model="account.tax.code.template" id="vat_code_balance_net">
+		<field name="name">Tax balance to pay</field>
+		<field name="parent_id" ref="vat_code_tax"/>
+	</record>
+
+	<record model="account.tax.code.template" id="vat_code_due_tva">
 		<field name="name">Tax Due (Tax to pay)</field>
 		<field name="parent_id" ref="vat_code_balance_net"/>
 	</record>
 
-	<record model="account.tax.code" id="vat_code_payable">
+	<record model="account.tax.code.template" id="vat_code_payable">
 		<field name="name">Tax payable</field>
 		<field name="parent_id" ref="vat_code_balance_net"/>
 	</record>
 
-	<record model="account.tax.code" id="vat_code_base_net">
+	<record model="account.tax.code.template" id="vat_code_base_net">
 		<field name="name">Tax bases</field>
+		<field name="parent_id" ref="vat_code_tax"/>
 	</record>
 
 
-	<record model="account.tax.code" id="vat_code_base_due">
+	<record model="account.tax.code.template" id="vat_code_base_due">
 		<field name="name">Base of taxed sales</field>
 		<field name="parent_id" ref="vat_code_base_net"/>
 	</record>
 
 
-	<record model="account.tax.code" id="vat_code_receivable_net">
+	<record model="account.tax.code.template" id="vat_code_receivable_net">
 		<field name="name">Base of taxed purchases</field>
 		<field name="parent_id" ref="vat_code_base_net"/>
 	</record>

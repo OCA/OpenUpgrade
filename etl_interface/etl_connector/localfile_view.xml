@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="etl_connector_localfile_form" model="ir.ui.view">
+			<field name="name">etl.connector.localfile.form</field>
+			<field name="model">etl.connector</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_connector_basic_form"/>
+			<field name="arch" type="xml">
+				<notebook position='inside'>
+					<page string="Other Information" attrs="{'invisible':[('type','!=','localfile')]}">
+						<field name="bufsize"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+
+
+		<record id="action_etl_connector_localfile_tree"
+			model="ir.actions.act_window">
+			<field name="name">File Connectors</field>
+			<field name="res_model">etl.connector</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','localfile')]</field>
+			<field name="view_id"
+				ref="etl_interface.etl_connector_basic_tree" />
+		</record>
+
+		<record id="action_etl_connector_localfile_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id"
+				ref="etl_interface.etl_connector_basic_tree" />
+			<field name="act_window_id"
+				ref="action_etl_connector_localfile_tree" />
+		</record>
+
+		<record id="action_etl_connector_localfile_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_connector_localfile_form" />
+			<field name="act_window_id"
+				ref="action_etl_connector_localfile_tree" />
+		</record>
+
+		<menuitem name="File Access Control"
+			parent="etl_interface.etl_connector_all_tree"
+			action="action_etl_connector_localfile_tree"
+			id="connector_file_access_control" />
+
+	</data>
+</openerp>
+

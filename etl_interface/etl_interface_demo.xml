@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+		<!--		Transition CHANNEL -->
+		<record id="channel_main" model="etl.channel">
+			<field name="name">main</field>
+			<field name="code">main</field>
+			<field name="type">transition</field>
+		</record>
+		<record id="channel_error" model="etl.channel">
+			<field name="name">error</field>
+			<field name="code">error</field>
+			<field name="type">transition</field>
+		</record>
+		<record id="channel_gmail" model="etl.channel">
+			<field name="name">gmail</field>
+			<field name="code">gmail</field>
+			<field name="type">transition</field>
+		</record>
+
+		<record id="channel_partner" model="etl.channel">
+			<field name="name">partner</field>
+			<field name="code">partner</field>
+			<field name="type">transition</field>
+		</record>
+
+		<record id="channel_address" model="etl.channel">
+			<field name="name">address</field>
+			<field name="code">address</field>
+			<field name="type">transition</field>
+		</record>
+
+		<!--	CONNECTORS-->
+
+		<record id="fileconnector_partner" model="etl.connector">
+			<field name="name">Partner Data</field>
+			<field name="type">localfile</field>
+			<field name="uri">/etl_interface/etl_demo/input/partner.csv</field>
+		</record>
+
+		<record id="fileconnector_partner1" model="etl.connector">
+			<field name="name">Partner Data1</field>
+			<field name="type">localfile</field>
+			<field name="uri">/etl_interface/etl_demo/input/partner1.csv</field>
+		</record>
+
+		<record id="fileconnector_partner3" model="etl.connector">
+			<field name="name">Partner Data3</field>
+			<field name="type">localfile</field>
+			<field name="uri">/etl_interface/etl_demo/input/partner3.csv</field>
+		</record>
+
+		<record id="fileconnector_output" model="etl.connector">
+			<field name="name">Partner OUT Data1</field>
+			<field name="type">localfile</field>
+			<field name="uri">/etl_interface/etl_demo/output/test1_partner.csv</field>
+		</record>
+
+		<record id="fileconnector_filevcard" model="etl.connector">
+			<field name="name">Contacts vcard</field>
+			<field name="type">localfile</field>
+			<field name="uri">/etl_interface/etl_demo/input/contacts.vcf</field>
+		</record>
+
+		<record id="fileconnector_ooconnector" model="etl.connector">
+			<field name="name">OpenObject Connector</field>
+			<field name="type">openobject</field>
+			<field name="uri">http://localhost:8069</field>
+			<!--field name="db">etl</field-->
+			<field name="uid">admin</field>
+			<field name="passwd">admin</field>
+			<field name="obj">/xmlrpc/object</field>
+			<!--field name="con_type">xmlrpc</field-->
+		</record>
+
+		<record id="facebook_connector" model="etl.connector">
+			<field name="name">Facebook connector</field>
+			<field name="type">facebook</field>
+			<field name="uri">http://facebook.com</field>
+			<field name="email">modiinfo@gmail.com</field>
+		</record>
+
+		<!--	COMPONENTS-->
+
+		<record id="component_csv_in1" model="etl.component">
+			<field name="name">csv_in1</field>
+			<field name="type_id" ref="comp_input_csv_in" />
+			<field name="connector_id" ref="fileconnector_partner" />
+		</record>
+
+		<record id="component_csv_in2" model="etl.component">
+			<field name="name">csv_in2</field>
+			<field name="type_id" ref="comp_input_csv_in" />
+			<field name="connector_id" ref="fileconnector_partner1" />
+		</record>
+
+		<record id="component_csv_out1" model="etl.component">
+			<field name="name">csv_out1</field>
+			<field name="type_id" ref="comp_output_csv_out" />
+			<field name="connector_id" ref="fileconnector_output" />
+		</record>
+
+		<record id="component_sort1" model="etl.component">
+			<field name="name">sort1</field>
+			<field name="type_id" ref="comp_transform_sort" />
+		</record>
+
+		<record id="component_log1_job1" model="etl.component">
+			<field name="name">Read Partner File</field>
+			<field name="type_id" ref="comp_transform_logger" />
+		</record>
+
+		<record id="component_log2_job1" model="etl.component">
+			<field name="name">After Sort</field>
+			<field name="type_id" ref="comp_transform_logger" />
+		</record>
+
+		<record id="component_log1_job2" model="etl.component">
+			<field name="name">vCard-&gt;Oo</field>
+			<field name="type_id" ref="comp_transform_logger" />
+		</record>
+
+		<record id="component_log2_job2" model="etl.component">
+			<field name="name">Count</field>
+			<field name="type_id" ref="comp_transform_logger" />
+		</record>
+
+		<record id="component_sleep1" model="etl.component">
+			<field name="name">sleep1</field>
+			<field name="type_id" ref="comp_control_sleep" />
+		</record>
+
+		<record id="component_vcard_in1" model="etl.component">
+			<field name="name">vcard_in1</field>
+			<field name="type_id" ref="comp_input_vcard_in" />
+			<field name="connector_id" ref="fileconnector_filevcard" />
+		</record>
+
+		<record id="component_facebook_in" model="etl.component">
+			<field name="name">Facebook in</field>
+			<field name="type_id" ref="comp_input_facebook_in" />
+			<field name="connector_id" ref="facebook_connector" />
+			<field name="method">get_friends</field>
+		</record>
+
+		<record id="component_oo_out" model="etl.component">
+			<field name="name">oo_out</field>
+			<field name="type_id" ref="comp_output_openobject_out" />
+			<field name="connector_id" ref="fileconnector_ooconnector" />
+			<field name="model_id" model="ir.model"
+				search="[('model','=','res.partner')]" />
+		</record>
+
+		<record id="component_oo_out2" model="etl.component">
+			<field name="name">oo_out2</field>
+			<field name="type_id" ref="comp_output_openobject_out" />
+			<field name="connector_id" ref="fileconnector_ooconnector" />
+			<field name="model_id" model="ir.model"
+				search="[('model','=','res.partner.address')]" />
+		</record>
+
+		<record id="component_map1" model="etl.component">
+			<field name="name">map</field>
+			<field name="type_id" ref="comp_transform_map" />
+		</record>
+
+		<record id="component_count" model="etl.component">
+			<field name="name">count</field>
+			<field name="type_id" ref="comp_control_data_count" />
+		</record>
+
+
+		<!--	FIELDS-->
+
+		<record id="map_line1"
+			model="etl.component.transform.map_lines">
+			<field name="name">main</field>
+			<field name="component_id" ref="component_map1" />
+		</record>
+
+		<record id="field1"
+			model="etl.component.transform.map_fields">
+			<field name="name">id</field>
+			<field name="dest_field">tools.uniq_id(main.get('org', 'anonymous'),prefix='partner_')</field>
+			<field name="map_line_id" ref="map_line1" />
+		</record>
+
+		<record id="field2"
+			model="etl.component.transform.map_fields">
+			<field name="name">address_id</field>
+			<field name="dest_field">tools.uniq_id(main.get('fn', 'anonymous'),prefix='contact_')</field>
+			<field name="map_line_id" ref="map_line1" />
+		</record>
+
+		<record id="field3"
+			model="etl.component.transform.map_fields">
+			<field name="name">name</field>
+			<field name="dest_field">main.get('org',['anonymous'])[0]</field>
+			<field name="map_line_id" ref="map_line1" />
+		</record>
+
+		<record id="field4"
+			model="etl.component.transform.map_fields">
+			<field name="name">contact_name</field>
+			<field name="dest_field">main.get('fn','anonymous')</field>
+			<field name="map_line_id" ref="map_line1" />
+		</record>
+
+		<record id="field5"
+			model="etl.component.transform.map_fields">
+			<field name="name">email</field>
+			<field name="dest_field">main.get('email','').upper()</field>
+			<field name="map_line_id" ref="map_line1" />
+		</record>
+
+		<record id="field_oo1" model="etl.component.openobject.lines">
+			<field name="source_field">id</field>
+			<field name="dest_field">id</field>
+			<field name="component_id" ref="component_oo_out" />
+		</record>
+
+		<record id="field_oo2" model="etl.component.openobject.lines">
+			<field name="source_field">name</field>
+			<field name="dest_field">name</field>
+			<field name="component_id" ref="component_oo_out" />
+		</record>
+
+		<record id="field_oo3" model="etl.component.openobject.lines">
+			<field name="source_field">name</field>
+			<field name="dest_field">contact_name</field>
+			<field name="component_id" ref="component_oo_out2" />
+		</record>
+
+		<record id="field_oo4" model="etl.component.openobject.lines">
+			<field name="source_field">id</field>
+			<field name="dest_field">address_id</field>
+			<field name="component_id" ref="component_oo_out2" />
+		</record>
+
+		<record id="field_oo5" model="etl.component.openobject.lines">
+			<field name="source_field">partner_id</field>
+			<field name="dest_field">id</field>
+			<field name="component_id" ref="component_oo_out2" />
+		</record>
+
+		<record id="field_oo6" model="etl.component.openobject.lines">
+			<field name="source_field">email</field>
+			<field name="dest_field">email</field>
+			<field name="component_id" ref="component_oo_out2" />
+		</record>
+
+
+
+
+		<!--TRANSITIONS-->
+
+		<record id="transition_trans" model="etl.transition">
+			<field name="name">trans1</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_csv_in1" />
+			<field name="destination_component_id"
+				ref="component_sort1" />
+		</record>
+
+		<record id="transition_trans" model="etl.transition">
+			<field name="name">trans</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_csv_in1" />
+			<field name="destination_component_id"
+				ref="component_sort1" />
+		</record>
+
+		<record id="transition_trans1" model="etl.transition">
+			<field name="name">trans1</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_csv_in2" />
+			<field name="destination_component_id"
+				ref="component_sort1" />
+		</record>
+
+		<record id="transition_trans3" model="etl.transition">
+			<field name="name">trans3</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_sort1" />
+			<field name="destination_component_id"
+				ref="component_sleep1" />
+		</record>
+
+		<record id="transition_trans4" model="etl.transition">
+			<field name="name">trans4</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_sleep1" />
+			<field name="destination_component_id"
+				ref="component_log2_job1" />
+		</record>
+
+		<record id="transition_trans5" model="etl.transition">
+			<field name="name">trans5</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_sort1" />
+			<field name="destination_component_id"
+				ref="component_csv_out1" />
+		</record>
+
+		<record id="transition_trans2_1" model="etl.transition">
+			<field name="name">trans</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_vcard_in1" />
+			<field name="destination_component_id" ref="component_map1" />
+		</record>
+
+		<record id="transition_trans2_2" model="etl.transition">
+			<field name="name">trans</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_map1" />
+			<field name="destination_component_id"
+				ref="component_log1_job2" />
+		</record>
+
+		<record id="transition_trans2_3" model="etl.transition">
+			<field name="name">trans</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_log1_job2" />
+			<field name="destination_component_id"
+				ref="component_oo_out" />
+		</record>
+
+		<record id="transition_trans2_4" model="etl.transition">
+			<field name="name">trans</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_oo_out" />
+			<field name="destination_component_id"
+				ref="component_oo_out2" />
+		</record>
+
+		<record id="transition_trans2_5" model="etl.transition">
+			<field name="name">trans</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_map1" />
+			<field name="destination_component_id"
+				ref="component_count" />
+			<field name="channel_destination">gmail</field>
+		</record>
+
+		<record id="transition_trans2_6" model="etl.transition">
+			<field name="name">trans</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_oo_out" />
+			<field name="destination_component_id"
+				ref="component_count" />
+			<field name="channel_destination">partner</field>
+		</record>
+
+		<record id="transition_trans2_7" model="etl.transition">
+			<field name="name">trans</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_oo_out2" />
+			<field name="destination_component_id"
+				ref="component_count" />
+			<field name="channel_destination">address</field>
+		</record>
+
+		<record id="transition_trans2_8" model="etl.transition">
+			<field name="name">trans</field>
+			<field name="type">data</field>
+			<field name="source_component_id" ref="component_count" />
+			<field name="destination_component_id"
+				ref="component_log2_job2" />
+		</record>
+
+
+		<record id="job1" model="etl.job">
+			<field name="name">job1</field>
+			<field name="component_ids"
+				eval="[(6,0,[ref('component_csv_out1'),ref('component_log2_job1')])]" />
+		</record>
+
+		<record id="job2" model="etl.job">
+			<field name="name">job2</field>
+			<field name="component_ids"
+				eval="[(6,0,[ref('component_oo_out2'),ref('component_log2_job2')])]" />
+		</record>
+
+
+		<!--		<record id="job2" model="etl.job">-->
+		<!--			<field name="name">job vcard</field>-->
+		<!--			<field name="component_ids"-->
+		<!--				eval="[(6,0,[ref('component_oo_out2'),ref('component_log_job2')])]" />-->
+		<!--		</record>-->
+
+
+<!--				SCHEDULER-->
+
+	    <record forcecreate="True" id="ir_cron_scheduler_action" model="ir.cron">
+            <field name="name">Run Job Process</field>
+            <field eval="False" name="active"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'etl.job.process'" name="model"/>
+            <field eval="'run_scheduler'" name="function"/>
+            <field eval="'(uid,)'" name="args"/>
+        </record>
+
+	</data>
+</openerp>

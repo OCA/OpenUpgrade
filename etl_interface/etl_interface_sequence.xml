@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+		<!-- Sequences for etl.job.process -->
+		<record id="seq_type_etl_job_process"
+			model="ir.sequence.type">
+			<field name="name">ETL Job Process</field>
+			<field name="code">etl.job.process</field>
+		</record>
+		<record id="seq_etl_job_process" model="ir.sequence">
+			<field name="name">ETL Job Process</field>
+			<field name="code">etl.job.process</field>
+		</record>
+	</data>
+</openerp>

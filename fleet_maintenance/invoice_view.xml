@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="account_invoice_line_form_fleet_maintenance">
+			<field name="name">account.invoice.line.form.fleet_maintenace.inherit</field>
+			<field name="model">account.invoice.line</field>
+			<field name="inherit_id" ref="account.view_invoice_line_form" />
+			<field name="type">form</field>
+      <field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Maintenance">
+						<group>
+	     			<field name="fleet_id" string="Sub Fleet" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}" domain="[('fleet_type','=','sub_fleet'), ('parent_partner_id','=',parent.partner_id)]"/>
+	     			<field name="maintenance_month_qty" readonly="1" />
+						<field name="maintenance_product_qty" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
+	     			<field name="maintenance_start_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
+	     			<field name="maintenance_end_date" attrs="{'readonly':[('is_maintenance','=',False)], 'required':[('is_maintenance','=',True)]}"/>
+	     			</group>
+	     			<separator string="Analytic Accounting" />
+	     			<field colspan="4" name="account_analytic_lines" attrs="{'readonly':[('is_maintenance','=',False)]}" nolabel="1"/>
+	     		</page>
+				</notebook>
+	    </field>
+		</record>
+		
+		<record model="ir.ui.view" id="account_invoice_line_tree_fleet_maintenance">
+			<field name="name">account.invoice.line.tree.fleet_maintenace.inherit</field>
+			<field name="model">account.invoice.line</field>
+			<field name="inherit_id" ref="account.view_invoice_line_tree" />
+			<field name="type">tree</field>
+      <field name="arch" type="xml">
+				<field name="uos_id" position="before">
+	     			<field name="maintenance_start_date"/>
+	     			<field name="maintenance_end_date"/>
+				</field>
+	    </field>
+		</record>    
+		
+		<record model="ir.ui.view" id="account_invoice_line_calendar_fleet_maintenance">
+			<field name="name">account.invoice.line.calendar.fleet_maintenace.inherit</field>
+			<field name="model">account.invoice.line</field>
+			<field name="type">calendar</field>
+      <field name="arch" type="xml">
+				<calendar color="name" date_start="maintenance_start_date" date_stop="maintenance_end_date" string="Calendar View">
+					<field name="origin"/>
+					<field name="fleet_id"/>
+       	</calendar>
+	    </field>
+		</record>
+	</data>
+</openerp>

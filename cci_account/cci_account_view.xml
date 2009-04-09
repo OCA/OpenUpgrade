@@ -2,161 +2,129 @@
 <openerp>
 <data>
 
-	<record model="ir.ui.view" id="view_account_invoice_supplier_inherit">
-			<field name="name">account.invoice.supplier.form.inherit</field>
-			<field name="type">form</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_supplier_form"/>
-			<field name="arch" type="xml">
-				<field name="comment" position="after">
-					<field name="internal_note" nolabel="1" colspan="4"/>
-			    	<separator string="Internal Note" colspan="4"/>
-				</field>
-			</field>
-		</record>
+    <record model="ir.ui.view" id="view_account_invoice_supplier_inherit">
+            <field name="name">account.invoice.supplier.form.inherit</field>
+            <field name="type">form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="comment" position="after">
+                    <separator string="Internal Note" colspan="4"/>
+                    <field name="internal_note" nolabel="1" colspan="4"/>
+                </field>
+            </field>
+        </record>
 
-	<record model="ir.ui.view" id="view_account_invoice_inherit">
-			<field name="name">account.invoice.form.inherit</field>
-			<field name="type">form</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_form"/>
-			<field name="arch" type="xml">
-				<field name="comment" position="after">
-					<field name="internal_note" nolabel="1" colspan="4"/>
-			    	<separator string="Internal Note" colspan="4"/>
-				</field>
-			</field>
-		</record>
+    <record model="ir.ui.view" id="view_account_invoice_inherit">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="type">form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="comment" position="after">
+                    <separator string="Internal Note" colspan="4"/>
+                    <field name="internal_note" nolabel="1" colspan="4"/>
+                </field>
+            </field>
+        </record>
 
-	<record model="ir.ui.view" id="view_bank_statement_form_inherit">
-			<field name="name">account.bank.statement.form</field>
-			<field name="model">account.bank.statement</field>
-			<field name="inherit_id" ref="account.view_bank_statement_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<field name="line_ids" position="replace">
-					<field name="line_ids" colspan="4" nolabel="1">
-						<tree string="Statement lines" editable="bottom"
-							colors="red:amount!=reconcile_amount and reconcile_id">
-							<field name="date"/>
-							<field name="ref"/>
-							<field name="type"/>
-							<field name="partner_id"
-								on_change="onchange_partner_id(partner_id, type, parent.currency)"/>
-							<field name="account_id"
-								domain="[('journal_id','=',parent.journal_id)]"/>
-							<field name="amount"/>
-							<field name="reconcile_id"
-								context="{'partner_id': partner_id, 'amount': amount, 'account_id': account_id, 'currency_id': parent.currency}"/>
-							<field name="reconcile_amount" invisible="1"/>
-							<field name="name"/>
-						</tree>
-						<form string="Statement lines">
-							<field name="date"/>
-							<field name="name"/>
-							<field name="type"/>
-							<field name="partner_id" on_change="onchange_partner_id(partner_id, type, parent.currency)"/>
-							<field name="account_id" domain="[('journal_id', '=', parent.journal_id), ('type', '&lt;&gt;', 'view')]"/>
-							<field name="amount"/>
-							<field name="reconcile_id" context="{'partner_id':partner_id,'amount':amount,'account_id':account_id}"/>
-							<field name="ref"/>
-							<separator string="Notes" colspan="4"/>
-							<field name="note" nolabel="1" colspan="4"/>
-						</form>
-					</field>
-				</field>
-			</field>
-	</record>
+    <record model="ir.ui.view" id="view_bank_statement_form_inherit">
+            <field name="name">account.bank.statement.form</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="line_ids" position="replace">
+                    <field name="line_ids" colspan="4" nolabel="1">
+                        <tree string="Statement lines" editable="bottom"
+                            colors="red:amount!=reconcile_amount and reconcile_id">
+                            <field name="date"/>
+                            <field name="ref"/>
+                            <field name="type"/>
+                            <field name="partner_id"
+                                on_change="onchange_partner_id(partner_id, type, parent.currency)"/>
+                            <field name="account_id"
+                                domain="[('journal_id','=',parent.journal_id)]"/>
+                            <field name="amount"/>
+                            <field name="reconcile_id"
+                                context="{'partner_id': partner_id, 'amount': amount, 'account_id': account_id, 'currency_id': parent.currency}"/>
+                            <field name="reconcile_amount" invisible="1"/>
+                            <field name="name"/>
+                        </tree>
+                        <form string="Statement lines">
+                            <field name="date"/>
+                            <field name="name"/>
+                            <field name="type"/>
+                            <field name="partner_id" on_change="onchange_partner_id(partner_id, type, parent.currency)"/>
+                            <field name="account_id" domain="[('journal_id', '=', parent.journal_id), ('type', '&lt;&gt;', 'view')]"/>
+                            <field name="amount"/>
+                            <field name="reconcile_id" context="{'partner_id':partner_id,'amount':amount,'account_id':account_id}"/>
+                            <field name="ref"/>
+                            <separator string="Notes" colspan="4"/>
+                            <field name="note" nolabel="1" colspan="4"/>
+                        </form>
+                    </field>
+                </field>
+            </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_cci_account_message_tree">
-		<field name="name">cci_account.message.tree</field>
-		<field name="model">cci_account.message</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Messages">
-				<field name="name"/>
-				<field name="msg"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_cci_account_message_form">
-		<field name="name">cci_account.message.form</field>
-		<field name="model">cci_account.message</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Messages">
-				<separator string="Write a notification or a wishful message." colspan="4"/>
-				<field name="name" select="1" colspan="2" />
-				<field name="msg" select="1" colspan="2"/>
-			</form>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="cci_account_mesage_tree_form">
-		<field name="name">Write Messages</field>
-		<field name="res_model">cci_account.message</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-	</record>
-	<menuitem name="Notification Message" id="menu_cci_account_mesage" parent="account.menu_finance_configuration"/>
-	<menuitem name="All Notification Messages" id="menu_cci_account_mesage_tree_form" action="cci_account_mesage_tree_form" parent="menu_cci_account_mesage"/>
+    <record model="ir.ui.view" id="invoice_form_inherit_cci_sup">
+            <field name="name">account.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                    <field name="dept" select="2"/>
+                </field>
+            </field>
+    </record>
+    <record model="ir.ui.view" id="invoice_form_inherit_cci">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="company_id" position="after">
+                    <field name="dept" select="2"/>
+                </field>
+            </field>
+    </record>
 
-	<record model="ir.ui.view" id="invoice_form_inherit_cci_sup">
-			<field name="name">account.invoice.supplier.form</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_supplier_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<field name="company_id" position="after">
-					<field name="dept" select="2"/>
-				</field>
-			</field>
-	</record>
-	<record model="ir.ui.view" id="invoice_form_inherit_cci">
-			<field name="name">account.invoice.form</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<field name="company_id" position="after">
-					<field name="dept" select="2"/>
-				</field>
-			</field>
-	</record>
+    <record model="ir.ui.view" id="invoice_form_inherit_cci_sup1">
+            <field name="name">account.invoice.supplier.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="date_due" position="after">
+                    <field name="invoice_special" select="2"/>
+                </field>
+            </field>
+    </record>
 
-	<record model="ir.ui.view" id="invoice_form_inherit_cci_sup1">
-			<field name="name">account.invoice.supplier.form</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_supplier_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<field name="date_due" position="after">
-					<field name="invoice_special" select="2"/>
-				</field>
-			</field>
-	</record>
+    <record model="ir.ui.view" id="invoice_form_inherit_cci_1">
+            <field name="name">account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="date_due" position="after">
+                    <field name="invoice_special" select="2"/>
+                </field>
+            </field>
+    </record>
 
-	<record model="ir.ui.view" id="invoice_form_inherit_cci_1">
-			<field name="name">account.invoice.form</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<field name="date_due" position="after">
-					<field name="invoice_special" select="2"/>
-				</field>
-			</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_order_form_inherit_cci">
-			<field name="name">sale.order.form</field>
-			<field name="model">sale.order</field>
-			<field name="inherit_id" ref="sale.view_order_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<field name="user_id" position="after">
-					<field name="dept" select="2"/>
-				</field>
-			</field>
-	</record>
+    <record model="ir.ui.view" id="view_order_form_inherit_cci">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="dept" select="2"/>
+                </field>
+            </field>
+    </record>
 </data>
 </openerp>

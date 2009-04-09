@@ -1,30 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id: partner.py 1007 2005-07-25 13:18:09Z kayhman $
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -136,7 +128,7 @@ class stock_planning_sale_prevision(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64),
         'user_id': fields.many2one('res.users' , 'Salesman',readonly=True, states={'draft':[('readonly',False)]}),
-        'period_id': fields.many2one('stock.period' , 'Period', required=True,readonly=True,  domain=[('state','=','open')],states={'draft':[('readonly',False)]}),
+        'period_id': fields.many2one('stock.period' , 'Period', required=True),
         'product_id': fields.many2one('product.product' , 'Product', readonly=True, required=True,states={'draft':[('readonly',False)]}),
         'product_qty' : fields.float('Product Quantity', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'product_amt' : fields.float('Product Amount', readonly=True, states={'draft':[('readonly',False)]}),
@@ -187,23 +179,32 @@ class stock_planning(osv.osv):
         if not context:
             context = {}
         mapping = {
-            'incoming': "incoming_qty",
-            'outgoing': "outgoing_qty",
+            'incoming': {
+                'field': "incoming_qty",
+                'adapter': lambda x: x,
+            },
+            'outgoing': {
+                'field': "outgoing_qty",
+                'adapter': lambda x: -x,
+            },
         }
+
+
         for val in self.browse(cr, uid, ids):
             res[val.id] = {}
             context['from_date'] = val.period_id.date_start
             context['to_date'] = val.period_id.date_stop
             context['warehouse'] = val.warehouse_id.id or False
             product_obj =  self.pool.get('product.product').read(cr, uid,val.product_id.id,[], context)
-            product_qty =product_obj[' , '.join(map(lambda x: mapping[x], field_names))]# 0.0
-            res[val.id][field_names[0]] = product_qty
+            for fn in field_names:
+                product_qty = product_obj[mapping[fn]['field']]
+                res[val.id][fn] = mapping[fn]['adapter'](product_qty)
         return res
     
     def _get_planned_sale(self, cr, uid, ids, field_name, arg, context):
         res = {}
         for val in self.browse(cr, uid, ids):
-            cr.execute('select sum(product_qty) from stock_planning_sale_prevision where product_id = %d and period_id = %d',(val.product_id.id,val.period_id.id))
+            cr.execute('select sum(product_qty) from stock_planning_sale_prevision where product_id = %s and period_id = %s',(val.product_id.id,val.period_id.id))
             product_qty = cr.fetchall()[0][0]
             res[val.id] = product_qty
         return res
@@ -254,7 +255,7 @@ class stock_planning(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64),
         'state' : fields.selection([('draft','Draft'),('done','Done')],'State',readonly=True),
-        'period_id': fields.many2one('stock.period' , 'Period', required=True,readonly=True,  domain=[('state','=','open')],states={'draft':[('readonly',False)]}),
+        'period_id': fields.many2one('stock.period' , 'Period', required=True),
         'product_id': fields.many2one('product.product' , 'Product', required=True),
         'product_uom' : fields.many2one('product.uom', 'UoM', required=True),
         'planned_outgoing' : fields.float('Planned Out', required=True),

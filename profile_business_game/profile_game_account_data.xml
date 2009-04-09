@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+        <record id="operations_journal" model="account.journal">
+            <field name="name">Journal des opérations diverses</field>
+            <field name="code">Op-Div</field>
+            <field name="type">purchase</field>
+            <field name="view_id" ref="account.account_journal_view"/>
+            <field name="sequence_id" ref="account.sequence_journal"/>
+            <field model="account.account" name="default_debit_account_id" search="[('type','=','payable')]"/>
+            <field model="account.account" name="default_credit_account_id" search="[('type','=','receivable')]"/>
+        </record>
+        <record id="bilan_journal" model="account.journal">
+            <field name="name">Journal d'ouverture</field>
+            <field name="code">Ouverture</field>
+            <field name="type">situation</field>
+            <field name="centralisation">True</field>
+            <field name="view_id" ref="account.account_journal_view"/>
+            <field name="sequence_id" ref="account.sequence_journal"/>
+        </record>
+
+	    <record model="account.journal" id="account.bank_journal">
+	      <field name="name">Journal de banque</field>
+	      <field name="code">JB</field>
+	      <field name="type">cash</field>
+	      <field name="view_id" ref="account.account_journal_bank_view"/>
+          <field name="sequence_id" ref="account.sequence_journal"/>
+	    </record>
+
+	    <record model="account.journal" id="closing_journal">
+	      <field name="name">Journal de clôture</field>
+	      <field name="code">JC</field>
+	      <field name="type">situation</field>
+	      <field name="centralisation">True</field>
+	      <field name="view_id" ref="account.account_journal_view"/>
+	      <field name="sequence_id" ref="account.sequence_journal"/>
+	    </record>
+	</data>
+</openerp>

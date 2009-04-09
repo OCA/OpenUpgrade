@@ -3,322 +3,322 @@
 <data>
 
 
-	<record model="ir.ui.view" id="view_partner_form">
-		<field name="name">Partner</field>
-		<field name="model">res.partner</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-		 <field name="ref" position="replace">
-				<field name="ref" select="2"/>
-				<field name="number" select="1"/>
-				<field name="partner_ref"/>
-		 </field>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_partner_form2">
-		<field name="name">Partner</field>
-		<field name="model">res.partner</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-		 <field name="parent_id" position="replace">
-				<field name="parent_id" select="2"/>
-		 </field>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_partner_form3">
-		<field name="name">Partner</field>
-		<field name="model">res.partner</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-		 <field name="category_id" position="replace">
-		   <field name="category_id" colspan="4" select="1" nolabel="1"/>
-		 </field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_form">
+        <field name="name">Partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+         <field name="ref" position="replace">
+                <field name="ref" select="2"/>
+                <field name="number" select="1"/>
+                <field name="partner_ref"/>
+         </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_partner_form2">
+        <field name="name">Partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+         <field name="parent_id" position="replace">
+                <field name="parent_id" select="2"/>
+         </field>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_partner_form3">
+        <field name="name">Partner</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+         <field name="category_id" position="replace">
+           <field name="category_id" colspan="4" select="1" nolabel="1"/>
+         </field>
+        </field>
+    </record>
 
 
-	<record model="ir.ui.view" id="view_partner_address_form2">
-		<field name="name">Partner Address</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form2"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-		 <field name="email" position="after">
-				<field name="comment" select="1" colspan="4"/>
-		 </field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_address_form2">
+        <field name="name">Partner Address</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form2"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+         <field name="email" position="after">
+                <field name="comment" select="1" colspan="4"/>
+         </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_partner_tree">
-		<field name="name">Partners</field>
-		<field name="model">res.partner</field>
-		<field name="type">tree</field>
-		<field name="priority" eval="8"/>
-		<field name="arch" type="xml">
-			<tree string="Partners">
-				<field name="name"/>
-				<field name="ref"/>
-				<field name="address"/>
-				<field name="lang"/>
-				<field name="category_id"/>
-				<field name="vat"/>
-			</tree>
-		</field>
-	</record>
-
-
-
+    <record model="ir.ui.view" id="view_partner_tree">
+        <field name="name">Partners</field>
+        <field name="model">res.partner</field>
+        <field name="type">tree</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <tree string="Partners">
+                <field name="name"/>
+                <field name="ref"/>
+                <field name="address"/>
+                <field name="lang"/>
+                <field name="category_id"/>
+                <field name="vat"/>
+            </tree>
+        </field>
+    </record>
 
 
 
 
 
-<!-- 	<record model="ir.ui.view" id="sale.view_order_form"> -->
-<!-- 		<field name="name">sale.order.form</field>  -->
-<!-- 		<field name="priority" eval="1"/> -->
-<!-- 		<field name="model">sale.order</field> -->
-<!-- 		<field name="type">form</field> -->
-<!-- 		<field name="arch" type="xml"> -->
-<!-- 			<form string="Sales Order"> -->
-<!-- 				<notebook> -->
-<!-- 					<page string="Sale Order"> -->
-<!-- 						<field name="name" select="1"/> -->
-<!-- 						<group colspan="2" col="4"> -->
-<!-- 							<field name="shipped" select="1"/> -->
-<!-- 							<field name="invoiced" select="1"/> -->
-<!-- 						</group> -->
-<!-- 						<newline/> -->
-
-<!-- 						<field name="date_order" select="1"/> -->
-<!-- 						<field name="shop_id" select="1" on_change="onchange_shop_id(shop_id)"/> -->
-<!-- 						<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id)" required="1"/> -->
-<!-- 						<field name="partner_order_id" domain="[('partner_id','=',partner_id)]"/> -->
-<!-- 						<field name="partner_invoice_id" domain="[('partner_id','=',partner_id)]"/> -->
-<!-- 						<field name="pricelist_id"  domain="[('type','=','sale')]"/> -->
-<!-- 						<field name="client_order_ref" /> -->
-<!-- 						<newline/> -->
-
-<!-- 						<field name="order_line" widget="one2many_list" colspan="4" nolabel="1"> -->
-<!-- 			<form string="Sales Order Line"> -->
-<!-- 				<notebook> -->
-<!-- 				<page string="Order Lines"> -->
-<!-- 					<separator string="Automatic Declaration" colspan="4"/> -->
-<!-- 					<field name="product_uom_qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id)" context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom" select="1"/> -->
-<!-- 					<field name="product_uom"/> -->
-<!-- 					<field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id)" context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom" colspan="3" select="1"/> -->
-<!-- <!\- 					<field name="production_lot_id" /> -\-> -->
-<!-- <!\- 					<field name="customer_ref" /> -\-> -->
-
-<!-- 					<separator string="Manual Description" colspan="4"/> -->
-<!-- 					<field name="name" colspan="3" select="1"/> -->
-<!-- 					<field name="price_unit" select="1"/> -->
-<!-- 					<field name="discount"/> -->
-<!-- 					<field name="type"/> -->
-<!-- 					<field name="date_planned" select="1"/> -->
-<!-- 					<field name="price_subtotal"/> -->
-<!-- 					<newline/> -->
-<!-- 					<field name="tax_id" colspan="3"/> -->
-<!-- 					<separator string="States" colspan="4"/> -->
-<!-- 					<field name="state" select="1"/> -->
-<!-- 					<field name="invoiced" select="1"/> -->
-<!-- 				</page><page string="Properties"> -->
-<!-- 					<field name="property_ids" colspan="4" nolabel="1"/> -->
-<!-- 				</page><page string="Notes"> -->
-<!-- 					<field name="notes" colspan="4" nolabel="1"/> -->
-<!-- 				</page><page string="History"> -->
-<!-- 					<field name="product_uos_qty" on_change="uos_change(product_uos, product_uos_qty, product_id)"/> -->
-<!-- 					<field name="product_uos"  /> -->
-<!-- 					<field name="product_packaging" /> -->
-<!-- 					<field name="address_allotment_id" select="1"/> -->
-<!-- 					<separator string="Invoice Lines" colspan="4"/> -->
-<!-- 					<field name="invoice_lines" colspan="4" nolabel="1"/> -->
-<!-- 					<separator string="Inventory Moves" colspan="4"/> -->
-<!-- 					<field name="move_ids" colspan="4" nolabel="1"/> -->
-<!-- 				</page> -->
-<!-- 				</notebook> -->
-<!-- 			</form> -->
-<!-- 						</field> -->
-<!-- 						<newline/> -->
-<!-- 						<group colspan="4" col="7"> -->
-<!-- 							<field name="amount_untaxed"/> -->
-<!-- 							<field name="amount_tax"/> -->
-<!-- 							<field name="amount_total"/> -->
-<!-- 							<button name="button_dummy" string="Compute" states="draft" type="object"/> -->
-<!-- 						</group> -->
-<!-- 						<group colspan="4" col="13"> -->
-<!-- 							<field name="state" select="1"/> -->
-<!-- 							<button name="order_confirm" string="Confirm Order" states="draft"/> -->
-<!-- 							<button name="invoice_recreate" string="Recreate Invoice" states="invoice_except"/> -->
-<!-- 							<button name="invoice_corrected" string="Invoice Corrected" states="invoice_except"/> -->
-<!-- 							<button name="ship_recreate" string="Recreate Procurement" states="shipping_except"/> -->
-<!-- 							<button name="ship_corrected" string="Procurement Corrected" states="shipping_except"/> -->
-<!-- 							<button name="manual_invoice" states="manual" string="Create Invoice"/> -->
-<!-- 							<button name="ship_cancel" string="Cancel Order" states="shipping_except"/> -->
-<!-- 							<button name="action_cancel_draft" states="cancel" string="Set to Draft" type="object"/> -->
-<!-- 							<button name="action_cancel" string="Cancel Order" states="manual,progress" type="object"/> -->
-<!-- 							<button name="cancel" string="Cancel Order" states="draft"/> -->
-<!-- 							<button name="invoice_cancel" string="Cancel Order" states="invoice_except"/> -->
-<!-- 						</group> -->
-<!-- 					</page> -->
-<!-- 					<page string="Other data"> -->
-
-<!-- 						<field name="incoterm"/> -->
-<!-- 						<field name="picking_policy" required="True"/> -->
-<!-- 						<field name="user_id"/> -->
-<!-- 						<field name="order_policy" /> -->
-<!-- 						<field name="origin"/> -->
-<!-- 						<field name="invoice_quantity"/> -->
-<!-- 						<field name="partner_shipping_id" domain="[('partner_id','=',partner_id)]"/> -->
-<!-- 						<field name="project_id" select="1"/> -->
-
-<!-- 						<separator string="Notes" colspan="4"/> -->
-<!-- 						<field name="note" colspan="4" nolabel="1"/> -->
-<!-- 					</page><page string="History"> -->
-<!-- 						<separator string="Generated Invoices" colspan="4"/> -->
-<!-- 						<field name="invoice_ids" colspan="4" nolabel="1"/> -->
-<!-- 						<separator string="Generated Pickings" colspan="4"/> -->
-<!-- 						<field name="picking_ids" colspan="4" nolabel="1"/> -->
-<!-- 					</page> -->
-<!-- 				</notebook> -->
-<!-- 			</form> -->
-<!-- 		</field> -->
-<!-- 	</record> -->
-
-	<record model="ir.ui.view" id="sale.view_order_line_tree">
-		<field name="name">Sale lines</field>
-		<field name="priority" eval="0"/>
-		<field name="model">sale.order.line</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Sales Order Line">
-				<field name="name" colspan="3"/>
-				<field name="product_uom_qty" string="Qty"/>
-				<field name="discount"/>
-				<field name="price_unit"/>
-				<field name="price_subtotal"/>
-			</tree>
-		</field>
-	</record>
-
-
-	<record model="ir.ui.view" id="sale_view_order_form">
-		<field name="name">Sale lines replace uom by mode</field>
-		<field name="model">sale.order</field>
-		<field name="type">form</field>
-		<field name="inherit_id" ref="sale.view_order_form"/>
-		<field name="arch" type="xml">
-			<tree string="Sales order lines" position="replace">
-				<tree string="Sales order lines">
-					<field name="product_id"/>
-					<field name="product_uom_qty" string="Qty"/>
-					<field name="type"/>
-					<field name="discount"/>
-					<field name="price_unit"/>
-					<field name="price_net"/>
-					<field name="price_subtotal"/>
-				</tree>
-			</tree>
-		</field>
-	</record>
-
-
-<!-- 	<record model="ir.ui.view" id="sale.view_order_line_form2"> -->
-<!-- 		<field name="name">sale.order.line.form2</field> -->
-<!-- 		<field name="model">sale.order.line</field> -->
-<!-- 		<field name="type">form</field> -->
-<!-- 		<field name="arch" type="xml"> -->
-<!-- 			<form string="Sales Order Line"> -->
-<!-- 				<notebook> -->
-<!-- 				<page string="Order Lines"> -->
-<!-- 					<separator string="Automatic Declaration" colspan="4"/> -->
-<!-- 					<field name="order_id" select="1"/> -->
-<!-- 					<field name="production_lot_id" /> -->
-<!-- 					<field name="customer_ref" /> -->
-<!-- 					<field name="invoiced" select="1"/> -->
-<!-- 					<field name="product_uom_qty" readonly="1" select="1"/> -->
-<!-- 					<field name="product_uom" readonly="1"/> -->
-<!-- 					<field name="product_id" readonly="1" select="1"/> -->
-
-<!-- 					<separator string="Manual Designation" colspan="4"/> -->
-<!-- 					<field name="name" colspan="3" select="1"/> -->
-<!-- 					<field name="price_unit" select="1"/> -->
-
-<!-- 					<field name="type"/> -->
-
-<!-- 					<field name="price_subtotal"/> -->
-<!-- 					<field name="tax_id" colspan="3"/> -->
-<!-- 					<separator string="States" colspan="4"/> -->
-<!-- 					<field name="state" select="1"/> -->
-<!-- 					<group colspan="2" col="2"> -->
-<!-- 						<button string="Done" name="button_done" states="confirmed"/> -->
-
-<!-- 					</group> -->
-<!-- 				</page><page string="Properties"> -->
-<!-- 					<field name="property_ids"/> -->
-<!-- 				</page><page string="Notes"> -->
-<!-- 					<field name="notes" colspan="4" nolabel="1"/> -->
-<!-- 				</page><page string="Invoice Lines"> -->
-<!-- 					<field name="invoice_lines" colspan="3"/> -->
-<!-- 				</page> -->
-<!-- 				</notebook> -->
-<!-- 			</form> -->
-<!-- 		</field> -->
-<!-- 	</record> -->
 
 
 
+<!--     <record model="ir.ui.view" id="sale.view_order_form"> -->
+<!--         <field name="name">sale.order.form</field>  -->
+<!--         <field name="priority" eval="1"/> -->
+<!--         <field name="model">sale.order</field> -->
+<!--         <field name="type">form</field> -->
+<!--         <field name="arch" type="xml"> -->
+<!--             <form string="Sales Order"> -->
+<!--                 <notebook> -->
+<!--                     <page string="Sale Order"> -->
+<!--                         <field name="name" select="1"/> -->
+<!--                         <group colspan="2" col="4"> -->
+<!--                             <field name="shipped" select="1"/> -->
+<!--                             <field name="invoiced" select="1"/> -->
+<!--                         </group> -->
+<!--                         <newline/> -->
 
-	<record model="ir.ui.view" id="account.view_invoice_line_tree">
-		<field name="name">Invoice lines</field>
-		<field name="model">account.invoice.line</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree  string="Invoice Line">
-				<field name="name"/>
-				<field name="account_id"/>
-				<field name="quantity"/>
-				<field name="uos_id"/>
-				<field name="price_unit"/>
-				<field name="discount"/>
-				<field name="price_subtotal"/>
-			</tree>
-		</field>
-	</record>
+<!--                         <field name="date_order" select="1"/> -->
+<!--                         <field name="shop_id" select="1" on_change="onchange_shop_id(shop_id)"/> -->
+<!--                         <field name="partner_id" select="1" on_change="onchange_partner_id(partner_id)" required="1"/> -->
+<!--                         <field name="partner_order_id" domain="[('partner_id','=',partner_id)]"/> -->
+<!--                         <field name="partner_invoice_id" domain="[('partner_id','=',partner_id)]"/> -->
+<!--                         <field name="pricelist_id"  domain="[('type','=','sale')]"/> -->
+<!--                         <field name="client_order_ref" /> -->
+<!--                         <newline/> -->
+
+<!--                         <field name="order_line" widget="one2many_list" colspan="4" nolabel="1"> -->
+<!--             <form string="Sales Order Line"> -->
+<!--                 <notebook> -->
+<!--                 <page string="Order Lines"> -->
+<!--                     <separator string="Automatic Declaration" colspan="4"/> -->
+<!--                     <field name="product_uom_qty" on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id)" context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom" select="1"/> -->
+<!--                     <field name="product_uom"/> -->
+<!--                     <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id)" context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom" colspan="3" select="1"/> -->
+<!-- <!\-                     <field name="production_lot_id" /> -\-> -->
+<!-- <!\-                     <field name="customer_ref" /> -\-> -->
+
+<!--                     <separator string="Manual Description" colspan="4"/> -->
+<!--                     <field name="name" colspan="3" select="1"/> -->
+<!--                     <field name="price_unit" select="1"/> -->
+<!--                     <field name="discount"/> -->
+<!--                     <field name="type"/> -->
+<!--                     <field name="date_planned" select="1"/> -->
+<!--                     <field name="price_subtotal"/> -->
+<!--                     <newline/> -->
+<!--                     <field name="tax_id" colspan="3"/> -->
+<!--                     <separator string="States" colspan="4"/> -->
+<!--                     <field name="state" select="1"/> -->
+<!--                     <field name="invoiced" select="1"/> -->
+<!--                 </page><page string="Properties"> -->
+<!--                     <field name="property_ids" colspan="4" nolabel="1"/> -->
+<!--                 </page><page string="Notes"> -->
+<!--                     <field name="notes" colspan="4" nolabel="1"/> -->
+<!--                 </page><page string="History"> -->
+<!--                     <field name="product_uos_qty" on_change="uos_change(product_uos, product_uos_qty, product_id)"/> -->
+<!--                     <field name="product_uos"  /> -->
+<!--                     <field name="product_packaging" /> -->
+<!--                     <field name="address_allotment_id" select="1"/> -->
+<!--                     <separator string="Invoice Lines" colspan="4"/> -->
+<!--                     <field name="invoice_lines" colspan="4" nolabel="1"/> -->
+<!--                     <separator string="Inventory Moves" colspan="4"/> -->
+<!--                     <field name="move_ids" colspan="4" nolabel="1"/> -->
+<!--                 </page> -->
+<!--                 </notebook> -->
+<!--             </form> -->
+<!--                         </field> -->
+<!--                         <newline/> -->
+<!--                         <group colspan="4" col="7"> -->
+<!--                             <field name="amount_untaxed"/> -->
+<!--                             <field name="amount_tax"/> -->
+<!--                             <field name="amount_total"/> -->
+<!--                             <button name="button_dummy" string="Compute" states="draft" type="object"/> -->
+<!--                         </group> -->
+<!--                         <group colspan="4" col="13"> -->
+<!--                             <field name="state" select="1"/> -->
+<!--                             <button name="order_confirm" string="Confirm Order" states="draft"/> -->
+<!--                             <button name="invoice_recreate" string="Recreate Invoice" states="invoice_except"/> -->
+<!--                             <button name="invoice_corrected" string="Invoice Corrected" states="invoice_except"/> -->
+<!--                             <button name="ship_recreate" string="Recreate Procurement" states="shipping_except"/> -->
+<!--                             <button name="ship_corrected" string="Procurement Corrected" states="shipping_except"/> -->
+<!--                             <button name="manual_invoice" states="manual" string="Create Invoice"/> -->
+<!--                             <button name="ship_cancel" string="Cancel Order" states="shipping_except"/> -->
+<!--                             <button name="action_cancel_draft" states="cancel" string="Set to Draft" type="object"/> -->
+<!--                             <button name="action_cancel" string="Cancel Order" states="manual,progress" type="object"/> -->
+<!--                             <button name="cancel" string="Cancel Order" states="draft"/> -->
+<!--                             <button name="invoice_cancel" string="Cancel Order" states="invoice_except"/> -->
+<!--                         </group> -->
+<!--                     </page> -->
+<!--                     <page string="Other data"> -->
+
+<!--                         <field name="incoterm"/> -->
+<!--                         <field name="picking_policy" required="True"/> -->
+<!--                         <field name="user_id"/> -->
+<!--                         <field name="order_policy" /> -->
+<!--                         <field name="origin"/> -->
+<!--                         <field name="invoice_quantity"/> -->
+<!--                         <field name="partner_shipping_id" domain="[('partner_id','=',partner_id)]"/> -->
+<!--                         <field name="project_id" select="1"/> -->
+
+<!--                         <separator string="Notes" colspan="4"/> -->
+<!--                         <field name="note" colspan="4" nolabel="1"/> -->
+<!--                     </page><page string="History"> -->
+<!--                         <separator string="Generated Invoices" colspan="4"/> -->
+<!--                         <field name="invoice_ids" colspan="4" nolabel="1"/> -->
+<!--                         <separator string="Generated Pickings" colspan="4"/> -->
+<!--                         <field name="picking_ids" colspan="4" nolabel="1"/> -->
+<!--                     </page> -->
+<!--                 </notebook> -->
+<!--             </form> -->
+<!--         </field> -->
+<!--     </record> -->
+
+    <record model="ir.ui.view" id="sale.view_order_line_tree">
+        <field name="name">Sale lines</field>
+        <field name="priority" eval="0"/>
+        <field name="model">sale.order.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Sales Order Line">
+                <field name="name" colspan="3"/>
+                <field name="product_uom_qty" string="Qty"/>
+                <field name="discount"/>
+                <field name="price_unit"/>
+                <field name="price_subtotal"/>
+            </tree>
+        </field>
+    </record>
 
 
-<!-- 	<act_window name="Packings" -->
-<!-- 		domain="[('sale_id', '=', active_id)]" -->
-<!-- 		res_model="stock.picking" -->
-<!-- 		src_model="sale.order" -->
-<!-- 		id="act_sale_order_to_picking"/> -->
+    <record model="ir.ui.view" id="sale_view_order_form">
+        <field name="name">Sale lines replace uom by mode</field>
+        <field name="model">sale.order</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <tree string="Sales order lines" position="replace">
+                <tree string="Sales order lines">
+                    <field name="product_id"/>
+                    <field name="product_uom_qty" string="Qty"/>
+                    <field name="type"/>
+                    <field name="discount"/>
+                    <field name="price_unit"/>
+                    <field name="price_net"/>
+                    <field name="price_subtotal"/>
+                </tree>
+            </tree>
+        </field>
+    </record>
 
 
-	<record model="ir.ui.view" id="view_partner_form">
-		<field name="name">Company</field>
-		<field name="model">res.company</field>
-		<field name="inherit_id" ref="base.view_company_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-		 <field name="rml_footer2" position="after">
-				<field name="export_file"/>
-		 </field>
-		</field>
-	</record>
+<!--     <record model="ir.ui.view" id="sale.view_order_line_form2"> -->
+<!--         <field name="name">sale.order.line.form2</field> -->
+<!--         <field name="model">sale.order.line</field> -->
+<!--         <field name="type">form</field> -->
+<!--         <field name="arch" type="xml"> -->
+<!--             <form string="Sales Order Line"> -->
+<!--                 <notebook> -->
+<!--                 <page string="Order Lines"> -->
+<!--                     <separator string="Automatic Declaration" colspan="4"/> -->
+<!--                     <field name="order_id" select="1"/> -->
+<!--                     <field name="production_lot_id" /> -->
+<!--                     <field name="customer_ref" /> -->
+<!--                     <field name="invoiced" select="1"/> -->
+<!--                     <field name="product_uom_qty" readonly="1" select="1"/> -->
+<!--                     <field name="product_uom" readonly="1"/> -->
+<!--                     <field name="product_id" readonly="1" select="1"/> -->
+
+<!--                     <separator string="Manual Designation" colspan="4"/> -->
+<!--                     <field name="name" colspan="3" select="1"/> -->
+<!--                     <field name="price_unit" select="1"/> -->
+
+<!--                     <field name="type"/> -->
+
+<!--                     <field name="price_subtotal"/> -->
+<!--                     <field name="tax_id" colspan="3"/> -->
+<!--                     <separator string="States" colspan="4"/> -->
+<!--                     <field name="state" select="1"/> -->
+<!--                     <group colspan="2" col="2"> -->
+<!--                         <button string="Done" name="button_done" states="confirmed"/> -->
+
+<!--                     </group> -->
+<!--                 </page><page string="Properties"> -->
+<!--                     <field name="property_ids"/> -->
+<!--                 </page><page string="Notes"> -->
+<!--                     <field name="notes" colspan="4" nolabel="1"/> -->
+<!--                 </page><page string="Invoice Lines"> -->
+<!--                     <field name="invoice_lines" colspan="3"/> -->
+<!--                 </page> -->
+<!--                 </notebook> -->
+<!--             </form> -->
+<!--         </field> -->
+<!--     </record> -->
 
 
-	<record model="ir.ui.view" id="view_categ_form">
-		<field name="model">res.partner.category</field>
-		<field name="inherit_id" ref="base.view_partner_category_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-		 <field name="parent_id" position="after">
-				<field name="export_enabled"/>
-		 </field>
-		</field>
-	</record>
+
+
+    <record model="ir.ui.view" id="account.view_invoice_line_tree">
+        <field name="name">Invoice lines</field>
+        <field name="model">account.invoice.line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Invoice Line">
+                <field name="name"/>
+                <field name="account_id"/>
+                <field name="quantity"/>
+                <field name="uos_id"/>
+                <field name="price_unit"/>
+                <field name="discount"/>
+                <field name="price_subtotal"/>
+            </tree>
+        </field>
+    </record>
+
+
+<!--     <act_window name="Packings" -->
+<!--         domain="[('sale_id', '=', active_id)]" -->
+<!--         res_model="stock.picking" -->
+<!--         src_model="sale.order" -->
+<!--         id="act_sale_order_to_picking"/> -->
+
+
+    <record model="ir.ui.view" id="view_partner_form">
+        <field name="name">Company</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+         <field name="rml_footer2" position="after">
+                <field name="export_file"/>
+         </field>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_categ_form">
+        <field name="model">res.partner.category</field>
+        <field name="inherit_id" ref="base.view_partner_category_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+         <field name="parent_id" position="after">
+                <field name="export_enabled"/>
+         </field>
+        </field>
+    </record>
 
 
 </data>

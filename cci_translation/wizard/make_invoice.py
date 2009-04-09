@@ -1,30 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id: make_invoice.py 1070 2005-07-29 12:41:24Z nicoe $
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -91,7 +83,8 @@ def _createInvoices(self, cr, uid, data, context):
         inv_create = inv_create + 1
 
         translation_product_id = pool_obj.get('product.product').search(cr, uid, [('name', 'like', 'Translation Folder')])[0]
-        val = obj_lines.product_id_change(cr, uid, [], translation_product_id,uom =False, partner_id = transfolder.partner_id.id)
+        fpos = transfolder.partner_id.property_account_position and transfolder.partner_id.property_account_position.id or False
+        val = obj_lines.product_id_change(cr, uid, [], translation_product_id,uom =False, partner_id = transfolder.partner_id.id, fposition_id=fpos)
 
         note = ''
         cci_special_reference = False
@@ -125,6 +118,7 @@ def _createInvoices(self, cr, uid, data, context):
             'currency_id' :transfolder.partner_id.property_product_pricelist.currency_id.id,
             'comment': '',
             'payment_term':transfolder.partner_id.property_payment_term.id,
+            'fiscal_position': transfolder.partner_id.property_account_position.id
         }
 
         inv_obj = pool_obj.get('account.invoice')

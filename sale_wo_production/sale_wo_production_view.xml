@@ -2,18 +2,16 @@
 <openerp>
 <data>
 
-	<record model="res.groups" id="grnoone">
-		<field name="name">grnoone</field>
-	</record>
+    <record model="ir.ui.menu" id="menu_mrp_procurement_action">
+        <field name="parent_id" ref="stock.menu_stock_root"/>
+    </record>
+    <record model="ir.ui.menu" id="mrp.mrp_Sched_all">
+        <field name="parent_id" ref="stock.menu_stock_root"/>
+    </record>
 
-	<menuitem name="Production" icon="terp-mrp" id="mrp.menu_mrp_root" groups="grnoone"/>
-	
-	<menuitem name="Inventory Control" id="menu_sale_wo_inventory"/>
-	<menuitem name="Procurement Orders" id="menu_sale_wo_inventory_procurements" parent="menu_sale_wo_inventory" action="mrp.mrp_procurement_action"/>
-	<menuitem name="Draft Procurements" id="menu_sale_wo_inventory_draft_procurements" parent="menu_sale_wo_inventory_procurements" action="mrp.mrp_procurement_action2"/>
-	<menuitem name="Unschedulled Procurements" id="menu_sale_wo_inventory_unscheduled_procurements" parent="menu_sale_wo_inventory_procurements" action="mrp.mrp_procurement_action3"/>
-	<menuitem name="All exceptions" id="menu_sale_wo_inventory_all_exception_procurements" parent="menu_sale_wo_inventory_procurements" action="mrp.mrp_procurement_action5"/>
-	<menuitem name="Exceptions to fix" id="menu_sale_wo_inventory_exception_procurements" parent="menu_sale_wo_inventory_all_exception_procurements" action="mrp.mrp_procurement_action4"/>
+    <record model="ir.ui.menu" id="mrp.menu_mrp_root">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+    </record>
 
 </data>
 </openerp>

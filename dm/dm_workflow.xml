@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <!-- USER ROLES -->
+        <record model="res.roles" id="res_roles_offermanager">
+            <field eval="&quot;&quot;&quot;Offer Manager&quot;&quot;&quot;" name="name"/>
+        </record>
+        
+        <record model="res.roles" id="res_roles_campaignmanager">
+            <field eval="&quot;&quot;&quot;Campaign Manager&quot;&quot;&quot;" name="name"/>
+        </record>
+    <!-- ==================Offer================== -->
+    	<record id="wkf_dm_offer" model="workflow">
+            <field name="name">dm.offer.basic</field>
+            <field name="osv">dm.offer</field>
+            <field name="on_create">True</field>
+        </record>
+        
+        <!-- Activity -->
+        <record id="act_offer_draft" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_offer"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+        </record>
+		
+		<record id="act_offer_ready" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_offer"/>
+            <field name="name">ready_to_plan</field>
+            <field name="kind">function</field>
+            <field name="action">state_ready_set()</field>
+        </record>
+        
+        <record id="act_offer_open" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_offer"/>
+            <field name="name">open</field>
+            <field name="kind">function</field>
+            <field name="action">state_open_set()</field>
+        </record>
+        
+        <record id="act_offer_freeze" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_offer"/>
+            <field name="name">freeze</field>
+            <field name="kind">function</field>
+            <field name="action">state_freeze_set()</field>
+        </record>
+        
+        <record id="act_offer_close" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_offer"/>
+            <field name="name">closed</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">stopall</field>
+            <field name="action">state_close_set()</field>
+        </record>
+        
+        <!-- Transition -->
+        <record id="trans_offer_draft_ready" model="workflow.transition">
+            <field name="act_from" ref="act_offer_draft"/>
+            <field name="act_to" ref="act_offer_ready"/>
+            <field name="signal">state_ready_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_offer_draft_open" model="workflow.transition">
+            <field name="act_from" ref="act_offer_draft"/>
+            <field name="act_to" ref="act_offer_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_offer_draft_close" model="workflow.transition">
+            <field name="act_from" ref="act_offer_draft"/>
+            <field name="act_to" ref="act_offer_close"/>
+            <field name="signal">state_close_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_offer_ready_open" model="workflow.transition">
+            <field name="act_from" ref="act_offer_ready"/>
+            <field name="act_to" ref="act_offer_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_offer_open_freeze" model="workflow.transition">
+            <field name="act_from" ref="act_offer_open"/>
+            <field name="act_to" ref="act_offer_freeze"/>
+            <field name="signal">state_freeze_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_offer_open_close" model="workflow.transition">
+            <field name="act_from" ref="act_offer_open"/>
+            <field name="act_to" ref="act_offer_close"/>
+            <field name="signal">state_close_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_offer_freeze_ready" model="workflow.transition">
+            <field name="act_from" ref="act_offer_freeze"/>
+            <field name="act_to" ref="act_offer_ready"/>
+            <field name="signal">state_ready_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_offer_freeze_open" model="workflow.transition">
+            <field name="act_from" ref="act_offer_freeze"/>
+            <field name="act_to" ref="act_offer_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_offer_freeze_close" model="workflow.transition">
+            <field name="act_from" ref="act_offer_freeze"/>
+            <field name="act_to" ref="act_offer_close"/>
+            <field name="signal">state_close_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+    <!-- ==================Offer Step================== -->
+        <record id="wkf_dm_step" model="workflow">
+            <field name="name">dm.offer.step.basic</field>
+            <field name="osv">dm.offer.step</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <!-- Activity -->
+        <record id="act_step_draft" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_step"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">state_draft_set()</field>
+        </record>
+
+        <record id="act_step_open" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_step"/>
+            <field name="name">open</field>
+            <field name="kind">function</field>
+            <field name="action">state_open_set()</field>
+        </record>
+        
+        <record id="act_step_freeze" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_step"/>
+            <field name="name">freeze</field>
+            <field name="kind">function</field>
+            <field name="action">state_freeze_set()</field>
+        </record>
+        
+        <record id="act_step_close" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_step"/>
+            <field name="name">closed</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">stopall</field>
+            <field name="action">state_close_set()</field>
+        </record>
+
+        <!-- Transition -->
+        <record id="trans_step_draft_open" model="workflow.transition">
+            <field name="act_from" ref="act_step_draft"/>
+            <field name="act_to" ref="act_step_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_step_freeze_open" model="workflow.transition">
+            <field name="act_from" ref="act_step_freeze"/>
+            <field name="act_to" ref="act_step_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_step_draft_freeze" model="workflow.transition">
+            <field name="act_from" ref="act_step_draft"/>
+            <field name="act_to" ref="act_step_freeze"/>
+            <field name="signal">state_freeze_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_step_open_close" model="workflow.transition">
+            <field name="act_from" ref="act_step_open"/>
+            <field name="act_to" ref="act_step_close"/>
+            <field name="signal">state_close_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_step_draft_close" model="workflow.transition">
+            <field name="act_from" ref="act_step_draft"/>
+            <field name="act_to" ref="act_step_close"/>
+            <field name="signal">state_close_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+        
+        <record id="trans_step_freeze_close" model="workflow.transition">
+            <field name="act_from" ref="act_step_freeze"/>
+            <field name="act_to" ref="act_step_close"/>
+            <field name="signal">state_close_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+
+
+    <!-- ==================Offer Document================== -->
+        <record id="wkf_dm_offer_document" model="workflow">
+            <field name="name">dm.offer.document.basic</field>
+            <field name="osv">dm.offer.document</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <!-- Activity -->
+        <record id="act_draft" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_offer_document"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+        </record>
+
+        <record id="act_validate" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_offer_document"/>
+            <field name="name">validate</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">function</field>
+            <field name="action">state_validate_set()</field>
+        </record>
+
+        <!-- Transition -->
+        <record id="trans_draft_validate" model="workflow.transition">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_validate"/>
+            <field name="signal">state_validate_set</field>
+            <field name="role_id" ref="res_roles_offermanager"/>
+        </record>
+
+    <!-- ==================Campaigns================== -->
+        <record id="wkf_dm_campaign" model="workflow">
+            <field name="name">dm.campaign.basic</field>
+            <field name="osv">dm.campaign</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <!-- Activity -->
+        <record id="act_campaign_draft" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+        </record>
+
+        <record id="act_campaign_pending" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">pending</field>
+            <field name="kind">function</field>
+            <field name="action">state_pending_set()</field>
+        </record>
+
+        <record id="act_campaign_open" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">open</field>
+            <field name="kind">function</field>
+            <field name="action">state_open_set()</field>
+        </record>
+        
+        <record id="act_campaign_close" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">close</field>
+            <field name="flow_stop">True</field>
+            <field name="kind">stopall</field>
+            <field name="action">state_close_set()</field>
+        </record>
+
+        <record id="act_campaign_manufacturing_inprogress" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">manufacturing_inprogress</field>
+            <field name="kind">function</field>
+            <field name="action">manufacturing_state_inprogress_set()</field>
+        </record>   
+        
+        <record id="act_campaign_dtp_inprogress" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">dtp_inprogress</field>
+            <field name="kind">function</field>
+            <field name="action">dtp_state_inprogress_set()</field>
+        </record>
+        
+        <record id="act_campaign_customer_file_inprogress" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">customer_file_inprogress</field>
+            <field name="kind">function</field>
+            <field name="action">customer_file_state_inprogress_set()</field>
+        </record>
+        
+        <record id="act_campaign_items_inprogress" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">items_inprogress</field>
+            <field name="kind">function</field>
+            <field name="action">items_state_inprogress_set()</field>
+        </record>      
+
+        <record id="act_campaign_manufacturing_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">manufacturing_done</field>
+            <field name="kind">function</field>
+            <field name="action">manufacturing_state_done_set()</field>
+        </record>   
+        
+        <record id="act_campaign_dtp_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">dtp_done</field>
+            <field name="kind">function</field>
+            <field name="action">dtp_state_done_set()</field>
+        </record>
+        
+        <record id="act_campaign_customer_file_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">customer_file_done</field>
+            <field name="kind">function</field>
+            <field name="action">customer_file_state_done_set()</field>
+        </record>
+        
+        <record id="act_campaign_items_done" model="workflow.activity">
+            <field name="wkf_id" ref="wkf_dm_campaign"/>
+            <field name="name">items_done</field>
+            <field name="kind">function</field>
+            <field name="action">items_state_done_set()</field>
+        </record>
+
+        <!-- Transition -->
+        <record id="trans_campaign_draft_pending" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_draft"/>
+            <field name="act_to" ref="act_campaign_pending"/>
+            <field name="signal">state_pending_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_pending_open" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_pending"/>
+            <field name="act_to" ref="act_campaign_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_open_close" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_open"/>
+            <field name="act_to" ref="act_campaign_close"/>
+            <field name="signal">state_close_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_pending_manufacturing_inprogress" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_pending"/>
+            <field name="act_to" ref="act_campaign_manufacturing_inprogress"/>
+            <field name="signal">manufacturing_state_inprogress_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_pending_dtp_inprogress" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_pending"/>
+            <field name="act_to" ref="act_campaign_dtp_inprogress"/>
+            <field name="signal">dtp_state_inprogress_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_pending_customer_file_inprogress" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_pending"/>
+            <field name="act_to" ref="act_campaign_customer_file_inprogress"/>
+            <field name="signal">customer_file_state_inprogress_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_pending_items_inprogress" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_pending"/>
+            <field name="act_to" ref="act_campaign_items_inprogress"/>
+            <field name="signal">items_state_inprogress_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_manufacturing_inprogress_done" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_manufacturing_inprogress"/>
+            <field name="act_to" ref="act_campaign_manufacturing_done"/>
+            <field name="signal">manufacturing_state_done_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+
+        <record id="trans_campaign_dtp_inprogress_done" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_dtp_inprogress"/>
+            <field name="act_to" ref="act_campaign_dtp_done"/>
+            <field name="signal">dtp_state_done_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_customer_file_inprogress_done" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_customer_file_inprogress"/>
+            <field name="act_to" ref="act_campaign_customer_file_done"/>
+            <field name="signal">customer_file_state_done_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_items_inprogress_done" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_items_inprogress"/>
+            <field name="act_to" ref="act_campaign_items_done"/>
+            <field name="signal">items_state_done_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_manufacturing_done_open" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_manufacturing_done"/>
+            <field name="act_to" ref="act_campaign_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_dtp_done_open" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_dtp_done"/>
+            <field name="act_to" ref="act_campaign_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_customer_file_done_open" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_customer_file_done"/>
+            <field name="act_to" ref="act_campaign_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+        <record id="trans_campaign_items_done_open" model="workflow.transition">
+            <field name="act_from" ref="act_campaign_items_done"/>
+            <field name="act_to" ref="act_campaign_open"/>
+            <field name="signal">state_open_set</field>
+            <field name="role_id" ref="res_roles_campaignmanager"/>
+        </record>
+        
+    </data>
+</openerp>

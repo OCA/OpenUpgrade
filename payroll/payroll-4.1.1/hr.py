@@ -1,30 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id: hr.py 4656 2006-11-24 09:58:42Z ced $
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -54,8 +46,10 @@ class hr_timesheet_group(osv.osv):
         while todo>0:
             cr.execute('select hour_from,hour_to from hr_timesheet where dayofweek=%d and tgroup_id=%d order by hour_from', (dt_from.day_of_week,id))
             for (hour_from,hour_to) in cr.fetchall():
-                h1,m1 = map(int,hour_from.split(':'))
-                h2,m2 = map(int,hour_to.split(':'))
+                h1 = int(hour_from)
+                m1 = int((hour_from - int(hour_from)) * 60)
+                h2 = int(hour_to)
+                m2 = int((hour_to - int(hour_to)) * 60)
                 d1 = DateTime.DateTime(dt_from.year,dt_from.month,dt_from.day,h1,m1)
                 d2 = DateTime.DateTime(dt_from.year,dt_from.month,dt_from.day,h2,m2)
                 if dt_from<d2:
@@ -112,8 +106,8 @@ class hr_employee_position(osv.osv):
 hr_employee_position()
 
 class hr_employee(osv.osv):
-        def _get_basic_salary(self, cr, uid, ids, prop, unknow_none, unknow_dict):
-                id_set=",".join(map(str,ids))
+    def _get_basic_salary(self, cr, uid, ids, prop, unknow_none, unknow_dict):
+        id_set=",".join(map(str,ids))
         cr.execute("SELECT s.id,COALESCE(SUM(s.basic),0)::decimal(16,2) AS basic FROM hr_employee s WHERE s.id IN ("+id_set+") GROUP BY s.id ")
         res=dict(cr.fetchall())
         return res
@@ -127,24 +121,24 @@ class hr_employee(osv.osv):
                         res[id] = basic.get(id,0.0) + allowance.get(id,0.0)
         return res
     def _get_net_deduction(self, cr, uid, ids, prop, unknow_none, unknow_dict):
-                id_set=",".join(map(str,ids))
+        id_set=",".join(map(str,ids))
         cr.execute("SELECT s.id,COALESCE(SUM(l.value),0)::decimal(16,2) AS n_deduction FROM hr_employee s LEFT OUTER JOIN hr_employee_salary_deduction l ON (s.id=l.deduction_id) WHERE s.id IN ("+id_set+") GROUP BY s.id ")
         res=dict(cr.fetchall())
         return res
     def _get_net_salary(self, cr, uid, ids, prop, unknow_none, unknow_dict):
-                gross = self._get_gross_salary(cr, uid, ids, prop, unknow_none, unknow_dict)
-                net_deduct = self._get_net_deduction(cr, uid, ids, prop, unknow_none, unknow_dict)
+        gross = self._get_gross_salary(cr, uid, ids, prop, unknow_none, unknow_dict)
+        net_deduct = self._get_net_deduction(cr, uid, ids, prop, unknow_none, unknow_dict)
         res = {}
         for id in ids:
                         res[id] = gross.get(id,0.0) - net_deduct.get(id,0.0)
         return res
 
     def _get_employee_department(self, cr, uid, ids, prop, unknow_none, unknow_dict):
-                id_set=",".join(map(str,ids))
+        id_set=",".join(map(str,ids))
         cr.execute("SELECT s.id,COALESCE(SUM(l.value),0)::decimal(16,2) AS n_deduction FROM hr_employee s LEFT OUTER JOIN hr_employee_salary_deduction l ON (s.id=l.deduction_id) WHERE s.id IN ("+id_set+") GROUP BY s.id ")
         res=dict(cr.fetchall())
         return res
-        
+
     _name = "hr.employee"
     _description = "Employee"
     _columns = {
@@ -256,7 +250,7 @@ class hr_employee(osv.osv):
             for emp_pay in emp_pays:
                 self.compute_value(cr, uid, emp_pay, emp_payelements, payelements)
         return True
-    
+
 hr_employee()
 
 class hr_timesheet(osv.osv):
@@ -304,7 +298,7 @@ class hr_attendance(osv.osv):
         'name' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         'employee_id' : _employee_get,
     }
-    
+
     def _altern_si_so(self, cr, uid, ids):
         for id in ids:
             sql = '''
@@ -321,7 +315,7 @@ class hr_attendance(osv.osv):
             if not ((len(atts)==1 and atts[0][0] == 'sign_in') or (atts[0][0] != atts[1][0] and atts[0][1] != atts[1][1])):
                 return False
         return True
-    
+
     _constraints = [(_altern_si_so, 'Error: Sign in (resp. Sign out) must follow Sign out (resp. Sign in)', ['action'])]
     _order = 'name desc'
 hr_attendance()

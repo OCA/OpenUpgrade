@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <wizard id="wizard_populate_payment_ext" menu="False" model="payment.order" name="populate_payment_ext" string="Populate payment to pay"/>
+        <wizard id="wizard_populate_statement_ext" menu="False" model="account.bank.statement" name="populate_statement_ext" string="Populate Statement with Payment lines"/>
+    </data>
+</openerp>

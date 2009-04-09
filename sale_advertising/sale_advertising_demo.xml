@@ -5,21 +5,21 @@
 	<!-- Product Categories (Media) Demo Data -->
 		<record id="product_category_advertisingmedium0" model="product.category">
 			<field name="property_account_expense_categ" ref="account.a_expense"/>
-			<field name="property_stock_journal" ref="account.stock_journal"/>
+			<field name="property_stock_journal" ref="stock.stock_journal"/>
 			<field eval="&quot;Advertising Medium&quot;" name="name"/>
 			<field name="parent_id" ref="product.cat1"/>
 			<field name="property_account_income_categ" ref="account.a_sale"/>
 		</record>
 		<record id="product_category_website0" model="product.category">
 			<field name="property_account_expense_categ" ref="account.a_expense"/>
-			<field name="property_stock_journal" ref="account.stock_journal"/>
+			<field name="property_stock_journal" ref="stock.stock_journal"/>
 			<field eval="&quot;Website&quot;" name="name"/>
 			<field name="parent_id" ref="product_category_advertisingmedium0"/>
 			<field name="property_account_income_categ" ref="account.a_sale"/>
 		</record>
 		<record id="product_category_magazine0" model="product.category">
 			<field name="property_account_expense_categ" ref="account.a_expense"/>
-			<field name="property_stock_journal" ref="account.stock_journal"/>
+			<field name="property_stock_journal" ref="stock.stock_journal"/>
 			<field eval="&quot;Press Review&quot;" name="name"/>
 			<field name="parent_id" ref="product_category_advertisingmedium0"/>
 			<field name="property_account_income_categ" ref="account.a_sale"/>

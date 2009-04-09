@@ -85,7 +85,7 @@ class account_voucher(osv.osv):
         'account_id':fields.many2one('account.account', 'Account', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'payment_ids':fields.one2many('account.voucher.line','voucher_id','Voucher Lines', readonly=False, states={'proforma':[('readonly',True)]}),
         'period_id': fields.many2one('account.period', 'Period', required=True, states={'posted':[('readonly',True)]}),
-        'narration':fields.text('Narration', readonly=True, states={'draft':[('readonly',False)]}),
+        'narration':fields.text('Narration', readonly=True, states={'draft':[('readonly',False)]}, required=True),
         'currency_id': fields.many2one('res.currency', 'Currency', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'state':fields.selection(
@@ -103,7 +103,7 @@ class account_voucher(osv.osv):
             required=True),
         'move_id':fields.many2one('account.move', 'Account Entry'),
         'move_ids':fields.many2many('account.move.line', 'voucher_id', 'account_id', 'rel_account_move', 'Real Entry'),
-        'partner_id':fields.many2one('res.partner', 'Partner', readonly=True, states={'draft':[('readonly',False)]}),
+        'partner_id':fields.many2one('res.partner', 'Partner', readonly=True, states={'draft':[('readonly',False)]})
     }
     
     _defaults = {
@@ -168,7 +168,7 @@ class account_voucher(osv.osv):
         self.write(cr, uid, ids, {'state':'draft'})
         return True
 
-    def unlink(self, cr, uid, ids,context={}):
+    def unlink(self, cr, uid, ids, context={}):
         vouchers = self.read(cr, uid, ids, ['state'])
         unlink_ids = []
         for t in vouchers:
@@ -176,9 +176,123 @@ class account_voucher(osv.osv):
                 unlink_ids.append(t['id'])
             else:
                 raise osv.except_osv('Invalid action !', 'Cannot delete invoice(s) which are already opened or paid !')
-        osv.osv.unlink(self, cr, uid, unlink_ids,context)
+        osv.osv.unlink(self, cr, uid, unlink_ids)
         return True
     
+#    def _get_analityc_lines(self, cr, uid, id):
+#        inv = self.browse(cr, uid, [id])[0]
+#        cur_obj = self.pool.get('res.currency')
+#
+#        company_currency = inv.company_id.currency_id.id
+#        
+#        if inv.type in ('rec_voucher,bank_rec_voucher,cont_voucher,journal_pur_voucher'):
+#            sign = 1
+#        else:
+#            sign = -1
+#
+#        iml = self.pool.get('account.voucher.line').move_line_get(cr, uid, inv.id)
+#        
+#        for il in iml:
+#            if il['account_analytic_id']:
+#                if inv.type in ('pay_voucher','journal_voucher', 'rec_voucher','cont_voucher','bank_pay_voucher','bank_rec_voucher','journal_sale_vou','journal_pur_voucher'):
+#                    ref = inv.reference
+#                else:
+#                    ref = self._convert_ref(cr, uid, inv.number)
+#
+#                il['analytic_lines'] = [(0,0, {
+#                    'name': il['name'],
+#                    'date': inv['date'],
+#                    'account_id': il['account_analytic_id'] or False,
+#                    'amount': inv['amount'] * sign,
+#                    'general_account_id': il['account_id'] or False,
+#                    'journal_id': inv.journal_id.analytic_journal_id.id,
+#                    'ref': ref,
+#                })]
+#
+#        return iml
+#    
+#    def action_move_line_create(self, cr, uid, ids, *args):
+#        for inv in self.browse(cr, uid, ids):
+#            if inv.move_id:
+#                continue
+#            company_currency = inv.company_id.currency_id.id
+#            # create the analytical lines
+#            line_ids = self.read(cr, uid, [inv.id], ['payment_ids'])[0]['payment_ids']
+#            ils = self.pool.get('account.voucher.line').read(cr, uid, line_ids)
+#            # one move line per invoice line
+#            iml = self._get_analityc_lines(cr, uid, inv.id)
+#            # check if taxes are all computed
+#            diff_currency_p = inv.currency_id.id <> company_currency
+#            # create one move line for the total and possibly adjust the other lines amount
+#            total = 0
+#            if inv.type in ('pay_voucher', 'journal_voucher', 'rec_voucher','cont_voucher','bank_pay_voucher','bank_rec_voucher','journal_sale_vou','journal_pur_voucher'):
+#                ref = inv.reference
+#                
+#            else:
+#                ref = self._convert_ref(cr, uid, inv.number)
+#                
+#            date = inv.date
+#            total_currency = 0
+#            for i in iml:
+#                    
+#                if inv.currency_id.id != company_currency:
+#                    i['currency_id'] = inv.currency_id.id
+#                    i['amount_currency'] = i['amount']
+#                    
+#                else:
+#                    i['amount_currency'] = False
+#                    i['currency_id'] = False
+#                ref = i['ref']
+#                if inv.type in ('rec_voucher','bank_rec_voucher','journal_pur_voucher','journal_voucher'):
+#                    total += i['amount']
+#                    total_currency += i['amount_currency'] or i['amount']
+#                    i['amount'] = - i['amount']
+#                else:
+#                    total -= i['amount']
+#                    total_currency -= i['amount_currency'] or i['amount']
+#            acc_id = inv.account_id.id
+#
+#            name = inv['name'] or '/'
+#            totlines = False
+#
+#            iml.append({
+#                'type': 'dest',
+#                'name': name,
+#                'amount': total,
+#                'account_id': acc_id,
+#                'amount_currency': diff_currency_p \
+#                        and total_currency or False,
+#                'currency_id': diff_currency_p \
+#                        and inv.currency_id.id or False,
+#                'ref': ref,
+#                'partner_id':inv.partner_id.id or False,
+#            })
+#
+#            date = inv.date
+#            inv.amount=total
+#
+#            line = map(lambda x:(0,0,self.line_get_convert(cr, uid, x,date, context={})) ,iml)
+#
+#            journal_id = inv.journal_id.id #self._get_journal(cr, uid, {'type': inv['type']})
+#            journal = self.pool.get('account.journal').browse(cr, uid, journal_id)
+#            if journal.sequence_id:
+#                name = self.pool.get('ir.sequence').get_id(cr, uid, journal.sequence_id.id)
+#
+#            move = {'name': name, 'line_id': line, 'journal_id': journal_id, 'type':inv.type}
+#            if inv.period_id:
+#                move['period_id'] = inv.period_id.id
+#                for i in line:
+#                    i[2]['period_id'] = inv.period_id.id
+#            move_id = self.pool.get('account.move').create(cr, uid, move)
+#            # make the invoice point to that move
+#            self.write(cr, uid, [inv.id], {'move_id': move_id})
+#            obj=self.pool.get('account.move').browse(cr,uid,move_id)
+#            for line in obj.line_id :
+#                cr.execute('insert into voucher_id (account_id,rel_account_move) values (%d, %d)',(int(ids[0]),int(line.id)))
+##            self.pool.get('account.move').post(cr, uid, [move_id])
+##        self._log_event(cr, uid, ids)
+#        return True
+         
     def _get_analytic_lines(self, cr, uid, id):
         inv = self.browse(cr, uid, [id])[0]
         cur_obj = self.pool.get('res.currency')

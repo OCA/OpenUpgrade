@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <menuitem icon="terp-administration" id="menu_comparison" name="ERP Comparison" sequence="10"/>
+        <menuitem id="menu_config_comparison" name="Configuration" parent="menu_comparison" sequence="1"/>
+        
+        <!-- Configure User -->
+        <record id="view_comparison_user_form" model="ir.ui.view">
+            <field name="name">comparison.user.form</field>
+            <field name="model">comparison.user</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Comaparison User">
+                    <field name="name" select="1"/>
+                    <field name="password" password="True"/>
+                    <field name="email" widget="email" select="1"/>
+                    <field name="active"/>
+                    <field name="factor_ids" colspan="4" widget="one2many_list">
+                    	<tree string="Factors">
+	                    	<field name="name"/>
+		                    <field name="parent_id"/>
+		                    <field name="ponderation"/>
+		                    <field name="state"/>
+	                    </tree>
+	                    <form string="Factors">
+	                    	<field name="name"/>
+		                    <field name="parent_id"/>
+		                    <field name="ponderation"/>
+		                    <field name="state"/>
+	                    </form>
+                    </field>
+                    <field name="suggestion_ids" colspan="4" widget="one2many_list">
+                    	<tree string="Suggested Ponderations">
+		                    <field name="factor_id" select="1"/>
+		                    <field name="ponderation" select="1"/>
+		                    <field name="state" select="2"/>
+	                	</tree>
+	               	</field> 	
+                    <field name="vote_ids" colspan="4"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_comparison_user_tree" model="ir.ui.view">
+            <field name="name">comparison.user.tree</field>
+            <field name="model">comparison.user</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Comaparison User">
+                    <field name="name"/>
+                    <field name="email"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_user_tree" model="ir.actions.act_window">
+            <field name="name">Users</field>
+            <field name="res_model">comparison.user</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_comparison_user_tree"/>
+        </record>
+        
+        <menuitem action="action_comparison_user_tree" id="menu_action_comparison_user_tree" parent="menu_config_comparison"/>
+        
+        <!-- Configure Items for Comparison -->
+        
+        <record id="view_comparison_item_form" model="ir.ui.view">
+            <field name="name">comparison.item.form</field>
+            <field name="model">comparison.item</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Comaparison Item">
+                    <field name="name" select="1"/>
+                    <field name="code" select="1"/>
+                    <field name="version"/>
+                    <field name="user_id" select="1"/>
+                    <field name="load_default" />
+                    <field name="sequence" />
+                    <field name="result_ids" colspan="4" widget="one2many_list" >
+                    	<tree string="Results">
+                    		<field name="factor_id"/>
+                    		<field name="result"/>
+                    		<field name="votes"/>
+                    	</tree>
+                    	<form string="Results">
+                    		<field name="factor_id"/>
+                    		<field name="result"/>
+                    		<field name="votes"/>
+                    	</form>
+                    </field>
+                    <newline/>
+                    <field name="note" colspan="4"/>
+                    <newline/>
+                    <field name="state" select="2"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_comparison_item_tree" model="ir.ui.view">
+            <field name="name">comparison.item.tree</field>
+            <field name="model">comparison.item</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Comaparison Items">
+                    <field name="name"/>
+                    <field name="version"/>
+                    <field name="code"/>
+                    <field name="load_default"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_item_tree" model="ir.actions.act_window">
+            <field name="name">Items</field>
+            <field name="res_model">comparison.item</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_comparison_item_tree"/>
+        </record>
+        
+        <menuitem action="action_comparison_item_tree" id="menu_action_comparison_item_tree" parent="menu_config_comparison"/>
+        
+        <!-- Configure Factors for Comparison -->
+        
+        <record id="view_comparison_factor_form" model="ir.ui.view">
+            <field name="name">comparison.factor.form</field>
+            <field name="model">comparison.factor</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Affecting Factors for Comparison">
+                    <notebook>
+                        <page string="General">
+                            <field name="name" select="1"/>
+                            <field name="parent_id" select="2"/>
+                            <newline/>
+	                        <field name="user_id" select="1"/>
+	                        <field name="ponderation" select="2"/>
+                            <newline/>
+                            <field name="type" select="1"/>
+                            <field name="pond_computed" />
+                            <field name="sequence" />
+                            <field name="result_ids" colspan="4" widget="one2many_list" >
+                            	<tree string="Results">
+		                    		<field name="item_id"/>
+		                    		<field name="result"/>
+		                    		<field name="votes"/>
+                    			</tree>
+		                    	<form string="Results">
+		                    		<field name="item_id"/>
+		                    		<field name="result"/>
+		                    		<field name="votes"/>
+		                    	</form>
+                            </field>
+                            <newline/>
+                            <field name="state" select="2"/>
+                            <button name="export_csv" string="Export to CSV" type="object"/>
+                        </page>
+                        <page string="Notes">
+                            <field colspan="4" name="note" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_comparison_factor_list" model="ir.ui.view">
+            <field name="name">comparison.factor.list</field>
+            <field name="model">comparison.factor</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Comaparison Factors">
+                    <field name="name"/>
+                    <field name="parent_id"/>
+                    <field name="user_id"/>
+                    <field name="ponderation"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_comparison_factor_tree" model="ir.ui.view">
+            <field name="name">comparison.factor.tree</field>
+            <field name="model">comparison.factor</field>
+            <field name="type">tree</field>
+            <field name="field_parent">child_ids</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <tree string="Criterias' Structure">
+                    <field name="name"/>
+                    <field name="ponderation"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_factor_list" model="ir.actions.act_window">
+            <field name="name">Criterias</field>
+            <field name="res_model">comparison.factor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem action="action_comparison_factor_list" id="menu_action_comparison_factor_list" parent="menu_config_comparison"/>
+
+
+        <record id="action_comparison_factor_tree" model="ir.actions.act_window">
+            <field name="name">Criterias Structure</field>
+            <field name="res_model">comparison.factor</field>
+            <field name="view_type">tree</field>
+            <field name="view_id" ref="view_comparison_factor_tree"/>
+            <field name="domain">[('parent_id','=',False)]</field>
+        </record>
+        <menuitem action="action_comparison_factor_tree" id="menu_action_comparison_factor_tree"
+            parent="menu_comparison"/>
+
+
+        <!-- Results of the Factors for Comparison -->
+        
+<!--        <record id="view_comparison_factor_result_form" model="ir.ui.view">
+            <field name="name">comparison.factor.result.form</field>
+            <field name="model">comparison.factor.result</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Result of the Comparisons">
+                    <field name="factor_id"/>
+                    <field name="item_id"/>
+                    <field name="result"/>
+                </form>
+            </field>
+        </record>-->
+
+        <record id="view_comparison_factor_result_tree" model="ir.ui.view">
+            <field name="name">comparison.factor.result.tree</field>
+            <field name="model">comparison.factor.result</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Results of the Comparisons">
+                    <field name="factor_id" select="1"/>
+                    <field name="item_id" select="1"/>
+                    <field name="result" select="2"/>
+                    <field name="votes" select="2"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_factor_result_tree" model="ir.actions.act_window">
+            <field name="name">Results of the Comparisons</field>
+            <field name="res_model">comparison.factor.result</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_comparison_factor_result_tree"/>
+        </record>
+        
+        <menuitem id="menu_comparison_results" name="Reporting" parent="menu_comparison"/>
+        <menuitem action="action_comparison_factor_result_tree" id="menu_action_comparison_factor_result_tree" parent="menu_comparison_results"/>
+        
+        <!-- Configure Vote values-->
+        
+        <record id="view_comparison_vote_values_form" model="ir.ui.view">
+            <field name="name">comparison.vote.values.form</field>
+            <field name="model">comparison.vote.values</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Vote Criterias">
+                    <field name="name" select="1"/>
+                    <field name="factor" select="1"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_comparison_vote_values_tree" model="ir.ui.view">
+            <field name="name">comparison.vote.values.tree</field>
+            <field name="model">comparison.vote.values</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Vote Values">
+                    <field name="name"/>
+                    <field name="factor"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_vote_values_tree" model="ir.actions.act_window">
+            <field name="name">Vote Values(Criterias)</field>
+            <field name="res_model">comparison.vote.values</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_comparison_vote_values_tree"/>
+        </record>
+        
+        <menuitem action="action_comparison_vote_values_tree" id="menu_action_comparison_vote_values_tree" parent="menu_config_comparison"/>
+        
+        <!-- Add Your vote-->
+        
+        <record id="view_comparison_vote_form" model="ir.ui.view">
+            <field name="name">comparison.vote.form</field>
+            <field name="model">comparison.vote</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Vote">
+                    <field name="item_id" select="1"/>
+                    <field name="user_id" select="2"/>
+                    <field name="factor_id" select="1"/>
+                    <field name="score_id" select="1"/>
+                    <field colspan="4" name="note" />
+                     <field name="state" colspan="2" select="2"/>
+                    <group col="2" colspan="2">
+                    <button name="accept_vote" states="draft" string="Accept" type="object"/>
+                    <button name="cancel_vote" states="draft,valid" string="Reject" type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_comparison_vote_tree" model="ir.ui.view">
+            <field name="name">comparison.vote.tree</field>
+            <field name="model">comparison.vote</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Votes">
+                    <field name="item_id"/>
+                    <field name="factor_id"/>
+                    <field name="score_id"/>
+                    <field name="state"/>
+<!--                    <field name="ponderation"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_comparison_vote_form" model="ir.actions.act_window">
+            <field name="name">New Vote</field>
+            <field name="res_model">comparison.vote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_comparison_vote_form"/>
+        </record>
+        
+        <record id="action_comparison_votes" model="ir.actions.act_window">
+            <field name="name">Votes</field>
+            <field name="res_model">comparison.vote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_comparison_vote_tree"/>
+        </record>
+        
+        <menuitem id="menu_comparison_votes" parent="menu_comparison" action="action_comparison_votes"/>
+        <menuitem action="action_comparison_vote_form" id="menu_action_comparison_vote_form" parent="menu_comparison_votes"/>
+        
+        <!-- Suggest for Ponderations-->
+        
+        <record id="view_suggest_ponderation_form" model="ir.ui.view">
+            <field name="name">comparison.ponderation.suggestion.form</field>
+            <field name="model">comparison.ponderation.suggestion</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Suggest Ponderations">
+                    <field name="factor_id" select="1"/>
+                    <field name="user_id" />
+                    <field name="ponderation" select="1"/>
+                    <field name="effect" select="2"/>
+                       <newline/>
+                    <field colspan="4" name="note" />
+                    <field name="state" colspan="2" select="2"/>
+                    <group col="2" colspan="2">
+                    <button name="accept_suggestion" states="draft" string="Accept" type="object"/>
+                    <button name="cancel_suggestion" states="draft,done" string="Reject" type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_suggest_ponderation_tree" model="ir.ui.view">
+            <field name="name">comparison.ponderation.suggestion.tree</field>
+            <field name="model">comparison.ponderation.suggestion</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Suggested Ponderations">
+                    <field name="factor_id" select="1"/>
+                    <field name="user_id" />
+                    <field name="ponderation" select="1"/>
+                    <field name="effect" />
+                    <field name="state" select="2"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_suggest_ponderation_form" model="ir.actions.act_window">
+            <field name="name">New Suggestion</field>
+            <field name="res_model">comparison.ponderation.suggestion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+            <field name="view_id" ref="view_suggest_ponderation_form"/>
+        </record>
+        
+        <record id="action_suggest_ponderation" model="ir.actions.act_window">
+            <field name="name">Suggestions</field>
+            <field name="res_model">comparison.ponderation.suggestion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_suggest_ponderation_tree"/>
+        </record>
+        
+        <menuitem id="menu_comparison_suggestions" parent="menu_comparison" action="action_suggest_ponderation"/>
+        <menuitem action="action_view_suggest_ponderation_form" id="menu_action_view_suggest_ponderation_form" parent="menu_comparison_suggestions"/>
+        
+        <record id="view_evaluation_pack_form" model="ir.ui.view">
+            <field name="name">evaluation.pack.form</field>
+            <field name="model">evaluation.pack</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Evaluation Pack">
+                    <field name="name" select="1"/>
+                    <newline/>
+                    <field name="item_ids"/>
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_evaluation_pack_tree" model="ir.ui.view">
+            <field name="name">evaluation.pack.tree</field>
+            <field name="model">evaluation.pack</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Evaluation Pack">
+                    <field name="name" select="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_evaluation_pack_tree" model="ir.actions.act_window">
+            <field name="name">Item Packs</field>
+            <field name="res_model">evaluation.pack</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem action="action_evaluation_pack_tree" id="menu_action_evaluation_pack_tree" parent="menu_config_comparison"/>
+        
+        <menuitem id="menu_periodical" name="Periodical Processing" parent="menu_comparison" sequence="2"/>
+        <menuitem id="menu_periodical_criterias" name="Criterias" parent="menu_periodical" sequence="1"/>
+        <menuitem id="menu_periodical_votes" name="Votes" parent="menu_periodical" sequence="3"/>
+        <menuitem id="menu_periodical_suggestions" name="Ponderation Suggestions" parent="menu_periodical" sequence="2"/>
+        
+        <!-- Criterias -->
+        
+        <record id="action_criterias_draft" model="ir.actions.act_window">
+            <field name="name">Draft Criterias</field>
+            <field name="res_model">comparison.factor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+        </record>
+        <menuitem action="action_criterias_draft" id="menu_action_criterias_draft" parent="menu_periodical_criterias"/>
+        
+        <record id="action_criterias_cancel" model="ir.actions.act_window">
+            <field name="name">Cancelled Criterias</field>
+            <field name="res_model">comparison.factor</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','cancel')]</field>
+        </record>
+        <menuitem action="action_criterias_cancel" id="menu_action_criterias_cancel" parent="menu_periodical_criterias"/>
+        
+        <!-- Votes -->
+        
+        <record id="action_votes_draft" model="ir.actions.act_window">
+            <field name="name">Draft Votes</field>
+            <field name="res_model">comparison.vote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+        </record>
+        <menuitem action="action_votes_draft" id="menu_action_votes_draft" parent="menu_periodical_votes"/>
+        
+        <record id="action_votes_cancel" model="ir.actions.act_window">
+            <field name="name">Cancelled Votes</field>
+            <field name="res_model">comparison.vote</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','cancel')]</field>
+        </record>
+        <menuitem action="action_votes_cancel" id="menu_action_votes_cancel" parent="menu_periodical_votes"/>
+        
+        <!-- Ponderation Suggestions -->
+        
+        <record id="action_ponderation_draft" model="ir.actions.act_window">
+            <field name="name">Draft Suggestions</field>
+            <field name="res_model">comparison.ponderation.suggestion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','draft')]</field>
+        </record>
+        <menuitem action="action_ponderation_draft" id="menu_action_ponderation_draft" parent="menu_periodical_suggestions"/>
+        
+        <record id="action_ponderation_cancel" model="ir.actions.act_window">
+            <field name="name">Cancelled Suggestions</field>
+            <field name="res_model">comparison.ponderation.suggestion</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','cancel')]</field>
+        </record>
+        <menuitem action="action_ponderation_cancel" id="menu_action_ponderation_cancel" parent="menu_periodical_suggestions"/>
+        
+        <wizard id="wizard_recompute_evaluations" menu="False" name="recompute.evaluations" string="Recompute All Evaluations"/>
+        <menuitem action="wizard_recompute_evaluations" id="menu_wizard_recompute_evaluations" parent="menu_periodical" type="wizard"/>
+        
+    </data>
+</openerp>

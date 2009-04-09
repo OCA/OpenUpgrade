@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="maintenance_maintenance_tree_view" model="ir.ui.view">
+            <field name="name">maintenance.maintenance.tree</field>
+            <field name="model">maintenance.maintenance</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Maintenance">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="type_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="maintenance_maintenance_form_view" model="ir.ui.view">
+            <field name="name">maintenance.maintenance.form</field>
+            <field name="model">maintenance.maintenance</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Maintenance">
+                    <group col="2" colspan="4">
+                        <group col="2">
+                            <field name="name" select="1"/>
+                            <field name="password" readonly="True"/>
+                        </group>
+                        <group col="2">
+                            <field name="type_id" select="1"/>
+                            <field name="state"/>
+                        </group>
+                        <group col="2" string="Partner">
+                            <field name="partner_id" select="1" on_change="onchange_partner_id(partner_id)"/>
+                            <field name="partner_invoice_id"/>
+                        </group>
+                        <group col="2" string="Dates">
+                            <field name="date_from" select="2" on_change="onchange_date_from(date_from)"/>
+                            <field name="date_to" select="2"/>
+                        </group>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Modules">
+                            <field name="module_ids" nolabel="1" colspan="4"/>
+                        </page>
+                        <page string="Notes">
+                            <field name="note" nolabel="1" colspan="4"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_maintenance_maintenance_form" model="ir.actions.act_window">
+            <field name="name">Maintenance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.maintenance</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem parent="base.menu_management"	name="Maintenance Editor" id="menu_maintenance_main"/>
+        <menuitem action="action_maintenance_maintenance_form" id="menu_maintenance_contracts" name="Maintenance Contracts" parent="menu_maintenance_main"/>
+
+        <record id="maintenance_maintenance_module_tree_view" model="ir.ui.view">
+            <field name="name">maintenance.maintenance.module.tree</field>
+            <field name="model">maintenance.maintenance.module</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Maintenance Modules">
+                    <field name="name"/>
+                    <field name="version"/>
+                </tree>
+            </field>
+        </record>
+
+        <wizard id="maintenance_maintenance_module_refresh_wizard" model="maintenance.maintenance.module" name="maintenance.maintenance.module.refresh" string="Refresh Module List" multi='True'/>
+        
+        <record id="maintenance_maintenance_module_form_view" model="ir.ui.view">
+            <field name="name">maintenance.maintenance.module.form</field>
+            <field name="model">maintenance.maintenance.module</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Maintenance Modules">
+                    <group col="2">
+                        <field name="name" select="1"/>
+                        <field name="version" select="1"/>
+                        <field name="path"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_maintenance_module_form" model="ir.actions.act_window">
+            <field name="name">Maintenance Modules</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.maintenance.module</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_maintenance_module_form" id="menu_maintenance_module" parent="menu_maintenance_main"/>
+        <menuitem action="maintenance_maintenance_module_refresh_wizard" id="menu_maintenace_module_refresh_wizard" parent="menu_maintenance_module" type="wizard"/>
+
+        <record id="maintenance_contract_type_form_view" model="ir.ui.view">
+            <field name="name">maintenance.contract.type.form</field>
+            <field name="model">maintenance.contract.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Maintenance Contract Type">
+                    <field name="name" colspan="4"/>
+                    <group string="Product" colspan="2" col="2">
+                        <field name="product_id"/>
+                    </group>
+                    <group string="CRM" colspan="2" col="2">
+                        <field name="crm_case_section_id"/>
+                        <field name="crm_case_categ_id"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_maintenance_contract_type_form" model="ir.actions.act_window">
+            <field name="name">Maintenance Contract Types</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">maintenance.contract.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem action="action_maintenance_contract_type_form" id="menu_maintenance_contract_type" parent="menu_maintenance_main"/>        
+
+    </data>
+</openerp>
+

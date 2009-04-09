@@ -1,0 +1,144 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="performance_form">
+			<field name="name">hr.performance.form</field>
+			<field name="model">hr.performance</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="HR Performance">
+					<group col="6" colspan="4">
+						<field name="reviewer_id"/>
+						<field name="date_from" attrs="{'readonly':[('state','=','done')]}"/>
+						<field name="date_to" attrs="{'readonly':[('state','=','done')]}"/>
+						<field name="user_id"/>
+					</group>
+					<field name="performance_id" nolabel="1" colspan="4" attrs="{'readonly':[('state','=','done')]}">
+						<form string="Performance Lines">
+							<field name="employee_id"/>
+							<newline/>
+							<field name="attribute_line" nolabel="1" colspan="4" />
+							<field name="total"/>
+							<field name="performance"/>
+						</form>
+						<tree string="Performance Lines" colors="red:performance &lt; 50">
+							<field name="employee_id"/>
+							<field name="total"/>
+							<field name="performance" attrs="{'readonly':[('parent.state','=','done')]}"/>
+						</tree>
+					</field>
+					<group col="4" colspan="4">
+						<field name="state"/>
+						<button string="Get Employee List" name="get_employee_list" states="new"/>
+						<button string="Confirm" name="confirm_review" states="saved" confirm="Are you sure to confirm this record." />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="performance_tree">
+			<field name="name">hr.performance.tree</field>
+			<field name="model">hr.performance</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="HR Performance">
+					<field name="reviewer_id" />
+					<field name="date_from" />
+					<field name="date_to" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="act_hr_performance_form">
+			<field name="res_model">hr.performance</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="performance_tree" />
+		</record>
+
+		<menuitem
+			name="Human Resources/Performance Review/Performance HR"
+			action="act_hr_performance_form" groups="base.group_system"
+			id="menu_hr_performance" />
+
+		<record model="ir.ui.view" id="Attribute_line_form">
+			<field name="name">hr.attribute.line.form</field>
+			<field name="model">attribute.line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Attribute Lines">
+					<field name="attribute_id" />
+					<newline />
+					<field name="total_marks" />
+					<field name="obtained_marks"
+						on_change="change_obtain_marks(total_marks,obtained_marks)" />
+					<field name="description" colspan="4" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="performance_line_tree">
+			<field name="name">hr.attribute.line.tree</field>
+			<field name="model">attribute.line</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Attribute Lines" editable="top">
+					<field name="attribute_id" />
+					<field name="total_marks" />
+					<field name="obtained_marks"
+						on_change="change_obtain_marks(total_marks,obtained_marks)" />
+					<field name="description" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window"
+			id="act_hr_performance_line_form">
+			<field name="res_model">hr.performance.line</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="performance_line_tree" />
+		</record>
+
+		<record model="ir.ui.view"
+			id="performance_line_attribute_form">
+			<field name="name">hr.performance.line.attribute.form</field>
+			<field name="model">hr.performance.line.attribute</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Review Attributes">
+					<field name="name" />
+					<field name="total_point" />
+					<field name="note" colspan="4"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view"
+			id="performance_line_attribute_tree">
+			<field name="name">hr.performance.line.attribute.tree</field>
+			<field name="model">hr.performance.line.attribute</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Review Attributes">
+					<field name="name" />
+					<field name="total_point"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window"
+			id="act_hr_performance_line_attribute_form">
+			<field name="res_model">hr.performance.line.attribute</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="performance_line_attribute_tree" />
+		</record>
+
+		<menuitem
+			name="Human Resources/Performance Review/Review Attributes HR"
+			action="act_hr_performance_line_attribute_form"
+			groups="base.group_system" id="menu_hr_performance_attribute" />
+	</data>
+</openerp>

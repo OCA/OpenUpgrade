@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="ir_actions_server_soinvoiceall1" model="ir.actions.server">
+			<field eval="103" name="sequence"/>
+			<field name="state">object_create</field>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order_line"/>
+			<field name="srcmodel_id" ref="account.model_account_invoice"/>
+			<field name="condition">True</field>
+			<field name="name">SO -&gt; Invoice - All</field>
+		</record>
+		<record id="ir_server_object_lines_41" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoiceall1"/>
+			<field name="type">equation</field>
+			<field name="value">object.order_id.partner_id.property_account_receivable.id</field>
+			<field name="col1" ref="account.field_account_invoice_account_id"/>
+		</record>
+		<record id="ir_server_object_lines_42" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoiceall1"/>
+			<field name="type">equation</field>
+			<field name="value">object.order_id.partner_invoice_id.id</field>
+			<field name="col1" ref="account.field_account_invoice_address_invoice_id"/>
+		</record>
+		<record id="ir_server_object_lines_43" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoiceall1"/>
+			<field name="type">equation</field>
+			<field name="value">object.order_id.partner_id.id</field>
+			<field name="col1" ref="account.field_account_invoice_partner_id"/>
+		</record>
+		<record id="ir_server_object_lines_44" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoiceall1"/>
+			<field name="type">equation</field>
+			<field name="value">[[0, 0, {'product_id':object.product_id.id, 'uos_id':object.product_uom.id, 'price_unit':object.price_unit, 'name':object.name, 'quantity':object.product_uom_qty, 'invoice_id':object.order_id.client_order_ref, 'account_id':object.product_id.property_account_income.id or object.product_id.categ_id.property_account_income_categ.id}]]</field>
+			<field name="col1" ref="account.field_account_invoice_invoice_line"/>
+		</record>
+		<record id="ir_server_object_lines_45" model="ir.server.object.lines">
+			<field name="server_id" ref="ir_actions_server_soinvoiceall1"/>
+			<field name="type">equation</field>
+			<field name="value">object.order_id.name + '/' + object.product_id.name</field>
+			<field name="col1" ref="account.field_account_invoice_name"/>
+		</record>
+		<record id="ir_actions_server_loopinvocesolinemain0" model="ir.actions.server">
+			<field eval="100" name="sequence"/>
+			<field name="loop_action" ref="ir_actions_server_soinvoiceall1"/>
+			<field name="state">loop</field>
+			<field name="type">ir.actions.server</field>
+			<field name="model_id" ref="sale.model_sale_order"/>
+			<field name="condition">True</field>
+			<field name="name">Loop 1 Invoce / SO Line MAIN</field>
+			<field name="expression">object.order_line</field>
+		</record>
+	</data>
+</openerp>

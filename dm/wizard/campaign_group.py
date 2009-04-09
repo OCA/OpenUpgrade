@@ -1,4 +1,24 @@
 # -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 import wizard
 import pooler
 
@@ -14,7 +34,7 @@ class wizard_campaign_group(wizard.interface):
         <field name="group" colspan="4"/>
     </form>'''
     
-    message ='''<?xml version="1.0"?>
+    message = '''<?xml version="1.0"?>
     <form string="Create Group">
         <label align="0.0" colspan="4" string="Selected campaign has been added in the group.Campaigns that are already in some group will not be added in new group and will remain in same group"/>
     </form>'''

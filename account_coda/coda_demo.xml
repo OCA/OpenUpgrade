@@ -1,32 +1,5 @@
 <?xml version="1.0"?>
 <openerp>
 <data noupdate="1">
-	<record model="res.partner" id="partner_demo1">
-		<field name="name">PROLIBRE SARL             CAROUGE G</field>
-	</record>
-	<record model="res.partner.bank" id="partner_bank1">
-		<field name="acc_number">301915554082</field>
-		<field name="state">bank</field>
-		<field name="partner_id" ref="partner_demo1"></field>
-	</record>
-
-	<record model="res.partner" id="partner_demo2">
-		<field name="name">SEDNACOM                  43 ALLEE</field>
-	</record>
-	<record model="res.partner.bank" id="partner_bank2">
-     	<field name="acc_number">050000000017</field>
-		<field name="state">iban</field>
-		<field name="partner_id" ref="partner_demo2"></field>
-	</record>
-
-<!--	<record model="res.partner.bank" id="partner_agrolait">
-		<field name="acc_number">301915554082</field>
-		<field name="partner_id" ref="base.res_partner_agrolait"/>
-	</record>
-
-	<record model="res.partner.bank" id="res_partner_10">
-		<field name="acc_number">050000000017</field>
-		<field name="partner_id" ref="base.res_partner_10"/>
-	</record>-->
 </data>
 </openerp>

@@ -1,30 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id: account.py 1005 2005-07-25 08:41:42Z nicoe $
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -49,6 +41,7 @@ class CompanyLDAP(osv.osv):
         'company': fields.many2one('res.company', 'Company', required=True,
             ondelete='cascade'),
         'ldap_server': fields.char('LDAP Server address', size=64, required=True),
+        'ldap_server_port': fields.integer('LDAP Server port', required=True),
         'ldap_binddn': fields.char('LDAP binddn', size=64, required=True),
         'ldap_password': fields.char('LDAP password', size=64, required=True),
         'ldap_filter': fields.char('LDAP filter', size=64, required=True),
@@ -59,6 +52,8 @@ class CompanyLDAP(osv.osv):
             help="Create the user if not in database"),
     }
     _defaults = {
+        'ldap_server': lambda *a: '127.0.0.1',
+        'ldap_server_port': lambda *a: 389,
         'sequence': lambda *a: 10,
         'create_user': lambda *a: True,
     }
@@ -82,10 +77,10 @@ def ldap_login(oldfnc):
         if module_ids:
             state = module_obj.read(cr, 1, module_ids, ['state'])[0]['state']
             if state in ('installed', 'to upgrade', 'to remove'):
-                cr.execute("select id, company, ldap_server, ldap_binddn, ldap_password, ldap_filter, ldap_base, \"user\", create_user from res_company_ldap where ldap_server != '' and ldap_binddn != '' order by sequence")
+                cr.execute("select id, company, ldap_server, ldap_server_port, ldap_binddn, ldap_password, ldap_filter, ldap_base, \"user\", create_user from res_company_ldap where ldap_server != '' and ldap_binddn != '' order by sequence")
                 for res_company_ldap in cr.dictfetchall():
                     try:
-                        l = ldap.open(res_company_ldap['ldap_server'])
+                        l = ldap.open(res_company_ldap['ldap_server'], res_company_ldap['ldap_server_port'])
                         if l.simple_bind_s(res_company_ldap['ldap_binddn'], res_company_ldap['ldap_password']):
                             base = res_company_ldap['ldap_base']
                             scope = ldap.SCOPE_SUBTREE
@@ -154,7 +149,7 @@ def ldap_check(oldfnc):
                 if user and user.company_id.ldaps:
                     for res_company_ldap in user.company_id.ldaps:
                         try:
-                            l = ldap.open(res_company_ldap.ldap_server)
+                            l = ldap.open(res_company_ldap.ldap_server, res_company_ldap.ldap_server_port)
                             if l.simple_bind_s(res_company_ldap.ldap_binddn,
                                     res_company_ldap.ldap_password):
                                 base = res_company_ldap.ldap_base

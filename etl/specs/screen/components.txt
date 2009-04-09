@@ -1,0 +1,382 @@
+Legend on performance:
+* Streamline: when one (or a few) records is in input, then it goes directly to
+  output. This is a very fast and low-memory consumming component. Putting
+  only streamine elements on the main flow is really fast and allow to compute
+  on Gbs.
+* Semi-Streamline: some inputs elements are stored and the output is returned
+  when an element is computed. It's less efficient than streamline but it never
+  stores all elements in memory, so it's acceptable in most cases.
+* Bloc: all inputs elements are stored and the output is return at the end
+  of the complete process. This component consumme more memory and can trigger
+  problems with very big amount of data to process.
+
+Note:
+All components will store these processing information on themselves and route
+the the channel called 'Main Log':
+* time, number input, number output, start date, end date, time/record
+
+
+etl.component.diff
+------------------
+
+Takes 2 flows in input and detect a difference between these two flows
+using computed keys (based on data records) to compare elements that may not
+have to be in the same order.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 2
+* main: The main flow
+* .*: the second flow
+Output Flows: 0-x
+* same: return all elements that are the same in both input flows
+* updated: return all updated elements
+* removed: return all elements that where in main and not in the second flow
+* added: return all elements from the second flow that are not in main channel
+
+etl.component.reverse
+---------------------
+
+Receive a flow in input and return the same flow in output, in the same channel
+name but in reverse orders. The first elements from input becomes the latests
+elements sent in output.
+
+Type: Data Component
+Computing Performance: Bloc
+Input Flows: 0-x
+* .*: the main data flow
+Output Flows: 0-y
+* .*: the returned data flow, in the same channel name than input
+
+etl.component.subjob
+--------------------
+
+When entering in this component, it trigger the beginning of a new job, linked
+in this component. This allows you to create complex jobs that are composed of
+different subjobs. Use it with trigger transitions.
+
+Type: Job Component
+Computing Performance: /
+Input Flows: 0-x
+* .*: do nothing
+Output Flows: 0-x
+* .*: output no data, just trigger signals
+
+etl.component.dummy
+-------------------
+
+A component that do nothing.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .*: receive data
+Output Flows: 0-y
+* .*: output nothing
+
+
+etl.component.aggregate_sorted
+------------------------------
+
+This component is used to give aggregate result from sorted input. Records
+having the same key columns will be aggregated in one record, others are columns
+are computed (sums, average, count, ...) Use this component if records are
+sorted accorded to keys, because it is much more faster than the
+etl.component.aggregate_unsorted as it works in streamline. If several channels
+are provided in input, it return one aggregated flow in output per input channel,
+with the same name.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-y
+* main: The main flow
+Output Flows: 0-x
+* .*: return aggregated result with channel of same name than input
+
+
+etl.component.aggregate_unsorted
+--------------------------------
+
+This component is used to give aggregate result from sorted input. Records
+having the same key columns will be aggregated in one record, others are columns
+are computed (sums, average, count, ...) Use this component if records are
+unsorted. It output all the results at the end of the input process of a channel.
+
+Type: Data Component
+Computing Performance: Bloc
+Input Flows: 0-y
+* main: The main flow
+Output Flows: 0-x
+* .*: return the main flow with aggregated result
+
+etl.component.csv_input
+-----------------------
+
+This component is used to read csv file data.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-x
+* .* : return the main flow with data from csv file
+
+etl.component.csv_output
+------------------------
+
+This component use to store data into csv file
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-1
+* main : return all data
+
+etl.component.row_filter (etl.component.simple_filter)
+------------------------
+
+This component use to filter records from given input.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : the main data flow with input data
+Output Flows: 0-x
+* main : return the main flow with data that matches the test
+* invalid : the flow
+
+etl.component.log_bloc
+----------------------------
+This component use to display output in block
+
+Type: Data Component
+Computing Performance: Bloc
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-y
+* .* : return the main flow 
+
+etl.component.logger
+----------------------------
+This component use to display output in streamline
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-y
+* .* : return the main flow 
+
+etl.component.map
+----------------------------
+This component use for field mapping. 
+Record's field which exits in list of fields in this component will be map with destination field and 
+return only those records which match relation conditions of component.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-y
+* .* : return the main flow with mapping result
+
+etl.component.sort
+----------------------------
+This component use for sort process. Sort on records having keys.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : the main data flow with input data
+Output Flows: 0-x
+* .* : return the main flow with sort result
+
+etl.component.sql_in
+----------------------------
+This component use to read data from sql table.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-x
+* .* : return the main flow with sql data
+
+etl.component.sql_out
+----------------------------
+This component use to insert,update,delete data from sql table.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-1
+* .* : return the main flow 
+
+etl.component.schema_validation
+----------------------------
+This component use to validate input records with given schema.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : the main data flow with input data
+Output Flows: 0-x
+* .* : return the main flow with result of schema validation
+
+etl.component.merge
+----------------------------
+This component use to merge different inputs data into one output base on schema
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 0-x
+* .* : the main data flow with input data
+Output Flows: 0-y
+* .* : return the main flow with merged data
+
+etl.component.openobject_in
+----------------------------
+
+This component is used to read data from openobject like read partner datas
+from res.partner model with a specific domain to select the records.
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-x
+* .* : return the main flow with data of openobject
+
+etl.component.openobject_out
+----------------------------
+
+This component is used to create,write,unlink data on openobject 
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 0-x
+* .* : main flow with input data
+Output Flows: 0-1
+* .* : return the main flow
+
+etl.component.find_replace
+--------------------------
+
+This component use to do find and replace operation in the input columns defined.
+This component has keys with find and replace information. It uses regex to do
+the replacement.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : main flow with input data
+Output Flows: 0-x
+* .* : return the main flow with replaced data
+
+etl.component.find_replace_list
+-------------------------------
+
+This component is used to find value from source data and replace with new value
+which exits in another source data in the input columns defined. This component
+has only keys without find and replace information.
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 2
+* .* : main flow with source data
+* .* : second flow with replace  data
+Output Flows: 0-x
+* .* : return the main flow with replaced data
+
+
+etl.component.python_code
+-------------------------
+
+This component is used to execute python code. The python code process
+an input stream and return an output result.
+
+Type: Data Component
+Computing Performance: Depends on the code
+Input Flows: 0-x
+* .* : main flow with input data
+Output Flows: 0-y
+* .* : return the main flow with result of python code
+
+
+etl.component.fork
+------------------
+
+This component use to make fork flow (replica flow)
+
+Type: Data Component
+Computing Performance: Streamline
+Input Flows: 1
+* .* : main flow with input data
+Output Flows: 0-2
+* main : return the main flow 
+* fork : return second flow which is fork flow of main flow 
+
+
+etl.component.uniq
+------------------
+
+This component id used to check and process uniq constraints on records.
+It sends all uniq records to one channel (uniq) and all duplicates records
+to another channel (duplicate)
+
+Type: Data Component
+Computing Performance: Semi-Streamline
+Input Flows: 1
+* .* : main flow with input data
+Output Flows: 0-x
+* uniq : return  uniq rows
+* duplicate : return duplicate rows
+
+etl.component.wait
+------------------
+
+This component is used to slow the data transfer. It mark a pause of
+X second at each inputed row.
+
+Type: Job Component
+Computing Performance: Streamline
+Input Flows: 0
+* .* : do nothing
+Output Flows: 0-1
+* .* : return the same flow
+
+etl.component.speedtest
+-----------------------
+
+This component is used to log data transfer speed of job.
+
+Type: Log Component
+Computing Performance: /
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-1
+* .* : return the speed data 
+
+
+etl.component.statistics
+------------------------
+
+This component is used to log statistical result of job process. like
+user,current process,source component, destination component, start date of
+process, end date of process, messages.
+
+Type: Log Component
+Computing Performance: /
+Input Flows: 0
+* .* : nothing
+Output Flows: 0-1
+* .* : return the statistical data 
+  
+
+
+
+
+
+

@@ -1,0 +1,170 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="res_partner_category_fournisseurs0" model="res.partner.category">
+			<field eval="&quot;&quot;&quot;Fournisseurs&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_clients0" model="res.partner.category">
+			<field eval="&quot;&quot;&quot;Clients&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_prospects0" model="res.partner.category">
+			<field eval="&quot;&quot;&quot;Prospects&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_matrieldesono0" model="res.partner.category">
+			<field eval="&quot;&quot;&quot;Matériel de Sono&quot;&quot;&quot;" name="name"/>
+			<field name="parent_id" ref="res_partner_category_fournisseurs0"/>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_soustraitantsvnements0" model="res.partner.category">
+			<field name="parent_id" ref="res_partner_category_fournisseurs0"/>
+			<field eval="&quot;&quot;&quot;Sous-Traitants événements&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_entreprises0" model="res.partner.category">
+			<field name="parent_id" ref="res_partner_category_clients0"/>
+			<field eval="&quot;&quot;&quot;Entreprises&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_particuliers0" model="res.partner.category">
+			<field name="parent_id" ref="res_partner_category_clients0"/>
+			<field eval="&quot;&quot;&quot;Particuliers&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_function_directeurcommercial0" model="res.partner.function">
+			<field eval="&quot;&quot;&quot;DC&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Directeur Commercial&quot;&quot;&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="account_account_type_r0" model="account.account.type">
+			<field eval="&quot;&quot;&quot;r&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;r&quot;&quot;&quot;" name="name"/>
+			<field eval="5" name="sequence"/>
+			<field eval="&quot;&quot;&quot;none&quot;&quot;&quot;" name="close_method"/>
+			<field eval="0" name="partner_account"/>
+		</record>
+	</data>
+	<data>
+		<record id="account_account_type_t0" model="account.account.type">
+			<field eval="&quot;&quot;&quot;t&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;t&quot;&quot;&quot;" name="name"/>
+			<field eval="5" name="sequence"/>
+			<field eval="&quot;&quot;&quot;none&quot;&quot;&quot;" name="close_method"/>
+			<field eval="0" name="partner_account"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="res_partner_sound0" model="res.partner">
+			<field eval="&quot;&quot;&quot;VPC - Vente en ligne&quot;&quot;&quot;" name="comment"/>
+			<field eval="1" name="active"/>
+			<field name="property_product_pricelist" ref="product.list0"/>
+			<field name="property_account_receivable" ref="l10n_fr.fr_pcg_recv"/>
+			<field name="property_account_payable" ref="l10n_fr.fr_pcg_pay"/>
+			<field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
+			<field eval="&quot;&quot;&quot;S7&quot;&quot;&quot;" name="ref"/>
+			<field eval="&quot;&quot;&quot;http://www.sound7.be&quot;&quot;&quot;" name="website"/>
+			<field eval="1" name="supplier"/>
+			<field name="property_stock_customer" ref="stock.stock_location_customers"/>
+			<field eval="0" name="customer"/>
+			<field eval="&quot;&quot;&quot;Sound7&quot;&quot;&quot;" name="name"/>
+			<field name="property_product_pricelist_purchase" ref="purchase.list0"/>
+			<field eval="[(6,0,[ref('res_partner_category_matrieldesono0')])]" name="category_id"/>
+		</record>
+		<record id="res_partner_address_ericlegrand0" model="res.partner.address">
+			<field name="function" ref="res_partner_function_directeurcommercial0"/>
+			<field eval="&quot;&quot;&quot;Eric Legrand&quot;&quot;&quot;" name="name"/>
+			<field name="partner_id" ref="res_partner_sound0"/>
+			<field eval="1" name="active"/>
+		</record>
+		<record id="res_partner_address_fabienpinckaers0" model="res.partner.address">
+			<field name="function" ref="res_partner_function_directeurcommercial0"/>
+			<field eval="&quot;&quot;&quot;Pepinster&quot;&quot;&quot;" name="city"/>
+			<field eval="&quot;&quot;&quot;Fabien Pinckaers&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;4860&quot;&quot;&quot;" name="zip"/>
+			<field name="partner_id" ref="res_partner_sound0"/>
+			<field name="country_id" ref="base.be"/>
+			<field eval="&quot;&quot;&quot;+32 (0)87 31 23 93&quot;&quot;&quot;" name="phone"/>
+			<field eval="&quot;&quot;&quot;15, rue Raymond Legentil&quot;&quot;&quot;" name="street"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;info@sound7.be&quot;&quot;&quot;" name="email"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="res_partner_musicstore0" model="res.partner">
+			<field eval="1" name="active"/>
+			<field name="property_product_pricelist" ref="product.list0"/>
+			<field name="property_account_receivable" ref="l10n_fr.fr_pcg_recv"/>
+			<field name="property_account_payable" ref="l10n_fr.fr_pcg_pay"/>
+			<field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
+			<field eval="&quot;&quot;&quot;MS&quot;&quot;&quot;" name="ref"/>
+			<field eval="1" name="supplier"/>
+			<field name="property_stock_customer" ref="stock.stock_location_customers"/>
+			<field eval="0" name="customer"/>
+			<field eval="&quot;&quot;&quot;Music Store&quot;&quot;&quot;" name="name"/>
+			<field name="property_product_pricelist_purchase" ref="purchase.list0"/>
+			<field eval="[(6,0,[ref('res_partner_category_matrieldesono0')])]" name="category_id"/>
+		</record>
+		<record id="res_partner_address_stphanedubois0" model="res.partner.address">
+			<field eval="&quot;&quot;&quot;Köln&quot;&quot;&quot;" name="city"/>
+			<field eval="&quot;&quot;&quot;Stéphane Dubois&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;50667&quot;&quot;&quot;" name="zip"/>
+			<field name="partner_id" ref="res_partner_musicstore0"/>
+			<field name="country_id" ref="base.de"/>
+			<field eval="&quot;&quot;&quot;49 221 925791-0&quot;&quot;&quot;" name="phone"/>
+			<field eval="&quot;&quot;&quot;Große Budengasse 9-17&quot;&quot;&quot;" name="street"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;info@musicstore.de&quot;&quot;&quot;" name="email"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="res_partner_showconcept0" model="res.partner">
+			<field eval="&quot;&quot;&quot;Sous-traitant pour l'organisation de soirée privée.
+Ils sont également clients pour le matériel de Sono.&quot;&quot;&quot;" name="comment"/>
+			<field eval="1" name="active"/>
+			<field name="property_product_pricelist" ref="product.list0"/>
+			<field name="user_id" ref="stock.user_logistic"/>
+			<field name="property_account_receivable" ref="l10n_fr.fr_pcg_recv"/>
+			<field name="property_account_payable" ref="l10n_fr.fr_pcg_pay"/>
+			<field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
+			<field eval="&quot;&quot;&quot;SC&quot;&quot;&quot;" name="ref"/>
+			<field eval="1" name="supplier"/>
+			<field name="property_stock_customer" ref="stock.stock_location_customers"/>
+			<field eval="1" name="customer"/>
+			<field eval="&quot;&quot;&quot;Show Concept&quot;&quot;&quot;" name="name"/>
+			<field name="property_product_pricelist_purchase" ref="purchase.list0"/>
+			<field eval="[(6,0,[])]" name="category_id"/>
+		</record>
+		<record id="res_partner_address_ericchardon0" model="res.partner.address">
+			<field name="function" ref="res_partner_function_directeurcommercial0"/>
+			<field eval="&quot;&quot;&quot;Paris&quot;&quot;&quot;" name="city"/>
+			<field eval="&quot;&quot;&quot;Eric Chardon&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;75000&quot;&quot;&quot;" name="zip"/>
+			<field name="partner_id" ref="res_partner_showconcept0"/>
+			<field name="country_id" ref="base.fr"/>
+			<field eval="&quot;&quot;&quot;+33.6.09.06.71.09&quot;&quot;&quot;" name="phone"/>
+			<field eval="&quot;&quot;&quot;Avenue du Général Papou 12&quot;&quot;&quot;" name="street"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;info@showconcept.fr&quot;&quot;&quot;" name="email"/>
+		</record>
+	</data>
+</openerp>

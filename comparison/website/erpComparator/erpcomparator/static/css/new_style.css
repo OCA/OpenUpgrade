@@ -1,0 +1,461 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    color: #000000;
+}
+
+body,
+table {
+    font-family: Verdana, Arial, sans-serif;
+    font-size: 12px;
+}
+
+a {
+    text-decoration: none;
+    color: #990000;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #690000;
+}
+
+a.imglink {
+    text-decoration: none;
+}
+
+a:hover .imglink {
+    border: none;
+}
+
+.dimmed-text {
+    color: #bbb;
+}
+
+.dimmed-text a {
+    font-size: 10px;
+    color: #bbb;
+    text-transform: uppercase;
+}
+
+.dimmed-text a:hover {
+    color: #333;
+    text-decoration: none;
+}
+
+td.dimmed-text {    
+    padding-left: 5px;
+}
+
+hr {
+    border: 0px;
+    background-color: #888;
+    height: 1px;
+}
+
+input,
+select,
+textarea {
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #999999;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #990033;
+}
+
+input.checkbox,
+input.radio {
+    background-color: transparent;
+    border: none;
+    margin: 0px;
+}
+
+button {
+    border: solid 1px #888888;    
+    background: url(/static/images/button_bg.png) repeat-x left top;
+    color: #000;
+    padding: 0px 2px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+#container {
+    margin: auto;
+}
+
+.width_border {
+	width: 1004px;	
+}
+
+table.header {
+    background: url(/static/images/grdheader.gif) repeat-x left top;
+    width: 100%;
+}
+
+button:hover {
+    background: url(/static/images/button_bg2.png) repeat-x left top;
+}
+
+button.inactive {
+    background: #eeeeee;
+    border: solid 1px #888888;
+    color: #999999;
+}
+
+div.box2 {
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #F6F6F6;
+    border-top: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+}
+
+div.header {
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #F6F6F6;
+    border-top: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+    text-align: center;
+    color: #990033;
+    text-align: center;
+    font-size: 14px;
+}
+
+.toolbar {
+    background-color: #F6F6F6;
+    border-top: 1px solid #bbb8a9;
+    border-bottom: 1px solid #bbb8a9;
+    padding: 5px;
+    white-space: nowrap;
+}
+   
+/* ----------------- Navigation -------------- */
+
+span.disabled_text {
+    color: gray;
+}
+
+td.label_header {
+    text-align: center;
+    color: #990033;
+    font-size: 12px;
+    font-weight: bold;    
+}
+
+div.label_header {
+    text-align: center;
+    color: #990033;
+    font-size: 12px;        
+}
+
+td.label {
+    padding: 0 4px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+div.message {
+    background-color: gray;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+}
+
+div.welcome {
+    text-align: center;
+    color: #990033;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* view style */
+.view {
+    width: 100%;
+}
+
+.view .spacer {
+    width: 4px;
+    height: 4px;
+}
+
+.view .titlebar {
+    font-size: 16px;
+    font-weight: bold;
+    color: #950000;
+    border-bottom: 1px solid #363636;
+    margin-bottom: 4px;
+}
+
+.view .titlebar button {
+    width: auto;
+    margin: 0 1px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.view .title {
+    background: url(/static/images/grdline1.gif) repeat-x left top;
+    border-top: 1px solid #E3E3E3;
+    height: 20px;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.view .toolbar {
+    background-color: #F6F6F6;
+    border-top: 1px solid #bbb8a9;
+    border-bottom: 1px solid #bbb8a9;
+    padding: 5px;
+    white-space: nowrap;
+}
+
+.view .toolbar button {
+    width: auto;
+    margin: 0 1px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.view .toolbar img,
+.view .titlebar img {
+    border: none;
+    margin: 0 1px;
+    vertical-align: middle;
+}
+.view .toolbar img.button,
+.view .titlebar img.button {
+    cursor: pointer;
+}
+
+.view .fields {
+}
+
+.view .separator {
+    font-weight: bold;
+    border-bottom: 1px solid #666;
+    margin: 6px 0px;
+}
+
+td.label {
+    padding: 0 4px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+td.item input,
+td.item select,
+td.item textarea,
+td.item button {
+    width: 99%;
+}
+
+td.item .checkbox,
+td.item .radio {
+    width: auto;
+}
+
+/* treebar */
+.treebar {
+    padding-right: 5px;
+    width: 100px;
+}
+
+.treebar .row {
+    cursor: pointer;
+}
+
+.treesep {
+
+}
+
+
+/* ================================================ */
+
+#site {
+	background: transparent url(/static/images/white_shadow_bg.gif) repeat-y scroll left top;
+	margin: 0 auto;
+	padding: 0 18px;
+	/*text-align: left;*/
+	width: 930px;
+}
+
+#header {
+	background: transparent url(/static/images/headerimage.jpg) repeat-y scroll left top;) repeat-y scroll 0 0;
+	height:108px;
+	position:relative;
+	width:890px;
+}
+
+#header_bar {
+	/*height:40px;*/
+	position:relative;
+	width:890px;
+	height:39px;
+	background-attachment: scroll;
+	background-color: transparent;
+	background-image: url(/static/images/loginbg.gif);
+	background-repeat: no-repeat;
+	background-position: left top;
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 11px;
+	color: #00C1C0;
+	text-align: left;
+	vertical-align: bottom;
+}
+
+#body_color {
+	height:483px;
+	position:relative;
+	width:830px;
+	background-attachment: scroll;
+	background-image: url(/static/images/bgcolorimage.gif);
+	background-repeat: repeat-y;
+	visibility: inherit;	
+}
+
+#bodybackground {
+	background-attachment: scroll;
+	background-image: url(/static/images/bodybg.gif);
+	width:890px;
+	height:auto;	
+	/*padding-left:20px;
+	padding-right:20px;*/
+}
+	
+#bodytextbg {
+	background-attachment: scroll;
+	height:30px;
+	background-repeat: no-repeat;
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-weight:normal;
+	font-size: 11px;
+	padding-top:20px;
+	padding-left:20px;
+	color:#353433;
+	width:830px;
+	background-image: url(/static/images/bluebgimage.png);
+}
+
+#footerbg {
+	background-image: url(/static/images/footerbg.gif);
+	width:890px;
+	height:26;
+}
+
+#newtext {
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 11px;
+	padding-top:5px;
+	padding-left:20px;
+}
+
+#checkboxtext {
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-size: 11px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+}
+
+#loginbg {
+	background: url(/static/images/bk_loginimage.png);
+	/*background-repeat:no-repeat;*/
+	float: right;
+	height: 39px;
+	padding-right: 30px;
+	width: 470px;
+}
+	
+#s {
+	background:#FFFFFF none repeat scroll 0 0;
+	border:1px solid #EEAA22;
+	font-size:11px;
+	margin:3px;
+	padding:2px;
+	width:50px;
+}
+
+#bluebg {
+	background-image:url(/static/images/bluebgimage.png) no-repeat;
+	background-attachment: scroll;
+}
+
+/*#textInput1 {
+	background:#555555 none repeat scroll 0 0;
+	border:1px solid #FF0000;
+	color:#FFFFFF;
+	font-size:8px;
+	margin-left:60px;
+	width: 50px;
+}*/
+
+.rollover :hover {
+	background:url(/static/images/graphs_03.jpg);
+}
+
+.textInput {
+	border: 1px solid #d1d1d1;
+	width:100px;
+	font-size: 1.1em;
+}
+
+#bottom_shadow {
+	background:transparent url(/static/images/bottom_shadow2.png) no-repeat scroll left top;
+	height:23px;
+	margin:0 auto;
+	width:926px;
+}
+
+#footertext {
+	font-family: Verdana, Geneva, sans-serif;
+	font-style: normal;
+	font-weight: normal;
+	color:#524f4f;
+	font-size: 11px;
+	text-align:centre;
+}
+
+#footertext a:hover {
+	text-decoration:underline;
+}
+
+#footertext a, #footer a:visited {
+	color:#990000;
+	font-style:bold;
+	font-size:12px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 11px;
+	text-decoration:none;
+}
+
+#new_planet {
+	width: 850px;
+	font-family: sans-serif;
+	margin: 0px 8px auto;
+}
+
+
+/**
+ * vim: sts=4 st=4 et 
+ *
+ */

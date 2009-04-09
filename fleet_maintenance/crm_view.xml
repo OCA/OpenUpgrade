@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+	
+		<record model="ir.ui.view" id="view_crm_case_form_fleet_maintenance">
+			<field name="name">crm.case.form.fleet_maintenance</field>
+			<field name="model">crm.case</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+
+				<form string="Fleet Incident">
+					<separator string="Identification" />
+					<group col="6" colspan="4">
+						<field name="prodlot_id" required="1" on_change="onchange_prodlot_id(prodlot_id)" />
+
+						<field name="partner_id" />
+
+						<field name="fleet_id" />
+						<field name="product_id" />
+
+						<field name="is_fleet_expired" readonly="1" />
+					</group>
+					<separator string="Moves" />
+					<group col="4" colspan="4">
+						<field name="related_incoming_picking_state" nolabel="1"/><field name="incoming_picking_id" mode="form" domain="[('type','=','in')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'customer','location_dest_id_usage':'internal','product_id':product_id,'location_id':fleet_id,'prodlot_id':prodlot_id}" />
+					</group>
+					<group col="4" colspan="4">
+						<field name="related_picking_state" nolabel="1"/><field name="picking_id" domain="[('type','=','internal')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'internal','location_dest_id_usage':'internal','product_id':product_id,'prodlot_id':prodlot_id}" />
+					</group>
+					<group col="4" colspan="4">
+						<field name="related_outgoing_picking_state" nolabel="1"/><field name="outgoing_picking_id" domain="[('type','=','out')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'internal','location_dest_id_usage':'customer','product_id':product_id,'location_dest_id':fleet_id,'prodlot_id':prodlot_id}" />
+					</group>
+					<separator string="Qualification" />
+					<group col="6" colspan="4">
+						<field name="incident_ref" />
+						<field name="name" string="Description" />
+						<field name="user_id" select="2" string="Responsible" />
+						<field name="external_ref" />
+						<field name="section_id" />
+						<newline />
+						<field name="date" string="Incident date" required="1" />
+						<field name="categ_id" on_change="onchange_categ_id(categ_id)" select="1" string="Type of Incident" />
+						<label align="1.0" string="Stage: " />
+						<group col="2" colspan="1">
+							<field name="stage_id" nolabel="1" select="1" />
+							<button icon="gtk-go-forward" name="stage_next" string="" type="object" />
+						</group>
+					</group>
+					<notebook>
+						<page string="Incident Info">
+							<field colspan="1" name="partner_address_id" on_change="onchange_partner_address_id(partner_address_id, email_from)"
+								string="Contact" />
+							<field name="email_from" />
+							<field name="partner_phone" />
+							<field name="partner_mobile" />
+							<newline />
+							<field name="priority" />
+							<field name="category2_id" select="1" string="Type of Action" />
+
+							<separator colspan="2" string="Claim Description" />
+							<separator colspan="2" string="Action Description" />
+							<field colspan="2" name="note" nolabel="1" />
+							<field colspan="2" name="description" nolabel="1" />
+							<label colspan="2" string="" />
+							<group colspan="2">
+								<button name="case_log_reply" states="open" string="Send Partner &amp; Historize" type="object" />
+								<button name="case_log" states="open" string="Historize" type="object" />
+							</group>
+							<separator colspan="4" string="Status" />
+							<group col="8" colspan="4">
+								<field name="state" select="1" />
+								<button name="case_close" states="open,draft,pending" string="Done" type="object" />
+								<button name="case_open" states="draft,pending" string="Open" type="object" />
+								<button name="case_cancel" states="draft,open,pending" string="Cancel" type="object" />
+								<button name="case_pending" states="draft,open" string="Pending" type="object" />
+								<button name="case_reset" states="done,cancel" string="Reset to Draft" type="object" />
+							</group>
+						</page>
+						<page groups="base.group_extended" string="Extra Info">
+							<field name="id" />
+							<field name="active" />
+							<field name="email_cc" />
+							<field name="canal_id" />
+							<separator colspan="4" string="Dates" />
+							<field name="create_date" />
+							<field name="date_closed" />
+							<field name="date_action_last" />
+							<field name="date_action_next" />
+							<field name="som" />
+							<separator colspan="4" string="History" />
+							<field colspan="4" mode="tree,form" name="history_line" nolabel="1">
+								<form string="Communication history">
+									<group col="6" colspan="4">
+										<field name="date" />
+										<field name="email" />
+										<field name="canal_id" />
+									</group>
+									<newline />
+									<field colspan="4" name="description" nolabel="1" />
+								</form>
+								<tree string="Communication history">
+									<field name="description" />
+									<field name="email" />
+									<field name="date" />
+								</tree>
+							</field>
+						</page>
+						<page string="History">
+							<field colspan="4" name="log_ids" nolabel="1">
+								<form string="Actions">
+									<separator colspan="4" string="Action Information" />
+									<field colspan="4" name="name" />
+									<field name="date" />
+									<field name="user_id" />
+									<field name="som" />
+									<field name="canal_id" />
+								</form>
+							</field>
+						</page>
+						<page string="Supplier Return?">
+							<field name="in_supplier_picking_id" domain="[('type','=','out')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'internal','location_dest_id_usage':'supplier','product_id':product_id,'prodlot_id':prodlot_id}" />
+							<field name="out_supplier_picking_id" domain="[('type','=','in')]" context="{'partner_id':partner_id,'view':'incident','location_id_usage':'supplier','location_dest_id_usage':'internal','product_id':product_id,'prodlot_id':prodlot_id}" />
+						</page>
+						<page string="Money">
+							<field name="planned_cost" string="Incident Cost" />
+							<field name="planned_revenue" string="Incident Revenue" />
+						</page>
+					</notebook>
+				</form>
+
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_crm_case_tree_fleet_maintenance">
+			<field name="name">crm.case.tree.fleet_maintenance</field>
+			<field name="model">crm.case</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="incident_ref" />
+					<field name="partner_id" select="1"/>
+					<field name="fleet_id" />
+					<field name="prodlot_id" />
+					<field name="section_id" />
+					<field name="state" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+
+		<record id="fleet_incident_action" model="ir.actions.act_window">
+			<field name="name">All Fleet Incidents</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.case</field>
+			<field name="view_type">form</field>
+			<field name="domain">[('prodlot_id','!=',False)]</field>
+			<field name="view_mode">tree,form,calendar</field>
+		</record>
+
+		<menuitem icon="terp-crm" id="menu_fleet_incidents" name="Fleet Incidents" parent="menu_main_fleets" />
+		<menuitem icon="STOCK_JUSTIFY_FILL" action="fleet_incident_action" id="all_fleet_incidents" name="All Fleet Incidents" parent="menu_fleet_incidents" />
+
+		<record id="ir_actions_act_window_view_crm_incident_form" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_incident_action" />
+			<field eval="1" name="sequence" />
+			<field name="view_id" ref="fleet_maintenance.view_crm_case_form_fleet_maintenance" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+
+		<record id="ir_actions_act_window_view_crm_incident_tree" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_incident_action" />
+			<field eval="0" name="sequence" />
+			<field name="view_id" ref="fleet_maintenance.view_crm_case_tree_fleet_maintenance" />
+			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
+		</record>
+
+
+
+		<record id="fleet_incident_action_new" model="ir.actions.act_window">
+			<field name="name">New Fleet Incident</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.case</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+
+		<menuitem action="fleet_incident_action_new" id="new_fleet_incident" name="New Fleet Incident" parent="menu_fleet_incidents" />
+
+		<record id="ir_actions_act_window_view_crm_incident_new_form" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_incident_action_new" />
+			<field eval="1" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.view_crm_case_form_fleet_maintenance" />
+			<field eval="&quot;&quot;&quot;form&quot;&quot;&quot;" name="view_mode" />
+		</record>
+
+		<record id="ir_actions_act_window_view_crm_incident_new_tree" model="ir.actions.act_window.view">
+			<field name="act_window_id" ref="fleet_incident_action_new" />
+			<field eval="1" name="multi" />
+			<field name="view_id" ref="fleet_maintenance.view_crm_case_tree_fleet_maintenance" />
+			<field eval="&quot;&quot;&quot;tree&quot;&quot;&quot;" name="view_mode" />
+		</record>
+
+	</data>
+</openerp>

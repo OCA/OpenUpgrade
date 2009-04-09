@@ -1,319 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 	<data noupdate="1">
-<record id="chart0" model="account.account">
-	<field name="code">0</field>
-	<field name="name">Account Chart</field>
-
-<!--	<field name="parent_id" eval="[]"/>-->
-	<field name="type">view</field>
-
-</record>
-<record id="chart1" model="account.account">
-	<field name="code">1</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">BEFEKTETETT ESZK�Z�K</field>
-
-</record>
-<record id="chart2" model="account.account">
-	<field name="code">2</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">K�SZLETEK</field>
-
-</record>
-<record id="chart3" model="account.account">
-	<field name="code">3</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">K�VETEL�SEK</field>
-
-</record>
-<record id="chart4" model="account.account">
-	<field name="code">4</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">K�TELEZETTS�GEK</field>
-
-</record>
-<record id="chart5" model="account.account">
-	<field name="code">5</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">K�LTS�GEK</field>
-
-</record>
-<record id="chart8" model="account.account">
-	<field name="code">8</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">R�FORD�T�SOK</field>
-
-</record>
-<record id="chart9" model="account.account">
-	<field name="code">9</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart0"/>
-	<field name="type">view</field>
-	<field name="name">BEV�TELEK</field>
-
-</record>
-<record id="account.a_cash" model="account.account">
-	<field name="code">1140</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart1"/>
-	<field name="type">asset</field>
-	<field name="name">Irodai eszk�z�k</field>
-
-</record>
-<record id="chart1199" model="account.account">
-	<field name="code">1199</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart1"/>
-	<field name="type">asset</field>
-	<field name="name">Irodai eszk�z�k �CS</field>
-
-</record>
-<record id="chart2610" model="account.account">
-	<field name="code">2610</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart2"/>
-	<field name="type">asset</field>
-	<field name="name">�ruk </field>
-
-</record>
-<record id="chart3110" model="account.account">
-	<field name="code">3110</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart3"/>
-	<field name="type">asset</field>
-	<field name="name">Vev�k</field>
-
-</record>
-<record id="chart3111" model="account.account">
-	<field name="code">3111</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart3"/>
-	<field name="type">asset</field>
-	<field name="name">K�lf�ldi vev�k</field>
-
-</record>
-<record id="chart3810" model="account.account">
-	<field name="code">3810</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart3"/>
-	<field name="type">asset</field>
-	<field name="name">P�nzt�r 1</field>
-
-</record>
-<record id="chart3811" model="account.account">
-	<field name="code">3811</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart3"/>
-	<field name="type">asset</field>
-	<field name="name">P�nzt�r 2</field>
-
-</record>
-<record id="chart3840" model="account.account">
-	<field name="code">3840</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart3"/>
-	<field name="type">asset</field>
-	<field name="name">Bank 1</field>
-
-</record>
-<record id="chart3841" model="account.account">
-	<field name="code">3841</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart3"/>
-	<field name="type">asset</field>
-	<field name="name">Bank 2</field>
-
-</record>
-<record id="chart4540" model="account.account">
-	<field name="code">4540</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart4"/>
-	<field name="type">cash</field>
-	<field name="name">Belf�ldi Sz�ll�t�k</field>
-
-</record>
-<record id="chart4541" model="account.account">
-	<field name="code">4541</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart4"/>
-	<field name="type">cash</field>
-	<field name="name">K�lf�ldi sz�ll�t�k</field>
-
-</record>
-<record id="chart4660" model="account.account">
-	<field name="code">4660</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart4"/>
-	<field name="type">cash</field>
-	<field name="name">Visszaig�nyelhet� �FA 25%</field>
-
-</record>
-<record id="chart4661" model="account.account">
-	<field name="code">4661</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart4"/>
-	<field name="type">cash</field>
-	<field name="name">Visszaig�nyelhet� �FA 12%</field>
-
-</record>
-<record id="chart4662" model="account.account">
-	<field name="code">4662</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart4"/>
-	<field name="type">cash</field>
-	<field name="name">Visszaig�nyelhet� �FA 5%</field>
-
-</record>
-<record id="chart4663" model="account.account">
-	<field name="code">4663</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart4"/>
-	<field name="type">cash</field>
-	<field name="name">Visszaig�nyelhet� �FA ad�mentes</field>
-
-</record>
-<record id="chart4670" model="account.account">
-	<field name="code">4670</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart4"/>
-	<field name="type">cash</field>
-	<field name="name">Fizetend� �FA 25%</field>
-
-</record>
-<record id="chart4671" model="account.account">
-	<field name="code">4671</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart4"/>
-	<field name="type">cash</field>
-	<field name="name">Fizetend� �FA 15%</field>
-
-</record>
-<record id="chart4672" model="account.account">
-	<field name="code">4672</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart4"/>
-	<field name="type">cash</field>
-	<field name="name">Fizetend� �FA 5%</field>
-
-</record>
-<record id="chart4673" model="account.account">
-	<field name="code">4673</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart4"/>
-	<field name="type">cash</field>
-	<field name="name">Fizetend� �FA ad�mentes</field>
-
-</record>
-<record id="chart5200" model="account.account">
-	<field name="code">5200</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart5"/>
-	<field name="type">expense</field>
-	<field name="name">B�rleti d�j</field>
-
-</record>
-<record id="chart5210" model="account.account">
-	<field name="code">5210</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart5"/>
-	<field name="type">expense</field>
-	<field name="name">Telefon</field>
-
-</record>
-<record id="chart5990" model="account.account">
-	<field name="code">5990</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart5"/>
-	<field name="type">expense</field>
-	<field name="name">K�lts�gek</field>
-
-</record>
-<record id="account.a_expense" model="account.account">
-	<field name="code">8140</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart8"/>
-	<field name="type">expense</field>
-	<field name="name">Eladott �ruk beszerz�si �rt�ke</field>
-
-</record>
-<record id="account.a_pay" model="account.account">
-	<field name="code">8700</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart8"/>
-	<field name="type">expense</field>
-	<field name="name">�rfolyamvesztes�g</field>
-
-</record>
-<record id="account.a_income" model="account.account">
-	<field name="code">9110</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart9"/>
-	<field name="type">income</field>
-	<field name="name">Belf�ldi �rbev�tel</field>
-
-</record>
-<record id="chart9111" model="account.account">
-	<field name="code">9111</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart9"/>
-	<field name="type">income</field>
-	<field name="name">K�lf�ldi �rbev�tel</field>
-
-</record>
-<record id="account.a_recv" model="account.account">
-	<field name="code">9700</field>
-	<field name="reconcile" eval="False"/>
-
-	<field name="parent_id" ref="chart9"/>
-	<field name="type">income</field>
-	<field name="name">�rfolyamnyeres�g</field>
-
-</record>
+	<!-- Account Types -->
+
+	<record model="account.account.type" id="account_type_receivable" >
+      <field name="name">Receivable</field>
+      <field name="code">receivable</field>
+      <field name="close_method">unreconciled</field>
+    </record>
+
+    <record model="account.account.type" id="account_type_payable" >
+      <field name="name">Payable</field>
+      <field name="code">payable</field>
+      <field name="close_method">unreconciled</field>
+    </record>
+
+    <record model="account.account.type" id="account_type_view">
+      <field name="name">View</field>
+      <field name="code">view</field>
+      <field name="close_method">none</field>
+    </record>
+
+    <record model="account.account.type" id="account_type_income" >
+      <field name="name">Income</field>
+      <field name="code">income</field>
+      <field name="close_method">none</field>
+    </record>
+
+    <record model="account.account.type" id="account_type_expense">
+      <field name="name">Expense</field>
+      <field name="code">expense</field>
+      <field name="close_method">none</field>
+    </record>
+
+    <record model="account.account.type" id="account_type_tax">
+      <field name="name">Tax</field>
+      <field name="code">tax</field>
+      <field name="close_method">unreconciled</field>
+    </record>
+
+    <record model="account.account.type" id="account_type_cash">
+      <field name="name">Cash</field>
+      <field name="code">cash</field>
+      <field name="close_method">balance</field>
+    </record>
+
+    <record model="account.account.type" id="account_type_asset">
+      <field name="name">Asset</field>
+      <field name="code">asset</field>
+      <field name="close_method">balance</field>
+    </record>
+
+    <record model="account.account.type" id="account_type_equity">
+      <field name="name">Equity</field>
+      <field name="code">equity</field>
+      <field name="close_method">balance</field>
+    </record>
+
+	<!-- Account Templates -->
+	
+	<record id="chart0" model="account.account.template">
+		<field name="code">0</field>
+		<field name="name">Account Chart</field>
+		<field name="type">view</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_view"/>
+	</record>
+	<record id="chart1" model="account.account.template">
+		<field name="code">1</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart0"/>
+		<field name="type">view</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_view"/>
+		<field name="name">BEFEKTETETT ESZK�Z�K</field>
+	</record>
+	<record id="chart2" model="account.account.template">
+		<field name="code">2</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart0"/>
+		<field name="type">view</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_view"/>
+		<field name="name">K�SZLETEK</field>
+	</record>
+	<record id="chart3" model="account.account.template">
+		<field name="code">3</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart0"/>
+		<field name="type">view</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_view"/>
+		<field name="name">K�VETEL�SEK</field>
+	</record>
+	<record id="chart4" model="account.account.template">
+		<field name="code">4</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart0"/>
+		<field name="type">view</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_view"/>
+		<field name="name">K�TELEZETTS�GEK</field>
+	</record>
+	<record id="chart5" model="account.account.template">
+		<field name="code">5</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart0"/>
+		<field name="type">view</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_view"/>
+		<field name="name">K�LTS�GEK</field>
+	</record>
+	<record id="chart8" model="account.account.template">
+		<field name="code">8</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart0"/>
+		<field name="type">view</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_view"/>
+		<field name="name">R�FORD�T�SOK</field>
+	</record>
+	<record id="chart9" model="account.account.template">
+		<field name="code">9</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart0"/>
+		<field name="type">view</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_view"/>
+		<field name="name">BEV�TELEK</field>
+	</record>
+	<record id="hu_a_cash" model="account.account.template">
+		<field name="code">1140</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart1"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_asset"/>
+		<field name="name">Irodai eszk�z�k</field>
+	</record>
+	<record id="chart1199" model="account.account.template">
+		<field name="code">1199</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart1"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_asset"/>
+		<field name="name">Irodai eszk�z�k �CS</field>
+	</record>
+	<record id="chart2610" model="account.account.template">
+		<field name="code">2610</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart2"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_asset"/>
+		<field name="name">�ruk </field>
+	</record>
+	<record id="chart3110" model="account.account.template">
+		<field name="code">3110</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart3"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_asset"/>
+		<field name="name">Vev�k</field>
+	</record>
+	<record id="chart3111" model="account.account.template">
+		<field name="code">3111</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart3"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_asset"/>
+		<field name="name">K�lf�ldi vev�k</field>
+	</record>
+	<record id="chart3810" model="account.account.template">
+		<field name="code">3810</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart3"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_asset"/>
+		<field name="name">P�nzt�r 1</field>
+	</record>
+	<record id="chart3811" model="account.account.template">
+		<field name="code">3811</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart3"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_asset"/>
+		<field name="name">P�nzt�r 2</field>
+	</record>
+	<record id="chart3840" model="account.account.template">
+		<field name="code">3840</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart3"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_asset"/>
+		<field name="name">Bank 1</field>
+	</record>
+	<record id="chart3841" model="account.account.template">
+		<field name="code">3841</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart3"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_asset"/>
+		<field name="name">Bank 2</field>
+	</record>
+	<record id="chart4540" model="account.account.template">
+		<field name="code">4540</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart4"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_cash"/>
+		<field name="name">Belf�ldi Sz�ll�t�k</field>
+	</record>
+	<record id="chart4541" model="account.account.template">
+		<field name="code">4541</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart4"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_cash"/>
+		<field name="name">K�lf�ldi sz�ll�t�k</field>
+	</record>
+	<record id="chart4660" model="account.account.template">
+		<field name="code">4660</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart4"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_cash"/>
+		<field name="name">Visszaig�nyelhet� �FA 25%</field>
+	</record>
+	<record id="chart4661" model="account.account.template">
+		<field name="code">4661</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart4"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_cash"/>
+		<field name="name">Visszaig�nyelhet� �FA 12%</field>
+	</record>
+	<record id="chart4662" model="account.account.template">
+		<field name="code">4662</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart4"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_cash"/>
+		<field name="name">Visszaig�nyelhet� �FA 5%</field>
+	</record>
+	<record id="chart4663" model="account.account.template">
+		<field name="code">4663</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart4"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_cash"/>
+		<field name="name">Visszaig�nyelhet� �FA ad�mentes</field>
+	</record>
+	<record id="chart4670" model="account.account.template">
+		<field name="code">4670</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart4"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_cash"/>
+		<field name="name">Fizetend� �FA 25%</field>
+	</record>
+	<record id="chart4671" model="account.account.template">
+		<field name="code">4671</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart4"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_cash"/>
+		<field name="name">Fizetend� �FA 15%</field>
+	</record>
+	<record id="chart4672" model="account.account.template">
+		<field name="code">4672</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart4"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_cash"/>
+		<field name="name">Fizetend� �FA 5%</field>
+	</record>
+	<record id="chart4673" model="account.account.template">
+		<field name="code">4673</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart4"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_cash"/>
+		<field name="name">Fizetend� �FA ad�mentes</field>
+	</record>
+	<record id="chart5200" model="account.account.template">
+		<field name="code">5200</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart5"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_expense"/>
+		<field name="name">B�rleti d�j</field>
+	</record>
+	<record id="chart5210" model="account.account.template">
+		<field name="code">5210</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart5"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_expense"/>
+		<field name="name">Telefon</field>
+	</record>
+	<record id="chart5990" model="account.account.template">
+		<field name="code">5990</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart5"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_expense"/>
+		<field name="name">K�lts�gek</field>
+	</record>
+	<record id="hu_a_expense" model="account.account.template">
+		<field name="code">8140</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart8"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_expense"/>
+		<field name="name">Eladott �ruk beszerz�si �rt�ke</field>
+	</record>
+	<record id="hu_a_pay" model="account.account.template">
+		<field name="code">8700</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart8"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_expense"/>
+		<field name="name">�rfolyamvesztes�g</field>
+	</record>
+	<record id="hu_a_income" model="account.account.template">
+		<field name="code">9110</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart9"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_income"/>
+		<field name="name">Belf�ldi �rbev�tel</field>
+	</record>
+	<record id="chart9111" model="account.account.template">
+		<field name="code">9111</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart9"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_income"/>
+		<field name="name">K�lf�ldi �rbev�tel</field>
+	</record>
+	<record id="hu_a_recv" model="account.account.template">
+		<field name="code">9700</field>
+		<field name="reconcile" eval="False"/>
+		<field name="parent_id" ref="chart9"/>
+		<field name="type">other</field>
+		<field name="user_type" ref="l10n_chart_hu.account_type_income"/>
+		<field name="name">�rfolyamnyeres�g</field>
+	</record>
+	
+	
+	<!-- Chart template -->
+	<record id="hu_chart_template" model="account.chart.template">
+	    <field name="name">Hungary - Chart of Accounts</field>
+	    <field name="account_root_id" ref="l10n_chart_hu.chart0"/>
+	    <field name="tax_code_root_id" ref="l10n_chart_hu.vat_code_tax"/>
+	    <field name="bank_account_view_id" ref="l10n_chart_hu.hu_a_cash"/>
+	    <field name="property_account_receivable" ref="l10n_chart_hu.hu_a_recv"/>
+        <field name="property_account_payable" ref="l10n_chart_hu.hu_a_pay"/>
+        <field name="property_account_expense_categ" ref="l10n_chart_hu.hu_a_expense"/>
+        <field name="property_account_income_categ" ref="l10n_chart_hu.hu_a_income"/>
+	</record>
+	
 </data>
 </openerp>

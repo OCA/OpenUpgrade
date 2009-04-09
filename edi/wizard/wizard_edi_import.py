@@ -1,30 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id: wizard_edi_import.py 1825 2005-12-13 11:04:20Z ede $
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -127,7 +119,7 @@ def _prepare_import(self, cr, uid, data, context):
                     FirstOrd=False
 
                 sale_order_o.parse_line(line_type, line_content, status)
-                
+
             sale_orders.append(sale_order_o)
 
         finally:
@@ -224,6 +216,8 @@ class sale_order:
             self.partner_invoice_id = self.partner_id
         if not hasattr(self, 'partner_shipping_id'):
             self.partner_shipping_id = self.partner_invoice_id
+        partner = pooler.get_pool(cr.dbname).get('res.partner').browse(self.cr, self.uid, self.partner)
+        # Fiscal position for partner is added at the time if sale.order create, should be check..
         order_id = pooler.get_pool(cr.dbname).get('sale.order').create(self.cr, self.uid, { 'partner_id': self.partner_id,
                                                                                 'partner_order_id': self.partner_order_id,
                                                                                 'partner_invoice_id': self.partner_invoice_id,
@@ -233,6 +227,7 @@ class sale_order:
                                                                                 'client_order_ref': self.ordernum,
                                                                                 'date_order': self.orderdate,
                                                                                 'note': self.note,
+                                                                                'fiscal_position': partner.property_account_position.id
                                                                             })
         for orderline in self.order_lines:
             orderline.store(order_id)
@@ -250,7 +245,7 @@ class sale_order:
     def _parse_HINT(self, line_content, status):
         self.timestamp_edi="%s%s" % (line_content["date"], line_content["time"])
         self.sr['sender'] = line_content['sender']
-        
+
         partners=pooler.get_pool(cr.dbname).get('res.partner').search(self.cr, self.uid, [('ean13','=',line_content["receiver"]),])
         if len(partners) != 1:
             status.add_error("unknown receiver: %s" % line_content["receiver"], self.ordernum, self.timestamp_edi, self.sr['sender'])
@@ -277,7 +272,7 @@ class sale_order:
 
     def _parse_HPTY(self, line_content, status):
         partner_table = pooler.get_pool(cr.dbname).get('res.partner')
-        
+
         partners = partner_table.search(self.cr, self.uid, [('ean13', '=', line_content['partner-code'])])
         if partners and len(partners) == 1:
             default_addresses = pooler.get_pool(cr.dbname).get('res.partner.address').search(self.cr, self.uid, [('partner_id', '=', partners[0]), ('type', 'ilike', 'default')])
@@ -288,7 +283,7 @@ class sale_order:
             self.hpty_dispatchers[line_content['partner-type']](self, partners[0], default_addresses, line_content, status)
         else:
             status.add_error("unknown %s: %s" % (line_content["partner-type"], line_content["partner-code"]), self.ordernum, self.timestamp_edi, self.sr['sender'])
-    
+
     def _parse_HPTYBY(self, partner, default_addresses, line_content, status):
         partner_table = pooler.get_pool(cr.dbname).get('res.partner')
 
@@ -299,12 +294,12 @@ class sale_order:
         orders=pooler.get_pool(cr.dbname).get("sale.order").search(self.cr, self.uid, [('client_order_ref', 'ilike', self.ordernum), ('partner_order_id',"=",self.partner_order_id)])
         if orders and len(orders)>0:
             status.add_warning("This client order reference (%s) already exists for this client" % self.ordernum, self.ordernum, self.timestamp_edi, self.sr['sender'])
-    
+
     def _parse_HPTYSU(self, partner, default_addresses, line_content, status):
         partner_table = pooler.get_pool(cr.dbname).get('res.partner')
         if not (partner_table._is_related_to(self.cr, self.uid, [partner], self.sr['receiver'])[0] or self.sr['receiver'] == partner):
             status.add_error("unknown %s: %s" % (line_content["partner-type"], line_content["partner-code"]), self.ordernum, self.timestamp_edi, self.sr['sender'])
-    
+
     def _parse_HPTYDP(self, partner, default_addresses, line_content, status):
         shipping_addresses=pooler.get_pool(cr.dbname).get('res.partner.address').search(self.cr, self.uid, [('partner_id','=',partner), ('type', 'ilike', 'delivery')])
         if len(shipping_addresses) < 1:
@@ -317,14 +312,14 @@ class sale_order:
             self.partner_invoice_id=default_addresses[0]
         else:
             self.partner_invoice_id=invoice_addresses[0]
-    
+
     def _parse_HPTYIV(self, partner, default_addresses, line_content, status):
         invoice_addresses=pooler.get_pool(cr.dbname).get('res.partner.address').search(self.cr, self.uid, [('partner_id','=',partner), ('type', 'ilike', 'invoice')])
         if len(invoice_addresses) < 1:
             self.partner_invoice_id=default_addresses[0]
         else:
             self.partner_invoice_id=invoice_addresses[0]
-    
+
     hpty_dispatchers = { 'BY' : _parse_HPTYBY, 'SU' : _parse_HPTYSU, 'DP' : _parse_HPTYDP, 'IV' : _parse_HPTYIV }
 
     def _parse_HFTX(self, line_content, status):
@@ -434,7 +429,7 @@ class sale_order_line:
             status.add_error('Invalid package for product %s (%s)' % (self.product_ean, float(self.uoc_quantity)), self.sale_order.ordernum, self.sale_order.timestamp_edi, self.sale_order.sr['sender'])
         else:
             self.pack_id=packs[0]
-        
+
         #print "PriceList: %s, product: %s, quantity: %s " % (self.pricelist_id, self.product, self.quantity)
         try:
             dico=pooler.get_pool(cr.dbname).get('sale.order.line').product_id_change(self.cr, self.uid, [], self.pricelist_id, self.product, int(float(self.quantity)))
@@ -446,7 +441,7 @@ class sale_order_line:
 #       product_infos = pooler.get_pool(cr.dbname).get('product.product').read(self.cr, self.uid, [self.product])[0]
 #       if product_infos['uos_id'][1] != self.price_unit:
 #           status.add_warning('Invalid unit for Sale price : Should be "%s"' % product_infos['uos_id'][1], self.sale_order.ordernum, self.sale_order.timestamp_edi, self.sale_order.sr['sender'])
-        
+
         # Checking the price
 
 #       if unit_price != self.price:

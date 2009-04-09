@@ -29,8 +29,8 @@
 from osv import fields, osv
 
 class cci_country(osv.osv):
-    _name = "cci_country"
-    _description = "country or area for CCI"
+    _name = "cci.country"
+    _description = "Country or Area for CCI"
     _columns = {
         'code' : fields.char('Code',size=3,required=True),
         'name' : fields.char('Name',size=64,required=True),

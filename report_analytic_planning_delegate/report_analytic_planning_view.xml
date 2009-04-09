@@ -1,38 +1,38 @@
 <?xml version="1.0"?>
 <openerp>
-	<data>
+    <data>
 
-		<record model="ir.ui.view" id="account_analytic_planning_view_form">
-			<field name="name">report.account.analytic.planning.form.inherit_assign</field>
-			<field name="model">report_account_analytic.planning</field>
-			<field name="inherit_id" ref="report_analytic_planning.account_analytic_planning_view_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<xpath expr="/form/notebook/page/field[@name='line_ids']" position="after">
-					<field name="delegate_ids" colspan="4" nolabel="1">
-						<tree string="Assigned Planning" editable="bottom">
-							<field name="account_id"/>
-							<field name="amount"/>
-							<field name="amount_unit"/>
-							<field name="note"/>
-						</tree>
-					</field>
-				</xpath>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="account_analytic_planning_view_form">
+            <field name="name">report.account.analytic.planning.form.inherit_assign</field>
+            <field name="model">report_account_analytic.planning</field>
+            <field name="inherit_id" ref="report_analytic_planning.account_analytic_planning_view_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page/field[@name='line_ids']" position="after">
+                    <field name="delegate_ids" colspan="4" nolabel="1" groups="group_planning_delegate">
+                        <tree string="Assigned Planning" editable="bottom">
+                            <field name="account_id"/>
+                            <field name="amount"/>
+                            <field name="amount_unit"/>
+                            <field name="note"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="account_analytic_planning_view_form2">
-			<field name="name">report.account.analytic.planning.form.inherit_delegate</field>
-			<field name="model">report_account_analytic.planning</field>
-			<field name="inherit_id" ref="report_analytic_planning.account_analytic_planning_view_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<field name="account_id" position="before">
-					<field name="delegate_id"/>
-				</field>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="account_analytic_planning_view_form2">
+            <field name="name">report.account.analytic.planning.form.inherit_delegate</field>
+            <field name="model">report_account_analytic.planning</field>
+            <field name="inherit_id" ref="report_analytic_planning.account_analytic_planning_view_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="account_id" position="before">
+                    <field name="delegate_id"/>
+                </field>
+            </field>
+        </record>
 
 
-	</data>
+    </data>
 </openerp>

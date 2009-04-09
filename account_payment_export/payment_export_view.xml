@@ -2,163 +2,163 @@
 <openerp>
 <data>
     <!-- Adding the institution_code field to res_partner_bank views -->
-	<record model="ir.ui.view" id="view_partner_form_inherit_code">
-		<field name="name">res.partner.form.code.inherit</field>
-		<field name="model">res.partner</field>
-		<field name="type">form</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="arch" type="xml">
-			<field name="bank" position="before">
-				<field name="institution_code" select="1"/>
-				<newline/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_form_inherit_code">
+        <field name="name">res.partner.form.code.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="bank" position="before">
+                <field name="institution_code" select="1"/>
+                <newline/>
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_partner_bank_form_inherit_code">
-		<field name="name">res.partner.bank.form.code.inherit</field>
-		<field name="model">res.partner.bank</field>
-		<field name="type">form</field>
-		<field name="inherit_id" ref="base.view_partner_bank_form"/>
-		<field name="arch" type="xml">
-			<field name="bank" position="before">
-				<field name="institution_code" select="1"/>
-				<newline/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_bank_form_inherit_code">
+        <field name="name">res.partner.bank.form.code.inherit</field>
+        <field name="model">res.partner.bank</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_bank_form"/>
+        <field name="arch" type="xml">
+            <field name="bank" position="before">
+                <field name="institution_code" select="1"/>
+                <newline/>
+            </field>
+        </field>
+    </record>
 
     <!-- Payment Export Logs views and menuitems-->
-	<record model="ir.ui.view" id="view_account_pay_tree">
-			<field name="name">account.pay.tree</field>
-			<field name="model">account.pay</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Payment Export Logs">
+    <record model="ir.ui.view" id="view_account_pay_tree">
+            <field name="name">account.pay.tree</field>
+            <field name="model">account.pay</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Export Logs">
                     <field name="payment_order_id"/>
-					<field name="file"/>
+                    <field name="file"/>
                     <field name="create_date"/>
                     <field name="create_uid"/>
-					<field name="note"/>
-					<field name="state"/>
-				</tree>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_payment_mode_form">
-			<field name="name">account.pay.form</field>
-			<field name="model">account.pay</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Payment Export Logs">
-					<field name="payment_order_id" select="1"/>
-					<field name="state" select="2"/>
-					<newline/>
+                    <field name="note"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_payment_mode_form">
+            <field name="name">account.pay.form</field>
+            <field name="model">account.pay</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Payment Export Logs">
+                    <field name="payment_order_id" select="1"/>
+                    <field name="state" select="2"/>
+                    <newline/>
                     <field name="create_date" select="1"/>
                     <field name="create_uid" select="2"/>
-					<newline/>
-					<field name="file" colspan="4" select="1"/>
-					<newline/>
-					<field name="note" colspan="4"/>
-				</form>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_account_pay_tree">
-			<field name="name">Payment Export Logs</field>
-			<field name="res_model">account.pay</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+                    <newline/>
+                    <field name="file" colspan="4" select="1"/>
+                    <newline/>
+                    <field name="note" colspan="4"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_account_pay_tree">
+            <field name="name">Payment Export Logs</field>
+            <field name="res_model">account.pay</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-		<menuitem
-			name="Payment Export" parent="account.menu_finance_configuration"
-			id="menu_action_action_account_pay" />
+        <menuitem
+            name="Payment Export" parent="account.menu_finance_configuration"
+            id="menu_action_action_account_pay" />
 
-		<menuitem
-			parent="menu_action_action_account_pay"
-			id="menu_action_action_account_pay_tree" action="action_account_pay_tree"/>
+        <menuitem
+            parent="menu_action_action_account_pay"
+            id="menu_action_action_account_pay_tree" action="action_account_pay_tree"/>
 
 
     <!-- Adding the bilateral field to res_bank views -->
-	<record model="ir.ui.view" id="view_res_bank_form_inherit">
-			<field name="name">res.bank.form.inherit</field>
-			<field name="model">res.bank</field>
-			<field name="type">form</field>
-			<field name="inherit_id" ref="base.view_res_bank_form"/>
-			<field name="arch" type="xml">
-			<field name="bic" position="after">
-				<field name="bilateral" />
-			</field>
-			</field>
-	</record>
+    <record model="ir.ui.view" id="view_res_bank_form_inherit">
+            <field name="name">res.bank.form.inherit</field>
+            <field name="model">res.bank</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_res_bank_form"/>
+            <field name="arch" type="xml">
+            <field name="bic" position="after">
+                <field name="bilateral" />
+            </field>
+            </field>
+    </record>
 
 
     <!-- Payment Method views and menuitems-->
-	<record model="ir.ui.view" id="view_payment_method_tree">
-			<field name="name">payment.method.tree</field>
-			<field name="model">payment.method</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Payment Method">
-					<field name="name" />
-					<field name="description" />
-				</tree>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_payment_method_form">
-			<field name="name">payment.method.form</field>
-			<field name="model">payment.method</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Payment Method">
-					<field name="name" select="1"/>
-					<newline/>
-					<field name="description" />
-				</form>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_payment_method_tree">
-			<field name="name">Payment Method</field>
-			<field name="res_model">payment.method</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
+    <record model="ir.ui.view" id="view_payment_method_tree">
+            <field name="name">payment.method.tree</field>
+            <field name="model">payment.method</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Method">
+                    <field name="name" />
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_payment_method_form">
+            <field name="name">payment.method.form</field>
+            <field name="model">payment.method</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Payment Method">
+                    <field name="name" select="1"/>
+                    <newline/>
+                    <field name="description" />
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_payment_method_tree">
+            <field name="name">Payment Method</field>
+            <field name="res_model">payment.method</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
 
-	<menuitem parent="account_payment.next_id_44" id="menu_action_payment_method_tree" action="action_payment_method_tree"/>
+    <menuitem parent="account_payment.next_id_44" id="menu_action_payment_method_tree" action="action_payment_method_tree"/>
 
     <!-- Charge Code views and menuitems-->
 
-	<record model="ir.ui.view" id="view_charges_code_tree">
-			<field name="name">charges.code.tree</field>
-			<field name="model">charges.code</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="Charges Code">
-					<field name="name"/>
-					<field name="description" />
-				</tree>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_charges_code_form">
-			<field name="name">charges.code.form</field>
-			<field name="model">charges.code</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Charges Code">
-					<field name="name" select="1"/>
-					<newline/>
-					<field name="description" />
-				</form>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_charges_code_tree">
-			<field name="name">Charges Code</field>
-			<field name="res_model">charges.code</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record>
-	<menuitem
-			parent="account_payment.next_id_44"
-			id="menu_action_charges_code_tree" action="action_charges_code_tree"/>
+    <record model="ir.ui.view" id="view_charges_code_tree">
+            <field name="name">charges.code.tree</field>
+            <field name="model">charges.code</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Charges Code">
+                    <field name="name"/>
+                    <field name="description" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_charges_code_form">
+            <field name="name">charges.code.form</field>
+            <field name="model">charges.code</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Charges Code">
+                    <field name="name" select="1"/>
+                    <newline/>
+                    <field name="description" />
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_charges_code_tree">
+            <field name="name">Charges Code</field>
+            <field name="res_model">charges.code</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    <menuitem
+            parent="account_payment.next_id_44"
+            id="menu_action_charges_code_tree" action="action_charges_code_tree"/>
 
 </data>
 </openerp>

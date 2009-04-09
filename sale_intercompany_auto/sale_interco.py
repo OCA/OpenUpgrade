@@ -1,29 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                   Fabien Pinckaers <fp@tiny.Be>
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -54,7 +47,9 @@ class purchase_order(osv.osv):
                         ['invoice', 'delivery', 'contact'])
                 default_pricelist = partner_obj.browse(cr, uid, partner_id,
                             {}).property_product_pricelist.id
-
+                fpos = partner_obj.browse(cr, uid, partner_id,
+                            {}).property_account_position
+                fpos_id = fpos and fpos.id or False
                 vals = {
                     'origin': 'PO:%s' % str(po.name),
                     'picking_policy': 'direct',
@@ -66,13 +61,14 @@ class purchase_order(osv.osv):
                     'partner_shipping_id': partner_addr['delivery'],
                     'order_policy': 'manual',
                     'date_order': time.strftime('%Y-%m-%d'),
-                    'order_policy': po.invoice_method=='picking' and 'picking' or 'manual'
+                    'order_policy': po.invoice_method=='picking' and 'picking' or 'manual',
+                    'fiscal_position': fpos_id
                 }
                 new_id = sale_obj.create(cr, uid, vals)
-
+                fpos = user.company_id.partner_id.property_account_position and user.company_id.partner_id.property_account_position.id or False
                 for line in po.order_line:
                     value = sale_line_obj.product_id_change(cr, uid, [], default_pricelist,
-                            line.product_id.id, qty=line.product_qty, partner_id=partner_id)['value']
+                            line.product_id.id, qty=line.product_qty, partner_id=partner_id, fiscal_position=fpos)['value']
                     value['price_unit'] = line.price_unit
                     value['product_id'] = line.product_id.id
                     value['product_uos'] = value.get('product_uos', False)

@@ -1,43 +1,43 @@
 <?xml version="1.0" ?>
 <openerp>
-	<data>
+    <data>
 <!-- Account Invoice object view (inherited) -->
-		<record model="ir.ui.view" id="invoice_form_domicile">
-			<field name="name">account.invoice.domicile.form</field>
-			<field name="type">form</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_form"/>
-			<field name="arch" type="xml">
-				<field name="period_id" position="before">
-					<field name="domiciled"/>
-					<field name="domiciled_send_date"/>
-				</field>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="supplier_invoice_form_domicile">
-			<field name="name">supplier.invoice.domicile.form</field>
-			<field name="type">form</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_supplier_form"/>
-			<field name="arch" type="xml">
-				<field name="period_id" position="before">
-					<field name="domiciled"/>
-					<field name="domiciled_send_date"/>
-				</field>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="invoice_form_domicile">
+            <field name="name">account.invoice.domicile.form</field>
+            <field name="type">form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="period_id" position="before">
+                    <field name="domiciled"/>
+                    <field name="domiciled_send_date"/>
+                </field>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="supplier_invoice_form_domicile">
+            <field name="name">supplier.invoice.domicile.form</field>
+            <field name="type">form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <field name="period_id" position="before">
+                    <field name="domiciled"/>
+                    <field name="domiciled_send_date"/>
+                </field>
+            </field>
+        </record>
 <!-- Partner object view (inherited) -->
-		<record model="ir.ui.view" id="view_partner_domicile_form">
-			<field name="name">res.partner.domicile.form</field>
-			<field name="type">form</field>
-			<field name="model">res.partner</field>
-			<field name="inherit_id" ref="base.view_partner_form"/>
-			<field name="arch" type="xml">
-				<field name="date" position="after">
-					<field name="domiciliation"/>
-				</field>
-			</field>
-		</record>
+        <record model="ir.ui.view" id="view_partner_domicile_form">
+            <field name="name">res.partner.domicile.form</field>
+            <field name="type">form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="domiciliation"/>
+                </field>
+            </field>
+        </record>
 
-	</data>
+    </data>
 </openerp>

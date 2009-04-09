@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate="1">
+    <!--
+    Case Sections
+    -->
+    <record model="crm.case.section" id="section_support">
+        <field name="name">Direct Maketing Campaigns</field>
+        <field name="code">DM</field>
+    </record>
+	</data>
+
+	
+	<!-- OFFER STEP ACTION -->
+	<data noupdate="1">
+        <record id="ir_actions_server_crm_case_create0" model="dm.offer.step.action">
+            <field name="model_id" ref="dm.model_dm_workitem"/>
+			<field eval="&quot;&quot;&quot;# You can use the following variables
+#    - object
+#    - object2
+#    - time
+#    - cr
+#    - uid
+#    - ids
+# If you plan to return an action, assign: action = {...}
+&quot;&quot;&quot;" name="code"/>
+			<field name="media_id" ref="dm.media_phone"/>
+			<field eval="[(6,0,[])]" name="child_ids"/>
+			<field name="srcmodel_id" ref="crm.model_crm_case"/>
+			<field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
+			<field eval="&quot;&quot;&quot;Create CRM Case&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;object_create&quot;&quot;&quot;" name="state"/>
+			<field name="record_id" ref="dm.field_dm_workitem_error_msg"/>
+            <field eval="1" name="dm_action"/>
+        </record>
+        <record id="ir_server_object_lines_0" model="ir.server.object.lines">
+			<field name="server_id"  model="ir.actions.server" search="[('name','=','Create CRM Case')]"/>
+			<field eval="&quot;&quot;&quot;value&quot;&quot;&quot;" name="type"/>
+            <field model="crm.case.section" name="value" search="[('code','=','DM')]"/>
+			<field name="col1" ref="crm.field_crm_case_section_id"/>
+		</record>
+		<record id="ir_server_object_lines_1" model="ir.server.object.lines">
+			<field name="server_id"  model="ir.actions.server" search="[('name','=','Create CRM Case')]"/>
+			<field eval="&quot;&quot;&quot;value&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;CRM Test&quot;&quot;&quot;" name="value"/>
+			<field name="col1" ref="crm.field_crm_case_name"/>
+		</record>
+    </data>
+
+</openerp>

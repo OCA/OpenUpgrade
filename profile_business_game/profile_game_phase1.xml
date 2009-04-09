@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record model="profile.game.phase1" id="phase1">
+            <field name="state">not running</field>
+        </record>
+    </data>
+    <data>
+
+        <record model="ir.ui.view" id="view_game_phase1_form">
+            <field name="name">profile.game.phase1.form</field>
+            <field name="model">profile.game.phase1</field>
+            <field name="arch" type="xml">
+                <form string="Business Game">
+                    <separator string="Introduction" colspan="4"/>
+                    <label colspan="4" align="0.0" angle="0">This business game will help you to discover Open ERP and it's enterprise management processes.
+The game is based on a company called 'GoodSound' selling audio and video hardware and organising sonorisation events.
+
+The game is structured into two phases:
+   1. You will discover the Open ERP interface through a complete sale flow: from the quotation to the invoice,
+   2. The goal of the next phase is to make some strategic choices in the system to increase company's profitability
+      within a few turns of one year each.
+
+Click on the button "Start Scenario" to begin the phase one.
+
+After this, you will have to disconnect form the system and log in using the different users to process the
+above steps, in the right order, of a complete sale flow. You can use the shortcuts of each user to process
+the required steps.
+
+Click on 'Get Complete Scenario' to get the document explaining the details of the game.</label>
+                    <group colspan="1" col="2">
+                        <separator string="1. Salesman :(SM)" colspan="2"/>
+                        <label string="(login: sale, password: sale)" colspan="2"/>
+                        <field name="step1"/>
+                        <field name="step2"/>
+                        <field name="step3"/>
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="2. Purchase :(HRM)" colspan="2"/>
+                        <label string="(login: hr, password: hr)" colspan="2"/>
+                        <field name="step4"/>
+                        <field name="step5"/>
+                        <field name="step6"/>
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="3. Logistic :(LM)" colspan="2"/>
+                        <label string="(login: logistic, password: logistic)" colspan="2"/>
+                        <field name="step7"/>
+                        <field name="step8"/>
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="4. Accountant :(FM)" colspan="2"/>
+                        <label string="(login: finance, password: finance)" colspan="2"/>
+                        <field name="step9"/>
+                        <field name="step10"/>
+                    </group>
+                    <newline/>
+                    <separator string="Game Status" colspan="4"/>
+                    <group colspan="4" col="5">
+                        <field name="state" align="0.0"/>
+                        <button
+                            string="Start Scenario"
+                            name="confirm"
+                            states="not running"
+                            type="object"
+                            icon="gtk-ok"/>
+                        <button
+                            string="Continue to Strategic Game"
+                            name="%(prepare_phase2_id)d"
+                            type="action"
+                            states="done"
+                            icon="gtk-ok" />
+                        <button
+                            string="Get Complete Scenario"
+                            name="next_phase" states="not running" type="object"
+                            icon="gtk-help"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_game_phase1_tree">
+            <field name="name">profile.game.phase1.tree</field>
+            <field name="model">profile.game.phase1</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Business Game">
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_game_phase1_form">
+            <field name="name">Business Game</field>
+            <field name="res_model">profile.game.phase1</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            name="Business Game Scenario"
+            parent="business_game"
+            sequence="1"
+            id="menu_game_phase1"
+            action="action_game_phase1_form"/>
+
+
+        <record id="account.user_finance" model="res.users">
+            <field name="action_id" ref="act_launch_phase_one"/>
+        </record>
+        <record id="hr.user_hr" model="res.users">
+            <field name="action_id" ref="act_launch_phase_one"/>
+        </record>
+        <record id="stock.user_logistic" model="res.users">
+            <field name="action_id" ref="act_launch_phase_one"/>
+        </record>
+        <record id="sale.user_sales" model="res.users">
+            <field name="action_id" ref="act_launch_phase_one"/>
+        </record>
+        <record id="base.user_root" model="res.users">
+            <field name="action_id" ref="act_launch_phase_one"/>
+        </record>
+
+		<record id="account_budget_inherit" model="ir.ui.view">
+            <field name="name">account.budget.inherit</field>
+            <field name="model">account.budget.post</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="account_budget.view_budget_post_form"/>
+            <field name="arch" type="xml">
+                    <page string="Budget Lines" position="replace"/>
+			</field>
+		</record>
+     </data>
+</openerp>

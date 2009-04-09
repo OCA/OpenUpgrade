@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record id="action_product_configure_from_sale_order" model="ir.actions.act_window">
+			<field name="name">Product Configure Wizard</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale_product_multistep_configurator.configurator</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+			<field name="context">{'active_id_object_type':"sale.order", 'multistep_wizard_dispatch': True}</field>
+		</record>
+
+		<record id="action_product_configure_from_sale_order_line" model="ir.actions.act_window">
+			<field name="name">Product Configure Wizard</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale_product_multistep_configurator.configurator</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+			<field name="context">{'active_id_object_type':"sale.order.line", 'multistep_wizard_dispatch': True}</field>
+		</record>
+		
+		<record id="product_multistep_configurator_step_list" model="ir.actions.act_window">
+			<field name="name">product_multistep_configurator_step_list</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale_product_multistep_configurator.configurator.step</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+	
+		<menuitem id="product_configurator_steps" parent="product.menu_config_product" name="Configurator Steps" action="product_multistep_configurator_step_list"/>
+		 	
+		<record model="ir.ui.view" id="product_multistep_configurator_step_list_view_form">
+			<field name="name">product_multistep_configurator_step_list_view_form</field>
+			<field name="model">sale_product_multistep_configurator.configurator.step</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Configurator Step">
+					<field name="name"/>
+					<field name="model_id"/>
+					<field name="sequence"/>
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="product_multistep_configurator_step_list_view_tree">
+			<field name="name">product_multistep_configurator_step_list_view_tree</field>
+			<field name="model">sale_product_multistep_configurator.configurator.step</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Configurator Step">
+					<field name="name"/>
+					<field name="model_id"/>
+					<field name="sequence"/>
+				</tree>
+			</field>
+		</record>
+
+	</data>
+</openerp>

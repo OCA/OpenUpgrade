@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+    <openerp>
+        <data>
+
+            <!--
+            =======================================================
+            CUSTOMER FILE EXTENSIONS
+            =======================================================
+            -->
+            <record id="view_customer_file_form_inherit" model="ir.ui.view">
+                <field name="name">dm.customers.file.inherit</field>
+                <field name="model">dm.customers_file</field>
+                <field name="type">form</field>
+                <field name="inherit_id" ref="dm.view_dm_customers_file_form"/>
+                <field name="arch" type="xml">
+                    <field name="source" position="after">
+                    	<group colspan="4" attrs="{'invisible':[('source','!=','case_id')]}">
+                            <separator string="CRM Cases" colspan="4"/>
+                            <field name="case_ids" colspan="4" nolabel="1">
+                                <tree string="CRM Cases">
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </field>
+                </field>
+            </record>
+        </data>
+    </openerp>
+

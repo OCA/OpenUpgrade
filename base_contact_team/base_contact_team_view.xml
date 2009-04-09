@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_partner_job_inherited">
+            <field name="name">view.partner.job.inherited</field>
+            <field name="model">res.partner.job</field>
+            <field name="inherit_id" ref="base_contact.view_partner_job_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="team_id" />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_partner_team_form">
+            <field name="name">res.partner.team.form</field>
+            <field name="model">res.partner.team</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Team">
+                    <field name="name" />
+                    <newline />
+                    <separator string="Description" colspan="4" />
+                    <field name="description" colspan="4" nolabel="1"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_partner_team_tree">
+            <field name="name">res.partner.team.tree</field>
+            <field name="model">res.partner.team</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Team">
+                    <field name="name" />
+                    <field name="description" colspan="4" nolabel="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="res_partner_team_all_act">
+            <field name="name">Teams</field>
+            <field name="res_model">res.partner.team</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="res_partner_team_new_act">
+            <field name="name">New Team</field>
+            <field name="res_model">res.partner.team</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+        </record>
+
+        <menuitem parent="base.menu_base_partner" id="res_partner_team_all_mi" action="res_partner_team_all_act" />
+        <menuitem parent="res_partner_team_all_mi" id="res_partner_team_new_mi" action="res_partner_team_new_act" />
+    </data>
+</openerp>

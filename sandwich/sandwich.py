@@ -1,4 +1,24 @@
 # -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 import time
 
 from osv import osv, fields
@@ -71,7 +91,7 @@ class sandwich_order_line(osv.osv):
         # print id, user_id, product_type_id, context
         if (not user_id) or (not product_type_id):
             return {}
-        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%d AND product_type_id=%d ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
+        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%s AND product_type_id=%s ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
         res = cr.dictfetchone()
         if res:
             return {'value': res}
@@ -81,7 +101,7 @@ class sandwich_order_line(osv.osv):
     def onchange_product_type_id(self, cr, uid, id, user_id, product_type_id, context={}):
         if (not product_type_id) or (not user_id):
             return {}
-        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%d AND product_type_id=%d ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
+        cr.execute('SELECT product_id,name,quantity FROM sandwich_order_line WHERE user_id=%s AND product_type_id=%s ORDER BY date DESC LIMIT 1', (user_id, product_type_id))
         res = cr.dictfetchone()
         if res:
             return {'value': res}
@@ -89,9 +109,10 @@ class sandwich_order_line(osv.osv):
         return {'value': {'product_id': False, 'name': '', 'quantity': 1}}
 
     def onchange_product_id(self, cr, uid, id, product_id, context={}):
+        res = {}
         if not product_id:
             return {}
-        res = pooler.get_pool(cr.dbname).get('sandwich.product').read(cr, uid, [ product_id ], ['name','product_type_id'])
+        res = pooler.get_pool(cr.dbname).get('sandwich.product').read(cr, uid, [ product_id ], ['name','product_type_id'])[0]
         return {'value': res}
         #return {'value': {'name': name or product_id.name, 'product_type_id': product_id.product_type_id}}
 

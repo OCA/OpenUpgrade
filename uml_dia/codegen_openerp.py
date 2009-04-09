@@ -1,6 +1,24 @@
 # -*- encoding: utf-8 -*-
-# PyDia Code Generation from UML Diagram
-# Copyright (c) 2008  Fabien Pinckaers <fp@tinyerp.com>
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 
 import sys, dia, os
 import zipfile
@@ -25,8 +43,8 @@ class Klass :
         self.operations.append((name,(type, visibility, params, inheritance_type, comment, class_scope)))
     def SetComment(self, s) :
         self.comment = s
-    def AddParrent(self, parrent):
-        self.parents.append(parrent)
+    def AddParent(self, parent):
+        self.parents.append(parent)
     def AddTemplate(self, template):
         self.templates.append(template)
     def SetInheritance_type(self, inheritance_type):
@@ -37,7 +55,7 @@ class ObjRenderer :
     def __init__ (self) :
         # an empty dictionary of classes
         self.klasses = {}
-                self.klass_names = []   # store class names to maintain order
+        self.klass_names = []   # store class names to maintain order
         self.arrows = []
         self.filename = ""
         
@@ -69,7 +87,7 @@ class ObjRenderer :
                         #print "\t", attr[0], attr[1], attr[4]
                         k.AddAttribute(attr[0], attr[1], attr[4], attr[2], attr[3])
                     self.klasses[o.properties["name"].value] = k
-                                        self.klass_names += [o.properties["name"].value]
+                    self.klass_names += [o.properties["name"].value]
                     #Connections
                 elif o.type.name == "UML - Association" :
                     # should already have got attributes relation by names
@@ -96,7 +114,7 @@ class ObjRenderer :
                         par_name = par.properties["name"].value
                         chi_name = chi.properties["name"].value
                         if n.type.name == "UML - Generalization":
-                            self.klasses[chi_name].AddParrent(par_name)
+                            self.klasses[chi_name].AddParent(par_name)
                         else: self.klasses[chi_name].AddTemplate(par_name)
                     
     def end_render(self) :

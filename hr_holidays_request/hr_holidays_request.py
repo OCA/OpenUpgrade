@@ -1,4 +1,24 @@
 # -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
 from mx import DateTime
 import time
 import pooler
@@ -82,6 +102,7 @@ class hr_holidays(osv.osv):
         'name' : fields.char('Description', required=True, readonly=True, size=64, states={'draft':[('readonly',False)],'draft1':[('readonly',False)]}),
         'state': fields.selection([('draft1', 'draft'),('draft', 'draft'), ('confirm', 'Requested'), ('refuse', 'Refused'), ('validate', 'Validate'), ('cancel', 'Cancel')], 'State', readonly=True),
         'date_from' : fields.datetime('Vacation start day'),
+        'date_to' : fields.datetime('Vacation end day'),
         'date_from1' : fields.date('From', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_to1' : fields.date('To', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'employee_id' : fields.many2one('hr.employee', 'Employee', select=True, readonly=True, required=True),
@@ -93,6 +114,8 @@ class hr_holidays(osv.osv):
         'total_half':fields.integer("Total Half Leave", readonly=True),
         'total_full':fields.integer("Total Full Leave", readonly=True),
         'total_hour':fields.integer("Total Hours", readonly=True),
+        'number_of_days': fields.float('Number of Days in this Holiday Request'),
+        'holiday_status' : fields.many2one("hr.holidays.status", "Holiday's Status"),
           }
     _defaults = {
         'manager_id' : _manager_get,

@@ -12,9 +12,8 @@ from tools import config
 class account_invoice_line(osv.osv):
     _inherit = "account.invoice.line"
     _columns = {
-                'exise_amt' : fields.float('Exise Amount', digits=(16,2)),
-                }
-    
+        'exise_amt' : fields.float('Exise Amount', digits=(16,2)),
+    }
 account_invoice_line()
 
 
@@ -179,8 +178,6 @@ class account_tax(osv.osv):
 account_tax()
 
 
-
-
 class account_invoice_tax(osv.osv):
     _inherit = "account.invoice.tax"
 
@@ -274,12 +271,3 @@ class account_invoice_tax(osv.osv):
                         tax_grouped[key]['tax_amount'] += val['tax_amount']
         return tax_grouped
 account_invoice_tax()
-
-
-
-
-
-
-
-
-    

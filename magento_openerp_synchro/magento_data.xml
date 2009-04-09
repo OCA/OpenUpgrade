@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate="1">
+		
+	<!-- Default Config, of course then you need to update it to your Magento config -->
+		<record model="magento.web" id="default_magento_web">
+			<field name="magento_name">default_magento_website</field>
+			<field name="magento_url">http://localhost/magento/</field>
+			<field name="magento_flag" eval="True" />
+			<field name="auto_update" eval="False" />
+			<field name="api_user">your_magento_webservice_api_user_name</field>
+			<field name="api_pwd">your_magento_webservice_api_user_password</field>
+		</record>
+		
+		<record id="sale.shop" model="sale.shop">
+			<field eval="1" name="magento_flag"/>
+		</record>
+
+	<!-- Resource: product.uom.categ -->
+		<record id="product_uom_categ_unit" model="product.uom.categ">
+			<field name="name">PCE</field>
+		</record>
+	
+	<!-- Resource: product.uom -->
+		<record id="product_uom_unit" model="product.uom">
+			<field name="category_id" ref="product_uom_categ_unit" />
+			<field name="name">Unit</field>
+		</record>
+	
+	<!-- Resource: product.category -->
+		<record model="product.category" id="cat_service">
+			<field name="parent_id" ref="null" />
+			<field name="name">Services</field>
+		</record>
+
+	<!-- Resource: product.product -->
+		<record id="product_product_shipping" model="product.product">
+			<field name="default_code">SHIP</field>
+			<field name="list_price">0.0</field>
+			<field name="standard_price">0.0</field>
+			<field name="uom_id" ref="product_uom_unit" />
+			<field name="uom_po_id" ref="product_uom_unit" />
+			<field name="type">service</field>
+			<field name="name">Shipping and Handling</field>
+			<field name="exportable" eval="False" />
+			<field name="categ_id" ref="cat_service" />
+		</record>
+		
+	</data>
+</openerp>

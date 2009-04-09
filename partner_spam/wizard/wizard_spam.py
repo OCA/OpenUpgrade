@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -34,7 +35,7 @@ import pooler
 import tools
 import base64
 
-email_send_form = '''<?xml version="1.0"?>
+email_send_form = '''<?xml version="1.0" encoding="utf-8"?>
 <form string="Mass Mailing">
     <field name="from"/>
     <newline/>
@@ -95,7 +96,7 @@ email_send_fields = {
     'file3': {'string':'File 3', 'type':'binary'},
 }
 
-email_done_form = '''<?xml version="1.0"?>
+email_done_form = '''<?xml version="1.0" encoding="utf-8"?>
 <form string="Mass Mailing">
     <field name="email_sent"/>
 </form>'''
@@ -140,7 +141,7 @@ def _mass_mail_send(cr, uid, data, context, adr):
 
 #TODO: add some tests to check for invalid email addresses
 #CHECKME: maybe we should use res.partner/email_send
-    tools.email_send_attach(data['form']['from'], to, data['form']['subject'], mail, attach=f_attach)
+    tools.email_send(data['form']['from'], to, data['form']['subject'], mail, attach=f_attach)
 
     # Add a partner event
     c_id = pooler.get_pool(cr.dbname).get('res.partner.canal').search(cr ,uid, [('name','ilike','EMAIL'),('active','=',True)])

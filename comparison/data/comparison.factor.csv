@@ -1,0 +1,1004 @@
+"id","parent_id:id","name","type","sequence"
+"F1",,"Features & Business Applications","view",0
+"F429",,"Productivity, Ergonomy & Ease of Use","view",2
+"F2","F1","After-Sales Services","view",10
+"F3","F2","Repairs management","view",1
+"F4","F3","Manages reception of defect products and deliveries ","criterion",1
+"F5","F3","Manages reparation in the warehouse","criterion",1
+"F6","F3","Manages repairs at customer location","criterion",1
+"F7","F3","Automatic invoicing of raw materials and products","criterion",1
+"F8","F3","Automatic invoicing of services or hours spent on repairs","criterion",1
+"F9","F3","Traceability of all operations on the lot","criterion",1
+"F10","F2","Waranties Management","view",1
+"F11","F10","Waranties limit computation based on lots","criterion",1
+"F12","F10","Automatic re-invoicing of products/services based on waranties","criterion",1
+"F13","F2","Claims Management","view",1
+"F14","F13","Integrates customers claims management","criterion",1
+"F15","F13","Integrates suppliers claims management","criterion",1
+"F16","F13","Support for corrective and preventive actions","criterion",1
+"F17","F13","Traceability of the discussion and actions on the claim","criterion",1
+"F18","F13","Attach claims to lots, products and partners","criterion",1
+"F19","F13","Support for attached documents describing the problem","criterion",1
+"F20","F2","Quality Management","view",1
+"F21","F20","Integration of the quality manual","criterion",1
+"F22","F20","Visual integration of company processes as graphs","criterion",1
+"F23","F20","Support for corrective and preventive actions","criterion",1
+"F24","F20","Support for alerts and warnings based on customizable criterions","criterion",1
+"F25","F1","Manufacturing Management","view",6
+"F26","F25","MRP I Features","view",1
+"F27","F26","Multi-Level Bill of Materials support","criterion",1
+"F28","F26","Make-to-Stock / Make-to-Order support","criterion",1
+"F29","F26","Support for sales packs","criterion",1
+"F30","F26","Support of substition of bill of materials","criterion",1
+"F31","F26","Support for products of substitution","criterion",1
+"F32","F26","Stock forecasts","criterion",1
+"F949","F25","Batch Process","view",1
+"F950","F949","Free batch format","criterion",1
+"F951","F949","Define substitutes for parts of process","criterion",1
+"F952","F949","Batch analysis for economical production","criterion",1
+"F953","F949","Adjustment batches for region / country","criterion",1
+"F954","F949","Batch Size and underlying ingredients can be adjusted","criterion",1
+"F955","F949","Defining Down anticipated life","criterion",1
+"F956","F25","Plant Maintance ","view",1
+"F957","F956","create Maintainance order","criterion",1
+"F958","F956","Preventive and breakdown maintainance","criterion",1
+"F959","F25","Quality","view",1
+"F960","F959","Management of defective material","criterion",1
+"F961","F959","Quality in point per record in process","criterion",1
+"F33","F25","MRP II Features","view",1
+"F34","F33","Master Production Schedule","criterion",1
+"F35","F33","Support for simulations of procurements","criterion",1
+"F36","F25","Products Flexibility","view",1
+"F37","F36","Multi-variants supports in product and BoM","criterion",1
+"F38","F36","Multi unit of measures for the same product","criterion",1
+"F39","F36","Product configurator in sales orders","criterion",1
+"F40","F36","Product configurator in manufacturing orders","criterion",1
+"F41","F25","Best-Practices","view",1
+"F42","F41","Just-in-Time Support","criterion",1
+"F43","F41","Bar code support on products and lots","criterion",1
+"F44","F41","Bar code support for operations","criterion",1
+"F45","F41","Kanban support with stock level computation per location","criterion",1
+"F46","F41","Central point of management for all exceptions","criterion",1
+"F47","F41","Management of assembly lines per location","criterion",1
+"F48","F41","Real time detection of bottle necks","criterion",1
+"F49","F25","Flexibility","view",1
+"F50","F49","Ability to easily cancel any scheduled operation","criterion",1
+"F51","F49","Ability to change all operations: product's quantities, routings, ...","criterion",1
+"F52","F49","Reorganisation of proposed manufacturing orders and work orders","criterion",1
+"F53","F49","Multiple plants management","criterion",1
+"F54","F25","Lots management","view",1
+"F55","F54","Bar code support for lots","criterion",1
+"F56","F54","Lots on palets/boxes","criterion",1
+"F57","F54","Lots number on manufactured products or raw materials","criterion",1
+"F58","F54","Alerts and visibility on lots availability","criterion",1
+"F59","F25","Reporting","view",1
+"F60","F59","Margins analysis on sales, products, manufacuting orders and affairs","criterion",1
+"F61","F59","Dynamic graphs on workcenter usage","criterion",1
+"F62","F59","Dynamic graphs on products and stock evolution","criterion",1
+"F63","F59","Dynamic graphs on stocks forecasts","criterion",1
+"F64","F25","Integration","view",1
+"F65","F64","Manufacuring simulations in quotations or sales orders","criterion",1
+"F66","F64","Sub-contracting of work orders management","criterion",1
+"F67","F64","Integration of services in manufacturing orders","criterion",1
+"F68","F64","Alerts on stock levels by email","criterion",1
+"F69","F25","Ergonomy and ease of use","view",1
+"F70","F69","Gantt manipulation of manufacturing orders","criterion",1
+"F71","F69","Gantt manipulation of work orders","criterion",1
+"F72","F69","Support for Drag&Drop for priorities and routings","criterion",1
+"F73","F429","Document Management System","view",1
+"F74","F73","Classification of documents","view",1
+"F75","F74","Ability to attach documents on any resource","criterion",1
+"F76","F74","Classification of attached documents into folders","criterion",1
+"F77","F74","Automatic classification according to templates","criterion",1
+"F78","F74","Automatic attachment of printed reports","criterion",1
+"F79","F73","Best Practices","view",1
+"F80","F79","Version control system","criterion",1
+"F81","F79","History of modifications","criterion",1
+"F82","F79","Configurable rules to automatically process documents","criterion",1
+"F83","F79","Automatic generation of documents based on configurable templates","criterion",1
+"F84","F73","Accessibility of documents","view",1
+"F85","F84","FTP access","criterion",1
+"F86","F84","Webdav access","criterion",1
+"F87","F84","Web interface to browse documents","criterion",1
+"F88","F84","Customer or supplier interface to get documents","criterion",1
+"F89","F84","Email integration for incoming documents","criterion",1
+"F90","F73","Search of documents","view",1
+"F91","F90","Automatic indexation of Microsoft Office files contents","criterion",1
+"F92","F90","Automatic indexation of OpenOffice files contents","criterion",1
+"F93","F90","Automatic indexation of PDF's files contents","criterion",1
+"F94","F90","Automatic indexation of images content (OCR)","criterion",1
+"F95","F90","Meta data support: project, account, user, status, version, ...","criterion",1
+"F96","F90","Search on content, metadata","criterion",1
+"F97","F73","Reporting","view",1
+"F98","F97","Statistics on Document Management System usage","criterion",1
+"F99","F97","Statistics on user's aceptability of the DMS","criterion",1
+"F100","F73","Integration","view",1
+"F101","F100","Customer or supplier portal to access and put documents","criterion",1
+"F102","F100","Outlook integration to quickly add or get documents from application","criterion",1
+"F103","F100","Single point of security management for DMS and ERP","criterion",1
+"F104","F1","Purchase Management","view",5
+"F105","F104","Automatic propositions of purchases","view",1
+"F106","F105","Propositions based on 'Make to Order' requirements","criterion",1
+"F107","F105","Propositions based on minimum stock rules","criterion",1
+"F108","F105","Propositions based on manufacturing requirements","criterion",1
+"F109","F105","Propositions based on Master Production Schedule","criterion",1
+"F110","F105","Recurring purchase orders support","criterion",1
+"F111","F104","Purchases facilities","view",1
+"F112","F111","Support for Request for Quotations","criterion",1
+"F113","F111","Open Purchase orders","criterion",1
+"F114","F111","Ability to define alerts on products purchase","criterion",1
+"F115","F111","Ability to define alerts on supplier purchase","criterion",1
+"F946","F111","Contracts","criterion",1
+"F947","F111","Quote Management per Item","criterion",1
+"F948","F111","Repeat Purchases","criterion",1
+"F116","F104","Best-Practices","view",1
+"F117","F116","Just-in-Time Support","criterion",1
+"F118","F116","ISO9001 Suppliers evaluation","criterion",1
+"F119","F104","Purchases negotiation","view",1
+"F120","F119","Auction with suppliers","criterion",1
+"F121","F119","Purchase Tenders","criterion",1
+"F945","F119","Product description by suppliers","criterion",1
+"F122","F119","Public offers","criterion",1
+"F123","F104","Reporting","view",1
+"F124","F123","Visibility in the RfQ: stocks, latests prices, supplier quality","criterion",1
+"F125","F123","Reports on suppliers purchases","criterion",1
+"F126","F123","Reports on suppliers quality","criterion",1
+"F127","F104","Prices Management","view",1
+"F128","F127","Supplier's pricelists and promotion support","criterion",1
+"F129","F127","Standard price support on products","criterion",1
+"F130","F127","Average price support per product","criterion",1
+"F131","F127","FIFO price support on products","criterion",1
+"F132","F127","Sales prices can be automatically based on purchases prices","criterion",1
+"F133","F127","End-of-year discount management","criterion",1
+"F134","F104","Invoicing control","view",1
+"F135","F134","Invoice control based on deliveries of products","criterion",1
+"F136","F134","Invoice control based on deliveries of services","criterion",1
+"F137","F134","Invoice control based on purchases","criterion",1
+"F138","F134","Reconciliation process","criterion",1
+"F139","F104","Supplier Portal on Web","view",1
+"F140","F139","Ability to track requests for quotations","criterion",1
+"F141","F139","Ability to put prices and/or confirm purchase orders","criterion",1
+"F142","F139","Ability to confirm availabilities of products","criterion",1
+"F143","F139","Ability to confirm delivery of products","criterion",1
+"F144","F139","Ability to track invoices received and paid","criterion",1
+"F145","F139","Ability to track received products","criterion",1
+"F146","F1","Project Management","view",4
+"F147","F146","Cross-project and project consolidation facilities","view",1
+"F148","F147","Sub-project nesting for collaborative project hierarchal management","criterion",1
+"F149","F147","Prioritisation and dependencies between projects","criterion",1
+"F150","F147","Organisation of many project in one central place on web","criterion",1
+"F151","F147","Real-time status on tasks achievement","criterion",1
+"F152","F147","Template of projects and consolidation projects","criterion",1
+"F153","F146","Project's Planning","view",1
+"F154","F153","Long-term planning","criterion",1
+"F155","F153","Short-term planning","criterion",1
+"F156","F153","Calendar view of tasks and deadlines","criterion",1
+"F157","F153","Gantt view of the plannings","criterion",1
+"F158","F146","Tasks organisation","view",1
+"F159","F158","Report to display a gantt chart on multiple projects","criterion",1
+"F160","F158","Dynamic Gantt chart manipulation","criterion",1
+"F161","F158","Dynamic Calendar of tasks","criterion",1
+"F162","F158","Dynamic Perf chart manipulation","criterion",1
+"F163","F146","Integration","view",1
+"F164","F163","Integration between tasks and timesheets","criterion",1
+"F165","F163","Creation of tasks based on sales orders","criterion",1
+"F166","F163","Creation of tasks or projects based on manufacturing orders","criterion",1
+"F167","F163","Integration with the enterprise calendar","criterion",1
+"F168","F146","Thrid Party Integration","view",1
+"F169","F168","Automatic sends of emails based on tasks events","criterion",1
+"F170","F168","Automatic creation of tasks based on emails","criterion",1
+"F171","F168","Document management to store information related to project","criterion",1
+"F172","F168","Integration with Outlook and Thunderbird","criterion",1
+"F173","F146","Methodologies","view",1
+"F174","F173","SCRUM methodologies for IT companies","criterion",1
+"F175","F173","Getting Things Done methodology","criterion",1
+"F176","F146","Flexilibty","view",1
+"F177","F176","Multi unit of measures: hour/day/week/month","criterion",1
+"F178","F176","Reorganisation of projects'structure in real time","criterion",1
+"F179","F176","Unlimited levels of project's structure","criterion",1
+"F180","F146","Project's Financial integration","view",1
+"F181","F180","Integration of projects with budgets","criterion",1
+"F182","F180","Costs management including purchases, time of employee and expenses","criterion",1
+"F183","F180","Financial indicators about profitability and invoicing","criterion",1
+"F184","F180","Customers invoices forecasts based on projects","criterion",1
+"F185","F180","Supplier costs forecasts based on projects","criterion",1
+"F186","F146","Project's invoicing","view",1
+"F187","F186","Automatic invoicing based on time spent","criterion",1
+"F188","F186","Automatic invoicing on fixed-price put on tasks","criterion",1
+"F189","F186","Re-invoicing on costs on projects","criterion",1
+"F190","F186","Different rules for invoice price of costs, tasks or time","criterion",1
+"F191","F146","Reporting","view",1
+"F192","F191","Availability of graphs based on tasks","criterion",1
+"F193","F191","Availability of graphs based on projects","criterion",1
+"F194","F191","Dashboards for projects users","criterion",1
+"F195","F191","Dashboards for projects managager","criterion",1
+"F196","F191","Business Intelligence","criterion",1
+"F197","F1","Warehouse Management","view",3
+"F198","F197","Products Routes","view",1
+"F199","F198","Manage long delays in product's routes (seas/oceans/ports)","criterion",1
+"F200","F198","Manage product's route in the warehouse ","criterion",1
+"F201","F198","Manage product's route in manufacturing chains","criterion",1
+"F202","F198","Unlimitted number of locations for a warehouse","criterion",1
+"F203","F198","Locations defined in a hierarchy structure, with unlimited nested levels","criterion",1
+"F204","F197","Products","view",1
+"F205","F204","Support for variants with one dimension","criterion",1
+"F206","F204","Support for variants with multiple dimensions","criterion",1
+"F207","F204","Visibility of real stock and future stocks in product's form","criterion",1
+"F208","F197","Renting Products","view",1
+"F209","F208","Manages products to be rent","criterion",1
+"F210","F208","Planification of stock based on receptions of the product","criterion",1
+"F211","F208","Manages stock at customer location","criterion",1
+"F212","F197","Lots Management","view",1
+"F213","F212","Support for production lots (per product)","criterion",1
+"F214","F212","Support for logistic lots (on palets and boxes)","criterion",1
+"F215","F212","Barcode support to encode and print lots labels","criterion",1
+"F216","F197","Internal Moves","view",1
+"F217","F216","Automatic propositions of internal pickings for manufacturing orders","criterion",1
+"F218","F197","Barcode support","view",1
+"F219","F218","Barcode support for pickings","criterion",1
+"F220","F218","Barcode support for receptions","criterion",1
+"F221","F218","Barcode support for manufacturing orders","criterion",1
+"F222","F218","Barcode support for workcenters to track events","criterion",1
+"F223","F197","Warehouse Organisation","view",1
+"F224","F223","Capacity management per location and product","criterion",1
+"F225","F223","Graphical representation of zones according to products usage","criterion",1
+"F226","F223","Builtin interface with automated racks","criterion",1
+"F227","F197","Periodical Inventories","view",1
+"F228","F227","Allows to continue working on products when doing an inventory","criterion",1
+"F229","F227","Allows to post inventory entries in the past","criterion",1
+"F230","F227","Support for total and partial inventories","criterion",1
+"F231","F227","Computation of latest dates of inventories for rounding inventories","criterion",1
+"F232","F197","Traceability","view",1
+"F233","F232","Traceability on manufactured lots (on products)","criterion",1
+"F234","F232","Traceability on logistic units (on palets/boxes)","criterion",1
+"F235","F232","Graphical upstream traceability graph or tree","criterion",1
+"F236","F232","Graphical downstream traceability graph or tree","criterion",1
+"F237","F232","Tracebility up to the customer or supplier locations","criterion",1
+"F238","F1","Point of Sale","view",11
+"F239","F238","Touchscreen interface","criterion",1
+"F962","F238","centralize access of data","criterion",1
+"F963","F238","Integration with main module","criterion",1
+"F964","F238","integrate with third party peripherals","criterion",1
+"F965","F238","Easy to use interface","criterion",1
+"F966","F238","Autometic generation of account entreis","criterion",1
+"F967","F238","Tax facility","criterion",1
+"F968","F238","Multiple payment option","criterion",1
+"F969","F238","capable to print receipts","criterion",1
+"F970","F238","Updated physical inventory details","criterion",1
+"F971","F238","sale order creation","criterion",1
+"F972","F238","Product image available","criterion",1
+"F973","F238","Able to send email and sms to customer","criterion",1
+"F974","F238","Reports ","view",1
+"F975","F974","able to print receipts","criterion",1
+"F976","F974","Graphical view of sales ","criterion",1
+"F977","F974","Able to print summary reports","criterion",1
+"F978","F238","Point of Sale Security","view",1
+"F979","F978","Secure the access of POS","criterion",1
+"F980","F978","Manage users and profile","criterion",1
+"F981","F978","Only authenticate user can access information","criterion",1
+"F240","F1","Sales Management","view",2
+"F241","F1","Direct Marketing","view",12
+"F242","F241","Offers management","view",1
+"F243","F242","Ability to define re-useable campaigns","criterion",1
+"F244","F241","Campaign management","view",1
+"F245","F241","Paper based campaigns","view",1
+"F246","F245","Complex layouts of mailings designed using Ms. or OpenOffice","criterion",1
+"F247","F245","Mass mailing merging and routing","criterion",1
+"F248","F245","Barcode support for fast encoding of orders","criterion",1
+"F249","F245","PDF generation of the mailings","criterion",1
+"F250","F241","Email based campaigns","view",1
+"F251","F250","Email composition using HTML","criterion",1
+"F252","F250","Ability to add trackers in emails for reporting","criterion",1
+"F253","F250","Ability to add trackers on links provided in the email","criterion",1
+"F254","F241","SMS based campaigns","view",1
+"F255","F254","Connection available to an SMS gateway","criterion",1
+"F256","F241","Segmentations","view",1
+"F257","F256","Tools for automatic segmentations of customers or prospects","criterion",1
+"F258","F256","Statistics reports on return answers per segments","criterion",1
+"F259","F1","Accounting & Financial Management","view",0
+"F260","F259","Fast encoding of entries","view",1
+"F261","F260","Full keyboard support","criterion",1
+"F262","F260","Encoding by entries and entries lines","criterion",1
+"F263","F260","Bank statement encoding facilities","criterion",1
+"F264","F260","Number of keys to encode an invoice entry","criterion",1
+"F265","F260","Automatic computation of taxes and analytic entries","criterion",1
+"F266","F259","Budgets","view",1
+"F267","F266","Consolidations and views by departments, project or budget","criterion",1
+"F268","F266","Integration to analytic accounting","criterion",1
+"F269","F259","Payment Management","view",1
+"F270","F259","Treasury Management","view",1
+"F271","F259","Assets Management","view",1
+"F273","F259","Bank Statements","view",1
+"F274","F1","Analytic accounting","view",1
+"F275","F1","Human Ressources","view",8
+"F276","F275","Payroll Management","view",1
+"F277","F275","Expenses Tracking","view",1
+"F278","F275","Skills Management","view",1
+"F279","F275","Holidays & Leaves","view",1
+"F280","F275","Attendances","view",1
+"F281","F1","CRM & SRM","view",9
+"F282","F281","Accounts management (customers/partners)","view",1
+"F283","F282","Prospects management and conversion to customers","criterion",1
+"F284","F282","Multiple relations between enterprises (accounts) and contacts (m/n)","criterion",1
+"F285","F282","Automatic segmentations of accounts","criterion",1
+"F286","F282","Integration with phone central (VOIP)","criterion",1
+"F287","F281","Leads management","view",1
+"F288","F287","Automatic creation of leads based on a website form","criterion",1
+"F289","F287","Automatic creation of leads based on incoming email","criterion",1
+"F290","F287","Creation of accounts and opportunities based on leads","criterion",1
+"F291","F287","Wizard to simplify mass importation of prospects","criterion",1
+"F292","F281","Opportunities Management","view",1
+"F293","F292","Create quotations or sales based on opportunities","criterion",1
+"F294","F292","Ability to customize screens according to the business","criterion",1
+"F295","F292","Ability to integrate opportunities and actions on the calendar","criterion",1
+"F296","F281","Phone Center Management","view",1
+"F297","F281","Email Integration","view",1
+"F298","F281","Marketing Campaigns Management","view",1
+"F299","F298","Integration with Ms. Word for mass mailing preparation","criterion",1
+"F300","F298","Integration with OpenOffice for mass mailing preparation","criterion",1
+"F301","F298","Segmentation tools for accounts","criterion",1
+"F302","F281","Integrated Webmail","view",1
+"F303","F302","Support for IMAP","criterion",1
+"F304","F302","Support for POP","criterion",1
+"F305","F302","Search, rules, hyerarchical folders","criterion",1
+"F306","F302","Ergonomy: drag&drop, ajax enabled","criterion",1
+"F307","F302","Customizable screens for business logic","criterion",1
+"F308","F281","Integrations","view",1
+"F309","F308","Integration with Outlook for mails and contacts synchronisation","criterion",1
+"F310","F308","Integration with Thunderbird for mails and contacts synchronisation","criterion",1
+"F311","F308","Web portal","criterion",1
+"F312","F281","Ergonomy","view",1
+"F313","F312","Drag & Drop in the calendar of events","criterion",1
+"F314","F312","Calendar per day,week,month,year","criterion",1
+"F315","F312","Drag and drop between opportunities for prioritization","criterion",1
+"F316","F312","Accessibility of all information in forms","criterion",1
+"F317","F281","Portails","view",1
+"F318","F317","Others features","view",1
+"F319","F318","Association Management","view",1
+"F320","F319","Membership management","criterion",1
+"F321","F319","Events Organisation","criterion",1
+"F322","F319","Fund Raising","criterion",1
+"F323","F318","Public","criterion",1
+"F324","F318","Network Management","criterion",1
+"F330","F429","Customer & Supplier Portal","view",1
+"F332","F429","Ergonomy","view",1
+"F333","F332","Web Interface on all features","view",1
+"F334","F333","Support for drag & drop","criterion",1
+"F335","F333","Configurable Dashboards","criterion",1
+"F336","F333","Customizable templates","criterion",1
+"F337","F332","Rich Interface on all features","view",1
+"F338","F337","Support for drag & drop","criterion",1
+"F339","F337","Configurable Dashboards","criterion",1
+"F340","F337","Customizable templates","criterion",1
+"F341","F332","Dashboards","view",1
+"F342","F341","Graphs, calendar and lists support in dashboards","criterion",1
+"F343","F341","Filter on graphs","criterion",1
+"F344","F341","Graphs clickable on each axis","criterion",1
+"F345","F341","Customizable dashboards per user","criterion",1
+"F346","F332","Calendars","view",1
+"F347","F346","On all ressources: manufacturing orders, event, meeting, deliveries, ...","criterion",1
+"F348","F346","Drag & Drop of events","criterion",1
+"F349","F346","Filter on calendars","criterion",1
+"F350","F332","Gant Views","view",1
+"F351","F350","Gantt view on all ressources","criterion",1
+"F352","F350","Drag & Drop for planification","criterion",1
+"F353","F350","Consilidation of resources per usage","criterion",1
+"F354","F429","Productivity","view",1
+"F355","F354","Presentation of data in the screen","view",1
+"F356","F355","Only one screen to encode a sale order and all related data","criterion",1
+"F357","F429","Information visibility","view",1
+"F358","F357","Easy switch between list, form view","criterion",1
+"F359","F357","Easy switch to Business Intelligence interface","criterion",1
+"F360","F357","Easy switch to graphs","criterion",1
+"F361","F357","Easy switch to gantt or calendar views","criterion",1
+"F362","F354","Fast encoding of entries","view",1
+"F363","F362","Support for encoding in list views like Ms. Excel","criterion",1
+"F364","F362","Less than 10 keys to encode accounting entries with 3 lines","criterion",1
+"F365","F362","Less than 15 keys to encode accounting entries with 3 lines","criterion",1
+"F366","F362","Less than 20 keys to encode accounting entries with 3 lines","criterion",1
+"F367","F362","Less than 25 keys to encode accounting entries with 3 lines","criterion",1
+"F368","F362","Full keyboard support (no mouse)","criterion",1
+"F369","F354","Integration with Microsoft Office","criterion",1
+"F370","F354","Integration with OpenOffice","criterion",1
+"F371","F354","Integration with Mail Client","criterion",1
+"F372","F354","Integrated Webmail","criterion",1
+"F373","F429","Ease of use","view",1
+"F374","F373","Fast Learning Curve","view",1
+"F375","F374","Official editor's trainings for sale/purchase/mrp/stock <3 days","criterion",1
+"F376","F374","Official editor's trainings for sale/purchase/mrp/stock <10 days","criterion",1
+"F377","F374","Official editor's trainings for sale/purchase/mrp/stock <20 days","criterion",1
+"F378","F374","It exists companies that integrated the software by themselves","criterion",1
+"F379","F373","Documentation accessibility","view",1
+"F380","F379","Tooltips on all fields","criterion",1
+"F381","F379","Contextual documentation on all screens","criterion",1
+"F382","F379","Technical documentation on all tables/objects","criterion",1
+"F383","F379","Graphical process on every screen","criterion",1
+"F384","F373","Documentation availability","view",1
+"F385","F384","Online and free book for documentation (>500 pages)","criterion",1
+"F386","F384","Online and free book for documentation (>150 pages)","criterion",1
+"F387","F384","Online and free learning screencasts (>20 hours)","criterion",1
+"F388","F384","Online and free learning screencasts (>5 hours)","criterion",1
+"F389","F384","Availability of paper books in book stores","criterion",1
+"F390","F384","Availability of documentations for end-users","criterion",1
+"F391","F384","Availability of documentations for integrators","criterion",1
+"F392","F384","Availability of documentations for developers","criterion",1
+"F393","F384","Automatic technical documentation of custom modules","criterion",1
+"F394","F373","Services suppliers","criterion",1
+"F395","F373","Ease of Installation","view",1
+"F396","F395","Installation <1 day for novices","criterion",1
+"F397","F395","Installation <1 day for experts","criterion",1
+"F398","F395","Configuration wizards at the installation of the software","criterion",1
+"F399","F395","Configuration wizards at the installation of new modules","criterion",1
+"F400",,"Customisations & Flexibility","view",3
+"F401","F400","Technical Workflow Editor","view",1
+"F402","F401","Support for workflows on all resources","criterion",1
+"F403","F401","Editable workflows","criterion",1
+"F404","F401","Graphical workflow editor","criterion",1
+"F405","F401","Configuration of all nodes and activities","criterion",1
+"F406","F401","Workflows compatibility with WfMC","criterion",1
+"F407","F400","Screen Designer","view",1
+"F408","F407","Editable menu structure","criterion",1
+"F409","F407","Ability to add fields anywhere on any screen","criterion",1
+"F410","F407","Ability to modify the layout of any screen","criterion",1
+"F411","F407","Ability to add HTML in views","criterion",1
+"F413","F400","Report Designer","view",1
+"F414","F400","Statistics Report Designer","view",1
+"F415","F400","Business Intelligence","view",1
+"F416","F400","Objects Designer","view",1
+"F417","F416","Ability to create new fields","criterion",1
+"F418","F416","Ability to create new tables","criterion",1
+"F419","F416","Ability to design new actions without development","criterion",1
+"F420","F400","Customizable actions","view",1
+"F421","F400","Customizable documentation","view",1
+"F422","F421","Editable tooltips on fields","criterion",1
+"F423","F421","Customizable user documentation","criterion",1
+"F424","F421","Customizable end-users processes","criterion",1
+"F425","F400","Modularity","view",1
+"F426","F425","Package any modification as a module/addons/plugin","criterion",1
+"F427","F425","Reuse existing configuration easily","criterion",1
+"F428","F425","Ability to distribute existing configuration","criterion",1
+"F430","F429","Accessibility","view",1
+"F431","F430","Public resources and communities","view",1
+"F432","F431","Public bug tracker","criterion",1
+"F433","F431","Official forum","criterion",1
+"F433b","F431","Official IRC channel","criterion",1
+"F434","F431","Official wiki for documentations","criterion",1
+"F435","F431","Official repository of sources","criterion",1
+"F443","F430","Availability of Books","view",1
+"F444","F443","Books on technical architecture","criterion",1
+"F445","F443","Books on functionnal aspects","criterion",1
+"F446","F443","Books on customer experiences","criterion",1
+"F447","F430","Availability of main source codes and extra features","view",1
+"F448","F447","Availability of source codes","criterion",1
+"F449","F447","Availability of extra features (plugins, modules, addons)","criterion",1
+"F450","F447","Open Source codes","criterion",1
+"F451",,"Total Cost of Ownership","view",5
+"F452","F451","Licences","view",1
+"F453","F452","Open Source Licences","view",1
+"F454","F453","Availability of an Open Source licence","criterion",1
+"F455","F453","90% of modules or features are under an Open Source licence","criterion",1
+"F456","F453","All modules or features are under an Open Source licence","criterion",1
+"F457","F452","Cost of Licences","view",1
+"F458","F457","Licences are free (0 $)","criterion",1
+"F459","F457","Avarage licence cost <500$ per user and per year","criterion",1
+"F460","F457","Avarage licence cost <5000$ per user and per year","criterion",1
+"F461","F457","Avarage licence cost <1000$ per user and per year","criterion",1
+"F462","F451","SaaS offer (sometimes called On Demand)","view",1
+"F463","F462","Availability of a SaaS offer","criterion",1
+"F464","F462","A fixed price for: software, support, maintenance, hosting","criterion",1
+"F465","F462","Zero integration costs for the SaaS offer","criterion",1
+"F466","F462","Purchase online and get directly an access","criterion",1
+"F467","F462","Availability of a free trial version","criterion",1
+"F468","F451","Cost of customizations","view",1
+"F469","F468","You don't need a specific licence to customize screens","criterion",1
+"F470","F468","Ability to customize screens without development","criterion",1
+"F471","F468","Ability to customize logic without development","criterion",1
+"F472","F468","Ability to customize layout of reports without development","criterion",1
+"F473","F468","Ability to customize/add statistical reports without development","criterion",1
+"F474","F468","Integrated business intelligence to define end-users reports","criterion",1
+"F475","F468","Interface to others application using web-services","criterion",1
+"F476","F451","Cost of data importation","view",1
+"F477","F476","Ability to import .CSV files from the client side","criterion",1
+"F478","F476","Ability to import .XML files from the client side","criterion",1
+"F479","F476","Ability to manages ID from original software to re-create relation","criterion",1
+"F482",,"Technical Quality","view",4
+"F985","F482","Technical","view",1
+"F986","F985","coding are done from client side so no load on server side","criterion",1
+"F987","F985","Table creation done using GUI wizard","criterion",1
+"F988","F985","Form creation done using GUI wizard","criterion",1
+"F989","F985","Codeunit are defined seprately so can be resuable","criterion",1
+"F990","F985","Different Menusuites can defined for same system","criterion",2
+"F991","F985","Version of each object defined","criterion",3
+"F992","F985","Uses CAL Programming language","criterion",4
+"F483","F482","Database flexibility","view",1
+"F484","F483","Support for an Open Source database","criterion",1
+"F485","F483","Multi-Database support","criterion",1
+"F486","F483","Ability to add rows from the interface","criterion",1
+"F487","F483","Ability to add tables from the interface","criterion",1
+"F488","F483","Ability to define objects from the interface","criterion",1
+"F489","F482","Object Oriented system","view",1
+"F490","F489","Ability to add methods on objects from inheritance","criterion",1
+"F491","F489","The model is defined through objects, not flat data","criterion",1
+"F492","F489","Support for computed fields (properties method on object)","criterion",1
+"F493","F482","Language","view",1
+"F494","F493","Fully object oriented language support","criterion",1
+"F495","F493","Scripting language support","criterion",1
+"F496","F493","Based on an Open Source language","criterion",1
+"F497","F493","Based on a very popular language (Java, .NET, C#)","criterion",1
+"F497_1","F493","Based on a popular language (Python, C++)","criterion",1
+"F498","F482","Modularity","view",1
+"F499","F498","Ability to package modifications as separate modules or plugins","criterion",1
+"F500","F498","Sales/purchases/project/stock mgt. are distinct modules","criterion",1
+"F501","F498","Integrated Object Relational Mapping system","criterion",1
+"F502","F400","Customisations without development","view",1
+"F503","F482","Screen Definition","view",1
+"F505","F482","Workflows Management","view",1
+"F507","F482","Report Engines","view",1
+"F508","F482","Statistics Report Engines","view",1
+"F509","F451","Maintenance Costs","view",10
+"F510","F509","Availability of a fixed price maintenance contract","criterion",1
+"F511","F509","Unlimited bugfixes guarantee in the maintenance contract","criterion",1
+"F512","F509","Migrations included in the maintenance contract","criterion",1
+"F513","F509","A 3 years compatibility guarantee","criterion",1
+"F514","F509","A 5 years compatibility guarantee","criterion",1
+"F515","F451","Migration system and offers","view",5
+"F516","F515","Migration system for major new versions","view",1
+"F518","F516","Automatic migration of the data without external scripts","criterion",1
+"F519","F516","Automatic migration of the logic/workflow without external scripts","criterion",1
+"F520","F516","Route and process documents from invalid to valid states","criterion",1
+"F521","F516","Availability of open source migration scripts","criterion",1
+"F522","F516","Availability of payable migration scripts instead of services","criterion",1
+"F523","F516","Availability of a service offer to migration","criterion",1
+"F524","F516","Public price available for the migration service offer","criterion",1
+"F525","F515","Migration system for bugfixes or small features","view",1
+"F526","F525","Availability of patches for bugfixes","criterion",1
+"F527","F525","Automatic migration of the data based on patches","criterion",1
+"F528","F525","Availability of open source migration scripts for patches","criterion",1
+"F529","F525","Availability of payable migration scripts instead of services","criterion",1
+"F530","F525","Availability of a service offer to apply bugfixes","criterion",1
+"F531","F515","Migration system and specific developments","view",1
+"F532","F531","Automatic migrations for screens","criterion",1
+"F533","F531","In one table, some fields may belongs to official distribution and others not","criterion",1
+"F534","F531","In one screen, some fields may belongs to official distribution and others not","criterion",1
+"F535","F531","Support for automatic migration of a part of the screen","criterion",1
+"F536","F515","Automatic migrations for the logic layer","view",1
+"F537","F536","The way document are processed is described through meta-data and not code","criterion",1
+"F538","F536","Ability to migrate workflow (or logic) with states from official release and states for specific devs","criterion",1
+"F539","F502","Communication Tools","view",1
+"F541","F539","Ability to define automatic emails on specific status of each document","criterion",1
+"F542","F539","Ability to define automatic SMS on specific status of each document","criterion",1
+"F543","F539","Ability to prepare paper based mailing on specific status of each document","criterion",1
+"F544","F539","Ability to trigger status change of documents based on email reception","criterion",1
+"F545","F539","Ability to trigger status change of documents based on sms reception","criterion",1
+"F546","F502","Objects changes based on events or status of documents","view",1
+"F547","F546","Ability to create new objects","criterion",1
+"F548","F546","Ability to modify existing objects","criterion",1
+"F549","F546","Ability to delete existing objects","criterion",1
+"F550","F546","Ability to trigger workflow events on specific objects","criterion",1
+"F551","F502","Automated actions based on events or documents status","view",1
+"F552","F551","Ability to trigger static reports (HTML or PDF)","criterion",1
+"F553","F551","Ability to trigger modifiable reports (open in Office)","criterion",1
+"F554","F551","Ability to trigger others actions","criterion",1
+"F555","F551","Ability to trigger status change","criterion",1
+"F556","F502","Definition of complex actions as parametrization, not development","view",1
+"F557","F556","Ability to define loops (for) in actions","criterion",1
+"F558","F556","Ability to define conditions (if) in actions","criterion",1
+"F559","F556","Ability to define nested actions (recursive)","criterion",1
+"F560","F502","Connection to external systems as parametrization","view",1
+"F561","F560","Ability to manges automatically Id's of third party application for synchronisation","criterion",1
+"F562","F560","Ability to detect third party web-services through introspection","criterion",1
+"F563","F560","Ability to trigger requests to third party applications using XML-RPC","criterion",1
+"F564","F560","Ability to trigger requests to third party applications using SOAP","criterion",1
+"F565","F560","Ability to trigger requests to third party applications using REST","criterion",1
+"F566","F503","Separation of the data and the code","view",1
+"F567","F566","The definition of the screens are separated from code of objects","criterion",1
+"F568","F566","The layout of screens are defined as data not code","criterion",1
+"F569","F566","You don't need to develop to define new screens","criterion",1
+"F570","F503","Available widgets for screen definition","view",1
+"F571","F570","Widgets for relationships","view",1
+"F572","F571","Relation widget to one resource (1:n)","criterion",1
+"F573","F571","Relation widget to any number of resources (m:n)","criterion",1
+"F574","F571","One resource related to any number of others resources (n:1)","criterion",1
+"F575","F570","Specific widgets","view",1
+"F576","F575","Availability of currency widgets (with conversions)","criterion",1
+"F577","F575","Availability of time widgets","criterion",1
+"F578","F575","Availability of date and time widgets","criterion",1
+"F579","F570","Advanced static widgets (just for reading purpose)","view",1
+"F580","F579","Availability of static graphs widgets","criterion",1
+"F581","F579","Availability of static calendar widgets with monthly view","criterion",1
+"F582","F579","Availability of static gantt charts widgets","criterion",1
+"F583","F579","Availability of static grids widgets","criterion",1
+"F584","F570","Advanced dynamic widgets","view",1
+"F585","F584","Availability of dynamic graphs widgets","criterion",1
+"F586","F584","Availability of dynamic calendar widgets with monthly view","criterion",1
+"F587","F584","Availability of dynamic gantt charts widgets","criterion",1
+"F588","F584","Availability of editable grids widgets","criterion",1
+"F589","F503","Ability to extend views from modules/plugins","view",1
+"F590","F589","Ability to add custom fields in base views","criterion",1
+"F591","F589","Ability to remove custom fields from base views","criterion",1
+"F592","F589","Ability to define new kind of widgets in modules/plugins","criterion",1
+"F593","F505","Workflow engine","view",1
+"F595","F593","Function calls from one object to another are managed by a workflow engine","criterion",1
+"F596","F593","All objects of the system that require a logic uses worklows","criterion",1
+"F597","F593","Workflow engine support nested workflows","criterion",1
+"F598","F593","Workflow engine support split modes per activity: XOR, OR, AND","criterion",1
+"F599","F593","Workflow engine support join modes per activity: XOR, OR, AND","criterion",1
+"F600","F593","An instance can be in any number of activities in the same time","criterion",1
+"F601","F593","Different workflows can be defined for the same document","criterion",1
+"F602","F505","Workflow definition","view",1
+"F603","F602","The workflow definition is in XML","criterion",1
+"F604","F602","The workflow definition is compatible with WfMC","criterion",1
+"F605","F602","The workflow definition can be overrided in specific modules","criterion",1
+"F606","F602","Availability of a workflow editor that is able to save the workflow","criterion",1
+"F607","F505","Workflow evolution","view",1
+"F608","F607","The workflow engine as an automatic migration system","criterion",1
+"F609","F607","The workflow migration is able to change documents in invalid state","criterion",1
+"F610","F607","You do not have to define hooks to connect the workflow to objects","criterion",1
+"F611","F482","Lines of code required to develop a new feature","view",1
+"F612","F611","SLOC(*) for the whole ERP <15.000 lines","criterion",1
+"F613","F611","SLOC(*) for the whole ERP <25.000 lines","criterion",1
+"F614","F611","SLOC(*) for the whole ERP <35.000 lines","criterion",1
+"F615","F611","SLOC(*) for the whole ERP <55.000 lines","criterion",1
+"F616","F611","SLOC(*) for the whole ERP <100.000 lines","criterion",1
+"F617","F611","SLOC(*) for the whole ERP <200.000 lines","criterion",1
+"F618","F611","SLOC(*) for the whole ERP <500.000 lines","criterion",1
+"F619","F503","Flexibility of screens definition","view",1
+"F620","F619","Ability to trigger modifications of fields according to others","criterion",1
+"F621","F619","Change properties of fields (readonly, invisible, ...) according to others","criterion",1
+"F622","F619","Ability to include HTML to define views","criterion",1
+"F623","F619","Ability to include scripts whithin views for custom behaviours","criterion",1
+"F624","F619","Ability to include AJAX within views","criterion",1
+"F625","F453","The open source licence is OSI compliant","criterion",1
+"F626","F274","Analytic Structure","view",1
+"F627","F626","Support for multiple analytic plans","criterion",1
+"F628","F626","Each analytic plan can be hierarchised (tree structure)","criterion",1
+"F629","F626","Support for an unlimited number of plans and hierarchy levels","criterion",1
+"F630","F626","Each analytic account can work with multiple currencies","criterion",1
+"F631","F274","Automatic integration with others components","view",1
+"F632","F631","Supplier and customer invoices generates analytic entries","criterion",1
+"F633","F631","Manufacturing orders can create analytic entries costs","criterion",1
+"F634","F631","Costs of employee generates analytic entries through timesheets","criterion",1
+"F635","F631","Assets are integrated with analytic accounting","criterion",1
+"F636","F631","Employees leaves/hollidays can generate analytic costs","criterion",1
+"F637","F631","Time spent on a task can generate analytic entries","criterion",1
+"F638","F274","Entries encoding","view",1
+"F639","F638","Support for manually encoding of analytic entries","criterion",1
+"F640","F638","Support for analytic entries without financial entries counter-part","criterion",1
+"F641","F638","Fast encoding in a grid view (ala Excel)","criterion",1
+"F642","F638","Support for model of analytic distributions","criterion",1
+"F643","F638","One financial entry can be splitted in several analytic lines","criterion",1
+"F644","F274","Features","view",1
+"F645","F644","Ability to automatically reinvoice costs","criterion",1
+"F646","F644","Automatically propose the account based on user, product, date, etc.","criterion",1
+"F647","F644","Integrated with project management (planning, costs of tasks, etc.)","criterion",1
+"F648","F644","Ability to link users to different products based on contract/account","criterion",1
+"F649","F644","Support for multi-company environment","criterion",1
+"F650","F644","Ability to consolidates accounts from multiple companies","criterion",1
+"F652","F274","Reporting","view",1
+"F653","F652","Support for cross-reports between analytic and financial accounts","criterion",1
+"F654","F652","Support for cross-reports between several analytic plans","criterion",1
+"F655","F652","Availability of graphical dashboards and indicators","criterion",1
+"F656","F652","Ability to compute the theorical revenue based on costs and pricelists","criterion",1
+"F657","F240","Quotations","view",1
+"F658","F657","Ability to create a quotation from a business opportunity (CRM)","criterion",1
+"F659","F657","Ability to convert a quotation into a sale order","criterion",1
+"F660","F657","Support for sales by lots (tenders)","criterion",1
+"F661","F657","Only 2 fields to fill in to encode a quotation (partner, product)","criterion",1
+"F662","F657","Support for versions of quotations","criterion",1
+"F663","F657","Integration with document management system to store propositions","criterion",1
+"F664","F657","Support for attachment of files on quotations","criterion",1
+"F943","F657","Drop Shipment Facility","criterion",1
+"F944","F657","While Creating orders, Inventory for each item available. ","criterion",1
+"F666","F240","Logistic","view",1
+"F667","F666","Ability to mix services, products and consumables in one sale order","criterion",1
+"F668","F666","Ability to select 'make to stock'/'make to order' logistics on sale order lines","criterion",1
+"F669","F666","Ability to select the lot or tracking number on sale order line","criterion",1
+"F670","F666","Support for payment before delivery","criterion",1
+"F671","F666","Support for automatic invoice after delivery","criterion",1
+"F672","F666","Choose between invoice based on delivered or ordered quantities","criterion",1
+"F673","F666","Support for advances invoices","criterion",1
+"F675","F240","Information availability from quotations","view",1
+"F676","F675","History of sales for the related customer","criterion",1
+"F677","F675","Zoom into the customer form in one click","criterion",1
+"F678","F675","Future stock forecasts for selected product(s)","criterion",1
+"F679","F675","Cost computation of the product based on quantities","criterion",1
+"F680","F675","Theorical planning for manufacturing orders","criterion",1
+"F681","F675","History of purchases for the selected product","criterion",1
+"F682","F240","Automatic Invoicing","view",1
+"F683","F682","Ability to automatically generate draft or confirmed invoice","criterion",1
+"F684","F682","Ability to generate invoices based on sales order","criterion",1
+"F685","F682","Ability to generate invoices based on costs on project","criterion",1
+"F686","F682","Ability to generate invoices based on deliveries","criterion",1
+"F687","F682","Ability to generate invoices based on tasks","criterion",1
+"F688","F682","Ability to generate invoices based on manufacturing orders","criterion",1
+"F689","F240","Prices and contracts","view",1
+"F690","F689","Pricelists","view",1
+"F691","F690","Unlimited number of pricelists","criterion",1
+"F692","F690","Support for a pricelist system based on rules","criterion",1
+"F693","F690","Price computation using factors or sums","criterion",1
+"F694","F690","Price can be computed based on others pricelist","criterion",1
+"F695","F690","Customer prices can be computed based on supplier prices","criterion",1
+"F696","F690","Customer prices can be computed based cost of the product","criterion",1
+"F697","F690","A pricelist can have an unlimitted number of versions","criterion",1
+"F698","F689","Prices","view",1
+"F699","F698","Prices can be based on any field of the product form","criterion",1
+"F700","F698","Support for average price costing method","criterion",1
+"F701","F698","Support for standard price costing method","criterion",1
+"F702","F698","Support for LIFO costing method","criterion",1
+"F703","F698","Support for FIFO costing method","criterion",1
+"F704","F698","Multi-currencies support and automatic conversions","criterion",1
+"F705","F638","Discounts","view",1
+"F706","F705","Ability to set a discount per sale order line","criterion",1
+"F707","F705","Support for end-of-year discounts","criterion",1
+"F708","F705","Support for end-of-campaign discounts","criterion",1
+"F709","F705","Support for promotions pricelists","criterion",1
+"F710","F330","Customer Portal","view",1
+"F711","F710","Portal Management","view",1
+"F712","F711","Ability to create and send new users based on a selection of customers","criterion",1
+"F713","F711","Ability to reorganise menus of the portal","criterion",1
+"F714","F711","Ability to export any kind of document in the portal","criterion",1
+"F715","F711","Different access rights possible per customer","criterion",1
+"F716","F711","Support for unlimited number of portals (resellers, customers, etc)","criterion",1
+"F717","F710","Available Features","view",1
+"F718","F717","Customers can access his own sales orders and quotations","criterion",1
+"F719","F717","Customers can access and reprint his own invoices","criterion",1
+"F720","F717","Customers can work on their own projects and tasks","criterion",1
+"F721","F717","Customers can access his after-sales services and support","criterion",1
+"F722","F717","Customers can have a restricted visibility on stock availabilities","criterion",1
+"F723","F710","Portal User Interface","view",1
+"F724","F723","Customers can access using an application to install","criterion",1
+"F725","F723","Customers can access using a web interface","criterion",1
+"F726","F723","Customers can access documents using a FTP access","criterion",1
+"F727","F723","Customers can access documents using a WebDav access","criterion",1
+"F728","F723","Customers can access their own documents using web-services","criterion",1
+"F729","F330","Supplier Portal","view",1
+"F730","F729","Portal Management","view",1
+"F731","F730","Ability to create and send new accounts based on a selection of suppliers","criterion",1
+"F732","F730","Ability to reorganise menus of the portal","criterion",1
+"F733","F730","Ability to export any kind of document in the portal","criterion",1
+"F734","F730","Different access rights possible per supplier","criterion",1
+"F735","F730","Ability to manage different users for the same supplier","criterion",1
+"F736","F729","Supplier Portal Features","view",1
+"F737","F736","Suppliers can access and complete requests for quotations","criterion",1
+"F739","F736","Suppliers can work on their own projects and tasks","criterion",1
+"F741","F736","Suppliers can have a restricted visibility on stock availabilities","criterion",1
+"F742","F729","Portal User Interface","view",1
+"F743","F742","Suppliers can access using an application to install","criterion",1
+"F744","F742","Suppliers can access using a web interface","criterion",1
+"F745","F742","Suppliers can access documents using a FTP access","criterion",1
+"F746","F742","Suppliers can access documents using a WebDav access","criterion",1
+"F747","F742","Suppliers can access their own documents using web-services","criterion",1
+"F748","F507","Availability of a report engine that produces PDF","criterion",1
+"F749","F507","Availability of a report engine that produces HTML documents","criterion",1
+"F750","F507","Availability of a report engine that produces Open Office","criterion",1
+"F751","F507","Availability of a report engine that produces Microsoft Office docuements","criterion",1
+"F752","F507","You can change on reports if it opens as PDF of editable document","criterion",1
+"F753","F508","Availability of reports based on SQL queries","criterion",1
+"F754","F508","Availability of a end-user SQL expression builder","criterion",1
+"F755","F415","Olap Database","view",1
+"F756","F415","Cube Designer","view",1
+"F757","F415","Data Browser","view",1
+"F758","F415","Data Mining","view",1
+"F759","F415","Pre-Configurations","view",1
+"F760","F755","Support for basic MDX queries","criterion",1
+"F761","F755","Support for all kind of MDX queries","criterion",1
+"F762","F755","Access through web-services","criterion",1
+"F763","F755","Unlimitted levels hierarcies, dimensions and levels","criterion",1
+"F764","F755","MOLAP Database (Memory Olap)","criterion",1
+"F765","F755","ROLAP Database (Relationnal Olap)","criterion",1
+"F766","F755","HOLAP Database (Hybrid Olap)","criterion",1
+"F767","F756","Availability of a end-user cube designer","criterion",1
+"F768","F756","Users can build schema and cubes without any SQL knowledge","criterion",1
+"F769","F756","Users can build cubes without knowledge of db structure","criterion",1
+"F770","F756","Cube builts through the interface are directly useable","criterion",1
+"F771","F756","You can create menus in the application that opens cubes directly","criterion",1
+"F772","F756","Cube designer support drag & drop","criterion",1
+"F773","F757","Support for drill-up/drill-down navigation","criterion",1
+"F774","F757","Support for drill-accross navigation","criterion",1
+"F775","F757","Support for slicer and filters","criterion",1
+"F776","F757","Data can be displayed as dynamic grids","criterion",1
+"F777","F757","Data can be displayed as bar charts","criterion",1
+"F778","F757","Data can be displayed as pie charts","criterion",1
+"F779","F757","Data can be displayed as 3D charts","criterion",1
+"F780","F757","Drag & Drop user interface","criterion",1
+"F781","F757","You can modify and write MDX queries your self","criterion",1
+"F782","F758","Extract, transform, and load transaction data onto the data warehouse system","criterion",1
+"F783","F758","Support for artificial neural networks","criterion",1
+"F784","F758","Support for decision trees","criterion",1
+"F785","F758","Support for nearest neighbor method","criterion",1
+"F786","F758","Support for rule induction","criterion",1
+"F787","F476","Availability of an integrated ETL system","criterion",4
+"F788","F759","Jobs exists to automate simple import from text files","view",1
+"F789","F788","A connector exists to import partners","criterion",1
+"F790","F788","A connector exists to import products","criterion",1
+"F791","F788","A connector exists to import stocks","criterion",1
+"F792","F788","A connector exists to import bill of materials","criterion",1
+"F793","F788","A connector exists to import projects & tasks","criterion",1
+"F794","F759","Projects exists to import full applications","view",1
+"F795","F794","Tasks and contacts from Outlook","criterion",1
+"F796","F794","Contacts from a GMail account","criterion",1
+"F797","F794","Accounting data from Sage","criterion",1
+"F798","F794","Accounting data from Tally","criterion",1
+"F799","F794","More than 3 others applications","criterion",1
+"F800","F794","More than 10 others applications","criterion",1
+"F801","F794","More than 20 others applications","criterion",1
+"F802","F420","Ability to configure automatic email based on events","criterion",1
+"F803","F420","Ability to configure automatic sms based on events","criterion",1
+"F804","F420","Ability to trigger printable reports based on events","criterion",1
+"F805","F420","Ability to trigger others screens based on events","criterion",1
+"F806","F420","Ability to configure an object creation","criterion",1
+"F807","F420","Ability to configure an object modification","criterion",1
+"F808","F420","Ability to configure signals for the workflow engine","criterion",1
+"F809","F420","Ability to configure changes in the user interface","criterion",1
+"F810","F413","Availability of end-user report designer","criterion",1
+"F811","F413","Possibility to easily add tables in reports","criterion",1
+"F812","F413","Possibility to add fields from the main object","criterion",1
+"F813","F413","Possibility to add fields related to the main object","criterion",1
+"F814","F413","Possibility to loop on relations fields (for ex, sale order lines)","criterion",1
+"F815","F413","Possibility to add pictures through report designer","criterion",1
+"F816","F413","Possibility to add computed graphs through report designer","criterion",1
+"F817","F413","Report designer based on Crystal Report","criterion",1
+"F818","F413","Report designer based on Ms. Office","criterion",1
+"F819","F413","Report designer based on Open Ofjice","criterion",1
+"F820","F413","Report designer based on Jasper Report","criterion",1
+"F821","F413","Support for all kind of formating elements: bold, alignment, etc.","criterion",1
+"F982","F413","Graphic displays decision tree relationship","criterion",2
+"F983","F413","Reporting and analysis in groups","criterion",3
+"F984","F413","Dimensions","criterion",2
+"F822","F414","Availability of a end-user statistic report designer","criterion",1
+"F823","F414","You can create statistic reports without any DB knowledge","criterion",1
+"F824","F414","Statistics can be displayed as a bar chart graph","criterion",1
+"F825","F414","Statistics can be displayed as a pie chart graph","criterion",1
+"F826","F414","Statistics can be displayed as a gantt chart","criterion",1
+"F827","F414","Statistics can be displayed as a 3D graph","criterion",1
+"F828","F414","The system support at least 5 aggregates function","criterion",1
+"F829","F414","The statistics can be computed on joined tables","criterion",1
+"F830","F414","You can browse and filter in real time in statistics reports","criterion",1
+"F831","F414","Statistics support drill-down navigation","criterion",1
+"F832","F414","Statistics support drill-accross navigation","criterion",1
+"F833","F242","Ability to define a complete workflow of steps in an offer","criterion",1
+"F834","F242","Ability to define products and marketing documents at each step","criterion",1
+"F835","F242","Ability to manage multi-media campaigns (email, sms, paper)","criterion",1
+"F836","F242","Ability to manage the retro-planning on an offer","criterion",1
+"F837","F244","Ability to manage the retro-planning on an campaign","criterion",1
+"F838","F244","Tools to manage mass importation of prospects","criterion",1
+"F839","F244","Tools to search and avoid deduplications of prospects","criterion",1
+"F840","F244","Manage a complete workflow of events for a campaign","criterion",1
+"F841","F244","Ability to track segments of cutomers through the campaign","criterion",1
+"F842","F269","Availability of a system to prepare payments based on supplier invoices","criterion",1
+"F843","F269","Support for partial payments","criterion",1
+"F844","F269","Ability to automatically import payments into bank statements or entries","criterion",1
+"F845","F269","Different users for preparation and execution of payments","criterion",1
+"F846","F269","Print checks based on payment preparations","criterion",1
+"F847","F269","Generate eletronic files for bank payments","criterion",1
+"F848","F269","Support for the new european standard SEPA for electronic payment","criterion",1
+"F849","F270","Availability of a treasury forecast report","criterion",1
+"F850","F270","Treasury forecasts based on sales, purchases and invoices","criterion",1
+"F851","F270","Treasury forecasts based on CRM opportunities","criterion",1
+"F852","F270","Dynamic and graphical forecasts","criterion",1
+"F853","F271","Availability of an asset management system","criterion",1
+"F854","F271","Availability of inventories of different assets","criterion",1
+"F855","F271","Accept for multiple invoices for the same asset","criterion",1
+"F856","F271","IFRS compliant assets","criterion",1
+"F857","F271","Possibility to amortize the same asset in different ways","criterion",1
+"F858","F271","Automatic generation of accounting entries based on assets","criterion",1
+"F859","F273","Availability of a bank statement view","criterion",1
+"F860","F273","Import entries in bank statements from invoices","criterion",1
+"F861","F273","Encode entries in statement or load existing entries in statement","criterion",1
+"F862","F273","Support for write-off in payments","criterion",1
+"F863","F259","Reconciliation process","view",1
+"F864","F863","Support for partial reconciliation","criterion",1
+"F865","F863","Automatic reconciliation when several partial closes the reconciliation","criterion",1
+"F866","F863","Ability to reconcile from statements","criterion",1
+"F867","F863","Ability to reconcile from accounting entries","criterion",1
+"F868","F863","Ability to reconcile from invoice payments","criterion",1
+"F869","F863","Availability of a tool to automatically detect reconciliations","criterion",1
+"F896a","F863","Ability to unreconcile entries for some users","criterion",1
+"F870","F259","Multi-Company Support","view",1
+"F871","F870","Support for multiple chart of accounts for multiple companies in same DB","criterion",1
+"F872","F870","Support for consolidation of multiple chart of accounts in real time","criterion",1
+"F873","F870","Accept all reports on consolidated chart of accounts","criterion",1
+"F874","F870","Support for different fiscal years for each company","criterion",1
+"F875","F259","Multi-Currency Support","view",1
+"F876","F875","Support for multiple currencies","criterion",1
+"F877","F875","Possibility to automatically update daily currencies rate","criterion",1
+"F878","F875","Support for average rate when crediting bank accounts","criterion",1
+"F879","F875","Support for current rate when crediting bank accounts","criterion",1
+"F880","F875","Support for multiple-currencies in reconciliation process","criterion",1
+"F881","F875","Automatic proposition of currencies amount based on account configuration","criterion",1
+"F882","F259","Model of entries","view",1
+"F883","F882","Availability to define model of entries for recurring operations","criterion",1
+"F884","F882","Possibility to define recurring operations for automatic generation","criterion",1
+"F885","F882","Ability to call a model when encoding entries","criterion",1
+"F886","F882","Ability to put computation formulae in model of entries","criterion",1
+"F887","F259","Customers Follow-Up","view",1
+"F888","F887","Automatic follow-ups with unlimited levels","criterion",1
+"F889","F887","Generations of letters for the customer according to the level","criterion",1
+"F890","F887","Automatic emails sent based on follow-ups","criterion",1
+"F891","F887","Support for multiple payment terms","criterion",1
+"F892","F887","Ability to define default payment terms on customers","criterion",1
+"F893","F887","Ability to define default payment terms on suppliers","criterion",1
+"F894","F259","Flexibility","view",1
+"F895","F894","Ability to confirm draft entries so that you can not change them","criterion",1
+"F896","F894","Ability to close a period (not a complete fiscal year)","criterion",1
+"F897","F894","Ability to close a journal","criterion",1
+"F898","F894","If an entry is confirmed, you can change non legal values (like: notes)","criterion",1
+"F899","F894","Unlimitted size for account numbers","criterion",1
+"F900","F894","Ability to browse the chart of account as a hiearchy (tree structure)","criterion",1
+"F901","F894","Ability to define constraints on accounts to use depending on the journal","criterion",1
+"F902","F894","Ability to define customized views for entries per journal","criterion",1
+"F903","F894","Ability to configure accounts and taxes on products","criterion",1
+"F904","F894","Ability to define accounting rules depending on partners and products","criterion",1
+"F905","F259","Closing of fiscal years","view",1
+"F906","F905","Automatic generation of entries when closing a fiscal year","criterion",1
+"F907","F905","Ability to generate closing entries without closing a fiscal year","criterion",1
+"F908","F905","Ability to cancel closing entries without closing a fiscal year","criterion",1
+"F909","F905","Manages reconciliation of invoices on closed fiscal years","criterion",1
+"F910","F276","Availability of a payroll system","criterion",1
+"F911","F276","Integration of payroll with employee's attendances","criterion",1
+"F912","F276","Automatic generation of accounting entries","criterion",1
+"F913","F277","Ability to manage expense notes","criterion",1
+"F914","F277","Allows employee without accounting knowledge to encode their expense","criterion",1
+"F915","F277","Ability to manage employee reimbursement","criterion",1
+"F916","F277","Automatic generation of accounting entries","criterion",1
+"F917","F277","Workflow: Draft -> Confirmed -> Approved Manager -> Approved Accountant","criterion",1
+"F918","F277","Support for multi-currencies expenses","criterion",1
+"F919","F278","Availability of skills management features on employees","criterion",1
+"F920","F278","Employees periodical evaluation forms","criterion",1
+"F921","F278","Reports on enterprise consolidated skills","criterion",1
+"F922","F279","Availability of a employee leave management system","criterion",1
+"F923","F279","Workflow management: request holiday -> accepted by manager -> approved by hr dept.","criterion",1
+"F924","F279","Integrated with analytic accounting for costs of leaves","criterion",1
+"F925","F279","Integrated with enterprise calendar and planning","criterion",1
+"F926","F280","Availability of an attendance management system","criterion",1
+"F927","F280","Availability of interfaces with hardware material for attendances","criterion",1
+"F928","F275","Timesheets","view",1
+"F929_1","F928","Ability to encode timesheets by hours","criterion",1
+"F929","F928","Ability to encode timesheets by days","criterion",1
+"F930","F928","Integration of timesheets with analytic or cost accounting","criterion",1
+"F931","F928","Integration of timesheets with tasks","criterion",1
+"F932","F928","Validation workflow on timesheets by periods","criterion",1
+"F933","F928","Integration of timesheets with planning","criterion",1
+"F934","F928","Integration of timesheets with attendances for comparisons","criterion",1
+"F935","F296","Support for phone campaigns","view",1
+"F936","F935","Ability to mass import phone calls","criterion",1
+"F937","F935","Ability to define rules to route phone calls management","criterion",1
+"F938","F297","Synchronisation of contacts with Outlook","criterion",1
+"F939","F297","Outlook plugin to push important emails in the software","criterion",1
+"F940","F297","Thunderbird plugin to push important emails in the software","criterion",1
+"F941","F297","Evolution plugin to push important emails in the software","criterion",1
+"F942","F297","Availability of a mail gateway to connect on mail server to integrate with application","criterion",1
+"F993","F482","Back up","view",8
+"F994","F993","Back can be taken of each individual object. E.g. Table,Form,Report,Code units","criterion",1
+"F995","F993","Backup restore at client side easily ","criterion",2
+"F996","F993","No need to restart system or create database again","criterion",3
+"F997","F993","Whole database backup","criterion",4
+"F998","F482","Sequence Generation","view",9
+"F999","F998","Define to generate autometic numbers. ","criterion",1
+"F1000","F998","Define from which start date to end date use no. series","criterion",2
+"F1001","F998","All sequence or number series are defined at one place","criterion",3
+"F1002","F998","Crtiteria on sequence","criterion",4
+"F1003","F482","Posting Groups","view",10
+"F1004","F1003","Relation with accounting","criterion",1
+"F1005","F1003","Different Posting groups for Customer, Vendor,Bank Accounts, Inventory Fixed Assets","criterion",2
+"F1006","F482","Debugger","view",11
+"F1007","F1006","Navision debugger at client side","criterion",1
+"F1008","F1006","Debug whole code of process flow","criterion",2
+"F1009","F482","Biz Talk server","view",12
+"F1010","F1009","Integration with Biz Talk server","criterion",1
+"F1011","F482","Import/Export","view",13
+"F1012","F1011","Import and Export of Objects","criterion",1
+"F1013","F1011","Import and Export of XML,CSV files","criterion",2
+"F1014","F482","Data Filtering Facility","view",14
+"F1015","F1014","Table filter","criterion",1
+"F1016","F1014","Field Filter","criterion",2
+"F1017","F1014","Flow Filter ","criterion",3
+"F1018","F482","Analysis ","view",15
+"F1019","F1018","Dimension are used for analysis and reporting","criterion",1
+"F1020","F1018","Two dimension are defined Global and shortcut dimension","criterion",2
+"F1021","F1018","Global dimension are exist with all table","criterion",3
+"F1022","F1018","User can define his own dimension","criterion",4
+"F1023","F482","Miscellaneous ","view",16
+"F1024","F1023","To enter current date type 't'","criterion",1
+"F1025","F1023","For Date range startdate..enddate","criterion",2
+"F1026","F1023","Can set work date for ERP","criterion",3

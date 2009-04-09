@@ -1,0 +1,52 @@
+Hello,
+
+For the business game, I need a scenario system that allows to create a
+scenario and force the user to do a sequence of steps one after the other. The
+first part of the business game will be a simple flow from the quotation to the
+customer to the delivery and invoicing, including purchases.
+
+Here is the flow to implement:
+
+Sales Manager:
+	Create a Quotation (With 1 PC1, 1 PC2)
+	Print the quotation
+	Confirm the order
+
+HR Manager
+	Print request for quotation
+	Change the price to 545 EUR
+	Confirm & Approve the RfQ
+
+Logistic Manager
+	Receive the products from supplier
+	Deliver the products to the customer
+
+Financial Manager
+	Confirm the draft Invoice
+
+So each operation have to be done one after the other. If the user
+tries to do another operation, the system raise an exception. This
+is like a scenario for the firsts steps in the system.
+
+So, can you develop a generic "game_scenario" module that allows
+to encode scenario and the system will help the user to do these
+scenarios. A scenario is a list of steps with <pre> and <post> actions.
+
+The scenario is defined by a list of steps to perform. I think
+you should replace the osv function to test all incoming XML-RPC
+request if they match the post_process function of the active step.
+Then call this post_process function for all incoming request.
+
+This function can raise an exception if it's not allowed by the
+current active step. If not, it performs the method and go the the next steps
+(step_next_ids is a many2many).
+
+The post process change the status of the object: business.game.retail.phase1
+and store, for example the ID of the generated sale order.
+
+Please contact me tomorrow morning if it's not clear. This ystem is urgent.
+
+
+
+
+

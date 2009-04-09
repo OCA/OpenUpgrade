@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+	 <report string="Loan Paper"
+	   		model="account.loan"
+	 	 	name="letter.letter_info"
+	 	  	id="letter_letter_info"
+	 	   	rml="addons/loan/report/merge_letter.rml"
+	 	   	auto="False"/>
+
+	 <report string="Loan Details"
+	   		model="account.loan"
+	 	 	name="account.loan"
+	 	  	id="account.loan"
+	 	   	rml="addons/loan/report/loan_info.rml"
+	 	   	auto="False"/>
+	</data>
+</openerp>

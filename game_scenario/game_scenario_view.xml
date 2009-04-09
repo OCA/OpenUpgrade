@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+    <menuitem
+        id="menu_game_scenario_step_root"
+        parent="base.menu_administration"
+        name="Game Scenario"/>
+
+    <record model="ir.ui.view" id="view_game_scenario_step_tree">
+        <field name="name">game.scenario.step.tree</field>
+        <field name="model">game.scenario.step</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Steps">
+                <field name="name"/>
+                <field name="menu_id"/>
+                <field name="pre_process_object"/>
+                <field name="pre_process_method"/>
+                <field name="post_process_object"/>
+                <field name="post_process_method"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_game_scenario_step_form">
+        <field name="name">game.scenario.step.form</field>
+        <field name="model">game.scenario.step</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Scenario Steps">
+                <field name="name" select="1"/>
+                <field name="menu_id"/>
+                <field name="scenario_id" select="1"/>
+                <notebook colspan="4">
+                    <page string="General Information">
+                        <group col="2" colspan="2">
+                            <separator colspan="2" string="Preprocess"/>
+                            <field name="pre_process_object"/>
+                            <field name="pre_process_method"/>
+                        </group>
+                        <group col="2" colspan="2">
+                            <separator colspan="2" string="Postprocess"/>
+                            <field name="post_process_object"/>
+                            <field name="post_process_method"/>
+                           </group>
+                    </page>
+                    <page string="Next steps">
+                        <separator colspan="4" string="Next Steps"/>
+                        <field name="step_next_ids" colspan="4" nolabel="1"/>
+                    </page>
+                    <page string="Extra Information">
+                        <field name="description" colspan="4"/>
+                        <field name="tip" colspan="4"/>
+                        <field name="error" colspan="4"/>
+                    </page>
+                </notebook>
+                <separator string="State" colspan="4"/>
+                <field name="state"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_game_scenario_step_form">
+        <field name="name">Scenario Steps</field>
+        <field name="res_model">game.scenario.step</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_game_scenario_step_tree"/>
+    </record>
+
+    <menuitem
+        id="menu_game_scenario_step_configuration"
+        name="Configuration"
+        parent="menu_game_scenario_step_root"/>
+    <menuitem
+        parent="menu_game_scenario_step_configuration"
+        id="menu_game_scenario_step_form"
+        action="action_game_scenario_step_form"/>
+
+    <record model="ir.ui.view" id="view_game_scenario_tree">
+        <field name="name">game.scenario.tree</field>
+        <field name="model">game.scenario</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Scenario">
+                <field name="name"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_game_scenario_form">
+        <field name="name">game.scenario.form</field>
+        <field name="model">game.scenario</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Scenario">
+                <field name="name" select="1"/>
+                <separator colspan="4" string="Notes"/>
+                <field name="note" colspan="4" nolabel="1"/>
+                <newline/>
+                <field name="state" select="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_game_scenario_form">
+        <field name="name">Scenario</field>
+        <field name="res_model">game.scenario</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_game_scenario_tree"/>
+    </record>
+
+    <menuitem
+        parent="menu_game_scenario_step_configuration"
+        id="menu_game_scenario_form"
+        action="action_game_scenario_form"/>
+
+    </data>
+</openerp>

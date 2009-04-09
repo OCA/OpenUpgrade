@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<record id="comp_output_csv_out" model="etl.component.type">
+			<field name="name">output.csv_out</field>
+			<field name="code">output.csv_out</field>
+		</record>
+
+		<record id="comp_input_excel_out" model="etl.component.type">
+			<field name="name">output.excel_out</field>
+			<field name="code">output.excel_out</field>
+		</record>
+
+		<record id="comp_output_openobject_out" model="etl.component.type">
+			<field name="name">output.openobject_out</field>
+			<field name="code">output.openobject_out</field>
+		</record>
+
+		<record id="comp_output_sql_out" model="etl.component.type">
+			<field name="name">output.sql_out</field>
+			<field name="code">output.sql_out</field>
+		</record>
+
+		 <record id="comp_input_vcard_out" model="etl.component.type">
+			<field name="name">output.vcard_out</field>
+			<field name="code">output.vcard_out</field>
+		</record>
+
+		<record id="comp_input_xml_out" model="etl.component.type">
+			<field name="name">output.xml_out</field>
+			<field name="code">output.xml_out</field>
+		</record>
+
+    </data>
+</openerp>

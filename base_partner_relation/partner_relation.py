@@ -1,30 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id: partner.py 1007 2005-07-25 13:18:09Z kayhman $
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -32,7 +24,7 @@ from osv import fields,osv
 
 
 class res_partner_relation(osv.osv):
-    _description='The partner object'
+    _description='Partner Relation'
     _name = "res.partner.relation"
     _columns = {
         'name': fields.selection( [ ('default','Default'),('invoice','Invoice'), ('delivery','Delivery'), ('contact','Contact'), ('other','Other') ],'Relation Type', required=True),
@@ -77,40 +69,5 @@ class res_partner(osv.osv):
             result.update(super(res_partner, self).address_get(cr, uid, ids, todo))
         return result
 
-    def property_get(self, cr, uid, ids,property_pref=[],rel_name=["'invoice'"]):
-        result = {}
-        cr.execute('select name,relation_id,partner_id from res_partner_relation where name in ('+",".join(map(str,rel_name))+') and partner_id in ('+','.join(map(str,ids))+')')
-        rels = cr.fetchall()
-        result= super(res_partner, self).property_get(cr, uid, ids,property_pref)
-        for res in result:
-            for (rel_name,rel_id,part_id) in rels:
-                if res['id']==part_id:
-                    prps=self.read(cr,uid,rel_id,property_pref)
-                    for prt in property_pref:
-                        res[prt] = prps[prt] and prps[prt][0] or False
-        return result
 res_partner()
-
-
-class PartnerAddress(osv.osv):
-    _inherit = 'res.partner.address'
-    def _where_calc(self, cursor, user, args, active_test=True, context=None):
-        if not args:
-            args=[]
-        partner_obj = self.pool.get('res.partner')
-        args = args[:]
-        i = 0
-        while i < len(args):
-            if type(args[i])==tuple:
-                continue
-            if args[i][0] == 'partner_id' and args[i][1] == '=':
-                partner = partner_obj.browse(cursor, user, args[i][2],
-                        context=context)
-                args[i] = ('partner_id', 'in', [args[i][2]] + [x.relation_id.id \
-                        for x in partner.relation_ids])
-            i += 1
-        return super(PartnerAddress, self)._where_calc(cursor, user, args,
-                active_test=active_test, context=context)
-PartnerAddress()
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

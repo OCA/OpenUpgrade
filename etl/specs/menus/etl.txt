@@ -1,0 +1,119 @@
+ETL/
+    Configuration/
+        Project Definitions/
+            All Projects
+            Current Projects
+            New Project
+        Channel Defination /
+            Log Channel /
+                All Log Channel
+                New Log Channel
+            Transition Channels
+        Schema Defination /
+            All Schemas
+            New Schema
+        File Format /
+            CSV File Format /
+        Connector/
+            SQL Connector
+                 Tested Connector
+                 New Connector
+            File Access Control
+                 Tested Connector
+                 New Connector
+            Open Object Connector
+                 Tested Connector
+                 New Connector
+        Components Types/
+            All Componet Types
+        Jobs Definitions/
+            Jobs /
+                All Jobs
+                Running Jobs
+                New Job
+            Components/
+                Input Component  /
+                    CSVFile Data Input /
+                        All Components
+                        New component
+                    ExcelFile Data Input /
+                        All Components
+                        New component
+                    XMLFile Data Input /
+                        All Components
+                        New component
+                    Open ERP module /
+                        All Components
+                        New component
+                    Open ERP MDX Cube Query /
+                        All Components
+                        New component
+                    Open ERP web-service /
+                        All Components
+                        New component
+                    SQL Input Data /
+                        All Components
+                        New component
+
+                Output Component  /
+                    CSVFile Data Output component /
+                    ExcelFile Data Component /
+                    XMLFile Data Component /
+                    Open ERP module /
+                    Open ERP web-service /
+                    SQL Output Data /
+
+                Process ETL Component  /
+                    Sort process
+                    Reverse Order process
+                    Field Mapping Process
+                    Filtering Row Process (*)
+                    Filtering Column process
+                    Diff Process
+                    Merge Process
+                    Search/Replace (from info in the component)
+                    Search/Replace (from another flow)
+                    Uniq Checks Process
+                    Schema Validation
+                    Python Code
+                    Fork Flow
+                    Split Flow
+                    Sub-Job
+                    Aggregate component /
+                        Aggregate unsorted lists
+                        Aggregate sorted lists
+
+                Logger ETL Component  /
+                    Data Logger component
+                    Data Log bloc (log all at once, at the end, keep in memory) (see prototype)
+
+                Analysis Components
+                    Speed Tests (return a flow with speed results)
+                    Statistics on processed data
+            Transitions/
+                Data Transitions
+                Trigger Transitions
+    Traceability/
+        Loggers
+        Jobs Events
+        Process Log
+    Process
+        Draft Process
+        Running Process
+
+
+Terminology
+-----------
+
+A job is the definition of the job (like a workflow)
+
+A process is a running job (like an instance of workflow)
+
+A channel is a name on a transition. Components write data to channels.
+
+A connector is the definition of the access on a database, file, ...
+    A input/output component can use a connector.
+
+etl.log.channel : different objects to receive some logging data
+etl.transition.channel : to select transition to efficiently route different data flow
+

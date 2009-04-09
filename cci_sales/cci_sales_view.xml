@@ -1,32 +1,32 @@
 <?xml version="1.0" ?>
 <openerp>
-	<data>
-		<record model="ir.ui.view" id="view_order_form_inherit_cci_sales">
-			<field name="name">sale.order.form.inherit.cci.sales</field>
-			<field name="type">form</field>
-			<field name="model">sale.order</field>
-			<field name="inherit_id" ref="sale.view_order_form"/>
-			<field name="arch" type="xml">
-				<notebook position="inside">
-					<page string="Riders">
-					<field name="parent_so" />
-					<field name="child_so" colspan="4" nolabel="1"/>
-					</page>
-				</notebook>
-			</field>
-		</record>
+    <data>
+        <record model="ir.ui.view" id="view_order_form_inherit_cci_sales">
+            <field name="name">sale.order.form.inherit.cci.sales</field>
+            <field name="type">form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Riders">
+                    <field name="parent_so" />
+                    <field name="child_so" colspan="4" nolabel="1"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
 
-		<record model="ir.ui.view" id="view_order_form_inherit_cci_sales_2">
-			<field name="name">sale.order.form.inherit</field>
-			<field name="type">form</field>
-			<field name="model">sale.order</field>
-			<field name="inherit_id" ref="sale.view_order_form"/>
-			<field name="arch" type="xml">
-				<field name="advertising_agency" position="after">
-					<separator string="Related Cases" colspan="4"/>
-					<field name="case_ids" colspan="4" nolabel="1"/>
-				</field>
-			</field>
-		</record>
-	</data>
+        <record model="ir.ui.view" id="view_order_form_inherit_cci_sales_2">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="type">form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="advertising_agency" position="after">
+                    <separator string="Related Cases" colspan="4"/>
+                    <field name="case_ids" colspan="4" nolabel="1"/>
+                </field>
+            </field>
+        </record>
+    </data>
 </openerp>

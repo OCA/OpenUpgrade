@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!-- Actions to call different Views -->
+
+		<!-- HR Budgets -->
+ 		<record id="action_budgets" model="ir.actions.act_window">
+            <field name="name">HR Budgets</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.budget.post</field>
+           <field name="view_type">form</field>
+            <field name="view_id" ref="account_budget.view_budget_post_tree"/>
+        </record>
+
+        <!--  Sale forecast -->
+ 		<record id="action_sale_forecast" model="ir.actions.act_window">
+            <field name="name">Sale Forecast</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.planning.sale.prevision</field>
+            <field name="domain">[('user_id','=',uid)]</field>
+           <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="stock_planning.view_stock_planning_prevision_tree"/>
+        </record>
+
+        <!-- Margin Forecast -->
+		<record id="action_margin_forecast" model="ir.actions.act_window">
+            <field name="name">Margin Forecast</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.planning.sale.prevision</field>
+            <field name="domain">[('user_id','=',uid)]</field>
+           <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="stock_planning.view_stock_planning_prevision_tree"/>
+        </record>
+
+ 	<!-- stock forecast and total purchase in last year -->
+		<record id="action_stock_forecast" model="ir.actions.act_window">
+            <field name="name">Stock Details</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="product.product_product_tree_view"/>
+        </record>
+
+	<!-- cost of purchase forecast -->
+		<record id="action_cost_purchaseforecast" model="ir.actions.act_window">
+            <field name="name">Purchase Details</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.planning</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="stock_planning.view_stock_planning_tree"/>
+        </record>
+
+    <!-- Bank loan Wizard view -->
+
+     <record model="ir.ui.view" id="view_bank_loan_wiz">
+            <field name="name">bank.loan.wiz</field>
+            <field name="model">bank.loan</field>
+            <field name="arch" type="xml">
+                <form string="Bank Loan">
+                	<group col="2" colspan="2">
+	                	<label align="0.0">This wizard will help you to get loan from bank. You just need
+	to fill up the amount you needed in the field 'Loan Amount' and the duration in years in the field 'Number of years"</label>
+	 					<separator colspan="3"/>
+	   					<group col="2" colspan="2">
+	   						<field  colspan="2" name="fiscal_year"/>
+					 		<field  colspan="2" name="loan_duration" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
+				            <field  colspan="2" name="loan_amount" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
+				            <field  colspan="2" name="rate" on_change="onchange_loan_duration(loan_duration,loan_amount,rate)"/>
+				            <field  colspan="2" name="total_amount"/>
+				            <separator colspan="3"/>
+				        	<button string="Get Loan" name="get_loan" type="object" icon="gtk-ok"/>
+				        </group>
+			        </group>
+ 				</form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_loan_detail_wiz">
+            <field name="name">loan details</field>
+             <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bank.loan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_bank_loan_tree">
+            <field name="name">bank.loan.tree</field>
+            <field name="model">bank.loan</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Loan Details">
+                	<field name="fiscal_year" select = "1"/>
+                    <field name="loan_duration" select = "1"/>
+		            <field name="loan_amount" select = "1"/>
+		            <field name="rate" select = "1"/>
+		            <field name="total_amount" select = "2"/>
+		            <field name="reimburse_principle_amt_without_int"/>
+		            <field name="reimburse_principle_amt_with_int"/>
+		            <field name="interest_per_month"/>
+		            <field name="months_left"/>
+                </tree>
+            </field>
+        </record>
+
+		<record model="ir.actions.act_window" id="action_loan_detail_tree">
+            <field name="name">loan details</field>
+            <field name="res_model">bank.loan</field>
+             <field name="view_type">tree</field>
+        </record>
+
+        <record model="ir.ui.view" id="view_game_detail_form">
+            <field name="name">profile.game.phase2.form</field>
+            <field name="model">profile.game.phase2</field>
+            <field name="arch" type="xml">
+                <form string="Game Details">
+                    <newline/>
+                    <notebook>
+	                    <page string="Details">
+		                    <group col="2" colspan="2">
+                                <separator colspan="2" string="Finance Manager :(FM)"/>
+                                <group col="3" colspan="3">
+                                    <field name="total_reimburse"/>
+                                 </group>
+                                <group col="3" colspan="3">
+                                    <field name="current_treasury"/>
+                                </group>
+                                <group col="3" colspan="3">
+	                            	    <label colspan ="1"/>
+	                                    <separator colspan="2" string="Bank Loan"/>
+	                                    <label colspan ="1"/>
+	                                    <field name="loan_total_reimburse"/>
+	                                    <label colspan ="1"/>
+	                                    <field name="loan_total_reimburse_this_year"/>
+	                                    <label colspan ="1"/>
+	                                    <button icon="gtk-ok" string="Get Loan" name="%(action_loan_detail_wiz)d" type="action" colspan ="1"/>
+	                                    <button icon="gtk-ok" string="Loan Details" name="%(action_loan_detail_tree)d" type="action" colspan ="1"/>
+	                            </group>
+		                        <group col="3" colspan="2">
+		                            <separator colspan="3" string="HR Manager :(HRM)"/>
+		                        	<field name="hr_budget"/>
+		                    	</group>
+	                        </group>
+	                        <group col="2" colspan="2">
+	                        	<separator colspan="2" string = "Reports"/>
+	                        	<group col="2" colspan="2">
+	                        		<newline/>
+									<button  colspan = "1" icon="terp-account" string="Budgets" name="%(action_budgets)d" type="action"/>
+									<button  colspan = "1" icon="terp-sale" string="Sale Forecast Details" name="%(action_sale_forecast)d" type="action"/>
+									<button  colspan = "1" icon="terp-sale" string="Margin Forecast Details" name="%(action_margin_forecast)d" type="action"/>
+									<button  colspan = "1" icon="terp-stock" string="Products Stock" name="%(action_stock_forecast)d" type="action"/>
+									<button  colspan = "1" icon="terp-stock" string="Stock Location Structure" name="%(action_stock_forecast)d" type="action"/>
+									<button  colspan = "1" icon="terp-stock" string="Master Procurement Schedule" name="%(action_cost_purchaseforecast)d" type="action"/>
+									<newline/>
+									<separator colspan="2" string = "Wizard"/>
+									<newline/>
+									<button colspan = "1" icon="terp-account" string="Account Chart" name="%(account.wizard_account_chart)d" type="action"/>
+									<button colspan = "1" icon="terp-product" string="Product Sold" name="%(product_margin.action_open_margin)d" type="action"/>
+									<newline/>
+									<separator colspan="1" string = "Continue With the Game"/>
+									<newline/>
+									<button
+		                                colspan = "1"
+		                                string="Continue To Next Year"
+		                                name="continue_next_year"
+		                                type="object"
+		                                icon="gtk-media-next"/>
+								</group>
+	                        </group>
+	              			<group col="3" colspan="2">
+	            				<separator colspan="3" string="Sales Manager :(SM)"/>
+	                        	<field name="last_total_sale"/>
+	                        	<field name="sale_forcast"/>
+	                        	<field name="margin_forcast"/>
+	                    	</group>
+	              			<group col="3" colspan="2">
+	                            <separator colspan="3" string="Logistic Manager :(LM)"/>
+	                            <field name="last_total_purchase"/>
+	                        	<field name="avg_stock_forcast"/>
+	                        	<field name="cost_purchase_forcast"/>
+	                    	</group>
+	                        <newline/>
+	                        <group col ="8" colspan="8">
+	                            <separator colspan="8" string="Objectives Achievement"/>
+	                            <field colspan ="2" name="last_turnover"/>
+	                            <field colspan ="2" name="total_benefit"/>
+	                            <field colspan ="2" name="total_sold_products"/>
+	                            <field colspan ="2" name="turnover_growth"/>
+	                            <field colspan ="2" name="benefits_growth"/>
+	                            <field colspan ="2" name="products_growth"/>
+	                            <newline/>
+	                		</group>
+		                 </page>
+		                 <page string="Traceback [Current Year]">
+		                       <field name="cy_traceback" nolabel="1" colspan="4" widget="text_wiki"/>
+						</page>
+						<page string="Warnings &amp; Errors">
+		                       <field name="warn_error" nolabel="1" colspan="4" widget="text_wiki"/>
+						</page>
+						<page string="Traceback [All Years]">
+		                       <field name="ay_traceback" nolabel="1" colspan="4" widget="text_wiki"/>
+						</page>
+					</notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_game_detail_tree">
+            <field name="name">profile.game.phase2.tree</field>
+            <field name="model">profile.game.phase2</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Game Details">
+                    <field name="name"/>
+                    <field name="current_treasury"/>
+                    <field name="sale_forcast"/>
+                    <field name="margin_forcast"/>
+                    <field name="cost_purchase_forcast"/>
+                    <field name="total_benefit"/>
+                    <field name="total_sold_products"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_game_detail_form">
+            <field name="name">Business Game</field>
+            <field name="res_model">profile.game.phase2</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form,tree</field>
+        </record>
+         <record id="open_board_game2" model="ir.actions.act_window">
+            <field name="name">Business Game Dashboard</field>
+            <field name="res_model">profile.game.phase2</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" eval="False"/>
+        </record>
+
+        <menuitem id="business_game" name="Business Game" parent="board.dashboard_menu"/>
+       <!-- <menuitem name="Business Game Details" parent="business_game" id="menu_game_Detail_form" action="action_game_detail_form"/>-->
+
+         <record id="view_confirm_wizard_form" model="ir.ui.view">
+            <field name="name">Configuration of Business Game</field>
+            <field name="model">profile.game.config.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Configuration of Business Game">
+                    <separator string="Configuration of Business Game" colspan="4"/>
+                    <field name="state"/>
+                    <field name="objectives"/>
+                    <field name="years"/>
+                    <field name="difficulty"/>
+                    <separator string="Financial Manager" colspan="4"/>
+                    <group name="finacial" colspan="4">
+                        <field name="finance_name"  string="Name" />
+                        <field name="finance_email" string="Email"/>
+                    </group>
+                    <separator string="Logistic Manager" colspan="4"/>
+                    <group name="logistic" colspan="4">
+                        <field name="logistic_name" string="Name"/>
+                        <field name="logistic_email" string="Email"/>
+                    </group>
+                    <separator string="Sales Manager" colspan="4"/>
+                    <group name="sales" colspan="4">
+                        <field name="sale_name" string="Name"/>
+                        <field name="sale_email" string="Email"/>
+                    </group>
+                    <separator string="Human Resources Manager" colspan="4"/>
+                    <group name="hr" colspan="4">
+                        <field name="hr_name" string="Name" />
+                        <field name="hr_email" string="Email" />
+                    </group>
+                    <separator string="" colspan="4"/>
+                    <label string="" colspan="2"/>
+                    <group col="4" colspan="2">
+                       <!-- <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>-->
+                        <button name="action_run" string="Install" icon='gtk-ok' type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_config_wizard" model="ir.actions.act_window">
+            <field name="name">Configuration of Business Game</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">profile.game.config.wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+      <record model="ir.actions.todo"
+            id="profile_game_config_wizard">
+            <field name="name">Configuration of Business Game</field>
+            <field name="note">Configuration of Business Game :
+* Select Number of Players.
+* Select Objectives.
+* Select Turns/Years.
+* Set Difficulty.
+* Set name and email detail of players"></field>
+            <field name="action_id" ref="action_config_wizard"/>
+        </record>
+   </data>
+</openerp>
