@@ -89,7 +89,7 @@ class dm_offer_step(osv.osv):
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32, states={'closed':[('readonly',True)]}),
 #        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,size=64),
-        'code' : fields.char('Code',size=64,required=True),
+        'code' : fields.char('Code',size=64,required=True,translate=True),
         'quotation' : fields.char('Quotation', size=16, states={'closed':[('readonly',True)]}),
         'media_id' : fields.many2one('dm.media', 'Media', ondelete="cascade",required=True, states={'closed':[('readonly',True)]}),
         'type_id' : fields.many2one('dm.offer.step.type','Type',required=True, states={'closed':[('readonly',True)]}),
@@ -123,10 +123,12 @@ class dm_offer_step(osv.osv):
         'split_mode' : lambda *a : 'or',
     }
 
-    def onchange_code(self,cr,uid,ids,type_id):
+    def onchange_code(self,cr,uid,ids,type_id,context):
         step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type_id])[0]
+        res_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[step_type.id])
+        type_code = res_code[step_type.id] or step_type.code
         value = {
-                    'code':step_type['code'],
+                 'code' : type_code
                 }
         return {'value':value}
     
