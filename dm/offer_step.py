@@ -126,7 +126,7 @@ class dm_offer_step(osv.osv):
     def onchange_code(self,cr,uid,ids,type_id):
         step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type_id])[0]
         value = {
-                    'code':step_type['name'],
+                    'code':step_type['code'],
                 }
         return {'value':value}
     
