@@ -42,7 +42,7 @@ report_sxw.report_sxw('report.training.subscription.cancel','training.subscripti
 reports = [
     ('report.training.seance.booking.support', 'training.seance'),
     ('report.training.seance.booking.classroom', 'training.seance'),
-    ('report.training.subscription.cancel', 'training.subscription'),
+#    ('report.training.subscription.cancel', 'training.subscription'),
     ('report.training.subscription.confirm', 'training.subscription'),
     ('report.training.course.material.report', 'training.course'),
     ('report.training.course.financial.report', 'training.course')
