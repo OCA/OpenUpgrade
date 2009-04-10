@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        <report 
-            id="training_seance_booking_support" 
-            model="training.seance" 
-            name="training.seance.booking.support" 
-            string="Support Booking" 
+        <report
+            id="training_seance_booking_support"
+            model="training.seance"
+            name="training.seance.booking.support"
+            string="Support Booking"
             rml="training/report/in_construction.rml"
             header="False"
             />
-        <report 
-            id="training_seance_booking_classroom" 
-            model="training.seance" 
-            name="training.seance.booking.classroom" 
-            string="Classroom Booking" 
-            rml="training/report/in_construction.rml" 
+        <report
+            id="training_seance_booking_classroom"
+            model="training.seance"
+            name="training.seance.booking.classroom"
+            string="Classroom Booking"
+            rml="training/report/in_construction.rml"
             header="False"
             />
-        <report 
-            id="training_subscription_cancel_report" 
-            model="training.subscription" 
-            name="training.subscription.cancel" 
-            string="Cancellation Letter" 
-            rml="training/report/in_construction.rml" 
+        <report
+            id="training_subscription_cancel_report"
+            model="training.subscription"
+            name="training.subscription.cancel"
+            string="Cancellation Letter"
+            rml="training/report/trainining_cancel.rml"
             header="False"
             />
-        <report 
-            id="training_subscription_confirm_report" 
-            model="training.subscription" 
-            name="training.subscription.confirm" 
-            string="Validation Letter" 
-            rml="training/report/in_construction.rml" 
+        <report
+            id="training_subscription_confirm_report"
+            model="training.subscription"
+            name="training.subscription.confirm"
+            string="Validation Letter"
+            rml="training/report/in_construction.rml"
             header="False"
             />
-        <report 
-            id="training_course_material_report" 
-            model="training.course" 
-            name="training.course.material.report" 
-            string="Course Form" 
+        <report
+            id="training_course_material_report"
+            model="training.course"
+            name="training.course.material.report"
+            string="Course Form"
             rml="training/report/in_construction.rml" />
-        <report 
-            id="training_course_financial_report" 
-            model="training.course" 
-            name="training.course.financial.report" 
-            string="Financial Statistics" 
+        <report
+            id="training_course_financial_report"
+            model="training.course"
+            name="training.course.financial.report"
+            string="Financial Statistics"
             rml="training/report/in_construction.rml" />
     </data>
 </openerp>
