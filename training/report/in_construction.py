@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -29,6 +29,15 @@ class in_construction(report_sxw.rml_parse):
         self.localcontext.update({
             'time': time,
         })
+
+class training_subscription_cancel_report(report_sxw.rml_parse):
+
+    def __init__(self, cr, uid, name, context):
+        super(training_subscription_cancel_report, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+report_sxw.report_sxw('report.training.subscription.cancel','training.subscription','addons/training/report/trainining_cancel.rml',parser=training_subscription_cancel_report)
 
 reports = [
     ('report.training.seance.booking.support', 'training.seance'),
