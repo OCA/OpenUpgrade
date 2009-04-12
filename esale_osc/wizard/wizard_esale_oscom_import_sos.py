@@ -52,7 +52,7 @@ _import_done_fields = {}
 
 def _country_info(self,cr, uid, data, context):
     country_pooler = pooler.get_pool(cr.dbname).get('res.country')
-    data['code'] = data['code'].lower()
+    data['code'] = data['code'].upper()
     search_country = country_pooler.search(cr,uid,[('code','=',data['code'])])
     if len(search_country):
         return search_country[0]
@@ -62,11 +62,10 @@ def _country_info(self,cr, uid, data, context):
     del data['esale_oscom_id']
     return country_pooler.create(cr,uid,data)
 
-def _state_info(self,cr, uid, data, country_id,context):
+def _state_info(self,cr, uid, data, country_id, context):
     state_pooler = pooler.get_pool(cr.dbname).get('res.country.state')
-    data['code'] = data['code'].lower()
     data['country_id'] = country_id
-    search_state = state_pooler.search(cr,uid,[('code','=',data['code']),('country_id','=',data['country_id'])])
+    search_state = state_pooler.search(cr, uid, ['|',('code','ilike',data['code']),('name','ilike','%'+data['code']+'%'), ('country_id','=',data['country_id'])])
     if len(search_state):
         return search_state[0]
     #end if len(search_country):
@@ -126,18 +125,21 @@ def _do_import(self, cr, uid, data, context):
             del oscom_partner['addresses']
             partner_id = self.pool.get('res.partner').create(cr,uid,oscom_partner)
         #end if len(partner_ids):
-        default_address_id = _add_address(self,cr, uid, default_address.copy(), partner_id, context)
-
+        shipping_address['type'] = 'delivery'
         shipping_address_id = _add_address(self,cr, uid, shipping_address.copy(), partner_id, context)
 
+        billing_address['type'] = 'invoice'
         billing_address_id = _add_address(self,cr, uid, billing_address.copy(),partner_id, context)
+
+        default_address['type'] = 'default'
+        default_address_id = _add_address(self,cr, uid, default_address.copy(), partner_id, context)
 
         value={ 'esale_oscom_web': website.id,
                 'esale_oscom_id' : saleorder['id'],
                 'shop_id'        : website.shop_id.id,
                 'partner_id'     : partner_id,
                 'note'           : saleorder['note'],
-                'price_type'     : saleorder['price_type']
+                #'price_type'     : saleorder['price_type']
             }
 
         saleorder_pool=self.pool.get('sale.order')
@@ -158,8 +160,8 @@ def _do_import(self, cr, uid, data, context):
 #                if len(country_ids):
 #                    country_id=country_ids[0]
 #                else:
-#                    country_id=self.pool.get('res.country').create(cr, uid, {    'name'    : saleorder[address[0]]['country'],
-#                                                                                    'code'    : saleorder[address[0]]['country'][0:2].lower()})
+#                    country_id=self.pool.get('res.country').create(cr, uid, { 'name' : saleorder[address[0]]['country'],
+#                                                                              'code' : saleorder[address[0]]['country'][0:2].lower()})
 #                insert['country_id']=country_id
 #                if address[0]=='address':
 #                    insert['email']=saleorder['address']['email']
@@ -243,21 +245,28 @@ def _do_import(self, cr, uid, data, context):
 
         ######################################################################################
         oscom_pay_met = saleorder['pay_met']
-        typ_ids = self.pool.get('esale.oscom.paytype').search(cr,uid,[('name','=',oscom_pay_met)])
+        typ_ids = self.pool.get('esale.oscom.paytype').search(cr,uid,[('esale_oscom_id', '=', oscom_pay_met), ('web_id', '=', website.id)])
         so_datas = saleorder_pool.read(cr,uid,[order_id])[0]
-        typ_datas = self.pool.get('esale.oscom.paytype').read(cr,uid,typ_ids)[0]
+        if typ_ids:
+            typ_data = self.pool.get('esale.oscom.paytype').browse(cr, uid, typ_ids)[0]
+            paytype = typ_data.paytyp
+            cr.execute('select * from ir_module_module where name=%s and state=%s', ('sale_payment','installed'))
+            if cr.fetchone():
+                saleorder_pool.write(cr, uid, [order_id], {'payment_type': typ_data.payment_id.id})
+        else:
+            paytype = 'type1'
         wf_service = netsvc.LocalService("workflow")
-        if typ_datas['paytyp'] == 'type1':
+        if paytype == 'type1':
             #SO in state draft so nothing
             pass
-        elif typ_datas['paytyp'] == 'type2':
+        elif paytype == 'type2':
             #SO in state confirmed
             wf_service.trg_validate(uid, 'sale.order', order_id, 'order_confirm', cr)
-        elif typ_datas['paytyp'] == 'type3':
+        elif paytype == 'type3':
             #INVOICE draft
             wf_service.trg_validate(uid, 'sale.order', order_id, 'order_confirm', cr)
             wf_service.trg_validate(uid, 'sale.order', order_id, 'manual_invoice', cr)
-        elif typ_datas['paytyp'] == 'type4':
+        elif paytype == 'type4':
             wf_service.trg_validate(uid, 'sale.order', order_id, 'order_confirm', cr)
             wf_service.trg_validate(uid, 'sale.order', order_id, 'manual_invoice', cr)
             inv_obj = self.pool.get('account.invoice')
@@ -266,7 +275,7 @@ def _do_import(self, cr, uid, data, context):
             inv_id = inv_datas['id']
             inv_obj.button_compute(cr, uid, [inv_id])
             wf_service.trg_validate(uid, 'account.invoice',inv_id, 'invoice_open', cr)
-        elif typ_datas['paytyp'] == 'type5':
+        elif paytype == 'type5':
             #INVOICE payed
             wf_service.trg_validate(uid, 'sale.order', order_id, 'order_confirm', cr)
             wf_service.trg_validate(uid, 'sale.order', order_id, 'manual_invoice', cr)
