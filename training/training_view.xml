@@ -530,8 +530,12 @@
                     <field name="name" />
                     <field name="date" />
                     <field name="duration" widget="float_time" />
-                    <field name="session_ids" colspan="4"/>
                     <field name="state" />
+                    <separator string="Sessions" colspan="4" />
+                    <field name="session_ids" colspan="4"/>
+                    <separator string="Location" colspan="4" />
+                    <field name="location" />
+                    <field name="room" />
                 </form>
             </field>
         </record>
@@ -547,6 +551,8 @@
                     <field name="duration" widget="float_time" />
                     <field name="session_ids" />
                     <field name="state" />
+                    <field name="location" />
+                    <field name="room" />
                 </tree>
             </field>
         </record>
@@ -1213,7 +1219,8 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Participation" id="training_participation_mi" parent="training_mi" />
+        <menuitem name="Participation" id="training_participation_mi" parent="training_mi"
+            sequence="50" />
         <menuitem 
             id="training_participation_all_mi"
             action="action_training_participation_all"

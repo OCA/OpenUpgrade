@@ -586,6 +586,10 @@ class training_event(osv.osv):
                                    readonly=True,
                                    select=1
                                   ),
+        'location' : fields.char('Location', size=32),
+        'room' : fields.char('Room', size=32),
+        'reserved' : fields.boolean('Reserved'),
+        'layout' : fields.char('Layout', size=32),
     }
 
     _constraints = [
@@ -616,10 +620,6 @@ class training_seance(osv.osv):
         'course_id' : fields.many2one('training.course', 'Course', required=True),
         #'copies' : fields.integer('Copies'),
         #'printed' : fields.boolean('Printed'),
-        'reserved' : fields.boolean('Reserved'),
-        'layout' : fields.char('Layout', size=32),
-        'location' : fields.char('Location', size=32),
-        'room' : fields.char('Room', size=32),
         #'limit' : fields.integer('Limit'), 
         'purchase_line_ids' : fields.one2many('training.seance.purchase_line', 'seance_id', 'Supplier Commands'),
         'min_limit' : fields.integer("Minimum Limit"),
