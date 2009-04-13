@@ -46,7 +46,6 @@ class in_construction(report_sxw.rml_parse):
 reports = [
     ('report.training.seance.booking.support', 'training.seance'),
     ('report.training.seance.booking.classroom', 'training.seance'),
-    #    ('report.training.subscription.cancel', 'training.subscription'),
     ('report.training.subscription.confirm', 'training.subscription'),
     ('report.training.course.material.report', 'training.course'),
     ('report.training.course.financial.report', 'training.course')
@@ -56,7 +55,7 @@ for name, model in reports:
     report_sxw.report_sxw(name, model,
                           'addons/training/report/in_construction.rml',
                           parser=in_construction,
-                          header=False)
+                          header=True)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
