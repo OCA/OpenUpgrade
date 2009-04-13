@@ -7,12 +7,12 @@
 			<field name="inherit_id" ref="base.view_users_form"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-					<notebook>
-						<page string="Blogger">
-							<field name="blogger_email"/>
-							<field name="blogger_password" password="True"/>
-						</page>
-					</notebook>
+				<notebook>
+					<page string="Blogger">
+						<field name="blogger_email"/>
+						<field name="blogger_password" password="True"/>
+					</page>
+				</notebook>
 			</field>
 		</record>
 	</data>
