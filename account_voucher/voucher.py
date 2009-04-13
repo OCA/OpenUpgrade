@@ -549,7 +549,7 @@ class account_voucher(osv.osv):
         if default is None:
             default = {}
         default = default.copy()
-        default.update({'state':'draft', 'number':False, 'move_id':False, 'move_ids':False})
+        default.update({'state':'draft', 'number':False, 'move_id':False, 'move_ids':False, 'payment_ids':False})
         if 'date' not in default:
             default['date'] = time.strftime('%Y-%m-%d')
         return super(account_voucher, self).copy(cr, uid, id, default, context)
@@ -573,6 +573,12 @@ account_voucher()
 class VoucherLine(osv.osv):
     _name = 'account.voucher.line'
     _description = 'Voucher Line'
+    
+    def default_get(self, cr, uid, fields, context={}):
+        data = super(VoucherLine, self).default_get(cr, uid, fields, context)
+        self.voucher_context = context
+        return data
+    
     _columns = {
         'voucher_id':fields.many2one('account.voucher', 'Voucher'),
         'name':fields.char('Description', size=256, required=True),
@@ -642,6 +648,10 @@ class VoucherLine(osv.osv):
         return res
     
     def onchange_partner(self, cr, uid, ids, partner_id, type,type1):
+
+        lines = []
+        if 'lines' in self.voucher_context:
+            lines = [x[2] for x in self.voucher_context['lines']]
         if not partner_id:
             return {'value' : {'account_id' : False, 'type' : False ,'amount':False}}
         obj = self.pool.get('res.partner')
@@ -650,18 +660,26 @@ class VoucherLine(osv.osv):
         if type1 in ('rec_voucher','bank_rec_voucher', 'journal_voucher'):
             account_id = obj.browse(cr, uid, partner_id).property_account_receivable
             balance=obj.browse(cr,uid,partner_id).credit
+            same_partner_due_amt = [x['amount'] for x in lines if x['partner_id']==partner_id]
+            balance -= sum(same_partner_due_amt)
             type = 'cr'
         elif type1 in ('pay_voucher','bank_pay_voucher','cont_voucher') : 
             account_id = obj.browse(cr, uid, partner_id).property_account_payable
             balance=obj.browse(cr,uid,partner_id).debit
+            same_partner_due_amt = [x['amount'] for x in lines if x['partner_id']==partner_id]
+            balance -= sum(same_partner_due_amt)
             type = 'dr'
         elif type1 in ('journal_sale_vou') : 
             account_id = obj.browse(cr, uid, partner_id).property_account_receivable
             balance=obj.browse(cr,uid,partner_id).credit
+            same_partner_due_amt = [x['amount'] for x in lines if x['partner_id']==partner_id]
+            balance -= sum(same_partner_due_amt)
             type = 'dr'
         elif type1 in ('journal_pur_voucher') : 
             account_id = obj.browse(cr, uid, partner_id).property_account_payable
             balance=obj.browse(cr,uid,partner_id).debit
+            same_partner_due_amt = [x['amount'] for x in lines if x['partner_id']==partner_id]
+            balance -= sum(same_partner_due_amt)
             type = 'cr'
 
         return {
