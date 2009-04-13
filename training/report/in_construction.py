@@ -23,6 +23,19 @@
 import time
 from report import report_sxw
 
+class training_subscription_cancel_report(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(training_subscription_cancel_report, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+
+report_sxw.report_sxw('report.training.subscription.cancel',
+                      'training.subscription',
+                      'addons/training/report/training_cancel.rml',
+                      parser=training_subscription_cancel_report,
+                      header=True)
+
 class in_construction(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(in_construction, self).__init__(cr, uid, name, context)
@@ -30,19 +43,10 @@ class in_construction(report_sxw.rml_parse):
             'time': time,
         })
 
-class training_subscription_cancel_report(report_sxw.rml_parse):
-
-    def __init__(self, cr, uid, name, context):
-        super(training_subscription_cancel_report, self).__init__(cr, uid, name, context)
-        self.localcontext.update({
-            'time': time,
-        })
-report_sxw.report_sxw('report.training.subscription.cancel','training.subscription','addons/training/report/trainining_cancel.rml',parser=training_subscription_cancel_report)
-
 reports = [
     ('report.training.seance.booking.support', 'training.seance'),
     ('report.training.seance.booking.classroom', 'training.seance'),
-#    ('report.training.subscription.cancel', 'training.subscription'),
+    #    ('report.training.subscription.cancel', 'training.subscription'),
     ('report.training.subscription.confirm', 'training.subscription'),
     ('report.training.course.material.report', 'training.course'),
     ('report.training.course.financial.report', 'training.course')
