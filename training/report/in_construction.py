@@ -35,6 +35,31 @@ report_sxw.report_sxw('report.training.subscription.cancel',
                       'addons/training/report/training_cancel.rml',
                       parser=training_subscription_cancel_report,
                       header=True)
+class training_subscription_confirm_report(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(training_subscription_cancel_report, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+
+report_sxw.report_sxw('report.training.subscription.confirm',
+                      'training.subscription',
+                      'addons/training/report/training_cancel.rml',
+                      parser=training_subscription_confirm_report,
+                      header=True)
+
+class training_subscription_confirm_report(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(training_subscription_confirm_report, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+
+report_sxw.report_sxw('report.training.subscription.confirm',
+                      'training.subscription',
+                      'addons/training/report/training_confirm.rml',
+                      parser=training_subscription_confirm_report,
+                      header=True)
 
 class in_construction(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
