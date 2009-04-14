@@ -61,6 +61,20 @@ report_sxw.report_sxw('report.training.seance.presence',
                       parser=training_seance_presence_report,
                       header=True)
 
+
+class training_course_material_report(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(training_course_material_report, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+
+report_sxw.report_sxw('report.training.course.material.report',
+                      'training.course',
+                      'addons/training/report/training_course.rml',
+                      parser=training_seance_presence_report,
+                      header=True)
+
 class in_construction(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(in_construction, self).__init__(cr, uid, name, context)
@@ -71,7 +85,6 @@ class in_construction(report_sxw.rml_parse):
 reports = [
     ('report.training.seance.booking.support', 'training.seance'),
     ('report.training.seance.booking.classroom', 'training.seance'),
-    ('report.training.course.material.report', 'training.course'),
     ('report.training.course.financial.report', 'training.course')
 ]
 
