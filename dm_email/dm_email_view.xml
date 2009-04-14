@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+    <openerp>
+        <data>
+        <!--
+         =======================================================
+         OFFER STEP DOCUMENT EXTENSION
+         =======================================================
+         -->
+
+        <record id="dm_document_normal_form_view" model="ir.ui.view">
+            <field name="name">dm.offer.document.form.inherit</field>
+            <field name="model">dm.offer.document</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_offer_step_document_form"/>
+                <field name="arch" type="xml">
+                    <notebook position="inside">
+                        <page string="Email Configuration" attrs="{'invisible':[('parent.media','!=','Email')]}">
+                            <field name="subject" colspan="4"/>
+                            <field name="editor" colspan="4"/>
+                            <group colspan="4" attrs="{'invisible':[('editor','!=','internal')]}">
+                                <separator string="Content" colspan="4" />
+                                <field name="content" colspan="4" nolabel="1"  widget="text_html"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </field>
+        </record>
+        <!--
+        =======================================================
+        OFFER STEP DOCUMENT EXTENSION
+        =======================================================
+        -->
+
+        <record id="dm_document_media_form_view" model="ir.ui.view">
+            <field name="name">dm.offer.document.media.form.inherit</field>
+            <field name="model">dm.offer.document</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_offer_step_document_form"/>
+            <field name="arch" type="xml">
+                <field name="step_id" position="replace">
+                    <field name="step_id" colspan="4" on_change="onchange_step(step_id)"/>
+                </field>
+            </field>
+        </record>
+
+        </data>
+    </openerp>

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution····
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,7 +19,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from osv import fields
+from osv import osv
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
-import dm_email_document
+class dm_offer_document(osv.osv):
+    _inherit = "dm.offer.document"
+    _columns = {
+                'subject' : fields.char('Subject',size=64,),
+                'editor' : fields.selection([('internal','Internal'),('oord','DM Open Office Report Design')],'Editor'),
+                'content' : fields.text('Content'),
+                'media' : fields.char('Media',size=64)
+            }
+    def onchange_step(self, cr, uid, ids, step_id):
+        res = {'value':{}}
+        if step_id:
+            step  = self.pool.get('dm.offer.step').browse(cr, uid, step_id)
+            res['value'] = {'media':step.media_id.name}
+        return res
+
+dm_offer_document()
