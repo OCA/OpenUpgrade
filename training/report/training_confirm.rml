@@ -183,8 +183,7 @@
       <font color="white"> </font>
     </para>
     <para style="terp_tblheader_Details">Détail des séances</para>
-    <para style="P2">[[repeatIn(subscription.session_id.event_ids,'event') ]]</para>
-    <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="Table3">
+      <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="Table3">
       <tr>
         <td>
           <para style="terp_tblheader_General_Centre">Date</para>
@@ -205,12 +204,14 @@
           <para style="terp_tblheader_General_Centre">Room</para>
         </td>
         <td>
-          <para style="terp_default_Centre_8">Instructor</para>
-          <para style="terp_default_Centre_8">
-            <font color="white"> </font>
-          </para>
+          <para style="terp_tblheader_General_Centre">Instructor</para>
+
         </td>
       </tr>
+    </blockTable>
+    <section>
+    <para style="P2">[[repeatIn(subscription.session_id.event_ids,'event') ]]</para>
+    <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="Table3">
       <tr>
         <td>
            <para style="terp_default_Centre_8"> [[time.strftime('%Y-%m-%d', time.strptime( event.date, '%Y-%m-%d %H:%M:%S'))]]</para>
@@ -238,11 +239,12 @@
           <para style="terp_default_Centre_8">[[repeatIn(subscription.session_id.offer_id.course_ids,'course')]]</para>
           <para style="terp_default_Centre_8">[[repeatIn(course.lecturer_ids,'lect')]]</para>
           <para style="terp_default_Centre_8">
-            <font face="Times-Roman" size="10.0">[[lect.name]]</font>
+            [[lect.name]]
           </para>
         </td>
       </tr>
     </blockTable>
+    </section>
     <para style="P2">
       <font color="white"> </font>
     </para>
