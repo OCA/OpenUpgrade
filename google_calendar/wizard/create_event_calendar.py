@@ -20,19 +20,17 @@
 #
 ##############################################################################
 
-import wizard
-import pooler
-from gdata import service
-import gdata
-import atom
-from osv import osv,fields
-
-import gdata.calendar.service
-import gdata.service
-import atom.service
-import gdata.calendar
 import time
 import datetime
+
+from gdata import service
+import gdata.calendar.service
+import gdata.calendar
+import atom
+
+import wizard
+import pooler
+from osv import osv,fields
 
 _blog_form =  '''<?xml version="1.0"?>
         <form string="Export">
@@ -81,13 +79,13 @@ class google_calendar_wizard(wizard.interface):
         blog_auth_details = obj_user.browse(cr, uid, uid)
         location = blog_auth_details.company_id.partner_id.address[0].city #should be check
 
-        if not blog_auth_details.blogger_email or not blog_auth_details.blogger_password:
+        if not blog_auth_details.google_email or not blog_auth_details.google_password:
             raise osv.except_osv('Warning !',
-                                 'Please  Enter email id and password in users')
+                                 'Please Enter google email id and password in users')
         try:
             self.calendar_service = gdata.calendar.service.CalendarService()
-            self.calendar_service.email = blog_auth_details.blogger_email
-            self.calendar_service.password = blog_auth_details.blogger_password
+            self.calendar_service.email = blog_auth_details.google_email
+            self.calendar_service.password = blog_auth_details.google_password
             self.calendar_service.source = 'Tiny'
             self.calendar_service.ProgrammaticLogin()
             obj_event = pooler.get_pool(cr.dbname).get('event.event')

@@ -21,3 +21,13 @@
 ##############################################################################
 
 from osv import fields, osv
+
+class res_users(osv.osv):
+    _inherit="res.users"
+    _description = 'res.users'
+
+    _columns = {
+        'google_email':fields.char('Google Email Id', size=100),
+        'google_password': fields.char('Password', size=100),
+                }
+res_users()
