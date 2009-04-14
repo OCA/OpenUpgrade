@@ -55,14 +55,14 @@ def generate_reports(cr,uid,obj,report_type,context):
             if report_ids :
                 attachment_obj = pool.get('ir.attachment')
                 for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
-                    print "Report name : ",report.report_name
+#                    print "Report name : ",report.report_name
                     srv = netsvc.LocalService('report.' + report.report_name)
-                    print "Report test srv: ", srv
+#                    print "Report test srv: ", srv
                     context['customer_id'] = customer_id
                     context['document_id'] = document_id[0]
                     report_data,report_type = srv.create(cr, uid, [], {},context)
-                    print "Report data : ",report_data
-                    print "Report type : ",report_type
+#                    print "Report data : ",report_data
+#                    print "Report type : ",report_type
                     attach_vals={'name' : document_name + "_" + str(customer_id),
                                  'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
                                  'res_model' : 'dm.campaign.document',
@@ -70,7 +70,7 @@ def generate_reports(cr,uid,obj,report_type,context):
                                  'datas': base64.encodestring(report_data),
                                  }
                     attach_id = attachment_obj.create(cr,uid,attach_vals)
-                    print "Attachement : ",attach_id
+#                    print "Attachement : ",attach_id
     return True
 
 

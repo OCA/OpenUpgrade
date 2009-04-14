@@ -131,7 +131,7 @@ class dm_offer_step(osv.osv):
                  'code' : type_code
                 }
         return {'value':value}
-    
+
     def onchange_type(self,cr,uid,ids,type_id,offer_id,context):
         step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,[type_id])[0]
         value = {
@@ -197,7 +197,16 @@ class dm_offer_step_transition_trigger(osv.osv):
     _columns = {
         'name' : fields.char('Trigger Name', size=64, required=True, translate=True),
         'code' : fields.char('Code' , size=64, required=True, translate=True),
-        'type' : fields.selection([('action', 'Action'),('noaction','No Action'),('auto','Auto')], 'Trigger Type', required=True),
+#        'type' : fields.selection([('action', 'Action'),('noaction','No Action'),('auto','Auto')], 'Trigger Type', required=True),
+        'gen_next_wi' : fields.boolean('Auto Generate Next Workitems'),
+#        'type' : fields.selection([('out_chk', 'Outgoing Check'),('in_chk','Incoming Check'),('no_chk','No Check')], 'Trigger Type', required=True),
+        'in_act_cond' : fields.text('Incoming Action Condition', required=True),
+        'out_act_cond' : fields.text('Outgoing Action Condition', required=True),
+    }
+    _defaults = {
+        'gen_next_wi': lambda *a: 'False',
+        'in_act_cond': lambda *a: 'result = False',
+        'out_act_cond': lambda *a: 'result = False',
     }
 dm_offer_step_transition_trigger()
 
