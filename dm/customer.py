@@ -26,6 +26,7 @@ from osv import osv
 import pooler
 import sys
 import datetime
+import netsvc
 
 class dm_order(osv.osv):
     _name = "dm.order"
@@ -145,8 +146,8 @@ class dm_workitem(osv.osv):
         'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
         'action_time' : fields.datetime('Action Time'),
         'source' : fields.selection(_SOURCES, 'Source', required=True),
-        'error_msg' : fields.text('Error Message'),
-        'state' : fields.selection([('pending','Pending'),('error','Error'),('cancel','Cancel'),('done','Done')], 'Status'),
+        'error_msg' : fields.text('System Message'),
+        'state' : fields.selection([('pending','Pending'),('error','Error'),('cancel','Cancelled'),('done','Done')], 'Status'),
     }
     _defaults = {
         'source': lambda *a: 'address_id',
@@ -160,18 +161,72 @@ class dm_workitem(osv.osv):
         try:
             server_obj = self.pool.get('ir.actions.server')
             print "Calling run for : ",wi.step_id.action_id.server_action_id.name
-            res = server_obj.run(cr, uid, [wi.step_id.action_id.server_action_id.id], context)
-            self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
-            done = True
+            res = True
+
+            """ Check if action must be done or cancelled """
+            """ Check Outgoing transitions Action condition """
+            for tr in wi.step_id.outgoing_transition_ids:
+                eval_context = {
+                    'pool' : self.pool,
+                    'cr' : cr,
+                    'uid' : uid,
+                    'wi': wi,
+                    'tr':tr,
+                }
+                val = {}
+                print "Outgoing Action Condition : ",tr.condition_id.out_act_cond
+                try:
+                    exec tr.condition_id.out_act_cond.replace('\r','') in eval_context,val
+                    print "Val out get wi_ids : ",val.get('wi_ids',False)
+                    print "Val out get res : ",val.get('result',False)
+                except Exception,e:
+                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, 'Invalid code in Outgoing Action Condition: %s'% tr.condition_id.out_act_cond)
+                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, e)
+                    continue
+                if not val.get('result',False):
+                    res = False
+                    act_step = tr.step_to_id.name or False
+                    break
+            """ Check Incoming transitions Action condition """
+            if not res:
+                for tr in wi.step_id.incoming_transition_ids:
+                    eval_context = {
+                        'pool' : self.pool,
+                        'cr' : cr,
+                        'uid' : uid,
+                        'wi': wi,
+                        'tr':tr,
+                    }
+                    val = {}
+                    print "Incoming Action Condition : ",tr.condition_id.in_act_cond
+                    try:
+                        exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
+                        print "Val in get wid_ids : ",val.get('wi_ids',False)
+                        print "Val in get res : ",val.get('result',False)
+                    except Exception,e:
+                        netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, 'Invalid code in Incoming Action Condition: %s'% tr.condition_id.in_act_cond)
+                        netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, e)
+                        continue
+                    if not val.get('result',False):
+                        res = False
+                        act_step = tr.step_from_id.name or False
+                        break
+
+            if res:
+                res = server_obj.run(cr, uid, [wi.step_id.action_id.server_action_id.id], context)
+                self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
+                done = True
+            else:
+                self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
+                done = False
         except :
             self.write(cr, uid, [wi.id], {'state': 'error','error_msg':sys.exc_info()})
+
         if done:
             """ Create next auto workitems """
             for tr in wi.step_id.outgoing_transition_ids:
-                if tr.condition_id.type == "auto":
-                    print "Creating auto workitem"
-                    print "Delay : ",tr.delay
                     print "Delay Type: ",tr.delay_type
+
                     wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
                     if tr.delay_type == 'minute':
                         next_action_time = wi_action_time + datetime.timedelta(minutes=tr.delay)

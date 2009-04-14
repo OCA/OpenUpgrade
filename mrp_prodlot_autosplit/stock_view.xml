@@ -25,8 +25,7 @@
 
 		<!-- The following out going product editable grid can be useful, but it tends to break inheritance so we prefer disabling it -->
 		<!-- record model="ir.ui.view" id="view_picking_out_form_unique_production_number">
-			<field name="name">view.picking.out.form.unique_production_number
-			</field>
+			<field name="name">view.picking.out.form.unique_production_number</field>
 			<field name="model">stock.picking</field>
 			<field name="inherit_id" ref="stock.view_picking_out_form" />
 			<field name="type">form</field>
@@ -45,5 +44,18 @@
 				</xpath>
 			</field>
 		</record -->
+		
+
+     <record id="view_production_lot_form_unique_production_number" model="ir.ui.view">
+         <field name="name">view_production_lot_form_unique_production_number</field>
+         <field name="model">stock.production.lot</field>
+         <field name="inherit_id" ref="stock.view_production_lot_form"/>
+         <field name="type">form</field>
+         <field name="arch" type="xml">
+	         <field name="stock_available" position="after">
+	         	 <field name="last_location_id"/>
+	         </field>
+         </field>
+     </record>
 	</data>
 </openerp>

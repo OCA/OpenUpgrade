@@ -87,7 +87,7 @@
                     <page string="General">
                         <field name="name" select="1" />
 <!--                       <field name="type_id" select="2" widget="selection" on_change="onchange_type(type_id,offer_id,context)"/>-->
-                        <field name="type_id" select="2" widget="selection" on_change="onchange_code(type_id)"/>
+                        <field name="type_id" select="2" widget="selection" on_change="onchange_code(type_id,context)"/>
 <!--                        <field name="type_id" select="2"/>-->
                         <field name="media_id" select="1"/>
                         <field name="action_id" select="1" domain="[('media_id','=',media_id)]"/>
@@ -202,7 +202,11 @@
                         <form string="Transition Trigger">
                                 <field name="name"/>
                                 <field name="code"/>
-                                <field name="type"/>
+                                <field name="gen_next_wi"/>
+                                <separator string="Incoming Action Condition" colspan="4"/>
+                                <field name="in_act_cond" nolabel="1" colspan="4"/>
+                                <separator string="Outgoing Action Condition" colspan="4"/>
+                                <field name="out_act_cond" nolabel="1" colspan="4"/>
                         </form>
                 </field>
         </record>
@@ -215,7 +219,6 @@
                         <tree string="Transition Trigger">
                                 <field name="name"/>
                                 <field name="code"/>
-                                <field name="type"/>
                         </tree>
                 </field>
         </record>

@@ -137,17 +137,15 @@
 			<field name="model">crm.case</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-
 				<tree>
 					<field name="incident_ref" />
-					<field name="partner_id" />
+					<field name="partner_id" select="1"/>
 					<field name="fleet_id" />
 					<field name="prodlot_id" />
 					<field name="section_id" />
 					<field name="state" />
 					<field name="name" />
 				</tree>
-
 			</field>
 		</record>
 

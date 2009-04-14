@@ -31,5 +31,5 @@ from csv_out import csv_out
 from sql_out import sql_out
 from openobject_out import openobject_out
 from facebook_out import facebook_out
-#from xmlrpc_out import xmlrpc_out
+from xmlrpc_out import xmlrpc_out
 

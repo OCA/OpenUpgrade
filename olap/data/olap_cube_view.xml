@@ -484,6 +484,7 @@ Wizard view for the Auto Configuring the data
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Olap Saved Query">
+            	<field name="name"/>
                 <field name="time"/>
                 <field name="query"/>
                 <field name="user_id"/>
@@ -499,6 +500,7 @@ Wizard view for the Auto Configuring the data
         <field name="type">mdx</field>
         <field name="arch" type="xml">
             <tree string="Olap Saved Query">
+            	<field name="name"/>
                 <field name="user_id"/>
                 <field name="query"/>
                 <field name="cube_id"/>
@@ -511,6 +513,7 @@ Wizard view for the Auto Configuring the data
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Olap Saved Query">
+             	<field name="name" select="1" readonly="True"/>
                 <field name="query" select="1" colspan="4" readonly="True"/>
                 <field name="user_id" readonly="True"/>
                 <field name="cube_id" select="2" readonly="True"/>

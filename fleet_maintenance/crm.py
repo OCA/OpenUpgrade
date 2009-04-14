@@ -45,7 +45,7 @@ class crm_case(osv.osv):
             return result
 
         #TODO: will that work with a product return for repair?
-        cr.execute("select stock_location.id from stock_location left join stock_move on location_dest_id = stock_location.id where stock_move.prodlot_id = %s and fleet_type = 'sub_fleet' order by stock_move.date ASC LIMIT 1 " % prodlot_id)
+        cr.execute("select stock_location.id from stock_location left join stock_move on location_dest_id = stock_location.id where stock_move.prodlot_id = %s and fleet_type = 'sub_fleet' order by stock_move.date_planned ASC LIMIT 1 " % prodlot_id)
         
         results = cr.fetchone()
 

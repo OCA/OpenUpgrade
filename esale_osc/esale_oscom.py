@@ -118,6 +118,55 @@ class esale_oscom_web(osv.osv):
                     category_pool.create(cr, uid, value)
         return True
 
+    def category_import_create(self, cr, uid, ids, *args):
+        for website in self.browse(cr, uid, ids):
+            server = xmlrpclib.ServerProxy("%s/openerp-synchro.php" % website.url)
+            cat_pool = self.pool.get('product.category')
+            cat_oscom_pool = self.pool.get('esale.oscom.category')
+
+            # Search OScommerce languages mapped to OpenERP
+            osc_langs = [lang.esale_oscom_id for lang in website.language_ids if lang.language_id and lang.language_id.translatable]
+            oerp_langs = [lang.language_id for lang in website.language_ids if lang.language_id and lang.language_id.translatable]
+            if not osc_langs:
+                raise osv.except_osv(_('Warning'), _("First you must map OScommerce languages to OpenERP languages in the Web Shop!"))
+
+            categories = server.get_categories_parent(osc_langs)
+            for category in categories:
+                # Search in intermediate esale.oscom.category object that maps OScommerce and OpenERP categories
+                cat_oscom_id = cat_oscom_pool.search(cr, uid, [('web_id','=',website.id), ('esale_oscom_id','=',category[0])])
+                if cat_oscom_id:
+                    cat_oscom = cat_oscom_pool.browse(cr, uid, cat_oscom_id)[0]
+                if category[1]: # Has a parent category
+                    cat_oscom_p_id = cat_oscom_pool.search(cr, uid, [('web_id','=',website.id), ('esale_oscom_id','=',category[1])])
+                    cat_oscom_p = cat_oscom_pool.browse(cr, uid, cat_oscom_p_id)[0]
+
+                # Creates or updates product.category and esale.oscom.category objects
+                value = {
+                    'name' : category[2],
+                    'parent_id': category[1] and cat_oscom_p.category_id.id
+                }
+                if not cat_oscom_id or not cat_oscom.category_id: # OpenERP category does not exist
+                    cat_id = cat_pool.create(cr, uid, value)
+                    value_cat_oscom = {
+                        'web_id' : website.id,
+                        'esale_oscom_id' : category[0],
+                        'name' : category[2],
+                        'category_id' : cat_id,
+                    }
+                    if not cat_oscom_id:
+                        cat_oscom_id = cat_oscom_pool.create(cr, uid, value_cat_oscom)
+                    else:
+                        cat_oscom_pool.write(cr, uid, cat_oscom_id, value_cat_oscom)
+                else:  # OpenERP category exists
+                    cat_id = cat_oscom.category_id.id
+                    cat_pool.write(cr, uid, cat_id, value)
+
+                # Updates translations
+                for trans, lang in zip(category[2:], oerp_langs):
+                    #print trans, lang.code
+                    cat_pool.write(cr, uid, cat_id, {'name': trans}, {'lang': lang.code})
+        return True
+
     def get_payment_methods(self, cr, uid, ids, *args):
         for website in self.browse(cr, uid, ids):
             server = xmlrpclib.ServerProxy("%s/openerp-synchro.php" % website.url)
@@ -187,6 +236,7 @@ class esale_oscom_paytype(osv.osv):
         'name': fields.char('Name', size=64, reuired=True, readonly=True),
         'esale_oscom_id': fields.integer('OScommerce Id', required=True),
         'web_id': fields.many2one('esale.oscom.web', 'Website'),
+        'payment_id': fields.many2one('payment.type', 'OpenERP payment'),
         'paytyp': fields.selection([('type1','SO in State Draft'),('type2','SO Confirmed'),('type3','Invoice Draft'),('type4','Invoice Confirmed'),('type5','Invoice Payed')], 'Payment Type'),
     }
 esale_oscom_paytype()
@@ -229,7 +279,7 @@ class esale_oscom_product(osv.osv):
                 websites[esale_product_data.get('web_id',False) and esale_product_data.get('web_id')[0]] = [esale_product_data.get('esale_oscom_id',False)]
             #end if len(web_product_ids):
         #end for esale_product_data in esale_products_datas:
-        websites_objs = self.pool.get('esale.oscom.web').browse(cr, uid, websites.keys())
+        websites_objs = self.pool.get('esale.oscom.web').browse(cr, uid, [x for x in websites.keys() if type(x) is int])
         for website in websites_objs:
             server = xmlrpclib.ServerProxy("%s/openerp-synchro.php" % website.url)
             server.remove_product({'oscom_product_ids':websites.get(website.id)})

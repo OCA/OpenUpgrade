@@ -39,11 +39,9 @@ class query(object):
         db = sqlalchemy.create_engine(self.object.schema_id.database_id.connection_url,encoding='utf-8')
         metadata = sqlalchemy.MetaData(db)
         print 'Connected to database...', self.object.schema_id.database_id.connection_url
-
         #
         # Compute axis
         #
-
         axis = []
         axis_result = []
         cube_size = []
@@ -69,8 +67,9 @@ class query(object):
                 len_axis = len(axis[-1])
                 len_cross = len(cross)
                 delta_count = 0 
-                d = len_axis  
+                d=0  
                 for data in common.xcombine(axis[-1],cross):
+                    print " In the loop ",delta_count
                     flag = False
                     make_where = []
                     temp_where = []
@@ -87,6 +86,9 @@ class query(object):
                     delta_count = delta_count + 1
                     if delta_count >= len_cross and len_cross!=1:
                         delta_count = 0 
+                        data_temp['delta'] = d
+                        d = d + 1
+                    else:
                         data_temp['delta'] = d
                         d = d + 1
                     if flag:

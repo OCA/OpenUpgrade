@@ -909,17 +909,23 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         <record id="dm_offer_step_transition_purchase" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Purchase&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;purchase&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;action&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>
         </record>
         <record id="dm_offer_step_transition_not_purchase" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Not Purchase&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;noaction&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>
         </record>
         <record id="dm_offer_step_transition_automatic" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Automatic&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;automatic&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;auto&quot;&quot;&quot;" name="type"/>
+            <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>
         </record>
     </data>
     <data noupdate="0">

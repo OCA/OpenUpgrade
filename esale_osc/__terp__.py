@@ -4,7 +4,7 @@
 	"author" : "Axelor/Zikzakmedia",
 	"category" : "Interface OScommerce",
 	"website" : "http://www.zikzakmedia.com",
-	"depends" : ["product", "stock", "sale"],
+	"depends" : ["product", "stock", "sale", "account_payment"],
 	"description": """OSCommerce (Zencart) eCommerce interface synchronisation.
 Users can order on the website, orders are automatically imported in OpenERP.
 

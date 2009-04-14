@@ -9,7 +9,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <xpath expr="/form/notebook/page/field[@name='line_ids']" position="after">
-                    <field name="delegate_ids" colspan="4" nolabel="1" groups="group_planning_delegate">
+                    <field name="delegate_ids" colspan="4" nolabel="1" groups="report_analytic_planning_delegate.group_planning_delegate">
                         <tree string="Assigned Planning" editable="bottom">
                             <field name="account_id"/>
                             <field name="amount"/>

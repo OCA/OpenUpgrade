@@ -23,6 +23,7 @@
     "name":"Direct Marketing profile",
     "version":"0.1",
     "author":"Tiny",
+    "description":"""Profile module for advanced Direct Marketing management""",
     "category":"Profile",
     "depends":["board_dm", "dm_crm", "dm_email", "dm_website", "dm_lead"],
     "demo_xml":[],
