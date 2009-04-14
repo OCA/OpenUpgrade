@@ -647,6 +647,18 @@ class VoucherLine(osv.osv):
             res.append(self.move_line_get_item(cr, uid, line, context))
         return res
     
+    def onchange_line_account(self, cr, uid, ids, account_id):
+        lines = []
+        if 'lines' in self.voucher_context:
+            lines = [x[2] for x in self.voucher_context['lines']]
+        if not account_id:
+            return {'value':{'amount':False}}
+        account = self.pool.get('account.account').browse(cr,uid,account_id)
+        balance=account.balance
+        same_account_due_amt = [x['amount'] for x in lines if x['account_id']==account_id]
+        balance -= sum(same_account_due_amt)
+        return {'value':{'amount':balance}}
+    
     def onchange_partner(self, cr, uid, ids, partner_id, type,type1):
 
         lines = []
