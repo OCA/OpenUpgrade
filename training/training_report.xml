@@ -9,6 +9,14 @@
             rml="training/report/in_construction.rml"
             header="False"
             />
+         <report
+            id="training_seance_presence_report"
+            model="training.seance"
+            name="training.seance.presence"
+            string="Presence List"
+            rml="training/report/training_presence.rml"
+            header="True"
+            />
         <report
             id="training_seance_booking_classroom"
             model="training.seance"
