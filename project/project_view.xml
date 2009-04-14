@@ -165,10 +165,11 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree editable="top" string="Task Work">
-                    <field name="date"/>
-                    <field name="name"/>
-                    <field name="hours" widget="float_time"/>
-                    <field name="user_id"/>
+                    <field name="task_id" select="1"/>
+                    <field name="user_id" select="1"/>
+                    <field colspan="4" name="name" select="1"/>
+                    <field name="date" select="1"/>
+                    <field name="hours" select="1" widget="float_time"/>
                 </tree>
             </field>
         </record>
