@@ -14,7 +14,7 @@
             <field name="inherit_id" ref="dm.view_offer_step_document_form"/>
                 <field name="arch" type="xml">
                     <notebook position="inside">
-                        <page string="Email Configuration" attrs="{'invisible':[('parent.media','!=','Email')]}">
+                        <page string="Email Configuration" attrs="{'invisible':[('media','!=','Email')]}">
                             <field name="subject" colspan="4"/>
                             <field name="editor" colspan="4"/>
                             <group colspan="4" attrs="{'invisible':[('editor','!=','internal')]}">
@@ -39,6 +39,7 @@
             <field name="arch" type="xml">
                 <field name="step_id" position="replace">
                     <field name="step_id" colspan="4" on_change="onchange_step(step_id)"/>
+                    <field name="media" invisible="True"/>
                 </field>
             </field>
         </record>
