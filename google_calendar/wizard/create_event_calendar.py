@@ -78,20 +78,22 @@ class google_calendar_wizard(wizard.interface):
         #        3. some events in the calendar (crm) are linked to section that should be synchronized with google calendar
         #        4. create google calendar email and password on user's form currently it is using blogger!
         obj_user = pooler.get_pool(cr.dbname).get('res.users')
-        blog_auth_details = obj_user.read(cr, uid, uid, [])
-        if not blog_auth_details['blogger_email'] or not blog_auth_details['blogger_password']:
+        blog_auth_details = obj_user.browse(cr, uid, uid)
+        location = blog_auth_details.company_id.partner_id.address[0].city #should be check
+
+        if not blog_auth_details.blogger_email or not blog_auth_details.blogger_password:
             raise osv.except_osv('Warning !',
                                  'Please  Enter email id and password in users')
         try:
             self.calendar_service = gdata.calendar.service.CalendarService()
-            self.calendar_service.email = blog_auth_details['blogger_email']
-            self.calendar_service.password = blog_auth_details['blogger_password']
+            self.calendar_service.email = blog_auth_details.blogger_email
+            self.calendar_service.password = blog_auth_details.blogger_password
             self.calendar_service.source = 'Tiny'
             self.calendar_service.ProgrammaticLogin()
             obj_event = pooler.get_pool(cr.dbname).get('event.event')
             data_event = obj_event.read(cr, uid, data['form']['event_id'][0][2], [])
             for event in data_event:
-                self.add_event(self.calendar_service, event['name'], event['name'], 'ahmedabad', event['date_begin'], event['date_end'])
+                self.add_event(self.calendar_service, event['name'], event['name'], location, event['date_begin'], event['date_end'])
             return {}
         except Exception, e:
             raise osv.except_osv('Error !', e )
