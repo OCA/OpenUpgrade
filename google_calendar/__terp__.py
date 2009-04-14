@@ -9,8 +9,8 @@
     """,
     "depends" : ["event"],
     "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ['google_calendar_view.xml'],
+    "demo_xml" : ['google_calendar_demo.xml'],
+    "update_xml" : ['google_calendar_view.xml', 'google_calendar_wizard.xml'],
     "active": False,
     "installable": True,
 }

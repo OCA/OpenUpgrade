@@ -48,7 +48,7 @@ class google_blogger_wizard(wizard.interface):
         blog_auth_details = obj_user.read(cr, uid, uid, [])
         if not blog_auth_details['blogger_email'] or not blog_auth_details['blogger_password']:
             raise osv.except_osv('Warning !',
-                                 'Please  Enter email id and password in users')
+                                 'Please  blogger Enter email id and password in users')
         try:
             self.blog_service = service.GDataService(blog_auth_details['blogger_email'], blog_auth_details['blogger_password'])
             self.blog_service.source = 'Tiny'
