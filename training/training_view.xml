@@ -647,7 +647,7 @@
                             <field name="participant_ids" 
                                 colspan="4" 
                                 nolabel="1" 
-                                domain="[('group_id', '=', group_id), ('session_ids', 'in', [ session_id ])]" />
+                                domain="[('group_id', '=', group_id)]" />
                         </page>
                         <page string="StakeHolders">
                             <separator string="StakeHolders" colspan="4" />

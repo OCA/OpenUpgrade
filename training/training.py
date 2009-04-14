@@ -801,6 +801,24 @@ class training_subscription(osv.osv):
 
         return {'value' : {'address_id':ids[0]} }
 
+
+    # Don't forget to add the session_id field in the domain for the participants in the seance
+    # form view
+    #def search(self, cr, user, domain, offset=0, limit=None, order=None,context=None, count=False):
+    #    session_id = context and context.get('session_id', False) or False
+    #    if session_id:
+    #        #cr.execute('SELECT s.id FROM training_session_event_rel rel, training_seance s where rel.session_id = %s and rel.event_id = s.event_id', (session_id,))
+    #        #return [x[0] for x in cr.fetchall()]
+    #        return []
+    #    else:
+    #        return super(training_seance, self).search(cr, user,
+    #                                                   domain,
+    #                                                   offset=offset,
+    #                                                   limit=limit,
+    #                                                   order=order,
+    #                                                   context=context,
+    #                                                   count=count)
+
 training_subscription()
 
 class training_participation_skateholder(osv.osv):
