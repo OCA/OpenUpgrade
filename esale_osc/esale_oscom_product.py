@@ -40,14 +40,6 @@ class esale_oscom_product_manufacturer(osv.osv):
 #class esale_oscom_product_manyfacture(osv.osv):
 esale_oscom_product_manufacturer()
 
-class esale_oscom_product_template(osv.osv):
-    _name = "product.template"
-    _inherit = "product.template"
-
-    _columns = {
-                'description_sale': fields.text('Sale Description', translate=True),
-                }
-esale_oscom_product_template()
 
 class esale_oscom_product_inherit(osv.osv):
     _inherit = 'product.product'
@@ -254,13 +246,13 @@ class esale_oscom_product_inherit(osv.osv):
                         }
                         if oscom_product.product_id.manufacturer_id:
                             manufacturer_langs[str(lang.esale_oscom_id)] = {
-                            'manufacturers_url':self.pool.get('product.manufaturer').read(cr, uid, [oscom_product.product_id.manufacturer_id.id], ['manufacturer_url'], {'lang': lang.language_id.code})[0]['manufacturer_url'] or '',
+                            'manufacturers_url':self.pool.get('product.manufacturer').read(cr, uid, [oscom_product.product_id.manufacturer_id.id], ['manufacturer_url'], {'lang': lang.language_id.code})[0]['manufacturer_url'] or '',
                             }
 
                 webproduct['langs'] = langs
-                webproduct['name'] = str(oscom_product.product_id.name)
-                webproduct['description'] = str(oscom_product.product_id.description_sale or '')
-                webproduct['url'] = str(oscom_product.product_id.product_url or '')
+                webproduct['name'] = oscom_product.product_id.name
+                webproduct['description'] = oscom_product.product_id.description_sale or ''
+                webproduct['url'] = oscom_product.product_id.product_url or ''
 
                 if oscom_product.product_id.manufacturer_id:
                     webproduct['manufacturers_name'] = oscom_product.product_id.manufacturer_id.name

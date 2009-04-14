@@ -33,3 +33,4 @@ from sql_connector import sql_connector
 from openobject_connector import openobject_connector
 from facebook_connector import facebook_connector
 from sugarcrm_connector import sugarcrm_connector
+from xmlrpc_connector import xmlrpc_connector

@@ -189,7 +189,9 @@ class sale_order_line(osv.osv):
         
     def _check_maintenance_fleet(self, cr, uid, ids):
         for order_line in self.browse(cr, uid, ids):
-            if order_line.product_id.is_maintenance or order_line.product_id.type == 'product' or order_line.product_id.type == 'consu':
+            if order_line.order_id.is_loan:  #FIXME ugly because depends on product_loan module
+                return True
+            elif order_line.product_id.is_maintenance or order_line.product_id.type == 'product' or order_line.product_id.type == 'consu':
                 if order_line.fleet_id and order_line.fleet_id.fleet_type == 'sub_fleet' and order_line.fleet_id.location_id.partner_id == order_line.order_id.partner_id:
                     return True
                 return False

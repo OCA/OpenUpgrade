@@ -35,11 +35,12 @@
 						<field colspan="4" name="language_ids" widget="one2many_list" nolabel="1"/>
 					</page>
 					<page string="Categories Mapping">
-						<button type="object" string="Import categories" name="category_import"/>
+						<button type="object" string="Import Categories" name="category_import"/>
+						<button type="object" string="Import and create/update Categories" name="category_import_create"/>
 						<field colspan="4" name="category_ids" widget="one2many_list" nolabel="1"/>
 					</page>
 					<page string="Payment types Mapping">
-						<button type="object" string="Import payment methods" name="get_payment_methods"/>
+						<button type="object" string="Import Payment Methods" name="get_payment_methods"/>
 						<field colspan="4" name="pay_typ_ids" widget="one2many_list" nolabel="1"/>
 					</page>
 				</notebook>
@@ -124,8 +125,9 @@
 			<form string="Payment types">
 				<separator colspan="4" string="Payment types mapping"/>
 				<field colspan="4" name="name" select="1" required="1"/>
-				<field name="paytyp" select="1"/>
+				<field name="payment_id" select="1"/>
 				<field name="esale_oscom_id" readonly="1" select="1"/>
+				<field name="paytyp" select="1"/>
 			</form>
 		</field>
 	</record>
@@ -136,6 +138,7 @@
 		<field name="arch" type="xml">
 			<tree string="Payment types">
 				<field name="name" />
+				<field name="payment_id" />
 				<field name="paytyp" />
 			</tree>
 		</field>
