@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+	<record model="ir.ui.view" id="view_users_google_form">
+			<field name="name">res.users.google.form</field>
+			<field name="model">res.users</field>
+			<field name="inherit_id" ref="base.view_users_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<notebook>
+					<page string="Google">
+						<field name="google_email"/>
+						<field name="google_password" password="True"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+	<wizard id="wizard_google_calendar"  name="google.calendar" string="Export to google calendar"/>
+	<menuitem name="Export to google calendar" id="menu_tools_google_calendar" parent="event.menu_event_main" action="wizard_google_calendar" type="wizard"/>
+
+	</data>
+</openerp>

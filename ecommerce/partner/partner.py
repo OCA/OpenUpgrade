@@ -23,13 +23,12 @@
 from osv import osv, fields
 from tools.translate import _
     
-import smtplib
-
-from email.MIMEText import MIMEText
-from email.MIMEMultipart import MIMEMultipart
+import sys,os,smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
 from email.Header import Header
 from email import Encoders
-
 import logging        
 
 def _lang_get(self, cr, uid, context = {}):
@@ -233,16 +232,15 @@ class ecommerce_partner(osv.osv):
         return price   
     
     def ecommerce_sendmail(self, cr, uid, mail_to, subject, body, attachment=None, context = {}):
-
         try:
             mail_from = 'mansuri.sananaz@gmail.com'
-
+            
             s = smtplib.SMTP('smtp.gmail.com', 587)
             s.set_debuglevel(1)
             s.ehlo()
             s.starttls()
             s.ehlo()
-            s.login('mansuri.sananaz@gmail.com', '2332442222')
+            s.login('mansuri.sananaz@gmail.com', '123456')
             outer = MIMEMultipart()
             outer['Subject'] = 'Invoice:'
             outer['To'] = mail_to
@@ -266,7 +264,6 @@ class ecommerce_partner(osv.osv):
 
                 composed = outer.as_string()
                 s.sendmail(mail_from, mail_to, composed)
-                
             s.close()
         
         except Exception, e:
