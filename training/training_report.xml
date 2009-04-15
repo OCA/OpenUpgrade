@@ -42,6 +42,15 @@
             header="True"
             />
         <report
+            id="training_subscription_presence_certificate_report"
+            model="training.subscription"
+            name="training.subscription.presence.certificate"
+            string="Presence Certificate"
+            rml="training/report/training_presence_certificate.rml"
+            header="True"
+            />
+
+        <report
             id="training_course_material_report"
             model="training.course"
             name="training.course.material.report"

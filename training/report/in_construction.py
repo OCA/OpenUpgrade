@@ -75,6 +75,19 @@ report_sxw.report_sxw('report.training.course.material.report',
                       parser=training_seance_presence_report,
                       header=True)
 
+class training_subscription_presence_certificate_report(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(training_subscription_presence_certificate_report, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+
+report_sxw.report_sxw('report.training.subscription.presence.certificate.report',
+                      'training.subscription',
+                      'addons/training/report/training_presence_certificate.rml',
+                      parser=training_subscription_presence_certificate_report,
+                      header=True)
+
 class in_construction(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(in_construction, self).__init__(cr, uid, name, context)
