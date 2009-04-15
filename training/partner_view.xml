@@ -43,5 +43,21 @@
                 </field>
             </field>
         </record>
+
+        <record model="ir.ui.view" id="res_partner_view_form_inherited">
+            <field name="name">res.partner.view.form.inherited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Training">
+                        <separator string="Notification" colspan="4" />
+                        <field name="notif_contact_id" />
+                        <field name="notif_participant" />
+                    </page>
+                </notebook>
+            </field>
+        </record>
     </data>
 </openerp>

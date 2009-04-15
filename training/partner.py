@@ -79,4 +79,14 @@ class res_partner_team(osv.osv):
 
 res_partner_team()
 
+class res_partner(osv.osv):
+    _inherit = 'res.partner'
+
+    _columns = {
+        'notif_contact_id' : fields.many2one('res.partner.contact', 'Contact RH'),
+        'notif_participant' : fields.boolean('Participant'),
+    }
+
+res_partner()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
