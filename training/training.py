@@ -819,6 +819,8 @@ class training_subscription(osv.osv):
     #                                                   context=context,
     #                                                   count=count)
 
+    _order = 'date desc'
+
 training_subscription()
 
 class training_participation_skateholder(osv.osv):
