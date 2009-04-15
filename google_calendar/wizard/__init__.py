@@ -20,4 +20,5 @@
 #
 ##############################################################################
 
-import create_event_calendar
+import export_events
+import import_events

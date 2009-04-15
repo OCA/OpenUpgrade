@@ -59,7 +59,7 @@ class portal_portal(osv.osv):
 
     def create_menu(self, cr, uid,portal_id, portal_model_id, menu_name, action_id,parent_menu_id=None,view_ids=None,view_type=False,context=None):
         """
-        Create a menuitem for the given portal and model whith the given name and action.
+        Create a menuitem for the given portal and model with the given name and action.
         """
 
         assert portal_id and portal_model_id and menu_name and action_id, "Create_menu does not accept null values"
@@ -253,7 +253,7 @@ class portal_config_install_modules_wizard(osv.osv_memory):
                     ids = mod_obj.search(cr, uid, [('name', '=', r)])
                     mod_obj.button_install(cr, uid, ids, context=context)
         cr.commit()
-        db, pool = pooler.restart_pool(cr.dbname,force_demo=True, update_module=True)
+        db, pool = pooler.restart_pool(cr.dbname,update_module=True)
         return {
                 'view_type': 'form',
                 "view_mode": 'form',

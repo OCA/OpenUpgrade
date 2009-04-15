@@ -34,6 +34,7 @@
                    "dm_email_demo.xml",
                    ],
     "update_xml" : [
+                    "dm_email_view.xml",
                     "dm_email_data.xml",
                     ],
     "active": False,

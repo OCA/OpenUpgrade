@@ -12,7 +12,7 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ['google_blogger_view.xml',
-                    'google_blogger_wizard_view.xml'],
+                    'google_blogger_wizard.xml'],
     "active": False,
     "installable": True,
 }
