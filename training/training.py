@@ -755,6 +755,7 @@ class training_subscription(osv.osv):
                                        required=True,
                                        domain="[('partner_id', '=', partner_id)]",
                                       ),
+        'contact_email' : fields.related('contact_id', 'email', type='char', string='Email'),
         # Pour le group ID, discuter pour savoir si on doit utiliser le seuil pédagogique du groupe pour savoir si on crée un nouveau group ou non
         'invoice_id' : fields.many2one('account.invoice', 'Invoice'),
         'group_id' : fields.many2one('training.group', 'Group'),
