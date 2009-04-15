@@ -41,6 +41,7 @@
         'hr_holidays',
         'portal_ifbl',
         'ifbl_budget',
+        'sale',
     ],
     'init_xml' : [],
     'update_xml' : [
