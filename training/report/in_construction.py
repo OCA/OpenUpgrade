@@ -98,6 +98,7 @@ class in_construction(report_sxw.rml_parse):
 reports = [
     ('report.training.seance.booking.support', 'training.seance'),
     ('report.training.seance.booking.classroom', 'training.seance'),
+    ('report.training.planned_exam.report', 'training.planned_exam'),
     ('report.training.course.financial.report', 'training.course')
 ]
 
