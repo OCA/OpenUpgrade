@@ -770,6 +770,7 @@ class training_subscription(osv.osv):
                                    select=1),
         'price' : fields.float('Price', digits=(16,2), required=True),
         'paid' : fields.boolean('Paid'),
+        'invoiced' : fields.boolean('Invoiced'),
 
         'rest_seats' : fields.integer('Rest Seats'),
         'max_seats' : fields.integer('Maximum Seats'),
