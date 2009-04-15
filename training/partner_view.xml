@@ -59,5 +59,10 @@
                 </notebook>
             </field>
         </record>
+
+        <act_window name="Subscriptions" id="res_partner_subscription_act" 
+            res_model="training.subscription"
+            src_model="res.partner"
+            domain="[('partner_id', '=', active_id)]" />
     </data>
 </openerp>
