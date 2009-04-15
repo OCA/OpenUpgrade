@@ -13,6 +13,13 @@
     <blockTableStyle id="Table1">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#cccccc" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Table3">
       <blockAlignment value="LEFT"/>
@@ -44,23 +51,46 @@
       <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,4" stop="1,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#cccccc" start="1,4" stop="1,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="0,5" stop="0,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="0,0" stop="0,0"/>
       <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,5" stop="1,-1"/>
-      <lineStyle kind="LINEAFTER" colorName="#cccccc" start="1,5" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#cccccc" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#cccccc" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,1" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#cccccc" start="1,1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="0,2" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,2" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#cccccc" start="1,2" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="0,3" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#cccccc" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#cccccc" start="1,3" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#cccccc" start="1,3" stop="1,-1"/>
       <lineStyle kind="LINEBELOW" colorName="#cccccc" start="1,-1" stop="1,-1"/>
     </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P2" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P3" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
-    <paraStyle name="P4" fontName="Helvetica-Bold" fontSize="13.0" leading="16" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P2" fontName="Helvetica"/>
+    <paraStyle name="P3" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT"/>
     <paraStyle name="P5" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P6" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P7" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P7" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P8" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="P10" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -101,73 +131,108 @@
   </stylesheet>
   <images/>
   <story>
-    <para style="P1">[[repeatIn(objects,'subscription')]]</para>
-    <para style="P1">
+    <para style="P6">[[repeatIn(objects,'planned_exam')]]</para>
+    <para style="P7">Date:[[formatLang(time.strftime('%Y-%m-%d'),date=True) ]]</para>
+    <para style="P6">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="325.0,206.0" style="Table1">
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="terp_header">
+      Exam – Confirmation
+    </para>
+    <para style="P3">
+      <font face="Times-Roman"/>
+    </para>
+    <para style="terp_default_8">
+      We have the pleasure to confirm the following exam:
+    </para>
+    <para style="P4">
+      <font color="white"> </font>
+    </para>
+    <section>
+      <para style="P4">[[repeatIn(planned_exam.participant_ids,'participant_ids')]]</para>
+      <blockTable colWidths="265.0,265.0" style="Table1">
+        <tr>
+          <td>
+            <para style="P9">
+              <font face="Times-Roman">Participant</font>
+            </para>
+          </td>
+          <td>
+            <para style="P5">[[ participant_ids.contact_id.title ]][[ participant_ids.contact_id.first_name ]][[ participant_ids.contact_id.name ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P4">
+        <font face="Times-Roman"/>
+      </para>
+    </section>
+    <para style="P4">
+      <font face="Times-Roman"/>
+    </para>
+    <para style="P4">
+      <font face="Times-Roman"/>
+    </para>
+    <blockTable colWidths="265.0,265.0" style="Table3">
       <tr>
         <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
+          <para style="P10">Exam</para>
         </td>
         <td>
-          <para style="terp_default_8">[[ subscription.partner_id.title or '' ]][[ subscription.partner_id.name ]]</para>
-          <para style="terp_default_8">[[ subscription.address_id.title or '' ]][[ subscription.address_invoice_id.name ]]</para>
-          <para style="terp_default_8">[[ subscription.address_id.street ]]</para>
-          <para style="terp_default_8">[[ subscription.address_id.street2 or '' ]]</para>
-          <para style="terp_default_8">[[ subscription.address_id.zip or '' ]][[ subscription.address_id.city or '' ]]</para>
-          <para style="terp_default_8">[[ subscription.address_id.state_id and subscription.address_id.state_id.name or '' ]]</para>
-          <para style="terp_default_8">[[ subscription.address_id.country_id and subscription.address_id.country_id.name or '' ]]</para>
+          <para style="P5">[[ planned_exam.name ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P10">Date</para>
+        </td>
+        <td>
+          <para style="P5">[[ planned_exam.date ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P10">Schedule </para>
+        </td>
+        <td>
+          <para style="P5">[[ planned_exam.duration ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P10">Location</para>
+        </td>
+        <td>
+          <para style="P5">[[ planned_exam.location_id.name ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P10">Room</para>
+        </td>
+        <td>
+          <para style="P5">[[ planned_exam.room ]]</para>
         </td>
       </tr>
     </blockTable>
     <para style="P2">
       <font color="white"> </font>
     </para>
-    <para style="terp_header">
-      Subscription –   Cancellation :
-      [[ subscription.name ]]
+    <para style="P2">
+      <font color="white"> </font>
     </para>
-    <para style="P4">
-      <font face="Times-Roman" size="12.0"/>
+    <para style="P2">
+      <font color="white"> </font>
     </para>
-    <para style="terp_default_9">Pour des raisons indépendantes de notre volonté, nous nous voyons dans l'obligation d'annuler le cours suivant: <font face="Times-Roman"/></para>
-    <para style="P4">
-      <font face="Times-Roman" size="12.0"/>
-    </para>
-     <para style="P4">
-      <font face="Times-Roman" size="12.0"/>
-    </para>
-    <blockTable colWidths="265.0,265.0" style="Table3">
+    <blockTable colWidths="265.0,265.0" style="Table4">
       <tr>
         <td>
-          <para style="P3">Participant</para>
-        </td>
-        <td>
-          <para style="P5">[[ subscription.contact_id.title ]][[ subscription.contact_id.name ]][[ subscription.contact_id.first_name ]]</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P3">Training</para>
-        </td>
-        <td>
-          <para style="P7">[[ subscription.session_id.name ]]</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P3">Date</para>
-        </td>
-        <td>
-          <para style="P6">[[subscription.session_id.date]]</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P3">Motif</para>
+          <para style="P8">Adresse(s):</para>
         </td>
         <td>
           <para style="P5">
@@ -177,7 +242,7 @@
       </tr>
       <tr>
         <td>
-          <para style="P3">Cancellation Fees</para>
+          <para style="P8">Support</para>
         </td>
         <td>
           <para style="P5">
@@ -187,7 +252,17 @@
       </tr>
       <tr>
         <td>
-          <para style="P3">Your IFBL contact</para>
+          <para style="P8">Miscellaneous</para>
+        </td>
+        <td>
+          <para style="P5">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P8">IFBL Contact</para>
         </td>
         <td>
           <para style="P5">
@@ -196,30 +271,22 @@
         </td>
       </tr>
     </blockTable>
-    <para style="terp_default_9">
-      <font face="Times-Roman" size="8.0"/>
-    </para>
-    <para style="terp_default_9">
-      <font face="Times-Roman" size="8.0"/>
-    </para>
-    <para style="terp_default_9">
-      <font face="Times-Roman" size="8.0"/>
-    </para>
-    <para style="terp_default_9">
-      <font face="Times-Roman" size="8.0"/>
-    </para>
-    <para style="terp_default_9">
-      <font face="Times-Roman" size="8.0"/>
-    </para>
-    <para style="terp_default_9">
-      <font face="Times-Roman" size="8.0"/>
-    </para>
-    <para style="terp_default_9">
+    <para style="P2">
       <font color="white"> </font>
     </para>
-    <para style="terp_default_9">
+    <para style="P1">
       <font color="white"> </font>
     </para>
-    <para style="terp_default_9">For more information for a course or for the next seance of this course, you can consult our web site<font face="Times-Roman"/><font face="Times-Roman">www.ifbl.lu</font> or to address to our Customer Service. <font face="Times-Roman" size="8.0"/></para>
+    <para style="P5">L'inscription est payable dès réception de la facture.
+</para>
+    <para style="P5">Conditions d'annulation :
+</para>
+    <para style="P5">Toute modification ou annulation d'examen sera facturée au prix de l'inscription.
+</para>
+    <para style="P5">Parking souterrain (euro : 1,-/hre) et restauration (chèque-repas ou cash) possibles dans
+</para>
+    <para style="P5">l'immeuble.
+</para>
+    <para style="P5"/>
   </story>
 </document>
