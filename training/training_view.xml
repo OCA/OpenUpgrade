@@ -782,13 +782,18 @@
                     <field name="session_id" />
                     <field name="price" />
                     <field name="invoice_id" />
-                    <field name="paid" />
-                    <field name="invoiced" />
+                    <group colspan="2" col="4">
+                        <field name="paid" />
+                        <field name="invoiced" />
+                    </group>
                     <separator string="Participant" colspan="4" />
                     <field name="contact_id" />
                     <field name="contact_email" />
                     <field name="nbr_to_subscribe" />
                     <field name="group_id" />
+                    <separator string="Notification" colspan="4" />
+                    <field name="notification_active" />
+                    <field name="notification_text" />
                     <separator colspan="4"/>
                     <group colspan="4" col="6">
                         <field name="state" />
