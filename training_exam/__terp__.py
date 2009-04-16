@@ -33,6 +33,7 @@
     'demo_xml' : [ ],
     'update_xml' : [
         'training_exam_view.xml',
+        'training_exam_report.xml',
         'workflow/questionnaire_workflow.xml',
         'workflow/planned_exam_workflow.xml',
         'security/training_exam_security.xml',

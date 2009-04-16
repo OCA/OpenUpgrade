@@ -20,5 +20,6 @@
 #
 ##############################################################################
 
-import training_exam
-import report
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
+import in_construction
