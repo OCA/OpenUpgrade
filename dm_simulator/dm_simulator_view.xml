@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+	<!--
+    =======================================================
+    SIMULATOR VIEWS
+    =======================================================
+    -->
+
+	<record id="view_dm_sim_scenario_tree" model="ir.ui.view">
+	    <field name="name">dm.sim.scenario.tree</field>
+	    <field name="model">dm.sim.scenario</field>
+	    <field name="type">tree</field>
+	    <field name="arch" type="xml">
+	        <tree string="Simulators">
+	        	<field name="name"/>
+	            <field name="campaign_id"/>
+                <field name="date_start"/>
+                <field name="date_stop"/>
+                <field name="action_qty"/>
+	        </tree>
+	    </field>
+	</record>
+	<record id="view_dm_sim_scenario_form" model="ir.ui.view">
+	    <field name="name">dm.sim.scenario.form</field>
+	    <field name="model">dm.sim.scenario</field>
+	    <field name="type">form</field>
+	    <field name="arch" type="xml">
+	        <form string="Simulator">
+	            <field name="name" select="1"/>
+	            <field name="campaign_id"/>
+                <field name="date_start" select="1"/>
+                <field name="date_stop"/>
+                <field name="action_qty" select="2"/>
+                <button string="Confirm" name="simulation_start" type="object" colspan="2"/>
+	        </form>
+	    </field>
+	</record>
+	<record id="act_dm_sim_scenario_form" model="ir.actions.act_window">
+	    <field name="name">Simulator</field>
+	    <field name="type">ir.actions.act_window</field>
+	    <field name="res_model">dm.sim.scenario</field>
+	    <field name="view_type">form</field>
+	    <field name="view_mode">tree,form</field>
+	</record>
+	<menuitem action="act_dm_sim_scenario_form" id="menu_act_dm_sim_scenario_form" parent="dm.menu_dm_config_lowlevel"/>
+	
+</data>
+</openerp>
