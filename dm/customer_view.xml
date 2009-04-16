@@ -512,5 +512,50 @@
 
     <menuitem id="menu_action_dm_customer_segmentation_form" parent="dm.menu_dm_config_customer" action="action_dm_customer_segmentation_form" sequence="0" />
 
+	<!--
+    =======================================================
+    EVENT VIEWS
+    =======================================================
+    -->
+
+	<record id="view_dm_event_tree" model="ir.ui.view">
+	    <field name="name">dm.event.tree</field>
+	    <field name="model">dm.event</field>
+	    <field name="type">tree</field>
+	    <field name="arch" type="xml">
+	        <tree editable="bottom" string="Events">
+	            <field name="campaign_id"/>
+                <field name="segment_id"/>
+                <field name="step_id"/>
+                <field name="source"/>
+                <field name="address_id"/>
+                <field name="trigger_type_id"/>
+	        </tree>
+	    </field>
+	</record>
+	<record id="view_dm_event_form" model="ir.ui.view">
+	    <field name="name">dm.event.form</field>
+	    <field name="model">dm.event</field>
+	    <field name="type">form</field>
+	    <field name="arch" type="xml">
+	        <form string="Events">
+	            <field name="campaign_id" select="1"/>
+                <field name="segment_id"/>
+                <field name="step_id" select="2"/>
+                <field name="source" select="1"/>
+                <field name="address_id"/>
+                <field name="trigger_type_id" select="1"/>
+	        </form>
+	    </field>
+	</record>
+	<record id="act_dm_event_form" model="ir.actions.act_window">
+	    <field name="name">Edit Events</field>
+	    <field name="type">ir.actions.act_window</field>
+	    <field name="res_model">dm.event</field>
+	    <field name="view_type">form</field>
+	    <field name="view_mode">tree,form</field>
+	</record>
+	<menuitem action="act_dm_event_form" id="menu_act_dm_event_form" parent="dm.menu_dm_config_lowlevel"/>
+
     </data>
 </openerp>
