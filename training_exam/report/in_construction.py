@@ -36,22 +36,34 @@ report_sxw.report_sxw('report.report.training.planned_exam.report',
                       parser=training_planned_exam_confirm_report,
                       header=True)
 
+class training_planned_exam_cancel_report(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(training_planned_exam_cancel_report, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+
+report_sxw.report_sxw('report.training.planned_exam.cancel',
+                      'training.subscription',
+                      'addons/training/report/training_exam_cancel.rml',
+                      parser=training_planned_exam_cancel_report,
+                      header=True)
 class in_construction(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(in_construction, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
         })
-
-reports = [
-    ('report.training.planned_exam.cancel', 'training.planned_exam'),
-]
-
-for name, model in reports:
-    report_sxw.report_sxw(name, model,
-                          'addons/training/report/in_construction.rml',
-                          parser=in_construction,
-                          header=True)
+#
+#reports = [
+#    ('report.training.planned_exam.cancel', 'training.planned_exam'),
+#]
+#
+#for name, model in reports:
+#    report_sxw.report_sxw(name, model,
+#                          'addons/training/report/in_construction.rml',
+#                          parser=in_construction,
+#                          header=True)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
