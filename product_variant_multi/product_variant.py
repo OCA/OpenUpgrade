@@ -150,11 +150,6 @@ class product_product(osv.osv):
 
     _columns = {
         'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions', domain="[('product_tmpl_id','=',product_tmpl_id)]"),
-        #
-        # TODO: compute price_extra and _margin based on variants
-        #
-        # 'price_extra': fields.function('Price Extra'),
-        # 'price_margin': fields.function('Price Margin'),
         'variants': fields.function(_variant_name_get, method=True, type='char', size=64, string='Variants', readonly=True, 
             store={
                 'product.variant.dimension.type': (_get_products, None, 10),
