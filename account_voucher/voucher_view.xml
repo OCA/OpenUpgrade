@@ -38,7 +38,7 @@
 								<tree string="Voucher Lines" editable="top">
 									<field name="account_analytic_id"/>
 									<field name="partner_id" on_change="onchange_partner(partner_id,type,parent.type)"/>
-									<field name="account_id"/>
+									<field name="account_id" on_change="onchange_line_account(account_id)"/>
 									<field name="name"/>
 									<field name="type"/>
 									<field name="amount"/>
