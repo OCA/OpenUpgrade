@@ -44,13 +44,13 @@
        <lineStyle kind="LINEABOVE" colorName="#808080" start="0,0" stop="-1,-1"/>
     </blockTableStyle>
     <blockTableStyle id="TableLightGrey">
-      <blockAlignment value="LEFT"/>
-      <blockValign value="TOP"/>
-      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
-      <lineStyle kind="LINEAFTER" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
-     </blockTableStyle>
+        <blockAlignment value="LEFT"/>
+        <blockValign value="TOP"/>
+        <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
+        <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
+        <lineStyle kind="LINEAFTER" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
+        <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
+    </blockTableStyle>
 
     <blockTableStyle id="TableHeaderBorder">
       <blockAlignment value="LEFT"/>
@@ -194,111 +194,51 @@
     <para style="P6">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="265.0,265.0" style="TableLightGrey">
+    <blockTable colWidths="265.0" style="TableLightGrey">
         <tr>
             <td>
-                <para style="terp_tblheader_General">Adresse</para>
-            </td>
-            <td>
-                <para style="terp_tblheader_General">Distribution du matériel de cours</para>
+                <para style="terp_tblheader_General">Address</para>
             </td>
         </tr>
         <tr>
             <td>
                 <para style="terp_default_8"><!--[[ subscription.partner_id.name ]]--> TO FILL</para>
             </td>
-            <td>
-                <para style="terp_default_8">[[ repeatIn(subscription.session_id.offer_id.course_ids,'course') ]]</para>
-                <para style="terp_default_8">[[ course.name ]]</para>
-            </td>
         </tr>
     </blockTable>
     <para style="P6">
-      <font color="white"> </font>
+        <font color="white"> </font>
     </para>
-    <blockTable colWidths="265.0,265.0" style="TableLightGrey">
-        <tr>
-        <td>
-          <para style="terp_tblheader_General">Divers</para>
-        </td>
-        <td>
-          <para style="terp_tblheader_General">Votre contact</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-    </blockTable>
     <para style="P6">
       <font color="white"> </font>
     </para>
     <para style="terp_tblheader_Details">Détail des séances</para>
-      <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="TableHeaderBorder">
+      <blockTable colWidths="176.0,176.0,176.0" style="TableHeaderBorder">
       <tr>
         <td>
-          <para style="terp_tblheader_General_Centre">Date</para>
+          <para style="terp_tblheader_General">Date</para>
         </td>
         <td>
-          <para style="terp_tblheader_General_Centre">Schedule</para>
+          <para style="terp_tblheader_General">Duration</para>
         </td>
         <td>
-          <para style="terp_tblheader_General_Centre">Type</para>
-        </td>
-        <td>
-          <para style="terp_tblheader_General_Centre">Catering</para>
-        </td>
-        <td>
-          <para style="terp_tblheader_General_Centre">Location</para>
-        </td>
-        <td>
-          <para style="terp_tblheader_General_Centre">Room</para>
-        </td>
-        <td>
-          <para style="terp_tblheader_General_Centre">Instructor</para>
-
+          <para style="terp_tblheader_General">Type</para>
         </td>
       </tr>
     </blockTable>
     <section>
     <para style="P2">[[repeatIn(subscription.session_id.event_ids,'event') ]]</para>
-    <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="TableInsideLine">
+    <blockTable colWidths="176.0,176.0,176.0" style="TableInsideLine">
       <tr>
         <td>
-           <para style="terp_default_Centre_8"> [[time.strftime('%Y-%m-%d', time.strptime( event.date, '%Y-%m-%d %H:%M:%S'))]]</para>
+           <para style="terp_default_Centre_8"> [[time.strftime('%Y-%m-%d %H:%M:%S', time.strptime( event.date, '%Y-%m-%d %H:%M:%S'))]]</para>
         </td>
         <td>
-         <para style="terp_default_Centre_8">[[time.strftime('%H:%M:%S', time.strptime( event.date, '%Y-%m-%d %H:%M:%S'))]]</para>
-        </td>
-        <td>
-          <para style="terp_default_Centre_8">
-            <font color="white"> </font>
-          </para>
+         <para style="terp_default_Centre_8">[[event.duration]]</para>
         </td>
         <td>
           <para style="terp_default_Centre_8">
             <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="terp_default_Centre_8">[[event.location]]</para>
-        </td>
-        <td>
-          <para style="terp_default_Centre_8">[[event.room]]</para>
-        </td>
-        <td>
-          <para style="terp_default_Centre_8">[[repeatIn(subscription.session_id.offer_id.course_ids,'course')]]</para>
-          <para style="terp_default_Centre_8">[[repeatIn(course.lecturer_ids,'lect')]]</para>
-          <para style="terp_default_Centre_8">
-            [[lect.name]]
           </para>
         </td>
       </tr>
@@ -316,5 +256,21 @@
     <para style="P2">
       <font color="white"> </font>
     </para>
+    <blockTable colWidths="265.0" style="TableLightGrey">
+        <tr>
+            <td>
+                <para style="terp_tblheader_General">Divers</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="terp_default_8">
+                    <font color="white"> </font>
+                </para>
+            </td>
+        </tr>
+    </blockTable>
   </story>
 </document>
+:w
+:a
