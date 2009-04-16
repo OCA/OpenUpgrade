@@ -72,20 +72,29 @@ class google_calendar_wizard(wizard.interface):
             self.calendar_service.max_results = 500
             self.calendar_service.ProgrammaticLogin()
             feed = self.calendar_service.GetCalendarEventFeed()
-
+#            feed.timezone.value = 'Asia/Calcutta'
             for i, an_event in enumerate(feed.entry):
                 name_event = an_event.title.text or ''
                 stime = an_event.when[0].start_time
                 etime = an_event.when[0].end_time
+
+                from dateutil.tz import *
                 stime = dateutil.parser.parse(stime)
                 etime = dateutil.parser.parse(etime)
                 start_date = datetime.datetime(*stime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                 end_date = datetime.datetime(*etime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
 
+                a = time.mktime(time.strptime(start_date, "%Y-%m-%d %H:%M:%S"))
+                timestring = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(a - time.timezone - 30600))
+
+                b = time.mktime(time.strptime(end_date, "%Y-%m-%d %H:%M:%S"))
+                timestring_end = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(b - time.timezone - 30600))
+
+
                 val = {
                    'name': name_event,
-                   'date_begin': start_date,
-                   'date_end': end_date,
+                   'date_begin': timestring,#start_date,
+                   'date_end': timestring_end,#end_date,
                    'product_id': product[0]
                        }
                 obj_event.create(cr, uid, val)
