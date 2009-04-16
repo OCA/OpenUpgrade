@@ -966,7 +966,7 @@ class olap_saved_query(osv.osv):
 #   _rec_name = 'user_id'
     _columns = {
                 'name': fields.text('Query Name', size=64),
-                'user_id' : fields.many2one('res.users', 'Tiny ERP User'),
+                'user_id' : fields.many2one('res.users', 'User'),
                 'query': fields.text('Query', required = True),
                 'cube_id': fields.many2one('olap.cube', 'Cube',required=True),
                 'schema_id': fields.many2one('olap.schema', 'Schema',required=True),

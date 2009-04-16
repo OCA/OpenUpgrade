@@ -87,7 +87,7 @@ class mdx_parser(object):
         cross_parser = self.mdx_level()
         cross_parser.setParseAction(lambda s,a,toks:cross.cross(toks))
 
-        cross_parse = leftCurlBr + cross_parser("cross") + rightCurlBr
+        cross_parse = leftCurlBr + cross_parser + rightCurlBr
 
         return cross_parse 
         
