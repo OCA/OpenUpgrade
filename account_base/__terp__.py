@@ -8,8 +8,8 @@
     "demo_xml" : [],
     "update_xml" : [
                     'partner_view.xml',
-                    'base_setup/base_setup_data.xml',
-                    'base_setup/base_setup_wizard.xml'],
+                    #'base_setup/base_setup_data.xml',
+                    #'base_setup/base_setup_wizard.xml'],
     "active": False,
     "installable": True
 }
