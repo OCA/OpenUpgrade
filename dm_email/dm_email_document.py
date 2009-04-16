@@ -29,13 +29,7 @@ class dm_offer_document(osv.osv):
                 'subject' : fields.char('Subject',size=64,),
                 'editor' : fields.selection([('internal','Internal'),('oord','DM Open Office Report Design')],'Editor'),
                 'content' : fields.text('Content'),
-                'media' : fields.char('Media',size=64)
+                'media_id':fields.related('step_id','media_id',type='many2one', relation='dm.media', string='Media'),
             }
-    def onchange_step(self, cr, uid, ids, step_id):
-        res = {'value':{}}
-        if step_id:
-            step  = self.pool.get('dm.offer.step').browse(cr, uid, step_id)
-            res['value'] = {'media':step.media_id.name}
-        return res
 
 dm_offer_document()
