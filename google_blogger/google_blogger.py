@@ -28,7 +28,7 @@ class res_users(osv.osv):
     _description = 'res.users'
 
     _columns = {
-        'blogger_email':fields.char('Blogger Email Id', size=100),
-        'blogger_password': fields.char('Password', size=100),
+        'blogger_email':fields.char('Blogger Email Id', size=128),
+        'blogger_password': fields.char('Password', size=128),
                 }
 res_users()

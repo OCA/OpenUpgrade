@@ -67,7 +67,6 @@ class RstDoc(object):
         self.module = module
 
     def _quality_certified_label(self, module):
-        """"""
         label = ""
         certificate = module.certificate
         if certificate and len(certificate) > 1:
@@ -99,6 +98,11 @@ class RstDoc(object):
         dico['title_underline'] = title_underline
 
         sl = [
+            "",
+            """.. tip:: This module is part of the Open ERP software, the leading Open Source """,
+            """  enterprise management system. If you want to discover Open ERP, check our """,
+            """  <a href="http://openerp.tv">screencasts</a> or download """,
+            """  <a href="http://openerp.com">Open ERP</a> directly.""",
             "",
             ".. module:: %(name)s",
             "    :synopsis: %(shortdesc)s %(quality_certified_label)s",

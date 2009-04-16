@@ -490,3 +490,25 @@ class dm_offer_history(osv.osv):
         'responsible_id' : fields.many2one('res.users','Responsible'),
     }
 dm_offer_history()
+
+class dm_event(osv.osv_memory):
+    _name = "dm.event"
+    _rec_name = "campaign_id"
+    _columns = {
+        'campaign_id' : fields.many2one('dm.campaign', 'Campaign'),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment'),
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step'),
+        'source' : fields.selection([('address_id','Addresses')], 'Source'),
+        'address_id' : fields.many2one('res.partner.address', 'Address'),
+        'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition'),
+    }
+    _defaults = {
+        'source': lambda *a: 'address_id',
+    }
+    
+    def create(self,cr,uid,vals,context={}):
+        self.pool.get('dm.workitem').create(cr, uid, {'step_id':vals['step_id'] or False, 'segment_id':vals['segment_id'] or False,
+        'address_id':vals['address_id'] or False, 'action_time':time.strftime("%Y-%m-%d %H:%M:%S"), 'source':vals['source']})
+        return super(dm_event,self).create(cr,uid,vals,context)
+    
+dm_event()
