@@ -52,6 +52,17 @@
       <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
      </blockTableStyle>
 
+    <blockTableStyle id="TableHeaderBorder">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,0" stop="-1,-1"/>
+    </blockTableStyle>
+
+    <blockTableStyle id="TableInsideLine">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
+    </blockTableStyle>
 
     <blockTableStyle id="Table4">
       <blockAlignment value="LEFT"/>
@@ -194,11 +205,11 @@
         </tr>
         <tr>
             <td>
-                <para style="terp_default_8">[[ subscription.partner_id.name ]] </para>
+                <para style="terp_default_8"><!--[[ subscription.partner_id.name ]]--> TO FILL</para>
             </td>
             <td>
-                <para style="terp_default_8">[[repeatIn(subscription.session_id.offer_id.course_ids,'course')]]</para>
-                <para style="terp_default_8">[[course.name]]</para>
+                <para style="terp_default_8">[[ repeatIn(subscription.session_id.offer_id.course_ids,'course') ]]</para>
+                <para style="terp_default_8">[[ course.name ]]</para>
             </td>
         </tr>
     </blockTable>
@@ -231,7 +242,7 @@
       <font color="white"> </font>
     </para>
     <para style="terp_tblheader_Details">Détail des séances</para>
-      <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="TableLightGrey">
+      <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="TableHeaderBorder">
       <tr>
         <td>
           <para style="terp_tblheader_General_Centre">Date</para>
@@ -259,7 +270,7 @@
     </blockTable>
     <section>
     <para style="P2">[[repeatIn(subscription.session_id.event_ids,'event') ]]</para>
-    <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="TableLightGrey">
+    <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="TableInsideLine">
       <tr>
         <td>
            <para style="terp_default_Centre_8"> [[time.strftime('%Y-%m-%d', time.strptime( event.date, '%Y-%m-%d %H:%M:%S'))]]</para>
