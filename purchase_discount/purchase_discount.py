@@ -35,7 +35,7 @@ class purchase_order_line(osv.osv):
 
     def _amount_line(self, cr, uid, ids, prop, unknow_none,unknow_dict):
         res = {}
-        cur_obj=self.pool.get('res.currency')
+        cur_obj = self.pool.get('res.currency')
         for line in self.browse(cr, uid, ids):
             cur = line.order_id.pricelist_id.currency_id
             res[line.id] = cur_obj.round(cr, uid, cur, line.price_unit * line.product_qty * (1 - (line.discount or 0.0) /100.0))
@@ -54,37 +54,25 @@ class purchase_order(osv.osv):
     _name = "purchase.order"
     _inherit = "purchase.order"
     
-    def _amount_untaxed(self, cr, uid, ids, field_name, arg, context):
-        id_set = ",".join(map(str, ids))
-        sql_req="SELECT s.id,COALESCE(SUM(l.price_unit*l.product_qty*(100.0-l.discount))/100.0,0) AS amount FROM purchase_order s LEFT OUTER JOIN purchase_order_line l ON (s.id=l.order_id) WHERE s.id IN ("+id_set+") GROUP BY s.id"
-        cr.execute(sql_req)
-        
-        res = dict(cr.fetchall())
-
-        cur_obj=self.pool.get('res.currency')
-        for id in res.keys():
-            order=self.browse(cr, uid, [id])[0]
-            cur=order.pricelist_id.currency_id
-            res[id]=cur_obj.round(cr, uid, cur, res[id])
-        return res
-
-
-    def _amount_tax(self, cr, uid, ids, field_name, arg, context):
+    def _amount_all(self, cr, uid, ids, field_name, arg, context):
         res = {}
-        cur_obj=self.pool.get('res.currency')
+        cur_obj = self.pool.get('res.currency')
         for order in self.browse(cr, uid, ids):
-            val = 0.0
-            cur=order.pricelist_id.currency_id
+            res[order.id] = {
+                'amount_untaxed': 0.0,
+                'amount_tax': 0.0,
+                'amount_total': 0.0,
+            }
+            val = val1 = 0.0
+            cur = order.pricelist_id.currency_id
             for line in order.order_line:
-                for c in self.pool.get('account.tax').compute(cr, uid, line.taxes_id, line.price_unit * (1-(line.discount or 0.0)/100.0), line.product_qty, order.partner_address_id.id, line.product_id):
-                    val+= cur_obj.round(cr, uid, cur, c['amount'])
-            res[order.id]=cur_obj.round(cr, uid, cur, val)
+                for c in self.pool.get('account.tax').compute(cr, uid, line.taxes_id, line.price_unit * (1-(line.discount or 0.0)/100.0), line.product_qty, order.partner_address_id.id, line.product_id, order.partner_id):
+                    val += c['amount']
+                val1 += line.price_subtotal
+            res[order.id]['amount_tax'] = cur_obj.round(cr, uid, cur, val)
+            res[order.id]['amount_untaxed'] = cur_obj.round(cr, uid, cur, val1)
+            res[order.id]['amount_total'] = res[order.id]['amount_untaxed'] + res[order.id]['amount_tax']
         return res
-
-    _columns = {
-        'amount_untaxed': fields.function(_amount_untaxed, method=True, string='Untaxed Amount'),
-        'amount_tax': fields.function(_amount_tax, method=True, string='Taxes'),
-    }       
     
 purchase_order()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
