@@ -20,7 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 -->
-<terp>
+<openerp>
 <data>
 
     <record model="ir.ui.view" id="sednacom_email_form">
@@ -36,7 +36,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
                 <field name="datetime" select="2" />
                 <field name="state" select="2" />
                 <field name="crm_case" colspan="4" />
-                <separator label="message" colspan="4" />
+                <separator string="message" colspan="4" />
                 <field name="body" nolabel="1" colspan="4" widget="html_tag" />
                 <group col="2" colspan="2" >
                     <button name="sendmail" string="Send" type="object" states="draft" />
@@ -73,5 +73,4 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
 </data>
-</terp>
-
+</openerp>
