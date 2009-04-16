@@ -23,11 +23,23 @@
 from osv import fields, osv
 
 class res_users(osv.osv):
-    _inherit="res.users"
+    _inherit = "res.users"
     _description = 'res.users'
 
     _columns = {
-        'google_email':fields.char('Google Email Id', size=100),
-        'google_password': fields.char('Password', size=100),
+        'google_email':fields.char('Google Email Id', size=128),
+        'google_password': fields.char('Password', size=128),
                 }
 res_users()
+
+class event_event(osv.osv):
+    _inherit = "event.event"
+    _description = "Event"
+
+    _columns = {
+        'google_event_id': fields.char('Google Event Id', size=128, readonly=True),
+        'event_modify_date': fields.datetime('Google Modify Date', readonly=False),
+        'write_date': fields.datetime('Date Modified', readonly=True),
+        'create_date': fields.datetime('Date create', readonly=True),
+                }
+event_event()
