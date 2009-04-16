@@ -169,7 +169,7 @@
     <para style="P7">
       <font color="white"> </font>
     </para>
-    <para style="terp_default_9">Nous avons le plaisir de confirmer la tenue de la formation suivante:</para>
+    <para style="terp_default_9">We have the pleasure to confirm the following session:</para>
     <para style="P1">
       <font color="white"> </font>
     </para>
@@ -179,7 +179,7 @@
           <para style="terp_tblheader_General">Participant</para>
         </td>
         <td>
-          <para style="terp_tblheader_General">Training</para>
+          <para style="terp_tblheader_General">Session</para>
         </td>
       </tr>
       <tr>
@@ -194,7 +194,7 @@
     <para style="P6">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="265.0" style="TableLightGrey">
+    <blockTable colWidths="530." style="TableLightGrey">
         <tr>
             <td>
                 <para style="terp_tblheader_General">Address</para>
@@ -202,13 +202,10 @@
         </tr>
         <tr>
             <td>
-                <para style="terp_default_8"><!--[[ subscription.partner_id.name ]]--> TO FILL</para>
+                <para style="terp_default_8">[[ len(subscription.session_id.offer_id.course_ids) > 0 and subscription.session_id.offer_id.course_ids[0].location or "The address isn't defined" ]]</para>
             </td>
         </tr>
     </blockTable>
-    <para style="P6">
-        <font color="white"> </font>
-    </para>
     <para style="P6">
       <font color="white"> </font>
     </para>
@@ -247,16 +244,7 @@
     <para style="P2">
       <font color="white"> </font>
     </para>
-    <para style="P2">
-      <font color="white"> </font>
-    </para>
-    <para style="P2">
-      <font color="white"> </font>
-    </para>
-    <para style="P2">
-      <font color="white"> </font>
-    </para>
-    <blockTable colWidths="265.0" style="TableLightGrey">
+    <blockTable colWidths="530.0" style="TableLightGrey">
         <tr>
             <td>
                 <para style="terp_tblheader_General">Divers</para>
@@ -272,5 +260,3 @@
     </blockTable>
   </story>
 </document>
-:w
-:a
