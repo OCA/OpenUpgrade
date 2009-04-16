@@ -125,18 +125,13 @@
     <para style="terp_header">
       Presence Certificate
     </para>
-    <para style="P1">
-      <font color="white"> </font>
-    </para>
     <blockTable colWidths="265.0,265.0" style="Table1">
       <tr>
         <td>
           <para style="terp_tblheader_General">Partner</para>
         </td>
         <td>
-          <para style="terp_tblheader_General">
-            Participant
-          </para>
+          <para style="terp_tblheader_General">Participant</para>
         </td>
       </tr>
       <tr>
@@ -144,28 +139,24 @@
           <para style="terp_default_8">[[ subscription.partner_id.name ]]</para>
         </td>
         <td>
-          <para style="terp_default_8">[[ subscription.contact_id.title or ' ']][[ subscription.contact_id.name or '']][[ subscription.contact_id.first_name or '' ]]</para>
+          <para style="terp_default_8">[[ subscription.contact_id.title or ' ']] [[ subscription.contact_id.name or '']] [[ subscription.contact_id.first_name or '' ]]</para>
         </td>
       </tr>
       </blockTable>
-		<para style="terp_default_8">
-            <font color="white"> </font>
-         </para>
-	    <para style="P2">
-      	<font color="white"> </font>
-    	</para>
+      <para style="P2">
+          <font color="white"> </font>
+      </para>
 
-       <blockTable colWidths="265.0,265.0" style="Table1">
+      <blockTable colWidths="265.0,132.5,132.5" style="Table1">
       <tr>
         <td>
-          <para style="terp_tblheader_General">
-           Session
-          </para>
+          <para style="terp_tblheader_General">Session</para>
         </td>
         <td>
-          <para style="terp_tblheader_General">
-            Date
-          </para>
+          <para style="terp_tblheader_General">Date</para>
+        </td>
+        <td>
+        <para style="terp_tblheader_General">Number of Seances</para>
         </td>
       </tr>
       <tr>
@@ -177,56 +168,12 @@
         </td>
       </tr>
     </blockTable>
-      <para style="P2">
-      <font color="white"> </font>
-    </para>
-        <blockTable colWidths="265.0,265.0" style="Table4">
-      <tr>
-        <td>
-          <para style="terp_tblheader_General">Adresse(s):</para>
-        </td>
-        <td>
-          <para style="terp_default_8">[[ subscription.contact_id.first_name or '' ]]</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="terp_tblheader_General">Support</para>
-        </td>
-        <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="terp_tblheader_General">Miscellaneous</para>
-        </td>
-        <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="terp_tblheader_General">IFBL Contact</para>
-        </td>
-        <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-    </blockTable>
-
-    <para style="P6">
+    <para style="P2">
       <font color="white"> </font>
     </para>
     <section>
     <para style="terp_tblheader_Details">Courses</para>
-    <blockTable colWidths="107.0,105.0,147.0,85.0,85.0" style="Table3">
+    <blockTable colWidths="65.0,230.0,150.0,85.0" style="Table3">
       <tr>
         <td>
           <para style="terp_tblheader_General">Code</para>
@@ -240,13 +187,10 @@
         <td>
           <para style="terp_tblheader_General">Language </para>
         </td>
-        <td>
-        <para style="terp_tblheader_General">Number of Seances </para>
-        </td>
       </tr>
     </blockTable>
 
-    <blockTable colWidths="107.0,105.0,147.0,85.0,85.0" style="Table5">
+    <blockTable colWidths="65.0,230.0,150.0,85.0" style="Table5">
       <tr>
         <td>
           <para style="P4">[[repeatIn(subscription.session_id.offer_id.course_ids,'course')]]</para>
@@ -260,9 +204,6 @@
         </td>
         <td>
           <para style="terp_default_8">[[course.lang_id.name]]</para>
-        </td>
-        <para style="terp_default_8"></para>
-        <td>
         </td>
       </tr>
     </blockTable>
