@@ -23,72 +23,6 @@
 import time
 from report import report_sxw
 
-class training_subscription_cancel_report(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
-        super(training_subscription_cancel_report, self).__init__(cr, uid, name, context)
-        self.localcontext.update({
-            'time': time,
-        })
-
-report_sxw.report_sxw('report.training.subscription.cancel',
-                      'training.subscription',
-                      'addons/training/report/training_cancel.rml',
-                      parser=training_subscription_cancel_report,
-                      header=True)
-
-class training_subscription_confirm_report(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
-        super(training_subscription_confirm_report, self).__init__(cr, uid, name, context)
-        self.localcontext.update({
-            'time': time,
-        })
-
-report_sxw.report_sxw('report.training.subscription.confirm',
-                      'training.subscription',
-                      'addons/training/report/training_confirm.rml',
-                      parser=training_subscription_confirm_report,
-                      header=True)
-class training_seance_presence_report(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
-        super(training_seance_presence_report, self).__init__(cr, uid, name, context)
-        self.localcontext.update({
-            'time': time,
-        })
-
-report_sxw.report_sxw('report.training.seance.presence',
-                      'training.seance',
-                      'addons/training/report/training_presence.rml',
-                      parser=training_seance_presence_report,
-                      header=True)
-
-
-class training_course_material_report(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
-        super(training_course_material_report, self).__init__(cr, uid, name, context)
-        self.localcontext.update({
-            'time': time,
-        })
-
-report_sxw.report_sxw('report.training.course.material.report',
-                      'training.course',
-                      'addons/training/report/training_course.rml',
-                      parser=training_seance_presence_report,
-                      header=True)
-
-class training_subscription_presence_certificate_report(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
-        super(training_subscription_presence_certificate_report, self).__init__(cr, uid, name, context)
-        self.localcontext.update({
-            'time': time,
-        })
-
-report_sxw.report_sxw('report.training.subscription.presence.certificate.report',
-                      'training.subscription',
-                      'addons/training/report/training_presence_certificate.rml',
-                      parser=training_subscription_presence_certificate_report,
-                      header=True)
-
-
 class training_planned_exam_confirm_report(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(training_planned_exam_confirm_report, self).__init__(cr, uid, name, context)
@@ -101,6 +35,7 @@ report_sxw.report_sxw('report.report.training.planned_exam.report',
                       'addons/training/report/training_exam_confirm.rml',
                       parser=training_planned_exam_confirm_report,
                       header=True)
+
 class in_construction(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(in_construction, self).__init__(cr, uid, name, context)
@@ -109,10 +44,7 @@ class in_construction(report_sxw.rml_parse):
         })
 
 reports = [
-    ('report.training.seance.booking.support', 'training.seance'),
-    ('report.training.seance.booking.classroom', 'training.seance'),
     ('report.training.planned_exam.cancel', 'training.planned_exam'),
-    ('report.training.course.financial.report', 'training.course')
 ]
 
 for name, model in reports:
