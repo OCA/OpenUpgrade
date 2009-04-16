@@ -241,11 +241,12 @@
           <para style="P6">
             <font color="white"> </font>
           </para>
-    <para style="terp_tblheader_Details">Preliminary Courses</para>
+    <para style="terp_tblheader_Details">Preliminary Courses [[course.preliminary_course_ids and  ' ' or removeParentNode('para')]]</para>
+
     <blockTable colWidths="265.0,200.0,64.0" style="Table4">
       <tr>
         <td>
-          <para style="terp_tblheader_General">Courses</para>
+          <para style="terp_tblheader_General">Courses [[course.preliminary_course_ids and ' ' or removeParentNode('blockTable')]]</para>
         </td>
         <td>
           <para style="terp_tblheader_General">Type</para>
@@ -274,11 +275,12 @@
           <para style="P6">
             <font color="white"> </font>
           </para>
-    <para style="terp_tblheader_Details">Complementary Courses</para>
+
+    <para style="terp_tblheader_Details">Complementary Courses[[course.complementary_course_ids and  ' ' or removeParentNode('para')]]</para>
     <blockTable colWidths="265.0,200.0,64.0" style="Table4">
       <tr>
         <td>
-          <para style="terp_tblheader_General">Courses</para>
+          <para style="terp_tblheader_General">Courses [[ course.complementary_course_ids and  ' ' or removeParentNode('blockTable') ]]</para>
         </td>
         <td>
           <para style="terp_tblheader_General">Type</para>
@@ -288,7 +290,7 @@
         </td>
       </tr>
     </blockTable>
-    <section>
+<section>
     <blockTable colWidths="265.0,200.0,64.0" style="Table5">
       <tr>
         <td>
