@@ -42,8 +42,17 @@
       <lineStyle kind="LINEBELOW" colorName="#808080" start="0,0" stop="-1,-1"/>
       <lineStyle kind="LINEAFTER" colorName="#808080" start="0,0" stop="-1,-1"/>
        <lineStyle kind="LINEABOVE" colorName="#808080" start="0,0" stop="-1,-1"/>
-
     </blockTableStyle>
+    <blockTableStyle id="TableLightGrey">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
+     </blockTableStyle>
+
+
     <blockTableStyle id="Table4">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
@@ -153,29 +162,68 @@
     <para style="P1">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="265.0,265.0" style="Table2">
+    <blockTable colWidths="265.0,265.0" style="TableLightGrey">
       <tr>
         <td>
-          <para style="terp_tblheader_General">Participant :</para>
+          <para style="terp_tblheader_General">Participant</para>
         </td>
         <td>
-          <para style="terp_default_8">[[ subscription.contact_id.title ]] [[ subscription.contact_id.name ]] [[ subscription.contact_id.first_name ]]</para>
+          <para style="terp_tblheader_General">Training</para>
         </td>
       </tr>
       <tr>
         <td>
-          <para style="P8">Training:</para>
+          <para style="terp_default_8">[[ subscription.contact_id.title ]] [[ subscription.contact_id.name ]] [[ subscription.contact_id.first_name ]]</para>
         </td>
         <td>
           <para style="terp_default_8">[[ subscription.session_id.offer_id.name ]] </para>
         </td>
       </tr>
-      <tr>
+    </blockTable>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="265.0,265.0" style="TableLightGrey">
+        <tr>
+            <td>
+                <para style="terp_tblheader_General">Adresse</para>
+            </td>
+            <td>
+                <para style="terp_tblheader_General">Distribution du matériel de cours</para>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <para style="terp_default_8">[[ subscription.partner_id.name ]] </para>
+            </td>
+            <td>
+                <para style="terp_default_8">[[repeatIn(subscription.session_id.offer_id.course_ids,'course')]]</para>
+                <para style="terp_default_8">[[course.name]]</para>
+            </td>
+        </tr>
+    </blockTable>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="265.0,265.0" style="TableLightGrey">
+        <tr>
         <td>
-          <para style="terp_tblheader_General">Price:</para>
+          <para style="terp_tblheader_General">Divers</para>
         </td>
         <td>
-          <para style="terp_default_8">[[ subscription.price ]]</para>
+          <para style="terp_tblheader_General">Votre contact</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="terp_default_8">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="terp_default_8">
+            <font color="white"> </font>
+          </para>
         </td>
       </tr>
     </blockTable>
@@ -183,7 +231,7 @@
       <font color="white"> </font>
     </para>
     <para style="terp_tblheader_Details">Détail des séances</para>
-      <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="Table3">
+      <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="TableLightGrey">
       <tr>
         <td>
           <para style="terp_tblheader_General_Centre">Date</para>
@@ -211,7 +259,7 @@
     </blockTable>
     <section>
     <para style="P2">[[repeatIn(subscription.session_id.event_ids,'event') ]]</para>
-    <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="Table3">
+    <blockTable colWidths="76.0,76.0,76.0,70.0,82.0,60.0,92.0" style="TableLightGrey">
       <tr>
         <td>
            <para style="terp_default_Centre_8"> [[time.strftime('%Y-%m-%d', time.strptime( event.date, '%Y-%m-%d %H:%M:%S'))]]</para>
@@ -254,46 +302,6 @@
     <para style="P2">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="265.0,265.0" style="Table4">
-      <tr>
-        <td>
-          <para style="terp_tblheader_General">Adresse(s):</para>
-        </td>
-        <td>
-          <para style="terp_default_8">[[ subscription.partner_id.name ]] </para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="terp_tblheader_General">Distribution du matériel de cours:</para>
-        </td>
-        <td>
-          <para style="terp_default_8">[[repeatIn(subscription.session_id.offer_id.course_ids,'course')]]</para>
-          <para style="terp_default_8">[[course.name]]</para>
-
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="terp_tblheader_General">Divers:</para>
-        </td>
-        <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="terp_tblheader_General">Votre contact à l'IFBL:</para>
-        </td>
-        <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-    </blockTable>
     <para style="P2">
       <font color="white"> </font>
     </para>
