@@ -26,6 +26,50 @@
                     </field>
                 </field>
             </record>
+
+			<!--
+		    =======================================================
+		    EVENT CASE VIEWS
+		    =======================================================
+		    -->
+			<record id="view_dm_event_case_tree" model="ir.ui.view">
+			    <field name="name">dm.event.case.tree</field>
+			    <field name="model">dm.event.case</field>
+			    <field name="type">tree</field>
+			    <field name="arch" type="xml">
+			        <tree editable="bottom" string="Events">
+			            <field name="campaign_id"/>
+		                <field name="segment_id"/>
+		                <field name="step_id"/>
+		                <field name="source"/>
+		                <field name="case_id"/>
+		                <field name="trigger_type_id" widget="selection"/>
+			        </tree>
+			    </field>
+			</record>
+			<record id="view_dm_event_case_form" model="ir.ui.view">
+			    <field name="name">dm.event.case.form</field>
+			    <field name="model">dm.event.case</field>
+			    <field name="type">form</field>
+			    <field name="arch" type="xml">
+			        <form string="Events">
+			            <field name="campaign_id" select="1"/>
+		                <field name="segment_id"/>
+		                <field name="step_id" select="2"/>
+		                <field name="source" select="1"/>
+		                <field name="case_id"/>
+		                <field name="trigger_type_id" select="1"/>
+			        </form>
+			    </field>
+			</record>
+			<record id="act_dm_event_case_form" model="ir.actions.act_window">
+			    <field name="name">Edit Case Events</field>
+			    <field name="type">ir.actions.act_window</field>
+			    <field name="res_model">dm.event.case</field>
+			    <field name="view_type">form</field>
+			    <field name="view_mode">tree,form</field>
+			</record>
+			<menuitem action="act_dm_event_case_form" id="menu_act_dm_event_case_form" parent="dm.menu_dm_config_lowlevel"/>
         </data>
     </openerp>
 
