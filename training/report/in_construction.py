@@ -45,9 +45,10 @@ class training_subscription_confirm_report(report_sxw.rml_parse):
 
 report_sxw.report_sxw('report.training.subscription.confirm',
                       'training.subscription',
-                      'addons/training/report/training_confirm.rml',
+                      'addons/training/report/training_subscription_confirm.rml',
                       parser=training_subscription_confirm_report,
                       header=True)
+
 class training_seance_presence_report(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(training_seance_presence_report, self).__init__(cr, uid, name, context)
