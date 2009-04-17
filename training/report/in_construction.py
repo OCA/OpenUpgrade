@@ -150,20 +150,20 @@ report_sxw.report_sxw('report.dummy.training.hiring.form.report',
                       parser=training_dummy_training_hiring_form_report,
                       header=True)
 
-class training_dummy_training_evalation_skateholder_report(report_sxw.rml_parse):
+class training_dummy_training_evaluation_skateholder_report(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(training_dummy_training_evalation_skateholder_report, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
         })
 
-report_sxw.report_sxw('report.training.evaluation.form.report',
+report_sxw.report_sxw('report.training.evaluation.skateholder.report',
                       'dummy.support.delivery',
-                      'addons/training/report/training_evalation_skateholder.rml',
-                      parser=training_dummy_training_evalation_skateholder_report,
+                      'addons/training/report/evaluation_from_skateholder.rml',
+                      parser=training_dummy_training_evaluation_skateholder_report,
                       header=True)
 
-class training_dummy_training_evalation_participant_report(report_sxw.rml_parse):
+class training_dummy_training_evaluation_participant_report(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(training_dummy_training_evalation_participant_report, self).__init__(cr, uid, name, context)
         self.localcontext.update({
@@ -172,8 +172,8 @@ class training_dummy_training_evalation_participant_report(report_sxw.rml_parse)
 
 report_sxw.report_sxw('report.training.evaluation.participant.report',
                       'dummy.support.delivery',
-                      'addons/training/report/evalation_from_participant.rml',
-                      parser=training_dummy_training_evalation_participant_report,
+                      'addons/training/report/evaluation_from_participant.rml',
+                      parser=training_dummy_training_evaluation_participant_report,
                       header=True)
 
 class in_construction(report_sxw.rml_parse):

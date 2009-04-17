@@ -93,12 +93,18 @@
             rml="training/report/training_hiring_form.rml" />
 
        <report
-            id="training_dummy_training_evalation_participant_report"
+            id="training_dummy_training_evaluation_skateholder_report"
+            model="dummy.support.delivery"
+            name="dummy.training.evaluation.skateholder.report"
+            string="Evaluation From SkateHolder"
+            rml="training/report/evaluation_from_skateholder.rml" />
+
+       <report
+            id="training_dummy_training_evaluation_participant_report"
             model="dummy.support.delivery"
             name="dummy.training.evaluation.participant.report"
-            string="Evaluation Form Participant"
-            rml="training/report/evalation_from_participant.rml" />
-
+            string="Evaluation From Participant"
+            rml="training/report/evaluation_from_participant.rml" />
 
     </data>
 </openerp>
