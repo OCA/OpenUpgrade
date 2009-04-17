@@ -53,7 +53,15 @@ class training_seance_presence_report(report_sxw.rml_parse):
         super(training_seance_presence_report, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
+            'present':self._present
         })
+        def _present(self,subscription_id):
+            res=[]
+            self.cr.execute('select present from training_participation where subscription_id =%s',(subscription_id,))
+            res=self.cr.fetchone()
+            if res[0]==True:
+                return 'Yes'
+            return res and res[0] or 'No'
 
 report_sxw.report_sxw('report.training.seance.presence',
                       'training.seance',
