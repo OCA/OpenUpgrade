@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution
+#    OpenERP, Open Source Management Solution	
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,23 +20,16 @@
 #
 ##############################################################################
 
-{
-    "name" : "On Demand Open Object - Subscription Control",
-    "version" : "1.1",
-    "author" : "Tiny",
-    "category" : "Tools",
-    "description": """
-This module provides reports to control your on demand subscription.
-You can not uninstall or delete it.
-""",
-    "website": "http://www.openerp.com",
-    "depends" : ["base"],
-    "init_xml" : [],
-    "update_xml" : [
-        "use_control_view.xml",
-        "security/ir.model.access.csv",
-    ],
-    "demo_xml" : [],
-    "installable": True,
-    "active" : True,
-}
+from osv import osv
+from tools.translate import _
+
+class module(osv.osv):
+    _inherit = 'ir.module.module'
+
+    def button_uninstall(self, cr, uid, ids, context=None):
+        if self.search(cr, uid, ['&', ('id', 'in', ids), ('name', '=', 'use_control')], context=context):
+            raise osv.except_osv(_('Error'), _('The "use_control" module is not uninstallable'))
+        return super(module, self).button_uninstall(cr, uid, ids, context)
+
+module()
+
