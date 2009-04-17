@@ -118,24 +118,6 @@
     <para style="P3">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="319.0,211.0" style="Table1">
-      <tr>
-        <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-            <para style="terp_default_8">[[ subscription.partner_id.title or '' ]] [[ subscription.partner_id.name ]]</para>
-            <para style="terp_default_8">[[ subscription.partner_id.address_id.title or '' ]]</para>
-            <para style="terp_default_8">[[ subscription.partner_id.address_id.street ]]</para>
-            <para style="terp_default_8">[[ subscription.partner_id.address_id.street2 or '' ]]</para>
-            <para style="terp_default_8">[[ subscription.partner_id.address_id.zip or '' ]] [[ subscription.partner_id.address_id.city or '' ]]</para>
-            <para style="terp_default_8">[[ subscription.partner_id.address_id.state_id and subscription.partner_id.address_id.state_id.name or '' ]]</para>
-            <para style="terp_default_8">[[ subscription.partner_id.address_id.country_id and subscription.partner_id.address_id.country_id.name or '' ]]</para>
-        </td>
-      </tr>
-    </blockTable>
     <para style="P4">
       <font color="white"> </font>
     </para>
