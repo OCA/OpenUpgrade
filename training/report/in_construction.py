@@ -111,6 +111,18 @@ report_sxw.report_sxw('report.dummy.support.delivery.report',
                       parser=training_dummy_support_delivery_report,
                       header=True)
 
+class training_seance_cancel_report(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(training_seance_cancel_report, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+
+report_sxw.report_sxw('report.training.seance.cancel.report',
+                      'training.seance',
+                      'addons/training/report/training_seance_cancel.rml',
+                      parser=training_seance_cancel_report,
+                      header=True)
 
 class in_construction(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):

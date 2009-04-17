@@ -70,6 +70,13 @@
             name="dummy.support.delivery.report'"
             string="Support Delivery"
             rml="training/report/delivery_support.rml" />
+
+        <report 
+            id="training_seance_cancel_report"
+            model="training.seance"
+            name="training.seance.cancel.report"
+            string="Seance - Cancellation"
+            rml="training/report/training_seance_cancel.rml" />
     </data>
 </openerp>
 
