@@ -487,7 +487,7 @@ class olap_database_columns(osv.osv):
                 args = [('table_id','in',table_ids),('related_to','<>',False),('hide','<>',True),('active','<>',False)]
             elif context and context.has_key('master_schema') and context['master_schema']:
                     args=[('primary_key','=','True')]
-        args=[('primary_key','=',True),('hide','<>',True),('active','<>',False)]
+#        args=[('primary_key','=',True),('hide','<>',True),('active','<>',False)] 
         return super(olap_database_columns,self).search(cr, uid, args, offset, limit,
                     order, context=context, count=count)
 

@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,27 +19,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-
 {
-    'name': 'Business Process for Accounting Voucher',
-    'version': '1.0',
-    'category': 'Generic Modules/Indian Accounting',
-    'description': """Business process for the Accounting Voucher
-    We can define the rules for voucher > 1000 need Special Authorization
+    "name":"Indian Accounting Profile",
+    "version":"1.0",
+    "author": 'Tiny & Axelor',
+    "description":"""Profile Indian Accounting
+    * Chart of Account
+    * Payment Receipt methods
+    * Accunting Reports
+    * Indian Payroll and Loan Management
     """,
-    'author': 'Tiny & Axelor',
-    'website': 'http://tinyerpindia.com',
-    'depends': [
-        'account_voucher'
+    "website" : "http://tinyerpindia.com",
+    'category': 'Profile',
+    "depends":[
+        "account_base",
+        "l10n_chart_in",
+        "account_voucher",
+        "account_voucher_payment",
+        "account_voucher_workflow",
     ],
-    'init_xml': [],
-    'update_xml': [
-        'account_voucher_workflow.xml',
-        "account_voucher_view.xml"
-    ],
-    'demo_xml': [],
-    'installable': True,
-    'active': False,
+    "demo_xml":[],
+    "update_xml":[],
+    "active":False,
+    "installable":True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

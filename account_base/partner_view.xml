@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
-		<record model="ir.ui.view" id="voucher_partner_form">
-			<field name="name">voucher.partner.form</field>
+		<record model="ir.ui.view" id="account_base_partner_form">
+			<field name="name">account_base.partner.form</field>
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="model">res.partner</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="date" select="2" position="after">
-					<separator string="Exices Details" colspan="4"/>
+				<field name="bank_ids" select="2" position="before">
+					<separator string="Exise, Service Tax, and PAN Details" colspan="4"/>
 					<field name="excise" select="2"/>
 					<field name="range" select="2"/>
 					<field name="div" select="2"/>
@@ -20,48 +20,5 @@
 			</field>
 		</record>
 		
-		<!--   Wizard View -->
-		<record model="ir.ui.view" id="wizard_account_base_setup_form">
-			<field name="name">wizard.account.base.setup.form</field>
-			<field name="model">wizard.account.base.setup</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Company Excise Detail">
-					<field name="company_id" select="1" readonly="1"/>
-					<field name="partner_id" select="1" readonly="1"/>
-					<separator string="Excise Details" colspan="4"/>
-					<field name="excise" select="2"/>
-					<field name="range" select="2"/>
-					<field name="div" select="2"/>
-					<field name="vat_no" select="2" />
-					<field name="cst_no" select="2"/>
-					<field name="pan_no" select="2" />
-					<field name="ser_tax" select="2"/>
-					<group col="2" colspan="4">
-						<button icon="gtk-cancel" special="cancel" type="object" name="action_cancel" string="Cancel"/>
-						<button icon="gtk-ok" name="action_create" string="Create" type="object"/>
-					</group>
-				</form>
-			</field>
-		</record>
-		
-        <record id="action_wizard_account_base_setup_form" model="ir.actions.act_window">
-            <field name="name">Company Excise Detail</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">wizard.account.base.setup</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field>
-        </record>
-
-        <!-- register configuration wizard -->
-
-        <record id="config_wizard_account_base_setup_form" model="ir.actions.todo">
-            <field name="name">Company Excise Detail Wizard</field>
-            <field name="note">Define Company Excise Detail</field>
-            <field name="action_id" ref="action_wizard_account_base_setup_form"/>
-        </record>
-
-
 	</data>
 </openerp>

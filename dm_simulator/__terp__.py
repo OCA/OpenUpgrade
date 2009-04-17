@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,27 +19,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-
 {
-    'name': 'Business Process for Accounting Voucher',
-    'version': '1.0',
-    'category': 'Generic Modules/Indian Accounting',
-    'description': """Business process for the Accounting Voucher
-    We can define the rules for voucher > 1000 need Special Authorization
-    """,
-    'author': 'Tiny & Axelor',
-    'website': 'http://tinyerpindia.com',
-    'depends': [
-        'account_voucher'
-    ],
-    'init_xml': [],
-    'update_xml': [
-        'account_voucher_workflow.xml',
-        "account_voucher_view.xml"
-    ],
-    'demo_xml': [],
-    'installable': True,
-    'active': False,
+    "name" : "Simulation",
+    "version" : "1.0",
+    "author" : "Tiny",
+    "website" : "http://www.openerp.com",
+    "category" : "Generic Modules/Direct Marketing",
+    "description": """
+            This module is used to launch simulation on other servers.
+            """,
+    "depends" : ["dm"],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : [
+                    "dm_simulator_view.xml",
+                    ],
+    "active": False,
+    "installable": True,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

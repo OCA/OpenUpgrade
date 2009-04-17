@@ -21,22 +21,27 @@
 ##############################################################################
 
 {
-    "name" : "Invoice Payment through Voucher",
+    "name" : "Invoice Payment/Receipt by Vouchers",
     "version" : "1.0",
-    "author" : "Tiny",
-    "description": """
-        This module includes :
-        * It is used to pay the invoice amount through 
-          voucher
+    "author" : 'Tiny & Axelor',
+    "description": """This module includes :
+    * It reconcile the invoice (supplier, customer) while paying through 
+    Accounting Vouchers
     """,
-    "category" : "Generic Modules/Accounting",
-    "website" : "http://tinyerp.com",
-    "depends" : ["base", "account"],
+    "category" : "Generic Modules/Indian Accounting",
+    "website" : "http://tinyerpindia.com",
+    "depends" : [
+        "base", 
+        "account",
+        "account_voucher",
+    ],
     "init_xml" : [
     ],
     
     "demo_xml" : [],
-    "update_xml" : ["account_voucher_payment_view.xml"],
+    "update_xml" : [
+        "account_voucher_payment_view.xml"
+    ],
     "active": False,
     "installable": True,
 }
