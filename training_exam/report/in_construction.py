@@ -31,7 +31,7 @@ class training_planned_exam_confirm_report(report_sxw.rml_parse):
         })
 
 report_sxw.report_sxw('report.report.training.planned_exam.report',
-                      'training.subscription',
+                      'training.planned_exam',
                       'addons/training/report/training_exam_confirm.rml',
                       parser=training_planned_exam_confirm_report,
                       header=True)
@@ -44,7 +44,7 @@ class training_planned_exam_cancel_report(report_sxw.rml_parse):
         })
 
 report_sxw.report_sxw('report.training.planned_exam.cancel',
-                      'training.subscription',
+                      'training.planned_exam',
                       'addons/training/report/training_exam_cancel.rml',
                       parser=training_planned_exam_cancel_report,
                       header=True)
