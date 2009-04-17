@@ -113,8 +113,8 @@
           </para>
         </td>
         <td>
-          <para style="terp_default_8">[[ subscription.partner_id.title or '' ]][[ subscription.partner_id.name ]]</para>
-          <para style="terp_default_8">[[ subscription.address_id.title or '' ]][[ subscription.address_invoice_id.name ]]</para>
+
+          <para style="terp_default_8">[[ subscription.address_id.title or '' ]][[ subscription.address_id.name ]]</para>
           <para style="terp_default_8">[[ subscription.address_id.street ]]</para>
           <para style="terp_default_8">[[ subscription.address_id.street2 or '' ]]</para>
           <para style="terp_default_8">[[ subscription.address_id.zip or '' ]][[ subscription.address_id.city or '' ]]</para>
