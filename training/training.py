@@ -338,6 +338,12 @@ class training_session(osv.osv):
                 res[obj.id] = (obj.offer_id.kind == 'intra')
         return res
 
+    def _get_seances(self, cr, uid, ids, context=None):
+        if not ids:
+            return '0'
+        return '0'
+
+
     _columns = {
         'name' : fields.char('Name',
                              size=64,
@@ -768,6 +774,13 @@ class training_subscription(osv.osv):
         'nbr_to_subscribe' : lambda *a: 1,
     }
 
+    def _get_courses_with_attendance(self, cr, uid, ids, context=None):
+        if not ids:
+            return []
+        cr.execute("SELECT ts.course_id FROM training_seance ts, training_participation tp WHERE \
+                   ts.event_id = tp.event_id AND tp.present = %s AND tp.subscription_id = %s",
+                   (True, ids[0],))
+        return self.pool.get('training.course').browse(cr, uid, [x[0] for x in cr.fetchall()], context=context)
 
     def on_change_partner(self, cr, uid, ids, partner_id):
         """
