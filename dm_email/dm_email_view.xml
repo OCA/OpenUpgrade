@@ -25,5 +25,18 @@
                     </notebook>
                 </field>
         </record>
+
+        <record id="dm_document_normal_form_view2" model="ir.ui.view">
+            <field name="name">dm.offer.document.form.inherit2</field>
+            <field name="model">dm.offer.document</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_offer_step_document_form"/>
+            <field name="arch" type="xml">
+                <field name="step_id" position="after">
+                    <field name="media_id" invisible="True"/>
+                </field>
+            </field>
+        </record>
+
         </data>
     </openerp>

@@ -188,6 +188,16 @@ class dm_offer_step(osv.osv):
     def state_draft_set(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state':'draft'})
         return True
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context and 'dm_camp_id' in context:
+            if not context['dm_camp_id']:
+                return []
+            res  = self.pool.get('dm.campaign').browse(cr, uid,context['dm_camp_id'])
+            step_ids = map(lambda x : x.id, res.offer_id.step_ids)
+            return step_ids
+        return super(dm_offer_step, self).search(cr, uid, args, offset, limit, order, context, count)
+
 
 dm_offer_step()
 

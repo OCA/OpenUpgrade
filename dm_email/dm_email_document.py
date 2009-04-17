@@ -29,7 +29,7 @@ class dm_offer_document(osv.osv):
                 'subject' : fields.char('Subject',size=64,),
                 'editor' : fields.selection([('internal','Internal'),('oord','DM Open Office Report Design')],'Editor'),
                 'content' : fields.text('Content'),
-                'media_id':fields.related('step_id','media_id',type='many2one', relation='dm.media', string='Media'),
+                'media_id':fields.related('step_id','media_id','name',type='char', relation='dm.media', string='Media'),
             }
 
 dm_offer_document()

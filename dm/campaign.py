@@ -1058,6 +1058,17 @@ class dm_campaign_proposition_segment(osv.osv):
     _inherits = {'account.analytic.account': 'analytic_account_id'}
     _description = "A subset of addresses coming from a customers file"
 
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context and 'dm_camp_id' in context:
+            if not context['dm_camp_id']:
+                return []
+            res  = self.pool.get('dm.campaign').browse(cr, uid,context['dm_camp_id'])
+            seg_ids = []
+            for pro  in res.proposition_ids:
+                seg_ids.extend(map(lambda x : x.id, pro.segment_ids))
+            return seg_ids
+        return super(dm_campaign_proposition_segment, self).search(cr, uid, args, offset, limit, order, context, count)
+
     def _quantity_usable_get(self, cr, uid, ids, name, args, context={}):
         result ={}
         for segment in self.browse(cr,uid,ids):
@@ -1093,6 +1104,8 @@ class dm_campaign_proposition_segment(osv.osv):
                     code1='-'.join([cust_file_code[:3], seq[:4]])
                     result[s]=code1
                     i +=1
+            else :
+                result[seg.id]=seg.type_src+'%d'%id
         return result
 
     def onchange_list(self, cr, uid, ids, customers_list, start_census, end_census):
