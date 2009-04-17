@@ -156,9 +156,9 @@ class dm_campaign_group(osv.osv):
         'campaign_ids': fields.one2many('dm.campaign', 'campaign_group_id', 'Campaigns', domain=[('campaign_group_id','=',False)], readonly=True),
         'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_group_id', 'Purchase Lines'),
 #        'quantity_planned_total' : fields.function(_quantity_planned_total, string='Total planned Quantity',type="char",size="64",method=True,readonly=True),
-        'quantity_wanted_total' : fields.function(_quantity_wanted_total, string='Total Wanted Quantity',type="char",size="64",method=True,readonly=True),
-        'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size="64",method=True,readonly=True),
-        'quantity_usable_total' : fields.function(_quantity_usable_total, string='Total Usable Quantity',type="char",size="64",method=True,readonly=True),
+        'quantity_wanted_total' : fields.function(_quantity_wanted_total, string='Total Wanted Quantity',type="char",size=64,method=True,readonly=True),
+        'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size=64,method=True,readonly=True),
+        'quantity_usable_total' : fields.function(_quantity_usable_total, string='Total Usable Quantity',type="char",size=64,method=True,readonly=True),
     }
 dm_campaign_group()
 
@@ -369,7 +369,7 @@ class dm_campaign(osv.osv):
 
 
     _columns = {
-        'code1' : fields.function(_campaign_code,string='Code',type="char",size="64",method=True,readonly=True),
+        'code1' : fields.function(_campaign_code,string='Code',type="char",size=64,method=True,readonly=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','in',['ready','open']),('type','in',['new','standart','rewrite'])], required=True,
             help="Choose the commercial offer to use with this campaign, only offers in ready to plan or open state can be assigned"),
         'country_id' : fields.many2one('res.country', 'Country',required=True, 
@@ -417,10 +417,10 @@ class dm_campaign(osv.osv):
                                                         domain=[('type','ilike','Customers List')], context={'type':'Customers List'}),
         'item_task_ids': one2many_mod_task('project.task', 'project_id', "Items Procurement tasks",
                                                         domain=[('type','ilike','Items Procurement')], context={'type':'Items Procurement'}),
-        'quantity_planned_total' : fields.function(_quantity_planned_total, string='Total planned Quantity',type="char",size="64",method=True,readonly=True),
-        'quantity_wanted_total' : fields.function(_quantity_wanted_total, string='Total Wanted Quantity',type="char",size="64",method=True,readonly=True),
-        'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size="64",method=True,readonly=True),
-        'quantity_usable_total' : fields.function(_quantity_usable_total, string='Total Usable Quantity',type="char",size="64",method=True,readonly=True),
+        'quantity_planned_total' : fields.function(_quantity_planned_total, string='Total planned Quantity',type="char",size=64,method=True,readonly=True),
+        'quantity_wanted_total' : fields.function(_quantity_wanted_total, string='Total Wanted Quantity',type="char",size=64,method=True,readonly=True),
+        'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size=64,method=True,readonly=True),
+        'quantity_usable_total' : fields.function(_quantity_usable_total, string='Total Usable Quantity',type="char",size=64,method=True,readonly=True),
         'dtp_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "DTP Purchase Lines",
                                                         domain=[('product_category','=','DTP')], context={'product_category':'DTP'}),
         'manufacturing_purchase_line_ids': one2many_mod_pline('dm.campaign.purchase_line', 'campaign_id', "Manufacturing Purchase Lines",
@@ -903,7 +903,7 @@ class dm_campaign_proposition(osv.osv):
         return []
 
     _columns = {
-        'code1' : fields.function(_proposition_code,string='Code',type="char",size="64",method=True,readonly=True),
+        'code1' : fields.function(_proposition_code,string='Code',type="char",size=64,method=True,readonly=True),
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade',required=True),
         'sale_rate' : fields.float('Sale Rate (%)', digits=(16,2),
                     help='This is the planned sale rate (in percent) for this commercial proposition'),
@@ -912,15 +912,15 @@ class dm_campaign_proposition(osv.osv):
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
         'quantity_planned' : fields.integer('Planned Quantity', help='The planned quantity is an estimation of the usable quantity of addresses you  will get after delivery, deduplication and cleaning\n' \
                             'This is usually the quantity used to order the manufacturing of the mailings'),
-        'quantity_wanted' : fields.function(_quantity_wanted_get,string='Wanted Quantity',type="char",size="64",method=True,readonly=True,
+        'quantity_wanted' : fields.function(_quantity_wanted_get,string='Wanted Quantity',type="char",size=64,method=True,readonly=True,
                     help='The wanted quantity is the number of addresses you wish to get for that segment.\n' \
                             'This is usually the quantity used to order Customers Lists\n' \
                             'The wanted quantity could be AAA for All Addresses Available'),
-        'quantity_delivered' : fields.function(_quantity_delivered_get,string='Delivered Quantity',type="char",size="64",method=True,readonly=True,
+        'quantity_delivered' : fields.function(_quantity_delivered_get,string='Delivered Quantity',type="char",size=64,method=True,readonly=True,
                     help='The delivered quantity is the number of addresses you receive from the broker.'),
-        'quantity_usable' : fields.function(_quantity_usable_get,string='Usable Quantity',type="char",size="64",method=True,readonly=True,
+        'quantity_usable' : fields.function(_quantity_usable_get,string='Usable Quantity',type="char",size=64,method=True,readonly=True,
                     help='The usable quantity is the number of addresses you have after delivery, deduplication and cleaning.'),
-        'quantity_real' : fields.function(_quantity_real_get,string='Real Quantity',type="char",size="64",method=True,readonly=True,
+        'quantity_real' : fields.function(_quantity_real_get,string='Real Quantity',type="char",size=64,method=True,readonly=True,
                     help='The real quantity is the number of addresses you really get in the file.'),
         'starting_mail_price' : fields.float('Starting Mail Price',digits=(16,2)),
         'customer_pricelist_id':fields.many2one('product.pricelist','Product Pricelist', required=False),
@@ -1106,7 +1106,7 @@ class dm_campaign_proposition_segment(osv.osv):
         return False
 
     _columns = {
-        'code1' : fields.function(_segment_code, string='Code', type="char", size="64", method=True, readonly=True),
+        'code1' : fields.function(_segment_code, string='Code', type="char", size=64, method=True, readonly=True),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
         'type_src' : fields.selection([('internal','Internal'),('external','External')], 'Type'),
         'customers_list_id': fields.many2one('dm.customers_list','Customers List'),
