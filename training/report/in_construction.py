@@ -32,7 +32,7 @@ class training_subscription_cancel_report(report_sxw.rml_parse):
 
 report_sxw.report_sxw('report.training.subscription.cancel',
                       'training.subscription',
-                      'addons/training/report/training_cancel.rml',
+                      'addons/training/report/training_subscription_cancel.rml',
                       parser=training_subscription_cancel_report,
                       header=True)
 
