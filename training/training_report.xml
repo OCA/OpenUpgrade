@@ -77,6 +77,13 @@
             name="training.seance.cancel.report"
             string="Seance - Cancellation"
             rml="training/report/training_seance_cancel.rml" />
+
+        <report 
+            id="training_session_cancel_report"
+            model="training.session"
+            name="training.session.cancel.report"
+            string="Session - Cancellation"
+            rml="training/report/training_session_cancel.rml" />
     </data>
 </openerp>
 
