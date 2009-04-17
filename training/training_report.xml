@@ -67,7 +67,7 @@
         <report
             id="training_dummy_support_delivery_report"
             model="dummy.support.delivery"
-            name="dummy.support.delivery.report'"
+            name="dummy.support.delivery.report"
             string="Support Delivery"
             rml="training/report/delivery_support.rml" />
 
@@ -84,6 +84,15 @@
             name="training.session.cancel.report"
             string="Session - Cancellation"
             rml="training/report/training_session_cancel.rml" />
+
+        <report
+            id="training_dummy_training_hiring_form_report"
+            model="dummy.support.delivery"
+            name="dummy.training.hiring.form.report"
+            string="Training Hiring Form"
+            rml="training/report/training_hiring_form.rml" />
+
+
     </data>
 </openerp>
 
