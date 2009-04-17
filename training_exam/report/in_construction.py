@@ -32,7 +32,7 @@ class training_planned_exam_confirm_report(report_sxw.rml_parse):
 
 report_sxw.report_sxw('report.report.training.planned_exam.report',
                       'training.planned_exam',
-                      'addons/training/report/training_exam_confirm.rml',
+                      'addons/training_exam/report/training_exam_confirm.rml',
                       parser=training_planned_exam_confirm_report,
                       header=True)
 
@@ -45,7 +45,7 @@ class training_planned_exam_cancel_report(report_sxw.rml_parse):
 
 report_sxw.report_sxw('report.training.planned_exam.cancel',
                       'training.planned_exam',
-                      'addons/training/report/training_exam_cancel.rml',
+                      'addons/training_exam/report/training_exam_cancel.rml',
                       parser=training_planned_exam_cancel_report,
                       header=True)
 class in_construction(report_sxw.rml_parse):

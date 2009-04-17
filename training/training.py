@@ -599,7 +599,7 @@ class training_event(osv.osv):
     }
 
     _constraints = [
-        ( _check_date, "Errorr, Can you check your start date", ['date']),
+        ( _check_date, "Error, Can you check your start date", ['date']),
     ]
 
     _defaults = {
