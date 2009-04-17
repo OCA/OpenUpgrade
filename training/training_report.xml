@@ -71,14 +71,14 @@
             string="Support Delivery"
             rml="training/report/delivery_support.rml" />
 
-        <report 
+        <report
             id="training_seance_cancel_report"
             model="training.seance"
             name="training.seance.cancel.report"
             string="Seance - Cancellation"
             rml="training/report/training_seance_cancel.rml" />
 
-        <report 
+        <report
             id="training_session_cancel_report"
             model="training.session"
             name="training.session.cancel.report"
@@ -91,6 +91,13 @@
             name="dummy.training.hiring.form.report"
             string="Training Hiring Form"
             rml="training/report/training_hiring_form.rml" />
+
+       <report
+            id="training_dummy_training_evalation_skateholder_report"
+            model="dummy.support.delivery"
+            name="dummy.training.evaluation.form.report"
+            string="Evaluation Form SkateHolder"
+            rml="training/report/training_evalation_skateholder.rml" />
 
 
     </data>
