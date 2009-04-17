@@ -64,6 +64,8 @@ With the analytic account support, you can know the costs of your trainings.
         'workflow/subscription_workflow.xml',
         'process/plan_course_process.xml',
         'process/course_subscription_process.xml',
+
+        'dummy_view.xml',
     ],
     'active' : False,
     'installable' : True,
