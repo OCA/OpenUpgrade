@@ -55,7 +55,7 @@ class training_seance_presence_report(report_sxw.rml_parse):
             'time': time,
             'present':self._present
         })
-        def _present(self,subscription_id):
+    def _present(self,subscription_id):
             res=[]
             self.cr.execute('select present from training_participation where subscription_id =%s',(subscription_id,))
             res=self.cr.fetchone()
