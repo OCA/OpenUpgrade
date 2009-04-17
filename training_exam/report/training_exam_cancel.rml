@@ -126,23 +126,21 @@
           </para>
         </td>
         <td>
-          <para style="terp_default_8">[[ subscription.partner_id.title or '' ]][[ planned_exam.location_id.address_id.name ]]</para>
-          <para style="terp_default_8">[[  planned_exam.location_id..address_id.title or '' ]]</para>
-          <para style="terp_default_8">[[planned_exam.location_id .address_id.street ]]</para>
-          <para style="terp_default_8">[[ planned_exam.location_id.street2 or '' ]]</para>
-          <para style="terp_default_8">[[ planned_exam.location_id.address_id.zip or '' ]][[planned_exam.location_id .address_id.city or '' ]]</para>
-          <para style="terp_default_8">[[ planned_exam.location_id address_id.state_id and planned_exam.location_id.address_id.state_id.name or '' ]]</para>
-          <para style="terp_default_8">[[ planned_exam.location_id.address_id.country_id and  planned_exam.location_id.address_id.country_id.name or '' ]]</para>
+            <para style="terp_default_8">[[ subscription.partner_id.title or '' ]] [[ subscription.partner_id.name ]]</para>
+            <para style="terp_default_8">[[ subscription.partner_id.address_id.title or '' ]]</para>
+            <para style="terp_default_8">[[ subscription.partner_id.address_id.street ]]</para>
+            <para style="terp_default_8">[[ subscription.partner_id.address_id.street2 or '' ]]</para>
+            <para style="terp_default_8">[[ subscription.partner_id.address_id.zip or '' ]] [[ subscription.partner_id.address_id.city or '' ]]</para>
+            <para style="terp_default_8">[[ subscription.partner_id.address_id.state_id and subscription.partner_id.address_id.state_id.name or '' ]]</para>
+            <para style="terp_default_8">[[ subscription.partner_id.address_id.country_id and subscription.partner_id.address_id.country_id.name or '' ]]</para>
         </td>
       </tr>
     </blockTable>
     <para style="P4">
       <font color="white"> </font>
     </para>
-    <para style="terp_header">Exam –Cancellation: [[ planned_exam.name ]]</para>
-    <para style="P2">
-      <font color="white"> </font>
-    </para>
+    <para style="terp_header">Exam - Cancellation: [[ planned_exam.name ]]</para>
+    <!--
     <section>
     <para style="P7">[[repeatIn(planned_exam.participant_ids,'participant_ids')]]</para>
     <blockTable colWidths="265.0,265.0" style="Table3">
@@ -159,10 +157,8 @@
     <para style="P2">
       <font color="white"> </font>
     </para>
-    <para style="P2">
-      <font color="white"> </font>
-    </para>
-    <blockTable colWidths="265.0,265.0" style="Table2">
+    -->
+    <blockTable colWidths="150.0,380.0" style="Table2">
       <tr>
         <td>
           <para style="P13">Date</para>
@@ -210,9 +206,6 @@
         </td>
       </tr>
     </blockTable>
-    <para style="P2">
-      <font color="white"> </font>
-    </para>
     <para style="P1">
       <font color="white"> </font>
     </para>
