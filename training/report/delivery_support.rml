@@ -68,18 +68,23 @@
     <paraStyle name="terp_default_9" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_tblheader_Details" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
     <paraStyle name="terp_default_Right_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_tblheader_General" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
   </stylesheet>
   <images/>
   <story>
     <para style="Standard">[[repeatIn(objects,'delivery')]]</para>
-    <para style="P6">
-      <font face="Times-Roman">Course Support Deposit </font>
-      <font face="Times-Roman">[[ delivery.name ]]</font>
+    <para style="terp_header">
+      Course Support Deposit
+      [[ delivery.name ]]
     </para>
+		<para style="P7">
+            <font color="white"> </font>
+       </para>
+
     <blockTable colWidths="241.0,241.0" style="Table2">
       <tr>
         <td>
-          <para style="P2">Room</para>
+          <para style="terp_tblheader_General">Room</para>
         </td>
         <td>
           <para style="P7">
@@ -89,7 +94,7 @@
       </tr>
       <tr>
         <td>
-          <para style="P2">Date</para>
+          <para style="terp_tblheader_General">Date</para>
         </td>
         <td>
           <para style="P5">
@@ -99,7 +104,7 @@
       </tr>
       <tr>
         <td>
-          <para style="P2">Support Name</para>
+          <para style="terp_tblheader_General">Support Name</para>
         </td>
         <td>
           <para style="P8">
@@ -109,7 +114,7 @@
       </tr>
       <tr>
         <td>
-          <para style="P2">Count</para>
+          <para style="terp_tblheader_General">Count</para>
         </td>
         <td>
           <para style="P7">
@@ -119,7 +124,7 @@
       </tr>
       <tr>
         <td>
-          <para style="P2">Transmit by</para>
+          <para style="terp_tblheader_General">Transmit by</para>
         </td>
         <td>
           <para style="P7">
@@ -129,7 +134,7 @@
       </tr>
       <tr>
         <td>
-          <para style="P2">Remark</para>
+          <para style="terp_tblheader_General">Remark</para>
         </td>
         <td>
           <para style="P7">
