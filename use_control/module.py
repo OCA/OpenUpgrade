@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution····
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,17 +19,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields
+
 from osv import osv
+from tools.translate import _
 
+class module(osv.osv):
+    _inherit = 'ir.module.module'
 
-class dm_offer_document(osv.osv):
-    _inherit = "dm.offer.document"
-    _columns = {
-                'subject' : fields.char('Subject',size=64,),
-                'editor' : fields.selection([('internal','Internal'),('oord','DM Open Office Report Design')],'Editor'),
-                'content' : fields.text('Content'),
-                'media_id':fields.related('step_id','media_id','name',type='char', relation='dm.media', string='Media'),
-            }
+    def button_uninstall(self, cr, uid, ids, context=None):
+        if self.search(cr, uid, ['&', ('id', 'in', ids), ('name', '=', 'use_control')], context=context):
+            raise osv.except_osv(_('Error'), _('The "use_control" module is not uninstallable'))
+        return super(module, self).button_uninstall(cr, uid, ids, context)
 
-dm_offer_document()
+module()
+

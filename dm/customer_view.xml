@@ -326,8 +326,9 @@
                 <field name="segment_id" select="1"/>
                 <field name="source" select="1"/>
                 <field name="error_msg" select="2" colspan="4"/>
-                <field name="state" select="1"/>
+                <field name="tr_from_id" select="1"/>
                 <field name="action_time" select="2"/>
+                <field name="state" select="1"/>
             </form>
         </field>
     </record>
@@ -529,7 +530,7 @@
                 <field name="step_id"/>
                 <field name="source"/>
                 <field name="address_id"/>
-                <field name="trigger_type_id"/>
+                <field name="trigger_type_id" widget="selection"/>
 	        </tree>
 	    </field>
 	</record>

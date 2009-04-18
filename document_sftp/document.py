@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution····
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,17 +19,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields
-from osv import osv
 
-
-class dm_offer_document(osv.osv):
-    _inherit = "dm.offer.document"
+from osv import osv, fields
+class res_users(osv.osv):
+    _name = 'res.users'
+    _inherit = 'res.users'    
     _columns = {
-                'subject' : fields.char('Subject',size=64,),
-                'editor' : fields.selection([('internal','Internal'),('oord','DM Open Office Report Design')],'Editor'),
-                'content' : fields.text('Content'),
-                'media_id':fields.related('step_id','media_id','name',type='char', relation='dm.media', string='Media'),
-            }
-
-dm_offer_document()
+        'ssh_key': fields.text('SSH Public key'),
+    }    
+res_users()

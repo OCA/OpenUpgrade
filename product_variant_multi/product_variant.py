@@ -126,31 +126,34 @@ class product_product(osv.osv):
 
     def _variant_name_get(self, cr, uid, ids, name, arg, context={}):
         res = {}
-        for p in self.browse(cr, uid, ids, context):
-            r = map(lambda dim: (dim.dimension_id.name or '')+'/'+(dim.name or '-'), p.dimension_value_ids)
-            res[p.id] = ','.join(r)
+        for product in self.browse(cr, uid, ids, context):
+            r = map(lambda dim: (dim.dimension_id.name or '')+'/'+(dim.name or '-'), product.dimension_value_ids)
+            res[product.id] = ','.join(r)
         return res
+    
+    def _get_products(self, cr, uid, ids, context={}):
+        result = []
+        for type in self.pool.get('product.variant.dimension.type').browse(cr, uid, ids, context=context):
+            for product_id in type.product_tmpl_id.variant_ids:
+                result.append(product_id.id)
+        return result
 
     def _check_dimension_values(self, cr, uid, ids): # TODO: check that all dimension_types of the product_template have a corresponding dimension_value ??
         for p in self.browse(cr, uid, ids, {}):
-            buffer=[]
+            buffer = []
             for value in p.dimension_value_ids:
                 buffer.append(value.dimension_id)
-            mSet=set(buffer)
-            if len(mSet)!=len(buffer):
+            unique_set = set(buffer)
+            if len(unique_set) != len(buffer):
                 return False
         return True
 
     _columns = {
         'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions', domain="[('product_tmpl_id','=',product_tmpl_id)]"),
-        #
-        # TODO: compute price_extra and _margin based on variants
-        #
-        # 'price_extra': fields.function('Price Extra'),
-        # 'price_margin': fields.function('Price Margin'),
-        #
-        # TODO: store = true? If yes find out invalidation listeners
-        'variants': fields.function(_variant_name_get, method=True, type='char', size=64, string='Variants'),
+        'variants': fields.function(_variant_name_get, method=True, type='char', size=64, string='Variants', readonly=True, 
+            store={
+                'product.variant.dimension.type': (_get_products, None, 10),
+            }),
     }
     _constraints = [ (_check_dimension_values, 'Several dimension values for the same dimension type', ['dimension_value_ids']),]
     

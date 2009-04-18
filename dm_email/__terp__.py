@@ -26,7 +26,7 @@
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Direct Marketing",
     "description": """
-            This module deals with emails.
+            This module add emailing management to the Direct Marketing module.
             """,
     "depends" : ["dm"],
     "init_xml" : [],

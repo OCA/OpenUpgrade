@@ -38,8 +38,8 @@ class event_event(osv.osv):
 
     _columns = {
         'google_event_id': fields.char('Google Event Id', size=128, readonly=True),
-        'event_modify_date': fields.datetime('Google Modify Date', readonly=False),
-        'write_date': fields.datetime('Date Modified', readonly=True),
-        'create_date': fields.datetime('Date create', readonly=True),
+        'event_modify_date': fields.datetime('Google Modify Date', readonly=True, help='google event modify date'),
+        'write_date': fields.datetime('Date Modified', readonly=True, help='tiny event modify date'),
+        'create_date': fields.datetime('Date created', readonly=True, help='tiny event create date'),
                 }
 event_event()

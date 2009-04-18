@@ -28,7 +28,7 @@ import os
 import base64
 import tempfile
 import tarfile
-
+import httplib
 
 
 choose_file_form = '''<?xml version="1.0"?>
@@ -90,19 +90,45 @@ class RstDoc(object):
         lst = ['  %s' % line for line in txt.split('\n')]
         return '\n'.join(lst)
 
+    def _get_download_links(self):
+        def _is_connection_status_good(link):
+            server = "openerp.com"
+            status_good = False
+            try:
+                conn = httplib.HTTPConnection(server)
+                conn.request("HEAD", link)
+                res = conn.getresponse()
+                if res.status in (200, ):
+                    status_good = True
+            except (Exception, ), e:
+                logger = netsvc.Logger()
+                msg = "error connecting to server '%s' with link '%s'. Error message: %s" % (server, link, str(e))
+                logger.notifyChannel("base_module_doc_rst", netsvc.LOG_ERROR, msg)
+                status_good = False
+            return status_good
+
+        versions = ('4.2', '5.0', 'trunk')
+        download_links = []
+        for ver in versions:
+            link = '/download/modules/%s/%s.zip' % (ver, self.dico['name'])
+            if _is_connection_status_good(link):
+                download_links.append("  * `%s <%s>`_" % (ver, link))
+
+        if download_links:
+            res = '\n'.join(download_links)
+        else:
+            res = "(No download links available)"
+        return res
+
     def _write_header(self):
         dico = self.dico
         title = "%s (*%s*)" % (dico['shortdesc'], dico['name'])
         title_underline = "=" * len(title)
         dico['title'] = title
         dico['title_underline'] = title_underline
+        dico['download_links'] = self._get_download_links()
 
         sl = [
-            "",
-            """.. tip:: This module is part of the Open ERP software, the leading Open Source """,
-            """  enterprise management system. If you want to discover Open ERP, check our """,
-            """  <a href="http://openerp.tv">screencasts</a> or download """,
-            """  <a href="http://openerp.com">Open ERP</a> directly.""",
             "",
             ".. module:: %(name)s",
             "    :synopsis: %(shortdesc)s %(quality_certified_label)s",
@@ -111,7 +137,18 @@ class RstDoc(object):
             "",
             ".. raw:: html",
             "",
+            "      <br />",
             """    <link rel="stylesheet" href="../_static/hide_objects_in_sidebar.css" type="text/css" />""",
+            "",
+            """.. tip:: This module is part of the Open ERP software, the leading Open Source """,
+            """  enterprise management system. If you want to discover Open ERP, check our """,
+            """  `screencasts <href="http://openerp.tv>`_ or download """,
+            """  `Open ERP <href="http://openerp.com>`_ directly.""",
+            "",
+            ".. raw:: html",
+            "",
+            """    <div class="js-kit-rating" title="" permalink="" standalone="yes" path="/%s"></div>""" % (dico['name'], ),
+            """    <script src="http://js-kit.com/ratings.js"></script>""",
             "",
             "%(title)s",
             "%(title_underline)s",
@@ -130,6 +167,14 @@ class RstDoc(object):
             "::",
             "",
             "%(description)s",
+            "",
+            "Download links",
+            "--------------",
+            "",
+            "You can download this module as a zip file in the following version:",
+            "",
+            "%(download_links)s",
+            "",
             ""]
         return '\n'.join(sl) % (dico)
 
@@ -200,7 +245,7 @@ class RstDoc(object):
             if not isinstance(field_def, tuple):
                 logger = netsvc.Logger()
                 msg = "Error on Object %s: field_def: %s [type: %s]" % (obj_name.encode('utf8'), field_def.encode('utf8'), type(field_def))
-                logger.notifyChannel("error", netsvc.LOG_ERROR, msg)
+                logger.notifyChannel("base_module_doc_rst", netsvc.LOG_ERROR, msg)
                 return ""
 
             field_name = field_def[0]
@@ -348,7 +393,7 @@ class wizard_tech_guide_rst(wizard.interface):
             res[m.id] = {
                 'menus_by_module': [],
                 'reports_by_module': [],
-                'views_by_module':  []
+                'views_by_module': []
             }
         view_id = model_data_obj.search(cr, uid, [('module', 'in', mnames.keys()),
             ('model', 'in', ('ir.ui.view', 'ir.actions.report.xml', 'ir.ui.menu'))])
@@ -356,20 +401,19 @@ class wizard_tech_guide_rst(wizard.interface):
             # We use try except, because views or menus may not exist
             try:
                 key = data_id['model']
-                if key=='ir.ui.view':
-                    v = view_obj.browse(cr,uid,data_id.res_id)
+                if key == 'ir.ui.view':
+                    v = view_obj.browse(cr, uid, data_id.res_id)
                     v_dict = {
                         'name': v.name,
                         'inherit': v.inherit_id,
                         'type': v.type}
                     res[mnames[data_id.module]]['views_by_module'].append(v_dict)
-                elif key=='ir.actions.report.xml':
-                    res[mnames[data_id.module]]['reports_by_module'].append(report_obj.browse(cr,uid,data_id.res_id).name)
-                elif key=='ir.ui.menu':
-                    res[mnames[data_id.module]]['menus_by_module'].append(menu_obj.browse(cr,uid,data_id.res_id).complete_name)
-            except KeyError, e:
+                elif key == 'ir.actions.report.xml':
+                    res[mnames[data_id.module]]['reports_by_module'].append(report_obj.browse(cr, uid, data_id.res_id).name)
+                elif key == 'ir.ui.menu':
+                    res[mnames[data_id.module]]['menus_by_module'].append(menu_obj.browse(cr, uid, data_id.res_id).complete_name)
+            except (KeyError, ):
                 pass
-        #import pydb; pydb.debugger()
         return res
 
     def _create_index(self, module_index):
@@ -418,7 +462,7 @@ class wizard_tech_guide_rst(wizard.interface):
         else:
             logger = netsvc.Logger()
             msg = "Object %s not found" % (obj)
-            logger.notifyChannel("error", netsvc.LOG_ERROR, msg)
+            logger.notifyChannel("base_module_doc_rst", netsvc.LOG_ERROR, msg)
             return ""
 
 ##     def _object_doc(self, cr, uid, obj):
