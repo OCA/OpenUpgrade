@@ -22,4 +22,4 @@
 
 import export_events
 import import_events
-#import synchronize_events
+import synchronize_events

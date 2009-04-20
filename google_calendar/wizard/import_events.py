@@ -83,10 +83,8 @@ class google_calendar_wizard(wizard.interface):
                 etime = dateutil.parser.parse(etime)
                 start_date = datetime.datetime(*stime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                 end_date = datetime.datetime(*etime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-
                 a = time.mktime(time.strptime(start_date, "%Y-%m-%d %H:%M:%S"))
                 timestring = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(a - time.timezone - 30600))
-
                 b = time.mktime(time.strptime(end_date, "%Y-%m-%d %H:%M:%S"))
                 timestring_end = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(b - time.timezone - 30600))
 
