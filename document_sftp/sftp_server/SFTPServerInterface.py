@@ -19,14 +19,59 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+import os
 import paramiko,os
 import pooler
 import netsvc
 import time
 import StringIO
 import base64
-from SFTPHandle import SFTPHandle
+
+from paramiko.sftp_handle import SFTPHandle
+
+class file_wrapper(StringIO.StringIO):
+    def __init__(self, sstr='', ressource_id=False, dbname=None, uid=1, name=''):
+        StringIO.StringIO.__init__(self, sstr)         
+        self.ressource_id = ressource_id
+        self.name = name
+        self.dbname = dbname
+        self.uid = uid
+    def close(self, *args, **kwargs):        
+        db,pool = pooler.get_db_and_pool(self.dbname)        
+        self.buf = ''
+        cr = db.cursor()
+        cr.commit()        
+        try:
+            val = self.getvalue()            
+            val2 = {
+                'datas': base64.encodestring(val),
+                'file_size': len(val),
+            }            
+            pool.get('ir.attachment').write(cr, self.uid, [self.ressource_id], val2)           
+        
+        finally:
+            cr.commit()
+            cr.close()
+        return StringIO.StringIO.close(self, *args, **kwargs)
+
+class content_wrapper(StringIO.StringIO):
+    def __init__(self, dbname, uid, pool, node, name=''):
+        StringIO.StringIO.__init__(self, '')                
+        self.dbname = dbname
+        self.uid = uid
+        self.node = node
+        self.pool = pool
+        self.name = name
+    def close(self, *args, **kwargs):
+        db,pool = pooler.get_db_and_pool(self.dbname)
+        cr = db.cursor()
+        cr.commit()        
+        try:
+            getattr(self.pool.get('document.directory.content'), 'process_write_'+self.node.content.extension[1:])(cr, self.uid, self.node, self.getvalue())
+        finally:
+            cr.commit()
+            cr.close()
+        return StringIO.StringIO.close(self, *args, **kwargs)
 
 class SFTPServer (paramiko.SFTPServerInterface):
     db_name_list=[]
@@ -47,9 +92,9 @@ class SFTPServer (paramiko.SFTPServerInterface):
     def ftp2fs(self, path, data):        
         if not data or (path and (path in ('/','.'))):
             return None               
-        path2 = filter(None,path.split('/'))[1:]        
+        path2 = filter(None,path.split('/'))[1:]                
         (cr, uid, pool) = data        
-        res = pool.get('document.directory').get_object(cr, uid, path2[:])        
+        res = pool.get('document.directory').get_object(cr, uid, path2[:])                
         if not res:
             raise OSError(2, 'Not such file or directory.')
         return res
@@ -57,11 +102,13 @@ class SFTPServer (paramiko.SFTPServerInterface):
     def get_cr(self, path):              
         if path and path in ('/','.'):
             return None
-        dbname = path.split('/')[1]        
+        dbname = path.split('/')[1]         
         try:
+            if not len(self.db_name_list):
+                self.db_name_list = self.db_list()
             if dbname not in self.db_name_list:
-                return None
-            db,pool = pooler.get_db_and_pool(dbname)
+                return None            
+            db,pool = pooler.get_db_and_pool(dbname)            
         except:
             raise OSError(1, 'Operation not permited.')
         cr = db.cursor()        
@@ -77,10 +124,10 @@ class SFTPServer (paramiko.SFTPServerInterface):
 
 
     def open(self, node, flags, attr):        
-        try:            
+        try:
             if not node:
-                raise OSError(1, 'Operation not permited.')            
-            if node.type=='file':
+                raise OSError(1, 'Operation not permited.')                        
+            if node.type=='file':                
                 if not self.isfile(node):
                     raise OSError(1, 'Operation not permited.')
                 f = StringIO.StringIO(base64.decodestring(node.object.datas or ''))                
@@ -97,12 +144,85 @@ class SFTPServer (paramiko.SFTPServerInterface):
         fobj = SFTPHandle(flags)
         fobj.filename = node.path
         fobj.readfile = f
-        fobj.writefile = f        
-        return fobj        
+        fobj.writefile = None       
+        return fobj       
+
+    def create(self, node, objname, flags):        
+        cr = node.cr
+        uid = node.uid
+        pool = pooler.get_pool(cr.dbname)
+        child = node.child(objname)
+        f = None
+        if child:
+            if child.type in ('collection','database'):
+                raise OSError(1, 'Operation not permited.')
+            if child.type=='content':
+                f = content_wrapper(cr.dbname, uid, pool, child)
+                
+        try:
+            fobj = pool.get('ir.attachment')
+            ext = objname.find('.') >0 and objname.split('.')[1] or False
+
+            # TODO: test if already exist and modify in this case if node.type=file
+            ### checked already exits
+            object2=node and node.object2 or False
+            object=node and node.object or False
+            cid=False
+
+            where=[('name','=',objname)]
+            if object and (object.type in ('directory')) or object2:
+                where.append(('parent_id','=',object.id))
+            else:
+                where.append(('parent_id','=',False))
+
+            if object2:
+                where +=[('res_id','=',object2.id),('res_model','=',object2._name)]
+            cids = fobj.search(cr, uid,where)
+            if len(cids):
+                cid=cids[0]
+
+            if not cid:
+                val = {
+                    'name': objname,
+                    'datas_fname': objname,
+                    'datas': '',
+                    'file_size': 0L,
+                    'file_type': ext,
+                }
+                if object and (object.type in ('directory')) or not object2:
+                    val['parent_id']= object and object.id or False
+                partner = False
+                if object2:
+                    if 'partner_id' in object2 and object2.partner_id.id:
+                        partner = object2.partner_id.id
+                    if object2._name == 'res.partner':
+                        partner = object2.id
+                    val.update( {
+                        'res_model': object2._name,
+                        'partner_id': partner,
+                        'res_id': object2.id
+                    })
+                cid = fobj.create(cr, uid, val, context={})
+            cr.commit()
+
+            f = file_wrapper('', cid, cr.dbname, uid, )          
+            
+        except Exception,e:             
+            log(e)
+            raise OSError(1, 'Operation not permited.')
+
+        if f :
+            fobj = SFTPHandle(flags)
+            fobj.filename =  objname
+            fobj.readfile = None
+            fobj.writefile = f
+            return fobj
+        return False
 
     def remove(self, node):   
         """ Remove a file """
-        try:            
+        try:       
+            print ' ......... Remove ......', node     
             cr = node.cr
             uid = node.uid
             pool = pooler.get_pool(cr.dbname)
@@ -120,7 +240,7 @@ class SFTPServer (paramiko.SFTPServerInterface):
             return paramiko.SFTPServer.convert_errno(e.errno)
 
     def db_list(self):
-        #return pooler.pool_dic.keys()
+        #return pooler.pool_dic.keys()                
         s = netsvc.LocalService('db')
         result = s.list()
         self.db_name_list = []

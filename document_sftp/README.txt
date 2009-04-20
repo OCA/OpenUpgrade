@@ -10,9 +10,4 @@
 
 To be done:
 -----------
-
-* put file
-* open file
-* copy/paste file
-* remove file
 * handle encoding problem
