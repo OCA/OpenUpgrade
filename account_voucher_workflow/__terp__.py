@@ -22,15 +22,17 @@
 
 
 {
-    'name': 'Accounting - Voucher Management Business Process',
+    'name': 'Business Process for Accounting Voucher',
     'version': '1.0',
-    'category': 'Generic Modules/Accounting',
-    'description': """
-Business process for the Accounting Voucher
+    'category': 'Generic Modules/Indian Accounting',
+    'description': """Business process for the Accounting Voucher
+    We can define the rules for voucher > 1000 need Special Authorization
     """,
-    'author': 'Tiny',
-    'website': 'http://www.openerp.com',
-    'depends': ['account_voucher'],
+    'author': 'Tiny & Axelor',
+    'website': 'http://tinyerpindia.com',
+    'depends': [
+        'account_voucher'
+    ],
     'init_xml': [],
     'update_xml': [
         'account_voucher_workflow.xml',

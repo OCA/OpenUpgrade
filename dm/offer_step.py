@@ -177,7 +177,6 @@ class dm_offer_step(osv.osv):
                     raise osv.except_osv(
                             _('Could not open this offer step !'),
                             _('You must first validate all documents attached to this offer step.'))
-#                    self.pool.get('dm.offer.document').write(cr,uid,[doc.id],{'state':'validate'})
             wf_service.trg_validate(uid, 'dm.offer.step', step.id, 'open', cr)
         self.write(cr, uid, ids, {'state':'open'})
         return True
@@ -189,6 +188,16 @@ class dm_offer_step(osv.osv):
     def state_draft_set(self, cr, uid, ids, context=None):
         self.write(cr, uid, ids, {'state':'draft'})
         return True
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context and 'dm_camp_id' in context:
+            if not context['dm_camp_id']:
+                return []
+            res  = self.pool.get('dm.campaign').browse(cr, uid,context['dm_camp_id'])
+            step_ids = map(lambda x : x.id, res.offer_id.step_ids)
+            return step_ids
+        return super(dm_offer_step, self).search(cr, uid, args, offset, limit, order, context, count)
+
 
 dm_offer_step()
 
@@ -197,16 +206,14 @@ class dm_offer_step_transition_trigger(osv.osv):
     _columns = {
         'name' : fields.char('Trigger Name', size=64, required=True, translate=True),
         'code' : fields.char('Code' , size=64, required=True, translate=True),
-#        'type' : fields.selection([('action', 'Action'),('noaction','No Action'),('auto','Auto')], 'Trigger Type', required=True),
         'gen_next_wi' : fields.boolean('Auto Generate Next Workitems'),
-#        'type' : fields.selection([('out_chk', 'Outgoing Check'),('in_chk','Incoming Check'),('no_chk','No Check')], 'Trigger Type', required=True),
-        'in_act_cond' : fields.text('Incoming Action Condition', required=True),
-        'out_act_cond' : fields.text('Outgoing Action Condition', required=True),
+        'in_act_cond' : fields.text('Action Condition', required=True),
+#        'out_act_cond' : fields.text('Outgoing Action Condition', required=True),
     }
     _defaults = {
         'gen_next_wi': lambda *a: 'False',
         'in_act_cond': lambda *a: 'result = False',
-        'out_act_cond': lambda *a: 'result = False',
+#        'out_act_cond': lambda *a: 'result = False',
     }
 dm_offer_step_transition_trigger()
 

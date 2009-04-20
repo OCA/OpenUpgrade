@@ -137,8 +137,27 @@ dm_customer_gender()
 class dm_workitem(osv.osv):
     _name = "dm.workitem"
     _description = "workitem"
-
     _SOURCES = [('address_id','Partner Address')]
+    """
+    def create(self,cr,uid,vals,context={}):
+        if 'action_time' in vals and vals['action_time']:
+            return super(dm_workitem, self).create(cr, uid, vals, context)
+        if 'tr_from_id' in vals and vals['tr_from_id']:
+            tr = self.pool.get('dm.offer.step.transition').browse(cr, uid, vals['tr_from_id'])
+            print "Delay Type: ",tr.delay_type
+
+            wi_action_time = datetime.datetime.now()
+            kwargs = {(tr.delay_type+'s'): tr.delay}
+            next_action_time = wi_action_time + datetime.timedelta(**kwargs)
+            print "Next action date : ",next_action_time
+            vals['action_time'] = next_action_time
+            print "Vals : ",vals
+        else:
+            vals['action_time'] = datetime.datetime.now()
+            print "Vals : ",vals
+
+        return super(dm_workitem, self).create(cr, uid, vals, context)
+    """
 
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step', select="1", ondelete="cascade"),
@@ -147,6 +166,7 @@ class dm_workitem(osv.osv):
         'action_time' : fields.datetime('Action Time'),
         'source' : fields.selection(_SOURCES, 'Source', required=True),
         'error_msg' : fields.text('System Message'),
+        'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition'),
         'state' : fields.selection([('pending','Pending'),('error','Error'),('cancel','Cancelled'),('done','Done')], 'Status'),
     }
     _defaults = {
@@ -164,7 +184,7 @@ class dm_workitem(osv.osv):
             res = True
 
             """ Check if action must be done or cancelled """
-            """ Check Outgoing transitions Action condition """
+            """
             for tr in wi.step_id.outgoing_transition_ids:
                 eval_context = {
                     'pool' : self.pool,
@@ -187,30 +207,33 @@ class dm_workitem(osv.osv):
                     res = False
                     act_step = tr.step_to_id.name or False
                     break
+            """
             """ Check Incoming transitions Action condition """
-            if not res:
-                for tr in wi.step_id.incoming_transition_ids:
-                    eval_context = {
-                        'pool' : self.pool,
-                        'cr' : cr,
-                        'uid' : uid,
-                        'wi': wi,
-                        'tr':tr,
-                    }
-                    val = {}
-                    print "Incoming Action Condition : ",tr.condition_id.in_act_cond
-                    try:
-                        exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
-                        print "Val in get wid_ids : ",val.get('wi_ids',False)
-                        print "Val in get res : ",val.get('result',False)
-                    except Exception,e:
-                        netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, 'Invalid code in Incoming Action Condition: %s'% tr.condition_id.in_act_cond)
-                        netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, e)
-                        continue
-                    if not val.get('result',False):
-                        res = False
-                        act_step = tr.step_from_id.name or False
-                        break
+#            if not res:
+            for tr in wi.step_id.incoming_transition_ids:
+                eval_context = {
+                    'pool' : self.pool,
+                    'cr' : cr,
+                    'uid' : uid,
+                    'wi': wi,
+                    'tr':tr,
+                }
+                val = {}
+                print "Incoming Transition : ",tr.condition_id.name
+                print "Incoming Action Condition : ",tr.condition_id.in_act_cond
+                try:
+                    exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
+                    print "Val in get step_to_check: ",val.get('step_to_check',False)
+                    print "Val in get wid_ids : ",val.get('wi_ids',False)
+                    print "Val in get res : ",val.get('result',False)
+                except Exception,e:
+                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, 'Invalid code in Incoming Action Condition: %s'% tr.condition_id.in_act_cond)
+                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, e)
+                    continue
+                if not val.get('result',False):
+                    res = False
+                    act_step = tr.step_from_id.name or False
+                    break
 
             if res:
                 res = server_obj.run(cr, uid, [wi.step_id.action_id.server_action_id.id], context)
@@ -225,25 +248,15 @@ class dm_workitem(osv.osv):
         if done:
             """ Create next auto workitems """
             for tr in wi.step_id.outgoing_transition_ids:
-                    print "Delay Type: ",tr.delay_type
+                print "Delay Type: ",tr.delay_type
 
-                    wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
-                    if tr.delay_type == 'minute':
-                        next_action_time = wi_action_time + datetime.timedelta(minutes=tr.delay)
-                    elif tr.delay_type == 'hour':
-                        next_action_time = wi_action_time + datetime.timedelta(hours=tr.delay)
-                    elif tr.delay_type == 'day':
-                        next_action_time = wi_action_time + datetime.timedelta(days=tr.delay)
-                    elif tr.delay_type == 'week':
-                        next_action_time = wi_action_time + datetime.timedelta(weeks=tr.delay)
-                    elif tr.delay_type == 'month':
-                        next_action_time = wi_action_time + datetime.timedelta(months=tr.delay)
+                wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
+                kwargs = {(tr.delay_type+'s'): tr.delay}
+                next_action_time = wi_action_time + datetime.timedelta(**kwargs)
+                print "Next action date : ",next_action_time
 
-                    print "Next action date : ",next_action_time
-
-                    aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time})
-                    print "auto wi : ",aw_id
-
+                aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time})
+                print "auto wi : ",aw_id
         return True
 
     def __init__(self, *args):
@@ -490,3 +503,43 @@ class dm_offer_history(osv.osv):
         'responsible_id' : fields.many2one('res.users','Responsible'),
     }
 dm_offer_history()
+
+class dm_event(osv.osv_memory):
+    _name = "dm.event"
+    _rec_name = "campaign_id"
+
+    _columns = {
+        'campaign_id' : fields.many2one('dm.campaign', 'Campaign'),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True,context="{'dm_camp_id':campaign_id}"),
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True,context="{'dm_camp_id':campaign_id}"),
+        'source' : fields.selection([('address_id','Addresses')], 'Source', required=True),
+        'address_id' : fields.many2one('res.partner.address', 'Address'),
+        'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
+    }
+    _defaults = {
+        'source': lambda *a: 'address_id',
+    }
+
+    def create(self,cr,uid,vals,context={}):
+#        if 'action_time' in vals and vals['action_time']:
+#            return super(dm_workitem, self).create(cr, uid, vals, context)
+#        if 'trigger_type_id' in vals and vals['trigger_type_id']:
+        tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',vals['step_id']),
+                ('condition_id','=',vals['trigger_type_id'])])
+        for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
+            wi_action_time = datetime.datetime.now()
+            kwargs = {(tr.delay_type+'s'): tr.delay}
+            next_action_time = wi_action_time + datetime.timedelta(**kwargs)
+            print "Next action date : ",next_action_time
+#                vals['action_time'] = next_action_time
+            print "Vals : ",vals
+#        else:
+#            vals['action_time'] = datetime.datetime.now()
+#            print "Vals : ",vals
+
+            self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':vals['segment_id'] or False,
+            (vals['source']):vals[(vals['source'])] or False, 'action_time':next_action_time, 'source':vals['source']})
+
+        return super(dm_event,self).create(cr,uid,vals,context)
+
+dm_event()

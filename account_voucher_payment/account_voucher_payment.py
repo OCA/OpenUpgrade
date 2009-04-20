@@ -19,13 +19,11 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 from osv import fields, osv
 
 class account_move_line(osv.osv):
     _inherit = "account.move.line"
-    
-    
-    
     _columns = {
         'voucher_invoice': fields.many2one('account.invoice', 'Invoice', readonly=True),
     }
@@ -33,15 +31,10 @@ account_move_line()
 
 class account_voucher(osv.osv):
     _inherit = 'account.voucher'
-    
     _columns = {
         'voucher_line_ids':fields.one2many('account.voucher.line','voucher_id','Voucher Lines', readonly=False, states={'proforma':[('readonly',True)]}),
     }
-    
-
-    
-    
-    
+        
     def action_move_line_create(self, cr, uid, ids, *args):
         
         for inv in self.browse(cr, uid, ids):
@@ -164,19 +157,20 @@ class account_voucher(osv.osv):
                 mline_ids = []
                 total = 0.0
                 mline = self.pool.get('account.move.line')
-                invoice = self.pool.get('account.invoice').browse(cr, uid, line.invoice_id.id)
-                src_account_id = invoice.account_id.id
+                if line.invoice_id.id:
+                    invoice = self.pool.get('account.invoice').browse(cr, uid, line.invoice_id.id)
+                    src_account_id = invoice.account_id.id
 #                cr.execute('select id from account_move_line where move_id in ('+str(move_id)+','+str(invoice.move_id.id)+')')
-                cr.execute('select id from account_move_line where move_id in ('+str(invoice.move_id.id)+')')
-                temp_ids = map(lambda x: x[0], cr.fetchall())
-                temp_ids.append(ml_id)
-                mlines = mline.browse(cr, uid, temp_ids)
-                for ml in mlines:
-                    if ml.account_id.id==src_account_id:
-                        mline_ids.append(ml.id)
-                        total += (ml.debit or 0.0) - (ml.credit or 0.0)
-                self.pool.get('account.move.line').reconcile_partial(cr, uid, mline_ids, 'manual', context={})
-                
+                    cr.execute('select id from account_move_line where move_id in ('+str(invoice.move_id.id)+')')
+                    temp_ids = map(lambda x: x[0], cr.fetchall())
+                    temp_ids.append(ml_id)
+                    mlines = mline.browse(cr, uid, temp_ids)
+                    for ml in mlines:
+                        if ml.account_id.id==src_account_id:
+                            mline_ids.append(ml.id)
+                            total += (ml.debit or 0.0) - (ml.credit or 0.0)
+                    self.pool.get('account.move.line').reconcile_partial(cr, uid, mline_ids, 'manual', context={})
+                #end if line.invoice_id.id:
                 if inv.narration:
                     line.name=inv.narration
                 else:
@@ -202,6 +196,8 @@ class account_voucher(osv.osv):
                 cr.execute('insert into voucher_id (account_id,rel_account_move) values (%d, %d)',(int(ids[0]),int(line.id)))
                 
         return True
+    
+    
 
     
     
@@ -210,9 +206,15 @@ account_voucher()
 class VoucherLine(osv.osv):
     _inherit = 'account.voucher.line'
     
+    def default_get(self, cr, uid, fields, context={}):
+        data = super(VoucherLine, self).default_get(cr, uid, fields, context)
+        self.voucher_context = context
+        return data
+    
     _columns = {
         'invoice_id' : fields.many2one('account.invoice','Invoice'),
     }
+
     
     def move_line_get_item(self, cr, uid, line, context={}):
         res = super(VoucherLine, self).move_line_get_item(cr, uid, line, context)
@@ -220,12 +222,18 @@ class VoucherLine(osv.osv):
         return res 
     
     def onchange_invoice_id(self, cr, uid, ids, invoice_id, context={}):
+        lines = []
+        if 'lines' in self.voucher_context:
+            lines = [x[2] for x in self.voucher_context['lines']]
         if not invoice_id:
             return {'value':{}}
         else:
             invoice_obj = self.pool.get('account.invoice').browse(cr, uid, invoice_id, context)
             residual = invoice_obj.residual
+            same_invoice_amounts = [x['amount'] for x in lines if x['invoice_id']==invoice_id]
+            residual -= sum(same_invoice_amounts)
             return {'value' : {'amount':residual}}  
+    
     
 VoucherLine()
 
@@ -233,7 +241,6 @@ VoucherLine()
 
 class account_invoice(osv.osv):
     _inherit = "account.invoice"
-    
     
     def action_cancel(self, cr, uid, ids, *args):
         
@@ -247,17 +254,6 @@ class account_invoice(osv.osv):
         move_ids = move_db.search(cr, uid, [])
         move_obj = move_db.browse(cr, uid, move_ids)
         
-        for voucher in voucher_obj:
-            for vline in voucher.voucher_line_ids:
-                for move in move_obj:
-                        print "voucher.move_ids[0].move_id.id -----> ", voucher.move_ids
-                        print "movee id -------> ", move.id
-                        
-                        if voucher.move_id == move.id:
-                                    move_db.unlink(cr, uid, [move.id])
-                if vline.invoice_id.id == invoices[0]['id']:
-                    voucher_db.write(cr, uid, [voucher.id], {'state' : 'draft'})
-                    
         return res
     
 account_invoice()

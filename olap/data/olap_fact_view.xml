@@ -93,13 +93,6 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Database tables">
-<!--            <group colspan ="2">
-                <button name="show_col_view" string="Column" type="object"/>    
-                    <button string="Columns" name="%(bi_load_column)d" type="action"/>
-                    <button name="hide_col" string="Hide" type="object"/>
-                    <button name="show_col" string="Show" type="object"/>
-                </group>
-                <newline/>-->
                 <field name="name" select="1" colspan="2"/>
                 <field name="table_db_name"/>
                 <field name="columns" colspan="4" mode="tree" nolabel="1">
@@ -157,7 +150,6 @@
             </tree>
         </field>
     </record>
-    
     
     <record model="ir.ui.view" id="view_olap_database_columns_tree_m20">
         <field name="name">olap.database.columns.tree.m20</field>

@@ -16,5 +16,24 @@
 				</notebook>
 			</field>
 		</record>
+
+
+		<record model="ir.ui.view" id="view_partner_event_google">
+			<field name="name">event.event.google.form</field>
+			<field name="type">form</field>
+			<field name="model">event.event</field>
+			<field name="inherit_id" ref="event.view_event_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Google">
+						<field name="google_event_id" colspan="4"/>
+						<field name="event_modify_date" colspan="4"/>
+						<field name="write_date" colspan="4"/>
+						<field name="create_date" colspan="4"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
 	</data>
 </openerp>

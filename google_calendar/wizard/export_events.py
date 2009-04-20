@@ -53,11 +53,13 @@ class google_calendar_wizard(wizard.interface):
         event.where.append(gdata.calendar.Where(value_string=where))
         time_format = "%Y-%m-%d %H:%M:%S"
         if start_time:
-            timestring = start_time
-            starttime = time.strptime(timestring,time_format)
+            # convert event start date into gmtime format
+            timestring = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(start_time, "%Y-%m-%d %H:%M:%S"))))
+            starttime = time.strptime(timestring, time_format)
             start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', starttime)
         if end_time:
-            timestring_end = end_time
+            # convert event end date into gmtime format
+            timestring_end = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(end_time, "%Y-%m-%d %H:%M:%S"))))
             endtime = time.strptime(timestring_end, time_format)
             end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', endtime)
 
@@ -74,7 +76,7 @@ class google_calendar_wizard(wizard.interface):
         # To do: 1. using proxy connect
         #        2. both side synchronize
         #        3. some events in the calendar (crm) are linked to section that should be synchronized with google calendar
-        #        4. time zone for time of event start and end
+        #        4. time zone for time of event start and end / gmtime
         #        5. open summary window after finish exporting
         obj_user = pooler.get_pool(cr.dbname).get('res.users')
         google_auth_details = obj_user.browse(cr, uid, uid)

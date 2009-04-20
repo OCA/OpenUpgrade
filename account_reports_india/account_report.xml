@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	    <menuitem 
+	        parent="account.menu_finance_legal_statement" 
+	        id="indian_accounting_reports"
+	        name="Accounting Reports"/>
+	        
+	    <report id="account_tb_account"
+			string="Trial Balancesheet"
+			model="account.account"
+			name="trial.balance.sheet"
+			header="False"
+			rml="account_reports_india/report/report_trial_balance.rml"
+			auto="False"
+			menu="False"/>
+			
+	    <wizard
+			string="Trial Balance Sheet"
+			model="account.account"
+			name="trial.balance.sheet.report"
+			menu="False"		
+			id="wizard_trial_balance_sheet"/>
+			
+		<menuitem
+		    parent="indian_accounting_reports"
+			name="Trial Balance Sheet"
+			action="wizard_trial_balance_sheet"
+			type="wizard"
+			icon="STOCK_PRINT"
+			id="menu_wizard_trial_balance_sheet"/>  
+			
+		<report id="account_pl_account"
+			string="Profit And Loss Account"
+			model="account.account"
+			name="pl.account"
+			header="False"
+			rml="account_reports_india/report/report_pl_account.rml"
+			auto="False"
+			menu="False"/>
+
+		<report id="account_pl_account_horizontal"
+			string="Profit And Loss Account"
+			model="account.account"
+			name="pl.account.horizontal"
+			rml="account_reports_india/report/report_pl_account_horizontal.rml"
+			auto="False"
+			menu="False"/>
+
+		<!-- profit and loss account report-related wizards -->
+		<wizard 
+			string="Profit And Loss Account"
+			model="account.account"
+			name="account.pl.report"
+			menu="False"
+			id="wizard_pl_report"/>
+			
+		<menuitem
+		    parent="indian_accounting_reports"
+			name="Profit And Loss Account"
+			action="wizard_pl_report"
+			type="wizard"
+			icon="STOCK_PRINT"
+			id="menu_profit_and_loss_account_report"/>
+
+		<report id="account_balancesheet"
+			string="Balance Sheet"
+			model="account.account"
+			header="False"
+			name="account.balancesheet"
+			rml="account_reports_india/report/report_balance_sheet.rml"
+			auto="False"
+			menu="False"/>
+
+		<report id="account_balancesheet"
+			string="Balance Sheet"
+			header="False"
+			model="account.account"
+			name="account.balancesheet.horizontal"
+			rml="account_reports_india/report/report_balance_sheet_horizontal.rml"
+			auto="False"
+			menu="False"/>
+
+		<!-- balance sheet account report-related wizards -->
+		<wizard 
+			string="Balance Sheet"
+			model="account.account"
+			name="balancesheet.report"
+			menu="False"
+			id="wizard_balancesheet_report"/>
+			
+		<menuitem
+		    parent="indian_accounting_reports"
+			name="Balance Sheet"
+			action="wizard_balancesheet_report"
+			type="wizard"
+			icon="STOCK_PRINT"
+			id="menu_balance_sheet_report"/>
+
+	</data>
+</openerp>

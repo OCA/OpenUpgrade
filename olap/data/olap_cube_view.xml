@@ -70,12 +70,12 @@ Wizard View for the parameters wizard
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
-        s<menuitem 
+        <menuitem 
         name="Server Parameters" 
         action="action_config_bi_parameters" 
         id="menu_bi_server_parameters" 
         sequence="50" 
-        parent="menu_bi_configuration"
+        parent="menu_bi"
         />
         <record model="ir.actions.todo" id="config_auto_directory">
             <field name="name">Server Parameters Configuration</field>
@@ -485,11 +485,10 @@ Wizard view for the Auto Configuring the data
         <field name="arch" type="xml">
             <tree string="Olap Saved Query">
             	<field name="name"/>
-                <field name="time"/>
-                <field name="query"/>
-                <field name="user_id"/>
                 <field name="cube_id"/>
-                <field name="schema_id"/>
+                <field name="user_id"/>
+                <field name="query"/>
+                <field name="time"/>
             </tree>
         </field>
     </record>

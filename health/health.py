@@ -65,6 +65,9 @@ class ir_action_window(osv.osv):
             lecture
         """
         res = super(ir_action_window, self).read(cr, uid, ids, *args, **kwargs)
+        if not isinstance(res, list):
+            res = [res]
+
         for r in res:
             mystring = 'id_resident()'
             if  mystring in (r.get('domain', '[]') or ''):
@@ -76,6 +79,8 @@ class ir_action_window(osv.osv):
                 cat_id = self.pool.get('res.partner.category'). search(cr, uid,
                     [('name','=','Postulant')])
                 r['domain'] = r['domain'].replace(mystring, str(cat_id))
+        if isinstance(ids, int):
+            return res[0]
         return res
 ir_action_window()
 

@@ -46,20 +46,17 @@
 		<field name="name">Closed</field>
 		<field name="code">closed</field>
 	</record>
-		
-	
 	
 	<!-- ## account chart -->
-	
 	
         <record model="account.account.template" id="root">
 			<field name="name">Account Chart-India</field>
 			<field name="code">0</field>
 			<field name="type">view</field>
 			<field name="user_type" ref="account_type_root_ind1"/>
-			<field name="type1">none</field>
+			
 			<field name="reconcile" eval="False"/>
-			<field name="currency_id" ref="base.IDR"/>
+			
 		</record>
 
 		<record model="account.account.template" id="IA_AC0">
@@ -67,9 +64,9 @@
 			<field name="code">IA_AC0</field>
 			<field name="type">view</field>
 			<field name="user_type" ref="account_type_root_ind1"/>
-			<field name="type1">none</field>
+			
 			<field name="reconcile" eval="False"/>
-			<field name="currency_id" ref="base.IDR"/>
+			
             <field name="parent_id" ref="root"/>
 		</record>
 		
@@ -78,9 +75,9 @@
 				<field name="code">IA_AC01</field>
 				<field name="type">view</field>
 				<field name="user_type" ref="account_type_root_ind1"/>
-				<field name="type1">none</field>
+				
 				<field name="reconcile" eval="False"/>
-				<field name="currency_id" ref="base.IDR"/>
+				
 	            <field name="parent_id" ref="IA_AC0"/>
 			</record>
 			
@@ -89,9 +86,9 @@
 					<field name="code">IA_AC011</field>
 					<field name="type">receivable</field>
 					<field name="user_type" ref="account_type_asset1"/>
-					<field name="type1">dr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC01"/>
 				</record>
 				
@@ -100,9 +97,9 @@
 						<field name="code">IA_AC0111</field>
 						<field name="type">receivable</field>
 						<field name="user_type" ref="account_type_asset1"/>
-						<field name="type1">dr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC011"/>
 					</record>
 					
@@ -111,9 +108,9 @@
 						<field name="code">IA_AC0112</field>
 						<field name="type">receivable</field>
 						<field name="user_type" ref="account_type_asset1"/>
-						<field name="type1">dr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC011"/>
 					</record>
 						
@@ -122,9 +119,9 @@
 							<field name="code">IA_AC01121</field>
 							<field name="type">receivable</field>
 							<field name="user_type" ref="account_type_asset1"/>
-							<field name="type1">dr</field>
+							
 							<field name="reconcile" eval="False"/>
-							<field name="currency_id" ref="base.IDR"/>
+							
 				            <field name="parent_id" ref="IA_AC0112"/>
 						</record>
 					
@@ -133,9 +130,9 @@
 						<field name="code">IA_AC0113</field>
 						<field name="type">receivable</field>
 						<field name="user_type" ref="account_type_asset1"/>
-						<field name="type1">dr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC011"/>
 					</record>
 					
@@ -144,9 +141,9 @@
 						<field name="code">IA_AC0114</field>
 						<field name="type">receivable</field>
 						<field name="user_type" ref="account_type_asset1"/>
-						<field name="type1">dr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC011"/>
 					</record>
 					
@@ -155,9 +152,9 @@
 <!--						<field name="code">IA_AC0115</field>-->
 <!--						<field name="type">receivable</field>-->
 <!--						<field name="user_type" ref="account_type_asset1"/>
-							<field name="type1">dr</field>-->
+							-->
 <!--						<field name="reconcile" eval="False"/>-->
-<!--						<field name="currency_id" ref="base.IDR"/>-->
+<!--						-->
 <!--			            <field name="parent_id" ref="IA_AC011"/>-->
 <!--					</record>-->
 
@@ -166,9 +163,9 @@
 						<field name="code">IA_AC0116</field>
 						<field name="type">receivable</field>
 						<field name="user_type" ref="account_type_asset1"/>
-						<field name="type1">dr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC011"/>
 					</record>
 	
@@ -177,9 +174,9 @@
 					<field name="code">IA_AC012</field>
 					<field name="type">receivable</field>
 					<field name="user_type" ref="account_type_asset1"/>
-					<field name="type1">dr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC01"/>
 				</record>
 
@@ -188,9 +185,9 @@
 					<field name="code">IA_AC013</field>
 					<field name="type">receivable</field>
 					<field name="user_type" ref="account_type_asset1"/>
-					<field name="type1">dr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC01"/>
 				</record>
 
@@ -199,9 +196,9 @@
 					<field name="code">IA_AC014</field>
 					<field name="type">receivable</field>
 					<field name="user_type" ref="account_type_asset1"/>
-					<field name="type1">dr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC01"/>
 				</record>
 				
@@ -211,9 +208,9 @@
 				<field name="code">IA_AC02</field>
 				<field name="type">view</field>
 				<field name="user_type" ref="account_type_root_ind1"/>
-				<field name="type1">none</field>
+				
 				<field name="reconcile" eval="False"/>
-				<field name="currency_id" ref="base.IDR"/>
+				
 	            <field name="parent_id" ref="IA_AC0"/>
 			</record>
 			
@@ -222,9 +219,9 @@
 					<field name="code">IA_AC021</field>
 					<field name="type">payable</field>
 					<field name="user_type" ref="account_type_liability1"/>
-					<field name="type1">cr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC02"/>
 				</record>
 					
@@ -233,9 +230,9 @@
 						<field name="code">IA_AC0211</field>
 						<field name="type">payable</field>
 						<field name="user_type" ref="account_type_liability1"/>
-						<field name="type1">cr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC021"/>
 					</record>
 					
@@ -244,9 +241,9 @@
 						<field name="code">IA_AC0212</field>
 						<field name="type">payable</field>
 						<field name="user_type" ref="account_type_liability1"/>
-						<field name="type1">cr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC021"/>
 					</record>
 					
@@ -255,9 +252,9 @@
 						<field name="code">IA_AC0213</field>
 						<field name="type">payable</field>
 						<field name="user_type" ref="account_type_liability1"/>
-						<field name="type1">cr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC021"/>
 					</record>
 
@@ -266,9 +263,9 @@
 					<field name="code">IA_AC022</field>
 					<field name="type">payable</field>
 					<field name="user_type" ref="account_type_liability1"/>
-					<field name="type1">cr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC02"/>
 				</record>
 				
@@ -277,9 +274,9 @@
 					<field name="code">IA_AC023</field>
 					<field name="type">payable</field>
 					<field name="user_type" ref="account_type_liability1"/>
-					<field name="type1">cr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC02"/>
 				</record>
 				
@@ -289,9 +286,9 @@
 						<field name="code">IA_AC0231</field>
 						<field name="type">payable</field>
 						<field name="user_type" ref="account_type_liability1"/>
-						<field name="type1">cr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC023"/>
 					</record>
 				
@@ -300,9 +297,9 @@
 						<field name="code">IA_AC0232</field>
 						<field name="type">payable</field>
 						<field name="user_type" ref="account_type_liability1"/>
-						<field name="type1">cr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC023"/>
 					</record>
 			
@@ -311,9 +308,9 @@
 					<field name="code">IA_AC024</field>
 					<field name="type">payable</field>
 					<field name="user_type" ref="account_type_liability1"/>
-					<field name="type1">cr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC02"/>
 				</record>
 					
@@ -322,9 +319,9 @@
 						<field name="code">IA_AC0241</field>
 						<field name="type">payable</field>
 						<field name="user_type" ref="account_type_liability1"/>
-						<field name="type1">cr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC024"/>
 					</record>
 						
@@ -333,9 +330,9 @@
 						<field name="code">IA_AC0242</field>
 						<field name="type">payable</field>
 						<field name="user_type" ref="account_type_liability1"/>
-						<field name="type1">cr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC024"/>
 					</record>
 					
@@ -344,9 +341,9 @@
 						<field name="code">IA_AC0243</field>
 						<field name="type">payable</field>
 						<field name="user_type" ref="account_type_liability1"/>
-						<field name="type1">cr</field>
+						
 						<field name="reconcile" eval="False"/>
-						<field name="currency_id" ref="base.IDR"/>
+						
 			            <field name="parent_id" ref="IA_AC024"/>
 					</record>
 						
@@ -355,9 +352,9 @@
 					<field name="code">IA_AC025</field>
 					<field name="type">payable</field>
 					<field name="user_type" ref="account_type_liability1"/>
-					<field name="type1">cr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC02"/>
 				</record>
 
@@ -367,9 +364,9 @@
 			<field name="code">IA_AC1</field>
 			<field name="type">view</field>
 			<field name="user_type" ref="account_type_root_ind1"/>
-			<field name="type1">none</field>
+			
 			<field name="reconcile" eval="False"/>
-			<field name="currency_id" ref="base.IDR"/>
+			
             <field name="parent_id" ref="root"/>
 		</record>
 		
@@ -378,9 +375,9 @@
 				<field name="code">IA_AC11</field>
 				<field name="type">view</field>
 				<field name="user_type" ref="account_type_root_ind1"/>
-				<field name="type1">none</field>
+				
 				<field name="reconcile" eval="False"/>
-				<field name="currency_id" ref="base.IDR"/>
+				
 	            <field name="parent_id" ref="IA_AC1"/>
 			</record>
 			
@@ -389,9 +386,9 @@
 					<field name="code">IA_AC111</field>
 					<field name="type">other</field>
 					<field name="user_type" ref="account_type_expense1"/>
-					<field name="type1">dr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC11"/>
 				</record>
 			
@@ -400,9 +397,9 @@
 					<field name="code">IA_AC112</field>
 					<field name="type">other</field>
 					<field name="user_type" ref="account_type_expense1"/>
-					<field name="type1">dr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC11"/>
 				</record>
 				
@@ -411,9 +408,9 @@
 					<field name="code">IA_AC113</field>
 					<field name="type">other</field>
 					<field name="user_type" ref="account_type_expense1"/>
-					<field name="type1">dr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC11"/>
 				</record>
 				<record model="account.account.template" id="IA_AC114">
@@ -421,9 +418,9 @@
 					<field name="code">IA_AC114</field>
 					<field name="type">other</field>
 					<field name="user_type" ref="account_type_expense1"/>
-					<field name="type1">dr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC11"/>
 				</record>
 
@@ -433,9 +430,9 @@
 				<field name="code">IA_AC12</field>
 				<field name="type">view</field>
 				<field name="user_type" ref="account_type_root_ind1"/>
-				<field name="type1">none</field>
+				
 				<field name="reconcile" eval="False"/>
-				<field name="currency_id" ref="base.IDR"/>
+				
 	            <field name="parent_id" ref="IA_AC1"/>
 			</record>
 			
@@ -444,9 +441,9 @@
 					<field name="code">IA_AC121</field>
 					<field name="type">other</field>
 					<field name="user_type" ref="account_type_income1"/>
-					<field name="type1">cr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC12"/>
 				</record>
 				
@@ -455,9 +452,9 @@
 					<field name="code">IA_AC122</field>
 					<field name="type">other</field>
 					<field name="user_type" ref="account_type_income1"/>
-					<field name="type1">cr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC12"/>
 				</record>
 				
@@ -466,9 +463,9 @@
 					<field name="code">IA_AC123</field>
 					<field name="type">other</field>
 					<field name="user_type" ref="account_type_income1"/>
-					<field name="type1">cr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC12"/>
 				</record>
 				<record model="account.account.template" id="IA_AC124">
@@ -476,9 +473,9 @@
 					<field name="code">IA_AC124</field>
 					<field name="type">other</field>
 					<field name="user_type" ref="account_type_income1"/>
-					<field name="type1">cr</field>
+					
 					<field name="reconcile" eval="False"/>
-					<field name="currency_id" ref="base.IDR"/>
+					
 		            <field name="parent_id" ref="IA_AC12"/>
 				</record>
 
