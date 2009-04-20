@@ -3,8 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution	
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    Copyright (C) 2008-2009 B2CK, Cedric Krier, Bertrand Chenal (the methods "check_vat_[a-z]{2}"
-#    $Id$
+#    Copyright (C) 2008-2009 B2CK, Cedric Krier, Bertrand Chenal (the methods "check_vat_[a-z]{2}" 
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -23,6 +22,8 @@
 
 from osv import osv
 from osv import fields
+import string
+from tools.func import partial
 
 def mult_add(i, j):
     """Sum each digits of the multiplication of i and j."""
@@ -40,14 +41,25 @@ class res_partner(osv.osv):
             if not partner.vat:
                 continue    #FIXME return False? empty vat numbre is invalid?
 
-            vat_country, vat_number = partner.vat[:2].lower(), partner.vat[2:]
-            if vat_number.find(' ') != -1:
-                return False 
-            check = getattr(self, 'check_vat_' + vat_country, lambda vn: False)
+            vat_country, vat_number = partner.vat[:2].lower(), partner.vat[2:].replace(' ', '')
+            check = getattr(self, 'check_vat_' + vat_country)
             if not check(vat_number):
                 return False
 
         return True
+
+    def __getattr__(self, attr):
+        if not attr.startswith('check_vat_'):
+            super(res_partner, self).__getattr__(attr)
+        
+        def default_vat_check(self, cn, vn):
+            # by default, a VAT number is valid if:
+            #  it starts with 2 letters
+            #  has more than 3 characters
+            return len(vn) > 0 and len(cn) == 2 and cn[0] in string.ascii_lowercase and cn[1] in string.ascii_lowercase
+
+        return partial(default_vat_check, self, attr[10:])
+
 
     def vat_change(self, cr, uid, ids, value, context={}):
         return {'value': {'vat_subjected': bool(value)}}

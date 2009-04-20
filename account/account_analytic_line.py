@@ -48,6 +48,21 @@ class account_analytic_line(osv.osv):
         'date': lambda *a: time.strftime('%Y-%m-%d'),
     }
     _order = 'date'
+    
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None):
+        if context is None:
+            context = {}
+
+        if context.get('from_date',False):
+            args.append(['date', '>=',context['from_date']])
+            
+        if context.get('to_date',False):
+            args.append(['date','<=',context['to_date']])
+            
+        return super(account_analytic_line, self).search(cr, uid, args, offset, limit,
+                order, context=context)
+        
     def _check_company(self, cr, uid, ids):
         lines = self.browse(cr, uid, ids)
         for l in lines:
@@ -69,7 +84,7 @@ class account_analytic_line(osv.osv):
                 a = prod.categ_id.property_account_expense_categ.id
             if not a:
                 raise osv.except_osv(_('Error !'),
-                        _('There is no expense account define ' \
+                        _('There is no expense account defined ' \
                                 'for this product: "%s" (id:%d)') % \
                                 (prod.name, prod.id,))
             amount = unit_amount * uom_obj._compute_price(cr, uid,

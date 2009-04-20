@@ -148,10 +148,10 @@ class account_account(osv.osv):
                     continue
                 jour = self.pool.get('account.journal').browse(cr, uid, args[pos][2])
                 if (not (jour.account_control_ids or jour.type_control_ids)) or not args[pos][2]:
-                    del args[pos]
+                    args[pos] = ('type','not in',('consolidation','view'))
                     continue
-                ids3 = map(lambda x: x.code, jour.type_control_ids)
-                ids1 = super(account_account, self).search(cr, uid, [('type', 'in', ids3)])
+                ids3 = map(lambda x: x.id, jour.type_control_ids)
+                ids1 = super(account_account, self).search(cr, uid, [('user_type', 'in', ids3)])
                 ids1 += map(lambda x: x.id, jour.account_control_ids)
                 args[pos] = ('id', 'in', ids1)
             pos += 1
@@ -654,7 +654,8 @@ class account_journal_period(osv.osv):
         'period_id': fields.many2one('account.period', 'Period', required=True, ondelete="cascade"),
         'icon': fields.function(_icon_get, method=True, string='Icon', type='string'),
         'active': fields.boolean('Active', required=True),
-        'state': fields.selection([('draft','Draft'), ('printed','Printed'), ('done','Done')], 'Status', required=True, readonly=True)
+        'state': fields.selection([('draft','Draft'), ('printed','Printed'), ('done','Done')], 'Status', required=True, readonly=True),
+        'fiscalyear_id': fields.related('period_id', 'fiscalyear_id', string='Fiscal Year', type='many2one', relation='account.fiscalyear'),
     }
 
     def _check(self, cr, uid, ids, context={}):
@@ -1327,11 +1328,8 @@ class account_tax(osv.osv):
                 data['amount'] = amount
 
             elif tax.type=='fixed':
-                #print "her", quantity
-                #print "data", data
                 data['amount'] = tax.amount
                 data['tax_amount']=quantity
-                #print "DATA 2", data
                # data['amount'] = quantity
             elif tax.type=='code':
                 address = address_id and self.pool.get('res.partner.address').browse(cr, uid, address_id) or None
@@ -1366,7 +1364,6 @@ class account_tax(osv.osv):
                                 latest[name+'_code_id'] = False
             if tax.include_base_amount:
                 cur_price_unit+=amount2
-        #print "rress final", res
         return res
 
     def compute(self, cr, uid, taxes, price_unit, quantity, address_id=None, product=None, partner=None):
@@ -1380,7 +1377,6 @@ class account_tax(osv.osv):
             one tax for each tax id in IDS and their childs
         """
         res = self._unit_compute(cr, uid, taxes, price_unit, address_id, product, partner, quantity)
-        #print "res",res
         total = 0.0
         for r in res:
             if r.get('balance',False):
@@ -1555,7 +1551,7 @@ class account_model_line(osv.osv):
 
         'ref': fields.char('Ref.', size=16),
 
-        'amount_currency': fields.float('Amount Currency', help="The amount expressed in an optionnal other currency."),
+        'amount_currency': fields.float('Amount Currency', help="The amount expressed in an optional other currency."),
         'currency_id': fields.many2one('res.currency', 'Currency'),
 
         'partner_id': fields.many2one('res.partner', 'Partner Ref.'),
@@ -1773,8 +1769,13 @@ class account_account_template(osv.osv):
             ('consolidation','Consolidation'),
             ('other','Others'),
             ('closed','Closed'),
-            ], 'Internal Type', required=True,),
-        'user_type': fields.many2one('account.account.type', 'Account Type', required=True),
+            ], 'Internal Type', required=True,help="This type is used to differenciate types with "\
+            "special effects in Open ERP: view can not have entries, consolidation are accounts that "\
+            "can have children accounts for multi-company consolidations, payable/receivable are for "\
+            "partners accounts (for debit/credit computations), closed for deprecated accounts."),
+        'user_type': fields.many2one('account.account.type', 'Account Type', required=True,
+            help="These types are defined according to your country. The type contain more information "\
+            "about the account and it's specificities."),
         'reconcile': fields.boolean('Allow Reconciliation', help="Check this option if you want the user to reconcile entries in this account."),
         'shortcut': fields.char('Shortcut', size=12),
         'note': fields.text('Note'),
@@ -2285,7 +2286,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
                 for tax in position.tax_ids:
                     vals_tax = {
                                 'tax_src_id' : tax_template_ref[tax.tax_src_id.id],
-                                'tax_dest_id' : tax_template_ref[tax.tax_dest_id.id],
+                                'tax_dest_id' : tax.tax_dest_id and tax_template_ref[tax.tax_dest_id.id] or False,
                                 'position_id' : new_fp,
                                 }
                     obj_tax_fp.create(cr, uid, vals_tax)

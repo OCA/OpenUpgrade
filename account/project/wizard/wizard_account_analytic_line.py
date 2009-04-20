@@ -26,15 +26,15 @@ import time
 from tools.translate import _
 
 def _action_open_window(self, cr, uid, data, context): 
-    domain=[]
-    from_date= data['form']['from_date']
-    to_date=data['form']['to_date']
+    domain = []
+    from_date = data['form']['from_date']
+    to_date = data['form']['to_date']
     if from_date and to_date:
-        domain=[('date','>=',from_date),('date','<=',to_date)]
+        domain = [('date','>=',from_date),('date','<=',to_date)]
     elif from_date:
-        domain=[('date','>=',from_date)]
+        domain = [('date','>=',from_date)]
     elif to_date:
-        domain=[('date','<=',to_date)]
+        domain = [('date','<=',to_date)]
     return {
         'name': _('Analytic Entries'),
         'view_type': 'form',
