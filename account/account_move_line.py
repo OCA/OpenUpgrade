@@ -40,16 +40,22 @@ class account_move_line(osv.osv):
         else:
             fiscalyear_clause = '%s' % context['fiscalyear']
         state=context.get('state',False)
-        where_move_state=''
+        where_move_state = ''
+        where_move_lines_by_date = ''
+
+        if context.get('date_from', False) and context.get('date_to', False):
+            where_move_lines_by_date = " AND " +obj+".move_id in ( select id from account_move  where date >= '" +context['date_from']+"' AND date <= '"+context['date_to']+"')"
+            
         if state:
             if state.lower() not in ['all']:
                 where_move_state= " AND "+obj+".move_id in (select id from account_move where account_move.state = '"+state+"')"
-
+        
+                
         if context.get('periods', False):
             ids = ','.join([str(x) for x in context['periods']])
-            return obj+".state<>'draft' AND "+obj+".period_id in (SELECT id from account_period WHERE fiscalyear_id in (%s) AND id in (%s)) %s" % (fiscalyear_clause, ids,where_move_state)
+            return obj+".state<>'draft' AND "+obj+".period_id in (SELECT id from account_period WHERE fiscalyear_id in (%s) AND id in (%s)) %s %s" % (fiscalyear_clause, ids,where_move_state,where_move_lines_by_date)
         else:
-            return obj+".state<>'draft' AND "+obj+".period_id in (SELECT id from account_period WHERE fiscalyear_id in (%s) %s)" % (fiscalyear_clause,where_move_state)
+            return obj+".state<>'draft' AND "+obj+".period_id in (SELECT id from account_period WHERE fiscalyear_id in (%s) %s %s)" % (fiscalyear_clause,where_move_state,where_move_lines_by_date)
 
     def default_get(self, cr, uid, fields, context={}):
         data = self._default_get(cr, uid, fields, context)
@@ -342,8 +348,8 @@ class account_move_line(osv.osv):
         'statement_id': fields.many2one('account.bank.statement', 'Statement', help="The bank statement used for bank reconciliation", select=1),
         'reconcile_id': fields.many2one('account.move.reconcile', 'Reconcile', readonly=True, ondelete='set null', select=2),
         'reconcile_partial_id': fields.many2one('account.move.reconcile', 'Partial Reconcile', readonly=True, ondelete='set null', select=2),
-        'amount_currency': fields.float('Amount Currency', help="The amount expressed in an optionnal other currency if it is a multi-currency entry."),
-        'currency_id': fields.many2one('res.currency', 'Currency', help="The optionnal other currency if it is a multi-currency entry."),
+        'amount_currency': fields.float('Amount Currency', help="The amount expressed in an optional other currency if it is a multi-currency entry."),
+        'currency_id': fields.many2one('res.currency', 'Currency', help="The optional other currency if it is a multi-currency entry."),
 
         'period_id': fields.many2one('account.period', 'Period', required=True, select=2),
         'journal_id': fields.many2one('account.journal', 'Journal', required=True, select=1),
@@ -793,6 +799,7 @@ class account_move_line(osv.osv):
             context['period_id'] = m.period_id.id
 
         self._update_journal_check(cr, uid, context['journal_id'], context['period_id'], context)
+        company_currency = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id.currency_id.id
 
         move_id = vals.get('move_id', False)
         journal = self.pool.get('account.journal').browse(cr, uid, context['journal_id'])
@@ -837,7 +844,7 @@ class account_move_line(osv.osv):
                     if a.id==vals['account_id']:
                         ok = True
                         break
-            if (account.currency_id) and 'amount_currency' not in vals:
+            if (account.currency_id) and 'amount_currency' not in vals and account.currency_id.id <> company_currency:
                 vals['currency_id'] = account.currency_id.id
                 cur_obj = self.pool.get('res.currency')
                 ctx = {}

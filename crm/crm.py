@@ -240,6 +240,7 @@ class crm_case_rule(osv.osv):
 
         'trg_priority_from': fields.selection([('','')] + AVAILABLE_PRIORITIES, 'Minimum Priority'),
         'trg_priority_to': fields.selection([('','')] + AVAILABLE_PRIORITIES, 'Maximim Priority'),
+        'trg_max_history': fields.integer('Maximum Communication History'),
 
         'act_method': fields.char('Call Object Method', size=64),
         'act_state': fields.selection([('','')]+AVAILABLE_STATES, 'Set state to', size=16),
@@ -418,6 +419,7 @@ class crm_case(osv.osv):
                     ok = ok and (not action.trg_categ_id or action.trg_categ_id.id==case.categ_id.id)
                     ok = ok and (not action.trg_user_id.id or action.trg_user_id.id==case.user_id.id)
                     ok = ok and (not action.trg_partner_id.id or action.trg_partner_id.id==case.partner_id.id)
+                    ok = ok and (not action.trg_max_history or action.trg_max_history<=(len(case.history_line)+1))
                     ok = ok and (
                         not action.trg_partner_categ_id.id or
                         (
@@ -510,7 +512,7 @@ class crm_case(osv.osv):
         return True
 
     def format_body(self, body):
-        return tools.ustr((body or '').encode('ascii', 'replace'))
+        return (body or u'').encode('utf8', 'replace')
 
     def format_mail(self, case, body):
         data = {
@@ -526,7 +528,7 @@ class crm_case(osv.osv):
             'partner': (case.partner_id and case.partner_id.name) or '/',
             'partner_email': (case.partner_address_id and case.partner_address_id.email) or '/',
         }
-        return self.format_body(body) % data
+        return self.format_body(body % data)
 
     def email_send(self, cr, uid, case, emails, body, context={}):
         body = self.format_mail(case, body)
@@ -534,7 +536,13 @@ class crm_case(osv.osv):
             emailfrom = case.user_id.address_id.email
         else:
             emailfrom = case.section_id.reply_to
-        tools.email_send(emailfrom, emails, '['+str(case.id)+'] '+case.name, body, reply_to=case.section_id.reply_to, tinycrm=str(case.id))
+        name = '[%d] %s' % (case.id, case.name.encode('utf8'))
+        reply_to = case.section_id.reply_to or False
+        if reply_to: reply_to = reply_to.encode('utf8')
+        if not emailfrom:
+            raise osv.except_osv(_('Error!'),
+                    _("No E-Mail ID Found for the Responsible user !"))
+        tools.email_send(emailfrom, emails, name, body, reply_to=reply_to, tinycrm=str(case.id))
         return True
     def __log(self, cr, uid, cases, keyword, context={}):
         if not self.pool.get('res.partner.event.type').check(cr, uid, 'crm_case_'+keyword):
@@ -600,6 +608,11 @@ class crm_case(osv.osv):
         for case in self.browse(cr, uid, ids):
             if case.section_id.reply_to and case.email_from:
                 src = case.email_from
+                
+                if not src:
+                    raise osv.except_osv(_('Error!'),
+                        _("No E-Mail ID Found for the Responsible user !"))
+                    
                 dest = case.section_id.reply_to
                 body = case.email_last or case.description
                 if not destination:
@@ -614,7 +627,7 @@ class crm_case(osv.osv):
                     attach_ids = self.pool.get('ir.attachment').search(cr, uid, [('res_model', '=', 'crm.case'), ('res_id', '=', case.id)])
                     attach_to_send = self.pool.get('ir.attachment').read(cr, uid, attach_ids, ['datas_fname','datas'])
                     attach_to_send = map(lambda x: (x['datas_fname'], base64.decodestring(x['datas'])), attach_to_send)
-
+                
                 # Send an email
                 tools.email_send(
                     src,
@@ -649,6 +662,9 @@ class crm_case(osv.osv):
             if not case.email_from:
                 raise osv.except_osv(_('Error!'),
                         _('You must put a Partner eMail to use this action!'))
+            if not case.user_id:
+                raise osv.except_osv(_('Error!'),
+                        _('You must define a responsible user for this case in order to use this action!'))
             if not case.description:
                 raise osv.except_osv(_('Error!'),
                         _('Can not send mail with empty body,you should have description in the body'))
@@ -664,8 +680,14 @@ class crm_case(osv.osv):
             body = case.description or ''
             if case.user_id.signature:
                 body += '\n\n%s' % (case.user_id.signature)
+            
+            emailfrom = case.user_id.address_id and case.user_id.address_id.email or False
+            if not emailfrom:
+                raise osv.except_osv(_('Error!'),
+                        _("No E-Mail ID Found for the Responsible user !"))
+                
             tools.email_send(
-                case.user_id.address_id.email,
+                emailfrom,
                 emails,
                 '['+str(case.id)+'] '+case.name,
                 self.format_body(body),
@@ -721,6 +743,7 @@ class crm_case(osv.osv):
             else:
                 raise osv.except_osv(_('Error !'), _('You can not escalate this case.\nYou are already at the top level.'))
             self.write(cr, uid, ids, data)
+        cases = self.browse(cr, uid, ids)
         self.__history(cr, uid, cases, _('Escalate'))
         self._action(cr, uid, cases, 'escalate')
         return True
@@ -793,6 +816,14 @@ class crm_case_history(osv.osv):
     _description = "Case history"
     _order = "id desc"
     _inherits = {'crm.case.log':"log_id"}
+
+    def create(self, cr, user, vals, context=None):
+        if vals.has_key('case_id') and vals['case_id']:
+            case_obj = self.pool.get('crm.case')
+            cases = case_obj.browse(cr, user, [vals['case_id']])
+            case_obj._action(cr, user, cases, '')
+        return super(crm_case_history, self).create(cr, user, vals, context)
+
     def _note_get(self, cursor, user, ids, name, arg, context=None):
         res = {}
         for hist in self.browse(cursor, user, ids, context or {}):
