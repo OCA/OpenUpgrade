@@ -18,7 +18,6 @@ class Comparison(controllers.Controller, TinyResource):
     
     @expose(template="erpcomparator.subcontrollers.templates.comparison")
     def default(self, args=None, **kw):
-        
         selected_items = kw.get('ids', [])
         selected_items = selected_items and eval(str(selected_items))
         
@@ -89,10 +88,36 @@ class Comparison(controllers.Controller, TinyResource):
         
         item_model = 'comparison.item'
         
+        
         proxy_item = rpc.RPCProxy(item_model)
         item_ids = proxy_item.search([])
         
         res = proxy_item.read(item_ids, ['name', 'code', 'load_default'])
+        
+        lang_proxy = rpc.RPCProxy('res.lang')
+        if(kw.get('lang_code')):
+            language = kw['lang_code']
+            context = rpc.session.context
+              
+            context['lang'] = language
+            lang_id = lang_proxy.search([])
+            lang_data = lang_proxy.read(lang_id,[])
+            cherrypy.session['language'] = context['lang']
+            cherrypy.session['lang_data'] = lang_data
+        else:
+            search_lang = lang_proxy.search([])
+            lang_data = lang_proxy.read(search_lang,[], rpc.session.context)
+            language  = 'en_US'
+            context = rpc.session.context
+            context['lang'] = language
+        
+        if(cherrypy.session.has_key('language')):
+             cherrypy.session['language']
+             cherrypy.session['lang_data']
+        else:
+            cherrypy.session['language'] = context['lang']
+            cherrypy.session['lang_data'] = lang_data
+        
         
         titles = []
         ses_id = []
@@ -172,7 +197,6 @@ class Comparison(controllers.Controller, TinyResource):
         
         self.url_params = _jsonify(self.url_params)
         self.headers = jsonify.encode(self.headers)
-        
         return dict(headers=self.headers, url_params=self.url_params, url=self.url, titles=titles, selected_items=selected_items)
     
     def check_data(self):
@@ -582,4 +606,3 @@ class Comparison(controllers.Controller, TinyResource):
                     field['colspan'] = 3
                     
                 self.head += [field]
-        
