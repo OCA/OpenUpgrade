@@ -91,9 +91,16 @@ function add_new_user() {
 	params['password'] = $('passwd').value;
 	params['email'] = $('email').value;
 	
-	name = params['user_name'].match(/^[A-Za-z0-9_]+$/);
-	if (! name) {
+	var user_name = params['user_name'].match(/^[A-Za-z0-9_]+$/);
+	
+	if (! user_name) {
 		return alert("Username accepts only Digit, Later, _ sign...");	
+	}
+	
+	var email = params['email'].match(/(^[a-z]([a-z_\.]*)@([a-z_\.]*)([.][a-z]{3})$)|(^[a-z]([a-z_\.]*)@([a-z_\.]*)(\.[a-z]{3})(\.[a-z]{2})*$)/i);
+	
+	if (! email) {
+		return alert("Invalid Email Address...");	
 	}
 	
 	if (!params['user_name'] || !params['password'] || !params['email']) {
@@ -245,9 +252,9 @@ function item_vote() {
 	var val = '';
 	
 	forEach(treenode.childNodes, function(node){
-		var name = node.record.id;
+		var node_name = node.record.id;
 		try{
-			var elem = document.getElementById(name + '_score_id');
+			var elem = document.getElementById(node_name + '_score_id');
 		}
 		catch(e) {
 			alert(e)
@@ -255,11 +262,11 @@ function item_vote() {
 		
 		if(elem != null) {
 			var params = {};
-			params['id'] = name;
-			params['score_id'] = $(name + '_score_id').value;
+			params['id'] = node_name;
+			params['score_id'] = $(node_name + '_score_id').value;
 			params['item_id'] = $('item_id').value;
 			params['note'] = $('note').value;
-			values = "id,"+name+"|score_id,"+$(name + '_score_id').value+"|item_id,"+$('item_id').value+"|note,"+$('note').value;
+			values = "id,"+node_name+"|score_id,"+$(node_name + '_score_id').value+"|item_id,"+$('item_id').value+"|note,"+$('note').value;
 		}
 		
 		if (i != treenode.childNodes.length) {
