@@ -35,6 +35,13 @@ from tools import config
 
 import urllib2
 
+class product_product(osv.osv):
+    _inherit = "product.product"
+    _columns = {
+        'exportable' : fields.boolean('Exportable')
+    }
+    
+product_product()
 
 class esale_joomla_web(osv.osv):
     _name = "esale_joomla.web"
