@@ -64,13 +64,6 @@
 						<img src="/static/images/load.jpg" style="cursor: pointer" onclick="getRecords()"/>
 					</td>
 				</tr>
-				<tr>
-					 <td colspan="${len(titles)+1}" align="right">
-<!--						<a href="/comparison/Complete_comparison">Complete</a>-->
-<!--						<input type="button" value="Complete Comparison" onclick="expand_tree(this)" style="cursor: pointer;"/>-->
-							<input type="button" value="Complete Comparison" onclick="window.location.href='/comparison?all=1'" style="cursor: pointer;"/>
-					</td>
-				</tr>
 			</table>
 		</div>
     	
