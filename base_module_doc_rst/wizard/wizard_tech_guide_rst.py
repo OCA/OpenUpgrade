@@ -110,7 +110,7 @@ class RstDoc(object):
         versions = ('4.2', '5.0', 'trunk')
         download_links = []
         for ver in versions:
-            link = '/download/modules/%s/%s.zip' % (ver, self.dico['name'])
+            link = 'http://www.openerp.com/download/modules/%s/%s.zip' % (ver, self.dico['name'])
             if _is_connection_status_good(link):
                 download_links.append("  * `%s <%s>`_" % (ver, link))
 

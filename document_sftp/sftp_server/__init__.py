@@ -22,11 +22,9 @@
 #
 ##############################################################################
 
-import paramiko,socket,threading
-import serverInterface
-import SFTPHandle
+import paramiko, socket, threading
+from Server import Server
 import SFTPServerInterface
-import AuthHandler
 import SFTPServer
 from document import ftpserver 
 
@@ -69,7 +67,7 @@ class sftp_server(ftpserver.ftp_server):
 
                 # set up sftp handler
                 t.set_subsystem_handler('sftp', SFTPServer.SFTPServer, SFTPServerInterface.SFTPServer)
-                server = serverInterface.Server()
+                server = Server()
                 event = threading.Event()
 
                 # start ssh server session
