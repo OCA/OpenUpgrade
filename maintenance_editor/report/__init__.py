@@ -26,29 +26,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
-{
-    "name" : "Maintenance Editor",
-    "version" : "1.1",
-    "author" : "Tiny",
-    "category" : "Generic Modules/Base",
-    "depends" : ["base", 'product', 'crm'],
-    "init_xml" : [],
-    "demo_xml" : [
-    ],
-    "description": """
-    module to manage maintenance contracts:
-    """,
-    "update_xml" : [
-        "security/maintenance_security.xml",
-        "security/ir.model.access.csv",
-        "maintenance_editor_view.xml",
-        "maintenance_sequence.xml",
-        "maintenance_report.xml",
-        "maintenance_wizard.xml",
-        ],
-    "active": False,
-    "installable": True
-}
+
+import contract_report
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,25 +19,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Simulation",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module is used to launch simulation on other servers.
-            """,
-    "depends" : ["dm"],
-    "init_xml" : [
-    ],
-    "demo_xml" : [],
-    "update_xml" : [
-                    "dm_simulator_view.xml",
-                    "dm_simulator_data.xml",
-                    ],
-    "active": False,
-    "installable": True,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+from osv import fields, osv
+
+class ir_translation(osv.osv):
+    _inherit = "ir.translation"
+    _description = 'ir.translation'
+
+    _columns = {
+        'need_review': fields.boolean('Need review')
+                }
+ir_translation()

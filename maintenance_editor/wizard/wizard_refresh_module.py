@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,25 +19,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Simulation",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module is used to launch simulation on other servers.
-            """,
-    "depends" : ["dm"],
-    "init_xml" : [
-    ],
-    "demo_xml" : [],
-    "update_xml" : [
-                    "dm_simulator_view.xml",
-                    "dm_simulator_data.xml",
-                    ],
-    "active": False,
-    "installable": True,
-}
+
+from mx.DateTime import now
+from osv import osv
+import wizard
+import netsvc
+import ir
+import pooler
+import tools
+from tools.translate import _
+
+class maintenance_maintenance_module_refresh_wizard(wizard.interface):
+    def init(self, cr, uid, data, context):
+        pooler.get_pool(cr.dbname).get('maintenance.maintenance.module').refresh(cr, uid)
+        raise osv.except_osv(_('Refresh'), _('List refreshed successfully'))
+        return {}
+
+    states = {
+        'init': {
+            'actions': [init],
+            'result': {'type': 'state', 'state': 'end'}
+        }
+    }
+maintenance_maintenance_module_refresh_wizard("maintenance.maintenance.module.refresh")
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

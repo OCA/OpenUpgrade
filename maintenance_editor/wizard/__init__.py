@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,25 +19,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Simulation",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module is used to launch simulation on other servers.
-            """,
-    "depends" : ["dm"],
-    "init_xml" : [
-    ],
-    "demo_xml" : [],
-    "update_xml" : [
-                    "dm_simulator_view.xml",
-                    "dm_simulator_data.xml",
-                    ],
-    "active": False,
-    "installable": True,
-}
+
+import wizard_print_maintenance_contract
+import wizard_refresh_module
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

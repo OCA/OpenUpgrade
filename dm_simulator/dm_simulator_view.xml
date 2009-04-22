@@ -1,49 +1,79 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-	<!--
+    <!--
     =======================================================
     SIMULATOR VIEWS
     =======================================================
     -->
 
-	<record id="view_dm_sim_scenario_tree" model="ir.ui.view">
-	    <field name="name">dm.sim.scenario.tree</field>
-	    <field name="model">dm.sim.scenario</field>
-	    <field name="type">tree</field>
-	    <field name="arch" type="xml">
-	        <tree string="Simulators">
-	        	<field name="name"/>
-	            <field name="campaign_id"/>
-                <field name="date_start"/>
-                <field name="date_stop"/>
+    <record id="view_dm_simulator_tree" model="ir.ui.view">
+        <field name="name">dm.simulator.tree</field>
+        <field name="model">dm.simulator</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Simulators">
+                <field name="name" />
+                <field name="campaign_id"/>
+                <field name="type"/>
+                <field name="duration"/>
+                <field name="duration_unit"/>
                 <field name="action_qty"/>
-	        </tree>
-	    </field>
-	</record>
-	<record id="view_dm_sim_scenario_form" model="ir.ui.view">
-	    <field name="name">dm.sim.scenario.form</field>
-	    <field name="model">dm.sim.scenario</field>
-	    <field name="type">form</field>
-	    <field name="arch" type="xml">
-	        <form string="Simulator">
-	            <field name="name" select="1"/>
-	            <field name="campaign_id"/>
-                <field name="date_start" select="1"/>
-                <field name="date_stop"/>
-                <field name="action_qty" select="2"/>
-                <button string="Confirm" name="simulation_start" type="object" colspan="2"/>
-	        </form>
-	    </field>
-	</record>
-	<record id="act_dm_sim_scenario_form" model="ir.actions.act_window">
-	    <field name="name">Simulator</field>
-	    <field name="type">ir.actions.act_window</field>
-	    <field name="res_model">dm.sim.scenario</field>
-	    <field name="view_type">form</field>
-	    <field name="view_mode">tree,form</field>
-	</record>
-	<menuitem action="act_dm_sim_scenario_form" id="menu_act_dm_sim_scenario_form" parent="dm.menu_dm_config_lowlevel"/>
-	
+                <field name="state" />
+            </tree>
+        </field>
+    </record>
+    <record id="view_dm_simulator_form" model="ir.ui.view">
+        <field name="name">dm.simulator.form</field>
+        <field name="model">dm.simulator</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Simulator">
+                <separator string="Simulation Description" colspan="4"/>
+                <field name="name" colspan="4" select="1"/>
+                <field name="campaign_id" on_change="onchange_campaign(campaign_id, type)"/>
+                <field name="type" select="1"/>
+                <notebook colspan="4">
+                <page string="General">
+                <group colspan="2" col="3">
+                    <field name="duration" select="2" />
+                    <field name="duration_unit" nolabel="1" />
+                </group>
+                <separator string="Simulation Informations" colspan="4"/>
+                <group colspan="2" col="2">
+                <separator string="Dates" />
+                    <field name="date_start" select="1" />
+                    <field name="date_stop" select="1" />
+                </group>
+                <group colspan="2" col="2">
+                    <separator string="Quantities" />
+                    <field name="cust_qty" />
+                    <field name="action_qty" />
+                    <field name="section_qty" />
+                </group>
+                <separator string="Status" colspan="4"/>
+                <field name="state" select="1" />
+                <group colspan="2">
+                    <button string="Start Simulation" name="simulation_start" states="pending" type="object" colspan="2"/>
+                    <button string="Stop Simulation" name="simulation_stop"  states="running" type="object" colspan="2"/>
+                </group>
+                </page>
+                <page string="Logs">
+                    <separator string="Actions Logs" colspan="4"/>
+                    <field name="logs" colspan="4" nolabel="1"/>
+                </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+    <record id="act_dm_simulator_form" model="ir.actions.act_window">
+        <field name="name">Campaign Simulator</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.simulator</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem action="act_dm_simulator_form" id="menu_act_dm_simulator_form" parent="dm.menu_dm_config_lowlevel"/>
+    
 </data>
 </openerp>

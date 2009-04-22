@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+  
+        <report
+			id="report_basic_contract_maintenance"
+			string="Basic Contract"
+			model="maintenance.maintenance"
+			name="maintenance.basic.contract"
+			rml="maintenance_editor/report/basic_contract.rml"
+			menu="False"
+			/>
+
+        <report
+			id="report_smb_contract_maintenance"
+			string="SMB Contract"
+			model="maintenance.maintenance"
+			name="maintenance.smb.contract"
+			rml="maintenance_editor/report/smb_contract.rml"
+			menu="False"
+			/>
+
+        <report
+			id="report_corporate_contract_maintenance"
+			string="Corporate Contract"
+			model="maintenance.maintenance"
+			name="maintenance.corporate.contract"
+			rml="maintenance_editor/report/corporate_contract.rml"
+			menu="False"
+			/>
+
+    </data>
+</openerp>
