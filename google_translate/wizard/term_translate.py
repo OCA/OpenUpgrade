@@ -28,18 +28,18 @@ import pooler
 import re
 
 trans_form = '''<?xml version="1.0"?>
-    <form string="Translate" colspan="4">
+    <form string="Translation" colspan="4">
          <newline/>
-         <label string="Translate Terms using google" align="0.0" colspan="3"/>
+         <label string="Translate Terms of tiny using google" align="0.0" colspan="3"/>
          <newline/>
      </form>
          '''
 trans_fields = { }
 
 trans_sum = '''<?xml version="1.0"?>
-        <form string=" " colspan="4">
+        <form string="Translation" colspan="4">
              <newline/>
-             <label string="Successfullly Translat" align="0.0" colspan="3"/>
+             <label string="Successfullly Translate" />
              <newline/>
         </form>
          '''
@@ -50,16 +50,20 @@ def setUserAgent(userAgent):
     pass
 
 def translate(self,cr,uid,data,context):
+    # Todo:
+    #    1. should work for all language (arabic)
     pool = pooler.get_pool(cr.dbname)
-    translation_obj=pool.get('ir.translation').browse(cr, uid,data['id'], context)
-    in_lang=context['lang'][:2].lower().encode('utf-8')
-    out_lang= translation_obj['lang'][:2].lower().encode('utf-8')
-    src=translation_obj['src'].encode('utf-8')
+    translation_obj = pool.get('ir.translation').browse(cr, uid,data['id'], context)
+    in_lang = context['lang'][:2].lower().encode('utf-8')
+    out_lang = translation_obj['lang'][:2].lower().encode('utf-8')
+    src = translation_obj['src'].encode('utf-8')
     setUserAgent("Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008070400 SUSE/3.0.1-0.1 Firefox/3.0.1")
+
     try:
         post_params = urllib.urlencode({"langpair":"%s|%s" %(in_lang,out_lang), "text":src,"ie":"UTF8", "oe":"UTF8"})
     except KeyError, error:
         return
+
     page = urllib.urlopen("http://translate.google.com/translate_t", post_params)
     content = page.read()
     page.close()
@@ -68,7 +72,7 @@ def translate(self,cr,uid,data,context):
     pool.get('ir.translation').write(cr, uid, data['id'],{'value':value})
     return {}
 
-class Transaltor(wizard.interface):
+class google_translate_wizard(wizard.interface):
     states = {
             'init': {
              'actions': [],
@@ -80,4 +84,4 @@ class Transaltor(wizard.interface):
                 },
             }
 
-Transaltor('trans_wizard')
+google_translate_wizard('google.translate.wizard')

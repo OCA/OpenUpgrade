@@ -20,4 +20,13 @@
 #
 ##############################################################################
 
-import term_translate
+from osv import fields, osv
+
+class ir_translation(osv.osv):
+    _inherit = "ir.translation"
+    _description = 'ir.translation'
+
+    _columns = {
+        'need_review': fields.boolean('Need review')
+                }
+ir_translation()
