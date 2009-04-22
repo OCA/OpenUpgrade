@@ -36,7 +36,7 @@ from osv import fields, osv
 
 _google_form =  '''<?xml version="1.0"?>
         <form string="Export">
-        <separator string="Synchronize events between tiny and google calendar " colspan="4"/>
+        <separator string="Synchronize events between tiny and google calendar" colspan="4"/>
         </form> '''
 
 _google_fields = {
@@ -47,7 +47,7 @@ class google_calendar_wizard(wizard.interface):
     calendar_service = ""
 
     def add_event(self, calendar_service, title='',content='', where='', start_time=None, end_time=None):
-        
+
         try:
             event = gdata.calendar.CalendarEventEntry()
             event.title = atom.Title(text=title)
@@ -73,28 +73,23 @@ class google_calendar_wizard(wizard.interface):
             return new_event
         except Exception, e:
             raise osv.except_osv('Error !',e )
-        
-    def _synch_events(self, cr, uid, data, context):
+
+    def _synch_events(self, cr, uid, data, context={}):
 
 #        To do import:
 #            - Retrieving events without query parameters => done
 #            - Retrieving events for a specified date range
 #            - all events should be retrieve currently it comes with limit (25)
 #            - time zone set => done
-#            - set start and end date of event from calendar of google using rfc3339 format => done
 #            - more attribute can be added if possible on event.event
 #            - open summary window after finish importing
-#            - google date not comes correct => done
-#            - optimize
+#            - delete events
 
 #         To do export:
 #            1. using proxy connect
-#            2. both side synchronize
-#            3. some events in the calendar (crm) are linked to section that should be synchronized with google calendar
-#            4. time zone for time of event start and end / gmtime
-#            5. open summary window after finish exporting
-#            6. multiple location of events
-#            7. update date problem
+#            2. open summary window after finish exporting
+#            3. multiple location of events
+#            4. delete events
 
         obj_user = pooler.get_pool(cr.dbname).get('res.users')
         product = pooler.get_pool(cr.dbname).get('product.product').search(cr, uid, [('name', 'like', 'Calendar Product')])
@@ -103,7 +98,7 @@ class google_calendar_wizard(wizard.interface):
         if not google_auth_details.google_email or not google_auth_details.google_password:
             raise osv.except_osv('Warning !',
                                  'Please Enter google email id and password in users')
-        if context['tz']:
+        if 'tz' in context and context['tz']:
             time_zone = context['tz']
             au_tz = timezone(time_zone)
         else:
@@ -122,7 +117,7 @@ class google_calendar_wizard(wizard.interface):
             street2 = google_auth_details.company_id.partner_id.address[0].street2 or ''
             zip = google_auth_details.company_id.partner_id.address[0].zip or ''
             country = google_auth_details.company_id.partner_id.address[0].country_id.name or ''
-            location = street + " "+street2 + " " + city + " " + zip + " " + country
+            location = street + " " +street2 + " " + city + " " + zip + " " + country
             tiny_events = obj_event.browse(cr, uid, tiny_events)
             feed = self.calendar_service.GetCalendarEventFeed()
             tiny_event_dict = {}
@@ -136,6 +131,7 @@ class google_calendar_wizard(wizard.interface):
                 tiny_event_dict[event.google_event_id] = event
             for i, an_event in enumerate(feed.entry):
                 google_id = an_event.id.text
+
                 if google_id in tiny_event_dict.keys():
                     event = tiny_event_dict[google_id]
                     google_up = an_event.updated.text # google event modify date
@@ -161,6 +157,7 @@ class google_calendar_wizard(wizard.interface):
                         an_event.when[0].start_time = start_time
                         an_event.when[0].end_time = end_time
                         update_event = self.calendar_service.UpdateEvent(an_event.GetEditLink().href, an_event)
+
                     elif event.write_date < google_up:
                         # google events => tiny
                         utime = dateutil.parser.parse(an_event.updated.text)
@@ -183,8 +180,10 @@ class google_calendar_wizard(wizard.interface):
                            'event_modify_date': timestring_update
                            }
                         obj_event.write(cr, uid, [event.id], val)
+
                     elif event.write_date == google_up:
                         pass
+
                 else:
                     google_id = an_event.id.text
                     utime = dateutil.parser.parse(an_event.updated.text)
@@ -209,11 +208,10 @@ class google_calendar_wizard(wizard.interface):
                        'event_modify_date': timestring_update
                         }
                     obj_event.create(cr, uid, val)
+
             return {}
         except Exception, e:
             raise osv.except_osv('Error !',e )
-        
-
 
     states = {
         'init': {
@@ -227,3 +225,5 @@ class google_calendar_wizard(wizard.interface):
     }
 
 google_calendar_wizard('google.calendar.synch')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

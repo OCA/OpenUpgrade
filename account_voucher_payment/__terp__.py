@@ -19,9 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 {
-    "name" : "Invoice Payment/Receipt by Vouchers",
+    "name" : "Invoice Payment/Receipt by Vouchers.",
     "version" : "1.0",
     "author" : 'Tiny & Axelor',
     "description": """This module includes :
