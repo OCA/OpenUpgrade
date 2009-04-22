@@ -704,8 +704,15 @@
                             <separator string="Segment Description" colspan="4"/>
                             <field name="name" string="Name" select="1"/>
                             <field name="code1" string="Code" select="1"/>
-                            <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
-                            <field name="customers_file_id" select="1" groups="base.group_extended"/>
+							<group colspan="2">
+								<field name="type_src"/>
+							</group>
+							<group colspan="2" col="2">
+								<field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)" attrs="{'invisible':[('type_src','=','internal')],'readonly':[('type_src','=','internal')]}" />
+								<field name="customers_file_id" select="1" groups="base.group_extended" attrs="{'invisible':[('type_src','=','external')],'readonly':[('type_src','=','external')]}"/>
+							</group>
+<!--                            <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
+                            <field name="customers_file_id" select="1" groups="base.group_extended"/>-->
                         </group>
                         <notebook colspan="4">
                             <page string="General">

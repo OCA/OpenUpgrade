@@ -525,22 +525,28 @@ class dm_event(osv.osv_memory):
 #        if 'action_time' in vals and vals['action_time']:
 #            return super(dm_workitem, self).create(cr, uid, vals, context)
 #        if 'trigger_type_id' in vals and vals['trigger_type_id']:
+        id = super(dm_event,self).create(cr,uid,vals,context)
+        obj = self.browse(cr, uid ,id)
         tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',vals['step_id']),
                 ('condition_id','=',vals['trigger_type_id'])])
         for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
             wi_action_time = datetime.datetime.now()
             kwargs = {(tr.delay_type+'s'): tr.delay}
             next_action_time = wi_action_time + datetime.timedelta(**kwargs)
-            print "Next action date : ",next_action_time
+            print "Event - Next action date : ",next_action_time
 #                vals['action_time'] = next_action_time
-            print "Vals : ",vals
+            print "Event -  : ",vals
 #        else:
 #            vals['action_time'] = datetime.datetime.now()
 #            print "Vals : ",vals
 
-            self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':vals['segment_id'] or False,
-            (vals['source']):vals[(vals['source'])] or False, 'action_time':next_action_time, 'source':vals['source']})
+#            self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':vals['segment_id'] or False,
+#            (vals['source']):vals[(vals['source'])] or False, 'action_time':next_action_time, 'source':vals['source']})
 
-        return super(dm_event,self).create(cr,uid,vals,context)
+            self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
+#            (obj.source):('obj.'+obj.source+'.id'), 'action_time':next_action_time, 'source':obj.source})
+            (obj.source):obj.address_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
+#        return super(dm_event,self).create(cr,uid,vals,context)
+        return id
 
 dm_event()
