@@ -138,6 +138,7 @@ class dm_workitem(osv.osv):
     _name = "dm.workitem"
     _description = "workitem"
     _SOURCES = [('address_id','Partner Address')]
+    SELECTION_LIST = [('pending','Pending'),('error','Error'),('cancel','Cancelled'),('done','Done')]
     """
     def create(self,cr,uid,vals,context={}):
         if 'action_time' in vals and vals['action_time']:
@@ -167,7 +168,7 @@ class dm_workitem(osv.osv):
         'source' : fields.selection(_SOURCES, 'Source', required=True),
         'error_msg' : fields.text('System Message'),
         'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition'),
-        'state' : fields.selection([('pending','Pending'),('error','Error'),('cancel','Cancelled'),('done','Done')], 'Status'),
+        'state' : fields.selection(SELECTION_LIST, 'Status'),
     }
     _defaults = {
         'source': lambda *a: 'address_id',
