@@ -51,8 +51,8 @@ class Login(controllers.Controller, TinyResource):
             model = 'comparison.user'
     
             proxy = rpc.RPCProxy(model)
-            uids = proxy.search([])
-            ures = proxy.read(uids, ['name', 'password'])
+            uids = proxy.search([], 0, 0, 0, rpc.session.context)
+            ures = proxy.read(uids, ['name', 'password'], rpc.session.context)
             
             for r in ures:
                 if r['name'] == user_name and r['password'] == password:
