@@ -744,6 +744,7 @@ class dm_campaign_proposition(osv.osv):
     def write(self, cr, uid, ids, vals, context=None):
         if 'camp_id' in vals and vals['camp_id']:
             campaign = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
+            vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',campaign.analytic_account_id.id)])[0]
             if campaign.date_start:
                 vals['date_start']=campaign.date_start
             else:
@@ -752,6 +753,7 @@ class dm_campaign_proposition(osv.osv):
 
     def create(self,cr,uid,vals,context={}):
         id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
+        vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',id.analytic_account_id.id)])[0]
         if 'date_start' in vals and not vals['date_start']:
             if id.date_start:
                 vals['date_start']=id.date_start
@@ -945,7 +947,7 @@ class dm_campaign_proposition(osv.osv):
         'keep_segments' : lambda *a : True,
         'keep_prices' : lambda *a : True
     }
-
+    
     def _check(self, cr, uid, ids=False, context={}):
         '''
         Function called by the scheduler to create workitem from the segments of propositions.
@@ -1059,6 +1061,17 @@ class dm_campaign_proposition_segment(osv.osv):
     _inherits = {'account.analytic.account': 'analytic_account_id'}
     _description = "A subset of addresses coming from a customers file"
 
+    def write(self, cr, uid, ids, vals, context=None):
+        if 'proposition_id' in vals and vals['proposition_id']:
+            proposition_id = self.pool.get('dm.campaign.proposition').browse(cr, uid, vals['proposition_id'])
+            vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',proposition_id.analytic_account_id.id)])[0]
+        return super(dm_campaign_proposition_segment,self).write(cr, uid, ids, vals, context)
+
+    def create(self,cr,uid,vals,context={}):
+        proposition_id = self.pool.get('dm.campaign.proposition').browse(cr, uid, vals['proposition_id'])
+        vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',proposition_id.analytic_account_id.id)])[0]
+        return super(dm_campaign_proposition_segment, self).create(cr, uid, vals, context)
+        
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context and 'dm_camp_id' in context:
             if not context['dm_camp_id']:
