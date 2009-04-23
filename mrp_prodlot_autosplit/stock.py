@@ -35,6 +35,8 @@ class stock_move(osv.osv):
                     'product_id': product_id,
                 })
                 self.write(cr, uid, ids, {'prodlot_id': prodlot_id})
+            else:
+                self.pool.get('stock.production.lot').write(cr, uid, existing_prodlot_id, {'name': value})
             
 
     _columns = {        
