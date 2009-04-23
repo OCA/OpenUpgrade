@@ -36,6 +36,9 @@ class dm_mail_service(osv.osv):
         'name' : fields.function(_default_name, method=True, string='Name',store=True ,type='char' ,size=128),
         'partner_id' : fields.many2one('res.partner','Partner',domain=[('category_id','ilike','Mail Service')],context={'category':'Mail Service'}),
         'media_id' : fields.many2one('dm.media','Media'),
+        'time_mode' : fields.selection([('hour','Fixed Hour'),('date','Fixed Date'),('interval','Interval')],'Time Mode'),
+        'action_hour' : fields.float('Hours'),
+        'action_date' : fields.datetime('Date'),
         'action_interval': fields.integer('Interval'),
         'unit_interval': fields.selection( [('minutes', 'Minutes'),
             ('hours', 'Hours'), ('work_days','Work Days'), ('days', 'Days'),\

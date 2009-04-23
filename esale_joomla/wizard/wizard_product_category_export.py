@@ -64,7 +64,7 @@ def _do_export(self, cr, uid, data, context):
         server = xmlrpclib.ServerProxy("%s/tinyerp-synchro.php" % website.url)
 #       server.delete_product_categories()
 #       server.delete_products()
-        cat_ids = self.pool.get('product.category').search(cr, uid, [('parent_id', 'is', None)])
+        cat_ids = self.pool.get('product.category').search(cr, uid, [('parent_id', '=', False)])
 
         def _add_category(category):
             esale_joomla_id2 = self.pool.get('esale_joomla.category').search(cr, uid, [('web_id', '=', website.id), ('category_id', '=', category.id)])

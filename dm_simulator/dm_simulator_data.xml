@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+ <openerp>
+
+<data noupdate="0">
+         <record model="ir.cron" id="ir_cron_campaign_proposition">
+             <field name="name">DM Simulator</field>
+             <field name="interval_number">1</field>
+             <field name="interval_type">minutes</field>
+             <field name="numbercall">-1</field>
+             <field name="doall" eval="False"/>
+             <field name="active" eval="True"/>
+             <field name="model" eval="'dm.simulator'"/>
+             <field name="function" eval="'action_do'"/>
+             <field name="args" eval="'()'"/>
+         </record>
+     </data>
+</openerp>
+

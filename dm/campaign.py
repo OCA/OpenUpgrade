@@ -498,7 +498,8 @@ class dm_campaign(osv.osv):
                 for seg in propo.segment_ids:
                     if seg.type_src == 'internal' and seg.customers_file_id:
                         res = self.pool.get('dm.workitem').create(cr, uid, {'segment_id':seg.id, 'step_id':step,
-                            'source':seg.customers_file_id.source, 'action_time': time.strftime("%Y-%m-%d %H:%M:%S")})
+                            'source':seg.customers_file_id.source, 'is_global':True,
+                            'action_time': time.strftime("%Y-%m-%d %H:%M:%S")})
                         print "created wi :",res
 
         self.write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
@@ -744,6 +745,7 @@ class dm_campaign_proposition(osv.osv):
     def write(self, cr, uid, ids, vals, context=None):
         if 'camp_id' in vals and vals['camp_id']:
             campaign = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
+            vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',campaign.analytic_account_id.id)])[0]
             if campaign.date_start:
                 vals['date_start']=campaign.date_start
             else:
@@ -752,6 +754,7 @@ class dm_campaign_proposition(osv.osv):
 
     def create(self,cr,uid,vals,context={}):
         id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
+        vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',id.analytic_account_id.id)])[0]
         if 'date_start' in vals and not vals['date_start']:
             if id.date_start:
                 vals['date_start']=id.date_start
@@ -945,7 +948,7 @@ class dm_campaign_proposition(osv.osv):
         'keep_segments' : lambda *a : True,
         'keep_prices' : lambda *a : True
     }
-
+    
     def _check(self, cr, uid, ids=False, context={}):
         '''
         Function called by the scheduler to create workitem from the segments of propositions.
@@ -1010,6 +1013,7 @@ class dm_customers_list(osv.osv):
         'list_type_id' : fields.many2one('dm.customers_list.type','Type'),
         'update_frq' : fields.integer('Update Frequency'),
         'notes': fields.text('Description'),
+        'media_id' : fields.many2one('dm.media','Media'),
     }
     _defaults =  {
         'invoice_base': lambda *a: 'net',
@@ -1058,6 +1062,17 @@ class dm_campaign_proposition_segment(osv.osv):
     _inherits = {'account.analytic.account': 'analytic_account_id'}
     _description = "A subset of addresses coming from a customers file"
 
+    def write(self, cr, uid, ids, vals, context=None):
+        if 'proposition_id' in vals and vals['proposition_id']:
+            proposition_id = self.pool.get('dm.campaign.proposition').browse(cr, uid, vals['proposition_id'])
+            vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',proposition_id.analytic_account_id.id)])[0]
+        return super(dm_campaign_proposition_segment,self).write(cr, uid, ids, vals, context)
+
+    def create(self,cr,uid,vals,context={}):
+        proposition_id = self.pool.get('dm.campaign.proposition').browse(cr, uid, vals['proposition_id'])
+        vals['parent_id'] = self.pool.get('account.analytic.account').search(cr,uid,[('id','=',proposition_id.analytic_account_id.id)])[0]
+        return super(dm_campaign_proposition_segment, self).create(cr, uid, vals, context)
+        
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context and 'dm_camp_id' in context:
             if not context['dm_camp_id']:
@@ -1188,6 +1203,7 @@ class dm_campaign_proposition_item(osv.osv):
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Product Type', size=64),
         'offer_step_type_id': fields.many2one('dm.offer.step.type','Offer Step Type'), 
         'notes' : fields.text('Notes'),
+        'forecasted_yield' : fields.float('Forecasted Yield'),
     }
 dm_campaign_proposition_item()
 
@@ -2044,7 +2060,7 @@ class res_partner(osv.osv):
         'state_ids': _default_all_state,
     }
 res_partner()
-
+"""
 class res_partner_address(osv.osv):
     _inherit = 'res.partner.address'
     _columns = {
@@ -2054,7 +2070,7 @@ class res_partner_address(osv.osv):
         'street4' : fields.char('Street4',size=32),
     }
 res_partner_address()
-
+"""
 class purchase_order(osv.osv):
     _name = 'purchase.order'
     _inherit = 'purchase.order'
