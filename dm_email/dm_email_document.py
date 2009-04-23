@@ -31,7 +31,5 @@ class dm_offer_document(osv.osv):
                 'content' : fields.text('Content'),
                 'media_id':fields.related('step_id','media_id','name',type='char', relation='dm.media', string='Media'),
             }
-    _defaults = {
-        'content': lambda *a: "<!-- Do not remove this line--> [[ repeatIn(document(),'document') ]]",
-        }
+
 dm_offer_document()
