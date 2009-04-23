@@ -22,7 +22,7 @@
 {
     "name" : "account_invoice_number",
     "version" : "1.0",
-    "depends" : ["account", "sale", "purchase"],
+    "depends" : ["account"],
     "author" : "Tiny",
     "description": """Module to change defination of the name field of invoice
     using this module you can change the invoice number when it is in draft state.

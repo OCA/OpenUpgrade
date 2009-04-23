@@ -34,7 +34,7 @@
 			<field eval="&quot;&quot;&quot;2008-06-18&quot;&quot;&quot;" name="date_start"/>
 			<field eval="&quot;&quot;&quot;Cont-1&quot;&quot;&quot;" name="name"/>
 			<field name="employee_id" ref="hr_employee_amit0"/>
-			<field eval="8" name="working_hours_per_day"/>
+			<field eval="8" name="working_hours_per_day_id"/>
 			<field name="department_id" ref="hr.dep_it"/>
 		</record>
 		<record id="md_hr_contract_availability_0" model="md.hr.contract.availability">
@@ -94,7 +94,7 @@
 			<field name="employee_id" ref="hr_employee_christophe0"/>
 			<field eval="&quot;&quot;&quot;2008-06-27&quot;&quot;&quot;" name="extend_appointment_date"/>
 			<field eval="3000.0" name="wage"/>
-			<field eval="8" name="working_hours_per_day"/>
+			<field eval="8" name="working_hours_per_day_id"/>
 			<field eval="&quot;&quot;&quot;2008-06-18&quot;&quot;&quot;" name="date_end"/>
 			<field name="department_id" ref="hr.dep_it"/>
 		</record>

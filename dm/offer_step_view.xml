@@ -146,8 +146,11 @@
                         <field name="seq"/>
                     </page>
                     <page string="Products">
-                        <separator string="Offer Step Product"  colspan="4"/>
-                        <field name="item_ids" colspan="4" nolabel="1" readonly="0" select="2"/>
+                        <group colspan="4">
+                            <field name="forecasted_yield" colspan="4"/>
+                            <separator string="Offer Step Product"  colspan="4"/>
+                            <field name="item_ids" colspan="4" nolabel="1" readonly="0" select="2"/>
+                        </group>
                     </page>
                     <page string="Advises">
                         <group groups="base.group_extended">

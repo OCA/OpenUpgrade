@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<menuitem id="menu_translate" name="Google Translation"/>
+		<menuitem id="review_translate" name="Translation" parent="menu_translate"/>
+
+		<record model="ir.ui.view" id="view_translation_form_inherit">
+			<field name="name">ir.translation.inherit.form</field>
+			<field name="model">ir.translation</field>
+			<field name="inherit_id" ref="base.view_translation_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="value" position="after">
+					<field name="need_review"/>
+				</field>
+			</field>
+		</record>
+
+		<record id="action_translation_need_review" model="ir.actions.act_window">
+            <field name="name">Need review terms</field>
+            <field name="res_model">ir.translation</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="base.view_translation_tree"/>
+            <field name="domain">[('need_review', '=', False)]</field>
+            <field name="context">{'need_review': False}</field>
+        </record>
+        <menuitem action="action_translation_need_review" id="menu_action_translation_review" parent="review_translate"/>
+
+	</data>
+</openerp>
