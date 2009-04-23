@@ -58,7 +58,7 @@ def _translate(self, cr, uid, data, context={}):
     translation_data = tran_obj.browse(cr, uid, ids, context)
 
     for trans in translation_data:
-        if trans.need_review:
+        if not trans.need_review:
             continue
         if 'lang' in context and context['lang']:
             in_lang = context['lang'][:2].lower().encode('utf-8')
@@ -82,7 +82,7 @@ def _translate(self, cr, uid, data, context={}):
         value = src
         if match:
             value = match.groups()[0]
-        tran_obj.write(cr, uid, trans.id, {'value':value, 'need_review':True})
+        tran_obj.write(cr, uid, trans.id, {'value':value, 'need_review':False})
     return {}
 
 class google_translate_wizard(wizard.interface):
