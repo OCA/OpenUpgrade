@@ -26,13 +26,13 @@
     'version': '1.0',
     'category': 'Generic Modules/Accounting',
     'description': """
-        Once a pro-forma invoice is created, the module sends automatically mail 
-        and call actions after X days.
-        It's the same principle than account_followup but for proforma invoice only. 
-        Only followups by email, no need to do reports. 
-        Also, at each steps, we should be able to call several functions. 
-        (for example, if a pro-forma is canceled, it will close a delivery order)
-""",
+Once a pro-forma invoice is created, the module sends automatically mail 
+and call actions after X days.
+It's the same principle than account_followup but for proforma invoice only. 
+Only followups by email, no need to do reports. 
+Also, at each steps, we should be able to call several functions. 
+(for example, if a pro-forma is canceled, it will close a delivery order)
+    """,
     'author': 'Tiny',
     'website': 'http://www.openerp.com',
     'depends': ['account'],
