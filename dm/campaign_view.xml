@@ -688,6 +688,7 @@
                             <field name="offer_step_type_id"/>
                             <field name="product_id" string="Product"/>
                             <field name="price"/>
+                            <field name="forecasted_yield"/>
                             <field name="item_type"/>
                             <field name="notes"/>
                         </tree>
@@ -1270,6 +1271,7 @@
                 <group colspan="2" col="2">
                     <separator string="General" colspan="2"/>
                     <field name="product_id" select="1"/>
+                    <field name="media_id" select="1"/>
                     <field name="owner_id" select="1"/>
                     <field name="broker_id" select="1"/>
                     <field name="country_id" select="1"/>

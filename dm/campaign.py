@@ -1010,6 +1010,7 @@ class dm_customers_list(osv.osv):
         'list_type_id' : fields.many2one('dm.customers_list.type','Type'),
         'update_frq' : fields.integer('Update Frequency'),
         'notes': fields.text('Description'),
+        'media_id' : fields.many2one('dm.media','Media'),
     }
     _defaults =  {
         'invoice_base': lambda *a: 'net',
@@ -1188,6 +1189,7 @@ class dm_campaign_proposition_item(osv.osv):
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Product Type', size=64),
         'offer_step_type_id': fields.many2one('dm.offer.step.type','Offer Step Type'), 
         'notes' : fields.text('Notes'),
+        'forecasted_yield' : fields.float('Forecasted Yield'),
     }
 dm_campaign_proposition_item()
 
