@@ -60,7 +60,7 @@ def generate_reports(cr,uid,obj,report_type,context):
     print "customer_id : ",customer_id
     customer_ids = []
 
-    if not customer_id:
+    if obj.is_global:
         """ if segment workitem """
         print "source fields : ",getattr(obj.segment_id.customers_file_id, obj.source + "s")
         for cust_id in getattr(obj.segment_id.customers_file_id, obj.source + "s"):

@@ -498,7 +498,8 @@ class dm_campaign(osv.osv):
                 for seg in propo.segment_ids:
                     if seg.type_src == 'internal' and seg.customers_file_id:
                         res = self.pool.get('dm.workitem').create(cr, uid, {'segment_id':seg.id, 'step_id':step,
-                            'source':seg.customers_file_id.source, 'action_time': time.strftime("%Y-%m-%d %H:%M:%S")})
+                            'source':seg.customers_file_id.source, 'is_global':True,
+                            'action_time': time.strftime("%Y-%m-%d %H:%M:%S")})
                         print "created wi :",res
 
         self.write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
@@ -2059,7 +2060,7 @@ class res_partner(osv.osv):
         'state_ids': _default_all_state,
     }
 res_partner()
-
+"""
 class res_partner_address(osv.osv):
     _inherit = 'res.partner.address'
     _columns = {
@@ -2069,7 +2070,7 @@ class res_partner_address(osv.osv):
         'street4' : fields.char('Street4',size=32),
     }
 res_partner_address()
-
+"""
 class purchase_order(osv.osv):
     _name = 'purchase.order'
     _inherit = 'purchase.order'

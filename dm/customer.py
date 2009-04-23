@@ -167,12 +167,14 @@ class dm_workitem(osv.osv):
         'action_time' : fields.datetime('Action Time'),
         'source' : fields.selection(_SOURCES, 'Source', required=True),
         'error_msg' : fields.text('System Message'),
+        'is_global': fields.boolean('Global Workitem'),
         'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition'),
         'state' : fields.selection(SELECTION_LIST, 'Status'),
     }
     _defaults = {
         'source': lambda *a: 'address_id',
         'state': lambda *a: 'pending',
+        'is_global': lambda *a: False,
     }
 
     def run(self, cr, uid, wi, context={}):
@@ -256,7 +258,7 @@ class dm_workitem(osv.osv):
                 next_action_time = wi_action_time + datetime.timedelta(**kwargs)
                 print "Next action date : ",next_action_time
 
-                aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time})
+                aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})
                 print "auto wi : ",aw_id
         return True
 
@@ -522,31 +524,21 @@ class dm_event(osv.osv_memory):
     }
 
     def create(self,cr,uid,vals,context={}):
-#        if 'action_time' in vals and vals['action_time']:
-#            return super(dm_workitem, self).create(cr, uid, vals, context)
-#        if 'trigger_type_id' in vals and vals['trigger_type_id']:
         id = super(dm_event,self).create(cr,uid,vals,context)
         obj = self.browse(cr, uid ,id)
-        tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',vals['step_id']),
-                ('condition_id','=',vals['trigger_type_id'])])
+        tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
+                ('condition_id','=',obj.trigger_type_id.id)])
         for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
             wi_action_time = datetime.datetime.now()
             kwargs = {(tr.delay_type+'s'): tr.delay}
             next_action_time = wi_action_time + datetime.timedelta(**kwargs)
-            print "Event - Next action date : ",next_action_time
-#                vals['action_time'] = next_action_time
-            print "Event -  : ",vals
-#        else:
-#            vals['action_time'] = datetime.datetime.now()
-#            print "Vals : ",vals
+            netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
+            netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Workitem : %s"% vals)
 
-#            self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':vals['segment_id'] or False,
-#            (vals['source']):vals[(vals['source'])] or False, 'action_time':next_action_time, 'source':vals['source']})
-
-            self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
-#            (obj.source):('obj.'+obj.source+'.id'), 'action_time':next_action_time, 'source':obj.source})
-            (obj.source):obj.address_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
-#        return super(dm_event,self).create(cr,uid,vals,context)
+            wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
+            (obj.source):obj[obj.source].id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
+            if not wi_id:
+                netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem")
         return id
 
 dm_event()
