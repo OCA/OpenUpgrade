@@ -47,7 +47,7 @@ def setUserAgent(userAgent):
     urllib.FancyURLopener.version = userAgent
     pass
 
-def _translate(self, cr, uid, data, context):
+def _translate(self, cr, uid, data, context={}):
     # Todo:
     #    1. should work for all language (arabic)
     #    2. test for all browser (xp,linux..)
@@ -55,19 +55,19 @@ def _translate(self, cr, uid, data, context):
     tran_obj = pool.get('ir.translation')
     in_lang = 'en'
     ids = data['ids']
+    translation_data = tran_obj.browse(cr, uid, ids, context)
 
-    for id in ids:
-        translation_obj = tran_obj.browse(cr, uid, id, context)
-        if translation_obj.need_review:
+    for trans in translation_data:
+        if trans.need_review:
             continue
         if 'lang' in context and context['lang']:
             in_lang = context['lang'][:2].lower().encode('utf-8')
 
-        if not translation_obj['lang'] or not translation_obj['src']:
+        if not trans['lang'] or not trans['src']:
             raise osv.except_osv('Warning !',
                                      'Please provide language and source')
-        out_lang = translation_obj['lang'][:2].lower().encode('utf-8')
-        src = translation_obj['src'].encode('utf-8')
+        out_lang = trans['lang'][:2].lower().encode('utf-8')
+        src = trans['src'].encode('utf-8')
         setUserAgent("Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008070400 SUSE/3.0.1-0.1 Firefox/3.0.1")
 
         try:
@@ -82,7 +82,7 @@ def _translate(self, cr, uid, data, context):
         value = src
         if match:
             value = match.groups()[0]
-        tran_obj.write(cr, uid, id, {'value':value, 'need_review':True})
+        tran_obj.write(cr, uid, trans.id, {'value':value, 'need_review':True})
     return {}
 
 class google_translate_wizard(wizard.interface):
