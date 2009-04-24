@@ -34,6 +34,12 @@ import wizard
 import pooler
 from osv import fields, osv
 
+def _tz_get(self, cr, uid, data, context={}):
+    if 'tz' in context and context['tz']:
+        return'synch'
+    else:
+        return 'timezone'
+
 _google_form =  '''<?xml version="1.0"?>
         <form string="Export">
         <separator string="Synchronize events between tiny and google calendar" colspan="4"/>
@@ -41,6 +47,22 @@ _google_form =  '''<?xml version="1.0"?>
 
 _google_fields = {
         }
+
+_timezone_form =  '''<?xml version="1.0"?>
+        <form string="Export">
+        <separator string="Select Timezone" colspan="4"/>
+        <field name="timezone_select"/>
+        </form> '''
+
+_timezone_fields = {
+            'timezone_select': {
+            'string': 'Time Zone',
+            'type': 'selection',
+            'selection': [(x, x) for x in pytz.all_timezones],
+            'required': True,
+        },
+        }
+
 
 class google_calendar_wizard(wizard.interface):
 
@@ -80,7 +102,6 @@ class google_calendar_wizard(wizard.interface):
 #            - Retrieving events without query parameters => done
 #            - Retrieving events for a specified date range
 #            - all events should be retrieve currently it comes with limit (25)
-#            - time zone set => done
 #            - more attribute can be added if possible on event.event
 #            - open summary window after finish importing
 #            - delete events
@@ -100,10 +121,9 @@ class google_calendar_wizard(wizard.interface):
                                  'Please Enter google email id and password in users')
         if 'tz' in context and context['tz']:
             time_zone = context['tz']
-            au_tz = timezone(time_zone)
         else:
-            raise osv.except_osv('Warning !',
-                             'Please set your timezone')
+            time_zone = data['form']['timezone_select']
+        au_tz = timezone(time_zone)
         try :
             self.calendar_service = gdata.calendar.service.CalendarService()
             self.calendar_service.email = google_auth_details.google_email
@@ -169,10 +189,14 @@ class google_calendar_wizard(wizard.interface):
                         from dateutil.tz import *
                         stime = dateutil.parser.parse(stime)
                         etime = dateutil.parser.parse(etime)
-                        au_dt = au_tz.normalize(stime.astimezone(au_tz))
-                        timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                        au_dt = au_tz.normalize(etime.astimezone(au_tz))
-                        timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                        try:
+                            au_dt = au_tz.normalize(stime.astimezone(au_tz))
+                            timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                            au_dt = au_tz.normalize(etime.astimezone(au_tz))
+                            timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                        except :
+                            timestring = datetime.datetime(*stime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                            timestring_end = datetime.datetime(*etime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                         val = {
                            'name': name_event,
                            'date_begin': timestring,
@@ -195,10 +219,14 @@ class google_calendar_wizard(wizard.interface):
                     from dateutil.tz import *
                     stime = dateutil.parser.parse(stime)
                     etime = dateutil.parser.parse(etime)
-                    au_dt = au_tz.normalize(stime.astimezone(au_tz))
-                    timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                    au_dt = au_tz.normalize(etime.astimezone(au_tz))
-                    timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                    try :
+                        au_dt = au_tz.normalize(stime.astimezone(au_tz))
+                        timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                        au_dt = au_tz.normalize(etime.astimezone(au_tz))
+                        timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                    except :
+                        timestring = datetime.datetime(*stime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                        timestring_end = datetime.datetime(*etime.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
                     val = {
                        'name': name_event,
                        'date_begin': timestring,
@@ -212,12 +240,24 @@ class google_calendar_wizard(wizard.interface):
             return {}
         except Exception, e:
             raise osv.except_osv('Error !',e )
-
+        
     states = {
+              
         'init': {
             'actions': [],
-            'result': {'type': 'form', 'arch':_google_form, 'fields':_google_fields,  'state':[('end','Cancel'),('synch','Synchronize')]}
+            'result': {'type': 'form', 'arch':_google_form, 'fields':_google_fields,  'state':[('end','Cancel'),('synch1','Synchronize')]}
         },
+        
+        'synch1': {
+            'actions': [],
+            'result': {'type': 'choice', 'next_state': _tz_get }
+            },
+        
+        'timezone': {
+            'actions': [],
+            'result': {'type': 'form', 'arch':_timezone_form, 'fields':_timezone_fields,  'state':[('synch','Synchronize')]}
+        },
+            
         'synch': {
             'actions': [_synch_events],
             'result': {'type': 'state', 'state': 'end'}
