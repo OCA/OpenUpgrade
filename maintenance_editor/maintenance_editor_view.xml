@@ -76,8 +76,6 @@
             </field>
         </record>
 
-        <wizard id="maintenance_maintenance_module_refresh_wizard" model="maintenance.maintenance.module" name="maintenance.maintenance.module.refresh" string="Refresh Module List" multi='True'/>
-        
         <record id="maintenance_maintenance_module_form_view" model="ir.ui.view">
             <field name="name">maintenance.maintenance.module.form</field>
             <field name="model">maintenance.maintenance.module</field>
@@ -101,7 +99,6 @@
             <field name="view_mode">tree,form</field>
         </record>
         <menuitem action="action_maintenance_module_form" id="menu_maintenance_module" parent="menu_maintenance_main"/>
-        <menuitem action="maintenance_maintenance_module_refresh_wizard" id="menu_maintenace_module_refresh_wizard" parent="menu_maintenance_module" type="wizard"/>
 
         <record id="maintenance_contract_type_form_view" model="ir.ui.view">
             <field name="name">maintenance.contract.type.form</field>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+		 <record id="view_wizard_hr_development" model="ir.ui.view">
+            <field name="name">Generate Chart of Accounts from a Chart Template</field>
+            <field name="model">wizard.hr.holidays.evaluation</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Count The Holidays for the Employee">
+                    <separator col="4" colspan="4" string="Count Holidays For The Employee"/>
+                    <group col="2" colspan="2">
+                   		<field name="holiday_status_id"/>
+                    	<field name="hr_timesheet_group_id"/>
+                    	<field name="float_time" widget="float_time"/>
+                    	<newline/>
+                    	<newline/>                 
+                        <button icon="gtk-cancel" special="cancel" type="object" name="action_cancel" string="Cancel"/>
+                        <button icon="gtk-ok" name="action_create" string="Create" type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_hr_development" model="ir.actions.act_window">
+            <field name="name">Generate Chart of Accounts from a Chart Template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.hr.holidays.evaluation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+    <menuitem name="Holidays Evaluation" id="menu_hr_holidays_evaluation" parent="hr_holidays.menu_open_ask_holidays"/>
+	<menuitem name="Count Holiday For Employee" id="menu_wizard_hr_development" parent="menu_hr_holidays_evaluation" action="action_wizard_hr_development"/>
+		
+</data>
+</openerp>

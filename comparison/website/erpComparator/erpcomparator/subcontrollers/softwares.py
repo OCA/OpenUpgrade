@@ -13,9 +13,9 @@ class Softwares(controllers.Controller, TinyResource):
     def index(self):
         proxy = rpc.RPCProxy('comparison.item')
         url_re = re.compile('(http\:\/\/[^\s]+)|(file\:\/\/[^\s]+)|(ftp\:\/\/[^\s]+)|(https\:\/\/[^\s]+)', re.MULTILINE)
-        ids = proxy.search([])        
-        res = proxy.read(ids, ['name', 'note'])
-        
+        ids = proxy.search([], 0, 0, 0, rpc.session.context)        
+        res = proxy.read(ids, ['name', 'note'], rpc.session.context)
+
         for note in res:
             if note['note']:
                 notes = str(note['note'])
@@ -26,4 +26,5 @@ class Softwares(controllers.Controller, TinyResource):
                 note['note'] = url_re.sub(substitue_url, note['note'])
                 note['note'] = note['note'].replace('\n',' <br/>')
                 note['note'] = note['note'].replace('&','&amp;')
+  
         return dict(res=res)
