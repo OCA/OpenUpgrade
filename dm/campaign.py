@@ -2060,17 +2060,7 @@ class res_partner(osv.osv):
         'state_ids': _default_all_state,
     }
 res_partner()
-"""
-class res_partner_address(osv.osv):
-    _inherit = 'res.partner.address'
-    _columns = {
-        'firstname' : fields.char('First Name',size=64),
-        'name_complement' : fields.char('Name Complement',size=64),
-        'street3' : fields.char('Street3',size=32),
-        'street4' : fields.char('Street4',size=32),
-    }
-res_partner_address()
-"""
+
 class purchase_order(osv.osv):
     _name = 'purchase.order'
     _inherit = 'purchase.order'
