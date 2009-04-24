@@ -1,6 +1,32 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
+		
+		<record id="view_hr_holidays_note" model="ir.ui.view">
+            <field name="name">Notes</field>
+            <field name="model">hr.holidays.note</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Notes">
+                    <separator col="4" colspan="4" string="Notes"/>
+                    <field name="note" widget="text_wiki" nolabel="1" colspan="4" height="350" width="800" readonly="1"/>
+
+                </form>
+            </field>
+        </record>
+        
+        <record id="view_hr_holidays_note_tre" model="ir.ui.view">
+            <field name="name">Notes</field>
+            <field name="model">hr.holidays.note</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Notes">
+                    <separator col="4" colspan="4" string="Notes"/>
+					<field name="note"/>
+                </tree>
+            </field>
+        </record>
+
 		 <record id="view_wizard_hr_development" model="ir.ui.view">
             <field name="name">Generate Chart of Accounts from a Chart Template</field>
             <field name="model">wizard.hr.holidays.evaluation</field>
@@ -12,6 +38,7 @@
                    		<field name="holiday_status_id"/>
                     	<field name="hr_timesheet_group_id"/>
                     	<field name="float_time" widget="float_time"/>
+                    	<field name="date_current"/>
                     	<newline/>
                     	<newline/>                 
                         <button icon="gtk-cancel" special="cancel" type="object" name="action_cancel" string="Cancel"/>
