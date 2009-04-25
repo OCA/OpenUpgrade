@@ -24,7 +24,7 @@
     "name":"Hr holidays evaluation",
     "version" : "1.0",
     "author" : "Tiny",
-    "depends" : ["base", "hr_holidays", "hr_contract", "hr_timesheet_sheet"],
+    "depends" : ["base", "hr_holidays", "hr_contract", "hr_attendance"],
     "demo_xml" : [],
     "update_xml" : ["hr_holidays_evaluation_view.xml"],
     "description" : "Computation of holidays for employee",

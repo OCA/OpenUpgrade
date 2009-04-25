@@ -53,7 +53,7 @@ class localfile(connector):
         """
         # TODO : pass encoding in file
         super(localfile, self).open()
-	return file(self.uri, mode)
+        return file(self.uri, mode)
         #self.file.encoding=self.encoding
 
     def close(self,connector):
@@ -61,7 +61,8 @@ class localfile(connector):
         Closes a file connection
         """
         super(localfile, self).close()
-        connector.close()
+        if connector:
+            connector.close()
 
     def __copy__(self): 
         """

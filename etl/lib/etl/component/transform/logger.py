@@ -40,8 +40,7 @@ class logger(component):
 		* .* : return the main flow 
     """    
     def __init__(self, output=sys.stdout, name='component.output.logger'):       
-        self.output = output
-        self.is_end = 'main'
+        self.output = output        
         super(logger, self).__init__(name)
 
     def process(self):
