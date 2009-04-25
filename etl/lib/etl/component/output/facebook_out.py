@@ -24,7 +24,7 @@ This is an ETL Component that use to write data into facebook.
 """
 
 from etl.component import component
-import time
+
 
 class facebook_out(component):
     """
@@ -32,26 +32,33 @@ class facebook_out(component):
     """
 
     def __init__(self,facebook_connector,method,domain=[],fields=['name'],name='component.input.facebook_out',transformer=None,row_limit=0):
-        super(facebook_out, self).__init__(name,transformer=transformer)
-        self.facebook_connector = facebook_connector
+        super(facebook_out, self).__init__(name=name, connector=facebook_connector, transformer=transformer,row_limit=row_limit)        
+        self._type='component.output.facebook_out'
         self.method=method
         self.domain=domain
         self.fields=fields
-        self.row_limit=row_limit # to be check
+
+    def __copy__(self):        
+        res=facebook_out(self.connector, self.name, self.transformer, self.row_limit)
+        return res  
+
+    def end(self):
+        super(facebook_out, self).end()
+        if self.facebook:
+            self.connector.close(self.facebook)
+            self.facebook=False
+        
 
     def process(self): 
+        self.facebook = False
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:  
-                    try:
-                        if self.transformer:
-                            d=self.transformer.transform(d)
-                        connector=self.facebook_connector.open()
-                        self.facebook_connector.execute(connector,self.method,fields=self.fields)
-                        self.facebook_connector.close(connector)
-                        yield d, 'main'
-                    except Exception,e:
-                        yield {'data':d,'type':'exception','message':str(e)}, 'error'         
+                    if not self.facebook:                       
+                        self.facebook=self.connector.open()
+                    self.connector.execute(self.facebook,self.method,fields=self.fields)                    
+                    yield d, 'main'
+                           
 
 
 def test():

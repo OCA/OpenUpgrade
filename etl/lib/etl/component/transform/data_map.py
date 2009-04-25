@@ -32,7 +32,7 @@ class map(component):
         Data map component
     """
 
-    def __init__(self, map_criteria, preprocess=None, name='component.transfer.map', transformer=None):
+    def __init__(self, map_criteria, preprocess=None, name='component.transfer.map', transformer=None, row_limit=0):
         """ 
         Required Parameters ::   
         map_criteria  :  Mapping criteria
@@ -43,14 +43,17 @@ class map(component):
         preprocess    : TODO
         """
         
-        super(map, self).__init__(name, transformer=transformer)
+        super(map, self).__init__(name=name, transformer=transformer, row_limit=row_limit)
+        self._type='component.transfer.map'
         self.map_criteria = map_criteria
         self.preprocess = preprocess
-        self.transformer = transformer
-        self.name = name
 
-    def process(self):
-        #TODO : proper handle exception. not use generic Exception class
+    def __copy__(self):        
+        res=map(self.map_criteria, self.preprocess, self.name, self.transformer, self.row_limit)
+        return res
+        
+
+    def process(self):        
         channels = self.input_get()
         datas = {}
         if self.preprocess:
@@ -72,12 +75,7 @@ class map(component):
                             result=self.transformer.transform(result)
                         yield result, channel_dest
 
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=map(self.map_criteria, self.preprocess, self.name, self.transformer)
-        return res
+    
     
 def test():
 

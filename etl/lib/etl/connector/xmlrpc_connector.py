@@ -71,8 +71,10 @@ class xmlrpc_connector(connector):
         to be update
         """
         super(xmlrpc_connector, self).__init__(name)
+        self._type = 'connector.xmlrpc_connector'
         self.host = host
         self.port = port
+        
 
     def start(self,funs):
         xml_server = xmlrpc_server_thread()

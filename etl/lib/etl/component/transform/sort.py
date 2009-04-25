@@ -40,7 +40,7 @@ class sort(component):
         * .* : return the main flow with sort result
     """    
 
-    def __init__(self, fieldname,name='component.process.sort'):
+    def __init__(self, fieldname,name='component.transfer.sort'):
         """ 
         Required Parameters ::
         fieldname : specifies the fieldname according to which sorting process will be done
@@ -50,7 +50,12 @@ class sort(component):
         """
 
         super(sort, self).__init__(name )
+        self._type='component.transfer.sort'
         self.fieldname = fieldname
+
+    def __copy__(self):        
+        res=sort(self.fieldname, self.name)
+        return res
 
     # Read all input channels, sort and write to 'main' channel
     def process(self):
@@ -64,12 +69,7 @@ class sort(component):
         for d in datas:
             yield d, 'main'
         
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=sort(self.fieldname, self.name)
-        return res
+    
     
 
 

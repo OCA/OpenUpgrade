@@ -33,7 +33,7 @@ class join(map):
         Data Join component
     """
 
-    def __init__(self, map_criteria, join_keys={}, name='component.transfer.join', transformer=None):
+    def __init__(self, map_criteria, join_keys={}, name='component.transfer.join', transformer=None, row_limit=0):
 
         """
         Required Parameters ::      
@@ -44,11 +44,10 @@ class join(map):
         join_keys     :
         transformer   : Transformer object to transform string data into  particular object
         """
-        super(map, self).__init__(name, transformer=transformer)
+        super(map, self).__init__(name=name, transformer=transformer,row_limit=0)
+        self._type='component.transfer.join' 
         self.map_criteria = map_criteria
-        self.join_keys = join_keys          
-        self.transformer = transformer
-        self.name = name
+        self.join_keys = join_keys                  
         
         def preprocess(self, channels):          
             res={}
@@ -62,11 +61,8 @@ class join(map):
         self.preprocess = preprocess
 
     
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=join(self.map_criteria, self.join_keys, self.name, self.transformer)
+    def __copy__(self):        
+        res=join(self.map_criteria, self.join_keys, self.name, self.transformer, self.row_limit)
         return res
     
 

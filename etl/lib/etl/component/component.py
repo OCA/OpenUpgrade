@@ -27,8 +27,6 @@ GNU General Public License
 """
 import datetime
 from etl import signal
-from etl import logger
-
 
 
 class component(signal):
@@ -36,22 +34,24 @@ class component(signal):
     Base class of ETL Component.
     """
 
-    def __init__(self, name='', transformer=None, row_limit=0):
-        super(component, self).__init__()        
-        self._cache={}
+    def __init__(self, name='', connector=None, transformer=None, row_limit=0):
+        super(component, self).__init__() 
+        self._type='component'       
+        self._cache={}        
         self.trans_in=[]
         self.trans_out=[]
         self.data={}
         self.job=False
         self.generator=None
         self.name=name
+        self.connector=connector
         self.transformer=transformer
         self.row_limit=row_limit
-        self.logger=logger.logger()
-        self.status='open'    
+        self.status='open'
+            
 
     def __str__(self):                   
-        res='<Component job="%s" name="%s"'% (self.job.name, self.name)
+        res='<Component job="%s" name="%s" type="%s"'% (self.job.name, self.name, self._type)
         if self.is_start():
             res += ' is_start="True"'
         if self.is_end():
@@ -88,7 +88,15 @@ class component(signal):
 
     def stop(self):        
         self.status='stop'
-        self.signal('stop')    
+        self.signal('stop')  
+
+    def end(self):
+        self.status='end'
+        self.signal('end')  
+
+    def start(self):
+        self.status='start'
+        self.signal('start')
 
     def generator_get(self, transition):
         """
@@ -110,11 +118,10 @@ class component(signal):
         self._cache['start_input']={trans:False}
         gen=self.generator_get(trans) or None
         if trans:
-            trans.status='start'
-            trans.signal('start')
-        self.status='start'
-        self.signal('start')
+            trans.start()
+        self.start()
         try:
+            row_count=0
             while True:
                 if self.data[trans]:
                     if not self._cache['start_output'][trans]:
@@ -131,20 +138,34 @@ class component(signal):
                     self.signal('start_input', {'trans':trans, 'start_input_date':datetime.datetime.today()})
                 self.signal('get_input', {'trans':trans, 'get_input_date':datetime.datetime.today()})
 
-                data, chan=gen.next()
+                
+
+                data, chan=gen.next() 
+                row_count+=1                 
+                if self.row_limit and row_count > self.row_limit:
+                     raise StopIteration
+              
                 if data is None:                    
                     self.signal('no_input')
                     raise StopIteration
+
+                
+                if self.transformer:
+                    data=self.transformer.transform(data)
+
                 for t, t2 in self.trans_out:                    
                     if (t == chan) or (not t) or (not chan):
                         self.data.setdefault(t2, [])
-                        self.data[t2].append(data)
-        except StopIteration, e:
+                        self.data[t2].append(data)        
+
+        except StopIteration, e:                       
             if trans:
-                trans.status='end'
-                trans.signal('end')
-            self.status='end'
-            self.signal('end')
+                trans.end()
+            self.end()           
+
+        except Exception, e:
+            self.signal('error', {'data':self.data, 'type':'exception', 'error':str(e)}) 
+            
 
     def process(self):
         """

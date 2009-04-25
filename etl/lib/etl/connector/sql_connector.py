@@ -47,6 +47,7 @@ class sql_connector(connector):
         name: Name of the conector
         """
         super(sql_connector, self).__init__(name)
+        self._type='connector.sql_connector'
         self.uri = host+':'+str(port)
         self.host=host
         self.port=port

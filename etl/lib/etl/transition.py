@@ -26,7 +26,6 @@ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 GNU General Public License
 """
 from signal import signal
-import logger
 class transition(signal):
     """
     Base class of ETL transition.
@@ -42,7 +41,7 @@ class transition(signal):
         self.destination.trans_in.append((channel_destination,self))
         self.source.trans_out.append((channel_source,self))
         self.status='open' # open,close # open : active, close : inactive
-        self.logger = logger.logger()
+        
 
     def __str__(self):
         return "<Transition source='%s' destination='%s' channel_source='%s' channel_destination='%s' type='%s' trigger='%s'>" \
@@ -64,6 +63,14 @@ class transition(signal):
     def stop(self):
         self.status = 'stop'
         self.signal('stop')
+
+    def end(self):
+        self.status='end'
+        self.signal('end')
+
+    def start(self):
+        self.status='start'
+        self.signal('start')
 
     def pause(self):
         self.status = 'pause'

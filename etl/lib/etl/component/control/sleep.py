@@ -39,9 +39,13 @@ class sleep(component):
         delay          : Delay in Seconds 
         name          : Name of Component. 
         """
-        self.delay = delay
-        self.name = name
         super(sleep, self).__init__(name)
+        self._type='component.control.sleep'
+        self.delay = delay
+
+    def __copy__(self):        
+        res=sleep(self.delay, self.name)
+        return res
 
     def process(self):
         for channel,trans in self.input_get().items():
@@ -51,9 +55,4 @@ class sleep(component):
                     yield d, 'main'
 
 
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=sleep(self.delay, name=self.name)
-        return res
+    

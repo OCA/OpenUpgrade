@@ -43,6 +43,7 @@ class localfile(connector):
         name     : Name of connector
         """    
         super(localfile, self).__init__(name)
+        self._type = 'connector.localfile'
         self.bufsize=bufsize
         self.encoding=encoding
         self.uri = uri

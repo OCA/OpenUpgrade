@@ -31,7 +31,7 @@ from etl.component import component
 
 class vcard_in(component):
 
-    def __init__(self,fileconnector,name='component.input.csv_in'):
+    def __init__(self,fileconnector,name='component.input.csv_in',transformer=None, row_limit=0):
     	"""
     	Required Parameters ::
     	fileconnector : Local file connector to connect with file.
@@ -39,33 +39,36 @@ class vcard_in(component):
         Extra Parameters ::
         name          : Name of Component.
         """
-        super(vcard_in, self).__init__(name)
-        self.fileconnector = fileconnector             
+        super(vcard_in, self).__init__(name=name, connector=fileconnector,transformer=transformer,row_limit=row_limit)
+        self._type='component.input.vcard_in'
+            
+
+    def __copy__(self):        
+        res=vcard_in(self.connector, self.name,self.transformer,self.row_limit)
+        return res   
+    
+    def end(self):
+        super(vcard_in, self).end()
+        if self.fp:
+            self.connector.close(self.fp)
+            self.fp=False
     
     
-    def process(self):
-        try:
-            import vobject 
-            fp=self.fileconnector.open('r')        
-            s = "".join(fp.readlines())
-            reader = vobject.readComponents(s)
-            while True:
-                row={}
-                data=reader.next()
-                for d in data.contents:
-                    row[unicode(d)]=eval('data.'+unicode(d)+'.value')                    
-                yield row,'main'
-            self.fileconnector.close(fp)
-        except IOError,e:
-            self.signal('error',{'data':self.data,'type':'exception','error':str(e)})
+    def process(self):        
+        import vobject 
+        self.fp=self.connector.open('r')        
+        s = "".join(self.fp.readlines())
+        reader = vobject.readComponents(s)
+        while True:
+            row={}
+            data=reader.next()
+            for d in data.contents:
+                row[unicode(d)]=eval('data.'+unicode(d)+'.value')                    
+            yield row,'main'           
+        
 
 
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=vcard_in(self.fileconnector, self.name)
-        return res
+    
 
 def test():
     pass

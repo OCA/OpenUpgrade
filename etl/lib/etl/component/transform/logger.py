@@ -39,24 +39,23 @@ class logger(component):
 		Output Flows: 0-y
 		* .* : return the main flow 
     """    
-    def __init__(self, output=sys.stdout, name='component.output.logger'):       
-        self.output = output        
-        super(logger, self).__init__(name)
+    def __init__(self, output=sys.stdout, name='component.transfer.logger'):
+        super(logger, self).__init__(name=name)
+        self._type='component.transfer.logger'
+        self.output = output
 
-    def process(self):
-        #TODO : proper handle exception
+    def __copy__(self):        
+        res=logger(self.output, self.name)
+        return res
+
+    def process(self):        
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:                   
                     self.output.write('Log '+self.name+' '+str(d)+'\n')
                     yield d, 'main'
-        super(logger, self).process()
+        
 
         
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=logger(self.output, self.name)
-        return res
+    
     

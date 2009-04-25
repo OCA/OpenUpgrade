@@ -57,9 +57,13 @@ class schema_validator(component):
         Extra Parameters ::
         name          : Name of Component.
         """
-        super(schema_validator, self).__init__(name )
-        self.schema = schema
-        self.name = name
+        super(schema_validator, self).__init__(name=name)
+        self._type='component.transfer.schema_validator'
+        self.schema = schema        
+
+    def __copy__(self):        
+        res=schema_validator(self.schema, self.name)
+        return res
 
 
     def process(self):       
@@ -111,12 +115,7 @@ class schema_validator(component):
                         yield d,channel
                            
         
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=schema_validator(self.schema, self.name)
-        return res
+    
     
 
 def test():

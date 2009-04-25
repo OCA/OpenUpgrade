@@ -32,74 +32,62 @@ import datetime
 
 class sql_in(component):
     """
-        This is an ETL Component that use to read data from sql db.
+    This is an ETL Component that use to read data from sql db.
 
-        Type: Data Component
-        Computing Performance: Streamline
-        Input Flows: 0
-        * .* : nothing
-        Output Flows: 0-x
-        * .* : return the main flow with data from csv file
+    Type: Data Component
+    Computing Performance: Streamline
+    Input Flows: 0
+    * .* : nothing
+    Output Flows: 0-x
+    * .* : return the main flow with data from csv file
     """
 
-    def __init__(self, sqlconnector, sqlquery, row_limit=0, name='component.input.sql_in', transformer=None):
+    def __init__(self, sqlconnector, sqlquery, name='component.input.sql_in', transformer=None, row_limit=0):
 
-	""" 
-	Required Parameters ::
-	sqlconnector :  sqlconnector connector.
-	sqlquery     : SQL Query
-    
-    Extra Parameters ::
-    name        : Name of Component.
-	transformer  : Transformer object to transform string data into particular type.
-	row_limit    : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
-	"""
-        super(sql_in, self).__init__(name, transformer=transformer)
-
-        self.sqlconnector = sqlconnector
-        self.sqlquery=sqlquery
-        self.row_limit=row_limit
-        self.row_count=0
-        self.name = name
-
-
-    def action_start(self, key, signal_data={}, data={}):
-        super(sql_in, self).action_start(key, signal_data, data)
-        self.connector=self.sqlconnector.open()
-
-
-    def action_end(self, key, signal_data={}, data={}):
-        super(sql_in, self).action_end(key, signal_data, data)
-        self.sqlconnector.close()
-
-    def process(self):
-        try:
-            cursor=self.connector.cursor()
-            cursor.execute(self.sqlquery)
-            print dir(cursor)
-            columns_description= cursor.description
-            rows= cursor.fetchall()
-            for row in rows:
-                self.row_count+=1
-                if self.row_limit and self.row_count > self.row_limit:
-                     raise StopIteration
-                col_count=0
-                d={}
-                for column in columns_description:
-                    d[column[0]]=row[col_count]
-                    col_count+=1
-                if self.transformer:
-                    d=self.transformer.transform(d)
-                if d:
-                    yield d, 'main'
-        except TypeError, e:
-            self.action_error(e)
+        """ 
+        Required Parameters ::
+        sqlconnector :  sqlconnector connector.
+        sqlquery     : SQL Query
         
-    def __copy__(self):
+        Extra Parameters ::
+        name        : Name of Component.
+        transformer  : Transformer object to transform string data into particular type.
+        row_limit    : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
         """
-        Overrides copy method
-        """
-        res=sql_in(self.sqlconnector, self.sqlquery, self.row_limit, self.name, self.transformer)
+        super(sql_in, self).__init__(name=name,connector=sqlconnector, transformer=transformer, row_limit=row_limit)        
+        self._type='component.input.sql_in'
+        self.sqlquery=sqlquery
+        
+        
+    def __copy__(self):       
+        res=sql_in(self.connector, self.sqlquery, self.name, self.transformer, self.row_limit)
         return res
+
+   
+
+
+    def end(self):
+        super(sql_in, self).end()
+        if self.sql_con:
+            self.connector.close(self.sql_con)
+            self.sql_con=False
+
+    def process(self):        
+        self.sql_con=self.connector.open()
+        cursor=self.sql_con.cursor()
+        cursor.execute(self.sqlquery)            
+        columns_description= cursor.description
+        rows= cursor.fetchall()
+        for row in rows:               
+            col_count=0
+            d={}
+            for column in columns_description:
+                d[column[0]]=row[col_count]
+                col_count+=1                
+            if d:
+                yield d, 'main'
+       
+        
+   
     
 

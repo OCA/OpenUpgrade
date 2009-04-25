@@ -175,6 +175,8 @@ class job(signal):
         self.register_actions_job(self)
         for component in self.get_components():
             self.register_actions_component(component)
+            if component.connector:
+                self.register_actions_connector(component.connector)
         for transition in self.get_transitions():
             self.register_actions_transition(transition)
 
@@ -193,6 +195,11 @@ class job(signal):
         component.signal_connect(component, 'stop', self.action_component_stop)
         component.signal_connect(component, 'end', self.action_component_end)
         component.signal_connect(component, 'error', self.action_component_error)
+
+    def register_actions_connector(self, connector):
+        connector.signal_connect(connector, 'open', self.action_connector_open)
+        connector.signal_connect(connector, 'close', self.action_connector_close)
+        connector.signal_connect(connector, 'error', self.action_connector_error)
 
 
     def register_actions_transition(self, transition):        
@@ -231,6 +238,21 @@ class job(signal):
     def action_job_copy(self,key,signal_data={},data={}):      
         self.logger.notifyChannel("job", logger.LOG_INFO, 
                      'the <'+key.name+'> is coping now...')
+        return True
+
+    def action_connector_open(self, key, signal_data={}, data={}):        
+        self.logger.notifyChannel("connector", logger.LOG_INFO,
+                     'the <'+key.name+'> is open now...')
+        return True
+
+    def action_connector_close(self, key, signal_data={}, data={}):
+        self.logger.notifyChannel("connector", logger.LOG_INFO,
+                    'the <'+key.name+'> is close now...')
+        return True
+    
+    def action_connector_error(self, key, signal_data={}, data={}):
+        self.logger.notifyChannel("connector", logger.LOG_ERROR,
+                    '<'+key.name+'> : '+data.get('error',False))
         return True
 
 
