@@ -7,7 +7,7 @@
     "website" : "http://www.openerp.com",
     "depends" : ["base"],
     "description": """
-            This Module includes following :
+            This Module will includes following :
 
             * Layers with characteristics by regions
             * Display customers, whom country has colors by turnover
