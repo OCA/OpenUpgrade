@@ -6,7 +6,12 @@
 			string="Customer on Map"
 			model="res.partner.address"
 			name="wizard_customer_on_map"
-			id="wizard_id_customer_on_map"
-			keyword="client_action_multi"/>
+			id="wizard_customer_on_map"
+			keyword="client_action_multi"
+			menu="False"
+			/>
+		<menuitem id="google_earth" name="Google Map/Earth" parent="base.menu_base_partner"/>
+		<menuitem name="Customer on Map" id="menu_google_earth" parent="google_earth" action="wizard_customer_on_map" type="wizard"/>
+
 	</data>
 </openerp>
