@@ -42,7 +42,9 @@
         "security/maintenance_security.xml",
         "security/ir.model.access.csv",
         "maintenance_editor_view.xml",
-        "maintenance_sequence.xml"
+        "maintenance_sequence.xml",
+        "maintenance_report.xml",
+        "maintenance_wizard.xml",
         ],
     "active": False,
     "installable": True

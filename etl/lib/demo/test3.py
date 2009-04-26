@@ -19,6 +19,5 @@ trans=transformer(
 csv_in1= etl.component.input.csv_in(fileconnector=fileconnector,transformer=trans)
 log1=etl.component.transform.logger(name='Read Invoice File')
 tran=etl.transition(csv_in1,log1)
-job1=etl.job([log1])
-#job1.run()
+job1=etl.job([csv_in1,log1])
 job1.run()

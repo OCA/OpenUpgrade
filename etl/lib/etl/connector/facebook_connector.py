@@ -45,6 +45,7 @@ class facebook_connector(connector):
         name        : Name of connector
         """
         super(facebook_connector, self).__init__(name)
+        self._type = 'connector.facebook_connector'
         self.email = email
         self.delay_time = delay_time
         self.uid = False

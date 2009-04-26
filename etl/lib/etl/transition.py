@@ -26,57 +26,12 @@ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 GNU General Public License
 """
 from signal import signal
-import logger
 class transition(signal):
     """
     Base class of ETL transition.
     """
-    
-
-    def action_start(self,key,signal_data={},data={}):       
-        self.logger.notifyChannel("transition", logger.LOG_INFO, 
-                     'the '+str(self)+' is start now...')
-        return True 
-
-    def action_pause(self,key,signal_data={},data={}):       
-        self.logger.notifyChannel("transition", logger.LOG_INFO, 
-                     'the '+str(self)+' is pause now...')
-        return True 
-
-    def action_stop(self,key,signal_data={},data={}):       
-        self.logger.notifyChannel("transition", logger.LOG_INFO, 
-                     'the '+str(self)+' is stop now...')
-        return True 
-  
-    def action_end(self,key,signal_data={},data={}):       
-        self.logger.notifyChannel("transition", logger.LOG_INFO, 
-                     'the '+str(self)+' is end now...')        
-        return True     
-
-    def __str__(self):
-        return '<Transition : '+str(self.source)+' to '+str(self.destination)+'>'
-
-    def open(self):
-        self.status='open'
-
-    def close(self):
-        self.status='close'
-
-    def stop(self):
-        self.status='stop'
-        self.signal('stop')
-
-    def pause(self):
-        self.status='pause'
-        self.signal('pause')
-
-    def start(self):
-        self.status='start'
-        self.signal('start')
-    
-
     def __init__(self, source, destination, channel_source='main', channel_destination='main', type='data',trigger=None):
-        super(transition, self).__init__() 
+        super(transition, self).__init__()            
         self.type = type
         self.trigger=trigger
         self.source = source
@@ -85,21 +40,49 @@ class transition(signal):
         self.channel_destination = channel_destination
         self.destination.trans_in.append((channel_destination,self))
         self.source.trans_out.append((channel_source,self))
-        self.status='open' # open,close 
-                           # open : active, close : inactive
+        self.status='open' # open,close # open : active, close : inactive
+        
 
-        self.logger = logger.logger()
-        self.signal_connect(self,'start',self.action_start)
-        self.signal_connect(self,'pause',self.action_pause)
-        self.signal_connect(self,'stop',self.action_stop)
-        self.signal_connect(self,'end',self.action_end)
+    def __str__(self):
+        return "<Transition source='%s' destination='%s' channel_source='%s' channel_destination='%s' type='%s' trigger='%s'>" \
+                %(self.source.name, self.destination.name, self.type, self.channel_source, self.channel_destination, self.trigger)
 
-    def __copy__(self):                               
-        res=transition(self.source,self.destination,self.channel_source, self.channel_destination, self.type)               
-        return res
+    def __copy__(self):             
+        res = transition(self.source,self.destination,self.channel_source, self.channel_destination, self.type)               
+        return res  
 
     def copy(self):
-        return self.__copy__()
+        return self.__copy__()   
+
+    def open(self):
+        self.status = 'open'
+
+    def close(self):
+        self.status = 'close'
+
+    def stop(self):
+        self.status = 'stop'
+        self.signal('stop')
+
+    def end(self):
+        self.status='end'
+        self.signal('end')
+
+    def start(self):
+        self.status='start'
+        self.signal('start')
+
+    def pause(self):
+        self.status = 'pause'
+        self.signal('pause')
+
+    def start(self):
+        self.status = 'start'
+        self.signal('start')
+
+    def restart(self):
+        self.status = 'start'
+        self.signal('restart')
 
 
 

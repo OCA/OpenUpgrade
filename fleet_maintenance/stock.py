@@ -62,7 +62,7 @@ class stock_location(osv.osv):
     _columns = {
         'fleet_type': fields.selection([('none','Not a Fleet'),('fleet','Fleet'),('sub_fleet','Sub Fleet')], 'Fleet type', required=False),
         'partner_id': fields.many2one('res.partner', 'Customer', required = False, ondelete = 'cascade', select = True),
-        'parent_partner_id': fields.related('location_id', 'partner_id', type='many2one', relation='res.partner', string='Customer', store=True),
+        'parent_partner_id': fields.related('location_id', 'partner_id', type='many2one', relation='res.partner', string='Customer'),
         'sale_order_lines': fields.one2many('sale.order.line', 'fleet_id', 'Sale Order Lines'),
         'fleet_sale_order_lines': fields.one2many('sale.order.line', 'parent_fleet_id', 'Sale Order Lines'),
         'account_invoice_lines': fields.one2many('account.invoice.line', 'fleet_id', 'Invoice Lines'),

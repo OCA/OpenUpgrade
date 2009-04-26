@@ -26,6 +26,7 @@ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
 GNU General Public License
 """
 from etl.component import component
+
 class openobject_out(component):
     """
     This is an ETL Component that use to write data into sql table.
@@ -39,7 +40,7 @@ class openobject_out(component):
     * main : return all data
     """
 
-    def __init__(self, openobject_connector, model, fields=None, name='component.output.openobject_out', transformer=None):
+    def __init__(self, openobject_connector, model, fields=None, name='component.output.openobject_out', transformer=None, row_limit=0):
         """
         Paramters :-
         openobject_connector : Openobject connector to connect with openerp server
@@ -51,16 +52,25 @@ class openobject_out(component):
         fields               : Fields of openobject model.
         model                : Openobject model name.        
         """    
-        super(openobject_out, self).__init__(name, transformer=transformer)
-        self.fields = fields
-        self.openobject_connector = openobject_connector
+        super(openobject_out, self).__init__(name=name, connector=openobject_connector, transformer=transformer, row_limit=row_limit)
+        self._type='component.output.openobject_out'
+        self.fields = fields        
         self.model=model
-        self.name = name
+
+    def __copy__(self):        
+        res=openobject_out(self.connector, self.model, self.fields, self.name, self.transformer, self.row_limit)
+        return res
+        
+    def end(self):
+        super(openobject_out, self).end()
+        if self.op_oc:
+            self.connector.close(self.op_oc)
+            self.op_oc=False
 
     def process(self):       
         datas = []
         self.fields_keys = None
-        connector=False
+        self.op_oc=False
         for channel, trans in self.input_get().items():
             for iterator in trans:                
                 for d in iterator:                    
@@ -71,22 +81,13 @@ class openobject_out(component):
                         self.fields = dict(map(lambda x: (x, x), self.fields))
                     if not self.fields_keys:
                         self.fields_keys = self.fields.keys()
-                    try:
-                        if self.transformer:
-                            d=self.transformer.transform(d)
-                                                
-                        connector=self.openobject_connector.open()
-                        self.openobject_connector.execute(connector, 'execute', self.model, 'import_data', self.fields_keys, [map(lambda x: d[self.fields[x]], self.fields_keys)])                        
-                        self.openobject_connector.close(connector)
-                        yield d, 'main'
-                    except Exception, e:
-                        yield {'data':d, 'type':'exception', 'message':str(e)}, 'error'        
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=openobject_out(self.openobject_connector, self.model, self.fields, self.name, self.transformer)
-        return res
+                    
+                    if not self.op_oc:                         
+                        self.op_oc=self.connector.open()                        
+                    self.connector.execute(self.op_oc, 'execute', self.model, 'import_data', self.fields_keys, [map(lambda x: d[self.fields[x]], self.fields_keys)])                                            
+                    yield d, 'main'     
+                    
+    
     
 
 def test():

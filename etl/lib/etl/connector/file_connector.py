@@ -43,6 +43,7 @@ class file_connector(connector):
         name     : Name of connector
         """    
         super(file_connector, self).__init__(name)
+        self._type = 'connector.file_connector'
         self.bufsize=bufsize
         self.encoding=encoding
         self.uri = uri

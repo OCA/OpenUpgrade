@@ -47,21 +47,6 @@ import release
 import wizard
 import pooler
 
-class maintenance_maintenance_module_refresh_wizard(wizard.interface):
-    def init(self, cr, uid, data, context):
-        pooler.get_pool(cr.dbname).get('maintenance.maintenance.module').refresh(cr, uid)
-        raise osv.except_osv(_('Refresh'), _('List refreshed successfully'))
-        return {}
-
-    states = {
-        'init': {
-            'actions': [init],
-            'result': {'type': 'state', 'state': 'end'}
-        }
-    }
-maintenance_maintenance_module_refresh_wizard("maintenance.maintenance.module.refresh")
-
-
 class maintenance_maintenance_module(osv.osv):
     
     __root_path = os.path.join(config['root_path'], 'maintenance', 'addons')

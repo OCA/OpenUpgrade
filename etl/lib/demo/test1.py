@@ -6,6 +6,7 @@ sys.path.append('..')
 import etl
 
 fileconnector_partner=etl.connector.localfile('input/partner.csv')
+
 fileconnector_partner1=etl.connector.localfile('input/partner1.csv')
 fileconnector_partner3=etl.connector.localfile('input/partner3.csv')
 fileconnector_output=etl.connector.localfile('output/test1_partner.csv')
@@ -26,8 +27,9 @@ tran4=etl.transition(sleep1,log2)
 tran5=etl.transition(sort1,csv_out1)
 
 
-job1=etl.job([csv_out1,log2])
+job1=etl.job([csv_in1,csv_in2,csv_out1,sort1,log1,log2,sleep1])
 
 
-job1.run()
+job2 = job1.copy()
+job2.run()
 

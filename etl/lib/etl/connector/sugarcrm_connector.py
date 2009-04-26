@@ -39,6 +39,7 @@ class sugarcrm_connector(connector):
         name    : Name of connector
         """
         super(sugarcrm_connector, self).__init__(name)
+        self._type = 'connector.sugarcrm_connector'
         self.url=url                
         self.username = username
         self.password = password

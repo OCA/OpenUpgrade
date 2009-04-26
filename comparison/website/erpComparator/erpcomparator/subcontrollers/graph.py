@@ -14,6 +14,11 @@ class Graph(controllers.Controller, TinyResource):
     @expose(template="erpcomparator.subcontrollers.templates.graph")
     def index(self, **kw):
         
+      
+        ctx = rpc.session.context.copy()
+        ctx.update(ctx or {})
+
+        
         proxy_factor = rpc.RPCProxy('comparison.factor')
         
         view_factor_id = kw.get('view_id', [])
@@ -22,12 +27,12 @@ class Graph(controllers.Controller, TinyResource):
         sel_factor_id = []
         if parent_name:
             parent_name = parent_name.replace('@', '&')
-            sel_factor_id = proxy_factor.search([('name', '=', parent_name)])
+            sel_factor_id = proxy_factor.search([('name', '=', parent_name)], 0, 0, 0, ctx)
         
         proxy_item = rpc.RPCProxy('comparison.item')
-        item_ids = proxy_item.search([])
-        res = proxy_item.read(item_ids, ['name'])
-        
+        item_ids = proxy_item.search([], 0, 0, 0, ctx)
+        res = proxy_item.read(item_ids, ['name'], ctx)
+ 
         titles = []
         factors = []
         
@@ -54,22 +59,21 @@ class Graph(controllers.Controller, TinyResource):
 #        if view_factor_id:
 #            view_factors = proxy_factor.search([('id', '=', [view_factor_id])])
 #        else:
-        factors = proxy_factor.search([('parent_id', '=', False)])
-        
-        parents = proxy_factor.read(factors, ['id', 'name'])
-        
+        factors = proxy_factor.search([('parent_id', '=', False)], 0, 0, 0, ctx)
+        parents = proxy_factor.read(factors, ['id', 'name'], ctx)
+      
         for pch in parents:
-            fact = proxy_factor.search([('id', '=', [pch['id']])])
-            parent_child += proxy_factor.read(fact, ['child_ids'])
+            fact = proxy_factor.search([('id', '=', [pch['id']])], 0, 0, 0, ctx)
+            parent_child += proxy_factor.read(fact, ['child_ids'], ctx)
         
         all_child = []
         
         for ch in parent_child:
-            pname = proxy_factor.read(ch['id'], ['name'])
+            pname = proxy_factor.read(ch['id'], ['name'], ctx)
             if ch.get('child_ids'):
                 for c in ch['child_ids']:
                     child = {}
-                    level2 = proxy_factor.read(c, ['name'])
+                    level2 = proxy_factor.read(c, ['name'], ctx)
                     child['name'] = pname.get('name') + '/' + level2.get('name')
                     child['id'] = level2.get('id')
                     all_child += [child]
@@ -78,7 +82,7 @@ class Graph(controllers.Controller, TinyResource):
         
         if view_factor_id:
             view = {}
-            view_id = proxy_factor.read([view_factor_id], ['name'])
+            view_id = proxy_factor.read([view_factor_id], ['name'], ctx)
             view_name = view_id[0].get('name')
             view['id'] = view_id[0].get('id')
             view['name'] = view_name
@@ -92,38 +96,40 @@ class Graph(controllers.Controller, TinyResource):
         item_ids = kw.get('ids')
         item_ids = item_ids and eval(str(item_ids))
         
+       
+        ctx = rpc.session.context.copy()
+        ctx.update(ctx or {})
+        
         parent_name = kw.get('factor_name')
         parent_name = parent_name.replace('@', '&')
-        
         proxy_factor = rpc.RPCProxy('comparison.factor')
         
         child_name = []
         child_ids = []
         
         if parent_name == 'Summary':
-            list = proxy_factor.search([('parent_id', '=', False)])
-            ch_ids = proxy_factor.read(list, ['name'])
-            
+            list = proxy_factor.search([('parent_id', '=', False)], 0, 0, 0, ctx)
+            ch_ids = proxy_factor.read(list, [], ctx)
             for ch in ch_ids:
                 cname = {}                
                 cname['name'] = ch['name'][:18]
                                 
                 child_ids += [ch['id']]
                 child_name += [cname]
+                
         else :
             if '/' in parent_name:
                 parent_name = parent_name.rsplit('/')[1]
-            parent_list = proxy_factor.search([('name', '=', parent_name)])
+            parent_list = proxy_factor.search([('name', '=', parent_name)], 0, 0, 0, ctx)
             
-            child_ids = proxy_factor.read(parent_list, ['child_ids'])
+            child_ids = proxy_factor.read(parent_list, ['child_ids'], ctx)
             child_ids = child_ids[0].get('child_ids')
-            child_list = proxy_factor.read(child_ids, ['name'])
-            
+            child_list = proxy_factor.read(child_ids, ['name'], ctx)
             for ch in child_list:
                 cname = {}
                 cname['name'] = ch['name'][:18]
                 child_name += [cname]
-        
+
         elem = []
         elements = {}
         elements["elements"] = [] #Required
@@ -137,8 +143,8 @@ class Graph(controllers.Controller, TinyResource):
         item_name = proxy_item.read(item_ids, ['name'])
         
         proxy_res = rpc.RPCProxy('comparison.factor.result')
-        rids = proxy_res.search([('factor_id', 'in', child_ids)])            
-        factor_res = proxy_res.read(rids)
+        rids = proxy_res.search([('factor_id', 'in', child_ids)], 0, 0, 0, ctx)            
+        factor_res = proxy_res.read(rids, [], ctx)
         
         value = []
         
@@ -149,9 +155,9 @@ class Graph(controllers.Controller, TinyResource):
                 if factor.get('item_id')[1] == item['name']:
                     val[lables.index(factor.get('factor_id')[1][:18])] = factor.get('result')/10.0
             value += [val]
-        
-        for n, j in enumerate(item_name):
             
+        for n, j in enumerate(item_name):
+        
             if n%2==0:
                 elem.append({'type': 'line_hollow', 
                              "values": value[n],
@@ -174,7 +180,6 @@ class Graph(controllers.Controller, TinyResource):
                               "loop": True})
                 
             elements["elements"] = elem
-        
         elements["title"] = {"text": parent_name, "style": "{font-size: 15px; color: #50284A; text-align: left; font-weight: bold;}"}
         elements["radar_axis"] = {
                                   "max":10,

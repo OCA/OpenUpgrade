@@ -29,20 +29,28 @@ class xmlrpc_out(component):
     """
     # To do: comment
     """
-    def __init__(self, xmlrpc_connector, method=None,datas=[], name='component.output.xmlrpc_out', transformer=None):
-        super(xmlrpc_out, self).__init__(name, transformer=transformer)
-        self.xmlrpc_connector = xmlrpc_connector
-        self.method = method
-        self.datas=datas
+    def __init__(self, xmlrpc_connector, name='component.output.xmlrpc_out', transformer=None, row_limit=0):
+        super(xmlrpc_out, self).__init__(name=name,connector=xmlrpc_connector, transformer=transformer, row_limit=row_limit)
+        self._type='component.output.xmlrpc_out'
+
+    def __copy__(self):        
+        res=xmlrpc_out(self.connector, self.name, self.transformer, self.row_limit)
+        return res  
+
+    def end(self):
+        super(xmlrpc_out, self).end()
+        if self.server:
+            self.connector.close(self.server)   
+            self.server=False           
 
     def process(self):
-        server=False
+        self.server=False
         for channel,trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
-                    if not server:
-                        server = self.xmlrpc_connector.connect()
-                    server.import_data([d])
+                    if not self.server:
+                        self.server = self.connector.connect()
+                    self.server.import_data([d])
                     yield d, 'main'
 
 def test():
