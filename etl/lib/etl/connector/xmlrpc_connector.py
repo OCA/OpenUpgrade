@@ -50,8 +50,9 @@ class xmlrpc_server_thread(threading.Thread):
         server = SimpleXMLRPCServer((self.host, self.port))
         server.register_introspection_functions()
         for fun in self.get_register_functions():
-            print fun
-            server.register_function(fun)
+            server.register_function(self.import_data)
+            #To do create instance of method
+            #server.register_function(fun)
         server.serve_forever()
         return server
 
@@ -74,7 +75,7 @@ class xmlrpc_connector(connector):
         self._type = 'connector.xmlrpc_connector'
         self.host = host
         self.port = port
-        
+
 
     def start(self,funs):
         xml_server = xmlrpc_server_thread()
@@ -84,7 +85,6 @@ class xmlrpc_connector(connector):
         server = xml_server.start()
 
     def connect(self):
-        print self.host,str(self.port)
         server = xmlrpclib.ServerProxy('http://' + self.host+':'+str(self.port))
         return server
 

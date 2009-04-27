@@ -22,7 +22,7 @@
 """
  This component is used to read data.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License
 """
 
@@ -37,28 +37,28 @@ class data(component):
     """
 
     def __init__(self, datas, name='component.input.data', transformer=None, row_limit=0):
-        """    
+        """
         Required  Parameters ::
         datas : Input datas
-        
+
         Extra Parameters ::
         name          : Name of Component.
         transformer   : Transformer object to transform string data into  particular object
        """
         super(data, self).__init__(name=name, transformer=transformer, row_limit=row_limit)
         self._type='component.input.data'
-        self.datas = datas  
+        self.datas = datas
 
-    def __copy__(self):       
+    def __copy__(self):
         res=data(self.datas, self.name, self.transformer, self.row_limit)
-        return res      
+        return res
 
     def process(self):
         for d in self.datas:
             yield d, 'main'
-        
-    
-    
+
+
+
 def test():
     from etl_test import etl_test
     import etl
@@ -71,6 +71,6 @@ def test():
     test.check_output([{'country_id': 3, 'id': 1, 'name': 'Fabien'}, {'country_id': 3, 'id': 2, 'name': 'Luc'}, {'country_id': 1, 'id': 3, 'name': 'Henry'}] )
     res=test.output()
     print res
-    
+
 if __name__ == '__main__':
     test()

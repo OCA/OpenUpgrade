@@ -21,18 +21,17 @@
 ##############################################################################
 
 from etl.connector import connector
-#from sugarcrm.sugarsoap_services_types import *
-#from sugarcrm.sugarsoap_services import *
+
 class sugarcrm_connector(connector):
     """
     This is an ETL connector that use to provide connectivity with SugarCRM server.
     """
     def __init__(self, username, password, url='http://localhost/sugarcrm', encoding='utf-8', name='sugarcrm_connector'):
-        """ 
+        """
         Required Parameters ::
         username: Userid of SugarCRM server
-        password: Password 
-                
+        password: Password
+
         Extra Parameters ::
         url     : URL of SugarCRM server
         encoding: Encoding format
@@ -40,15 +39,16 @@ class sugarcrm_connector(connector):
         """
         super(sugarcrm_connector, self).__init__(name)
         self._type = 'connector.sugarcrm_connector'
-        self.url=url                
+        self.url=url
         self.username = username
         self.password = password
         self.encoding=encoding
 
 
-    def open(self):        
+    def open(self):
         super(sugarcrm_connector, self).open()
-        
+        from sugarcrm.sugarsoap_services_types import *
+        from sugarcrm.sugarsoap_services import *
         loc = sugarsoapLocator();
         request = loginRequest();
         uauth = ns0.user_auth_Def(request);
@@ -62,7 +62,9 @@ class sugarcrm_connector(connector):
             raise LoginError(response._return._error._description);
         return (portType, response._return._id);
 
-    def search(self, portType, session_id, module, offset=0, row_limit=0, query=None):        
+    def search(self, portType, session_id, module, offset=0, row_limit=0, query=None):
+        from sugarcrm.sugarsoap_services_types import *
+        from sugarcrm.sugarsoap_services import *
         se_req = get_entry_listRequest()
         se_req._session =session_id;
         se_req._module_name =module
@@ -86,7 +88,9 @@ class sugarcrm_connector(connector):
         #end for
         return ans_list;
 
-    def edit(self, portType, session_id, module, values):        
+    def edit(self, portType, session_id, module, values):
+        from sugarcrm.sugarsoap_services_types import *
+        from sugarcrm.sugarsoap_services import *
         gui_req = get_user_idRequest();
         gui_req._session = session_id;
         user_id =portType.get_user_id(gui_req)._return;
@@ -107,15 +111,15 @@ class sugarcrm_connector(connector):
         account_id = se_resp._return._id;
         return account_id;
 
-    def close(self, connector): 
-        super(sugarcrm_connector, self).close()          
+    def close(self, connector):
+        super(sugarcrm_connector, self).close()
         return connector.close()
 
-    def __copy__(self): 
+    def __copy__(self):
         res=sugarcrm_connector(self.username, self.password, self.url, self.encoding, self.name)
         return res
 
-def test(): 
+def test():
     #TODO
     pass
 

@@ -14,7 +14,7 @@ log=etl.component.transform.logger(name='After map')
 
 tran=etl.transition(sugarcrm_in1,log,channel_source='Contacts')
 
-job1=etl.job([log])
+job1=etl.job([sugarcrm_in1,log])
 job1.run()
 #
 ## sugarcrm -> logger

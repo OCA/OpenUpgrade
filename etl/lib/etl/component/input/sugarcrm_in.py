@@ -30,11 +30,11 @@ class sugarcrm_in(component):
 
     """
     def __init__(self, sugarcrm_connector, module, name='componet.input.sugarcrm_in', transformer=False, row_limit=0):
-        """ 
+        """
         Required Parameters ::
         sugarcrm_connector :  sugarcrm connector.
         module             : name of the module
-        
+
         Extra Parameters ::
         name        : Name of Component.
         transformer  : Transformer object to transform string data into particular type.
@@ -43,22 +43,23 @@ class sugarcrm_in(component):
 
         super(sugarcrm_in, self).__init__(name=name,connector=sugarcrm_connector, transformer=transformer,row_limit=row_limit)
         self._type='componet.input.sugarcrm_in'
-        self.module=module 
+        self.module=module
 
-    def __copy__(self):   
+    def __copy__(self):
         res=sugarcrm_in(self.sugarcrm_connector, self.module, self.name, self.transformer, self.row_limit)
         return res
 
     def process(self):
         res=[]
-        self.connector.open()
-        res=self.connector.search(self.module)
-        for data in res:            
+        (portType, session_id,)=self.connector.open()
+        res=self.connector.search(portType, session_id,self.module)
+        for data in res:
             if data:
+                print data['first_name'],data['account_name']
                 yield data, 'main'
 
-   
-    
+
+
 
 
 
