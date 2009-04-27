@@ -33,3 +33,10 @@ class dm_offer_document(osv.osv):
             }
 
 dm_offer_document()
+
+class dm_mail_service(osv.osv):
+    _inherit = "dm.mail_service"
+    _columns = {
+                'smtp_server_id' : fields.many2one('email.smtpclient', 'SMTP Server', ondelete="cascade"),
+    }
+dm_mail_service()

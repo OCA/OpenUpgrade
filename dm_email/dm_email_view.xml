@@ -38,5 +38,22 @@
             </field>
         </record>
 
+        <!--
+         =======================================================
+         MAIL SERVICE EXTENSION
+         =======================================================
+         -->
+        <record id="view_dm_mail_service_form_inherit" model="ir.ui.view">
+            <field name="name">dm.mail_service.form.inherit</field>
+            <field name="model">dm.mail_service</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_dm_mail_service_form"/>
+                <field name="arch" type="xml">
+					<field name="type_id" position="after">
+						<field name="smtp_server_id" attrs="{'invisible':[('type_id','!=','smtp')]}">
+					</field>
+				</field>
+			</field>
+		</record>
         </data>
     </openerp>

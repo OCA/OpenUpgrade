@@ -49,6 +49,7 @@ class dm_simulator(osv.osv):
     def onchange_campaign(self, cr, uid, ids, campaign_id, type):
         value = {}
         if campaign_id:
+            cust_ids = []
             camp = self.pool.get('dm.campaign').browse(cr, uid, campaign_id)
 
             """ Count the quantity customers and actions to simulate"""

@@ -41,5 +41,12 @@
             <field eval="&quot;&quot;&quot;ACKEMAIL&quot;&quot;&quot;" name="code"/>              
         </record>
     </data>
-    
+
+    <!-- Mail Service Type -->
+    <data>
+        <record model="dm.mail_service.type" id="dm_mail_service_type_smtp">
+            <field name="name" eval="&quot;SMTP Server&quot;"/>
+            <field name="code" eval="&quot;smtp&quot;"/>
+        </record>
+    </data>   
 </openerp>
