@@ -524,8 +524,15 @@ TreeNode.prototype = {
                 this.element_a.innerHTML = MochiKit.DOM.escapeHTML(value);
                 
                 if (record.action) {
-                    MochiKit.DOM.setNodeAttribute(this.element_a, 'href', record.action);
+                    MochiKit.DOM.setNodeAttribute(this.element_a, 'href', 'javascript: void(0)');
+                } else {
+                    value.onclick = MochiKit.Base.bind(function(){
+                        this.toggle();
+                    }, this);
                 }
+//                if (record.action) {
+//                    MochiKit.DOM.setNodeAttribute(this.element_a, 'href', record.action);
+//                }
                 
                 if (record.target) {
                     MochiKit.DOM.setNodeAttribute(this.element_a, 'target', record.target);
