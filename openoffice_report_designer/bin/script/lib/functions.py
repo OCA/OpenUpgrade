@@ -77,7 +77,7 @@ def getList(aObjectList,host,count):
                                             getRelation(docinfo.getUserFieldValue(3), sItem[sItem.find(".")+1:sItem.find(",")], sItem[sItem.find(",'")+2:sItem.find("')")],aObjectList,host)
                                         else:
                                             sPath=getPath(sItem[sItem.find("(")+1:sItem.find(",")], sMain)
-                                            getRelation(docinfo.getUserFieldValue(3), sPath[sPath.find(".")+1:], sItem[sItem.find(",'")+2:sItem.find("')")],aObjectList,host)
+                                            getRelation(docinfo.getUserFieldValue(3), sPath, sItem[sItem.find(",'")+2:sItem.find("')")],aObjectList,host)
     else:
         aObjectList.append("List of " + docinfo.getUserFieldValue(3))
 
@@ -134,7 +134,7 @@ def EnumDocument(aItemList,aComponentAdd):
         if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn" and not oPar.Items in aItemList:
             templist=oPar.Items[0],sItem
             aItemList.append( templist )
-            aComponentAdd.append( parent )
+        aComponentAdd.append( parent )
 
 def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
     sNames = oPar.getCellNames()
