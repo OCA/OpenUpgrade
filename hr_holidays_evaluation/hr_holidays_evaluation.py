@@ -29,26 +29,21 @@ import datetime
 
 class hr_holidays_note(osv.osv):
     _name='hr.holidays.note'
-    _rec_name = 'employee_name'
-
+    _rec_name = 'note'
     _columns = {
         'note' : fields.text('Note', size=64),
     } 
-
 hr_holidays_note()
  
 class wizard_hr_holidays_evaluation(osv.osv_memory):
-   
     _name='wizard.hr.holidays.evaluation'
     _rec_name = 'holiday_status_id'
-
     _columns = {
         'holiday_status_id':fields.many2one('hr.holidays.status','Holiday Status', required=True),
         'hr_timesheet_group_id':fields.many2one('hr.timesheet.group', 'Timesheet Group', required=True),
         'float_time':fields.float('Minutes', required=True),
         'date_current' : fields.date('Date')
     }
-    
     _defaults = {
             'date_current' : lambda *a: time.strftime('%Y-%m-%d'),
                  }
@@ -60,10 +55,6 @@ class wizard_hr_holidays_evaluation(osv.osv_memory):
         bjs = []
         my_dict = {}
         obj_contract = self.pool.get('hr.contract')
-        att_obj = self.pool.get('hr.attendance')
-        se_ids = att_obj.search(cr, uid, [])
-        b_ids = att_obj.browse(cr, uid, se_ids)[0]
-        dates = str(b_ids.name)
         obj_self = self.browse(cr, uid, ids, context=context)[0]
         group_ids = obj_self.hr_timesheet_group_id.name
         obj_ids = obj_contract.search(cr, uid, [('working_hours_per_day_id', '=', group_ids)])
@@ -72,15 +63,20 @@ class wizard_hr_holidays_evaluation(osv.osv_memory):
             s_date = rec_con.date_start
             
             cr.execute("select distinct(ht.dayofweek), sum(ht.hour_to - ht.hour_from) from hr_timesheet_group as htg, hr_timesheet as ht where ht.tgroup_id = htg.id and htg.id = %s group by ht.dayofweek" %obj_self.hr_timesheet_group_id.id)
-            tg = cr.fetchall()
-            A = map(lambda x: x[0], tg)
-            nod = len(A)
-            B = map(lambda x: x[1], tg)
+            tsg = cr.fetchall()
+            alldays = map(lambda x: x[0], tsg)
+            nod = len(alldays)
+            alltime = map(lambda x: x[1], tsg)
             how = 0
-            for k in B:
+            for k in alltime:
                 how += k
             hpd = how/nod
             
+            user_obj = self.pool.get('hr.holidays.per.user')
+            user_ids = user_obj.search(cr, uid, [('employee_id', '=', name),('holiday_status', '=', obj_self.holiday_status_id.id)])
+            if user_ids:
+                old_leave = user_obj.browse(cr, uid, user_ids, context)[0].max_leaves
+                
             cr.execute("select distinct(to_date(to_char(ha.name, 'YYYY-MM-dd'),'YYYY-MM-dd')) from hr_attendance ha where (to_date(to_char(ha.name, 'YYYY-MM-dd'),'YYYY-MM-dd') <= %s) AND (action = 'sign_in' or action = 'sign_out') AND (to_date(to_char(ha.name, 'YYYY-MM-dd'),'YYYY-MM-dd') >= %s) AND ha.employee_id = %s ", (obj_self.date_current,s_date,name))
             results = cr.fetchall()
             all_dates = map(lambda x: x[0], results)
@@ -89,7 +85,7 @@ class wizard_hr_holidays_evaluation(osv.osv_memory):
                 sign_in_dates = cr.fetchall()
                 cr.execute("select distinct(to_date(to_char(name, 'YYYY-MM-dd'),'YYYY-MM-dd')) from hr_attendance where (action = 'sign_out') and (to_date(to_char(name, 'YYYY-MM-dd'),'YYYY-MM-dd')) = '%s' group by name" %i)
                 sign_out_dates = cr.fetchall()
-            
+                
                 if sign_in_dates and sign_out_dates:
                     if len(sign_in_dates) == len(sign_out_dates):
                         days = len(sign_in_dates)
@@ -108,9 +104,6 @@ class wizard_hr_holidays_evaluation(osv.osv_memory):
                             else:
                                x = day
         
-                    user_obj = self.pool.get('hr.holidays.per.user')
-                    user_ids = user_obj.search(cr, uid, [('employee_id', '=', name),('holiday_status', '=', obj_self.holiday_status_id.id)])
-                    max_leave = user_obj.browse(cr, uid, user_ids, context)[0].max_leaves
                     if len(user_ids) == 0:
                         data = {'employee_id': name, 'holiday_status': obj_self.holiday_status_id.id, 'max_leaves' : x}
                         user_id = user_obj.create(cr, uid, data, context)
@@ -122,15 +115,15 @@ class wizard_hr_holidays_evaluation(osv.osv_memory):
                         
                     value['note'] = ''
                     emp_name = rec_con.employee_id.name
-                    my_dict[name] = [emp_name, max_leave, x, x-max_leave]
+                    my_dict[name] = [emp_name, old_leave, x, x-old_leave]
                 
         header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-16s \n! %-20s \n! %-16s ', [_('employee name'), 'Previous holiday number', 'Active holiday number', 'differnce'])
         detail = ""
         detail += self.format_table(header, my_dict)
         
         value['note'] = detail
-        c_id = self.pool.get('hr.holidays.note').create(cr, uid, value, context)
-        bjs.append(c_id)
+        note_id = self.pool.get('hr.holidays.note').create(cr, uid, value, context)
+        bjs.append(note_id)
             
         return {
             'domain': "[('id','in', ["+','.join(map(str,bjs))+"])]",
