@@ -21,37 +21,37 @@
 ##############################################################################
 
 """
-To provide connectivity with sql database server. 
-supported connection with :
-postgres server
-mysql server
-oracle server
+ To provide connectivity with SQL database server. 
+ supported connection with :
+     * postgres server
+     * mysql server
+     * oracle server
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
- GNU General Public License
+ GNU General Public License.
 """
 from etl.connector import connector
 class sql_connector(connector):   
     def __init__(self, host, port, db, uid, passwd, sslmode='allow', con_type='postgres', name='sql_connector'):
         """
-        Required Parameters ::
-        host : Database server host name
-        port : Database serverPort
-        db : Database name
-        uid : User name to login into Database
-        passwd : Password of the user
+        Required Parameters
+        host   : Database server host name.
+        port   : Database server port.
+        db     : Database name.
+        uid    : User name to login into Database.
+        passwd : Password of the user.
                 
-        Extra Parameters ::
-        sslmode : For SSL connection
-        con_type : Type of connection (postgres,mysql, oracle)
-        name: Name of the conector
+        Extra Parameters 
+        sslmode  : For SSL connection.
+        con_type : Type of connection (postgres, mysql, oracle).
+        name     : Name of the connector.
         """
         super(sql_connector, self).__init__(name)
-        self._type='connector.sql_connector'
-        self.uri = host+':'+str(port)
-        self.host=host
-        self.port=port
-        self.sslmode=sslmode             
+        self._type = 'connector.sql_connector'
+        self.uri = host + ':' + str(port)
+        self.host = host
+        self.port = port
+        self.sslmode = sslmode             
         self.db = db
         self.uid = uid
         self.con_type = con_type
@@ -60,18 +60,18 @@ class sql_connector(connector):
          
     def open(self):
         """ 
-        Opens a connection to Database server
+        Opens a connection to Database server.
         """ 
         super(sql_connector, self).open()
-        connector=False
-        if self.con_type=='postgres':
+        connector = False
+        if self.con_type == 'postgres':
             import psycopg2
             connector = psycopg2.connect("dbname=%s user=%s host=%s port=%s password=%s sslmode=%s" \
                                 % (self.db, self.uid, self.host, self.port, self.passwd, self.sslmode))
-        elif self.con_type=='mysql':
+        elif self.con_type == 'mysql':
             import MySQLdb
             connector = MySQLdb.Connection(db=self.db, host=self.host, port=self.port, user=self.uid, passwd=self.pwd)
-        elif self.con_type=='oracle':
+        elif self.con_type == 'oracle':
             import cx_Oracle
             dsn_tns = cx_Oracle.makedsn(self.host, self.port, self.db)
             connector = cx_Oracle.connect(self.uid, self.passwd, dsn_tns)    
@@ -81,16 +81,16 @@ class sql_connector(connector):
 
     def close(self, connector): 
         """ 
-        Closes a connection to Database Server
+        Closes the connection made to Database Server.
         """ 
         super(sql_connector, self).close()          
         return connector.close()
 
     def __copy__(self): 
         """
-        Overrides copy method
+        Overrides copy method.
         """
-        res=sql_connector(self.host, self.port, self.db, self.uid, self.passwd, self.sslmode, self.con_type, self.name)        
+        res = sql_connector(self.host, self.port, self.db, self.uid, self.passwd, self.sslmode, self.con_type, self.name)        
         return res
 
 def test():   

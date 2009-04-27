@@ -24,25 +24,25 @@ from etl.connector import connector
 
 class sugarcrm_connector(connector):
     """
-    This is an ETL connector that use to provide connectivity with SugarCRM server.
+    This is an ETL connector that provides connectivity with SugarCRM server.
     """
     def __init__(self, username, password, url='http://localhost/sugarcrm', encoding='utf-8', name='sugarcrm_connector'):
         """
-        Required Parameters ::
-        username: Userid of SugarCRM server
-        password: Password
+        Required Parameters 
+        username: Userid of SugarCRM server.
+        password: Password.
 
-        Extra Parameters ::
-        url     : URL of SugarCRM server
-        encoding: Encoding format
-        name    : Name of connector
+        Extra Parameters 
+        url     : URL of SugarCRM server.
+        encoding: Encoding format.
+        name    : Name of connector.
         """
         super(sugarcrm_connector, self).__init__(name)
         self._type = 'connector.sugarcrm_connector'
         self.url=url
         self.username = username
         self.password = password
-        self.encoding=encoding
+        self.encoding = encoding
 
 
     def open(self):
@@ -66,8 +66,8 @@ class sugarcrm_connector(connector):
         from sugarcrm.sugarsoap_services_types import *
         from sugarcrm.sugarsoap_services import *
         se_req = get_entry_listRequest()
-        se_req._session =session_id;
-        se_req._module_name =module
+        se_req._session = session_id;
+        se_req._module_name = module
         se_req._offset = offset;
         se_req._max_results = row_limit;
         #se_req._order_by = 'id';
@@ -93,13 +93,13 @@ class sugarcrm_connector(connector):
         from sugarcrm.sugarsoap_services import *
         gui_req = get_user_idRequest();
         gui_req._session = session_id;
-        user_id =portType.get_user_id(gui_req)._return;
+        user_id = portType.get_user_id(gui_req)._return;
 
         se_req = set_entryRequest();
         se_req._session = session_id;
-        se_req._module_name =module;
+        se_req._module_name = module;
         se_req._name_value_list = [];
-        name =[];
+        name = [];
 
         for (n, v) in values:
             nvl = ns0.name_value_Def('name_value');
@@ -116,7 +116,7 @@ class sugarcrm_connector(connector):
         return connector.close()
 
     def __copy__(self):
-        res=sugarcrm_connector(self.username, self.password, self.url, self.encoding, self.name)
+        res = sugarcrm_connector(self.username, self.password, self.url, self.encoding, self.name)
         return res
 
 def test():

@@ -20,7 +20,7 @@
 #
 ##############################################################################
 """
-Data Map component
+Data Map component.
 """
 
 from etl.component import component
@@ -29,36 +29,34 @@ from etl import tools
 
 class map(component):
     """
-        Data map component
+        Data map component.
     """
 
     def __init__(self, map_criteria, preprocess=None, name='component.transfer.map', transformer=None, row_limit=0):
         """ 
-        Required Parameters ::   
-        map_criteria  :  Mapping criteria
+        Required Parameters    
+        map_criteria  :  Mapping criteria.
         
-        Extra Parameters ::
-        name          : name of the component
-        transformer   : Transformer object to transform string data into  particular object
-        preprocess    : TODO
+        Extra Parameters 
+        name          : Name of the component.
+        transformer   : Transformer object to transform string data into  particular object.
+        preprocess    : For initializing the instance of custom variable.
         """
         
         super(map, self).__init__(name=name, transformer=transformer, row_limit=row_limit)
-        self._type='component.transfer.map'
+        self._type = 'component.transfer.map'
         self.map_criteria = map_criteria
         self.preprocess = preprocess
 
     def __copy__(self):        
-        res=map(self.map_criteria, self.preprocess, self.name, self.transformer, self.row_limit)
+        res = map(self.map_criteria, self.preprocess, self.name, self.transformer, self.row_limit)
         return res
         
-
     def process(self):        
         channels = self.input_get()
         datas = {}
         if self.preprocess:
             datas = self.preprocess(self, channels)
-
         for channel, trans in channels.items():            
             for iterator in trans:                
                 for d in iterator:                    
@@ -72,11 +70,9 @@ class map(component):
                             else:
                                 result[key] = val
                         if self.transformer:
-                            result=self.transformer.transform(result)
+                            result = self.transformer.transform(result)
                         yield result, channel_dest
 
-    
-    
 def test():
 
     from etl_test import etl_test
@@ -98,7 +94,7 @@ def test():
             for d in iterator:
                 cdict[d['id']] = d
     return {'country_var': cdict}
-    test=etl_test.etl_component_test(map(map_keys, preprocess))
+    test = etl_test.etl_component_test(map(map_keys, preprocess))
     test.check_input({'partner':input_part, 'countries': input_cty})
     print test.output()
 

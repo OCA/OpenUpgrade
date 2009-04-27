@@ -20,30 +20,29 @@
 ##############################################################################
 """
 {ETL} (Extract, transform, and load) is a module for python 2.5 or greater 
-that implements ETL concepts for data import,export and also perform some operations 
+that implements ETL concepts for data import, export and also performs some operations 
 beween import/export.  
 
-This packages has different sub-packages to define ETL job process, 
+This package has different sub-packages for defining  ETL job process, 
 ETL components (Input/Source, transform/process, control, Output/Destination),
-ETL connectors, ETL transition.
+ETL connectors and ETL transition.
 
 ETL job means to define etl process which can run, stop, pause.
 
-ETL components means to define components which used in etl job like 
-- Input Component     : to get data from external sources
-- Output Component    : to store data into external destination
+ETL components means to define components which are used in etl job like 
+- Input Component     : to get data from external sources.
+- Output Component    : to store data to external destination.
 - Transform Component : to perform a series of rules or functions to the extracted data 
 from the source to derive the data for loading into the end target.
 
-ETL connectors means to connect with external systems or server which are used by ETL Components
+ETL connectors means to connect with external systems or server which are used by ETL Components.
 
 ETL transition means to define data flow with different transition channels between 
-source etl components and destination etl components
+source etl components and destination etl components.
 
-ETL is written entirely in python and is
-released under the GNU General Public License.
+ETL is written entirely in python and is released under the GNU General Public License.
 
-Website: U{http://www.openerp.com/}
+Website: U{http://www.openerp.com/}.
 
 @version: 1.0.0
 @author: Tiny SPRL

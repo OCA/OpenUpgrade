@@ -23,46 +23,46 @@
  Used to find difference between Data.
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
- GNU General Public License
+ GNU General Public License.
 """
 
 from etl.component import component
 
 class diff(component):
     """
-        This is an ETL Component that use to find diff.
+        This is an ETL Component that finds difference.
         Takes 2 flows in input and detect a difference between these two flows
         using computed keys (based on data records) to compare elements that may not
         have to be in the same order.
 
-        Type: Data Component
-        Computing Performance: Semi-Streamline
-        Input Flows: 2
-        * main: The main flow
-        * .*: the second flow
-        Output Flows: 0-x
-        * same: return all elements that are the same in both input flows
-        * updated: return all updated elements
-        * removed: return all elements that where in main and not in the second flow
-        * added: return all elements from the second flow that are not in main channel
+        Type                  : Data Component.
+        Computing Performance : Semi-Streamline.
+        Input Flows           : 2.
+        * main                : The main flow.
+        * .*                  : The second flow.
+        Output Flows          : 0-x.
+        * same                : Returns all elements that are the same in both input flows.
+        * updated             : Returns all updated elements
+        * removed             : Returns all elements that where in main and not in the second flow.
+        * added               : Returns all elements from the second flow that are not in the main channel.
     """
-    def __init__(self, keys,name='component.process.diff',transformer=None, row_limit=0):
+    def __init__(self, keys, name='component.process.diff', transformer=None, row_limit=0):
         """
-        Required  Parameters ::
-        keys  : Keys to differenciate
+        Required  Parameters
+        keys  : Keys for differentiating.
            
-        Extra Parameters ::
+        Extra Parameters 
         name          : Name of Component.
         """             
-        super(diff, self).__init__(name=name,transformer=transformer,row_limit=row_limit)
-        self._type='component.transfer.diff' 
+        super(diff, self).__init__(name=name, transformer=transformer, row_limit=row_limit)
+        self._type = 'component.transfer.diff' 
         self.keys = keys
         self.row = {}
         self.diff = []
         self.same = []    
 
     def __copy__(self):        
-        res=diff(self.key, self.name, self.transformer, self.row_limit)
+        res = diff(self.key, self.name, self.transformer, self.row_limit)
         return res
 
     # Return the key of a row
@@ -74,12 +74,12 @@ class diff(component):
 
     def process(self):        
         self.row = {}
-        for channel,transition in self.input_get().items():
+        for channel, transition in self.input_get().items():
             if channel not in self.row:
                 self.row[channel] = {}
             other = None
             for key in self.row.keys():
-                if key<>channel:
+                if key <> channel:
                     other = key
                     break
             for iterator in transition:
@@ -99,42 +99,36 @@ class diff(component):
             for v in self.row[k].values():
                 yield v,channel
 
-
-    
-    
-    
 def test():                     
     from etl_test import etl_test
     from etl import transformer
     input_part = [
-    {'id': 1L, 'name': 'Fabien','address':'france'},
-    {'id': 1L, 'name': 'Fabien','address': 'belgium'},
-    {'id': 3L, 'name': 'harshad','address': 'india'},
+    {'id': 1L, 'name': 'Fabien', 'address': 'france'},
+    {'id': 1L, 'name': 'Fabien', 'address': 'belgium'},
+    {'id': 3L, 'name': 'harshad', 'address': 'india'},
     ]   
     modify = [
-    {'id': 1L, 'name': 'Fabien','address':'india'},        
-    {'id': 1L, 'name': 'Fabien','address': 'belgium'},
-    {'id': 3L, 'name': 'harshad','address': 'india'},
+    {'id': 1L, 'name': 'Fabien', 'address': 'india'},        
+    {'id': 1L, 'name': 'Fabien', 'address': 'belgium'},
+    {'id': 3L, 'name': 'harshad', 'address': 'india'},
     ] 
 
     add = [
-    {'id': 4L, 'name': 'henry','address':'spain'}
+    {'id': 4L, 'name': 'henry', 'address': 'spain'}
     ]
 
 
     modify = [
-    {'id': 1L, 'name': 'Fabien','address':'india'}               
+    {'id': 1L, 'name': 'Fabien', 'address': 'india'}               
     ]     
 
     remove = [
-    {'id': 1L, 'name': 'Fabien','address': 'belgium'},
+    {'id': 1L, 'name': 'Fabien', 'address': 'belgium'},
     ]
-    test=etl_test.etl_component_test(diff())
+    test = etl_test.etl_component_test(diff())
     test.check_input({'main':input_part})    
-    test.check_output(duplicate_part,'duplicate')
+    test.check_output(duplicate_part, 'duplicate')
     print test.output()
 
 if __name__ == '__main__':
     test()
-
-

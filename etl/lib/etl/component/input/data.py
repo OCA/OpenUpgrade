@@ -33,24 +33,24 @@ import csv
 
 class data(component):
     """
-        This is an ETL Component that return python data from a list of dict
+        This is an ETL Component that return python data from a list of dictionary.
     """
 
     def __init__(self, datas, name='component.input.data', transformer=None, row_limit=0):
         """
-        Required  Parameters ::
-        datas : Input datas
+        Required  Parameters
+        datas      : Input data
 
-        Extra Parameters ::
+        Extra Parameters
         name          : Name of Component.
-        transformer   : Transformer object to transform string data into  particular object
+        transformer   : Transformer object to transform string data into  particular object.
        """
         super(data, self).__init__(name=name, transformer=transformer, row_limit=row_limit)
-        self._type='component.input.data'
+        self._type = 'component.input.data'
         self.datas = datas
 
     def __copy__(self):
-        res=data(self.datas, self.name, self.transformer, self.row_limit)
+        res = data(self.datas, self.name, self.transformer, self.row_limit)
         return res
 
     def process(self):
@@ -69,7 +69,7 @@ def test():
     ])
     test = etl_test.etl_component_test(inp_data)
     test.check_output([{'country_id': 3, 'id': 1, 'name': 'Fabien'}, {'country_id': 3, 'id': 2, 'name': 'Luc'}, {'country_id': 1, 'id': 3, 'name': 'Henry'}] )
-    res=test.output()
+    res = test.output()
     print res
 
 if __name__ == '__main__':

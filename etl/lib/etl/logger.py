@@ -24,7 +24,7 @@
  To  provide internal logging system.
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
- GNU General Public License
+ GNU General Public License.
 
 """
 import logging
@@ -40,10 +40,10 @@ LOG_ERROR = 'error'
 def init_logger():
     logger = logging.getLogger()
     # create a format for log messages and dates
-    formatter = logging.Formatter('[%(asctime)s] %(levelname)s:%(name)s:%(message)s', '%a %b %d %Y %H:%M:%S')
+    formatter = logging.Formatter('[%(asctime)s] %(levelname)s: %(name)s: %(message)s', '%a %b %d %Y %H:%M:%S')
     
-    logf='/tmp/etl_log.out' 
-    handler = logging.handlers.TimedRotatingFileHandler(logf,'D',1,30)
+    logf = '/tmp/etl_log.out' 
+    handler = logging.handlers.TimedRotatingFileHandler(logf, 'D', 1, 30)
      
     # tell the handler to use this format
     handler.setFormatter(formatter)
@@ -59,15 +59,14 @@ class logger(object):
         msg = unicode(msg)
 
         result = msg.strip().split('\n')
-        if len(result)>1:
+        if len(result) > 1:
             for idx, s in enumerate(result):
-                level_method('[%02d]: %s' % (idx+1, s,))
+                level_method('[%02d]: %s' % (idx + 1, s,))
         elif result:
             level_method(result[0])
 
     def shutdown(self):
         logging.shutdown()
-
 
 init_logger()
 

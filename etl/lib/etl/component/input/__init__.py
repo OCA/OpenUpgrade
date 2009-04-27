@@ -21,10 +21,10 @@
 ##############################################################################
 
 """
-  To extract data from the source systems.
+ To extract data from the source systems.
   
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
- GNU General Public License
+ GNU General Public License.
 """
 from data import data
 from csv_in import csv_in

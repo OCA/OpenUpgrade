@@ -31,18 +31,18 @@ from etl.connector import connector
 
 class facebook_connector(connector):
     """
-    This is an ETL connector that use to provide connectivity with Facebook server.
+    This is an ETL connector that is used to provide connectivity with Facebook server.
     """
-    def __init__(self, facebook_uri, email, password=False, delay_time=20,name='facebook_connector'):
+    def __init__(self, facebook_uri, email, password=False, delay_time=20, name='facebook_connector'):
         """
-        Required Parameters ::
-        facebook_uri: URI of Facebook server
-        email       : Email Address of Facebook User
+        Required Parameters
+        facebook_uri : URI of Facebook server.
+        email        : Email Address of Facebook User.
                 
-        Extra Parameters ::
-        password    : Password
-        delay_time  : Time in sec which is use to wait for login when open login page in browser
-        name        : Name of connector
+        Extra Parameters 
+        password    : Password.
+        delay_time  : Time in sec which is use to wait for login while opening login page in browser.
+        name        : Name of connector.
         """
         super(facebook_connector, self).__init__(name)
         self._type = 'connector.facebook_connector'
@@ -55,7 +55,7 @@ class facebook_connector(connector):
 
     def open(self):
         """
-        Opens connection to facebook
+        Opens connection to facebook.
         """
         from facebook import Facebook
         super(facebook_connector, self).open()
@@ -67,88 +67,87 @@ class facebook_connector(connector):
         session = facebook.auth.getSession()
         return facebook
 
-    def execute(self,facebook,method,fields):
+    def execute(self, facebook, method, fields):
         """
-        Required Parameters ::
-        facebook : Facebook Object
-        method   : Method name like
-                    'get_user_info'=> Returns information of current user
-                    'get_friends'=> Returns all the friends and its information for current user
-                    'get_user_events'=> Returns all the events related to current user and members of events
-                    'get_user_groups'=> Returns all the groups and its members
-                    'get_user_notes'=> Returns notes created by user
-                    'get_user_notification'=> Returns information on outstanding Facebook notifications for current session user
-                    'get_user_profile'=> Returns the specified user's application info section for the calling application.
-                    'get_user_pages'=> Returns all visible pages to the filters specified.
-                    'get_user_photos'=> Returns all visible photos according to the filters specified.
-                    'get_user_albums'=> Returns metadata about all of the photo albums uploaded by the specified user.
-                    'get_user_status'=> Returns the user's current and most recent statuses
-                    'get_user_links'=> Returns all links the user has posted on their profile through your application.
-        fields  : Fields List
+        Required Parameters
+        facebook  : Facebook Object
+        method    : Method name like
+                    'get_user_info'         => Returns information of current user.
+                    'get_friends'           => Returns all the friends and its information for current user.
+                    'get_user_events'       => Returns all the events related to current user and members of events.
+                    'get_user_groups'       => Returns all the groups and its members.
+                    'get_user_notes'        => Returns notes created by user.
+                    'get_user_notification' => Returns information on outstanding Facebook notifications for current session user.
+                    'get_user_profile'      => Returns the specified user's application info section for the calling application.
+                    'get_user_pages'        => Returns all visible pages to the filters specified.
+                    'get_user_photos'       => Returns all visible photos according to the filters specified.
+                    'get_user_albums'       => Returns metadata about all of the photo albums uploaded by the specified user.
+                    'get_user_status'       => Returns the user's current and most recent status.
+                    'get_user_links'        => Returns all links the user has posted on their profile through your application.
+        fields    : Fields List
         """
-        if method=='get_user_info':
+        if method == 'get_user_info':
             rows = facebook.users.getInfo(facebook.uid, fields)
-        if method=='get_friends':
+        if method == 'get_friends':
             friends = facebook.friends.get()
             friends.append(facebook.uid)
             rows = facebook.users.getInfo(friends, fields)
-        if method=='get_user_events':
+        if method == 'get_user_events':
             rows_user = facebook.users.getInfo(facebook.uid, ['name'])
             rows = facebook.events.get(facebook.uid)
-            map(lambda x:x.update({'user_name': rows_user[0]['name']}), rows)
+            map(lambda x: x.update({'user_name': rows_user[0]['name']}), rows)
 #            for event in event_ids:# can be used
 #                rows_member = facebook.events.getMembers(event)
-        if method=='get_user_groups':
+        if method == 'get_user_groups':
             rows = facebook.groups.get()
             group_ids = map(lambda x: x['gid'], rows)
             for group in group_ids:
                 rows_member = facebook.groups.getMembers(group)
         # user notes => Beta
-        if method=='get_user_notes':
+        if method == 'get_user_notes':
             rows = facebook.notes.get(facebook.uid)
-        if method=='get_user_notification':
+        if method == 'get_user_notification':
             rows = facebook.notifications.get()
-        if method=='get_user_profile':
+        if method == 'get_user_profile':
             rows = facebook.profile.getInfo(facebook.uid)
-        if method=='get_user_pages':
+        if method == 'get_user_pages':
             rows = facebook.pages.getInfo(uid=facebook.uid, fields=['name','written_by']) #Todo : add more fields
         #  fields_pages = 'name', 'written_by', 'website', 'location (street, city, state, country, zip)', 'founded', 'products', 'produced_by'...etc
 
         # tobe test : photos.get, photos.getAlbums, status.get , links.get
-        if method=='get_user_photos':
+        if method == 'get_user_photos':
             rows = facebook.photos.get(subj_id=facebook.uid)
-        if method=='get_user_albums':
+        if method == 'get_user_albums':
             rows = facebook.photos.getAlbums(uid=facebook.uid)
-        if method=='get_user_status':# Beta
+        if method == 'get_user_status':# Beta
             rows = facebook.status.get()
-        if method=='get_user_links':
+        if method == 'get_user_links':
             rows = facebook.links.get()
 
-        if method=='set_events':# to be check
+        if method == 'set_events':# to be check
             perm = facebook.users.hasAppPermission(ext_perm='create_event')
-            event_info = {"name":"Tinyerp Event","category":"1","subcategory":"1","host":"host","location":"location","city":"Palo Alto, CA","start_time":1215929160,"end_time":1215929160}
+            event_info = {"name": "Tinyerp Event", "category": "1", "subcategory": "1", "host": "host", "location": "location", "city": "Palo Alto, CA", "start_time": 1215929160, "end_time": 1215929160}
             event_id = facebook.events.create(event_info=event_info)
         return rows
 
     def __copy__(self):
-        res=facebook_connector(self.facebook_uri, self.email, self.password, self.delay_time)
+        res = facebook_connector(self.facebook_uri, self.email, self.password, self.delay_time)
 
     def __copy__(self):
         """
-        Overrides copy method
+        Overrides copy method.
         """
-        res=facebook_connector(self.facebook_uri, self.email, self.password, self.delay_time,self.name)
+        res = facebook_connector(self.facebook_uri, self.email, self.password, self.delay_time, self.name)
 
         return res
 
 def test():
     """
-    Test function
+    Test function.
     """
     #TODO
     pass
 
 if __name__ == '__main__':
     test()
-
 
