@@ -13,12 +13,10 @@
     <blockTableStyle id="Tableau4">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
     </blockTableStyle>
     <blockTableStyle id="Tableau2">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
     </blockTableStyle>
     <blockTableStyle id="Tableau1">
       <blockAlignment value="LEFT"/>
@@ -38,7 +36,8 @@
     <paraStyle name="P8" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P9" fontName="Times-Roman" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P10" fontName="Times-Roman" fontSize="14.0" leading="17" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P11" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P11" fontName="Times-Roman" fontSize="6.0" leading="8" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -56,11 +55,11 @@
         </td>
       </tr>
     </blockTable>
-    <para style="P3">List of Residents Present</para>
+    <para style="P3">Liste des Résidents Présents</para>
     <blockTable colWidths="482.0" repeatRows="1" style="Tableau2">
       <tr>
         <td>
-          <para style="P5">From [[ data['form']['datedebut'] ]] To [[ data['form']['datefin'] ]]</para>
+          <para style="P5">du [[ data['form']['datedebut'] ]] au [[ data['form']['datefin'] ]]</para>
           <para style="P4">
             <font color="white"> </font>
           </para>
@@ -74,19 +73,19 @@
       <blockTable colWidths="140.0,49.0,46.0,88.0,49.0,84.0,25.0" style="Tableau1">
         <tr>
           <td>
-            <para style="P8">Name</para>
+            <para style="P8">Nom</para>
           </td>
           <td>
-            <para style="P8">Room</para>
+            <para style="P8">Chambre</para>
           </td>
           <td>
-            <para style="P8">Entry</para>
+            <para style="P8">Entrée</para>
           </td>
           <td>
             <para style="P8">Provenance</para>
           </td>
           <td>
-            <para style="P11">Release</para>
+            <para style="P8">Sortie</para>
           </td>
           <td>
             <para style="P8">Destination</para>
@@ -120,7 +119,7 @@
         </tr>
         <tr>
           <td>
-            <para style="P5">Total = [[ len(_entree(data['form'])) ]] Residents</para>
+            <para style="P5">Total = [[ len(_entree(data['form'])) ]] Résidents</para>
           </td>
           <td>
             <para style="P2">

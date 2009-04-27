@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2007 EVI.  All Rights Reserved.
+# Copyright (c) 2007 EVERLIBRE.  All Rights Reserved.
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -43,7 +43,6 @@ class regimecaisse(report_sxw.rml_parse):
         })
         self.context = context
         return None
-
     def _lines_resident(self,form):
             res = []
             regime_obj = self.pool.get('health.regime')
@@ -57,11 +56,10 @@ class regimecaisse(report_sxw.rml_parse):
                     for id in patient_ids:
                         resident_record=patient_obj.read(self.cr, self.uid,id)
                         res.append({'regime':"",'resident':resident_record['name'],'secu':resident_record['numerosecu'],'entree':resident_record['admission_date']})
+                        
             return res
-
-    def _total(self):
+    def _total(self,form):
         return self.total
-
     def _lines(self, form):
             res = []
             regime_obj = self.pool.get('health.regime')
@@ -75,9 +73,9 @@ class regimecaisse(report_sxw.rml_parse):
                     res.append({'regime':regime_record['name'],'effectifs':len(patient_ids)})
                     self.total=self.total+len(patient_ids)
             return res
+    
 
-
-
+    
 
 report_sxw.report_sxw('report.health.regimecaisse.report', 'health.patient','addons/health/report/regimecaisse.rml', parser=regimecaisse, header=False)
 
