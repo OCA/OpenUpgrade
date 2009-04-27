@@ -23,6 +23,14 @@
 from osv import fields
 from osv import osv
 
+class dm_mail_service_type(osv.osv):
+    _name = "dm.mail_service.type"
+    _columns = {
+        'name' : fields.char('Name', size=64),
+        'code' : fields.char('Code', size=64),
+    }
+dm_mail_service_type()
+
 class dm_mail_service(osv.osv):
     _name = "dm.mail_service"
 #    _inherits = {'ir.actions.server':'mail_action_id'}
@@ -36,12 +44,16 @@ class dm_mail_service(osv.osv):
         'name' : fields.function(_default_name, method=True, string='Name',store=True ,type='char' ,size=128),
         'partner_id' : fields.many2one('res.partner','Partner',domain=[('category_id','ilike','Mail Service')],context={'category':'Mail Service'}),
         'media_id' : fields.many2one('dm.media','Media'),
+        'time_mode' : fields.selection([('hour','Fixed Hour'),('date','Fixed Date'),('interval','Interval')],'Time Mode'),
+        'action_hour' : fields.float('Hours'),
+        'action_date' : fields.datetime('Date'),
         'action_interval': fields.integer('Interval'),
         'unit_interval': fields.selection( [('minutes', 'Minutes'),
             ('hours', 'Hours'), ('work_days','Work Days'), ('days', 'Days'),\
             ('weeks', 'Weeks'), ('months', 'Months')], 'Interval Unit'),
         'default_for_media' : fields.boolean('Default Mail Service for Media'),
         'action_id' : fields.many2one('ir.actions.server','Server Action'),
+        'type_id' : fields.many2one('dm.mail_service.type','Type',ondelete="cascade"),
     }
 
     def _check_unique_mail_service(self, cr, uid, ids, media_id, default_for_media):

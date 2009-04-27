@@ -965,4 +965,18 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         </record>
     </data>
 -->
+
+    <!-- Mail Service Type -->
+    <data>
+        <record model="dm.mail_service.type" id="dm_mail_service_type_dummy">
+            <field name="name" eval="&quot;Dummy&quot;"/>
+            <field name="code" eval="&quot;dummy&quot;"/>
+        </record>
+    </data>
+
+	<!-- Default Type in Mail Service -->
+    <data noupdate="1">
+        <function eval="('default',False,'type_id', [('dm.mail_service', False)], dm_mail_service_type_dummy, True, False, False, False, True)" id="type_dummy_default_set" model="ir.values" name="set"/>
+    </data>
+
 </openerp>

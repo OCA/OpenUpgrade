@@ -12,6 +12,45 @@ import netsvc
 from report import interface ,report_sxw
 import time
 from customer_function import customer_function
+import re
+interna_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+    <TITLE></TITLE>
+    <META NAME="GENERATOR" CONTENT="OpenOffice.org 3.0  (Linux)">
+    <META NAME="CREATED" CONTENT="20090420;15063300">
+    <META NAME="CHANGED" CONTENT="20090420;15071700"> 
+    <META NAME="Info 4" CONTENT="dm.offer.document">
+    <STYLE TYPE="text/css">
+        <!--
+        @page { margin: 2cm }
+        P { margin-bottom: 0.21cm }
+        A:link { so-language: zxx }
+        -->
+    </STYLE>
+<i/HEAD>
+<BODY LANG="en-IN" DIR="LTR">
+'''
+
+def merge_message(cr, uid, keystr, context):
+    logger = netsvc.Logger()
+    def merge(match):
+        dm_obj = pooler.get_pool(cr.dbname).get('dm.offer.document')
+        id = context.get('document_id')
+        obj = dm_obj.browse(cr, uid, id)
+        exp = str(match.group()[2:-2]).strip()
+        plugin_values = generate_plugin_value(cr, uid, id, context.get('customer_id'), context)
+        context.update(plugin_values).update({'object':obj,'time':time})
+        result = eval(exp,)
+        if result in (None, False):
+            return str("--------")
+        return str(result)
+
+    com = re.compile('(\[\[.+?\]\])')
+    message = com.sub(merge, keystr)
+    return message
+
 
 def generate_reports(cr,uid,obj,report_type,context):
 
@@ -21,7 +60,7 @@ def generate_reports(cr,uid,obj,report_type,context):
     print "customer_id : ",customer_id
     customer_ids = []
 
-    if not customer_id:
+    if obj.is_global:
         """ if segment workitem """
         print "source fields : ",getattr(obj.segment_id.customers_file_id, obj.source + "s")
         for cust_id in getattr(obj.segment_id.customers_file_id, obj.source + "s"):
@@ -50,28 +89,36 @@ def generate_reports(cr,uid,obj,report_type,context):
         if document_id :
             report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
             print "report_ids : ",report_ids
-            document_name = dm_doc_obj.read(cr,uid,document_id,['name'])[0]['name']
-            print "Doc name : ",document_name
+            print dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
+
+            document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
+            print "Doc name : ",document_data['name']
+            context['customer_id'] = customer_id
+            context['document_id'] = document_id[0]
+            attachment_obj = pool.get('ir.attachment')
+            if report_type=='html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
+                report_data = interna_html_report +str(document_data['content'])+"</BODY></HTML>"
+                report_data = merge_message(cr, uid, report_data, context)
+                attach_vals={'name' : document_data['name'] + "_" + str(customer_id),
+                             'datas_fname' : 'report_test' + report_type ,
+                             'res_model' : 'dm.campaign.document',
+                             'res_id' : camp_doc,
+                             'datas': base64.encodestring(report_data),
+                            }
+                attach_id = attachment_obj.create(cr,uid,attach_vals)
+            print "Attachment id and campaign doc id" , attach_id,camp_doc
             if report_ids :
-                attachment_obj = pool.get('ir.attachment')
                 for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
-#                    print "Report name : ",report.report_name
                     srv = netsvc.LocalService('report.' + report.report_name)
-#                    print "Report test srv: ", srv
-                    context['customer_id'] = customer_id
-                    context['document_id'] = document_id[0]
                     report_data,report_type = srv.create(cr, uid, [], {},context)
-#                    print "Report data : ",report_data
-#                    print "Report type : ",report_type
-                    attach_vals={'name' : document_name + "_" + str(customer_id),
+                    attach_vals={'name' : document_data['name'] + "_" + str(customer_id)+str(report.id),
                                  'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
                                  'res_model' : 'dm.campaign.document',
                                  'res_id' : camp_doc,
                                  'datas': base64.encodestring(report_data),
                                  }
                     attach_id = attachment_obj.create(cr,uid,attach_vals)
-#                    print "Attachement : ",attach_id
-    return True
+                    print "Attachement : ",attach_id
 
 
 
@@ -122,13 +169,12 @@ def generate_plugin_value(cr, uid, document_id, customer_id, context={}):
                                              'customer_id':customer_id,
                                              'plugin_id':p.id,
                                              'value' : plugin_value})
-        vals[str(p.id)] = plugin_value
+        vals[str(p.code)] = plugin_value
     return vals
 
 class offer_document(rml_parse):
     def __init__(self, cr, uid, name, context):
         print "Calling offer_document __init__"
-        print "context : ",context
         super(offer_document, self).__init__(cr, uid, name, context)
         print "Calling offer_document super"
         self.localcontext.update({

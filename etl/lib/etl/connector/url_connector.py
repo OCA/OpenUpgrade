@@ -44,6 +44,7 @@ class url_connector(connector):
         name     : Name of connector
         """ 
         super(url_connector, self).__init__(name)
+        self._type = 'connector.url_connector'
         self.bufsize=bufsize
         self.encoding=encoding
         self.uri = uri

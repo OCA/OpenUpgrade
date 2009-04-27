@@ -36,7 +36,7 @@ class data(component):
         This is an ETL Component that return python data from a list of dict
     """
 
-    def __init__(self, datas, name='component.input.data', transformer=None):
+    def __init__(self, datas, name='component.input.data', transformer=None, row_limit=0):
         """    
         Required  Parameters ::
         datas : Input datas
@@ -45,21 +45,19 @@ class data(component):
         name          : Name of Component.
         transformer   : Transformer object to transform string data into  particular object
        """
-        super(data, self).__init__(name=name, transformer=transformer)
-        self.datas = datas
-        self.name = name
-        self.transformer = transformer
+        super(data, self).__init__(name=name, transformer=transformer, row_limit=row_limit)
+        self._type='component.input.data'
+        self.datas = datas  
+
+    def __copy__(self):       
+        res=data(self.datas, self.name, self.transformer, self.row_limit)
+        return res      
 
     def process(self):
         for d in self.datas:
             yield d, 'main'
         
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=data(self.datas, self.name, self.transformer)
-        return res
+    
     
 def test():
     from etl_test import etl_test

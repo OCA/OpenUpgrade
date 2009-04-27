@@ -44,6 +44,7 @@ class openobject_connector(connector):
         con_type : Type of connection to OpenObject
         """
         super(openobject_connector, self).__init__(name)
+        self._type = 'connector.openobject_connector'
         self.db = db
         self.user_login = login
         self.obj = obj

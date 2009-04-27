@@ -61,6 +61,13 @@
             name="wizard_document_report"
             keyword="client_print_multi"
             id="wizard_document_report"/>
+            
+        <wizard
+        	string="Modify Workitem"
+            model="dm.workitem"
+            name="wizard.workitem"
+            multi="1"
+            id="workitem_wiz"/>
 
 <!--         <wizard
             string="Duplicate"

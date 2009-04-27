@@ -27,7 +27,7 @@
 """
 
 from etl.component import component
-import datetime
+
 
 class csv_out(component):
     """
@@ -41,7 +41,7 @@ class csv_out(component):
     * main : return all data
     """   
 
-    def __init__(self, fileconnector, row_limit=0, csv_params={}, name='component.output.csv_out', transformer=None):
+    def __init__(self, fileconnector, csv_params={}, name='component.output.csv_out', transformer=None, row_limit=0):
         """ 
         Required  Parameters ::
         fileconnector :  localfile connector.
@@ -52,38 +52,38 @@ class csv_out(component):
         row_limit     : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
         csv_param     : To specify other csv parameter like fieldnames , restkey , restval etc. 
         """
-        super(csv_out, self).__init__(name, transformer=transformer)      
-          
-        self.fileconnector = fileconnector 
-        self.csv_params=csv_params       
-        self.row_limit=row_limit                                  
+        super(csv_out, self).__init__(name=name, connector=fileconnector, transformer=transformer, row_limit=row_limit)      
+        self._type='component.output.csv_out'         
+        self.csv_params=csv_params    
 
-    
+    def __copy__(self):      
+        res= csv_out(self.connector , self.csv_params, self.name, self.transformer, self.row_limit)
+        return res   
+        
+    def end(self):
+        super(csv_out, self).end()
+        if self.fp:
+            self.connector.close(self.fp)
+            self.fp=False
 
-    def process(self): 
-        #TODO : proper handle exception. not use generic Exception class
+    def process(self):         
         import csv      
         datas = []        
-        fp=False
+        self.fp=False
         writer=False
         for channel, trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:
-                    try:               
-                        if not fp:
-                            fp=self.fileconnector.open('wb+')
-                            fieldnames = d.keys()
-                            writer = csv.DictWriter(fp, fieldnames)
-                            writer.writerow(dict(map(lambda x: (x, x), fieldnames)))
-                        writer.writerow(d)
-                        yield d, 'main'                    
-                    except IOError, e: 
-                        self.signal('error', {'data':self.data, 'type':'exception', 'error':str(e)})
-        self.fileconnector.close(fp)        
+                for d in iterator:                                   
+                    if not self.fp:
+                        self.fp=self.connector.open('wb+')
+                        fieldnames = d.keys()
+                        writer = csv.DictWriter(self.fp, fieldnames)
+                        writer.writerow(dict(map(lambda x: (x, x), fieldnames)))
+                    writer.writerow(d)
+                    yield d, 'main'                                       
+                
 
-    def __copy__(self):      
-        res= csv_out(self.fileconnector , self.row_limit, self.csv_params, self.name, self.transformer)
-        return res
+    
 
 def test():
     pass

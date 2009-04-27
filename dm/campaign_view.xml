@@ -688,6 +688,7 @@
                             <field name="offer_step_type_id"/>
                             <field name="product_id" string="Product"/>
                             <field name="price"/>
+                            <field name="forecasted_yield"/>
                             <field name="item_type"/>
                             <field name="notes"/>
                         </tree>
@@ -704,8 +705,15 @@
                             <separator string="Segment Description" colspan="4"/>
                             <field name="name" string="Name" select="1"/>
                             <field name="code1" string="Code" select="1"/>
-                            <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
-                            <field name="customers_file_id" select="1" groups="base.group_extended"/>
+							<group colspan="2">
+								<field name="type_src"/>
+							</group>
+							<group colspan="2" col="2">
+								<field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)" attrs="{'invisible':[('type_src','=','internal')],'readonly':[('type_src','=','internal')]}" />
+								<field name="customers_file_id" select="1" groups="base.group_extended" attrs="{'invisible':[('type_src','=','external')],'readonly':[('type_src','=','external')]}"/>
+							</group>
+<!--                            <field name="customers_list_id" select="1" on_change="onchange_list(customers_list_id,start_census,end_census)"/>
+                            <field name="customers_file_id" select="1" groups="base.group_extended"/>-->
                         </group>
                         <notebook colspan="4">
                             <page string="General">
@@ -1263,6 +1271,7 @@
                 <group colspan="2" col="2">
                     <separator string="General" colspan="2"/>
                     <field name="product_id" select="1"/>
+                    <field name="media_id" select="1"/>
                     <field name="owner_id" select="1"/>
                     <field name="broker_id" select="1"/>
                     <field name="country_id" select="1"/>
@@ -1651,7 +1660,7 @@
             </notebook>
         </field>
     </record>
-
+    
 <!--
     =======================================================
         OVERLAY PAYMENT RULE
@@ -1700,8 +1709,6 @@
     </record>
 
     <menuitem id="menu_action_overlay_payment_rule_form" parent="dm.menu_dm_config_campaign" action="action_overlay_payment_rule_form"/>
-
-
 
 
     <!--

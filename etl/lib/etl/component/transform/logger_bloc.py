@@ -40,13 +40,15 @@ class logger_bloc(component):
 		* .* : return the main flow 
     """    
     def __init__(self, output=sys.stdout, name='component.output.logger_bloc'):
-        self.name = name
-        self.output = output
-        self.is_end = 'main'
-        super(logger_bloc, self).__init__(name)
+        super(logger_bloc, self).__init__(name=name)
+        self._type='component.transfer.logger_bloc'
+        self.output = output 
 
-    def process(self):
-        #TODO : proper handle exception
+    def __copy__(self):       
+        res=logger_bloc(self.output, self.name)
+        return res 
+
+    def process(self):        
         datas=[]
         for channel, trans in self.input_get().items():
             for iterator in trans:
@@ -57,10 +59,5 @@ class logger_bloc(component):
             yield d, 'main'
         
         
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=logger_bloc(self.output, self.name)
-        return res
+    
     

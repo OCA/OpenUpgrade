@@ -89,7 +89,8 @@ class wizard_proposition_products(wizard.interface):
                             'qty_planned':item.virtual_available,
                             'qty_real':item.qty_available,
                             'price':item.list_price,
-                            'notes':item.description
+                            'notes':item.description,
+                            'forecasted_yield' : step.forecasted_yield,
                             }
                     new_id=pool.get('dm.campaign.proposition.item').create(cr, uid, vals)
             stp=stp+1

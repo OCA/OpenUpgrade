@@ -26,9 +26,7 @@
  GNU General Public License
 """
 from etl.component import component
-from SimpleXMLRPCServer import SimpleXMLRPCServer
-from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
-import threading
+
 #
 class xmlrpc_in(component):
     """
@@ -37,21 +35,28 @@ class xmlrpc_in(component):
     """
     _register_functions=[]
 
-    def __init__(self, xmlrpc_connector,  name='control.xmlrpc_in', transformer=None):
+    def __init__(self, xmlrpc_connector,  name='component.input.xmlrpc_in', transformer=None, row_limit=0):
         """
         To be update
         """
-        super(xmlrpc_in, self).__init__(name, transformer=transformer)
-        self.xmlrpc_connector = xmlrpc_connector
+        super(xmlrpc_in, self).__init__(name=name,connector=xmlrpc_connector, transformer=transformer, row_limit=0)
+        self._type='component.input.xmlrpc_in'        
         self.datas=[]
         self.isStarted=False
         self.register_functions(self.import_data)
+
+    def __copy__(self):        
+        res=xmlrpc_in(self.xmlrpc_connector, self.name, self.transformer, self.row_limit)
+        return res
 
     def register_functions(self,fun):
         self._register_functions.append(fun)
 
     def process(self):
-        self.xmlrpc_connector.start(self.import_data)
+        from SimpleXMLRPCServer import SimpleXMLRPCServer
+        from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
+        import threading
+        self.connector.start(self.import_data)
         for d in self.datas:
             yield d,'main'
 

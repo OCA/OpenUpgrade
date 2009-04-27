@@ -41,9 +41,12 @@ class unique(component):
     """    
 
     def __init__(self,name='component.transform.unique'):
-        super(unique, self).__init__(name )
+        super(unique, self).__init__(name=name )
+        self._type='component.transfer.unique'
 
-
+    def __copy__(self):        
+        res=sort(self.name)
+        return res   
 
     def process(self):
         unique_datas=[]
@@ -58,12 +61,7 @@ class unique(component):
         for d in unique_datas:
             yield d, "main"
              
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=sort(self.name)
-        return res   
+    
 
 
 def test():                        

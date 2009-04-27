@@ -127,8 +127,8 @@ class payment_order(osv.osv):
         'reference': _get_reference,
     }
 
-    def unlink(self, cr, uid, ids):
-        pay_orders = self.read(cr, uid, ids, ['state'])
+    def unlink(self, cr, uid, ids, context={}):
+        pay_orders = self.read(cr, uid, ids, ['state'], context=context)
         unlink_ids = []
         for t in pay_orders:
             if t['state'] in ('draft', 'cancel'):

@@ -116,6 +116,7 @@ class dm_offer_step(osv.osv):
         'doc_number' : fields.integer('Number of documents of the mailing', states={'closed':[('readonly',True)]}),
         'manufacturing_constraint_ids' : fields.many2many('product.product','dm_offer_step_manufacturing_product_rel','product_id','offer_step_id','Mailing Manufacturing Products',domain=[('categ_id', 'ilike', 'Mailing Manufacturing')], states={'closed':[('readonly',True)]}),
         'action_id' : fields.many2one('dm.offer.step.action', string="Action", required=True, domain="[('dm_action','=',True)]"),
+        'forecasted_yield' : fields.float('Forecasted Yield'),
     }
 
     _defaults = {
@@ -223,7 +224,7 @@ class dm_offer_step_transition(osv.osv):
     _columns = {
         'condition_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
         'delay' : fields.integer('Offer Delay' ,required=True),
-        'delay_type' : fields.selection([('minute', 'Minutes'),('hour','Hours'),('day','Days'),('month','Months')], 'Delay type', required=True),
+        'delay_type' : fields.selection([('minute', 'Minutes'),('hour','Hours'),('day','Days'),('week','Weeks'),('month','Months')], 'Delay type', required=True),
         'step_from_id' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to_id' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
     }

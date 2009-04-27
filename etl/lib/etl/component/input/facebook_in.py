@@ -27,7 +27,7 @@ This is an ETL Component that use to read data from facebook.
 """
 
 from etl.component import component
-import time
+
 class facebook_in(component):
     """
     This is an ETL Component that use to read data from facebook.
@@ -53,29 +53,25 @@ class facebook_in(component):
         transformer   : Transformer object to transform string data into  particular object
         row_limit     : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
         """
-        super(facebook_in, self).__init__(name, transformer=transformer)
-        self.facebook_connector = facebook_connector
+        super(facebook_in, self).__init__(name=name,connector=facebook_connector, transformer=transformer,row_limit=row_limit)        
+        self._type='component.input.facebook_in'
         self.method=method
         self.domain=domain
         self.fields=fields
-        self.row_limit=row_limit
-        self.name = name
+       
 
-    def process(self):
-        facebook=self.facebook_connector.open()
-        rows=self.facebook_connector.execute(facebook, self.method, fields=self.fields)
-        for row in rows:
-            if self.transformer:
-                row=self.transformer.transform(row)
+    def __copy__(self):        
+        res=facebook_in(self.connector, self.method, self.domain, self.fields, self.name, self.transformer, self.row_limit)
+        return res
+
+    def process(self):        
+        facebook=self.connector.open()
+        rows=self.connector.execute(facebook, self.method, fields=self.fields)
+        for row in rows:           
             if row:
                 yield row, 'main'
 
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=facebook_in(self.facebook_connector, self.method, self.domain, self.fields, self.name, self.transformer, self.row_limit)
-        return res
+    
 
 # fields = ['uid', 'name', 'birthday', 'about_me', 'activities', 'affiliations', 'books', 'current_location', 'education_history', 'email_hashes', 'first_name','has_added_app', 'hometown_location', 'hs_info', 'hs_info', 'hs_info', 'hs_info', 'hs_info', 'meeting_for', 'meeting_sex', 'movies', 'music','notes_count', 'pic', 'pic_with_logo', 'pic_big', 'pic_big_with_logo', 'pic_small', 'pic_small_with_logo', 'pic_square', 'pic_square_with_logo','political', 'profile_update_time', 'profile_url', 'proxied_email', 'quotes', 'relationship_status', 'religion', 'sex', 'significant_other_id']
 

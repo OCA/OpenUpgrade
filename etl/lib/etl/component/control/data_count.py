@@ -33,9 +33,14 @@ class data_count(component):
      calculate total of tranfering data
 
     """   
-    def __init__(self,name='component.control.data_count'):
-        self.name = name
-        super(data_count, self).__init__(name)
+    def __init__(self,name='component.control.data_count'):        
+        super(data_count, self).__init__(name=name)
+        self._type='component.control.data_count'
+
+    def __copy__(self):        
+        res=data_count(name=self.name)
+        return res
+
     def process(self):
         datas = {}
         for channel,trans in self.input_get().items():
@@ -48,9 +53,4 @@ class data_count(component):
             yield {'channel': d, 'count': datas[d]}, 'main'
 
 
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=data_count(name=self.name)
-        return res
+    

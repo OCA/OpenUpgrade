@@ -29,10 +29,12 @@
             This module is used to launch simulation on other servers.
             """,
     "depends" : ["dm"],
-    "init_xml" : [],
+    "init_xml" : [
+    ],
     "demo_xml" : [],
     "update_xml" : [
                     "dm_simulator_view.xml",
+                    "dm_simulator_data.xml",
                     ],
     "active": False,
     "installable": True,

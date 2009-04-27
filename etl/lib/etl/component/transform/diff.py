@@ -20,7 +20,7 @@
 #
 ##############################################################################
 """
-   Used to find difference between Data.
+ Used to find difference between Data.
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
  GNU General Public License
@@ -46,20 +46,24 @@ class diff(component):
         * removed: return all elements that where in main and not in the second flow
         * added: return all elements from the second flow that are not in main channel
     """
-    def __init__(self, keys,name='component.process.diff'):
+    def __init__(self, keys,name='component.process.diff',transformer=None, row_limit=0):
         """
         Required  Parameters ::
         keys  : Keys to differenciate
            
         Extra Parameters ::
         name          : Name of Component.
-        """ 
+        """             
+        super(diff, self).__init__(name=name,transformer=transformer,row_limit=row_limit)
+        self._type='component.transfer.diff' 
         self.keys = keys
         self.row = {}
         self.diff = []
-        self.same = []
-        self.name = name
-        super(diff, self).__init__(name)
+        self.same = []    
+
+    def __copy__(self):        
+        res=diff(self.key, self.name, self.transformer, self.row_limit)
+        return res
 
     # Return the key of a row
     def key_get(self, row):
@@ -68,8 +72,7 @@ class diff(component):
             result.append(row[k])
         return tuple(result)
 
-    def process(self):
-        #TODO : put try..except block
+    def process(self):        
         self.row = {}
         for channel,transition in self.input_get().items():
             if channel not in self.row:
@@ -97,12 +100,7 @@ class diff(component):
                 yield v,channel
 
 
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=diff(self.key, self.name)
-        return res
+    
     
     
 def test():                     

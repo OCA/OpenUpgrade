@@ -22,6 +22,8 @@
 import time
 import datetime
 import dateutil
+from dateutil.tz import *
+from dateutil.parser import *
 from pytz import timezone
 import pytz
 
@@ -42,12 +44,13 @@ def _tz_get(self, cr, uid, data, context={}):
 
 _google_form =  '''<?xml version="1.0"?>
         <form string="Export">
-        <separator string="Synchronize events between tiny and google calendar" colspan="4"/>
+        <separator string="This wizard synchronize events between tiny and google calendar" colspan="4"/>
         </form> '''
 
 _google_fields = {
         }
 
+<<<<<<< TREE
 _timezone_form =  '''<?xml version="1.0"?>
         <form string="Export">
         <separator string="Select Timezone" colspan="4"/>
@@ -64,6 +67,29 @@ _timezone_fields = {
         }
 
 
+=======
+_timezone_form =  '''<?xml version="1.0"?>
+        <form string="Export">
+        <separator string="Select Timezone" colspan="4"/>
+        <field name="timezone_select"/>
+        </form> '''
+
+_timezone_fields = {
+            'timezone_select': {
+            'string': 'Time Zone',
+            'type': 'selection',
+            'selection': [(x, x) for x in pytz.all_timezones],
+            'required': True,
+        },
+        }
+
+def _tz_get(self, cr, uid, data, context={}):
+    if 'tz' in context and context['tz']:
+        return'synch'
+    else:
+        return 'timezone'
+
+>>>>>>> MERGE-SOURCE
 class google_calendar_wizard(wizard.interface):
 
     calendar_service = ""
@@ -122,8 +148,14 @@ class google_calendar_wizard(wizard.interface):
         if 'tz' in context and context['tz']:
             time_zone = context['tz']
         else:
+<<<<<<< TREE
             time_zone = data['form']['timezone_select']
         au_tz = timezone(time_zone)
+=======
+            time_zone = data['form']['timezone_select']
+
+        au_tz = timezone(time_zone)
+>>>>>>> MERGE-SOURCE
         try :
             self.calendar_service = gdata.calendar.service.CalendarService()
             self.calendar_service.email = google_auth_details.google_email
@@ -186,7 +218,6 @@ class google_calendar_wizard(wizard.interface):
                         name_event = an_event.title.text or ''
                         stime = an_event.when[0].start_time
                         etime = an_event.when[0].end_time
-                        from dateutil.tz import *
                         stime = dateutil.parser.parse(stime)
                         etime = dateutil.parser.parse(etime)
                         try:
@@ -216,7 +247,6 @@ class google_calendar_wizard(wizard.interface):
                     name_event = an_event.title.text or ''
                     stime = an_event.when[0].start_time
                     etime = an_event.when[0].end_time
-                    from dateutil.tz import *
                     stime = dateutil.parser.parse(stime)
                     etime = dateutil.parser.parse(etime)
                     try :
@@ -242,9 +272,14 @@ class google_calendar_wizard(wizard.interface):
             raise osv.except_osv('Error !',e )
         
     states = {
+<<<<<<< TREE
               
+=======
+
+>>>>>>> MERGE-SOURCE
         'init': {
             'actions': [],
+<<<<<<< TREE
             'result': {'type': 'form', 'arch':_google_form, 'fields':_google_fields,  'state':[('end','Cancel'),('synch1','Synchronize')]}
         },
         
@@ -258,6 +293,21 @@ class google_calendar_wizard(wizard.interface):
             'result': {'type': 'form', 'arch':_timezone_form, 'fields':_timezone_fields,  'state':[('synch','Synchronize')]}
         },
             
+=======
+            'result': {'type': 'form', 'arch':_google_form, 'fields':_google_fields,  'state':[('end','Cancel'),('synch1','Synchronize')]}
+        },
+
+        'synch1': {
+            'actions': [],
+            'result': {'type': 'choice', 'next_state': _tz_get }
+            },
+
+        'timezone': {
+            'actions': [],
+            'result': {'type': 'form', 'arch':_timezone_form, 'fields':_timezone_fields,  'state':[('synch','Synchronize')]}
+        },
+
+>>>>>>> MERGE-SOURCE
         'synch': {
             'actions': [_synch_events],
             'result': {'type': 'state', 'state': 'end'}

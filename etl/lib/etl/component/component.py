@@ -27,122 +27,76 @@ GNU General Public License
 """
 import datetime
 from etl import signal
-from etl import logger
-
 
 
 class component(signal):
     """
     Base class of ETL Component.
     """
-    def action_start(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the '+str(self)+' is start now...')
-        return True
 
-    def action_start_input(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the '+str(self)+' is start to taken input...')
-        return True
-
-    def action_start_output(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the '+str(self)+' is start to give output...')
-        return True
-
-    def action_no_input(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("component", logger.LOG_WARNING,
-                     'the '+str(self)+' has no input data...')
-        return True
-
-    def action_stop(self, key, signal_data={}, data={}):
-        # TODO : stop all IN_trans and OUT_trans  related this component
-        self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the '+str(self)+' is stop now...')
-        return True
-
-
-
-    def action_end(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the '+str(self)+' is end now...')
-        return True
-
-
-    def action_error(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("component", logger.LOG_ERROR,
-                     str(self)+' : '+signal_data.get('error','False'))
-        #yield {'error_msg':'Error  :'+str(e), 'error_date':datetime.datetime.today()}, 'error'
-        return True
-
-    def __init__(self, name='', transformer=None):
-        super(component, self).__init__()
-        self._cache={}
+    def __init__(self, name='', connector=None, transformer=None, row_limit=0):
+        super(component, self).__init__() 
+        self._type='component'       
+        self._cache={}        
+        self.trans_in=[]
+        self.trans_out=[]
+        self.data={}
+        self.job=False
+        self.generator=None
         self.name=name
-        self.trans_in = []
-        self.trans_out = []
-        self.data = {}
-        self.generator = None
+        self.connector=connector
         self.transformer=transformer
-        self.logger = logger.logger()
-        self.status = 'open'
-        self.signal_connect(self, 'start', self.action_start)
-        self.signal_connect(self, 'start_input', self.action_start_input)
-        self.signal_connect(self, 'start_output', self.action_start_output)
-        self.signal_connect(self, 'no_input', self.action_no_input)
-        self.signal_connect(self, 'stop', self.action_stop)
-        self.signal_connect(self, 'end', self.action_end)
-        self.signal_connect(self, 'error', self.action_error)
+        self.row_limit=row_limit
+        self.status='open'
+            
 
-    def copy(self):
-        #TODO : it's not work properly
-        res=self.__copy__()
-        trans_in=[]
-        for channel,tran_in in self.trans_in:
-            new_tran_in=tran_in.copy()
-            #new_tran_in.source=tran_in.source.copy()
-            new_tran_in.destination=res
-            trans_in.append((channel,new_tran_in))
-        res.trans_in=trans_in
-
-        trans_out=[]
-        for channel,tran_out in self.trans_out:
-            new_tran_out=tran_out.copy()
-            new_tran_out.source=res
-            #new_tran_out.destination=tran_out.destination.copy()
-            trans_out.append((channel,new_tran_out))
-        res.trans_out=trans_out
+    def __str__(self):                   
+        res='<Component job="%s" name="%s" type="%s"'% (self.job.name, self.name, self._type)
+        if self.is_start():
+            res += ' is_start="True"'
+        if self.is_end():
+            res += ' is_end="True"'
+        res += ">"
         return res
+    
+            
 
-    def __copy__(self):
+    def __copy__(self):        
         res=component(name=self.name,transformer=self.transformer)
         return res
 
-    def pause(self):
-        for channel,tran_in in self.trans_in:
-            tran_in.pause()
-            tran_in.source.pause()
-        for channel,tran_out in self.trans_out:
-            tran_out.pause()
-            tran_out.destination.pause()
+    def copy(self):
+        res=self.__copy__()
+        res.name+='(copy)'
+        return res
+
+    def is_start(self):        
+        if not len(self.trans_in):
+            return True
+        return False
+
+    def is_end(self):        
+        if not len(self.trans_out):
+            return True
+        return False
+
+    
+
+    def pause(self):        
         self.status='pause'
         self.signal('pause')
 
-    def stop(self):
-        for channel,tran_in in self.trans_in:
-            tran_in.stop()
-            tran_in.source.stop()
-        for channel,tran_out in self.trans_out:
-            tran_out.stop()
-            tran_out.destination.stop()
+    def stop(self):        
         self.status='stop'
-        self.signal('stop')
+        self.signal('stop')  
 
-    def __str__(self):
-        if not self.name:
-            self.name=''
-    	return '<Component : '+self.name+'>'
+    def end(self):
+        self.status='end'
+        self.signal('end')  
 
+    def start(self):
+        self.status='start'
+        self.signal('start')
 
     def generator_get(self, transition):
         """
@@ -150,25 +104,24 @@ class component(signal):
         """
         if self.generator:
             return self.generator
-        self.generator = self.process()
+        self.generator=self.process()
         return self.generator
 
     def channel_get(self, trans=None):
         """
         Get channel list of transition
-        """
-        if self.status in ('end','stop') or (trans and trans.type=='data' and trans.status in ('end','stop','close')):
-            return
+        """        
+        #if self.status in ('end','stop') or (trans and trans.type=='trigger' and trans.status in ('end','stop','close')):
+        #    return
         self.data.setdefault(trans, [])
         self._cache['start_output']={trans:False}
         self._cache['start_input']={trans:False}
-        gen = self.generator_get(trans) or None
+        gen=self.generator_get(trans) or None
         if trans:
-            trans.status='start'
-            trans.signal('start')
-        self.status='start'
-        self.signal('start')
+            trans.start()
+        self.start()
         try:
+            row_count=0
             while True:
                 if self.data[trans]:
                     if not self._cache['start_output'][trans]:
@@ -177,7 +130,7 @@ class component(signal):
                     self.signal('send_output', {'trans':trans, 'send_output_date':datetime.datetime.today()})
                     yield self.data[trans].pop(0)
                     continue
-                elif self.data[trans] is None:
+                elif self.data[trans] is None:                    
                     self.signal('no_input')
                     raise StopIteration
                 if not self._cache['start_input'][trans]:
@@ -185,20 +138,34 @@ class component(signal):
                     self.signal('start_input', {'trans':trans, 'start_input_date':datetime.datetime.today()})
                 self.signal('get_input', {'trans':trans, 'get_input_date':datetime.datetime.today()})
 
-                data, chan = gen.next()
-                if data is None:
+                
+
+                data, chan=gen.next() 
+                row_count+=1                 
+                if self.row_limit and row_count > self.row_limit:
+                     raise StopIteration
+              
+                if data is None:                    
                     self.signal('no_input')
                     raise StopIteration
-                for t, t2 in self.trans_out:
+
+                
+                if self.transformer:
+                    data=self.transformer.transform(data)
+
+                for t, t2 in self.trans_out:                    
                     if (t == chan) or (not t) or (not chan):
                         self.data.setdefault(t2, [])
-                        self.data[t2].append(data)
-        except StopIteration, e:
+                        self.data[t2].append(data)        
+
+        except StopIteration, e:                       
             if trans:
-                trans.status='end'
-                trans.signal('end')
-            self.status='end'
-            self.signal('end')
+                trans.end()
+            self.end()           
+
+        except Exception, e:
+            self.signal('error', {'data':self.data, 'type':'exception', 'error':str(e)}) 
+            
 
     def process(self):
         """
@@ -213,7 +180,7 @@ class component(signal):
         """
         Get input iterator of ETL component
         """
-        result = {}
+        result={}
         for channel, trans in self.trans_in:
             result.setdefault(channel, [])
             if trans=='trigger':
