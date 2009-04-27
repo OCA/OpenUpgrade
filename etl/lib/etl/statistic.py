@@ -20,51 +20,45 @@
 #
 ##############################################################################
 """ 
-  Provides statistic info of ETL process.
+ Provides statistic info of ETL process.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>)
- GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 
 """
 import datetime
 
 class statistic(object):
     """
-    This class computes basic statistics and return them at the end of the process like data in a channel called "statistics":
+    This class computes basic statistics and return them at the end of the process like data in a channel called     
+    "statistics".
     Input Channel | # of Records | Time To Process | Time/Record | Memory Usage
     main          | 1244         | 123 sec         | 0.1 sec     | 1Mb
     other         | 144          | 12 sec          | 0.1 sec     | 1Mb
     """
     
-    statistics={}
-    def statistic(self,source_component,destination_component,source_channel,destination_channel,total_record,stat_time):
+    statistics = {}
+    def statistic(self, source_component, destination_component, source_channel, destination_channel, total_record, stat_time):
         #TODO : improvement
-        input_channel=(source_component,destination_component,source_channel,destination_channel)
+        input_channel = (source_component, destination_component, source_channel, destination_channel)
         if input_channel not in self.statistics:
-            self.statistics.setdefault(input_channel,{                   
-                       'input_channel':input_channel,
-                       'total_records':0,
-                       'total_time':0,
-                       'record_time':0,
-                       'memory':0,
-                       'start':stat_time
+            self.statistics.setdefault(input_channel, {                   
+                       'input_channel': input_channel,
+                       'total_records': 0,
+                       'total_time': 0,
+                       'record_time': 0,
+                       'memory': 0,
+                       'start': stat_time
             })
-        stat=self.statistics[input_channel]        
-        stat['end']=stat_time
-        stat['total_time']=stat['end']-stat['start']
+        stat = self.statistics[input_channel]        
+        stat['end'] = stat_time
+        stat['total_time'] = stat['end'] - stat['start']
         if total_record:    
-            stat['total_records']+=total_record
-            stat['record_time']=stat['total_time']/stat['total_records']
-            stat['memory']+=0 # TODO : Calculate size of data
+            stat['total_records'] += total_record
+            stat['record_time'] = stat['total_time'] / stat['total_records']
+            stat['memory'] += 0 # TODO : Calculate size of data
 
     def statistics_get(self):
         for stat in self.statistics:
-            yield stat,'statistics'
-
-
-
-
-
-
-
+            yield stat, 'statistics'
 

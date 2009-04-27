@@ -21,36 +21,36 @@
 ##############################################################################
 
 """
-To provide connectivity with Local File 
+ To provide connectivity with Local File .
 
-Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
-GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
 from etl.connector import connector
 
 class localfile(connector):
     """
-    This is an ETL connector that use to provide connectivity with Local File.
+    This is an ETL connector that is used to provide connectivity with Local File.
     """ 
-    def __init__(self,uri,bufsize=-1,encoding='utf-8',name='localfile'):
+    def __init__(self, uri, bufsize=-1, encoding='utf-8', name='localfile'):
         """ 
-        Required Parameters ::
-        uri      : Path of file
+        Required Parameters 
+        uri      : Path of file.
                 
-        Extra Parameters ::
-        bufsize  : Bufsize for reading data
-        encoding : Encoding format
-        name     : Name of connector
+        Extra Parameters 
+        bufsize   : Buffer size for reading data.
+        encoding  : Encoding format.
+        name      : Name of connector.
         """    
         super(localfile, self).__init__(name)
         self._type = 'connector.localfile'
-        self.bufsize=bufsize
-        self.encoding=encoding
+        self.bufsize = bufsize
+        self.encoding = encoding
         self.uri = uri
 
     def open(self, mode='r'):
         """
-        Opens a file connection
+        Opens a file connection.
         """
         # TODO : pass encoding in file
         super(localfile, self).open()
@@ -59,7 +59,7 @@ class localfile(connector):
 
     def close(self,connector):
         """
-        Closes a file connection
+        Closes a file connection.
         """
         super(localfile, self).close()
         if connector:
@@ -67,7 +67,7 @@ class localfile(connector):
 
     def __copy__(self): 
         """
-        Overrides copy method
+        Overrides copy method.
         """
-        res=localfile(self.uri, self.bufsize, self.encoding, self.name)        
+        res = localfile(self.uri, self.bufsize, self.encoding, self.name)        
         return res

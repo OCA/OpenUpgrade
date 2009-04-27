@@ -23,61 +23,56 @@
  To perform sort operation.
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
- GNU General Public License
+ GNU General Public License.
 """
 
 from etl.component import component
 
 class sort(component):
     """
-        This is an ETL Component that use to perform sort operation.
+        This is an ETL Component that performs sort operation.
  
-        Type: Data Component
-        Computing Performance: Semi-Streamline
-        Input Flows: 1
-        * .* : the main data flow with input data
-        Output Flows: 0-x
-        * .* : return the main flow with sort result
+        Type                  : Data Component.
+        Computing Performance : Semi-Streamline.
+        Input Flows           : 1.
+        * .*                  : The main data flow with input data.
+        Output Flows          : 0-x.
+        * .*                  : Returns the main flow with sort result.
     """    
 
-    def __init__(self, fieldname,name='component.transfer.sort'):
+    def __init__(self, fieldname, name='component.transfer.sort'):
         """ 
-        Required Parameters ::
-        fieldname : specifies the fieldname according to which sorting process will be done
+        Required Parameters
+        fieldname      : Specifies the field name according to which sorting process will be done.
        
-        Extra Parametrs ::
-        name          : name of the component 
+        Extra Parameters
+        name          : Name of the component. 
         """
-
         super(sort, self).__init__(name )
-        self._type='component.transfer.sort'
+        self._type = 'component.transfer.sort'
         self.fieldname = fieldname
 
     def __copy__(self):        
-        res=sort(self.fieldname, self.name)
+        res = sort(self.fieldname, self.name)
         return res
 
     # Read all input channels, sort and write to 'main' channel
     def process(self):
         datas = []
-        for channel,trans in self.input_get().items():
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     datas.append(d)
-
-        datas.sort(lambda x,y: cmp(x[self.fieldname],y[self.fieldname]))
+        datas.sort(lambda x, y: cmp(x[self.fieldname], y[self.fieldname]))
         for d in datas:
             yield d, 'main'
-        
     
-    
-
-
 def test():
     from etl_test import etl_test
-    test=etl_test.etl_component_test(sort('sort','name'))
-    test.check_input({'main':[{'id':1, 'name':'OpenERP'},{'id':2,'name':'Fabien'}]})
-    test.check_output([{'id':2, 'name':'OpenERP'},{'id':1,'name':'Fabien'}],'main')
-    res=test.output()
+    test = etl_test.etl_component_test(sort('sort', 'name'))
+    test.check_input({'main': [{'id': 1, 'name': 'OpenERP'}, {'id': 2, 'name': 'Fabien'}]})
+    test.check_output([{'id': 2, 'name': 'OpenERP'}, {'id': 1, 'name': 'Fabien'}], 'main')
+    res = test.output()
+
 if __name__ == '__main__':
     test()

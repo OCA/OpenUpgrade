@@ -20,10 +20,10 @@
 #
 ##############################################################################
 """
-To provide connectivity with Facebook
+ To provide connectivity with XMLRPC Server.
 
-Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
-GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
 import threading
 import xmlrpclib
@@ -33,13 +33,13 @@ from SimpleXMLRPCServer import SimpleXMLRPCServer
 from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
 
 class xmlrpc_server_thread(threading.Thread):
-    _register_functions=[]
+    _register_functions = []
 
     def register_functions(self, funs):
         if not self._register_functions:
-            self._register_functions=[]
+            self._register_functions = []
         if isinstance(funs,list):
-            self._register_functions+=funs
+            self._register_functions += funs
         else:
             self._register_functions.append(funs)
 
@@ -58,18 +58,18 @@ class xmlrpc_server_thread(threading.Thread):
 
     def import_data(self, datas):
         if self.transformer:
-            row=self.transformer.transform(datas)
+            row = self.transformer.transform(datas)
         for d in datas:
-            yield d,'main'
+            yield d, 'main'
 
 class xmlrpc_connector(connector):
     """
-    This is an ETL connector that use to provide connectivity with xmlrpc server.
+    This is an ETL connector that provides connectivity with xmlrpc server.
     """
 
     def __init__(self, host, port, name='xmlrpc_connector'):
         """
-        to be update
+        Initializes the parameters required to connect to xmlrpc server.
         """
         super(xmlrpc_connector, self).__init__(name)
         self._type = 'connector.xmlrpc_connector'
@@ -85,24 +85,23 @@ class xmlrpc_connector(connector):
         server = xml_server.start()
 
     def connect(self):
-        server = xmlrpclib.ServerProxy('http://' + self.host+':'+str(self.port))
+        server = xmlrpclib.ServerProxy('http://' + self.host + ':' + str(self.port))
         return server
 
     def __copy__(self):
         """
-        Overrides copy method
+        Overrides copy method.
         """
         res = xmlrpc_connector(self.host, self.port)
         return res
 
 def test():
     """
-    Test function
+    Test function.
     """
     #TODO
     pass
 
 if __name__ == '__main__':
     test()
-
 

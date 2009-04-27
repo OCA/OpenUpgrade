@@ -20,35 +20,34 @@
 #
 ##############################################################################
 """ 
-ETL transition.
+ ETL transition.
 
-Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
-GNU General Public License
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
+ GNU General Public License.
 """
 from signal import signal
 class transition(signal):
     """
     Base class of ETL transition.
     """
-    def __init__(self, source, destination, channel_source='main', channel_destination='main', type='data',trigger=None):
+    def __init__(self, source, destination, channel_source='main', channel_destination='main', type='data', trigger=None):
         super(transition, self).__init__()            
         self.type = type
-        self.trigger=trigger
+        self.trigger = trigger
         self.source = source
         self.destination = destination
         self.channel_source = channel_source
         self.channel_destination = channel_destination
-        self.destination.trans_in.append((channel_destination,self))
-        self.source.trans_out.append((channel_source,self))
-        self.status='open' # open,close # open : active, close : inactive
+        self.destination.trans_in.append((channel_destination, self))
+        self.source.trans_out.append((channel_source, self))
+        self.status = 'open' # open,close # open : active, close : inactive
         
-
     def __str__(self):
         return "<Transition source='%s' destination='%s' channel_source='%s' channel_destination='%s' type='%s' trigger='%s'>" \
                 %(self.source.name, self.destination.name, self.type, self.channel_source, self.channel_destination, self.trigger)
 
     def __copy__(self):             
-        res = transition(self.source,self.destination,self.channel_source, self.channel_destination, self.type)               
+        res = transition(self.source, self.destination, self.channel_source, self.channel_destination, self.type)               
         return res  
 
     def copy(self):
@@ -65,11 +64,11 @@ class transition(signal):
         self.signal('stop')
 
     def end(self):
-        self.status='end'
+        self.status = 'end'
         self.signal('end')
 
     def start(self):
-        self.status='start'
+        self.status = 'start'
         self.signal('start')
 
     def pause(self):
@@ -83,8 +82,3 @@ class transition(signal):
     def restart(self):
         self.status = 'start'
         self.signal('restart')
-
-
-
-
-

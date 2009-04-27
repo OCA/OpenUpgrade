@@ -20,7 +20,7 @@
 #
 ##############################################################################
 """
-Data filter component
+Data filter component.
 """
 
 from etl.component import component
@@ -28,49 +28,45 @@ import datetime
 
 class data_filter(component):
     """
-        Data filter component
+        Data filter component.
     """   
 
     def __init__(self, filter_criteria, name='component.transfer.data_filter', transformer=None, row_limit=0):
 
         """ 
-        Required Parameters ::
-        filter_crtiteria : Dictonary of Filtering Criteria
+        Required Parameters
+        filter_criteria  : Dictionary of filtering criteria.
         
-        Extra Parameters ::
-        name             : Name of component
+        Extra Parameters 
+        name             : Name of component.
         transformer      : Transformer object to transform string data into particular type.
         """
         super(data_filter, self).__init__(name=name, transformer=transformer,row_limit=row_limit)  
-        self._type='component.transfer.data_filter'       
+        self._type = 'component.transfer.data_filter'       
         self.filter_criteria = filter_criteria      
     
     def __copy__(self):        
-        res=data_filter(self.filter_criteria, self.name, self.transformer, self.row_limit)
+        res = data_filter(self.filter_criteria, self.name, self.transformer, self.row_limit)
         return res        
 
     def process(self):              
         datas = []  
-        
         for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:                    
                     if self.transformer:
-                        d=self.transformer.transform(d)
-                    filter=''
+                        d = self.transformer.transform(d)
+                    filter = ''
                     for filter_data in self.filter_criteria: 
                          val = d[filter_data['name']]                                                                                                             
                          _filter = filter_data.get('filter', False)                             
                          if val and _filter:
-                             val=eval((_filter) % d)                                
+                             val = eval((_filter) % d)                                
                          filter += " %s %s %s %s" % (repr(val), filter_data['operator'], filter_data['operand'], filter_data.get('condition', ''))
-                    
                     if self.transformer:
-                        d=self.transformer.transform(d)
+                        d = self.transformer.transform(d)
                     if eval(filter):                       
                        yield d, 'main'
                     else:
                        yield d, 'invalid'
                     
-
-    

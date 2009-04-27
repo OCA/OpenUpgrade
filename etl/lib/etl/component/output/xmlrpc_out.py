@@ -20,32 +20,35 @@
 #
 ##############################################################################
 """
-To do: comment
+ To get the response for the request made to xmlrpc server.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License.
 """
 
 from etl.component import component
 
 class xmlrpc_out(component):
     """
-    # To do: comment
+    To get the response for the request made to xmlrpc server.
     """
     def __init__(self, xmlrpc_connector, name='component.output.xmlrpc_out', transformer=None, row_limit=0):
-        super(xmlrpc_out, self).__init__(name=name,connector=xmlrpc_connector, transformer=transformer, row_limit=row_limit)
-        self._type='component.output.xmlrpc_out'
+        super(xmlrpc_out, self).__init__(name=name, connector=xmlrpc_connector, transformer=transformer, row_limit=row_limit)
+        self._type = 'component.output.xmlrpc_out'
 
     def __copy__(self):
-        res=xmlrpc_out(self.connector, self.name, self.transformer, self.row_limit)
+        res = xmlrpc_out(self.connector, self.name, self.transformer, self.row_limit)
         return res
 
     def end(self):
         super(xmlrpc_out, self).end()
         if self.server:
             self.connector.close(self.server)
-            self.server=False
+            self.server = False
 
     def process(self):
-        self.server=False
-        for channel,trans in self.input_get().items():
+        self.server = False
+        for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     if not self.server:
@@ -56,11 +59,10 @@ class xmlrpc_out(component):
 def test():
     from etl_test import etl_test
     import etl
-    xmlrpc_conn=etl.connector.xmlrpc_connector('localhost', 8050)
+    xmlrpc_conn = etl.connector.xmlrpc_connector('localhost', 8050)
     test1 = etl_test.etl_component_test(xmlrpc_out(xmlrpc_conn))
     server = xmlrpc_conn.connect()
     server.import_data([])
-
 
 if __name__ == '__main__':
     test()

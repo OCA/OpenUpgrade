@@ -21,10 +21,10 @@
 ##############################################################################
 
 """
- To load/store data into destinaton system
+ To load/store data into destination system.
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
- GNU General Public License
+ GNU General Public License.
 """
 
 from csv_out import csv_out
