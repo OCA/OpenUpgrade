@@ -40,12 +40,12 @@ class xmlrpc_in(component):
         To be update
         """
         super(xmlrpc_in, self).__init__(name=name,connector=xmlrpc_connector, transformer=transformer, row_limit=0)
-        self._type='component.input.xmlrpc_in'        
+        self._type='component.input.xmlrpc_in'
         self.datas=[]
         self.isStarted=False
         self.register_functions(self.import_data)
 
-    def __copy__(self):        
+    def __copy__(self):
         res=xmlrpc_in(self.xmlrpc_connector, self.name, self.transformer, self.row_limit)
         return res
 
@@ -74,7 +74,12 @@ class xmlrpc_in(component):
         return True
 
 def test():
-    pass
+    from etl_test import etl_test
+    import etl
+    xmlrpc_conn=etl.connector.xmlrpc_connector('localhost', 8050)
+    conn = xmlrpc_conn.start('import_data')
+    test1 = etl_test.etl_component_test(xmlrpc_in(xmlrpc_conn))
+    res=test1.output()
+    print res
 if __name__ == '__main__':
-#    test()
-    pass
+    test()

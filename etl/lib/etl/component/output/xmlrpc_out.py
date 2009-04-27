@@ -33,15 +33,15 @@ class xmlrpc_out(component):
         super(xmlrpc_out, self).__init__(name=name,connector=xmlrpc_connector, transformer=transformer, row_limit=row_limit)
         self._type='component.output.xmlrpc_out'
 
-    def __copy__(self):        
+    def __copy__(self):
         res=xmlrpc_out(self.connector, self.name, self.transformer, self.row_limit)
-        return res  
+        return res
 
     def end(self):
         super(xmlrpc_out, self).end()
         if self.server:
-            self.connector.close(self.server)   
-            self.server=False           
+            self.connector.close(self.server)
+            self.server=False
 
     def process(self):
         self.server=False
@@ -54,10 +54,16 @@ class xmlrpc_out(component):
                     yield d, 'main'
 
 def test():
-    pass
+    from etl_test import etl_test
+    import etl
+    xmlrpc_conn=etl.connector.xmlrpc_connector('localhost', 8050)
+    test1 = etl_test.etl_component_test(xmlrpc_out(xmlrpc_conn))
+    server = xmlrpc_conn.connect()
+    server.import_data([])
+
 
 if __name__ == '__main__':
-    pass
+    test()
 
 #s = xmlrpclib.ServerProxy('http://localhost:5000')
 #s.import_data([
