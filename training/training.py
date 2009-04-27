@@ -131,12 +131,8 @@ class training_course(osv.osv):
         return res
 
     _columns = {
-        'duration' : fields.float('Duration',
-                                 required=True,
-                                 help="The duration for a standalone course"),
-
-        'p_id' : fields.many2one('training.course', 'Parent Course', help="The parent course"),
-
+        'duration' : fields.float('Duration', required=True, help="The duration for a standalone course"),
+        'p_id' : fields.many2one('training.course', 'Parent Course', help="The parent course", readonly=True),
         'children' : fields.one2many('training.course', 'p_id', string="Children",
                                      help="A course can be completed with some subcourses"),
 
@@ -159,11 +155,7 @@ class training_course(osv.osv):
                                          help="The master course is necessary if the user wants to link certain courses together to easy the managment"),
 
         'analytic_account_id' : fields.many2one('account.analytic.account', 'Account'),
-
-        'course_type_id' : fields.many2one('training.course_type', 'Type',
-                                           required=True,
-                                          ),
-
+        'course_type_id' : fields.many2one('training.course_type', 'Type', required=True),
         'lecturer_ids' : fields.many2many('res.partner.contact',
                                           'training_course_partner_rel',
                                           'course_id',

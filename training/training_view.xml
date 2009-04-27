@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
         <record model="ir.ui.view" id="training_course_category_form">
@@ -128,6 +127,7 @@
                         <field name="target_public" />
                         <field name="reference_id" />
                         <field name="duration" widget="float_time" />
+                        <field name="p_id" />
                     </group>
                     <notebook colspan="4">
                         <page string="Offers">
@@ -148,17 +148,16 @@
                             </field>
                         </page>
                         <page string="Sub Courses">
-                            <field name="children" nolabel="1" colspan="4"
-                                context="{'default_parent_id':parent_id, 'default_course_type_id': course_type_id, 'default_lang_id':lang_id}">
+                            <field name="children" nolabel="1" colspan="4" context="{'default_parent_id':parent_id, 'default_course_type_id': course_type_id, 'default_lang_id':lang_id}">
                                 <form string="Sub Course">
                                     <group colspan="4" col='6'>
                                         <field name="name" string="Designation" select="1" required="True"/>
-                                        <field name="parent_id" string="Product Line" required="True" />
+                                        <field name="parent_id" string="Product Line" required="True" readonly="True"/>
                                         <field name="course_type_id" />
                                         <field name="code" string="Code" select="1" />
                                         <field name="lang_id" />
                                         <field name="target_public" />
-                                        <field name="reference_id" />
+                                        <!-- <field name="reference_id" /> -->
                                         <field name="duration" widget="float_time"/>
                                     </group>
                                     <separator string="Note" colspan="4" />
@@ -224,12 +223,12 @@
             name="Planned Courses" 
             id="training_course_planned" />
 
-        <record model="ir.ui.view" id="training_course_tree">
-            <field name="name">training.course.tree</field>
+        <record model="ir.ui.view" id="training_course_list">
+            <field name="name">training.course.list</field>
             <field name="model">training.course</field>
             <field name="type">tree</field>
             <field name="arch" type="xml"> 
-                <tree string="courses">
+                <tree string="Courses" colors="blue:p_id == False">
                     <field name="sequence" />
                     <field name="code" string="Code" />
                     <field name="name" string="Designation" />
@@ -237,9 +236,49 @@
                     <field name="duration" widget="float_time" />
                     <field name="state_course" />
                     <field name="has_support" />
+                    <field name="p_id" />
                 </tree>
             </field>
         </record>
+
+        <!--
+        <record model="ir.ui.view" id="training_course_tree">
+            <field name="name">training.course.tree</field>
+            <field name="model">training.course</field>
+            <field name="type">tree</field>
+            <field name="field_parent">children</field>
+            <field name="arch" type="xml">
+                <tree string="Courses">
+                    <field name="name" string="Designation" />
+                    <field name="state_course" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="course_by_active_id_act">
+            <field name="res_model">training.course</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="domain">[('id', '=', active_id)]</field>
+        </record>
+
+        <record model="ir.values" id="training_course_tree_line_act">
+            <field name="key2">tree_but_open</field>
+            <field name="model">training.course</field>
+            <field name="name">Courses</field>
+            <field name="value" eval="'ir.actions.act_window,%d'%course_by_active_id_act" />
+            <field name="object" eval="True" />
+        </record>
+
+        <record model="ir.actions.act_window" id="training_course_tree_act">
+            <field name="name">Courses</field>
+            <field name="res_model">training.course</field>
+            <field name="view_type">tree</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="training_course_tree" />
+            <field name="domain">[('p_id', '=', False)]</field>
+        </record>
+        -->
 
         <record model="ir.actions.act_window" id="training_course_all_act">
             <field name="name">Courses</field>
@@ -1035,6 +1074,12 @@
             id="training_library_course_course_mi" 
             parent="training_library_course_mi" 
             action="training_course_all_act" />
+        <!--
+        <menuitem 
+            id="training_library_course_course_tree_mi"
+            parent="training_library_course_mi"
+            action="training_course_tree_act" />
+        -->
         <menuitem 
             id="training_library_course_course_current_mi" 
             parent="training_library_course_course_mi" 
