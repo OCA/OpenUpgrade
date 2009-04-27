@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
-	
+	<menuitem  id="hotel_restaurant_menu" name="Hotel Management/Restaurant" sequence="4"/>
 		<!-- ==============================
 			Table Master
 		============================== -->		  
@@ -35,11 +35,10 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record> 
-		<menuitem name="Hotel Restaurant" id="menu_hotel_res"/>
-		<menuitem name="Configuration" parent="menu_hotel_res" id="menu_hotel_config"/>
-		<menuitem name="Tables" parent="menu_hotel_config"
+		<menuitem name="Tables"
 		          id="menu_open_view_hotel_restaurant_tables_form_tree" 
-				  action="open_view_hotel_restaurant_tables_form_tree"/>
+				  action="open_view_hotel_restaurant_tables_form_tree"
+				  parent="hotel.hotel_configuration_menu"/>
 				  
 		<!-- 
 		==============================
@@ -67,7 +66,7 @@
 					<button string="Done" name="done" states="confirm" type="workflow"/>
 					<button string="Cancel" name="cancel" states="confirm" type="workflow" />
 					<button string="Set to Draft" name="action_set_to_draft" states="cancel" type="object"/>
-					<button string="Create Order" name="_create_order" type="object"/>
+					<button string="Create Order" name="_create_order" type="object" states="done"/>
 					</group>
 					
 				</form>
@@ -96,10 +95,10 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record> 
-		<menuitem name="Reservation" parent="menu_hotel_res" id="menu_reserv"/>
-		<menuitem name="Table Booking" parent="menu_reserv"
+		<menuitem name="Table Booking"
 		          id="menu_open_view_hotel_restaurant_reservation_form_tree" 
-				  action="open_view_hotel_restaurant_reservation_form_tree"/>
+				  action="open_view_hotel_restaurant_reservation_form_tree"
+				  parent="hotel_restaurant_menu"/>
 	
 		<!-- 
 		======================
@@ -168,9 +167,10 @@
 			<field name="view_mode">tree,form</field>
 			
 		</record> 
-		<menuitem name="Orders" parent="menu_reserv"
+		<menuitem name="Orders"
 		          id="menu_open_view_hotel_reservation_order_form_tree" 
-				  action="open_view_hotel_reservation_order_form_tree"/>
+				  action="open_view_hotel_reservation_order_form_tree"
+				  parent="hotel_restaurant_menu"/>
 	
 		<!-- 
 		==============================
@@ -240,10 +240,11 @@
 			<field name="view_mode">tree,form</field>
 			
 		</record> 
-		<menuitem name="Table Order" parent="menu_hotel_res"
+		<menuitem name="Table Order"
 		          id="menu_open_view_hotel_restaurant_order_form_tree" 
 				  action="open_view_hotel_restaurant_order_form_tree"
-				  sequence="11"/>
+				  sequence="11"
+				  parent="hotel_restaurant_menu"/>
 				  
 	<!-- ==============================
 			Kitchen Order List
@@ -304,10 +305,11 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record> 
-		<menuitem name="KOT"  parent="menu_hotel_res"
+		<menuitem name="KOT"
 		          id="menu_open_view_hotel_restaurant_kitchen_order_tickets_form_tree" 
 				  action="open_view_hotel_restaurant_kitchen_order_tickets_form_tree"
-				  sequence="12"/>
+				  sequence="12"
+				  parent="hotel_restaurant_menu"/>
 				  
 		<!-- Menucard Category -->
 		
@@ -340,9 +342,10 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 	   	</record>
-		<menuitem name="FoodItem Types" parent="menu_hotel_config"
+		<menuitem name="FoodItem Types"
 				  id="menu_action_hotel_menucard_type_view_form"
-				  action="action_hotel_menucard_type_view_form"/> 
+				  action="action_hotel_menucard_type_view_form"
+				  parent="hotel.hotel_configuration_menu"/> 
 		
 		<record model="ir.ui.view" id="view_hotel_menucard_form">
 			<field name="name">hotel.menucard.form</field>
@@ -419,9 +422,10 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 		 
-		<menuitem name="Menucard" parent="menu_hotel_config"
+		<menuitem name="Food Items"
 					 id="menu_open_hotel_menucard_form" 
-					 action="action_hotel_menucard_form"/>
+					 action="action_hotel_menucard_form"
+					 parent="menu_action_hotel_menucard_type_view_form"/>
 					 
 		<!-- 
 	====================================================

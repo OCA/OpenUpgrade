@@ -1,22 +1,27 @@
-# -*- encoding: utf-8 -*-
 ##############################################################################
+#Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#                    Fabien Pinckaers <fp@tiny.Be>
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+# WARNING: This program as such is intended to be used by professional
+# programmers who take the whole responsability of assessing all potential
+# consequences resulting from its eventual inadequacies and bugs
+# End users who are looking for a ready-to-use solution with commercial
+# garantees and support are strongly adviced to contract a Free Software
+# Service Company
 #
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+# This program is Free Software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
 from osv import fields
@@ -128,7 +133,7 @@ class hotel_reservation(osv.osv):
 #                                                                                           
 #                                                                                                  
                                                                        })
-            cr.execute('insert into hotel_folio_reservation_rel (order_id,invoice_id) values (%s,%s)', (reservation.id, folio))   
+            cr.execute('insert into hotel_folio_reservation_rel (order_id,invoice_id) values (%d,%d)', (reservation.id, folio))  
             self.write(cr, uid, ids, {'state':'done'})
         return True
 hotel_reservation()
@@ -140,11 +145,9 @@ class hotel_reservation_line(osv.osv):
      _columns = {
                  
                'line_id':fields.many2one('hotel.reservation'),
-               'reserve':fields.many2many('product.product','hotel_reservation_line_room_rel','room_id','hotel_reservation_line_id', domain="[('categ_id','=',categ_id)]"),   
-               'categ_id': fields.many2one('product.category','Room Type'), 
-               'reserve':fields.many2many('product.product','hotel_reservation_line_room_rel','room_id','hotel_reservation_line_id', domain="[('categ_id','=',categ_id)]"),   
+               'reserve':fields.many2many('product.product','hotel_reservation_line_room_rel','room_id','hotel_reservation_line_id', domain="[('isroom','=',True),('categ_id','=',categ_id)]"),   
                'categ_id': fields.many2one('product.category','Room Type',domain="[('isroomtype','=',True)]"), 
-
+              
         }
 hotel_reservation_line()
 
@@ -154,6 +157,4 @@ hotel_reservation_line()
 
 
 
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
