@@ -51,7 +51,7 @@ class connector(signal):
 
     def open(self):
         self.status = 'open'
-        self.signal('open')
+        self.signal('open', {'date': datetime.datetime.today()})
 
     def close(self, connector=False):
         """
@@ -59,7 +59,7 @@ class connector(signal):
         connector : Connector that is to be closed.
         """
         self.status = 'close'
-        self.signal('close')
+        self.signal('close', {'date': datetime.datetime.today()})
 
     def execute(self):
         return True

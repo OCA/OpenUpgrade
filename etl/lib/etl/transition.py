@@ -26,6 +26,7 @@
  GNU General Public License.
 """
 from signal import signal
+import datetime
 class transition(signal):
     """
     Base class of ETL transition.
@@ -65,19 +66,15 @@ class transition(signal):
 
     def end(self):
         self.status = 'end'
-        self.signal('end')
+        self.signal('end', {'date': datetime.datetime.today()})
 
     def start(self):
         self.status = 'start'
-        self.signal('start')
+        self.signal('start', {'date': datetime.datetime.today()})
 
     def pause(self):
         self.status = 'pause'
-        self.signal('pause')
-
-    def start(self):
-        self.status = 'start'
-        self.signal('start')
+        self.signal('pause')    
 
     def restart(self):
         self.status = 'start'

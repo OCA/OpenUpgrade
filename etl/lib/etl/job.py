@@ -20,14 +20,16 @@
 #
 ##############################################################################
 """
- Defines ETL job with ETL output components.
+ Defines ETL job with ETL components.
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
  GNU General Public License.
 """
 from signal import signal
+import time
 import logger
 import pickle
+import datetime
 
 class job(signal):
     """
@@ -37,7 +39,8 @@ class job(signal):
     def __init__(self, components=[], name='job'):        
         super(job, self).__init__()
         self.name = name
-        self._components = components        
+        self._components = components    
+        self._cache = {}    
         for component in self._components:
             component.job = self   
         self.status = 'open' # open, start, pause, stop, close
@@ -75,7 +78,7 @@ class job(signal):
             new_transitions.append(new_tra)
 
         res = job(new_components.values(), self.name + '(copy)')
-        self.signal('copy')
+        self.signal('copy', {'date': datetime.datetime.today()})
         return res
 
     def copy(self):		
@@ -89,7 +92,7 @@ class job(signal):
         
     def get_transitions(self):
         transitions = []
-        for component in self._components:
+        for component in self.get_components():
             for channel, tran_in in component.trans_in:            
                 if tran_in not in transitions:
                     transitions.append(tran_in)
@@ -117,7 +120,7 @@ class job(signal):
         for tran in self.get_transitions():
             tran.pause()
         self.status = 'pause'
-        self.signal('pause')
+        self.signal('pause', {'date': datetime.datetime.today()})
         return self.pickle
 
     def restart(self):      
@@ -125,19 +128,19 @@ class job(signal):
             tran.restart()           
         
         self.status = 'start'
-        self.signal('restart') 
+        self.signal('restart', {'date': datetime.datetime.today()}) 
 
-    def start(self):      
+    def start(self):              
         self.register_actions()  
         self.status = 'start'            
-        self.signal('start')
+        self.signal('start', {'date': datetime.datetime.today()})        
         for c in self.get_end_components():
             for a in c.channel_get():              
                 pass 
 
     def end(self):
         self.status = 'end'
-        self.signal('end')
+        self.signal('end', {'date': datetime.datetime.today()})
         
         
     def open(self):
@@ -150,7 +153,7 @@ class job(signal):
         for tran in self.get_transitions():
             tran.stop()                
         self.status = 'stop'
-        self.signal('stop')
+        self.signal('stop', {'date': datetime.datetime.today()})
           
     def get_end_components(self):
         end_components = []
@@ -159,7 +162,32 @@ class job(signal):
                 end_components.append(component)       
         return end_components
 
-    
+    def get_statitic_info(self):
+        print 'Statistical Information :'
+        print '======================================'
+        print 'Job : %s' %(self.name)
+        print '-------------------'
+        print 'Start : %s' %(self._cache['start_date'])
+        print 'End   : %s' %(self._cache['end_date'])
+        print 'Total Process time : %s' %(self._cache['process_time'])
+        for component in self.get_components():
+             print '\nComponent : %s'%(component)
+             print '---------------------------------'
+             print 'Start : %s' %(component._cache['start_date'])
+             print 'End   : %s' %(component._cache['end_date'])
+             print 'Total Process time : %s' %(component._cache['process_time'])
+             for trans,value in component._cache['trans'].items():
+                print '\nTransition : %s'%trans
+                print '---------------------------------'
+                print 'Total Inputs : %s'%value.get('total_inputs',0)
+                print 'Total Outputs : %s'%value.get('total_outputs',0)
+                print 'Total Input Process Time : %s'%value.get('input_process_time',0)
+                print 'Total Output Process Time : %s'%value.get('output_process_time',0)
+                print 'Input Process Time per Record : %s'%value.get('input_process_time_per_record',0)
+                print 'Output Process Time per Record : %s'%value.get('output_process_time_per_record',0)
+                
+                
+
     def run(self):              
         if self.pickle:
             job = self.read(self.pickle)
@@ -168,6 +196,7 @@ class job(signal):
         else:
             self.start()
             self.end()
+        self.get_statitic_info()
 
     def register_actions(self):
         self.register_actions_job(self)
@@ -189,6 +218,8 @@ class job(signal):
         component.signal_connect(component, 'start', self.action_component_start)
         component.signal_connect(component, 'start_input', self.action_component_start_input)
         component.signal_connect(component, 'start_output', self.action_component_start_output)
+        component.signal_connect(component, 'get_input', self.action_component_get_input)
+        component.signal_connect(component, 'send_output', self.action_component_send_output)
         component.signal_connect(component, 'no_input', self.action_component_no_input)
         component.signal_connect(component, 'stop', self.action_component_stop)
         component.signal_connect(component, 'end', self.action_component_end)
@@ -210,6 +241,7 @@ class job(signal):
     def action_job_start(self, key, signal_data={}, data={}):              
         self.logger.notifyChannel("job", logger.LOG_INFO, 
                      'the <' + key.name + '> has started now...')
+        key._cache['start_date'] =  signal_data.get('date',False)        
         return True
   
     def action_job_restart(self, key, signal_data={}, data={}):          
@@ -229,7 +261,15 @@ class job(signal):
 
     def action_job_end(self, key, signal_data={}, data={}):      
         self.logger.notifyChannel("job", logger.LOG_INFO, 
-                     'the <' + key.name + '> has ended now...')              
+                     'the <' + key.name + '> has ended now...')           
+        start_time = key._cache.get('start_date',False)
+        current_time = signal_data.get('date',datetime.datetime.today())
+        diff = 0
+        if current_time and start_time:
+            diff = (current_time - start_time).microseconds
+    
+        key._cache['end_date'] =  current_time
+        key._cache['process_time'] = diff
         return True
 
     def action_job_copy(self, key, signal_data={}, data={}):      
@@ -255,16 +295,75 @@ class job(signal):
     def action_component_start(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("component", logger.LOG_INFO,
                      'the <' + key.name + '> has started now...')
+        key._cache['start_date'] = signal_data.get('date',False)        
         return True
 
     def action_component_start_input(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the <' + key.name + '> has started to take input...')
+                     'the <' + key.name + '> has started to take input...')        
+        if 'trans' not in key._cache:
+            key._cache['trans'] = {}
+        value = key._cache['trans']
+        trans = signal_data.get('trans',False)
+        if trans not in value:
+            value[trans] = {}
+        value[trans].update({'start_input' : signal_data.get('date',False)})
         return True
 
     def action_component_start_output(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("component", logger.LOG_INFO,
                      'the <' + key.name + '> has started to give output...')
+        if 'trans' not in key._cache:
+            key._cache['trans'] = {}
+        value = key._cache['trans']
+        trans = signal_data.get('trans',False)
+        if trans not in value:
+            value[trans] = {}
+        value[trans].update({'start_output' : signal_data.get('date',False)})
+        return True
+
+    def action_component_get_input(self, key, signal_data={}, data={}):
+        self.logger.notifyChannel("component", logger.LOG_INFO,
+                     'the <' + key.name + '> has get input...')
+        if 'trans' not in key._cache:
+            key._cache['trans'] = {}
+        value = key._cache['trans']
+
+        trans = signal_data.get('trans',False)
+        total = value[trans].get('total_inputs',0)
+        total += 1
+        start_time = value[trans].get('start_input',False)        
+        current_time = signal_data.get('date',datetime.datetime.today())        
+        diff = 0
+        if current_time and start_time:
+            diff = (current_time - start_time).microseconds
+        process_per_record = 0
+        if total :            
+            process_per_record =  diff / total
+        if not process_per_record:
+            print total, diff, (current_time - start_time).microseconds
+        value[trans].update({'total_inputs' : total, 'input_process_time' : diff ,'input_process_time_per_record' : process_per_record})
+        return True
+
+    def action_component_send_output(self, key, signal_data={}, data={}):
+        self.logger.notifyChannel("component", logger.LOG_INFO,
+                     'the <' + key.name + '> has send output...')
+        if 'trans' not in key._cache:
+            key._cache['trans'] = {}
+        value = key._cache['trans'] 
+
+        trans = signal_data.get('trans',False)
+        total = value[trans].get('total_outputs',0)
+        total += 1
+        start_time = value[trans].get('start_output',False)
+        current_time = signal_data.get('date',datetime.datetime.today())
+        diff = 0
+        if current_time and start_time:
+            diff = (current_time - start_time).microseconds
+        process_per_record = 0
+        if total :
+            process_per_record =  diff / total
+        value[trans].update({'total_outputs' : total, 'output_process_time' : diff ,'output_process_time_per_record' : process_per_record})
         return True
 
     def action_component_no_input(self, key, signal_data={}, data={}):
@@ -272,15 +371,22 @@ class job(signal):
                      'the <' + key.name + '> has no input data...')
         return True
 
-    def action_component_stop(self, key, signal_data={}, data={}):
-        # TODO : stop all IN_trans and OUT_trans  related this component
+    def action_component_stop(self, key, signal_data={}, data={}):        
         self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the <' + key.name + '> has stopped now...')
+                     'the <' + key.name + '> has stopped now...')        
         return True
 
     def action_component_end(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the <' + key.name + '> has ended now...')
+                     'the <' + key.name + '> has ended now...')      
+        
+        value = key._cache
+        start_time = value.get('start_date',False)
+        current_time = signal_data.get('date',datetime.datetime.today())
+        diff = 0
+        if current_time and start_time:
+            diff = (current_time - start_time).microseconds
+        value.update({'end_date' : current_time, 'process_time' : diff})
         return True
 
     def action_component_error(self, key, signal_data={}, data={}):
@@ -290,7 +396,7 @@ class job(signal):
 
     def action_transition_start(self, key, signal_data={}, data={}):       
         self.logger.notifyChannel("transition", logger.LOG_INFO, 
-                     'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))
+                     'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))        
         return True 
 
     def action_transition_pause(self, key, signal_data={}, data={}):       
@@ -305,6 +411,6 @@ class job(signal):
   
     def action_transition_end(self, key, signal_data={}, data={}):       
         self.logger.notifyChannel("transition", logger.LOG_INFO, 
-                     'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))     
+                     'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))          
         return True     
 

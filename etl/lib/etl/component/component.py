@@ -79,19 +79,19 @@ class component(signal):
 
     def pause(self):        
         self.status = 'pause'
-        self.signal('pause')
+        self.signal('pause', {'date': datetime.datetime.today()})
 
     def stop(self):        
         self.status = 'stop'
-        self.signal('stop')  
+        self.signal('stop', {'date': datetime.datetime.today()})  
 
     def end(self):
         self.status = 'end'
-        self.signal('end')  
+        self.signal('end', {'date': datetime.datetime.today()})  
 
     def start(self):
         self.status = 'start'
-        self.signal('start')
+        self.signal('start', {'date': datetime.datetime.today()})
 
     def generator_get(self, transition):
         """
@@ -121,17 +121,15 @@ class component(signal):
                 if self.data[trans]:
                     if not self._cache['start_output'][trans]:
                         self._cache['start_output'][trans] = datetime.datetime.today()
-                        self.signal('start_output', {'trans': trans, 'start_output_date': datetime.datetime.today()})
-                    self.signal('send_output', {'trans':trans, 'send_output_date': datetime.datetime.today()})
-                    yield self.data[trans].pop(0)
+                        self.signal('start_output', {'trans': trans, 'date': datetime.datetime.today()})
+                    data = self.data[trans].pop(0)
+                    self.signal('send_output', {'trans':trans,'data':data, 'date': datetime.datetime.today()})
+                    yield data
                     continue
                 elif self.data[trans] is None:                    
                     self.signal('no_input')
                     raise StopIteration
-                if not self._cache['start_input'][trans]:
-                    self._cache['start_input'][trans] = datetime.datetime.today()
-                    self.signal('start_input', {'trans': trans, 'start_input_date': datetime.datetime.today()})
-                self.signal('get_input', {'trans': trans, 'get_input_date': datetime.datetime.today()})
+                              
                 data, chan = gen.next() 
                 row_count += 1                 
                 if self.row_limit and row_count > self.row_limit:
@@ -141,6 +139,12 @@ class component(signal):
                     raise StopIteration
                 if self.transformer:
                     data = self.transformer.transform(data)
+
+                if not self._cache['start_input'][trans]:
+                    self._cache['start_input'][trans] = datetime.datetime.today()
+                    self.signal('start_input', {'trans': trans,'channel':chan, 'date': datetime.datetime.today()})  
+
+                self.signal('get_input', {'trans': trans,'channel':chan,'data':data, 'date': datetime.datetime.today()})
                 for t, t2 in self.trans_out:                    
                     if (t == chan) or (not t) or (not chan):
                         self.data.setdefault(t2, [])
@@ -149,8 +153,8 @@ class component(signal):
             if trans:
                 trans.end()
             self.end()           
-        except Exception, e:
-            self.signal('error', {'data': self.data, 'type': 'exception', 'error': str(e)}) 
+        #except Exception, e:
+        #    self.signal('error', {'data': self.data, 'type': 'exception', 'error': str(e)}) 
 
     def process(self):
         """

@@ -28,7 +28,6 @@
 
 
 from etl.component import component
-import csv
 
 
 class data(component):
