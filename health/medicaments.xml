@@ -1,1855 +1,1854 @@
 <?xml version="1.0"  encoding="utf-8" ?>
-<openerp>
-	<data noupdate="1">
-		<record id="categorie.unit" model="product.uom.categ">
-				<field name="name">Boite</field>
-		</record>
-		<record id="categ.unit" model="product.uom">
-				<field name="category_id" ref="categorie.unit"/>
-				<field name="name">Boite</field>
-		</record>
-		<record model="product.category" id="med">
-				<field name="name">Medicaments</field>
-			</record>
-		<record id="drug.1" model="health.drug">
-			<field name="name">ABBE CHAUPITRE N° 10 : flacon 20ml (100 gtes)</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3307868</field>
-			<field name="ucd">9139001</field>
-			<field name="atc"></field>
-			<field name="volume">100</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2" model="health.drug">
-			<field name="name">ABBE CHAUPITRE N° 12 : flacon 20ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3307874</field>
-			<field name="ucd">9140168</field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.3" model="health.drug">
-			<field name="name">ABBE CHAUPITRE N° 13 : flacon 20ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3307650</field>
-			<field name="ucd">9140613</field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.4" model="health.drug">
-			<field name="name">ABBE CHAUPITRE N° 15 : flacon 20ml (100 gtes)</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3307880</field>
-			<field name="ucd">9143267</field>
-			<field name="atc"></field>
-			<field name="volume">100</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.66" model="health.drug">
-			<field name="name">ACIDE LACTIQUE B BRAUN sol p irrigation : fl 1 000 ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5608114</field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.117" model="health.drug">
-			<field name="name">ALLOPURINOL IVAX 100 mg caps : 28</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3604017</field>
-			<field name="ucd"></field>
-			<field name="atc">M04AA01</field>
-			<field name="volume">28</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.168" model="health.drug">
-			<field name="name">AMOXICILLINE TEVA 500 mg gél : 12</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3611276</field>
-			<field name="ucd"></field>
-			<field name="atc">J01CA04</field>
-			<field name="volume">12</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.169" model="health.drug">
-			<field name="name">AMOXICILLINE TEVA 500 mg/5 ml pdre p susp buv : fl 60 ml (12 c mes)</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3611230</field>
-			<field name="ucd"></field>
-			<field name="atc">J01CA04</field>
-			<field name="volume">12</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.220" model="health.drug">
-			<field name="name">BACTERIX 200 mg gél : 12</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3595873</field>
-			<field name="ucd"></field>
-			<field name="atc">A07AX03</field>
-			<field name="volume">12</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.271" model="health.drug">
-			<field name="name">BUFLOMEDIL TEVA 300 mg cp : 10</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3614168</field>
-			<field name="ucd"></field>
-			<field name="atc">C04AX20</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.372" model="health.drug">
-			<field name="name">CHRONO-INDOCID 75</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3231013</field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">20</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.473" model="health.drug">
-			<field name="name">CO APROVEL</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip"></field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">28</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.774" model="health.drug">
-			<field name="name">HALDOL FORT</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip"></field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1075" model="health.drug">
-			<field name="name">IODUM COMPLEXE N° 118 : flacon compte-gtes 30ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3401610</field>
-			<field name="ucd">9174612</field>
-			<field name="atc"></field>
-			<field name="volume">1200</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1576" model="health.drug">
-			<field name="name">LEPTICUR PARK 5mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3316910</field>
-			<field name="ucd">9144835</field>
-			<field name="atc">N04AA12</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1977" model="health.drug">
-			<field name="name">MEDIFLOR N°16 RHUME sol p inhalation par fumigation : fl 90 ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3604276</field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">18</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1978" model="health.drug">
-			<field name="name">MEDIFLOR PECTORALE D\'ALSACE N° 8 en sachet-doses : 24</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3132972</field>
-			<field name="ucd">9057504</field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1979" model="health.drug">
-			<field name="name">MEDIMIX 50 135 bar : bouteille 15 l</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5621617</field>
-			<field name="ucd"></field>
-			<field name="atc">N01AX13</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1980" model="health.drug">
-			<field name="name">MEDIMIX 50 135 bar : bouteille 5 l</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5621600</field>
-			<field name="ucd"></field>
-			<field name="atc">N01AX13</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1981" model="health.drug">
-			<field name="name">MEDISENSE PRECIS ELECTRODES</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip"></field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">0</field>
-			<field name="vidal">0</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1982" model="health.drug">
-			<field name="name">MEDIVEINE 300mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3347951</field>
-			<field name="ucd">9169060</field>
-			<field name="atc">C05CA03</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1983" model="health.drug">
-			<field name="name">MEDIVEINE 600mg : Gé : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3511132</field>
-			<field name="ucd">9212761</field>
-			<field name="atc">C05CA03</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1984" model="health.drug">
-			<field name="name">MEDIVEINE 600mg pdre p susp buv:Gé : 30</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3587939</field>
-			<field name="ucd"></field>
-			<field name="atc">C05CA03</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1985" model="health.drug">
-			<field name="name">MEDIVENE 300mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3347968</field>
-			<field name="ucd">9169060</field>
-			<field name="atc">C05CA03</field>
-			<field name="volume">60</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1986" model="health.drug">
-			<field name="name">MEDROL 100mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5600822</field>
-			<field name="ucd">9196335</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1987" model="health.drug">
-			<field name="name">MEDROL 16mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3318984</field>
-			<field name="ucd">9141050</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">20</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1988" model="health.drug">
-			<field name="name">MEDROL 16mg : 100 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5568202</field>
-			<field name="ucd">9141050</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">100</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1989" model="health.drug">
-			<field name="name">MEDROL 32mg Adulte : 100 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5573367</field>
-			<field name="ucd">9154029</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">100</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1990" model="health.drug">
-			<field name="name">MEDROL 4mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3318984</field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">30</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1991" model="health.drug">
-			<field name="name">MEDROL 4mg : 100 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5539465</field>
-			<field name="ucd">9057585</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">100</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1992" model="health.drug">
-			<field name="name">MEDROL 4mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3065595</field>
-			<field name="ucd">9057585</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1993" model="health.drug">
-			<field name="name">MEFOXIN 1g : flacon poudre</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5611599</field>
-			<field name="ucd">9205525</field>
-			<field name="atc">J01DA05</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1994" model="health.drug">
-			<field name="name">MEFOXIN 2g : flacon poudre</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5611607</field>
-			<field name="ucd">9205531</field>
-			<field name="atc">J01DA05</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1995" model="health.drug">
-			<field name="name">MEGACE 160mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3360472</field>
-			<field name="ucd">9167753</field>
-			<field name="atc">L02AB01</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1996" model="health.drug">
-			<field name="name">MEGAMAG 45mg : 40 gélules</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3291699</field>
-			<field name="ucd">9119240</field>
-			<field name="atc">A12CC30</field>
-			<field name="volume">40</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1997" model="health.drug">
-			<field name="name">MEGAMYLASE 200 U/ml : flacon 125ml + gobelet doseur</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3500387</field>
-			<field name="ucd">9213111</field>
-			<field name="atc"></field>
-			<field name="volume">25</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1998" model="health.drug">
-			<field name="name">MEGAMYLASE 200 U/ml : flacon 250ml + gobelet doseur</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3500393</field>
-			<field name="ucd">9213128</field>
-			<field name="atc"></field>
-			<field name="volume">50</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.1999" model="health.drug">
-			<field name="name">MEGAMYLASE Adulte 3000 U : 24 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3500370</field>
-			<field name="ucd">9213105</field>
-			<field name="atc"></field>
-			<field name="volume">24</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2000" model="health.drug">
-			<field name="name">MEGAVIX 50mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3380919</field>
-			<field name="ucd">9187827</field>
-			<field name="atc">M03BX07</field>
-			<field name="volume">20</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2001" model="health.drug">
-			<field name="name">MELADININE 0,1 % : flacon 24ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3065678</field>
-			<field name="ucd">9057757</field>
-			<field name="atc">D05AD02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2002" model="health.drug">
-			<field name="name">MELADININE 0,75 % : flacon 24ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3065684</field>
-			<field name="ucd">9057763</field>
-			<field name="atc">D05AD02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2003" model="health.drug">
-			<field name="name">MELADININE 10mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3065661</field>
-			<field name="ucd">9057740</field>
-			<field name="atc">D05AD02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2004" model="health.drug">
-			<field name="name">MELAXOSE</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip"></field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2005" model="health.drug">
-			<field name="name">MELAXOSE Adulte : pot 150 g</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3391722</field>
-			<field name="ucd">9186526</field>
-			<field name="atc">A06AD61</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2006" model="health.drug">
-			<field name="name">MELIANE : 21 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3392182</field>
-			<field name="ucd">9173191</field>
-			<field name="atc">G03AA10</field>
-			<field name="volume">21</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2007" model="health.drug">
-			<field name="name">MELIANE : 21 x 3 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3392199</field>
-			<field name="ucd">9173191</field>
-			<field name="atc">G03AA10</field>
-			<field name="volume">63</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2008" model="health.drug">
-			<field name="name">MELLERIL 10mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3065738</field>
-			<field name="ucd">9057792</field>
-			<field name="atc">N05AC02</field>
-			<field name="volume">25</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2009" model="health.drug">
-			<field name="name">MELLERIL 2mg/ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3065721</field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2010" model="health.drug">
-			<field name="name">MELLERIL 40mg/ml Flacon de 30ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3065715</field>
-			<field name="ucd">9111770</field>
-			<field name="atc">N05AC02</field>
-			<field name="volume">900</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2011" model="health.drug">
-			<field name="name">MELLERIL 5 MG</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip"></field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2012" model="health.drug">
-			<field name="name">MELLERIL 50mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3315537</field>
-			<field name="ucd">9057846</field>
-			<field name="atc">N05AC02</field>
-			<field name="volume">25</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2013" model="health.drug">
-			<field name="name">MELODIA : 28 cp (24 jaunes + 4 blancs)</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3515779</field>
-			<field name="ucd">9212519</field>
-			<field name="atc">G03AA10</field>
-			<field name="volume">28</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2014" model="health.drug">
-			<field name="name">MELODIA : 28 x 3 cp (24 jaunes + 4 blancs)</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3515785</field>
-			<field name="ucd">9212519</field>
-			<field name="atc">G03AA10</field>
-			<field name="volume">84</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2015" model="health.drug">
-			<field name="name">MENINGITEC : flacon 0,5ml + 1 seringue +2 aiguilles</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3577786</field>
-			<field name="ucd">9235621</field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2016" model="health.drug">
-			<field name="name">MENINVACT pdre et solv p susp inj IM:fl pdre + fl solv</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3577881</field>
-			<field name="ucd">9238571</field>
-			<field name="atc">J07AH07</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2017" model="health.drug">
-			<field name="name">MENJUGATE pdre et solv p susp inj IM:fl pdre + fl solv</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3594690</field>
-			<field name="ucd">9241521</field>
-			<field name="atc">J07AH07</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2018" model="health.drug">
-			<field name="name">MENOMUNE pdre et solv p sol inj SC : fl pdre + fl solv</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3596387</field>
-			<field name="ucd"></field>
-			<field name="atc">J07AH04</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2019" model="health.drug">
-			<field name="name">MENOPUR : flacon poudre + ampoules solv 1ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3568161</field>
-			<field name="ucd"></field>
-			<field name="atc">G03GA02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2020" model="health.drug">
-			<field name="name">MENOREST 100 µg/24 h : 8 patchs de 29 cm²</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3382433</field>
-			<field name="ucd">9175729</field>
-			<field name="atc">G03CA03</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2021" model="health.drug">
-			<field name="name">MENOREST 25 µg/ 24 h : 8 patchs de 7,25 cm²</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3501346</field>
-			<field name="ucd">9226154</field>
-			<field name="atc">G03CA03</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2022" model="health.drug">
-			<field name="name">MENOREST 37,5 µg/24 h : 8 patchs de 11 cm²</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3382479</field>
-			<field name="ucd">9175735</field>
-			<field name="atc">G03CA03</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2023" model="health.drug">
-			<field name="name">MENOREST 50 µg/24 h : 8 patchs de 14,5 cm²</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3382396</field>
-			<field name="ucd">9175741</field>
-			<field name="atc">G03CA03</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2024" model="health.drug">
-			<field name="name">MENOREST 75 µg/24 h : 8 patchs de 22 cm²</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3382410</field>
-			<field name="ucd">9175758</field>
-			<field name="atc">G03CA03</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2025" model="health.drug">
-			<field name="name">MEPACYL : flacon compte-gte 14ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3290576</field>
-			<field name="ucd">9188146</field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2026" model="health.drug">
-			<field name="name">MEPROBAMATE RICHARD 200mg : 50 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3065827</field>
-			<field name="ucd">9057935</field>
-			<field name="atc">N05BC01</field>
-			<field name="volume">50</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2027" model="health.drug">
-			<field name="name">MEPROBAMATE RICHARD 400mg : 1 000 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5517015</field>
-			<field name="ucd">9130017</field>
-			<field name="atc">N05BC01</field>
-			<field name="volume">1000</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2028" model="health.drug">
-			<field name="name">MEPRONIZINE</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3065856</field>
-			<field name="ucd">9057941</field>
-			<field name="atc">N05CX01</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2029" model="health.drug">
-			<field name="name">MEPRONIZINE Adulte : 100 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5568165</field>
-			<field name="ucd"></field>
-			<field name="atc">N05CX01</field>
-			<field name="volume">100</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2030" model="health.drug">
-			<field name="name">MEPRONIZINE Adulte : 50 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5590058</field>
-			<field name="ucd">9057941</field>
-			<field name="atc">N05CX01</field>
-			<field name="volume">50</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2031" model="health.drug">
-			<field name="name">MERCALM : 15 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3421481</field>
-			<field name="ucd">9104971</field>
-			<field name="atc"></field>
-			<field name="volume">15</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2032" model="health.drug">
-			<field name="name">MERCILON : 21 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3305208</field>
-			<field name="ucd">9140091</field>
-			<field name="atc">G03AA09</field>
-			<field name="volume">21</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2033" model="health.drug">
-			<field name="name">MERCILON : 21 x 3 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3305214</field>
-			<field name="ucd">9140091</field>
-			<field name="atc">G03AA09</field>
-			<field name="volume">63</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2034" model="health.drug">
-			<field name="name">MERCRYL : flacon 125ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3545680</field>
-			<field name="ucd">9226734</field>
-			<field name="atc">D08AC52</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2035" model="health.drug">
-			<field name="name">MERCRYL : flacon 300ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3545697</field>
-			<field name="ucd">9226740</field>
-			<field name="atc">D08AC52</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2036" model="health.drug">
-			<field name="name">MERCRYL SOLUTION MOUSSANTE : flacon 1 000ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3535635</field>
-			<field name="ucd">9218568</field>
-			<field name="atc">D08AC52</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2037" model="health.drug">
-			<field name="name">MERCRYL SOLUTION MOUSSANTE : flacon 300ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3535629</field>
-			<field name="ucd">9218580</field>
-			<field name="atc">D08AC52</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2038" model="health.drug">
-			<field name="name">MERCRYLSPRAY : flacon 50ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3545674</field>
-			<field name="ucd">9226757</field>
-			<field name="atc">D08AC52</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2039" model="health.drug">
-			<field name="name">MERCUR SOL COMPLEXE N° 39 : 80 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3059270</field>
-			<field name="ucd">9052151</field>
-			<field name="atc"></field>
-			<field name="volume">60</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2040" model="health.drug">
-			<field name="name">MERCURESCEINE GIFRER aqueuse : flacon 45ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3129042</field>
-			<field name="ucd">9058053</field>
-			<field name="atc">D08AK04</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2041" model="health.drug">
-			<field name="name">MERCURIUS CYANATUS COMPLEXE N° 43 : flacon compte-gtes 30ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3370358</field>
-			<field name="ucd">9174813</field>
-			<field name="atc"></field>
-			<field name="volume">1200</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2042" model="health.drug">
-			<field name="name">MERFENE 0,05 % : 10 unidoses 10ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3364665</field>
-			<field name="ucd">9162276</field>
-			<field name="atc">D08AC02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2043" model="health.drug">
-			<field name="name">MERONEM IV 1g</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5604814</field>
-			<field name="ucd">9194738</field>
-			<field name="atc">J01DH02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2044" model="health.drug">
-			<field name="name">MESOCAINE 0,5 % : ampoules 5ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3310770</field>
-			<field name="ucd">9134765</field>
-			<field name="atc">N01BB02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2045" model="health.drug">
-			<field name="name">MESOCAINE 1 % : ampoules 5ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3310801</field>
-			<field name="ucd">9134771</field>
-			<field name="atc">N01BB02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2046" model="health.drug">
-			<field name="name">MESTACINE 100mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3409830</field>
-			<field name="ucd">9124809</field>
-			<field name="atc">J01AA08</field>
-			<field name="volume">15</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2047" model="health.drug">
-			<field name="name">MESTACINE 100mg : 6 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3293362</field>
-			<field name="ucd">9124809</field>
-			<field name="atc">J01AA08</field>
-			<field name="volume">6</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2048" model="health.drug">
-			<field name="name">MESTINON</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3066643</field>
-			<field name="ucd">9058389</field>
-			<field name="atc">N07AA02</field>
-			<field name="volume">20</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2049" model="health.drug">
-			<field name="name">METACUPROL p sol locale : 18 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3037564</field>
-			<field name="ucd">9058426</field>
-			<field name="atc"></field>
-			<field name="volume">18</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2050" model="health.drug">
-			<field name="name">METALYSE 10 000 U/10ml : flacon poudre + seringue préremplie solv</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5621310</field>
-			<field name="ucd">9227774</field>
-			<field name="atc">B01AD11</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2051" model="health.drug">
-			<field name="name">METASPIRINE Adulte : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3289142</field>
-			<field name="ucd">9058449</field>
-			<field name="atc">N02BA51</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2052" model="health.drug">
-			<field name="name">METASTRON Adulte : flacon 4ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5580120</field>
-			<field name="ucd">9160490</field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2053" model="health.drug">
-			<field name="name">METEOPLASMYL</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3325406</field>
-			<field name="ucd">9146685</field>
-			<field name="atc">A03AX13</field>
-			<field name="volume">20</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2054" model="health.drug">
-			<field name="name">METEOSPASMYL</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip"></field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2055" model="health.drug">
-			<field name="name">METEOXANE : 60 gélules</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3066933</field>
-			<field name="ucd">9058478</field>
-			<field name="atc">A03AX13</field>
-			<field name="volume">60</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2056" model="health.drug">
-			<field name="name">METFORMINE ARROW 500mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3577237</field>
-			<field name="ucd">9235584</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2057" model="health.drug">
-			<field name="name">METFORMINE ARROW 850mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3577266</field>
-			<field name="ucd">9235590</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2058" model="health.drug">
-			<field name="name">METFORMINE BIOGARAN 850mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3455540</field>
-			<field name="ucd">9201852</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2059" model="health.drug">
-			<field name="name">METFORMINE EG 500mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3544491</field>
-			<field name="ucd">9206789</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2060" model="health.drug">
-			<field name="name">METFORMINE EG 500mg : 50 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3466584</field>
-			<field name="ucd"></field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">50</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2061" model="health.drug">
-			<field name="name">METFORMINE EG 850mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3466590</field>
-			<field name="ucd">9206795</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2062" model="health.drug">
-			<field name="name">METFORMINE G GAM 850mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3521805</field>
-			<field name="ucd">9217161</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2063" model="health.drug">
-			<field name="name">METFORMINE GNR 500mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3534765</field>
-			<field name="ucd">9219438</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2064" model="health.drug">
-			<field name="name">METFORMINE GNR 850mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3534802</field>
-			<field name="ucd">9219444</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2065" model="health.drug">
-			<field name="name">METFORMINE IREX 850mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3584131</field>
-			<field name="ucd">9234691</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2066" model="health.drug">
-			<field name="name">METFORMINE IVAX 500 mg cp pelliculé : 30</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3612258</field>
-			<field name="ucd"></field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2067" model="health.drug">
-			<field name="name">METFORMINE IVAX 850 mg cp pelliculé : 30</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3612293</field>
-			<field name="ucd"></field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2068" model="health.drug">
-			<field name="name">METFORMINE MERCK 500mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3524442</field>
-			<field name="ucd">9221286</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2069" model="health.drug">
-			<field name="name">METFORMINE MERCK 850mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3547822</field>
-			<field name="ucd">9225841</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2070" model="health.drug">
-			<field name="name">METFORMINE QUALIMED 500mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3588146</field>
-			<field name="ucd">9236796</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2071" model="health.drug">
-			<field name="name">METFORMINE QUALIMED 850mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3491168</field>
-			<field name="ucd">9231534</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2072" model="health.drug">
-			<field name="name">METFORMINE RATIOPHARM 500mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3530081</field>
-			<field name="ucd">9219088</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2073" model="health.drug">
-			<field name="name">METFORMINE RATIOPHARM 850mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3532341</field>
-			<field name="ucd">9219094</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2074" model="health.drug">
-			<field name="name">METFORMINE RPG 500mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3524353</field>
-			<field name="ucd">9206246</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2075" model="health.drug">
-			<field name="name">METFORMINE RPG 850mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3466555</field>
-			<field name="ucd">9206252</field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2076" model="health.drug">
-			<field name="name">METFORMINE TEVA 500 mg cp pelliculé : 30</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3616121</field>
-			<field name="ucd"></field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2077" model="health.drug">
-			<field name="name">METFORMINE TEVA 850 mg cp pelliculé : 30</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3616138</field>
-			<field name="ucd"></field>
-			<field name="atc">A10BA02</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2078" model="health.drug">
-			<field name="name">METHADONE AP-HP 1,33 mg/ml sirop : fût 5 l</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3531979</field>
-			<field name="ucd"></field>
-			<field name="atc">N07BC02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2079" model="health.drug">
-			<field name="name">METHADONE AP-HP 10mg/7,5ml Adulte : unidose 7,5ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3389435</field>
-			<field name="ucd">9171559</field>
-			<field name="atc">N07BC02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2080" model="health.drug">
-			<field name="name">METHADONE AP-HP 20mg/15ml Adulte : unidose 15ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3389441</field>
-			<field name="ucd">9171565</field>
-			<field name="atc">N07BC02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2081" model="health.drug">
-			<field name="name">METHADONE AP-HP 40mg/15ml Adulte : unidose 15ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3400415</field>
-			<field name="ucd">9178455</field>
-			<field name="atc">N07BC02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2082" model="health.drug">
-			<field name="name">METHADONE AP-HP 5mg/3,75ml Adulte : unidose 3,75ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3389458</field>
-			<field name="ucd">9171571</field>
-			<field name="atc">N07BC02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2083" model="health.drug">
-			<field name="name">METHADONE AP-HP 60mg/15ml Adulte : unidose 15ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3400421</field>
-			<field name="ucd">9178461</field>
-			<field name="atc">N07BC02</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2084" model="health.drug">
-			<field name="name">METHERGIN 0,125mg : 20 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3355933</field>
-			<field name="ucd">9170620</field>
-			<field name="atc">G02AB01</field>
-			<field name="volume">20</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2085" model="health.drug">
-			<field name="name">METHERGIN 0,2 mg/ml sol inj IM IV : 10 amp 1 ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5621971</field>
-			<field name="ucd"></field>
-			<field name="atc">G02AB01</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2086" model="health.drug">
-			<field name="name">METHERGIN 0,25ml/ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3066979</field>
-			<field name="ucd">9058490</field>
-			<field name="atc">G02AB01</field>
-			<field name="volume">200</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2087" model="health.drug">
-			<field name="name">METHERGIN 0,2mg/ml : 3 ampoules 1ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3066962</field>
-			<field name="ucd">9058484</field>
-			<field name="atc">G02AB01</field>
-			<field name="volume">3</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2088" model="health.drug">
-			<field name="name">METHERGIN 0,2mg/ml : 50 ampoules 1ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5514761</field>
-			<field name="ucd">9058484</field>
-			<field name="atc">G02AB01</field>
-			<field name="volume">50</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2089" model="health.drug">
-			<field name="name">METHOTREXATE BELLON 2,5mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3067068</field>
-			<field name="ucd">9058544</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">20</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2090" model="health.drug">
-			<field name="name">METHOTREXATE BELLON 25mg/ml : 10 flacon 1ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5607592</field>
-			<field name="ucd">9213039</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2091" model="health.drug">
-			<field name="name">METHOTREXATE BELLON 25mg/ml : flacon 1ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3453972</field>
-			<field name="ucd">9213039</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2092" model="health.drug">
-			<field name="name">METHOTREXATE BELLON 500mg/20ml : 10 flacon 20ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5614994</field>
-			<field name="ucd">9213051</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2093" model="health.drug">
-			<field name="name">METHOTREXATE BELLON 50mg/2ml : 10 flacon 2ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5615002</field>
-			<field name="ucd">9213045</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2094" model="health.drug">
-			<field name="name">METHOTREXATE BELLON 50mg/2ml : flacon 2ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3450123</field>
-			<field name="ucd">9213045</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2095" model="health.drug">
-			<field name="name">METHOTREXATE BELLON 5mg/2ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5503421</field>
-			<field name="ucd">9106616</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2096" model="health.drug">
-			<field name="name">METHOTREXATE BELLON 5mg/2ml : 10 flacons 2ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5503438</field>
-			<field name="ucd"></field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2097" model="health.drug">
-			<field name="name">METHOTREXATE BELLON 5mg/2ml : flacon 2ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3067080</field>
-			<field name="ucd">9106616</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2098" model="health.drug">
-			<field name="name">METHOTREXATE MERCK 100mg/ml : flacon 50ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5642430</field>
-			<field name="ucd">9233467</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2099" model="health.drug">
-			<field name="name">METHOTREXATE MERCK 2,5mg/ml : 10 flacon 2ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3578337</field>
-			<field name="ucd">9233473</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2100" model="health.drug">
-			<field name="name">METHOTREXATE MERCK 25mg/ml : fl</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5642393</field>
-			<field name="ucd">9233504</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2101" model="health.drug">
-			<field name="name">METHOTREXATE MERCK 25mg/ml : flacon 20ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5642341</field>
-			<field name="ucd">9233496</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2102" model="health.drug">
-			<field name="name">METHOTREXATE MERCK 50mg/2ml : flacon 2ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3578314</field>
-			<field name="ucd">9233622</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2103" model="health.drug">
-			<field name="name">METHOTREXATE TEVA 10% 1g/10ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5610097</field>
-			<field name="ucd">9205933</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2104" model="health.drug">
-			<field name="name">METHOTREXATE TEVA 5 g/50ml : flacon 50ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5601974</field>
-			<field name="ucd">9190605</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2105" model="health.drug">
-			<field name="name">METHOTREXATE TEVA 500mg/20ml : flacon 20ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5601968</field>
-			<field name="ucd">9190634</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2106" model="health.drug">
-			<field name="name">METHOTREXATE TEVA 50mg/2ml : flacon 2ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5601951</field>
-			<field name="ucd">9190628</field>
-			<field name="atc">L01BA01</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2107" model="health.drug">
-			<field name="name">METHYL-GAG 100mg : 5 flacon poudre</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3067097</field>
-			<field name="ucd"></field>
-			<field name="atc">L01XX16</field>
-			<field name="volume">5</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2108" model="health.drug">
-			<field name="name">METHYLDOPA MSD 250mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3408894</field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">30</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2109" model="health.drug">
-			<field name="name">METHYLDOPA MSD 500mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3408919</field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">30</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2110" model="health.drug">
-			<field name="name">METHYLPREDNISOLONE DAKOTA Pharm 120mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5559580</field>
-			<field name="ucd">9122621</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">25</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2111" model="health.drug">
-			<field name="name">METHYLPREDNISOLONE DAKOTA PHARM 20mg : 25 flacon lyoph</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5559574</field>
-			<field name="ucd">9122638</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">25</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2112" model="health.drug">
-			<field name="name">METHYLPREDNISOLONE DAKOTA Pharm 40mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5559568</field>
-			<field name="ucd">9122644</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">25</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2113" model="health.drug">
-			<field name="name">METHYLPREDNISOLONE DAKOTA PHARM 500mg : 5 flacon poudre</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5615315</field>
-			<field name="ucd">9202337</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">5</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2114" model="health.drug">
-			<field name="name">METHYLPREDNISOLONE MERCK 1g : 10 flacon lyoph</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3554064</field>
-			<field name="ucd">9223003</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">10</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2115" model="health.drug">
-			<field name="name">METHYLPREDNISOLONE MERCK 20mg : 20 flacon poudre</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3554087</field>
-			<field name="ucd">9226786</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">20</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2116" model="health.drug">
-			<field name="name">METHYLPREDNISOLONE MERCK 40mg : 20</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3554093</field>
-			<field name="ucd">9226792</field>
-			<field name="atc">H02AB04</field>
-			<field name="volume">20</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2617" model="health.drug">
-			<field name="name">OROKEN 200mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip"></field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2718" model="health.drug">
-			<field name="name">VITRIMIX KV</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3265437</field>
-			<field name="ucd">9124821</field>
-			<field name="atc">B05BA10</field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2719" model="health.drug">
-			<field name="name">VIVALAN 100mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3197003</field>
-			<field name="ucd">9100996</field>
-			<field name="atc">N06AX09</field>
-			<field name="volume">20</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2720" model="health.drug">
-			<field name="name">VIVALAN LP 300mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3308276</field>
-			<field name="ucd">9136623</field>
-			<field name="atc">N06AX09</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2721" model="health.drug">
-			<field name="name">VIVALAN LP LP 300mg : 100 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5591804</field>
-			<field name="ucd"></field>
-			<field name="atc">N06AX09</field>
-			<field name="volume">100</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2722" model="health.drug">
-			<field name="name">VIVAMAG 100mg : 30 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3337970</field>
-			<field name="ucd">9235644</field>
-			<field name="atc">A12CC06</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2723" model="health.drug">
-			<field name="name">VIVAMAG 50mg/190mg : 50 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3538421</field>
-			<field name="ucd">9235650</field>
-			<field name="atc">A12CC06</field>
-			<field name="volume">50</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2724" model="health.drug">
-			<field name="name">VIVAMYNE : 20 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3375628</field>
-			<field name="ucd">9169901</field>
-			<field name="atc">A11AA04</field>
-			<field name="volume">20</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2779" model="health.drug">
-			<field name="name">XANTHIUM LP Adulte 200mg : 30 gélules</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3315359</field>
-			<field name="ucd">9143586</field>
-			<field name="atc">R03DA04</field>
-			<field name="volume">30</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2885" model="health.drug">
-			<field name="name">ZACNAN 100mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3403365</field>
-			<field name="ucd">9187980</field>
-			<field name="atc">J01AA08</field>
-			<field name="volume">6</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2886" model="health.drug">
-			<field name="name">ZACNAN 100mg : Gé : 14 gélules</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3403371</field>
-			<field name="ucd">9187980</field>
-			<field name="atc">J01AA08</field>
-			<field name="volume">14</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2887" model="health.drug">
-			<field name="name">ZACNAN 50mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3403359</field>
-			<field name="ucd">9187997</field>
-			<field name="atc">J01AA08</field>
-			<field name="volume">28</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2938" model="health.drug">
-			<field name="name">ZERIT 1mg/ml : flacon 200ml de sol reconstituée</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3413381</field>
-			<field name="ucd">9185946</field>
-			<field name="atc">J05AF04</field>
-			<field name="volume">6</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2939" model="health.drug">
-			<field name="name">ZERIT 20mg : 56 gélules</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3413323</field>
-			<field name="ucd">9177585</field>
-			<field name="atc">J05AF04</field>
-			<field name="volume">56</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2940" model="health.drug">
-			<field name="name">ZERIT 30mg : 56 gélules</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3413352</field>
-			<field name="ucd">9177591</field>
-			<field name="atc">J05AF04</field>
-			<field name="volume">56</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2941" model="health.drug">
-			<field name="name">ZERIT 40mg : 56 gélules</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3413375</field>
-			<field name="ucd">9177616</field>
-			<field name="atc">J05AF04</field>
-			<field name="volume">56</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2942" model="health.drug">
-			<field name="name">ZESTORETIC</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3317335</field>
-			<field name="ucd">9143445</field>
-			<field name="atc">C09BA03</field>
-			<field name="volume">28</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2943" model="health.drug">
-			<field name="name">ZESTORETIC : 100 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5613115</field>
-			<field name="ucd">9143445</field>
-			<field name="atc">C09BA03</field>
-			<field name="volume">100</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2944" model="health.drug">
-			<field name="name">ZESTORETIC 20 MG</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip"></field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2945" model="health.drug">
-			<field name="name">ZESTRIL 20mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3299904</field>
-			<field name="ucd">9128061</field>
-			<field name="atc">C09AA03</field>
-			<field name="volume">28</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2946" model="health.drug">
-			<field name="name">ZESTRIL 20mg : 100 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5591810</field>
-			<field name="ucd">9128061</field>
-			<field name="atc">C09AA03</field>
-			<field name="volume">100</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2947" model="health.drug">
-			<field name="name">ZESTRIL 5mg</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3299910</field>
-			<field name="ucd">9128078</field>
-			<field name="atc">C09AA03</field>
-			<field name="volume">28</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2948" model="health.drug">
-			<field name="name">ZESTRIL 5mg : 100 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5591827</field>
-			<field name="ucd">9128078</field>
-			<field name="atc">C09AA03</field>
-			<field name="volume">100</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2949" model="health.drug">
-			<field name="name">ZIACAINE : flacon 45ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5001234</field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">1</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2950" model="health.drug">
-			<field name="name">ZIACAINE 3 % NORADRENALINE : 50 cartouches (boîte carton)</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">5576437</field>
-			<field name="ucd"></field>
-			<field name="atc">N01BB52</field>
-			<field name="volume">50</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2951" model="health.drug">
-			<field name="name">ZIACAINE compresse imprégnée p us dentaire : 200 compresses en fl sol 45 ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3572665</field>
-			<field name="ucd"></field>
-			<field name="atc">N01BB02</field>
-			<field name="volume">200</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2952" model="health.drug">
-			<field name="name">ZIACAINE en pulvérisateur : 80ml</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3194542</field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">540</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2978" model="health.drug">
-			<field name="name">ZIPREXA 10mg cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip"></field>
-			<field name="ucd"></field>
-			<field name="atc"></field>
-			<field name="volume">1</field>
-			<field name="vidal">FAUX</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-		<record id="drug.2979" model="health.drug">
-			<field name="name">ZITHROMAX 250mg : 6 cp</field>
-			<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
-			<field name="cip">3517732</field>
-			<field name="ucd">9216842</field>
-			<field name="atc">J01FA10</field>
-			<field name="volume">6</field>
-			<field name="vidal">VRAI</field>
-			<field name="uom_id" ref="categ.unit"/>
-		</record>
-	</data>
-</openerp>
+<terp>
+<data noupdate="1">
+<record id="categorie.unit" model="product.uom.categ">
+		<field name="name">Boite</field>
+</record>
+<record id="categ.unit" model="product.uom">
+		<field name="category_id" ref="categorie.unit"/>
+		<field name="name">Boite</field>
+</record>
+<record model="product.category" id="med">
+		<field name="name">Medicaments</field>
+	</record>
+<record id="drug.1" model="health.drug">
+	<field name="name">ABBE CHAUPITRE N° 10 : flacon 20ml (100 gtes)</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3307868</field>
+	<field name="ucd">9139001</field>
+	<field name="atc"></field>
+	<field name="volume">100</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2" model="health.drug">
+	<field name="name">ABBE CHAUPITRE N° 12 : flacon 20ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3307874</field>
+	<field name="ucd">9140168</field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.3" model="health.drug">
+	<field name="name">ABBE CHAUPITRE N° 13 : flacon 20ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3307650</field>
+	<field name="ucd">9140613</field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.4" model="health.drug">
+	<field name="name">ABBE CHAUPITRE N° 15 : flacon 20ml (100 gtes)</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3307880</field>
+	<field name="ucd">9143267</field>
+	<field name="atc"></field>
+	<field name="volume">100</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.66" model="health.drug">
+	<field name="name">ACIDE LACTIQUE B BRAUN sol p irrigation : fl 1 000 ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5608114</field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.117" model="health.drug">
+	<field name="name">ALLOPURINOL IVAX 100 mg caps : 28</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3604017</field>
+	<field name="ucd"></field>
+	<field name="atc">M04AA01</field>
+	<field name="volume">28</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.168" model="health.drug">
+	<field name="name">AMOXICILLINE TEVA 500 mg gél : 12</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3611276</field>
+	<field name="ucd"></field>
+	<field name="atc">J01CA04</field>
+	<field name="volume">12</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.169" model="health.drug">
+	<field name="name">AMOXICILLINE TEVA 500 mg/5 ml pdre p susp buv : fl 60 ml (12 c mes)</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3611230</field>
+	<field name="ucd"></field>
+	<field name="atc">J01CA04</field>
+	<field name="volume">12</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.220" model="health.drug">
+	<field name="name">BACTERIX 200 mg gél : 12</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3595873</field>
+	<field name="ucd"></field>
+	<field name="atc">A07AX03</field>
+	<field name="volume">12</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.271" model="health.drug">
+	<field name="name">BUFLOMEDIL TEVA 300 mg cp : 10</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3614168</field>
+	<field name="ucd"></field>
+	<field name="atc">C04AX20</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.372" model="health.drug">
+	<field name="name">CHRONO-INDOCID 75</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3231013</field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">20</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.473" model="health.drug">
+	<field name="name">CO APROVEL</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip"></field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">28</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.774" model="health.drug">
+	<field name="name">HALDOL FORT</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip"></field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1075" model="health.drug">
+	<field name="name">IODUM COMPLEXE N° 118 : flacon compte-gtes 30ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3401610</field>
+	<field name="ucd">9174612</field>
+	<field name="atc"></field>
+	<field name="volume">1200</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1576" model="health.drug">
+	<field name="name">LEPTICUR PARK 5mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3316910</field>
+	<field name="ucd">9144835</field>
+	<field name="atc">N04AA12</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1977" model="health.drug">
+	<field name="name">MEDIFLOR N°16 RHUME sol p inhalation par fumigation : fl 90 ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3604276</field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">18</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1978" model="health.drug">
+	<field name="name">MEDIFLOR PECTORALE D\'ALSACE N° 8 en sachet-doses : 24</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3132972</field>
+	<field name="ucd">9057504</field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1979" model="health.drug">
+	<field name="name">MEDIMIX 50 135 bar : bouteille 15 l</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5621617</field>
+	<field name="ucd"></field>
+	<field name="atc">N01AX13</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1980" model="health.drug">
+	<field name="name">MEDIMIX 50 135 bar : bouteille 5 l</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5621600</field>
+	<field name="ucd"></field>
+	<field name="atc">N01AX13</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1981" model="health.drug">
+	<field name="name">MEDISENSE PRECIS ELECTRODES</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip"></field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">0</field>
+	<field name="vidal">0</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1982" model="health.drug">
+	<field name="name">MEDIVEINE 300mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3347951</field>
+	<field name="ucd">9169060</field>
+	<field name="atc">C05CA03</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1983" model="health.drug">
+	<field name="name">MEDIVEINE 600mg : Gé : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3511132</field>
+	<field name="ucd">9212761</field>
+	<field name="atc">C05CA03</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1984" model="health.drug">
+	<field name="name">MEDIVEINE 600mg pdre p susp buv:Gé : 30</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3587939</field>
+	<field name="ucd"></field>
+	<field name="atc">C05CA03</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1985" model="health.drug">
+	<field name="name">MEDIVENE 300mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3347968</field>
+	<field name="ucd">9169060</field>
+	<field name="atc">C05CA03</field>
+	<field name="volume">60</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1986" model="health.drug">
+	<field name="name">MEDROL 100mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5600822</field>
+	<field name="ucd">9196335</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1987" model="health.drug">
+	<field name="name">MEDROL 16mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3318984</field>
+	<field name="ucd">9141050</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">20</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1988" model="health.drug">
+	<field name="name">MEDROL 16mg : 100 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5568202</field>
+	<field name="ucd">9141050</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">100</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1989" model="health.drug">
+	<field name="name">MEDROL 32mg Adulte : 100 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5573367</field>
+	<field name="ucd">9154029</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">100</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1990" model="health.drug">
+	<field name="name">MEDROL 4mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3318984</field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">30</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1991" model="health.drug">
+	<field name="name">MEDROL 4mg : 100 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5539465</field>
+	<field name="ucd">9057585</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">100</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1992" model="health.drug">
+	<field name="name">MEDROL 4mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3065595</field>
+	<field name="ucd">9057585</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1993" model="health.drug">
+	<field name="name">MEFOXIN 1g : flacon poudre</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5611599</field>
+	<field name="ucd">9205525</field>
+	<field name="atc">J01DA05</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1994" model="health.drug">
+	<field name="name">MEFOXIN 2g : flacon poudre</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5611607</field>
+	<field name="ucd">9205531</field>
+	<field name="atc">J01DA05</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1995" model="health.drug">
+	<field name="name">MEGACE 160mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3360472</field>
+	<field name="ucd">9167753</field>
+	<field name="atc">L02AB01</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1996" model="health.drug">
+	<field name="name">MEGAMAG 45mg : 40 gélules</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3291699</field>
+	<field name="ucd">9119240</field>
+	<field name="atc">A12CC30</field>
+	<field name="volume">40</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1997" model="health.drug">
+	<field name="name">MEGAMYLASE 200 U/ml : flacon 125ml + gobelet doseur</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3500387</field>
+	<field name="ucd">9213111</field>
+	<field name="atc"></field>
+	<field name="volume">25</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1998" model="health.drug">
+	<field name="name">MEGAMYLASE 200 U/ml : flacon 250ml + gobelet doseur</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3500393</field>
+	<field name="ucd">9213128</field>
+	<field name="atc"></field>
+	<field name="volume">50</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.1999" model="health.drug">
+	<field name="name">MEGAMYLASE Adulte 3000 U : 24 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3500370</field>
+	<field name="ucd">9213105</field>
+	<field name="atc"></field>
+	<field name="volume">24</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2000" model="health.drug">
+	<field name="name">MEGAVIX 50mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3380919</field>
+	<field name="ucd">9187827</field>
+	<field name="atc">M03BX07</field>
+	<field name="volume">20</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2001" model="health.drug">
+	<field name="name">MELADININE 0,1 % : flacon 24ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3065678</field>
+	<field name="ucd">9057757</field>
+	<field name="atc">D05AD02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2002" model="health.drug">
+	<field name="name">MELADININE 0,75 % : flacon 24ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3065684</field>
+	<field name="ucd">9057763</field>
+	<field name="atc">D05AD02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2003" model="health.drug">
+	<field name="name">MELADININE 10mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3065661</field>
+	<field name="ucd">9057740</field>
+	<field name="atc">D05AD02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2004" model="health.drug">
+	<field name="name">MELAXOSE</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip"></field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2005" model="health.drug">
+	<field name="name">MELAXOSE Adulte : pot 150 g</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3391722</field>
+	<field name="ucd">9186526</field>
+	<field name="atc">A06AD61</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2006" model="health.drug">
+	<field name="name">MELIANE : 21 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3392182</field>
+	<field name="ucd">9173191</field>
+	<field name="atc">G03AA10</field>
+	<field name="volume">21</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2007" model="health.drug">
+	<field name="name">MELIANE : 21 x 3 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3392199</field>
+	<field name="ucd">9173191</field>
+	<field name="atc">G03AA10</field>
+	<field name="volume">63</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2008" model="health.drug">
+	<field name="name">MELLERIL 10mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3065738</field>
+	<field name="ucd">9057792</field>
+	<field name="atc">N05AC02</field>
+	<field name="volume">25</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2009" model="health.drug">
+	<field name="name">MELLERIL 2mg/ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3065721</field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2010" model="health.drug">
+	<field name="name">MELLERIL 40mg/ml Flacon de 30ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3065715</field>
+	<field name="ucd">9111770</field>
+	<field name="atc">N05AC02</field>
+	<field name="volume">900</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2011" model="health.drug">
+	<field name="name">MELLERIL 5 MG</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip"></field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2012" model="health.drug">
+	<field name="name">MELLERIL 50mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3315537</field>
+	<field name="ucd">9057846</field>
+	<field name="atc">N05AC02</field>
+	<field name="volume">25</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2013" model="health.drug">
+	<field name="name">MELODIA : 28 cp (24 jaunes + 4 blancs)</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3515779</field>
+	<field name="ucd">9212519</field>
+	<field name="atc">G03AA10</field>
+	<field name="volume">28</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2014" model="health.drug">
+	<field name="name">MELODIA : 28 x 3 cp (24 jaunes + 4 blancs)</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3515785</field>
+	<field name="ucd">9212519</field>
+	<field name="atc">G03AA10</field>
+	<field name="volume">84</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2015" model="health.drug">
+	<field name="name">MENINGITEC : flacon 0,5ml + 1 seringue +2 aiguilles</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3577786</field>
+	<field name="ucd">9235621</field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2016" model="health.drug">
+	<field name="name">MENINVACT pdre et solv p susp inj IM:fl pdre + fl solv</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3577881</field>
+	<field name="ucd">9238571</field>
+	<field name="atc">J07AH07</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2017" model="health.drug">
+	<field name="name">MENJUGATE pdre et solv p susp inj IM:fl pdre + fl solv</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3594690</field>
+	<field name="ucd">9241521</field>
+	<field name="atc">J07AH07</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2018" model="health.drug">
+	<field name="name">MENOMUNE pdre et solv p sol inj SC : fl pdre + fl solv</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3596387</field>
+	<field name="ucd"></field>
+	<field name="atc">J07AH04</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2019" model="health.drug">
+	<field name="name">MENOPUR : flacon poudre + ampoules solv 1ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3568161</field>
+	<field name="ucd"></field>
+	<field name="atc">G03GA02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2020" model="health.drug">
+	<field name="name">MENOREST 100 µg/24 h : 8 patchs de 29 cm²</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3382433</field>
+	<field name="ucd">9175729</field>
+	<field name="atc">G03CA03</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2021" model="health.drug">
+	<field name="name">MENOREST 25 µg/ 24 h : 8 patchs de 7,25 cm²</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3501346</field>
+	<field name="ucd">9226154</field>
+	<field name="atc">G03CA03</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2022" model="health.drug">
+	<field name="name">MENOREST 37,5 µg/24 h : 8 patchs de 11 cm²</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3382479</field>
+	<field name="ucd">9175735</field>
+	<field name="atc">G03CA03</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2023" model="health.drug">
+	<field name="name">MENOREST 50 µg/24 h : 8 patchs de 14,5 cm²</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3382396</field>
+	<field name="ucd">9175741</field>
+	<field name="atc">G03CA03</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2024" model="health.drug">
+	<field name="name">MENOREST 75 µg/24 h : 8 patchs de 22 cm²</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3382410</field>
+	<field name="ucd">9175758</field>
+	<field name="atc">G03CA03</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2025" model="health.drug">
+	<field name="name">MEPACYL : flacon compte-gte 14ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3290576</field>
+	<field name="ucd">9188146</field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2026" model="health.drug">
+	<field name="name">MEPROBAMATE RICHARD 200mg : 50 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3065827</field>
+	<field name="ucd">9057935</field>
+	<field name="atc">N05BC01</field>
+	<field name="volume">50</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2027" model="health.drug">
+	<field name="name">MEPROBAMATE RICHARD 400mg : 1 000 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5517015</field>
+	<field name="ucd">9130017</field>
+	<field name="atc">N05BC01</field>
+	<field name="volume">1000</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2028" model="health.drug">
+	<field name="name">MEPRONIZINE</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3065856</field>
+	<field name="ucd">9057941</field>
+	<field name="atc">N05CX01</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2029" model="health.drug">
+	<field name="name">MEPRONIZINE Adulte : 100 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5568165</field>
+	<field name="ucd"></field>
+	<field name="atc">N05CX01</field>
+	<field name="volume">100</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2030" model="health.drug">
+	<field name="name">MEPRONIZINE Adulte : 50 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5590058</field>
+	<field name="ucd">9057941</field>
+	<field name="atc">N05CX01</field>
+	<field name="volume">50</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2031" model="health.drug">
+	<field name="name">MERCALM : 15 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3421481</field>
+	<field name="ucd">9104971</field>
+	<field name="atc"></field>
+	<field name="volume">15</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2032" model="health.drug">
+	<field name="name">MERCILON : 21 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3305208</field>
+	<field name="ucd">9140091</field>
+	<field name="atc">G03AA09</field>
+	<field name="volume">21</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2033" model="health.drug">
+	<field name="name">MERCILON : 21 x 3 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3305214</field>
+	<field name="ucd">9140091</field>
+	<field name="atc">G03AA09</field>
+	<field name="volume">63</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2034" model="health.drug">
+	<field name="name">MERCRYL : flacon 125ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3545680</field>
+	<field name="ucd">9226734</field>
+	<field name="atc">D08AC52</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2035" model="health.drug">
+	<field name="name">MERCRYL : flacon 300ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3545697</field>
+	<field name="ucd">9226740</field>
+	<field name="atc">D08AC52</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2036" model="health.drug">
+	<field name="name">MERCRYL SOLUTION MOUSSANTE : flacon 1 000ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3535635</field>
+	<field name="ucd">9218568</field>
+	<field name="atc">D08AC52</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2037" model="health.drug">
+	<field name="name">MERCRYL SOLUTION MOUSSANTE : flacon 300ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3535629</field>
+	<field name="ucd">9218580</field>
+	<field name="atc">D08AC52</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2038" model="health.drug">
+	<field name="name">MERCRYLSPRAY : flacon 50ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3545674</field>
+	<field name="ucd">9226757</field>
+	<field name="atc">D08AC52</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2039" model="health.drug">
+	<field name="name">MERCUR SOL COMPLEXE N° 39 : 80 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3059270</field>
+	<field name="ucd">9052151</field>
+	<field name="atc"></field>
+	<field name="volume">60</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2040" model="health.drug">
+	<field name="name">MERCURESCEINE GIFRER aqueuse : flacon 45ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3129042</field>
+	<field name="ucd">9058053</field>
+	<field name="atc">D08AK04</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2041" model="health.drug">
+	<field name="name">MERCURIUS CYANATUS COMPLEXE N° 43 : flacon compte-gtes 30ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3370358</field>
+	<field name="ucd">9174813</field>
+	<field name="atc"></field>
+	<field name="volume">1200</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2042" model="health.drug">
+	<field name="name">MERFENE 0,05 % : 10 unidoses 10ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3364665</field>
+	<field name="ucd">9162276</field>
+	<field name="atc">D08AC02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2043" model="health.drug">
+	<field name="name">MERONEM IV 1g</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5604814</field>
+	<field name="ucd">9194738</field>
+	<field name="atc">J01DH02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2044" model="health.drug">
+	<field name="name">MESOCAINE 0,5 % : ampoules 5ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3310770</field>
+	<field name="ucd">9134765</field>
+	<field name="atc">N01BB02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2045" model="health.drug">
+	<field name="name">MESOCAINE 1 % : ampoules 5ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3310801</field>
+	<field name="ucd">9134771</field>
+	<field name="atc">N01BB02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2046" model="health.drug">
+	<field name="name">MESTACINE 100mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3409830</field>
+	<field name="ucd">9124809</field>
+	<field name="atc">J01AA08</field>
+	<field name="volume">15</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2047" model="health.drug">
+	<field name="name">MESTACINE 100mg : 6 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3293362</field>
+	<field name="ucd">9124809</field>
+	<field name="atc">J01AA08</field>
+	<field name="volume">6</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2048" model="health.drug">
+	<field name="name">MESTINON</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3066643</field>
+	<field name="ucd">9058389</field>
+	<field name="atc">N07AA02</field>
+	<field name="volume">20</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2049" model="health.drug">
+	<field name="name">METACUPROL p sol locale : 18 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3037564</field>
+	<field name="ucd">9058426</field>
+	<field name="atc"></field>
+	<field name="volume">18</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2050" model="health.drug">
+	<field name="name">METALYSE 10 000 U/10ml : flacon poudre + seringue préremplie solv</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5621310</field>
+	<field name="ucd">9227774</field>
+	<field name="atc">B01AD11</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2051" model="health.drug">
+	<field name="name">METASPIRINE Adulte : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3289142</field>
+	<field name="ucd">9058449</field>
+	<field name="atc">N02BA51</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2052" model="health.drug">
+	<field name="name">METASTRON Adulte : flacon 4ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5580120</field>
+	<field name="ucd">9160490</field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2053" model="health.drug">
+	<field name="name">METEOPLASMYL</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3325406</field>
+	<field name="ucd">9146685</field>
+	<field name="atc">A03AX13</field>
+	<field name="volume">20</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2054" model="health.drug">
+	<field name="name">METEOSPASMYL</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip"></field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2055" model="health.drug">
+	<field name="name">METEOXANE : 60 gélules</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3066933</field>
+	<field name="ucd">9058478</field>
+	<field name="atc">A03AX13</field>
+	<field name="volume">60</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2056" model="health.drug">
+	<field name="name">METFORMINE ARROW 500mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3577237</field>
+	<field name="ucd">9235584</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2057" model="health.drug">
+	<field name="name">METFORMINE ARROW 850mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3577266</field>
+	<field name="ucd">9235590</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2058" model="health.drug">
+	<field name="name">METFORMINE BIOGARAN 850mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3455540</field>
+	<field name="ucd">9201852</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2059" model="health.drug">
+	<field name="name">METFORMINE EG 500mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3544491</field>
+	<field name="ucd">9206789</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2060" model="health.drug">
+	<field name="name">METFORMINE EG 500mg : 50 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3466584</field>
+	<field name="ucd"></field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">50</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2061" model="health.drug">
+	<field name="name">METFORMINE EG 850mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3466590</field>
+	<field name="ucd">9206795</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2062" model="health.drug">
+	<field name="name">METFORMINE G GAM 850mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3521805</field>
+	<field name="ucd">9217161</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2063" model="health.drug">
+	<field name="name">METFORMINE GNR 500mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3534765</field>
+	<field name="ucd">9219438</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2064" model="health.drug">
+	<field name="name">METFORMINE GNR 850mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3534802</field>
+	<field name="ucd">9219444</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2065" model="health.drug">
+	<field name="name">METFORMINE IREX 850mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3584131</field>
+	<field name="ucd">9234691</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2066" model="health.drug">
+	<field name="name">METFORMINE IVAX 500 mg cp pelliculé : 30</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3612258</field>
+	<field name="ucd"></field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2067" model="health.drug">
+	<field name="name">METFORMINE IVAX 850 mg cp pelliculé : 30</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3612293</field>
+	<field name="ucd"></field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2068" model="health.drug">
+	<field name="name">METFORMINE MERCK 500mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3524442</field>
+	<field name="ucd">9221286</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2069" model="health.drug">
+	<field name="name">METFORMINE MERCK 850mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3547822</field>
+	<field name="ucd">9225841</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2070" model="health.drug">
+	<field name="name">METFORMINE QUALIMED 500mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3588146</field>
+	<field name="ucd">9236796</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2071" model="health.drug">
+	<field name="name">METFORMINE QUALIMED 850mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3491168</field>
+	<field name="ucd">9231534</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2072" model="health.drug">
+	<field name="name">METFORMINE RATIOPHARM 500mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3530081</field>
+	<field name="ucd">9219088</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2073" model="health.drug">
+	<field name="name">METFORMINE RATIOPHARM 850mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3532341</field>
+	<field name="ucd">9219094</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2074" model="health.drug">
+	<field name="name">METFORMINE RPG 500mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3524353</field>
+	<field name="ucd">9206246</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2075" model="health.drug">
+	<field name="name">METFORMINE RPG 850mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3466555</field>
+	<field name="ucd">9206252</field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2076" model="health.drug">
+	<field name="name">METFORMINE TEVA 500 mg cp pelliculé : 30</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3616121</field>
+	<field name="ucd"></field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2077" model="health.drug">
+	<field name="name">METFORMINE TEVA 850 mg cp pelliculé : 30</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3616138</field>
+	<field name="ucd"></field>
+	<field name="atc">A10BA02</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2078" model="health.drug">
+	<field name="name">METHADONE AP-HP 1,33 mg/ml sirop : fût 5 l</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3531979</field>
+	<field name="ucd"></field>
+	<field name="atc">N07BC02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2079" model="health.drug">
+	<field name="name">METHADONE AP-HP 10mg/7,5ml Adulte : unidose 7,5ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3389435</field>
+	<field name="ucd">9171559</field>
+	<field name="atc">N07BC02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2080" model="health.drug">
+	<field name="name">METHADONE AP-HP 20mg/15ml Adulte : unidose 15ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3389441</field>
+	<field name="ucd">9171565</field>
+	<field name="atc">N07BC02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2081" model="health.drug">
+	<field name="name">METHADONE AP-HP 40mg/15ml Adulte : unidose 15ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3400415</field>
+	<field name="ucd">9178455</field>
+	<field name="atc">N07BC02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2082" model="health.drug">
+	<field name="name">METHADONE AP-HP 5mg/3,75ml Adulte : unidose 3,75ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3389458</field>
+	<field name="ucd">9171571</field>
+	<field name="atc">N07BC02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2083" model="health.drug">
+	<field name="name">METHADONE AP-HP 60mg/15ml Adulte : unidose 15ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3400421</field>
+	<field name="ucd">9178461</field>
+	<field name="atc">N07BC02</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2084" model="health.drug">
+	<field name="name">METHERGIN 0,125mg : 20 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3355933</field>
+	<field name="ucd">9170620</field>
+	<field name="atc">G02AB01</field>
+	<field name="volume">20</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2085" model="health.drug">
+	<field name="name">METHERGIN 0,2 mg/ml sol inj IM IV : 10 amp 1 ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5621971</field>
+	<field name="ucd"></field>
+	<field name="atc">G02AB01</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2086" model="health.drug">
+	<field name="name">METHERGIN 0,25ml/ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3066979</field>
+	<field name="ucd">9058490</field>
+	<field name="atc">G02AB01</field>
+	<field name="volume">200</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2087" model="health.drug">
+	<field name="name">METHERGIN 0,2mg/ml : 3 ampoules 1ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3066962</field>
+	<field name="ucd">9058484</field>
+	<field name="atc">G02AB01</field>
+	<field name="volume">3</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2088" model="health.drug">
+	<field name="name">METHERGIN 0,2mg/ml : 50 ampoules 1ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5514761</field>
+	<field name="ucd">9058484</field>
+	<field name="atc">G02AB01</field>
+	<field name="volume">50</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2089" model="health.drug">
+	<field name="name">METHOTREXATE BELLON 2,5mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3067068</field>
+	<field name="ucd">9058544</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">20</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2090" model="health.drug">
+	<field name="name">METHOTREXATE BELLON 25mg/ml : 10 flacon 1ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5607592</field>
+	<field name="ucd">9213039</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2091" model="health.drug">
+	<field name="name">METHOTREXATE BELLON 25mg/ml : flacon 1ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3453972</field>
+	<field name="ucd">9213039</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2092" model="health.drug">
+	<field name="name">METHOTREXATE BELLON 500mg/20ml : 10 flacon 20ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5614994</field>
+	<field name="ucd">9213051</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2093" model="health.drug">
+	<field name="name">METHOTREXATE BELLON 50mg/2ml : 10 flacon 2ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5615002</field>
+	<field name="ucd">9213045</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2094" model="health.drug">
+	<field name="name">METHOTREXATE BELLON 50mg/2ml : flacon 2ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3450123</field>
+	<field name="ucd">9213045</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2095" model="health.drug">
+	<field name="name">METHOTREXATE BELLON 5mg/2ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5503421</field>
+	<field name="ucd">9106616</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2096" model="health.drug">
+	<field name="name">METHOTREXATE BELLON 5mg/2ml : 10 flacons 2ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5503438</field>
+	<field name="ucd"></field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2097" model="health.drug">
+	<field name="name">METHOTREXATE BELLON 5mg/2ml : flacon 2ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3067080</field>
+	<field name="ucd">9106616</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2098" model="health.drug">
+	<field name="name">METHOTREXATE MERCK 100mg/ml : flacon 50ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5642430</field>
+	<field name="ucd">9233467</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2099" model="health.drug">
+	<field name="name">METHOTREXATE MERCK 2,5mg/ml : 10 flacon 2ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3578337</field>
+	<field name="ucd">9233473</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2100" model="health.drug">
+	<field name="name">METHOTREXATE MERCK 25mg/ml : fl</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5642393</field>
+	<field name="ucd">9233504</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2101" model="health.drug">
+	<field name="name">METHOTREXATE MERCK 25mg/ml : flacon 20ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5642341</field>
+	<field name="ucd">9233496</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2102" model="health.drug">
+	<field name="name">METHOTREXATE MERCK 50mg/2ml : flacon 2ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3578314</field>
+	<field name="ucd">9233622</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2103" model="health.drug">
+	<field name="name">METHOTREXATE TEVA 10% 1g/10ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5610097</field>
+	<field name="ucd">9205933</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2104" model="health.drug">
+	<field name="name">METHOTREXATE TEVA 5 g/50ml : flacon 50ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5601974</field>
+	<field name="ucd">9190605</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2105" model="health.drug">
+	<field name="name">METHOTREXATE TEVA 500mg/20ml : flacon 20ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5601968</field>
+	<field name="ucd">9190634</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2106" model="health.drug">
+	<field name="name">METHOTREXATE TEVA 50mg/2ml : flacon 2ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5601951</field>
+	<field name="ucd">9190628</field>
+	<field name="atc">L01BA01</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2107" model="health.drug">
+	<field name="name">METHYL-GAG 100mg : 5 flacon poudre</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3067097</field>
+	<field name="ucd"></field>
+	<field name="atc">L01XX16</field>
+	<field name="volume">5</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2108" model="health.drug">
+	<field name="name">METHYLDOPA MSD 250mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3408894</field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">30</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2109" model="health.drug">
+	<field name="name">METHYLDOPA MSD 500mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3408919</field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">30</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2110" model="health.drug">
+	<field name="name">METHYLPREDNISOLONE DAKOTA Pharm 120mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5559580</field>
+	<field name="ucd">9122621</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">25</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2111" model="health.drug">
+	<field name="name">METHYLPREDNISOLONE DAKOTA PHARM 20mg : 25 flacon lyoph</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5559574</field>
+	<field name="ucd">9122638</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">25</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2112" model="health.drug">
+	<field name="name">METHYLPREDNISOLONE DAKOTA Pharm 40mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5559568</field>
+	<field name="ucd">9122644</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">25</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2113" model="health.drug">
+	<field name="name">METHYLPREDNISOLONE DAKOTA PHARM 500mg : 5 flacon poudre</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5615315</field>
+	<field name="ucd">9202337</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">5</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2114" model="health.drug">
+	<field name="name">METHYLPREDNISOLONE MERCK 1g : 10 flacon lyoph</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3554064</field>
+	<field name="ucd">9223003</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">10</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2115" model="health.drug">
+	<field name="name">METHYLPREDNISOLONE MERCK 20mg : 20 flacon poudre</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3554087</field>
+	<field name="ucd">9226786</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">20</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2116" model="health.drug">
+	<field name="name">METHYLPREDNISOLONE MERCK 40mg : 20</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3554093</field>
+	<field name="ucd">9226792</field>
+	<field name="atc">H02AB04</field>
+	<field name="volume">20</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2617" model="health.drug">
+	<field name="name">OROKEN 200mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip"></field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2718" model="health.drug">
+	<field name="name">VITRIMIX KV</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3265437</field>
+	<field name="ucd">9124821</field>
+	<field name="atc">B05BA10</field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2719" model="health.drug">
+	<field name="name">VIVALAN 100mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3197003</field>
+	<field name="ucd">9100996</field>
+	<field name="atc">N06AX09</field>
+	<field name="volume">20</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2720" model="health.drug">
+	<field name="name">VIVALAN LP 300mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3308276</field>
+	<field name="ucd">9136623</field>
+	<field name="atc">N06AX09</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2721" model="health.drug">
+	<field name="name">VIVALAN LP LP 300mg : 100 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5591804</field>
+	<field name="ucd"></field>
+	<field name="atc">N06AX09</field>
+	<field name="volume">100</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2722" model="health.drug">
+	<field name="name">VIVAMAG 100mg : 30 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3337970</field>
+	<field name="ucd">9235644</field>
+	<field name="atc">A12CC06</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2723" model="health.drug">
+	<field name="name">VIVAMAG 50mg/190mg : 50 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3538421</field>
+	<field name="ucd">9235650</field>
+	<field name="atc">A12CC06</field>
+	<field name="volume">50</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2724" model="health.drug">
+	<field name="name">VIVAMYNE : 20 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3375628</field>
+	<field name="ucd">9169901</field>
+	<field name="atc">A11AA04</field>
+	<field name="volume">20</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2779" model="health.drug">
+	<field name="name">XANTHIUM LP Adulte 200mg : 30 gélules</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3315359</field>
+	<field name="ucd">9143586</field>
+	<field name="atc">R03DA04</field>
+	<field name="volume">30</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2885" model="health.drug">
+	<field name="name">ZACNAN 100mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3403365</field>
+	<field name="ucd">9187980</field>
+	<field name="atc">J01AA08</field>
+	<field name="volume">6</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2886" model="health.drug">
+	<field name="name">ZACNAN 100mg : Gé : 14 gélules</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3403371</field>
+	<field name="ucd">9187980</field>
+	<field name="atc">J01AA08</field>
+	<field name="volume">14</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2887" model="health.drug">
+	<field name="name">ZACNAN 50mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3403359</field>
+	<field name="ucd">9187997</field>
+	<field name="atc">J01AA08</field>
+	<field name="volume">28</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2938" model="health.drug">
+	<field name="name">ZERIT 1mg/ml : flacon 200ml de sol reconstituée</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3413381</field>
+	<field name="ucd">9185946</field>
+	<field name="atc">J05AF04</field>
+	<field name="volume">6</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2939" model="health.drug">
+	<field name="name">ZERIT 20mg : 56 gélules</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3413323</field>
+	<field name="ucd">9177585</field>
+	<field name="atc">J05AF04</field>
+	<field name="volume">56</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2940" model="health.drug">
+	<field name="name">ZERIT 30mg : 56 gélules</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3413352</field>
+	<field name="ucd">9177591</field>
+	<field name="atc">J05AF04</field>
+	<field name="volume">56</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2941" model="health.drug">
+	<field name="name">ZERIT 40mg : 56 gélules</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3413375</field>
+	<field name="ucd">9177616</field>
+	<field name="atc">J05AF04</field>
+	<field name="volume">56</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2942" model="health.drug">
+	<field name="name">ZESTORETIC</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3317335</field>
+	<field name="ucd">9143445</field>
+	<field name="atc">C09BA03</field>
+	<field name="volume">28</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2943" model="health.drug">
+	<field name="name">ZESTORETIC : 100 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5613115</field>
+	<field name="ucd">9143445</field>
+	<field name="atc">C09BA03</field>
+	<field name="volume">100</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2944" model="health.drug">
+	<field name="name">ZESTORETIC 20 MG</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip"></field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2945" model="health.drug">
+	<field name="name">ZESTRIL 20mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3299904</field>
+	<field name="ucd">9128061</field>
+	<field name="atc">C09AA03</field>
+	<field name="volume">28</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2946" model="health.drug">
+	<field name="name">ZESTRIL 20mg : 100 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5591810</field>
+	<field name="ucd">9128061</field>
+	<field name="atc">C09AA03</field>
+	<field name="volume">100</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2947" model="health.drug">
+	<field name="name">ZESTRIL 5mg</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3299910</field>
+	<field name="ucd">9128078</field>
+	<field name="atc">C09AA03</field>
+	<field name="volume">28</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2948" model="health.drug">
+	<field name="name">ZESTRIL 5mg : 100 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5591827</field>
+	<field name="ucd">9128078</field>
+	<field name="atc">C09AA03</field>
+	<field name="volume">100</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2949" model="health.drug">
+	<field name="name">ZIACAINE : flacon 45ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5001234</field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">1</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2950" model="health.drug">
+	<field name="name">ZIACAINE 3 % NORADRENALINE : 50 cartouches (boîte carton)</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">5576437</field>
+	<field name="ucd"></field>
+	<field name="atc">N01BB52</field>
+	<field name="volume">50</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2951" model="health.drug">
+	<field name="name">ZIACAINE compresse imprégnée p us dentaire : 200 compresses en fl sol 45 ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3572665</field>
+	<field name="ucd"></field>
+	<field name="atc">N01BB02</field>
+	<field name="volume">200</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2952" model="health.drug">
+	<field name="name">ZIACAINE en pulvérisateur : 80ml</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3194542</field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">540</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2978" model="health.drug">
+	<field name="name">ZIPREXA 10mg cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip"></field>
+	<field name="ucd"></field>
+	<field name="atc"></field>
+	<field name="volume">1</field>
+	<field name="vidal">FAUX</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+<record id="drug.2979" model="health.drug">
+	<field name="name">ZITHROMAX 250mg : 6 cp</field>
+	<field name="categ_id" model="product.category" search="[('name','=','Medicaments')]"/>
+	<field name="cip">3517732</field>
+	<field name="ucd">9216842</field>
+	<field name="atc">J01FA10</field>
+	<field name="volume">6</field>
+	<field name="vidal">VRAI</field>
+	<field name="uom_id" ref="categ.unit"/>
+</record>
+</data></terp>

@@ -1,22 +1,28 @@
-# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+# Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#                    Fabien Pinckaers <fp@tiny.Be>
 #
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
+# WARNING: This program as such is intended to be used by professional
+# programmers who take the whole responsability of assessing all potential
+# consequences resulting from its eventual inadequacies and bugs
+# End users who are looking for a ready-to-use solution with commercial
+# garantees and support are strongly adviced to contract a Free Software
+# Service Company
 #
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
+# This program is Free Software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
 #
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
 from osv import fields
@@ -111,12 +117,13 @@ hotel_restaurant_tables()
 class hotel_restaurant_reservation(osv.osv):
 
     def _create_order(self,cr,uid,ids,context=None):
-
+         k=[]
          for i in self.browse(cr,uid,ids):
+             table_ids = [x.id for x in i.tableno]
              kot_data=self.pool.get('hotel.reservation.order').create(cr,uid,{
                                                                             'reservationno':i.reservation_id,
                                                                             'date1':i.start_date,
-                                                                            'table_no':[(6,0,i.tableno)],
+                                                                            'table_no':[(6,0,table_ids)],
                                                                              })
 
 
@@ -231,12 +238,13 @@ class hotel_restaurant_order(osv.osv):
     def generate_kot(self,cr,uid,ids,part):
 
         for order in self.browse(cr,uid,ids):
+            table_ids = [x.id for x in order.table_no]
             kot_data=self.pool.get('hotel.restaurant.kitchen.order.tickets').create(cr,uid,{
                                                                             'orderno':order.order_no,
                                                                             'kot_date':order.o_date,
                                                                             'room_no':order.room_no.name,
                                                                             'w_name':order.waiter_name.name,
-                                                                            'tableno':[(6,0,order.table_no)],
+                                                                            'tableno':[(6,0,table_ids)],
                                                                              })
 
             for order_line in order.order_list:
@@ -321,14 +329,15 @@ class hotel_reservation_order(osv.osv):
     def _reservation_generate_kot(self,cr,uid,ids,part):
 
         for order in self.browse(cr,uid,ids):
+            table_ids = [x.id for x in order.table_no]
             kot_data=self.pool.get('hotel.restaurant.kitchen.order.tickets').create(cr,uid,{
                                                                             'orderno':order.order_number,
                                                                             'resno':order.reservationno,
                                                                             'kot_date':order.date1,
                                                                             'w_name':order.waitername.name,
-                                                                            'tableno':[(6,0,order.table_no)],
+                                                                            'tableno':[(6,0,table_ids)],
                                                                              })
-
+            
             for order_line in order.order_list:
 
                 o_line={
@@ -395,5 +404,3 @@ class hotel_restaurant_order_list(osv.osv):
         'price_subtotal': fields.function(_sub_total, method=True, string='Subtotal'),
          }
 hotel_restaurant_order_list()
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

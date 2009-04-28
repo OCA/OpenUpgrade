@@ -1,10 +1,14 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
+	<menuitem  id="hotel_configuration_menu" name="Hotel Management/Configuration" sequence="1"/>
+	<menuitem  id="hotel_report_menu" name="Hotel Management/Reports" sequence="6"/>
+	
+	
 	<!--====================================================
 								Floor
 		==================================================== -->
-
+		
 		<record model="ir.ui.view" id="view_hotel_floor_form">
 			<field name="name">hotel.floor.form</field>
 			<field name="model">hotel.floor</field>
@@ -32,14 +36,14 @@
 			<field name="res_model">hotel.floor</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-		</record>
-		<menuitem name="Hotel Management" id="menu_hotel_mgt"/>
-		<menuitem name="Configuration" parent="menu_hotel_mgt" id="menu_config"/>
-		<menuitem name="Floor" parent="menu_config"
-		          id="menu_open_hotel_floor_form_tree"
-				  action="open_hotel_floor_form_tree"/>
-
-	<!--====================================================================
+		</record> 
+		<menuitem name="Floor"
+		          id="menu_open_hotel_floor_form_tree" 
+				  action="open_hotel_floor_form_tree"
+				  sequence="1"
+				  parent="hotel_configuration_menu"/>
+	
+	<!--==================================================================== 
 								Amenities Type
 		====================================================================-->
 
@@ -61,7 +65,7 @@
 			<field name="arch" type="xml">
 				<tree string="Hotel Room Amenities Type">
 					<field name="complete_name"/>
-
+					
 				</tree>
 			</field>
 		</record>
@@ -71,16 +75,18 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 	   	</record>
-		<menuitem name="Amenities Types" parent="menu_config"
+		<menuitem name="Amenity Types"
 				  id="menu_action_hotel_room_amenities_type_view_form"
-				  action="action_hotel_room_amenities_type_view_form"/>
-
-
+				  action="action_hotel_room_amenities_type_view_form"
+				  sequence="3"
+				  parent="hotel_configuration_menu"/> 
+	
+	
 
 	<!--===============================================================
 								Room Amenities
 		===============================================================-->
-
+		
 		<record model="ir.ui.view" id="view_hotel_room_amenities_form">
 			<field name="name">hotel.room_amenities_form</field>
 			<field name="model">hotel.room_amenities</field>
@@ -104,7 +110,7 @@
 							<field name="supplier_taxes_id" colspan="4" />
 							<field name="taxes_id" colspan="4" />
 						</page>
-
+						
 						<page string="Procurement">
 							<field name="supply_method"/>
 							<field name="active" select="2"/>
@@ -116,7 +122,7 @@
 							<field name="cost_method"/>
 							<field name="rental" select="2"/>
 							<newline/>
-							<!--
+							<!-- 
 							<field name="price_margin"/>
 							<field name="price_extra"/>
 							-->
@@ -124,7 +130,7 @@
 							<field name="uos_coeff" />
 							<newline />
 							<field name="seller_ids" colspan="4" nolabel="1" widget="one2many_list"/>
-
+							
 						</page>
 						<page string="Descriptions">
 							<separator string="Description" />
@@ -137,7 +143,7 @@
 						<page string="Properties">
 							<properties/>
 						</page>
-
+						
 					</notebook>
 				</form>
 			</field>
@@ -151,7 +157,7 @@
 					<field name="name" />
 					<field name="categ_id" select="1"/>
 					<field name="list_price" string="Amenity rate"/>
-
+					
 				</tree>
 			</field>
 		</record>
@@ -162,10 +168,12 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_hotel_room_amenities_list"/>
 		</record>
-		<menuitem name="Amenities" parent="menu_hotel_mgt"
+		<menuitem name="Amenities"
 				  id="menu_action_hotel_room_amenities_view_form"
-				  action="action_hotel_room_amenities_view_form"/>
-
+				  action="action_hotel_room_amenities_view_form"
+				  sequence="2"
+				  parent="menu_action_hotel_room_amenities_type_view_form"/>	
+		
 	<!--========================================================
 								Room Type
 		========================================================-->
@@ -195,11 +203,13 @@
 			<field name="res_model">hotel.room_type</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-		</record>
-		<menuitem name="Room Type" parent="menu_config"
-				 id="menu_open_hotel_room_type_form_tree"
-				 action="open_hotel_room_type_form_tree"/>
-
+		</record> 
+		<menuitem name="Room Types"
+				  id="menu_open_hotel_room_type_form_tree" 
+				  action="open_hotel_room_type_form_tree"
+				  sequence="6"
+				  parent="hotel_configuration_menu"/>
+				 
 	<!--===================================================
 								Rooms
 		=================================================== -->
@@ -218,12 +228,12 @@
 							<field name="categ_id" select="1" domain="[('isroomtype','=',True)]"/>
 							<field name="state" select="2" string="Room Status"/>
 <!--							<field name="type" select="2"/>-->
-
+							
 <!--							<field name="maxAdult" />-->
 <!--							<field name="maxChild" /> -->
-
+							
 <!--							<field name="procure_method"/>-->
-
+							
 							<field name="uom_id"/>
 <!--							<field name="uom_po_id"/>-->
 							<field name="product_manager" select="2"/>
@@ -241,14 +251,14 @@
 							<newline/>
 							<field name="list_price"/>
 							<field name="rental" select="2"/>
-
+							
 <!--							<field name="sale_ok" select="2"/>-->
 							<field name="standard_price"/>
 <!--							<field name="purchase_ok" select="2"/>-->
 							<field name="cost_method"/>
-
+							
 							<newline/>
-							<!--
+							<!-- 
 							<field name="price_margin"/>
 							<field name="price_extra"/>
 							-->
@@ -256,7 +266,7 @@
 							<field name="uos_coeff" />
 							<newline />
 							<field name="seller_ids" colspan="4" nolabel="1" widget="one2many_list"/>
-
+							
 						</page>
 						<page string="Descriptions">
 							<separator string="Description" />
@@ -291,13 +301,15 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-
-		<menuitem name="Rooms" parent="menu_hotel_mgt"
-					 id="menu_open_hotel_room_form"
-					 action="action_hotel_room_form"/>
-
+		 
+		<menuitem name="Rooms"
+				  id="menu_open_hotel_room_form" 
+				  action="action_hotel_room_form"
+				  sequence="5"
+				  parent="menu_open_hotel_room_type_form_tree"/>
+					  
 		<!-- Services -->
-
+		
 		<record model="ir.ui.view" id="view_hotel_service_type_form">
 			<field name="name">hotel.service_type.form</field>
 			<field name="model">hotel.service_type</field>
@@ -324,12 +336,14 @@
 			<field name="res_model">hotel.service_type</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-		</record>
-		<menuitem name="Services Type" parent="menu_config"
-				 id="menu_open_hotel_service_type_form_tree"
-				 action="open_hotel_service_type_form_tree"/>
-
-
+		</record> 
+		<menuitem name="Service Types"
+				  id="menu_open_hotel_service_type_form_tree" 
+				  action="open_hotel_service_type_form_tree"
+				  sequence="9"
+				  parent="hotel_configuration_menu"/>
+				 
+				 
 		<record model="ir.ui.view" id="view_hotel_services_form">
 			<field name="name">.hotel.services.form</field>
 			<field name="model">hotel.services</field>
@@ -364,7 +378,7 @@
 							<field name="cost_method"/>
 							<field name="rental" select="2"/>
 							<newline/>
-							<!--
+							<!-- 
 							<field name="price_margin"/>
 							<field name="price_extra"/>
 							-->
@@ -372,7 +386,7 @@
 							<field name="uos_coeff" />
 							<newline />
 							<field name="seller_ids" colspan="4" nolabel="1" widget="one2many_list"/>
-
+							
 						</page>
 						<page string="Descriptions">
 							<separator string="Description" />
@@ -407,11 +421,13 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-
-		<menuitem name="Services" parent="menu_hotel_mgt"
-					 id="menu_open_hotel_services_form"
-					 action="action_hotel_services_form"/>
-
+		 
+		<menuitem name="Services"
+				  id="menu_open_hotel_services_form" 
+				  action="action_hotel_services_form"
+				  sequence="8"
+				  parent="menu_open_hotel_service_type_form_tree"/>
+					 
 
 	<!--========================================================
 								Hotel Folio
@@ -448,14 +464,14 @@
 											<field name="checkout_date" on_change="on_change_checkout(checkin_date,checkout_date)" />
 											<separator string="Automatic Declaration" colspan="4"/>
 											<field name="product_uom_qty"
-												on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, parent.fiscal_position, 'lang' in context and context['lang'], False, parent.date_order)"
+												on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order)"
 												context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
 												select="1"/>
 											<field name="product_uom"
 												on_change="product_uom_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order)"
 												string="Rent(UOM)"/>
 											<field name="product_id"
-												on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, parent.fiscal_position, 'lang' in context and context['lang'], True, parent.date_order)"
+												on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], True, parent.date_order)"
 												context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
 												colspan="4" select="1" domain="[('isroom','=',True)]" string="Room No"/>
 											<separator string="Manual Description"
@@ -505,14 +521,14 @@
 										<page string="Service Line">
 											<separator string="Automatic Declaration" colspan="4"/>
 											<field name="product_uom_qty"
-												on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, parent.fiscal_position, 'lang' in context and context['lang'], False, parent.date_order)"
+												on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order)"
 												context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
 												select="1"/>
 											<field name="product_uom"
 												on_change="product_uom_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], False, parent.date_order)"
 												/>
 											<field name="product_id"
-												on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, parent.fiscal_position, 'lang' in context and context['lang'], True, parent.date_order)"
+												on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, 'lang' in context and context['lang'], True, parent.date_order)"
 												context="partner_id=parent.partner_id,quantity=product_uom_qty,pricelist=parent.pricelist_id,shop=parent.shop_id,uom=product_uom"
 												colspan="4" select="1" domain="[('isservice','=',True)]"/>
 											<separator string="Manual Description"
@@ -583,7 +599,6 @@
 							<field name="origin"/>
 							<field name="invoice_quantity"/>
 							<field name="client_order_ref" />
-							<field name="fiscal_position" groups="base.group_extended"/>
 							<separator string="Notes" colspan="4"/>
 							<field name="note" colspan="4" nolabel="1"/>
 						</page>
@@ -601,10 +616,10 @@
 			<field name="name">hotel.folio.tree</field>
 			<field name="model">hotel.folio</field>
 			<field name="type">tree</field>
-
+			 
 			<field name="arch" type="xml">
 				<tree string="Hotel Folio1">
-
+					
 					<field name="checkin_date" />
 					<field name="checkout_date" />
 					<field name="name" select="1"/>
@@ -620,22 +635,24 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 		</record>
-		<menuitem name="Generate Folio" parent="menu_hotel_mgt"
+		<menuitem name="Hotel Management/All Folio/Generate Folio"
 				  id="menu_open_hotel_folio1_form_tree"
-				  action="open_hotel_folio1_form_tree"/>
-
+				  action="open_hotel_folio1_form_tree"
+				  sequence="27"/>
+		
 		<record model="ir.actions.act_window" id="open_hotel_folio1_form_tree_all">
 			<field name="name">Hotel Folio</field>
 			<field name="res_model">hotel.folio</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="All Folio" parent="menu_open_hotel_folio1_form_tree"
+		<menuitem name="Hotel Management/All Folio"
 				  id="menu_open_hotel_folio1_form_tree_all"
-				  action="open_hotel_folio1_form_tree_all"/>
-
-		<!-- Categories for Room, Amenities, Services -->
-
+				  action="open_hotel_folio1_form_tree_all"
+				  sequence="5"/>		  			 
+					 
+		<!-- Categories for Room, Amenities, Services -->		
+					 
 		<record model="ir.actions.act_window" id="hotel_room_category_action">
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">product.category</field>
@@ -643,9 +660,12 @@
 			<field name="view_type">tree</field>
 			<field name="view_id" ref="product.product_category_tree_view"/>
 		</record>
-		<menuitem name="Room Type" parent="menu_config" id="menu_room_type"/>
-		<menuitem name="Room by Category" parent="menu_room_type" id="menu_hotel_room_category_action" action="hotel_room_category_action"/>
-
+		<menuitem name="Room by Category" 
+				  id="menu_hotel_room_category_action" 
+				  action="hotel_room_category_action"
+				  sequence="7"
+				  parent="menu_open_hotel_room_type_form_tree"/>
+		
 		<record model="ir.actions.act_window" id="hotel_amenity_category_action">
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">product.category</field>
@@ -653,9 +673,12 @@
 			<field name="view_type">tree</field>
 			<field name="view_id" ref="product.product_category_tree_view"/>
 		</record>
-		<menuitem name="Amenities Types" parent="menu_config" id="menu_amenities"/>
-		<menuitem name="Amenities by Category" parent="menu_amenities" id="menu_hotel_amenity_category_action" action="hotel_amenity_category_action"/>
-
+		<menuitem name="Amenities by Category" 
+				  id="menu_hotel_amenity_category_action" 
+				  action="hotel_amenity_category_action"
+				  sequence="4"
+				  parent="menu_action_hotel_room_amenities_type_view_form"/>
+	
 		<record model="ir.actions.act_window" id="hotel_service_category_action">
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">product.category</field>
@@ -663,7 +686,11 @@
 			<field name="view_type">tree</field>
 			<field name="view_id" ref="product.product_category_tree_view"/>
 		</record>
-		<menuitem name="Services by Category" parent="menu_open_hotel_service_type_form_tree" id="menu_hotel_service_category_action" action="hotel_service_category_action"/>
-
+		<menuitem name="Services by Category" 
+				  id="menu_hotel_service_category_action" 
+				  action="hotel_service_category_action"
+				  sequence="10"
+				  parent="menu_open_hotel_service_type_form_tree"/>
+	
 	</data>
 </openerp>

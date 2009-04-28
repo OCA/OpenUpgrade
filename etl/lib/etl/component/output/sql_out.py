@@ -22,7 +22,7 @@
 """
  To write data into SQL table.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 
 """
@@ -40,12 +40,12 @@ class sql_out(component):
         * .*                   : The main data flow with input data.
         Output Flows           : 0-1.
         * main                 : Return all data.
-    """   
+    """
 
     def __init__(self, sqlconnector, sqltable, name='component.output.sql_out', transformer=None, row_limit=0):
 
-        """ 
-        Required  Parameters  
+        """
+        Required  Parameters
         sql_connector  : SQL connector.
         sqltable       : The name of the SQL table.
 
@@ -56,39 +56,40 @@ class sql_out(component):
         """
         super(sql_out, self).__init__(name=name, connector=sqlconnector, transformer=transformer, row_limit=row_limit)
         self._type = 'component.output.sql_out'
-        self.sqltable = sqltable    
+        self.sqltable = sqltable
 
-    def __copy__(self):       
+    def __copy__(self):
         res = sql_out(self.connector, self.sqlquery, self.name, self.transformer, self.row_limit)
         return res
 
     def end(self):
         super(sql_out, self).end()
-        if self.sqlconnector:            
-             self.connector.close(self.sqlconnector)        
+        if self.sqlconnector:
+             self.connector.close(self.sqlconnector)
 
-    def process(self):             
-        datas = []  
-        self.sqlconnector = False      
+    def process(self):
+        datas = []
+        self.sqlconnector = False
         for channel, trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:                                     
+                for d in iterator:
                     if not self.sqlconnector:
-                        self.sqlconnector = self.connector.open()                        
-                    insert_query = " INSERT into %s (%s) VALUES (%s)" % (self.sqltable, ','.join(d.keys()), ','.join(map(lambda x: (type(x) in (int, long, float, complex)) and x or repr(str(x)), d.values())))                        
+                        self.sqlconnector = self.connector.open()
+                    insert_query = " INSERT into %s (%s) VALUES (%s)" % (self.sqltable, ','.join(d.keys()), ','.join(map(lambda x: (type(x) in (int, long, float, complex)) and x or repr(str(x)), d.values())))
                     cr = self.sqlconnector.cursor()
-                    cr.execute(insert_query)                     
-                    self.sqlconnector.commit()                       
+                    cr.execute(insert_query)
+                    self.sqlconnector.commit()
                     yield d, 'main'
-                    
+
 def test():
     from etl_test import etl_test
     import etl
-    sql_conn = etl.connector.sql_connector.sql_connector('localhost', 5432, 'dms_20090204', 'postgres', 'postgres')
-    test = etl_test.etl_component_test(sql_out('test', sql_conn, 'res_partner'))
-    test.check_input({'main': [{'name': 'OpenERP11'}, {'name': 'Fabien11'}]})
-    test.check_output([{'name': 'OpenERP11'}, {'name': 'Fabien11'}], 'main')
+    sql_conn = etl.connector.sql_connector('localhost', 5432, 'trunk', 'postgres', 'postgres')
+    test = etl_test.etl_component_test(sql_out(sql_conn, 'res_partner'))
+    test.check_input({'main': [{'name': 'tinyerp belgium'}]})
+    test.check_output([{'name': 'tinyerp belgium'}], 'main')
     res = test.output()
+    print res
 
-if __name__ == '__main__': 
+if __name__ == '__main__':
     test()

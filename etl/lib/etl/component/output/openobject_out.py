@@ -44,36 +44,36 @@ class openobject_out(component):
         """
         Parameters
         openobject_connector : Open object connector to connect with OpenERP server.
-        model                : Open object model name.    
-                
-        Extra Parameters 
+        model                : Open object model name.
+
+        Extra Parameters
         name                 : Name of Component.
         transformer          : Transformer object to transform string data into particular object.
         fields               : Fields of open object model.
-        model                : Open object model name.        
-        """    
+        model                : Open object model name.
+        """
         super(openobject_out, self).__init__(name=name, connector=openobject_connector, transformer=transformer, row_limit=row_limit)
         self._type = 'component.output.openobject_out'
-        self.fields = fields        
+        self.fields = fields
         self.model = model
 
-    def __copy__(self):        
+    def __copy__(self):
         res = openobject_out(self.connector, self.model, self.fields, self.name, self.transformer, self.row_limit)
         return res
-        
+
     def end(self):
         super(openobject_out, self).end()
         if self.op_oc:
             self.connector.close(self.op_oc)
             self.op_oc = False
 
-    def process(self):       
+    def process(self):
         datas = []
         self.fields_keys = None
         self.op_oc = False
         for channel, trans in self.input_get().items():
-            for iterator in trans:                
-                for d in iterator:                    
+            for iterator in trans:
+                for d in iterator:
                     if not self.fields:
                         self.fields = dict(map(lambda x: (x, x), d.keys()))
                     if type(self.fields) == type([]):
@@ -81,19 +81,20 @@ class openobject_out(component):
                         self.fields = dict(map(lambda x: (x, x), self.fields))
                     if not self.fields_keys:
                         self.fields_keys = self.fields.keys()
-                    if not self.op_oc:                         
-                        self.op_oc = self.connector.open()                        
-                    self.connector.execute(self.op_oc, 'execute', self.model, 'import_data', self.fields_keys, [map(lambda x: d[self.fields[x]], self.fields_keys)])                                            
-                    yield d, 'main'     
-                    
+                    if not self.op_oc:
+                        self.op_oc = self.connector.open()
+                    self.connector.execute(self.op_oc, 'execute', self.model, 'import_data', self.fields_keys, [map(lambda x: d[self.fields[x]], self.fields_keys)])
+                    yield d, 'main'
+
 def test():
     from etl_test import etl_test
     import etl
     openobject_conn = etl.connector.openobject_connector('http://localhost:8069', 'trunk', 'admin', 'admin', con_type='xmlrpc')
-    test = etl_test.etl_component_test(openobject_out('test', openobject_conn, 'res.partner'))
-    test.check_input({'main': [{'name': 'OpenERP1'}, {'name': 'Fabien1'}]})
-    test.check_output([{'name': 'OpenERP1'}, {'name': 'Fabien1'}], 'main')
+    test = etl_test.etl_component_test(openobject_out(openobject_conn, 'res.country'))
+    test.check_input({'main': [{'name': 'India_test', 'code':'India_test'}]})
+    test.check_output([{'name': 'India_test', 'code':'India_test'}], 'main')
     res = test.output()
 
 if __name__ == '__main__':
     test()
+

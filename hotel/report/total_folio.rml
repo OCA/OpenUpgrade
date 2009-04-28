@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<document filename="total_collection.pdf">
-  <template pageSize="(595.0,842.0)" title="Total Collection" author="Martin Simon" allowSplitting="20">
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
     <pageTemplate id="first">
       <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
     </pageTemplate>
@@ -25,96 +25,87 @@
       <blockBackground colorName="#ffffff" start="0,0" stop="0,0"/>
       <blockBackground colorName="#c0c0c0" start="1,0" stop="1,0"/>
     </blockTableStyle>
-     <blockTableStyle id="Table3">
-      <blockAlignment value="LEFT"/>
-      <blockValign value="TOP"/>
-     
-    </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT"/>
-    <paraStyle name="P2" fontName="Helvetica" fontSize="10.0" leading="13" alignment="CENTER"/>
-    <paraStyle name="P3" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
-    <paraStyle name="P4" fontName="Helvetica-Bold" fontSize="9.0" leading="13" alignment="CENTER"/>
-    <paraStyle name="P5" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
-    <paraStyle name="P6" fontName="Helvetica" fontSize="12.0" leading="12" alignment="RIGHT"/>
-    <paraStyle name="P7" fontName="Helvetica" fontSize="11.0" leading="12" alignment="LEFT"/>
-    <paraStyle name="P8" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT"/>
-    <paraStyle name="P9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" backColor="#c0c0c0"/>
-    <paraStyle name="P10" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER"/>
-    <paraStyle name="P11" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" backColor="#ffffff"/>
-    <paraStyle name="Standard" fontName="Helvetica"/>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER" backColor="#c0c0c0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER" backColor="#ffffff"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P11" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="CENTER"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
-    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Caption" fontName="Times-Italic" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
-    <paraStyle name="Index" fontName="Helvetica"/>
-    <paraStyle name="Table Contents" fontName="Helvetica"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
   </stylesheet>
   <story>
     <para style="P2">
       <font color="white"> </font>
     </para>
-   <blockTable colWidths="481.0" style="Table3">
-      <tr>
-        <td>
-          <para style="P6">Total Collection</para>
-        </td>
-      </tr>
-    </blockTable>
-    
-    <para style="P8">[[repeatIn(objects,'o')]]</para>
+    <para style="P9">Total Collection</para>
+    <para style="P10">[[repeatIn(objects,'o')]]</para>
+    <para style="P12">From [[ data['form']['date_start'] ]] to [[ data['form']['date_end'] ]] </para>
     <blockTable colWidths="90.0,129.0,98.0,96.0,69.0" style="Table1">
       <tr>
         <td>
-          <para style="P4">Folio No.</para>
+          <para style="P5">Folio No.</para>
         </td>
         <td>
-          <para style="P4">Guest Name</para>
+          <para style="P5">Customer Name</para>
         </td>
         <td>
-          <para style="P4">CheckIn</para>
+          <para style="P5">CheckIn</para>
         </td>
         <td>
-          <para style="P4">CheckOut</para>
+          <para style="P5">CheckOut</para>
         </td>
         <td>
-          <para style="P4">Total</para>
+          <para style="P5">Total</para>
         </td>
       </tr>
       <tr>
         <td>
-          <para style="P5">[[ repeatIn(get_data(data['form']['date_start'],data['form']['date_end']) ,'o') ]]</para>
-          <para style="P3">[[o.order_id.name]]</para>
+          <para style="P6">[[ repeatIn(get_data(data['form']['date_start'],data['form']['date_end']) ,'o') ]]</para>
+          <para style="P4">[[o.order_id.name]]</para>
         </td>
         <td>
-          <para style="P3">[[o.partner_id.name]]</para>
+          <para style="P4">[[o.partner_id.name]]</para>
         </td>
         <td>
-          <para style="P3">[[o.checkin_date]]</para>
+          <para style="P4">[[o.checkin_date]]</para>
         </td>
         <td>
-          <para style="P3">[[o.checkout_date]]</para>
+          <para style="P4">[[o.checkout_date]]</para>
         </td>
         <td>
-          <para style="P3" alignment="RIGHT" >[[o.amount_total]]</para>
-          <para style="P3">[[get_total(o.amount_total)]]</para>
+          <para style="P4">[[o.amount_total]]</para>
+          
+          <para style="P4">[[get_total(o.amount_total)]]</para>
         </td>
       </tr>
     </blockTable>
     <blockTable colWidths="316.0,96.0,69.0" style="Table2">
       <tr>
         <td>
-          <para style="P11">
+          <para style="P8">
             <font color="#ffffff"> </font>
           </para>
         </td>
         <td>
-          <para style="P9" alignment="RIGHT"><font face="Helvetica-Bold">Net Total :-</font></para>
+          <para style="P7">Net Total :-</para>
         </td>
         <td>
-          <para style="P3" alignment="RIGHT"><font face="Helvetica-Bold">[[get_Total()]]</font></para>
+          <para style="P4">[[get_Total()]]</para>
         </td>
       </tr>
     </blockTable>
