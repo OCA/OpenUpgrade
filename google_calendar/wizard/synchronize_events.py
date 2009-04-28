@@ -36,12 +36,6 @@ import wizard
 import pooler
 from osv import fields, osv
 
-def _tz_get(self, cr, uid, data, context={}):
-    if 'tz' in context and context['tz']:
-        return'synch'
-    else:
-        return 'timezone'
-
 _google_form =  '''<?xml version="1.0"?>
         <form string="Export">
         <separator string="This wizard synchronize events between tiny and google calendar" colspan="4"/>
@@ -50,7 +44,6 @@ _google_form =  '''<?xml version="1.0"?>
 _google_fields = {
         }
 
-<<<<<<< TREE
 _timezone_form =  '''<?xml version="1.0"?>
         <form string="Export">
         <separator string="Select Timezone" colspan="4"/>
@@ -66,8 +59,6 @@ _timezone_fields = {
         },
         }
 
-
-=======
 _timezone_form =  '''<?xml version="1.0"?>
         <form string="Export">
         <separator string="Select Timezone" colspan="4"/>
@@ -82,6 +73,7 @@ _timezone_fields = {
             'required': True,
         },
         }
+
 
 def _tz_get(self, cr, uid, data, context={}):
     if 'tz' in context and context['tz']:
@@ -89,7 +81,7 @@ def _tz_get(self, cr, uid, data, context={}):
     else:
         return 'timezone'
 
->>>>>>> MERGE-SOURCE
+
 class google_calendar_wizard(wizard.interface):
 
     calendar_service = ""
@@ -120,7 +112,7 @@ class google_calendar_wizard(wizard.interface):
             new_event = calendar_service.InsertEvent(event, '/calendar/feeds/default/private/full')
             return new_event
         except Exception, e:
-            raise osv.except_osv('Error !',e )
+            raise osv.except_osv('Error !', e )
 
     def _synch_events(self, cr, uid, data, context={}):
 
@@ -148,14 +140,8 @@ class google_calendar_wizard(wizard.interface):
         if 'tz' in context and context['tz']:
             time_zone = context['tz']
         else:
-<<<<<<< TREE
             time_zone = data['form']['timezone_select']
         au_tz = timezone(time_zone)
-=======
-            time_zone = data['form']['timezone_select']
-
-        au_tz = timezone(time_zone)
->>>>>>> MERGE-SOURCE
         try :
             self.calendar_service = gdata.calendar.service.CalendarService()
             self.calendar_service.email = google_auth_details.google_email
@@ -183,7 +169,6 @@ class google_calendar_wizard(wizard.interface):
                 tiny_event_dict[event.google_event_id] = event
             for i, an_event in enumerate(feed.entry):
                 google_id = an_event.id.text
-
                 if google_id in tiny_event_dict.keys():
                     event = tiny_event_dict[google_id]
                     google_up = an_event.updated.text # google event modify date
@@ -196,7 +181,7 @@ class google_calendar_wizard(wizard.interface):
                         # tiny events => google
                         an_event.title.text = event.name
                         an_event.content.text = event.name
-                        an_event.where.insert(0,gdata.calendar.Where(value_string=location))
+                        an_event.where.insert(0, gdata.calendar.Where(value_string=location))
                         time_format = "%Y-%m-%d %H:%M:%S"
                         # convert event start date into gmtime format
                         timestring = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime(time.mktime(time.strptime(event.date_begin, "%Y-%m-%d %H:%M:%S"))))
@@ -269,45 +254,24 @@ class google_calendar_wizard(wizard.interface):
 
             return {}
         except Exception, e:
-            raise osv.except_osv('Error !',e )
+            raise osv.except_osv('Error !', e )
         
     states = {
-<<<<<<< TREE
-              
-=======
-
->>>>>>> MERGE-SOURCE
         'init': {
             'actions': [],
-<<<<<<< TREE
-            'result': {'type': 'form', 'arch':_google_form, 'fields':_google_fields,  'state':[('end','Cancel'),('synch1','Synchronize')]}
+            'result': {'type': 'form', 'arch': _google_form, 'fields': _google_fields, 'state': [('end', 'Cancel'),('tz', 'Synchronize')]}
         },
         
-        'synch1': {
-            'actions': [],
-            'result': {'type': 'choice', 'next_state': _tz_get }
-            },
-        
-        'timezone': {
-            'actions': [],
-            'result': {'type': 'form', 'arch':_timezone_form, 'fields':_timezone_fields,  'state':[('synch','Synchronize')]}
-        },
-            
-=======
-            'result': {'type': 'form', 'arch':_google_form, 'fields':_google_fields,  'state':[('end','Cancel'),('synch1','Synchronize')]}
-        },
-
-        'synch1': {
+        'tz': {
             'actions': [],
             'result': {'type': 'choice', 'next_state': _tz_get }
             },
 
         'timezone': {
             'actions': [],
-            'result': {'type': 'form', 'arch':_timezone_form, 'fields':_timezone_fields,  'state':[('synch','Synchronize')]}
+            'result': {'type': 'form', 'arch': _timezone_form, 'fields': _timezone_fields, 'state': [('synch', 'Synchronize')]}
         },
 
->>>>>>> MERGE-SOURCE
         'synch': {
             'actions': [_synch_events],
             'result': {'type': 'state', 'state': 'end'}
