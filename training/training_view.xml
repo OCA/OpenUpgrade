@@ -814,26 +814,32 @@
                 <form string="subscription">
                     <separator string="Subscription Description" colspan="4" />
                     <field name="name" />
-                    <field name="date" />
-                    <separator string="Invoicing" colspan="4" />
-                    <field name="partner_id" on_change="on_change_partner(partner_id)"/>
-                    <field name="address_id" domain="[('partner_id','=', partner_id),('type', '=', 'invoice')]"/>
-                    <field name="session_id" />
-                    <field name="price" />
-                    <field name="invoice_id" />
-                    <group colspan="2" col="4">
-                        <field name="paid" />
-                        <field name="invoiced" />
-                    </group>
-                    <separator string="Participant" colspan="4" />
-                    <field name="contact_id" />
-                    <field name="contact_email" />
-                    <field name="nbr_to_subscribe" />
-                    <field name="group_id" />
-                    <separator string="Notification" colspan="4" />
-                    <field name="notification_active" />
-                    <field name="notification_text" />
-                    <separator colspan="4"/>
+                    <field name="create_date" />
+                    <notebook colspan="4">
+                        <page string="Subscription">
+                            <field name="partner_id" on_change="on_change_partner(partner_id)"/>
+                            <field name="address_id" domain="[('partner_id','=', partner_id),('type', '=', 'invoice')]"/>
+                            <field name="pricelist_id" />
+                            <field name="payment_term_id" />
+                            <field name="subscription_line_ids" colspan="4" nolabel="1" view_mode="tree">
+                                <tree string="Participants" editable="bottom">
+                                    <field name="session_id" />
+                                    <field name="contact_id" />
+                                    <field name="contact_email" readonly="1" />
+                                    <field name="with_exam" />
+                                    <field name="group_id" />
+                                    <field name="invoiced" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Other Data">
+                            <field name="responsible_id" />
+                            <field name="origin" />
+                            <separator string="Notification" colspan="4" />
+                            <field name="notification_active" />
+                            <field name="notification_text" />
+                        </page>
+                    </notebook>
                     <group colspan="4" col="6">
                         <field name="state" />
                         <button string="Confirm" type="workflow" name="signal_confirm" states="draft,cancelled" />
@@ -851,13 +857,18 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Subscriptions">
-                    <field name="date" />
+                    <field name="create_date" />
+                    <!--
                     <field name="contact_id" />
-                    <field name="partner_id" />
                     <field name="session_id" />
                     <field name="group_id" />
+                    -->
+                    <field name="partner_id" />
                     <field name="state" />
+                    <!--
                     <field name="paid" />
+                    <field name="invoiced" />
+                    -->
                 </tree>
             </field>
         </record>
@@ -869,9 +880,11 @@
             <field name="arch" type="xml">
                 <tree string="Subscriptions">
                     <field name="name" />
+                    <!--
                     <field name="contact_id" />
+                    -->
                     <field name="partner_id" />
-                    <field name="session_id" />
+                    <!-- <field name="session_id" />-->
                     <field name="rest_seats" />
                     <field name="max_seats" />
                     <field name="draft_seats" />
@@ -916,6 +929,38 @@
             <field name="res_model">training.subscription</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
+        </record>
+
+        <record model="ir.ui.view" id="training_subscription_line_tree">
+            <field name="name">training.subscription.line.tree</field>
+            <field name="model">training.subscription.line</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Subscription Lines" colors="red:invoiced==False">
+                    <field name="subscription_id" />
+                    <field name="session_id" />
+                    <field name="partner_id" />
+                    <field name="contact_id" />
+                    <field name="with_exam" />
+                    <field name="invoiced" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_subscription_line_all_act">
+            <field name="name">Subscription Lines</field>
+            <field name="res_model">training.subscription.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window"
+            id="training_subscription_line_uninvoiced_act">
+            <field name="name">Uninvoiced Subscription Lines</field>
+            <field name="res_model">training.subscription.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('invoiced', '=', False)]</field>
         </record>
 
         <record model="ir.ui.view" id="training_offer_form">
@@ -1000,46 +1045,6 @@
             <field name="view_mode">form</field>
         </record>
 
-        <record id="training_mass_subscription_wizard" model="ir.ui.view">
-            <field name="name">Mass Subscribing</field>
-            <field name="model">wizard.training.mass.subscription</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form col="4" string="Mass Subscription">
-                    <group colspan="2" fill="0">
-                        <separator string="Partners" />
-                        <newline />
-                        <field name="partner_ids" nolabel="1" height="300" width="400">
-                            <tree string="Partners">
-                                <field name="name" />
-                            </tree>
-                        </field>
-                    </group>
-                    <group colspan="2" fill="0">
-                        <separator string="Sessions" />
-                        <newline />
-                        <field name="session_ids" nolabel="1" height="300" width="400">
-                            <tree string="Sessions">
-                                <field name="name" />
-                            </tree>
-                        </field>
-                    </group>
-                    <group col="2" fill="0">
-                        <button icon="gtk-cancel" string="Cancel" type="object" name="action_cancel" special="cancel" />
-                        <button icon="gtk-apply" string="Apply" type="object" name="action_apply" />
-                    </group>
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.actions.act_window" id="training_session_mass_subscription_act">
-            <field name="name">Mass Subscription</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">wizard.training.mass.subscription</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">form</field>
-            <field name="target">new</field>
-        </record>
     </data>
 
     <data>
@@ -1222,10 +1227,16 @@
             id="training_subscription_management_subscription_new_mi" 
             parent="training_subscription_management_mi" 
             action="training_subscription_new_act" />
+
         <menuitem 
-            id="training_subscription_management_subscription_mass_mi" 
-            parent="training_subscription_management_mi" 
-            action="training_session_mass_subscription_act" />
+            id="training_subscription_management_subscription_line_all_mi"
+            parent="training_subscription_management_mi"
+            action="training_subscription_line_all_act" />
+
+        <menuitem 
+            id="training_subscription_management_subscription_line_uninvoiced_mi"
+            parent="training_subscription_management_subscription_line_all_mi"
+            action="training_subscription_line_uninvoiced_act" />
 
     </data>
 

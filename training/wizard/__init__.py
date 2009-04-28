@@ -21,5 +21,6 @@
 ##############################################################################
 
 import wizard_not_implemented
+import wizard_subscription_line_invoice
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

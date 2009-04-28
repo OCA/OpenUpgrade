@@ -153,12 +153,7 @@
         <record id="training_subscription_sub0" model="training.subscription">
             <field name="address_id" ref="base.main_address"/>
             <field eval="&quot;&quot;&quot;SUB/0002&quot;&quot;&quot;" name="name"/>
-            <field eval="2500.0" name="price"/>
-            <field eval="0" name="paid"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
-            <field name="session_id" ref="training_session_openerptechnicaltraining0"/>
-            <field eval="&quot;&quot;&quot;2009-03-27 15:31:00&quot;&quot;&quot;" name="date"/>
-            <field name="contact_id" ref="base_contact.res_partner_contact_simonis0"/>
             <field name="partner_id" ref="base.main_partner"/>
         </record>
     </data>

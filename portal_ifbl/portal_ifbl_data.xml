@@ -230,11 +230,6 @@
             id="portal_partner_subscription_new_mi"
             action="training.training_subscription_new_act" />
 
-        <menuitem 
-            parent="menu_portal_partner_training"
-            id="portal_partner_subscription_mass_mi"
-            action="training.training_session_mass_subscription_act"/>
-
         <record model="ir.ui.view" id="view_portal_partner_subscription_tree">
             <field name="name">view.portal.partner.subscription.tree</field>
             <field name="model">portal.training.subscription</field>
