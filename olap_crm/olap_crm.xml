@@ -418,6 +418,7 @@ Measures
         <field name="cube_id" ref="cube_crm"/>
         <field name="measure_type">sql_expr</field>
         <field name="value_sql">avg(crm_case.planned_revenue)</field>
+        <field name="formatstring">cr_postfix_comma</field>
     </record>
 
     <record model="olap.measure" id="measure_crm_avg_planned_revenue">
@@ -425,6 +426,7 @@ Measures
         <field name="cube_id" ref="cube_crm"/>
         <field name="measure_type">sql_expr</field>
         <field name="value_sql">avg(crm_case.planned_cost)</field>
+        <field name="formatstring">cr_postfix_comma</field>
     </record>
     
      <record model="olap.measure" id="measure_planned_revenue">
@@ -434,6 +436,7 @@ Measures
         <field name="value_column_id_name">planned_cost</field>
         <field name="table_name">crm_case</field>
         <field name="agregator">sum</field>
+        <field name="formatstring">cr_postfix_comma</field>
     </record>
  
     <record model="olap.measure" id="measure_planned_revenue">

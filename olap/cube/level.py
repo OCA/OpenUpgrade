@@ -48,7 +48,7 @@ class level(object):
         '''
         if self.sublevels[0].name=='all':
             return [{
-                'value': [([self.level], 'All '+self.level, False)],
+                'value': [([str(self.level)], str('All '+self.level), False)],
                 'query': {
                     'column': [sqlalchemy.literal('all')],
                 },
@@ -114,7 +114,7 @@ class level(object):
         def _tuple_define(x):
             y=list(x)
             return ([self.level]+y[:-1]),y[-1]
-#            return ([self.level]+map(lambda x: str(x).split(".")[0],y[:-1]),str(y[-1]).split(".")[0])
+             
         axis = map(_tuple_define, result)
         # Gives the mapping
 
@@ -206,6 +206,21 @@ class level(object):
             k = tuple(list(a)[0][1:])
             mapping_axis = filter(lambda m: tuple(list(m)[:-1])==k, mapping)
             primary_keys = map(lambda x:list(x)[-1], mapping_axis)
+            # To convert everythin in to the string so that no conversion needed at later stage 
+            # This is for the elements to be displayed in the rows and columns
+            for i in range(len(a[0])):
+                if isinstance(a[0][i],int):
+                    a[0][i] = str(a[0][i])
+                elif isinstance(a[0][i],float):
+                    a[0][i] = str(int(a[0][i]))
+                else:
+                    a[0][i] = str(a[0][i])
+            a = list(a)
+            if isinstance(a[-1],int):
+                a[-1] = str(a[-1])
+            elif isinstance(a[-1],float):
+                a[-1] = str(int(a[-1]))
+            a = tuple(a)
             result.append( {
                 'value': [a],
                 'query': {

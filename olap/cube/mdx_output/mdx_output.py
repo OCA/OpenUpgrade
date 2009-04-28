@@ -39,7 +39,7 @@ def sort_axis(data):
 
 def mdx_output(data):
     print 'DATA',  data
-    decimal_to_float(data[1])
+#    decimal_to_float(data[1])
 #    sort_axis(data) 
     return data
 

@@ -22,7 +22,7 @@
 """
  To perform sort operation.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 
@@ -31,28 +31,28 @@ from etl.component import component
 class sort(component):
     """
         This is an ETL Component that performs sort operation.
- 
+
         Type                  : Data Component.
         Computing Performance : Semi-Streamline.
         Input Flows           : 1.
         * .*                  : The main data flow with input data.
         Output Flows          : 0-x.
         * .*                  : Returns the main flow with sort result.
-    """    
+    """
 
     def __init__(self, fieldname, name='component.transfer.sort'):
-        """ 
+        """
         Required Parameters
         fieldname      : Specifies the field name according to which sorting process will be done.
-       
+
         Extra Parameters
-        name          : Name of the component. 
+        name          : Name of the component.
         """
         super(sort, self).__init__(name )
         self._type = 'component.transfer.sort'
         self.fieldname = fieldname
 
-    def __copy__(self):        
+    def __copy__(self):
         res = sort(self.fieldname, self.name)
         return res
 
@@ -66,12 +66,12 @@ class sort(component):
         datas.sort(lambda x, y: cmp(x[self.fieldname], y[self.fieldname]))
         for d in datas:
             yield d, 'main'
-    
+
 def test():
     from etl_test import etl_test
-    test = etl_test.etl_component_test(sort('sort', 'name'))
+    test = etl_test.etl_component_test(sort('name'))
     test.check_input({'main': [{'id': 1, 'name': 'OpenERP'}, {'id': 2, 'name': 'Fabien'}]})
-    test.check_output([{'id': 2, 'name': 'OpenERP'}, {'id': 1, 'name': 'Fabien'}], 'main')
+    test.check_output([{'id': 2, 'name': 'Fabien'}, {'id': 1, 'name': 'OpenERP'}], 'main')
     res = test.output()
 
 if __name__ == '__main__':

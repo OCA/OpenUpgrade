@@ -91,7 +91,7 @@ class sql_in(component):
 def test():
     from etl_test import etl_test
     import etl
-    sql_conn = etl.connector.sql_connector('localhost', '5432', 'trunk', 'admin', 'a')
+    sql_conn = etl.connector.sql_connector('localhost', 5432, 'trunk', 'admin', 'a')
     query =  'select * from res_users'
     test = etl_test.etl_component_test(sql_in(sql_conn, query))
 #    test.check_output
