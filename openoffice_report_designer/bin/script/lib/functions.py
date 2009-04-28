@@ -134,7 +134,7 @@ def EnumDocument(aItemList,aComponentAdd):
         if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn" and not oPar.Items in aItemList:
             templist=oPar.Items[0],sItem
             aItemList.append( templist )
-            aComponentAdd.append( parent )
+        aComponentAdd.append( parent )
 
 def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
     sNames = oPar.getCellNames()
