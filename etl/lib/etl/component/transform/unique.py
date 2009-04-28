@@ -22,7 +22,7 @@
 """
  To perform unique operation.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 
@@ -30,38 +30,38 @@ from etl.component import component
 class unique(component):
     """
         This is an ETL Component that performs unique operation.
- 
+
         Type                  : Data Component.
         Computing Performance : Semi-Streamline.
         Input Flows           : 1.
-        * .*                  : The main data flow with input data.    
+        * .*                  : The main data flow with input data.
         Output Flows          : 0-x.
         * .*                  : Returns the main flow with unique result.
         * .*                  : Returns the duplicate flow with duplicate Result.
-    """    
+    """
 
     def __init__(self, name='component.transform.unique'):
         super(unique, self).__init__(name=name )
         self._type = 'component.transfer.unique'
 
-    def __copy__(self):        
+    def __copy__(self):
         res = sort(self.name)
-        return res   
+        return res
 
     def process(self):
         unique_datas = []
         duplicate_datas = []
         for channel, trans in self.input_get().items():
-            for iterator in trans:             
+            for iterator in trans:
                 for d in iterator:
-                   if d in unique_datas:                    
-                       yield d, "duplicate"		                    
+                   if d in unique_datas:
+                       yield d, "duplicate"
                    else :
                        unique_datas.append(d)
         for d in unique_datas:
             yield d, "main"
-             
-def test():                        
+
+def test():
 
     from etl_test import etl_test
     from etl import transformer
@@ -69,17 +69,17 @@ def test():
         {'id': 1L, 'name': 'Fabien', 'active': True, 'birth_date': '2009-02-01', 'amount': 209.58},
         {'id': 1L, 'name': 'Fabien', 'active': True, 'birth_date': '2009-02-01', 'amount': 209.58},
         {'id': 3L, 'name': 'Henry', 'active': True, 'birth_date': '2006-02-01', 'amount': 219.20},
-    ]   
+    ]
     unique_part = [
-        {'id': 1L, 'name': 'Fabien', 'active': True, 'birth_date': '2009-02-01', 'amount': 209.58},        
+        {'id': 1L, 'name': 'Fabien', 'active': True, 'birth_date': '2009-02-01', 'amount': 209.58},
         {'id': 3L, 'name': 'Henry', 'active': True, 'birth_date': '2006-02-01', 'amount': 219.20},
-    ] 
+    ]
     duplicate_part = [
-        {'id': 1L, 'name': 'Fabien', 'active': True, 'birth_date': '2009-02-01', 'amount': 209.58},                
-    ]     
+        {'id': 1L, 'name': 'Fabien', 'active': True, 'birth_date': '2009-02-01', 'amount': 209.58},
+    ]
     test = etl_test.etl_component_test(unique())
-    test.check_input({'main': input_part})    
-    test.check_output(duplicate_part, 'duplicate')
+    test.check_input({'main': input_part})
+    test.check_output(unique_part, 'main')
     print test.output()
 
 if __name__ == '__main__':
