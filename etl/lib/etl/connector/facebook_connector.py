@@ -38,8 +38,8 @@ class facebook_connector(connector):
         Required Parameters
         facebook_uri : URI of Facebook server.
         email        : Email Address of Facebook User.
-                
-        Extra Parameters 
+
+        Extra Parameters
         password    : Password.
         delay_time  : Time in sec which is use to wait for login while opening login page in browser.
         name        : Name of connector.
@@ -145,8 +145,13 @@ def test():
     """
     Test function.
     """
-    #TODO
-    pass
+    from etl_test import etl_test
+    import etl
+    facebook_conn=facebook_connector('http://facebook.com', 'modiinfo@gmail.com')
+    test = etl_test.etl_component_test(etl.component.input.facebook_in(facebook_conn, 'get_user_events'))
+    res=test.output()
+    print res
+
 
 if __name__ == '__main__':
     test()
