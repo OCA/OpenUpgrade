@@ -31,17 +31,17 @@ from etl.connector import connector
 class localfile(connector):
     """
     This is an ETL connector that is used to provide connectivity with Local File.
-    """ 
+    """
     def __init__(self, uri, bufsize=-1, encoding='utf-8', name='localfile'):
-        """ 
-        Required Parameters 
+        """
+        Required Parameters
         uri      : Path of file.
-                
-        Extra Parameters 
+
+        Extra Parameters
         bufsize   : Buffer size for reading data.
         encoding  : Encoding format.
         name      : Name of connector.
-        """    
+        """
         super(localfile, self).__init__(name)
         self._type = 'connector.localfile'
         self.bufsize = bufsize
@@ -65,9 +65,22 @@ class localfile(connector):
         if connector:
             connector.close()
 
-    def __copy__(self): 
+    def __copy__(self):
         """
         Overrides copy method.
         """
-        res = localfile(self.uri, self.bufsize, self.encoding, self.name)        
+        res = localfile(self.uri, self.bufsize, self.encoding, self.name)
         return res
+def test():
+
+    from etl_test import etl_test
+    import etl
+    file_conn=localfile('../../demo/input/partner1.csv')
+    test = etl_test.etl_component_test(etl.component.input.csv_in(file_conn, name='csv test'))
+    test.check_output([{'tel': '+32.81.81.37.00', 'id': '11', 'name': 'Fabien'}])
+    res=test.output()
+    print res
+
+if __name__ == '__main__':
+    test()
+
