@@ -28,11 +28,11 @@ class sugarcrm_connector(connector):
     """
     def __init__(self, username, password, url='http://localhost/sugarcrm', encoding='utf-8', name='sugarcrm_connector'):
         """
-        Required Parameters 
+        Required Parameters
         username: Userid of SugarCRM server.
         password: Password.
 
-        Extra Parameters 
+        Extra Parameters
         url     : URL of SugarCRM server.
         encoding: Encoding format.
         name    : Name of connector.
@@ -120,8 +120,13 @@ class sugarcrm_connector(connector):
         return res
 
 def test():
-    #TODO
-    pass
+    from etl_test import etl_test
+    import etl
+    sugarcrm_conn=sugarcrm_connector('admin','sugarpasswd',url='http://192.168.0.7/sugarcrm/soap.php')
+    test = etl_test.etl_component_test(etl.component.input.sugarcrm_in(sugarcrm_conn, 'Contacts'))
+    res=test.output()
+    print res
+
 
 if __name__ == '__main__':
     test()
