@@ -45,7 +45,7 @@ class gmail_in(component):
 
     def process(self):
         import gdata.contacts.service
-        super(gmail_in, self).action_start(key, singal_data, data)
+#        super(gmail_in, self).action_start(key, singal_data, data) # to be checked for test.
         connector = gdata.contacts.service.ContactsService()
         connector.ClientLogin(self.user, self.pwd)
         contacts_feed = connector.GetContactsFeed()
@@ -77,6 +77,8 @@ def test():
     user = user + '@gmail.com'
     password = getpass.unix_getpass("Enter your password:")
     test = etl_test.etl_component_test(gmail_in(user, password))
+    test.check_output([{'phone_numbers': [''], 'postal_addresses': [''], 'emails': [''], 'title': ''}], 'main')
+    # here add the details of the contact in your gmail in the above mentioned format 
     res = test.output()
 
 if __name__ == '__main__':

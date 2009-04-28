@@ -69,18 +69,34 @@ class sql_in(component):
             self.connector.close(self.sql_con)
             self.sql_con = False
 
-    def process(self):        
+    def process(self):       
         self.sql_con = self.connector.open()
         cursor = self.sql_con.cursor()
         cursor.execute(self.sqlquery)            
         columns_description = cursor.description
         rows = cursor.fetchall()
-        for row in rows:               
+        for row in rows:
+            print row               
             col_count=0
             d = {}
             for column in columns_description:
+                print column
                 d[column[0]] = row[col_count]
-                col_count += 1                 
+                col_count += 1
+                print d                 
             if d:
                 yield d, 'main'
        
+
+def test():
+    from etl_test import etl_test
+    import etl
+    sql_conn = etl.connector.sql_connector('localhost', '5432', 'trunk', 'admin', 'a')
+    query =  'select * from res_users'
+    test = etl_test.etl_component_test(sql_in(sql_conn, query))
+#    test.check_output
+    res = test.output()
+    print res
+    
+if __name__ == '__main__':
+    test() 
