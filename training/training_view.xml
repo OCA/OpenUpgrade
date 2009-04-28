@@ -228,7 +228,7 @@
             <field name="model">training.course</field>
             <field name="type">tree</field>
             <field name="arch" type="xml"> 
-                <tree string="Courses" colors="blue:p_id == False">
+                <tree string="Courses" colors="blue:state_course=='validated'">
                     <field name="sequence" />
                     <field name="code" string="Code" />
                     <field name="name" string="Designation" />
