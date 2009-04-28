@@ -81,11 +81,17 @@ class etl_component_test(object):
         if self.output_channel not in self.datas:
             raise etl_test_exception('expected output channel does not has actual data.')
         act_datas=self.datas[self.output_channel]
+<<<<<<< TREE
+        print act_datas,self.output_data
+        if len(act_datas)!=len(self.output_data):
+            raise etl_test_exception('lengths of actual output and expected output are different')
+=======
         if self.output_data:
             if len(act_datas)!=len(self.output_data):
                 raise etl_test_exception('lengths of actual output and expected output are different')
         else:
              return self.datas
+>>>>>>> MERGE-SOURCE
         count=0
         while count<len(act_datas):
             exp_r=self.output_data[count]

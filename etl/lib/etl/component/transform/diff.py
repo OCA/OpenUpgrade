@@ -22,7 +22,7 @@
 """
  Used to find difference between Data.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 
@@ -50,18 +50,18 @@ class diff(component):
         """
         Required  Parameters
         keys  : Keys for differentiating.
-           
-        Extra Parameters 
+
+        Extra Parameters
         name          : Name of Component.
-        """             
+        """
         super(diff, self).__init__(name=name, transformer=transformer, row_limit=row_limit)
-        self._type = 'component.transfer.diff' 
+        self._type = 'component.transfer.diff'
         self.keys = keys
         self.row = {}
         self.diff = []
-        self.same = []    
+        self.same = []
 
-    def __copy__(self):        
+    def __copy__(self):
         res = diff(self.key, self.name, self.transformer, self.row_limit)
         return res
 
@@ -69,10 +69,10 @@ class diff(component):
     def key_get(self, row):
         result = []
         for k in self.keys:
-            result.append(row[k])
+            result.append(row[k]) # should be chk...it add value not key here
         return tuple(result)
 
-    def process(self):        
+    def process(self):
         self.row = {}
         for channel, transition in self.input_get().items():
             if channel not in self.row:
@@ -99,19 +99,19 @@ class diff(component):
             for v in self.row[k].values():
                 yield v,channel
 
-def test():                     
+def test():
     from etl_test import etl_test
     from etl import transformer
     input_part = [
     {'id': 1L, 'name': 'Fabien', 'address': 'france'},
     {'id': 1L, 'name': 'Fabien', 'address': 'belgium'},
     {'id': 3L, 'name': 'harshad', 'address': 'india'},
-    ]   
+    ]
     modify = [
-    {'id': 1L, 'name': 'Fabien', 'address': 'india'},        
+    {'id': 1L, 'name': 'Fabien', 'address': 'india'},
     {'id': 1L, 'name': 'Fabien', 'address': 'belgium'},
     {'id': 3L, 'name': 'harshad', 'address': 'india'},
-    ] 
+    ]
 
     add = [
     {'id': 4L, 'name': 'henry', 'address': 'spain'}
@@ -119,15 +119,15 @@ def test():
 
 
     modify = [
-    {'id': 1L, 'name': 'Fabien', 'address': 'india'}               
-    ]     
+    {'id': 1L, 'name': 'Fabien', 'address': 'india'}
+    ]
 
     remove = [
     {'id': 1L, 'name': 'Fabien', 'address': 'belgium'},
     ]
-    test = etl_test.etl_component_test(diff())
-    test.check_input({'main':input_part})    
-    test.check_output(duplicate_part, 'duplicate')
+    test = etl_test.etl_component_test(diff(['id']))
+    test.check_input({'main':input_part})
+    test.check_output(modify, 'main')
     print test.output()
 
 if __name__ == '__main__':
