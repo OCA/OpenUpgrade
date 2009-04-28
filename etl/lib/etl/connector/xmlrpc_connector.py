@@ -100,7 +100,13 @@ def test():
     Test function.
     """
     #TODO
-    pass
+    from etl_test import etl_test
+    import etl
+    xmlrpc_conn=xmlrpc_connector('localhost',8050)
+    conn = xmlrpc_conn.start('import_data')
+    test = etl_test.etl_component_test(etl.component.input.xmlrpc_in( etl.component.input.xmlrpc_in(xmlrpc_conn)))
+    res=test.output()
+    print res
 
 if __name__ == '__main__':
     test()
