@@ -35,7 +35,7 @@ class dm_simulator(osv.osv):
         'date_start' : fields.datetime('Date Start', readonly=False),
         'date_stop' : fields.datetime('Date Stop', readonly=False),
         'duration' : fields.integer('Duration'),
-        'duration_unit' : fields.selection([('minutes', 'Minutes'),('hours','Hours'),('days','Days'),('months','Months')], 'Time Unit'),
+        'duration_unit' : fields.selection([('minutes', 'Minutes'),('hours','Hours'),('days','Days'),('weeks','Weeks'),('months','Months')], 'Time Unit'),
         'cust_qty' : fields.integer('Customers', readonly=True),
         'action_qty' : fields.integer('Actions', readonly=True),
         'section_qty' : fields.integer('Section', readonly=True),
@@ -100,6 +100,7 @@ class dm_simulator(osv.osv):
         if sim.type == "purchase":
             sect_act_qty = sim.cust_qty
             sect_act = []
+            cust_ids = []
             sect = 0
             while (sect < sim.section_qty):
                 """ Compute time range """
