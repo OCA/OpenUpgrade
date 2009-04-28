@@ -165,13 +165,13 @@ class sale_order_1(report_sxw.rml_parse):
                     res['price_subtotal']=''
                     res['currency']=''
                 elif entry.layout_type=='line':
-                    res['product_uom_qty']='____________'
+                    res['product_uom_qty']='__________'
                     res['price_unit']='______________'
-                    res['discount']='____________'
+                    res['discount']='___________'
                     res['tax_id']='_________________'
                     res['product_uom']='_____'
-                    res['name']='________________________________________'
-                    res['price_subtotal']='_______________________'
+                    res['name']='_______________________________________'
+                    res['price_subtotal']='_________'
                     res['currency']='_______'
                 elif entry.layout_type=='break':
                     res['layout_type']=entry.layout_type
