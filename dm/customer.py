@@ -256,6 +256,21 @@ class dm_workitem(osv.osv):
                 wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
                 kwargs = {(tr.delay_type+'s'): tr.delay}
                 next_action_time = wi_action_time + datetime.timedelta(**kwargs)
+
+                """
+                if tr.action_hour:
+                    print "Action Hour :",tr.action_hour
+                    print "Action Hour datetime :", datetime.datetime.strptime(str(tr.action_hour),'%H.%M')
+                    act_hour = datetime.datetime.fromtimestamp(tr.action_hour)
+                    print "Action Hour timestamp :",act_hour.strftime('%H:%M:%S')
+
+                if tr.action_day:
+                    nxt_act_time = next_action_time.timetuple()
+                    print "Next time timetuple :",nxt_act_time
+                    act_day = int(tr.action_day)
+                    print "Action Day :",act_day
+                """
+
                 print "Next action date : ",next_action_time
 
                 aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})

@@ -145,7 +145,9 @@ class dm_simulator(osv.osv):
                         action_time = datetime.datetime.fromtimestamp(random.randint(int(from_ts),int(to_ts))).strftime('%Y-%m-%d  %H:%M:%S')
                         print "DM SIM - action_time :",action_time
                         self.pool.get('dm.simulator.action').create(cr, uid, {'simulator_id':sim.id,'trigger_type_id':trigger_type_id,
-                            'step_id':step, 'segment_id':cust[1], 'address_id':cust[0],'section':sect_act.index(s),
+#                            'step_id':step, 'segment_id':cust[1], 'address_id':cust[0],'section':sect_act.index(s),
+#To fix : Segment_id
+                            'step_id':step, 'segment_id':1, 'address_id':cust,'section':sect_act.index(s),
                             'action_time':action_time})
                     print "DM SIM - Customers :", cust_ids[0:s[0]]
 

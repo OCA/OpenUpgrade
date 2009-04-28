@@ -107,13 +107,19 @@
                     <page string="Transitions">
                         <field name="outgoing_transition_ids" colspan="4" nolabel="1" default_get="{'type_id':'step_from_id','step_id':active_id or False}">
                             <form string="Transition">
+                                <separator string="Origin and Destination" colspan="4"/>
                                 <field name="step_from_id" colspan="4" readonly="1"/>
                                 <field name="step_to_id" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>
+                                <separator string="Action Condition and Time" colspan="4"/>
                                 <field name="condition_id" select="1"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
                                     <field name="delay_type" nolabel="1" select="2"/>
+                                </group>
+                                <group col="2" colspan="2">
+                                    <field name="action_hour" widget="float_time" select="2"/>
+                                    <field name="action_day" select="2"/>
                                 </group>
                             </form>
                             <tree string="Outgoing Transitions">
@@ -126,14 +132,19 @@
                         </field>
                         <field name="incoming_transition_ids" colspan="4" nolabel="1">
                             <form string="Transition">
+                                <separator string="Origin and Destination" colspan="4"/>
                                 <field name="step_from_id" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <field name="step_to_id" readonly="1"/>
-<!--                                <field name="condition" select="1" widget="selection"/>-->
+                                <separator string="Action Condition and Time" colspan="4"/>
                                 <field name="condition_id" select="1"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
                                     <field name="delay_type" nolabel="1" select="2"/>
+                                </group>
+                                <group col="2" colspan="2">
+                                    <field name="action_hour" widget="float_time" select="2"/>
+                                    <field name="action_day" select="2"/>
                                 </group>
                             </form>
                             <tree string="Incoming Transitions">
