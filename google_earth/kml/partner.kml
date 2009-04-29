@@ -1,18 +1,31 @@
 <?xml version="1.0" ?>
 <kml>
  <Document>
+  <Region>
+   <LatLonAltBox>
+    <north/>
+    <south/>
+    <east/>
+    <west/>
+   </LatLonAltBox>
+   <Lod>
+    <minLodPixels/>
+    <maxLodPixels/>
+   </Lod>
+  </Region>
   <Placemark>
    <name>
     ASUStek
    </name>
    <description>
-     , Taiwan, Taiwan Turnover = 3700.0
+     Taiwan, Taiwan
    </description>
-   <Point>
-    <coordinates>
-     120.9605150,23.6978100
-    </coordinates>
-   </Point>
+   <LineString>
+    <tessellate>
+     1
+    </tessellate>
+    <coordinates/>
+   </LineString>
   </Placemark>
  </Document>
 </kml>

@@ -21,3 +21,4 @@
 ##############################################################################
 
 import google_map_display
+import layers_of_region_category

@@ -10,8 +10,19 @@
 			keyword="client_action_multi"
 			menu="False"
 			/>
+			
+		<wizard
+			string="Layers of Category of Regions"
+			model="res.partner.address"
+			name="layers.region.catery"
+			id="wizard_layers_basedon_region_category"
+			keyword="client_action_multi"
+			menu="False"
+			/>
+			
 		<menuitem id="google_earth" name="Google Map/Earth" parent="base.menu_base_partner"/>
 		<menuitem name="Customer on Map" id="menu_google_earth" parent="google_earth" action="wizard_customer_on_map" type="wizard"/>
-
+		<menuitem name="Layers of Category of Regions" id="menu_layers_of_region_category" parent="google_earth" action="wizard_layers_basedon_region_category" type="wizard"/>
+		
 	</data>
 </openerp>
