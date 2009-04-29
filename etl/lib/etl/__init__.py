@@ -61,7 +61,6 @@ __version_info__ = (1, 0, 0)
 __license__ = "GNU General Public License"
 
 from signal import signal
-from statistic import statistic
 from job import job
 from transition import transition
 from transformer import transformer
