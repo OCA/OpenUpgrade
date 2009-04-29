@@ -28,66 +28,71 @@ import time
 import datetime
 
 class hr_holidays_note(osv.osv_memory):
-    _name='hr.holidays.note'
-    _rec_name = 'note'
+    _name = 'hr.holidays.note'
+    _description = "Holidays note"
     _columns = {
+        'name' : fields.char('Employee name', size=64, readonly=True),
         'note' : fields.text('Note', size=64),
     } 
 hr_holidays_note()
  
 class wizard_hr_holidays_evaluation(osv.osv_memory):
-    _name='wizard.hr.holidays.evaluation'
+    _name = 'wizard.hr.holidays.evaluation'
     _rec_name = 'holiday_status_id'
     _columns = {
-        'holiday_status_id':fields.many2one('hr.holidays.status','Holiday Status', required=True, help='This is where you specify the holiday type to synchronize. It will create the "holidays per employee" accordingly if necessary, or replace the value "Max leaves allowed" into the existing one.'),
-        'hr_timesheet_group_id':fields.many2one('hr.timesheet.group', 'Timesheet Group', required=True, help='This field allow you to filter on only the employees that have a contract using this working hour.'),
-        'float_time':fields.float('Time', required=True, help='''This time depicts the amount per day earned by an employee working a day. 
-The computation is: total earned = time * number of working days'''),
+        'holiday_status_id':fields.many2one('hr.holidays.status','Holiday Status', required=True, 
+            help='This is where you specify the holiday type to synchronize. It will create the "holidays per employee" accordingly if necessary, or replace the value "Max leaves allowed" into the existing one.'),
+        'hr_timesheet_group_id':fields.many2one('hr.timesheet.group', 'Timesheet Group', required=True, 
+            help='This field allow you to filter on only the employees that have a contract using this working hour.'),
+        'float_time':fields.float('Time', required=True, 
+            help='''This time depicts the amount per day earned by an employee working a day.The computation is: total earned = time * number of working days'''),
         'date_current' : fields.date('Date', help='This field allow you to choose the date to use, for forecast matter e.g')
     }
     _defaults = {
-            'date_current' : lambda *a: time.strftime('%Y-%m-%d'),
-                 }
+        'date_current' : lambda *a: time.strftime('%Y-%m-%d'),
+        }
     
     def action_create(self, cr, uid, ids, context=None):
-        value = {}
         data = {}
         objs = []
-        bjs = []
+        value = {}
         my_dict = {}
+        bjs = []
         obj_contract = self.pool.get('hr.contract')
-        obj_self = self.browse(cr, uid, ids, context=context)[0]
+        obj_self = self.browse(cr,uid,ids,context=context)[0]
         group_ids = obj_self.hr_timesheet_group_id.name
-        obj_ids = obj_contract.search(cr, uid, [('working_hours_per_day_id', '=', group_ids)])
+        obj_ids = obj_contract.search(cr,uid,[('working_hours_per_day_id','=',group_ids)])
         for rec_con in obj_contract.browse(cr,uid,obj_ids):
-            name=rec_con.employee_id.id
+            name = rec_con.employee_id.id
             s_date = rec_con.date_start
             
-            cr.execute("select distinct(ht.dayofweek), sum(ht.hour_to - ht.hour_from) from hr_timesheet_group as htg, hr_timesheet as ht where ht.tgroup_id = htg.id and htg.id = %s group by ht.dayofweek" %obj_self.hr_timesheet_group_id.id)
+            cr.execute("""select distinct(ht.dayofweek),sum(ht.hour_to - ht.hour_from) 
+                        from hr_timesheet_group as htg,hr_timesheet as ht 
+                        where ht.tgroup_id = htg.id and htg.id = %s group by ht.dayofweek""" %obj_self.hr_timesheet_group_id.id)
             tsg = cr.fetchall()
-            alldays = map(lambda x: x[0], tsg)
+            alldays = map(lambda x: x[0],tsg)
             nod = len(alldays)
-            alltime = map(lambda x: x[1], tsg)
+            alltime = map(lambda x: x[1],tsg)
             how = 0
             for k in alltime:
                 how += k
             hpd = how/nod
             
             user_obj = self.pool.get('hr.holidays.per.user')
-            user_ids = user_obj.search(cr, uid, [('employee_id', '=', name),('holiday_status', '=', obj_self.holiday_status_id.id)])
+            user_ids = user_obj.search(cr,uid,[('employee_id','=',name),('holiday_status','=',obj_self.holiday_status_id.id)])
             if user_ids:
-                old_leave = user_obj.browse(cr, uid, user_ids, context)[0].max_leaves
+                old_leave = user_obj.browse(cr,uid,user_ids,context)[0].max_leaves
                 
-            cr.execute("""SELECT distinct(to_date(to_char(ha.name, 'YYYY-MM-dd'),'YYYY-MM-dd')) 
+            cr.execute("""SELECT distinct(to_date(to_char(ha.name,'YYYY-MM-dd'),'YYYY-MM-dd')) 
                         FROM hr_attendance ha, hr_attendance ha2 
                         WHERE ha.action='sign_in' 
                             AND ha2.action='sign_out' 
-                            AND (to_date(to_char(ha.name, 'YYYY-MM-dd'),'YYYY-MM-dd'))=(to_date(to_char(ha2.name, 'YYYY-MM-dd'),'YYYY-MM-dd')) 
-                            AND (to_date(to_char(ha.name, 'YYYY-MM-dd'),'YYYY-MM-dd') <= %s)  
-                            AND (to_date(to_char(ha.name, 'YYYY-MM-dd'),'YYYY-MM-dd') >= %s) 
+                            AND (to_date(to_char(ha.name,'YYYY-MM-dd'),'YYYY-MM-dd'))=(to_date(to_char(ha2.name,'YYYY-MM-dd'),'YYYY-MM-dd')) 
+                            AND (to_date(to_char(ha.name,'YYYY-MM-dd'),'YYYY-MM-dd') <= %s)  
+                            AND (to_date(to_char(ha.name,'YYYY-MM-dd'),'YYYY-MM-dd') >= %s) 
                             AND ha.employee_id = %s """, (obj_self.date_current,s_date,name))
             results = cr.fetchall()
-            all_dates = map(lambda x: x[0], results)
+            all_dates = map(lambda x: x[0],results)
             days = len(all_dates)
             hrss = days * obj_self.float_time
 
@@ -101,24 +106,22 @@ The computation is: total earned = time * number of working days'''),
                     x += 0.5
 
             if len(user_ids) == 0:
-                data = {'employee_id': name, 'holiday_status': obj_self.holiday_status_id.id, 'max_leaves' : x}
-                user_id = user_obj.create(cr, uid, data, context)
+                data = {'employee_id':name,'holiday_status':obj_self.holiday_status_id.id,'max_leaves':x}
+                user_id = user_obj.create(cr,uid,data,context)
                 objs.append(user_id)
                 return objs
             else:
-                user_emp_ids = user_obj.search(cr, uid, [('employee_id', '=', name),('holiday_status', '=', obj_self.holiday_status_id.id)])
-                ser_obj = self.pool.get('hr.holidays.per.user').write(cr, uid, user_emp_ids, {'max_leaves':x})
-
-                #value['note'] = ''
+                user_emp_ids = user_obj.search(cr,uid,[('employee_id','=',name),('holiday_status','=',obj_self.holiday_status_id.id)])
+                ser_obj = self.pool.get('hr.holidays.per.user').write(cr,uid,user_emp_ids,{'max_leaves':x})
                 emp_name = rec_con.employee_id.name
-                my_dict[name] = [emp_name, old_leave, x, x-old_leave]
+                my_dict[name] = [emp_name,old_leave,x,x-old_leave]
                 
         header = ('{| border="1" cellspacing="0" cellpadding="5" align="left" \n! %-40s \n! %-16s \n! %-20s \n! %-16s ', [_('employee name'), 'Previous holiday number', 'Active holiday number', 'differnce'])
         detail = ""
-        detail += self.format_table(header, my_dict)
-        
+        detail += self.format_table(header,my_dict)
         value['note'] = detail
-        note_id = self.pool.get('hr.holidays.note').create(cr, uid, value, context)
+        value['name'] = emp_name
+        note_id = self.pool.get('hr.holidays.note').create(cr,uid,value,context)
         bjs.append(note_id)
             
         return {

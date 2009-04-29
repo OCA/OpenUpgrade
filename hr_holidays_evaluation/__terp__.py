@@ -21,12 +21,16 @@
 ##############################################################################
 
 {
-    "name":"Hr holidays evaluation",
+    "name" : "Hr holidays evaluation",
     "version" : "1.0",
     "author" : "Tiny",
-    "depends" : ["base", "hr_holidays", "hr_contract", "hr_attendance"],
+    "category" : "Generic Modules/Human Resources",
+    "website" : "http://www.openerp.com",
+    "depends" : ["hr_holidays", "hr_contract", "hr_attendance"],
     "demo_xml" : [],
-    "update_xml" : ["hr_holidays_evaluation_view.xml"],
+    'init_xml': [],
+    "update_xml" : ["hr_holidays_evaluation_view.xml",
+                    "security/ir.model.access.csv"],
     "description" : "Computation of holidays for employee",
     "active" : False,
     "installable" : True,

@@ -10,7 +10,6 @@
                 <form string="Notes">
                     <separator col="4" colspan="4" string="Notes"/>
                     <field name="note" widget="text_wiki" nolabel="1" colspan="4" height="350" width="800" readonly="1"/>
-
                 </form>
             </field>
         </record>
@@ -22,7 +21,7 @@
             <field name="arch" type="xml">
                 <tree string="Notes">
                     <separator col="4" colspan="4" string="Notes"/>
-					<field name="note"/>
+					<field name="name"/>
                 </tree>
             </field>
         </record>
