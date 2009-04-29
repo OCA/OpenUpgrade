@@ -44,8 +44,8 @@ class transition(signal):
         self.status = 'open' # open,close # open : active, close : inactive
         
     def __str__(self):
-        return "<Transition source='%s' destination='%s' channel_source='%s' channel_destination='%s' type='%s' trigger='%s'>" \
-                %(self.source.name, self.destination.name, self.type, self.channel_source, self.channel_destination, self.trigger)
+        return "<Transition source='%s' destination='%s' channel_source='%s' channel_destination='%s' type='%s' trigger='%s' status='%s'>" \
+                %(self.source.name, self.destination.name, self.type, self.channel_source, self.channel_destination, self.trigger, self.status)
 
     def __copy__(self):             
         res = transition(self.source, self.destination, self.channel_source, self.channel_destination, self.type)               

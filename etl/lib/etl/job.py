@@ -48,7 +48,7 @@ class job(signal):
         self.logger = logger.logger()
 
     def __str__(self):           
-        res = '<Job name = "%s">' % (self.name)
+        res = '<Job name="%s" status="%s">' % (self.name, self.status)
         components = [] 
         trans = []
         for component in self.get_components():            
@@ -163,29 +163,29 @@ class job(signal):
         return end_components
 
     def get_statitic_info(self):
-        print 'Statistical Information :'
-        print '======================================'
-        print 'Job : %s' %(self.name)
-        print '-------------------'
-        print 'Start : %s' %(self._cache['start_date'])
-        print 'End   : %s' %(self._cache['end_date'])
-        print 'Total Process time : %s' %(self._cache['process_time'])
+        stat_info =  'Statistical Information (process time in microsec):\n'
+        stat_info += '======================================\n'
+        stat_info += 'Job : %s\n' %(self.name)
+        stat_info += '-------------------\n'
+        stat_info += 'Start : %s\n' %(self._cache['start_date'])
+        stat_info += 'End   : %s\n' %(self._cache['end_date'])
+        stat_info += 'Total Process time : %s\n' %(self._cache['process_time'])
         for component in self.get_components():
-             print '\nComponent : %s'%(component)
-             print '---------------------------------'
-             print 'Start : %s' %(component._cache['start_date'])
-             print 'End   : %s' %(component._cache['end_date'])
-             print 'Total Process time : %s' %(component._cache['process_time'])
+             stat_info += '\nComponent : %s\n'%(component)
+             stat_info += '---------------------------------\n'
+             stat_info += 'Start : %s\n' %(component._cache['start_date'])
+             stat_info += 'End   : %s\n' %(component._cache['end_date'])
+             stat_info += 'Total Process time : %s\n' %(component._cache['process_time'])
              for trans,value in component._cache['trans'].items():
-                print '\nTransition : %s'%trans
-                print '---------------------------------'
-                print 'Total Inputs : %s'%value.get('total_inputs',0)
-                print 'Total Outputs : %s'%value.get('total_outputs',0)
-                print 'Total Input Process Time : %s'%value.get('input_process_time',0)
-                print 'Total Output Process Time : %s'%value.get('output_process_time',0)
-                print 'Input Process Time per Record : %s'%value.get('input_process_time_per_record',0)
-                print 'Output Process Time per Record : %s'%value.get('output_process_time_per_record',0)
-                
+                stat_info += '\nOut Transition : %s\n'%trans
+                stat_info += '---------------------------------\n'
+                stat_info += 'Total Inputs : %s\n'%value.get('total_inputs',0)
+                stat_info += 'Total Outputs : %s\n'%value.get('total_outputs',0)
+                stat_info += 'Total Input Process Time : %s\n'%value.get('input_process_time',0)
+                stat_info += 'Total Output Process Time : %s\n'%value.get('output_process_time',0)
+                stat_info += 'Input Process Time per Record : %s\n'%value.get('input_process_time_per_record',0)
+                stat_info += 'Output Process Time per Record : %s\n'%value.get('output_process_time_per_record',0)
+        return stat_info         
                 
 
     def run(self):              
@@ -196,7 +196,7 @@ class job(signal):
         else:
             self.start()
             self.end()
-        self.get_statitic_info()
+        
 
     def register_actions(self):
         self.register_actions_job(self)
@@ -339,9 +339,7 @@ class job(signal):
             diff = (current_time - start_time).microseconds
         process_per_record = 0
         if total :            
-            process_per_record =  diff / total
-        if not process_per_record:
-            print total, diff, (current_time - start_time).microseconds
+            process_per_record =  diff / total        
         value[trans].update({'total_inputs' : total, 'input_process_time' : diff ,'input_process_time_per_record' : process_per_record})
         return True
 

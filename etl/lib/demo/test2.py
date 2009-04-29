@@ -39,4 +39,4 @@ etl.transition(diff1, log4, channel_source="update")
 job = etl.job([in1,in2,log_1,log_2,diff1,log1,log2,log3,log4,csv_out1])
 print job
 job.run()
-
+print job.get_statitic_info()

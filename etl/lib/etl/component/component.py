@@ -50,7 +50,7 @@ class component(signal):
         self.status = 'open'
             
     def __str__(self):                   
-        res='<Component job = "%s" name = "%s" type = "%s"'% (self.job.name, self.name, self._type)
+        res='<Component job="%s" name="%s" type="%s" status="%s"'% (self.job.name, self.name, self._type, self.status)
         if self.is_start():
             res += ' is_start = "True"'
         if self.is_end():
