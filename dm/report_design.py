@@ -13,6 +13,7 @@ from report import interface ,report_sxw
 import time
 from customer_function import customer_function
 import re
+import datetime
 interna_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -42,7 +43,9 @@ def merge_message(cr, uid, keystr, context):
         exp = str(match.group()[2:-2]).strip()
         plugin_values = generate_plugin_value(cr, uid, id, context.get('customer_id'), context)
         context.update(plugin_values).update({'object':obj,'time':time})
-        result = eval(exp,)
+        print "=============================="
+        print context
+        result = eval(exp,context)
         if result in (None, False):
             return str("--------")
         return str(result)
@@ -78,13 +81,42 @@ def generate_reports(cr,uid,obj,report_type,context):
     report_xml = pool.get('ir.actions.report.xml')
 
     for customer_id in customer_ids:
-
+        camp_id = obj.segment_id.proposition_id.camp_id.id 
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',report_type)])
-        vals={'segment_id': obj.segment_id.id, 'name': obj.step_id.code + "_" +str(customer_id), 'type_id': type_id[0]}
-        camp_doc  = pool.get('dm.campaign.document').create(cr,uid,vals)
+        camp_mail_service_obj = pool.get('dm.campaign.mail_service')
+        camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
+        print "camp_mail_service_id",camp_mail_service_id
+        camp_mail_service = camp_mail_service_obj.browse(cr,uid,camp_mail_service_id)[0]
+        print "camp_mail_service.mail_service_id",camp_mail_service.mail_service_id.time_mode
+        if camp_mail_service.mail_service_id.time_mode=='interval' :
+            kwargs =  {(camp_mail_service.mail_service_id.unit_interval):camp_mail_service.mail_service_id.action_interval}
+            delivery_time = datetime.datetime.now() + datetime.timedelta(**kwargs)
+        elif camp_mail_service.mail_service_id.time_mode=='date' :
+            delivery_time = camp_mail_service.mail_service_id.action_date
+        elif camp_mail_service.mail_service_id.time_mode=='hour' :
+            temp_time = str(camp_mail_service.mail_service_id.action_hour)
+            if time.strftime('%H.%M:') > temp_time:
+                date = datetime.datetime.now() + datetime.timedelta(days=1).strftime('%Y-%m-%d')
+            else : 
+                date = time.strftime('%Y-%m-%d')
+            delivery_time = date+' '+temp_time.replace('.',':')+':00'
+        else :
+            delivery_time=time.strftime('%Y-%m-%d %H:%M:%S')
+        print "delivery_time",delivery_time
 
         document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
         print "Doc id : ",document_id
+
+        vals={  'segment_id': obj.segment_id.id,
+            'name': obj.step_id.code + "_" +str(customer_id),
+            'type_id': type_id[0],
+            'mail_service_id':camp_mail_service.mail_service_id.id,
+            'delivery_time' : delivery_time,
+            'document_id' : document_id[0],
+            'address_id' : obj.address_id.id
+            }
+        camp_doc  = pool.get('dm.campaign.document').create(cr,uid,vals)
+        print "camp_doc",camp_doc
 
         if document_id :
             report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
@@ -104,9 +136,10 @@ def generate_reports(cr,uid,obj,report_type,context):
                              'res_model' : 'dm.campaign.document',
                              'res_id' : camp_doc,
                              'datas': base64.encodestring(report_data),
+                             'file_type':'html'
                             }
                 attach_id = attachment_obj.create(cr,uid,attach_vals)
-            print "Attachment id and campaign doc id" , attach_id,camp_doc
+                print "Attachment id and campaign doc id" , attach_id,camp_doc
             if report_ids :
                 for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
                     srv = netsvc.LocalService('report.' + report.report_name)
@@ -116,6 +149,7 @@ def generate_reports(cr,uid,obj,report_type,context):
                                  'res_model' : 'dm.campaign.document',
                                  'res_id' : camp_doc,
                                  'datas': base64.encodestring(report_data),
+                                 'file_type':report_type
                                  }
                     attach_id = attachment_obj.create(cr,uid,attach_vals)
                     print "Attachement : ",attach_id
@@ -164,7 +198,7 @@ def generate_plugin_value(cr, uid, document_id, customer_id, context={}):
             plugin_func = getattr(X, plugin_name)
             plugin_value = plugin_func(cr, uid, customer_id, **args)
 
-        if p.store_value : 
+        if p.store_value :
             dm_plugins_value.create(cr, uid,{'date':time.strftime('%Y-%m-%d'),
                                              'customer_id':customer_id,
                                              'plugin_id':p.id,
