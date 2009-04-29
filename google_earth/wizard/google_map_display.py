@@ -82,7 +82,7 @@ def create_kml(self, cr, uid, data, context={}):
 #        address += ', '
 #        address += str(add.street2)
     if add.city:
-        address += ', '
+#        address += ', '
         address += str(add.city)
     if add.state_id:
         address += ', '
@@ -90,7 +90,7 @@ def create_kml(self, cr, uid, data, context={}):
     if add.country_id:
         address += ', '
         address += str(add.country_id.name)
-    
+
     desc_text = address + ' Turnover = ' + str(turnover)
     kmlDoc = xml.dom.minidom.Document()
     kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
