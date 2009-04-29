@@ -8,26 +8,46 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Notes">
-                    <separator col="4" colspan="4" string="Notes"/>
-                    <field name="note" widget="text_wiki" nolabel="1" colspan="4" height="350" width="800" readonly="1"/>
+                    <field name="date" select="1"/>
+                    <field name="employee_id" select="1"/>
+                    <field name="prev_number" select="2"/>
+                    <field name="new_number" select="2"/>
+                    <field name="diff"/>
                 </form>
             </field>
         </record>
-        
         <record id="view_hr_holidays_note_tre" model="ir.ui.view">
             <field name="name">Notes</field>
             <field name="model">hr.holidays.note</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Notes">
-                    <separator col="4" colspan="4" string="Notes"/>
-					<field name="name"/>
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <field name="prev_number"/>
+                    <field name="new_number"/>
+                    <field name="diff"/>
                 </tree>
             </field>
         </record>
 
+        <record model="ir.ui.view" id="view_holidays_per_user_form_inherited">
+            <field name="name">hr.holidays.per.user.form.inherited</field>
+            <field name="model">hr.holidays.per.user</field>
+            <field name="inherit_id" ref="hr_holidays.view_holidays_per_user_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Evaluation Holiday History">
+                        <field name="note_ids" readonly="1"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+
 		 <record id="view_wizard_hr_development" model="ir.ui.view">
-            <field name="name">Generate Chart of Accounts from a Chart Template</field>
+            <field name="name">Holidays Evaluation Wizard</field>
             <field name="model">wizard.hr.holidays.evaluation</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
@@ -48,7 +68,7 @@
         </record>
 
         <record id="action_wizard_hr_development" model="ir.actions.act_window">
-            <field name="name">Generate Chart of Accounts from a Chart Template</field>
+            <field name="name">Holidays Evaluation Wizard</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">wizard.hr.holidays.evaluation</field>
             <field name="view_type">form</field>
