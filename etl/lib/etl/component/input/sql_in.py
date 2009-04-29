@@ -76,14 +76,11 @@ class sql_in(component):
         columns_description = cursor.description
         rows = cursor.fetchall()
         for row in rows:
-            print row               
             col_count=0
             d = {}
             for column in columns_description:
-                print column
                 d[column[0]] = row[col_count]
                 col_count += 1
-                print d                 
             if d:
                 yield d, 'main'
        
@@ -91,10 +88,10 @@ class sql_in(component):
 def test():
     from etl_test import etl_test
     import etl
-    sql_conn = etl.connector.sql_connector('localhost', 5432, 'trunk', 'admin', 'a')
-    query =  'select * from res_users'
+    sql_conn = etl.connector.sql_connector('localhost', 5432, 'trunk', 'postgres', 'postgres')
+    query =  'select * from etl_test'# execute the query you wish to
     test = etl_test.etl_component_test(sql_in(sql_conn, query))
-#    test.check_output
+    test.check_output([{'id': 1, 'name': 'a'}, {'id': 2, 'name': 'b'}])# output according to the executed query should be written over here.
     res = test.output()
     print res
     
