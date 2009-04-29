@@ -99,29 +99,15 @@ class job(signal):
             for channel, tran_out in component.trans_out:                
                 if tran_out not in transitions:
                     transitions.append(tran_out)             
-        return transitions
+        return transitions   
     
-    def write(self):
-        """
-        Store job instance into pickle object.
-        """        
-        return pickle.dumps(self)
-        
-    def read(self,value): 
-        """
-        Read job instance value from pickle object.
-        Parameter
-        value - pickle value  
-        """     
-        return pickle.load(value)
       
-    def pause(self): 
-        self.pickle = self.write()     
+    def pause(self):              
         for tran in self.get_transitions():
             tran.pause()
         self.status = 'pause'
         self.signal('pause', {'date': datetime.datetime.today()})
-        return self.pickle
+        
 
     def restart(self):      
         for tran in self.get_transitions():
@@ -130,8 +116,7 @@ class job(signal):
         self.status = 'start'
         self.signal('restart', {'date': datetime.datetime.today()}) 
 
-    def start(self):              
-        self.register_actions()  
+    def start(self):
         self.status = 'start'            
         self.signal('start', {'date': datetime.datetime.today()})        
         for c in self.get_end_components():
@@ -161,6 +146,32 @@ class job(signal):
             if component.is_end():
                 end_components.append(component)       
         return end_components
+    
+    #TODO  : make separate class like job.process and put below functions in new class
+
+    def write(self):
+        """
+        Store job instance into pickle object.
+        """        
+        return pickle.dumps(self)
+        
+    def read(self,value): 
+        """
+        Read job instance value from pickle object.
+        Parameter
+        value - pickle value  
+        """     
+        return pickle.load(value)
+
+    def run(self):     
+        self.register_actions()         
+        if self.pickle:
+            job = self.read(self.pickle)
+            job.restart()
+            job.end()
+        else:
+            self.start()
+            self.end()
 
     def get_statitic_info(self):
         stat_info =  'Statistical Information (process time in microsec):\n'
@@ -185,18 +196,7 @@ class job(signal):
                 stat_info += 'Total Output Process Time : %s\n'%value.get('output_process_time',0)
                 stat_info += 'Input Process Time per Record : %s\n'%value.get('input_process_time_per_record',0)
                 stat_info += 'Output Process Time per Record : %s\n'%value.get('output_process_time_per_record',0)
-        return stat_info         
-                
-
-    def run(self):              
-        if self.pickle:
-            job = self.read(self.pickle)
-            job.restart()
-            job.end()
-        else:
-            self.start()
-            self.end()
-        
+        return stat_info  
 
     def register_actions(self):
         self.register_actions_job(self)

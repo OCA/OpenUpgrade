@@ -19,7 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 """
-{ETL} (Extract, transform, and load) is a module for python 2.5 or greater 
+I{ETL} (Extract, transform, and load) is a module for python 2.5 or greater 
 that implements ETL concepts for data import, export and also performs some operations 
 beween import/export.  
 
@@ -44,19 +44,19 @@ ETL is written entirely in python and is released under the GNU General Public L
 
 Website: U{http://www.openerp.com/}.
 
-@version: 1.0.0
+@version: 1.0.0a1
 @author: Tiny SPRL
 @contact: support@tinyerp.com
 @license: GNU General Public License
 """
 import sys
-if sys.version_info < (2, 2):
-    raise RuntimeError('You need python 2.2 for this module.')
+if sys.version_info < (2, 4):
+    raise RuntimeError('You need python 2.4 for this module.')
 
 
 __author__ = "Tiny SPRL"
-__date__ = "01 Aprl 2009"
-__version__ = "1.0.0"
+__date__ = "01 May 2009"
+__version__ = "1.0.0a1"
 __version_info__ = (1, 0, 0)
 __license__ = "GNU General Public License"
 
@@ -79,8 +79,7 @@ for c in locals().values():
 del c
 
 
-__all__ = [ 'signal',
-            'statistic',
+__all__ = [ 'signal',            
             'job',
             'transition',
             'transformer',
