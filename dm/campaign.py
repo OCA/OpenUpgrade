@@ -2002,23 +2002,6 @@ class dm_campaign_proposition_prices_progression(osv.osv):
     }
 dm_campaign_proposition_prices_progression()
 
-class dm_campaign_document_type(osv.osv):
-    _name = 'dm.campaign.document.type'
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=64, required=True),
-    }
-dm_campaign_document_type()
-
-class dm_campaign_document(osv.osv):
-    _name = 'dm.campaign.document'
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'type_id' : fields.many2one('dm.campaign.document.type','Format',required=True),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment',required=True),
-    }
-dm_campaign_document()
-
 class Country(osv.osv):
     _name = 'res.country'
     _inherit = 'res.country'

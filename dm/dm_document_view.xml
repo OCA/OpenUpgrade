@@ -3,7 +3,7 @@
 <data>
 
 	<menuitem name="Documents" id="menu_action_offer_doc" parent="dm.menu_dm_config" sequence="1" />
-	
+    <menuitem name="Campaign Documents" id="menu_dm_config_lowlevel_campaign_doc" parent="dm.menu_dm_config_lowlevel" groups="res_groups_dmadmin" sequence="1"/>
 	<!--
 	=======================================================
 	OFFER STEP DOCUMENT CATEGORY VIEWS
@@ -276,6 +276,97 @@
 
     <!--
     =======================================================
+    CAMPAIGN DOCUMENT TYPE
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_campaign_document_type_form">
+        <field name="name">dm.campaign.document.type.form</field>
+        <field name="model">dm.campaign.document.type</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Campaign Document Type">
+                <separator string="Campaign Document Type" colspan="4"/>
+                <field name="name" select="1"/>
+                <field name="code" select="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_campaign_document_type_tree">
+        <field name="name">dm.campaign.document.type.tree</field>
+        <field name="model">dm.campaign.document.type</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Campaign Document Types">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_campaign_document_type">
+        <field name="name">All Campaign Document Types</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.document.type</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_campaign_document_type_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_campaign_document_type" parent="menu_dm_config_lowlevel_campaign_doc" action="action_dm_campaign_document_type" sequence="0" />
+
+    <!--
+    =======================================================
+    CAMPAIGN DOCUMENT
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_campaign_document_form">
+        <field name="name">dm.campaign.document.form</field>
+        <field name="model">dm.campaign.document</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Campaign Document">
+                <separator string="Campaign Document" colspan="4"/>
+                <field name="name" select="1"/>
+                <field name="type_id" select="2"/>
+                <field name="segment_id" select="2"/>
+                <field name="delivery_time" select="1"/>
+                <field name="mail_service_id" select="2"/>
+                <field name="state" select="2"/>
+                <field name="error_msg"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_campaign_document_tree">
+        <field name="name">dm.campaign.document.tree</field>
+        <field name="model">dm.campaign.document</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Campaign Documents">
+                <field name="name"/>
+                <field name="type_id"/>
+                <field name="segment_id"/>
+                <field name="delivery_time" select="1"/>
+                <field name="state" select="2"/>
+                <field name="error_msg"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_campaign_document">
+        <field name="name">All Campaign Documents</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.document</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_campaign_document_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_campaign_document" parent="menu_dm_config_lowlevel_campaign_doc" action="action_dm_campaign_document" sequence="1" />
+
+    <!--
+    =======================================================
         RELATES
     =======================================================
     -->
@@ -287,5 +378,6 @@
         view_mode="tree,form"
 		id="act_back_to_offer_step_open"
 		domain = "[('document_ids','in',[active_id])]"/>
+		
 </data>
 </openerp>    
