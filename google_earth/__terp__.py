@@ -5,7 +5,7 @@
     "author" : "Tiny",
     "category" : "Generic Modules/Others",
     "website" : "http://www.openerp.com",
-    "depends" : ["base"],
+    "depends" : ["base","account"],
     "description": """
             This Module will includes following :
 
