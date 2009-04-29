@@ -31,8 +31,8 @@ class hr_holidays_note(osv.osv_memory):
     _name = 'hr.holidays.note'
     _description = "Holidays note"
     _columns = {
-        'name' : fields.char('Employee name', size=64, readonly=True),
-        'note' : fields.text('Note', size=64),
+        'name' : fields.char('Employee name',size=64,readonly=True),
+        'note' : fields.text('Note',size=64),
     } 
 hr_holidays_note()
  
@@ -40,13 +40,10 @@ class wizard_hr_holidays_evaluation(osv.osv_memory):
     _name = 'wizard.hr.holidays.evaluation'
     _rec_name = 'holiday_status_id'
     _columns = {
-        'holiday_status_id':fields.many2one('hr.holidays.status','Holiday Status', required=True, 
-            help='This is where you specify the holiday type to synchronize. It will create the "holidays per employee" accordingly if necessary, or replace the value "Max leaves allowed" into the existing one.'),
-        'hr_timesheet_group_id':fields.many2one('hr.timesheet.group', 'Timesheet Group', required=True, 
-            help='This field allow you to filter on only the employees that have a contract using this working hour.'),
-        'float_time':fields.float('Time', required=True, 
-            help='''This time depicts the amount per day earned by an employee working a day.The computation is: total earned = time * number of working days'''),
-        'date_current' : fields.date('Date', help='This field allow you to choose the date to use, for forecast matter e.g')
+        'holiday_status_id':fields.many2one('hr.holidays.status','Holiday Status',required=True,help='This is where you specify the holiday type to synchronize. It will create the "holidays per employee" accordingly if necessary, or replace the value "Max leaves allowed" into the existing one.'),
+        'hr_timesheet_group_id':fields.many2one('hr.timesheet.group','Timesheet Group',required=True,help='This field allow you to filter on only the employees that have a contract using this working hour.'),
+        'float_time':fields.float('Time',required=True,help='''This time depicts the amount per day earned by an employee working a day.The computation is: total earned = time * number of working days'''),
+        'date_current' : fields.date('Date',help='This field allow you to choose the date to use, for forecast matter e.g')
     }
     _defaults = {
         'date_current' : lambda *a: time.strftime('%Y-%m-%d'),
