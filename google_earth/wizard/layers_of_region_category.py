@@ -21,7 +21,7 @@
 ##############################################################################
 
 import sys
-#import arcgisscripting, 
+#import arcgisscripting,
 import datetime, os, zipfile, xml, string
 from xml.dom.ext.reader.Sax2 import FromXmlStream
 from xml.dom.ext import PrettyPrint
@@ -69,19 +69,19 @@ def geocode(address):
 def create_kml(self, cr, uid, data, context={}):
     # This function creates an XML document and adds the necessary
     # KML elements.
-    
+
     address = ' '
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
     path = tools.config['addons_path']
-    fileName = path + '/google_earth/kml/partner.kml'
+    fileName = path + '/google_earth/kml/partner_region.kml'
     partner_data = partner_obj.browse(cr, uid, data['form']['partner_id'], context)
 
-    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
-    for id, turnover, partner_id in cr.fetchall():
-        if not (partner_id == data['form']['partner_id']):
-            raise wizard.except_wizard('Warning','This parnter has no turnover')
-            return {}
+#    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+##    for id, turnover, partner_id in cr.fetchall():
+##        if not (partner_id == data['form']['partner_id']):
+##            raise wizard.except_wizard('Warning','This parnter has no turnover')
+##            return {}
     address_obj= pool.get('res.partner.address')
     add = address_obj.browse(cr, uid, partner_data.address[0].id, context) # Todo: should be work for multiple address
 
@@ -93,16 +93,16 @@ def create_kml(self, cr, uid, data, context={}):
     if add.country_id:
         address += ', '
         address += str(add.country_id.name)
-    
+
     kmlDoc = xml.dom.minidom.Document()
     kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
     kmlElement = kmlDoc.appendChild(kmlElement)
-    
+
     documentElement = kmlDoc.createElement('Document')
     documentElement = kmlElement.appendChild(documentElement)
-    
+
     RegionElement = kmlDoc.createElement('Region')
-    
+
     LatlonaltboxElement = kmlDoc.createElement('LatLonAltBox')
     northElement = kmlDoc.createElement('north')
     LatlonaltboxElement.appendChild(northElement)
@@ -113,28 +113,28 @@ def create_kml(self, cr, uid, data, context={}):
     westElement = kmlDoc.createElement('west')
     LatlonaltboxElement.appendChild(westElement)
     RegionElement.appendChild(LatlonaltboxElement)
-    
+
     LodElement = kmlDoc.createElement('Lod')
     minlodpixelsElement = kmlDoc.createElement('minLodPixels')
     LodElement.appendChild(minlodpixelsElement)
     maxlodpixelsElement = kmlDoc.createElement('maxLodPixels')
     LodElement.appendChild(maxlodpixelsElement)
     RegionElement.appendChild(LodElement)
-    
+
     documentElement.appendChild(RegionElement)
-    
+
     placemarkElement = kmlDoc.createElement('Placemark')
-    
+
     placemarknameElement = kmlDoc.createElement('name')
     placemarknameText = kmlDoc.createTextNode(partner_data.name)
     placemarknameElement.appendChild(placemarknameText)
     placemarkElement.appendChild(placemarknameElement)
-    
+
     descriptionElement = kmlDoc.createElement('description')
     descriptionText = kmlDoc.createTextNode(address)
     descriptionElement.appendChild(descriptionText)
     placemarkElement.appendChild(descriptionElement)
-    
+
     linestringElement = kmlDoc.createElement('LineString')
     tessellateElement = kmlDoc.createElement('tessellate')
     tessellateText = kmlDoc.createTextNode('1')
@@ -143,7 +143,7 @@ def create_kml(self, cr, uid, data, context={}):
     coordinatesElement = kmlDoc.createElement('coordinates')
     linestringElement.appendChild(coordinatesElement)
     placemarkElement.appendChild(linestringElement)
-    
+
     documentElement.appendChild(placemarkElement)
 
     # This writes the KML Document to a file.
