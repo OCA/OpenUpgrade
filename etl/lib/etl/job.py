@@ -224,6 +224,7 @@ class job(signal):
         component.signal_connect(component, 'stop', self.action_component_stop)
         component.signal_connect(component, 'end', self.action_component_end)
         component.signal_connect(component, 'error', self.action_component_error)
+        component.signal_connect(component, 'warning', self.action_component_warning)
 
     def register_actions_connector(self, connector):
         connector.signal_connect(connector, 'open', self.action_connector_open)
@@ -289,8 +290,9 @@ class job(signal):
     
     def action_connector_error(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("connector", logger.LOG_ERROR,
-                    '<' + key.name + '> : '+data.get('error', False))
+                    '<' + key.name + '> : '+signal_data.get('message', False))
         return True
+    
 
     def action_component_start(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("component", logger.LOG_INFO,
@@ -298,9 +300,7 @@ class job(signal):
         key._cache['start_date'] = signal_data.get('date',False)        
         return True
 
-    def action_component_start_input(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the <' + key.name + '> has started to take input...')        
+    def action_component_start_input(self, key, signal_data={}, data={}):             
         if 'trans' not in key._cache:
             key._cache['trans'] = {}
         value = key._cache['trans']
@@ -310,9 +310,7 @@ class job(signal):
         value[trans].update({'start_input' : signal_data.get('date',False)})
         return True
 
-    def action_component_start_output(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the <' + key.name + '> has started to give output...')
+    def action_component_start_output(self, key, signal_data={}, data={}):        
         if 'trans' not in key._cache:
             key._cache['trans'] = {}
         value = key._cache['trans']
@@ -322,9 +320,7 @@ class job(signal):
         value[trans].update({'start_output' : signal_data.get('date',False)})
         return True
 
-    def action_component_get_input(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the <' + key.name + '> has get input...')
+    def action_component_get_input(self, key, signal_data={}, data={}):        
         if 'trans' not in key._cache:
             key._cache['trans'] = {}
         value = key._cache['trans']
@@ -343,9 +339,7 @@ class job(signal):
         value[trans].update({'total_inputs' : total, 'input_process_time' : diff ,'input_process_time_per_record' : process_per_record})
         return True
 
-    def action_component_send_output(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("component", logger.LOG_INFO,
-                     'the <' + key.name + '> has send output...')
+    def action_component_send_output(self, key, signal_data={}, data={}):        
         if 'trans' not in key._cache:
             key._cache['trans'] = {}
         value = key._cache['trans'] 
@@ -389,7 +383,12 @@ class job(signal):
 
     def action_component_error(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("component", logger.LOG_ERROR,
-                     '<' + key.name + '> : ' + signal_data.get('error', 'False'))        
+                     '<' + key.name + '> : ' + signal_data.get('message', 'False'))        
+        return True
+
+    def action_component_warning(self, key, signal_data={}, data={}):        
+        self.logger.notifyChannel("component", logger.LOG_WARNING,
+                    '<' + key.name + '> : '+signal_data.get('message', False))
         return True
 
     def action_transition_start(self, key, signal_data={}, data={}):       

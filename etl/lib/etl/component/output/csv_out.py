@@ -67,6 +67,8 @@ class csv_out(component):
             self.fp = False
 
     def process(self):
+        if self.is_start():
+            self.warning('No any Input attached')
         import csv
         datas = []
         self.fp = False

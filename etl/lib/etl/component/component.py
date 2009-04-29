@@ -93,6 +93,12 @@ class component(signal):
         self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
 
+    def warning(self, message):
+        self.signal('warning', {'message': message})
+
+    def error(self, message):
+        self.signal('error', {'message': message})
+
     def generator_get(self, transition):
         """
         Get generator list of transition.

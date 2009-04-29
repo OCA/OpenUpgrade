@@ -63,7 +63,9 @@ class csv_in(component):
             self.connector.close(self.fp)  
             self.fp = False
 
-    def process(self):        
+    def process(self):
+        if self.is_end():
+            self.warning('No any Output attached')        
         import csv
         self.fp = self.connector.open()
         reader = csv.DictReader(self.fp, **self.csv_params)                   

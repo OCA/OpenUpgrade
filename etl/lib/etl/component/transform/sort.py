@@ -58,6 +58,10 @@ class sort(component):
 
     # Read all input channels, sort and write to 'main' channel
     def process(self):
+        if self.is_start():
+            self.warning('No any Input attached')
+        if self.is_end():
+            self.warning('No any Output attached')
         datas = []
         for channel, trans in self.input_get().items():
             for iterator in trans:
