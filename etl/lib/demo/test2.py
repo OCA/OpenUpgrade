@@ -21,7 +21,7 @@ log2 = etl.component.transform.logger(name="Log Add")
 log3 = etl.component.transform.logger(name="Log Remove")
 log4 = etl.component.transform.logger(name="Log Update")
 
-fileconnector_output=etl.connector.localfile('output/test2_add.csv')
+fileconnector_output=etl.connector.localfile('output/test2_add.csv', 'w+')
 csv_out1 = etl.component.output.csv_out(fileconnector_output,name='Output')
 
 etl.transition(in1, log_1)
