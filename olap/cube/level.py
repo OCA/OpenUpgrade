@@ -48,7 +48,7 @@ class level(object):
         '''
         if self.sublevels[0].name=='all':
             return [{
-                'value': [([str(self.level)], str('All '+self.level), False)],
+                'value': [([str(self.level)], str(self.level), False)],
                 'query': {
                     'column': [sqlalchemy.literal('all')],
                 },
@@ -113,6 +113,12 @@ class level(object):
         result = query.fetchall()
         def _tuple_define(x):
             y=list(x)
+            if y[-1] == None:
+                y[-1] = '/'
+            elif isinstance(y[-1],float):
+                y[-1] = str (int(y[-1]))
+            else:
+                y[-1] = str (y[-1])
             return ([self.level]+y[:-1]),y[-1]
              
         axis = map(_tuple_define, result)
@@ -209,12 +215,15 @@ class level(object):
             # To convert everythin in to the string so that no conversion needed at later stage 
             # This is for the elements to be displayed in the rows and columns
             for i in range(len(a[0])):
-                if isinstance(a[0][i],int):
-                    a[0][i] = str(a[0][i])
-                elif isinstance(a[0][i],float):
-                    a[0][i] = str(int(a[0][i]))
+                if a[0][i]:
+                    if isinstance(a[0][i],int):
+                        a[0][i] = str(a[0][i])
+                    elif isinstance(a[0][i],float):
+                        a[0][i] = str(int(a[0][i]))
+                    else:
+                        a[0][i] = str(a[0][i])
                 else:
-                    a[0][i] = str(a[0][i])
+                    a[0][i] = '/'
             a = list(a)
             if isinstance(a[-1],int):
                 a[-1] = str(a[-1])
