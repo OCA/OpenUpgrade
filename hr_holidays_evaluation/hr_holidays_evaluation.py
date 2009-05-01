@@ -161,17 +161,6 @@ class wizard_hr_holidays_evaluation(osv.osv_memory):
     def action_cancel(self,cr,uid,ids,context=None):
         return {}
     
-    def format_table(self, header=[], data_list={}): #This function can work forwidget="text_wiki"
-        detail = ""
-        detail += (header[0]) % tuple(header[1])
-        frow = '\n|-'
-        for i in header[1]:
-            frow += '\n| %s'
-        for key, value in data_list.items():
-            detail += (frow) % tuple(value)
-        detail = detail + '\n|}'
-        return detail
-    
 wizard_hr_holidays_evaluation()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
