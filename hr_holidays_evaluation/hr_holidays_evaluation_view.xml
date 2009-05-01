@@ -39,7 +39,7 @@
             <field name="arch" type="xml">
                 <notebook position="inside">
                     <page string="Evaluation Holiday History">
-                        <field name="note_ids" readonly="1"/>
+                        <field name="note_ids" readonly="1" nolabel="1"/>
                     </page>
                 </notebook>
             </field>
