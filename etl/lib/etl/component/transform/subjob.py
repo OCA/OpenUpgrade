@@ -41,18 +41,20 @@ class subjob(component):
         res = subjob(self.sub_job, name = self.name)
         return res
     
-    def dummy_iterator(self, channel, datas):
-        for d in datas:            
-            yield d, channel
+    def dummy_iterator(self):
+        for channel,iterator in self.input.items():                             
+            for d in iterator:                       
+                yield d, channel
 
-    def dummy2_iterator(self, dummy2):
+    def dummy2_iterator(self):
         self.result = {}
-        for channel,trans in dummy2.input_get().items():
-            self.result.setdefault(channel, [])
-            for iterator in trans:                
-                for d in iterator:                    
-                    self.result[channel].append(d)  
-                    yield d, channel
+        for channel,trans in self.dummy2.input_get().items():
+            for iterator in trans:                                
+                for ch, d in iterator:  
+                    if not self.result.get(ch, False):
+                        self.result[ch] = []
+                    self.result[ch].append(d)
+                    yield d, ch
 
     def process(self):          
         dummy = etl.component.component(name='dummy')
@@ -71,23 +73,27 @@ class subjob(component):
         self.sub_job.add_component(dummy)  
         self.sub_job.add_component(dummy2) 
      
-        for start_com in start_coms:
-            tran = etl.transition(dummy,start_com) 
-        for end_com in end_coms:
-            tran = etl.transition(end_com, dummy2)  
-        dummy2.generator =  self.dummy2_iterator(dummy2)
-            
+        for start_com in start_coms:            
+            new_in_tran = etl.transition(dummy, start_com) 
+        for end_com in end_coms:            
+            new_out_tran = etl.transition(end_com, dummy2, channel_source='', channel_destination='') 
 
+        self.dummy2 = dummy2 
+        self.dummy2.generator =  self.dummy2_iterator()       
+            
+        
+        self.input = {}
         for channel,trans in self.input_get().items():
             for iterator in trans:   
-                self.result = {}            
-                if dummy:
-                    dummy.generator = self.dummy_iterator(channel,iterator)                    
-                    self.sub_job.run()  
-                                   
-                for channel,iterator in self.result.items():                   
-                    for d in iterator:                        
-                        yield d, channel      
+                self.input.setdefault(channel, [])            
+                for d in iterator:                    
+                    self.input[channel].append(d)
+        self.result = {} 
+        dummy.generator = self.dummy_iterator()                  
+        self.sub_job.run()                                    
+        for channel,iterator in self.result.items():                   
+            for d in iterator:
+                yield d, channel
 
     
     

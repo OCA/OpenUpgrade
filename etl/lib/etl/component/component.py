@@ -128,8 +128,9 @@ class component(signal):
                     if not self._cache['start_output'][trans]:
                         self._cache['start_output'][trans] = datetime.datetime.today()
                         self.signal('start_output', {'trans': trans, 'date': datetime.datetime.today()})
+                    
                     data = self.data[trans].pop(0)
-                    self.signal('send_output', {'trans':trans,'data':data, 'date': datetime.datetime.today()})
+                    self.signal('send_output', {'trans':trans,'data':data, 'date': datetime.datetime.today()})                    
                     yield data
                     continue
                 elif self.data[trans] is None:                      
@@ -150,10 +151,13 @@ class component(signal):
                     self.signal('start_input', {'trans': trans,'channel':chan, 'date': datetime.datetime.today()})  
 
                 self.signal('get_input', {'trans': trans,'channel':chan,'data':data, 'date': datetime.datetime.today()})
-                for t, t2 in self.trans_out:                    
-                    if (t == chan) or (not t) or (not chan):
+                for t, t2 in self.trans_out:
+                    if (t == chan) or (not t) or (not chan):                        
                         self.data.setdefault(t2, [])
-                        self.data[t2].append(data)        
+                        if not t:
+                            self.data[t2].append((chan,data))        
+                        else:
+                             self.data[t2].append(data)
         except StopIteration, e:                       
             if trans:
                 trans.end()
