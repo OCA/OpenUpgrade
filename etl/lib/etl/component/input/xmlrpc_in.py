@@ -56,27 +56,28 @@ class xmlrpc_in(component):
 
     def process(self): 
         start_com = False
+        dummy = etl.component.component(name='dummy')
         for com in self.rel_job.get_components():
             if com.is_start():
                 start_com = com
-        self.rel_job.add_component(self)        
+        self.rel_job.add_component(dummy)        
         if start_com:
-            tran = etl.transition(self,start_com)               
-        self.connector.start(self.import_data)
+            tran = etl.transition(dummy,start_com)               
+        self.dummy = dummy
+        self.connector.start(self.import_data)        
         for d in self.datas:
             yield d, 'main'
 
-    def iterator(self, datas=[]):        
+    def iterator(self, datas=[]):                
         for d in datas:
             yield d, 'main'
+    
 
-    def data_iterator(self, datas):
-        pass
-
-    def import_data(self, datas):  
+    def import_data(self, datas): 
+        self.datas = datas 
         for com in self.rel_job.get_components():
             com.generator = False   
-        self.generator = self.iterator(datas)           
+        self.dummy.generator = self.iterator(self.datas)           
         self.rel_job.run()        
         return True
 
