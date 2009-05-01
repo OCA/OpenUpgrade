@@ -78,19 +78,19 @@ class component(signal):
         return False
 
     def pause(self):        
-        self.status = 'pause'
+        #self.status = 'pause'
         self.signal('pause', {'date': datetime.datetime.today()})
 
     def stop(self):        
-        self.status = 'stop'
+        #self.status = 'stop'
         self.signal('stop', {'date': datetime.datetime.today()})  
 
     def end(self):
-        self.status = 'end'
+        #self.status = 'end'
         self.signal('end', {'date': datetime.datetime.today()})  
 
     def start(self):
-        self.status = 'start'
+        #self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
 
     def warning(self, message):
@@ -117,7 +117,7 @@ class component(signal):
         self.data.setdefault(trans, [])
         self._cache['start_output'] = {trans:False}
         self._cache['start_input'] = {trans:False}
-        gen = self.generator_get(trans) or None
+        gen = self.generator_get(trans) or None        
         if trans:
             trans.start()
         self.start()
@@ -132,13 +132,12 @@ class component(signal):
                     self.signal('send_output', {'trans':trans,'data':data, 'date': datetime.datetime.today()})
                     yield data
                     continue
-                elif self.data[trans] is None:                    
+                elif self.data[trans] is None:                      
                     self.signal('no_input')
-                    raise StopIteration
-                              
-                data, chan = gen.next() 
+                    raise StopIteration                
+                data, chan = gen.next()                 
                 row_count += 1                 
-                if self.row_limit and row_count > self.row_limit:
+                if self.row_limit and row_count > self.row_limit:                     
                      raise StopIteration
                 if data is None:                    
                     self.signal('no_input')
@@ -181,6 +180,6 @@ class component(signal):
             if trans == 'trigger':
                 data = trans.source.get_trigger_data(channel, trans.trigger)
             else:
-                data = trans.source.channel_get(trans)
+                data = trans.source.channel_get(trans)            
             result[channel].append(data)
         return result

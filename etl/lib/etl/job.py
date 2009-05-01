@@ -88,7 +88,8 @@ class job(signal):
         return self._components
 
     def add_component(self, component):
-        self._componets.append(component)
+        self._components.append(component)
+        component.job = self
         
     def get_transitions(self):
         transitions = []
@@ -105,7 +106,7 @@ class job(signal):
     def pause(self):              
         for tran in self.get_transitions():
             tran.pause()
-        self.status = 'pause'
+        #self.status = 'pause'
         self.signal('pause', {'date': datetime.datetime.today()})
         
 
@@ -113,18 +114,18 @@ class job(signal):
         for tran in self.get_transitions():
             tran.restart()           
         
-        self.status = 'start'
+        #self.status = 'start'
         self.signal('restart', {'date': datetime.datetime.today()}) 
 
     def start(self):
-        self.status = 'start'            
+        #self.status = 'start'            
         self.signal('start', {'date': datetime.datetime.today()})        
         for c in self.get_end_components():
             for a in c.channel_get():              
                 pass 
 
     def end(self):
-        self.status = 'end'
+        #self.status = 'end'
         self.signal('end', {'date': datetime.datetime.today()})
         
         
@@ -137,7 +138,7 @@ class job(signal):
     def stop(self):
         for tran in self.get_transitions():
             tran.stop()                
-        self.status = 'stop'
+        #self.status = 'stop'
         self.signal('stop', {'date': datetime.datetime.today()})
           
     def get_end_components(self):
@@ -147,7 +148,7 @@ class job(signal):
                 end_components.append(component)       
         return end_components
     
-    #TODO  : make separate class like job.process and put below functions in new class
+    #TODO  : make separate class : job.process to provide platform for job process and put below functions in new class
 
     def write(self):
         """

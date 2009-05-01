@@ -32,7 +32,7 @@ class localfile(connector):
     """
     This is an ETL connector that is used to provide connectivity with Local File.
     """
-    def __init__(self, uri, bufsize=-1, encoding='utf-8', name='localfile'):
+    def __init__(self, uri, mode='r', bufsize=-1, encoding='utf-8', name='localfile'):
         """
         Required Parameters
         uri      : Path of file.
@@ -45,15 +45,18 @@ class localfile(connector):
         super(localfile, self).__init__(name)
         self._type = 'connector.localfile'
         self.bufsize = bufsize
+        self.mode = mode
         self.encoding = encoding
         self.uri = uri
 
-    def open(self, mode='r'):
+    def open(self, mode=False):
         """
         Opens a file connection.
         """
         # TODO : pass encoding in file
         super(localfile, self).open()
+        if not mode:
+            mode = self.mode
         return file(self.uri, mode)
         #self.file.encoding=self.encoding
 

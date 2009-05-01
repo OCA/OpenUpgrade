@@ -25,9 +25,9 @@
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
+import etl
 from etl.component import component
 
-#
 class xmlrpc_in(component):
     """
     To connect server with xmlrpc request.
@@ -35,42 +35,49 @@ class xmlrpc_in(component):
     """
     _register_functions=[]
 
-    def __init__(self, xmlrpc_connector, name='component.input.xmlrpc_in', transformer=None, row_limit=0):
+    def __init__(self, xmlrpc_connector, job, name='component.input.xmlrpc_in', transformer=None, row_limit=0):
         """
         To be update
         """
-        super(xmlrpc_in, self).__init__(name=name, connector=xmlrpc_connector, transformer=transformer, row_limit=0)
+        super(xmlrpc_in, self).__init__(name=name, connector=xmlrpc_connector, transformer=transformer, row_limit=row_limit)
         self._type = 'component.input.xmlrpc_in'
         self.datas = []
-        self.isStarted = False
+        self.rel_job = job
+        
         self.register_functions(self.import_data)
+        
 
     def __copy__(self):
-        res = xmlrpc_in(self.xmlrpc_connector, self.name, self.transformer, self.row_limit)
+        res = xmlrpc_in(self.connector, self.job, self.name, self.transformer, self.row_limit)
         return res
 
     def register_functions(self, fun):
         self._register_functions.append(fun)
 
-    def process(self):
-        from SimpleXMLRPCServer import SimpleXMLRPCServer
-        from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
-        import threading
+    def process(self): 
+        start_com = False
+        for com in self.rel_job.get_components():
+            if com.is_start():
+                start_com = com
+        self.rel_job.add_component(self)        
+        if start_com:
+            tran = etl.transition(self,start_com)               
         self.connector.start(self.import_data)
         for d in self.datas:
             yield d, 'main'
 
-    def iterator(self, datas=[]):
-        if self.transformer:
-            row = self.transformer.transform(self.datas)
+    def iterator(self, datas=[]):        
         for d in datas:
             yield d, 'main'
 
     def data_iterator(self, datas):
         pass
 
-    def import_data(self, datas):
-        self.generator = self.data_iterator(datas)
+    def import_data(self, datas):  
+        for com in self.rel_job.get_components():
+            com.generator = False   
+        self.generator = self.iterator(datas)           
+        self.rel_job.run()        
         return True
 
 def test():

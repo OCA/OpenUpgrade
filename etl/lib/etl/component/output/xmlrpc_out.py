@@ -38,23 +38,22 @@ class xmlrpc_out(component):
 
     def __copy__(self):
         res = xmlrpc_out(self.connector, self.name, self.transformer, self.row_limit)
-        return res
-
-    def end(self):
-        super(xmlrpc_out, self).end()
-        if self.server:
-            self.connector.close(self.server)
-            self.server = False
+        return res          
+        
 
     def process(self):
         self.server = False
+        datas = []
         for channel, trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:
-                    if not self.server:
-                        self.server = self.connector.connect()
-                    self.server.import_data([d])
-                    yield d, 'main'
+                for d in iterator:    
+                    self.server = self.connector.connect() 
+                    self.server.import_data([d])     
+                    self.connector.close(self.server)
+                    self.server = False               
+                    yield d, 'main'               
+        
+        
 
 def test():
     from etl_test import etl_test

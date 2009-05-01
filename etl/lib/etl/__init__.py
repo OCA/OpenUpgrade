@@ -19,7 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ##############################################################################
 """
-I{ETL} (Extract, transform, and load) is a module for python 2.5 or greater 
+ETL (Extract, transform, and load) is a module for python 2.4 or greater 
 that implements ETL concepts for data import, export and also performs some operations 
 beween import/export.  
 
@@ -85,6 +85,7 @@ __all__ = [ 'signal',
             'logger',
             'component',
             'connector',
-            'tools' ]
+            'tools' 
+           ]
 
 

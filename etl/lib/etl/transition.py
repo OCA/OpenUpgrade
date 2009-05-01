@@ -61,21 +61,21 @@ class transition(signal):
         self.status = 'close'
 
     def stop(self):
-        self.status = 'stop'
+        #self.status = 'stop'
         self.signal('stop')
 
     def end(self):
-        self.status = 'end'
+        #self.status = 'end'
         self.signal('end', {'date': datetime.datetime.today()})
 
     def start(self):
-        self.status = 'start'
+        #self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
 
     def pause(self):
-        self.status = 'pause'
+        #self.status = 'pause'
         self.signal('pause')    
 
     def restart(self):
-        self.status = 'start'
+        #self.status = 'start'
         self.signal('restart')

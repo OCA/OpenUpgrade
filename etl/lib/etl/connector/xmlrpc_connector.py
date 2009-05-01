@@ -26,11 +26,8 @@
  GNU General Public License.
 """
 import threading
-import xmlrpclib
-
 from etl.connector import connector
-from SimpleXMLRPCServer import SimpleXMLRPCServer
-from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
+
 
 class xmlrpc_server_thread(threading.Thread):
     _register_functions = []
@@ -47,20 +44,14 @@ class xmlrpc_server_thread(threading.Thread):
         return self._register_functions
 
     def run(self):
+        from SimpleXMLRPCServer import SimpleXMLRPCServer
+        from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
         server = SimpleXMLRPCServer((self.host, self.port))
         server.register_introspection_functions()
         for fun in self.get_register_functions():
-            server.register_function(self.import_data)
-            #To do create instance of method
-            #server.register_function(fun)
+            server.register_function(fun)            
         server.serve_forever()
-        return server
-
-    def import_data(self, datas):
-        if self.transformer:
-            row = self.transformer.transform(datas)
-        for d in datas:
-            yield d, 'main'
+        return server    
 
 class xmlrpc_connector(connector):
     """
@@ -85,6 +76,7 @@ class xmlrpc_connector(connector):
         server = xml_server.start()
 
     def connect(self):
+        import xmlrpclib
         server = xmlrpclib.ServerProxy('http://' + self.host + ':' + str(self.port))
         return server
 

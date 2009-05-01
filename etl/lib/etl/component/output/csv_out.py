@@ -77,7 +77,7 @@ class csv_out(component):
             for iterator in trans:
                 for d in iterator:
                     if not self.fp:
-                        self.fp = self.connector.open('wb+')
+                        self.fp = self.connector.open()
                         fieldnames = d.keys()
                         writer = csv.DictWriter(self.fp, fieldnames)
                         writer.writerow(dict(map(lambda x: (x, x), fieldnames)))
