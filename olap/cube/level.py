@@ -212,7 +212,7 @@ class level(object):
             k = tuple(list(a)[0][1:])
             mapping_axis = filter(lambda m: tuple(list(m)[:-1])==k, mapping)
             primary_keys = map(lambda x:list(x)[-1], mapping_axis)
-            # To convert everythin in to the string so that no conversion needed at later stage 
+            # To convert everything in to the string so that no conversion needed at later stage 
             # This is for the elements to be displayed in the rows and columns
             for i in range(len(a[0])):
                 if a[0][i]:

@@ -78,7 +78,9 @@ class query(object):
                         flag = True
                         temp_where = data[0]['query']['whereclause'][0] 
                         data[0]['query']['whereclause']=str(data[0]['query']['whereclause'][0])
-                    data_temp = copy.deepcopy(data[0])
+                        data_temp = copy.deepcopy(data[0])
+                    else:
+                        data_temp = copy.copy(data[0])
                     if 'whereclause' in data[1]['query'].keys():
                         if 'whereclause' in data_temp['query'].keys():
                             make_where.append(data[1]['query']['whereclause'][0])
