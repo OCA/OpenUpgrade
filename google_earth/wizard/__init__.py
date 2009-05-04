@@ -20,5 +20,5 @@
 #
 ##############################################################################
 
-import google_map_display
-import layers_of_region_category
+import google_map_turnover
+import google_map_layer
