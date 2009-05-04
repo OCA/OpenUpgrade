@@ -61,11 +61,7 @@ class openobject_out(component):
         res = openobject_out(self.connector, self.model, self.fields, self.name, self.transformer, self.row_limit)
         return res
 
-    def end(self):
-        super(openobject_out, self).end()
-        if self.op_oc:
-            self.connector.close(self.op_oc)
-            self.op_oc = False
+
 
     def process(self):
         datas = []
@@ -81,9 +77,9 @@ class openobject_out(component):
                         self.fields = dict(map(lambda x: (x, x), self.fields))
                     if not self.fields_keys:
                         self.fields_keys = self.fields.keys()
-                    if not self.op_oc:
-                        self.op_oc = self.connector.open()
-                    self.connector.execute(self.op_oc, 'execute', self.model, 'import_data', self.fields_keys, [map(lambda x: d[self.fields[x]], self.fields_keys)])
+                    op_oc = self.connector.open()
+                    self.connector.execute(op_oc, 'execute', self.model, 'import_data', self.fields_keys, [map(lambda x: d[self.fields[x]], self.fields_keys)])
+                    self.connector.close(op_oc)
                     yield d, 'main'
 
 def test():
