@@ -40,7 +40,7 @@
         'hr_expense',
         'hr_holidays',
         'portal_ifbl',
-        'ifbl_budget',
+        'account_budget_project',
         'sale',
     ],
     'init_xml' : [],
