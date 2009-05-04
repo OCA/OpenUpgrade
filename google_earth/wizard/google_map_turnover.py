@@ -69,12 +69,14 @@ def create_kml(self, cr, uid, data, context={}):
     fileName = path + '/google_earth/kml/partner.kml'
     partner_data = partner_obj.browse(cr, uid, data['form']['partner_id'], context)
 
+    # query should be check only with current partner not all
     cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
     for id, turnover, partner_id in cr.fetchall():
-        partner = partner_obj.read(cr, uid, partner_id, ['name'])
-
+        if not (partner_id == data['form']['partner_id']):
+            turnover = 0
+        if partner_id == data['form']['partner_id']:
+            turnover = turnover
     address_obj= pool.get('res.partner.address')
-#    address_ids = address_obj.search(cr, uid, ['partner_id', '=', partner_id])
     add = address_obj.browse(cr, uid, partner_data.address[0].id, context) # Todo: should be work for multiple address
 #    if add.street:
 #        address += str(add.street)
@@ -82,7 +84,7 @@ def create_kml(self, cr, uid, data, context={}):
 #        address += ', '
 #        address += str(add.street2)
     if add.city:
-        address += ', '
+#        address += ', '
         address += str(add.city)
     if add.state_id:
         address += ', '
@@ -90,19 +92,20 @@ def create_kml(self, cr, uid, data, context={}):
     if add.country_id:
         address += ', '
         address += str(add.country_id.name)
-#    if add.zip:
-#        address += ' '
-#        address += str(add.zip)
 
-
+    desc_text = address + ' , Partner turnover = ' + str(turnover)
     kmlDoc = xml.dom.minidom.Document()
-    kmlElement = kmlDoc.createElementNS('http://earth.google.com/kml/2.2','kml')
+    kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
     kmlElement = kmlDoc.appendChild(kmlElement)
     documentElement = kmlDoc.createElement('Document')
     documentElement = kmlElement.appendChild(documentElement)
     placemarkElement = kmlDoc.createElement('Placemark')
+    placemarknameElement = kmlDoc.createElement('name')
+    placemarknameText = kmlDoc.createTextNode(partner_data.name)
+    placemarknameElement.appendChild(placemarknameText)
+    placemarkElement.appendChild(placemarknameElement)
     descriptionElement = kmlDoc.createElement('description')
-    descriptionText = kmlDoc.createTextNode(address)
+    descriptionText = kmlDoc.createTextNode(desc_text)
     descriptionElement.appendChild(descriptionText)
     placemarkElement.appendChild(descriptionElement)
     pointElement = kmlDoc.createElement('Point')
