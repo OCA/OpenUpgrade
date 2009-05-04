@@ -50,5 +50,14 @@
 		<field name="media_id" ref="dm.media_email"/>
 		<field name="action_id" ref="dm_email.ir_actions_server_html_doc_generate0"/>
 	</record>
+
+    <record id="dm_mail_service_email0" model="dm.mail_service">
+        <field eval="&quot;&quot;&quot;Print and Send for Email&quot;&quot;&quot;" name="name"/>
+        <field name="partner_id" ref="dm.res_partner_print_send0"/>
+        <field name="media_id" ref="dm.media_email"/>
+        <field eval="1" name="default_for_media"/>
+        <field ref="dm_email.ir_actions_server_email_queue_generate" name="action_id"/>
+    </record>
+
 	</data>
 </openerp>

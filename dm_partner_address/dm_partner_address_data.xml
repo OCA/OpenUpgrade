@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+    
+    	<!-- PLUGINS -->
+    	<record id="dm_ddf_plugin_firstname0" model="dm.ddf.plugin">
+            <field eval="&quot;&quot;&quot;firstname&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;First Name&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="base.model_res_partner_address"/>
+            <field eval="&quot;&quot;&quot;Partner Address - First Name&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="dm_partner_address.field_res_partner_address_firstname"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        
+        <!-- TEMPLATE -->
+        <record id="dm.dm_document_template_partner0" model="dm.document.template">
+            <field model="dm.ddf.plugin" search="[('model_id.model','like','res.partner')]" name="plugin_ids"/>
+        </record>
+
+    </data>
+</openerp>

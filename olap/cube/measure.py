@@ -10,7 +10,6 @@ from pyparsing import *
 from agregator import agregator
 import axis_map
 
-
 class measure(object):
     def __init__(self, name):
         self.name = name
@@ -71,7 +70,8 @@ class measure(object):
                 'column': [col_agregated]
             },
             'axis_mapping': axis_map.column_fixed(0),
-            'delta': 0
+            'delta': 0,
+            'format':self.object.formatstring
         } ]
 
     def children(self, level, metadata):

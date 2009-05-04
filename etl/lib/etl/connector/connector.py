@@ -20,75 +20,47 @@
 #
 ##############################################################################
 """
-ETL Connector.
+ ETL Connector.
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
- GNU General Public License
+ GNU General Public License.
 """
 from etl import signal
-from etl import logger
 import datetime
 class connector(signal):
     """
     Base class of ETL Connector.
-    """
-    def action_open(self, key, signal_data={}, data={}):
-        """
-        Parameters ::
-        key : Key for connector
-        signal_data   : Data sent by signal
-        data     : Other common data between all methods
-        """
-        self.logger.notifyChannel("connector", logger.LOG_INFO,
-                     'the '+str(self)+' is open now...')
-        return True
-
-    def action_close(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("connector", logger.LOG_INFO,
-                    'the '+str(self)+' is close now...')
-        return True
-    
-    def action_error(self, key, signal_data={}, data={}):
-        self.logger.notifyChannel("connector", logger.LOG_ERROR,
-                    str(self)+' : '+data.get('error',False))
-        return True
+    """   
 
     def __init__(self,name='connector'):
         """
-        Parameters ::
-        name : Name of the connector
+        Parameters 
+        name : Name of the connector.
         """
+        self._type = 'connector'
         super(connector, self).__init__()
-        self.name=name
-        self.logger = logger.logger()
+        self.name = name or ''
+        self.status = 'close'        
 
-        self.status = 'close'
-        self.signal_connect(self, 'open', self.action_open)
-        self.signal_connect(self, 'close', self.action_close)
+    def __copy__(self):       
+        res = connector(name=self.name)
+        return res
+
+    def __str__(self):        
+    	return '<Connector name = "%s" type = "%s">'%(self.name, self._type)
 
     def open(self):
-        self.status='open'
-        self.signal('open')
-    def close(self,connector=False):
-        """
-        Parameters ::
-        connector : Connector that is to be closed
-        """
-        self.status='close'
-        self.signal('close')
+        self.status = 'open'
+        self.signal('open', {'date': datetime.datetime.today()})
 
-    def __copy__(self):
+    def close(self, connector=False):
         """
-        Overrides copy method
+        Parameters
+        connector : Connector that is to be closed.
         """
-        res=connector(name=self.name)
-        return res
+        self.status = 'close'
+        self.signal('close', {'date': datetime.datetime.today()})
 
     def execute(self):
         return True
 
-    def __str__(self):
-        if not self.name:
-            self.name=''
-    	return '<Connector : '+self.name+'>'
-    

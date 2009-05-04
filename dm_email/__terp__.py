@@ -28,7 +28,7 @@
     "description": """
             This module add emailing management to the Direct Marketing module.
             """,
-    "depends" : ["dm"],
+    "depends" : ["dm","smtpclient"],
     "init_xml" : [],
     "demo_xml" : [
                    "dm_email_demo.xml",

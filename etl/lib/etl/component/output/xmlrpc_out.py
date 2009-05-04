@@ -20,36 +20,51 @@
 #
 ##############################################################################
 """
-To do: comment
+ To get the response for the request made to xmlrpc server.
+
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ GNU General Public License.
 """
 
 from etl.component import component
 
 class xmlrpc_out(component):
     """
-    # To do: comment
+    To get the response for the request made to xmlrpc server.
     """
-    def __init__(self, xmlrpc_connector, method=None,datas=[], name='component.output.xmlrpc_out', transformer=None):
-        super(xmlrpc_out, self).__init__(name, transformer=transformer)
-        self.xmlrpc_connector = xmlrpc_connector
-        self.method = method
-        self.datas=datas
+    def __init__(self, xmlrpc_connector, name='component.output.xmlrpc_out', transformer=None, row_limit=0):
+        super(xmlrpc_out, self).__init__(name=name, connector=xmlrpc_connector, transformer=transformer, row_limit=row_limit)
+        self._type = 'component.output.xmlrpc_out'
+
+    def __copy__(self):
+        res = xmlrpc_out(self.connector, self.name, self.transformer, self.row_limit)
+        return res          
+        
 
     def process(self):
-        server=False
-        for channel,trans in self.input_get().items():
+        self.server = False
+        datas = []
+        for channel, trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:
-                    if not server:
-                        server = self.xmlrpc_connector.connect()
-                    server.import_data([d])
-                    yield d, 'main'
+                for d in iterator:    
+                    self.server = self.connector.connect() 
+                    self.server.import_data([d])     
+                    self.connector.close(self.server)
+                    self.server = False               
+                    yield d, 'main'               
+        
+        
 
 def test():
-    pass
+    from etl_test import etl_test
+    import etl
+    xmlrpc_conn = etl.connector.xmlrpc_connector('localhost', 8050)
+    test1 = etl_test.etl_component_test(xmlrpc_out(xmlrpc_conn))
+    server = xmlrpc_conn.connect()
+    server.import_data([])
 
 if __name__ == '__main__':
-    pass
+    test()
 
 #s = xmlrpclib.ServerProxy('http://localhost:5000')
 #s.import_data([

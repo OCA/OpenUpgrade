@@ -256,6 +256,21 @@ class dm_workitem(osv.osv):
                 wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
                 kwargs = {(tr.delay_type+'s'): tr.delay}
                 next_action_time = wi_action_time + datetime.timedelta(**kwargs)
+
+                """
+                if tr.action_hour:
+                    print "Action Hour :",tr.action_hour
+                    print "Action Hour datetime :", datetime.datetime.strptime(str(tr.action_hour),'%H.%M')
+                    act_hour = datetime.datetime.fromtimestamp(tr.action_hour)
+                    print "Action Hour timestamp :",act_hour.strftime('%H:%M:%S')
+
+                if tr.action_day:
+                    nxt_act_time = next_action_time.timetuple()
+                    print "Next time timetuple :",nxt_act_time
+                    act_day = int(tr.action_day)
+                    print "Action Day :",act_day
+                """
+
                 print "Next action date : ",next_action_time
 
                 aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})
@@ -265,6 +280,20 @@ class dm_workitem(osv.osv):
     def __init__(self, *args):
         self.is_running = False
         return super(dm_workitem, self).__init__(*args)
+
+    def mail_service_run(self, cr, uid, camp_doc, context={}):
+        print "Calling camp doc run"
+        context['active_id'] = camp_doc.id
+        try:
+            server_obj = self.pool.get('ir.actions.server')
+            print "Calling mail service run for :"
+            if not camp_doc.mail_service_id.action_id :
+                return False
+            res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
+            self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'done','error_msg':""})
+        except Exception,e:
+            self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error','error_msg':sys.exc_info()})
+        return True
 
     def check_all(self, cr, uid, context={}):
         print "Calling check all"
@@ -276,7 +305,15 @@ class dm_workitem(osv.osv):
             for wi in self.browse(cr, uid, ids, context=context):
                 self.run(cr, uid, wi, context=context)
             self.is_running = False
+ #       dm.campaign.document process
+        camp_doc_obj = self.pool.get('dm.campaign.document')
+        time_now = time.strftime('%Y-%m-%d %H:%M:%S')
+        camp_doc_ids = camp_doc_obj.search(cr,uid,[('state','=','pending'),('delivery_time','<',time_now)])
+        print camp_doc_ids
+        for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
+            self.mail_service_run(cr, uid, camp_doc, context=context)
         return True
+
 dm_workitem()
 
 class dm_customer_segmentation(osv.osv):

@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>ZSI.schema.SchemaInstanceType</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        ZSI ::
+        schema ::
+        SchemaInstanceType ::
+        Class&nbsp;SchemaInstanceType
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="ZSI.schema.SchemaInstanceType-class.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== TYPE DESCRIPTION ==================== -->
+<h1 class="epydoc">Type SchemaInstanceType</h1><br /><br />
+<pre class="base-tree">
+object --+    
+         |    
+      type --+
+             |
+            <strong class="uidshort">SchemaInstanceType</strong>
+</pre>
+
+<hr />
+<pre class="literalblock">
+Register all types/elements, when hit already defined 
+class dont create a new one just give back reference.  Thus 
+import order determines which class is loaded.
+
+class variables:
+    types -- dict of typecode classes definitions 
+        representing global type definitions.
+    elements -- dict of typecode classes representing 
+        global element declarations.
+    element_typecode_cache -- dict of typecode instances 
+        representing global element declarations.
+
+</pre><br /><br />
+
+<!-- ==================== INSTANCE METHODS ==================== -->
+<a name="section-InstanceMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Instance Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-InstanceMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>type</code></b>:
+      <code>__call__</code>,
+      <code>__cmp__</code>,
+      <code>__delattr__</code>,
+      <code>__getattribute__</code>,
+      <code>__hash__</code>,
+      <code>__repr__</code>,
+      <code>__setattr__</code>,
+      <code>__subclasses__</code>,
+      <code>mro</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__init__</code>,
+      <code>__reduce__</code>,
+      <code>__reduce_ex__</code>,
+      <code>__str__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="ZSI.schema.SchemaInstanceType-class.html#getTypeDefinition" class="summary-sig-name">getTypeDefinition</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">namespaceURI</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">lazy</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Grab a type definition, returns a typecode class definition
+because the facets (name, minOccurs, maxOccurs) must be provided.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="ZSI.schema.SchemaInstanceType-class.html#getElementDeclaration" class="summary-sig-name">getElementDeclaration</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">namespaceURI</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">isref</span>=<span class="summary-sig-default">False</span>,
+        <span class="summary-sig-arg">lazy</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Grab an element declaration, returns a typecode instance
+representation or a typecode class definition.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Static Methods</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-StaticMethods"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="ZSI.schema.SchemaInstanceType-class.html#__new__" class="summary-sig-name">__new__</a>(<span class="summary-sig-arg">cls</span>,
+        <span class="summary-sig-arg">classname</span>,
+        <span class="summary-sig-arg">bases</span>,
+        <span class="summary-sig-arg">classdict</span>)</span><br />
+      If classdict has literal and schema register it as a element 
+      declaration, else if has type and schema register it as a type 
+      definition.</td>
+          <td align="right" valign="top">
+            
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== CLASS VARIABLES ==================== -->
+<a name="section-ClassVariables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="ZSI.schema.SchemaInstanceType-class.html#types" class="summary-name">types</a> = <code title="{('http://www.sugarcrm.com/sugarcrm', 'contact_detail'): &lt;class 'etl.c\
+onnector.sugarcrm.sugarsoap_services_types.contact_detail_Def'&gt;,
+ ('http://www.sugarcrm.com/sugarcrm', 'contact_detail_array'): &lt;class \
+'etl.connector.sugarcrm.sugarsoap_services_types.contact_detail_array_\
+Def'&gt;,
+ ('http://www.sugarcrm.com/sugarcrm', 'document_revision'): &lt;class 'et\
+l.connector.sugarcrm.sugarsoap_services_types.document_revision_Def'&gt;,
+ ('http://www.sugarcrm.com/sugarcrm', 'entry_list'): &lt;class 'etl.conne\
+..."><code class="variable-group">{</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">http://www.sugarcrm.com/sugarcrm</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">contact_detail</code><code class="variable-quote">'</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="ZSI.schema.SchemaInstanceType-class.html#elements" class="summary-name">elements</a> = <code title="{('http://www.zolera.com/schemas/ZSI/', 'ActorFaultDetail'): &lt;class 'Z\
+SI.fault.ActorFaultDetailTypeCode'&gt;,
+ ('http://www.zolera.com/schemas/ZSI/', 'FaultDetail'): &lt;class 'ZSI.fa\
+ult.ZSIFaultDetailTypeCode'&gt;,
+ ('http://www.zolera.com/schemas/ZSI/', 'URIFaultDetail'): &lt;class 'ZSI\
+.fault.URIFaultDetailTypeCode'&gt;}"><code class="variable-group">{</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">http://www.zolera.com/schemas/ZSI/</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ActorFault</code><code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="element_typecode_cache"></a><span class="summary-name">element_typecode_cache</span> = <code title="{}"><code class="variable-group">{</code><code class="variable-group">}</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== PROPERTIES ==================== -->
+<a name="section-Properties"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Properties</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Properties"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+  <tr>
+    <td colspan="2" class="summary">
+    <p class="indent-wrapped-lines"><b>Inherited from <code>type</code></b>:
+      <code>__base__</code>,
+      <code>__bases__</code>,
+      <code>__basicsize__</code>,
+      <code>__dictoffset__</code>,
+      <code>__flags__</code>,
+      <code>__itemsize__</code>,
+      <code>__mro__</code>,
+      <code>__name__</code>,
+      <code>__weakrefoffset__</code>
+      </p>
+    <p class="indent-wrapped-lines"><b>Inherited from <code>object</code></b>:
+      <code>__class__</code>
+      </p>
+    </td>
+  </tr>
+</table>
+<!-- ==================== METHOD DETAILS ==================== -->
+<a name="section-MethodDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Method Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-MethodDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="__new__"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__new__</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">classname</span>,
+        <span class="sig-arg">bases</span>,
+        <span class="sig-arg">classdict</span>)</span>
+    <br /><em class="fname">Static Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  If classdict has literal and schema register it as a element 
+  declaration, else if has type and schema register it as a type 
+  definition.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+a new object with type S, a subtype of T
+
+</pre></dd>
+    <dt>Overrides:
+      type.__new__
+    </dt>
+  </dl>
+</td></tr></table>
+</div>
+<a name="getTypeDefinition"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getTypeDefinition</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">namespaceURI</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">lazy</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  <pre class="literalblock">
+Grab a type definition, returns a typecode class definition
+because the facets (name, minOccurs, maxOccurs) must be provided.
+
+Parameters:
+   namespaceURI -- 
+   name -- 
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getElementDeclaration"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getElementDeclaration</span>(<span class="sig-arg">cls</span>,
+        <span class="sig-arg">namespaceURI</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">isref</span>=<span class="sig-default">False</span>,
+        <span class="sig-arg">lazy</span>=<span class="sig-default">False</span>)</span>
+    <br /><em class="fname">Class Method</em>
+  </h3>
+  </td><td align="right" valign="top"
+    >&nbsp;
+    </td>
+  </table>
+  
+  <pre class="literalblock">
+Grab an element declaration, returns a typecode instance
+representation or a typecode class definition.  An element 
+reference has its own facets, and is local so it will not be
+cached.
+
+Parameters:
+    namespaceURI -- 
+    name -- 
+    isref -- if element reference, return class definition.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== CLASS VARIABLE DETAILS ==================== -->
+<a name="section-ClassVariableDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Class Variable Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-ClassVariableDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="types"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">types</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">http://www.sugarcrm.com/sugarcrm</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">contact_detail</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code>&lt;class 'etl.c<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+onnector.sugarcrm.sugarsoap_services_types.contact_detail_Def'&gt;<code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">http://www.sugarcrm.com/sugarcrm</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">contact_detail_array</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code>&lt;class <span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+'etl.connector.sugarcrm.sugarsoap_services_types.contact_detail_array_<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+Def'&gt;<code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">http://www.sugarcrm.com/sugarcrm</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">document_revision</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code>&lt;class 'et<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+l.connector.sugarcrm.sugarsoap_services_types.document_revision_Def'&gt;<code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">http://www.sugarcrm.com/sugarcrm</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">entry_list</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code>&lt;class 'etl.conne<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+<code class="variable-ellipsis">...</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="elements"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">elements</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code><code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">http://www.zolera.com/schemas/ZSI/</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">ActorFaultDetail</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code>&lt;class 'Z<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+SI.fault.ActorFaultDetailTypeCode'&gt;<code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">http://www.zolera.com/schemas/ZSI/</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">FaultDetail</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code>&lt;class 'ZSI.fa<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+ult.ZSIFaultDetailTypeCode'&gt;<code class="variable-op">,</code>
+ <code class="variable-group">(</code><code class="variable-quote">'</code><code class="variable-string">http://www.zolera.com/schemas/ZSI/</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">URIFaultDetail</code><code class="variable-quote">'</code><code class="variable-group">)</code><code class="variable-op">: </code>&lt;class 'ZSI<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+.fault.URIFaultDetailTypeCode'&gt;<code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Wed Apr 29 20:37:21 2009
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

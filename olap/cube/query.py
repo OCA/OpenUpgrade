@@ -1,3 +1,5 @@
+import locale
+
 
 import mdx_input
 import sqlalchemy
@@ -5,7 +7,6 @@ import common
 import slicer
 import datetime
 import pooler
-
 import copy
 
 class mapper(object):
@@ -35,7 +36,7 @@ class query(object):
             cube_data = newcube
         return cube_data
 
-    def run(self):
+    def run(self,currency):
         db = sqlalchemy.create_engine(self.object.schema_id.database_id.connection_url,encoding='utf-8')
         metadata = sqlalchemy.MetaData(db)
         print 'Connected to database...', self.object.schema_id.database_id.connection_url
@@ -77,7 +78,9 @@ class query(object):
                         flag = True
                         temp_where = data[0]['query']['whereclause'][0] 
                         data[0]['query']['whereclause']=str(data[0]['query']['whereclause'][0])
-                    data_temp = copy.deepcopy(data[0])
+                        data_temp = copy.deepcopy(data[0])
+                    else:
+                        data_temp = copy.copy(data[0])
                     if 'whereclause' in data[1]['query'].keys():
                         if 'whereclause' in data_temp['query'].keys():
                             make_where.append(data[1]['query']['whereclause'][0])
@@ -137,12 +140,35 @@ class query(object):
 #            metadata.bind.echo = True
             query = select.execute()
             result = query.fetchall()
-            
             for record in result:
                 cube = cube_data
                 r = list(record)
                 value = False
                 for s in subset:
+                    if s.has_key('format'):
+                        # To make use of the format string if specified for the measure
+                        # Its set to static for a testing
+                        if not currency:
+                            currency = "EUR"
+                        if isinstance(r[0],float) or isinstance(r[0],int) or isinstance(r[0],long):
+                            a = {'data':r[0]}
+                            r[0] = str(r[0])
+                        else:
+                            r[0] = '0.0'
+                            a = {'data':0.0}
+                            
+                        if s['format'] == 'cr_prefix':
+                            r[0] = currency + " "  + str(r[0])
+                        elif s['format'] == 'cr_postfix':
+                            r[0] = str(r[0]) + " " + currency
+                        elif s['format'] == 'comma_sep':
+                            r[0] = locale.format("%(data).2f", a, 1)
+                        elif s['format'] == 'cr_prefix_comma':
+                            r[0] = locale.format("%(data).2f", a, 1)
+                            r[0] = currency + " "  + str(r[0])
+                        elif s['format'] == 'cr_postfix_comma':
+                            r[0] = locale.format("%(data).2f", a, 1)
+                            r[0] = str(r[0]) + " " + currency
                     cube = s['axis_mapping'].cube_set(cube, r, s['delta'])
                     value = s['axis_mapping'].value_set(r) or value
                 for s in slice:

@@ -6,7 +6,7 @@ import etl
 
 filevcard = etl.connector.localfile('input/contacts.vcf')
 vcard_in1 = etl.component.input.vcard_in(filevcard)
-ooconnector = etl.connector.openobject_connector('http://localhost:8069', 'trunk', 'admin', 'a', con_type='xmlrpc')
+ooconnector = etl.connector.openobject_connector('http://localhost:8069', 'trunk', 'admin', 'admin', con_type='xmlrpc')
 
 map = etl.component.transform.map({'main':{
     'id': "tools.uniq_id(main.get('org', 'anonymous'), prefix='partner_')",
@@ -43,5 +43,6 @@ tran=etl.transition(oo_out2, count, channel_destination='address')
 tran=etl.transition(count, log2)
 
 
-job1=etl.job([oo_out2, log2])
+job1=etl.job([vcard_in1,oo_out,oo_out2, log2,count])
 job1.run()
+print job1.get_statitic_info()

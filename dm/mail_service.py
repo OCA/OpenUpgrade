@@ -23,6 +23,14 @@
 from osv import fields
 from osv import osv
 
+class dm_mail_service_type(osv.osv):
+    _name = "dm.mail_service.type"
+    _columns = {
+        'name' : fields.char('Name', size=64),
+        'code' : fields.char('Code', size=64),
+    }
+dm_mail_service_type()
+
 class dm_mail_service(osv.osv):
     _name = "dm.mail_service"
 #    _inherits = {'ir.actions.server':'mail_action_id'}
@@ -41,10 +49,13 @@ class dm_mail_service(osv.osv):
         'action_date' : fields.datetime('Date'),
         'action_interval': fields.integer('Interval'),
         'unit_interval': fields.selection( [('minutes', 'Minutes'),
-            ('hours', 'Hours'), ('work_days','Work Days'), ('days', 'Days'),\
+            ('hours', 'Hours'), 
+#('work_days','Work Days'), 
+            ('days', 'Days'),
             ('weeks', 'Weeks'), ('months', 'Months')], 'Interval Unit'),
         'default_for_media' : fields.boolean('Default Mail Service for Media'),
         'action_id' : fields.many2one('ir.actions.server','Server Action'),
+        'type_id' : fields.many2one('dm.mail_service.type','Type',ondelete="cascade"),
     }
 
     def _check_unique_mail_service(self, cr, uid, ids, media_id, default_for_media):
@@ -56,17 +67,17 @@ class dm_mail_service(osv.osv):
         else :
             return True 
 
-    def create(self, cr, uid, vals, context={}):
-        new_mail_service = super(dm_mail_service, self).create(cr, uid, vals, context)
-        mail_service = self.browse(cr, uid, new_mail_service)
-        new_vals = {
-                    'name'           : mail_service.name,
-                    'interval_number': mail_service.action_interval,
-                    'interval_type'  : mail_service.unit_interval,
-                    'model'          : 'dm.mail_service',
-                    'function'       : '_check_action'  }
-        self.pool.get('ir.cron').create(cr, uid, new_vals)
-        return new_mail_service
+#    def create(self, cr, uid, vals, context={}):
+#        new_mail_service = super(dm_mail_service, self).create(cr, uid, vals, context)
+#        mail_service = self.browse(cr, uid, new_mail_service)
+#        new_vals = {
+#                    'name'           : mail_service.name,
+#                    'interval_number': mail_service.action_interval,
+#                    'interval_type'  : mail_service.unit_interval,
+#                    'model'          : 'dm.mail_service',
+#                    'function'       : '_check_action'  }
+#        self.pool.get('ir.cron').create(cr, uid, new_vals)
+#        return new_mail_service
 
 dm_mail_service()
 

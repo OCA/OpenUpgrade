@@ -217,4 +217,32 @@ class dm_offer_document(osv.osv):
   
 dm_offer_document()
 
+class dm_campaign_document_type(osv.osv):
+    _name = 'dm.campaign.document.type'
+    _columns = {
+            'name' : fields.char('Name', size=64, required=True),
+            'code' : fields.char('Code', size=64, required=True),
+            }
+dm_campaign_document_type()
+
+class dm_campaign_document(osv.osv):
+    _name = 'dm.campaign.document'
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'type_id' : fields.many2one('dm.campaign.document.type','Format',required=True),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment',required=True),
+        'delivery_time': fields.datetime('Delivery Time', readonly=True),
+        'mail_service_id' : fields.many2one('dm.mail_service','Mail Service',ondelete='cascade',),
+        'state' : fields.selection([('pending','Pending'),('done','Done'),('error','Error'),],'State'),
+        'error_msg' : fields.text('System Message'),
+        'document_id' : fields.many2one('dm.offer.document','Document',ondelete="cascade"),
+        'address_id' : fields.many2one('res.partner.address', 'Customer Address', select="1", ondelete="cascade"),
+        }
+    _defaults = {
+        'state': lambda *a : 'pending',
+        }
+        
+dm_campaign_document()
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -69,8 +69,7 @@
 			<field name="model">hotel.reservation</field>
 			<field name="type">graph</field>
 			<field name="arch" type="xml">
-				<graph string="Reservation" type="bar" colors="blue:state=='draft';red:state=='confirm'">
-					
+				<graph string="Reservation" type="bar">		
 					<field name="state"/>
 					<field name="reservation_no"/>
 				</graph>
@@ -85,9 +84,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 		</record> 
-		<menuitem name="Hotel Reservation/New Reservation"
-		          id="menu_open_hotel_reservation_form_tree" 
-				  action="open_hotel_reservation_form_tree"/>
+		
 				  
 		<record model="ir.actions.act_window" id="action_hotel_reservation_tree_all">
 			<field name="name">All Reservation</field>
@@ -96,9 +93,15 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Hotel Reservation/New Reservation/" 
-					id="menu_action_hotel_reservation_tree_all" 
-					action="action_hotel_reservation_tree_all"/>
+		<menuitem name="Hotel Management/All Reservation" 
+				  id="menu_action_hotel_reservation_tree_all" 
+				  action="action_hotel_reservation_tree_all"
+				  sequence="2"/>
+		<menuitem name="New Reservation"
+		          id="menu_open_hotel_reservation_form_tree" 
+				  action="open_hotel_reservation_form_tree"
+				  sequence="20"
+				  parent="menu_action_hotel_reservation_tree_all"/>
 				
 		<record model="ir.actions.act_window" id="action_hotel_reservation_tree_draft">
 			<field name="name">All Draft Reservation</field>
@@ -108,9 +111,10 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('state','=','draft')]</field>
 		</record>
-		<menuitem name="Hotel Reservation/New Reservation/All Reservation/" 
+		<menuitem name="Hotel Management/All Reservation/" 
 				    id="menu_action_hotel_reservation_tree_draft" 
-				    action="action_hotel_reservation_tree_draft"/>
+				    action="action_hotel_reservation_tree_draft"
+				    sequence="17"/>
 				  
 		<record model="ir.actions.act_window" id="action_hotel_reservation_tree_confirm">
 			<field name="name">All Confirm Reservation</field>
@@ -120,9 +124,10 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('state','=','confirm')]</field>
 		</record>
-		<menuitem name="Hotel Reservation/New Reservation/All Reservation/" 
-					id="menu_action_hotel_reservation_tree_confirm" 
-					action="action_hotel_reservation_tree_confirm"/>
+		<menuitem name="Hotel Management/All Reservation/" 
+				  id="menu_action_hotel_reservation_tree_confirm" 
+				  action="action_hotel_reservation_tree_confirm"
+				  sequence="18"/>
 					
 		<record model="ir.actions.act_window" id="action_hotel_reservation_tree_done">
 			<field name="name">All Done Reservation</field>
@@ -132,9 +137,10 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('state','=','done')]</field>
 		</record>
-		<menuitem name="Hotel Reservation/New Reservation/All Reservation/" 
-					id="menu_action_hotel_reservation_tree_done" 
-					action="action_hotel_reservation_tree_done"/>
+		<menuitem name="Hotel Management/All Reservation/" 
+				  id="menu_action_hotel_reservation_tree_done" 
+				  action="action_hotel_reservation_tree_done"
+				  sequence="19"/>
 		
 		<record model="ir.ui.view" id="hotel_calendar_view">
 			<field name="name">Room Reservation</field>

@@ -23,7 +23,7 @@ rpc.session = rpc.RPCSession(host, port, protocol, storage=cherrypy.session)
 
 class Root(controllers.RootController, TinyResource):
     @expose(template="erpcomparator.templates.index")
-    def index(self):
+    def index(self, **kw):
         
         res = rpc.session.login(database, user_name, password)
         userinfo = cherrypy.session.get('user_info', '')

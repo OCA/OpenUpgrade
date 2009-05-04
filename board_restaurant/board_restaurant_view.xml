@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record model="board.note.type" id="note_restaurant_type">
+			<field name="name">Table Reservation</field>
+		</record>
+				
+		<record model="ir.actions.act_window" id="action_hotel_restaurant_reservation_form_tree">
+			<field name="name">Today's Reservation</field>
+			<field name="res_model">hotel.restaurant.reservation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('start_date','&gt;',time.strftime('%Y-%m-%d 00:00:00')),('start_date','&lt;',time.strftime('%Y-%m-%d 23:59:59'))]</field>
+			<field name="view_id" ref="hotel_restaurant.view_hotel_restaurant_reservation_tree" />
+		</record>
+
+		<record model="ir.actions.act_window" id="action_hotel_restaurant_reservation_order_form_tree">
+			<field name="name">Order Of Reservation</field>
+			<field name="res_model">hotel.reservation.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('date1','&gt;',time.strftime('%Y-%m-%d 00:00:00')),('date1','&lt;',time.strftime('%Y-%m-%d 23:59:59'))]</field>
+			<field name="view_id" ref="hotel_restaurant.view_hotel_reservation_order_tree" />
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_hotel_restaurant_order_form_tree">
+			<field name="name">Current Table Orders</field>
+			<field name="res_model">hotel.restaurant.order</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('o_date','&gt;',time.strftime('%Y-%m-%d 00:00:00')),('o_date','&lt;',time.strftime('%Y-%m-%d 23:59:59'))]</field>
+			<field name="view_id" ref="hotel_restaurant.view_hotel_restaurant_order_tree" />
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_hotel_kot_form_tree">
+			<field name="name">Kitchen Order Tickets List</field>
+			<field name="res_model">hotel.restaurant.kitchen.order.tickets</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('kot_date','&gt;',time.strftime('%Y-%m-%d 00:00:00')),('kot_date','&lt;',time.strftime('%Y-%m-%d 23:59:59'))]</field>
+			<field name="view_id" ref="hotel_restaurant.view_hotel_restaurant_kitchen_order_tickets_tree" />
+		</record>
+		
+		<record model="ir.ui.view" id="board_restaurant_form">
+			<field name="name">board.restaurant.form</field>
+			<field name="model">board.board</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="restaurant board">
+					<notebook>
+						<page string="Reservation">
+							<hpaned>
+								<child1>
+									<action
+										string="Today's Table Reservation"
+										name="%(action_hotel_restaurant_reservation_form_tree)d"
+										height="150"
+										colspan="4"/>
+									
+									<action
+										string="Order Of Reservation"
+										name="%(action_hotel_restaurant_reservation_order_form_tree)d"
+										height="150"
+										colspan="4"/>
+								</child1>
+								<child2>
+									<action
+										string="Today's Table Reservation"
+										name="%(report_hotel_restaurant.action_report_hotel_restaurant_status_tree_graph)d"
+										height="150"
+										colspan="4"/>
+										
+									<action
+										string="Today's Table Reservation"
+										name="%(report_hotel_restaurant.action_report_hotel_restaurant_status_tree_graph_bar)d"
+										height="150"
+										colspan="4"/>
+										
+								</child2>
+								
+							</hpaned>
+						</page>	
+						<page string="Current Orders">
+							<hpaned>
+								<child1>			
+									<action
+										string="Current Table Order"
+										name="%(action_hotel_restaurant_order_form_tree)d"
+										height="150"
+										colspan="4"/>
+									
+									<action
+										string="KOT list"
+										name="%(action_hotel_kot_form_tree)d"
+										height="150"
+										colspan="4"/>
+								</child1>
+							</hpaned>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="open_board_restaurant">
+			<field name="name">Restaurant Dashboard</field>
+			<field name="res_model">board.board</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="usage">menu</field>
+			<field name="view_id" ref="board_restaurant_form"/>
+		</record>
+		<menuitem
+			name="Dashboards/Hotel Management/Hotel Restaurant Board"
+			action="open_board_restaurant"
+			sequence="1"
+			id="menu_board_restaurant" icon="terp-graph"/>
+	</data>
+</openerp>

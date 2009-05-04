@@ -24,76 +24,62 @@ from etl.component import component
 
 class gmail_in(component):
 
-    def __init__(self, user, password, name='component.input.gmail_in', row_limit=0):
-        """    
-        Required  Parameters ::
-        user     : user name 
-        password : password of the user
-        
-        Extra Parameters ::
-        name          : Name of Component.
-        row_limit     : Limited records send to destination if row limit specified. If row limit is 0,all records are send.
+    def __init__(self, user, password, name='component.input.gmail_in', transformer=None, row_limit=0):
         """
+        Required  Parameters
+        user     : User name.
+        password : Password of the user.
 
-        super(gmail_in, self).__init__(name)
-        self.fp=None
-        self.connector=None
-        self.user=user
-        self.pwd=password
-        self.name = name
-        self.row_limit = row_limit
+        Extra Parameters 
+        name          : Name of Component.
+        row_limit     : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
+        """
+        super(gmail_in, self).__init__(name=name, transformer=transformer, row_limit=row_limit)
+        self._type = 'component.input.gmail_in'
+        self.user = user
+        self.pwd = password
 
-    def action_start(self, key, singal_data={}, data={}):
-        import gdata.contacts.service
-        super(gmail_in, self).action_start(key, singal_data, data)
-        self.connector = gdata.contacts.service.ContactsService()
-        self.connector.ClientLogin(self.user, self.pwd)
+    def __copy__(self):
+        res = gmail_in(self.user, self.password, self.name, self.transformer, self.row_limit)
+        return res
 
-
-    def action_end(self, key, singal_data={}, data={}): 
-        self.connector=False
-        
-    
     def process(self):
-        contacts_feed = self.connector.GetContactsFeed()
-        count=0
+        import gdata.contacts.service
+#        super(gmail_in, self).action_start(key, singal_data, data) # to be checked for test.
+        connector = gdata.contacts.service.ContactsService()
+        connector.ClientLogin(self.user, self.pwd)
+        contacts_feed = connector.GetContactsFeed()
         for feed in contacts_feed.entry:
-            count +=1  
-            emails=[]  
-            phone_numbers=[]
-            postal_addresses=[]        
+            emails = []
+            phone_numbers = []
+            postal_addresses = []
             for email in feed.email:
                 emails.append(email.address)
-        
+
             for phone_number in feed.phone_number:
                 phone_numbers.append(phone_number.text)
-        
+
             for postal_address in feed.postal_address:
                 postal_addresses.append(postal_address.text)
             d={
-                'title':feed.title and feed.title.text or False, 
-                'emails':emails, 
-                'phone_numbers':phone_numbers, 
-                'postal_addresses':postal_addresses
+                'title': feed.title and feed.title.text or False,
+                'emails': emails,
+                'phone_numbers': phone_numbers,
+                'postal_addresses': postal_addresses
             }
             yield d, 'main'
-        
-    def __copy__(self):
-        """
-        Overrides copy method
-        """
-        res=gmail_in(self.user, self.password, self.row_limit, self.name)
-        return res
-    
+
 def test():
     from etl_test import etl_test
     import etl
+    import getpass
     user = raw_input('Enter gmail username: ')
     user = user + '@gmail.com'
-    password = raw_input('Enter correct password for user %s: ' % user)
-    test=etl_test.etl_component_test(gmail_in(user, password))
-    res=test.output()
-    
+    password = getpass.unix_getpass("Enter your password:")
+    test = etl_test.etl_component_test(gmail_in(user, password))
+    test.check_output([{'phone_numbers': [''], 'postal_addresses': [''], 'emails': [''], 'title': ''}], 'main')
+    # here add the details of the contact in your gmail in the above mentioned format 
+    res = test.output()
+
 if __name__ == '__main__':
     test()
-

@@ -1,7 +1,7 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2007 EVI All Rights Reserved.
+# Copyright (c) 2009 EVERLIVBRE All Rights Reserved.
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -36,8 +36,8 @@ dates_form = '''<?xml version="1.0"?>
 </form>'''
 
 dates_fields = {
-    'datedebut': {'string': 'Start', 'type': 'date', 'required': True},
-    'datefin': {'string': 'End', 'type': 'date', 'required':True}
+    'datedebut': {'string': 'Début', 'type': 'date', 'required': True},
+    'datefin': {'string': 'Fin', 'type': 'date', 'required':True}
 }
 
 class wizard_report(wizard.interface):

@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>etl.etl</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        <a href="etl-module.html">Package&nbsp;etl</a> ::
+        Module&nbsp;etl
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="etl.etl-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="etl.etl-module.html">Module etl.etl</a></h1>
+<pre class="py-src">
+<a name="L1"></a><tt class="py-lineno"> 1</tt>  <tt class="py-line"><tt class="py-comment"># -*- encoding: utf-8 -*-</tt> </tt>
+<a name="L2"></a><tt class="py-lineno"> 2</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">##############################################################################</tt> </tt>
+<a name="L3"></a><tt class="py-lineno"> 3</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L4"></a><tt class="py-lineno"> 4</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    ETL system- Extract Transfer Load system</tt> </tt>
+<a name="L5"></a><tt class="py-lineno"> 5</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    Copyright (C) 2004-2009 Tiny SPRL (&lt;http://tiny.be&gt;). All Rights Reserved</tt> </tt>
+<a name="L6"></a><tt class="py-lineno"> 6</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    $Id$</tt> </tt>
+<a name="L7"></a><tt class="py-lineno"> 7</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L8"></a><tt class="py-lineno"> 8</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    This program is free software: you can redistribute it and/or modify</tt> </tt>
+<a name="L9"></a><tt class="py-lineno"> 9</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    it under the terms of the GNU General Public License as published by</tt> </tt>
+<a name="L10"></a><tt class="py-lineno">10</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    the Free Software Foundation, either version 3 of the License, or</tt> </tt>
+<a name="L11"></a><tt class="py-lineno">11</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    (at your option) any later version.</tt> </tt>
+<a name="L12"></a><tt class="py-lineno">12</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L13"></a><tt class="py-lineno">13</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    This program is distributed in the hope that it will be useful,</tt> </tt>
+<a name="L14"></a><tt class="py-lineno">14</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    but WITHOUT ANY WARRANTY; without even the implied warranty of</tt> </tt>
+<a name="L15"></a><tt class="py-lineno">15</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</tt> </tt>
+<a name="L16"></a><tt class="py-lineno">16</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    GNU General Public License for more details.</tt> </tt>
+<a name="L17"></a><tt class="py-lineno">17</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L18"></a><tt class="py-lineno">18</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    You should have received a copy of the GNU General Public License</tt> </tt>
+<a name="L19"></a><tt class="py-lineno">19</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#    along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</tt> </tt>
+<a name="L20"></a><tt class="py-lineno">20</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#</tt> </tt>
+<a name="L21"></a><tt class="py-lineno">21</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">##############################################################################</tt> </tt>
+<a name="L22"></a><tt class="py-lineno">22</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-docstring">""" </tt> </tt>
+<a name="L23"></a><tt class="py-lineno">23</tt>  <tt class="py-line"><tt class="py-docstring">    ETL Process.</tt> </tt>
+<a name="L24"></a><tt class="py-lineno">24</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L25"></a><tt class="py-lineno">25</tt>  <tt class="py-line"><tt class="py-docstring">    This is the main file of ETL which includes several test functions.</tt> </tt>
+<a name="L26"></a><tt class="py-lineno">26</tt>  <tt class="py-line"><tt class="py-docstring"></tt> </tt>
+<a name="L27"></a><tt class="py-lineno">27</tt>  <tt class="py-line"><tt class="py-docstring">"""</tt> </tt>
+<a name="L28"></a><tt class="py-lineno">28</tt>  <tt class="py-line"><tt class="py-comment"># TODO :</tt> </tt>
+<a name="L29"></a><tt class="py-lineno">29</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#     - make good documentation and test with doctest</tt> </tt>
+<a name="L30"></a><tt class="py-lineno">30</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#     - Integrate profiler in the job code: cProfile</tt> </tt>
+<a name="L31"></a><tt class="py-lineno">31</tt>  <tt class="py-line"><tt class="py-comment"></tt><tt class="py-comment">#     - do a unittest system and implement unit tests on components file</tt> </tt>
+<a name="L32"></a><tt class="py-lineno">32</tt>  <tt class="py-line"><tt class="py-comment"></tt> </tt>
+<a name="L33"></a><tt class="py-lineno">33</tt>  <tt class="py-line"> </tt>
+<a name="test1"></a><div id="test1-def"><a name="L34"></a><tt class="py-lineno">34</tt> <a class="py-toggle" href="#" id="test1-toggle" onclick="return toggle('test1');">-</a><tt class="py-line"><tt class="py-keyword">def</tt> <a class="py-def-name" href="etl.etl-module.html#test1">test1</a><tt class="py-op">(</tt><tt class="py-op">)</tt><tt class="py-op">:</tt> </tt>
+</div><div id="test1-collapsed" style="display:none;" pad="++" indent="++++"></div><div id="test1-expanded"><a name="L35"></a><tt class="py-lineno">35</tt>  <tt class="py-line">    <tt class="py-comment">#TODO : avoid using .CSV files, povide stringIO with string directly in the __main__</tt> </tt>
+<a name="L36"></a><tt class="py-lineno">36</tt>  <tt class="py-line"><tt class="py-comment"></tt>    <tt class="py-name">fileconnector</tt> <tt class="py-op">=</tt> <tt id="link-0" class="py-name" targets="Package etl=etl-module.html,Module etl.etl=etl.etl-module.html"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-0', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-1" class="py-name" targets="Package etl.connector=etl.connector-module.html,Class etl.connector.facebook_connector'.connector=etl.connector.facebook_connector%27.connector-class.html"><a title="etl.connector
+etl.connector.facebook_connector'.connector" class="py-name" href="#" onclick="return doclink('link-1', 'connector', 'link-1');">connector</a></tt><tt class="py-op">.</tt><tt id="link-2" class="py-name" targets="Class etl.connector.localfile'.localfile=etl.connector.localfile%27.localfile-class.html"><a title="etl.connector.localfile'.localfile" class="py-name" href="#" onclick="return doclink('link-2', 'localfile', 'link-2');">localfile</a></tt><tt class="py-op">(</tt><tt class="py-string">'demo/data/invoice.csv'</tt><tt class="py-op">)</tt> </tt>
+<a name="L37"></a><tt class="py-lineno">37</tt>  <tt class="py-line">    <tt id="link-3" class="py-name" targets="Class etl.transformer=etl.transformer-class.html"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-3', 'transformer', 'link-3');">transformer</a></tt><tt class="py-op">.</tt><tt class="py-name">description</tt> <tt class="py-op">=</tt> <tt class="py-op">{</tt><tt class="py-string">'id'</tt><tt class="py-op">:</tt> <tt id="link-4" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-4', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-5" class="py-name"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-5', 'transformer', 'link-3');">transformer</a></tt><tt class="py-op">.</tt><tt id="link-6" class="py-name" targets="Variable etl.transformer.LONG=etl.transformer-class.html#LONG,Variable pickle.LONG=pickle-module.html#LONG"><a title="etl.transformer.LONG
+pickle.LONG" class="py-name" href="#" onclick="return doclink('link-6', 'LONG', 'link-6');">LONG</a></tt><tt class="py-op">,</tt> <tt class="py-string">'name'</tt><tt class="py-op">:</tt> <tt id="link-7" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-7', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-8" class="py-name"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-8', 'transformer', 'link-3');">transformer</a></tt><tt class="py-op">.</tt><tt id="link-9" class="py-name" targets="Variable etl.transformer.STRING=etl.transformer-class.html#STRING,Variable pickle.STRING=pickle-module.html#STRING"><a title="etl.transformer.STRING
+pickle.STRING" class="py-name" href="#" onclick="return doclink('link-9', 'STRING', 'link-9');">STRING</a></tt><tt class="py-op">,</tt> <tt class="py-string">'invoice_date'</tt><tt class="py-op">:</tt> <tt id="link-10" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-10', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-11" class="py-name"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-11', 'transformer', 'link-3');">transformer</a></tt><tt class="py-op">.</tt><tt id="link-12" class="py-name" targets="Variable etl.transformer.DATE=etl.transformer-class.html#DATE"><a title="etl.transformer.DATE" class="py-name" href="#" onclick="return doclink('link-12', 'DATE', 'link-12');">DATE</a></tt><tt class="py-op">,</tt> <tt class="py-string">'invoice_amount'</tt><tt class="py-op">:</tt> <tt id="link-13" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-13', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-14" class="py-name"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-14', 'transformer', 'link-3');">transformer</a></tt><tt class="py-op">.</tt><tt id="link-15" class="py-name" targets="Variable etl.transformer.FLOAT=etl.transformer-class.html#FLOAT,Variable pickle.FLOAT=pickle-module.html#FLOAT"><a title="etl.transformer.FLOAT
+pickle.FLOAT" class="py-name" href="#" onclick="return doclink('link-15', 'FLOAT', 'link-15');">FLOAT</a></tt><tt class="py-op">,</tt> <tt class="py-string">'is_paid'</tt><tt class="py-op">:</tt> <tt id="link-16" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-16', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-17" class="py-name"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-17', 'transformer', 'link-3');">transformer</a></tt><tt class="py-op">.</tt><tt id="link-18" class="py-name" targets="Variable etl.transformer.BOOLEAN=etl.transformer-class.html#BOOLEAN"><a title="etl.transformer.BOOLEAN" class="py-name" href="#" onclick="return doclink('link-18', 'BOOLEAN', 'link-18');">BOOLEAN</a></tt><tt class="py-op">}</tt> </tt>
+<a name="L38"></a><tt class="py-lineno">38</tt>  <tt class="py-line">    <tt id="link-19" class="py-name"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-19', 'transformer', 'link-3');">transformer</a></tt> <tt class="py-op">=</tt> <tt id="link-20" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-20', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-21" class="py-name"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-21', 'transformer', 'link-3');">transformer</a></tt><tt class="py-op">(</tt><tt id="link-22" class="py-name"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-22', 'transformer', 'link-3');">transformer</a></tt><tt class="py-op">.</tt><tt class="py-name">description</tt><tt class="py-op">)</tt> </tt>
+<a name="L39"></a><tt class="py-lineno">39</tt>  <tt class="py-line">    <tt class="py-name">csv_in1</tt> <tt class="py-op">=</tt> <tt id="link-23" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-23', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-24" class="py-name" targets="Package etl.component=etl.component-module.html,Class etl.component.control.sleep'.component=etl.component.control.sleep%27.component-class.html"><a title="etl.component
+etl.component.control.sleep'.component" class="py-name" href="#" onclick="return doclink('link-24', 'component', 'link-24');">component</a></tt><tt class="py-op">.</tt><tt id="link-25" class="py-name" targets="Package etl.component.input=etl.component.input-module.html"><a title="etl.component.input" class="py-name" href="#" onclick="return doclink('link-25', 'input', 'link-25');">input</a></tt><tt class="py-op">.</tt><tt id="link-26" class="py-name" targets="Class etl.component.input.csv_in'.csv_in=etl.component.input.csv_in%27.csv_in-class.html"><a title="etl.component.input.csv_in'.csv_in" class="py-name" href="#" onclick="return doclink('link-26', 'csv_in', 'link-26');">csv_in</a></tt><tt class="py-op">.</tt><tt id="link-27" class="py-name"><a title="etl.component.input.csv_in'.csv_in" class="py-name" href="#" onclick="return doclink('link-27', 'csv_in', 'link-26');">csv_in</a></tt><tt class="py-op">(</tt><tt class="py-name">fileconnector</tt><tt class="py-op">=</tt><tt class="py-name">fileconnector</tt><tt class="py-op">,</tt> <tt id="link-28" class="py-name"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-28', 'transformer', 'link-3');">transformer</a></tt><tt class="py-op">=</tt><tt id="link-29" class="py-name"><a title="etl.transformer" class="py-name" href="#" onclick="return doclink('link-29', 'transformer', 'link-3');">transformer</a></tt><tt class="py-op">)</tt> </tt>
+<a name="L40"></a><tt class="py-lineno">40</tt>  <tt class="py-line">    <tt class="py-name">log1</tt> <tt class="py-op">=</tt> <tt id="link-30" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-30', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-31" class="py-name"><a title="etl.component
+etl.component.control.sleep'.component" class="py-name" href="#" onclick="return doclink('link-31', 'component', 'link-24');">component</a></tt><tt class="py-op">.</tt><tt id="link-32" class="py-name" targets="Package etl.component.transform=etl.component.transform-module.html,Method etl.transformer.transform()=etl.transformer-class.html#transform"><a title="etl.component.transform
+etl.transformer.transform" class="py-name" href="#" onclick="return doclink('link-32', 'transform', 'link-32');">transform</a></tt><tt class="py-op">.</tt><tt id="link-33" class="py-name" targets="Class etl.component.transform.logger'.logger=etl.component.transform.logger%27.logger-class.html,Module etl.logger=etl.logger-module.html,Class etl.logger.logger=etl.logger.logger-class.html"><a title="etl.component.transform.logger'.logger
+etl.logger
+etl.logger.logger" class="py-name" href="#" onclick="return doclink('link-33', 'logger', 'link-33');">logger</a></tt><tt class="py-op">.</tt><tt id="link-34" class="py-name"><a title="etl.component.transform.logger'.logger
+etl.logger
+etl.logger.logger" class="py-name" href="#" onclick="return doclink('link-34', 'logger', 'link-33');">logger</a></tt><tt class="py-op">(</tt><tt class="py-name">name</tt><tt class="py-op">=</tt><tt class="py-string">'Read Invoice File'</tt><tt class="py-op">)</tt> </tt>
+<a name="L41"></a><tt class="py-lineno">41</tt>  <tt class="py-line">    <tt class="py-name">tran</tt> <tt class="py-op">=</tt> <tt id="link-35" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-35', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-36" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-36', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-37" class="py-name" targets="Class etl.transition=etl.transition-class.html"><a title="etl.transition" class="py-name" href="#" onclick="return doclink('link-37', 'transition', 'link-37');">transition</a></tt><tt class="py-op">(</tt><tt class="py-name">csv_in1</tt><tt class="py-op">,</tt> <tt class="py-name">log1</tt><tt class="py-op">)</tt> </tt>
+<a name="L42"></a><tt class="py-lineno">42</tt>  <tt class="py-line">    <tt class="py-name">job1</tt> <tt class="py-op">=</tt> <tt id="link-38" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-38', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-39" class="py-name"><a title="etl
+etl.etl" class="py-name" href="#" onclick="return doclink('link-39', 'etl', 'link-0');">etl</a></tt><tt class="py-op">.</tt><tt id="link-40" class="py-name" targets="Class etl.job=etl.job-class.html"><a title="etl.job" class="py-name" href="#" onclick="return doclink('link-40', 'job', 'link-40');">job</a></tt><tt class="py-op">(</tt><tt class="py-op">[</tt><tt class="py-name">log1</tt><tt class="py-op">]</tt><tt class="py-op">)</tt> </tt>
+<a name="L43"></a><tt class="py-lineno">43</tt>  <tt class="py-line">    <tt class="py-name">job1</tt><tt class="py-op">.</tt><tt id="link-41" class="py-name" targets="Method etl.connector.xmlrpc_connector'.xmlrpc_server_thread.run()=etl.connector.xmlrpc_connector%27.xmlrpc_server_thread-class.html#run,Method etl.job.run()=etl.job-class.html#run"><a title="etl.connector.xmlrpc_connector'.xmlrpc_server_thread.run
+etl.job.run" class="py-name" href="#" onclick="return doclink('link-41', 'run', 'link-41');">run</a></tt><tt class="py-op">(</tt><tt class="py-op">)</tt> </tt>
+</div><a name="L44"></a><tt class="py-lineno">44</tt>  <tt class="py-line"> </tt>
+<a name="L45"></a><tt class="py-lineno">45</tt>  <tt class="py-line"><tt class="py-keyword">if</tt> <tt class="py-name">__name__</tt> <tt class="py-op">==</tt> <tt class="py-string">'__main__'</tt><tt class="py-op">:</tt> </tt>
+<a name="L46"></a><tt class="py-lineno">46</tt>  <tt class="py-line">    <tt class="py-comment">#TODO : make perfect testing method</tt> </tt>
+<a name="L47"></a><tt class="py-lineno">47</tt>  <tt class="py-line"><tt class="py-comment"></tt>    <tt class="py-keyword">pass</tt> </tt>
+<a name="L48"></a><tt class="py-lineno">48</tt>  <tt class="py-line"> </tt><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Wed Apr 29 20:37:25 2009
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

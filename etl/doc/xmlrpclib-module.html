@@ -1,0 +1,831 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>xmlrpclib</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;xmlrpclib
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="xmlrpclib-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module xmlrpclib</h1><span class="codelink"><a href="xmlrpclib-pysrc.html">source&nbsp;code</a></span><br /><br />
+<pre class="literalblock">
+
+An XML-RPC client interface for Python.
+
+The marshalling and response parser code can also be used to
+implement XML-RPC servers.
+
+Exported exceptions:
+
+  Error          Base class for client errors
+  ProtocolError  Indicates an HTTP protocol error
+  ResponseError  Indicates a broken response package
+  Fault          Indicates an XML-RPC fault package
+
+Exported classes:
+
+  ServerProxy    Represents a logical connection to an XML-RPC server
+
+  MultiCall      Executor of boxcared xmlrpc requests
+  Boolean        boolean wrapper to generate a &quot;boolean&quot; XML-RPC value
+  DateTime       dateTime wrapper for an ISO 8601 string or time tuple or
+                 localtime integer value to generate a &quot;dateTime.iso8601&quot;
+                 XML-RPC value
+  Binary         binary data wrapper
+
+  SlowParser     Slow but safe standard parser (based on xmllib)
+  Marshaller     Generate an XML-RPC params chunk from a Python data structure
+  Unmarshaller   Unmarshal an XML-RPC response from incoming XML event message
+  Transport      Handles an HTTP transaction to an XML-RPC server
+  SafeTransport  Handles an HTTPS transaction to an XML-RPC server
+
+Exported constants:
+
+  True
+  False
+
+Exported functions:
+
+  boolean        Convert any Python value to an XML-RPC boolean
+  getparser      Create instance of the fastest available parser &amp; attach
+                 to an unmarshalling object
+  dumps          Convert an argument tuple or a Fault instance to an XML-RPC
+                 request (or response, if the methodresponse option is used).
+  loads          Convert an XML-RPC packet to unmarshalled data plus a method
+                 name (None if not present).
+
+</pre><br /><br />
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        1.0.1
+      </p>
+</div><!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.Binary-class.html" class="summary-name">Binary</a><br />
+      Wrapper for binary data.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.DateTime-class.html" class="summary-name">DateTime</a><br />
+      DateTime wrapper for an ISO 8601 string or time tuple or 
+        localtime integer value to generate 'dateTime.iso8601' XML-RPC 
+        value.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.Error-class.html" class="summary-name">Error</a><br />
+      Base class for client errors.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.ExpatParser-class.html" class="summary-name">ExpatParser</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.Fault-class.html" class="summary-name">Fault</a><br />
+      Indicates an XML-RPC fault package.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.Marshaller-class.html" class="summary-name">Marshaller</a><br />
+      Generate an XML-RPC params chunk from a Python data 
+        structure.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.MultiCall-class.html" class="summary-name">MultiCall</a><br />
+      server -&gt; a object used to boxcar method calls
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.MultiCallIterator-class.html" class="summary-name">MultiCallIterator</a><br />
+      Iterates over the results of a multicall.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.ProtocolError-class.html" class="summary-name">ProtocolError</a><br />
+      Indicates an HTTP protocol error.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.ResponseError-class.html" class="summary-name">ResponseError</a><br />
+      Indicates a broken response package.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.SafeTransport-class.html" class="summary-name">SafeTransport</a><br />
+      Handles an HTTPS transaction to an XML-RPC server.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.ServerProxy-class.html" class="summary-name">Server</a><br />
+      uri [,options] -&gt; a logical connection to an XML-RPC server
+
+uri is the connection point on the server, given as
+scheme://host/target.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.ServerProxy-class.html" class="summary-name">ServerProxy</a><br />
+      uri [,options] -&gt; a logical connection to an XML-RPC server
+
+uri is the connection point on the server, given as
+scheme://host/target.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.SlowParser-class.html" class="summary-name">SlowParser</a><br />
+      Default XML parser (based on xmllib.XMLParser).
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.Transport-class.html" class="summary-name">Transport</a><br />
+      Handles an HTTP transaction to an XML-RPC server.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib.Unmarshaller-class.html" class="summary-name">Unmarshaller</a><br />
+      Unmarshal an XML-RPC response, based on incoming XML event 
+        messages (start, data, end).
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib._Method-class.html" class="summary-name">_Method</a>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib._MultiCallMethod-class.html" class="summary-name">_MultiCallMethod</a>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_binary"></a><span class="summary-sig-name">_binary</span>(<span class="summary-sig-arg">data</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="xmlrpclib-pysrc.html#_binary">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_datetime"></a><span class="summary-sig-name">_datetime</span>(<span class="summary-sig-arg">data</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="xmlrpclib-pysrc.html#_datetime">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_datetime_type"></a><span class="summary-sig-name">_datetime_type</span>(<span class="summary-sig-arg">data</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="xmlrpclib-pysrc.html#_datetime_type">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_decode"></a><span class="summary-sig-name">_decode</span>(<span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">encoding</span>,
+        <span class="summary-sig-arg">is8bit</span>=<span class="summary-sig-default">&lt;built-in method search of _sre.SRE_Pattern object at 0xab96b8&gt;</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="xmlrpclib-pysrc.html#_decode">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_stringify"></a><span class="summary-sig-name">_stringify</span>(<span class="summary-sig-arg">string</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="xmlrpclib-pysrc.html#_stringify">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="xmlrpclib-module.html#dumps" class="summary-sig-name">dumps</a>(<span class="summary-sig-arg">params</span>,
+        <span class="summary-sig-arg">methodname</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">methodresponse</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">encoding</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">allow_none</span>=<span class="summary-sig-default">0</span>)</span><br />
+      data [,options] -&gt; marshalled data
+
+Convert an argument tuple or a Fault instance to an XML-RPC
+request (or response, if the methodresponse option is used).</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="xmlrpclib-pysrc.html#dumps">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="escape"></a><span class="summary-sig-name">escape</span>(<span class="summary-sig-arg">s</span>,
+        <span class="summary-sig-arg">replace</span>=<span class="summary-sig-default">&lt;function replace at 0x7f806f3447d0&gt;</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="xmlrpclib-pysrc.html#escape">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="xmlrpclib-module.html#getparser" class="summary-sig-name">getparser</a>()</span><br />
+      Create an instance of the fastest available parser, and attach it 
+      to an unmarshalling object.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="xmlrpclib-pysrc.html#getparser">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="xmlrpclib-module.html#loads" class="summary-sig-name">loads</a>(<span class="summary-sig-arg">data</span>,
+        <span class="summary-sig-arg">use_datetime</span>=<span class="summary-sig-default">0</span>)</span><br />
+      data -&gt; unmarshalled data, method name</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="xmlrpclib-pysrc.html#loads">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="APPLICATION_ERROR"></a><span class="summary-name">APPLICATION_ERROR</span> = <code title="-32500">-32500</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="False"></a><span class="summary-name">False</span> = <code title="False">False</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="FastMarshaller"></a><span class="summary-name">FastMarshaller</span> = <code title="None">None</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="FastParser"></a><span class="summary-name">FastParser</span> = <code title="None">None</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="FastUnmarshaller"></a><span class="summary-name">FastUnmarshaller</span> = <code title="None">None</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INTERNAL_ERROR"></a><span class="summary-name">INTERNAL_ERROR</span> = <code title="-32603">-32603</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INVALID_ENCODING_CHAR"></a><span class="summary-name">INVALID_ENCODING_CHAR</span> = <code title="-32702">-32702</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INVALID_METHOD_PARAMS"></a><span class="summary-name">INVALID_METHOD_PARAMS</span> = <code title="-32602">-32602</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INVALID_XMLRPC"></a><span class="summary-name">INVALID_XMLRPC</span> = <code title="-32600">-32600</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="MAXINT"></a><span class="summary-name">MAXINT</span> = <code title="2147483647">2147483647</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="METHOD_NOT_FOUND"></a><span class="summary-name">METHOD_NOT_FOUND</span> = <code title="-32601">-32601</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="MININT"></a><span class="summary-name">MININT</span> = <code title="-2147483648">-2147483648</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="NOT_WELLFORMED_ERROR"></a><span class="summary-name">NOT_WELLFORMED_ERROR</span> = <code title="-32700">-32700</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PARSE_ERROR"></a><span class="summary-name">PARSE_ERROR</span> = <code title="-32700">-32700</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SERVER_ERROR"></a><span class="summary-name">SERVER_ERROR</span> = <code title="-32600">-32600</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SYSTEM_ERROR"></a><span class="summary-name">SYSTEM_ERROR</span> = <code title="-32400">-32400</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SgmlopParser"></a><span class="summary-name">SgmlopParser</span> = <code title="None">None</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="StringTypes"></a><span class="summary-name">StringTypes</span> = <code title="(&lt;type 'str'&gt;, &lt;type 'unicode'&gt;)"><code class="variable-group">(</code>&lt;type 'str'&gt;<code class="variable-op">, </code>&lt;type 'unicode'&gt;<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TRANSPORT_ERROR"></a><span class="summary-name">TRANSPORT_ERROR</span> = <code title="-32300">-32300</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="True"></a><span class="summary-name">True</span> = <code title="True">True</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="UNSUPPORTED_ENCODING"></a><span class="summary-name">UNSUPPORTED_ENCODING</span> = <code title="-32701">-32701</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="xmlrpclib-module.html#WRAPPERS" class="summary-name">WRAPPERS</a> = <code title="(&lt;class xmlrpclib.DateTime at 0xb1f230&gt;,
+ &lt;class xmlrpclib.Binary at 0xb1f4d0&gt;)"><code class="variable-group">(</code>&lt;class xmlrpclib.DateTime at 0xb1f230&gt;<code class="variable-op">, </code>&lt;class xml<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_bool_is_builtin"></a><span class="summary-name">_bool_is_builtin</span> = <code title="True">True</code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="dumps"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">dumps</span>(<span class="sig-arg">params</span>,
+        <span class="sig-arg">methodname</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">methodresponse</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">encoding</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">allow_none</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xmlrpclib-pysrc.html#dumps">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  <pre class="literalblock">
+data [,options] -&gt; marshalled data
+
+Convert an argument tuple or a Fault instance to an XML-RPC
+request (or response, if the methodresponse option is used).
+
+In addition to the data object, the following options can be given
+as keyword arguments:
+
+    methodname: the method name for a methodCall packet
+
+    methodresponse: true to create a methodResponse packet.
+    If this option is used with a tuple, the tuple must be
+    a singleton (i.e. it can contain only one element).
+
+    encoding: the packet encoding (default is UTF-8)
+
+All 8-bit strings in the data structure are assumed to use the
+packet encoding.  Unicode strings are automatically converted,
+where necessary.
+
+</pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="getparser"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">getparser</span>()</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xmlrpclib-pysrc.html#getparser">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  Create an instance of the fastest available parser, and attach it to 
+  an unmarshalling object.  Return both objects.
+  <dl class="fields">
+    <dt>Returns:</dt>
+        <dd><pre class="literalblock">
+parser, unmarshaller
+
+</pre></dd>
+  </dl>
+</td></tr></table>
+</div>
+<a name="loads"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">loads</span>(<span class="sig-arg">data</span>,
+        <span class="sig-arg">use_datetime</span>=<span class="sig-default">0</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="xmlrpclib-pysrc.html#loads">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  <p>data -&gt; unmarshalled data, method name</p>
+  <p>Convert an XML-RPC packet to unmarshalled data plus a method name 
+  (None if not present).</p>
+  If the XML-RPC packet represents a fault condition, this function 
+  raises a Fault exception.
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="WRAPPERS"></a>
+<div>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">WRAPPERS</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">(</code>&lt;class xmlrpclib.DateTime at 0xb1f230&gt;<code class="variable-op">,</code>
+ &lt;class xmlrpclib.Binary at 0xb1f4d0&gt;<code class="variable-group">)</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Wed Apr 29 20:37:21 2009
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

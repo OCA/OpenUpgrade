@@ -1,0 +1,1044 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>pickle</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Module&nbsp;pickle
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="pickle-module.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module pickle</h1><span class="codelink"><a href="pickle-pysrc.html">source&nbsp;code</a></span><br /><br />
+<pre class="literalblock">
+Create portable serialized representations of Python objects.
+
+See module cPickle for a (much) faster implementation.
+See module copy_reg for a mechanism for registering custom picklers.
+See module pickletools source for extensive comments.
+
+Classes:
+
+    Pickler
+    Unpickler
+
+Functions:
+
+    dump(object, file)
+    dumps(object) -&gt; string
+    load(file) -&gt; object
+    loads(string) -&gt; object
+
+Misc variables:
+
+    __version__
+    format_version
+    compatible_formats
+
+</pre><br /><br />
+
+<hr />
+<div class="fields">      <p><strong>Version:</strong>
+        $Revision: 38432 $
+      </p>
+</div><!-- ==================== CLASSES ==================== -->
+<a name="section-Classes"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Classes</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Classes"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pickle.PickleError-class.html" class="summary-name">PickleError</a><br />
+      A common base class for the other pickling exceptions.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pickle.Pickler-class.html" class="summary-name">Pickler</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pickle.PicklingError-class.html" class="summary-name">PicklingError</a><br />
+      This exception is raised when an unpicklable object is passed to
+        the dump() method.
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pickle.Unpickler-class.html" class="summary-name">Unpickler</a>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pickle.UnpicklingError-class.html" class="summary-name">UnpicklingError</a><br />
+      This exception is raised when there is a problem unpickling an 
+        object, such as a security violation.
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pickle._EmptyClass-class.html" class="summary-name">_EmptyClass</a>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pickle._Stop-class.html" class="summary-name">_Stop</a>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Functions</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Functions"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pickle-module.html#_keep_alive" class="summary-sig-name">_keep_alive</a>(<span class="summary-sig-arg">x</span>,
+        <span class="summary-sig-arg">memo</span>)</span><br />
+      Keeps a reference to the object x in the memo.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pickle-pysrc.html#_keep_alive">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="_test"></a><span class="summary-sig-name">_test</span>()</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pickle-pysrc.html#_test">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pickle-module.html#decode_long" class="summary-sig-name">decode_long</a>(<span class="summary-sig-arg">data</span>)</span><br />
+      Decode a long from a two's complement little-endian binary 
+      string.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pickle-pysrc.html#decode_long">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="dump"></a><span class="summary-sig-name">dump</span>(<span class="summary-sig-arg">obj</span>,
+        <span class="summary-sig-arg">file</span>,
+        <span class="summary-sig-arg">protocol</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pickle-pysrc.html#dump">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="dumps"></a><span class="summary-sig-name">dumps</span>(<span class="summary-sig-arg">obj</span>,
+        <span class="summary-sig-arg">protocol</span>=<span class="summary-sig-default">None</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pickle-pysrc.html#dumps">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pickle-module.html#encode_long" class="summary-sig-name">encode_long</a>(<span class="summary-sig-arg">x</span>)</span><br />
+      Encode a long to a two's complement little-endian binary 
+      string.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pickle-pysrc.html#encode_long">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="load"></a><span class="summary-sig-name">load</span>(<span class="summary-sig-arg">file</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pickle-pysrc.html#load">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="loads"></a><span class="summary-sig-name">loads</span>(<span class="summary-sig-arg">str</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pickle-pysrc.html#loads">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="pickle-module.html#whichmodule" class="summary-sig-name">whichmodule</a>(<span class="summary-sig-arg">func</span>,
+        <span class="summary-sig-arg">funcname</span>)</span><br />
+      Figure out the module in which a function occurs.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="pickle-pysrc.html#whichmodule">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+</table>
+<!-- ==================== VARIABLES ==================== -->
+<a name="section-Variables"></a>
+<table class="summary" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-Variables"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="APPEND"></a><span class="summary-name">APPEND</span> = <code title="'a'"><code class="variable-quote">'</code><code class="variable-string">a</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="APPENDS"></a><span class="summary-name">APPENDS</span> = <code title="'e'"><code class="variable-quote">'</code><code class="variable-string">e</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BINFLOAT"></a><span class="summary-name">BINFLOAT</span> = <code title="'G'"><code class="variable-quote">'</code><code class="variable-string">G</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BINGET"></a><span class="summary-name">BINGET</span> = <code title="'h'"><code class="variable-quote">'</code><code class="variable-string">h</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BININT"></a><span class="summary-name">BININT</span> = <code title="'J'"><code class="variable-quote">'</code><code class="variable-string">J</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BININT1"></a><span class="summary-name">BININT1</span> = <code title="'K'"><code class="variable-quote">'</code><code class="variable-string">K</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BININT2"></a><span class="summary-name">BININT2</span> = <code title="'M'"><code class="variable-quote">'</code><code class="variable-string">M</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BINPERSID"></a><span class="summary-name">BINPERSID</span> = <code title="'Q'"><code class="variable-quote">'</code><code class="variable-string">Q</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BINPUT"></a><span class="summary-name">BINPUT</span> = <code title="'q'"><code class="variable-quote">'</code><code class="variable-string">q</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BINSTRING"></a><span class="summary-name">BINSTRING</span> = <code title="'T'"><code class="variable-quote">'</code><code class="variable-string">T</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BINUNICODE"></a><span class="summary-name">BINUNICODE</span> = <code title="'X'"><code class="variable-quote">'</code><code class="variable-string">X</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="BUILD"></a><span class="summary-name">BUILD</span> = <code title="'b'"><code class="variable-quote">'</code><code class="variable-string">b</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="DICT"></a><span class="summary-name">DICT</span> = <code title="'d'"><code class="variable-quote">'</code><code class="variable-string">d</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="DUP"></a><span class="summary-name">DUP</span> = <code title="'2'"><code class="variable-quote">'</code><code class="variable-string">2</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="EMPTY_DICT"></a><span class="summary-name">EMPTY_DICT</span> = <code title="'}'"><code class="variable-quote">'</code><code class="variable-string">}</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="EMPTY_LIST"></a><span class="summary-name">EMPTY_LIST</span> = <code title="']'"><code class="variable-quote">'</code><code class="variable-string">]</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="EMPTY_TUPLE"></a><span class="summary-name">EMPTY_TUPLE</span> = <code title="')'"><code class="variable-quote">'</code><code class="variable-string">)</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="EXT1"></a><span class="summary-name">EXT1</span> = <code title="'\x82'"><code class="variable-quote">'</code><code class="variable-string">\x82</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="EXT2"></a><span class="summary-name">EXT2</span> = <code title="'\x83'"><code class="variable-quote">'</code><code class="variable-string">\x83</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="EXT4"></a><span class="summary-name">EXT4</span> = <code title="'\x84'"><code class="variable-quote">'</code><code class="variable-string">\x84</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="FALSE"></a><span class="summary-name">FALSE</span> = <code title="'''I00
+'''"><code class="variable-quote">'</code><code class="variable-string">I00\n</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="FLOAT"></a><span class="summary-name">FLOAT</span> = <code title="'F'"><code class="variable-quote">'</code><code class="variable-string">F</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="GET"></a><span class="summary-name">GET</span> = <code title="'g'"><code class="variable-quote">'</code><code class="variable-string">g</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="GLOBAL"></a><span class="summary-name">GLOBAL</span> = <code title="'c'"><code class="variable-quote">'</code><code class="variable-string">c</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="HIGHEST_PROTOCOL"></a><span class="summary-name">HIGHEST_PROTOCOL</span> = <code title="2">2</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INST"></a><span class="summary-name">INST</span> = <code title="'i'"><code class="variable-quote">'</code><code class="variable-string">i</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="INT"></a><span class="summary-name">INT</span> = <code title="'I'"><code class="variable-quote">'</code><code class="variable-string">I</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LIST"></a><span class="summary-name">LIST</span> = <code title="'l'"><code class="variable-quote">'</code><code class="variable-string">l</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LONG"></a><span class="summary-name">LONG</span> = <code title="'L'"><code class="variable-quote">'</code><code class="variable-string">L</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LONG1"></a><span class="summary-name">LONG1</span> = <code title="'\x8a'"><code class="variable-quote">'</code><code class="variable-string">\x8a</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LONG4"></a><span class="summary-name">LONG4</span> = <code title="'\x8b'"><code class="variable-quote">'</code><code class="variable-string">\x8b</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LONG_BINGET"></a><span class="summary-name">LONG_BINGET</span> = <code title="'j'"><code class="variable-quote">'</code><code class="variable-string">j</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="LONG_BINPUT"></a><span class="summary-name">LONG_BINPUT</span> = <code title="'r'"><code class="variable-quote">'</code><code class="variable-string">r</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="MARK"></a><span class="summary-name">MARK</span> = <code title="'('"><code class="variable-quote">'</code><code class="variable-string">(</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="NEWFALSE"></a><span class="summary-name">NEWFALSE</span> = <code title="'\x89'"><code class="variable-quote">'</code><code class="variable-string">\x89</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="NEWOBJ"></a><span class="summary-name">NEWOBJ</span> = <code title="'\x81'"><code class="variable-quote">'</code><code class="variable-string">\x81</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="NEWTRUE"></a><span class="summary-name">NEWTRUE</span> = <code title="'\x88'"><code class="variable-quote">'</code><code class="variable-string">\x88</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="NONE"></a><span class="summary-name">NONE</span> = <code title="'N'"><code class="variable-quote">'</code><code class="variable-string">N</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="OBJ"></a><span class="summary-name">OBJ</span> = <code title="'o'"><code class="variable-quote">'</code><code class="variable-string">o</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PERSID"></a><span class="summary-name">PERSID</span> = <code title="'P'"><code class="variable-quote">'</code><code class="variable-string">P</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="POP"></a><span class="summary-name">POP</span> = <code title="'0'"><code class="variable-quote">'</code><code class="variable-string">0</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="POP_MARK"></a><span class="summary-name">POP_MARK</span> = <code title="'1'"><code class="variable-quote">'</code><code class="variable-string">1</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PROTO"></a><span class="summary-name">PROTO</span> = <code title="'\x80'"><code class="variable-quote">'</code><code class="variable-string">\x80</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PUT"></a><span class="summary-name">PUT</span> = <code title="'p'"><code class="variable-quote">'</code><code class="variable-string">p</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="PyStringMap"></a><span class="summary-name">PyStringMap</span> = <code title="None">None</code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="REDUCE"></a><span class="summary-name">REDUCE</span> = <code title="'R'"><code class="variable-quote">'</code><code class="variable-string">R</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SETITEM"></a><span class="summary-name">SETITEM</span> = <code title="'s'"><code class="variable-quote">'</code><code class="variable-string">s</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SETITEMS"></a><span class="summary-name">SETITEMS</span> = <code title="'u'"><code class="variable-quote">'</code><code class="variable-string">u</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="SHORT_BINSTRING"></a><span class="summary-name">SHORT_BINSTRING</span> = <code title="'U'"><code class="variable-quote">'</code><code class="variable-string">U</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="STOP"></a><span class="summary-name">STOP</span> = <code title="'.'"><code class="variable-quote">'</code><code class="variable-string">.</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="STRING"></a><span class="summary-name">STRING</span> = <code title="'S'"><code class="variable-quote">'</code><code class="variable-string">S</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="StringTypes"></a><span class="summary-name">StringTypes</span> = <code title="(&lt;type 'str'&gt;, &lt;type 'unicode'&gt;)"><code class="variable-group">(</code>&lt;type 'str'&gt;<code class="variable-op">, </code>&lt;type 'unicode'&gt;<code class="variable-group">)</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TRUE"></a><span class="summary-name">TRUE</span> = <code title="'''I01
+'''"><code class="variable-quote">'</code><code class="variable-string">I01\n</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TUPLE"></a><span class="summary-name">TUPLE</span> = <code title="'t'"><code class="variable-quote">'</code><code class="variable-string">t</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TUPLE1"></a><span class="summary-name">TUPLE1</span> = <code title="'\x85'"><code class="variable-quote">'</code><code class="variable-string">\x85</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TUPLE2"></a><span class="summary-name">TUPLE2</span> = <code title="'\x86'"><code class="variable-quote">'</code><code class="variable-string">\x86</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="TUPLE3"></a><span class="summary-name">TUPLE3</span> = <code title="'\x87'"><code class="variable-quote">'</code><code class="variable-string">\x87</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="UNICODE"></a><span class="summary-name">UNICODE</span> = <code title="'V'"><code class="variable-quote">'</code><code class="variable-string">V</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_extension_cache"></a><span class="summary-name">_extension_cache</span> = <code title="{}"><code class="variable-group">{</code><code class="variable-group">}</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_extension_registry"></a><span class="summary-name">_extension_registry</span> = <code title="{}"><code class="variable-group">{</code><code class="variable-group">}</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_inverted_registry"></a><span class="summary-name">_inverted_registry</span> = <code title="{}"><code class="variable-group">{</code><code class="variable-group">}</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="_tuplesize2code"></a><span class="summary-name">_tuplesize2code</span> = <code title="[')', '\x85', '\x86', '\x87']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">)</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">\x85</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">\x86</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">\x87</code><code class="variable-quote">'</code><code class="variable-group">]</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="classmap"></a><span class="summary-name">classmap</span> = <code title="{}"><code class="variable-group">{</code><code class="variable-group">}</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="compatible_formats"></a><span class="summary-name">compatible_formats</span> = <code title="['1.0', '1.1', '1.2', '1.3', '2.0']"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">1.0</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">1.1</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">1.2</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">1.3</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">2.0</code><code class="variable-quote">'</code><code class="variable-group">]</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a href="pickle-module.html#dispatch_table" class="summary-name">dispatch_table</a> = <code title="{&lt;type '_sre.SRE_Pattern'&gt;: &lt;function _pickle at 0x7f806f39c410&gt;,
+ &lt;type 'complex'&gt;: &lt;function pickle_complex at 0x7f806f43c488&gt;,
+ &lt;type 'posix.stat_result'&gt;: &lt;function _pickle_stat_result at 0x7f806f\
+43c8c0&gt;,
+ &lt;type 'posix.statvfs_result'&gt;: &lt;function _pickle_statvfs_result at 0x\
+7f806f43c9b0&gt;}"><code class="variable-group">{</code>&lt;type '_sre.SRE_Pattern'&gt;<code class="variable-op">: </code>&lt;function _pickle<code class="variable-ellipsis">...</code></code>
+    </td>
+  </tr>
+<tr class="private">
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+        <a name="format_version"></a><span class="summary-name">format_version</span> = <code title="'2.0'"><code class="variable-quote">'</code><code class="variable-string">2.0</code><code class="variable-quote">'</code></code>
+    </td>
+  </tr>
+</table>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Function Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-FunctionDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="_keep_alive"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_keep_alive</span>(<span class="sig-arg">x</span>,
+        <span class="sig-arg">memo</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pickle-pysrc.html#_keep_alive">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  <p>Keeps a reference to the object x in the memo.</p>
+  Because we remember objects by their id, we have to assure that 
+  possibly temporary objects are kept alive by referencing them. We store a
+  reference at the id of the memo, which should normally not be used unless
+  someone tries to deepcopy the memo itself...
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="decode_long"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">decode_long</span>(<span class="sig-arg">data</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pickle-pysrc.html#decode_long">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  Decode a long from a two's complement little-endian binary string.
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>decode_long(<span class="py-string">''</span>)
+<span class="py-output">0L</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>decode_long(<span class="py-string">&quot;\xff\x00&quot;</span>)
+<span class="py-output">255L</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>decode_long(<span class="py-string">&quot;\xff\x7f&quot;</span>)
+<span class="py-output">32767L</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>decode_long(<span class="py-string">&quot;\x00\xff&quot;</span>)
+<span class="py-output">-256L</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>decode_long(<span class="py-string">&quot;\x00\x80&quot;</span>)
+<span class="py-output">-32768L</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>decode_long(<span class="py-string">&quot;\x80&quot;</span>)
+<span class="py-output">-128L</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>decode_long(<span class="py-string">&quot;\x7f&quot;</span>)
+<span class="py-output">127L</span></pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="encode_long"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">encode_long</span>(<span class="sig-arg">x</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pickle-pysrc.html#encode_long">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  Encode a long to a two's complement little-endian binary string. Note 
+  that 0L is a special case, returning an empty string, to save a byte in 
+  the LONG1 pickling context.
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>encode_long(0L)
+<span class="py-output">''</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>encode_long(255L)
+<span class="py-output">'\xff\x00'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>encode_long(32767L)
+<span class="py-output">'\xff\x7f'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>encode_long(-256L)
+<span class="py-output">'\x00\xff'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>encode_long(-32768L)
+<span class="py-output">'\x00\x80'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>encode_long(-128L)
+<span class="py-output">'\x80'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt; </span>encode_long(127L)
+<span class="py-output">'\x7f'</span>
+<span class="py-output"></span><span class="py-prompt">&gt;&gt;&gt;</span></pre>
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<a name="whichmodule"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr valign="top"><td>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">whichmodule</span>(<span class="sig-arg">func</span>,
+        <span class="sig-arg">funcname</span>)</span>
+  </h3>
+  </td><td align="right" valign="top"
+    ><span class="codelink"><a href="pickle-pysrc.html#whichmodule">source&nbsp;code</a></span>&nbsp;
+    </td>
+  </table>
+  
+  <p>Figure out the module in which a function occurs.</p>
+  Search sys.modules for the module. Cache in classmap. Return a module 
+  name. If the function cannot be found, return &quot;__main__&quot;.
+  <dl class="fields">
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr bgcolor="#70b0f0" class="table-header">
+  <td colspan="2" class="table-header">
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr valign="top">
+        <td align="left"><span class="table-header">Variables Details</span></td>
+        <td align="right" valign="top"
+         ><span class="options">[<a href="#section-VariablesDetails"
+         class="privatelink" onclick="toggle_private();"
+         >hide private</a>]</span></td>
+      </tr>
+    </table>
+  </td>
+</tr>
+</table>
+<a name="dispatch_table"></a>
+<div class="private">
+<table class="details" border="1" cellpadding="3"
+       cellspacing="0" width="100%" bgcolor="white">
+<tr><td>
+  <h3 class="epydoc">dispatch_table</h3>
+  
+  <dl class="fields">
+  </dl>
+  <dl class="fields">
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-group">{</code>&lt;type '_sre.SRE_Pattern'&gt;<code class="variable-op">: </code>&lt;function _pickle at 0x7f806f39c410&gt;<code class="variable-op">,</code>
+ &lt;type 'complex'&gt;<code class="variable-op">: </code>&lt;function pickle_complex at 0x7f806f43c488&gt;<code class="variable-op">,</code>
+ &lt;type 'posix.stat_result'&gt;<code class="variable-op">: </code>&lt;function _pickle_stat_result at 0x7f806f<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+43c8c0&gt;<code class="variable-op">,</code>
+ &lt;type 'posix.statvfs_result'&gt;<code class="variable-op">: </code>&lt;function _pickle_statvfs_result at 0x<span class="variable-linewrap"><img src="crarr.png" alt="\" /></span>
+7f806f43c9b0&gt;<code class="variable-group">}</code>
+</pre></td></tr></table>
+</dd>
+  </dl>
+</td></tr></table>
+</div>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="etl-module.html">Home</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+      <th class="navbar" width="100%"></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Wed Apr 29 20:37:20 2009
+    </td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

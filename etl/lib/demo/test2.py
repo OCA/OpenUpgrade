@@ -21,7 +21,7 @@ log2 = etl.component.transform.logger(name="Log Add")
 log3 = etl.component.transform.logger(name="Log Remove")
 log4 = etl.component.transform.logger(name="Log Update")
 
-fileconnector_output=etl.connector.localfile('output/test2_add.csv')
+fileconnector_output=etl.connector.localfile('output/test2_add.csv', 'w+')
 csv_out1 = etl.component.output.csv_out(fileconnector_output,name='Output')
 
 etl.transition(in1, log_1)
@@ -36,6 +36,7 @@ etl.transition(diff1, log2, channel_source="add")
 etl.transition(diff1, csv_out1, channel_source="add")
 etl.transition(diff1, log4, channel_source="update")
 
-job = etl.job([log_1,log_2,diff1,log1,log2,log3,log4,csv_out1])
+job = etl.job([in1,in2,log_1,log_2,diff1,log1,log2,log3,log4,csv_out1])
+print job
 job.run()
-
+print job.get_statitic_info()

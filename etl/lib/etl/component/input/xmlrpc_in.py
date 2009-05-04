@@ -20,56 +20,75 @@
 #
 ##############################################################################
 """
- to run xmlrpc server
+ To run xmlrpc server.
 
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
- GNU General Public License
+ GNU General Public License.
 """
+import etl
 from etl.component import component
-from SimpleXMLRPCServer import SimpleXMLRPCServer
-from SimpleXMLRPCServer import SimpleXMLRPCRequestHandler
-import threading
-#
+
 class xmlrpc_in(component):
     """
-    To connect server with xmlrpc request
+    To connect server with xmlrpc request.
 
     """
     _register_functions=[]
 
-    def __init__(self, xmlrpc_connector,  name='control.xmlrpc_in', transformer=None):
+    def __init__(self, xmlrpc_connector, job, name='component.input.xmlrpc_in', transformer=None, row_limit=0):
         """
         To be update
         """
-        super(xmlrpc_in, self).__init__(name, transformer=transformer)
-        self.xmlrpc_connector = xmlrpc_connector
-        self.datas=[]
-        self.isStarted=False
+        super(xmlrpc_in, self).__init__(name=name, connector=xmlrpc_connector, transformer=transformer, row_limit=row_limit)
+        self._type = 'component.input.xmlrpc_in'
+        self.datas = []
+        self.rel_job = job
+        
         self.register_functions(self.import_data)
+        
 
-    def register_functions(self,fun):
+    def __copy__(self):
+        res = xmlrpc_in(self.connector, self.job, self.name, self.transformer, self.row_limit)
+        return res
+
+    def register_functions(self, fun):
         self._register_functions.append(fun)
 
-    def process(self):
-        self.xmlrpc_connector.start(self.import_data)
+    def process(self): 
+        start_com = False
+        dummy = etl.component.component(name='dummy')
+        for com in self.rel_job.get_components():
+            if com.is_start():
+                start_com = com
+        self.rel_job.add_component(dummy)        
+        if start_com:
+            tran = etl.transition(dummy,start_com)               
+        self.dummy = dummy
+        self.connector.start(self.import_data)        
         for d in self.datas:
-            yield d,'main'
-
-    def iterator(self,datas=[]):
-        if self.transformer:
-            row=self.transformer.transform(self.datas)
-        for d in datas:
             yield d, 'main'
 
-    def data_iterator(self,datas):
-        pass
+    def iterator(self, datas=[]):                
+        for d in datas:
+            yield d, 'main'
+    
 
-    def import_data(self, datas):
-        self.generator=self.data_iterator(datas)
+    def import_data(self, datas): 
+        self.datas = datas 
+        for com in self.rel_job.get_components():
+            com.generator = False   
+        self.dummy.generator = self.iterator(self.datas)           
+        self.rel_job.run()        
         return True
 
 def test():
-    pass
+    from etl_test import etl_test
+    import etl
+    xmlrpc_conn=etl.connector.xmlrpc_connector('localhost', 8050)
+    conn = xmlrpc_conn.start('import_data')
+    test1 = etl_test.etl_component_test(xmlrpc_in(xmlrpc_conn))
+    res = test1.output()
+    print res
+
 if __name__ == '__main__':
-#    test()
-    pass
+    test()

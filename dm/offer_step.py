@@ -224,7 +224,9 @@ class dm_offer_step_transition(osv.osv):
     _columns = {
         'condition_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True,ondelete="cascade"),
         'delay' : fields.integer('Offer Delay' ,required=True),
-        'delay_type' : fields.selection([('minute', 'Minutes'),('hour','Hours'),('day','Days'),('month','Months')], 'Delay type', required=True),
+        'action_hour' : fields.float('Action Hour'),
+        'action_day' : fields.selection([('0', 'Monday'),('1','Tuesday'),('2','Wednesday'),('3','Thursday'),('4','Friday'),('5','Saturday'),('6','Sunday')], 'Action Day'),
+        'delay_type' : fields.selection([('minute', 'Minutes'),('hour','Hours'),('day','Days'),('week','Weeks'),('month','Months')], 'Delay type', required=True),
         'step_from_id' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to_id' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
     }
