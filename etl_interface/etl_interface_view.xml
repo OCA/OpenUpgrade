@@ -171,8 +171,7 @@
 					<newline />
 					<notebook colspan="4">
 						<page string="Job's Components">
-							<field name="component_ids" nolabel="1"
-								select="1" />
+							<field name="component_ids" nolabel="1" widget="many2many"/>
 						</page>
 						<page string="Other Info">
 							<separator string="Processes" colspan="4" />
@@ -259,7 +258,7 @@
 					<field name="type" select="1" />
 					<separator string="Transition property" colspan="4" />
 					<newline />
-					<field name="source_component_id" select="1" readonly="1" />
+					<field name="source_component_id" select="1" />
 					<field name="destination_component_id" select="1" />
 					<field name="channel_source" select="1" />
 					<field name="channel_destination" select="1" />
