@@ -246,6 +246,7 @@ dm_campaign_document()
 
 class dm_dynamic_text(osv.osv):
     _name = 'dm.dynamic_text'
+    _rec_name = 'language_id'
     _columns = {
         'language_id' : fields.many2one('res.lang','Language',ondelete='cascade'),
         'gender_id' : fields.many2one('res.partner.title', 'Gender', domain="[('domain','=','contact')]"),
