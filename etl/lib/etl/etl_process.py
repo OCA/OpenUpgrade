@@ -175,7 +175,6 @@ class job_process(signal):
         self.detail[key]['end_date'] =  current_time
         self.detail[key]['process_time'] =  diff
         self.detail[key]['status'] ='end'
-        print "===detail",self.detail
         return True
 
     def action_job_copy(self, key, signal_data={}, data={}):
@@ -184,6 +183,7 @@ class job_process(signal):
         return True
 
     def action_connector_open(self, key, signal_data={}, data={}):
+
         self.logger.notifyChannel("connector", logger.LOG_INFO,
                      'the <' + key.name + '> is open now...')
         return True
@@ -200,16 +200,23 @@ class job_process(signal):
 
 
     def action_component_start(self, key, signal_data={}, data={}):
+        if not 'components' in self.detail[key.job]:
+            self.detail[key.job]['components'] = {}
+        self.detail[key.job]['components'][key] = {}
+
         self.logger.notifyChannel("component", logger.LOG_INFO,
                      'the <' + key.name + '> has started now...')
         key._cache['start_date'] = signal_data.get('date',False)
         return True
 
     def action_component_start_input(self, key, signal_data={}, data={}):
+        # To do: check override problem
+        self.detail[key.job]['components'][key]['in_connector'] = key.connector
+        self.detail[key.job]['components'][key]['in_tran'] = {}
+        for i in key.trans_in:
+            self.detail[key.job]['components'][key]['in_tran'][i[1]] = {}
+            self.detail[key.job]['components'][key]['in_tran'][i[1]]['status_trans'] = i[1].status
 
-#        if not 'in_tran' in self.detail[key.job]:
-#            self.detail[key.job][key]['in_tran'] = []
-#        self.detail[key.job][key]['in_tran'].append(key.trans_in)
         if 'trans' not in key._cache:
             key._cache['trans'] = {}
         value = key._cache['trans']
@@ -217,13 +224,19 @@ class job_process(signal):
         if trans not in value:
             value[trans] = {}
         value[trans].update({'start_input' : signal_data.get('date',False)})
+
+        self.detail[key.job]['components'][key]['start_input_date'] = signal_data.get('date',False)
         return True
 
     def action_component_start_output(self, key, signal_data={}, data={}):
+        # To do: check override problem
+        self.detail[key.job]['components'][key]['out_connector'] = key.connector
+        self.detail[key.job]['components'][key]['out_tran'] = {}
 
-#        if not 'in_tran' in self.detail[key.job]:
-#            self.detail[key.job][key]['out_tran'] = []
-#        self.detail[key.job][key]['out_tran'].append(key.trans_out)
+        for i in key.trans_out:
+            self.detail[key.job]['components'][key]['out_tran'][i[1]] = {}
+            self.detail[key.job]['components'][key]['out_tran'][i[1]]['status_trans'] = i[1].status
+
         if 'trans' not in key._cache:
             key._cache['trans'] = {}
         value = key._cache['trans']
@@ -231,12 +244,19 @@ class job_process(signal):
         if trans not in value:
             value[trans] = {}
         value[trans].update({'start_output' : signal_data.get('date',False)})
+        self.detail[key.job]['components'][key]['start_output_date'] = signal_data.get('date',False)
         return True
 
     def action_component_get_input(self, key, signal_data={}, data={}):
+
+
         if 'trans' not in key._cache:
             key._cache['trans'] = {}
         value = key._cache['trans']
+
+#        for i in key.trans_in:
+#            if i[1] in self.detail[key.job]['components'][key]['in_tran']:
+#                self.detail[key.job]['components'][key]['in_tran'][i[1]]['total_inputs'] = value[key]['total_inputs']
 
         trans = signal_data.get('trans',False)
         total = value[trans].get('total_inputs',0)
@@ -282,6 +302,7 @@ class job_process(signal):
         return True
 
     def action_component_end(self, key, signal_data={}, data={}):
+
         self.logger.notifyChannel("component", logger.LOG_INFO,
                      'the <' + key.name + '> has ended now...')
 
@@ -443,4 +464,3 @@ class job(job_process):
         return end_components
 
     #TODO  : make separate class : job.process to provide platform for job process and put below functions in new class
-
