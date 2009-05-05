@@ -104,6 +104,7 @@ class dm_customer_order(osv.osv):
 
 dm_customer_order()
 
+
 class dm_customer_gender(osv.osv):
     _name = "dm.customer.gender"
     def _customer_gender_code(self, cr, uid, ids, name, args, context={}):
@@ -134,31 +135,12 @@ class dm_customer_gender(osv.osv):
     }
 dm_customer_gender()
 
+
 class dm_workitem(osv.osv):
     _name = "dm.workitem"
     _description = "workitem"
     _SOURCES = [('address_id','Partner Address')]
     SELECTION_LIST = [('pending','Pending'),('error','Error'),('cancel','Cancelled'),('done','Done')]
-    """
-    def create(self,cr,uid,vals,context={}):
-        if 'action_time' in vals and vals['action_time']:
-            return super(dm_workitem, self).create(cr, uid, vals, context)
-        if 'tr_from_id' in vals and vals['tr_from_id']:
-            tr = self.pool.get('dm.offer.step.transition').browse(cr, uid, vals['tr_from_id'])
-            print "Delay Type: ",tr.delay_type
-
-            wi_action_time = datetime.datetime.now()
-            kwargs = {(tr.delay_type+'s'): tr.delay}
-            next_action_time = wi_action_time + datetime.timedelta(**kwargs)
-            print "Next action date : ",next_action_time
-            vals['action_time'] = next_action_time
-            print "Vals : ",vals
-        else:
-            vals['action_time'] = datetime.datetime.now()
-            print "Vals : ",vals
-
-        return super(dm_workitem, self).create(cr, uid, vals, context)
-    """
 
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step', select="1", ondelete="cascade"),
@@ -227,7 +209,7 @@ class dm_workitem(osv.osv):
                 try:
                     exec tr.condition_id.in_act_cond.replace('\r','') in eval_context,val
                     print "Val in get step_to_check: ",val.get('step_to_check',False)
-                    print "Val in get wid_ids : ",val.get('wi_ids',False)
+                    print "Val in get wi_ids : ",val.get('wi_ids',False)
                     print "Val in get res : ",val.get('result',False)
                 except Exception,e:
                     netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Invalid code in Incoming Action Condition: %s'% tr.condition_id.in_act_cond)
@@ -286,7 +268,7 @@ class dm_workitem(osv.osv):
         context['active_id'] = camp_doc.id
         try:
             server_obj = self.pool.get('ir.actions.server')
-            print "Calling mail service run for :"
+#            print "Calling mail service run for :"
             if not camp_doc.mail_service_id.action_id :
                 return False
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
@@ -566,6 +548,11 @@ class dm_event(osv.osv_memory):
         obj = self.browse(cr, uid ,id)
         tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
                 ('condition_id','=',obj.trigger_type_id.id)])
+        if not tr_ids:
+            netsvc.Logger().notifyChannel('dm event case', netsvc.LOG_WARNING, "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
+            osv.except_osv('Warning', "There is no transition %s at this step : %s"% (obj.trigger_type_id.name, obj.step_id.code))
+            return False
+
         for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
             if obj.action_time:
                 next_action_time = datetime.datetime.strptime(obj.action_time, '%Y-%m-%d  %H:%M:%S')
@@ -582,7 +569,8 @@ class dm_event(osv.osv_memory):
 
             try:
                 wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
-                (obj.source):obj[obj.source].id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
+#                (obj.source):obj[obj.source].id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
+                'address_id':obj.address_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
             except:
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem")
