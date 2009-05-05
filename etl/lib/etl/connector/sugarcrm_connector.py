@@ -47,8 +47,9 @@ class sugarcrm_connector(connector):
 
     def open(self):
         super(sugarcrm_connector, self).open()
-        from sugarcrm.sugarsoap_services_types import *
-        from sugarcrm.sugarsoap_services import *
+        from sugarcrm.sugarsoap_services_types import ns0
+        import md5
+        from sugarcrm.sugarsoap_services  import sugarsoapLocator,loginRequest
         loc = sugarsoapLocator();
         request = loginRequest();
         uauth = ns0.user_auth_Def(request);
@@ -63,8 +64,7 @@ class sugarcrm_connector(connector):
         return (portType, response._return._id);
 
     def search(self, portType, session_id, module, offset=0, row_limit=0, query=None):
-        from sugarcrm.sugarsoap_services_types import *
-        from sugarcrm.sugarsoap_services import *
+        from sugarcrm.sugarsoap_services  import get_entry_listRequest
         se_req = get_entry_listRequest()
         se_req._session = session_id;
         se_req._module_name = module
@@ -89,8 +89,7 @@ class sugarcrm_connector(connector):
         return ans_list;
 
     def edit(self, portType, session_id, module, values):
-        from sugarcrm.sugarsoap_services_types import *
-        from sugarcrm.sugarsoap_services import *
+        from sugarcrm.sugarsoap_services import get_entry_listRequest
         gui_req = get_user_idRequest();
         gui_req._session = session_id;
         user_id = portType.get_user_id(gui_req)._return;
