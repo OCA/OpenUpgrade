@@ -230,8 +230,8 @@ class dm_workitem(osv.osv):
                     print "Val in get wid_ids : ",val.get('wi_ids',False)
                     print "Val in get res : ",val.get('result',False)
                 except Exception,e:
-                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, 'Invalid code in Incoming Action Condition: %s'% tr.condition_id.in_act_cond)
-                    netsvc.Logger().notifyChannel('dm', netsvc.LOG_ERROR, e)
+                    netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Invalid code in Incoming Action Condition: %s'% tr.condition_id.in_act_cond)
+                    netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, e)
                     continue
                 if not val.get('result',False):
                     res = False
@@ -251,19 +251,17 @@ class dm_workitem(osv.osv):
         if done:
             """ Create next auto workitems """
             for tr in wi.step_id.outgoing_transition_ids:
-                print "Delay Type: ",tr.delay_type
-
                 wi_action_time = datetime.datetime.strptime(wi.action_time, '%Y-%m-%d  %H:%M:%S')
                 kwargs = {(tr.delay_type+'s'): tr.delay}
                 next_action_time = wi_action_time + datetime.timedelta(**kwargs)
 
-                """
                 if tr.action_hour:
-                    print "Action Hour :",tr.action_hour
-                    print "Action Hour datetime :", datetime.datetime.strptime(str(tr.action_hour),'%H.%M')
-                    act_hour = datetime.datetime.fromtimestamp(tr.action_hour)
-                    print "Action Hour timestamp :",act_hour.strftime('%H:%M:%S')
+                    hour_str =  str(tr.action_hour).split('.')[0] + ':' + str(int(int(str(tr.action_hour).split('.')[1]) * 0.6))
+                    act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
+                    next_action_time = next_action_time.replace(hour=act_hour.hour)
+                    next_action_time = next_action_time.replace(minute=act_hour.minute)
 
+                """
                 if tr.action_day:
                     nxt_act_time = next_action_time.timetuple()
                     print "Next time timetuple :",nxt_act_time
@@ -271,10 +269,12 @@ class dm_workitem(osv.osv):
                     print "Action Day :",act_day
                 """
 
-                print "Next action date : ",next_action_time
+                try:
+                    aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})
+                    netsvc.Logger().notifyChannel('dm action', netsvc.LOG_DEBUG, "Creating Auto Workitem %d with action at %s"% (aw_id,next_action_time.strftime('%Y-%m-%d  %H:%M:%S')))
+                except:
+                    netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, "Cannot create Auto Workitem")
 
-                aw_id = self.copy(cr, uid, wi.id, {'step_id':tr.step_to_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S')})
-                print "auto wi : ",aw_id
         return True
 
     def __init__(self, *args):
@@ -555,6 +555,7 @@ class dm_event(osv.osv_memory):
         'source' : fields.selection([('address_id','Addresses')], 'Source', required=True),
         'address_id' : fields.many2one('res.partner.address', 'Address'),
         'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
+        'action_time': fields.datetime('Action Time'),
     }
     _defaults = {
         'source': lambda *a: 'address_id',
@@ -566,16 +567,26 @@ class dm_event(osv.osv_memory):
         tr_ids = self.pool.get('dm.offer.step.transition').search(cr, uid, [('step_from_id','=',obj.step_id.id),
                 ('condition_id','=',obj.trigger_type_id.id)])
         for tr in self.pool.get('dm.offer.step.transition').browse(cr, uid, tr_ids):
-            wi_action_time = datetime.datetime.now()
-            kwargs = {(tr.delay_type+'s'): tr.delay}
-            next_action_time = wi_action_time + datetime.timedelta(**kwargs)
-            netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
-            netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Workitem : %s"% vals)
+            if obj.action_time:
+                next_action_time = datetime.datetime.strptime(obj.action_time, '%Y-%m-%d  %H:%M:%S')
+            else:
+                wi_action_time = datetime.datetime.now()
+                kwargs = {(tr.delay_type+'s'): tr.delay}
+                next_action_time = wi_action_time + datetime.timedelta(**kwargs)
 
-            wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
-            (obj.source):obj[obj.source].id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
-            if not wi_id:
+                if tr.action_hour:
+                    hour_str =  str(tr.action_hour).split('.')[0] + ':' + str(int(int(str(tr.action_hour).split('.')[1]) * 0.6))
+                    act_hour = datetime.datetime.strptime(hour_str,'%H:%M')
+                    next_action_time = next_action_time.replace(hour=act_hour.hour)
+                    next_action_time = next_action_time.replace(minute=act_hour.minute)
+
+            try:
+                wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
+                (obj.source):obj[obj.source].id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'), 'source':obj.source})
+                netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
+            except:
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem")
+
         return id
 
 dm_event()
