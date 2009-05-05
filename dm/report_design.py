@@ -30,7 +30,7 @@ interna_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitiona
         A:link { so-language: zxx }
         -->
     </STYLE>
-<i/HEAD>
+</HEAD>
 <BODY LANG="en-IN" DIR="LTR">
 '''
 
@@ -41,10 +41,9 @@ def merge_message(cr, uid, keystr, context):
         id = context.get('document_id')
         obj = dm_obj.browse(cr, uid, id)
         exp = str(match.group()[2:-2]).strip()
-        plugin_values = generate_plugin_value(cr, uid, id, context.get('customer_id'), context)
-        context.update(plugin_values).update({'object':obj,'time':time})
-        print "=============================="
-        print context
+        plugin_values = generate_plugin_value(cr, uid, id, context.get('address_id'), context)
+        context.update(plugin_values)
+        context.update({'object':obj,'time':time})
         result = eval(exp,context)
         if result in (None, False):
             return str("--------")
@@ -59,28 +58,28 @@ def generate_reports(cr,uid,obj,report_type,context):
 
     print "Calling generate_reports from wi : ", obj.id
     print "Calling generate_reports source code : ", obj.source
-    customer_id = getattr(obj, obj.source).id
-    print "customer_id : ",customer_id
-    customer_ids = []
+    address_id = getattr(obj, obj.source).id
+    print "address_id : ",address_id
+    address_ids = []
 
     if obj.is_global:
         """ if segment workitem """
         print "source fields : ",getattr(obj.segment_id.customers_file_id, obj.source + "s")
         for cust_id in getattr(obj.segment_id.customers_file_id, obj.source + "s"):
             print "cust_id : ",cust_id
-            customer_ids.append(cust_id.id)
+            address_ids.append(cust_id.id)
     else:
         """ if customer workitem """
-        customer_ids.append(customer_id)
+        address_ids.append(address_id)
 
-    print "customer_ids : ", customer_ids
+    print "address_ids : ", address_ids
 
     step_id = obj.step_id.id
     pool = pooler.get_pool(cr.dbname)
     dm_doc_obj = pool.get('dm.offer.document') 
     report_xml = pool.get('ir.actions.report.xml')
 
-    for customer_id in customer_ids:
+    for address_id in address_ids:
         camp_id = obj.segment_id.proposition_id.camp_id.id 
         type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',report_type)])
         camp_mail_service_obj = pool.get('dm.campaign.mail_service')
@@ -108,7 +107,7 @@ def generate_reports(cr,uid,obj,report_type,context):
         print "Doc id : ",document_id
 
         vals={  'segment_id': obj.segment_id.id,
-            'name': obj.step_id.code + "_" +str(customer_id),
+            'name': obj.step_id.code + "_" +str(address_id),
             'type_id': type_id[0],
             'mail_service_id':camp_mail_service.mail_service_id.id,
             'delivery_time' : delivery_time,
@@ -125,18 +124,18 @@ def generate_reports(cr,uid,obj,report_type,context):
 
             document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
             print "Doc name : ",document_data['name']
-            context['customer_id'] = customer_id
+            context['address_id'] = address_id
             context['document_id'] = document_id[0]
             attachment_obj = pool.get('ir.attachment')
             if report_type=='html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
                 report_data = interna_html_report +str(document_data['content'])+"</BODY></HTML>"
                 report_data = merge_message(cr, uid, report_data, context)
-                attach_vals={'name' : document_data['name'] + "_" + str(customer_id),
-                             'datas_fname' : 'report_test' + report_type ,
-                             'res_model' : 'dm.campaign.document',
-                             'res_id' : camp_doc,
-                             'datas': base64.encodestring(report_data),
-                             'file_type':'html'
+                attach_vals={'name' : document_data['name'] + "_" + str(address_id),
+                            'datas_fname' : 'report_test' + report_type ,
+                            'res_model' : 'dm.campaign.document',
+                            'res_id' : camp_doc,
+                            'datas': base64.encodestring(report_data),
+                            'file_type':'html'
                             }
                 attach_id = attachment_obj.create(cr,uid,attach_vals)
                 print "Attachment id and campaign doc id" , attach_id,camp_doc
@@ -144,7 +143,7 @@ def generate_reports(cr,uid,obj,report_type,context):
                 for report in pool.get('ir.actions.report.xml').browse(cr, uid, report_ids) :
                     srv = netsvc.LocalService('report.' + report.report_name)
                     report_data,report_type = srv.create(cr, uid, [], {},context)
-                    attach_vals={'name' : document_data['name'] + "_" + str(customer_id)+str(report.id),
+                    attach_vals={'name' : document_data['name'] + "_" + str(address_id)+str(report.id),
                                  'datas_fname' : 'report.' + report.report_name + '.' + report_type ,
                                  'res_model' : 'dm.campaign.document',
                                  'res_id' : camp_doc,
@@ -156,10 +155,10 @@ def generate_reports(cr,uid,obj,report_type,context):
 
 
 
-def generate_plugin_value(cr, uid, document_id, customer_id, context={}):
+def generate_plugin_value(cr, uid, document_id, address_id, context={}):
     if not document_id :
         return False
-    if not customer_id :
+    if not address_id :
         return False
     vals = {}
 
@@ -182,7 +181,7 @@ def generate_plugin_value(cr, uid, document_id, customer_id, context={}):
     for p in plugins :
         args = {}
         if p.type == 'fields':
-            plugin_value = compute_customer_plugin(cr, uid, p, customer_id)
+            plugin_value = compute_customer_plugin(cr, uid, p, address_id)
 
         else :
             arguments = p.argument_ids
@@ -190,17 +189,17 @@ def generate_plugin_value(cr, uid, document_id, customer_id, context={}):
                 if not a.stored_plugin :
                     args[str(a.name)]=str(a.value)
                 else :
-                    args[str(a.name)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, customer_id)
+                    args[str(a.name)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id)
             path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
             plugin_name = p.file_fname.split('.')[0]
             sys.path.append(path)
             X =  __import__(plugin_name)
             plugin_func = getattr(X, plugin_name)
-            plugin_value = plugin_func(cr, uid, customer_id, **args)
+            plugin_value = plugin_func(cr, uid, address_id, **args)
 
         if p.store_value :
             dm_plugins_value.create(cr, uid,{'date':time.strftime('%Y-%m-%d'),
-                                             'customer_id':customer_id,
+                                             'address_id':address_id,
                                              'plugin_id':p.id,
                                              'value' : plugin_value})
         vals[str(p.code)] = plugin_value
@@ -221,12 +220,12 @@ class offer_document(rml_parse):
     def document(self):
         print "Calling document"
         if 'form' not in self.datas :
-            customer_id = self.context['customer_id']
+            address_id = self.context['address_id']
             document_id = self.context['document_id']
         else :
-            customer_id = self.datas['form']['customer_id']
+            address_id = self.datas['form']['address_id']
             document_id = self.ids[0]
-        values = generate_plugin_value(self.cr,self.uid,document_id,customer_id)
+        values = generate_plugin_value(self.cr,self.uid,document_id,address_id)
         return [values]
 
 from report.report_sxw import report_sxw

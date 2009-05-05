@@ -21,10 +21,10 @@ def customer_function(cr,uid,ids,**args):
         if res[args['field_name']]:
             if args['field_name'] == 'lang':
                 res_lang = pool.get('res.lang')
-                language = res_lang.search(cr,uid,[('code','=',customers[args['field_name']])])
+                language = res_lang.search(cr,uid,[('code','=',res[args['field_name']])])
                 read_name = res_lang.read(cr,uid,language,['name'])
-                customers[args['field_name']] = str(read_name[0]['name'])
-        value = customers[args['field_name']]
+                res[args['field_name']] = str(read_name[0]['name'])
+        value = res[args['field_name']]
         return value
     elif args['field_type'] not in ['many2many','one2many','many2one']:
         return res[args['field_name']]

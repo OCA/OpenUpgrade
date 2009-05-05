@@ -11,6 +11,17 @@
 <!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
     </data>
+
+    <data>
+        <record id="dm_offer_step_transition_plan_to_sell" model="dm.offer.step.transition.trigger">
+            <field eval="&quot;&quot;&quot;Plan to Sell&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;plan_to_sell&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+<!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
+        </record>
+    </data>
+
 <!--
     <data>
         <record id="dm_customers_file_source_crm_case" model="dm.customers_file.source">

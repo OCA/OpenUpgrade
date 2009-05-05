@@ -36,8 +36,15 @@
                 <notebook colspan="4">
                 <page string="General">
                 <group colspan="2" col="3">
+                	<separator string="Duration"/>
                     <field name="duration" select="2" />
                     <field name="duration_unit" nolabel="1" />
+                </group>
+                <group colspan="2" col="2">
+                	<separator string="Options"/>
+                    <field name="so_gen" select="2" />
+                    <field name="invoice_gen" select="2" attrs="{'readonly':[('so_gen','!=',True)]}"/>
+                    <field name="invoice_pay" select="2" attrs="{'readonly':[('invoice_gen','!=',True)]}"/>
                 </group>
                 <separator string="Simulation Informations" colspan="4"/>
                 <group colspan="2" col="2">
@@ -58,10 +65,19 @@
                     <button string="Stop Simulation" name="simulation_stop"  states="running" type="object" colspan="2"/>
                 </group>
                 </page>
-                <page string="Logs">
+                <page string="Statistics">
                     <separator string="Actions Logs" colspan="4"/>
-                    <field name="logs" colspan="4" nolabel="1"/>
+                    <field name="action_done_qty" />
+                    <field name="action_pending_qty" />
+                    <field name="action_dur_total" widget="float_time"/>
+                    <field name="avg_rate" />
+                    <separator string="Actions Statistics" colspan="4"/>
+                    <field name="stats" colspan="4" nolabel="1"/>
                 </page>
+<!--                <page string="Logs">
+                    <separator string="Last Actions Logs" colspan="4"/>
+                    <field name="logs" colspan="4" nolabel="1"/>
+                </page>-->
                 </notebook>
             </form>
         </field>
