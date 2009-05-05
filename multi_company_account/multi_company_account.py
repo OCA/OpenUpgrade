@@ -178,6 +178,13 @@ class account_invoice_line(osv.osv):
 
 account_invoice_line()
 
+class JournalPeriod(osv.osv):
+    _inherit = 'account.journal.period'
+    _columns = {
+        'company_id' : fields.many2one('res.company', 'Company')
+    }
+JournalPeriod()
+
 class account_invoice(osv.osv):
     _name = "account.invoice"
     _inherit = "account.invoice"
