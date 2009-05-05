@@ -30,12 +30,10 @@ from osv import osv, fields
 
 _earth_form =  '''<?xml version="1.0"?>
         <form string="Google Map/Earth">
-        <separator string="Select Partner" colspan="4"/>
-        <field name="partner_id"/>
+        <label string="kml file created in ../google_earth/kml/partner.kml"/>
         </form> '''
 
 _earth_fields = {
-            'partner_id': {'string': 'Partner', 'type': 'many2one', 'relation': 'res.partner', 'required': True,},
             }
 
 def geocode(address):
@@ -62,80 +60,81 @@ def geocode(address):
 def create_kml(self, cr, uid, data, context={}):
     # This function creates an XML document and adds the necessary
     # KML elements.
-    address = ' '
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
     path = tools.config['addons_path']
     fileName = path + '/google_earth/kml/partner.kml'
-    partner_data = partner_obj.browse(cr, uid, data['form']['partner_id'], context)
-
-    # query should be check only with current partner not all
-    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
-    for id, turnover, partner_id in cr.fetchall():
-        if not (partner_id == data['form']['partner_id']):
-            turnover = 0
-        if partner_id == data['form']['partner_id']:
-            turnover = turnover
+    partner_ids = partner_obj.search(cr, uid, [])
+    partner_data = partner_obj.browse(cr, uid, partner_ids, context)
     address_obj= pool.get('res.partner.address')
-    add = address_obj.browse(cr, uid, partner_data.address[0].id, context) # Todo: should be work for multiple address
-#    if add.street:
-#        address += str(add.street)
-#    if add.street2:
-#        address += ', '
-#        address += str(add.street2)
-    if add.city:
-#        address += ', '
-        address += str(add.city)
-    if add.state_id:
-        address += ', '
-        address += str(add.state_id.name)
-    if add.country_id:
-        address += ', '
-        address += str(add.country_id.name)
 
-    desc_text = address + ' , Partner turnover = ' + str(turnover)
+    res = {}
+    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+    res_partner = cr.fetchall()
+    for part in partner_data:
+        for id, turnover, partner_id in res_partner:
+            if not (partner_id == part.id):
+                res[part.id] = 0
+            if partner_id == part.id:
+                res[part.id] = turnover
     kmlDoc = xml.dom.minidom.Document()
     kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
     kmlElement = kmlDoc.appendChild(kmlElement)
     documentElement = kmlDoc.createElement('Document')
     documentElement = kmlElement.appendChild(documentElement)
-    placemarkElement = kmlDoc.createElement('Placemark')
-    placemarknameElement = kmlDoc.createElement('name')
-    placemarknameText = kmlDoc.createTextNode(partner_data.name)
-    placemarknameElement.appendChild(placemarknameText)
-    placemarkElement.appendChild(placemarknameElement)
-    descriptionElement = kmlDoc.createElement('description')
-    descriptionText = kmlDoc.createTextNode(desc_text)
-    descriptionElement.appendChild(descriptionText)
-    placemarkElement.appendChild(descriptionElement)
-    pointElement = kmlDoc.createElement('Point')
-    placemarkElement.appendChild(pointElement)
-    coorElement = kmlDoc.createElement('coordinates')
-
-    # This geocodes the address and adds it to a <Point> element.
-    coordinates = geocode(address)
-    coorElement.appendChild(kmlDoc.createTextNode(coordinates))
-    pointElement.appendChild(coorElement)
-    documentElement.appendChild(placemarkElement)
-
-    # This writes the KML Document to a file.
     kmlFile = open(fileName, 'w')
+    for part in partner_data:
+        address = ''
+        add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
+        if add:
+        #    if add.street:
+        #        address += str(add.street)
+        #    if add.street2:
+        #        address += ', '
+        #        address += str(add.street2)
+            if add.city:
+        #        address += ', '
+                address += str(add.city)
+            if add.state_id:
+                address += ', '
+                address += str(add.state_id.name)
+            if add.country_id:
+                address += ', '
+                address += str(add.country_id.name)
+
+        desc_text = address + ' , turnover of partner : ' + str(res[part.id])
+        placemarkElement = kmlDoc.createElement('Placemark')
+        placemarknameElement = kmlDoc.createElement('name')
+        placemarknameText = kmlDoc.createTextNode(part.name)
+        placemarknameElement.appendChild(placemarknameText)
+        placemarkElement.appendChild(placemarknameElement)
+        descriptionElement = kmlDoc.createElement('description')
+        descriptionText = kmlDoc.createTextNode(desc_text)
+        descriptionElement.appendChild(descriptionText)
+        placemarkElement.appendChild(descriptionElement)
+        pointElement = kmlDoc.createElement('Point')
+        placemarkElement.appendChild(pointElement)
+        coorElement = kmlDoc.createElement('coordinates')
+        # This geocodes the address and adds it to a <Point> element.
+        coordinates = geocode(address)
+        coorElement.appendChild(kmlDoc.createTextNode(coordinates))
+        pointElement.appendChild(coorElement)
+        documentElement.appendChild(placemarkElement)
+        # This writes the KML Document to a file.
+
     kmlFile.write(kmlDoc.toprettyxml(' '))
     kmlFile.close()
-
     return {}
 
 class customer_on_map(wizard.interface):
 
     states = {
-       'init': {
-            'actions': [],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Cancel'),('map','Get map')]}
-                },
-         'map': {
+         'init': {
             'actions': [create_kml],
-            'result': {'type': 'state', 'state': 'end'}
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
                 }
             }
+
 customer_on_map('google.earth')
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
