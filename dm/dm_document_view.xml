@@ -365,6 +365,52 @@
 
     <menuitem id="menu_action_dm_campaign_document" parent="menu_dm_config_lowlevel_campaign_doc" action="action_dm_campaign_document" sequence="1" />
 
+	<!--
+    =======================================================
+        DYNAMIC TEXT
+    =======================================================
+    -->
+
+    <record model="ir.ui.view" id="view_dm_dynamic_text_form">
+        <field name="name">dm.dynamic_text.form</field>
+        <field name="model">dm.dynamic_text</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Dynamic Text">
+                <field name="language_id" select="1"/>
+                <field name="gender_id" select="2"/>
+                <field name="previous_step_id" select="1"/>
+                <field name="ref_text_id" select="2"/>
+                <field name="content" colspan="4"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_dm_dynamic_text_tree">
+        <field name="name">dm.dynamic_text.tree</field>
+        <field name="model">dm.dynamic_text</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Dynamic Texts">
+                <field name="language_id"/>
+                <field name="gender_id"/>
+                <field name="previous_step_id"/>
+                <field name="ref_text_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_dynamic_text">
+        <field name="name">All Dynamic Texts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.dynamic_text</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_dm_dynamic_text_tree"/>
+    </record>
+
+    <menuitem id="menu_action_dm_dynamic_text" parent="dm.menu_action_offer_doc" action="action_dm_dynamic_text" sequence="5" />
+
+
     <!--
     =======================================================
         RELATES
