@@ -255,12 +255,14 @@ class dm_workitem(osv.osv):
             for wi in self.browse(cr, uid, ids, context=context):
                 self.run(cr, uid, wi, context=context)
             self.is_running = False
- #       dm.campaign.document process
+
+        """ dm.campaign.document process """
         camp_doc_obj = self.pool.get('dm.campaign.document')
         time_now = time.strftime('%Y-%m-%d %H:%M:%S')
         camp_doc_ids = camp_doc_obj.search(cr,uid,[('state','=','pending'),('delivery_time','<',time_now)])
         print camp_doc_ids
         for camp_doc in camp_doc_obj.browse(cr, uid, camp_doc_ids, context=context):
+            print "Sending : ",camp_doc.name
             self.mail_service_run(cr, uid, camp_doc, context=context)
         return True
 

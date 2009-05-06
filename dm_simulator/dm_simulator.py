@@ -129,6 +129,7 @@ class dm_simulator(osv.osv):
                         for cust_id in seg.customers_file_id.address_ids:
                             cust_ids.append([cust_id.id,seg.id])
 
+            action_qty = 0
             for s in sect_act:
                 """ Get offer steps """
                 step_ids = self.pool.get('dm.offer.step').search(cr, uid, [('offer_id','=',sim.campaign_id.offer_id.id)])
@@ -158,8 +159,12 @@ class dm_simulator(osv.osv):
                                 'step_id':step, 'segment_id':cust[1], 'address_id':cust[0],'section':sect_act.index(s),
                                 'action_time':action_time})
                         print "DM SIM - Customers :", cust_ids[0:s[0]]
+                        action_qty += 1
 
-        self.write(cr, uid, ids, {'state':'running'})
+        stat_init = "--- Starting Campaign Simulation Actions at %s ---"% time.strftime('%Y-%m-%d  %H:%M:%S')
+# TO FIX : Not good quantity
+#        self.write(cr, uid, ids, {'action_pending_qty':action_qty, 'state':'running'})
+        self.write(cr, uid, ids, {'stats':stat_init,'action_pending_qty':sim.action_qty, 'state':'running'})
 
         return True
 
@@ -177,8 +182,12 @@ class dm_simulator(osv.osv):
 
         sim_ids = self.search(cr, uid, [('state','=','running')])
         for sim in self.browse(cr, uid, sim_ids):
-            print "DM SIM - Doing action for :",sim.name
 
+            """ Check if Simulation to stop """
+            if sim.date_stop > time.strftime('%Y-%m-%d  %H:%M:%S'):
+                sim.simulation_stop(cr, uid, [sim.id])
+
+            print "DM SIM - Doing action for :",sim.name
             start_time = time.time()
             sim_act_ids = self.pool.get('dm.simulator.action').search(cr, uid, [('simulator_id','=',sim.id),('state','=','pending'),
                 ('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
@@ -231,7 +240,7 @@ class dm_simulator(osv.osv):
 
                     if sim.invoice_gen:
                         inv_id = self.pool.get('sale.order').action_invoice_create(cr, uid, [new_id])
-                        #wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+                        wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
                         print "invoice id :",inv_id
 
                         if sim.invoice_pay:
@@ -247,7 +256,6 @@ class dm_simulator(osv.osv):
             new_stats = []
             stats = self.read(cr, uid, sim.id, ['stats'])
             new_stats.append("> %d actions done in %s seconds (%s actions/second)"% (len(sim_act_ids), str(duration), len(sim_act_ids)/duration))
-            new_stats.append(stats['stats'] or "--- Starting Campaign Simulation Actions at %s ---"% start_date.strftime('%Y-%m-%d  %H:%M:%S'))
 
             action_done_qty = sim.action_done_qty + len(sim_act_ids)
             action_pending_qty = sim.action_qty - action_done_qty
@@ -276,15 +284,15 @@ class dm_simulator_action(osv.osv):
     _name = "dm.simulator.action"
     _description = "DM Campaign Simulator Action"
     _columns = {
-        'simulator_id' : fields.many2one('dm.simulator','Simulator',required=True),
-        'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
+        'simulator_id' : fields.many2one('dm.simulator','Simulator', required=True, ondelete="cascade"),
+        'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger', 'Trigger Condition', required=True),
         'step_id' : fields.many2one('dm.offer.step','Offer Step', required=True),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment', required=True),
         'source' : fields.char('source',size=64),
         'address_id' : fields.many2one('res.partner.address','Customer', required=True),
         'section' : fields.integer('Section'),
         'action_time' : fields.datetime('Action Time'),
-        'state' : fields.selection([('pending','Pending'),('done','Done'),('error','Error')],'State',readonly=True),
+        'state' : fields.selection([('pending','Pending'),('done','Done'),('error','Error')], 'State', readonly=True),
         'error_msg' : fields.text('Error Message'),
         'action_start' : fields.datetime('Action Start'),
         'action_stop' : fields.datetime('Action Stop'),

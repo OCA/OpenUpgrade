@@ -21,18 +21,13 @@
 ##############################################################################
 
 import sys
-import datetime, os, zipfile, xml, string
-from xml.dom.ext.reader.Sax2 import FromXmlStream
-from xml.dom.ext import PrettyPrint
-
+import os, xml, string
 import urllib
 import xml.dom.minidom
-import pyexpat
 
 import wizard
 import pooler
 import tools
-from osv import osv, fields
 
 _earth_form =  '''<?xml version="1.0"?>
         <form string="Google Map/Earth">
