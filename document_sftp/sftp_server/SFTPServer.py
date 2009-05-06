@@ -37,15 +37,15 @@ from paramiko.sftp_attr import *
 class SFTPServer (paramiko.SFTPServer):
 
     def _read_folder(self, request_number, folder):        
-        flist = folder._get_next_files()        
+        flist = folder._get_next_files()                
         if len(flist) == 0:
             self._send_status(request_number, SFTP_EOF)
             return
         msg = Message()
         msg.add_int(request_number)
         msg.add_int(len(flist))
-        for node in flist:
-            attr = self.server.stat(node)            
+        for node in flist:            
+            attr = self.server.stat(node)              
             msg.add_string(attr.filename)
             msg.add_string(str(attr))
             attr._pack(msg)
@@ -79,7 +79,7 @@ class SFTPServer (paramiko.SFTPServer):
                 else:                    
                     attr = False #SFTPAttributes._from_msg(msg)                    
                     datacr = self.server.get_cr(path)                    
-                    node = self.server.ftp2fs(path, datacr)                                             
+                    node = self.server.ftp2fs(path, datacr)                      
                     self._send_handle_response(request_number, self.server.open(node, flags, attr))
             elif t == CMD_CLOSE:
                 handle = msg.get_string()
@@ -146,7 +146,7 @@ class SFTPServer (paramiko.SFTPServer):
             elif t == CMD_OPENDIR:
                 path = msg.get_string()                
                 datacr = self.server.get_cr(path)
-                node = self.server.ftp2fs(path, datacr)                
+                node = self.server.ftp2fs(path, datacr)                   
                 self._open_folder(request_number, node)
                 return
             elif t == CMD_READDIR:
@@ -154,8 +154,8 @@ class SFTPServer (paramiko.SFTPServer):
                 if handle not in self.folder_table:
                     self._send_status(request_number, SFTP_BAD_MESSAGE, 'Invalid handle')
                     return
-                folder = self.folder_table[handle]
-                self._read_folder(request_number, folder)
+                folder = self.folder_table[handle]                
+                self._read_folder(request_number, folder)                
             elif t == CMD_STAT:
                 path = msg.get_string()                                
                 datacr = self.server.get_cr(path)                

@@ -22,6 +22,30 @@
 
 from osv import osv, fields
 
+class account_move_line(osv.osv):
+    _name = 'account.move.line'
+    _inherit = 'account.move.line'
+    _columns = {
+        'company_id': fields.many2one('res.company', 'Company', required=True),
+    }
+    _defaults = {
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+    }
+
+account_move_line()
+
+class account_move(osv.osv):
+    _name = 'account.move'
+    _inherit = 'account.move'
+    _columns = {
+        'company_id': fields.many2one('res.company', 'Company', required=True),
+    }
+    _defaults = {
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+    }
+
+account_move()
+
 class account_journal(osv.osv):
     _name = "account.journal"
     _inherit = "account.journal"
