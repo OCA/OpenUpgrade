@@ -282,14 +282,14 @@ def create_kml(self, cr, uid, data, context={}):
             geometryElement = kmlDoc.createElement('MultiGeometry')
             polygonElement = kmlDoc.createElement('Polygon')
 
-            extrudeElement = kmlDoc.createElement('extrude')
-            extrudeElement.appendChild(kmlDoc.createTextNode('1'))
-            polygonElement.appendChild(extrudeElement)
+#            extrudeElement = kmlDoc.createElement('extrude')
+#            extrudeElement.appendChild(kmlDoc.createTextNode('1'))
+#            polygonElement.appendChild(extrudeElement)
 
-            altitudemodeElement = kmlDoc.createElement('altitudeMode')
-            altitudemodeElement.appendChild(kmlDoc.createTextNode('relativeToGround'))
-            polygonElement.appendChild(altitudemodeElement)
-
+#            altitudemodeElement = kmlDoc.createElement('altitudeMode')today
+#            altitudemodeElement.appendChild(kmlDoc.createTextNode('relativeToGround'))
+#            polygonElement.appendChild(altitudemodeElement)
+#
             outerboundaryisElement = kmlDoc.createElement('outerBoundaryIs')
             linearringElement = kmlDoc.createElement('LinearRing')
 
