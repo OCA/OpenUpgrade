@@ -40,10 +40,13 @@
 			<field name="usage">menu</field>
 			<field name="view_id" ref="board_frontdesk_form"/>
 		</record>
+		
 		<menuitem
-			name="Dashboards/Hotel Management/Hotel FrontDesk Board"
+			name="Hotel FrontDesk Board"
 			action="open_board_frontdesk"
 			sequence="1"
-			id="menu_board_frontdesk" icon="terp-graph"/>
+			id="menu_board_frontdesk" icon="terp-graph"
+			parent="board.dashboard_menu"/>
+			
 	</data>
 </openerp>

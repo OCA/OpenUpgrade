@@ -1,3 +1,26 @@
+
+# -*- encoding: utf-8 -*-
+##############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
 import time
 from report import report_sxw
 import datetime
@@ -25,15 +48,17 @@ class activity_report(report_sxw.rml_parse):
                         "inner join product_product as ppr on ppr.product_tmpl_id=ha.h_id " \
                         "inner join product_template as ppt on ppt.id=ppr.product_tmpl_id " \
                         "inner join res_users as rs on rs.id=hha.housekeeper " \
-                        "where hh.current_date >= %s and hh.current_date <= %s  and hor.id= %d " \
-                        ,(date_start,date_end,room_no)
+                        "where hh.current_date >= %s and hh.current_date <= %s  and hor.id= cast(%s as integer) " \
+                        ,(date_start,date_end,str(room_no))
                         )
                      
         res=self.cr.dictfetchall()
-        print res     
         return res
    
     def get_room_no(self,room_no):
         return self.pool.get('hotel.room').browse(self.cr, self.uid, room_no).name
     
-report_sxw.report_sxw('report.activity.detail', 'hotel.housekeeping', 'addons/hotel_housekeeping/report/activity_detail.rml',parser= activity_report)    
+report_sxw.report_sxw('report.activity.detail', 'hotel.housekeeping', 'addons/hotel_housekeeping/report/activity_detail.rml',parser= activity_report)
+
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:    

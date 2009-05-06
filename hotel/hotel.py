@@ -1,28 +1,22 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 from osv import fields
@@ -107,9 +101,7 @@ class hotel_room_amenities(osv.osv):
         'iscategid': lambda *a: 1,
         }
         
-#end class
 hotel_room_amenities()
-
 
 class hotel_room(osv.osv):
   
@@ -131,7 +123,6 @@ class hotel_room(osv.osv):
         }
 
 hotel_room()
-
 
 class hotel_folio(osv.osv):
     
@@ -243,35 +234,6 @@ class hotel_folio(osv.osv):
         return  res
     def action_ship_create(self, cr, uid, ids, *args):
         res =  self.pool.get('sale.order').action_ship_create(cr, uid, ids, *args)
-#        print "::RSLL::",dir(res)
-#        picking_id=False
-#        for order in self.browse(cr, uid, ids, context={}):
-#            print "::ORDEER::",order
-#            for line in order.order_line:
-#                print "::LINE::",line
-#                proc_id=False
-#                if line.state == 'done':
-#                    continue
-#        wf_service = netsvc.LocalService("workflow")
-#        wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-#        self.pool.get('sale.order.line').write(cr, uid, [line.id], {'procurement_id': proc_id})
-#                else:
-#                    print "::PROC ID::",proc_id
-#                    wf_service = netsvc.LocalService("workflow")
-#                    wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-#                    self.pool.get('sale.order.line').write(cr, uid, [line.id], {'procurement_id': proc_id})
-#
-#            val = {}
-#            if picking_id:
-#                wf_service = netsvc.LocalService("workflow")
-#                wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
-#                #val = {'picking_ids':[(6,0,[picking_id])]}
-#
-#            if order.state=='shipping_except':
-#                val['state'] = 'progress'
-#                if (order.order_policy == 'manual') and order.invoice_ids:
-#                    val['state'] = 'manual'
-#            self.write(cr, uid, [order.id], val)
         return res
     def action_ship_end(self, cr, uid, ids, context={}):
         res = self.pool.get('sale.order').action_ship_end(cr, uid, ids, context={})
@@ -355,13 +317,13 @@ class hotel_folio_line(osv.osv):
         
     def on_change_checkout(self,cr, uid, ids, checkin_date=time.strftime('%Y-%m-%d %H:%M:%S'),checkout_date=time.strftime('%Y-%m-%d %H:%M:%S'),context=None):
         qty = 1
-        print checkin_date
-        print checkout_date
         if checkout_date < checkin_date:
             raise osv.except_osv ('Error !','Checkout must be greater or equal checkin date')
         if checkin_date:
             diffDate = datetime.datetime(*time.strptime(checkout_date,'%Y-%m-%d %H:%M:%S')[:5]) - datetime.datetime(*time.strptime(checkin_date,'%Y-%m-%d %H:%M:%S')[:5])
             qty = diffDate.days
+            if qty == 0:
+                qty=1
         return {'value':{'product_uom_qty':qty}}
     
     def button_confirm(self, cr, uid, ids, context={}):
@@ -432,8 +394,6 @@ class hotel_service_line(osv.osv):
             lang=False, update_tax=True, date_order=False)
     def on_change_checkout(self,cr, uid, ids, checkin_date=time.strftime('%Y-%m-%d %H:%M:%S'),checkout_date=time.strftime('%Y-%m-%d %H:%M:%S'),context=None):
         qty = 1
-        print checkin_date
-        print checkout_date
         if checkout_date < checkin_date:
             raise osv.except_osv ('Error !','Checkout must be greater or equal checkin date')
         if checkin_date:
@@ -466,7 +426,6 @@ class hotel_service_type(osv.osv):
     _defaults = {
         'isservicetype': lambda *a: 1,
     }    
-#end class    
 hotel_service_type()
 
 class hotel_services(osv.osv):
@@ -481,5 +440,7 @@ class hotel_services(osv.osv):
     _defaults = {
         'isservice': lambda *a: 1,
         }
-#end class
 hotel_services()
+
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -20,7 +20,6 @@
 							<field name="inspect_date_time"/>
 							<field name="quality"/>
 							<newline/>
-<!--							<separater string="Activities Performed"/>-->
 							<newline/>
 							<field name="activity_lines" colspan="4" nolabel="1">
 								<form string="Activity Lines">
@@ -47,7 +46,6 @@
 							<button string="Inspect" name="inspect" states="clean" type="workflow"/>
 							<button string="Done" name="done" states="inspect" type="workflow"/>
 							<button string="Cancel" name="cancel" states="clean,inspect" type="workflow" />
-<!--							<button string="Cancel" name="cancel" states="inspect" type="workflow" />-->
 							<button string="Set to Dirty" name="action_set_to_dirty" states="cancel" type="object"/>
 							</group>
 							
@@ -85,7 +83,7 @@
 		<menuitem name="Hotel Management/Housekeeping"
 		          id="menu_open_hotel_housekeeping_form_tree" 
 				  action="open_hotel_housekeeping_form_tree"
-				  sequence="3" />
+				  sequence="4" />
 			
 		<!-- 
 		================ New HouseKeeping =================

@@ -62,11 +62,14 @@
 		<field name="view_mode">graph,tree</field>
 		
 	</record>
-
-	<menuitem name="Hotel Management/Reports/This Month/States By restaurant" 
-			  action="action_report_hotel_restaurant_status_tree_graph" 
-			  id="menu_hotel_restaurant_status_tree_graph"
-			  sequence="32"/>
+	<menuitem name = "Hotel Management/Reports/This Month"  
+			  id = "menu_hotel_restaurant_this_month"/>
+			  
+	<menuitem name = "States By restaurant" 
+			  action = "action_report_hotel_restaurant_status_tree_graph" 
+			  id = "menu_hotel_restaurant_status_tree_graph"
+			  sequence = "32"
+			  parent = "menu_hotel_restaurant_this_month"/>
 
 	<record model="ir.actions.act_window" id="action_report_hotel_restaurant_status_tree_graph_bar">
 			<field name="name">States By Restaurant</field>
@@ -77,9 +80,10 @@
 			
 		</record>
 	
-		<menuitem name="Hotel Management/Reports/This Month/States By Restaurant" 
+		<menuitem name="States By Restaurant" 
 		          action="action_report_hotel_restaurant_status_tree_graph_bar" 
 		          id="menu_hotel_restaurant_status_tree_graph_bar"
-		          sequence="33"/>
+		          sequence="33"
+		          parent = "menu_hotel_restaurant_this_month"/>
 </data>
 </openerp>
