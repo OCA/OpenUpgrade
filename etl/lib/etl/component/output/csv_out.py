@@ -52,7 +52,7 @@ class csv_out(component):
         row_limit       : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
         csv_param       : To specify other csv parameter like fieldnames , restkey , restval etc.
         """
-        super(csv_out, self).__init__(connector=fileconnector, csv_params={}, name=name, transformer=transformer, row_limit=row_limit)
+        super(csv_out, self).__init__(name=name, connector=fileconnector, transformer=transformer, row_limit=row_limit)
         self._type = 'component.output.csv_out'
         self.csv_params = csv_params
 
