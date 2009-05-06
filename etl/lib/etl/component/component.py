@@ -34,7 +34,7 @@ class component(signal):
     Base class of ETL Component.
     """
 
-    def __init__(self, name='', connector=None, transformer=None, row_limit=0):
+    def __init__(self, connector=None, name='', transformer=None, row_limit=0):
         super(component, self).__init__() 
         self._type = 'component'       
         self._cache = {}        
@@ -49,7 +49,7 @@ class component(signal):
         self.row_limit = row_limit
         self.status = 'open'
             
-    def __str__(self):                   
+    def __str__(self):
         res='<Component job="%s" name="%s" type="%s" status="%s"'% (self.job.name, self.name, self._type, self.status)
         if self.is_start():
             res += ' is_start = "True"'
