@@ -185,11 +185,11 @@
 					<field name="state" select="1" />
 					<group colspan="2">
 						<button name="action_open_job" string="Open"
-							type="object" states="draft,close" />
+							type="object" states="draft,close" icon="gtk-yes"/>
 						<button name="%(wizard_launch_job_process)d"
-							string="Launch a Process" type="action" states="open" />
+							string="Launch a Process" type="action" states="open" icon="gtk-go-forward"/>
 						<button name="action_close_job" string="Close"
-							type="object" states="open" />
+							type="object" states="open" icon="gtk-cancel"/>
 					</group>
 				</form>
 			</field>
@@ -603,3 +603,4 @@
 
 	</data>
 </openerp>
+
