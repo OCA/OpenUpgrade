@@ -108,12 +108,12 @@ def create_kml(self, cr, uid, data, context={}):
 
     linestyleElement = kmlDoc.createElement('LineStyle')
     colorElement = kmlDoc.createElement('color')
-    colorElement.appendChild(kmlDoc.createTextNode('cc000000'))
+    colorElement.appendChild(kmlDoc.createTextNode('CC66CC'))
     linestyleElement.appendChild(colorElement)
     styleElement.appendChild(linestyleElement)
     ballonElement = kmlDoc.createElement('BalloonStyle')
     ballonbgElement = kmlDoc.createElement('bgColor')
-    ballonbgElement.appendChild(kmlDoc.createTextNode('ffffffff'))
+    ballonbgElement.appendChild(kmlDoc.createTextNode('00FF33'))
     balloontextElement = kmlDoc.createElement('text')
     balloontextElement.appendChild(kmlDoc.createTextNode('TESSTT'))
     ballonElement.appendChild(ballonbgElement)
@@ -122,7 +122,7 @@ def create_kml(self, cr, uid, data, context={}):
 
     polystyleElement = kmlDoc.createElement('PolyStyle')
     polycolorElement = kmlDoc.createElement('color')
-    polycolorElement.appendChild(kmlDoc.createTextNode('CC99CC'))
+    polycolorElement.appendChild(kmlDoc.createTextNode('59009900'))
     polyfillElement = kmlDoc.createElement('fill')
     polyfillElement.appendChild(kmlDoc.createTextNode('1'))
     polyoutlineElement = kmlDoc.createElement('outline')
@@ -156,8 +156,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkstyleElement = kmlDoc.createElement('Style')
         placemarkpolystyleElement = kmlDoc.createElement('PolyStyle')
         placemarkcolorrElement = kmlDoc.createElement('color')
-        print colors[cnt]
-        placemarkcolorrElement.appendChild(kmlDoc.createTextNode(colors[cnt]))
+        placemarkcolorrElement.appendChild(kmlDoc.createTextNode('FF0000'))#colors[cnt])
         placemarkpolystyleElement.appendChild(placemarkcolorrElement)
         placemarkstyleElement.appendChild(placemarkpolystyleElement)
 
