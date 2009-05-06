@@ -21,18 +21,13 @@
 ##############################################################################
 
 import sys
-import datetime, os, zipfile, xml, string
-from xml.dom.ext.reader.Sax2 import FromXmlStream
-from xml.dom.ext import PrettyPrint
-
+import os, xml, string
 import urllib
 import xml.dom.minidom
-import pyexpat
 
 import wizard
 import pooler
 import tools
-from osv import osv, fields
 
 _earth_form =  '''<?xml version="1.0"?>
         <form string="Google Map/Earth">
@@ -108,12 +103,12 @@ def create_kml(self, cr, uid, data, context={}):
 
     linestyleElement = kmlDoc.createElement('LineStyle')
     colorElement = kmlDoc.createElement('color')
-    colorElement.appendChild(kmlDoc.createTextNode('cc000000'))
+    colorElement.appendChild(kmlDoc.createTextNode('CC66CC'))
     linestyleElement.appendChild(colorElement)
     styleElement.appendChild(linestyleElement)
     ballonElement = kmlDoc.createElement('BalloonStyle')
     ballonbgElement = kmlDoc.createElement('bgColor')
-    ballonbgElement.appendChild(kmlDoc.createTextNode('ffffffff'))
+    ballonbgElement.appendChild(kmlDoc.createTextNode('00FF33'))
     balloontextElement = kmlDoc.createElement('text')
     balloontextElement.appendChild(kmlDoc.createTextNode('TESSTT'))
     ballonElement.appendChild(ballonbgElement)
@@ -139,20 +134,24 @@ def create_kml(self, cr, uid, data, context={}):
     foldernameElement.appendChild(kmlDoc.createTextNode('Folder'))
     folderElement.appendChild(foldernameElement)
 
+    colors = ['33333333','dfbf9f3b','59009900','FF9933','FF3300','FF66CC','993399','00FF33','CC99CC','FF0000','CC66CC','6633CC','00FF99','990099','0099FF','CCCCFF','CCCC99','66CCFF','00CCFF','CC9933','FFCC99','CCCC66','99FF33']
+    len_color = len(colors)
+    cnt = 0
     for country in country_list:
+        cnt += 1
         cooridinate = dict_country[country]
 
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(country)
         placemarkdescElement = kmlDoc.createElement('description')
-        placemarkdescElement.appendChild(kmlDoc.createTextNode(str(res[country])))
+        placemarkdescElement.appendChild(kmlDoc.createTextNode('Turnover of country: ' + str(res[country])))
         placemarknameElement.appendChild(placemarknameText)
 
         placemarkstyleElement = kmlDoc.createElement('Style')
         placemarkpolystyleElement = kmlDoc.createElement('PolyStyle')
         placemarkcolorrElement = kmlDoc.createElement('color')
-        placemarkcolorrElement.appendChild(kmlDoc.createTextNode('59009900'))
+        placemarkcolorrElement.appendChild(kmlDoc.createTextNode('FF0000'))#colors[cnt])
         placemarkpolystyleElement.appendChild(placemarkcolorrElement)
         placemarkstyleElement.appendChild(placemarkpolystyleElement)
 
@@ -189,7 +188,6 @@ def create_kml(self, cr, uid, data, context={}):
     return {}
 
 class customer_on_map(wizard.interface):
-
     states = {
          'init': {
             'actions': [create_kml],

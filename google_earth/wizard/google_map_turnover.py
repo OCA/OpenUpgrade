@@ -26,7 +26,6 @@ import xml.dom.minidom
 import wizard
 import pooler
 import tools
-from osv import osv, fields
 
 _earth_form =  '''<?xml version="1.0"?>
         <form string="Google Map/Earth">

@@ -12,6 +12,8 @@
             * Layers with characteristics by regions
             * Display customers, whom country has colors by turnover
             * Most frequent delivery routes
+
+            Menu : Partners/Google Map/Earth
     """,
     "init_xml" : [],
     "demo_xml" : [],
