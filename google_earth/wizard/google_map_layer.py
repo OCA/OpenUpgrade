@@ -297,7 +297,7 @@ def create_kml(self, cr, uid, data, context={}):
         #    tessellateElement.appendChild(kmlDoc.createTextNode('1'))
         #    linearringElement.appendChild(tessellateElement)
 
-            coordinatesElemenent = kmlDoc.createElement('cooridinate')
+            coordinatesElemenent = kmlDoc.createElement('coordinates')
         #    coordinatesElemenent.appendChild(kmlDoc.createTextNode(coordinates_text))
             coordinatesElemenent.appendChild(kmlDoc.createTextNode(cooridinate))
             linearringElement.appendChild(coordinatesElemenent)
