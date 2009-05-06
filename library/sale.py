@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -22,13 +22,13 @@
 
 from mx import DateTime
 import netsvc
-from osv import fields,osv
-import time
+from osv import fields, osv
+
 
 class sale_order_line(osv.osv):
     _inherit = 'sale.order.line'
-    _columns = { 
-        'production_lot_id':fields.many2one('stock.production.lot', 'Production Lot',),
+    _columns = {
+        'production_lot_id': fields.many2one('stock.production.lot', 'Production Lot',),
         'customer_ref': fields.char('Customer reference', size=64),
     }
 
@@ -37,8 +37,8 @@ class sale_order_line(osv.osv):
         }
 
     def button_confirm(self, cr, uid, ids, context={}):
-        lines = self.pool.get('sale.order.line').browse(cr,uid,ids)
-        l_id= 0
+        lines = self.pool.get('sale.order.line').browse(cr, uid, ids)
+        l_id = 0
         for line in lines:
             if line.production_lot_id:
                 continue
@@ -48,17 +48,17 @@ class sale_order_line(osv.osv):
                 'product_id': line.product_id.id
             }
             production_lot_id = self.pool.get('stock.production.lot').create(cr, uid, production_lot_dico)
-            self.pool.get('sale.order.line').write(cr,uid,[line.id],{'production_lot_id':production_lot_id})
+            self.pool.get('sale.order.line').write(cr, uid, [line.id], {'production_lot_id': production_lot_id})
 
-        super(sale_order_line,self).button_confirm(cr,uid,ids,context)
+        super(sale_order_line, self).button_confirm(cr, uid, ids, context)
         return
 
-    def copy(self, cr, uid, id, default=None,context={}):
+    def copy(self, cr, uid, id, default=None, context={}):
         if not default:
             default = {}
         default.update({
-            'production_lot_id':False,
-            'customer_ref':''
+            'production_lot_id': False,
+            'customer_ref': ''
         })
         return super(sale_order_line, self).copy(cr, uid, id, default, context)
 sale_order_line()
@@ -76,12 +76,12 @@ class sale_order(osv.osv):
     }
 
     def action_ship_create(self, cr, uid, ids, *args):
-        picking_id=False
+        picking_id = False
         for order in self.browse(cr, uid, ids, context={}):
             output_id = order.shop_id.warehouse_id.lot_output_id.id
             picking_id = False
             for line in order.order_line:
-                proc_id=False
+                proc_id = False
                 date_planned = (DateTime.now() + DateTime.RelativeDateTime(days=line.delay or 0.0)).strftime('%Y-%m-%d')
                 if line.state == 'done':
                     continue
@@ -98,10 +98,10 @@ class sale_order(osv.osv):
                             'address_id': order.partner_shipping_id.id,
                             'note': order.note,
                             'invoice_state': (order.order_policy=='picking' and '2binvoiced') or 'none',
-                            'carrier_id':order.carrier_id.id,
+                            'carrier_id': order.carrier_id.id,
                         })
                     move_id = self.pool.get('stock.move').create(cr, uid, {
-                        'name':'SO:'+order.name,
+                        'name': 'SO:' + order.name,
                         'picking_id': picking_id,
                         'product_id': line.product_id.id,
                         'date_planned': date_planned,
@@ -109,8 +109,8 @@ class sale_order(osv.osv):
                         'product_uom': line.product_uom.id,
                         'product_uos_qty': line.product_uos_qty,
                         'product_uos': line.product_uos.id,
-                        'product_packaging' : line.product_packaging.id,
-                        'address_id' : line.address_allotment_id.id or order.partner_shipping_id.id,
+                        'product_packaging': line.product_packaging.id,
+                        'address_id': line.address_allotment_id.id or order.partner_shipping_id.id,
                         'location_id': location_id,
                         'location_dest_id': output_id,
                         'sale_line_id': line.id,
@@ -136,7 +136,7 @@ class sale_order(osv.osv):
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
                     self.pool.get('sale.order.line').write(cr, uid, [line.id], {'procurement_id': proc_id})
-                elif line.product_id and line.product_id.product_tmpl_id.type=='service':
+                elif line.product_id and line.product_id.product_tmpl_id.type == 'service':
                     proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
                         'name': line.name,
                         'origin': order.name,
@@ -162,7 +162,7 @@ class sale_order(osv.osv):
                 wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
                 #val = {'picking_ids':[(6,0,[picking_id])]}
 
-            if order.state=='shipping_except':
+            if order.state == 'shipping_except':
                 val['state'] = 'progress'
                 if (order.order_policy == 'manual') and order.invoice_ids:
                     val['state'] = 'manual'
