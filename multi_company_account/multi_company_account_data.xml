@@ -11,6 +11,30 @@
         <record id="account.bank_journal" model="account.journal">
             <field name="company_id" ref="base.main_company"/>
         </record>
+
+	<record id="account_move_comp_rule_group" model="ir.rule.group">
+            <field name="name">Account Entry</field>
+            <field model="ir.model" name="model_id" search="[('model','=','account.move')]"/>
+            <field eval="True" name="global"/>
+        </record>
+        <record id="account_move_comp_rule" model="ir.rule">
+            <field model="ir.model.fields" name="field_id" search="[('model','=','account.move'),('name','=','company_id')]"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="account_move_comp_rule_group"/>
+        </record>
+
+	<record id="account_move_line_comp_rule_group" model="ir.rule.group">
+            <field name="name">Entry lines</field>
+            <field model="ir.model" name="model_id" search="[('model','=','account.move.line')]"/>
+            <field eval="True" name="global"/>
+        </record>
+        <record id="account_move_line_comp_rule" model="ir.rule">
+            <field model="ir.model.fields" name="field_id" search="[('model','=','account.move.line'),('name','=','company_id')]"/>
+            <field name="operator">child_of</field>
+            <field name="operand">user.company_id.id</field>
+            <field name="rule_group" ref="account_move_line_comp_rule_group"/>
+        </record>
         
         <record id="journal_period_comp_rule_group" model="ir.rule.group">
             <field name="name">Journal Period</field>
