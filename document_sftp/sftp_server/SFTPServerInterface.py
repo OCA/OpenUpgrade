@@ -29,6 +29,30 @@ import base64
 
 from paramiko.sftp_handle import SFTPHandle
 
+def _to_unicode(s):
+    try:
+        return s.encode('ascii')
+    except UnicodeError:
+        try:
+            return s.decode('utf-8')
+        except UnicodeError:
+            try:
+                return s.decode('latin')
+            except UnicodeError:
+                return s
+
+def _to_decode(s):
+    try:
+        return s.encode('utf-8')
+    except UnicodeError:
+        try:
+            return s.encode('latin')
+        except UnicodeError:
+            try:
+                return s.decode('ascii')
+            except UnicodeError:
+                return s  
+
 class file_wrapper(StringIO.StringIO):
     def __init__(self, sstr='', ressource_id=False, dbname=None, uid=1, name=''):
         StringIO.StringIO.__init__(self, sstr)         
@@ -80,18 +104,20 @@ class SFTPServer (paramiko.SFTPServerInterface):
         self.ROOT = '/'
 
     def fs2ftp(self, node):        
-        res='/'
+        res = '/'
         if node:
-            res=os.path.normpath(node.path)
+            res = os.path.normpath(node.path)
             res = res.replace("\\", "/")        
             while res[:2] == '//':
-                res = res[1:]
+                res = res[1:]            
             res='/' + node.cr.dbname + '/' + res
+        res = _to_decode(res)
         return res
 
     def ftp2fs(self, path, data):        
         if not data or (path and (path in ('/','.'))):
-            return None               
+            return None      
+        path = _to_unicode(path)         
         path2 = filter(None,path.split('/'))[1:]                
         (cr, uid, pool) = data        
         res = pool.get('document.directory').get_object(cr, uid, path2[:])                
@@ -99,7 +125,8 @@ class SFTPServer (paramiko.SFTPServerInterface):
             raise OSError(2, 'Not such file or directory.')
         return res
 
-    def get_cr(self, path):              
+    def get_cr(self, path): 
+        path = _to_unicode(path)             
         if path and path in ('/','.'):
             return None
         dbname = path.split('/')[1]         
@@ -147,7 +174,8 @@ class SFTPServer (paramiko.SFTPServerInterface):
         fobj.writefile = None       
         return fobj       
 
-    def create(self, node, objname, flags):        
+    def create(self, node, objname, flags):  
+        objname=_to_unicode(objname)      
         cr = node.cr
         uid = node.uid
         pool = pooler.get_pool(cr.dbname)
@@ -221,8 +249,7 @@ class SFTPServer (paramiko.SFTPServerInterface):
 
     def remove(self, node):   
         """ Remove a file """
-        try:       
-            print ' ......... Remove ......', node     
+        try:    
             cr = node.cr
             uid = node.uid
             pool = pooler.get_pool(cr.dbname)
@@ -253,7 +280,7 @@ class SFTPServer (paramiko.SFTPServerInterface):
                 if not cr.fetchone():
                     continue
 
-                cr.execute("select id from ir_module_module where name like 'document%' and state='installed' ")
+                cr.execute("select id from ir_module_module where name like 'document_sftp' and state='installed' ")
                 res = cr.fetchone()
                 if res and len(res):
                     self.db_name_list.append(db_name)
@@ -295,7 +322,7 @@ class SFTPServer (paramiko.SFTPServerInterface):
             * A directory: change the parent and reassign childs to ressource
         """
         try:
-            #dst_basename=_to_unicode(dst_basename)
+            dst_basename=_to_unicode(dst_basename)
             if src.type=='collection':
                 if src.object._table_name <> 'document.directory':
                     raise OSError(1, 'Operation not permited.')
@@ -414,13 +441,13 @@ class SFTPServer (paramiko.SFTPServerInterface):
     
         
 
-    def mkdir(self, node, basename,attr):
+    def mkdir(self, node, basename, attr):
         try:
             """Create the specified directory."""            
             if not node:
                 raise OSError(1, 'Operation not permited.')
             
-            #basename=_to_unicode(basename)
+            basename=_to_unicode(basename)
             object2=node and node.object2 or False
             object=node and node.object or False
             cr = node.cr
@@ -517,8 +544,10 @@ class SFTPServer (paramiko.SFTPServerInterface):
             r[6] = self.getsize(node)                    
             r[7] = self.getmtime(node)               
             r[8] =  self.getmtime(node)            
-            r[9] =  self.getmtime(node)               
-            return paramiko.SFTPAttributes.from_stat(os.stat_result(r),node and node.path.split('/')[-1] or '.')
+            r[9] =  self.getmtime(node)    
+            path =  node and node.path.split('/')[-1] or '.'
+            path =  _to_decode(path)        
+            return paramiko.SFTPAttributes.from_stat(os.stat_result(r), path)
         except OSError, e:            
             return paramiko.SFTPServer.convert_errno(e.errno)
     lstat=stat        

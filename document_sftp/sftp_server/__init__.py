@@ -27,12 +27,10 @@ from Server import Server
 import SFTPServerInterface
 import SFTPServer
 from document import ftpserver 
-
-#from __future__ import with_statement
-#import traceback,  binascii  #configure
-
 from tools import config
-privateKey = '/home/hmo/.ssh/id_rsa'    # FIX - change this to the path of the server private key
+import os
+
+privateKey = os.path.expanduser('~/.ssh/id_rsa')
 PORT = int(config.get('sftp_server_port', 8022))
 HOST = ''
 

@@ -44,7 +44,7 @@ class Server (paramiko.ServerInterface):
                 return False
             if allowed_auths == 'publickey':
                 cr.execute("select distinct users.login,users.password,users.id from ir_module_module module,res_users users "+ \
-                           "where module.name like 'document%' and module.state='installed' "+ \
+                           "where module.name like 'document_sftp' and module.state='installed' "+ \
                            " and users.active=True and users.login='%s'"%(username))
                 results = cr.fetchone()
                 if results:
