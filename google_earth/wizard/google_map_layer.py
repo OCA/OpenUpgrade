@@ -42,6 +42,7 @@ _earth_form =  '''<?xml version="1.0"?>
 _earth_fields = {
             }
 
+
 def create_kml(self, cr, uid, data, context={}):
     # This function creates an XML document and adds the necessary
     # KML elements.
@@ -121,7 +122,7 @@ def create_kml(self, cr, uid, data, context={}):
 
     polystyleElement = kmlDoc.createElement('PolyStyle')
     polycolorElement = kmlDoc.createElement('color')
-    polycolorElement.appendChild(kmlDoc.createTextNode('59009900'))
+    polycolorElement.appendChild(kmlDoc.createTextNode('CC99CC'))
     polyfillElement = kmlDoc.createElement('fill')
     polyfillElement.appendChild(kmlDoc.createTextNode('1'))
     polyoutlineElement = kmlDoc.createElement('outline')
@@ -138,7 +139,11 @@ def create_kml(self, cr, uid, data, context={}):
     foldernameElement.appendChild(kmlDoc.createTextNode('Folder'))
     folderElement.appendChild(foldernameElement)
 
+    colors = ['33333333','dfbf9f3b','59009900','FF9933','FF3300','FF66CC','993399','00FF33','CC99CC','FF0000','CC66CC','6633CC','00FF99','990099','0099FF','CCCCFF','CCCC99','66CCFF','00CCFF','CC9933','FFCC99','CCCC66','99FF33']
+    len_color = len(colors)
+    cnt = 0
     for country in country_list:
+        cnt += 1
         cooridinate = dict_country[country]
 
         placemarkElement = kmlDoc.createElement('Placemark')
@@ -151,7 +156,8 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkstyleElement = kmlDoc.createElement('Style')
         placemarkpolystyleElement = kmlDoc.createElement('PolyStyle')
         placemarkcolorrElement = kmlDoc.createElement('color')
-        placemarkcolorrElement.appendChild(kmlDoc.createTextNode('59009900'))
+        print colors[cnt]
+        placemarkcolorrElement.appendChild(kmlDoc.createTextNode(colors[cnt]))
         placemarkpolystyleElement.appendChild(placemarkcolorrElement)
         placemarkstyleElement.appendChild(placemarkpolystyleElement)
 
