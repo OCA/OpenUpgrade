@@ -21,7 +21,6 @@
 ##############################################################################
 
 import sys
-#import arcgisscripting,
 import datetime, os, zipfile, xml, string
 from xml.dom.ext.reader.Sax2 import FromXmlStream
 from xml.dom.ext import PrettyPrint
@@ -29,7 +28,6 @@ from xml.dom.ext import PrettyPrint
 import urllib
 import xml.dom.minidom
 import pyexpat
-#from xml.sax import ExpatParser
 
 import wizard
 import pooler
