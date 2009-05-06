@@ -42,15 +42,14 @@ email_send_form = '''<?xml version="1.0" encoding="utf-8"?>
     <newline/>
     <field name="subject"/>
     <newline/>
-    <separator colspan="4"/>
-    <label string="Message:"/>
+    <separator string="Message:" colspan="4"/>
     <field name="text" nolabel="1" colspan="4"/>
 </form>'''
 
 email_send_fields = {
     'to': {'string':"To", 'type':'char', 'size':512, 'required':True},
     'subject': {'string':'Subject', 'type':'char', 'size':64, 'required':True},
-    'text': {'string':'Message', 'type':'text', 'required':True}
+    'text': {'string':'Message', 'type':'text_tag', 'required':True}
 }
 
 email_done_form = '''<?xml version="1.0" encoding="utf-8"?>
@@ -66,7 +65,7 @@ email_done_fields = {
 def _get_defaults(self, cr, uid, data, context):
     p = pooler.get_pool(cr.dbname)
     user = p.get('res.users').browse(cr, uid, uid, context)
-    subject = user.company_id.name+_('. Num.')
+    subject = user.company_id.name+_('. Sale Num.')
     text = '\n--\n' + user.signature
 
     orders = p.get(data['model']).browse(cr, uid, data['ids'], context)
@@ -96,23 +95,45 @@ def _get_defaults(self, cr, uid, data, context):
     return {'to': to, 'subject': subject, 'text': text}
 
 
+def create_report(cr, uid, res_ids, report_name=False, file_name=False):
+    if not report_name or not res_ids:
+        return (False, Exception('Report name and Resources ids are required !!!'))
+    try:
+        ret_file_name = '/tmp/'+file_name+'.pdf'
+        service = netsvc.LocalService("report."+report_name);
+        (result, format) = service.create(cr, uid, res_ids, {}, {})
+        fp = open(ret_file_name, 'wb+');
+        fp.write(result);
+        fp.close();
+    except Exception,e:
+        print 'Exception in create report:',e
+        return (False, str(e))
+    return (True, ret_file_name)
+
+
 def _send_mails(self, cr, uid, data, context):
     import re
     p = pooler.get_pool(cr.dbname)
 
     user = p.get('res.users').browse(cr, uid, uid, context)
     file_name = user.company_id.name.replace(' ','_')+'_'+_('Sale_Order')
-    sale_smtpserver_id = p.get('email.smtpclient').search(cr, uid, [('type','=','sale'),('state','=','confirm')], context=False)
+    sale_smtpserver_id = p.get('email.smtpclient').search(cr, uid, [('type','=','sale'),('state','=','confirm'),('active','=',True)], context=False)
     if not sale_smtpserver_id:
-        default_smtpserver_id = p.get('email.smtpclient').search(cr, uid, [('type','=','default'),('state','=','confirm')], context=False)
+        default_smtpserver_id = p.get('email.smtpclient').search(cr, uid, [('type','=','default'),('state','=','confirm'),('active','=',True)], context=False)
     smtpserver_id = sale_smtpserver_id or default_smtpserver_id
-    if not smtpserver_id:
+    if smtpserver_id:
+        smtpserver_id = smtpserver_id[0]
+    else:
         raise osv.except_osv(_('Error'), _('No SMTP Server has been defined!'))
+
+    # Create report to send as file attachments
+    report = create_report(cr, uid, data['ids'], data['model'], file_name)
+    attachments = report[0] and [report[1]] or []
 
     nbr = 0
     for email in data['form']['to'].split(','):
         #print email, data['form']['subject'], data['ids'], data['model'], file_name, data['form']['text']
-        state = p.get('email.smtpclient').send_email(cr, uid, smtpserver_id, email, data['form']['subject'], data['ids'], data['form']['text'], data['model'], file_name)
+        state = p.get('email.smtpclient').send_email(cr, uid, smtpserver_id, email, data['form']['subject'], data['form']['text'], attachments)
         if not state:
             raise osv.except_osv(_('Error sending email'), _('Please check the Server Configuration!'))
         nbr += 1

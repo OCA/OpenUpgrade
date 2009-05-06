@@ -34,32 +34,33 @@ import wizard
 import pooler
 import tools
 import base64
+import time
 
 email_send_form = '''<?xml version="1.0" encoding="utf-8"?>
 <form string="Mass Mailing">
-    <field name="from"/>
+    <field name="smtp_server" colspan="4"/>
     <newline/>
     <field name="subject" colspan="4"/>
 
-    <separator string="Attached files:" colspan="4"/>
-    <field name="name1"/>
-    <field name="file1" fname_widget="name1"/>
-    <field name="name2"/>
-    <field name="file2" fname_widget="name2"/>
-    <field name="name3"/>
-    <field name="file3" fname_widget="name3"/>
-
-    <separator colspan="4"/>
-    <label string="Only send to addresses:" colspan="2"/>
-    <field name="default"/>
-    <field name="invoice"/>
-    <field name="delivery"/>
-    <field name="contact"/>
-    <field name="other"/>
-
-    <separator colspan="4"/>
-    <label string="Message:"/>
+    <separator string="Message:" colspan="4"/>
     <field name="text" nolabel="1" colspan="4"/>
+
+    <separator string="Attached files:" colspan="4"/>
+    <field name="file1" filename="name1"/>
+    <field name="name1"/>
+    <field name="file2" filename="name2"/>
+    <field name="name2"/>
+    <field name="file3" filename="name3"/>
+    <field name="name3"/>
+
+    <separator string="Only send to addresses:" colspan="4"/>
+    <group colspan="4" col="10">
+        <field name="default"/>
+        <field name="invoice"/>
+        <field name="delivery"/>
+        <field name="contact"/>
+        <field name="other"/>
+    </group>
 
     <separator string="The following tags can be included in the message. They will be replaced to the corresponding values of each partner contact:" colspan="4"/>
     <label string="[[partner_id]] -> Partner name" colspan="2"/>
@@ -80,14 +81,14 @@ email_send_form = '''<?xml version="1.0" encoding="utf-8"?>
 </form>'''
 
 email_send_fields = {
-    'from': {'string':"Sender's email", 'type':'char', 'size':64, 'required':True},
+    'smtp_server': {'string':"SMTP Server", 'type':'many2one', 'relation':'email.smtpclient', 'required':True},
     'subject': {'string':'Subject', 'type':'char', 'size':64, 'required':True},
     'default':  {'string':'Default', 'type':'boolean'},
     'invoice':  {'string':'Invoice', 'type':'boolean'},
     'delivery': {'string':'Delivery', 'type':'boolean'},
     'contact':  {'string':'Contact', 'type':'boolean'},
     'other':    {'string':'Other', 'type':'boolean'},
-    'text': {'string':'Message', 'type':'text', 'required':True},
+    'text': {'string':'Message', 'type':'text_tag', 'required':True},
     'name1': {'string':"File name 1", 'type':'char', 'size':64},
     'name2': {'string':"File name 2", 'type':'char', 'size':64},
     'name3': {'string':"File name 3", 'type':'char', 'size':64},
@@ -106,6 +107,24 @@ email_done_fields = {
 }
 
 
+def _get_defaults(self, cr, uid, data, context):
+    user = pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, uid, context)
+    text = '\n--\n' + user.signature
+    return {'text': text}
+
+
+def attach_file(name, content):
+    name = '/tmp/'+name
+    try:
+        fp = open(name, 'wb+');
+        fp.write(content);
+        fp.close();
+    except Exception,e:
+        print 'Exception in create report:',e
+        return False
+    return name
+
+
 def _mass_mail_send(cr, uid, data, context, adr):
     import re
     # change the [[field]] tags with the partner address values
@@ -118,9 +137,9 @@ def _mass_mail_send(cr, uid, data, context, adr):
             text = text.name
         if text and field[2:-2]=='function': # functions field
             text = text.name
-        texts.append(text or '')
-    data['form']['text'] = data['form']['text'].replace('%', '%%')
-    mail = str(pattern.sub('%s', data['form']['text']))
+        texts.append(text and text.encode('utf-8') or '')
+    mail = data['form']['text'].replace('%', '%%')
+    mail = pattern.sub('%s', mail)
     mail = mail % tuple(texts)
     mail = mail.replace('%%', '%')
     #print mail
@@ -132,16 +151,17 @@ def _mass_mail_send(cr, uid, data, context, adr):
 
     # List of attached files: List of tuples with (file_name, file_content)
     f_attach = []
+    sufix = time.strftime("%d%m%y%H%M%S")
     if data['form']['file1']:
-        f_attach.append((data['form']['name1'] or 'attached_file1', base64.decodestring(data['form']['file1'])))
+        f_attach.append(attach_file(data['form']['name1'] or 'file1_'+sufix, base64.decodestring(data['form']['file1'])))
     if data['form']['file2']:
-        f_attach.append((data['form']['name2'] or 'attached_file2', base64.decodestring(data['form']['file2'])))
+        f_attach.append(attach_file(data['form']['name2'] or 'file2_'+sufix, base64.decodestring(data['form']['file2'])))
     if data['form']['file3']:
-        f_attach.append((data['form']['name3'] or 'attached_file3', base64.decodestring(data['form']['file3'])))
+        f_attach.append(attach_file(data['form']['name3'] or 'file3_'+sufix, base64.decodestring(data['form']['file3'])))
+    f_attach = [f for f in f_attach if f] # Removing False elements
 
-#TODO: add some tests to check for invalid email addresses
-#CHECKME: maybe we should use res.partner/email_send
-    tools.email_send(data['form']['from'], to, data['form']['subject'], mail, attach=f_attach)
+    email_server = pooler.get_pool(cr.dbname).get('email.smtpclient')
+    email_server.send_email(cr, uid, data['form']['smtp_server'], to, data['form']['subject'], mail, f_attach)
 
     # Add a partner event
     c_id = pooler.get_pool(cr.dbname).get('res.partner.canal').search(cr ,uid, [('name','ilike','EMAIL'),('active','=',True)])
@@ -182,7 +202,7 @@ def _mass_mail_send_partner(self, cr, uid, data, context):
 class part_email(wizard.interface):
     states = {
         'init': {
-            'actions': [],
+            'actions': [_get_defaults],
             'result': {'type': 'form', 'arch': email_send_form, 'fields': email_send_fields, 'state':[('end','Cancel'), ('send','Send Email')]}
         },
         'send': {
@@ -220,7 +240,7 @@ def _mass_mail_send_partner_address(self, cr, uid, data, context):
 class part_email_partner_address(wizard.interface):
     states = {
         'init': {
-            'actions': [],
+            'actions': [_get_defaults],
             'result': {'type': 'form', 'arch': email_send_form, 'fields': email_send_fields, 'state':[('end','Cancel'), ('send','Send Email')]}
         },
         'send': {
