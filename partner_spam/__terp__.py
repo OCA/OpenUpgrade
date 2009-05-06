@@ -28,7 +28,7 @@
       [[mobile]] -> Mobile
       [[birthdate]] -> Birthday
     """,
-    "depends" : ["base",],
+    "depends" : ["base","smtpclient"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [

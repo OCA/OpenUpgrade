@@ -136,6 +136,20 @@
                 </field>
             </field>
         </record>
-
+        
+        <record id="view_journal_period_tree_new" model="ir.ui.view">
+            <field name="name">account.journal.period.tree</field>
+            <field name="model">account.journal.period</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="account.view_journal_period_tree"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <field name="company_id"/>
+                </field>
+            </field>
+        </record>
+        
+        <wizard id="account.action_move_journal_line_form" menu="False" model="account.move.line" name="account.move.journal.multicompany" string="Entries Encoding by Line"/>
+        
     </data>
 </openerp>

@@ -20,18 +20,15 @@
 #
 ##############################################################################
 
-from mx.DateTime import now
 from osv import osv
 import wizard
-import netsvc
-import ir
 import pooler
-import tools
 from tools.translate import _
 
 class maintenance_maintenance_module_refresh_wizard(wizard.interface):
     def init(self, cr, uid, data, context):
         pooler.get_pool(cr.dbname).get('maintenance.maintenance.module').refresh(cr, uid)
+        cr.commit()
         raise osv.except_osv(_('Refresh'), _('List refreshed successfully'))
         return {}
 

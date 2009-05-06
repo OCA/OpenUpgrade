@@ -71,9 +71,10 @@
 			<field name="view_id" ref="board_reservation_form"/>
 		</record>
 		<menuitem
-			name="Dashboards/Hotel Management/Hotel Reservation Board"
+			name="Hotel Reservation Board"
 			action="open_board_reservation"
 			sequence="1"
-			id="menu_board_reservation" icon="terp-graph"/>
+			id="menu_board_reservation" icon="terp-graph"
+			parent="board.dashboard_menu"/>
 	</data>
 </openerp>

@@ -40,7 +40,7 @@
     "demo_xml" : [
     ],
     "update_xml" : [
-        "account_report.xml",
+       "account_report.xml",
        "account_wizard.xml"
     ],
     "active": False,

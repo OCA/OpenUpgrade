@@ -27,7 +27,7 @@ import time
 import base64
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+from dm.report_design import merge_message
 class dm_offer_document(osv.osv):
     _inherit = "dm.offer.document"
     _columns = {
@@ -59,7 +59,8 @@ def create_email_queue(cr,uid,obj,context):
         root = etree.HTML(message)
         body = root.findall('body')[0]
         msg = MIMEMultipart('alternative')
-        msg['Subject'] = str(obj.document_id.subject)
+        subject =  merge_message(cr, uid, str(obj.document_id.subject), context)
+        msg['Subject'] = subject
         msg['From'] = str(obj.mail_service_id.smtp_server_id.email)
         msg['To'] = str(obj.address_id.email)
         part2 = MIMEText(message, 'html')
@@ -70,7 +71,7 @@ def create_email_queue(cr,uid,obj,context):
                 'server_id':obj.mail_service_id.smtp_server_id.id,
                 'cc':False,
                 'bcc':False,
-                'name':str(obj.document_id.subject),
+                'name':subject,
                 'body' : msg.as_string(),
                 'serialized_message': msg.as_string(),
                 'date_create':time.strftime('%Y-%m-%d %H:%M:%S')

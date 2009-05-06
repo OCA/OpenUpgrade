@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 	<data>
-	<menuitem  id="hotel_restaurant_menu" name="Hotel Management/Restaurant" sequence="4"/>
+	<menuitem  id="hotel_restaurant_menu" name="Hotel Management/Restaurant" sequence="3"/>
 		<!-- ==============================
 			Table Master
 		============================== -->		  
@@ -124,7 +124,6 @@
 							<field name="name" on_change="on_change_item_name(name)"/>
 							<field name="item_qty"/>
 							<field name="item_rate"/>
-<!--							<field name="pname" on_change="on_change_item_name(name)"/>-->
 			
 						</form>
 						<tree string="Order List">
@@ -196,7 +195,6 @@
 							<field name="name" on_change="on_change_item_name(name)"/>
 							<field name="item_qty"/>
 							<field name="item_rate"/>
-<!--							<field name="pname" on_change="on_change_item_name(name)"/>-->
 			
 						</form>
 						<tree string="Order List">
@@ -427,53 +425,6 @@
 					 action="action_hotel_menucard_form"
 					 parent="menu_action_hotel_menucard_type_view_form"/>
 					 
-		<!-- 
-	====================================================
-					Menu card
-		====================================================  -->
-		
-		<!--<record model="ir.ui.view" id="view_hotel_restaurant_menucard_form">
-			<field name="name">hotel_restaurant_menucard.form</field>
-			<field name="model">hotel.restaurant.menucard</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<form string="Menucard">
-					<field name="name" select="1"/>
-					<field name="code"/>
-					<field name="category"/>
-					<field name="unit"/>
-					<field name="qty"/>
-					<field name="rate" on_change="on_change_rate(rate)"/>
-				</form>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_hotel_restaurant_menucard_tree">
-			<field name="name">hotel_restaurant_menucard.tree</field>
-			<field name="model">hotel.restaurant.menucard</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string=" Menucard">
-					<field name="name"/>
-					<field name="code"/>
-					<field name="category"/>
-					<field name="unit"/>
-					<field name="qty"/>
-					<field name="rate"/>
-
-				</tree>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="open_view_hotel_restaurant_menucard_form_tree">
-			<field name="name">Menucard</field>
-			<field name="res_model">hotel.restaurant.menucard</field>
-			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
-		</record> 
-		<menuitem name="Hotel Restaurant/Configuration/Menucard"
-		          id="menu_open_view_hotel_restaurant_menucard_form_tree" 
-				  action="open_view_hotel_restaurant_menucard_form_tree"/>
-		 
-		-->
 					  
 	</data>
 </openerp>

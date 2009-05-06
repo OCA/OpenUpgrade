@@ -102,7 +102,7 @@ class dm_simulator(osv.osv):
         self.write(cr, uid, ids, {'date_stop':date_stop.strftime('%Y-%m-%d  %H:%M:%S')})
 
         """ compute duration per section """
-        sect_dur = duration // 4
+        sect_dur = duration // sim.section_qty
         print "DM SIM - sect_dur :",sect_dur
         print "DM SIM - type sect_dur :",type(sect_dur)
 
@@ -114,12 +114,10 @@ class dm_simulator(osv.osv):
             while (sect < sim.section_qty):
                 """ Compute time range """
                 from_time = datetime.datetime.strptime(sim.date_start, '%Y-%m-%d  %H:%M:%S') + (sect_dur * sect)
-                print "DM SIM - actions from_time :",from_time
                 to_time = datetime.datetime.strptime(sim.date_start, '%Y-%m-%d  %H:%M:%S') + (sect_dur * (sect+1))
-                print "DM SIM - actions to_time :",to_time
 
-                sect_act.append([sect_act_qty,from_time,to_time])
                 sect_act_qty = sect_act_qty/2
+                sect_act.append([sect_act_qty,from_time,to_time])
                 sect = sect+1
 
             print "DM SIM - Section actions :",sect_act
@@ -130,7 +128,6 @@ class dm_simulator(osv.osv):
                     if seg.type_src == "internal" and seg.customers_file_id:
                         for cust_id in seg.customers_file_id.address_ids:
                             cust_ids.append([cust_id.id,seg.id])
-            print "DM SIM - Customers :", cust_ids
 
             for s in sect_act:
                 """ Get offer steps """
@@ -146,18 +143,21 @@ class dm_simulator(osv.osv):
                 print "DM SIM - steps_sorted :",steps_sorted
                 for step in steps_sorted:
                     print "Offer step :",step
-                    """ Compute action times range"""
-                    from_ts = time.mktime(s[1].timetuple())
-                    to_ts = time.mktime(s[2].timetuple())
 
-                    """ Generate Actions """
-                    for cust in cust_ids[0:s[0]]:
-                        action_time = datetime.datetime.fromtimestamp(random.randint(int(from_ts),int(to_ts))).strftime('%Y-%m-%d  %H:%M:%S')
-                        print "DM SIM - action_time :",action_time
-                        self.pool.get('dm.simulator.action').create(cr, uid, {'simulator_id':sim.id,'trigger_type_id':trigger_type_id,
-                            'step_id':step, 'segment_id':cust[1], 'address_id':cust[0],'section':sect_act.index(s),
-                            'action_time':action_time})
-                    print "DM SIM - Customers :", cust_ids[0:s[0]]
+                    if sect_act.index(s) >= steps_sorted.index(step):
+                        """ Distribute load on sections """
+                        """ Compute actions time range"""
+                        from_ts = time.mktime(s[1].timetuple())
+                        to_ts = time.mktime(s[2].timetuple())
+
+                        """ Generate Actions """
+                        for cust in cust_ids[0:s[0]]:
+                            action_time = datetime.datetime.fromtimestamp(random.randint(int(from_ts),int(to_ts))).strftime('%Y-%m-%d  %H:%M:%S')
+                            print "DM SIM - action_time :",action_time
+                            self.pool.get('dm.simulator.action').create(cr, uid, {'simulator_id':sim.id,'trigger_type_id':trigger_type_id,
+                                'step_id':step, 'segment_id':cust[1], 'address_id':cust[0],'section':sect_act.index(s),
+                                'action_time':action_time})
+                        print "DM SIM - Customers :", cust_ids[0:s[0]]
 
         self.write(cr, uid, ids, {'state':'running'})
 
@@ -178,9 +178,7 @@ class dm_simulator(osv.osv):
         sim_ids = self.search(cr, uid, [('state','=','running')])
         for sim in self.browse(cr, uid, sim_ids):
             print "DM SIM - Doing action for :",sim.name
-#            logs = []
 
-#            start_time = datetime.datetime.now()
             start_time = time.time()
             sim_act_ids = self.pool.get('dm.simulator.action').search(cr, uid, [('simulator_id','=',sim.id),('state','=','pending'),
                 ('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
@@ -194,7 +192,8 @@ class dm_simulator(osv.osv):
 
                 """ Generate Sale Order """
                 if sim.so_gen and act.step_id.item_ids:
-                    products = random.sample(act.step_id.item_ids, random.randrange(len(act.step_id.item_ids)))
+                    products = random.sample(act.step_id.item_ids, random.randrange(len(act.step_id.item_ids)) or 1)
+                    print "act.step_id.item_ids :",act.step_id.item_ids
                     shop = self.pool.get('sale.shop').search(cr,uid,[])
                     wf_service = netsvc.LocalService('workflow')
                     partner_addr = self.pool.get('res.partner').address_get(cr, uid, [act.address_id.partner_id.id],
@@ -212,14 +211,14 @@ class dm_simulator(osv.osv):
                             'partner_invoice_id': partner_addr['invoice'],
                             'partner_order_id': partner_addr['contact'],
                             'partner_shipping_id': partner_addr['delivery'],
-                            'order_policy': 'postpaid',
+                            'order_policy': 'manual',
                             'date_order': time.strftime('%Y-%m-%d %H:%M:%S'),
                             'fiscal_position': fpos_id,
                             'project_id': act.segment_id.analytic_account_id.id
                         }
                     new_id = self.pool.get('sale.order').create(cr, uid, vals)
                     print "SO ID :",new_id
-
+                    print "products :",products
                     for product in products:
                         value = self.pool.get('sale.order.line').product_id_change(cr, uid, [], pricelist,
                                         product.id, qty=1, partner_id=act.address_id.partner_id.id, fiscal_position=fpos_id)['value']
@@ -230,23 +229,20 @@ class dm_simulator(osv.osv):
 
                     wf_service.trg_validate(uid, 'sale.order', new_id, 'order_confirm', cr)
 
-                    if invoice_gen:
+                    if sim.invoice_gen:
+                        inv_id = self.pool.get('sale.order').action_invoice_create(cr, uid, [new_id])
+                        #wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+                        print "invoice id :",inv_id
 
-                        pass
-
-                        if invoice_pay:
-
+                        if sim.invoice_pay:
                             pass
 
                 self.pool.get('dm.simulator.action').write(cr, uid, act.id, {'state':'done', 'action_stop':time.strftime('%Y-%m-%d  %H:%M:%S')})
-#                logs.append('%s - %s purchased at step : %s'% (act.action_time, act.address_id.name, act.step_id.name))
 
             stop_time = time.time()
             duration = stop_time - start_time
             start_date = datetime.datetime.fromtimestamp(start_time)
             stop_date = datetime.datetime.fromtimestamp(stop_time)
-
-#            self.write(cr, uid, sim.id, {'logs':"\n".join(logs)})
 
             new_stats = []
             stats = self.read(cr, uid, sim.id, ['stats'])

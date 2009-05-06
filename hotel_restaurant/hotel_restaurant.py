@@ -1,28 +1,22 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 from osv import fields
@@ -60,7 +54,6 @@ class hotel_menucard_type(osv.osv):
         'ismenutype': lambda *a: 1,
 
     }
-#end class
 hotel_menucard_type()
 
 class hotel_menucard(osv.osv):
@@ -76,32 +69,8 @@ class hotel_menucard(osv.osv):
     _defaults = {
         'ismenucard': lambda *a: 1,
         }
-#end class
 hotel_menucard()
 
-#class hotel_restaurant_menucard(osv.osv):
-#    def on_change_rate(self,cr, uid, ids, rate,context=None):
-#        print rate
-#        if rate < 0:
-#            print " rate is less than 0 "
-#            return {'value':{'rate':0.0}}
-#
-#        return {}
-#
-#    _name = "hotel.restaurant.menucard"
-#    _description="Includes Hotel Restaurant Menulist details"
-#    _columns={
-#        'name':fields.char('Item Name',size=64,required=True),
-#        'category':fields.selection([('gujarati','Gujarati'),('punjabi','Punjabi'),('chinesse','Chinesse')],'Catagory',required=True),
-#        'code':fields.char('code',size=128),
-#        'unit':fields.selection([('each','Each'),('gms','GMS'),('kgm','KGM')],'Unit'),
-#        'qty':fields.float('Quantity',required=True),
-#        'rate':fields.float('Rate',required=True),
-#
-#
-#        }
-##end class
-#hotel_restaurant_menucard()
 
 class hotel_restaurant_tables(osv.osv):
 
@@ -149,12 +118,10 @@ class hotel_restaurant_reservation(osv.osv):
 
             cr.execute("select count(*) from hotel_restaurant_reservation as hrr " \
                        "inner join reservation_table as rt on rt.reservation_table_id = hrr.id " \
-#                       "inner join hotel_restaurant_tables as hrt on hrt.name=rt.name " \
                        "where (start_date,end_date)overlaps( timestamp %s , timestamp %s ) " \
                        "and hrr.id<> %d " \
                        "and rt.name in (select rt.name from hotel_restaurant_reservation as hrr " \
                        "inner join reservation_table as rt on rt.reservation_table_id = hrr.id " \
-#                       "inner join hotel_restaurant_tables as hrt on hrt.name = rt.name " \
                        "where hrr.id= %d) " \
                         ,(reservation.start_date,reservation.end_date,reservation.id,reservation.id))
 
@@ -259,33 +226,6 @@ class hotel_restaurant_order(osv.osv):
         return True
 
 
-#
-#        temp=self.pool.get('hotel.restaurant.order').read(cr,uid,ids)
-#        print temp[0]
-#
-#        o_no=temp[0]['order_no']
-#        tno=temp[0]['table_no']
-#        room=temp[0]['room_no']
-#
-#        for food_order in temp[0]['order_list']:
-#                 print food_order,"::::::::::::::::"
-#                 reads=self.pool.get('hotel.restaurant.order.list').read(cr, uid, food_order, ['name','item_qty'], context={})
-#                 #data=self.pool.get('hotel_restaurant_order_list').read(cr,uid,food_order)
-#                 tables=temp[0]['table_no']
-#                 print "tttttttttTT",tables
-#                 qty=reads['item_qty']
-#                 iname=reads['name']
-#                 fd=iname[1]
-#                 if not room:
-#                     cr.execute('insert into hotel_restaurant_kitchen_order_tickets(orderno,tableno,fooditems,quantity) values(%s,[6,0,%s],%s,%s)', (o_no,tttt,fd,qty))
-#
-#                 else:
-#                     roomno=room[1]
-#                     cr.execute('insert into hotel_restaurant_kitchen_order_tickets(orderno,roomno,fooditems,quantity) values(%s,%s,%s,%s)', (o_no,roomno,fd,qty))
-#
-#
-#        return {}
-#
     _name = "hotel.restaurant.order"
     _description="Includes Hotel Restaurant Order"
     _columns={
@@ -351,9 +291,7 @@ class hotel_reservation_order(osv.osv):
 
     _name="hotel.reservation.order"
     _description="Reservation Order"
-#    _inherits={'hotel.restaurant.order':'hro_id'}
     _columns={
-#       'hro_id': fields.many2one('hotel.restaurant.order','Hro_id'),
        'order_number':fields.char('Order No',size=64),
        'reservationno':fields.char('Reservation No',size=64),
        'date1':fields.datetime('Date',required=True),
@@ -368,7 +306,6 @@ class hotel_reservation_order(osv.osv):
         }
 
     _defaults = {
-#      'ishro': lambda *a: 1,
         'order_number':lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid,'hotel.reservation.order'),
         }
 
@@ -387,7 +324,6 @@ class hotel_restaurant_order_list(osv.osv):
       if not name:
          return {'value':{}}
       temp=self.pool.get('hotel.menucard').browse(cr,uid,name,context)
-      print temp.rate
       return {'value':{'item_rate':temp.list_price}}
 
 
@@ -397,10 +333,12 @@ class hotel_restaurant_order_list(osv.osv):
         'o_list':fields.many2one('hotel.restaurant.order'),
         'o_l':fields.many2one('hotel.reservation.order'),
         'kot_order_list':fields.many2one('hotel.restaurant.kitchen.order.tickets'),
-#        'name':fields.many2one('hotel.restaurant.menucard','Item Name',required=True),
         'name':fields.many2one('hotel.menucard','Item Name',required=True),
         'item_qty':fields.char('Qty',size=64,required=True),
         'item_rate':fields.float('Rate',size=64),
         'price_subtotal': fields.function(_sub_total, method=True, string='Subtotal'),
          }
 hotel_restaurant_order_list()
+
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

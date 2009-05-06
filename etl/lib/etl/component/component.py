@@ -59,7 +59,7 @@ class component(signal):
         return res
     
     def __copy__(self):        
-        res = component(name=self.name, transformer=self.transformer)
+        res = component(name=self.name, connector=self.connector, transformer=self.transformer, row_limit=self.row_limit)
         return res
 
     def copy(self):

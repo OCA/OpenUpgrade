@@ -78,10 +78,12 @@ def generate_reports(cr,uid,obj,report_type,context):
     pool = pooler.get_pool(cr.dbname)
     dm_doc_obj = pool.get('dm.offer.document') 
     report_xml = pool.get('ir.actions.report.xml')
-
+    r_type = report_type
+    if report_type=='html2html':
+        r_type = 'html'
     for address_id in address_ids:
-        camp_id = obj.segment_id.proposition_id.camp_id.id 
-        type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',report_type)])
+        camp_id = obj.segment_id.proposition_id.camp_id.id
+        type_id = pool.get('dm.campaign.document.type').search(cr,uid,[('code','=',r_type)])
         camp_mail_service_obj = pool.get('dm.campaign.mail_service')
         camp_mail_service_id = camp_mail_service_obj.search(cr,uid,[('campaign_id','=',camp_id),('offer_step_id','=',step_id)])
         print "camp_mail_service_id",camp_mail_service_id
@@ -105,6 +107,7 @@ def generate_reports(cr,uid,obj,report_type,context):
 
         document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
         print "Doc id : ",document_id
+        print report_type
 
         vals={  'segment_id': obj.segment_id.id,
             'name': obj.step_id.code + "_" +str(address_id),

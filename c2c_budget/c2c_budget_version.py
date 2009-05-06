@@ -42,16 +42,20 @@ class c2c_budget_version(osv.osv):
     _name = "c2c_budget.version"
     _description = "Budget versions"
     _columns = {
-        'code'               : fields.char('Code', size=50),
-        'name'               : fields.char('Version Name', size=200,  required=True ),
-        'budget_id'          : fields.many2one('c2c_budget', 'Budget',  required=True),
-        'currency_id'        : fields.many2one('res.currency', 'Currency', required=True),
-        'company_id'         : fields.many2one('res.company', 'Company',  required=True),
-        'user_id'            : fields.many2one('res.users', 'User In Charge'),
-        'budget_line_ids'    : fields.one2many('c2c_budget.line', 'budget_version_id', 'Budget Lines'),
-        'note'               : fields.text('Notes'),
-        'create_date'        : fields.datetime('Creation Date', readonly=True),
-        'ref_date'           : fields.date('Reference Date', required=True),
+        'code' : fields.char('Code', size=50),
+        'name' : fields.char('Version Name', size=200,  required=True ),
+        'budget_id' : fields.many2one('c2c_budget', 'Budget',  required=True),
+        'currency_id' : fields.many2one('res.currency', 'Currency', required=True),
+        'company_id' : fields.many2one('res.company', 'Company',  required=True),
+        'user_id' : fields.many2one('res.users', 'User In Charge'),
+        'budget_line_ids' : fields.one2many(
+                                                'c2c_budget.line', 
+                                                'budget_version_id', 
+                                                'Budget Lines'
+                                            ),
+        'note' : fields.text('Notes'),
+        'create_date' : fields.datetime('Creation Date', readonly=True),
+        'ref_date' : fields.date('Reference Date', required=True),
         }
 
     _order = 'name'
@@ -63,10 +67,19 @@ class c2c_budget_version(osv.osv):
 
     
     def get_period(self, cr, uid, version, date, context={}):
-        """ return the period corresponding to the given date for the given version """
+        """ return the period corresponding to the given date 
+        for the given version """
         
         period_obj = self.pool.get('account.period')    
-        period_ids = period_obj.search( cr, uid,  [('date_start', '<=', date), ('date_stop', '>=', date)], context=context)
+        period_ids = period_obj.search( 
+                                        cr, 
+                                        uid,  
+                                        [
+                                            ('date_start', '<=', date), 
+                                            ('date_stop', '>=', date)
+                                        ], 
+                                        context=context
+                                    )
         periods_tmp = period_obj.browse(cr, uid, period_ids, context=context)
         if len(periods_tmp) > 0:
             return periods_tmp[0]
@@ -75,18 +88,30 @@ class c2c_budget_version(osv.osv):
     
     
     def get_periods (self, cr, uid, version, context={}):
-        """return periods informations used by this version. (the periods are those between start and end dates defined in budget)"""
+        """return periods informations used by this version. 
+        (the periods are those between start and end dates defined in budget)"""
         
         budget_obj = self.pool.get('c2c_budget')        
         return budget_obj.get_periods(cr, uid, version.budget_id.id)
  
  
         
-    def get_next_periods (self, cr, uid,  version, start_period, periods_nbr, context={}):
-        """ return a list of "periods_nbr" periods that follow the "start_period" for the given version """
+    def get_next_periods (self, cr, uid,  version, start_period,\
+        periods_nbr, context={}):
+        """ return a list of "periods_nbr" periods that follow the 
+        "start_period" for the given version """
         
         period_obj = self.pool.get('account.period')        
-        period_ids = period_obj.search(cr, uid, [('date_start', '>', start_period.date_start)], order="date_start ASC", limit=periods_nbr, context=context)
+        period_ids = period_obj.search(
+                            cr, 
+                            uid, 
+                            [
+                                ('date_start', '>', start_period.date_start)
+                            ], 
+                            order="date_start ASC", 
+                            limit=periods_nbr, 
+                            context=context
+                        )
         return period_obj.browse(cr, uid, period_ids, context)
          
  
@@ -97,7 +122,14 @@ class c2c_budget_version(osv.osv):
 
         period_obj = self.pool.get('account.period')        
         
-        ids = period_obj.search(cr, uid, [('date_stop','<',period.date_start)], order="date_start DESC")
+        ids = period_obj.search(
+                                cr, 
+                                uid, 
+                                [
+                                    ('date_stop','<',period.date_start)
+                                ], 
+                                order="date_start DESC"
+                            )
         periods = period_obj.browse(cr, uid, ids, context)
         if len(periods) > 0:
             return periods[0]
@@ -115,25 +147,34 @@ class c2c_budget_version(osv.osv):
         
         
 
-    def get_filtered_budget_values(self, cr,uid, version, lines, period_start=None, period_end=None, context={}):
-        """ for a given version compute items' values on lines between period_start and period_end included 
-            version is a budget_version object
-            lines is a list of budget_lines objects to work on
-            period_start is a c2c_budget.period object
-            period_end is a c2c_budget.period object
-            return a dict: item_id => value
+    def get_filtered_budget_values(self, cr,uid, version, lines, \
+        period_start=None, period_end=None, context={}):
+        """ 
+        for a given version compute items' values on lines between 
+        period_start and period_end included 
+        version is a budget_version object
+        lines is a list of budget_lines objects to work on
+        period_start is a c2c_budget.period object
+        period_end is a c2c_budget.period object
+        return a dict: item_id => value
         """
         
         #find periods used by this version that stand between period_start and period_end included.
         filtered_periods= []
         periods = self.get_periods(cr, uid, version, context)
         for p in periods:
-            if (period_start is None or p.date_start >= period_start.date_start ) and (period_end is None or p.date_stop <= period_end.date_stop):
+            if (period_start is None or p.date_start >= period_start.date_start)\
+                and (period_end is None or p.date_stop <= period_end.date_stop):
                 filtered_periods.append(p)
         
         #get lines related to this periods
         budget_lines_obj = pooler.get_pool(cr.dbname).get('c2c_budget.line')        
-        filtered_lines = budget_lines_obj.filter_by_period(cr, uid, lines, [x.id for x in filtered_periods])
+        filtered_lines = budget_lines_obj.filter_by_period(
+                                            cr, 
+                                            uid, 
+                                            lines, 
+                                            [x.id for x in filtered_periods]
+                                        )
         
         #compute budget values on those lines
         return self.get_budget_values(cr, uid, version, filtered_lines, context)
@@ -149,7 +190,11 @@ class c2c_budget_version(osv.osv):
 
         
         budget_item_obj = self.pool.get('c2c_budget.item')        
-        items = budget_item_obj.get_sorted_list(cr, uid, version.budget_id.budget_item_id.id)            
+        items = budget_item_obj.get_sorted_list(
+                                            cr, 
+                                            uid, 
+                                            version.budget_id.budget_item_id.id
+                                        )            
 
         #init results with 0
         items_results = dict(map(lambda x:(x.id, 0), items))
@@ -162,7 +207,8 @@ class c2c_budget_version(osv.osv):
             #go through all lines
             for l in lines:
                 # if the line belongs to this version and the line belongs to this item or subitem
-                if l.budget_version_id.id == version.id and l.budget_item_id.id in sub_items_ids:
+                if l.budget_version_id.id == version.id \
+                and l.budget_item_id.id in sub_items_ids:
                     items_results[item.id] += l.amount_in_budget_currency
     
         #complete results with calculated items
@@ -172,11 +218,13 @@ class c2c_budget_version(osv.osv):
         
         
         
-    def get_real_values_from_analytic_accounts(self, cr, uid, version, lines, context={}):
+    def get_real_values_from_analytic_accounts(self, cr, uid, \
+        version, lines, context={}):
         """ return the values from the analytic accounts """
         
         budget_item_obj = self.pool.get('c2c_budget.item')        
-        items = budget_item_obj.get_sorted_list(cr, uid, version.budget_id.budget_item_id.id)            
+        items = budget_item_obj.get_sorted_list(cr, uid, \
+            version.budget_id.budget_item_id.id)            
                 
         #init results with 0
         items_results = dict(map(lambda x:(x.id, 0), items))
@@ -186,7 +234,18 @@ class c2c_budget_version(osv.osv):
         
         #foreach item in the structure
         for item in items:
-            items_results[item.id] = budget_item_obj.get_real_values_from_analytic_accounts(cr, uid, item.id, periods, lines, version.company_id.id, version.currency_id.id, version.ref_date, context=context)
+            items_results[item.id] = \
+            budget_item_obj.get_real_values_from_analytic_accounts(
+                                                    cr, 
+                                                    uid, 
+                                                    item.id, 
+                                                    periods, 
+                                                    lines, 
+                                                    version.company_id.id, 
+                                                    version.currency_id.id, 
+                                                    version.ref_date, 
+                                                    context=context
+                                                )
         
         #complete results with calculated items
         result = budget_item_obj.compute_view_items(items, items_results)
@@ -198,7 +257,12 @@ class c2c_budget_version(osv.osv):
         """ return the values from the general account """
         
         budget_item_obj = self.pool.get('c2c_budget.item')        
-        items = budget_item_obj.get_sorted_list(cr, uid, version.budget_id.budget_item_id.id)            
+        items = budget_item_obj.get_sorted_list(
+                                        cr, 
+                                        uid, 
+                                        version.budget_id.budget_item_id.id
+                                    )
+                                                            
     
         #init results with 0
         items_results = dict(map(lambda x:(x.id, 0), items))
@@ -208,7 +272,16 @@ class c2c_budget_version(osv.osv):
         
         #foreach item in the structure
         for item in items:
-            items_results[item.id] = budget_item_obj.get_real_values(cr, uid, item, periods, version.company_id.id, version.currency_id.id, version.ref_date, context=context)
+            items_results[item.id] = budget_item_obj.get_real_values(
+                                                    cr, 
+                                                    uid, 
+                                                    item, 
+                                                    periods, 
+                                                    version.company_id.id, 
+                                                    version.currency_id.id, 
+                                                    version.ref_date, 
+                                                    context=context
+                                                )
         
         #complete results with calculated items
         result = budget_item_obj.compute_view_items(items, items_results)
@@ -217,7 +290,8 @@ class c2c_budget_version(osv.osv):
             
     
     def get_percent_values(self, cr, uid, ref_datas, ref_id):
-        """ build a dictionnary item_id => value that compare each values of ref_datas to one of them.
+        """ build a dictionnary item_id => value that compare each values 
+            of ref_datas to one of them.
             ref_datas is a dictionnary as get_budget_values() returns
             ref_id is one of the keys of ref_datas. 
         """
@@ -237,18 +311,32 @@ class c2c_budget_version(osv.osv):
         return result
     
     
-    def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=80):
-        """search not only for a matching names but also for a matching codes. Search also in budget names """
+    def name_search(self, cr, user, name, args=None, operator='ilike',\
+        context=None, limit=80):
+        """search not only for a matching names but also 
+        for a matching codes. Search also in budget names """
                 
         if not args:
             args=[]
         if not context:
             context={}
             
-        ids = self.search(cr, user, [('name',operator,name)]+ args, limit=limit, context=context)
+        ids = self.search(
+                            cr, 
+                            user, 
+                            [('name',operator,name)]+ args, 
+                            limit=limit, 
+                            context=context
+                        )
         
         if len(ids) < limit:
-            ids += self.search(cr, user, [('code',operator,name)]+ args, limit=limit, context=context)
+            ids += self.search(
+                                cr, 
+                                user, 
+                                [('code',operator,name)]+ args, 
+                                limit=limit, 
+                                context=context
+                            )
             
                 
         ids = ids[:limit]
@@ -260,7 +348,12 @@ class c2c_budget_version(osv.osv):
         """delete all budget lines when deleting a budget version """
         
         budget_lines_obj = pooler.get_pool(cr.dbname).get('c2c_budget.line')
-        lines_ids = budget_lines_obj.search(cr, uid, [('budget_version_id', 'in', ids)], context=context)
+        lines_ids = budget_lines_obj.search(
+                                            cr, 
+                                            uid, 
+                                            [('budget_version_id', 'in', ids)], 
+                                            context=context
+                                        )
         budget_lines_obj.unlink(cr, uid, lines_ids, context)
         return super(c2c_budget_version, self).unlink(cr, uid, ids, context)
                 

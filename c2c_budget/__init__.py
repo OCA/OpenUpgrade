@@ -2,7 +2,7 @@
 ##############################################################################
 #
 # Copyright (c) Camptocamp SA - http://www.camptocamp.com
-# Author: Arnaud Wüst
+# Author: Arnaud Wüst ported by nbessi
 #
 #    This file is part of the c2c_budget module
 #
@@ -31,13 +31,11 @@
 
 import account
 import analytic_account
-
 import c2c_budget_item
 import c2c_budget
 import c2c_budget_version
 import c2c_budget_line
 import c2c_budget_wizard_abstraction
 import c2c_budget_report_abstraction
-
 import wizard
 import report

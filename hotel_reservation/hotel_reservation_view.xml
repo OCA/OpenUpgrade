@@ -96,7 +96,7 @@
 		<menuitem name="Hotel Management/All Reservation" 
 				  id="menu_action_hotel_reservation_tree_all" 
 				  action="action_hotel_reservation_tree_all"
-				  sequence="2"/>
+				  sequence="3"/>
 		<menuitem name="New Reservation"
 		          id="menu_open_hotel_reservation_form_tree" 
 				  action="open_hotel_reservation_form_tree"
@@ -150,7 +150,6 @@
 			<field name="arch" type="xml">
 			   <calendar string="Current Reservation" date_start="checkin" date_stop= "dummy" color="state" >
 				    <field name="partner_id"/>
-<!--				    <field name="reservation_line"/>-->
 			   </calendar>
 			</field>
 		</record>

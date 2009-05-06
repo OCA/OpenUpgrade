@@ -36,7 +36,8 @@ import pooler
 
 class c2c_budget_report_abstraction(osv.osv):
     """ This object define parts of reports that can be override. 
-        It is used to replace analytic_account by projects for some of ours customers """
+        It is used to replace analytic_account by projects for some 
+        of ours customers """
     
     _name = "c2c_budget.report_abstraction"
     _description = "Report Abstraction"
@@ -46,7 +47,8 @@ class c2c_budget_report_abstraction(osv.osv):
         
     def get_project_group_object(self, cr, uid, context={}):
         """ return the object use to group by projects in reports 
-            this is an abstraction level use to allow this module to be overridden in order to use project as analytic accounts
+            this is an abstraction level use to allow this module 
+            to be overridden in order to use project as analytic accounts
         """
         return self.pool.get('account.analytic.account');
         

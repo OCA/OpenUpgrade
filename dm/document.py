@@ -206,7 +206,7 @@ class dm_offer_document(osv.osv):
               'document_id','document_template_plugin_id','Dynamic Plugins',),
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
         'note' : fields.text('Description'),
-        'gender_id' : fields.many2one('dm.customer.gender', 'Gender'),      
+        'gender_id' : fields.many2one('res.partner.title', 'Gender' ,domain=[('domain','=','contact')]),
     }
     _defaults = {
         'state': lambda *a: 'draft',
@@ -243,6 +243,18 @@ class dm_campaign_document(osv.osv):
         }
         
 dm_campaign_document()
+
+class dm_dynamic_text(osv.osv):
+    _name = 'dm.dynamic_text'
+    _rec_name = 'language_id'
+    _columns = {
+        'language_id' : fields.many2one('res.lang','Language',ondelete='cascade'),
+        'gender_id' : fields.many2one('res.partner.title', 'Gender', domain="[('domain','=','contact')]"),
+        'content' : fields.text('Content'),
+        'previous_step_id' : fields.many2one('dm.offer.step','Previous Step',ondelete='cascade'),
+        'ref_text_id' : fields.many2one('dm.dynamic_text', 'Reference Text'),
+    }
+dm_dynamic_text()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
