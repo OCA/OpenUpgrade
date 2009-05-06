@@ -313,7 +313,7 @@ def create_kml(self, cr, uid, data, context={}):
 
     # This writes the KML Document to a file.
     kmlFile = open(fileName, 'w')
-    kmlFile.write(kmlDoc.toprettyxml(' '))
+    kmlFile.write(kmlDoc.toxml())
     kmlFile.close()
     return {}
 
