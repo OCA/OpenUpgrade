@@ -206,7 +206,7 @@ class dm_offer_document(osv.osv):
               'document_id','document_template_plugin_id','Dynamic Plugins',),
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
         'note' : fields.text('Description'),
-        'gender_id' : fields.many2one('dm.customer.gender', 'Gender'),      
+        'gender_id' : fields.many2one('res.partner.title', 'Gender' ,domain=[('domain','=','contact')]),
     }
     _defaults = {
         'state': lambda *a: 'draft',

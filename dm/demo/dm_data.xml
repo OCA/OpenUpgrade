@@ -946,25 +946,6 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         </record>
     </data>
 
-    <!-- GENDER -->
-
-    <data noupdate="1">
-        <record id="dm_customer_gender_sir0" model="dm.customer.gender">
-            <field name="to_gender_id" ref="base.res_partner_title_sir"/>
-            <field eval="&quot;&quot;&quot;Sir&quot;&quot;&quot;" name="description"/>
-            <field eval="&quot;&quot;&quot;Sir&quot;&quot;&quot;" name="name"/>
-        </record>
-        <record id="dm_customer_gender_madam0" model="dm.customer.gender">
-            <field name="to_gender_id" ref="base.res_partner_title_madam"/>
-            <field eval="&quot;&quot;&quot;Madam&quot;&quot;&quot;" name="description"/>
-            <field eval="&quot;&quot;&quot;Madam&quot;&quot;&quot;" name="name"/>
-        </record>
-        <record id="dm_customer_gender_miss0" model="dm.customer.gender">
-            <field name="to_gender_id" ref="base.res_partner_title_miss"/>
-            <field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="description"/>
-            <field eval="&quot;&quot;&quot;Miss&quot;&quot;&quot;" name="name"/>
-        </record>
-    </data>
 
     <!-- TRIGGER -->
 

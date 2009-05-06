@@ -104,38 +104,6 @@ class dm_customer_order(osv.osv):
 
 dm_customer_order()
 
-
-class dm_customer_gender(osv.osv):
-    _name = "dm.customer.gender"
-    def _customer_gender_code(self, cr, uid, ids, name, args, context={}):
-        result ={}
-        for id in ids:
-            code=""
-            cust_gender = self.browse(cr,uid,[id])[0]
-            if cust_gender.lang_id:
-                if not cust_gender.from_gender_id:
-                    code='_'.join([cust_gender.lang_id.code, cust_gender.to_gender_id.name])
-                else:
-                    code='_'.join([cust_gender.lang_id.code, 'from', cust_gender.from_gender_id.name, 'to', cust_gender.to_gender_id.name])
-            else:
-                if not cust_gender.from_gender_id:
-                    code=cust_gender.to_gender_id.name
-                else:
-                    code='_'.join(['from', cust_gender.from_gender_id.name, 'to', cust_gender.to_gender_id.name])
-            result[id]=code
-        return result
-
-    _columns = {
-        'name' : fields.char('Name', size=16),
-        'code' : fields.function(_customer_gender_code,string='Code',type='char',method=True,readonly=True),
-        'from_gender_id' : fields.many2one('res.partner.title', 'From Gender', domain="[('domain','=','contact')]"),
-        'to_gender_id' : fields.many2one('res.partner.title', 'To Gender', required=True, domain="[('domain','=','contact')]"),
-        'lang_id' : fields.many2one('res.lang', 'Language'),
-        'description' : fields.text('Description'),
-    }
-dm_customer_gender()
-
-
 class dm_workitem(osv.osv):
     _name = "dm.workitem"
     _description = "workitem"

@@ -294,11 +294,6 @@ msgstr ""
 "clients"
 
 #. module: dm
-#: view:dm.customer.gender:0
-msgid "Customer Gender"
-msgstr "Genre"
-
-#. module: dm
 #: view:dm.customer.order:0
 #: field:dm.mail_service,partner_id:0
 #: field:dm.trademark,partner_id:0
@@ -1092,11 +1087,6 @@ msgstr "Média de l'offre"
 msgid "Quantity Type"
 msgstr "Type de quantité"
 
-#. module: dm
-#: model:ir.actions.act_window,name:dm.action_dm_customer_gender_form
-#: model:ir.ui.menu,name:dm.menu_action_view_dm_customer_gender_form
-msgid "All Customers Genders"
-msgstr "Tous les genres"
 
 #. module: dm
 #: view:dm.campaign:0
@@ -1261,11 +1251,6 @@ msgstr "Toutes les commandes client"
 #: help:dm.campaign.proposition.segment,quantity_cleaned_cleaner:0
 msgid "The quantity of wrong addresses removed by the cleaner."
 msgstr "La quantité de mauvaises adresses supprimées par le nettoyeur"
-
-#. module: dm
-#: field:dm.customer.gender,to_gender:0
-msgid "To Gender"
-msgstr "Vers le genre"
 
 #. module: dm
 #: model:dm.offer.step.type,name:dm.dm_offer_step_type_accompanyingletterofthestartingmailing0
@@ -1765,7 +1750,6 @@ msgstr "Voir les tâches"
 
 #. module: dm
 #: field:dm.campaign,lang_id:0
-#: field:dm.customer.gender,lang_id:0
 #: field:dm.offer.document,lang_id:0
 #: field:dm.offer.translation,language_id:0
 #: view:product.product:0
@@ -1888,10 +1872,6 @@ msgstr "Mes idées d'offre"
 msgid "Intermediaries"
 msgstr "Intermédiaires"
 
-#. module: dm
-#: model:ir.model,name:dm.model_dm_customer_gender
-msgid "dm.customer.gender"
-msgstr "dm.customer.gender"
 
 #. module: dm
 #: field:dm.order,customer_firstname:0
@@ -1988,7 +1968,6 @@ msgstr "Champs dynamique"
 #: field:dm.campaign.proposition.prices_progression,name:0
 #: view:dm.campaign.proposition.segment:0
 #: rml:dm.campaign.report:0
-#: field:dm.customer.gender,name:0
 #: field:dm.customer.segmentation,name:0
 #: view:dm.customers_file:0
 #: field:dm.customers_file,name:0
@@ -2350,7 +2329,6 @@ msgstr "Suppression"
 #: view:dm.campaign.proposition.segment:0
 #: field:dm.campaign.proposition.segment,code1:0
 #: field:dm.campaign.type,code:0
-#: field:dm.customer.gender,code:0
 #: field:dm.customer.segmentation,code:0
 #: view:dm.customers_file:0
 #: field:dm.customers_file,code:0
@@ -2952,10 +2930,6 @@ msgstr "Frais d'envoi"
 msgid "Could not open this Campaign !"
 msgstr "Impossible d'ouvrir la campagne"
 
-#. module: dm
-#: view:dm.customer.gender:0
-msgid "Customer Genders"
-msgstr "Genres"
 
 #. module: dm
 #: wizard_button:wizard_campaign_group,init,next:0
@@ -3827,11 +3801,6 @@ msgid "The Open ERP User Book"
 msgstr "Le livre utilisation d'Open ERP"
 
 #. module: dm
-#: field:dm.offer.document,gender_id:0
-msgid "Gender"
-msgstr "Genre"
-
-#. module: dm
 #: model:ir.actions.act_window,name:dm.action_campaign_proposition
 #: model:ir.ui.menu,name:dm.menu_action_campaign_proposition
 msgid "All Campaign Propositions"
@@ -4002,11 +3971,6 @@ msgstr "Brouillon"
 #: field:dm.customer.order,amount_untaxed:0
 msgid "Untaxed Amount"
 msgstr "Montant hors-taxes"
-
-#. module: dm
-#: field:dm.customer.gender,from_gender:0
-msgid "From Gender"
-msgstr "Du genre"
 
 #. module: dm
 #: view:dm.plugins.value:0
@@ -4287,8 +4251,6 @@ msgstr "Code client"
 #: view:dm.campaign.type:0
 #: field:dm.campaign.type,description:0
 #: field:dm.campaign.type,name:0
-#: view:dm.customer.gender:0
-#: field:dm.customer.gender,description:0
 #: view:dm.customer.segmentation:0
 #: field:dm.customer.segmentation,notes:0
 #: field:dm.customers_list,notes:0

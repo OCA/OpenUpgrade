@@ -263,54 +263,6 @@
 
     <!--
     =======================================================
-    CUSTOMER GENDER VIEWS
-    =======================================================
-    -->
-
-    <record model="ir.ui.view" id="view_dm_customer_gender_form">
-        <field name="name">dm.customer.gender.form</field>
-        <field name="model">dm.customer.gender</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Customer Gender">
-                <field name="name" select="1"/>
-                <field name="code" select="2"/>
-                <field name="from_gender_id" select="1"/>
-                <field name="to_gender_id" select="1"/>
-                <field name="lang_id" select="2"/>
-                <separator string="Description" colspan="4"/>
-                <field name="description" nolabel="1" colspan="4" widget="text_wiki"/>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_dm_customer_gender_tree">
-        <field name="name">dm.customer.gender.tree</field>
-        <field name="model">dm.customer.gender</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Customer Genders">
-                <field name="name"/>
-                <field name="code"/>
-                <field name="from_gender_id"/>
-                <field name="to_gender_id"/>
-                <field name="lang_id"/>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_dm_customer_gender_form">
-        <field name="name">All Customers Genders</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.customer.gender</field>
-        <field name="view_type">form</field>
-        <field name="view_id" ref="view_dm_customer_gender_tree"/>
-    </record>
-
-    <menuitem id="menu_action_view_dm_customer_gender_form" parent="dm.menu_dm_config_customer" action="action_dm_customer_gender_form"/>
-
-    <!--
-    =======================================================
     WORKITEM VIEWS
     =======================================================
     -->
