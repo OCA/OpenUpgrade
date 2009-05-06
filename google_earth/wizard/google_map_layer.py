@@ -42,7 +42,6 @@ _earth_form =  '''<?xml version="1.0"?>
 _earth_fields = {
             }
 
-
 def create_kml(self, cr, uid, data, context={}):
     # This function creates an XML document and adds the necessary
     # KML elements.
@@ -146,7 +145,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(country)
         placemarkdescElement = kmlDoc.createElement('description')
-        placemarkdescElement.appendChild(kmlDoc.createTextNode(str(res[country])))
+        placemarkdescElement.appendChild(kmlDoc.createTextNode('Turnover of country: ' + str(res[country])))
         placemarknameElement.appendChild(placemarknameText)
 
         placemarkstyleElement = kmlDoc.createElement('Style')
@@ -189,7 +188,6 @@ def create_kml(self, cr, uid, data, context={}):
     return {}
 
 class customer_on_map(wizard.interface):
-
     states = {
          'init': {
             'actions': [create_kml],
