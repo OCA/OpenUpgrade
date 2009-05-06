@@ -1,0 +1,35 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_payment_extension
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-03-23 08:50:46+0000\n"
+"PO-Revision-Date: 2009-03-23 08:50:46+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_payment_extension
+#: model:ir.module.module,description:account_payment_extension.module_name_translation
+msgid "Account payment extension.\n"
+"\n"
+"This module extends the account_payment module with a lot of features:\n"
+"    * Extension of payment types: The payment type has a translated name and note that can be shown in the invoices.\n"
+"    * Two default payment types for partners (client and supplier).\n"
+"    * Automatic selection of payment type in invoices. Now an invoice can have a payment term (30 days, 30/60 days, ...) and a payment type (cash, bank transfer, ...).\n"
+"    * A default check field in partner bank accounts. The default partner bank accounts are selected in invoices and payments.\n"
+"    * New menu/tree/forms to see payments to receive and payments to pay.\n"
+"    * The payments show tree editable fields: Due date, bank account and a check field (for example to write down if a bank check in paper support has been received).\n"
+"    * Two types of payment orders: Payable payment orders (from supplier invoices) and receivable payment orders (from client invoices). So we can make payment orders to receive the payments of our client invoices. Each payment order type has its own sequence.\n"
+"    * The payment orders allow negative payment amounts. So we can have payment orders for supplier invoices (pay money) and refund supplier invoices (return or receive money). Or for client invoices (receive money) and refund client invoices (return or pay money).\n"
+"    * Payment orders: Selected invoices are filtered by payment type, the second message communication can be set at the same time for several invoices.\n"
+"Based on previous work of Pablo Rocandio & Zikzakmedia (version for 4.2).\n"
+""
+msgstr ""
+
