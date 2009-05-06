@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* project_gtd
+# 	* project_gtd
 #
 msgid ""
 msgstr ""
@@ -17,8 +17,11 @@ msgstr ""
 
 #. module: project_gtd
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
+"Το όνομα αντικειμένου πρέπει να αρχίζει με x_ και να μήν περιέχει ειδικούς "
+"χαρακτήρες!"
 
 #. module: project_gtd
 #: model:ir.model,name:project_gtd.model_project_gtd_timebox
@@ -28,58 +31,58 @@ msgstr ""
 #. module: project_gtd
 #: field:project.gtd.timebox,context1_id:0
 msgid "Context 1"
-msgstr ""
+msgstr "Εννοιολογικό πλαίσιο 1"
 
 #. module: project_gtd
 #: selection:project.gtd.timebox,type:0
 msgid "Monthly"
-msgstr ""
+msgstr "Μηνιαία"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,parent_id:0
 msgid "Parent Timebox"
-msgstr ""
+msgstr "Μητρικό χρονικό πλαίσιο"
 
 #. module: project_gtd
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Άκυρο XML για αρχιτεκτονική προβολής!"
 
 #. module: project_gtd
 #: wizard_field:project.gtd.timebox.fill,init,task_ids:0
 msgid "Tasks selection"
-msgstr ""
+msgstr "Επιλογή εργασιών"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,col_priority:0
 msgid "Priority"
-msgstr ""
+msgstr "Προτεραιότητα"
 
 #. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.act_timebox_tasks_my_inbox
 #: model:ir.ui.menu,name:project_gtd.menu_open_time_myinbox
 msgid "My Inbox"
-msgstr ""
+msgstr "Τα Εισερχόμενά μου"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,context3_id:0
 msgid "Context 3"
-msgstr ""
+msgstr "Εννοιολογικό πλαίσιο 3"
 
 #. module: project_gtd
 #: view:project.gtd.timebox:0
 msgid "Timebox Definition"
-msgstr ""
+msgstr "Ορισμός χρονικού πλαισίου"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,context4_id:0
 msgid "Context 4"
-msgstr ""
+msgstr "Εννοιολογικό πλαίσιο 4"
 
 #. module: project_gtd
 #: wizard_field:project.gtd.timebox.fill,init,timebox_to_id:0
 msgid "Set to Timebox"
-msgstr ""
+msgstr "Αποστολή σε χρονικό πλαίσιο"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,type:0
@@ -89,50 +92,49 @@ msgstr "Είδος ημερολογίου"
 #. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.open_gtd_task_inbox
 msgid "Inbox Tasks"
-msgstr ""
+msgstr "Εργασίες στα Εισερχόμενα"
 
 #. module: project_gtd
-#: field:project.gtd.timebox,name:0
+#: view:project.gtd.timebox:0 field:project.gtd.timebox,name:0
 #: field:project.task,timebox_id:0
-#: view:project.gtd.timebox:0
 msgid "Timebox"
-msgstr ""
+msgstr "Χρονικό πλαίσιο"
 
 #. module: project_gtd
 #: view:project.gtd.timebox:0
 msgid "Visible Columns"
-msgstr ""
+msgstr "Ορατές στήλες"
 
 #. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.open_gtd_context_tree_my
 #: model:ir.ui.menu,name:project_gtd.menu_open_gtd_time_my_contexts
 msgid "My Contexts"
-msgstr ""
+msgstr "Τα εννοιολογικά μου πλαίσια"
 
 #. module: project_gtd
 #: wizard_view:project.gtd.timebox.fill,init:0
 msgid "Timebox tasks selection"
-msgstr ""
+msgstr "Επιλογή εργασιών χρονικού πλαισίου"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,col_effective_hours:0
 msgid "Effective Hours"
-msgstr ""
+msgstr "Πραγματικές ώρες"
 
 #. module: project_gtd
 #: model:ir.actions.wizard,name:project_gtd.open_gtd_timebox_empty
 msgid "Empty Timebox"
-msgstr ""
+msgstr "Κενό χρονικό πλαίσιο"
 
 #. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.act_timebox_tasks_my_pending
 msgid "My Pending Tasks"
-msgstr ""
+msgstr "Οι εκκρεμούσες εργασίες μου"
 
 #. module: project_gtd
 #: model:ir.ui.menu,name:project_gtd.menu_open_time_allinbox
 msgid "All My Timeboxes"
-msgstr ""
+msgstr "Όλα τα χρονικά μου πλαίσια"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,user_id:0
@@ -143,7 +145,7 @@ msgstr "Χρήστης"
 #: model:ir.actions.wizard,name:project_gtd.open_gtd_timebox_daily
 #: model:ir.ui.menu,name:project_gtd.menu_open_time_daily_inbox
 msgid "My Daily Timebox"
-msgstr ""
+msgstr "Το ημερήσιό μου χρονικό πλαίσιο"
 
 #. module: project_gtd
 #: model:ir.model,name:project_gtd.model_project_gtd_context
@@ -153,78 +155,77 @@ msgstr ""
 #. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.act_timebox_tasks_my_deadline_open
 msgid "My Deadlines"
-msgstr ""
+msgstr "Οι προθεσμίες μου"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,context2_id:0
 msgid "Context 2"
-msgstr ""
+msgstr "Εννοιολογικό πλαίσιο 2"
 
 #. module: project_gtd
 #: field:project.gtd.context,project_default_id:0
 msgid "Default Project"
-msgstr ""
+msgstr "Προκαθορισμένο πρότζεκτ"
 
 #. module: project_gtd
 #: wizard_button:project.gtd.timebox.fill,init,process:0
 msgid "Add to Timebox"
-msgstr ""
+msgstr "Προσθήκη σε χρονικό πλαίσιο"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,context5_id:0
 msgid "Context 5"
-msgstr ""
+msgstr "Εννοιολογικό πλαίσιο 5"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,context6_id:0
 msgid "Context 6"
-msgstr ""
+msgstr "Εννοιολογικό πλαίσιο 6"
 
 #. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.open_gtd_context_tree
 #: model:ir.ui.menu,name:project_gtd.menu_open_gtd_time_contexts
 #: view:project.gtd.timebox:0
 msgid "Contexts"
-msgstr ""
+msgstr "Εννοιολογικά πλαίσια"
 
 #. module: project_gtd
 #: selection:project.gtd.timebox,type:0
 msgid "Daily"
-msgstr ""
+msgstr "Ημερήσια"
 
 #. module: project_gtd
 #: model:ir.actions.wizard,name:project_gtd.open_gtd_timebox_fill
 msgid "Plannify Timebox"
-msgstr ""
+msgstr "Σχεδιοποίηση χρονικού πλαισίου"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,col_project:0
 msgid "Project"
-msgstr ""
+msgstr "Πρότζεκτ"
 
 #. module: project_gtd
 #: wizard_button:project.gtd.timebox.fill,init,end:0
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.open_gtd_timebox_tree
 #: model:ir.ui.menu,name:project_gtd.menu_open_gtd_time_timeboxes
 #: view:project.gtd.timebox:0
 msgid "Timeboxes"
-msgstr ""
+msgstr "Χρονικά πλαίσια"
 
 #. module: project_gtd
-#: field:project.gtd.context,name:0
+#: view:project.gtd.context:0 field:project.gtd.context,name:0
 #: field:project.task,context_id:0
-#: view:project.gtd.context:0
 msgid "Context"
-msgstr ""
+msgstr "Εννοιολογικό πλαίσιο"
 
 #. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.act_timebox_tasks_my_open
 msgid "My Open Tasks"
-msgstr ""
+msgstr "Οι ανοιχτές μου εργασίες"
 
 #. module: project_gtd
 #: view:project.task:0
@@ -232,16 +233,12 @@ msgid "Getting Things Done"
 msgstr ""
 
 #. module: project_gtd
-#: field:project.gtd.timebox,task1_ids:0
-#: field:project.gtd.timebox,task2_ids:0
-#: field:project.gtd.timebox,task3_ids:0
-#: field:project.gtd.timebox,task4_ids:0
-#: field:project.gtd.timebox,task5_ids:0
-#: field:project.gtd.timebox,task6_ids:0
-#: field:project.gtd.timebox,task_ids:0
-#: view:project.task:0
+#: field:project.gtd.timebox,task1_ids:0 field:project.gtd.timebox,task2_ids:0
+#: field:project.gtd.timebox,task3_ids:0 field:project.gtd.timebox,task4_ids:0
+#: field:project.gtd.timebox,task5_ids:0 field:project.gtd.timebox,task6_ids:0
+#: field:project.gtd.timebox,task_ids:0 view:project.task:0
 msgid "Tasks"
-msgstr ""
+msgstr "Εργασίες"
 
 #. module: project_gtd
 #: field:project.gtd.context,sequence:0
@@ -257,29 +254,29 @@ msgstr "Διαχείριση Χρόνου"
 #. module: project_gtd
 #: selection:project.gtd.timebox,type:0
 msgid "Other"
-msgstr ""
+msgstr "Άλλο"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,col_deadline:0
 msgid "Deadline"
-msgstr ""
+msgstr "Προθεσμία"
 
 #. module: project_gtd
 #: view:project.task:0
 msgid "Est. Hours"
-msgstr ""
+msgstr "Εκτιμώμενες ώρες"
 
 #. module: project_gtd
 #: wizard_field:project.gtd.timebox.fill,init,timebox_id:0
 msgid "Get from Timebox"
-msgstr ""
+msgstr "Λήψη από χρονικό πλαίσιο"
 
 #. module: project_gtd
 #: model:ir.actions.act_window,name:project_gtd.open_gtd_timebox_all
 #: model:ir.actions.act_window,name:project_gtd.open_gtd_timebox_tree_my
 #: model:ir.ui.menu,name:project_gtd.menu_open_gtd_time_my_timeboxes
 msgid "My Timeboxes"
-msgstr ""
+msgstr "Τα χρονικά μου πλαίσια"
 
 #. module: project_gtd
 #: field:project.gtd.timebox,child_ids:0
@@ -294,10 +291,24 @@ msgstr "Ημερομηνία Έναρξης"
 #. module: project_gtd
 #: field:project.gtd.timebox,col_planned_hours:0
 msgid "Planned Hours"
-msgstr ""
+msgstr "Προγραμματισμένες ώρες"
 
 #. module: project_gtd
 #: selection:project.gtd.timebox,type:0
 msgid "Weekly"
-msgstr ""
+msgstr "Εβδομαδιαία"
 
+#. module: project_gtd
+#: model:ir.module.module,shortdesc:project_gtd.module_meta_information
+msgid "Getting Things Done - Time Management Module"
+msgstr "Getting Things Done - Module Διαχείρισης Χρόνου"
+
+#. module: project_gtd
+#: model:ir.actions.act_window,name:project_gtd.act_timebox_tasks
+msgid "Timebox Tasks"
+msgstr "Εργασίες χρονικού πλαισίου"
+
+#. module: project_gtd
+#: field:project.gtd.timebox,child_ids:0
+msgid "Child Timeboxes"
+msgstr "Θυγατρικά χρονικά πλαίσια"
