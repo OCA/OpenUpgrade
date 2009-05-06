@@ -36,7 +36,6 @@ import pooler
 import tools
 from osv import osv, fields
 
-
 _earth_form =  '''<?xml version="1.0"?>
         <form string="Google Map/Earth" >
         <separator string="Enter Region(city/state/country)" colspan="4" />
@@ -47,27 +46,6 @@ _earth_form =  '''<?xml version="1.0"?>
 _earth_fields = {
             'region': {'string': 'Region', 'type': 'char','required': True,},
             }
-
-def geocode(address):
-    # This function queries the Google Maps API geocoder with an
-    # address. It gets back a csv file, which it then parses and
-    # returns a string with the longitude and latitude of the address.
-
-    # This isn't an actual maps key, you'll have to get one yourself.
-    # Sign up for one here: http://code.google.com/apis/maps/signup.html
-    mapsKey = 'abcdefgh'
-    mapsUrl = 'http://maps.google.com/maps/geo?q='
-
-    # This joins the parts of the URL together into one string.
-    url = ''.join([mapsUrl,urllib.quote(address),'&output=csv&key=',mapsKey])
-
-    # This retrieves the URL from Google.
-    coordinates = urllib.urlopen(url).read().split(',')
-
-    # This parses out the longitude and latitude, and then combines them into a string.
-    coorText = '%s,%s' % (coordinates[3],coordinates[2])
-    return coorText
-
 
 def create_kml(self, cr, uid, data, context={}):
     # This function creates an XML document and adds the necessary
@@ -113,62 +91,8 @@ def create_kml(self, cr, uid, data, context={}):
 
 
     for country in country_list:
-        print country
         cooridinate = dict_country[country]
-
-#        print cooridinate
-
         if country == 'TAIWAN':
-
-#    if address_with_country_ids:
-#        for id in address_with_country_ids:
-#            add = address_obj.browse(cr, uid, id, context)
-#            address = ' '
-#            if add.city:
-#                address += str(add.city)
-#            if add.state_id:
-#                address += ', '
-#                address += str(add.state_id.name)
-#            if add.country_id:
-#                address += ', '
-#                address += str(add.country_id.name)
-#            addresslist.append(address)
-#    elif address_with_state_ids:
-#        for id in address_with_state_ids:
-#            add = address_obj.browse(cr, uid, id, context)
-#            address = ' '
-#            if add.city:
-#                address += str(add.city)
-#            if add.state_id:
-#                address += ', '
-#                address += str(add.state_id.name)
-#            if add.country_id:
-#                address += ', '
-#                address += str(add.country_id.name)
-#            addresslist.append(address)
-#    elif address_with_city_ids:
-#        for id in address_with_city_ids:
-#            add = address_obj.browse(cr, uid, id, context)
-#            address = ' '
-#            if add.city:
-#                address += str(add.city)
-#            if add.state_id:
-#                address += ', '
-#                address += str(add.state_id.name)
-#            if add.country_id:
-#                address += ', '
-#                address += str(add.country_id.name)
-#            addresslist.append(address)
-#    else:
-#        raise wizard.except_wizard('Warning','Region has not defined')
-#        return {}
-
-#        for add in addresslist:
-#            coordinates.sort(coordinates.append(geocode(add)))
-#        for coordinate in coordinates:
-#            coordinates_text += coordinate + '\n\t'
-
-
     #    kml creation start
             kmlDoc = xml.dom.minidom.Document()
             kmlElement = kmlDoc.createElementNS('http://earth.google.com/kml/2.2','kml')
@@ -191,25 +115,10 @@ def create_kml(self, cr, uid, data, context={}):
             styleElement.setAttribute('id','transBluePoly')
 
             linestyleElement = kmlDoc.createElement('LineStyle')
-        #    colorElement = kmlDoc.createElement('color')
-        #    colorElement.appendChild(kmlDoc.createTextNode('80000000'))
-        #    linestyleElement.appendChild(colorElement)
-
-#            widthElement = kmlDoc.createElement('width')#today
-#            widthElement.appendChild(kmlDoc.createTextNode('1.5'))
             colorElement = kmlDoc.createElement('color')
             colorElement.appendChild(kmlDoc.createTextNode('cc000000'))
-#            linestyleElement.appendChild(widthElement)
             linestyleElement.appendChild(colorElement)
             styleElement.appendChild(linestyleElement)
-
-
-#
-#            <BalloonStyle><bgColor>ffffffff</bgColor><text><![CDATA[
-#            <b><font color="#CC0000" size="+2">$[name]</font></b>
-#            <br/><br/>$[description]<br/>
-#            ]]></text></BalloonStyle>
-
             ballonElement = kmlDoc.createElement('BalloonStyle')
             ballonbgElement = kmlDoc.createElement('bgColor')
             ballonbgElement.appendChild(kmlDoc.createTextNode('ffffffff'))
@@ -230,12 +139,6 @@ def create_kml(self, cr, uid, data, context={}):
             polystyleElement.appendChild(polycolorElement)
             polystyleElement.appendChild(polyfillElement)
             polystyleElement.appendChild(polyoutlineElement)
-        #    fillElement = kmlDoc.createElement('fill')
-        #    fillElement.appendChild(kmlDoc.createTextNode('1'))
-        #    polystyleElement.appendChild(fillElement)
-        #    outlineElement = kmlDoc.createElement('outline')
-        #    outlineElement.appendChild(kmlDoc.createTextNode('1'))
-        #    polystyleElement.appendChild(outlineElement)
             styleElement.appendChild(polystyleElement)
             documentElement.appendChild(styleElement)
 
@@ -263,18 +166,6 @@ def create_kml(self, cr, uid, data, context={}):
             placemarkElement.appendChild(placemarkdescElement)
             placemarkElement.appendChild(placemarkstyleElement)
 
-#            <Style><PolyStyle>
-#        <color>59009900</color>
-#        </PolyStyle></Style>
-
-        #    descriptionElement = kmlDoc.createElement('description')
-        #    desc = """<![CDATA[Terre Haute City Council<br>District 4<br>Councilman: Todd Nation<br>
-        #    website: <a href="http://www.toddnation.com">toddnation.com</a>]]>"""
-        #    cdataElement = kmlDoc.createElement('![CDATA[')
-        #    descriptionElement.appendChild(cdataElement)
-        #    descriptionText = kmlDoc.createTextNode(desc)
-        #    descriptionElement.appendChild(descriptionText)
-        #    placemarkElement.appendChild(descriptionElement)
             styleurlElement = kmlDoc.createElement('styleUrl')
             styleurlElement.appendChild(kmlDoc.createTextNode('#transBluePoly'))
             placemarkElement.appendChild(styleurlElement)
@@ -282,23 +173,10 @@ def create_kml(self, cr, uid, data, context={}):
             geometryElement = kmlDoc.createElement('MultiGeometry')
             polygonElement = kmlDoc.createElement('Polygon')
 
-#            extrudeElement = kmlDoc.createElement('extrude')
-#            extrudeElement.appendChild(kmlDoc.createTextNode('1'))
-#            polygonElement.appendChild(extrudeElement)
-
-#            altitudemodeElement = kmlDoc.createElement('altitudeMode')today
-#            altitudemodeElement.appendChild(kmlDoc.createTextNode('relativeToGround'))
-#            polygonElement.appendChild(altitudemodeElement)
-#
             outerboundaryisElement = kmlDoc.createElement('outerBoundaryIs')
             linearringElement = kmlDoc.createElement('LinearRing')
 
-        #    tessellateElement = kmlDoc.createElement('tessellate')
-        #    tessellateElement.appendChild(kmlDoc.createTextNode('1'))
-        #    linearringElement.appendChild(tessellateElement)
-
             coordinatesElemenent = kmlDoc.createElement('coordinates')
-        #    coordinatesElemenent.appendChild(kmlDoc.createTextNode(coordinates_text))
             coordinatesElemenent.appendChild(kmlDoc.createTextNode(cooridinate))
             linearringElement.appendChild(coordinatesElemenent)
 
@@ -309,7 +187,6 @@ def create_kml(self, cr, uid, data, context={}):
 
             folderElement.appendChild(placemarkElement)
             documentElement.appendChild(folderElement)
-#            documentElement.appendChild(placemarkElement) today
 
     # This writes the KML Document to a file.
     kmlFile = open(fileName, 'w')
