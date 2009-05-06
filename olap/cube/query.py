@@ -148,6 +148,7 @@ class query(object):
                     if s.has_key('format'):
                         # To make use of the format string if specified for the measure
                         # Its set to static for a testing
+                        print " This the the r[0]"
                         if not currency:
                             currency = "EUR"
                         if isinstance(r[0],float) or isinstance(r[0],int) or isinstance(r[0],long):
@@ -156,11 +157,10 @@ class query(object):
                         else:
                             r[0] = '0.0'
                             a = {'data':0.0}
-                            
                         if s['format'] == 'cr_prefix':
-                            r[0] = currency + " "  + str(r[0])
+                            r[0] = currency + " "  + "%.2f"%a['data']
                         elif s['format'] == 'cr_postfix':
-                            r[0] = str(r[0]) + " " + currency
+                            r[0] = "%.2f"%a['data'] + " " + currency
                         elif s['format'] == 'comma_sep':
                             r[0] = locale.format("%(data).2f", a, 1)
                         elif s['format'] == 'cr_prefix_comma':

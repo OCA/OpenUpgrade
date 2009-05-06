@@ -40,8 +40,10 @@
     "demo_xml" : [
     ],
     "update_xml" : [
+        "account_sequence.xml",
        "account_report.xml",
-       "account_wizard.xml"
+       "account_wizard.xml",
+       "account_invoice_view.xml"
     ],
     "active": False,
     "installable": True
