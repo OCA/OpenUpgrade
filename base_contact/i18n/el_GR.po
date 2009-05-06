@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* base_contact
+# 	* base_contact
 #
 msgid ""
 msgstr ""
@@ -22,17 +22,20 @@ msgstr ""
 
 #. module: base_contact
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
+"Το όνομα αντικειμένου πρέπει να αρχίζει με x_ και να μην περιέχει ειδικούς "
+"χαρακτήρες!"
 
 #. module: base_contact
 #: model:ir.actions.act_window,name:base_contact.action_partner_contact_form
-#: field:res.partner.address,job_ids:0
 #: model:ir.ui.menu,name:base_contact.menu_partner_contact_form
-#: view:res.partner.address:0
-#: view:res.partner:0
+#: model:process.node,name:base_contact.process_node_contacts0
+#: view:res.partner:0 view:res.partner.address:0
+#: field:res.partner.address,job_ids:0
 msgid "Contacts"
-msgstr ""
+msgstr "Επαφές"
 
 #. module: base_contact
 #: field:res.partner.job,sequence_partner:0
@@ -42,12 +45,12 @@ msgstr ""
 #. module: base_contact
 #: selection:res.partner.job,state:0
 msgid "Current"
-msgstr ""
+msgstr "Τρέχον"
 
 #. module: base_contact
 #: field:res.partner.contact,first_name:0
 msgid "First Name"
-msgstr ""
+msgstr "Όνομα"
 
 #. module: base_contact
 #: field:res.partner.job,state:0
@@ -57,32 +60,32 @@ msgstr ""
 #. module: base_contact
 #: view:res.partner.address:0
 msgid "# of Contacts"
-msgstr ""
+msgstr "# επαφών"
 
 #. module: base_contact
 #: field:res.partner.contact,website:0
 msgid "Website"
-msgstr ""
+msgstr "Ιστοσελίδα"
 
 #. module: base_contact
 #: field:res.partner.contact,function_id:0
 msgid "Main Job"
-msgstr ""
+msgstr "Κύρια εργασία"
 
 #. module: base_contact
 #: field:res.partner.job,phone:0
 msgid "Phone"
-msgstr ""
+msgstr "Τηλέφωνο"
 
 #. module: base_contact
 #: field:res.partner.contact,title:0
 msgid "Title"
-msgstr ""
+msgstr "Τίτλος"
 
 #. module: base_contact
 #: view:res.partner.job:0
 msgid "Contact Functions"
-msgstr ""
+msgstr "Καθήκοντα επαφής"
 
 #. module: base_contact
 #: field:res.partner.job,sequence_contact:0
@@ -92,18 +95,17 @@ msgstr ""
 #. module: base_contact
 #: field:res.partner.job,email:0
 msgid "E-Mail"
-msgstr ""
+msgstr "E-Mail"
 
 #. module: base_contact
 #: field:res.partner.job,date_stop:0
 msgid "Date Stop"
-msgstr ""
+msgstr "Τελική ημερομηνία"
 
 #. module: base_contact
-#: field:res.partner.job,address_id:0
-#: view:res.partner:0
+#: view:res.partner:0 field:res.partner.job,address_id:0
 msgid "Address"
-msgstr ""
+msgstr "Διεύθυνση"
 
 #. module: base_contact
 #: field:res.partner.contact,active:0
@@ -113,32 +115,32 @@ msgstr "Ενεργός"
 #. module: base_contact
 #: field:res.partner.contact,country_id:0
 msgid "Nationality"
-msgstr ""
+msgstr "Εθνικότητα"
 
 #. module: base_contact
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Άκυρο XML για αρχιτεκτονική προβολής!"
 
 #. module: base_contact
 #: view:res.partner.contact:0
 msgid "Seq."
-msgstr ""
+msgstr "Ακολ."
 
 #. module: base_contact
 #: field:res.partner.contact,lang_id:0
 msgid "Language"
-msgstr ""
+msgstr "Γλώσσα"
 
 #. module: base_contact
 #: field:res.partner.contact,mobile:0
 msgid "Mobile"
-msgstr ""
+msgstr "Κινητό"
 
 #. module: base_contact
 #: view:res.partner.contact:0
 msgid "Extra Information"
-msgstr ""
+msgstr "Επιπλέον πληροφορίες"
 
 #. module: base_contact
 #: field:res.partner.job,function_id:0
@@ -146,21 +148,22 @@ msgid "Job Title"
 msgstr ""
 
 #. module: base_contact
-#: field:res.partner.contact,job_ids:0
-#: view:res.partner.contact:0
+#: view:res.partner.contact:0 field:res.partner.contact,job_ids:0
 msgid "Functions and Addresses"
-msgstr ""
+msgstr "Καθήκοντα και διευθύνσεις"
 
 #. module: base_contact
 #: help:res.partner.job,sequence_partner:0
-msgid "order of importance of this job title in the list of job title of the linked partner"
+msgid ""
+"order of importance of this job title in the list of job title of the linked "
+"partner"
 msgstr ""
 
 #. module: base_contact
 #: model:ir.actions.act_window,name:base_contact.action_res_partner_job
 #: model:ir.ui.menu,name:base_contact.menu_action_res_partner_job
 msgid "Contact's Jobs"
-msgstr ""
+msgstr "Εργασίες επαφής"
 
 #. module: base_contact
 #: field:res.partner.job,contact_id:0
@@ -175,22 +178,25 @@ msgstr ""
 #. module: base_contact
 #: field:res.partner.contact,partner_id:0
 msgid "Main Employer"
-msgstr ""
+msgstr "Κύριος εργοδότης"
 
 #. module: base_contact
 #: help:res.partner.job,sequence_contact:0
-msgid "order of importance of this address in the list of addresses of the linked contact"
+msgid ""
+"order of importance of this address in the list of addresses of the linked "
+"contact"
 msgstr ""
 
 #. module: base_contact
+#: model:process.node,name:base_contact.process_node_addresses0
 #: view:res.partner:0
 msgid "Addresses"
-msgstr ""
+msgstr "Διευθύνσεις"
 
 #. module: base_contact
 #: view:res.partner.contact:0
 msgid "Partner Contact"
-msgstr ""
+msgstr "Επαφή συνέταιρου"
 
 #. module: base_contact
 #: field:res.partner.contact,name:0
@@ -198,20 +204,19 @@ msgid "Last Name"
 msgstr "Επώνυμο"
 
 #. module: base_contact
-#: view:res.partner.contact:0
-#: view:res.partner.job:0
+#: view:res.partner.contact:0 view:res.partner.job:0
 msgid "General"
-msgstr ""
+msgstr "Γενικός"
 
 #. module: base_contact
 #: selection:res.partner.job,state:0
 msgid "Past"
-msgstr ""
+msgstr "Παλαιός"
 
 #. module: base_contact
 #: view:res.partner.contact:0
 msgid "General Information"
-msgstr ""
+msgstr "Γενικές πληροφορίες"
 
 #. module: base_contact
 #: field:res.partner.job,name:0
@@ -221,10 +226,127 @@ msgstr "Συνέταιρος"
 #. module: base_contact
 #: field:res.partner.job,date_start:0
 msgid "Date Start"
-msgstr ""
+msgstr "Αρχική ημερομηνία"
 
 #. module: base_contact
 #: field:res.partner.contact,birthdate:0
 msgid "Birth Date"
-msgstr ""
+msgstr "Ημερομηνία γέννησης"
 
+#. module: base_contact
+#: field:res.partner.job,sequence_contact:0
+msgid "Contact Seq."
+msgstr "Ακολ. επαφών"
+
+#. module: base_contact
+#: field:res.partner.job,sequence_partner:0
+msgid "Partner Seq."
+msgstr "Ακολ. συνεταίρων"
+
+#. module: base_contact
+#: model:ir.model,name:base_contact.model_res_partner_job
+msgid "Contact Partner Function"
+msgstr "Καθήκοντα συνέταιρου επαφής"
+
+#. module: base_contact
+#: model:process.transition,name:base_contact.process_transition_contacttofunction0
+msgid "Contact to function"
+msgstr "Επαφή σε καθήκοντα"
+
+#. module: base_contact
+#: field:res.partner.job,function_id:0
+msgid "Partner Function"
+msgstr "Καθήκοντα συνέταιρου"
+
+#. module: base_contact
+#: model:process.transition,name:base_contact.process_transition_partnertoaddress0
+msgid "Partner to address"
+msgstr "Συνέταιρος σε διεύθυνση"
+
+#. module: base_contact
+#: model:process.node,name:base_contact.process_node_function0
+msgid "Function"
+msgstr "Καθήκοντα"
+
+#. module: base_contact
+#: model:process.transition,note:base_contact.process_transition_contacttofunction0
+msgid "Defines contacts and functions."
+msgstr "Ορίζει επαφές και καθήκοντα."
+
+#. module: base_contact
+#: model:ir.module.module,shortdesc:base_contact.module_meta_information
+msgid "Base Contact"
+msgstr "Βασική επαφή"
+
+#. module: base_contact
+#: help:res.partner.job,sequence_partner:0
+msgid ""
+"Order of importance of this job title in the list of job title of the linked "
+"partner"
+msgstr ""
+"Σειρά σπουδαιότητας αυτού του τίτλου εργασίας στη λίστα τίτλων εργασίας του "
+"συνδεδεμένου συνέταιρου"
+
+#. module: base_contact
+#: help:res.partner.job,sequence_contact:0
+msgid ""
+"Order of importance of this address in the list of addresses of the linked "
+"contact"
+msgstr ""
+"Σειρά σπουδαιότητας αυτής της διεύθυνσης στη λίστα διευθύνσεων της "
+"συνδεδεμένης επαφής"
+
+#. module: base_contact
+#: view:res.partner:0
+msgid "Categories"
+msgstr "Κατηγορίες"
+
+#. module: base_contact
+#: model:process.transition,note:base_contact.process_transition_partnertoaddress0
+msgid "Define partners and their addresses."
+msgstr "Ορισμός συνεργατών και των διευθύνσεών τους."
+
+#. module: base_contact
+#: model:process.process,name:base_contact.process_process_basecontactprocess0
+msgid "Base Contact Process"
+msgstr "Επεξεργασία βασικής επαφής"
+
+#. module: base_contact
+#: model:process.node,note:base_contact.process_node_contacts0
+msgid "People you work with."
+msgstr "Άτομα με τα οποία συνεργάζεστε."
+
+#. module: base_contact
+#: model:process.node,note:base_contact.process_node_partners0
+msgid "Companies you work with."
+msgstr "Εταιρίες με τις οποίες συνεργάζεστε."
+
+#. module: base_contact
+#: model:process.transition,name:base_contact.process_transition_functiontoaddress0
+msgid "Function to address"
+msgstr "Καθήκοντα σε διεύθυνση"
+
+#. module: base_contact
+#: model:ir.actions.act_window,name:base_contact.act_res_partner_jobs
+msgid "Partner Contacts"
+msgstr "Επαφές συνεταίρων"
+
+#. module: base_contact
+#: model:process.node,name:base_contact.process_node_partners0
+msgid "Partners"
+msgstr "Συνεργάτες"
+
+#. module: base_contact
+#: model:process.node,note:base_contact.process_node_addresses0
+msgid "Working and private addresses."
+msgstr "Διευθύνσεις εργασίας και οικίας."
+
+#. module: base_contact
+#: model:process.node,note:base_contact.process_node_function0
+msgid "Jobs at a same partner address."
+msgstr "Εργασίες στην ίδια διεύθυνση συνέταιρου."
+
+#. module: base_contact
+#: model:process.transition,note:base_contact.process_transition_functiontoaddress0
+msgid "Define functions and address."
+msgstr "Ορισμός καθηκόντων και διεύθυνσης."
