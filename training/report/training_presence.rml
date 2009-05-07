@@ -1,0 +1,218 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="34.0" y1="28.0" width="530" height="786"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#808080" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#808080" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#808080" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#808080" start="0,0" stop="-1,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#c0c0c0" start="0,0" stop="0,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#c0c0c0" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#c0c0c0" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#c0c0c0" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#c0c0c0" start="1,0" stop="1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#c0c0c0" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="#c0c0c0" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#c0c0c0" start="0,1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#c0c0c0" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#c0c0c0" start="1,1" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#c0c0c0" start="1,1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#c0c0c0" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#c0c0c0" start="0,2" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#c0c0c0" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBEFORE" colorName="#c0c0c0" start="1,2" stop="1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#c0c0c0" start="1,2" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#c0c0c0" start="1,-1" stop="1,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBEFORE" colorName="#c0c0c0" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#c0c0c0" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="LINEAFTER" colorName="#c0c0c0" start="0,0" stop="-1,-1"/>
+      <lineStyle kind="LINEABOVE" colorName="#c0c0c0" start="0,0" stop="-1,-1"/>
+    </blockTableStyle>
+     <blockTableStyle id="Table41">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="TableInsideLine">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,0" stop="-1,-1"/>
+    </blockTableStyle>
+
+
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="8.0" leading="10"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="P3" fontName="Times-Roman" alignment="CENTER"/>
+    <paraStyle name="P4" fontName="Times-Roman" alignment="LEFT"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P6" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="6.0" leading="8" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P7" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P8" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P10" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Helvetica-Oblique" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_header" fontName="Helvetica-Bold" fontSize="12.0" leading="15" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Right_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_9" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Centre_8" rightIndent="0.0" leftIndent="0.0" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_tblheader_General" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_General_Centre" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+  </stylesheet>
+  <images/>
+  <story>
+    <para style="P1">[[repeatIn(objects,'seance')]]</para>
+    <para style="terp_default_Right_8">Date:[[ formatLang(time.strftime('%Y-%m-%d'),date=True) ]]
+    </para>
+    <para style="terp_header">Presence List</para>
+    <blockTable colWidths="200.0,230.0,100.0" style="Table4">
+      <tr>
+        <td>
+            <para style="terp_tblheader_General">Training</para>
+        </td>
+        <td>
+          <para style="terp_tblheader_General">Seance</para>
+        </td>
+        <td>
+          <para style="terp_tblheader_General">Schedule</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="terp_default_8">[[ seance.course_id.name ]]</para>
+        </td>
+        <td>
+          <para style="terp_default_8">[[ seance.name ]]</para>
+        </td>
+        <td>
+          <para style="terp_default_8">[[ seance.date ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="terp_tblheader_General">Location</para>
+        </td>
+        <td>
+          <para style="terp_tblheader_General">Room</para>
+        </td>
+        <td>
+          <para style="terp_tblheader_General"># Participants</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="terp_default_8">[[ seance.event_id.location ]]</para>
+        </td>
+        <td>
+          <para style="terp_default_8">[[ seance.room ]]</para>
+        </td>
+        <td>
+          <para style="terp_default_8">[[ seance.participant_count ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P8">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="530.0" style="Table41">
+        <tr>
+            <td>
+                <para style="terp_tblheader_General">Instructor(s)</para>
+            </td>
+        </tr>
+	</blockTable>
+	<blockTable colWidths="530.0" style="TableInsideLine">
+        <tr>
+            <td>
+                <para style="P6">[[repeatIn(seance.course_id.lecturer_ids,'lect')]]</para>
+                <para style="terp_default_8">[[ lect.name ]] [[ lect.first_name ]]</para>
+            </td>
+        </tr>
+    </blockTable>
+    <para style="P3">
+      <font color="white"> </font>
+    </para>
+
+    <blockTable colWidths="227.0,227.0,75.0" style="Table41">
+        <tr>
+            <td>
+                <para style="terp_tblheader_General">Participant</para>
+            </td>
+            <td>
+                <para style="terp_tblheader_General">Partner</para>
+            </td>
+            <td>
+                <para style="terp_tblheader_General">Attendance</para>
+            </td>
+        </tr>
+    </blockTable>
+    <section>
+        <para style="terp_default_8">[[repeatIn(seance.participant_ids,'participant_ids')]]</para>
+        <blockTable colWidths="227.0,227.0,75.0" style="TableInsideLine">
+            <tr>
+                <td>
+                    <para style="terp_default_8">
+                        [[ participant_ids.contact_id.title or '']]
+                        [[ participant_ids.contact_id.name or '' ]]
+                        [[ participant_ids.contact_id.first_name or '']]
+                    </para>
+                </td>
+                <td>
+                    <para style="terp_default_8">[[ participant_ids.partner_id.name ]]</para>
+                </td>
+                <td>5
+                    <para style="terp_default_8">
+                       [[present(participant_ids.id)]]
+                    </para>
+                </td>
+            </tr>
+        </blockTable>
+    </section>
+    <para style="P4">
+      <font color="white"> </font>
+    </para>
+    <para style="P4">
+      <font color="white"> </font>
+    </para>
+    <para style="terp_default_8">The attendance record and evaluation forms are completed</para>
+  </story>
+</document>

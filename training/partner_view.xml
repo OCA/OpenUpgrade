@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="res_partner_contact_technical_skill_tree">
+            <field name="name">res.partner.contact.technical.skill.tree</field>
+            <field name="model">res.partner.contact_technical_skill</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Technical Skill">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="res_partner_contact_technical_skill_form">
+            <field name="name">res.partner.contact.technical.skill.form</field>
+            <field name="model">res.partner.contact_technical_skill</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Technical Skill">
+                    <field name="name" />
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="res_partner_contact_technical_skill_all_act">
+            <field name="name">Technical Skills</field>
+            <field name="res_model">res.partner.contact_technical_skill</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="partner_config_contact" parent="base.menu_base_config" name="Contacts" />
+        <menuitem id="partner_config_contact_technical_skill_all" parent="partner_config_contact" action="res_partner_contact_technical_skill_all_act" />
+
+        <record model="ir.ui.view" id="res_partner_team_form_inherited">
+            <field name="name">res.partner.team.form.inherited</field>
+            <field name="model">res.partner.team</field>
+            <field name="inherit_id" ref="base_contact_team.res_partner_team_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="specialisation_id" />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_partner_view_form_inherited">
+            <field name="name">res.partner.view.form.inherited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Training">
+                        <separator string="Notification" colspan="4" />
+                        <field name="notif_contact_id" />
+                        <field name="notif_participant" />
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <act_window name="Subscriptions" id="res_partner_subscription_act" 
+            res_model="training.subscription"
+            src_model="res.partner"
+            domain="[('partner_id', '=', active_id)]" />
+    </data>
+</openerp>

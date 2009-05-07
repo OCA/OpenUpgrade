@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_support_delivery_form">
+            <field name="name">view.dummy.support.delivery.form</field>
+            <field name="model">dummy.support.delivery</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Support Delivery">
+                    <field name="name" />
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_support_delivery_all">
+            <field name="name">Support Deliveries</field>
+            <field name="res_model">dummy.support.delivery</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Dummy" id="dummy_mi" sequence="100" />
+        <menuitem id="support_delivery_mi" parent="dummy_mi" action="action_support_delivery_all" />
+    </data>
+</openerp>

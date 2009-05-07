@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="workflow" id="workflow_questionnaire">
+            <field name="name">workflow.training.questionnaire</field>
+            <field name="osv">training.questionnaire</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_questionnaire_draft">
+            <field name="wkf_id" ref="workflow_questionnaire" />
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'draft'})</field>
+            <field name="flow_start">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_questionnaire_pending">
+            <field name="wkf_id" ref="workflow_questionnaire" />
+            <field name="name">pending</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'pending'})</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_questionnaire_inprogress">
+            <field name="wkf_id" ref="workflow_questionnaire" />
+            <field name="name">inprogress</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'inprogress'})</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_questionnaire_validated">
+            <field name="wkf_id" ref="workflow_questionnaire" />
+            <field name="name">validated</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'validated'})</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_questionnaire_deprecated">
+            <field name="wkf_id" ref="workflow_questionnaire" />
+            <field name="name">deprecated</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'deprecated'})</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_questionnaire_pending">
+            <field name="act_from" ref="activity_questionnaire_draft" />
+            <field name="act_to" ref="activity_questionnaire_pending" />
+            <field name="signal">signal_pending</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_questionnaire_validated_to_pending">
+            <field name="act_from" ref="activity_questionnaire_validated" />
+            <field name="act_to" ref="activity_questionnaire_pending" />
+            <field name="signal">signal_pending</field>
+        </record>
+
+        <record model="workflow.transition"
+            id="transition_questionnaire_deprecated_to_pending">
+            <field name="act_from" ref="activity_questionnaire_deprecated" />
+            <field name="act_to" ref="activity_questionnaire_pending" />
+            <field name="signal">signal_pending</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_questionnaire_inprogress_to_pending">
+            <field name="act_from" ref="activity_questionnaire_inprogress" />
+            <field name="act_to" ref="activity_questionnaire_pending" />
+            <field name="signal">signal_pending</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_questionnaire_inprogress">
+            <field name="act_from" ref="activity_questionnaire_pending" />
+            <field name="act_to" ref="activity_questionnaire_inprogress" />
+            <field name="signal">signal_inprogress</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_questionnaire_deprecated">
+            <field name="act_from" ref="activity_questionnaire_inprogress" />
+            <field name="act_to" ref="activity_questionnaire_deprecated" />
+            <field name="signal">signal_deprecate</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_questionnaire_validate">
+            <field name="act_from" ref="activity_questionnaire_inprogress" />
+            <field name="act_to" ref="activity_questionnaire_validated" />
+            <field name="signal">signal_validate</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_questionnaire_draft">
+            <field name="act_from" ref="activity_questionnaire_deprecated" />
+            <field name="act_to" ref="activity_questionnaire_draft" />
+            <field name="signal">signal_draft</field>
+        </record>
+    </data>
+</openerp>
+
