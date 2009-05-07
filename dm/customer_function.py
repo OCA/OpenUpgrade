@@ -14,12 +14,13 @@ def customer_function(cr,uid,ids,**args):
     res = pool.get('res.partner.address').read(cr,uid,ids)[0]
     if model_name == 'res.partner' :
         if res['partner_id']:
-            res = model_object.read(cr,uid,res['partner_id'])[0]
+            res = model_object.read(cr,uid,res['partner_id'][0])
     elif model_name in ['res.partner.contact','res.partner.job'] :
-        id = res['job_id']
-        if model_name == 'res.partner.contact' : 
-            id = pool.get('res.partner.job').read(cr,uid,id)[0]['contact_id']
-        res = model_object.read(cr,uid,id)[0]
+        if res['job_id']:
+            id = res['job_id']
+            if model_name == 'res.partner.contact' : 
+                id = pool.get('res.partner.job').read(cr,uid,id[0])['contact_id']
+            res = model_object.read(cr,uid,id[0])
     if args['field_type'] == 'selection':
         if res[args['field_name']]:
             if args['field_name'] == 'lang':
