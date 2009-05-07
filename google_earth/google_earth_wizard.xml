@@ -19,10 +19,17 @@
 			keyword="client_action_multi"
 			menu="False"
 			/>
-
+	 	<wizard
+		   string="Find route"
+		   name="find.route"
+		   id="wizard_find_route"
+		   keyword="client_action_multi"
+		   menu="False"
+		   />
 		<menuitem id="google_earth" name="Google Map/Earth" parent="base.menu_base_partner"/>
 		<menuitem name="Customer on Map with Turnover" id="menu_google_earth" parent="google_earth" action="wizard_customer_on_map" type="wizard"/>
 		<menuitem name="Layers of Category of Regions" id="menu_layers_of_region_category" parent="google_earth" action="wizard_layers_basedon_region_category" type="wizard"/>
+		<menuitem name="Find route" id="menu_find_route" parent="google_earth" action="wizard_find_route" type="wizard"/>
 
 	</data>
 </openerp>
