@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
 	<data>
+		<report id="report_account_invoice"
+				string="Invoice - Exice"
+				model="account.invoice"
+				name="tax.retail.account.invoice"
+				rml="account_invoice_india/report/invoice.rml"
+				auto="False"
+				header = "False"
+				menu="True"/>
+
 	    <menuitem 
 	        parent="account.menu_finance_legal_statement" 
 	        id="indian_accounting_reports2"
@@ -75,6 +84,6 @@
 			type="wizard"
 			icon="STOCK_PRINT"
 			id="menu_partner_new_balance"/>
-			
+	
 	</data>
 </openerp>
