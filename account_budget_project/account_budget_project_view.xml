@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_account_analytic_account_form_inherit">
+            <field name="name">account.analytic.account.form.inherit</field>
+            <field name="type">form</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="account.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='Budget Lines']" position="replace">
+                    <page string="Budget Lines">
+                        <field name="crossovered_budget_line" widget="one2many_list" colspan="4" 
+                            nolabel="1" mode="tree,form,graph"
+                            context="{'default_date_from':date_from, 'default_date_to':date_to}">
+                            <tree string="Budget Lines" editable="top">
+                                <field name="crossovered_budget_id"/>
+                                <!-- TODO Add the onchange event on the product and the quantity -->
+                                <field name="product_id" onchange="on_change_product_id(product_id)"/>
+                                <field name="general_budget_id"/>
+                                <field name="product_qty" onchange="on_change_product_qty(product_qty)"/>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                                <field name="planned_amount"/>
+                            </tree>
+                            <form string="Budget Lines">
+                                <field name="crossovered_budget_id"/>
+                                <!-- TODO Add the onchange event on the product and the quantity -->
+                                <field name="product_id" onchange="on_change_product_id(product_id)" />
+                                <field name="general_budget_id"/>
+                                <field name="product_qty" onchange="on_change_product_qty(product_qty)" />
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                                <field name="planned_amount"/>
+                            </form>
+                            <graph type="bar" string="Lines">
+                                <field name="general_budget_id" />
+                                <field name="planned_amount" operator="+"/>
+                                <field group="True" name="analytic_account_id"/>
+                            </graph>
+                        </field>
+                        <field name="costs" />
+                        <field name="revenues" />
+                        <field name="profit" />
+                        <field name="profit_margin" />
+                        <field name="profitability" />
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
+
+

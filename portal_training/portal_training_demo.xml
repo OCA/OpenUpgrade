@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="res_users_vb0" model="res.users">
+            <field model="ir.actions.actions" name="menu_id" search="[('name','=','Portal Supplier Menu')]"/>
+            <field eval="[(6,0,[ref('portal_training.res_groups_portal_supplier')])]" name="groups_id"/>
+            <field name="address_id" ref="base.main_address"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field name="password">supplier</field>
+            <field name="name">Supplier Portal</field>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="login">supplier</field>
+            <field model="ir.actions.actions" name="action_id" search="[('name','=','Portal Supplier Menu')]"/>
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="res_users_partner0" model="res.users">
+            <field model="ir.actions.actions" name="menu_id" search="[('name','=','Portal Partner Menu')]"/>
+            <field eval="[(6,0,[ref('portal_training.res_groups_portal_partner')])]" name="groups_id"/>
+            <field name="address_id" ref="base.main_address"/>
+            <field eval="[(6,0,[])]" name="roles_id"/>
+            <field eval="1" name="active"/>
+            <field name="password">partner</field>
+            <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="context_lang"/>
+            <field name="name">Partner Portal</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="login">partner</field>
+            <field model="ir.actions.actions" name="action_id" search="[('name','=','Portal Partner Menu')]"/>
+        </record>
+    </data>
+</openerp>

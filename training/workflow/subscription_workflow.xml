@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="workflow" id="workflow_subscription">
+            <field name="name">workflow.training.subscription</field>
+            <field name="osv">training.subscription</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_subscription_draft">
+            <field name="wkf_id" ref="workflow_subscription" />
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'draft'})</field>
+            <field name="flow_start">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_subscription_confirm">
+            <field name="wkf_id" ref="workflow_subscription" />
+            <field name="name">confirmed</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'confirmed'})</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_subscription_cancel">
+            <field name="wkf_id" ref="workflow_subscription" />
+            <field name="name">cancelled</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'cancelled'})</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_subscription_done">
+            <field name="wkf_id" ref="workflow_subscription" />
+            <field name="name">done</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'done'})</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_subscription_cancel_invoice">
+            <field name="wkf_id" ref="workflow_subscription" />
+            <field name="name">cancelled_and_invoiced</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'cancelled'})</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_subscription_confirm">
+            <field name="act_from" ref="activity_subscription_draft" />
+            <field name="act_to" ref="activity_subscription_confirm" />
+            <field name="role_id" ref="role_subscription_manager" />
+            <field name="signal">signal_confirm</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_subscription_cancel">
+            <field name="act_from" ref="activity_subscription_draft" />
+            <field name="act_to" ref="activity_subscription_cancel" />
+            <field name="signal">signal_cancel</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_subscription_confirm_to_cancel">
+            <field name="act_from" ref="activity_subscription_confirm" />
+            <field name="act_to" ref="activity_subscription_cancel" />
+            <field name="signal">signal_cancel</field>
+        </record>
+
+        <record model="workflow.transition"
+            id="transition_subscription_confirm_to_cancel_and_invoice">
+            <field name="act_from" ref="activity_subscription_confirm" />
+            <field name="act_to" ref="activity_subscription_cancel_invoice" />
+            <field name="signal">signal_confirm_to_cancel_with_invoice</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_subscription_done">
+            <field name="act_from" ref="activity_subscription_confirm" />
+            <field name="act_to" ref="activity_subscription_done" />
+            <field name="signal">signal_done</field>
+        </record>
+    </data>
+</openerp>
+
