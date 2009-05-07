@@ -189,7 +189,7 @@ def create_kml(self, cr, uid, data, context={}):
 
     polystyleElement = kmlDoc.createElement('PolyStyle')
     polycolorElement = kmlDoc.createElement('color')
-    polycolorElement.appendChild(kmlDoc.createTextNode('FF0000'))
+    polycolorElement.appendChild(kmlDoc.createTextNode('59009900'))
     polyfillElement = kmlDoc.createElement('fill')
     polyfillElement.appendChild(kmlDoc.createTextNode('1'))
     polyoutlineElement = kmlDoc.createElement('outline')
