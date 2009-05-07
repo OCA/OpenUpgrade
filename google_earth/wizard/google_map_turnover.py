@@ -57,6 +57,7 @@ def geocode(address):
 
 
 def create_kml(self, cr, uid, data, context={}):
+    # This wizard will be remove in future because it wll be merge with layer wizard
     # This function creates an XML document and adds the necessary
     # KML elements.
     pool = pooler.get_pool(cr.dbname)
