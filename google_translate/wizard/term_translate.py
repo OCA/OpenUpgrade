@@ -29,7 +29,7 @@ import re
 trans_form = '''<?xml version="1.0"?>
     <form string="Translation" colspan="4">
          <newline/>
-         <label string="Translate Terms of tiny using google" align="0.0" colspan="3"/>
+         <label string="This wizard will translate terms in source using google for given language" align="0.0" colspan="3"/>
          <newline/>
      </form> '''
 trans_fields = { }
