@@ -3,7 +3,20 @@
 	<data>
 		<!-- should be check! -->
 
-
+	<record id="etl_transform_sort_form" model="ir.ui.view">
+			<field name="name">etl.component.sort.form</field>
+			<field name="model">etl.component</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="etl_component_form"/>
+			<field name="arch" type="xml">
+             	<notebook position='inside'>
+           			<page string="Other Information" attrs="{'invisible':[('type_id','!=','transform.sort')]}">
+						<field name="field_to_sort" />
+						</page>
+				</notebook>
+			</field>
+		</record>
+		
 		<record id="action_etl_component_sort_tree"
 			model="ir.actions.act_window">
 			<field name="name">Sort component</field>
