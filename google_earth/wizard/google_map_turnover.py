@@ -29,7 +29,7 @@ import tools
 
 _earth_form =  '''<?xml version="1.0"?>
         <form string="Google Map/Earth">
-        <label string="kml file created in ../google_earth/kml/partner.kml"/>
+        <label string="kml file created in ../google_earth/kml/partner.kml , You can upload on google map online"/>
         </form> '''
 
 _earth_fields = {
