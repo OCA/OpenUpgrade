@@ -21,24 +21,24 @@
 ##############################################################################
 
 {
-    'name' : 'Portal Training',
+    'name' : 'Training Portal',
     'version' : '0.0.1',
     'author' : 'Tiny SPRL',
     'website' : 'http://www.openerp.com',
-    'description' : 'Supplier Portal',
+    'description' : 'Training Portals',
     'depends' : [
         'portal',
         'board',
         'training',
     ],
     'init_xml' : [
-        'portal_ifbl_data.xml',
+        'portal_training_data.xml',
     ],
     'demo_xml' : [
-        'portal_ifbl_demo.xml',
+        'portal_training_demo.xml',
     ],
     'update_xml' : [
-        'portal_ifbl_view.xml',
+        'portal_training_view.xml',
     ],
     'active' : False,
     'installable' : True,

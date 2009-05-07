@@ -70,7 +70,6 @@ class training_course_category(osv.osv):
 training_course_category()
 
 class res_partner_team(osv.osv):
-    # Extend the res.partner.team with a specialisation, this specialisation is proper to the IFBL
     _inherit = 'res.partner.team'
     _columns = {
         'specialisation_id' : fields.many2one('training.course_category', 'Specialisation',

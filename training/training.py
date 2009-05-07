@@ -207,6 +207,7 @@ class training_course(osv.osv):
                                                       'cpl_course_id',
                                                       'Complementary Courses'),
         'has_support' : fields.function(_has_support, method=True, type="boolean", string="Has Support"),
+        'display_name' : fields.char('Display Name', size=38, help='Allows to show a short name for this course'),
     }
 
     _defaults = {

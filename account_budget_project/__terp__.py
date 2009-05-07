@@ -21,13 +21,11 @@
 ##############################################################################
 
 {
-    'name' : 'IFBL Budget',
+    'name' : 'Account Budget Project',
     'version' : '0.0.1',
     'author' : 'Tiny SPRL',
     'website' : 'http://www.openerp.com',
-    'description' : """
-    This module overrides the budget lines for the IFBL project
-""",
+    'description' : """ This module overrides the budget lines in the Analytic Account """,
     'depends' : [
         'account_budget',
     ],
@@ -35,7 +33,7 @@
     'demo_xml' : [
     ],
     'update_xml' : [
-        'ifbl_budget_view.xml',
+        'account_budget_project_view.xml',
     ],
     'active' : False,
     'installable' : True,

@@ -22,7 +22,7 @@
 
 from osv import osv, fields
 
-class document_ifbl(osv.osv):
+class ir_attachment(osv.osv):
     _inherit = 'ir.attachment'
 
     _columns = {
@@ -54,6 +54,6 @@ class document_ifbl(osv.osv):
         for obj in cr.fetchall():
             ima.check(cr, uid, obj[0], mode)
 
-document_ifbl()
+ir_attachment()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

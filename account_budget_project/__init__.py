@@ -19,6 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import ifbl_budget
+import account_budget_project
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
