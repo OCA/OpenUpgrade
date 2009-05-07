@@ -130,26 +130,53 @@ training_questionnaire()
 
 class training_planned_exam(osv.osv):
     _name = 'training.planned_exam'
-    _description = 'Planned exam'
-    _inherits = { 'training.event' : 'event_id' }
+    _description = 'Planned Exam'
     _columns = {
-        # Ajouter le contact en plus du partenaire en many2many
-        #'partner_id' : fields.many2one('res.partner',
-        #                               'Partner',
-        #                               domain=[('is_guardian', '=', True)],
-        #                               select=1,
-        #                               required=True),
+        'name' : fields.char('Name', size=64, select=1, required=True),
+        'date' : fields.datetime('Date', required=False, select=1),
+        'duration' : fields.float('Duration', required=False, select=1),
+        # 'location_id' : fields.many2one('training.location', 
+        'state' : fields.selection([('draft', 'Draft'),
+                                    ('opened', 'Opened'),
+                                    ('opened_confirmed', 'Opened Confirmed'),
+                                    ('closed_confirmed', 'Closed Confirmed'),
+                                    ('inprogress', 'In Progress'),
+                                    ('closed', 'Closed'),
+                                    ('cancelled', 'Cancelled')],
+                                   'State',
+                                   required=True,
+                                   readonly=True,
+                                   select=1
+                                  ),
+        'participant_ids' : fields.many2many('training.subscription',
+                                             'training_participation',
+                                             'event_id',
+                                             'subscription_id',
+                                             'Participants',
+                                             domain="[('group_id', '=', group_id)]" ),
+        'group_id' : fields.many2one('training.group', 'Group'),
         'contact_ids' : fields.many2many('res.partner.contact', 'planned_exam_contact_rel',
                                          'planned_exam_id', 'contact_id',
                                          'StakeHolder'),
-        'event_id' : fields.many2one('training.event', 'Event'),
         'questionnaire_id' : fields.many2one('training.questionnaire',
                                              'Questionnaire',
                                              required=True),
+        'subscription_line_id' : fields.many2one('training.subscription.line', 'Subscription', required=True),
     }
 
-
 training_planned_exam()
+
+class training_subscription_line(osv.osv):
+    _inherit = 'training.subscription.line'
+    _columns = {
+        'with_exam' : fields.boolean('With Exam'),
+        'exam_id' : fields.one2many('training.planned_exam', 'Planned Exam'),
+    }
+    _defaults = {
+        'with_exam' : lambda *a: 0,
+    }
+
+training_subscription_line()
 
 class training_exam_result(osv.osv):
     _name = 'training.exam.result'

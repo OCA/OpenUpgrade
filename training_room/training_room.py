@@ -35,12 +35,12 @@ class training_location(osv.osv):
 
 training_location()
 
-class training_event(osv.osv):
-    _inherit = 'training.event'
-
-    _columns = {
-        'location_id' : fields.many2one('training.location', 'Location', select=1),
-    }
-
-training_event()
+#class training_event(osv.osv):
+#    _inherit = 'training.event'
+#
+#    _columns = {
+#        'location_id' : fields.many2one('training.location', 'Location', select=1),
+#    }
+#
+#training_event()
 

@@ -169,7 +169,9 @@
                         <page string="General">
                             <field name="date" />
                             <field name="duration" widget="float_time" />
+                            <!--
                             <field name="location_id" />
+                            -->
                         </page>
                         <page string="Participants">
                             <field name="group_id" invisible="1" />
@@ -208,7 +210,9 @@
                     <field name="questionnaire_id" />
                     <field name="date" />
                     <field name="duration" widget="float_time" />
+                    <!--
                     <field name="location_id" />
+                    -->
                     <field name="state" />
                 </tree>
             </field>
@@ -224,7 +228,9 @@
                     <field name="questionnaire_id" />
                     <field name="duration" widget="float_time" />
                     <field name="contact_ids" />
+                    <!--
                     <field name="location_id"/>
+                    -->
                 </calendar>
             </field>
         </record>
@@ -339,6 +345,22 @@
                     <field name="name" />
                     <field name="is_response" />
                 </tree>
+            </field>
+        </record>
+    </data>
+
+    <data>
+        <record id="training_subscription_line_form_inherited" model="ir.ui.view">
+            <field name="name">training.subscription.line.form.inherited</field>
+            <field name="model">training.subscription</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="training.training_subscription_form" />
+            <field name="arch" type="xml">
+                <xpath
+                    expr="/form/notebook/page[@string='Subscription']/field[@name='subscription_line_ids']/tree/field[@name='invoiced']" position="after">
+                    <field name="with_exam" />
+                    <field name="exam_id" />
+                </xpath>
             </field>
         </record>
     </data>

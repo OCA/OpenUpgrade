@@ -412,8 +412,8 @@
                     <newline />
                     <notebook colspan="4">
                         <page string="Seances">
-                            <field name="event_ids" readonly="true" colspan="4" nolabel="1">
-                                <tree string="Events">
+                            <field name="seance_ids" readonly="true" colspan="4" nolabel="1">
+                                <tree string="Seances">
                                     <field name="name" />
                                     <field name="date" />
                                     <field name="duration" widget="float_time" />
@@ -558,62 +558,6 @@
             <field name="view_id" ref="training_session_tree_resume" />
         </record>
 
-
-        <record model="ir.ui.view" id="training_event_form">
-            <field name="name">training.event.form</field>
-            <field name="model">training.event</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Event">
-                    <separator string="Event Description" colspan="4" />
-                    <field name="name" />
-                    <field name="date" />
-                    <field name="duration" widget="float_time" />
-                    <field name="state" />
-                    <separator string="Sessions" colspan="4" />
-                    <field name="session_ids" colspan="4"/>
-                    <separator string="Location" colspan="4" />
-                    <field name="location" />
-                    <field name="room" />
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="training_event_tree">
-            <field name="name">training.event.tree</field>
-            <field name="model">training.event</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Events">
-                    <field name="name" />
-                    <field name="date" />
-                    <field name="duration" widget="float_time" />
-                    <field name="session_ids" />
-                    <field name="state" />
-                    <field name="location" />
-                    <field name="room" />
-                </tree>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="training_event_all_calendar">
-            <field name="name">training.event.all.calendar</field>
-            <field name="model">training.event</field>
-            <field name="type">calendar</field>
-            <field name="arch" type="xml">
-                <calendar string="Events" date_start="date">
-                    <field name="name"/>
-                    <field name="session_ids" />
-                </calendar>
-            </field>
-        </record>
-
-        <record model="ir.actions.act_window" id="training_event_all_calendar_act">
-            <field name="name">Calendar of Events</field>
-            <field name="res_model">training.event</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">calendar,tree</field>
-        </record>
 
         <record model="ir.ui.view" id="training_seance_form">
             <field name="name">training.seance.form</field>
@@ -826,9 +770,10 @@
                                     <field name="session_id" />
                                     <field name="contact_id" />
                                     <field name="contact_email" readonly="1" />
-                                    <field name="with_exam" />
                                     <field name="group_id" />
                                     <field name="invoiced" />
+                                    <field name="with_exam" />
+                                    <field name="exam_id" />
                                 </tree>
                             </field>
                         </page>
@@ -1248,7 +1193,7 @@
             <field name="arch" type="xml">
                 <form string="Participation">
                     <separator string="Participation Description" colspan="4"/>
-                    <field name="event_id" />
+                    <field name="seance_id" />
                     <field name="date" />
                     <field name="subscription_id" />
                     <separator string="Contact Information" colspan="4" />
@@ -1267,7 +1212,7 @@
                 <tree string="Participation" editable="bottom">
                     <field name="partner_id" />
                     <field name="contact_id" />
-                    <field name="event_id" />
+                    <field name="seance_id" />
                     <field name="date" />
                     <field name="present" />
                     <field name="subscription_id" />

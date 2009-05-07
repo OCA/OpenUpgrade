@@ -315,9 +315,10 @@ class training_catalog(osv.osv):
 
 training_catalog()
 
-class training_event(osv.osv):
-    _name = 'training.event'
-training_event()
+class training_seance(osv.osv):
+    _name = 'training.seance'
+
+training_seance()
 
 class training_session(osv.osv):
     _name = 'training.session'
@@ -365,13 +366,9 @@ class training_session(osv.osv):
                                        select=1,
                                        help="Allows to select a published catalog"
                                       ),
-        'event_ids' : fields.many2many('training.event',
-                                       'training_session_event_rel',
-                                       'session_id',
-                                       'event_id',
-                                       'Events',
-                                       ondelete='cascade',
-                                       help="List of the events in the session"),
+        'seance_ids' : fields.many2many('training.seance', 'training_session_seance_rel',
+                                        'session_id', 'seance_id', 'Seances', ondelete='cascade',
+                                        help='List of the events in the session'),
         'date' : fields.datetime('Date',
                                  required=True,
                                  help="The date of the planned session"
@@ -515,12 +512,8 @@ class training_participation(osv.osv):
     _name = 'training.participation'
     _description = 'Participation'
     _columns = {
-        'event_id' : fields.many2one('training.event', 'Event', select=True,
-                                     required=True,
-                                     readonly=True),
-        'subscription_id' : fields.many2one('training.subscription', 'Subscription', select=True,
-                                            required=True, 
-                                            readonly=True),
+        'seance_id' : fields.many2one('training.seance', 'Seance', select=True, required=True, readonly=True),
+        'subscription_id' : fields.many2one('training.subscription', 'Subscription', select=True, required=True, readonly=True),
         'present' : fields.boolean('Present', help="Allows to know if a participant was present or not", select=1),
         'contact_id' : fields.related('subscription_id', 'contact_id',
                                       type='many2one',relation='res.partner.contact',
@@ -538,16 +531,21 @@ class training_participation(osv.osv):
 
 training_participation()
 
-
-class training_event(osv.osv):
-    _name = 'training.event'
-    _description = 'Event'
+class training_seance(osv.osv):
+    _name = 'training.seance'
+    _description = 'Seance'
 
     def _check_date(self,cr,uid,ids,context=None):
         return self.browse(cr, uid, ids)[0].date > time.strftime('%Y-%m-%d')
 
     def _support_ok_get( self, cr, uid, ids, name, args, context ):
         return {}.fromkeys(ids, True)
+
+    def _participant_count(self, cr, uid, ids, name, args, context=None):
+        res = dict.fromkeys(ids, 0)
+        for obj in self.browse(cr, uid, ids, context=context):
+            res[obj.id] = len(obj.participant_ids)
+        return res
 
     _columns = {
         'name' : fields.char('Name', size=64, select=1, required=True),
@@ -588,37 +586,8 @@ class training_event(osv.osv):
         'room' : fields.char('Room', size=32),
         'reserved' : fields.boolean('Reserved'),
         'layout' : fields.char('Layout', size=32),
-    }
-
-    _constraints = [
-        ( _check_date, "Error, Can you check your start date", ['date']),
-    ]
-
-    _defaults = {
-        'state' : lambda *a: 'draft',
-        'date' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-    }
-
-training_event()
-
-class training_seance(osv.osv):
-    _name = 'training.seance'
-    _description = 'Seance'
-    _inherits = { 'training.event' : 'event_id' }
-
-    def _participant_count(self, cr, uid, ids, name, args, context=None):
-        res = dict.fromkeys(ids, 0)
-        for obj in self.browse(cr, uid, ids, context=context):
-            res[obj.id] = len(obj.participant_ids)
-        return res
-
-    _columns = {
         'partner_ids' : fields.many2many('res.partner', 'training_seance_partner_rel', 'seance_id', 'partner_id', 'StakeHolders'),
-        'event_id' : fields.many2one('training.event', 'Event'),
         'course_id' : fields.many2one('training.course', 'Course', required=True),
-        #'copies' : fields.integer('Copies'),
-        #'printed' : fields.boolean('Printed'),
-        #'limit' : fields.integer('Limit'), 
         'purchase_line_ids' : fields.one2many('training.seance.purchase_line', 'seance_id', 'Supplier Commands'),
         'min_limit' : fields.integer("Minimum Limit"),
         'max_limit' : fields.integer("Maximum Limit"),
@@ -646,9 +615,8 @@ class training_seance(osv.osv):
         return obj.min_limit <= obj.max_limit
 
     _constraints = [
-        (_check_limits,
-         'The minimum limit is greater than the maximum limit',
-         ['min_limit', 'max_limit']),
+        ( _check_date, "Error, Can you check your start date", ['date']),
+        (_check_limits, 'The minimum limit is greater than the maximum limit', ['min_limit', 'max_limit']),
     ]
 
     _defaults = {
@@ -659,6 +627,8 @@ class training_seance(osv.osv):
         'invoice' : lambda *a: 0,
         'user_id' : lambda obj,cr,uid,context: uid, 
         'presence_form' : lambda *a: 0,
+        'state' : lambda *a: 'draft',
+        'date' : lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
     }
 
     def action_validate(self, cr, uid, ids, context=None):
@@ -851,7 +821,6 @@ class training_subscription_line(osv.osv):
         'contact_email' : fields.related('contact_id', 'email', type='char', string='Email'),
 
         'group_id' : fields.many2one('training.group', 'Group'),
-        'with_exam' : fields.boolean('With Exam'),
         'invoice_id' : fields.many2one('account.invoice', 'Invoice'),
         'paid' : fields.boolean('Paid'),
         'invoiced' : fields.boolean('Invoiced'),
@@ -865,7 +834,6 @@ class training_subscription_line(osv.osv):
     }
 
     _defaults = {
-        'with_exam' : lambda *a: 0,
         'paid' : lambda *a: False,
         'invoiced' : lambda *a: False,
     }
