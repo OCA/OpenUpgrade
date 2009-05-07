@@ -36,13 +36,15 @@ class report_postxt(osv.osv):
         'groups_id': fields.many2many('res.groups', 'res_groups_report_rel', 'uid', 'gid', 'Groups'),
 	'printer': fields.char('Printer', size=50, help="Preferred printer for this report. Useful for server-side printing."),
 	'copies': fields.integer('Copies', help="Default number of copies."),
+	'soft_copies': fields.boolean('Soft copies', help="If set to true, copies will be done through the\"num_copies\" variable of the content. Else, by the printing system."),
 	'txt_content': fields.text('Content of report in text'),
         }
     
     _defaults = {
         'multi': lambda *a: False,
         'type': lambda *a: 'ir.actions.report.postxt',
-	'copies': lambda  *a: 1
+	'copies': lambda  *a: 1,
+	'soft_copies': lambda *a: False
     }
     
     def pprint(self, cr,uid, report , data, context):
@@ -52,6 +54,11 @@ class report_postxt(osv.osv):
 	import os
 
 	logger = netsvc.Logger()
+	copies=report['copies']
+	if not copies:
+		copies=1
+	if report['soft_copies']:
+		data['num_copies']=copies
 	str_report= self._do_report(report['txt_content'],data)
 	if (report['printer']):
 		logger.notifyChannel("pos_print", netsvc.LOG_INFO, 'Trying to print %s on %s ref. ' % \
@@ -61,15 +68,14 @@ class report_postxt(osv.osv):
 		except:
 			raise Exception(_('Cannot talk to cups, please install pycups'))
 		ccon = cups.Connection()
-		copies=report['copies']
-		if not copies:
-			copies=1
 		(fileno, fp_name) = tempfile.mkstemp('.raw', 'openerp_')
 		fp = file(fp_name, 'wb+')
 		#fp.write(content.encode('iso8859-7'))
 		fp.write(str_report)
 		fp.close()
 		os.close(fileno)
+		if report['soft_copies']:
+			copies=1
 		job = ccon.printFile(report['printer'],fp_name,"Openerp: "+report['name'],{'copies': str(copies), 'raw': 'raw'})
 		os.unlink(fp_name)
 		if job:
