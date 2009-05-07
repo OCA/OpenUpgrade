@@ -111,6 +111,7 @@ class etl_connector(osv.osv):
         if (cr.dbname, uid, data.get('process_id', False), id) not in self._cache:
             self._cache[(cr.dbname, uid, data.get('process_id', False), id)]=self.create_instance(cr, uid, id, context, data)
         return self._cache[(cr.dbname, uid, data.get('process_id', False), id)]
+    
     def create_instance(self, cr, uid, ids, context={}, data={}):
         # logic for super create_instance
         return False
@@ -189,16 +190,31 @@ class etl_job(osv.osv):
         if context.get('action_end_job', False):
             job.signal_connect({'id':id, 'instance':job}, 'end', context['action_end_job'], data)
         if context.get('action_pause_job', False):
+            
             job.signal_connect({'id':id, 'instance':job}, 'pause', context['action_pause_job'], data)
         return self._cache[(cr.dbname, uid, data.get('process_id', False), id)]
 
     def create_instance(self, cr, uid, id, context={}, data={}):
         obj_component=self.pool.get('etl.component')
-        res = self.read(cr, uid, id, ['component_ids'])
-        output_cmps=[]
-        for cmp_id in res['component_ids']:
-            output_cmps.append(obj_component.get_instance(cr, uid, cmp_id, context, data))
-        job=etl.job(output_cmps)
+        res = self.read(cr, uid, id, ['component_ids', 'name'])
+        components=[]
+        component_instance = []
+        for comp in  obj_component.browse(cr, uid, res['component_ids']):
+            components.append(comp)
+            for trans in comp.trans_in_ids + comp.trans_out_ids:
+                components.append(trans.source_component_id)
+                components.append(trans.destination_component_id)
+        comps = []
+        for comp in components:
+            comps.append(comp.id)
+            for trans in comp.trans_in_ids + comp.trans_out_ids:
+                comps.append(trans.source_component_id.id)
+                comps.append(trans.destination_component_id.id)
+        comps = list(set(comps))
+        for cmp_id in comps:
+            component_instance.append(obj_component.get_instance(cr, uid, cmp_id, context, data))
+        
+        job=etl.job( component_instance, res['name'])
         return job
 
     def action_open_job(self, cr, uid, ids, context={}):

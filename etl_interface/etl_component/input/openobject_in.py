@@ -54,8 +54,10 @@ class etl_component_openobject_in(osv.osv):
                 conn_instance=obj_connector.get_instance(cr, uid, cmp.connector_id.id , context, data)
             if cmp.transformer_id:
                 trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
-            val = etl.component.input.openobject_in(conn_instance, 'component.input.openobject_in', trans_instance, cmp.row_limit, cmp.openobject_params and eval(cmp.openobject_params) or {})
-
+            field_ids={}
+            for data in cmp.openobject_field_ids:
+                field_ids[data.source_field] = data.dest_field
+            val = etl.component.input.openobject_in(conn_instance, cmp.model_id.model, cmp.domain and eval(cmp.domain) or [], field_ids, context, cmp.name, trans_instance, cmp.row_limit)
         return val
 
 etl_component_openobject_in()

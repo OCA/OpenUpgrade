@@ -27,12 +27,16 @@ from osv import osv, fields
 class etl_component_transform_sort(osv.osv):
     _name='etl.component'
     _inherit = 'etl.component'
+    _columns={
+              'field_to_sort' : fields.char('Field to sort', size=34),
+    }
     
     def create_instance(self, cr, uid, id, context={}, data={}):
         val=super(etl_component_transform_sort, self).create_instance(cr, uid, id, context, data)       
         cmp =self.browse(cr, uid, id,context=context)
+        cmp
         if cmp.type_id.name == 'transform.sort':
-            val = etl.component.transform.sort('name')
+            val = etl.component.transform.sort(cmp.field_to_sort, 'name')
         return val
     
 etl_component_transform_sort()

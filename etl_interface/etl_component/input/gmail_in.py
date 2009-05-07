@@ -34,7 +34,7 @@ class etl_component_gmail_in(osv.osv):
         if obj.type_id.name=='input.gmail_in':
             usr = obj.user
             passwd = obj.passwd
-            val = etl.component.input.gmail_in(usr, passwd, 'component.input.gmail_in'  or {})
+            val = etl.component.input.gmail_in(usr, passwd, cmp.name, trans_instance, cmp.row_limit)
         return val
 
 etl_component_gmail_in()

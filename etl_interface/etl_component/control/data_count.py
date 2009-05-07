@@ -29,10 +29,10 @@ class etl_component_control_data_count(osv.osv):
     _inherit = 'etl.component'
     
     def create_instance(self, cr, uid, id, context={}, data={}):
-        val=super(etl_component_control_data_count, self).create_instance(cr, uid, id, context, data)        
-        cmp = self.browse(cr, uid, id)        
-        if cmp.type_id.name == 'control.data_count':                     
-            val = etl.component.control.data_count()            
+        val=super(etl_component_control_data_count, self).create_instance(cr, uid, id, context, data)   
+        cmp = self.browse(cr, uid, id)  
+        if cmp.type_id.name == 'control.data_count':     
+            val = etl.component.control.data_count(cmp.name)
         return val
     
 etl_component_control_data_count()

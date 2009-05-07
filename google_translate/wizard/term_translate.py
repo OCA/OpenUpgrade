@@ -23,14 +23,13 @@ import urllib
 from urllib import urlopen, urlencode, unquote
 
 import wizard
-from osv import fields, osv
 import pooler
 import re
 
 trans_form = '''<?xml version="1.0"?>
     <form string="Translation" colspan="4">
          <newline/>
-         <label string="Translate Terms of tiny using google" align="0.0" colspan="3"/>
+         <label string="This wizard will translate terms in source using google for given language" align="0.0" colspan="3"/>
          <newline/>
      </form> '''
 trans_fields = { }
@@ -98,3 +97,5 @@ class google_translate_wizard(wizard.interface):
             }
 
 google_translate_wizard('google.translate.wizard')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

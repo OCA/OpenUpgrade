@@ -74,13 +74,15 @@ class query(object):
                     flag = False
                     make_where = []
                     temp_where = []
+                    temp_column = []
                     if 'whereclause' in data[0]['query'].keys():
                         flag = True
                         temp_where = data[0]['query']['whereclause'][0] 
                         data[0]['query']['whereclause']=str(data[0]['query']['whereclause'][0])
-                        data_temp = copy.deepcopy(data[0])
-                    else:
-                        data_temp = copy.copy(data[0])
+                    if isinstance(type(data[0]['query']['column'][0]),type(sqlalchemy.sql.expression._Function)):
+                        temp_column = data[0]['query']['column'][0]
+                        data[0]['query']['column'][0] = str(data[0]['query']['column'][0])
+                    data_temp = copy.deepcopy(data[0])
                     if 'whereclause' in data[1]['query'].keys():
                         if 'whereclause' in data_temp['query'].keys():
                             make_where.append(data[1]['query']['whereclause'][0])
@@ -102,6 +104,9 @@ class query(object):
                             data_temp['query']['whereclause'].append(make_where[0])
                         else:
                             data_temp['query']['whereclause'] = make_where
+                    if temp_column:
+                        data[0]['query']['column'] = [temp_column]
+                        data_temp['query']['column'] = [temp_column]
                     final_axis.append(data_temp)
                 axis[-1] = []
                 axis[-1] = final_axis
@@ -128,6 +133,7 @@ class query(object):
                 for key,val in s['query'].items():
                     for v in val:
                         if key=='column':
+                            print "This is the value >>>>",val , v
                             v = v.label('p_%d' % (position,))
                             position += 1
                             select.append_column(v)

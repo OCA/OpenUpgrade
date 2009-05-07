@@ -47,7 +47,7 @@ class etl_component_csv_out(osv.osv):
             if cmp.transformer_id:
                 trans_instance = obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
 
-            val = etl.component.output.csv_out(conn_instance, 'component.output.csv_out', trans_instance, cmp.row_limit, cmp.csv_params)
+            val = etl.component.output.csv_out(conn_instance, cmp.csv_params, cmp.name, trans_instance, cmp.row_limit )
         return val
 
 etl_component_csv_out()

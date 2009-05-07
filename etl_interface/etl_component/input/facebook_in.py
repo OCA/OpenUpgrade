@@ -45,7 +45,7 @@ class etl_component_facebook_in(osv.osv):
             if cmp.transformer_id:
                 trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
 
-            val =etl.component.input.facebook_in(conn_instance, self.method,name='component.input.facebook_in')
+            val =etl.component.input.facebook_in(conn_instance, self.method, cmp.domain and eval(cmp.domain) or [], cmp.name, trans_instance, cmp.row_limit)
         return val
 
 etl_component_facebook_in()

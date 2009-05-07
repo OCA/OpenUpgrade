@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,10 +19,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-import report_third_party_ledger
-import account_journal
-import general_ledger
-import aged_trial_balance
-import partner_balance
-import invoice
+{
+	"name" : "Electronic Intrastat Reporting",
+	"version" : "1.0",
+	"author" : "Tiny",
+	"website" : "http://tinyerp.com",
+	"depends" : ["report_intrastat"],
+	"category" : "Generic Modules/Inventory Control",
+	"description": "A module that export intrastat data into .SDV format",
+	"init_xml" : [],
+	"demo_xml" : [],
+	"update_xml" : ["report_instrastat.xml"],
+	"active": False,
+	"installable": True
+}

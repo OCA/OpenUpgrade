@@ -28,7 +28,7 @@
     "description": """
             
             """,
-    "depends" : ["base_contact","dm_partner_address"],
+    "depends" : ["dm_partner_address","base_contact"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
