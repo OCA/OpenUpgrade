@@ -19,14 +19,20 @@ _route_fields = {
             'destination': {'string': 'Customer Address', 'type': 'many2one', 'relation':'res.partner', 'required': True, 'domain':"[('customer','=',True)]"},
             }
 
+_earth_form =  '''<?xml version="1.0"?>
+        <form string="Google Map/Earth">
+        <label string="kml file created in ../google_earth/kml/route.kml , You can upload on google map online"/>
+        </form> '''
+
+_earth_fields = {
+            }
+
 def geocode(address):
     mapsKey = 'abcdefgh'
     mapsUrl = 'http://maps.google.com/maps/geo?q='
-
     url = ''.join([mapsUrl,urllib.quote(address),'&output=csv&key=',mapsKey])
     coordinates = urllib.urlopen(url).read().split(',')
     coorText = '%s,%s' % (coordinates[3],coordinates[2])
-
     return coorText
 
 def get_directions(source,destination):
@@ -41,9 +47,14 @@ def get_directions(source,destination):
         steps.append(endPoint)
         return steps
     else:
-        return {}
+        return False
 
-def create_kml(self, cr, uid, data, context={}):
+def _create_kml(self, cr, uid, data, context={}):
+    #Todo:
+    #    1. should be work with different country cities currenly it takes strait path if cities are in differnt countries
+    #    2. you can put differnt data on path like product sent, etc
+    #    3. should be store at user's location not in specific path of /google_earth/kml/ , use binary field
+    #from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
     path = tools.config['addons_path']
     fileName = path + '/google_earth/kml/route.kml'
 
@@ -102,10 +113,9 @@ def create_kml(self, cr, uid, data, context={}):
 
     steps = get_directions(s,d)
 
-    if not steps:
+    if not steps: # make route path strait
         coordinates1 = geocode(s)
         coorElement.appendChild(kmlDoc.createTextNode(coordinates1))
-
         coordinates2 = geocode(d)
         coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
     else:
@@ -120,7 +130,6 @@ def create_kml(self, cr, uid, data, context={}):
     kmlFile = open(fileName, 'w')
     kmlFile.write(kmlDoc.toprettyxml(' '))
     kmlFile.close()
-
     return {}
 
 class find_route(wizard.interface):
@@ -131,9 +140,10 @@ class find_route(wizard.interface):
             'result': {'type': 'form', 'arch':_route_form, 'fields':_route_fields,  'state':[('end','Cancel'),('map','Get map')]}
                 },
          'map': {
-            'actions': [create_kml],
-            'result': {'type': 'state', 'state': 'end'}
+            'actions': [_create_kml],
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
                 }
             }
-find_route('find.route')
+find_route('google.find.route')
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

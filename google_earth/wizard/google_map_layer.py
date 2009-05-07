@@ -32,7 +32,7 @@ import tools
 
 _earth_form =  '''<?xml version="1.0"?>
         <form string="Google Map/Earth">
-        <label string="kml file created in ../google_earth/kml/partner_region.kml"/>
+        <label string="kml file created in ../google_earth/kml/partner_region.kml , You can upload on google map online"/>
         </form> '''
 
 _earth_fields = {
@@ -62,6 +62,7 @@ def geocode(address):
 def create_kml(self, cr, uid, data, context={}):
     #Todo:
     #    check for all countries working with google or not (India..)
+    #    should be store at user's location not in specific path of /google_earth/kml/ , use binary field
     # This function creates an XML document and adds the necessary
     # KML elements.
     res = {}
