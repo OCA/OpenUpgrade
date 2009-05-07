@@ -23,7 +23,6 @@ import urllib
 from urllib import urlopen, urlencode, unquote
 
 import wizard
-from osv import fields, osv
 import pooler
 import re
 
@@ -98,3 +97,5 @@ class google_translate_wizard(wizard.interface):
             }
 
 google_translate_wizard('google.translate.wizard')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
