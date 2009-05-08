@@ -104,7 +104,9 @@ def _create_kml(self, cr, uid, data, context={}):
         if not pack.sale_id:
             #display some exception here
             continue
-        warehouse_city = str(pack.sale_id.shop_id.warehouse_id.partner_address_id.city)
+
+        # Todo: put osv exception if address not available
+        warehouse_city = pack.sale_id.shop_id.warehouse_id.partner_address_id and pack.sale_id.shop_id.warehouse_id.partner_address_id.city or ''
         customer_city = pack.address_id.city
         plane_date = pack.min_date
 
