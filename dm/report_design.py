@@ -187,8 +187,8 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
             plugin_value = compute_customer_plugin(cr, uid, p, address_id)
 
         else :
-            arguments = p.argument_ids
-            for a in arguments:
+            arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
+            for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
                 if not a.stored_plugin :
                     args[str(a.name)]=str(a.value)
                 else :
@@ -205,7 +205,7 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
                                              'address_id':address_id,
                                              'plugin_id':p.id,
                                              'value' : plugin_value})
-        vals[str(p.code)] = plugin_value
+        vals[str(p.id)] = plugin_value
     return vals
 
 class offer_document(rml_parse):
