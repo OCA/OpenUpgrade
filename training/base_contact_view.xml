@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="res_partner_contact_form_inherit">
+            <field name="name">res.partner.contact.form.inherit</field>
+            <field name="model">res.partner.contact</field>
+            <field name="inherit_id" ref="base_contact.view_partner_contact_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="birthdate" position="after">
+                    <field name="matricule" />
+                    <field name="birthplace" />
+                    <field name="education_level" />
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_partner_contact_form_inherit2">
+            <field name="name">res.partner.contact.form.inherit</field>
+            <field name="model">res.partner.contact</field>
+            <field name="inherit_id" ref="base_contact.view_partner_contact_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='General']/field[@name='job_ids']/form/field[@name='state']" position="after">
+                    <field name="team_id" />
+                    <field name="external_matricule" />
+                    <field name="departments" colspan="4" />
+                    <field name="orientation" colspan="4" />
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_partner_contact_form_inherit3">
+            <field name="name">res.partner.contact.form.inherit3</field>
+            <field name="model">res.partner.contact</field>
+            <field name="inherit_id" ref="base_contact.view_partner_contact_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <xpath expr="/form/notebook/page[@string='General']/field[@name='job_ids']/tree/field[@name='name']" position="after">
+                    <field name="team_id" />
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="res_partner_contact_form_inherit">
+            <field name="name">res.partner.contact.form.inherit</field>
+            <field name="model">res.partner.contact</field>
+            <field name="inherit_id" ref="base_contact.view_partner_contact_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Technical Skills">
+                        <separator string="Technical Skills" colspan="4" />
+                        <field name="technical_skill_ids" nolabel="1" colspan="4"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</openerp>
