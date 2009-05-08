@@ -86,18 +86,26 @@ def _create_kml(self, cr, uid, data, context={}):
     documentElement.appendChild(styleElement)
 
     for pack in pool.get('stock.picking').browse(cr, uid, data['ids']):
+        total_qty = 0
+        for move in pack.move_lines:
+            total_qty += move.product_qty
+
         if not pack.sale_id:
             #display some exception here
             continue
         warehouse_city = pack.sale_id.shop_id.warehouse_id.partner_address_id.city
         customer_city = pack.address_id.city
+        plane_date = pack.min_date
 
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(warehouse_city)
+        placemarkdescElement = kmlDoc.createElement('description')
+        placemarkdescElement.appendChild(kmlDoc.createTextNode('Warehouse location: ' + warehouse_city + ',Customer Location: ' + customer_city + ',Planned Date: ' + plane_date +',Number of product sent: ' + str(total_qty)))
 
         placemarknameElement.appendChild(placemarknameText)
         placemarkElement.appendChild(placemarknameElement)
+        placemarkElement.appendChild(placemarkdescElement)
 
         lineElement = kmlDoc.createElement('LineString')
         placemarkElement.appendChild(lineElement)
