@@ -150,7 +150,7 @@ class training_planned_exam(osv.osv):
                                   ),
         'participant_ids' : fields.many2many('training.subscription',
                                              'training_participation',
-                                             'event_id',
+                                             'seance_id',
                                              'subscription_id',
                                              'Participants',
                                              domain="[('group_id', '=', group_id)]" ),
@@ -161,7 +161,11 @@ class training_planned_exam(osv.osv):
         'questionnaire_id' : fields.many2one('training.questionnaire',
                                              'Questionnaire',
                                              required=True),
-        'subscription_line_id' : fields.many2one('training.subscription.line', 'Subscription', required=True),
+        'subscription_line_id' : fields.many2one('training.subscription.line', 'Subscription'),
+    }
+
+    _defaults = {
+        'state' : lambda *a: 'draft',
     }
 
 training_planned_exam()

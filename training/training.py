@@ -402,7 +402,7 @@ class training_session(osv.osv):
 
     def action_create_seance(self, cr, uid, ids, context=None):
         session = self.browse(cr, uid, ids, context=context)[0]
-        event_ids = []
+        seance_ids = []
 
         for course in session.offer_id.course_ids:
             seance_proxy = self.pool.get('training.seance')
@@ -413,15 +413,10 @@ class training_session(osv.osv):
                 'max_limit' : course.course_type_id.max_limit,
                 'user_id' : session.user_id.id,
             })
-            event_id = seance_proxy.read(cr,
-                                         uid,
-                                         [seance_id],
-                                         ['event_id'],
-                                         context=context)[0]['event_id'][0]
-            event_ids.append(event_id)
+            seance_ids.append(seance_id)
 
         return self.write(cr, uid, ids,
-                          {'event_ids' : [(6, 0, event_ids)]},
+                          {'seance_ids' : [(6, 0, seance_ids)]},
                           context=context)
 
 training_session()
@@ -522,7 +517,7 @@ class training_participation(osv.osv):
         'partner_id' : fields.related('subscription_id', 'partner_id', 
                                       type='many2one', relation='res.partner',
                                       string='Partner', readonly=True, select=2),
-        'date' : fields.related('event_id', 'date', type='datetime', string='Date', 
+        'date' : fields.related('seance_id', 'date', type='datetime', string='Date', 
                                 readonly=True, select=1),
     }
 
@@ -552,7 +547,7 @@ class training_seance(osv.osv):
         'name' : fields.char('Name', size=64, select=1, required=True),
         'session_ids' : fields.many2many('training.session',
                                          'training_session_event_rel',
-                                         'event_id',
+                                         'seance_id',
                                          'session_id',
                                          'Sessions',
                                          ondelete='cascade'),
@@ -561,7 +556,7 @@ class training_seance(osv.osv):
         'duration' : fields.float('Duration', required=False, select=1),
         'participant_ids' : fields.many2many('training.subscription',
                                              'training_participation',
-                                             'event_id',
+                                             'seance_id',
                                              'subscription_id',
                                              'Participants',
                                              domain="[('group_id', '=', group_id)]" ),
@@ -660,8 +655,10 @@ class training_seance(osv.osv):
         session_id = context and context.get('session_id', False) or False
 
         if session_id:
-            cr.execute('SELECT s.id FROM training_session_event_rel rel, training_seance s where rel.session_id = %s and rel.event_id = s.event_id', (session_id,))
-            return [x[0] for x in cr.fetchall()]
+            #cr.execute('SELECT s.id FROM training_session_event_rel rel, training_seance s where rel.session_id = %s and rel.event_id = s.event_id', (session_id,))
+            #return [x[0] for x in cr.fetchall()]
+            #TODO
+            return []
         else:
             return super(training_seance, self).search(cr, user,
                                                        domain,
@@ -740,10 +737,11 @@ class training_subscription(osv.osv):
     def _get_courses_with_attendance(self, cr, uid, ids, context=None):
         if not ids:
             return []
-        cr.execute("SELECT ts.course_id FROM training_seance ts, training_participation tp WHERE \
-                   ts.event_id = tp.event_id AND tp.present = %s AND tp.subscription_id = %s",
-                   (True, ids[0],))
-        return self.pool.get('training.course').browse(cr, uid, [x[0] for x in cr.fetchall()], context=context)
+        #cr.execute("SELECT ts.course_id FROM training_seance ts, training_participation tp WHERE \
+        #           ts.event_id = tp.event_id AND tp.present = %s AND tp.subscription_id = %s",
+        #           (True, ids[0],))
+        #return self.pool.get('training.course').browse(cr, uid, [x[0] for x in cr.fetchall()], context=context)
+        return []
 
     def on_change_partner(self, cr, uid, ids, partner_id):
         """
@@ -793,7 +791,7 @@ class training_subscription(osv.osv):
             result[line.subscription_id.id] = True
         return result.keys()
 
-    _order = 'date desc'
+    _order = 'create_date desc'
 
 training_subscription()
 
