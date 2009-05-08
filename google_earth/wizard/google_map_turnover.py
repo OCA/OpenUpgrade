@@ -26,13 +26,20 @@ import xml.dom.minidom
 import wizard
 import pooler
 import tools
+import base64
 
 _earth_form =  '''<?xml version="1.0"?>
-        <form string="Google Map/Earth">
-        <label string="kml file created in ../google_earth/kml/partner.kml , You can upload on google map online"/>
-        </form> '''
+<form string="Google Map/Earth">
+    <separator string="Select path to store KML file" colspan="2"/>
+    <newline/>
+    <field name="name"/>
+    <newline/>
+    <field name="kml_file"/>
+</form>'''
 
 _earth_fields = {
+        'name': {'string': 'KML File name', 'type': 'char', 'readonly': False , 'required': True},
+        'kml_file': {'string': 'Save KML file', 'type': 'binary', 'required': True},
             }
 
 def geocode(address):
@@ -62,8 +69,8 @@ def create_kml(self, cr, uid, data, context={}):
     # KML elements.
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
-    path = tools.config['addons_path']
-    fileName = path + '/google_earth/kml/partner.kml'
+#    path = tools.config['addons_path']
+#    fileName = path + '/google_earth/kml/partner.kml'
     partner_ids = partner_obj.search(cr, uid, [])
     partner_data = partner_obj.browse(cr, uid, partner_ids, context)
     address_obj= pool.get('res.partner.address')
@@ -82,7 +89,7 @@ def create_kml(self, cr, uid, data, context={}):
     kmlElement = kmlDoc.appendChild(kmlElement)
     documentElement = kmlDoc.createElement('Document')
     documentElement = kmlElement.appendChild(documentElement)
-    kmlFile = open(fileName, 'w')
+#    kmlFile = open(fileName, 'w')
     for part in partner_data:
         address = ''
         add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
@@ -122,16 +129,18 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(placemarkElement)
         # This writes the KML Document to a file.
 
-    kmlFile.write(kmlDoc.toprettyxml(' '))
-    kmlFile.close()
-    return {}
+    out = base64.encodestring(kmlDoc.toprettyxml(' '))
+#    kmlFile.write(kmlDoc.toprettyxml(' '))
+#    kmlFile.close()
+    fname = 'partner_turnover' + '.kml'
+    return {'kml_file': out, 'name': fname}
 
 class customer_on_map(wizard.interface):
 
     states = {
          'init': {
             'actions': [create_kml],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Done')]}
                 }
             }
 
