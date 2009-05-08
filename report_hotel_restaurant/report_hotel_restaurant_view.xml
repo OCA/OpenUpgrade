@@ -37,11 +37,11 @@
 			<graph string="States By restaurant" type="pie">
 				<field name="state"/>
 				<field name="nbr" operator="+"/>
-				
+
 			</graph>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_hotel_restaurant_status_graph_bar">
 		<field name="name">report.hotel.restaurant.status.graph</field>
 		<field name="model">report.hotel.restaurant.status</field>
@@ -50,26 +50,20 @@
 			<graph string="States By restaurant" type="bar" orientation="verticle">
 				<field name="state"/>
 				<field name="nbr" operator="+"/>
-				
+
 			</graph>
 		</field>
 	</record>
-	
+
 	<record model="ir.actions.act_window" id="action_report_hotel_restaurant_status_tree_graph">
 		<field name="name">States By Restaurant</field>
 		<field name="res_model">report.hotel.restaurant.status</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
-		
+
 	</record>
-	<menuitem name = "Hotel Management/Reports/This Month"  
+	<menuitem name = "Hotel Management/Reports/This Month"
 			  id = "menu_hotel_restaurant_this_month"/>
-			  
-	<menuitem name = "States By restaurant" 
-			  action = "action_report_hotel_restaurant_status_tree_graph" 
-			  id = "menu_hotel_restaurant_status_tree_graph"
-			  sequence = "32"
-			  parent = "menu_hotel_restaurant_this_month"/>
 
 	<record model="ir.actions.act_window" id="action_report_hotel_restaurant_status_tree_graph_bar">
 			<field name="name">States By Restaurant</field>
@@ -77,11 +71,11 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">graph,tree</field>
 			<field name = "view_id" ref="view_hotel_restaurant_status_graph_bar"/>
-			
+
 		</record>
-	
-		<menuitem name="States By Restaurant" 
-		          action="action_report_hotel_restaurant_status_tree_graph_bar" 
+
+		<menuitem name="States By Restaurant"
+		          action="action_report_hotel_restaurant_status_tree_graph_bar"
 		          id="menu_hotel_restaurant_status_tree_graph_bar"
 		          sequence="33"
 		          parent = "menu_hotel_restaurant_this_month"/>

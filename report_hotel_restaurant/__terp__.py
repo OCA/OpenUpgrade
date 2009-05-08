@@ -26,7 +26,12 @@
     "author" : "Tiny",
     "depends" : ["hotel_restaurant"],
     "category" : "Generic Modules/Hotel Restaurant",
-    "description": "A module that adds new reports based on Reservation cases.",
+    "description": """
+    Module shows the status of resturant reservation
+     * Current status of reserved tables
+     * List status of tables as draft or done state
+    """,
+
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["security/ir.model.access.csv","report_hotel_restaurant_view.xml"],
