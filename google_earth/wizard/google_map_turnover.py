@@ -132,10 +132,11 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(placemarkElement)
         # This writes the KML Document to a file.
 
-    out = base64.encodestring(kmlDoc.toprettyxml(' '))
+    
 #    kmlFile.write(kmlDoc.toprettyxml(' '))
 #    kmlFile.close()
-    fname = 'partner_turnover' + '.kml'
+    out = base64.encodestring(kmlDoc.toprettyxml(' '))
+    fname = 'turnover' + '.kml'
     return {'kml_file': out, 'name': fname}
 
 class customer_on_map(wizard.interface):

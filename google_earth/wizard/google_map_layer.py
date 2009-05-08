@@ -29,13 +29,20 @@ from xml.dom.minidom import parse, parseString
 import wizard
 import pooler
 import tools
+import base64
 
 _earth_form =  '''<?xml version="1.0"?>
-        <form string="Google Map/Earth">
-        <label string="kml file created in ../google_earth/kml/partner_region.kml , You can upload on google map online"/>
-        </form> '''
+<form string="Google Map/Earth">
+    <separator string="Select path to store KML file" colspan="2"/>
+    <newline/>
+    <field name="name"/>
+    <newline/>
+    <field name="kml_file"/>
+</form>'''
 
 _earth_fields = {
+        'name': {'string': 'KML File name', 'type': 'char', 'readonly': False , 'required': True},
+        'kml_file': {'string': 'Save KML file', 'type': 'binary', 'required': True},
             }
 
 def geocode(address):
@@ -74,8 +81,8 @@ def create_kml(self, cr, uid, data, context={}):
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
     address_obj= pool.get('res.partner.address')
-    path = tools.config['addons_path']
-    fileName = path + '/google_earth/kml/partner_region.kml'
+#    path = tools.config['addons_path']
+#    fileName = path + '/google_earth/kml/partner_region.kml'
     partner_ids = partner_obj.search(cr, uid, [])
     partners = partner_obj.browse(cr, uid, partner_ids)
 
@@ -254,16 +261,19 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(folderElement)
 
     # This writes the KML Document to a file.
-    kmlFile = open(fileName, 'w')
-    kmlFile.write(kmlDoc.toxml())
-    kmlFile.close()
-    return {}
+#    kmlFile = open(fileName, 'w')
+#    kmlFile.write(kmlDoc.toxml())
+#    kmlFile.close()
+#    return {}
+    out = base64.encodestring(kmlDoc.toxml())
+    fname = 'region' + '.kml'
+    return {'kml_file': out, 'name': fname}
 
 class customer_on_map(wizard.interface):
     states = {
          'init': {
             'actions': [create_kml],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Done')]}
                 }
             }
 customer_on_map('layers.region.catery')

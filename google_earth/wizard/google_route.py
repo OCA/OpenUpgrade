@@ -4,13 +4,21 @@ import xml.dom.minidom
 import wizard
 import pooler
 import tools
+import base64
 
-_earth_form = '''<?xml version="1.0"?>
-        <form string="Google Map/Earth">
-        <label string="kml file created in ../google_earth/kml/route.kml , You can upload on google map online"/>
-        </form> '''
+_earth_form =  '''<?xml version="1.0"?>
+<form string="Google Map/Earth">
+    <separator string="Select path to store KML file" colspan="2"/>
+    <newline/>
+    <field name="name"/>
+    <newline/>
+    <field name="kml_file"/>
+</form>'''
 
-_earth_fields = {}
+_earth_fields = {
+        'name': {'string': 'KML File name', 'type': 'char', 'readonly': False , 'required': True},
+        'kml_file': {'string': 'Save KML file', 'type': 'binary', 'required': True},
+            }
 
 def geocode(address):
     mapsKey = 'abcdefgh'
@@ -22,23 +30,25 @@ def geocode(address):
 
 def get_directions(source,destination):
     steps = []
+    res = False
     try:
         from google.directions import GoogleDirections
         gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
+        res = gd.query(source,destination)
     except:
         print "Is GoogleDirections package is installed ?" #should be make osv exception
-
-    res = gd.query(source,destination)
-    if res.status != 200:
-        print "Address not found. Status was: %d" % res.status
-        return False
-    if 'Directions' in res.result:
-        endPoint = res.result['Directions']['Routes'][0]['End']['coordinates']
-        result = res.result['Directions']['Routes'][0]['Steps']
-        for i in result:
-            steps.append(i['Point']['coordinates'])
-        steps.append(endPoint)
-        return steps
+        return
+    if res:
+        if res.status != 200:
+            print "Address not found. Status was: %d" % res.status #should be make osv exception
+            return
+        if 'Directions' in res.result:
+            endPoint = res.result['Directions']['Routes'][0]['End']['coordinates']
+            result = res.result['Directions']['Routes'][0]['Steps']
+            for i in result:
+                steps.append(i['Point']['coordinates'])
+            steps.append(endPoint)
+            return steps
 
 def _create_kml(self, cr, uid, data, context={}):
     #Todo:
@@ -48,8 +58,8 @@ def _create_kml(self, cr, uid, data, context={}):
     #    4. should be test for all cities (Shanghai -> Hongkong ) check to upper and lower possiblities to search
 
     #Note: from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
-    path = tools.config['addons_path']
-    fileName = path + '/google_earth/kml/route.kml'
+#    path = tools.config['addons_path']
+#    fileName = path + '/google_earth/kml/route.kml'
 
     # To find particular location
     pool = pooler.get_pool(cr.dbname)
@@ -96,13 +106,13 @@ def _create_kml(self, cr, uid, data, context={}):
         if not pack.sale_id:
             #display some exception here
             continue
-        warehouse_city = pack.sale_id.shop_id.warehouse_id.partner_address_id.city
+        warehouse_city = str(pack.sale_id.shop_id.warehouse_id.partner_address_id.city)
         customer_city = pack.address_id.city
         plane_date = pack.min_date
 
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
-        placemarknameText = kmlDoc.createTextNode(warehouse_city)
+        placemarknameText = kmlDoc.createTextNode(str(warehouse_city))
         placemarkdescElement = kmlDoc.createElement('description')
         placemarkdescElement.appendChild(kmlDoc.createTextNode('Warehouse location: ' + warehouse_city + ',Customer Location: ' + customer_city + ',Planned Date: ' + plane_date +',Number of product sent: ' + str(total_qty)))
 
@@ -131,17 +141,20 @@ def _create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(placemarkElement)
 
         # This writes the KML Document to a file.
-    kmlFile = open(fileName, 'w')
-    kmlFile.write(kmlDoc.toprettyxml(' '))
-    kmlFile.close()
-    return {}
+#    kmlFile = open(fileName, 'w')
+#    kmlFile.write(kmlDoc.toprettyxml(' '))
+#    kmlFile.close()
+#    return {}
+    out = base64.encodestring(kmlDoc.toprettyxml(' '))
+    fname = 'route' + '.kml'
+    return {'kml_file': out, 'name': fname}
 
 class find_route(wizard.interface):
 
     states = {
        'init': {
             'actions': [_create_kml],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Done')]}
                 },
             }
 find_route('google.find.route')
