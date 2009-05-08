@@ -4,13 +4,21 @@ import xml.dom.minidom
 import wizard
 import pooler
 import tools
+import base64
 
-_earth_form = '''<?xml version="1.0"?>
-        <form string="Google Map/Earth">
-        <label string="kml file created in ../google_earth/kml/route.kml , You can upload on google map online"/>
-        </form> '''
+_earth_form =  '''<?xml version="1.0"?>
+<form string="Google Map/Earth">
+    <separator string="Select path to store KML file" colspan="2"/>
+    <newline/>
+    <field name="name"/>
+    <newline/>
+    <field name="kml_file"/>
+</form>'''
 
-_earth_fields = {}
+_earth_fields = {
+        'name': {'string': 'KML File name', 'type': 'char', 'readonly': False , 'required': True},
+        'kml_file': {'string': 'Save KML file', 'type': 'binary', 'required': True},
+            }
 
 def geocode(address):
     mapsKey = 'abcdefgh'
@@ -48,8 +56,8 @@ def _create_kml(self, cr, uid, data, context={}):
     #    4. should be test for all cities (Shanghai -> Hongkong ) check to upper and lower possiblities to search
 
     #Note: from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
-    path = tools.config['addons_path']
-    fileName = path + '/google_earth/kml/route.kml'
+#    path = tools.config['addons_path']
+#    fileName = path + '/google_earth/kml/route.kml'
 
     # To find particular location
     pool = pooler.get_pool(cr.dbname)
@@ -96,7 +104,7 @@ def _create_kml(self, cr, uid, data, context={}):
         if not pack.sale_id:
             #display some exception here
             continue
-        warehouse_city = pack.sale_id.shop_id.warehouse_id.partner_address_id.city
+        warehouse_city = str(pack.sale_id.shop_id.warehouse_id.partner_address_id.city)
         customer_city = pack.address_id.city
         plane_date = pack.min_date
 
@@ -131,17 +139,20 @@ def _create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(placemarkElement)
 
         # This writes the KML Document to a file.
-    kmlFile = open(fileName, 'w')
-    kmlFile.write(kmlDoc.toprettyxml(' '))
-    kmlFile.close()
-    return {}
+#    kmlFile = open(fileName, 'w')
+#    kmlFile.write(kmlDoc.toprettyxml(' '))
+#    kmlFile.close()
+#    return {}
+    out = base64.encodestring(kmlDoc.toprettyxml(' '))
+    fname = 'route' + '.kml'
+    return {'kml_file': out, 'name': fname}
 
 class find_route(wizard.interface):
 
     states = {
        'init': {
             'actions': [_create_kml],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Done')]}
                 },
             }
 find_route('google.find.route')
