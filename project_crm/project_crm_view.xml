@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<record id="view_project_crm_task_form" model="ir.ui.view">
+			<field name="name">project.task.crm.form</field>
+			<field name="model">project.task</field>
+			<field name="inherit_id" ref="project.view_task_form2"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="user_id" position="after">
+                    <field name="case_id"/>
+					<group colspan ="2">
+						<button name="synch" string="Sync With Calendar" type="object" icon ="gtk-execute"  attrs="{'invisible':[('case_id','!=',False)]}"/>
+						<button name="%(wizard_unsync)d" string="UnSync Calendar" type="action" icon = "gtk-convert"  attrs="{'invisible':[('case_id','=',False)]}"/>
+					</group>					
+				</field>
+			</field>
+		</record>	
+		<record id="view_project_crm_task_tree" model="ir.ui.view">
+			<field name="name">project.task.crm.tree</field>
+			<field name="model">project.task</field>
+			<field name="inherit_id" ref="project.view_task_tree2"/>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<field name="user_id" position="after">
+					<field name="case_id"/>
+					<button name="synch" string="Sync With Calendar" help="Sync With Calendar" type="object" icon ="gtk-execute" attrs="{'invisible':[('case_id','!=',False)]}"/>
+					<button name="asynch" string="UnSync Calendar" help="UnSync Calendar" type="object" icon = "gtk-convert" attrs="{'invisible':[('case_id','=',False)]}"/>
+				</field>
+			</field>
+		</record>
+    </data>
+</openerp>
