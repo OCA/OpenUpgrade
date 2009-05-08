@@ -1,6 +1,5 @@
 import urllib
 import xml.dom.minidom
-from google.directions import GoogleDirections
 
 import wizard
 import pooler
@@ -22,8 +21,13 @@ def geocode(address):
     return coorText
 
 def get_directions(source,destination):
-    steps=[]
-    gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
+    steps = []
+    try:
+        from google.directions import GoogleDirections
+        gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
+    except:
+        print "Is GoogleDirections package is installed ?" #should be make osv exception
+
     res = gd.query(source,destination)
     if res.status != 200:
         print "Address not found. Status was: %d" % res.status

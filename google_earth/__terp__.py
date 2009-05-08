@@ -9,11 +9,10 @@
     "description": """
             This Module will includes following :
 
-            * Layers with characteristics by regions
-            * Display customers, whom country has colors by turnover
-            * Most frequent delivery routes
+            * Layers with characteristics by regions (menu: Partners/Google Map/Earth)
+            * Display customers, whom country has colors by turnover (menu: Partners/Google Map/Earth)
+            * Most frequent delivery routes (menu: on stock.picking)
 
-            Menu : Partners/Google Map/Earth
     """,
     "init_xml" : [],
     "demo_xml" : [],
