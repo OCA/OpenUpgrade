@@ -31,6 +31,8 @@ the choice to install the examn management and the room management""",
     'depends' : [
         'training',
         'document_lock',
+        #        'training_exam',
+        #'training_room',
     ],
     'init_xml' : [
     ],
