@@ -39,6 +39,10 @@ def get_directions(source,destination):
     steps=[]
     gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
     res = gd.query(source,destination)
+    print res.result
+    if res.status != 200:
+        print "Address not found. Status was: %d" % res.status
+        return False
     if 'Directions' in res.result:
         endPoint = res.result['Directions']['Routes'][0]['End']['coordinates']
         result = res.result['Directions']['Routes'][0]['Steps']
@@ -54,6 +58,7 @@ def _create_kml(self, cr, uid, data, context={}):
     #    1. should be work with different country cities currenly it takes strait path if cities are in differnt countries
     #    2. you can put differnt data on path like product sent, etc
     #    3. should be store at user's location not in specific path of /google_earth/kml/ , use binary field
+    #    4. should be test for all cities (Shanghai -> Hongkong ) check to upper and lower possiblities to search
     #from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
     path = tools.config['addons_path']
     fileName = path + '/google_earth/kml/route.kml'
