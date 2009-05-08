@@ -68,7 +68,7 @@ def geocode(address):
 def create_kml(self, cr, uid, data, context={}):
     #Todo:
     #    check for all countries working with google or not (India..)
-    #    should be store at user's location not in specific path of /google_earth/kml/ , use binary field
+    #    icons
     # This function creates an XML document and adds the necessary
     # KML elements.
     res = {}

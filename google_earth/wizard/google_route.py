@@ -52,8 +52,7 @@ def _create_kml(self, cr, uid, data, context={}):
     #Todo:
     #    1. should be work with different country cities currenly it takes strait path if cities are in differnt countries
     #    2. you can put differnt data on path like product sent, etc
-    #    3. should be store at user's location not in specific path of /google_earth/kml/ , use binary field
-    #    4. should be test for all cities (Shanghai -> Hongkong ) check to upper and lower possiblities to search
+    #    3. should be test for all cities (Shanghai -> Hongkong ) check to upper and lower possiblities to search
 
     #Note: from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
 #    path = tools.config['addons_path']
