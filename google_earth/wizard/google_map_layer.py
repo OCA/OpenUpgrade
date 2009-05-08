@@ -68,10 +68,11 @@ def geocode(address):
 def create_kml(self, cr, uid, data, context={}):
     #Todo:
     #    check for all countries working with google or not (India..)
-    #    should be store at user's location not in specific path of /google_earth/kml/ , use binary field
+    #    icons
     # This function creates an XML document and adds the necessary
     # KML elements.
     res = {}
+    res_inv = {}
     address = ' '
     coordinates = []
     addresslist = []
@@ -94,11 +95,20 @@ def create_kml(self, cr, uid, data, context={}):
                 country_list.append(cntry)
 
     map(lambda x:res.setdefault(x,0.0), country_list)
-    # fetch turnover by country
+    # fetch turnover by country (should be corect)
     cr.execute('select sum(l.credit), c.name from account_move_line as l join res_partner_address as a on l.partner_id=a.partner_id left join res_country as c on c.id=a.country_id group by c.name')
     res_partner = cr.fetchall()
     for part in res_partner:
         res[string.upper(part[1])] = part[0]
+
+    map(lambda x:res.setdefault(x,0), country_list)
+    # fetch invoice by country
+    cr.execute(''' select count(i.id),c.name from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id left join res_country as c on a.country_id=c.id where i.type in ('out_invoice','in_invoice') group by c.name ''')
+    invoice_partner = cr.fetchall()
+    for part in invoice_partner:
+        res_inv[str(string.upper(part[1]))] = str(part[0])
+
+
 
     # fetch turnover by individual partner
     cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
@@ -224,7 +234,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(country)
         placemarkdescElement = kmlDoc.createElement('description')
-        placemarkdescElement.appendChild(kmlDoc.createTextNode('Turnover of country: ' + str(res[country])))
+        placemarkdescElement.appendChild(kmlDoc.createTextNode('Number of Invoices made: ' + str(res_inv[country]) + ', Turnover of country: ' + str(res[country])))
         placemarknameElement.appendChild(placemarknameText)
 
         placemarkstyleElement = kmlDoc.createElement('Style')
