@@ -88,7 +88,10 @@ def create_kml(self, cr, uid, data, context={}):
     kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
     kmlElement = kmlDoc.appendChild(kmlElement)
     documentElement = kmlDoc.createElement('Document')
-    documentElement = kmlElement.appendChild(documentElement)
+    kmlElement.appendChild(documentElement)
+    documentElementname = kmlDoc.createElement('name')
+    documentElementname.appendChild(kmlDoc.createTextNode('Turnover by partners'))
+    documentElement.appendChild(documentElementname)
 #    kmlFile = open(fileName, 'w')
     for part in partner_data:
         address = ''

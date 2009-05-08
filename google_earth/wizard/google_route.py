@@ -58,7 +58,9 @@ def _create_kml(self, cr, uid, data, context={}):
     kmlElement = kmlDoc.appendChild(kmlElement)
 
     documentElement = kmlDoc.createElement('Document')
-    documentElement = kmlElement.appendChild(documentElement)
+    kmlElement.appendChild(documentElement)
+    documentElementname = kmlDoc.createElement('name')
+    documentElementname.appendChild(kmlDoc.createTextNode('Delivery route'))
 
     styleElement = kmlDoc.createElement('Style')
     styleElement.setAttribute('id','style15')
@@ -84,6 +86,7 @@ def _create_kml(self, cr, uid, data, context={}):
     polystyleElement.appendChild(outlineElement)
     documentElement.appendChild(polystyleElement)
     documentElement.appendChild(styleElement)
+    documentElement.appendChild(documentElementname)
 
     for pack in pool.get('stock.picking').browse(cr, uid, data['ids']):
         total_qty = 0
