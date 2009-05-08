@@ -32,11 +32,14 @@ _earth_form =  '''<?xml version="1.0"?>
 <form string="Google Map/Earth">
     <separator string="Select path to store KML file" colspan="2"/>
     <newline/>
+    <field name="name"/>
+    <newline/>
     <field name="kml_file"/>
 </form>'''
 
 _earth_fields = {
-        'kml_file': {'string': 'KML file', 'type': 'binary', 'required': True, 'help':'Save file with .kml extension'},
+        'name': {'string': 'KML File name', 'type': 'char', 'readonly': True , 'required': True},
+        'kml_file': {'string': 'Save KML file', 'type': 'binary', 'required': True},
             }
 
 def geocode(address):
@@ -66,8 +69,8 @@ def create_kml(self, cr, uid, data, context={}):
     # KML elements.
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
-    path = tools.config['addons_path']
-    fileName = path + '/google_earth/kml/partner.kml'
+#    path = tools.config['addons_path']
+#    fileName = path + '/google_earth/kml/partner.kml'
     partner_ids = partner_obj.search(cr, uid, [])
     partner_data = partner_obj.browse(cr, uid, partner_ids, context)
     address_obj= pool.get('res.partner.address')
@@ -129,7 +132,8 @@ def create_kml(self, cr, uid, data, context={}):
     out = base64.encodestring(kmlDoc.toprettyxml(' '))
 #    kmlFile.write(kmlDoc.toprettyxml(' '))
 #    kmlFile.close()
-    return {'kml_file': out}
+    fname = 'partner_turnover' + '.kml'
+    return {'kml_file': out, 'name': fname}
 
 class customer_on_map(wizard.interface):
 
