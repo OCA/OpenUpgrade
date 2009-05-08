@@ -50,8 +50,6 @@ def get_directions(source,destination):
             steps.append(i['Point']['coordinates'])
         steps.append(endPoint)
         return steps
-    else:
-        return False
 
 def _create_kml(self, cr, uid, data, context={}):
     #Todo:
@@ -59,7 +57,8 @@ def _create_kml(self, cr, uid, data, context={}):
     #    2. you can put differnt data on path like product sent, etc
     #    3. should be store at user's location not in specific path of /google_earth/kml/ , use binary field
     #    4. should be test for all cities (Shanghai -> Hongkong ) check to upper and lower possiblities to search
-    #from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
+
+    #Note: from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
     path = tools.config['addons_path']
     fileName = path + '/google_earth/kml/route.kml'
 
