@@ -30,23 +30,25 @@ def geocode(address):
 
 def get_directions(source,destination):
     steps = []
+    res = False
     try:
         from google.directions import GoogleDirections
         gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
+        res = gd.query(source,destination)
     except:
-        raise wizard.except_wizard('Warning!','No module named GoogleDirections')
+        raise wizard.except_wizard('Warning!','Please install Google direction package from http://pypi.python.org/pypi/google.directions/0.3 ')
 
-    res = gd.query(source,destination)
-    if res.status != 200:
-        print "Address not found. Status was: %d" % res.status
-        return False
-    if 'Directions' in res.result:
-        endPoint = res.result['Directions']['Routes'][0]['End']['coordinates']
-        result = res.result['Directions']['Routes'][0]['Steps']
-        for i in result:
-            steps.append(i['Point']['coordinates'])
-        steps.append(endPoint)
-        return steps
+    if res:
+        if res.status != 200:
+            print "Address not found. Status was: %d" % res.status
+            return
+        if 'Directions' in res.result:
+            endPoint = res.result['Directions']['Routes'][0]['End']['coordinates']
+            result = res.result['Directions']['Routes'][0]['Steps']
+            for i in result:
+                steps.append(i['Point']['coordinates'])
+            steps.append(endPoint)
+            return steps
 
 def _create_kml(self, cr, uid, data, context={}):
     #Todo:
@@ -107,12 +109,12 @@ def _create_kml(self, cr, uid, data, context={}):
         warehouse_city = pack.sale_id.shop_id.warehouse_id.partner_address_id and pack.sale_id.shop_id.warehouse_id.partner_address_id.city or ''
         customer_city = pack.address_id.city
         if not (warehouse_city or customer_city):
-            raise wizard.except_wizard('Warning!','There is no address of warehouse or customer')
+            raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer ')
         plane_date = pack.min_date
 
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
-        placemarknameText = kmlDoc.createTextNode(warehouse_city)
+        placemarknameText = kmlDoc.createTextNode(str(warehouse_city))
         placemarkdescElement = kmlDoc.createElement('description')
         placemarkdescElement.appendChild(kmlDoc.createTextNode('Warehouse location: ' + warehouse_city + ',Customer Location: ' + customer_city + ',Planned Date: ' + plane_date +',Number of product sent: ' + str(total_qty)))
 
