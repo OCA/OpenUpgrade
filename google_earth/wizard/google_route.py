@@ -34,7 +34,7 @@ def get_directions(source,destination):
         from google.directions import GoogleDirections
         gd = GoogleDirections('ABQIAAAAUbF6J26EmcC_0QgBXb9xvhRoz3DfI4MsQy-vo3oSCnT9jW1JqxQfs5OWnaBY9or_pyEGfvnnRcWEhA')
     except:
-        print "Is GoogleDirections package is installed ?" #should be make osv exception
+        raise wizard.except_wizard('Warning!','No module named GoogleDirections')
 
     res = gd.query(source,destination)
     if res.status != 200:
@@ -104,9 +104,10 @@ def _create_kml(self, cr, uid, data, context={}):
             #display some exception here
             continue
 
-        # Todo: put osv exception if address not available
         warehouse_city = pack.sale_id.shop_id.warehouse_id.partner_address_id and pack.sale_id.shop_id.warehouse_id.partner_address_id.city or ''
         customer_city = pack.address_id.city
+        if not (warehouse_city or customer_city):
+            raise wizard.except_wizard('Warning!','There is no address of warehouse or customer')
         plane_date = pack.min_date
 
         placemarkElement = kmlDoc.createElement('Placemark')
