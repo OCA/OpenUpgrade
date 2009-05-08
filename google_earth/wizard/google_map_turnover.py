@@ -38,7 +38,7 @@ _earth_form =  '''<?xml version="1.0"?>
 </form>'''
 
 _earth_fields = {
-        'name': {'string': 'KML File name', 'type': 'char', 'readonly': True , 'required': True},
+        'name': {'string': 'KML File name', 'type': 'char', 'readonly': False , 'required': True},
         'kml_file': {'string': 'Save KML file', 'type': 'binary', 'required': True},
             }
 
