@@ -38,7 +38,6 @@ _earth_form =  '''<?xml version="1.0"?>
 _earth_fields = {
             }
 
-
 def geocode(address):
     # This function queries the Google Maps API geocoder with an
     # address. It gets back a csv file, which it then parses and
@@ -164,7 +163,7 @@ def create_kml(self, cr, uid, data, context={}):
 
     documentElement = kmlElement.appendChild(documentElement)
     documentElementname = kmlDoc.createElement('name')
-    documentElementname.appendChild(kmlDoc.createTextNode('Todo name'))
+    documentElementname.appendChild(kmlDoc.createTextNode('Country Wise Turnover'))
     documentElementdesc = kmlDoc.createElement('description')
     documentElementdesc.appendChild(kmlDoc.createTextNode('Todo desctiption'))
 
