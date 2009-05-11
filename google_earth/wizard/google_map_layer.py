@@ -78,7 +78,6 @@ def create_kml(self, cr, uid, data, context={}):
     coordinates = []
     addresslist = []
     country_list = []
-    style_id_list = []
     coordinates_text = ' '
     colors = ['dfbf9f3b','88336699','59009900','8fffff00','7f00ffff','7fffffff','aaffffff','880fff00','880f00cc','88f000cc','33333333']
 
@@ -195,42 +194,6 @@ def create_kml(self, cr, uid, data, context={}):
 
     documentElement.appendChild(documentElementname)
     documentElement.appendChild(documentElementdesc)
-    cnt = 0
-    for country in country_list:
-        cnt += 1 
-        style_id = 'style' + str(cnt)
-        styel_id_url = '#' + style_id
-        style_id_list.append(styel_id_url)
-        styleElement = kmlDoc.createElement('Style')
-        styleElement.setAttribute('id','transBluePoly')
-    
-        linestyleElement = kmlDoc.createElement('LineStyle')
-        colorElement = kmlDoc.createElement('color')
-        colorElement.appendChild(kmlDoc.createTextNode('CC66CC'))
-        linestyleElement.appendChild(colorElement)
-        styleElement.appendChild(linestyleElement)
-        ballonElement = kmlDoc.createElement('BalloonStyle')
-        ballonbgElement = kmlDoc.createElement('bgColor')
-        ballonbgElement.appendChild(kmlDoc.createTextNode('59009900'))
-        balloontextElement = kmlDoc.createElement('text')
-        balloontextElement.appendChild(kmlDoc.createTextNode('TESSTT'))
-        ballonElement.appendChild(ballonbgElement)
-        ballonElement.appendChild(balloontextElement)
-        styleElement.appendChild(ballonElement)
-    
-        polystyleElement = kmlDoc.createElement('PolyStyle')
-        polycolorElement = kmlDoc.createElement('color')
-        polycolorElement.appendChild(kmlDoc.createTextNode(colors[cnt]))
-        polyfillElement = kmlDoc.createElement('fill')
-        polyfillElement.appendChild(kmlDoc.createTextNode('1'))
-        polyoutlineElement = kmlDoc.createElement('outline')
-        polyoutlineElement.appendChild(kmlDoc.createTextNode('1'))
-    
-        polystyleElement.appendChild(polycolorElement)
-        polystyleElement.appendChild(polyfillElement)
-        polystyleElement.appendChild(polyoutlineElement)
-        styleElement.appendChild(polystyleElement)
-        documentElement.appendChild(styleElement)
 
     folderElement = kmlDoc.createElement('Folder')
     foldernameElement = kmlDoc.createElement('name')
@@ -262,10 +225,6 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkElement.appendChild(placemarkdescElement)
         placemarkElement.appendChild(placemarkstyleElement)
 
-        styleurlElement = kmlDoc.createElement('styleUrl')
-#        styleurlElement.appendChild(kmlDoc.createTextNode('#transBluePoly'))
-        styleurlElement.appendChild(kmlDoc.createTextNode(style_id_list[cnt]))
-        placemarkElement.appendChild(styleurlElement)
         cnt += 1
         geometryElement = kmlDoc.createElement('MultiGeometry')
         polygonElement = kmlDoc.createElement('Polygon')
