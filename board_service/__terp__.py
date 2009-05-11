@@ -53,8 +53,9 @@
                  "board_project",
                  "sale_forecast",
                  "account_budget",
+                 "report_account",
                  "report_analytic_planning_delegate",
-                 "sale"],
+                 "report_sale"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [

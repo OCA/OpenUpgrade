@@ -80,7 +80,6 @@
     </record>
     
     <!-- Dashboard View -->   
-    
         
     <record id="board_service_weekly_form" model="ir.ui.view">
     	<field name="name">board.service.weekly.form</field>
@@ -90,13 +89,14 @@
         	<form string="Weekly Dashboard">
         		<hpaned>
         			<child1>
-            			<action colspan="4" name="%(action_view_forecast)d" string="Draft Sales Forecast Lines"/>
-            			<button colspan="4" icon="terp-purchase" name="%(hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_validate)d" string="My Department's Timesheet to Validate" type="action"/>
+            			<action colspan="4" name="%(action_view_forecast)d" string="Draft Sales Forecast Lines" width="500"/>
+            			<button colspan="4" icon="terp-purchase" name="%(hr_timesheet_sheet.act_hr_timesheet_sheet_form_department_validate)d" string="My Department's Timesheet to Validate" type="action" width="300"/>
             			
             		</child1>
             		<child2>
             			<action colspan="4" name="%(report_sale.action_so_pipeline)d" string="Sales Pipeline"/>
-            			<action colspan="4" name="%(report_analytic_planning.action_account_analytic_planning_stat_my_manager_form)d" string="My Planning Statistics"/>
+            			<action colspan="4" name="%(report_analytic_planning.action_account_analytic_planning_stat_my_manager_form)d" string="My Planning Statistics" />
+            			<action colspan="4" name="%(report_account.action_aged_receivable_graph)d" string="Aged Receivables" />
             		</child2>
             	</hpaned>
         	</form>
