@@ -890,7 +890,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_address_street"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-		<record id="dm_ddf_plugin_street2" model="dm.ddf.plugin">
+        <record id="dm_ddf_plugin_street2" model="dm.ddf.plugin">
             <field eval="&quot;&quot;&quot;street2&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Street2&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -917,7 +917,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_address_country_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-		<record id="dm_ddf_plugin_email0" model="dm.ddf.plugin">
+        <record id="dm_ddf_plugin_email0" model="dm.ddf.plugin">
             <field eval="&quot;&quot;&quot;email&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Email&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -968,7 +968,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 
     <data>
         <record id="dm_document_template_partner0" model="dm.document.template">
-        	<field model="dm.ddf.plugin" search="[('model_id.model','like','res.partner')]" name="plugin_ids"/>
+            <field model="dm.ddf.plugin" search="[('model_id.model','like','res.partner')]" name="plugin_ids"/>
             <field eval="&quot;&quot;&quot;Partner&quot;&quot;&quot;" name="name"/>
         </record>
         <record id="dm_document_template_wi0" model="dm.document.template">
@@ -992,7 +992,18 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;Not Purchase&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
-            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;
+purchase_trig_id = pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]\n
+step_ids = []\n
+for x in wi.tr_from_id.step_from_id.outgoing_transition_ids:\n
+    if x.condition_id.id == purchase_trig_id:\n
+         step_ids.append(x.step_to_id.id)\n
+wi_ids = pool.get('dm.workitem').search(cr, uid, [('step_id','in',step_ids),('address_id','=',wi.address_id.id)])\n
+if wi_ids:\n
+    result = False\n
+else:\n
+    result = True\n
+&quot;&quot;&quot;" name="in_act_cond"/>
 <!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
         <record id="dm_offer_step_transition_automatic" model="dm.offer.step.transition.trigger">
@@ -1003,10 +1014,10 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 <!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
     </data>
-    <data noupdate="0">
+    <data noupdate="1">
         <record model="ir.cron" id="ir_cron_campaign_proposition">
             <field name="name">Check  Workitem</field>
-            <field name="interval_number">10</field>
+            <field name="interval_number">1</field>
             <field name="interval_type">minutes</field>
             <field name="numbercall">-1</field>
             <field name="doall" eval="False"/>
@@ -1049,7 +1060,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         </record>
     </data>
 
-	<!-- Default Type in Mail Service -->
+    <!-- Default Type in Mail Service -->
     <data noupdate="1">
         <function eval="('default',False,'type_id', [('dm.mail_service', False)], dm_mail_service_type_dummy, True, False, False, False, True)" id="type_dummy_default_set" model="ir.values" name="set"/>
     </data>
