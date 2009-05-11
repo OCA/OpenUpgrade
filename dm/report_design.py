@@ -194,7 +194,7 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id, context=
                 if not a.stored_plugin :
                     args[str(a.name)]=str(a.value)
                 else :
-                    args[str(a.name)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
+                    args[str(a.custome_plugin_id.code)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
             path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
             plugin_name = p.file_fname.split('.')[0]
             sys.path.append(path)
