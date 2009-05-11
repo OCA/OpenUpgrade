@@ -34,9 +34,8 @@ class etl_component_transform_sort(osv.osv):
     def create_instance(self, cr, uid, id, context={}, data={}):
         val=super(etl_component_transform_sort, self).create_instance(cr, uid, id, context, data)       
         cmp =self.browse(cr, uid, id,context=context)
-        cmp
         if cmp.type_id.name == 'transform.sort':
-            val = etl.component.transform.sort(cmp.field_to_sort, 'name')
+            val = etl.component.transform.sort(cmp.field_to_sort, cmp.name)
         return val
     
 etl_component_transform_sort()
