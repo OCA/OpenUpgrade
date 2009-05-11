@@ -158,7 +158,7 @@ def generate_reports(cr,uid,obj,report_type,context):
 
 
 
-def generate_plugin_value(cr, uid, document_id, address_id, context={}):
+def generate_plugin_value(cr, uid, document_id, address_id,workitem_id, context={}):
     if not document_id :
         return False
     if not address_id :
@@ -166,10 +166,12 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
     vals = {}
 
     pool = pooler.get_pool(cr.dbname)
-    def compute_customer_plugin(cr, uid, p, cid):
+    def compute_customer_plugin(cr, uid, p, cid,wi_id=None):
         args = {}
         res  = pool.get('ir.model').browse(cr, uid, p.model_id.id)
         args['model_name'] = res.model
+        if res.model=='dm.workitem' and wi_id:
+            args['wi_id'] = wi_id    
         args['field_name'] = str(p.field_id.name)
         args['field_type'] = str(p.field_id.ttype)
         args['field_relation'] = str(p.field_id.relation)
@@ -184,7 +186,7 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
     for p in plugins :
         args = {}
         if p.type == 'fields':
-            plugin_value = compute_customer_plugin(cr, uid, p, address_id)
+            plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
 
         else :
             arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
@@ -192,7 +194,7 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
                 if not a.stored_plugin :
                     args[str(a.name)]=str(a.value)
                 else :
-                    args[str(a.name)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id)
+                    args[str(a.name)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
             path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
             plugin_name = p.file_fname.split('.')[0]
             sys.path.append(path)
@@ -205,7 +207,7 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
                                              'address_id':address_id,
                                              'plugin_id':p.id,
                                              'value' : plugin_value})
-        vals[str(p.id)] = plugin_value
+        vals[str(p.code)] = plugin_value
     return vals
 
 class offer_document(rml_parse):
@@ -225,10 +227,13 @@ class offer_document(rml_parse):
         if 'form' not in self.datas :
             address_id = self.context['address_id']
             document_id = self.context['document_id']
+            workitem_id = self.context['active_id']
         else :
             address_id = self.datas['form']['address_id']
             document_id = self.ids[0]
-        values = generate_plugin_value(self.cr,self.uid,document_id,address_id)
+#            set the workitem id here for the report which are called directly from the document object
+            workitem_id = 1
+        values = generate_plugin_value(self.cr,self.uid,document_id,address_id,workitem_id)
         return [values]
 
 from report.report_sxw import report_sxw
