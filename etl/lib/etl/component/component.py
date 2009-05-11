@@ -49,8 +49,8 @@ class component(signal):
         self.row_limit = row_limit
         self.status = 'open'
             
-    def __str__(self):                   
-        res='<Component job="%s" name="%s" type="%s" status="%s"'% (self.job.name, self.name, self._type, self.status)
+    def __str__(self):           
+        res='<Component job="%s" name="%s" type="%s" status="%s"'% (self.job and self.job.name or '', self.name, self._type, self.status)
         if self.is_start():
             res += ' is_start = "True"'
         if self.is_end():
