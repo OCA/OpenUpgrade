@@ -29,8 +29,11 @@ from signal import signal
 import time
 import logger
 import pickle
+import cPickle
 import datetime
-import shelve
+
+#import shelve
+
 class job_process(signal):
     def __init__(self, components=[], name='job'):
         super(job_process, self).__init__()
@@ -40,12 +43,14 @@ class job_process(signal):
         for component in self._components:
             component.job = self
         self.status = 'open' # open, start, pause, stop, close
-        self.pickle = False
+        self.pickle = False # should be removed
+        self.cpickle = cPickle
         self.logger = logger.logger()
         self.detail = {}
-        self.shelf = shelve.open('/tmp/data' , writeback=True)
-        self.id=tools.job_id()
-        self.shelf['key']=self.id
+
+#        self.shelf = shelve.open('/tmp/data' , writeback=True)
+#        self.id=tools.job_id()
+#        self.shelf['key']=self.id
 
 
     def write(self):
@@ -63,6 +68,9 @@ class job_process(signal):
         return pickle.load(value)
 
     def run(self):
+#        out_s = open('/home/tiny/Desktop/etl/a.txt', 'wb')
+#        self.cpickle.dump({'aa':3223}, out_s)
+#        out_s.close()
         self.register_actions()
         if self.pickle:
             job = self.read(self.pickle)
@@ -139,6 +147,10 @@ class job_process(signal):
 
 
     def action_job_start(self, key, signal_data={}, data={}):
+#        in_s = open('/home/tiny/Desktop/etl/a.txt', 'rb')
+#        in_s.seek(0,0)
+#        o = self.cpickle.load(in_s)
+#        in_s.close()
         self.detail[key]={}
         self.logger.notifyChannel("job", logger.LOG_INFO,
                      'the <' + key.name + '> has started now...')
@@ -146,8 +158,8 @@ class job_process(signal):
         self.detail[key]['start_date'] =  signal_data.get('date',False)
         self.detail[key]['status'] ='start'
 
-        self.shelf['start_date'] =signal_data.get('date',False)
-        self.shelf[key]['status'] ='start'
+#        self.shelf['start_date'] =signal_data.get('date',False)
+#        self.shelf[key]['status'] ='start'
 
         return True
 
@@ -161,14 +173,14 @@ class job_process(signal):
         self.logger.notifyChannel("job", logger.LOG_INFO,
                      'the <' + key.name + '> is paused now...')
         self.detail[key]['status'] ='pause'
-        self.shelf[key]['status'] ='pause'
+#        self.shelf[key]['status'] ='pause'
         return True
 
     def action_job_stop(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("job", logger.LOG_INFO,
                      'the <' + key.name + '> has stopped now...')
         self.detail[key]['status'] ='stop'
-        self.shelf[key]['status'] ='stop'
+#        self.shelf[key]['status'] ='stop'
         return True
 
     def action_job_end(self, key, signal_data={}, data={}):
@@ -185,11 +197,13 @@ class job_process(signal):
         self.detail[key]['end_date'] =  current_time
         self.detail[key]['process_time'] =  diff
         self.detail[key]['status'] ='end'
-
-
-        self.shelf['end_date'] =current_time
-        self.shelf['process_time']=diff
-        self.shelf['status'] ='end'
+        out_s = open('/home/tiny/Desktop/etl/a.txt', 'wb')
+        self.cpickle.dump({'Data':'Data'}, out_s)
+        out_s.close()
+#
+#        self.shelf['end_date'] =current_time
+#        self.shelf['process_time']=diff
+#        self.shelf['status'] ='end'
         return True
 
     def action_job_copy(self, key, signal_data={}, data={}):
@@ -198,21 +212,21 @@ class job_process(signal):
         return True
 
     def action_connector_open(self, key, signal_data={}, data={}):
-        if self.shelf.has_key('components'):
-            self.shelf['components']['connector']={}
-            self.shelf['components']['connector']['key']=key.name
-            self.shelf['components']['connector']['status']='open'
-            self.shelf['components']['connector']['open_date']=signal_data.get('date',False)
+#        if self.shelf.has_key('components'):
+#            self.shelf['components']['connector']={}
+#            self.shelf['components']['connector']['key']=key.name
+#            self.shelf['components']['connector']['status']='open'
+#            self.shelf['components']['connector']['open_date']=signal_data.get('date',False)
         self.logger.notifyChannel("connector", logger.LOG_INFO,
                      'the <' + key.name + '> is open now...')
         return True
 
     def action_connector_close(self, key, signal_data={}, data={}):
-        if self.shelf.has_key('components'):
-            if self.shelf['components'].has_key('connector'):
-                if self.shelf['components']['connector']['key']==key.name:
-                    self.shelf['components']['connector']['status']='close'
-                    self.shelf['components']['connector']['close_date']=signal_data.get('date',False)
+#        if self.shelf.has_key('components'):
+#            if self.shelf['components'].has_key('connector'):
+#                if self.shelf['components']['connector']['key']==key.name:
+#                    self.shelf['components']['connector']['status']='close'
+#                    self.shelf['components']['connector']['close_date']=signal_data.get('date',False)
         self.logger.notifyChannel("connector", logger.LOG_INFO,
                     'the <' + key.name + '> is closed now...')
         return True
@@ -224,8 +238,8 @@ class job_process(signal):
 
 
     def action_component_start(self, key, signal_data={}, data={}):
-        if self.shelf.has_key('components'):
-            self.shelf['components']['status']='start'
+#        if self.shelf.has_key('components'):
+#            self.shelf['components']['status']='start'
         if not 'components' in self.detail[key.job]:
             self.detail[key.job]['components'] = {}
         self.detail[key.job]['components'][key] = {}
@@ -274,8 +288,8 @@ class job_process(signal):
         return True
 
     def action_component_get_input(self, key, signal_data={}, data={}):
-        self.shelf['components']={}
-        self.shelf['components']['key']=key.name +":" + key._type
+#        self.shelf['components']={}
+#        self.shelf['components']['key']=key.name +":" + key._type
 
 
         if 'trans' not in key._cache:
@@ -354,13 +368,13 @@ class job_process(signal):
         return True
 
     def action_transition_start(self, key, signal_data={}, data={}):
-        self.shelf['trans']={}
-        self.shelf['trans']['key']=tools.trans_id()
-        self.shelf['trans']['source']=key.source.name
-        self.shelf['trans']['destination']=key.destination.name
-        self.shelf['trans']['channel_source']=key.channel_source
-        self.shelf['trans']['destination']=key.destination.name
-        self.shelf['trans']['status']='start'
+#        self.shelf['trans']={}
+#        self.shelf['trans']['key']=tools.trans_id()
+#        self.shelf['trans']['source']=key.source.name
+#        self.shelf['trans']['destination']=key.destination.name
+#        self.shelf['trans']['channel_source']=key.channel_source
+#        self.shelf['trans']['destination']=key.destination.name
+#        self.shelf['trans']['status']='start'
         self.logger.notifyChannel("transition", logger.LOG_INFO,
                      'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))
         return True
