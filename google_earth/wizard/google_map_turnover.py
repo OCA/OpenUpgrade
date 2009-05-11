@@ -111,7 +111,7 @@ def create_kml(self, cr, uid, data, context={}):
             if add.country_id:
                 address += ', '
                 address += str(add.country_id.name)
-        
+
         styleElement = kmlDoc.createElement('Style')
         styleElement.setAttribute('id','randomColorIcon')
         iconstyleElement = kmlDoc.createElement('IconStyle')
@@ -126,12 +126,12 @@ def create_kml(self, cr, uid, data, context={}):
         iconstyleElement.appendChild(scaleElement)
         iconElement = kmlDoc.createElement('Icon')
         hrefElement = kmlDoc.createElement('href')
-        hrefElement.appendChild(kmlDoc.createTextNode('http://maps.google.com/mapfiles/kml/pal3/icon46.png'))
+        hrefElement.appendChild(kmlDoc.createTextNode('http://maps.google.com/mapfiles/kml/pal3/icon48.png'))
         iconElement.appendChild(hrefElement)
         iconstyleElement.appendChild(iconElement)
         styleElement.appendChild(iconstyleElement)
         documentElement.appendChild(styleElement)
-        
+
         desc_text = address + ' , turnover of partner : ' + str(res[part.id])
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
@@ -155,7 +155,7 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(placemarkElement)
         # This writes the KML Document to a file.
 
-    
+
 #    kmlFile.write(kmlDoc.toprettyxml(' '))
 #    kmlFile.close()
     out = base64.encodestring(kmlDoc.toxml())
