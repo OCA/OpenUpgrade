@@ -73,6 +73,7 @@ def create_kml(self, cr, uid, data, context={}):
     # KML elements.
     res = {}
     res_inv = {}
+    res_cus = {}
     address = ' '
     coordinates = []
     addresslist = []
@@ -109,6 +110,12 @@ def create_kml(self, cr, uid, data, context={}):
         res_inv[str(string.upper(part[1]))] = str(part[0])
 
 
+    # fetch number of costomer by country
+    cr.execute(''' select count(distinct(p.id)), c.name from res_partner as p left join res_partner_address as a on p.id=a.partner_id left join res_country as c on c.id=a.country_id group by a.country_id, c.name  ''')
+    cust_country = cr.fetchall()
+    for part in cust_country:
+        if part[1]:
+            res_cus[str(string.upper(part[1]))] = str(part[0])
 
     # fetch turnover by individual partner
     cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
@@ -234,7 +241,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(country)
         placemarkdescElement = kmlDoc.createElement('description')
-        placemarkdescElement.appendChild(kmlDoc.createTextNode('Number of Invoices made: ' + str(res_inv[country]) + ', Turnover of country: ' + str(res[country])))
+        placemarkdescElement.appendChild(kmlDoc.createTextNode('Number of partner:' + str(res_cus[country]) + ', Number of Invoices made: ' + str(res_inv[country]) + ', Turnover of country: ' + str(res[country])))
         placemarknameElement.appendChild(placemarknameText)
 
         placemarkstyleElement = kmlDoc.createElement('Style')
