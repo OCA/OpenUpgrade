@@ -111,7 +111,27 @@ def create_kml(self, cr, uid, data, context={}):
             if add.country_id:
                 address += ', '
                 address += str(add.country_id.name)
-
+        
+        styleElement = kmlDoc.createElement('Style')
+        styleElement.setAttribute('id','randomColorIcon')
+        iconstyleElement = kmlDoc.createElement('IconStyle')
+        colorElement = kmlDoc.createElement('color')
+        colorElement.appendChild(kmlDoc.createTextNode('ff00ff00'))
+        iconstyleElement.appendChild(colorElement)
+        colormodeElement = kmlDoc.createElement('colorMode')
+        colormodeElement.appendChild(kmlDoc.createTextNode('random'))
+        iconstyleElement.appendChild(colormodeElement)
+        scaleElement = kmlDoc.createElement('scale')
+        scaleElement.appendChild(kmlDoc.createTextNode('1.1'))
+        iconstyleElement.appendChild(scaleElement)
+        iconElement = kmlDoc.createElement('Icon')
+        hrefElement = kmlDoc.createElement('href')
+        hrefElement.appendChild(kmlDoc.createTextNode('http://maps.google.com/mapfiles/kml/pal3/icon46.png'))
+        iconElement.appendChild(hrefElement)
+        iconstyleElement.appendChild(iconElement)
+        styleElement.appendChild(iconstyleElement)
+        documentElement.appendChild(styleElement)
+        
         desc_text = address + ' , turnover of partner : ' + str(res[part.id])
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
@@ -122,6 +142,9 @@ def create_kml(self, cr, uid, data, context={}):
         descriptionText = kmlDoc.createTextNode(desc_text)
         descriptionElement.appendChild(descriptionText)
         placemarkElement.appendChild(descriptionElement)
+        styleurlElement = kmlDoc.createElement('styleUrl')
+        styleurlElement.appendChild(kmlDoc.createTextNode('#randomColorIcon'))
+        placemarkElement.appendChild(styleurlElement)
         pointElement = kmlDoc.createElement('Point')
         placemarkElement.appendChild(pointElement)
         coorElement = kmlDoc.createElement('coordinates')
@@ -135,7 +158,7 @@ def create_kml(self, cr, uid, data, context={}):
     
 #    kmlFile.write(kmlDoc.toprettyxml(' '))
 #    kmlFile.close()
-    out = base64.encodestring(kmlDoc.toprettyxml(' '))
+    out = base64.encodestring(kmlDoc.toxml())
     fname = 'turnover' + '.kml'
     return {'kml_file': out, 'name': fname}
 
