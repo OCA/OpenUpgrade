@@ -76,7 +76,8 @@ def create_kml(self, cr, uid, data, context={}):
     address_obj= pool.get('res.partner.address')
 
     res = {}
-    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+#    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+    cr.execute("select min(aml.id) as id, sum(aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (actype.name = 'income' or ac.type = 'receivable') group by aml.partner_id")
     res_partner = cr.fetchall()
     for part in partner_data:
         for id, turnover, partner_id in res_partner:
