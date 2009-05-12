@@ -2,112 +2,118 @@
 <openerp>
 <data>
 
-	<menuitem name="Documents" id="menu_action_offer_doc" parent="dm.menu_dm_config" sequence="1" />
+    <menuitem name="Documents" id="menu_action_offer_doc" parent="dm.menu_dm_config" sequence="1" />
     <menuitem name="Campaign Documents" id="menu_dm_config_lowlevel_campaign_doc" parent="dm.menu_dm_config_lowlevel" groups="res_groups_dmadmin" sequence="1"/>
-	<!--
-	=======================================================
-	OFFER STEP DOCUMENT CATEGORY VIEWS
-	=======================================================
-	-->
+    <!--
+    =======================================================
+    OFFER STEP DOCUMENT CATEGORY VIEWS
+    =======================================================
+    -->
 
-	<record model="ir.ui.view" id="view_offer_step_document_categ_form">
-		<field name="name">dm.offer.document.category.form</field>
-		<field name="model">dm.offer.document.category</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Document Category">
-				<field name="name" select="1"/>
-				<field name="parent_id"/>
-			</form>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_offer_step_document_categ_form">
+        <field name="name">dm.offer.document.category.form</field>
+        <field name="model">dm.offer.document.category</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Document Category">
+                <field name="name" select="1"/>
+                <field name="parent_id"/>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_offer_step_document_categ_tree">
-		<field name="name">dm.offer.document.category.tree</field>
-		<field name="model">dm.offer.document.category</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Document Category">
-				<field name="complete_name"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_offer_step_document_categ_tree">
+        <field name="name">dm.offer.document.category.tree</field>
+        <field name="model">dm.offer.document.category</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Document Category">
+                <field name="complete_name"/>
+            </tree>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_doc_categ_form">
-		<field name="name">Edit DTP Documents Categories</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer.document.category</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="view_offer_step_document_categ_tree"/>
-	</record>
+    <record model="ir.actions.act_window" id="action_doc_categ_form">
+        <field name="name">Edit DTP Documents Categories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer.document.category</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_offer_step_document_categ_tree"/>
+    </record>
 
-	<menuitem id="menu_action_offer_doc_categ_form" parent="dm.menu_action_offer_doc" action="action_doc_categ_form" sequence="1"/>
+    <menuitem id="menu_action_offer_doc_categ_form" parent="dm.menu_action_offer_doc" action="action_doc_categ_form" sequence="1"/>
 
-	<!--
-	=======================================================
-	OFFER DOCUMENT VIEWS
-	=======================================================
-	-->
+    <!--
+    =======================================================
+    OFFER DOCUMENT VIEWS
+    =======================================================
+    -->
 
-	<record model="ir.ui.view" id="view_offer_step_document_form">
-		<field name="name">dm.offer.document.form</field>
-		<field name="model">dm.offer.document</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Documents">
-				<notebook>
-				<page string="General">
-					<field name="name" select="1"/>
-					<field name="code" select="2"/>
-					<field name="lang_id"/>
-					<field name="copywriter_id" select="1"/>
-					<field name="step_id" select="1"/>
-					<field name="gender_id" select="1"/>
-					<field name="category_id" colspan="4"/>
-					<separator string="Description" colspan="4"/>
-					<field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
-					<separator string="Status" colspan="4"/>
-					<group col="2" colspan="4">
-						<field name="state" nolabel="1"/>
-						<button name="state_validate_set" string="Validate" states="draft"/>
-					</group>
-				</page>
-				<page string="Dynamic Fields">
-					<field name="document_template_id" select="1" on_change ="onchange_plugin(document_template_id)"/>
-					<separator string="Template Plugins" colspan="4"/>
-					<field name="document_template_plugin_ids" colspan="4" nolabel="1" context="{'dm_template_id':document_template_id}"/>
-				</page>				
-				</notebook>
-			</form>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_offer_step_document_form">
+        <field name="name">dm.offer.document.form</field>
+        <field name="model">dm.offer.document</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Documents">
+                <notebook>
+                <page string="General">
+                    <field name="name" select="1"/>
+                    <field name="code" select="2"/>
+                    <field name="lang_id"/>
+                    <field name="copywriter_id" select="1"/>
+                    <field name="step_id" select="1"/>
+                    <field name="gender_id" select="1"/>
+                    <field name="category_id" colspan="4"/>
+                    <separator string="Description" colspan="4"/>
+                    <field name="note" colspan="4" nolabel="1" widget="text_wiki"/>
+                    <separator string="Status" colspan="4"/>
+                    <group col="2" colspan="4">
+                        <field name="state" nolabel="1"/>
+                        <button name="state_validate_set" string="Validate" states="draft"/>
+                    </group>
+                </page>
+                <page string="Dynamic Fields">
+                    <field name="document_template_id" select="1" on_change ="onchange_plugin(document_template_id)"/>
+                    <separator string="Template Plugins" colspan="4"/>
+                    <field name="document_template_plugin_ids" colspan="4" nolabel="1" context="{'dm_template_id':document_template_id}">
+                        <tree>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="note"/>
+                        </tree>
+                    </field>
+                </page>    
+                </notebook>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_offer_step_document_tree">
-		<field name="name">dm.offer.document.tree</field>
-		<field name="model">dm.offer.document</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree colors="red:not bool(has_attachment)" string="Documents">
-				<field name="name"/>
-				<field name="code"/>
-				<field name="step_id" />				
-				<field name="copywriter_id"/>
-				<field name="state"/>
-				<field name="gender_id"/>
-				<field name="has_attachment" invisible="1"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_offer_step_document_tree">
+        <field name="name">dm.offer.document.tree</field>
+        <field name="model">dm.offer.document</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree colors="red:not bool(has_attachment)" string="Documents">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="step_id" />
+                <field name="copywriter_id"/>
+                <field name="state"/>
+                <field name="gender_id"/>
+                <field name="has_attachment" invisible="1"/>
+            </tree>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_document_form">
-		<field name="name">All DTP Documents</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer.document</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="view_offer_step_document_tree"/>
-	</record>
+    <record model="ir.actions.act_window" id="action_document_form">
+        <field name="name">All DTP Documents</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.offer.document</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_offer_step_document_tree"/>
+    </record>
 
-	<menuitem id="menu_action_document_form" parent="dm.menu_action_offer_doc" action="action_document_form" sequence="2"/>
+    <menuitem id="menu_action_document_form" parent="dm.menu_action_offer_doc" action="action_document_form" sequence="2"/>
 
     <!--
     =======================================================
@@ -163,52 +169,52 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="DTP Plugin">
-            	<group  colspan="4">
-	                <field name="name" select="1" />
-			<field name="code" select="1" />	                
-			<field name="type" select="1" />
-			<field name="store_value" />
+                <group  colspan="4">
+                    <field name="name" select="1" />
+            <field name="code" select="1" />                    
+            <field name="type" select="1" />
+            <field name="store_value" />
                 </group>
                 <newline/>
-		<separator string="Description" colspan="4"/>
-		<field name="note" nolabel="1" colspan="4" widget="text_wiki"/>                
+        <separator string="Description" colspan="4"/>
+        <field name="note" nolabel="1" colspan="4" widget="text_wiki"/>                
                 <notebook colspan="4">
                     <page string="Customer Plugin" attrs="{'invisible':[('type','!=','fields')]}">
                         <field name="model_id" colspan="4" attrs="{'required':[('type','=','fields')]}" />
-     	                <field name="field_id"  colspan="4" domain = "[('model_id','=',model_id),('ttype','!=','one2many'),('ttype','not in',['many2one','many2many'])]" attrs="{'required':[('type','=','fields')]}" />
+                         <field name="field_id"  colspan="4" domain = "[('model_id','=',model_id),('ttype','!=','one2many'),('ttype','not in',['many2one','many2many'])]" attrs="{'required':[('type','=','fields')]}" />
 
                     </page>
                     <page string="Dynamic Plugin" attrs="{'invisible':[('type','not in',['dynamic','url'])]}">
-				<!--group colspan="4"  attrs="{'invisible':[('type','!=','dynamic')]}"-->
-			                <field name="file_id" colspan="4" filename="file_fname" />
-			                <field name="file_fname" />
+                <!--group colspan="4"  attrs="{'invisible':[('type','!=','dynamic')]}"-->
+                            <field name="file_id" colspan="4" filename="file_fname" />
+                            <field name="file_fname" />
                             <group colspan="4">
                                <field name="des_encrypt" />
                                <field name="key"/>
                             </group>
-				<!--/group-->
-				<separator string="Argument List" colspan="4"/>
-				<field name="argument_ids" nolabel="1" colspan="4">
-					<form string="Argument List">
-						<field name="name" select="1"/>
-					        <field name="stored_plugin"/>
-						<group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',True)]}">
-					        	<field name="value" />
-					        </group>
-					        <group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',False)]} ">
-				                	<field name="custome_plugin_id"/>
-				                </group>
-						<separator  colspan="4"/> 
-						<field name="note" nolabel="1" colspan="4" widget="text_wiki"/>
-					</form>
-					<tree string="Argument List">
-				        	<field name="name" select="1"/>
-						<field name="value"/>
-					</tree>					
-				</field>
-                    	</page>
-		</notebook>
-	    </form>
+                <!--/group-->
+                <separator string="Argument List" colspan="4"/>
+                <field name="argument_ids" nolabel="1" colspan="4">
+                    <form string="Argument List">
+                        <field name="name" select="1"/>
+                            <field name="stored_plugin"/>
+                        <group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',True)]}">
+                                <field name="value" />
+                            </group>
+                            <group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',False)]} ">
+                                    <field name="custome_plugin_id"/>
+                                </group>
+                        <separator  colspan="4"/> 
+                        <field name="note" nolabel="1" colspan="4" widget="text_wiki"/>
+                    </form>
+                    <tree string="Argument List">
+                            <field name="name" select="1"/>
+                        <field name="value"/>
+                    </tree>                    
+                </field>
+                        </page>
+        </notebook>
+        </form>
         </field>
     </record>
 
@@ -369,7 +375,7 @@
 
     <menuitem id="menu_action_dm_campaign_document" parent="menu_dm_config_lowlevel_campaign_doc" action="action_dm_campaign_document" sequence="1" />
 
-	<!--
+    <!--
     =======================================================
         DYNAMIC TEXT
     =======================================================
@@ -422,12 +428,12 @@
     -->
     
     <act_window name="Back To Offer Step"
-		res_model="dm.offer.step"
-		src_model="dm.offer.document"
-		view_type="form"
+        res_model="dm.offer.step"
+        src_model="dm.offer.document"
+        view_type="form"
         view_mode="tree,form"
-		id="act_back_to_offer_step_open"
-		domain = "[('document_ids','in',[active_id])]"/>
-		
+        id="act_back_to_offer_step_open"
+        domain = "[('document_ids','in',[active_id])]"/>
+        
 </data>
 </openerp>    

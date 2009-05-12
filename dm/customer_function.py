@@ -50,7 +50,7 @@ def customer_function(cr,uid,ids,**args):
                     res[args['field_name']] = str(read_name['name'])
                 else : return ' '
             elif args['field_name'] == 'name':
-                if res['name']
+                if res['name']:
                     read_name = pool.get('res.partner').read(cr,uid,res['name'][0],['name'])
                     res[args['field_name']] = str(read_name['name'])
                 else : return ' '
