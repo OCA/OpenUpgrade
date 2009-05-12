@@ -22,6 +22,10 @@
 
 from osv import fields, osv
 import pooler
+import tools
+from tools.config import config
+from tools.translate import _
+import netsvc
 
 class project_project(osv.osv):
     _inherit = "project.project"
@@ -34,43 +38,50 @@ project_project()
 
 class crm_case(osv.osv):
     _inherit = 'crm.case'
-    _columns = {
-         'server_act_id' : fields.many2one('ir.actions.server', 'Action'),        
-        }
-#    _defaults = {
-#           'server_act_id' : lambda self, cr, uid, context=None: \
-#                    self.pool.get('ir.actions.server').search(cr, uid, [('name', '=', 'Send email')])[0],      
-#            }
     
     def write(self, cr, uid, ids, vals, context={}):
-        id = self.pool.get('ir.actions.server').search(cr, uid, [('model_id', '=', 'Case'),('name','=','Send email')])
-        if id:
-            obj = pooler.get_pool(cr.dbname).get('ir.actions.server')
-            return obj.run(cr, uid, id, context=context)
-        return False
+        case_obj = self.browse(cr, uid, ids)[0]
+        prj_ids = self.pool.get('project.project').search(cr, uid, [('section_bug_id','=',case_obj.section_id.id) or ('section_feature_id','=',case_obj.section_id.id) or ('section_support_id','=',case_obj.section_id.id)])
+        members = self.pool.get('project.project').browse(cr, uid, prj_ids)[0].members
+        for i in members:
+            if tools.email_send(config['email_from'], i.address_id.email, case_obj.name, case_obj.description, debug=False, subtype='html') == True:
+                logger = netsvc.Logger()
+                logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
+            else:
+                logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
+        return True
 crm_case()
 
 class task(osv.osv):
     _inherit = 'project.task'
-    _columns = {
-         'server_act_id' : fields.many2one('ir.actions.server', 'Action'),        
-        }
-#    _defaults = {
-#           'server_act_id' : lambda self, cr, uid, context=None: \
-#                    self.pool.get('ir.actions.server').search(cr, uid, [('name', '=', 'Send email')])[0],      
-#            }
     
     def write(self, cr, uid, ids, vals, context={}):
-        user_id = self.browse(cr, uid, ids)[0].user_id.id
-        prj_ids = self.pool.get('project.project').search(cr, uid, [])
-        mem = self.pool.get('project.project').browse(cr, uid, prj_ids)[0].members
-        for i in mem:
-            if user_id in [i.id]:
-                id = self.pool.get('ir.actions.server').search(cr, uid, [('model_id', '=', 'Task'),('name','=','Send email')])
-                if id:
-                    obj = pooler.get_pool(cr.dbname).get('ir.actions.server')
-                    return obj.run(cr, uid, id, context=context)
-        return False
+        project_obj = self.browse(cr, uid, ids)[0]
+        prj_ids = self.pool.get('project.project').search(cr, uid, [('id','=',project_obj.project_id.id)])
+        members = self.pool.get('project.project').browse(cr, uid, prj_ids)[0].members
+        for i in members:
+            if tools.email_send(config['email_from'], i.address_id.email, project_obj.name, project_obj.description, debug=False, subtype='html') == True:
+                logger = netsvc.Logger()
+                logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
+            else:
+                logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
+        return True
 task()
+
+class document_file(osv.osv):
+    _inherit = 'ir.attachment'
+    
+    def write(self, cr, uid, ids, vals, context={}):
+        att_obj = self.browse(cr, uid, ids)[0]
+        if att_obj.res_id:
+            members = self.pool.get('project.project').browse(cr, uid, [att_id])[0].members
+            for i in members:
+                if tools.email_send(config['email_from'], i.address_id.email, att_obj.name, att_obj.description, debug=False, subtype='html') == True:
+                    logger = netsvc.Logger()
+                    logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
+                else:
+                    logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
+            return True
+document_file()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
