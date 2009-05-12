@@ -32,7 +32,7 @@ import pickle
 import cPickle
 import datetime
 
-#import shelve
+import shelve
 
 class job_process(signal):
     def __init__(self, components=[], name='job'):
@@ -147,10 +147,6 @@ class job_process(signal):
 
 
     def action_job_start(self, key, signal_data={}, data={}):
-#        in_s = open('/home/tiny/Desktop/etl/a.txt', 'rb')
-#        in_s.seek(0,0)
-#        o = self.cpickle.load(in_s)
-#        in_s.close()
         self.detail[key]={}
         self.logger.notifyChannel("job", logger.LOG_INFO,
                      'the <' + key.name + '> has started now...')
@@ -198,8 +194,22 @@ class job_process(signal):
         self.detail[key]['process_time'] =  diff
         self.detail[key]['status'] ='end'
         out_s = open('/home/tiny/Desktop/etl/a.txt', 'wb')
-        self.cpickle.dump({'Data':'Data'}, out_s)
+        self.cpickle.dump(str(self.detail), out_s)
         out_s.close()
+
+        d = shelve.open('/home/tiny/Desktop/etl/a2.txt' ,writeback=True)
+
+        d['key'] = self.detail
+
+        d.close()
+
+        in_s = open('/home/tiny/Desktop/etl/a.txt', 'rb')
+        in_s.seek(0)
+        a = self.cpickle.load(in_s)
+#        a = self.cpickle.loads(b_object)
+        print type(a)
+        print eval(a)
+#        out_s.close()
 #
 #        self.shelf['end_date'] =current_time
 #        self.shelf['process_time']=diff
