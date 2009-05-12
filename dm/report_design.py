@@ -158,7 +158,7 @@ def generate_reports(cr,uid,obj,report_type,context):
 
 
 
-def generate_plugin_value(cr, uid, document_id, address_id,workitem_id, context={}):
+def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, context={}):
     if not document_id :
         return False
     if not address_id :
@@ -170,7 +170,7 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id, context=
         args = {}
         res  = pool.get('ir.model').browse(cr, uid, p.model_id.id)
         args['model_name'] = res.model
-        if res.model=='dm.workitem' and wi_id:
+        if wi_id:
             args['wi_id'] = wi_id    
         args['field_name'] = str(p.field_id.name)
         args['field_type'] = str(p.field_id.ttype)
@@ -185,6 +185,8 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id, context=
 
     for p in plugins :
         args = {}
+        args['document_id'] = document_id
+        args['address_id'] = address_id
         if p.type == 'fields':
             plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
 
@@ -229,30 +231,24 @@ class offer_document(rml_parse):
             document_id = self.context['document_id']
             workitem_id = self.context['active_id']
         else :
-           
+
             address_id = self.datas['form']['address_id']
             document_id = self.ids[0]
-             
+
             dm_workitem_obj = self.pool.get('dm.workitem')
-            workitem_id = dm_workitem_obj.browse(self.cr,self.uid,document_id)
             workitem_data=dm_workitem_obj.search(self.cr,self.uid,[])
-            
-            dm_offer_step_obj = self.pool.get('dm.offer.step')
-            step_id = dm_offer_step_obj.browse(self.cr,self.uid,document_id)
-            step_data_id=dm_offer_step_obj.search(self.cr,self.uid,[])
-            
-            
-            dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
-            segment_id = dm_segment_obj.browse(self.cr,self.uid,document_id)
-            segment_data_id=dm_segment_obj.search(self.cr,self.uid,[])
-            
+
             if not workitem_data:
-                dm_workitem_obj.create(self.cr, self.uid,{'address_id':address_id,
-                                             'step_id':step_data_id[0],
+                document = self.pool.get('dm.offer.document').browse(self.cr,self.uid,document_id)
+
+                dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
+                segment_data_id=dm_segment_obj.search(self.cr,self.uid,[])
+
+                workitem_id = dm_workitem_obj.create(self.cr, self.uid,{'address_id':address_id,
+                                             'step_id':document.step_id.id,
                                              'segment_id' : segment_data_id[0]})
-            else:
-#            set the workitem id here for the report which are called directly from the document object
-                workitem_id = 1
+            else :
+                workitem_id = workitem_data[0]
         values = generate_plugin_value(self.cr,self.uid,document_id,address_id,workitem_id)
         return [values]
 

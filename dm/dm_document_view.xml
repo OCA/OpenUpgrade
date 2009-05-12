@@ -182,6 +182,10 @@
 				<!--group colspan="4"  attrs="{'invisible':[('type','!=','dynamic')]}"-->
 			                <field name="file_id" colspan="4" filename="file_fname" />
 			                <field name="file_fname" />
+                            <group colspan="4">
+                               <field name="des_encrypt" />
+                               <field name="key"/>
+                            </group>
 				<!--/group-->
 				<separator string="Argument List" colspan="4"/>
 				<field name="argument_ids" nolabel="1" colspan="4">

@@ -13,6 +13,9 @@ def customer_function(cr,uid,ids,**args):
     model_object =  pool.get(model_name)
     if model_name == 'dm.workitem' and 'wi_id' in args:
         res = pool.get(model_name).read(cr,uid,args['wi_id'])
+    elif model_name == 'dm.campaign' and 'wi_id' in args:
+        data = pool.get('dm.workitem').browse(cr,uid,[args['wi_id']])[0]
+        res = pool.get(model_name).read(cr,uid,[data.segment_id.proposition_id.camp_id.id])[0]
     else :
         res = pool.get('res.partner.address').read(cr,uid,ids)[0]
         if model_name == 'res.partner' :
@@ -34,18 +37,23 @@ def customer_function(cr,uid,ids,**args):
         value = res[args['field_name']]
         return value
     elif args['field_type'] == 'many2one':
-        print "args['field_name']", args['field_name'], res
         if res[args['field_name']]:
             if args['field_name'] == 'lang_id':
-                read_name = pool.get('res.lang').read(cr,uid,res['lang_id'][0],['name'])
-                res[args['field_name']] = str(read_name['name'])
+                if res['lang_id'] :
+                    read_name = pool.get('res.lang').read(cr,uid,res['lang_id'][0],['name'])
+                    res[args['field_name']] = str(read_name['name'])
+                else : return ' '
             elif args['field_name'] == 'country_id' or args['field_name'] == 'country':
-                id = res['country_id'][0] or res['country'][0]
-                read_name = pool.get('res.country').read(cr,uid,id,['name'])
-                res[args['field_name']] = str(read_name['name'])
+                if res['country_id']: 
+                    id = res['country_id'][0] or res['country'][0]
+                    read_name = pool.get('res.country').read(cr,uid,id,['name'])
+                    res[args['field_name']] = str(read_name['name'])
+                else : return ' '
             elif args['field_name'] == 'name':
-                read_name = pool.get('res.partner').read(cr,uid,res['name'][0],['name'])
-                res[args['field_name']] = str(read_name['name'])
+                if res['name']
+                    read_name = pool.get('res.partner').read(cr,uid,res['name'][0],['name'])
+                    res[args['field_name']] = str(read_name['name'])
+                else : return ' '
         if args['field_name'].find('id')>=0 :
             return res[args['field_name']][0]
         return res[args['field_name']]
