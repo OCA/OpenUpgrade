@@ -23,6 +23,7 @@
 import etl
 import tools
 from osv import osv, fields
+import sys
 
 class etl_component_transform_logger(osv.osv):
     _name='etl.component'
@@ -40,9 +41,8 @@ class etl_component_transform_logger(osv.osv):
             conn_instance=trans_instance=False
             if cmp.output_id:
                 conn_instance=obj_connector.get_instance(cr, uid, cmp.output_id.id , context, data)
-            args['name']=cmp.name
             if conn_instance:args['output']=conn_instance
-            val = etl.component.transform.logger(*args)
+            val = etl.component.transform.logger(sys.stdout, cmp.name)
         return val
 
 etl_component_transform_logger()

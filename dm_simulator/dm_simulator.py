@@ -56,6 +56,7 @@ class dm_simulator(osv.osv):
     }
 
     def onchange_campaign(self, cr, uid, ids, campaign_id, type):
+        """ Compute the quantities values on change of campaign """
         value = {}
         if campaign_id:
             cust_ids = []
@@ -93,6 +94,7 @@ class dm_simulator(osv.osv):
 
 
     def simulation_start(self, cr, uid, ids, *args):
+        """ Starts the simulation """
         sim = self.browse(cr, uid, ids)[0]
         now = datetime.datetime.now()
         self.write(cr, uid, ids, {'date_start':now.strftime('%Y-%m-%d  %H:%M:%S')})
@@ -117,6 +119,7 @@ class dm_simulator(osv.osv):
 
                 """ Define the quantity of actions per sections with start en end time """
                 """ Half of the customers purchase at the start of campaign """
+                """ Then half of then purchase at the next section and so on... """
                 sect_act_qty = (sect_act_qty/2) * (sect+1)
                 sect_act.append([sect_act_qty,from_time,to_time])
                 print "%s actions for section %s" %(sect_act_qty, sect)
@@ -171,6 +174,7 @@ class dm_simulator(osv.osv):
         return True
 
     def simulation_stop(self, cr, uid, ids, *args):
+        """ Stops the simulation """
 
         """ Remove simulation actions """
         sim = self.browse(cr, uid ,ids)[0]
@@ -187,6 +191,7 @@ class dm_simulator(osv.osv):
         return True
 
     def action_do(self, cr, uid, context={}):
+        """ Check for actions to execute and execute those planned at that time """
 
         sim_ids = self.search(cr, uid, [('state','=','running')])
         for sim in self.browse(cr, uid, sim_ids):

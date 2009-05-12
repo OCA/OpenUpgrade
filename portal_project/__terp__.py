@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,23 +20,18 @@
 #
 ##############################################################################
 {
-    "name" : "Direct Marketing For Web Site",
+    "name" : "Project Portal",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module deals with website.
-            """,
-    "depends" : ["dm"],
-    "init_xml" : [],
-    "demo_xml" : ["dm_website_demo.xml"],
-    "update_xml" : [
-                    "dm_website_view.xml",
-                    "dm_website_data.xml",
-                    ],
+    "category" : "Generic Modules/CRM",
+    "description": """ Synchronize between :
+                  - Project
+                  - Analytic Account
+                  - CRM Section Project task and CRM Case.""",
+    "depends" : ["base", "project", "crm_configuration"],
+    "init_xml" : ["portal_project_data.xml"],
+    "demo_xml" : [],
+    "update_xml" : ["portal_project_view.xml"],
     "active": False,
     "installable": True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

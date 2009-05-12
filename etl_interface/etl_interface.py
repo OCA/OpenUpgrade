@@ -26,6 +26,7 @@ import time
 import netsvc
 import pooler
 from osv import osv, fields
+import os
 
 class etl_project(osv.osv):
     _name='etl.project'
@@ -97,7 +98,7 @@ class etl_connector(osv.osv):
     _columns={
               'name' : fields.char('Connector Name', size=64, required=True),
               'type' : fields.selection(_get_connector_type, 'Connector Type', size=64, required=True),
-              'uri' : fields.char('URL', size=124),
+              'uri' : fields.char('URL', size=124, help="Enter Real Path"),
               'host' : fields.char('Host', size=64),
               'port' : fields.char('Port', size=64),
               'uid' : fields.char('User  ID', size=64),
@@ -213,16 +214,13 @@ class etl_job(osv.osv):
         comps = list(set(comps))
         for cmp_id in comps:
             component_instance.append(obj_component.get_instance(cr, uid, cmp_id, context, data))
-        
-        job=etl.job( component_instance, res['name'])
+        job=etl.job(component_instance, res['name'])
         return job
 
     def action_open_job(self, cr, uid, ids, context={}):
         return self.write(cr, uid, ids, {'state':'open'})
     def action_close_job(self, cr, uid, ids, context={}):
         return self.write(cr, uid, ids, {'state':'close'})
-
-
 
 etl_job()
 
@@ -610,7 +608,8 @@ class etl_transition(osv.osv):
         cmp_out = obj_component.get_instance(cr, uid, trans.destination_component_id.id, context, data)
         if (cr.dbname, uid, data.get('process_id', False), id) in self._cache:
             return self._cache[(cr.dbname, uid, data.get('process_id', False), id)]
-        val=etl.transition(cmp_in, cmp_out, channel_source=trans.channel_source, channel_destination=trans.channel_destination, type=trans.type)
+        val=etl.transition(cmp_in, cmp_out, channel_source=trans.channel_source or 'main',\
+                           channel_destination=trans.channel_destination or 'main', type=trans.type)
         return val
 
     def action_open_transition(self, cr, uid, ids, context={}):

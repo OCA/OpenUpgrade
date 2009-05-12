@@ -57,6 +57,8 @@ class localfile(connector):
         super(localfile, self).open()
         if not mode:
             mode = self.mode
+        if not mode in ['r','w','a','b','r+','w+','a+','rb','wb','ab','rb+','wb+','ab+']:
+            mode = 'ab+'
         return file(self.uri, mode)
         #self.file.encoding=self.encoding
 

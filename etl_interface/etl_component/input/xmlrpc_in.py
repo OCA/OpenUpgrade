@@ -24,32 +24,30 @@ import etl
 import tools
 from osv import osv, fields
 
-class etl_connector_openobject(osv.osv):
-    _name='etl.connector'
-    _inherit='etl.connector'
-
+class etl_component_xmlrpc_in(osv.osv):
+    _name = 'etl.component'
+    _inherit = 'etl.component'
     _columns={
+          'field_ids': fields.one2many('etl.component.field', 'component_id', 'Fields'),
+          'model_id': fields.many2one('ir.model', 'Model'),
 
-          'db' : fields.char('Database', size=64),
-          'obj' : fields.char('Object', size=64),
-          'openobject_con_type' : fields.selection([('xmlrpc','XML-RPC'),('socket','Socket')], 'Connection Type')
-    }
+     }
 
-
-    def onchange_type(self, cr, uid, ids, type):
-        res=super(etl_connector_openobject, self).onchange_type(cr,uid, ids, type)
-        val=res.get('value',{})
-        if type and type=='openobject':
-            val['obj']= '/xmlrpc/object'
-            val['openobject_con_type']= 'xmlrpc'
-        return {'value':val}
-
-    def create_instance(self, cr, uid, id , context={}, data={}):
-        val = super(etl_connector_openobject, self).create_instance(cr, uid, id, context, data)
-        con=self.browse(cr, uid, id)
-        if con.type == 'openobject':
-            val = etl.connector.openobject_connector(con.uri, cr.dbname, con.uid, con.passwd, con.obj, con.openobject_con_type, con.name)
+    def create_instance(self, cr, uid, id, context={}, data={}):
+        val = super(etl_component_xmlrpc_in, self).create_instance(cr, uid, id, context, data)
+        obj_connector = self.pool.get('etl.connector')
+        obj_transformer = self.pool.get('etl.transformer')
+        cmp=self.browse(cr, uid, id)
+        if cmp.type_id.name == 'input.xmlrpc_in':
+            conn_instance=trans_instance = False
+            if cmp.connector_id:
+                conn_instance=obj_connector.get_instance(cr, uid, cmp.connector_id.id , context, data)
+            if cmp.transformer_id:
+                trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
+            # TODO : Check for Job
+            self.job = None
+            val = etl.component.input.xmlrpc_in(conn_instance, self.job, cmp.name, trans_instance, cmp.row_limit)
         return val
 
-etl_connector_openobject()
+etl_component_xmlrpc_in()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

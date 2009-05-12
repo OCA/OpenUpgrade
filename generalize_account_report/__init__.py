@@ -19,24 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Direct Marketing For Web Site",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module deals with website.
-            """,
-    "depends" : ["dm"],
-    "init_xml" : [],
-    "demo_xml" : ["dm_website_demo.xml"],
-    "update_xml" : [
-                    "dm_website_view.xml",
-                    "dm_website_data.xml",
-                    ],
-    "active": False,
-    "installable": True,
-}
+import generalize_account_report
+import report
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,24 +19,22 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+
 {
-    "name" : "Direct Marketing For Web Site",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module deals with website.
-            """,
-    "depends" : ["dm"],
-    "init_xml" : [],
-    "demo_xml" : ["dm_website_demo.xml"],
-    "update_xml" : [
-                    "dm_website_view.xml",
-                    "dm_website_data.xml",
-                    ],
-    "active": False,
-    "installable": True,
+    'name': 'Getting Things Done - Idea Management Module',
+    'version': '1.0',
+    'category': 'Generic Modules/Projects & Services',
+    'description': "This module links all ideas to project",
+    'author': 'Tiny',
+    'depends': ['project', 'idea'],
+    'init_xml': [],
+    'update_xml': [
+        'project_idea_view.xml',
+    ],
+    'demo_xml': [],
+    'installable': True,
+    'active': False,
 }
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

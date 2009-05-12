@@ -102,14 +102,15 @@ class mrp_production(osv.osv):
     }
     
     def action_confirm(self, cr, uid, ids):
-        super(mrp_production, self).action_confirm(cr, uid, ids)
+        picking_id = super(mrp_production, self).action_confirm(cr, uid, ids)
         for production in self.browse(cr, uid, ids):
             for move_line, product_line in zip(production.move_lines, production.product_lines):
                 if move_line.product_id.id != product_line.product_id.id:
                     print "product_id mismatch !"
                 else:
                     self.pool.get('stock.move').write(cr, uid, move_line.id, {'bom_id': product_line.bom_id.id})
-                    
+        return picking_id
+
         
 mrp_production()
 
@@ -127,7 +128,6 @@ class mrp_procurement(osv.osv):
     _name = 'mrp.procurement'
     
     def action_produce_assign_product(self, cr, uid, ids, context={}):
-        print "Overloading successful"
         produce_id = False
         company = self.pool.get('res.users').browse(cr, uid, uid, context).company_id
         for procurement in self.browse(cr, uid, ids):
@@ -159,8 +159,8 @@ class mrp_procurement(osv.osv):
                 'sale_order_line_id':sale_order_line_id,
             })
             self.pool.get('sale.order.line').write(cr, uid, sale_order_line_id, {'mrp_production_id': produce_id})
-            
             ## End Smile's changes
+
             self.write(cr, uid, [procurement.id], {'state':'running'})
             bom_result = self.pool.get('mrp.production').action_compute(cr, uid,
                     [produce_id], properties=[x.id for x in procurement.property_ids])

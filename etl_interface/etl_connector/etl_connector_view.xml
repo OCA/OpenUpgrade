@@ -59,7 +59,7 @@
 							<field name="host"/>
 							<field name="port"/>
 							<field name="uid"/>
-							<field name="passwd"/>
+							<field name="passwd" password="1"/>
 						</page>
 						<page string="Other Information"  attrs="{'invisible':[('type','!=',False)]}"/>
                     </notebook>

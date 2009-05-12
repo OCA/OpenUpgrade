@@ -55,7 +55,6 @@ class sugarcrm_in(component):
         res = self.connector.search(portType, session_id, self.module)
         for data in res:
             if data:
-                print data['first_name'], data['account_name']
                 yield data, 'main'
 
 def test():

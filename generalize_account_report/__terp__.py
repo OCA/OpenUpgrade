@@ -20,23 +20,18 @@
 #
 ##############################################################################
 {
-    "name" : "Direct Marketing For Web Site",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module deals with website.
-            """,
-    "depends" : ["dm"],
+    "name" : "generalize account report module",
+    "version" : "0.1",
+    "author" : "Tiny/Axelor",
+    "depends" : ["base","account_voucher"],
+    "category" : "Generic Modules/generalize_account_report",
+    "description" : """Module to handle account in generalize manner and print the report.""",
     "init_xml" : [],
-    "demo_xml" : ["dm_website_demo.xml"],
-    "update_xml" : [
-                    "dm_website_view.xml",
-                    "dm_website_data.xml",
-                    ],
+    "demo_xml" : [],
+    "update_xml" : ["generalize_account_report_view.xml","generalize_account_report.xml"],
     "active": False,
-    "installable": True,
+    "installable": True
 }
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

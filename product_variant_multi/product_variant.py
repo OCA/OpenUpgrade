@@ -127,8 +127,8 @@ class product_product(osv.osv):
     def _variant_name_get(self, cr, uid, ids, name, arg, context={}):
         res = {}
         for product in self.browse(cr, uid, ids, context):
-            r = map(lambda dim: (dim.dimension_id.name or '')+'/'+(dim.name or '-'), product.dimension_value_ids)
-            res[product.id] = ','.join(r)
+            r = map(lambda dim: (dim.dimension_id.name or '')+':'+(dim.name or '-'), product.dimension_value_ids)
+            res[product.id] = ' - '.join(r)
         return res
     
     def _get_products(self, cr, uid, ids, context={}):

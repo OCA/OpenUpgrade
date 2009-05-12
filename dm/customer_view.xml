@@ -10,7 +10,7 @@
     CUSTOMER
     ======================
     -->
-
+<!--
     <record model="ir.ui.view" id="view_dm_customer_form">
         <field name="name">dm.customer.form</field>
         <field name="model">res.partner</field>
@@ -21,7 +21,6 @@
                     <separator string="Customer Description" colspan="5"/>
                     <field name="name" select="1"/>
                     <field name="ref" select="1"/>
-<!--                    <field name="code" select="1"/>-->
                     <field name="lang" select="2"/>
                 </group>
             <notebook>
@@ -73,7 +72,6 @@
                 </page>
                 <page string="Extra Infos">
                     <group colspan="2" col="2">
-<!--                        <field name="language_id" nolabel="1" select="2"/>-->
                         <separator string="Other Languages" colspan="2"/>
                         <field name="language_ids" nolabel="1" select="2"/>
                     </group>
@@ -104,11 +102,9 @@
         <field name="arch" type="xml">
             <tree string="Customers">
                 <field name="ref"/>
-<!--                <field name="code"/>-->
                 <field name="name" colspan="4"/>
                 <field name="country"/>
                 <field name="lang"/>
-<!--                <field name="language_id"/>-->
             </tree>
         </field>
     </record>
@@ -134,13 +130,13 @@
         <field name="act_window_id" ref="action_dm_customer_form"/>
     </record>
     <menuitem id="menu_dm_customer_form" parent="dm.menu_dm_config_customer" action="action_dm_customer_form" sequence="1" />
-
+-->
     <!--
     =======================================================
     CUSTOMER ORDER VIEWS
     =======================================================
     -->
-    
+<!--
     <record model="ir.ui.view" id="view_dm_customer_order_form">
         <field name="name">dm.customer.order.form</field>
         <field name="model">dm.customer.order</field>
@@ -196,7 +192,7 @@
     </record>
 
     <menuitem id="menu_action_dm_customer_order_form" parent="dm.menu_dm_config_customer" action="action_dm_customer_order_form" sequence="2" />
-
+-->
     <!--
     =======================================================
     ORDER VIEWS
