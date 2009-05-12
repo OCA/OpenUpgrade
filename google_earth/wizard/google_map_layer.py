@@ -79,6 +79,7 @@ def create_kml(self, cr, uid, data, context={}):
     addresslist = []
     country_list = []
     coordinates_text = ' '
+    colors = ['dfbf9f3b','88336699','59009900','8fffff00','7f00ffff','7fffffff','aaffffff','880fff00','880f00cc','88f000cc','33333333']
 
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
@@ -194,48 +195,16 @@ def create_kml(self, cr, uid, data, context={}):
     documentElement.appendChild(documentElementname)
     documentElement.appendChild(documentElementdesc)
 
-    styleElement = kmlDoc.createElement('Style')
-    styleElement.setAttribute('id','transBluePoly')
-
-    linestyleElement = kmlDoc.createElement('LineStyle')
-    colorElement = kmlDoc.createElement('color')
-    colorElement.appendChild(kmlDoc.createTextNode('CC66CC'))
-    linestyleElement.appendChild(colorElement)
-    styleElement.appendChild(linestyleElement)
-    ballonElement = kmlDoc.createElement('BalloonStyle')
-    ballonbgElement = kmlDoc.createElement('bgColor')
-    ballonbgElement.appendChild(kmlDoc.createTextNode('59009900'))
-    balloontextElement = kmlDoc.createElement('text')
-    balloontextElement.appendChild(kmlDoc.createTextNode('TESSTT'))
-    ballonElement.appendChild(ballonbgElement)
-    ballonElement.appendChild(balloontextElement)
-    styleElement.appendChild(ballonElement)
-
-    polystyleElement = kmlDoc.createElement('PolyStyle')
-    polycolorElement = kmlDoc.createElement('color')
-    polycolorElement.appendChild(kmlDoc.createTextNode('59009900'))
-    polyfillElement = kmlDoc.createElement('fill')
-    polyfillElement.appendChild(kmlDoc.createTextNode('1'))
-    polyoutlineElement = kmlDoc.createElement('outline')
-    polyoutlineElement.appendChild(kmlDoc.createTextNode('1'))
-
-    polystyleElement.appendChild(polycolorElement)
-    polystyleElement.appendChild(polyfillElement)
-    polystyleElement.appendChild(polyoutlineElement)
-    styleElement.appendChild(polystyleElement)
-    documentElement.appendChild(styleElement)
-
     folderElement = kmlDoc.createElement('Folder')
     foldernameElement = kmlDoc.createElement('name')
     foldernameElement.appendChild(kmlDoc.createTextNode('Folder'))
     folderElement.appendChild(foldernameElement)
 
     #different color should be used
-    colors = ['33333333','dfbf9f3b','59009900','FF9933','FF3300','FF66CC','993399','00FF33','CC99CC','FF0000','CC66CC','6633CC','00FF99','990099','0099FF','CCCCFF','CCCC99','66CCFF','00CCFF','CC9933','FFCC99','CCCC66','99FF33']
     len_color = len(colors)
     cnt = 0
     for country in country_list:
-        cnt += 1 #should be used
+#        cnt += 1 #should be used
         cooridinate = dict_country[country]
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
@@ -247,7 +216,8 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkstyleElement = kmlDoc.createElement('Style')
         placemarkpolystyleElement = kmlDoc.createElement('PolyStyle')
         placemarkcolorrElement = kmlDoc.createElement('color')
-        placemarkcolorrElement.appendChild(kmlDoc.createTextNode('FF0000'))#colors[cnt])
+#        placemarkcolorrElement.appendChild(kmlDoc.createTextNode('FF0000'))#colors[cnt])
+        placemarkcolorrElement.appendChild(kmlDoc.createTextNode(colors[cnt]))
         placemarkpolystyleElement.appendChild(placemarkcolorrElement)
         placemarkstyleElement.appendChild(placemarkpolystyleElement)
 
@@ -255,10 +225,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkElement.appendChild(placemarkdescElement)
         placemarkElement.appendChild(placemarkstyleElement)
 
-        styleurlElement = kmlDoc.createElement('styleUrl')
-        styleurlElement.appendChild(kmlDoc.createTextNode('#transBluePoly'))
-        placemarkElement.appendChild(styleurlElement)
-
+        cnt += 1
         geometryElement = kmlDoc.createElement('MultiGeometry')
         polygonElement = kmlDoc.createElement('Polygon')
 
@@ -276,6 +243,7 @@ def create_kml(self, cr, uid, data, context={}):
 
         folderElement.appendChild(placemarkElement)
         documentElement.appendChild(folderElement)
+        
 
     # This writes the KML Document to a file.
 #    kmlFile = open(fileName, 'w')
