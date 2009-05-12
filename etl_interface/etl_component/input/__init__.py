@@ -26,3 +26,4 @@ import xml_in
 import openobject_in
 import gmail_in
 import facebook_in
+import xmlrpc_in

@@ -55,7 +55,7 @@
          'etl_component/input/excel_in_view.xml',
          'etl_component/input/xml_in_view.xml',
          'etl_component/input/openobject_in_view.xml',
-
+        'etl_component/input/xmlrpc_in_view.xml',
 	     'etl_component/input/gmail_in_view.xml',
 
 	     'etl_component/output/csv_out_view.xml',
