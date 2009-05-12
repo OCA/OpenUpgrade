@@ -229,10 +229,30 @@ class offer_document(rml_parse):
             document_id = self.context['document_id']
             workitem_id = self.context['active_id']
         else :
+           
             address_id = self.datas['form']['address_id']
             document_id = self.ids[0]
+             
+            dm_workitem_obj = self.pool.get('dm.workitem')
+            workitem_id = dm_workitem_obj.browse(self.cr,self.uid,document_id)
+            workitem_data=dm_workitem_obj.search(self.cr,self.uid,[])
+            
+            dm_offer_step_obj = self.pool.get('dm.offer.step')
+            step_id = dm_offer_step_obj.browse(self.cr,self.uid,document_id)
+            step_data_id=dm_offer_step_obj.search(self.cr,self.uid,[])
+            
+            
+            dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
+            segment_id = dm_segment_obj.browse(self.cr,self.uid,document_id)
+            segment_data_id=dm_segment_obj.search(self.cr,self.uid,[])
+            
+            if not workitem_data:
+                dm_workitem_obj.create(self.cr, self.uid,{'address_id':address_id,
+                                             'step_id':step_data_id[0],
+                                             'segment_id' : segment_data_id[0]})
+            else:
 #            set the workitem id here for the report which are called directly from the document object
-            workitem_id = 1
+                workitem_id = 1
         values = generate_plugin_value(self.cr,self.uid,document_id,address_id,workitem_id)
         return [values]
 
