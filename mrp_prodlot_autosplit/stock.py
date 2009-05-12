@@ -28,15 +28,15 @@ class stock_move(osv.osv):
             
         for move in self.browse(cr, uid, ids):
             product_id = move.product_id.id
-            existing_prodlot_id = self.pool.get('stock.production.lot').search(cr, uid, [('product_id','=', product_id), ('name', '=', value)])
-            if not existing_prodlot_id: #avoid creating a prodlot twice
+            existing_prodlot = move.prodlot_id
+            if existing_prodlot: #avoid creating a prodlot twice
+                self.pool.get('stock.production.lot').write(cr, uid, existing_prodlot.id, {'name': value})
+            else:
                 prodlot_id = self.pool.get('stock.production.lot').create(cr, uid, {
                     'name': value,
                     'product_id': product_id,
                 })
                 self.write(cr, uid, ids, {'prodlot_id': prodlot_id})
-            else:
-                self.pool.get('stock.production.lot').write(cr, uid, existing_prodlot_id, {'name': value})
             
 
     _columns = {        
