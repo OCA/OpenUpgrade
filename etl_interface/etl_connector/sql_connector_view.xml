@@ -18,9 +18,6 @@
 			</field>
 		</record>
 
-
-
-
 		<record id="action_etl_connector_sql_tree"
 			model="ir.actions.act_window">
 			<field name="name">SQL Connectors</field>
@@ -54,7 +51,6 @@
 		<menuitem name="SQL Connector"
 			parent="etl_interface.etl_connector_all_tree"
 			action="action_etl_connector_sql_tree" id="etl_connector_sql" />
-
 
 	</data>
 </openerp>
