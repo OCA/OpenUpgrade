@@ -971,12 +971,11 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field model="dm.ddf.plugin" search="[('model_id.model','like','res.partner')]" name="plugin_ids"/>
             <field eval="&quot;&quot;&quot;Partner&quot;&quot;&quot;" name="name"/>
         </record>
-        <record id="dm_document_template_wi0" model="dm.document.template">
+        <record id="dm_document_template_website0" model="dm.document.template">
         	<field model="dm.ddf.plugin" search="[('model_id.model','like','dm.workitem')]" name="plugin_ids"/>
-            <field eval="&quot;&quot;&quot;Workitem&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Website&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
-
 
     <!-- TRIGGER -->
 
