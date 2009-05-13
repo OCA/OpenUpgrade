@@ -188,8 +188,9 @@
                 <!--group colspan="4"  attrs="{'invisible':[('type','!=','dynamic')]}"-->
                             <field name="file_id" colspan="4" filename="file_fname" />
                             <field name="file_fname" />
-                            <group colspan="4">
-                               <field name="des_encrypt" />
+                            <newline/>
+                            <field name="des_encrypt" />
+                            <group colspan="2" attrs="{'invisible':[('des_encrypt','=',False)]}">
                                <field name="key"/>
                             </group>
                 <!--/group-->
