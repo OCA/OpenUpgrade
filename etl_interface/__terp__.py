@@ -40,7 +40,8 @@
          'etl_interface_sequence.xml',
          'etl_interface_view.xml',
          'etl_interface_workflow.xml',
-         
+        
+         'etl_connector/etl_connector_view.xml',
          'etl_connector/localfile_view.xml',
          'etl_connector/openobject_connector_view.xml',
          'etl_connector/sql_connector_view.xml',
@@ -48,8 +49,6 @@
          'etl_connector/sugarcrm_connector_view.xml',
          
          'etl_component/etl_component_view.xml',
-         'etl_connector/etl_connector_view.xml',
-         
          'etl_component/control/data_count_view.xml',
          'etl_component/control/sleep_view.xml',
          
