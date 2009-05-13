@@ -27,7 +27,7 @@
 			model="ir.actions.act_window.view">
 			<field eval="2" name="sequence" />
 			<field name="view_mode">form</field>
-			<field name="view_id" ref="etl_connector_basic_form" />
+			<field name="view_id" ref="etl_interface.etl_connector_basic_form" />
 			<field name="act_window_id"
 				ref="action_etl_connector_sugarcrm_tree" />
 		</record>
