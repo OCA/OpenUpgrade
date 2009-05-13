@@ -29,9 +29,11 @@
                   - Analytic Account
                   - CRM Section Project task and CRM Case.""",
     "depends" : ["base", "project", "crm_configuration"],
-    "init_xml" : ["portal_project_data.xml"],
+    "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["portal_project_view.xml"],
     "active": False,
     "installable": True,
 }
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -17,7 +17,10 @@
 			<field name="name">SQL</field>
 			<field name="code">sql</field>
 		</record>
-  
+          <record id="conn_sugarcrm_connector" model="etl.connector.type">
+			<field name="name">SugarCRM</field>
+			<field name="code">sugarcrm</field>
+		</record>
 	</data>
 </openerp>
 

@@ -93,6 +93,8 @@ class dm_ddf_plugin(osv.osv):
         'type' : fields.selection([('fields','Customer'),('dynamic','Dynamic'),('url','URL')], 'Type', required=True),
         'model_id' : fields.many2one('ir.model','Object'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field'),
+        'des_encrypt' : fields.boolean('DES Encrypt'),
+        'key' : fields.char('DES Key',size=64),
 #        'url_text' : fields.char('Text To Display',size=64),     
  
                      
@@ -196,7 +198,7 @@ class dm_offer_document(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
-        'lang_id' : fields.many2one('res.lang', 'Language'),
+        'lang_id' : fields.many2one('res.lang', 'Language', required=True),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter', domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
         'category_id' : fields.many2one('dm.offer.document.category', 'Category'),
         'step_id': fields.many2one('dm.offer.step', 'Offer Step'),

@@ -27,3 +27,4 @@ import openobject_in
 import gmail_in
 import facebook_in
 import xmlrpc_in
+import sugarcrm_in
