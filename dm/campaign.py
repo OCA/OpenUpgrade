@@ -1020,16 +1020,6 @@ class dm_customers_list(osv.osv):
     }
 dm_customers_list()
 
-#class dm_customers_file_source(osv.osv):
-#    _name = "dm.customers_file.source"
-#    _description = "Customer File Source"
-#    _columns = {
-#            'name' : fields.char('Name', size=64 ,required=True),
-#            'code' : fields.char('code', size=64 ,required=True),
-#            'desc' : fields.text('Description'),
-#            }
-#dm_customers_file_source()
-
 
 class dm_customers_file(osv.osv):
     _name = "dm.customers_file"
@@ -1046,7 +1036,6 @@ class dm_customers_file(osv.osv):
         'delivery_date' : fields.date('Delivery Date'),
         'address_ids' : fields.many2many('res.partner.address','dm_cust_file_address_rel','cust_file_id','address_id','Customers File Addresses'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'customers_file_id', 'Segments', readonly=True),
-#        'source_id' :fields.many2one('dm.customers_file.source', 'Customers File Source'),
         'source' : fields.selection(_FILE_SOURCES, 'Source', required=True),
         'note' : fields.text('Notes'),
     }
@@ -2044,6 +2033,7 @@ class res_partner(osv.osv):
     }
 res_partner()
 
+"""
 class purchase_order(osv.osv):
     _name = 'purchase.order'
     _inherit = 'purchase.order'
@@ -2051,6 +2041,7 @@ class purchase_order(osv.osv):
         'dm_campaign_purchase_line' : fields.many2one('dm.campaign.purchase_line','DM Campaign Purchase Line'),
     }
 purchase_order()
+"""
 
 class project_task(osv.osv):
     _name = "project.task"
