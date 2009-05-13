@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution   
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -20,17 +20,5 @@
 #
 ##############################################################################
 
-import plugin
-import trademark
-import offer
-import offer_step
-import campaign
-import customer
-import mail_service
-import document
-import reportdm
-import wizard
-import dm_print_offer_graph
-import report_design
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
+import customer_function
+import dynamic_text

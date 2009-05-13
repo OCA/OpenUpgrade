@@ -11,10 +11,14 @@ import os
 import netsvc
 from report import interface ,report_sxw
 import time
-from customer_function import customer_function
+import dm.plugin 
+print dir()
+from plugin import customer_function
+from plugin.customer_function import customer_function
+from plugin.dynamic_text import dynamic_text
 import re
 import datetime
-interna_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -131,7 +135,7 @@ def generate_reports(cr,uid,obj,report_type,context):
             context['document_id'] = document_id[0]
             attachment_obj = pool.get('ir.attachment')
             if report_type=='html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
-                report_data = interna_html_report +str(document_data['content'])+"</BODY></HTML>"
+                report_data = internal_html_report +str(document_data['content'])+"</BODY></HTML>"
                 report_data = merge_message(cr, uid, report_data, context)
                 attach_vals={'name' : document_data['name'] + "_" + str(address_id),
                             'datas_fname' : 'report_test' + report_type ,
@@ -186,10 +190,11 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, con
     for p in plugins :
         args = {}
         args['document_id'] = document_id
-        args['address_id'] = address_id
         if p.type == 'fields':
             plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
-
+        elif p.type == 'dynamic_text' :
+            print args
+            plugin_value = dynamic_text(cr, uid, p.ref_text_id.id, **args)
         else :
             arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
             for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
