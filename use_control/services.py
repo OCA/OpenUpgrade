@@ -109,7 +109,7 @@ class use_control_service(netsvc.Service):
                 u.login
            ''')
         data = cr.fetchall()
-        cr.execute('update use_control_time t set uploaded=True where (not uploaded) or (uploaded is null)')
+        cr.execute('update use_control_time set uploaded=True where (not uploaded) or (uploaded is null)')
         cr.execute('select name from ir_module_module where state=%s', ('installed',))
         modules = map(lambda x: x[0], cr.fetchall())
 
