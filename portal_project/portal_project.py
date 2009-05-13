@@ -39,49 +39,94 @@ project_project()
 class crm_case(osv.osv):
     _inherit = 'crm.case'
     
+    def create(self, cr, uid, values, *args, **kwargs):
+        res = super(crm_case, self).create(cr, uid, values, *args, **kwargs)
+        prj_ids = self.pool.get('project.project').search(cr, uid, ['|','|',('section_bug_id','=',values['section_id']),('section_feature_id','=',values['section_id']),('section_support_id','=',values['section_id'])])
+        if prj_ids:
+            for j in prj_ids:
+                members = self.pool.get('project.project').browse(cr, uid, [j])[0].members
+                for i in members:
+                    if tools.email_send(config['email_from'], i.address_id.email, values['name'], values['description'], debug=False, subtype='html') == True:
+                        logger = netsvc.Logger()
+                        logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
+                    else:
+                        logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
+            return res
+    
     def write(self, cr, uid, ids, vals, context={}):
+        res = super(crm_case, self).write(cr, uid, ids, vals, context={})
         case_obj = self.browse(cr, uid, ids)[0]
-        prj_ids = self.pool.get('project.project').search(cr, uid, [('section_bug_id','=',case_obj.section_id.id) or ('section_feature_id','=',case_obj.section_id.id) or ('section_support_id','=',case_obj.section_id.id)])
-        members = self.pool.get('project.project').browse(cr, uid, prj_ids)[0].members
-        for i in members:
-            if tools.email_send(config['email_from'], i.address_id.email, case_obj.name, case_obj.description, debug=False, subtype='html') == True:
-                logger = netsvc.Logger()
-                logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
-            else:
-                logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
-        return True
+        prj_ids = self.pool.get('project.project').search(cr, uid, ['|','|',('section_bug_id','=',case_obj.section_id.id),('section_feature_id','=',case_obj.section_id.id),('section_support_id','=',case_obj.section_id.id)])
+        if prj_ids:
+            for j in prj_ids:
+                members = self.pool.get('project.project').browse(cr, uid, [j])[0].members
+                for i in members:
+                    if tools.email_send(config['email_from'], i.address_id.email, case_obj.name, case_obj.description, debug=False, subtype='html') == True:
+                        logger = netsvc.Logger()
+                        logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
+                    else:
+                        logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
+            return res
 crm_case()
 
 class task(osv.osv):
     _inherit = 'project.task'
     
+    def create(self, cr, uid, values, *args, **kwargs):
+        res = super(task, self).create(cr, uid, values, *args, **kwargs)
+        prj_ids = self.pool.get('project.project').search(cr, uid, [('id','=',values['project_id'])])
+        if prj_ids:
+            members = self.pool.get('project.project').browse(cr, uid, prj_ids)[0].members
+            for i in members:
+                if tools.email_send(config['email_from'], i.address_id.email, values['name'], values['description'], debug=False, subtype='html') == True:
+                    logger = netsvc.Logger()
+                    logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
+                else:
+                    logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
+        return res
+    
     def write(self, cr, uid, ids, vals, context={}):
+        res = super(task, self).write(cr, uid, ids, vals, context={})
         project_obj = self.browse(cr, uid, ids)[0]
         prj_ids = self.pool.get('project.project').search(cr, uid, [('id','=',project_obj.project_id.id)])
-        members = self.pool.get('project.project').browse(cr, uid, prj_ids)[0].members
-        for i in members:
-            if tools.email_send(config['email_from'], i.address_id.email, project_obj.name, project_obj.description, debug=False, subtype='html') == True:
-                logger = netsvc.Logger()
-                logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
-            else:
-                logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
-        return True
+        if prj_ids:
+            members = self.pool.get('project.project').browse(cr, uid, prj_ids)[0].members
+            for i in members:
+                if tools.email_send(config['email_from'], i.address_id.email, project_obj.name, project_obj.description, debug=False, subtype='html') == True:
+                    logger = netsvc.Logger()
+                    logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
+                else:
+                    logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
+        return res
 task()
 
 class document_file(osv.osv):
     _inherit = 'ir.attachment'
     
+    def create(self, cr, uid, values, *args, **kwargs):
+        res = super(document_file, self).create(cr, uid, values, *args, **kwargs)
+        if args[0]['default_res_id'] and args[0]['default_res_model'] == 'project.project':
+            members = self.pool.get(args[0]['default_res_model']).browse(cr, uid, [args[0]['default_res_id']])[0].members
+            for i in members:
+                if tools.email_send(config['email_from'], i.address_id.email, values['name'], values['description'], debug=False, subtype='html') == True:
+                    logger = netsvc.Logger()
+                    logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
+                else:
+                    logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
+        return res
+    
     def write(self, cr, uid, ids, vals, context={}):
+        res = super(document_file, self).write(cr, uid, ids, vals, context={})
         att_obj = self.browse(cr, uid, ids)[0]
-        if att_obj.res_id:
-            members = self.pool.get('project.project').browse(cr, uid, [att_id])[0].members
+        if att_obj.res_id and att_obj.res_model == 'project.project':
+            members = self.pool.get('project.project').browse(cr, uid, [att_obj.res_id])[0].members
             for i in members:
                 if tools.email_send(config['email_from'], i.address_id.email, att_obj.name, att_obj.description, debug=False, subtype='html') == True:
                     logger = netsvc.Logger()
                     logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
                 else:
                     logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
-            return True
+        return res
 document_file()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
