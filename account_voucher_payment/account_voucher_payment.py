@@ -196,11 +196,7 @@ class account_voucher(osv.osv):
                 cr.execute('insert into voucher_id (account_id,rel_account_move) values (%d, %d)',(int(ids[0]),int(line.id)))
                 
         return True
-    
-    
 
-    
-    
 account_voucher()
 
 class VoucherLine(osv.osv):
