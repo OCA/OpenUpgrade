@@ -31,7 +31,7 @@ import tools
 
 class dm_dynamic_text(osv.osv):
     _name = 'dm.dynamic_text'
-    _rec_name = 'language_id'
+    _rec_name = 'content'
     _columns = {
         'language_id' : fields.many2one('res.lang','Language',ondelete='cascade'),
         'gender_id' : fields.many2one('res.partner.title', 'Gender', domain="[('domain','=','contact')]"),
@@ -57,7 +57,7 @@ class dm_ddf_plugin(osv.osv):
     def _data_get(self, cr, uid, ids, name, arg, context):
         result = {}
         cr.execute('select id, file_fname from dm_ddf_plugin where id in ('+','.join(map(str, ids))+')')
-        for id, r in cr.fetchall():            
+        for id, r in cr.fetchall():
             try:
                 path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
                 value = file(os.path.join(path, r), 'rb').read()
@@ -93,7 +93,7 @@ class dm_ddf_plugin(osv.osv):
             vals = {'name':arg[0], 'note':desc, 'plugin_id':id, 'value':' '}
             new_id = self.pool.get('dm.plugin.argument').create(cr, uid, vals)
         if '__description__' in dir(X):
-            self.write(cr, uid, id, {'note':X.__description__})
+            self.write(cr, uid, id, {'note':str(X.__description__)})
         return True
     
     _columns = {
