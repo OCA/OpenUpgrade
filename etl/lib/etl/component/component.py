@@ -27,7 +27,7 @@
 """
 import datetime
 from etl import signal
-
+import pickle
 
 class component(signal):
     """
@@ -57,6 +57,15 @@ class component(signal):
             res += ' is_end = "True"'
         res += ">"
         return res
+
+    def __getstate__(self):
+        return {'name':self.name,'status':self.status, 'trans_in' : [], 'trans_out' : [], 'connector': pickle.dumps(self.connector),'_type':self._type }
+
+    def __setstate__(self, state):
+        state['connector'] = pickle.loads(state['connector'])        
+        self.__dict__ = state 
+        
+        
     
     def __copy__(self):        
         res = component(name=self.name, connector=self.connector, transformer=self.transformer, row_limit=self.row_limit)
@@ -78,19 +87,19 @@ class component(signal):
         return False
 
     def pause(self):        
-        #self.status = 'pause'
+        self.status = 'pause'
         self.signal('pause', {'date': datetime.datetime.today()})
 
     def stop(self):        
-        #self.status = 'stop'
+        self.status = 'stop'
         self.signal('stop', {'date': datetime.datetime.today()})  
 
     def end(self):
-        #self.status = 'end'
+        self.status = 'end'
         self.signal('end', {'date': datetime.datetime.today()})  
 
     def start(self):
-        #self.status = 'start'
+        self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
 
     def warning(self, message):

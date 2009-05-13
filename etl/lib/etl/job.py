@@ -84,6 +84,24 @@ class job(signal):
     def copy(self):		
         return self.__copy__()
 
+    def __getstate__(self):         
+        _components = self.__dict__.get('_components')
+        new_components = []
+        for comp in _components:
+            new_components.append(pickle.dumps(comp))        
+        
+        return {'name' :self.name, 'status':self.status , '_components':new_components}
+    def __setstate__(self, state):
+        components = []
+        for component in state.get('_components',[]):
+            new_cmp = pickle.loads(component)
+            new_cmp.__dict__['job'] = self            
+            components.append(new_cmp)
+        state['_components'] = components
+        self.__dict__ = state    
+        return  
+        
+
     def get_components(self):
         return self._components
 
@@ -106,7 +124,7 @@ class job(signal):
     def pause(self):              
         for tran in self.get_transitions():
             tran.pause()
-        #self.status = 'pause'
+        self.status = 'pause'
         self.signal('pause', {'date': datetime.datetime.today()})
         
 
@@ -114,18 +132,18 @@ class job(signal):
         for tran in self.get_transitions():
             tran.restart()           
         
-        #self.status = 'start'
+        self.status = 'start'
         self.signal('restart', {'date': datetime.datetime.today()}) 
 
     def start(self):
-        #self.status = 'start'            
+        self.status = 'start'            
         self.signal('start', {'date': datetime.datetime.today()})        
         for c in self.get_end_components():
             for a in c.channel_get():              
                 pass 
 
     def end(self):
-        #self.status = 'end'
+        self.status = 'end'
         self.signal('end', {'date': datetime.datetime.today()})
         
         

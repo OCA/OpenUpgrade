@@ -27,6 +27,7 @@
 """
 from signal import signal
 import datetime
+import pickle
 class transition(signal):
     """
     Base class of ETL transition.
@@ -50,6 +51,18 @@ class transition(signal):
     def __copy__(self):             
         res = transition(self.source, self.destination, self.channel_source, self.channel_destination, self.type)               
         return res  
+
+    def __getstate__(self):        
+        return {'type' : self.type,'status' : self.status, 'source' : pickle.dumps(self.source), 'destination': pickle.dumps(self.destination), 'trigger' : self.trigger, 'channel_source' : self.channel_source, 'channel_destination' : self.channel_destination}
+
+    def __setstate__(self, state):
+        source = pickle.loads(state['source'])
+        destination = pickle.loads(state['destination'])
+        destination.__dict__['trans_in'].append(state['channel_destination'],self)
+        source.__dict__['trans_out'].append(state['channel_source'],self)
+        state['source'] = source
+        state['destination'] = destination
+        self.__dict__ = state
 
     def copy(self):
         return self.__copy__()   
