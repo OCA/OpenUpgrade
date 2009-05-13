@@ -101,7 +101,12 @@ class account_voucher(osv.osv):
             if journal.sequence_id:
                 name = self.pool.get('ir.sequence').get_id(cr, uid, journal.sequence_id.id)
 
-            move = {'name': name, 'journal_id': journal_id}
+            move = {
+                'name': name, 
+                'journal_id': journal_id, 
+                'voucher_type':inv.type,
+                'narration' : inv.narration
+            }
             
             if inv.period_id:
                 move['period_id'] = inv.period_id.id
