@@ -102,21 +102,23 @@ def create_kml(self, cr, uid, data, context={}):
         address = ''
         add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
         if add:
-        #    if add.street:
-        #        address += str(add.street)
-        #    if add.street2:
-        #        address += ', '
-        #        address += str(add.street2)
+            address += '['
+            if add.street:
+                address += '  '
+                address += str(add.street)
+            if add.street2:
+                address += '  '
+                address += str(add.street2)
             if add.city:
-        #        address += ', '
+                address += '  '
                 address += str(add.city)
             if add.state_id:
-                address += ', '
+                address += '  '
                 address += str(add.state_id.name)
             if add.country_id:
-                address += ', '
+                address += '  '
                 address += str(add.country_id.name)
-
+            address += ']'
         styleElement = kmlDoc.createElement('Style')
         styleElement.setAttribute('id','randomColorIcon')
         iconstyleElement = kmlDoc.createElement('IconStyle')
@@ -137,7 +139,7 @@ def create_kml(self, cr, uid, data, context={}):
         styleElement.appendChild(iconstyleElement)
         documentElement.appendChild(styleElement)
 
-        desc_text = address + ' , turnover of partner : ' + str(res[part.id])
+        desc_text = address + ' [Turnover of partner : ' + str(res[part.id]) + ']'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
@@ -172,7 +174,7 @@ class customer_on_map(wizard.interface):
     states = {
          'init': {
             'actions': [create_kml],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Done')]}
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
                 }
             }
 
