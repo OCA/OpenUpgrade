@@ -73,11 +73,13 @@ def create_kml(self, cr, uid, data, context={}):
     # KML elements.
     res = {}
     res_inv = {}
+    res_cus = {}
     address = ' '
     coordinates = []
     addresslist = []
     country_list = []
     coordinates_text = ' '
+    colors = ['dfbf9f3b','88336699','59009900','8fffff00','7f00ffff','7fffffff','aaffffff','880fff00','880f00cc','88f000cc','33333333']
 
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
@@ -101,7 +103,7 @@ def create_kml(self, cr, uid, data, context={}):
     for part in res_partner:
         res[string.upper(part[1])] = part[0]
 
-    map(lambda x:res.setdefault(x,0), country_list)
+    map(lambda x:res_inv.setdefault(x,0), country_list)
     # fetch invoice by country
     cr.execute(''' select count(i.id),c.name from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id left join res_country as c on a.country_id=c.id where i.type in ('out_invoice','in_invoice') group by c.name ''')
     invoice_partner = cr.fetchall()
@@ -109,6 +111,12 @@ def create_kml(self, cr, uid, data, context={}):
         res_inv[str(string.upper(part[1]))] = str(part[0])
 
 
+    # fetch number of costomer by country
+    cr.execute(''' select count(distinct(p.id)), c.name from res_partner as p left join res_partner_address as a on p.id=a.partner_id left join res_country as c on c.id=a.country_id group by a.country_id, c.name  ''')
+    cust_country = cr.fetchall()
+    for part in cust_country:
+        if part[1]:
+            res_cus[str(string.upper(part[1]))] = str(part[0])
 
     # fetch turnover by individual partner
     cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
@@ -187,60 +195,29 @@ def create_kml(self, cr, uid, data, context={}):
     documentElement.appendChild(documentElementname)
     documentElement.appendChild(documentElementdesc)
 
-    styleElement = kmlDoc.createElement('Style')
-    styleElement.setAttribute('id','transBluePoly')
-
-    linestyleElement = kmlDoc.createElement('LineStyle')
-    colorElement = kmlDoc.createElement('color')
-    colorElement.appendChild(kmlDoc.createTextNode('CC66CC'))
-    linestyleElement.appendChild(colorElement)
-    styleElement.appendChild(linestyleElement)
-    ballonElement = kmlDoc.createElement('BalloonStyle')
-    ballonbgElement = kmlDoc.createElement('bgColor')
-    ballonbgElement.appendChild(kmlDoc.createTextNode('59009900'))
-    balloontextElement = kmlDoc.createElement('text')
-    balloontextElement.appendChild(kmlDoc.createTextNode('TESSTT'))
-    ballonElement.appendChild(ballonbgElement)
-    ballonElement.appendChild(balloontextElement)
-    styleElement.appendChild(ballonElement)
-
-    polystyleElement = kmlDoc.createElement('PolyStyle')
-    polycolorElement = kmlDoc.createElement('color')
-    polycolorElement.appendChild(kmlDoc.createTextNode('59009900'))
-    polyfillElement = kmlDoc.createElement('fill')
-    polyfillElement.appendChild(kmlDoc.createTextNode('1'))
-    polyoutlineElement = kmlDoc.createElement('outline')
-    polyoutlineElement.appendChild(kmlDoc.createTextNode('1'))
-
-    polystyleElement.appendChild(polycolorElement)
-    polystyleElement.appendChild(polyfillElement)
-    polystyleElement.appendChild(polyoutlineElement)
-    styleElement.appendChild(polystyleElement)
-    documentElement.appendChild(styleElement)
-
     folderElement = kmlDoc.createElement('Folder')
     foldernameElement = kmlDoc.createElement('name')
     foldernameElement.appendChild(kmlDoc.createTextNode('Folder'))
     folderElement.appendChild(foldernameElement)
 
     #different color should be used
-    colors = ['33333333','dfbf9f3b','59009900','FF9933','FF3300','FF66CC','993399','00FF33','CC99CC','FF0000','CC66CC','6633CC','00FF99','990099','0099FF','CCCCFF','CCCC99','66CCFF','00CCFF','CC9933','FFCC99','CCCC66','99FF33']
     len_color = len(colors)
     cnt = 0
     for country in country_list:
-        cnt += 1 #should be used
+#        cnt += 1 #should be used
         cooridinate = dict_country[country]
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(country)
         placemarkdescElement = kmlDoc.createElement('description')
-        placemarkdescElement.appendChild(kmlDoc.createTextNode('Number of Invoices made: ' + str(res_inv[country]) + ', Turnover of country: ' + str(res[country])))
+        placemarkdescElement.appendChild(kmlDoc.createTextNode('Number of partner:' + str(res_cus[country]) + ', Number of Invoices made: ' + str(res_inv[country]) + ', Turnover of country: ' + str(res[country])))
         placemarknameElement.appendChild(placemarknameText)
 
         placemarkstyleElement = kmlDoc.createElement('Style')
         placemarkpolystyleElement = kmlDoc.createElement('PolyStyle')
         placemarkcolorrElement = kmlDoc.createElement('color')
-        placemarkcolorrElement.appendChild(kmlDoc.createTextNode('FF0000'))#colors[cnt])
+#        placemarkcolorrElement.appendChild(kmlDoc.createTextNode('FF0000'))#colors[cnt])
+        placemarkcolorrElement.appendChild(kmlDoc.createTextNode(colors[cnt]))
         placemarkpolystyleElement.appendChild(placemarkcolorrElement)
         placemarkstyleElement.appendChild(placemarkpolystyleElement)
 
@@ -248,10 +225,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkElement.appendChild(placemarkdescElement)
         placemarkElement.appendChild(placemarkstyleElement)
 
-        styleurlElement = kmlDoc.createElement('styleUrl')
-        styleurlElement.appendChild(kmlDoc.createTextNode('#transBluePoly'))
-        placemarkElement.appendChild(styleurlElement)
-
+        cnt += 1
         geometryElement = kmlDoc.createElement('MultiGeometry')
         polygonElement = kmlDoc.createElement('Polygon')
 
@@ -269,6 +243,7 @@ def create_kml(self, cr, uid, data, context={}):
 
         folderElement.appendChild(placemarkElement)
         documentElement.appendChild(folderElement)
+
 
     # This writes the KML Document to a file.
 #    kmlFile = open(fileName, 'w')

@@ -48,9 +48,9 @@ class etl_connector_openobject(osv.osv):
         val = super(etl_connector_openobject, self).create_instance(cr, uid, id, context, data)
         con=self.browse(cr, uid, id)
         if con.type == 'openobject':
-            val = etl.connector.openobject_connector(con.uri, cr.dbname, con.login, con.passwd, con.obj, con.openobject_con_type, con.name)
+            print con.uri, cr.dbname, con.uid, con.passwd, con.obj, con.openobject_con_type, con.name
+            val = etl.connector.openobject_connector(con.uri, cr.dbname, con.uid, con.passwd, con.obj, con.openobject_con_type, con.name)
         return val
 
 etl_connector_openobject()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

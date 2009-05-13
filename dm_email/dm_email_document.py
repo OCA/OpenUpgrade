@@ -85,12 +85,12 @@ def create_email_queue(cr,uid,obj,context):
         message = base64.decodestring(attach.datas)
         root = etree.HTML(message)
         body = root.find('body')
-
         msgRoot = MIMEMultipart('related')
 
-        subject =  merge_message(cr, uid, str(obj.document_id.subject), context)
+        context['document_id'] = obj.document_id.id
+        context['address_id'] = obj.address_id.id
+        subject =  merge_message(cr, uid, obj.document_id.subject, context)
         msgRoot['Subject'] = subject
-
         msgRoot['From'] = str(obj.mail_service_id.smtp_server_id.email)
         msgRoot['To'] = str(obj.address_id.email)
         msgRoot.preamble = 'This is a multi-part message in MIME format.'
@@ -99,7 +99,6 @@ def create_email_queue(cr,uid,obj,context):
         msgRoot.attach(msg)
 
         set_image_email(body,msgRoot)
-
         msgText = MIMEText(etree.tostring(body), 'html')
         msg.attach(msgText)
 

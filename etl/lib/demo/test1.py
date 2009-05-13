@@ -29,8 +29,6 @@ tran5=etl.transition(sort1,csv_out1)
 
 job1=etl.job([csv_in1,csv_in2,csv_out1,sort1,log1,log2,sleep1])
 
-print job1
 job2 = job1.copy()
 job2.run()
-print job2.get_statitic_info()
 

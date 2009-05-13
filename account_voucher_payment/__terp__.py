@@ -39,7 +39,8 @@
     
     "demo_xml" : [],
     "update_xml" : [
-        "account_voucher_payment_view.xml"
+        "account_voucher_payment_view.xml",
+        "account_voucher_payment_wizard.py"
     ],
     "active": False,
     "installable": True,

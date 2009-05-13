@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="idea_edit_project" model="ir.ui.view">
+            <field name="name">project.project.form1</field>
+            <field name="model">project.project</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <field name="category_id" position="after">
+                    <field name="idea_id"/>
+                </field>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

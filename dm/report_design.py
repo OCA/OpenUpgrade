@@ -11,10 +11,14 @@ import os
 import netsvc
 from report import interface ,report_sxw
 import time
-from customer_function import customer_function
+import dm.plugin 
+print dir()
+from plugin import customer_function
+from plugin.customer_function import customer_function
+from plugin.dynamic_text import dynamic_text
 import re
 import datetime
-interna_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -131,7 +135,7 @@ def generate_reports(cr,uid,obj,report_type,context):
             context['document_id'] = document_id[0]
             attachment_obj = pool.get('ir.attachment')
             if report_type=='html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
-                report_data = interna_html_report +str(document_data['content'])+"</BODY></HTML>"
+                report_data = internal_html_report +str(document_data['content'])+"</BODY></HTML>"
                 report_data = merge_message(cr, uid, report_data, context)
                 attach_vals={'name' : document_data['name'] + "_" + str(address_id),
                             'datas_fname' : 'report_test' + report_type ,
@@ -158,7 +162,7 @@ def generate_reports(cr,uid,obj,report_type,context):
 
 
 
-def generate_plugin_value(cr, uid, document_id, address_id, context={}):
+def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, context={}):
     if not document_id :
         return False
     if not address_id :
@@ -166,10 +170,12 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
     vals = {}
 
     pool = pooler.get_pool(cr.dbname)
-    def compute_customer_plugin(cr, uid, p, cid):
+    def compute_customer_plugin(cr, uid, p, cid,wi_id=None):
         args = {}
         res  = pool.get('ir.model').browse(cr, uid, p.model_id.id)
         args['model_name'] = res.model
+        if wi_id:
+            args['wi_id'] = wi_id    
         args['field_name'] = str(p.field_id.name)
         args['field_type'] = str(p.field_id.ttype)
         args['field_relation'] = str(p.field_id.relation)
@@ -183,16 +189,19 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
 
     for p in plugins :
         args = {}
+        args['document_id'] = document_id
         if p.type == 'fields':
-            plugin_value = compute_customer_plugin(cr, uid, p, address_id)
-
+            plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
+        elif p.type == 'dynamic_text' :
+            print args
+            plugin_value = dynamic_text(cr, uid, p.ref_text_id.id, **args)
         else :
             arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
             for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
                 if not a.stored_plugin :
                     args[str(a.name)]=str(a.value)
                 else :
-                    args[str(a.name)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id)
+                    args[str(a.custome_plugin_id.code)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
             path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
             plugin_name = p.file_fname.split('.')[0]
             sys.path.append(path)
@@ -205,7 +214,7 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
                                              'address_id':address_id,
                                              'plugin_id':p.id,
                                              'value' : plugin_value})
-        vals[str(p.id)] = plugin_value
+        vals[str(p.code)] = plugin_value
     return vals
 
 class offer_document(rml_parse):
@@ -225,10 +234,27 @@ class offer_document(rml_parse):
         if 'form' not in self.datas :
             address_id = self.context['address_id']
             document_id = self.context['document_id']
+            workitem_id = self.context['active_id']
         else :
+
             address_id = self.datas['form']['address_id']
             document_id = self.ids[0]
-        values = generate_plugin_value(self.cr,self.uid,document_id,address_id)
+
+            dm_workitem_obj = self.pool.get('dm.workitem')
+            workitem_data=dm_workitem_obj.search(self.cr,self.uid,[])
+
+            if not workitem_data:
+                document = self.pool.get('dm.offer.document').browse(self.cr,self.uid,document_id)
+
+                dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
+                segment_data_id=dm_segment_obj.search(self.cr,self.uid,[])
+
+                workitem_id = dm_workitem_obj.create(self.cr, self.uid,{'address_id':address_id,
+                                             'step_id':document.step_id.id,
+                                             'segment_id' : segment_data_id[0]})
+            else :
+                workitem_id = workitem_data[0]
+        values = generate_plugin_value(self.cr,self.uid,document_id,address_id,workitem_id)
         return [values]
 
 from report.report_sxw import report_sxw

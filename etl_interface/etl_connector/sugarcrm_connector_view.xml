@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+
+		<record id="action_etl_connector_sugarcrm_tree"
+			model="ir.actions.act_window">
+			<field name="name">SugarCRM Connectors</field>
+			<field name="res_model">etl.connector</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('type','=','sugarcrm')]</field>
+			<field name="view_id"
+				ref="etl_interface.etl_connector_basic_tree" />
+		</record>
+
+		<record id="action_etl_connector_sugarcrm_view1"
+			model="ir.actions.act_window.view">
+			<field eval="1" name="sequence" />
+			<field name="view_mode">tree</field>
+			<field name="view_id"
+				ref="etl_interface.etl_connector_basic_tree" />
+			<field name="act_window_id"
+				ref="action_etl_connector_sugarcrm_tree" />
+		</record>
+
+		<record id="action_etl_connector_sugarcrm_view2"
+			model="ir.actions.act_window.view">
+			<field eval="2" name="sequence" />
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="etl_interface.etl_connector_basic_form" />
+			<field name="act_window_id"
+				ref="action_etl_connector_sugarcrm_tree" />
+		</record>
+
+		<menuitem name="SugarCRM Connector"
+			parent="etl_interface.etl_connector_all_tree"
+			action="action_etl_connector_sugarcrm_tree" id="etl_connector_sugarcrm" />
+
+	</data>
+</openerp>
+

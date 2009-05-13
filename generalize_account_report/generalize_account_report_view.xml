@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+	    <menuitem 
+	        parent="account.menu_finance_legal_statement" 
+	        id="generalize_accounting_report"
+	        name="Generalize Account Report"/>
+
+		<record id="view_generalize_account_report_tree" model="ir.ui.view">
+			<field name="name">generalize_account_report.tree</field>
+			<field name="model">generalize.account.report</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Generalize Account Report">
+						<field name="final_type" select="1"/>
+						<field name="name" select="1"/>
+						<field name="type" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record id="view_generalize_account_report_form" model="ir.ui.view">
+			<field name="name">generalize_account_report.form</field>
+			<field name="model">generalize.account.report</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Generalize Account Report">
+						<field name="final_type" select="1"/>
+						<field name="name" select="1"/>
+						<field name="type" select="1"/>
+						<field name="company_id" select="1"/>
+						<field name="fiscal_year" on_change="onchange_fiscal_year(fiscal_year)"/>
+						<field name="st_date"/>
+						<field name="end_date"/>
+						<field name="gr_detail" nolabel="1" colspan="4"/>
+						<field name="profit_tran_acc" domain="[('type','!=','view')]" attrs="{'readonly':[('final_type','=','pl')],'required':[('final_type','=','bs')]}"/>
+						<field name="Loss_tran_acc" domain="[('type','!=','view')]" attrs="{'readonly':[('final_type','=','pl')],'required':[('final_type','=','bs')]}" />
+						<separator colspan="4" string="Covert"/>
+	                    <group col="2" colspan="2">
+	                        <button name="to_horizontal" string="Horizontal" type="object" attrs="{'invisible':[('type','=','horizontal')]}"/>
+	                        <button name="to_vertical" string="Vertical" type="object" attrs="{'invisible':[('type','=','vertical')]}"/>
+	                    </group>
+				</form>
+			</field>
+		</record>
+		<record id="action_generalize_account_report" model="ir.actions.act_window">
+			<field name="name">Generalize Account Report</field>
+			<field name="res_model">generalize.account.report</field>
+			<field name="view_type">form</field>
+  			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem parent="generalize_accounting_report" action="action_generalize_account_report" id="menu_generalize_account_report"/>
+
+
+		<record id="view_group_detail_configuration_tree" model="ir.ui.view">
+			<field name="name">group.detail.configuration.tree</field>
+			<field name="model">group.detail.configuration</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Group Detail">
+					<field name="name" select="1"/>
+					<field domain="[('type','!=','view')]" name="acc_gr_name"/>
+					<field name="sequence"/>
+					<field name="pos_name"/>
+				</tree>
+			</field>
+		</record>
+		<record id="view_group_detail_configuration_form" model="ir.ui.view">
+			<field name="name">group.detail.configuration.form</field>
+			<field name="model">group.detail.configuration</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Group Detail">
+					<field name="name" select="1"/>
+					<field domain="[('type','!=','view')]" name="acc_gr_name"/>
+					<field name="sequence"/>
+					<field name="pos_name"/>
+				</form>
+			</field>
+		</record>
+		<record id="action_group_detail_configuration_form" model="ir.actions.act_window">
+			<field name="name">Group Detail</field>
+			<field name="res_model">group.detail.configuration</field>
+			<field name="view_type">form</field>
+  			 <field name="view_id" ref="view_group_detail_configuration_form"/>
+		</record>
+
+	</data>
+</openerp>

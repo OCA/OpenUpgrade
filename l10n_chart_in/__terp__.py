@@ -27,7 +27,7 @@
     Indian Accounting : chart of Account
     """,
     "author" : 'Tiny & Axelor',
-    "category" : 'Localisation/Account Charts',
+    "category": "Localisation/Account Charts",
     "depends" : [
         "account", 
         "account_chart"

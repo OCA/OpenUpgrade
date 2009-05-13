@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-	<data noupdate="1">
+	<data>
 		<!-- Media -->
 		<record model="dm.media" id="media_website">
 	    	<field name="name" eval="&quot;Web Site&quot;"/>
@@ -29,5 +29,71 @@
 	        <field eval="&quot;&quot;&quot;None&quot;&quot;&quot;" name="name"/>
 		</record>
     
+    <!-- PLUGINS -->
+    	
+    	<record id="dm_ddf_plugin_campaign_website" model="dm.ddf.plugin">
+            <field eval="&quot;&quot;&quot;website&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Website&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="dm.model_dm_campaign"/>
+            <field eval="&quot;&quot;&quot;Campaign - Website&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="dm_website.field_dm_campaign_website"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+    
+    	<record id="dm_ddf_plugin_phpurl0" model="dm.ddf.plugin">
+			<field eval="&quot;&quot;&quot;php_url&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Url&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="store_value"/>
+			<field eval="&quot;&quot;&quot;aW1wb3J0IHBvb2xlcgojZnJvbSBvc3YgaW1wb3J0IG9zdgojZnJvbSBvc3YgaW1wb3J0IGZpZWxk
+cwoKX19kZXNjcmlwdGlvbl9fID0gJycnVGhpcyBwbHVnaW4gZ2VuZXJhdGUgVVJMCiAgICAgICAg
+ICAgICAgICB1cmwgOiB3aGljaCBkZWZpbmVzIHVybAoJCXRleHRfZGlzcGxheSA6IGRlZmluZXMg
+dGhlIHRleHQgd2hpY2ggb25lIHdhbnQgdG8gZGlzcGxheSBvbiB1cmwgCiAgICAgICAgb25lIGNh
+biBhZGQgbW9yZSBhcmd1bWVudHMgd2hpY2ggb25lIHdhbnRzIHRvIGFkZCBhcyBrZXk9dmFsdWUg
+cGFpciBpbiB1cmwKICAgICAgICAgICAgICAgICcnJwpfX2FyZ3NfXyA9IFsoJ3VybCcsJ3N0cmlu
+ZycpLCgndGV4dF9kaXNwbGF5Jywnc3RyaW5nJyldCgpkZWYgcGhwX3VybChjcix1aWQsY3VzdG9t
+ZXJfaWRzLCoqYXJncyk6CiAgICByZXMgPVtdCiAgICBhcmd1bWVudHMgPSAnJwogICAgZm9yIGEg
+aW4gYXJncy5rZXlzKCkgOgogICAgICAgIGlmIGEhPSd1cmwnIGFuZCBhIT0ndGV4dF9kaXNwbGF5
+JzoKICAgICAgICAgICAgaWYgYXJndW1lbnRzID09JycgOgogICAgICAgICAgICAgICAgYXJndW1l
+bnRzICArPSAnJXM9JXMnJShhLGFyZ3NbYV0pCiAgICAgICAgICAgIGVsc2UgOgogICAgICAgICAg
+ICAgICAgYXJndW1lbnRzICArPSAnJiVzPSVzJyUoYSxhcmdzW2FdKQogICAgdXJsX25hbWUgPSBh
+cmdzWyd1cmwnXQogICAgaWYgdXJsX25hbWUuZmluZCgnaHR0cDovLycpPDA6CiAgICAgICAgdXJs
+X25hbWUgPSAnaHR0cDovLycgKyB1cmxfbmFtZQogICAgICAgIGlmIGFyZ3VtZW50cyA6CiAgICAg
+ICAgICAgIHVybF9uYW1lID0gdXJsX25hbWUrIj8iKyBhcmd1bWVudHMKICAgIHJldHVybiB1cmxf
+bmFtZQoKI3ZpbTpleHBhbmR0YWI6c21hcnRpbmRlbnQ6dGFic3RvcD00OnNvZnR0YWJzdG9wPTQ6
+c2hpZnR3aWR0aD00Ogo=
+&quot;&quot;&quot;" name="file_id"/>
+			<field eval="&quot;&quot;&quot;php_url.py&quot;&quot;&quot;" name="file_fname"/>
+			<field eval="&quot;&quot;&quot;url&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_plugin_argument_segment0" model="dm.plugin.argument">
+			<field name="plugin_id" ref="dm_ddf_plugin_phpurl0"/>
+			<field eval="1" name="stored_plugin"/>
+			<field eval="&quot;&quot;&quot;Segment ID&quot;&quot;&quot;" name="name"/>
+			<field name="custome_plugin_id" ref="dm.dm_ddf_plugin_wi_segment_id"/>
+		</record>
+		<record id="dm_plugin_argument_step0" model="dm.plugin.argument">
+			<field name="plugin_id" ref="dm_ddf_plugin_phpurl0"/>
+			<field eval="1" name="stored_plugin"/>
+			<field eval="&quot;&quot;&quot;Step ID&quot;&quot;&quot;" name="name"/>
+			<field name="custome_plugin_id" ref="dm.dm_ddf_plugin_wi_step_id"/>
+		</record>
+		<record id="dm_plugin_argument_partner0" model="dm.plugin.argument">
+			<field name="plugin_id" ref="dm_ddf_plugin_phpurl0"/>
+			<field eval="1" name="stored_plugin"/>
+			<field eval="&quot;&quot;&quot;Partner ID&quot;&quot;&quot;" name="name"/>
+			<field name="custome_plugin_id" ref="dm.dm_ddf_plugin_partner_id"/>
+		</record>
+		<record id="dm_plugin_argument_website0" model="dm.plugin.argument">
+			<field name="plugin_id" ref="dm_ddf_plugin_phpurl0"/>
+			<field eval="1" name="stored_plugin"/>
+			<field eval="&quot;&quot;&quot;Website&quot;&quot;&quot;" name="name"/>
+			<field name="custome_plugin_id" ref="dm_ddf_plugin_campaign_website"/>
+		</record>
+	
+	<!-- TEMPLATE -->
+		<record id="dm.dm_document_template_website0" model="dm.document.template">
+        	<field eval="[(6,0,[ref('dm_website.dm_ddf_plugin_phpurl0'),ref('dm.dm_ddf_plugin_wi_segment_id'),ref('dm.dm_ddf_plugin_wi_step_id'),ref('dm.dm_ddf_plugin_partner_id'),ref('dm_website.dm_ddf_plugin_campaign_website')])]" name="plugin_ids"/>
+        </record>
     </data>
 </openerp>

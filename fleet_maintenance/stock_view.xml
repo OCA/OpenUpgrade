@@ -305,6 +305,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">stock.location</field>
 			<field name="view_type">form</field>
+			<field name="limit">20</field>
 			<field name="domain">[('fleet_type','=','sub_fleet')]</field>
 			<field name="context">{'fleet_type':'sub_fleet'}</field>
 		</record>

@@ -30,16 +30,20 @@ class etl_connector_localfile(osv.osv):
 
     _columns={
               'bufsize' : fields.integer('Buffer Size'),
+              'mode' : fields.char('File Operation Mode', size=12),
     }
 
+    _defaults = {
+                    'mode': lambda *a: 'r+',
+         }
+    
     def create_instance(self, cr, uid, id , context={}, data={}):
         val =  super(etl_connector_localfile, self).create_instance(cr, uid, id, context, data)
         con=self.browse(cr, uid, id)
-        uri = tools.config['addons_path'] + con.uri
         if con.type == 'localfile':
-            val =  etl.connector.localfile(uri, 'r', con.bufsize, encoding='utf-8', name=con.name)
+            val =  etl.connector.localfile(con.uri, con.mode, con.bufsize, encoding='utf-8', name=con.name)
         return val
-
+    
 etl_connector_localfile()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

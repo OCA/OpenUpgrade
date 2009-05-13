@@ -6,7 +6,7 @@
 			<field name="name">etl.connector.sql.form</field>
 			<field name="model">etl.connector</field>
 			<field name="type">form</field>
-			<field name="inherit_id" ref="etl_connector_basic_form"/>
+			<field name="inherit_id" ref="etl_interface.etl_connector_basic_form"/>
 			<field name="arch" type="xml">
 				<notebook position='inside'>
 					<page string="Other Information" attrs="{'invisible':[('type','!=','sql')]}" >
@@ -17,9 +17,6 @@
 
 			</field>
 		</record>
-
-
-
 
 		<record id="action_etl_connector_sql_tree"
 			model="ir.actions.act_window">
@@ -54,7 +51,6 @@
 		<menuitem name="SQL Connector"
 			parent="etl_interface.etl_connector_all_tree"
 			action="action_etl_connector_sql_tree" id="etl_connector_sql" />
-
 
 	</data>
 </openerp>

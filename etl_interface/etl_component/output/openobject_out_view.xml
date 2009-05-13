@@ -7,25 +7,97 @@
 			<field name="name">view.etl.component.open.object.out.form</field>
 			<field name="model">etl.component</field>
 			<field name="type">form</field>
-			<field name="inherit_id" ref="etl_component_form"/>
 			<field name="arch" type="xml">
-					<notebook position='inside'>
-						<page string="Other Information" attrs="{'invisible':[('type_id','!=','output.openobject_out')]}">
-							<field name="model_id" attrs="{'required':[('type_id','=','output.openobject_out')]}" />
-							<separator string="Fields To Load"
-								colspan="4" />
-							<field name="openobject_field_ids" colspan="4" nolabel="1" widget="one2many_list" >
-								<tree string="Fields lines" editable="bottom">
-									<field name='source_field' />
-									<field name='dest_field' />
-								</tree>
-								<form string="Fields lines">
-									<field name='source_field' />
-									<field name='dest_field' />
-								</form>
-							</field>
-						</page>
-					</notebook>
+			<form string="Component">
+			    <group col="6" colspan="4">
+			        <field name="name" select="1" />
+			        <field name="type_id" select="1" />
+			        <field name="job_id" select="1" />
+			        <field name="connector_id" select="1" required="1" domain="[('type','=','openobject')]"/>
+			       <field name="transformer_id"/>
+			    </group>
+			    <notebook colspan="4">
+			        <page string="Property">
+			            <field name="model_id" attrs="{'required':[('type_id','=','output.openobject_out')]}" />
+						<separator string="Fields To Load"
+							colspan="4" />
+						<field name="openobject_field_ids" colspan="4" nolabel="1" widget="one2many_list" >
+							<tree string="Fields lines" editable="bottom">
+								<field name='source_field' />
+								<field name='dest_field' />
+							</tree>
+							<form string="Fields lines">
+								<field name='source_field' />
+								<field name='dest_field' />
+							</form>
+						</field>
+			        </page>
+			        <page string="Transitions Detail">
+			                <field name="trans_in_ids" nolabel="1" colspan="4" widget="one2many_list">
+			                    <tree string="Incomming Transitions">
+			                        <field name="name"/>
+			                        <field name="type"/>
+			                        <field name="source_component_id"/>
+			                        <field name="channel_source"/>
+			                        <field name="channel_destination"/>
+			                        <field name="state" />
+			                    </tree>
+			                    <form string="Incomming Transitions">
+			                        <field name="name"/>
+			                        <field name="type"/>
+			                        <separator string="Transition property" colspan="4" />
+			                        <newline />
+			                        <field name="source_component_id"/>
+			                        <field name="destination_component_id"/>
+			                        <field name="channel_source"/>
+			                        <field name="channel_destination"/>
+			                        <separator string="Status" colspan="4" />
+			                        <newline />
+			                        <field name="state"/>
+			                        <group col="2" colspan="2">
+			                            <button name="action_close_transition"
+			                                string="Close Transition" type="object" states="open" />
+			                            <button name="action_open_transition"
+			                                string="Open Transition" type="object" states="close" />
+			                        </group>
+			                    </form>
+			                </field>
+			                <field name="trans_out_ids" nolabel="1" colspan="4" widget="one2many_list">
+			                    <tree string="Outgoing Transitions">
+			                            <field name="name"/>
+			                            <field name="type"/>
+			                            <field name="destination_component_id"/>
+			                            <field name="channel_source"/>
+			                            <field name="channel_destination"/>
+			                            <field name="state" />
+			                        </tree>
+			                        <form string="Outgoing Transitions">
+			                            <field name="name"/>
+			                            <field name="type"/>
+			                            <separator string="Transition property" colspan="4" />
+			                            <newline />
+			                            <field name="source_component_id"/>
+			                            <field name="destination_component_id"/>
+			                            <field name="channel_source"/>
+			                            <field name="channel_destination"/>
+			                            <separator string="Status" colspan="4" />
+			                            <newline />
+			                            <field name="state"/>
+			                            <group col="2" colspan="2">
+			                                <button name="action_close_transition"
+			                                    string="Close Transition" type="object" states="open" />
+			                                <button name="action_open_transition"
+			                                    string="Open Transition" type="object" states="close" />
+			                            </group>
+			                        </form>
+			                </field>
+			            </page>
+			            <page string="Other Information">
+			                <field name="row_limit"/>
+			                        <field name ="encoding"/>
+			            </page>
+			        </notebook>
+			    </form>
 			</field>
 		</record>
 
@@ -67,8 +139,8 @@
 				ref="action_etl_component_open_object_out_tree" />
 		</record>
 
-		<menuitem name="OpenERP"
-			parent="etl_interface.menu_etl_jd_c_oc_form"
+		<menuitem name="OpenObject"
+			parent="etl_interface.menu_etl_component_output_form"
 			action="action_etl_component_open_object_out_tree"
 			id="menu_etl_jd_c_oc_oem_form" />
 

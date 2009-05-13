@@ -1327,6 +1327,7 @@ rkJggg==
         </record>
 	</data>
 	<!-- Customer Orders -->
+	<!--
 	<data noupdate="1">
 		<record id="dm_customer_order_so0" model="dm.customer.order">
 			<field name="offer_step_id" ref="dm.dm_offer_step_smforopenerpondemandfreetrial2010"/>
@@ -1380,6 +1381,7 @@ rkJggg==
 			<field name="shop_id" ref="dm.shop1"/>
 		</record>
 	</data>
+	-->
     <data noupdate="1">
         <record id="dm_offer_document_paperdocumentforondemand0" model="dm.offer.document">
             <field name="copywriter_id" ref="base.main_partner"/>
@@ -1400,7 +1402,7 @@ rkJggg==
 		<record id="dm_offer_document_startingmailingdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Starting Mailing Document-09&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm.dm_ddf_plugin_lastname0'),ref('dm.dm_ddf_plugin_street0'),ref('dm.dm_ddf_plugin_street2'),ref('dm.dm_ddf_plugin_city0'),ref('dm.dm_ddf_plugin_country0')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
 			<field name="gender_id" ref="base.res_partner_title_sir"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
@@ -1415,7 +1417,7 @@ rkJggg==
 		<record id="dm_offer_document_packageinsertdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Package Insert Document&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm.dm_ddf_plugin_email0'),ref('dm.dm_ddf_plugin_phone0')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
 			<field name="gender_id" ref="base.res_partner_title_sir"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
@@ -1429,7 +1431,7 @@ rkJggg==
 		<record id="dm_offer_document_accompanyingletterdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Accompanying Letter Document-09&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm_ddf_plugin_partner_id')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
 			<field name="gender_id" ref="base.res_partner_title_sir"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
@@ -1443,7 +1445,7 @@ rkJggg==
 		<record id="dm_offer_document_accompanyingletterforopenerpbookdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Accompanying Letter for OpenERP book Document&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm.dm_ddf_plugin_code0')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
 			<field name="gender_id" ref="base.res_partner_title_sir"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>

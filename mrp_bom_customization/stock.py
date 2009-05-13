@@ -30,8 +30,7 @@ class stock_move(osv.osv):
     def list_customizations(self, cr, uid, ids, name, args, context):
         result = {}
         for id in ids:
-            
-            result[id] = ""
+            result[id] = False
             
             #TODO CHECKME: stock.move should only be linked to one and only one mrp.production hopefully
             req = """ SELECT sale_order_line_id 
@@ -42,14 +41,13 @@ class stock_move(osv.osv):
             res = cr.fetchall()
 
             if not res:
-                break
+                continue
             
             sol_id = res[0][0]
             
             if not sol_id:
 #                raise osv.except_osv(_('No sale order line found !'),
 #                              _('Save your quotation first.'))
-                result[id] = False
                 continue
             
             req = """ SELECT cus.customization_key_id, grp.name, val.name 
@@ -64,7 +62,7 @@ class stock_move(osv.osv):
             key_val_grp_dict = dict([(i,(j,k)) for (i,j,k) in res])
             
             
-            req = """ SELECT bom_customization_key_id 
+            req = """ SELECT mrp_bom_customization_key_id 
                         FROM  mrp_bom_mrp_bom_customizations_keys_rel rel INNER JOIN stock_move sm ON rel.bom_id = sm.bom_id
                         WHERE sm.id = %d """ % id
             cr.execute(req)
@@ -76,8 +74,6 @@ class stock_move(osv.osv):
             
             if custom_text:
                 result[id] = custom_text[0:-1]
-            else:
-                result[id] = False
             
         return result
         
@@ -85,6 +81,6 @@ class stock_move(osv.osv):
     _columns = { 
         'bom_id': fields.many2one('mrp.bom', 'Origin bom line'),
         'production_orders': fields.many2many('mrp.production', 'mrp_production_move_ids', 'move_id', 'production_id', 'Production Order'),
-        'list_customizations': fields.function(list_customizations, string="List of Customizations", method=True, type="char", store=True, size=64, select=True),
+        'list_customizations': fields.function(list_customizations, string="List of Customizations", method=True, store=True, type="char", size=64, select=True),
     }
 stock_move()

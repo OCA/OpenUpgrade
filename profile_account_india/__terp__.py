@@ -33,10 +33,11 @@
     'category': 'Profile',
     "depends":[
         "account_base",
-        "l10n_chart_in",
         "account_voucher",
         "account_voucher_payment",
         "account_voucher_workflow",
+        "account_invoice_india",
+        "account_reports_india",
     ],
     "demo_xml":[],
     "update_xml":[],
