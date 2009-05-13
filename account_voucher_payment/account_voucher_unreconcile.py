@@ -32,11 +32,14 @@ _info_form = '''<?xml version="1.0"?>
 
 def _trans_unrec(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
-    recs = pool.get('account.move.line').read(cr, uid, data['ids'], ['reconcile_id',])
-    recs = filter(lambda x: x['reconcile_id'], recs)
-    rec_ids = [rec['reconcile_id'][0] for rec in recs]
-    if len(rec_ids):
-        pooler.get_pool(cr.dbname).get('account.move.reconcile').unlink(cr, uid, rec_ids)
+    voucher = pool.get('account.voucher').browse(cr, uid, data.get('id'))
+    recs = None
+    for line in voucher.move_ids:
+        if line.reconcile_id:
+            recs = [line.reconcile_id.id]
+    
+    for rec in recs:
+        pool.get('account.move.reconcile').unlink(cr, uid, rec)
     return {}
 
 class wiz_unreconcile(wizard.interface):
