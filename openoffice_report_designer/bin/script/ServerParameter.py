@@ -75,6 +75,8 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         sDatabase=self.win.getListBoxSelectedItem("lstDatabase")
         sLogin=self.win.getEditText("txtLoginName")
         sPassword=self.win.getEditText("txtPassword")
+        global url
+        self.sock=RPCSession(url)
         UID = self.sock.login(sDatabase,sLogin,sPassword)
         if not UID :
             ErrorDialog("Connection Refuse...","Please enter valid Login/Password")
