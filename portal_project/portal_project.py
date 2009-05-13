@@ -51,7 +51,7 @@ class crm_case(osv.osv):
                         logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
                     else:
                         logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
-            return res
+        return res
     
     def write(self, cr, uid, ids, vals, context={}):
         res = super(crm_case, self).write(cr, uid, ids, vals, context={})

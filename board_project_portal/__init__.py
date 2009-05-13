@@ -19,21 +19,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Project Portal",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "category" : "Generic Modules/CRM",
-    "description": """ Synchronize between :
-                  - Project
-                  - Analytic Account
-                  - CRM Section Project task and CRM Case.""",
-    "depends" : ["base", "crm_configuration", "portal", "project"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ["portal_project_view.xml", "portal_project_data.xml"],
-    "active": False,
-    "installable": True,
-}
 
+import board_project_portal
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
