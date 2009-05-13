@@ -86,17 +86,31 @@ class job(signal):
 
     def __getstate__(self):         
         _components = self.__dict__.get('_components')
-        new_components = []
+        components = []
         for comp in _components:
-            new_components.append(pickle.dumps(comp))        
+            if comp.is_start() and comp.is_end():
+                components.append(pickle.dumps(comp))
+        transitions = []
+        for transition in self.get_transitions():
+            transitions.append(pickle.dumps(transition))    
         
-        return {'name' :self.name, 'status':self.status , '_components':new_components}
+        return {'name' :self.name, 'status':self.status , 'single_components':components, 'transitions' : transitions}
     def __setstate__(self, state):
         components = []
-        for component in state.get('_components',[]):
-            new_cmp = pickle.loads(component)
-            new_cmp.__dict__['job'] = self            
-            components.append(new_cmp)
+        for component in state.get('single_components',[]):
+            _cmp = pickle.loads(component)                        
+            components.append(_cmp)
+
+        for transition in state.get('transitions',[]):
+            _transition = pickle.loads(transition)   
+            if _transition.source not in components:            
+                components.append(_transition.source)
+            if _transition.destination not in components:            
+                components.append(_transition.destination)
+
+        for _cmp in components:
+            _cmp.__dict__['job'] = self
+
         state['_components'] = components
         self.__dict__ = state    
         return  

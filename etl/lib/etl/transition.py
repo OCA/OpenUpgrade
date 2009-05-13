@@ -58,8 +58,8 @@ class transition(signal):
     def __setstate__(self, state):
         source = pickle.loads(state['source'])
         destination = pickle.loads(state['destination'])
-        destination.__dict__['trans_in'].append(state['channel_destination'],self)
-        source.__dict__['trans_out'].append(state['channel_source'],self)
+        destination.__dict__['trans_in'].append((state['channel_destination'],self))
+        source.__dict__['trans_out'].append((state['channel_source'],self))
         state['source'] = source
         state['destination'] = destination
         self.__dict__ = state
