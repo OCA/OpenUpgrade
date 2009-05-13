@@ -103,7 +103,7 @@ def create_kml(self, cr, uid, data, context={}):
     for part in res_partner:
         res[string.upper(part[1])] = part[0]
 
-    map(lambda x:res.setdefault(x,0), country_list)
+    map(lambda x:res_inv.setdefault(x,0), country_list)
     # fetch invoice by country
     cr.execute(''' select count(i.id),c.name from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id left join res_country as c on a.country_id=c.id where i.type in ('out_invoice','in_invoice') group by c.name ''')
     invoice_partner = cr.fetchall()
@@ -243,7 +243,7 @@ def create_kml(self, cr, uid, data, context={}):
 
         folderElement.appendChild(placemarkElement)
         documentElement.appendChild(folderElement)
-        
+
 
     # This writes the KML Document to a file.
 #    kmlFile = open(fileName, 'w')
