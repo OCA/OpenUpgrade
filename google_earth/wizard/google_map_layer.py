@@ -79,7 +79,7 @@ def create_kml(self, cr, uid, data, context={}):
     addresslist = []
     country_list = []
     coordinates_text = ' '
-    colors = ['dfbf9f3b','88336699','59009900','8fffff00','7f00ffff','7fffffff','aaffffff','880fff00','880f00cc','88f000cc','33333333']
+    colors = ['dfbf9f3b','88336699','59009900','880fff00','88f000cc','7fffffff','aaffffff','880fff00','880f00cc','88f000cc','33333333']
 
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
@@ -167,7 +167,7 @@ def create_kml(self, cr, uid, data, context={}):
                 address += ', '
                 address += str(add.country_id.name)
 
-        desc_text = address + ' , turnover of partner : ' + str(res[part.id])
+        desc_text = address + ' , Turnover of partner : ' + str(res[part.id])
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
@@ -203,9 +203,12 @@ def create_kml(self, cr, uid, data, context={}):
     #different color should be used
     len_color = len(colors)
     cnt = 0
+#    country_list.sort()
     for country in country_list:
-#        cnt += 1 #should be used
+        if cnt > len_color:
+            cnt = 0
         cooridinate = dict_country[country]
+
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(country)
