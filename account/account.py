@@ -1782,11 +1782,13 @@ class account_account_template(osv.osv):
         'parent_id': fields.many2one('account.account.template','Parent Account Template', ondelete='cascade'),
         'child_parent_ids':fields.one2many('account.account.template','parent_id','Children'),
         'tax_ids': fields.many2many('account.tax.template', 'account_account_template_tax_rel','account_id','tax_id', 'Default Taxes'),
+	'nocreate': fields.boolean('Optional create', help="If checked, the new chart of accounts will not contain this by default."),
     }
 
     _defaults = {
         'reconcile': lambda *a: False,
         'type' : lambda *a :'view',
+	'nocreate': lambda *a: False,
     }
 
     def _check_recursion(self, cr, uid, ids):
@@ -2113,7 +2115,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
         #deactivate the parent_store functionnality on account_account for rapidity purpose
         self.pool._init = True
 
-        children_acc_template = obj_acc_template.search(cr, uid, [('parent_id','child_of',[obj_acc_root.id])])
+        children_acc_template = obj_acc_template.search(cr, uid, [('parent_id','child_of',[obj_acc_root.id]),('nocreate','!=',True)])
         children_acc_template.sort()
         for account_template in obj_acc_template.browse(cr, uid, children_acc_template):
             tax_ids = []
