@@ -62,7 +62,7 @@ class product_variant_configurator_configurator(osv.osv_memory):
     _columns = {
               "product_tmpl_id": fields.many2one('product.template', "Product Template"),
               "dimension_configuration_line_ids": fields.one2many('product_variant_configurator.line', 'configurator_id', 'Configurator Lines'),
-              "product_variant_id": fields.many2one('product.product', "Product Variant", domain="[('product_tmpl_id','=',product_tmpl_id)]"),
+              "product_variant_id": fields.many2one('product.product', "Product Variant", required=True),
     }
     
     def create(self, cr, uid, vals, context=None):
@@ -106,6 +106,7 @@ class product_variant_configurator_configurator(osv.osv_memory):
         if not product_tmpl_id:
             return result
 
+        result = {'domain':{'product_variant_id':"[('product_tmpl_id','=',product_tmpl_id)]"}}
         product_template = self.pool.get('product.template').browse(cr, uid, product_tmpl_id)
         dim_ids = product_template.dimension_type_ids
         
@@ -128,6 +129,7 @@ class product_variant_configurator_configurator(osv.osv_memory):
             prod_id = False 
 
         result['value'] = {'dimension_configuration_line_ids': line_ids, 'product_variant_id': prod_id}
+        print result
         return result
     
     def onchange_product_variant_id(self, cr, uid, ids, product_variant_id=False, dimension_configuration_line_ids=False):

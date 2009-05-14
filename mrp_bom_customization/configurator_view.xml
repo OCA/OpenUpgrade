@@ -25,9 +25,9 @@
 
 			<field name="arch" type="xml">
 				<form string="BOM Configurator">
-					<field name="product_id" invisible='1' />
+					<field name="product_id" readonly="1"/>
 					<field name="bom_property_id_selection" on_change="onchange_bom_property_id_selection(bom_property_id_selection, product_id, 'sol_id' in context and context['sol_id'])"/><!-- domain="[('group_id','=',13)]"  -->
-					<field name="configurator_line_ids" widget="one2many_list" on_change="onchange_configurator_line_ids(configurator_line_ids, bom_property_id_selection, product_id)">
+					<field colspan="4" nolabel="1" name="configurator_line_ids" widget="one2many_list" on_change="onchange_configurator_line_ids(configurator_line_ids, bom_property_id_selection, product_id)">
 						<form string="Key / Value" editable="bottom">
 							<field name="customization_group_id"/>
 							<field name="customization_key_id" on_change="onchange_customization_key_id(customization_key_id)"/>
@@ -39,6 +39,7 @@
 							<field name="customization_value_id"/>
 						</tree>
 					</field>
+					<newline/>
 					<group col="2" colspan="2">
 						<button icon="gtk-cancel" special="cancel" string="Cancel" />
 						<button icon="gtk-ok" name="configure_line" string="Validate" type="object" />
