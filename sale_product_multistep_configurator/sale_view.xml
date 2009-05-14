@@ -11,7 +11,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="order_line" position="before">
-					<button colspan="4" icon="gtk-ok" name="%(action_product_configure_from_sale_order)d" string="Configure new product" type="action" states="draft" context="{'zop': 3}" />
+					<button colspan="4" icon="gtk-ok" name="%(action_product_configure_from_sale_order)d" string="Configure new product" type="action" states="draft" />
 				</field>
 			</field>
 		</record>
