@@ -48,12 +48,6 @@ class job(signal):
         self.logger = logger.logger()
         self.job_id = name
 
-#    def job_id(self, prefix='job'):
-#        import random
-#        result =prefix + random.choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
-#        print "job nameeee",result
-#        return result
-
     def __str__(self):
         res = '<Job name="%s" status="%s">' % (self.name, self.status)
         components = []
@@ -118,6 +112,9 @@ class job(signal):
         for _cmp in components:
             _cmp.__dict__['job'] = self
 
+#        connects = '__connects' in state and state['__connects'] or {}
+#        state['__connects'] = connects
+
         state['_components'] = components
         self.__dict__ = state
         return
@@ -143,7 +140,6 @@ class job(signal):
 
 
     def pause(self):
-        print "job is pausing..........................."
         for tran in self.get_transitions():
             tran.pause()
         self.status = 'pause'
@@ -151,7 +147,6 @@ class job(signal):
 
 
     def restart(self):
-        print "job is restarted now......................."
         for tran in self.get_transitions():
             tran.restart()
         self.status = 'start'
@@ -205,15 +200,15 @@ class job(signal):
         return pickle.load(value)
 
     def run(self):
-        print "job is running now.............................."
         self.register_actions()
-        if self.pickle:
-            job = self.read(self.pickle)
-            job.restart()
-            job.end()
-        else:
-            self.start()
-            self.end()
+        # now pickle will handle from thread server
+#        if self.pickle:
+#            job = self.read(self.pickle)
+#            job.restart()
+#            job.end()
+#        else:
+        self.start()
+        self.end()
 
     def get_statitic_info(self):
         stat_info =  'Statistical Information (process time in microsec):\n'
@@ -440,16 +435,16 @@ class job(signal):
 
     def action_transition_pause(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("transition", logger.LOG_INFO,
-                     'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))
+                     'the <%s> to <%s>  has pause now...'%(key.source.name, key.destination.name))
         return True
 
     def action_transition_stop(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("transition", logger.LOG_INFO,
-                     'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))
+                     'the <%s> to <%s>  has stop now...'%(key.source.name, key.destination.name))
         return True
 
     def action_transition_end(self, key, signal_data={}, data={}):
         self.logger.notifyChannel("transition", logger.LOG_INFO,
-                     'the <%s> to <%s>  has started now...'%(key.source.name, key.destination.name))
+                     'the <%s> to <%s>  has end now...'%(key.source.name, key.destination.name))
         return True
 
