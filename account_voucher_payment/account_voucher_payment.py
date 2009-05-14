@@ -101,7 +101,12 @@ class account_voucher(osv.osv):
             if journal.sequence_id:
                 name = self.pool.get('ir.sequence').get_id(cr, uid, journal.sequence_id.id)
 
-            move = {'name': name, 'journal_id': journal_id}
+            move = {
+                'name': name, 
+                'journal_id': journal_id, 
+                'voucher_type':inv.type,
+                'narration' : inv.narration
+            }
             
             if inv.period_id:
                 move['period_id'] = inv.period_id.id
@@ -196,11 +201,7 @@ class account_voucher(osv.osv):
                 cr.execute('insert into voucher_id (account_id,rel_account_move) values (%d, %d)',(int(ids[0]),int(line.id)))
                 
         return True
-    
-    
 
-    
-    
 account_voucher()
 
 class VoucherLine(osv.osv):
@@ -234,7 +235,33 @@ class VoucherLine(osv.osv):
             residual -= sum(same_invoice_amounts)
             return {'value' : {'amount':residual}}  
     
-    
+    def onchange_line_account(self, cr, uid, ids, account_id, type, type1):
+        if not account_id:
+            return {'value' : {'account_id' : False, 'type' : False ,'amount':False}}
+        obj = self.pool.get('account.account')
+        acc_id = False
+        
+        if type1 in ('rec_voucher','bank_rec_voucher', 'journal_voucher'):
+            acc_id = obj.browse(cr, uid, account_id)
+            balance = acc_id.credit
+            type = 'cr'
+        elif type1 in ('pay_voucher','bank_pay_voucher','cont_voucher') : 
+            acc_id = obj.browse(cr, uid, account_id)
+            balance = acc_id.debit
+            type = 'dr'
+        elif type1 in ('journal_sale_vou') : 
+            acc_id = obj.browse(cr, uid, account_id)
+            balance = acc_id.credit
+            type = 'dr'
+        elif type1 in ('journal_pur_voucher') : 
+            acc_id = obj.browse(cr, uid, account_id)
+            balance = acc_id.debit
+            type = 'cr'
+
+        return {
+            'value' : {'type' : type, 'amount':balance}
+        }
+
 VoucherLine()
 
 

@@ -58,7 +58,7 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="account_budget.view_budget_post_form"/>
             <field name="arch" type="xml">
-                <field name="sens" position="after">
+                <field name="code" position="after">
                     <field name="company_id"/>
                 </field>
             </field>

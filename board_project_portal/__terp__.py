@@ -19,31 +19,40 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Invoice Payment/Receipt by Vouchers.",
-    "version" : "1.0",
-    "author" : 'Tiny & Axelor',
-    "description": """This module includes :
-    * It reconcile the invoice (supplier, customer) while paying through 
-    Accounting Vouchers
-    """,
-    "category" : "Generic Modules/Indian Accounting",
-    "website" : "http://tinyerpindia.com",
-    "depends" : [
-        "base", 
-        "account",
-        "account_voucher",
-    ],
-    "init_xml" : [
-    ],
-    
-    "demo_xml" : [],
-    "update_xml" : [
-        "account_voucher_payment_view.xml",
-        "account_voucher_payment_wizard.py"
-    ],
-    "active": False,
-    "installable": True,
-}
 
+
+{
+    'name': 'Board for project users',
+    'version': '1.0',
+    'category': 'Board/Project_Portal',
+    'description': """
+This module implements a dashboard for project member that includes:
+    * List of my open tasks
+    * List of my Bugs
+    * List of Features
+    * List of Supported Requests
+    * List of Supported Documents
+    * Shortcut Buttons
+    * Graph of my work analysis
+    * Graph of Bugs status
+    """,
+    'author': 'Tiny',
+    'depends': [
+        'project',
+        'report_timesheet',
+        'board',
+        'report_analytic_planning',
+        'report_analytic_line',
+        'report_task',
+        'hr_timesheet_sheet',
+        'portal_project',
+        'base',
+        'crm_configuration',
+    ],
+    'update_xml': ['board_portal_view.xml'],
+    'demo_xml': [],
+    'installable': True,
+    'active': False,
+    'certificate': '',
+}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

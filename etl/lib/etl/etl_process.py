@@ -48,10 +48,10 @@ class job_process(signal):
         self.logger = logger.logger()
         self.detail = {}
 
-#        self.shelf = shelve.open('/tmp/data' , writeback=True)
+        self.shelf = shelve.open('/tmp/data' , writeback=True)
 #        self.id=tools.job_id()
 #        self.shelf['key']=self.id
-
+#        id(instance)
 
     def write(self):
         """
@@ -193,23 +193,22 @@ class job_process(signal):
         self.detail[key]['end_date'] =  current_time
         self.detail[key]['process_time'] =  diff
         self.detail[key]['status'] ='end'
-        out_s = open('/home/tiny/Desktop/etl/a.txt', 'wb')
-        self.cpickle.dump(str(self.detail), out_s)
-        out_s.close()
 
-        d = shelve.open('/home/tiny/Desktop/etl/a2.txt' ,writeback=True)
-
-        d['key'] = self.detail
-
-        d.close()
-
-        in_s = open('/home/tiny/Desktop/etl/a.txt', 'rb')
-        in_s.seek(0)
-        a = self.cpickle.load(in_s)
-#        a = self.cpickle.loads(b_object)
-        print type(a)
-        print eval(a)
+#        out_s = open('/home/tiny/Desktop/etl/a', 'wb')
+#        self.cpickle.dump(str(self.detail), out_s)
 #        out_s.close()
+
+#        d = shelve.open('/home/tiny/Desktop/etl/a2' ,writeback=True)
+        self.shelf['key']=self.detail
+
+#        in_s = open('/home/tiny/Desktop/etl/a.txt', 'rb')
+#        in_s.seek(0)
+#        a = self.cpickle.load(in_s)
+#
+##        a = self.cpickle.loads(b_object)
+#        print type(a)
+#        print eval(a)
+##        out_s.close()
 #
 #        self.shelf['end_date'] =current_time
 #        self.shelf['process_time']=diff

@@ -6,7 +6,7 @@
 			<field name="name">etl.connector.sql.form</field>
 			<field name="model">etl.connector</field>
 			<field name="type">form</field>
-			<field name="inherit_id" ref="etl_connector_basic_form"/>
+			<field name="inherit_id" ref="etl_interface.etl_connector_basic_form"/>
 			<field name="arch" type="xml">
 				<notebook position='inside'>
 					<page string="Other Information" attrs="{'invisible':[('type','!=','sql')]}" >

@@ -49,6 +49,12 @@ class connector(signal):
     def __str__(self):        
     	return '<Connector name = "%s" type = "%s">'%(self.name, self._type)
 
+    def __getstate__(self):
+        return {'name' : self.name, 'status': self.status , '_type' :self._type}
+
+    def __setstate__(self, state):
+        self.__dict__ = state
+
     def open(self):
         self.status = 'open'
         self.signal('open', {'date': datetime.datetime.today()})

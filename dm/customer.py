@@ -82,26 +82,7 @@ class res_partner(osv.osv):
     }
 res_partner()
 
-"""
-class dm_customer_order(osv.osv):
-    _name = "dm.customer.order"
-    _inherit = "sale.order"
-    _table = "sale_order"
-    _columns ={
-        'customer_id' : fields.many2one('res.partner', 'Customer', ondelete='cascade'),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
-        'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
-        'state' : fields.selection([('draft','Draft'),('done','Done')], 'Status', readonly=True),
-    }
-    _defaults = {
-        'picking_policy': lambda *a: 'one',
-    }
-    def set_confirm(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state': 'done'})
-        return True
 
-dm_customer_order()
-"""
 class dm_workitem(osv.osv):
     _name = "dm.workitem"
     _description = "workitem"
@@ -569,3 +550,11 @@ class dm_event(osv.osv_memory):
         return id
 
 dm_event()
+
+class sale_order(osv.osv):
+    _name = "sale.order"
+    _inherit = "sale.order"
+    _columns ={
+        'offer_step_id' : fields.many2one('dm.offer.step','Offer Step'),
+    }
+sale_order()

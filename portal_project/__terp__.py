@@ -28,10 +28,10 @@
                   - Project
                   - Analytic Account
                   - CRM Section Project task and CRM Case.""",
-    "depends" : ["base", "project", "crm_configuration"],
+    "depends" : ["base", "crm_configuration", "portal", "project"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["portal_project_view.xml"],
+    "update_xml" : ["portal_project_view.xml", "portal_project_data.xml"],
     "active": False,
     "installable": True,
 }

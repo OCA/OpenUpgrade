@@ -36,8 +36,8 @@
 	        <field name="arch" type="xml">
 	            <form string="Announces">
                     <field name="name" string="Subject"/>
-                    <field name="section_id" invisible="1"/>
-                    <field name="date" invisible="1"/>
+                    <field name="section_id" />
+                    <field name="date" />
                     <field name="user_id" string="Responsible"/>
                     <newline/>
                     <separator colspan="4" string="Description"/>
@@ -75,6 +75,10 @@
 	        <field name="view_id" ref="crm_case_announce_form_view"/>
 	    </record>
 		<menuitem id="menu_announce_new" parent="menu_crm_announce" action="crm_case_categ_announce_new"/>
+		
+		<menuitem name="Projects" id="menu_portal_project_project" parent="portal.menu_portal_customer"/>
+		<menuitem name="All projects" id="menu_portal_project_project_all" parent="menu_portal_project_project" action="project.open_view_project_all"/>
+		<menuitem name="All Tasks" id="menu_portal_project_task_all" parent="menu_portal_project_project" action="project.action_view_task"/>
 		
     </data>
 </openerp>

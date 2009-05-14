@@ -476,7 +476,7 @@
                 <field name="campaign_id"/>
                 <field name="segment_id"/>
                 <field name="step_id"/>
-                <field name="address_id" readonly="1"/>
+                <field name="address_id" required="1"/>
                 <field name="trigger_type_id" widget="selection"/>
                 <field name="action_time"/>
             </tree>
@@ -491,7 +491,7 @@
                 <field name="campaign_id" select="1"/>
                 <field name="segment_id"/>
                 <field name="step_id" select="2"/>
-                <field name="address_id" readonly="1"/>
+                <field name="address_id" required="1"/>
                 <field name="trigger_type_id" select="1"/>
                 <field name="action_time"/>
             </form>
