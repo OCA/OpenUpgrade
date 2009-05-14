@@ -33,11 +33,14 @@ class project_project(osv.osv):
                 "section_bug_id": fields.many2one('crm.case.section','Bug Section'),
                 "section_feature_id": fields.many2one('crm.case.section','Feature Section'),
                 "section_support_id": fields.many2one('crm.case.section','Support Section'),
-                    }
+                }
 project_project()
 
 class crm_case(osv.osv):
     _inherit = 'crm.case'
+    _columns = {
+                'project_id' : fields.many2one('project.project', 'Project', size=64),
+        }
     
     def create(self, cr, uid, values, *args, **kwargs):
         res = super(crm_case, self).create(cr, uid, values, *args, **kwargs)
@@ -66,7 +69,7 @@ class crm_case(osv.osv):
                         logger.notifyChannel('email', netsvc.LOG_INFO, 'Email successfully send to : %s' % (i.address_id.email))
                     else:
                         logger.notifyChannel('email', netsvc.LOG_ERROR, 'Failed to send email to : %s' % (i.address_id.email))
-            return res
+        return res
 crm_case()
 
 class task(osv.osv):
