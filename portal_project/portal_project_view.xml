@@ -16,6 +16,18 @@
 			</field>
 		</record>
 		
+		<record id="portal_crm_case-view" model="ir.ui.view">
+            <field name="name">portal crm case</field>
+            <field name="model">crm.case</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="crm.crm_case-view"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="project_id"/>
+                </field>
+            </field>
+        </record>
+		
 		<record model="ir.ui.view" id="crm_case_announce_tree_view">
 	        <field name="name">CRM - Announce Tree</field>
 	        <field name="model">crm.case</field>
@@ -76,9 +88,10 @@
 	    </record>
 		<menuitem id="menu_announce_new" parent="menu_crm_announce" action="crm_case_categ_announce_new"/>
 		
-		<menuitem name="Projects" id="menu_portal_project_project" parent="portal.menu_portal_customer"/>
-		<menuitem name="All projects" id="menu_portal_project_project_all" parent="menu_portal_project_project" action="project.open_view_project_all"/>
+		<menuitem name="Projects" id="menu_portal_project_project" parent="portal.menu_portal_customer" />
+		<menuitem name="All projects" id="menu_portal_project_project_all" parent="menu_portal_project_project" action="project.open_view_project_all" />
 		<menuitem name="All Tasks" id="menu_portal_project_task_all" parent="menu_portal_project_project" action="project.action_view_task"/>
+		<menuitem name="All Cases" id="menu_portal_project_case_all" parent="menu_portal_project_project" action="crm.crm_case_categ0-act"/>
 		
     </data>
 </openerp>
