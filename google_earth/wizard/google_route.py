@@ -156,7 +156,7 @@ class find_route(wizard.interface):
     states = {
        'init': {
             'actions': [_create_kml],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Done')]}
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
                 },
             }
 find_route('google.find.route')

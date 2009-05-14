@@ -79,8 +79,8 @@ def create_kml(self, cr, uid, data, context={}):
     addresslist = []
     country_list = []
     coordinates_text = ' '
-    colors = ['dfbf9f3b','88336699','59009900','880fff00','88f000cc','7fffffff','aaffffff','880fff00','880f00cc','88f000cc','33333333']
-
+    #colors = ['dfbf9f3b','88336699','59009900','880fff00','88f000cc','7fffffff','aaffffff','880fff00','880f00cc','88f000cc','33333333']
+    colors = ['9f8080ff', '9f0000ff']
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
     address_obj= pool.get('res.partner.address')
@@ -100,9 +100,13 @@ def create_kml(self, cr, uid, data, context={}):
     # fetch turnover by country (should be corect)
     cr.execute('select sum(l.credit), c.name from account_move_line as l join res_partner_address as a on l.partner_id=a.partner_id left join res_country as c on c.id=a.country_id group by c.name')
     res_partner = cr.fetchall()
+    list_to = []
     for part in res_partner:
         if part[1]:
             res[string.upper(part[1])] = part[0]
+            list_to.append(part[0])
+
+    avg_to = min(list_to) + max(list_to) / 2 or 0.0
 
     map(lambda x:res_inv.setdefault(x, 0), country_list)
     # fetch invoice by country
@@ -204,12 +208,18 @@ def create_kml(self, cr, uid, data, context={}):
     folderElement.appendChild(foldernameElement)
 
     #different color should be used
-    len_color = len(colors)
-    cnt = 0
+#    len_color = len(colors)
+#    cnt = 0
 #    country_list.sort()
+    country_list.sort()
     for country in country_list:
-        if cnt > len_color:
-            cnt = 0
+#        if cnt > len_color:
+#            cnt = 0
+        if res[country] > avg_to:
+            color = colors[1]
+        else:
+            color = colors[0]
+
         cooridinate = dict_country[country]
 
         placemarkElement = kmlDoc.createElement('Placemark')
@@ -222,8 +232,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkstyleElement = kmlDoc.createElement('Style')
         placemarkpolystyleElement = kmlDoc.createElement('PolyStyle')
         placemarkcolorrElement = kmlDoc.createElement('color')
-#        placemarkcolorrElement.appendChild(kmlDoc.createTextNode('FF0000'))#colors[cnt])
-        placemarkcolorrElement.appendChild(kmlDoc.createTextNode(colors[cnt]))
+        placemarkcolorrElement.appendChild(kmlDoc.createTextNode(color))#colors[cnt]
         placemarkpolystyleElement.appendChild(placemarkcolorrElement)
         placemarkstyleElement.appendChild(placemarkpolystyleElement)
 
@@ -231,7 +240,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkElement.appendChild(placemarkdescElement)
         placemarkElement.appendChild(placemarkstyleElement)
 
-        cnt += 1
+#        cnt += 1
         geometryElement = kmlDoc.createElement('MultiGeometry')
         polygonElement = kmlDoc.createElement('Polygon')
 
@@ -264,7 +273,7 @@ class customer_on_map(wizard.interface):
     states = {
          'init': {
             'actions': [create_kml],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Done')]}
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
                 }
             }
 customer_on_map('layers.region.catery')
