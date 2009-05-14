@@ -18,6 +18,7 @@ from plugin.customer_function import customer_function
 from plugin.dynamic_text import dynamic_text
 import re
 import datetime
+from lxml import etree
 internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -37,6 +38,7 @@ internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transition
 </HEAD>
 <BODY LANG="en-IN" DIR="LTR">
 '''
+_regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
 
 def merge_message(cr, uid, keystr, context):
     logger = netsvc.Logger()
@@ -322,6 +324,21 @@ class report_xml(osv.osv):
         db = pooler.get_db_only(cr.dbname)
         interface.register_all(db)
         return True
+
+    def set_image_email(self,cr,uid,report_id):
+        list_image_id = []
+        def process_tag(node,list_image_id):
+            if not node.getchildren():
+                if  node.tag=='img' and node.get('name') and node.get('name').find('[[setHtmlImage')>=0:
+                    res_id= _regex.split(node.get('name'))[1]
+                    list_image_id.append((res_id,node.get('src')))
+            else :
+                for n in node.getchildren():
+                    process_tag(n,list_image_id)
+        datas = self.report_get(cr, uid, report_id)['report_sxw_content']
+        root = etree.HTML(base64.decodestring(datas))
+        process_tag(root,list_image_id)
+        return list_image_id
 report_xml()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
