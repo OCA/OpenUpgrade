@@ -22,7 +22,7 @@
 """
  To display log detail in streamline.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 
@@ -31,27 +31,27 @@ import sys
 class logger(component):
     """
         This is an ETL Component that use to display log detail in streamline.
- 
+
 	    Type                   : Data Component.
 		Computing Performance  : Streamline.
 		Input Flows            : 0-x.
 		* .*                   : The main data flow with input data.
 		Output Flows           : 0-y.
-		* .*                   : Returns the main flow. 
-    """    
+		* .*                   : Returns the main flow.
+    """
     def __init__(self, output=sys.stdout, name='component.transfer.logger'):
         super(logger, self).__init__(name=name)
         self._type = 'component.transfer.logger'
         self.output = output
 
-    def __copy__(self):        
+    def __copy__(self):
         res = logger(self.output, self.name)
         return res
 
-    def process(self):        
+    def process(self):
         for channel,trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:                   
+                for d in iterator:
                     self.output.write('Log ' + self.name + ' ' + str(d) + '\n')
                     yield d, 'main'
-        
+

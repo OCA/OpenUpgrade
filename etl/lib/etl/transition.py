@@ -53,15 +53,21 @@ class transition(signal):
         return res
 
     def __getstate__(self):
-        return {'type' : self.type,'status' : self.status, 'source' : pickle.dumps(self.source), 'destination': pickle.dumps(self.destination), 'trigger' : self.trigger, 'channel_source' : self.channel_source, 'channel_destination' : self.channel_destination}
+        #'__connects' : self.__connects
+        return { 'type' : self.type,'status' : self.status, 'source' : pickle.dumps(self.source), 'destination': pickle.dumps(self.destination), 'trigger' : self.trigger, 'channel_source' : self.channel_source, 'channel_destination' : self.channel_destination}
 
     def __setstate__(self, state):
         source = pickle.loads(state['source'])
         destination = pickle.loads(state['destination'])
         destination.__dict__['trans_in'].append((state['channel_destination'],self))
         source.__dict__['trans_out'].append((state['channel_source'],self))
+#        self.__connects.__dict__['__connects'].append((state['__connects'],self))
+
+        connects = '__connects' in state and state['__connects'] or {}
+
         state['source'] = source
         state['destination'] = destination
+        state['__connects'] = connects
         self.__dict__ = state
 
     def copy(self):
@@ -74,20 +80,21 @@ class transition(signal):
         self.status = 'close'
 
     def stop(self):
-        self.status = 'stop'
+#        self.status = 'stop'
         self.signal('stop')
 
     def end(self):
-        self.status = 'end'
+#        self.status = 'end'
         self.signal('end', {'date': datetime.datetime.today()})
 
     def start(self):
-        self.status = 'start'
+#        self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
 
     def pause(self):
-        self.status = 'pause'
-        self.signal('pause')
+        pass
+#        self.status = 'pause'
+        self.signal('pause') #today
 
     def restart(self):
         self.status = 'start'
