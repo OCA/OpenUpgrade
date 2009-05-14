@@ -96,22 +96,25 @@ def create_kml(self, cr, uid, data, context={}):
                 cntry = string.upper(str(part.address[0].country_id.name))
                 country_list.append(cntry)
 
-    map(lambda x:res.setdefault(x,0.0), country_list)
+    map(lambda x:res.setdefault(x, 0.0), country_list)
     # fetch turnover by country (should be corect)
     cr.execute('select sum(l.credit), c.name from account_move_line as l join res_partner_address as a on l.partner_id=a.partner_id left join res_country as c on c.id=a.country_id group by c.name')
     res_partner = cr.fetchall()
     for part in res_partner:
-        res[string.upper(part[1])] = part[0]
+        if part[1]:
+            res[string.upper(part[1])] = part[0]
 
-    map(lambda x:res_inv.setdefault(x,0), country_list)
+    map(lambda x:res_inv.setdefault(x, 0), country_list)
     # fetch invoice by country
     cr.execute(''' select count(i.id),c.name from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id left join res_country as c on a.country_id=c.id where i.type in ('out_invoice','in_invoice') group by c.name ''')
     invoice_partner = cr.fetchall()
     for part in invoice_partner:
-        res_inv[str(string.upper(part[1]))] = str(part[0])
+        if part[1]:
+            res_inv[str(string.upper(part[1]))] = str(part[0])
 
 
     # fetch number of costomer by country
+    map(lambda x: res_cus.setdefault(x, 0), country_list)
     cr.execute(''' select count(distinct(p.id)), c.name from res_partner as p left join res_partner_address as a on p.id=a.partner_id left join res_country as c on c.id=a.country_id group by a.country_id, c.name  ''')
     cust_country = cr.fetchall()
     for part in cust_country:
@@ -152,11 +155,11 @@ def create_kml(self, cr, uid, data, context={}):
         address = ''
         add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
         if add:
-            if add.street:
-                address += str(add.street)
-            if add.street2:
-                address += ', '
-                address += str(add.street2)
+#            if add.street:
+#                address += str(add.street)
+#            if add.street2:
+#                address += ', '
+#                address += str(add.street2)
             if add.city:
                 address += ', '
                 address += str(add.city)
@@ -190,7 +193,7 @@ def create_kml(self, cr, uid, data, context={}):
     documentElementname = kmlDoc.createElement('name')
     documentElementname.appendChild(kmlDoc.createTextNode('Country Wise Turnover'))
     documentElementdesc = kmlDoc.createElement('description')
-    documentElementdesc.appendChild(kmlDoc.createTextNode('Todo desctiption'))
+    documentElementdesc.appendChild(kmlDoc.createTextNode('Tinyerp'))
 
     documentElement.appendChild(documentElementname)
     documentElement.appendChild(documentElementdesc)

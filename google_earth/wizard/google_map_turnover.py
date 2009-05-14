@@ -102,13 +102,13 @@ def create_kml(self, cr, uid, data, context={}):
         address = ''
         add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
         if add:
-            address += '['
-            if add.street:
-                address += '  '
-                address += str(add.street)
-            if add.street2:
-                address += '  '
-                address += str(add.street2)
+            address += ' ['
+#            if add.street:
+#                address += '  '
+#                address += str(add.street)
+#            if add.street2:
+#                address += '  '
+#                address += str(add.street2)
             if add.city:
                 address += '  '
                 address += str(add.city)
@@ -133,13 +133,13 @@ def create_kml(self, cr, uid, data, context={}):
         iconstyleElement.appendChild(scaleElement)
         iconElement = kmlDoc.createElement('Icon')
         hrefElement = kmlDoc.createElement('href')
-        hrefElement.appendChild(kmlDoc.createTextNode('http://maps.google.com/mapfiles/kml/pal3/icon48.png'))
+        hrefElement.appendChild(kmlDoc.createTextNode('http://maps.google.com/mapfiles/kml/pal3/icon53.png'))
         iconElement.appendChild(hrefElement)
         iconstyleElement.appendChild(iconElement)
         styleElement.appendChild(iconstyleElement)
         documentElement.appendChild(styleElement)
 
-        desc_text = address + ' [Turnover of partner : ' + str(res[part.id]) + ']'
+        desc_text = ' [ Partner Name : ' + str(part.name) + ']' + address + ' [Turnover of partner : ' + str(res[part.id]) + ']'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
