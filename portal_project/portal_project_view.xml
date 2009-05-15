@@ -8,11 +8,14 @@
 			<field name="inherit_id" ref="project.edit_project"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="category_id" position="after">
-                    <field name="section_bug_id"/>
-                    <field name="section_feature_id"/>
-                    <field name="section_support_id"/>
-				</field>
+				<notebook colspan="4">
+                     <page string="CRM">
+                        <field name="section_bug_id"/>
+                        <field name="section_feature_id"/>
+                        <field name="section_support_id"/>
+                        <field name="section_annouce_id"/>
+                     </page>
+				</notebook>
 			</field>
 		</record>
 

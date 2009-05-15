@@ -33,7 +33,8 @@ class project_project(osv.osv):
     _columns = {
                 "section_bug_id": fields.many2one('crm.case.section','Bug Section'),
                 "section_feature_id": fields.many2one('crm.case.section','Feature Section'),
-                "section_support_id": fields.many2one('crm.case.section','Support Section'),                
+                "section_support_id": fields.many2one('crm.case.section','Support Section'),
+                "section_annouce_id": fields.many2one('crm.case.section','Announce Section'),                
                 
     }   
 project_project()
