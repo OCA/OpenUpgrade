@@ -131,10 +131,17 @@ class product_product(osv.osv):
             res[product.id] = ' - '.join(r)
         return res
     
-    def _get_products(self, cr, uid, ids, context={}):
+    def _get_products_from_dimension(self, cr, uid, ids, context={}):
         result = []
         for type in self.pool.get('product.variant.dimension.type').browse(cr, uid, ids, context=context):
             for product_id in type.product_tmpl_id.variant_ids:
+                result.append(product_id.id)
+        return result
+    
+    def _get_products_from_product(self, cr, uid, ids, context={}):
+        result = []
+        for product in self.pool.get('product.product').browse(cr, uid, ids, context=context):
+            for product_id in product.product_tmpl_id.variant_ids:
                 result.append(product_id.id)
         return result
 
@@ -152,7 +159,8 @@ class product_product(osv.osv):
         'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions', domain="[('product_tmpl_id','=',product_tmpl_id)]"),
         'variants': fields.function(_variant_name_get, method=True, type='char', size=64, string='Variants', readonly=True, 
             store={
-                'product.variant.dimension.type': (_get_products, None, 10),
+                'product.variant.dimension.type': (_get_products_from_dimension, None, 10),
+                'product.product': (_get_products_from_product, None, 10),
             }),
     }
     _constraints = [ (_check_dimension_values, 'Several dimension values for the same dimension type', ['dimension_value_ids']),]

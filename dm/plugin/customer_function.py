@@ -44,17 +44,21 @@ def customer_function(cr,uid,ids,**args):
                     res[args['field_name']] = str(read_name['name'])
                 else : return ' '
             elif args['field_name'] == 'country_id' or args['field_name'] == 'country':
+                id = 0
                 if res['country_id']: 
-                    id = res['country_id'][0] or res['country'][0]
+                    id = res['country_id'][0]
+                elif res['country']:
+                    id = res['country'][0]
+                else : return ' '
+                if id != 0:
                     read_name = pool.get('res.country').read(cr,uid,id,['name'])
                     res[args['field_name']] = str(read_name['name'])
-                else : return ' '
             elif args['field_name'] == 'name':
                 if res['name']:
                     read_name = pool.get('res.partner').read(cr,uid,res['name'][0],['name'])
                     res[args['field_name']] = str(read_name['name'])
                 else : return ' '
-        if args['field_name'].find('id')>=0 :
+        if (model_name == 'dm.workitem') or (model_name == 'res.partner.address' and args['field_name'] == 'partner_id'):
             return res[args['field_name']][0]
         return res[args['field_name']]
     elif args['field_type'] not in ['many2many','one2many']:

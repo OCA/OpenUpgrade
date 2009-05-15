@@ -14,11 +14,17 @@
 			<field name="global" eval="False"/>
 		</record>
 		
+		<record model="ir.rule.group" id="project_case_rule_group">
+			<field name="name">Portal case rule</field>
+			<field name="model_id" search="[('model','=','crm.case')]" model="ir.model"/>
+			<field name="global" eval="False"/>
+		</record>
+		
 		<record model="ir.rule" id="task_rule">
 			<field name="field_id" search="[('model','=','project.task'),('name','=','project_id')]" model="ir.model.fields"/>
 			<field name="operator">=</field>
 			<field name="operand">user.id</field>
-			<field eval="[('project_id.members','in',[ref('portal.user_portal')])]" name="domain_force"/>
+			<field eval="'[(\'project_id.members\',\'in\',[user.id])]'" name="domain_force"/>
 			<field name="rule_group" ref="project_task_rule_group"/>
 		</record>
 		
@@ -26,56 +32,24 @@
 			<field name="field_id" search="[('model','=','project.project'),('name','=','members')]" model="ir.model.fields"/>
 			<field name="operator">in</field>
 			<field name="operand">user.id</field>
-			<field eval="[('members','in',[ref('portal.user_portal')])]" name="domain_force"/>
+			<field eval="'[(\'members\',\'in\',[user.id])]'" name="domain_force"/>
 			<field name="rule_group" ref="project_rule_group"/>
 		</record>
-	
-		<record model="portal.model" id="model_project">
-			<field name="name">Project Model</field>
-			<field name="model_id" search="[('model','=','project.project')]"/>
-			<field name="rule_group_id" ref="project_rule_group"/>
-			<field name="view_ids" eval="[(6,0,[ref('project.edit_project'),ref('project.view_project_list')])]"/>
-		</record>
 		
-		<record model="portal.model" id="model_project_task">
-			<field name="name">Task Model</field>
-			<field name="model_id" search="[('model','=','project.task')]"/>
-			<field name="rule_group_id" ref="project_task_rule_group"/>
-			<field name="view_ids" eval="[(6,0,[ref('project.view_task_form2'),ref('project.view_task_tree2')])]"/>
+		<record model="ir.rule" id="case_rule">
+			<field name="field_id" search="[('model','=','crm.case'),('name','=','project_id')]" model="ir.model.fields"/>
+			<field name="operator">in</field>
+			<field name="operand">user.id</field>
+			<field eval="'[(\'project_id.members\',\'in\',[user.id])]'" name="domain_force"/>
+			<field name="rule_group" ref="project_case_rule_group"/>
 		</record>
 		
 		<record model="res.groups" id="portal_project_group">
 			<field name="name">Portal Project group</field>
-			<field name="rule_groups" eval="[(4,ref('project_rule_group'))]"/>
-			<field name="menu_access" eval="[(6,0,[ref('menu_portal_project_project'),ref('menu_portal_project_project_all')])]"/>
-			<field name="users" eval="[(6,0,[ref('portal.user_portal')])]"/>
+			<field name="rule_groups" eval="[(4,ref('project_rule_group'),ref('project_task_rule_group'),ref('project_case_rule_group'))]"/>
+			<field name="menu_access" eval="[(6,0,[ref('menu_portal_project_project'),ref('menu_portal_project_project_all'),ref('menu_portal_project_task_all'),ref('menu_portal_project_case_all')])]"/>
 		</record>
 		
-		<record model="res.groups" id="portal_project_task_group">
-			<field name="name">Portal Task group</field>
-			<field name="rule_groups" eval="[(4,ref('project_task_rule_group'))]"/>
-			<field name="menu_access" eval="[(6,0,[ref('menu_portal_project_project'),ref('menu_portal_project_task_all')])]"/>
-			<field name="users" eval="[(6,0,[ref('portal.user_portal')])]"/>
-		</record>
-		
-		<record model="portal.portal" id="portal_project_portal">
-			<field name="name">Portal Project</field>
-			<field name="group_id" ref="portal_project_group"/>
-			<field name="menu_id" ref="menu_portal_project_project"/>
-			<field name="company_id" ref="base.main_company"/>
-			<field name="menu_action_id" ref="portal.portal_customer_action_menu"/>
-			<field name="home_action_id" ref="portal.portal_customer_action_menu"/>
-		</record>
-		
-		<record model="portal.portal" id="portal_project_task">
-			<field name="name">Portal Project Task</field>
-			<field name="group_id" ref="portal_project_task_group"/>
-			<field name="menu_id" ref="menu_portal_project_project"/>
-			<field name="company_id" ref="base.main_company"/>
-			<field name="menu_action_id" ref="portal.portal_customer_action_menu"/>
-			<field name="home_action_id" ref="portal.portal_customer_action_menu"/>
-		</record>
-	
 		<record model="ir.model.access" id="model_access_project_project">
 			<field name="name">Project Access</field>
 			<field name="perm_read">True</field>
@@ -86,8 +60,15 @@
 		<record model="ir.model.access" id="model_access_project_task">
 			<field name="name">Task Access</field>
 			<field name="perm_read">True</field>
-			<field name="group_id" ref="portal_project_task_group"/>
+			<field name="group_id" ref="portal_project_group"/>
 			<field name="model_id" search="[('model','=','project.task')]"/>
+		</record>
+		
+		<record model="ir.model.access" id="model_access_project_case">
+			<field name="name">Case Access</field>
+			<field name="perm_read">True</field>
+			<field name="group_id" ref="portal_project_group"/>
+			<field name="model_id" search="[('model','=','crm.case')]"/>
 		</record>
 		
 	</data>

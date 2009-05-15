@@ -21,3 +21,4 @@
 ##############################################################################
 
 import sale_product_multistep_configurator
+import sale

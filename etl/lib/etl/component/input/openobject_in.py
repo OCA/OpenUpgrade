@@ -72,7 +72,7 @@ class openobject_in(component):
         connector = self.connector.open()
         ids = self.connector.execute(connector, 'execute', self.model, 'search', self.domain, 0, self.row_limit, False, self.context, False)
         rows = self.connector.execute(connector, 'execute', self.model, 'read', ids, self.fields, self.context)
-        self.connector.close(connector)
+        connector = False
         for row in rows:
             if row:
                 yield row, 'main'
