@@ -70,6 +70,13 @@
 			<field name="group_id" ref="portal_project_group"/>
 			<field name="model_id" search="[('model','=','crm.case')]"/>
 		</record>
+
+
+        <record model="project.event.type" id="project_event_type_case">
+			<field name="name">Case</field>
+			<field name="code">case</field>			
+		</record>
+        
 		
 	</data>
 </openerp>
