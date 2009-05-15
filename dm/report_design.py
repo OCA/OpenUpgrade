@@ -194,9 +194,6 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, con
         args['document_id'] = document_id
         if p.type == 'fields':
             plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
-        elif p.type == 'dynamic_text' :
-            print args
-            plugin_value = dynamic_text(cr, uid, p.ref_text_id.id, **args)
         else :
             arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
             for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
@@ -204,12 +201,15 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, con
                     args[str(a.name)]=str(a.value)
                 else :
                     args[str(a.custome_plugin_id.code)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
-            path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
-            plugin_name = p.file_fname.split('.')[0]
-            sys.path.append(path)
-            X =  __import__(plugin_name)
-            plugin_func = getattr(X, plugin_name)
-            plugin_value = plugin_func(cr, uid, address_id, **args)
+            if p.type == 'dynamic_text' :
+                plugin_value = dynamic_text(cr, uid, p.ref_text_id.id, **args)
+            else :
+                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
+                plugin_name = p.file_fname.split('.')[0]
+                sys.path.append(path)
+                X =  __import__(plugin_name)
+                plugin_func = getattr(X, plugin_name)
+                plugin_value = plugin_func(cr, uid, address_id, **args)
 
         if p.store_value :
             dm_plugins_value.create(cr, uid,{'date':time.strftime('%Y-%m-%d'),

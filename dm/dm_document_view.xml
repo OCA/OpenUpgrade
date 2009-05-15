@@ -171,13 +171,13 @@
             <form string="DTP Plugin">
                 <group  colspan="4">
                     <field name="name" select="1" />
-            <field name="code" select="1" />                    
+            <field name="code" select="1" />
             <field name="type" select="1" />
             <field name="store_value" />
                 </group>
                 <newline/>
         <separator string="Description" colspan="4"/>
-        <field name="note" nolabel="1" colspan="4" widget="text_wiki"/>                
+        <field name="note" nolabel="1" colspan="4"/>
                 <notebook colspan="4">
                     <page string="Customer Plugin" attrs="{'invisible':[('type','!=','fields')]}">
                         <field name="model_id" colspan="4" attrs="{'required':[('type','=','fields')]}" />
