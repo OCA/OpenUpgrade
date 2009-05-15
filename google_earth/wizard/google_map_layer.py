@@ -98,14 +98,15 @@ def create_kml(self, cr, uid, data, context={}):
 
     map(lambda x:res.setdefault(x, 0.0), country_list)
     # fetch turnover by country (should be corect)
-    cr.execute('select sum(l.credit), c.name from account_move_line as l join res_partner_address as a on l.partner_id=a.partner_id left join res_country as c on c.id=a.country_id group by c.name')
+#    cr.execute('select sum(l.credit), c.name from account_move_line as l join res_partner_address as a on l.partner_id=a.partner_id left join res_country as c on c.id=a.country_id group by c.name')
+    cr.execute("select sum(l.credit), c.name from account_move_line l, res_country c, res_partner_address a, account_account act where l.partner_id = a.partner_id and c.id=a.country_id and l.account_id = act.id and act.type = 'receivable' group by c.name")
     res_partner = cr.fetchall()
     list_to = []
     for part in res_partner:
         if part[1]:
             res[string.upper(part[1])] = part[0]
             list_to.append(part[0])
-
+    
     avg_to = min(list_to) + max(list_to) / 2 or 0.0
 
     map(lambda x:res_inv.setdefault(x, 0), country_list)
@@ -124,16 +125,20 @@ def create_kml(self, cr, uid, data, context={}):
     for part in cust_country:
         if part[1]:
             res_cus[str(string.upper(part[1]))] = str(part[0])
-
     # fetch turnover by individual partner
-    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+#    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+    cr.execute("select min(aml.id) as id, sum(aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
     res_partner = cr.fetchall()
     for part in partners:
-        for id, turnover, partner_id in res_partner:
-            if not (partner_id == part.id):
-                res[part.id] = 0
-            if partner_id == part.id:
-                res[part.id] = turnover
+        res[part.id]= 0
+    for ml_id, turnover, partner_id in res_partner:
+        res[partner_id] = turnover
+#    for part in partners:
+#        for id, turnover, partner_id in res_partner:
+#            if not (partner_id == part.id):
+#                res[part.id] = 0
+#            if partner_id == part.id:
+#                res[part.id] = turnover
 
     ad = tools.config['addons_path'] # check for base module path also
     module_path = os.path.join(ad, 'google_earth/world_country.kml')
@@ -226,7 +231,6 @@ def create_kml(self, cr, uid, data, context={}):
             color = colors[1]
         else:
             color = colors[0]
-
         cooridinate = dict_country[country]
 
         placemarkElement = kmlDoc.createElement('Placemark')
@@ -235,7 +239,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkdescElement = kmlDoc.createElement('description')
         placemarkdescElement.appendChild(kmlDoc.createTextNode('Number of partner:' + str(res_cus[country]) + ', Number of Invoices made: ' + str(res_inv[country]) + ', Turnover of country: ' + str(res[country])))
         placemarknameElement.appendChild(placemarknameText)
-
+        
         placemarkstyleElement = kmlDoc.createElement('Style')
         placemarkpolystyleElement = kmlDoc.createElement('PolyStyle')
         placemarkcolorrElement = kmlDoc.createElement('color')
@@ -266,7 +270,7 @@ def create_kml(self, cr, uid, data, context={}):
         folderElement.appendChild(placemarkElement)
         documentElement.appendChild(folderElement)
 
-
+    
     # This writes the KML Document to a file.
 #    kmlFile = open(fileName, 'w')
 #    kmlFile.write(kmlDoc.toxml())
