@@ -21,7 +21,7 @@
 ##############################################################################
 
 {
-    'name': 'Getting Things Done - Idea Management Module',
+    'name': 'Link between Project and Idea Management Module',
     'version': '1.0',
     'category': 'Generic Modules/Projects & Services',
     'description': "This module links all ideas to project",
