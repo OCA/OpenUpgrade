@@ -147,6 +147,13 @@ class product_product(osv.osv):
             if len(unique_set) != len(buffer):
                 return False
         return True
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        default.update({'variant_ids':False,})
+        return super(product_product, self).copy(cr, uid, id, default, context)
 
     _columns = {
         'dimension_value_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions', domain="[('product_tmpl_id','=',product_tmpl_id)]"),
