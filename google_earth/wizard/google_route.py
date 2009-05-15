@@ -106,9 +106,9 @@ def _create_kml(self, cr, uid, data, context={}):
             #display some exception here
             continue
 
-        warehouse_city = pack.sale_id.shop_id.warehouse_id.partner_address_id and pack.sale_id.shop_id.warehouse_id.partner_address_id.city or ''
+        warehouse_city = pack.sale_id.shop_id.warehouse_id.partner_address_id and pack.sale_id.shop_id.warehouse_id.partner_address_id.city
         customer_city = pack.address_id.city
-        if not (warehouse_city or customer_city):
+        if not (warehouse_city and customer_city):
             raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer ')
         plane_date = pack.min_date
 
