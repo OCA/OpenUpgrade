@@ -189,9 +189,12 @@ class dm_workitem(osv.osv):
                 """ Dont Execute Action """
                 self.write(cr, uid, [wi.id], {'state': 'cancel','error_msg':'Cancelled by : %s'% act_step})
                 done = False
-        except Exception,e:
-            self.write(cr, uid, [wi.id], {'state': 'error','error_msg':sys.exc_info()})
-            netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, e)
+        except Exception, exception:
+            import traceback
+            tb = sys.exc_info()
+            tb_s = "".join(traceback.format_exception(*tb))
+            self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
+            netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
 
         if done:
             """ Check to create next auto workitems """
@@ -235,13 +238,16 @@ class dm_workitem(osv.osv):
         context['active_id'] = camp_doc.id
         try:
             server_obj = self.pool.get('ir.actions.server')
-#            print "Calling mail service run for :"
             if not camp_doc.mail_service_id.action_id :
                 return False
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
             self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'done','error_msg':""})
-        except Exception,e:
-            self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error','error_msg':sys.exc_info()})
+        except Exception, exception:
+            import traceback
+            tb = sys.exc_info()
+            tb_s = "".join(traceback.format_exception(*tb))
+            self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
+            netsvc.Logger().notifyChannel('dm campaign document', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
         return True
 
     def check_all(self, cr, uid, context={}):
@@ -498,13 +504,11 @@ dm_offer_history()
 
 class dm_event(osv.osv_memory):
     _name = "dm.event"
-#    _rec_name = "campaign_id"
     _rec_name = "segment_id"
 
     _columns = {
         'campaign_id' : fields.many2one('dm.campaign', 'Campaign'),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True,context="{'dm_camp_id':campaign_id}"),
-#        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True),
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True,context="{'dm_camp_id':campaign_id}"),
         'source' : fields.selection([('address_id','Addresses')], 'Source', required=True),
         'address_id' : fields.many2one('res.partner.address', 'Address'),

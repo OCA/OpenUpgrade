@@ -53,6 +53,8 @@ class dm_trademark(osv.osv):
         'header' : fields.binary('Header (.odt)'),
         'logo' : fields.binary('Logo'),
         'signature' : fields.binary('Signature'),
+        'banner_top' : fields.binary('Top Banner'),
+        'banner_bottom' : fields.binary('Bottom Banner'),
         'media_id' : fields.many2one('dm.media', 'Media')
     }
 

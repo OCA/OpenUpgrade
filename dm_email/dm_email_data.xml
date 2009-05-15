@@ -1,6 +1,17 @@
 <?xml version="1.0"?>
 <openerp>
 
+	<!-- Transition Triggers -->
+	
+	<data>
+    <record id="dm_offer_step_transition_mail_unsubscribe" model="dm.offer.step.transition.trigger">
+         <field eval="&quot;&quot;&quot;Unsubscribe&quot;&quot;&quot;" name="name"/>
+         <field eval="&quot;&quot;&quot;unsubscribe&quot;&quot;&quot;" name="code"/>
+         <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
+         <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+    </record>
+	</data>
+
 	<!-- OFFER STEP ACTION -->
     <data noupdate="0">
         <record id="ir_actions_server_html_doc_generate0" model="dm.offer.step.action">
