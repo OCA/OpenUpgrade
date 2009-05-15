@@ -26,7 +26,8 @@
     "website" : "http://www.openerp.com",
     "category" : "Generic Modules/Direct Marketing",
     "description": """
-            This module deals with emails.
+            This module provides an API to the Emailvision(c) Notification Messaging Integration API.
+            It allow to use that API to send Direct Marketing emails.
             """,
     "depends" : ["dm"],
     "init_xml" : [],
