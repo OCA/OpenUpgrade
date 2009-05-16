@@ -953,12 +953,21 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="dm.field_dm_workitem_step_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
+        <record id="dm_ddf_plugin_wi_tr_from_id" model="dm.ddf.plugin">
+            <field eval="&quot;&quot;&quot;previous_step_id&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Previous Step ID&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="dm.model_dm_workitem"/>
+            <field eval="&quot;&quot;&quot;Transition - Previous Step Id&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="dm.field_dm_workitem_tr_from_id"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
         <record id="dm_ddf_plugin_partner_id" model="dm.ddf.plugin">
             <field eval="&quot;&quot;&quot;address_id&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;Partner Address - ID&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;ID&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
             <field name="model_id" ref="base.model_res_partner_address"/>
-            <field eval="&quot;&quot;&quot;Partner Id&quot;&quot;&quot;" name="note"/>
+            <field eval="&quot;&quot;&quot;Partner Address - Id&quot;&quot;&quot;" name="note"/>
             <field name="field_id" ref="base.field_res_partner_address_partner_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>

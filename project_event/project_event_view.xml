@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_project_event_form2" model="ir.ui.view">
+			<field name="name">project.project</field>
+			<field name="model">project.project</field>
+			<field name="inherit_id" ref="project.edit_project"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<notebook colspan="4"  >
+                     <page string="Events">
+                        <field name="event_ids" nolabel="1" colspan="4" mode="tree,form" widget="one2many_list"> 
+                            <tree string="Events">
+                                <field name="name"/>  
+                                <field name="type"/>                                      
+                                <field name="date"/>                                    
+                                <field name="user_id" string="Responsible"/>
+                                <field name="action"/> 
+                            </tree>   
+                            <form string="Events">
+                                <field name="name"/>  
+                                <field name="type"/>                                      
+                                <field name="date"/>
+                                <field name="project_id"/>
+                                <field name="user_id" string="Responsible"/>
+                                <field name="action"/>
+                                <field name="res_id" string="Ref"/>
+                                <newline/>
+                                <separator colspan="4" string="Description"/>
+                                <field name="description" colspan="4" nolabel="1"/>
+                            </form>                
+                        </field>
+				    </page>
+                    <page string="Event Configuration">
+                        <field name="event_configuration_ids" nolabel="1" colspan="4" mode="tree,form"> 
+                            <tree string="Event Configuration" editable="bottom">
+                                <field name="name"/>                                                     
+                                <field name="type"/>                                      
+                                <field name="action_type"/>
+                                <field name="create"/>
+                                <field name="write"/>
+                                <field name="unlink"/>
+                            </tree>   
+                            <form string="Event Configuration">
+                                <field name="name"/>                                                    
+                                <field name="type"/>                                      
+                                <field name="action_type"/>
+                                <field name="create"/>
+                                <field name="write"/>
+                                <field name="unlink"/>
+                            </form>                
+                        </field>
+				    </page>
+                </notebook>
+			</field>
+		</record>
+
+
+        <record model="ir.ui.view" id="project_event_configuration_form_view">
+	        <field name="name">Project Event Configuration</field>
+	        <field name="model">project.event.configuration</field>
+	        <field name="type">form</field>
+	        <field name="arch" type="xml">
+	            <form string="Proejct Event Configuration">
+                    <field name="name"/>
+                    <field name="project_id"/>                    
+                    <field name="type"/>                                      
+                    <field name="action_type"/>
+                    <field name="create"/>
+                    <field name="write"/>
+                    <field name="unlink"/>
+                </form>
+            </field>
+	    </record>
+
+        <record model="ir.ui.view" id="project_event_configuration_tree_view">
+	        <field name="name">Project Event Configuration</field>
+	        <field name="model">project.event.configuration</field>
+	        <field name="type">tree</field>
+	        <field name="arch" type="xml">
+	            <tree string="Project Event Configuration" editable="bottom">
+                    <field name="name"/>
+	                <field name="project_id"/>                    
+                    <field name="type"/>                                      
+                    <field name="action_type"/>
+                    <field name="create"/>
+                    <field name="write"/>
+                    <field name="unlink"/>
+	            </tree>
+	        </field>
+	    </record>
+
+        <record model="ir.actions.act_window" id="project_event_configuration_action">
+	        <field name="name">Project Event Configuration</field>
+	        <field name="res_model">project.event.configuration</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="view_id" ref="project_event_configuration_tree_view"/>
+	    </record>
+
+
+
+        <record model="ir.ui.view" id="project_event_type_view">
+	        <field name="name">Project Event Type</field>
+	        <field name="model">project.event.type</field>
+	        <field name="type">form</field>
+	        <field name="arch" type="xml">
+	            <form string="Proejct Event Type">
+                    <field name="name"/>
+                    <field name="code"/>                    
+                </form>
+            </field>
+	    </record>
+
+        <record model="ir.ui.view" id="project_event_type_tree_view">
+	        <field name="name">Project Event Type</field>
+	        <field name="model">project.event.type</field>
+	        <field name="type">tree</field>
+	        <field name="arch" type="xml">
+	            <tree string="Proejct Event Type">
+                    <field name="name"/>
+	                <field name="code"/>                    
+	            </tree>
+	        </field>
+	    </record>
+
+        <record model="ir.actions.act_window" id="project_event_type_action">
+	        <field name="name">Project Event Type</field>
+	        <field name="res_model">project.event.type</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="view_id" ref="project_event_type_tree_view"/>
+	    </record>
+
+        <menuitem action="project_event_type_action" id="menu_project_event_type" parent="project.menu_definitions"/>
+    </data>
+</openerp>

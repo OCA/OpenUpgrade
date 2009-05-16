@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,23 +20,20 @@
 #
 ##############################################################################
 {
-    "name" : "Direct Marketing For EmailVision",
+    "name" : "Project Event",
     "version" : "1.0",
     "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module provides an API to the Emailvision(c) Notification Messaging Integration API.
-            It allow to use that API to send Direct Marketing emails.
-            """,
-    "depends" : ["dm"],
+    "category" : "Generic Modules/CRM",
+    "description": """This module allow track events on project and perform particular action in event
+  - event on create/modify task 
+  - event on document upload  
+""",
+    "depends" : ["base", "project"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [
-                    "dm_emailvision_data.xml"
-                    ],
+    "update_xml" : ["project_event_view.xml", "project_event_data.xml"],
     "active": False,
     "installable": True,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -82,17 +82,21 @@ class dm_ddf_plugin(osv.osv):
         v = base64.decodestring(value)
         fp.write(v)
         fp.close()
-        
+        plugin_res = self.browse(cr,uid,id)
+        print plugin_res
         sys.path.append(path)
         X =  __import__(filename.split('.')[0])
         args = []
         if '__args__' in dir(X):
             args = X.__args__
+        plugin_argument = self.pool.get('dm.plugin.argument')
         for arg in args:
-            desc = 'Value of the field must be of type %s or plugin may be crashed' %arg[1] 
-            vals = {'name':arg[0], 'note':desc, 'plugin_id':id, 'value':' '}
-            new_id = self.pool.get('dm.plugin.argument').create(cr, uid, vals)
-        if '__description__' in dir(X):
+            arg_id = plugin_argument.search(cr,uid,[('name','=',arg[0]),('plugin_id','=',id)])
+            if not arg_id:
+                desc = 'Value of the field must be of type %s or plugin may be crashed' %arg[1]
+                vals = {'name':arg[0], 'note':desc, 'plugin_id':id, 'value':' '}
+                new_id = plugin_argument.create(cr, uid, vals)
+        if '__description__' in dir(X) and not plugin_res.note :
             self.write(cr, uid, id, {'note':str(X.__description__)})
         return True
     

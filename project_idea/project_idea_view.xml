@@ -7,8 +7,22 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="project.edit_project"/>
             <field name="arch" type="xml">
+                <notebook colspan="4">
+                     <page string="Ideas">
+                        <field name="idea_ids" nolabel="1" colspan="4" mode="tree,form" widget="one2many_list"/>
+				    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="idea_view" model="ir.ui.view">
+            <field name="name">idea.idea.form</field>
+            <field name="model">idea.idea</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="idea.view_idea_idea_form"/>
+            <field name="arch" type="xml">
                 <field name="category_id" position="after">
-                    <field name="idea_id"/>
+                    <field name="project_id"/>
                 </field>
             </field>
         </record>

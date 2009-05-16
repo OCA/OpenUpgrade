@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
-#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    OpenERP, Open Source Management Solution    
+#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,24 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{
-    "name" : "Direct Marketing For EmailVision",
-    "version" : "1.0",
-    "author" : "Tiny",
-    "website" : "http://www.openerp.com",
-    "category" : "Generic Modules/Direct Marketing",
-    "description": """
-            This module provides an API to the Emailvision(c) Notification Messaging Integration API.
-            It allow to use that API to send Direct Marketing emails.
-            """,
-    "depends" : ["dm"],
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
-                    "dm_emailvision_data.xml"
-                    ],
-    "active": False,
-    "installable": True,
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+import project_event
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
