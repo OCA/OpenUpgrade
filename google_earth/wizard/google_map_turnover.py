@@ -97,7 +97,6 @@ def create_kml(self, cr, uid, data, context={}):
     documentElementname = kmlDoc.createElement('name')
     documentElementname.appendChild(kmlDoc.createTextNode('Turnover by partners'))
     documentElement.appendChild(documentElementname)
-#    kmlFile = open(fileName, 'w')
     for part in partner_data:
         address = ''
         add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
@@ -138,7 +137,6 @@ def create_kml(self, cr, uid, data, context={}):
         iconstyleElement.appendChild(iconElement)
         styleElement.appendChild(iconstyleElement)
         documentElement.appendChild(styleElement)
-        #<a href="http://www.w3schools.com">Visit W3Schools.com!</a>
         type = ''
         if part.customer:
             type += 'Customer,'
@@ -168,9 +166,6 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(placemarkElement)
         # This writes the KML Document to a file.
 
-
-#    kmlFile.write(kmlDoc.toprettyxml(' '))
-#    kmlFile.close()
     out = base64.encodestring(kmlDoc.toxml())
     fname = 'turnover' + '.kml'
     return {'kml_file': out, 'name': fname}

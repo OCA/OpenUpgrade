@@ -106,7 +106,7 @@ def create_kml(self, cr, uid, data, context={}):
         if part[1]:
             res[string.upper(part[1])] = part[0]
             list_to.append(part[0])
-    
+
     avg_to = min(list_to) + max(list_to) / 2 or 0.0
 
     map(lambda x:res_inv.setdefault(x, 0), country_list)
@@ -239,7 +239,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkdescElement = kmlDoc.createElement('description')
         placemarkdescElement.appendChild(kmlDoc.createTextNode('Number of partner:' + str(res_cus[country]) + ', Number of Invoices made: ' + str(res_inv[country]) + ', Turnover of country: ' + str(res[country])))
         placemarknameElement.appendChild(placemarknameText)
-        
+
         placemarkstyleElement = kmlDoc.createElement('Style')
         placemarkpolystyleElement = kmlDoc.createElement('PolyStyle')
         placemarkcolorrElement = kmlDoc.createElement('color')
@@ -270,12 +270,6 @@ def create_kml(self, cr, uid, data, context={}):
         folderElement.appendChild(placemarkElement)
         documentElement.appendChild(folderElement)
 
-    
-    # This writes the KML Document to a file.
-#    kmlFile = open(fileName, 'w')
-#    kmlFile.write(kmlDoc.toxml())
-#    kmlFile.close()
-#    return {}
     out = base64.encodestring(kmlDoc.toxml())
     fname = 'region' + '.kml'
     return {'kml_file': out, 'name': fname}
