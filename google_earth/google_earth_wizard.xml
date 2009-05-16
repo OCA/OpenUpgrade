@@ -21,16 +21,15 @@
 			/>
 
 	 	<wizard
-		   string="Delievery routes Find (Google)"
+		   string="Delievery routes find (Google)"
 		   name="google.find.route"
 		   id="wizard_find_route"
 		   keyword="client_action_multi"
-		   menu="True"
-		   model="stock.picking"
 		   />
+
 		<menuitem id="google_earth" name="Google Map/Earth" parent="base.menu_base_partner"/>
 		<menuitem name="Customer on Map with Turnover" id="menu_google_earth" parent="google_earth" action="wizard_customer_on_map" type="wizard"/>
 		<menuitem name="Partners country on map" id="menu_layers_of_region_category" parent="google_earth" action="wizard_layers_basedon_region_category" type="wizard"/>
-
+		<menuitem name="Delievery routes find" id="menu_google_delivery_route" parent="google_earth" action="wizard_find_route" type="wizard"/>
 	</data>
 </openerp>

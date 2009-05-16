@@ -1,10 +1,10 @@
 import urllib
 import xml.dom.minidom
+import base64
 
 import wizard
 import pooler
 import tools
-import base64
 
 _earth_form =  '''<?xml version="1.0"?>
 <form string="Google Map/Earth">
@@ -28,7 +28,7 @@ def geocode(address):
     coorText = '%s,%s' % (coordinates[3],coordinates[2])
     return coorText
 
-def get_directions(source,destination):
+def get_directions(source, destination):
     steps = []
     res = False
     try:
@@ -55,6 +55,7 @@ def _create_kml(self, cr, uid, data, context={}):
     #    1. should be work with different country cities currenly it takes strait path if cities are in differnt countries
     #    2. you can put differnt data on path like product sent, etc
     #    3. should be test for all cities (Shanghai -> Hongkong ) check to upper and lower possiblities to search
+    #    4. different colors accoridingly to number of deleveries
 
     #Note: from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
 #    path = tools.config['addons_path']
@@ -62,6 +63,7 @@ def _create_kml(self, cr, uid, data, context={}):
 
     # To find particular location
     pool = pooler.get_pool(cr.dbname)
+    warehouse_obj = pool.get('stock.warehouse')
     kmlDoc = xml.dom.minidom.Document()
     kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
     kmlElement = kmlDoc.appendChild(kmlElement)
@@ -94,30 +96,31 @@ def _create_kml(self, cr, uid, data, context={}):
     outlineElement.appendChild(kmlDoc.createTextNode('1'))
     polystyleElement.appendChild(outlineElement)
     documentElement.appendChild(polystyleElement)
-#    documentElement.appendChild(styleElement)
     documentElement.appendChild(documentElementname)
 
-    for pack in pool.get('stock.picking').browse(cr, uid, data['ids']):
-        total_qty = 0
-        for move in pack.move_lines:
-            total_qty += move.product_qty
+    cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id where sale_id is not null group by a.city,sp.warehouse_id;')
+    packings = cr.dictfetchall()
 
-        if not pack.sale_id:
-            #display some exception here
-            continue
+    warehouse_ids = warehouse_obj.search(cr, uid, [])
+    warehouse_datas = warehouse_obj.browse(cr, uid, warehouse_ids)
+    warehouse_dict = {}
 
-        warehouse_city = pack.sale_id.shop_id.warehouse_id.partner_address_id and pack.sale_id.shop_id.warehouse_id.partner_address_id.city or ''
-        customer_city = pack.address_id.city
-        if not (warehouse_city or customer_city):
+    for whouse in warehouse_datas:
+        warehouse_dict[whouse.id] = whouse.partner_address_id and whouse.partner_address_id.city or False
+
+    for pack in packings:
+        total_qty = pack['product_send']
+        warehouse_city = warehouse_dict[pack['warehouse_id']]
+        customer_city = pack['customer_city']
+        if not (warehouse_city and customer_city):
             raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer ')
-        plane_date = pack.min_date
 
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(str(warehouse_city))
         placemarkdescElement = kmlDoc.createElement('description')
-        placemarkdescElement.appendChild(kmlDoc.createTextNode('Warehouse location: ' + warehouse_city + ',Customer Location: ' + customer_city + ',Planned Date: ' + plane_date + ' ,Sale order reference: ' + str(pack.origin or '') + ',Number of product sent: ' + str(total_qty)))
-
+        #placemarkdescElement.appendChild(kmlDoc.createTextNode('Warehouse location: ' + warehouse_city + ',Customer Location: ' + customer_city + ',Planned Date: ' + plane_date + ' ,Sale order reference: ' + str(pack.origin or '') + ',Number of product sent: ' + str(total_qty)))
+        placemarkdescElement.appendChild(kmlDoc.createTextNode('Warehouse location: ' + warehouse_city + ',Customer Location: ' + customer_city + ',Number of product sent: ' + str(total_qty)))
         placemarknameElement.appendChild(placemarknameText)
         placemarkElement.appendChild(placemarknameElement)
         placemarkElement.appendChild(placemarkdescElement)
@@ -141,24 +144,18 @@ def _create_kml(self, cr, uid, data, context={}):
 
         lineElement.appendChild(coorElement)
         documentElement.appendChild(placemarkElement)
-
-        # This writes the KML Document to a file.
-#    kmlFile = open(fileName, 'w')
-#    kmlFile.write(kmlDoc.toprettyxml(' '))
-#    kmlFile.close()
-#    return {}
     out = base64.encodestring(kmlDoc.toprettyxml(' '))
     fname = 'route' + '.kml'
     return {'kml_file': out, 'name': fname}
 
-class find_route(wizard.interface):
+class delivery_route(wizard.interface):
 
     states = {
        'init': {
             'actions': [_create_kml],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Done')]}
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
                 },
             }
-find_route('google.find.route')
+delivery_route('google.find.route')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

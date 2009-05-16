@@ -97,12 +97,11 @@ def create_kml(self, cr, uid, data, context={}):
     documentElementname = kmlDoc.createElement('name')
     documentElementname.appendChild(kmlDoc.createTextNode('Turnover by partners'))
     documentElement.appendChild(documentElementname)
-#    kmlFile = open(fileName, 'w')
     for part in partner_data:
         address = ''
         add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
         if add:
-            address += ' ['
+#            address += ' <br />['
 #            if add.street:
 #                address += '  '
 #                address += str(add.street)
@@ -113,12 +112,12 @@ def create_kml(self, cr, uid, data, context={}):
                 address += '  '
                 address += str(add.city)
             if add.state_id:
-                address += '  '
+                address += ',  '
                 address += str(add.state_id.name)
             if add.country_id:
-                address += '  '
+                address += ',  '
                 address += str(add.country_id.name)
-            address += ']'
+#            address += ']'
         styleElement = kmlDoc.createElement('Style')
         styleElement.setAttribute('id','randomColorIcon')
         iconstyleElement = kmlDoc.createElement('IconStyle')
@@ -138,8 +137,13 @@ def create_kml(self, cr, uid, data, context={}):
         iconstyleElement.appendChild(iconElement)
         styleElement.appendChild(iconstyleElement)
         documentElement.appendChild(styleElement)
-
-        desc_text = ' [ Partner Name : ' + str(part.name) + ']' + address + ' [Turnover of partner : ' + str(res[part.id]) + ']'
+        type = ''
+        if part.customer:
+            type += 'Customer,'
+        if part.supplier:
+            type += 'Supplier'
+        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
+                    + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
@@ -162,9 +166,6 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(placemarkElement)
         # This writes the KML Document to a file.
 
-
-#    kmlFile.write(kmlDoc.toprettyxml(' '))
-#    kmlFile.close()
     out = base64.encodestring(kmlDoc.toxml())
     fname = 'turnover' + '.kml'
     return {'kml_file': out, 'name': fname}

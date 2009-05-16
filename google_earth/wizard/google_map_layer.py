@@ -79,8 +79,8 @@ def create_kml(self, cr, uid, data, context={}):
     addresslist = []
     country_list = []
     coordinates_text = ' '
-    colors = ['dfbf9f3b','88336699','59009900','880fff00','88f000cc','7fffffff','aaffffff','880fff00','880f00cc','88f000cc','33333333']
-
+    #colors = ['dfbf9f3b','88336699','59009900','880fff00','88f000cc','7fffffff','aaffffff','880fff00','880f00cc','88f000cc','33333333']
+    colors = ['9f8080ff', '9f0000ff']
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
     address_obj= pool.get('res.partner.address')
@@ -98,11 +98,16 @@ def create_kml(self, cr, uid, data, context={}):
 
     map(lambda x:res.setdefault(x, 0.0), country_list)
     # fetch turnover by country (should be corect)
-    cr.execute('select sum(l.credit), c.name from account_move_line as l join res_partner_address as a on l.partner_id=a.partner_id left join res_country as c on c.id=a.country_id group by c.name')
+#    cr.execute('select sum(l.credit), c.name from account_move_line as l join res_partner_address as a on l.partner_id=a.partner_id left join res_country as c on c.id=a.country_id group by c.name')
+    cr.execute("select sum(l.credit), c.name from account_move_line l, res_country c, res_partner_address a, account_account act where l.partner_id = a.partner_id and c.id=a.country_id and l.account_id = act.id and act.type = 'receivable' group by c.name")
     res_partner = cr.fetchall()
+    list_to = []
     for part in res_partner:
         if part[1]:
             res[string.upper(part[1])] = part[0]
+            list_to.append(part[0])
+
+    avg_to = min(list_to) + max(list_to) / 2 or 0.0
 
     map(lambda x:res_inv.setdefault(x, 0), country_list)
     # fetch invoice by country
@@ -120,16 +125,20 @@ def create_kml(self, cr, uid, data, context={}):
     for part in cust_country:
         if part[1]:
             res_cus[str(string.upper(part[1]))] = str(part[0])
-
     # fetch turnover by individual partner
-    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+#    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+    cr.execute("select min(aml.id) as id, sum(aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
     res_partner = cr.fetchall()
     for part in partners:
-        for id, turnover, partner_id in res_partner:
-            if not (partner_id == part.id):
-                res[part.id] = 0
-            if partner_id == part.id:
-                res[part.id] = turnover
+        res[part.id]= 0
+    for ml_id, turnover, partner_id in res_partner:
+        res[partner_id] = turnover
+#    for part in partners:
+#        for id, turnover, partner_id in res_partner:
+#            if not (partner_id == part.id):
+#                res[part.id] = 0
+#            if partner_id == part.id:
+#                res[part.id] = turnover
 
     ad = tools.config['addons_path'] # check for base module path also
     module_path = os.path.join(ad, 'google_earth/world_country.kml')
@@ -169,8 +178,15 @@ def create_kml(self, cr, uid, data, context={}):
             if add.country_id:
                 address += ', '
                 address += str(add.country_id.name)
+        type = ''
+        if part.customer:
+            type += 'Customer,'
+        if part.supplier:
+            type += 'Supplier'
 
-        desc_text = address + ' , Turnover of partner : ' + str(res[part.id])
+        #desc_text = address + ' , Turnover of partner : ' + str(res[part.id])
+        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
+                    + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
@@ -204,12 +220,17 @@ def create_kml(self, cr, uid, data, context={}):
     folderElement.appendChild(foldernameElement)
 
     #different color should be used
-    len_color = len(colors)
-    cnt = 0
+#    len_color = len(colors)
+#    cnt = 0
 #    country_list.sort()
+    country_list.sort()
     for country in country_list:
-        if cnt > len_color:
-            cnt = 0
+#        if cnt > len_color:
+#            cnt = 0
+        if res[country] > avg_to:
+            color = colors[1]
+        else:
+            color = colors[0]
         cooridinate = dict_country[country]
 
         placemarkElement = kmlDoc.createElement('Placemark')
@@ -222,8 +243,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkstyleElement = kmlDoc.createElement('Style')
         placemarkpolystyleElement = kmlDoc.createElement('PolyStyle')
         placemarkcolorrElement = kmlDoc.createElement('color')
-#        placemarkcolorrElement.appendChild(kmlDoc.createTextNode('FF0000'))#colors[cnt])
-        placemarkcolorrElement.appendChild(kmlDoc.createTextNode(colors[cnt]))
+        placemarkcolorrElement.appendChild(kmlDoc.createTextNode(color))#colors[cnt]
         placemarkpolystyleElement.appendChild(placemarkcolorrElement)
         placemarkstyleElement.appendChild(placemarkpolystyleElement)
 
@@ -231,7 +251,7 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkElement.appendChild(placemarkdescElement)
         placemarkElement.appendChild(placemarkstyleElement)
 
-        cnt += 1
+#        cnt += 1
         geometryElement = kmlDoc.createElement('MultiGeometry')
         polygonElement = kmlDoc.createElement('Polygon')
 
@@ -250,12 +270,6 @@ def create_kml(self, cr, uid, data, context={}):
         folderElement.appendChild(placemarkElement)
         documentElement.appendChild(folderElement)
 
-
-    # This writes the KML Document to a file.
-#    kmlFile = open(fileName, 'w')
-#    kmlFile.write(kmlDoc.toxml())
-#    kmlFile.close()
-#    return {}
     out = base64.encodestring(kmlDoc.toxml())
     fname = 'region' + '.kml'
     return {'kml_file': out, 'name': fname}
@@ -264,7 +278,7 @@ class customer_on_map(wizard.interface):
     states = {
          'init': {
             'actions': [create_kml],
-            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Done')]}
+            'result': {'type': 'form', 'arch':_earth_form, 'fields':_earth_fields,  'state':[('end','Ok')]}
                 }
             }
 customer_on_map('layers.region.catery')
