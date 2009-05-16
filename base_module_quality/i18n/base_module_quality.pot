@@ -1,13 +1,13 @@
 # Translation of OpenERP Server.
-# This file containt the translation of the following modules:
+# This file contains the translation of the following modules:
 #	* base_module_quality
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0_rc3\n"
+"Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-01-03 02:18:25+0000\n"
-"PO-Revision-Date: 2009-01-03 02:18:25+0000\n"
+"POT-Creation-Date: 2009-05-16 20:02:15+0000\n"
+"PO-Revision-Date: 2009-05-16 20:02:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,59 +16,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: base_module_quality
-#: field:quality.check.detail,general_info:0
-msgid "General Info"
-msgstr ""
-
-#. module: base_module_quality
-#: view:quality.check.detail:0
-msgid "Summary"
-msgstr ""
-
-#. module: base_module_quality
-#: constraint:ir.ui.view:0
-msgid "Invalid XML for View Architecture!"
-msgstr ""
-
-#. module: base_module_quality
-#: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
-msgstr ""
-
-#. module: base_module_quality
-#: field:quality.check.detail,detail:0
-#: view:quality.check.detail:0
-msgid "Detail"
-msgstr ""
-
-#. module: base_module_quality
-#: field:wizard.quality.check,verbose_detail:0
-msgid "Verbose Detail"
-msgstr ""
-
-#. module: base_module_quality
-#: model:ir.model,name:base_module_quality.model_quality_check_detail
-msgid "quality.check.detail"
-msgstr ""
-
-#. module: base_module_quality
-#: view:wizard.quality.check:0
-#: view:quality.check.detail:0
-msgid "Result"
-msgstr ""
-
-#. module: base_module_quality
-#: model:ir.model,name:base_module_quality.model_wizard_quality_check
-msgid "wizard.quality.check"
-msgstr ""
-
-#. module: base_module_quality
-#: view:wizard.quality.check:0
-msgid "Verbose detail"
-msgstr ""
-
-#. module: base_module_quality
-#: field:quality.check.detail,quality_check:0
-msgid "Quality"
+#: model:ir.module.module,description:base_module_quality.module_meta_information
+msgid "This module's aim is to check the quality of other modules.\n"
+"\n"
+"    It defines a wizard on the list of modules in OpenERP, which allow you to evaluate them on different criteria such as: the respect of OpenERP coding standards, the speed efficiency...\n"
+"\n"
+"    This module also provides generic framework to define your own quality test. For further info, coders may take a look into base_module_quality\README.txt\n"
+""
 msgstr ""
 

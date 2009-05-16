@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-04-09 13:53:08+0000\n"
-"PO-Revision-Date: 2009-04-09 13:53:08+0000\n"
+"POT-Creation-Date: 2009-05-16 20:02:15+0000\n"
+"PO-Revision-Date: 2009-05-16 20:02:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -58,11 +58,6 @@ msgid "Exceptions Procurements"
 msgstr ""
 
 #. module: mrp
-#: field:mrp.procurement,product_uos_qty:0
-msgid "UoS Quantity"
-msgstr ""
-
-#. module: mrp
 #: view:mrp.routing.workcenter:0
 msgid "Routing Workcenters"
 msgstr ""
@@ -86,12 +81,6 @@ msgstr ""
 #. module: mrp
 #: model:process.node,name:mrp.process_node_stock0
 msgid "Stockable Stock"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/wizard/wizard_change_production_qty.py:0
-#, python-format
-msgid "Warning !"
 msgstr ""
 
 #. module: mrp
@@ -120,18 +109,6 @@ msgstr ""
 #: wizard_field:mrp.procurement.compute.all,init,automatic:0
 #: wizard_field:mrp.procurement.orderpoint.compute,init,automatic:0
 msgid "Automatic orderpoint"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/mrp.py:0
-#, python-format
-msgid "No supplier defined for this product !"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "Product name"
 msgstr ""
 
 #. module: mrp
@@ -233,12 +210,6 @@ msgid "Do nothing"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "products"
-msgstr ""
-
-#. module: mrp
 #: rml:mrp.production.order:0
 msgid "Partner Ref"
 msgstr ""
@@ -301,12 +272,6 @@ msgid "Stockable Request"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "Workcenter name"
-msgstr ""
-
-#. module: mrp
 #: model:process.node,name:mrp.process_node_serviceonorder0
 msgid "Service on Order"
 msgstr ""
@@ -354,12 +319,6 @@ msgid "Confirm Production"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "Product Quantity"
-msgstr ""
-
-#. module: mrp
 #: model:process.node,name:mrp.process_node_purchaseprocure0
 #: field:stock.move,procurements:0
 msgid "Procurements"
@@ -389,12 +348,6 @@ msgstr ""
 #: selection:mrp.procurement,priority:0
 #: selection:mrp.production,priority:0
 msgid "Urgent"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "Product Standard Price"
 msgstr ""
 
 #. module: mrp
@@ -435,12 +388,6 @@ msgstr ""
 #. module: mrp
 #: model:process.transition,name:mrp.process_transition_producttostockrules0
 msgid "Product to stock rules"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/mrp.py:0
-#, python-format
-msgid "from stock: products assigned."
 msgstr ""
 
 #. module: mrp
@@ -526,12 +473,6 @@ msgid "Latest error"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/mrp.py:0
-#, python-format
-msgid "from stock and no minimum orderpoint rule defined"
-msgstr ""
-
-#. module: mrp
 #: field:mrp.bom,bom_lines:0
 msgid "BoM Lines"
 msgstr ""
@@ -552,11 +493,6 @@ msgid "Consumed Products"
 msgstr ""
 
 #. module: mrp
-#: constraint:mrp.bom:0
-msgid "Error ! You can not create recursive BoM."
-msgstr ""
-
-#. module: mrp
 #: model:process.transition,note:mrp.process_transition_stockmts0
 #: model:process.transition,note:mrp.process_transition_stockrfq0
 msgid "If Product type is Stockable and procure method is make to stock"
@@ -571,12 +507,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:mrp.mrp_procurement_action4
 #: model:ir.ui.menu,name:mrp.menu_mrp_procurement_action4
 msgid "Exceptions Procurements to Fix"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/mrp.py:0
-#, python-format
-msgid "No BoM defined for this product !"
 msgstr ""
 
 #. module: mrp
@@ -661,21 +591,13 @@ msgid "Per month"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/mrp.py:0
-#: code:addons/mrp/wizard/wizard_change_production_qty.py:0
-#, python-format
-msgid "Couldn't find bill of material for product"
+#: field:mrp.procurement,product_uos_qty:0
+msgid "UoS Quantity"
 msgstr ""
 
 #. module: mrp
 #: rml:bom.structure:0
 msgid "Product Name"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/mrp.py:0
-#, python-format
-msgid "Invalid action !"
 msgstr ""
 
 #. module: mrp
@@ -692,12 +614,6 @@ msgstr ""
 #. module: mrp
 #: field:mrp.bom,revision_type:0
 msgid "indice type"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "Hours Cost"
 msgstr ""
 
 #. module: mrp
@@ -740,12 +656,6 @@ msgstr ""
 #: model:process.node,note:mrp.process_node_serviceproduct0
 #: model:process.node,note:mrp.process_node_serviceproduct1
 msgid "If Product type is service"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "SUBTOTAL"
 msgstr ""
 
 #. module: mrp
@@ -836,12 +746,6 @@ msgid "Parent BoM"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "Unit Product Price"
-msgstr ""
-
-#. module: mrp
 #: rml:mrp.production.order:0
 msgid "Qty"
 msgstr ""
@@ -901,12 +805,6 @@ msgid "Description of the workcenter. Explain here what's a cycle according to t
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/wizard/wizard_change_production_qty.py:0
-#, python-format
-msgid "The production is in \"%s\" state. You can not change the production quantity anymore"
-msgstr ""
-
-#. module: mrp
 #: rml:bom.structure:0
 msgid "-"
 msgstr ""
@@ -963,12 +861,6 @@ msgid "Create Procurement"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "Product uom"
-msgstr ""
-
-#. module: mrp
 #: field:mrp.routing.workcenter,cycle_nbr:0
 msgid "Number of Cycle"
 msgstr ""
@@ -1001,12 +893,6 @@ msgstr ""
 #. module: mrp
 #: wizard_view:mrp.procurement.compute.all,init:0
 msgid "Scheduler Parameters"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "Cycles Cost"
 msgstr ""
 
 #. module: mrp
@@ -1211,9 +1097,7 @@ msgid "Procurement"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/report/price.py:0
 #: model:ir.actions.wizard,name:mrp.wizard_price
-#, python-format
 msgid "Product Cost Structure"
 msgstr ""
 
@@ -1574,12 +1458,6 @@ msgid "Use a phantom bill of material in raw materials lines that have to be aut
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/mrp.py:0
-#, python-format
-msgid "No address defined for the supplier"
-msgstr ""
-
-#. module: mrp
 #: field:mrp.workcenter,time_cycle:0
 msgid "Time for 1 cycle (hour)"
 msgstr ""
@@ -1741,12 +1619,6 @@ msgid "Number of Hours"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "Product quantity"
-msgstr ""
-
-#. module: mrp
 #: model:ir.actions.act_window,name:mrp.mrp_procurement_action
 #: model:ir.ui.menu,name:mrp.menu_mrp_procurement_action
 msgid "Procurement Orders"
@@ -1869,13 +1741,6 @@ msgid "Order to Max"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/mrp.py:0
-#: code:addons/mrp/wizard/wizard_change_production_qty.py:0
-#, python-format
-msgid "Error"
-msgstr ""
-
-#. module: mrp
 #: model:ir.actions.act_window,name:mrp.act_product_product_2_mrp_bom
 #: model:ir.actions.act_window,name:mrp.mrp_bom_form_action
 #: model:ir.ui.menu,name:mrp.menu_mrp_bom_form_action
@@ -1913,20 +1778,8 @@ msgid "Close"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "TOTAL"
-msgstr ""
-
-#. module: mrp
 #: field:mrp.production,sale_name:0
 msgid "Sale Name"
-msgstr ""
-
-#. module: mrp
-#: code:addons/mrp/report/price.py:0
-#, python-format
-msgid "Product supplier"
 msgstr ""
 
 #. module: mrp

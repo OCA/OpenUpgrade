@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.0\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-04-09 13:53:08+0000\n"
-"PO-Revision-Date: 2009-04-09 13:53:08+0000\n"
+"POT-Creation-Date: 2009-05-16 20:02:15+0000\n"
+"PO-Revision-Date: 2009-05-16 20:02:15+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,18 +36,8 @@ msgid "Destination"
 msgstr ""
 
 #. module: delivery
-#: model:product.template,name:delivery.delivery_product_product_template
-msgid "Delivery by Poste"
-msgstr ""
-
-#. module: delivery
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
-
-#. module: delivery
-#: constraint:res.partner:0
-msgid "Error ! You can not create recursive associated members."
 msgstr ""
 
 #. module: delivery
@@ -81,12 +71,6 @@ msgid "Fixed"
 msgstr ""
 
 #. module: delivery
-#: code:addons/delivery/wizard/delivery_sale_order.py:0
-#, python-format
-msgid "The order state have to be draft to add delivery lines."
-msgstr ""
-
-#. module: delivery
 #: field:delivery.grid,line_ids:0
 msgid "Grid Line"
 msgstr ""
@@ -104,18 +88,6 @@ msgid "Generate Draft Invoices On Receptions"
 msgstr ""
 
 #. module: delivery
-#: selection:delivery.grid.line,price_type:0
-#: field:delivery.grid.line,type:0
-msgid "Variable"
-msgstr ""
-
-#. module: delivery
-#: code:addons/delivery/wizard/delivery_sale_order.py:0
-#, python-format
-msgid "No grid matching for this carrier !"
-msgstr ""
-
-#. module: delivery
 #: model:ir.model,name:delivery.model_delivery_grid_line
 msgid "Delivery line of grid"
 msgstr ""
@@ -123,11 +95,6 @@ msgstr ""
 #. module: delivery
 #: model:ir.ui.menu,name:delivery.menu_delivery
 msgid "Delivery"
-msgstr ""
-
-#. module: delivery
-#: view:delivery.grid.line:0
-msgid "Grid Lines"
 msgstr ""
 
 #. module: delivery
@@ -188,18 +155,13 @@ msgid "Name"
 msgstr ""
 
 #. module: delivery
-#: constraint:product.template:0
-msgid "Error: UOS must be in a different category than the UOM"
-msgstr ""
-
-#. module: delivery
 #: field:delivery.grid,country_ids:0
 msgid "Countries"
 msgstr ""
 
 #. module: delivery
-#: constraint:product.template:0
-msgid "Error: The default UOM and the purchase UOM must be in the same category."
+#: field:delivery.grid.line,operator:0
+msgid "Operator"
 msgstr ""
 
 #. module: delivery
@@ -213,9 +175,9 @@ msgid "Variable Factor"
 msgstr ""
 
 #. module: delivery
-#: code:addons/delivery/wizard/delivery_sale_order.py:0
-#, python-format
-msgid "No grid avaible !"
+#: selection:delivery.grid.line,price_type:0
+#: field:delivery.grid.line,type:0
+msgid "Variable"
 msgstr ""
 
 #. module: delivery
@@ -262,19 +224,8 @@ msgid "ID"
 msgstr ""
 
 #. module: delivery
-#: field:delivery.grid.line,operator:0
-msgid "Operator"
-msgstr ""
-
-#. module: delivery
 #: model:ir.module.module,shortdesc:delivery.module_meta_information
 msgid "Carriers and deliveries"
-msgstr ""
-
-#. module: delivery
-#: code:addons/delivery/wizard/delivery_sale_order.py:0
-#, python-format
-msgid "Order not in draft state !"
 msgstr ""
 
 #. module: delivery
@@ -310,21 +261,9 @@ msgid "To Zip"
 msgstr ""
 
 #. module: delivery
-#: code:addons/delivery/delivery.py:0
-#, python-format
-msgid "No line matched this order in the choosed delivery grids !"
-msgstr ""
-
-#. module: delivery
 #: model:ir.actions.act_window,name:delivery.action_picking_tree4
 #: model:ir.ui.menu,name:delivery.menu_action_picking_tree3
 msgid "Packing to be invoiced"
-msgstr ""
-
-#. module: delivery
-#: code:addons/delivery/delivery.py:0
-#, python-format
-msgid "No price available !"
 msgstr ""
 
 #. module: delivery
@@ -343,8 +282,8 @@ msgid "Sale Price"
 msgstr ""
 
 #. module: delivery
-#: constraint:product.product:0
-msgid "Error: Invalid ean code"
+#: view:delivery.grid.line:0
+msgid "Grid Lines"
 msgstr ""
 
 #. module: delivery
@@ -353,20 +292,8 @@ msgid "Delivery grids"
 msgstr ""
 
 #. module: delivery
-#: code:addons/delivery/stock.py:0
-#, python-format
-msgid "The carrier %s (id: %d) has no delivery grid!"
-msgstr ""
-
-#. module: delivery
 #: wizard_button:delivery.sale.order,init,end:0
 msgid "Cancel"
-msgstr ""
-
-#. module: delivery
-#: code:addons/delivery/stock.py:0
-#, python-format
-msgid "Warning"
 msgstr ""
 
 #. module: delivery
@@ -379,11 +306,6 @@ msgstr ""
 #: selection:delivery.grid.line,type:0
 #: selection:delivery.grid.line,variable_factor:0
 msgid "Price"
-msgstr ""
-
-#. module: delivery
-#: constraint:res.partner:0
-msgid "The VAT doesn't seem to be correct."
 msgstr ""
 
 #. module: delivery

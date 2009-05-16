@@ -1,0 +1,33 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* mrp_prodlot_autosplit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 5.0.0\n"
+"Report-Msgid-Bugs-To: support@openerp.com\n"
+"POT-Creation-Date: 2009-05-16 20:02:15+0000\n"
+"PO-Revision-Date: 2009-05-16 20:02:15+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mrp_prodlot_autosplit
+#: model:ir.module.module,description:mrp_prodlot_autosplit.module_meta_information
+msgid "Turn production lot tracking into unique per product instance code. Moreover, it\n"
+"    1) adds a new checkbox on the product form to enable or disable this behavior\n"
+"    2) then forbids to perform a move if a move involves more than one product instance\n"
+"    3) automagically splits up picking list movements into one movement per product instance\n"
+"    4) turns incoming pickings into an editable grid where you can directly type the code\n"
+"    of a new production number/code to create and associate to the move (it also checks it\n"
+"    doesn't exist yet)\n"
+"    \n"
+"    Notice: this module doesn't split product nomemclatures in MRP since they don't use pickings\n"
+"    A good workaround is too define several lines of individual products in nomemclatures\n"
+"    and produce 1 by 1 (if possible) to make it easier to encore unique prodlot in production orders too.  \n"
+"    "
+msgstr ""
+
