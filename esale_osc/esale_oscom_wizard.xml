@@ -14,6 +14,9 @@
 		<menuitem
 			name="Update stocks to all OScommerce web shops" parent="menu_esale_oscom_root"
 			action="wizard_esale_oscom_stocks" type="wizard" id="menu_esale_oscom_stocks" />
+		<menuitem
+			name="Import sale orders from all OScommerce web shops" parent="menu_esale_oscom_root"
+			action="wizard_esale_oscom_saleorders" type="wizard" id="menu_esale_oscom_saleorders" />
 
 <!--Product related wizards-->
 		<wizard string="Sync. products and stocks" model="product.product" name="esale.oscom.select.products"

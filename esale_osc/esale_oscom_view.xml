@@ -16,14 +16,12 @@
 						<field name="url" widget="url" required="1"/>
 						<field name="active" select="1"/>
 						<field name="shop_id" select="1" required="1"/>
-						<!--
-						<field name="partner_anonymous_id" required="1"/>
-                        -->
+						<!--<field name="partner_anonymous_id" required="1"/>-->
 						<field name="price_type"/>
 						<field name="esale_account_id"/>
-<!--						<label string="Proceed with the mappings BEFORE the definitions of the active products!!" colspan="4"/> -->
+						<!--<label string="Proceed with the mappings BEFORE the definitions of the active products!!" colspan="4"/> -->
 <!--						<separator string="Active Products" colspan="4"/>-->
-<!--						<button name="add_all_products" string="Add all products" type="object"/>-->
+						<button name="product_import_create" string="Add all products" colspan="2" type="object"/>
 						<field name="product_ids" colspan="4" widget="one2many_list" nolabel="1" readonly="1"/>
 					</page>
 					<page string="Taxes Mapping">
@@ -145,8 +143,6 @@
 	</record>
 
 <!-- ####################################################################################### -->
-
-
 	<record model="ir.ui.view" id="esale_oscom_category_web_form">
 		<field name="name">esale.oscom.category.web.form</field>
 		<field name="model">esale.oscom.category</field>
@@ -368,7 +364,6 @@
 	</record>
 
 	<menuitem name="Sales Management/Internet Sales/Invoices/Opened" id="menu_action_oscom_invoice_open_tree" action="action_oscom_invoice_open"/>
-
 
 </data>
 </openerp>

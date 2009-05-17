@@ -39,14 +39,16 @@ _export_done_fields = {}
 
 def _do_export(self, cr, uid, data, context):
     self.pool = pooler.get_pool(cr.dbname)
+    esale_web_obj = self.pool.get('esale.oscom.web')
+    product_obj = self.pool.get('product.product')
 
     if data['model'] == 'ir.ui.menu':
-        website_ids = self.pool.get('esale.oscom.web').search(cr, uid, [('active', '=', True)])
+        website_ids = esale_web_obj.search(cr, uid, [('active', '=', True)])
     else:
         website_ids = []
         website_not = []
         for id in data['ids']:
-            exportable_website = self.pool.get('esale.oscom.web').search(cr, uid, [('id', '=', id), ('active', '=', True)])
+            exportable_website = esale_web_obj.search(cr, uid, [('id', '=', id), ('active', '=', True)])
             if exportable_website:
                 website_ids.append(exportable_website[0])
             else:
@@ -56,8 +58,8 @@ def _do_export(self, cr, uid, data, context):
             raise wizard.except_wizard(_("Error"), _("You asked to synchronize to non-active OScommerce web shop: IDs %s") % website_not)
 
     for website_id in website_ids:
-        website = self.pool.get('esale.oscom.web').browse(cr, uid, website_id)
-        self.pool.get('product.product').oscom_update_stock(cr, uid, website, context=context)
+        website = esale_web_obj.browse(cr, uid, website_id)
+        product_obj.oscom_update_stock(cr, uid, website, context=context)
     return {}
 
 class wiz_esale_oscom_stocks(wizard.interface):
