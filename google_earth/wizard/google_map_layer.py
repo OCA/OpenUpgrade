@@ -25,11 +25,11 @@ import os, xml, string
 import urllib
 import xml.dom.minidom
 from xml.dom.minidom import parse, parseString
+import base64
 
 import wizard
 import pooler
 import tools
-import base64
 
 _earth_form =  '''<?xml version="1.0"?>
 <form string="Google Map/Earth">
@@ -180,7 +180,7 @@ def create_kml(self, cr, uid, data, context={}):
                 address += str(add.country_id.name)
         type = ''
         if part.customer:
-            type += 'Customer,'
+            type += 'Customer '
         if part.supplier:
             type += 'Supplier'
 
@@ -233,11 +233,13 @@ def create_kml(self, cr, uid, data, context={}):
             color = colors[0]
         cooridinate = dict_country[country]
 
+        desctiption_country = '<html><head> <font color="red"> <b> Number of partner: ' + str(res_cus[country]) + '<br /> Number of Invoices made: ' + str(res_inv[country]) + '<br /> Turnover of country: ' + str(res[country]) + ' </b> </font> </head></html>'
+
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(country)
         placemarkdescElement = kmlDoc.createElement('description')
-        placemarkdescElement.appendChild(kmlDoc.createTextNode('Number of partner:' + str(res_cus[country]) + ', Number of Invoices made: ' + str(res_inv[country]) + ', Turnover of country: ' + str(res[country])))
+        placemarkdescElement.appendChild(kmlDoc.createTextNode(desctiption_country))
         placemarknameElement.appendChild(placemarknameText)
 
         placemarkstyleElement = kmlDoc.createElement('Style')
