@@ -23,20 +23,15 @@
 from osv import osv, fields
 from tools.translate import _
     
-import sys,os,smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.base import MIMEBase
-from email.mime.text import MIMEText
+import sys,os
+import smtplib
+from email.MIMEText import MIMEText
+from email.MIMEBase import MIMEBase
+from email.MIMEMultipart import MIMEMultipart
 from email.Header import Header
-from email import Encoders
-import logging        
-
-def _lang_get(self, cr, uid, context = {}):
-    obj = self.pool.get('res.lang')
-    ids = obj.search(cr, uid, [])
-    res = obj.read(cr, uid, ids, ['code', 'name'], context)
-    res = [(r['code'], r['name']) for r in res]
-    return res + [(False, '')]
+from email.Utils import formatdate, COMMASPACE
+from email.Utils import formatdate, COMMASPACE
+from email import Encoders    
 
 class ecommerce_partner(osv.osv):
     
@@ -47,7 +42,7 @@ class ecommerce_partner(osv.osv):
         'name': fields.char('Name', size=128, required=True, select=True,
                              help="Its ecommerce partner name and address"),
         'last_name': fields.char('Last Name', size=128, select=True),
-        'lang': fields.selection(_lang_get, 'Language', size=5),
+        'lang': fields.many2one('res.lang', 'Language', size=5),
         'company_name': fields.char('Company Name', size=64),
         'active': fields.boolean('Active'),
         'address_ids': fields.one2many('ecommerce.partner.address', 'partner_id', 'Contacts'),

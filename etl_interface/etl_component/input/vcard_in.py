@@ -40,7 +40,7 @@ class etl_component_vcard_in(osv.osv):
             if cmp.transformer_id:
                 trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
 
-            val =etl.component.input.vcard_in(conn_instance, 'component.input.vcard_in')
+            val =etl.component.input.vcard_in(conn_instance, cmp.name, trans_instance, cmp.row_limit )
         return val
 
 etl_component_vcard_in()

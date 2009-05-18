@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="workflow" id="workflow_session">
+            <field name="name">workflow.training.session</field>
+            <field name="osv">training.session</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_session_draft">
+            <field name="wkf_id" ref="workflow_session" />
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'draft'})</field>
+            <field name="flow_start">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_session_opened">
+            <field name="wkf_id" ref="workflow_session" />
+            <field name="name">open</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'opened'})</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_session_opened_confirmed">
+            <field name="wkf_id" ref="workflow_session" />
+            <field name="name">opened_confirmed</field>
+            <field name="kind">function</field>
+            <field name="action">action_create_seance()
+write({'state':'opened_confirmed'})</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_session_closed_confirmed">
+            <field name="wkf_id" ref="workflow_session" />
+            <field name="name">closed_confirmed</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'closed_confirmed'})</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_session_inprogress">
+            <field name="wkf_id" ref="workflow_session" />
+            <field name="name">inprogress</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'inprogress'})</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_session_closed">
+            <field name="wkf_id" ref="workflow_session" />
+            <field name="name">closed</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'closed'})</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+        <record model="workflow.activity" id="activity_session_cancelled">
+            <field name="wkf_id" ref="workflow_session" />
+            <field name="name">cancelled</field>
+            <field name="kind">function</field>
+            <field name="action">write({'state':'cancelled'})</field>
+            <field name="flow_stop">True</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_draft_to_opened">
+            <field name="act_from" ref="activity_session_draft" />
+            <field name="act_to" ref="activity_session_opened" />
+            <field name="signal">signal_open</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_opened_to_opened_confirmed">
+            <field name="act_from" ref="activity_session_opened" />
+            <field name="act_to" ref="activity_session_opened_confirmed" />
+            <field name="signal">signal_open_confirm</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_opened_confirmed_to_closed_confirmed">
+            <field name="act_from" ref="activity_session_opened_confirmed" />
+            <field name="act_to" ref="activity_session_closed_confirmed" />
+            <field name="signal">signal_close_confirm</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_closed_confirmed_to_inprogress">
+            <field name="act_from" ref="activity_session_closed_confirmed" />
+            <field name="act_to" ref="activity_session_inprogress" />
+            <field name="signal">signal_inprogress</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_inprogress_to_closed">
+            <field name="act_from" ref="activity_session_inprogress" />
+            <field name="act_to" ref="activity_session_closed" />
+            <field name="signal">signal_close</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_closed_confirmed_to_cancelled">
+            <field name="act_from" ref="activity_session_closed_confirmed" />
+            <field name="act_to" ref="activity_session_cancelled" />
+            <field name="signal">signal_cancel</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_draft_to_cancelled">
+            <field name="act_from" ref="activity_session_draft" />
+            <field name="act_to" ref="activity_session_cancelled" />
+            <field name="signal">signal_cancel</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_opened_to_cancelled">
+            <field name="act_from" ref="activity_session_opened" />
+            <field name="act_to" ref="activity_session_cancelled" />
+            <field name="signal">signal_cancel</field>
+        </record>
+
+        <record model="workflow.transition" id="transition_session_opened_confirmed_to_cancelled">
+            <field name="act_from" ref="activity_session_opened_confirmed" />
+            <field name="act_to" ref="activity_session_cancelled" />
+            <field name="signal">signal_cancel</field>
+        </record>
+    </data>
+</openerp>
+
+
+

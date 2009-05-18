@@ -26,7 +26,11 @@
     "author" : "Tiny",
     "depends" : ["hotel_reservation"],
     "category" : "Generic Modules/Hotel Reservation",
-    "description": "A module that adds new reports based on Reservation cases.",
+     "description": """
+    Module shows the status of room reservation
+     * Current status of reserved room
+     * List status of room as draft or done state
+    """,
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["security/ir.model.access.csv","report_hotel_reservation_view.xml"],

@@ -19,10 +19,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-""" 
+"""
  To handle ETL signal.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 
 """
@@ -41,18 +41,25 @@ class signal(object):
        - error        : When the component gives error.
     """
     def __init__(self, *args, **argv):
-        self.__connects = {}  
-    
+        self.__connects = {}
+
+    def __getstate__(self):
+        return {'__connects' : self.__connects}
+
+    def __setstate__(self, state):
+        state['__connects'] = pickle.loads(state['__connects'])
+        self.__dict__ = state
+
     def signal(self, signal, signal_data=None):
         for fnct, data, key in self.__connects.get(signal, []):
             fnct(key, signal_data, *data)
-        
+
 
     def signal_connect(self, key, signal, fnct, *data):
         self.__connects.setdefault(signal, [])
         if (fnct, data, key) not in self.__connects[signal]:
             self.__connects[signal].append((fnct, data, key))
-        
+
 
     def signal_unconnect(self, key, signal=None):
         if not signal:
@@ -66,4 +73,4 @@ class signal(object):
                     del self.__connects[sig][i]
                 else:
                     i += 1
-    
+

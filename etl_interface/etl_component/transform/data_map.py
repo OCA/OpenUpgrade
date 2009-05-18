@@ -78,8 +78,7 @@ class etl_component_transform_map(osv.osv):
                 for field in line.map_field_ids:
                     fields[field.name]=field.dest_field
                 map_criteria[line.name]=fields
-            val = etl.component.transform.map(map_criteria, cmp.preprocess, 'component.transfer.map', trans_instance)
-
+            val = etl.component.transform.map(map_criteria, cmp.preprocess, cmp.name, trans_instance, cmp.row_limit)
         return val
 
 etl_component_transform_map()

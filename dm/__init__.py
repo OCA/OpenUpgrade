@@ -20,6 +20,7 @@
 #
 ##############################################################################
 
+import plugin
 import trademark
 import offer
 import offer_step

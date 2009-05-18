@@ -71,24 +71,12 @@ dm_offer_step_action()
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
 
-#    def _offer_step_code(self, cr, uid, ids, name, args, context={}):
-#        result ={}
-#        for id in ids:
-#            offer_step = self.browse(cr,uid,[id])[0]
-#            step_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer.step.type,code', 'model', context.get('lang', False) or 'en_US',[offer_step.type_id.id])
-#            type_code = (step_code[offer_step.type_id.id] or offer_step.type_id.code) + str(offer_step.seq)
-#            offer_code = self.pool.get('ir.translation')._get_ids(cr, uid, 'dm.offer,code', 'model', context.get('lang', False) or 'en_US',[offer_step.offer_id.id])
-#            code = (offer_code[offer_step.offer_id.id] or offer_step.offer_id.code) + '_' + type_code
-#            result[id] = str(code)
-#        return result
-
     _columns = {
-        'seq' : fields.integer('Step Type Sequence'),
+        'seq' : fields.integer('Sequence'),
         'name' : fields.char('Name',size=64, required=True, states={'closed':[('readonly',True)]}),
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade", states={'closed':[('readonly',True)]}),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32, states={'closed':[('readonly',True)]}),
-#        'code' : fields.function(_offer_step_code,string='Code',type="char",method=True,size=64),
         'code' : fields.char('Code',size=64,required=True,translate=True),
         'quotation' : fields.char('Quotation', size=16, states={'closed':[('readonly',True)]}),
         'media_id' : fields.many2one('dm.media', 'Media', ondelete="cascade",required=True, states={'closed':[('readonly',True)]}),

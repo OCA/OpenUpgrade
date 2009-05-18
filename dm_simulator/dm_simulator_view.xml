@@ -46,7 +46,7 @@
                     <separator string="Options"/>
                     <field name="so_gen" select="2" />
                     <field name="invoice_gen" select="2" attrs="{'readonly':[('so_gen','!=',True)]}"/>
-                    <field name="invoice_pay" select="2" attrs="{'readonly':[('invoice_gen','!=',True)]}"/>
+                <!--    <field name="invoice_pay" select="2" attrs="{'readonly':[('invoice_gen','!=',True)]}"/>-->
                 </group>
                 <separator string="Simulation Informations" colspan="4"/>
                 <group colspan="2" col="2">

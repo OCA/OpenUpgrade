@@ -22,18 +22,24 @@
 
 import urllib
 import xml.dom.minidom
+import base64
 
 import wizard
 import pooler
 import tools
-from osv import osv, fields
 
 _earth_form =  '''<?xml version="1.0"?>
-        <form string="Google Map/Earth">
-        <label string="kml file created in ../google_earth/kml/partner.kml"/>
-        </form> '''
+<form string="Google Map/Earth">
+    <separator string="Select path to store KML file" colspan="2"/>
+    <newline/>
+    <field name="name"/>
+    <newline/>
+    <field name="kml_file"/>
+</form>'''
 
 _earth_fields = {
+        'name': {'string': 'KML File name', 'type': 'char', 'readonly': False , 'required': True},
+        'kml_file': {'string': 'Save KML file', 'type': 'binary', 'required': True},
             }
 
 def geocode(address):
@@ -58,51 +64,86 @@ def geocode(address):
 
 
 def create_kml(self, cr, uid, data, context={}):
+    # This wizard will be remove in future because it wll be merge with layer wizard
     # This function creates an XML document and adds the necessary
     # KML elements.
     pool = pooler.get_pool(cr.dbname)
     partner_obj = pool.get('res.partner')
-    path = tools.config['addons_path']
-    fileName = path + '/google_earth/kml/partner.kml'
+#    path = tools.config['addons_path']
+#    fileName = path + '/google_earth/kml/partner.kml'
     partner_ids = partner_obj.search(cr, uid, [])
     partner_data = partner_obj.browse(cr, uid, partner_ids, context)
     address_obj= pool.get('res.partner.address')
 
     res = {}
-    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+#    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+    cr.execute("select min(aml.id) as id, sum(aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
     res_partner = cr.fetchall()
     for part in partner_data:
-        for id, turnover, partner_id in res_partner:
-            if not (partner_id == part.id):
-                res[part.id] = 0
-            if partner_id == part.id:
-                res[part.id] = turnover
+        res[part.id]= 0
+    for ml_id, turnover, partner_id in res_partner:
+        res[partner_id] = turnover
+#    for part in partner_data:
+#        for id, turnover, partner_id in res_partner:
+#            if partner_id == part.id:
+#                res[part.id] = turnover
+#            if not (partner_id == part.id):
+#                res[part.id] = 0
     kmlDoc = xml.dom.minidom.Document()
     kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
     kmlElement = kmlDoc.appendChild(kmlElement)
     documentElement = kmlDoc.createElement('Document')
-    documentElement = kmlElement.appendChild(documentElement)
-    kmlFile = open(fileName, 'w')
+    kmlElement.appendChild(documentElement)
+    documentElementname = kmlDoc.createElement('name')
+    documentElementname.appendChild(kmlDoc.createTextNode('Turnover by partners'))
+    documentElement.appendChild(documentElementname)
     for part in partner_data:
         address = ''
         add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
         if add:
-        #    if add.street:
-        #        address += str(add.street)
-        #    if add.street2:
-        #        address += ', '
-        #        address += str(add.street2)
+#            address += ' <br />['
+#            if add.street:
+#                address += '  '
+#                address += str(add.street)
+#            if add.street2:
+#                address += '  '
+#                address += str(add.street2)
             if add.city:
-        #        address += ', '
+                address += '  '
                 address += str(add.city)
             if add.state_id:
-                address += ', '
+                address += ',  '
                 address += str(add.state_id.name)
             if add.country_id:
-                address += ', '
+                address += ',  '
                 address += str(add.country_id.name)
-
-        desc_text = address + ' , turnover of partner : ' + str(res[part.id])
+#            address += ']'
+        styleElement = kmlDoc.createElement('Style')
+        styleElement.setAttribute('id','randomColorIcon')
+        iconstyleElement = kmlDoc.createElement('IconStyle')
+        colorElement = kmlDoc.createElement('color')
+        colorElement.appendChild(kmlDoc.createTextNode('ff00ff00'))
+        iconstyleElement.appendChild(colorElement)
+        colormodeElement = kmlDoc.createElement('colorMode')
+        colormodeElement.appendChild(kmlDoc.createTextNode('random'))
+        iconstyleElement.appendChild(colormodeElement)
+        scaleElement = kmlDoc.createElement('scale')
+        scaleElement.appendChild(kmlDoc.createTextNode('1.1'))
+        iconstyleElement.appendChild(scaleElement)
+        iconElement = kmlDoc.createElement('Icon')
+        hrefElement = kmlDoc.createElement('href')
+        hrefElement.appendChild(kmlDoc.createTextNode('http://maps.google.com/mapfiles/kml/pal3/icon53.png'))
+        iconElement.appendChild(hrefElement)
+        iconstyleElement.appendChild(iconElement)
+        styleElement.appendChild(iconstyleElement)
+        documentElement.appendChild(styleElement)
+        type = ''
+        if part.customer:
+            type += 'Customer '
+        if part.supplier:
+            type += 'Supplier'
+        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
+                    + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
@@ -112,6 +153,9 @@ def create_kml(self, cr, uid, data, context={}):
         descriptionText = kmlDoc.createTextNode(desc_text)
         descriptionElement.appendChild(descriptionText)
         placemarkElement.appendChild(descriptionElement)
+        styleurlElement = kmlDoc.createElement('styleUrl')
+        styleurlElement.appendChild(kmlDoc.createTextNode('#randomColorIcon'))
+        placemarkElement.appendChild(styleurlElement)
         pointElement = kmlDoc.createElement('Point')
         placemarkElement.appendChild(pointElement)
         coorElement = kmlDoc.createElement('coordinates')
@@ -122,9 +166,9 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(placemarkElement)
         # This writes the KML Document to a file.
 
-    kmlFile.write(kmlDoc.toprettyxml(' '))
-    kmlFile.close()
-    return {}
+    out = base64.encodestring(kmlDoc.toxml())
+    fname = 'turnover' + '.kml'
+    return {'kml_file': out, 'name': fname}
 
 class customer_on_map(wizard.interface):
 

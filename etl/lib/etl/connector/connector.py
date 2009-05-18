@@ -22,7 +22,7 @@
 """
  ETL Connector.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 from etl import signal
@@ -30,24 +30,30 @@ import datetime
 class connector(signal):
     """
     Base class of ETL Connector.
-    """   
+    """
 
     def __init__(self,name='connector'):
         """
-        Parameters 
+        Parameters
         name : Name of the connector.
         """
         self._type = 'connector'
         super(connector, self).__init__()
         self.name = name or ''
-        self.status = 'close'        
+        self.status = 'close'
 
-    def __copy__(self):       
+    def __copy__(self):
         res = connector(name=self.name)
         return res
 
-    def __str__(self):        
+    def __str__(self):
     	return '<Connector name = "%s" type = "%s">'%(self.name, self._type)
+
+    def __getstate__(self):
+        return {'name' : self.name, 'status': self.status , '_type' :self._type}
+
+    def __setstate__(self, state):
+        self.__dict__ = state
 
     def open(self):
         self.status = 'open'

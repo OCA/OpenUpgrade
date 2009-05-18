@@ -3,20 +3,72 @@
     <data>
     
     	<!-- PLUGINS -->
-		<record id="dm.dm_ddf_plugin_lastname0" model="dm.ddf.plugin">
+		<record id="dm.dm_dtp_plugin_lastname0" model="dm.dtp.plugin">
 			<field eval="&quot;&quot;&quot;Partner Contact - Last Name&quot;&quot;&quot;" name="note"/>
             <field name="model_id" ref="base_contact.model_res_partner_contact"/>
             <field name="field_id" ref="base_contact.field_res_partner_contact_name"/> 
         </record>
-        <record id="dm_partner_address.dm_ddf_plugin_firstname0" model="dm.ddf.plugin">
+        <record id="dm_partner_address.dm_dtp_plugin_firstname0" model="dm.dtp.plugin">
         	<field eval="&quot;&quot;&quot;Partner Contact - First Name&quot;&quot;&quot;" name="note"/>
             <field name="model_id" ref="base_contact.model_res_partner_contact"/>
             <field name="field_id" ref="base_contact.field_res_partner_contact_first_name"/> 
         </record>
+        <record id="dm_dtp_plugin_mobile0" model="dm.dtp.plugin">
+        	<field eval="&quot;&quot;&quot;mobile&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Mobile&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+        	<field eval="&quot;&quot;&quot;Partner Contact - Mobile&quot;&quot;&quot;" name="note"/>
+            <field name="model_id" ref="base_contact.model_res_partner_contact"/>
+            <field name="field_id" ref="base_contact.field_res_partner_contact_mobile"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm.dm_dtp_plugin_language0" model="dm.dtp.plugin">
+        	<field eval="&quot;&quot;&quot;Partner Contact - Language&quot;&quot;&quot;" name="note"/>
+            <field name="model_id" ref="base_contact.model_res_partner_contact"/>
+            <field name="field_id" ref="base_contact.field_res_partner_contact_lang_id"/> 
+        </record>
+        <record id="dm.dm_dtp_plugin_country0" model="dm.dtp.plugin">
+        	<field eval="&quot;&quot;&quot;Partner Contact - Nationality&quot;&quot;&quot;" name="note"/>
+            <field name="model_id" ref="base_contact.model_res_partner_contact"/>
+            <field name="field_id" ref="base_contact.field_res_partner_contact_country_id"/> 
+        </record>
+        <record id="dm_dtp_plugin_birthdate0" model="dm.dtp.plugin">
+        	<field eval="&quot;&quot;&quot;birthdate&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Birthdate&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+        	<field eval="&quot;&quot;&quot;Partner Contact - Birthdate&quot;&quot;&quot;" name="note"/>
+            <field name="model_id" ref="base_contact.model_res_partner_contact"/>
+            <field name="field_id" ref="base_contact.field_res_partner_contact_birthdate"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_dtp_plugin_title0" model="dm.dtp.plugin">
+        	<field eval="&quot;&quot;&quot;title&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Title&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+        	<field eval="&quot;&quot;&quot;Partner Contact - Title&quot;&quot;&quot;" name="note"/>
+            <field name="model_id" ref="base_contact.model_res_partner_contact"/>
+            <field name="field_id" ref="base_contact.field_res_partner_contact_title"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm.dm_dtp_plugin_email0" model="dm.dtp.plugin">
+        	<field eval="&quot;&quot;&quot;Contact's Jobs - Email&quot;&quot;&quot;" name="note"/>
+            <field name="model_id" ref="base_contact.model_res_partner_job"/>
+            <field name="field_id" ref="base_contact.field_res_partner_job_email"/> 
+        </record>
+        <record id="dm.dm_dtp_plugin_phone0" model="dm.dtp.plugin">
+        	<field eval="&quot;&quot;&quot;Contact's Jobs - Phone&quot;&quot;&quot;" name="note"/>
+            <field name="model_id" ref="base_contact.model_res_partner_job"/>
+            <field name="field_id" ref="base_contact.field_res_partner_job_phone"/> 
+        </record>
+        <record id="dm.dm_dtp_plugin_name0" model="dm.dtp.plugin">
+        	<field eval="&quot;&quot;&quot;Contact's Jobs - Name(partner_name)&quot;&quot;&quot;" name="note"/>
+            <field name="model_id" ref="base_contact.model_res_partner_job"/>
+            <field name="field_id" ref="base_contact.field_res_partner_job_name"/> 
+        </record>
         
         <!-- TEMPLATE -->
         <record id="dm.dm_document_template_partner0" model="dm.document.template">
-            <field model="dm.ddf.plugin" search="[('model_id.model','like','res.partner')]" name="plugin_ids"/>
+            <field model="dm.dtp.plugin" search="[('model_id.model','like','res.partner')]" name="plugin_ids"/>
         </record>
     </data>
 </openerp>

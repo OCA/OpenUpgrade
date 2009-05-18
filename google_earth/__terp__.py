@@ -5,13 +5,17 @@
     "author" : "Tiny",
     "category" : "Generic Modules/Others",
     "website" : "http://www.openerp.com",
-    "depends" : ["account"],
+    "depends" : ["sale"],
     "description": """
             This Module will includes following :
 
-            * Layers with characteristics by regions
-            * Display customers, whom country has colors by turnover
-            * Most frequent delivery routes
+            * Layers with characteristics by regions (menu: Partners/Google Map/Earth)
+                - country wise turnover display (low turnover=light red, high turnover=dark red) with information
+                - partners display on map with its information
+            * Display customers, whom country has colors by turnover (menu: Partners/Google Map/Earth)
+                - partners display on map with its turnover
+            * Most frequent delivery routes (menu: Partners/Google Map/Earth)
+                - grouping of delivery by city and put route path on map with differnt color by number of deliveries
     """,
     "init_xml" : [],
     "demo_xml" : [],

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_document_file_form_inherited">
+            <field name="name">ir.attachment.inherited</field>
+            <field name="model">ir.attachment</field>
+            <field name="inherit_id" ref="document.view_document_file_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="write_uid" position="after">
+                    <field name="state" />
+                    <group colspan="2">
+                        <button name="" string="Lock" type="object" states="unlocked" />
+                        <button name="" string="Unlock" type="object" states="locked" />
+                    </group>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -30,9 +30,10 @@
             """,
     "depends" : ["dm"],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : ["dm_website_demo.xml"],
     "update_xml" : [
-                    "dm_website_data.xml"
+                    "dm_website_view.xml",
+                    "dm_website_data.xml",
                     ],
     "active": False,
     "installable": True,

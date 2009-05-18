@@ -26,6 +26,7 @@ import time
 import netsvc
 import pooler
 from osv import osv, fields
+import os
 
 class etl_project(osv.osv):
     _name='etl.project'
@@ -97,7 +98,7 @@ class etl_connector(osv.osv):
     _columns={
               'name' : fields.char('Connector Name', size=64, required=True),
               'type' : fields.selection(_get_connector_type, 'Connector Type', size=64, required=True),
-              'uri' : fields.char('URL', size=124),
+              'uri' : fields.char('URL', size=124, help="Enter Real Path"),
               'host' : fields.char('Host', size=64),
               'port' : fields.char('Port', size=64),
               'uid' : fields.char('User  ID', size=64),
@@ -111,6 +112,7 @@ class etl_connector(osv.osv):
         if (cr.dbname, uid, data.get('process_id', False), id) not in self._cache:
             self._cache[(cr.dbname, uid, data.get('process_id', False), id)]=self.create_instance(cr, uid, id, context, data)
         return self._cache[(cr.dbname, uid, data.get('process_id', False), id)]
+    
     def create_instance(self, cr, uid, ids, context={}, data={}):
         # logic for super create_instance
         return False
@@ -189,24 +191,36 @@ class etl_job(osv.osv):
         if context.get('action_end_job', False):
             job.signal_connect({'id':id, 'instance':job}, 'end', context['action_end_job'], data)
         if context.get('action_pause_job', False):
+            
             job.signal_connect({'id':id, 'instance':job}, 'pause', context['action_pause_job'], data)
         return self._cache[(cr.dbname, uid, data.get('process_id', False), id)]
 
     def create_instance(self, cr, uid, id, context={}, data={}):
         obj_component=self.pool.get('etl.component')
-        res = self.read(cr, uid, id, ['component_ids'])
-        output_cmps=[]
-        for cmp_id in res['component_ids']:
-            output_cmps.append(obj_component.get_instance(cr, uid, cmp_id, context, data))
-        job=etl.job(output_cmps)
+        res = self.read(cr, uid, id, ['component_ids', 'name'])
+        components=[]
+        component_instance = []
+        for comp in  obj_component.browse(cr, uid, res['component_ids']):
+            components.append(comp)
+            for trans in comp.trans_in_ids + comp.trans_out_ids:
+                components.append(trans.source_component_id)
+                components.append(trans.destination_component_id)
+        comps = []
+        for comp in components:
+            comps.append(comp.id)
+            for trans in comp.trans_in_ids + comp.trans_out_ids:
+                comps.append(trans.source_component_id.id)
+                comps.append(trans.destination_component_id.id)
+        comps = list(set(comps))
+        for cmp_id in comps:
+            component_instance.append(obj_component.get_instance(cr, uid, cmp_id, context, data))
+        job=etl.job(component_instance, res['name'])
         return job
 
     def action_open_job(self, cr, uid, ids, context={}):
         return self.write(cr, uid, ids, {'state':'open'})
     def action_close_job(self, cr, uid, ids, context={}):
         return self.write(cr, uid, ids, {'state':'close'})
-
-
 
 etl_job()
 
@@ -531,25 +545,27 @@ class etl_component(osv.osv):
 
     def create_instance(self, cr, uid, id, context={}, data={}):
         return True
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
-        result = super(osv.osv, self).fields_view_get(cr, uid, view_id,view_type,context,toolbar)
-        fields=result['fields']
-        from xml import dom, xpath
-        from lxml import etree
-        mydom = dom.minidom.parseString(result['arch'].encode('utf-8'))
-        child_node=mydom.childNodes[0].childNodes
-        for i in range(1,len(child_node)):
-            for node in child_node[i].childNodes:
-                if node.localName=='page':
-                    if node.getAttribute('attrs'):
-                        for key,value in eval(node.getAttribute('attrs')).items():
-                            if result['fields'][ value[0][0]]['type']=='many2one':
-                                obj=result['fields'][ value[0][0]]['relation']
-                                id=self.pool.get(obj).name_search(cr, uid, value[0][2])[0][0]
-                                newattr={key:[(str(value[0][0]),str(value[0][1]),id)]}
-                                node.setAttribute('attrs',str(newattr))
-        result['arch']=mydom.toxml()
-        return result
+    
+#    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
+#        result = super(osv.osv, self).fields_view_get(cr, uid, view_id,view_type,context,toolbar)
+#        fields=result['fields']
+#        from xml import dom, xpath
+#        from lxml import etree
+#        mydom = dom.minidom.parseString(result['arch'].encode('utf-8'))
+#        child_node=mydom.childNodes[0].childNodes
+#        for i in range(1,len(child_node)):
+#            for node in child_node[i].childNodes:
+#                if node.localName=='page':
+#                    if node.getAttribute('attrs'):
+#                        for key,value in eval(node.getAttribute('attrs')).items():
+#                            if result['fields'][ value[0][0]]['type']=='many2one':
+#                                obj=result['fields'][ value[0][0]]['relation']
+#                                id=self.pool.get(obj).name_search(cr, uid, value[0][2])[0][0]
+#                                newattr={key:[(str(value[0][0]),str(value[0][1]),id)]}
+#                                node.setAttribute('attrs',str(newattr))
+#        result['arch']=mydom.toxml()
+#        print "result['arch']result['arch']result['arch']result['arch']",result['arch']
+#        return result
 etl_component()
 
 
@@ -594,7 +610,8 @@ class etl_transition(osv.osv):
         cmp_out = obj_component.get_instance(cr, uid, trans.destination_component_id.id, context, data)
         if (cr.dbname, uid, data.get('process_id', False), id) in self._cache:
             return self._cache[(cr.dbname, uid, data.get('process_id', False), id)]
-        val=etl.transition(cmp_in, cmp_out, channel_source=trans.channel_source, channel_destination=trans.channel_destination, type=trans.type)
+        val=etl.transition(cmp_in, cmp_out, channel_source=trans.channel_source or 'main',\
+                           channel_destination=trans.channel_destination or 'main', type=trans.type)
         return val
 
     def action_open_transition(self, cr, uid, ids, context={}):

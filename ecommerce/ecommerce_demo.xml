@@ -62,7 +62,6 @@
 			<field name="street2">Rue des Palais 44</field>
 			<field name="country_id" ref="base.us"/>
 			<field name="street">bte 33</field>
-			<field name="state_id" ref="base.us-co"/>
 			<field name="name">cheque</field>
 		</record> 
 
@@ -618,7 +617,7 @@
 	<!-- Ecommerce Partner 1 -->
 
 		<record id="ecommerce_partner_name1" model="ecommerce.partner">
-			<field name="lang">en_US</field>
+			<field name="lang" ref="base.lang_en"></field>
 			<field name="last_name">Fedric</field>
 			<field name="name">Fedric Johnsans</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
@@ -632,7 +631,7 @@
 			<field name="zip">1348</field>
 			<field name="mobile">8986555555</field>
 			<field name="country_id" ref="base.fr"/>
-			<field name="state_id" ref="fr-bo"/>
+			<field name="state_id" ref="fr-pa"/>
 			<field name="phone">(+32).10.45.17.73</field>
 			<field name="street">Rue de l'Angelique, 1</field>
 			<field name="partner_id" ref="ecommerce_partner_name1"></field>
@@ -642,7 +641,7 @@
 	<!-- Ecommerce Partner 2 -->
 
 		<record id="ecommerce_partner_name2" model="ecommerce.partner">
-			<field name="lang">en_US</field>
+			<field name="lang" ref="base.lang_en"></field>
 			<field  name="last_name">Pathric</field>
 			<field  name="name">Laser Vinnie</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
@@ -684,7 +683,7 @@
 	<!-- Ecommerce Partner 3 -->
 
 		<record id="ecommerce_partner_name3" model="ecommerce.partner">
-			<field name="lang">en_US</field>
+			<field name="lang" ref="base.lang_en"></field>
 			<field name="last_name">Passot</field>
 			<field name="name">Thomas Passot</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>
@@ -710,7 +709,7 @@
 	<!-- Ecommerce Partner 4 -->
 
 		<record id="ecommerce_partner_name4" model="ecommerce.partner">
-			<field name="lang">en_US</field>
+			<field name="lang" ref="base.lang_en"></field>
 			<field name="last_name">jacot</field>
 			<field name="name">Laurent Oaurent</field>
 			<field eval="[(6,0,[ref('base.res_partner_category_0')])]" name="category_ids"/>

@@ -8,29 +8,38 @@
             <field eval="&quot;&quot;&quot;ev_mail_opened&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
-            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>
         </record>
         <record id="dm_offer_step_transition_ev_link_clicked" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Emailvision - Link Clicked&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;ev_link_clicked&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
-            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>
         </record>
         <record id="dm_offer_step_transition_ev_mail_not_opened" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Emailvision - Mail Not Opened&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;ev_mail_not_opened&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
-            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>
         </record>
         <record id="dm_offer_step_transition_ev_link_not_clicked" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Emailvision - Link Not Clicked&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;ev_link_not_clicked&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
-            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>
         </record>
     </data>
+    <data noupdate="0">
+         <record id="ir_actions_server_emailvision_api" model="ir.actions.server">
+             <field eval="5" name="sequence"/>
+             <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
+             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
+             <field name="model_id" ref="dm.model_dm_campaign_document"/>
+             <field eval="[(6,0,[])]" name="child_ids"/>
+             <field eval="&quot;&quot;&quot;from dm_emailvision import dm_emailvision_api\ndm_emailvision_api.send_email(cr,uid,obj,context)" name="code"/>
+             <field eval="True" name="condition"/>
+             <field eval="&quot;&quot;&quot;Send Email with Emailvision NMP API&quot;&quot;&quot;" name="name"/>
+         </record>
+     </data>
+
     
 </openerp>

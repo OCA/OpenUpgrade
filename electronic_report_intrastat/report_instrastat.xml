@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<terp>
+	<data>		
+
+		<wizard string="Export Data"
+			model="report.intrastat"
+			name="electronic.report.intrastat.export.data"
+			id="report_intrastat.report_intrastat_export"/>
+
+		<record model="ir.ui.view" id="view_export_log_form">
+			<field name="name">report.intrastat.export.log.form</field>
+			<field name="model">report.intrastat.export.log</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Intrastat Export Logs">
+					<field name="name" select="1" required="1"/>
+					<field name="date_create" select="1"/>
+					<field name="nbr"/>
+					<field name="user_id" />
+					<field name="note" colspan="4" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_export_log_tree">
+			<field name="name">export.log.tree</field>
+			<field name="model">report.intrastat.export.log</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Intrastat Export Logs">
+					<field name="name" select="1" required="1"/>
+					<field name="date_create" select="1"/>
+					<field name="nbr"/>
+					<field name="user_id" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_export_log_tree">
+			<field name="res_model">report.intrastat.export.log</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+
+		</record>
+        <menuitem id="menu_action_intrastat_export_log_tree" name="Intrastat Export Logs" parent="stock.next_id_61" action="action_export_log_tree"/>
+	</data>
+</terp>

@@ -11,10 +11,16 @@ import os
 import netsvc
 from report import interface ,report_sxw
 import time
-from customer_function import customer_function
+import dm.plugin 
+print dir()
+from plugin import customer_function
+from plugin.customer_function import customer_function
+from plugin.dynamic_text import dynamic_text
+from plugin.php_url import php_url
 import re
 import datetime
-interna_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+from lxml import etree
+internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -33,6 +39,7 @@ interna_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitiona
 </HEAD>
 <BODY LANG="en-IN" DIR="LTR">
 '''
+_regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
 
 def merge_message(cr, uid, keystr, context):
     logger = netsvc.Logger()
@@ -131,7 +138,7 @@ def generate_reports(cr,uid,obj,report_type,context):
             context['document_id'] = document_id[0]
             attachment_obj = pool.get('ir.attachment')
             if report_type=='html' and document_data['editor'] and document_data['editor']=='internal' and document_data['content']:
-                report_data = interna_html_report +str(document_data['content'])+"</BODY></HTML>"
+                report_data = internal_html_report +str(document_data['content'])+"</BODY></HTML>"
                 report_data = merge_message(cr, uid, report_data, context)
                 attach_vals={'name' : document_data['name'] + "_" + str(address_id),
                             'datas_fname' : 'report_test' + report_type ,
@@ -158,7 +165,7 @@ def generate_reports(cr,uid,obj,report_type,context):
 
 
 
-def generate_plugin_value(cr, uid, document_id, address_id, context={}):
+def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, context={}):
     if not document_id :
         return False
     if not address_id :
@@ -166,10 +173,12 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
     vals = {}
 
     pool = pooler.get_pool(cr.dbname)
-    def compute_customer_plugin(cr, uid, p, cid):
+    def compute_customer_plugin(cr, uid, p, cid,wi_id=None):
         args = {}
         res  = pool.get('ir.model').browse(cr, uid, p.model_id.id)
         args['model_name'] = res.model
+        if wi_id:
+            args['wi_id'] = wi_id    
         args['field_name'] = str(p.field_id.name)
         args['field_type'] = str(p.field_id.ttype)
         args['field_relation'] = str(p.field_id.relation)
@@ -177,28 +186,32 @@ def generate_plugin_value(cr, uid, document_id, address_id, context={}):
 
     dm_document = pool.get('dm.offer.document')
     dm_plugins_value = pool.get('dm.plugins.value')
-    ddf_plugin = pool.get('dm.ddf.plugin')
 
     plugins = dm_document.browse(cr, uid, document_id, ['document_template_plugin_ids' ])['document_template_plugin_ids']
 
     for p in plugins :
         args = {}
+        args['document_id'] = document_id
         if p.type == 'fields':
-            plugin_value = compute_customer_plugin(cr, uid, p, address_id)
-
+            plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
         else :
-            arguments = p.argument_ids
-            for a in arguments:
+            arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
+            for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
                 if not a.stored_plugin :
                     args[str(a.name)]=str(a.value)
                 else :
-                    args[str(a.name)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id)
-            path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
-            plugin_name = p.file_fname.split('.')[0]
-            sys.path.append(path)
-            X =  __import__(plugin_name)
-            plugin_func = getattr(X, plugin_name)
-            plugin_value = plugin_func(cr, uid, address_id, **args)
+                    args[str(a.custome_plugin_id.code)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
+            if p.type == 'dynamic_text' :
+                plugin_value = dynamic_text(cr, uid, p.ref_text_id.id, **args)
+            elif p.type == 'url' :
+                plugin_value = php_url(cr, uid, p.ref_text_id.id, **args)
+            else :
+                path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
+                plugin_name = p.file_fname.split('.')[0]
+                sys.path.append(path)
+                X =  __import__(plugin_name)
+                plugin_func = getattr(X, plugin_name)
+                plugin_value = plugin_func(cr, uid, address_id, **args)
 
         if p.store_value :
             dm_plugins_value.create(cr, uid,{'date':time.strftime('%Y-%m-%d'),
@@ -225,10 +238,27 @@ class offer_document(rml_parse):
         if 'form' not in self.datas :
             address_id = self.context['address_id']
             document_id = self.context['document_id']
+            workitem_id = self.context['active_id']
         else :
+
             address_id = self.datas['form']['address_id']
             document_id = self.ids[0]
-        values = generate_plugin_value(self.cr,self.uid,document_id,address_id)
+
+            dm_workitem_obj = self.pool.get('dm.workitem')
+            workitem_data=dm_workitem_obj.search(self.cr,self.uid,[])
+
+            if not workitem_data:
+                document = self.pool.get('dm.offer.document').browse(self.cr,self.uid,document_id)
+
+                dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
+                segment_data_id=dm_segment_obj.search(self.cr,self.uid,[])
+
+                workitem_id = dm_workitem_obj.create(self.cr, self.uid,{'address_id':address_id,
+                                             'step_id':document.step_id.id,
+                                             'segment_id' : segment_data_id[0]})
+            else :
+                workitem_id = workitem_data[0]
+        values = generate_plugin_value(self.cr,self.uid,document_id,address_id,workitem_id)
         return [values]
 
 from report.report_sxw import report_sxw
@@ -296,6 +326,21 @@ class report_xml(osv.osv):
         db = pooler.get_db_only(cr.dbname)
         interface.register_all(db)
         return True
+
+    def set_image_email(self,cr,uid,report_id):
+        list_image_id = []
+        def process_tag(node,list_image_id):
+            if not node.getchildren():
+                if  node.tag=='img' and node.get('name') and node.get('name').find('[[setHtmlImage')>=0:
+                    res_id= _regex.split(node.get('name'))[1]
+                    list_image_id.append((res_id,node.get('src')))
+            else :
+                for n in node.getchildren():
+                    process_tag(n,list_image_id)
+        datas = self.report_get(cr, uid, report_id)['report_sxw_content']
+        root = etree.HTML(base64.decodestring(datas))
+        process_tag(root,list_image_id)
+        return list_image_id
 report_xml()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

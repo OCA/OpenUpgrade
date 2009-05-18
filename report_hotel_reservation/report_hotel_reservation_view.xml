@@ -37,11 +37,11 @@
 			<graph string="States By Reservation" type="pie">
 				<field name="state"/>
 				<field name="nbr" operator="+"/>
-				
+
 			</graph>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_hotel_reservation_status_graph_bar">
 		<field name="name">report.hotel.reservation.status.graph</field>
 		<field name="model">report.hotel.reservation.status</field>
@@ -50,17 +50,17 @@
 			<graph string="States By Reservation" type="bar" orientation="verticle">
 				<field name="state"/>
 				<field name="nbr" operator="+"/>
-				
+
 			</graph>
 		</field>
 	</record>
-	
+
 	<record model="ir.actions.act_window" id="action_report_hotel_reservation_status_tree_graph">
 		<field name="name">States By Reservation</field>
 		<field name="res_model">report.hotel.reservation.status</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
-		
+
 	</record>
 
 	<record model="ir.actions.act_window" id="action_report_hotel_reservation_status_tree_graph_bar">
@@ -70,5 +70,13 @@
 			<field name="view_mode">graph,tree</field>
 			<field name = "view_id" ref="view_hotel_reservation_status_graph_bar"/>
  	</record>
+	<menuitem name = "Hotel Management/Reports/This Month"
+			  id = "menu_hotel_reservation_this_month"/>
+
+ 	<menuitem name="States By Reservation"
+		          action="action_report_hotel_reservation_status_tree_graph_bar"
+		          id="menu_hotel_reservation_status_tree_graph_bar"
+		          sequence="34"
+		          parent = "menu_hotel_reservation_this_month"/>
 </data>
 </openerp>

@@ -45,7 +45,7 @@ class dm_simulator(osv.osv):
         'section_qty' : fields.integer('Section', readonly=True),
         'sale_rate' : fields.float('Sale Rate (%)', digits=(16,2), readonly=True),
         'avg_rate' : fields.float('Average Actions/Second', digits=(16,2), readonly=True),
-        'type': fields.selection([('purchase','Purchase Simualtion')],'Type',required=True),
+        'type': fields.selection([('purchase','Purchase Simulation')],'Type',required=True),
         'note' : fields.text('Description'),
         'logs' : fields.text('Logs'),
         'stats' : fields.text('Statistics Logs'),
@@ -56,6 +56,7 @@ class dm_simulator(osv.osv):
     }
 
     def onchange_campaign(self, cr, uid, ids, campaign_id, type):
+        """ Compute the quantities values on change of campaign """
         value = {}
         if campaign_id:
             cust_ids = []
@@ -84,8 +85,8 @@ class dm_simulator(osv.osv):
                 sect_act = []
                 sect = 0
                 while (sect < section_qty):
+                    sect_act_qty = (sect_act_qty/2) * (sect+1)
                     sect_act.append(sect_act_qty)
-                    sect_act_qty = sect_act_qty/2
                     sect = sect+1
                 value['action_qty'] = sum(sect_act)
 
@@ -93,6 +94,7 @@ class dm_simulator(osv.osv):
 
 
     def simulation_start(self, cr, uid, ids, *args):
+        """ Starts the simulation """
         sim = self.browse(cr, uid, ids)[0]
         now = datetime.datetime.now()
         self.write(cr, uid, ids, {'date_start':now.strftime('%Y-%m-%d  %H:%M:%S')})
@@ -104,7 +106,6 @@ class dm_simulator(osv.osv):
         """ compute duration per section """
         sect_dur = duration // sim.section_qty
         print "DM SIM - sect_dur :",sect_dur
-        print "DM SIM - type sect_dur :",type(sect_dur)
 
         if sim.type == "purchase":
             sect_act_qty = sim.cust_qty
@@ -116,19 +117,25 @@ class dm_simulator(osv.osv):
                 from_time = datetime.datetime.strptime(sim.date_start, '%Y-%m-%d  %H:%M:%S') + (sect_dur * sect)
                 to_time = datetime.datetime.strptime(sim.date_start, '%Y-%m-%d  %H:%M:%S') + (sect_dur * (sect+1))
 
-                sect_act_qty = sect_act_qty/2
+                """ Define the quantity of actions per sections with start en end time """
+                """ Half of the customers purchase at the start of campaign """
+                """ Then half of then purchase at the next section and so on... """
+                sect_act_qty = (sect_act_qty/2) * (sect+1)
                 sect_act.append([sect_act_qty,from_time,to_time])
+                print "%s actions for section %s" %(sect_act_qty, sect)
                 sect = sect+1
 
-            print "DM SIM - Section actions :",sect_act
+            print "DM SIM - Total Sections actions :",len(sect_act)
             trigger_type_id = self.pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]
 
+            """ Get Customers from segments """
             for propo in sim.campaign_id.proposition_ids:
                 for seg in propo.segment_ids:
                     if seg.type_src == "internal" and seg.customers_file_id:
                         for cust_id in seg.customers_file_id.address_ids:
                             cust_ids.append([cust_id.id,seg.id])
 
+            action_qty = 0
             for s in sect_act:
                 """ Get offer steps """
                 step_ids = self.pool.get('dm.offer.step').search(cr, uid, [('offer_id','=',sim.campaign_id.offer_id.id)])
@@ -152,34 +159,51 @@ class dm_simulator(osv.osv):
 
                         """ Generate Actions """
                         for cust in cust_ids[0:s[0]]:
-                            action_time = datetime.datetime.fromtimestamp(random.randint(int(from_ts),int(to_ts))).strftime('%Y-%m-%d  %H:%M:%S')
+                            action_time = datetime.datetime.fromtimestamp(float(random.randint(int(from_ts),int(to_ts)))).strftime('%Y-%m-%d  %H:%M:%S')
                             print "DM SIM - action_time :",action_time
                             self.pool.get('dm.simulator.action').create(cr, uid, {'simulator_id':sim.id,'trigger_type_id':trigger_type_id,
-                                'step_id':step, 'segment_id':cust[1], 'address_id':cust[0],'section':sect_act.index(s),
-                                'action_time':action_time})
+                                'step_id':step, 'segment_id':cust[1], 'address_id':cust[0],'section':sect_act.index(s),'action_time':action_time})
+                            action_qty = action_qty+1
                         print "DM SIM - Customers :", cust_ids[0:s[0]]
+                print "SIM : Real action quantity :",action_qty
 
-        self.write(cr, uid, ids, {'state':'running'})
+        """ Init Statistics """
+        stat_init = "--- Starting Campaign Simulation at %s ---"% time.strftime('%Y-%m-%d  %H:%M:%S')
+        self.write(cr, uid, ids, {'stats':stat_init,'action_pending_qty':sim.action_qty, 'state':'running'})
 
         return True
 
     def simulation_stop(self, cr, uid, ids, *args):
+        """ Stops the simulation """
 
         """ Remove simulation actions """
         sim = self.browse(cr, uid ,ids)[0]
         sim_act_ids = self.pool.get('dm.simulator.action').search(cr, uid, [('simulator_id','=',sim.id),('state','=','pending')])
         self.pool.get('dm.simulator.action').unlink(cr, uid, sim_act_ids)
-        self.write(cr, uid, ids, {'state':'done'})
+
+        """ Update Statistics """
+        new_stats = []
+        stats = self.read(cr, uid, sim.id, ['stats'])
+        new_stats.append("--- Stopping Campaign Simulation at %s ---"% time.strftime('%Y-%m-%d  %H:%M:%S'))
+        new_stats.append(stats['stats'])
+        self.write(cr, uid, ids, {'stats':"\n".join(new_stats),'state':'done'})
 
         return True
 
     def action_do(self, cr, uid, context={}):
+        """ Check for actions to execute and execute those planned at that time """
 
         sim_ids = self.search(cr, uid, [('state','=','running')])
         for sim in self.browse(cr, uid, sim_ids):
-            print "DM SIM - Doing action for :",sim.name
 
+            """ Check if Simulation to stop """
+            if datetime.datetime.strptime(sim.date_stop, '%Y-%m-%d  %H:%M:%S') < datetime.datetime.now():
+                sim.simulation_stop(cr, uid, [sim.id])
+                continue
+
+            print "DM SIM - Doing action for :",sim.name
             start_time = time.time()
+            """ Get all pending actions for that simulator that needs to be executed """
             sim_act_ids = self.pool.get('dm.simulator.action').search(cr, uid, [('simulator_id','=',sim.id),('state','=','pending'),
                 ('action_time','<=',time.strftime('%Y-%m-%d %H:%M:%S'))])
             print "DM SIM - sim_act_ids :",sim_act_ids
@@ -187,6 +211,7 @@ class dm_simulator(osv.osv):
             for act in self.pool.get('dm.simulator.action').browse(cr, uid, sim_act_ids):
                 self.pool.get('dm.simulator.action').write(cr, uid, act.id, {'action_start':time.strftime('%Y-%m-%d  %H:%M:%S')})
                 """ Create Event """
+                # To improve: only works with addresses and not crm case
                 event_ids = self.pool.get('dm.event').create(cr, uid, {'segment_id':act.segment_id.id,'step_id':act.step_id.id,'source':'address_id',
                     'address_id':act.address_id.id,'trigger_type_id':act.trigger_type_id.id})
 
@@ -231,7 +256,7 @@ class dm_simulator(osv.osv):
 
                     if sim.invoice_gen:
                         inv_id = self.pool.get('sale.order').action_invoice_create(cr, uid, [new_id])
-                        #wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+                        wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
                         print "invoice id :",inv_id
 
                         if sim.invoice_pay:
@@ -244,26 +269,28 @@ class dm_simulator(osv.osv):
             start_date = datetime.datetime.fromtimestamp(start_time)
             stop_date = datetime.datetime.fromtimestamp(stop_time)
 
+            """ Update Statisctics """
             new_stats = []
             stats = self.read(cr, uid, sim.id, ['stats'])
             new_stats.append("> %d actions done in %s seconds (%s actions/second)"% (len(sim_act_ids), str(duration), len(sim_act_ids)/duration))
-            new_stats.append(stats['stats'] or "--- Starting Campaign Simulation Actions at %s ---"% start_date.strftime('%Y-%m-%d  %H:%M:%S'))
+            new_stats.append(stats['stats'])
 
             action_done_qty = sim.action_done_qty + len(sim_act_ids)
+            print "XXX action_done_qty :",action_done_qty
+            print "XXX len(sim_act_ids) :",len(sim_act_ids)
             action_pending_qty = sim.action_qty - action_done_qty
+            print "XXX action_pending_qty :",action_pending_qty
             action_dur_total = sim.action_dur_total + duration
             avg_rate = action_done_qty / action_dur_total
 
             self.write(cr, uid, sim.id, {'stats':"\n".join(new_stats),'action_done_qty':action_done_qty,
                 'action_pending_qty':action_pending_qty, 'action_dur_total':action_dur_total, 'avg_rate':avg_rate})
 
-
         return True
 
     _defaults = {
         'type' : lambda *a: "purchase",
         'duration' : lambda *a: 1,
-#        'action_pending_qty' : lambda *a: 0,
         'action_done_qty' : lambda *a: 0,
         'action_dur_total' : lambda *a: 0,
         'duration_unit' : lambda *a: "hours",
@@ -276,15 +303,15 @@ class dm_simulator_action(osv.osv):
     _name = "dm.simulator.action"
     _description = "DM Campaign Simulator Action"
     _columns = {
-        'simulator_id' : fields.many2one('dm.simulator','Simulator',required=True),
-        'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
+        'simulator_id' : fields.many2one('dm.simulator','Simulator', required=True, ondelete="cascade"),
+        'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger', 'Trigger Condition', required=True),
         'step_id' : fields.many2one('dm.offer.step','Offer Step', required=True),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment', required=True),
         'source' : fields.char('source',size=64),
         'address_id' : fields.many2one('res.partner.address','Customer', required=True),
         'section' : fields.integer('Section'),
         'action_time' : fields.datetime('Action Time'),
-        'state' : fields.selection([('pending','Pending'),('done','Done'),('error','Error')],'State',readonly=True),
+        'state' : fields.selection([('pending','Pending'),('done','Done'),('error','Error')], 'State', readonly=True),
         'error_msg' : fields.text('Error Message'),
         'action_start' : fields.datetime('Action Start'),
         'action_stop' : fields.datetime('Action Stop'),

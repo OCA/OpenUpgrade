@@ -15,7 +15,7 @@
                 <field name="arch" type="xml">
                     <notebook position="inside">
                         <page string="Email Configuration" attrs="{'invisible':[('media_id','!=','Email')]}">
-                            <field name="subject" colspan="4"/>
+                            <field name="subject" colspan="4" attrs="{'required':[('media_id','=','Email')]}"/>
                             <field name="editor" colspan="4"/>
                             <group colspan="4" attrs="{'invisible':[('editor','!=','internal')]}">
                                 <separator string="Content" colspan="4" />
@@ -50,10 +50,23 @@
             <field name="inherit_id" ref="dm.view_dm_mail_service_form"/>
                 <field name="arch" type="xml">
 					<field name="type_id" position="after">
-						<field name="smtp_server_id" attrs="{'invisible':[('type_id','!=','smtp')]}">
+                        <field name="service_type" on_change="on_change_service_type(type_id)" invisible="1"/>
+						<field name="smtp_server_id" attrs="{'invisible':[('service_type','!=','smtp')]}">
 					</field>
 				</field>
 			</field>
 		</record>
+
+        <record id="view_dm_mail_service_form_inherit2" model="ir.ui.view">
+            <field name="name">dm.mail_service.form.inherit2</field>
+            <field name="model">dm.mail_service</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="dm.view_dm_mail_service_form"/>
+            <field name="arch" type="xml">
+                <field name="type_id" position="replace">
+                    <field name="type_id" on_change="on_change_service_type(type_id)" widget="selection"/>
+                </field>
+            </field>
+        </record>
         </data>
     </openerp>

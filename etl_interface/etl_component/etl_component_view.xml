@@ -63,14 +63,64 @@
 						</page>
 
 						<page string="Transitions Detail">
-							<separator string="Incomming Transitions"
-								colspan="4" />
-							<field name="trans_in_ids" nolabel="1"
-								colspan="4" readonly="1" />
-							<separator string="Outgoing Transitions"
-								colspan="4" />
-							<field name="trans_out_ids" nolabel="1"
-								colspan="4" readonly="1" />
+							<field name="trans_in_ids" nolabel="1" colspan="4" widget="one2many_list">
+								<tree string="Incomming Transitions">
+									<field name="name"/>
+									<field name="type"/>
+									<field name="source_component_id"/>
+									<field name="channel_source"/>
+									<field name="channel_destination"/>
+									<field name="state" />
+								</tree>
+								<form string="Incomming Transitions">
+									<field name="name"/>
+									<field name="type"/>
+									<separator string="Transition property" colspan="4" />
+									<newline />
+									<field name="source_component_id"/>
+									<field name="destination_component_id"/>
+									<field name="channel_source"/>
+									<field name="channel_destination"/>
+									<separator string="Status" colspan="4" />
+									<newline />
+									<field name="state"/>
+									<group col="2" colspan="2">
+										<button name="action_close_transition"
+											string="Close Transition" type="object" states="open" />
+										<button name="action_open_transition"
+											string="Open Transition" type="object" states="close" />
+									</group>
+								</form>
+							</field>
+							<field name="trans_out_ids" nolabel="1" colspan="4" widget="one2many_list">
+								<tree string="Outgoing Transitions">
+										<field name="name"/>
+										<field name="type"/>
+										<field name="destination_component_id"/>
+										<field name="channel_source"/>
+										<field name="channel_destination"/>
+										<field name="state" />
+									</tree>
+									<form string="Outgoing Transitions">
+										<field name="name"/>
+										<field name="type"/>
+										<separator string="Transition property" colspan="4" />
+										<newline />
+										<field name="source_component_id"/>
+										<field name="destination_component_id"/>
+										<field name="channel_source"/>
+										<field name="channel_destination"/>
+										<separator string="Status" colspan="4" />
+										<newline />
+										<field name="state"/>
+										<group col="2" colspan="2">
+											<button name="action_close_transition"
+												string="Close Transition" type="object" states="open" />
+											<button name="action_open_transition"
+												string="Open Transition" type="object" states="close" />
+										</group>
+									</form>
+							</field>
 						</page>
 					</notebook>
 				</form>
@@ -124,7 +174,7 @@
 			parent="menu_etl_job_def_components" id="menu_etl_component_input_form" />
 
 		<menuitem name="Output Component"
-			parent="menu_etl_job_def_components" id="menu_etl_jd_c_oc_form" />
+			parent="menu_etl_job_def_components" id="menu_etl_component_output_form" />
 
 		<menuitem name="Transform ETL Component"
 			parent="menu_etl_job_def_components" id="menu_etl_jd_c_pec_form" />
