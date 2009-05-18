@@ -82,7 +82,7 @@
                             <field name="note"/>
                         </tree>
                     </field>
-                </page>    
+                </page>
                 </notebook>
             </form>
         </field>
@@ -163,9 +163,9 @@
     =======================================================
     -->
 
-    <record model="ir.ui.view" id="view_dm_ddf_plugin_form">
-        <field name="name">dm.ddf.plugin.form</field>
-        <field name="model">dm.ddf.plugin</field>
+    <record model="ir.ui.view" id="view_dm_dtp_plugin_form">
+        <field name="name">dm.dtp.plugin.form</field>
+        <field name="model">dm.dtp.plugin</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="DTP Plugin">
@@ -186,18 +186,14 @@
                     <page string="Dnynamic Text Plugin" attrs="{'invisible':[('type','!=','dynamic_text')]}">
                         <field name="ref_text_id" colspan="4" attrs="{'required':[('type','=','dynamic_text')]}" />
                     </page>
-                    <page string="Dynamic Plugin" attrs="{'invisible':[('type','not in',['dynamic','url'])]}">
-                	<!--group colspan="4"  attrs="{'invisible':[('type','!=','dynamic')]}"-->
+                    <page string="Dynamic Plugin" attrs="{'invisible':[('type','!=','dynamic')]}">
                             <field name="file_id" colspan="4" filename="file_fname" />
                             <field name="file_fname" />
-                            <newline/>
-                            <field name="des_encrypt" />
-                            <group colspan="2" attrs="{'invisible':[('des_encrypt','=',False)]}">
-                               <field name="key"/>
-                            </group>
-                	<!--/group-->
-                	</page>
-                	<page string="Argument List" attrs="{'invisible':[('type','not in',['dynamic','url','dynamic_text'])]}">
+                    </page>
+                    <page string="Argument List" attrs="{'invisible':[('type','not in',['dynamic','url','dynamic_text'])]}">
+                        <group  colspan="4"  attrs="{'invisible':[('type','!=','url')]}">
+                            <field name="encode"/>
+                        </group>
 	                	<field name="argument_ids" nolabel="1" colspan="4">
 	                    	<form string="Argument List">
 	                            <field name="name" select="1"/>
@@ -205,7 +201,7 @@
 	                            <group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',True)]}">
 	                                <field name="value" />
 	                            </group>
-	                            <group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',False)]} ">
+	                            <group  colspan="4"  attrs="{'invisible':[('stored_plugin','=',False)]}">
 	                                <field name="custome_plugin_id"/>
 	                            </group>
 	                            <separator  colspan="4"/> 
@@ -214,7 +210,7 @@
 	                        <tree string="Argument List">
 	                            <field name="name" select="1"/>
 	                            <field name="value"/>
-	                        </tree>                    
+	                        </tree>
 	                    </field>
                     </page>
        		 </notebook>
@@ -222,9 +218,9 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_dm_ddf_plugin_tree">
-        <field name="name">dm.ddf.plugin.tree</field>
-        <field name="model">dm.ddf.plugin</field>
+    <record model="ir.ui.view" id="view_dm_dtp_plugin_tree">
+        <field name="name">dm.dtp.plugin.tree</field>
+        <field name="model">dm.dtp.plugin</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="DTP Plugins">
@@ -234,15 +230,15 @@
         </field>
     </record>
 
-    <record model="ir.actions.act_window" id="action_dm_ddf_plugin">
+    <record model="ir.actions.act_window" id="action_dm_dtp_plugin">
         <field name="name">All DTP Plugins</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.ddf.plugin</field>
+        <field name="res_model">dm.dtp.plugin</field>
         <field name="view_type">form</field>
-        <field name="view_id" ref="view_dm_ddf_plugin_tree"/>
+        <field name="view_id" ref="view_dm_dtp_plugin_tree"/>
     </record>
 
-    <menuitem id="menu_action_dm_ddf_plugin" parent="dm.menu_action_offer_doc" action="action_dm_ddf_plugin" sequence="3" />    
+    <menuitem id="menu_action_dm_dtp_plugin" parent="dm.menu_action_offer_doc" action="action_dm_dtp_plugin" sequence="3" />
 
     <!--
     =======================================================

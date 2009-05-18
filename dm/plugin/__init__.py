@@ -22,3 +22,4 @@
 
 import customer_function
 import dynamic_text
+import php_url

@@ -845,7 +845,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     <!-- PLUGINS -->
 
     <data noupdate="0">
-        <record id="dm_ddf_plugin_name0" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_name0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;partner_name&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Partner Name&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -854,7 +854,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_name"/>
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_code0" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_code0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Code&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -863,7 +863,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_ref"/>
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_language0" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_language0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;language&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Language&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -872,7 +872,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_lang"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_lastname0" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_lastname0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;lastname&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Last Name&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -881,7 +881,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_address_name"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_street0" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_street0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;street&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Street&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -890,7 +890,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_address_street"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_street2" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_street2" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;street2&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Street2&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -899,7 +899,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_address_street2"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_city0" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_city0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;city&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;City&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -908,7 +908,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_address_city"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_country0" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_country0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;country&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Country&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -917,7 +917,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_address_country_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_email0" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_email0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;email&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Email&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -926,7 +926,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_address_email"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_phone0" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_phone0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;phone&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Phone&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -935,7 +935,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_address_phone"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_wi_segment_id" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_wi_segment_id" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;segment_id&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Segment ID&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -944,7 +944,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="dm.field_dm_workitem_segment_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_wi_step_id" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_wi_step_id" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;step_id&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Step ID&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -953,7 +953,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="dm.field_dm_workitem_step_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_wi_tr_from_id" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_wi_tr_from_id" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;previous_step_id&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Previous Step ID&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -962,7 +962,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="dm.field_dm_workitem_tr_from_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_partner_id" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_partner_id" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;address_id&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;ID&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -971,17 +971,57 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="base.field_res_partner_address_partner_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
+        <record id="dm_dtp_plugin_imagepluginlogo0" model="dm.dtp.plugin">
+			<field name="model_id" ref="dm.model_dm_trademark"/>
+			<field eval="&quot;&quot;&quot;image_plugin_logo&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field name="field_id" ref="dm.field_dm_trademark_logo"/>
+			<field eval="&quot;&quot;&quot;Image Plugin Logo&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Logo&quot;&quot;&quot;" name="note"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_dtp_plugin_imagepluginsignature0" model="dm.dtp.plugin">
+			<field name="model_id" ref="dm.model_dm_trademark"/>
+			<field eval="&quot;&quot;&quot;image_plugin_signature&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field name="field_id" ref="dm.field_dm_trademark_signature"/>
+			<field eval="&quot;&quot;&quot;Image Plugin Signature&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Sognature&quot;&quot;&quot;" name="note"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_dtp_plugin_imageplugintopbanner0" model="dm.dtp.plugin">
+			<field name="model_id" ref="dm.model_dm_trademark"/>
+			<field eval="&quot;&quot;&quot;image_plugin_top&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field name="field_id" ref="dm.field_dm_trademark_banner_top"/>
+			<field eval="&quot;&quot;&quot;Image Plugin Top Banner&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Top banner&quot;&quot;&quot;" name="note"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
+		<record id="dm_dtp_plugin_imagepluginbottombanner0" model="dm.dtp.plugin">
+			<field name="model_id" ref="dm.model_dm_trademark"/>
+			<field eval="&quot;&quot;&quot;image_plugin_bottom&quot;&quot;&quot;" name="code"/>
+			<field eval="0" name="store_value"/>
+			<field name="field_id" ref="dm.field_dm_trademark_banner_bottom"/>
+			<field eval="&quot;&quot;&quot;image Plugin Bottom Banner&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Bottom Banner&quot;&quot;&quot;" name="note"/>
+			<field eval="0" name="encode"/>
+			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+		</record>
     </data>
 
     <!-- TEMPLATE -->
 
     <data>
         <record id="dm_document_template_partner0" model="dm.document.template">
-            <field model="dm.ddf.plugin" search="[('model_id.model','like','res.partner')]" name="plugin_ids"/>
+            <field model="dm.dtp.plugin" search="[('model_id.model','like','res.partner')]" name="plugin_ids"/>
             <field eval="&quot;&quot;&quot;Partner&quot;&quot;&quot;" name="name"/>
         </record>
         <record id="dm_document_template_website0" model="dm.document.template">
-        	<field model="dm.ddf.plugin" search="[('model_id.model','like','dm.workitem')]" name="plugin_ids"/>
+        	<field model="dm.dtp.plugin" search="[('model_id.model','like','dm.workitem')]" name="plugin_ids"/>
             <field eval="&quot;&quot;&quot;Website&quot;&quot;&quot;" name="name"/>
         </record>
     </data>

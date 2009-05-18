@@ -105,9 +105,9 @@ msgid "Closed Offers"
 msgstr "Offres fermées"
 
 #. module: dm
-#: model:ir.model,name:dm.model_dm_ddf_plugin
-msgid "dm.ddf.plugin"
-msgstr "dm.ddf.plugin"
+#: model:ir.model,name:dm.model_dm_dtp_plugin
+msgid "dm.dtp.plugin"
+msgstr "dm.dtp.plugin"
 
 #. module: dm
 #: field:dm.campaign,manufacturing_purchase_line_ids:0
@@ -115,7 +115,7 @@ msgid "Manufacturing Purchase Lines"
 msgstr "Commandes de Fabrication"
 
 #. module: dm
-#: field:dm.ddf.plugin,object:0
+#: field:dm.dtp.plugin,object:0
 msgid "Object"
 msgstr "Objet"
 
@@ -311,8 +311,8 @@ msgid "Default Item"
 msgstr "Article par défaut"
 
 #. module: dm
-#: view:dm.ddf.plugin:0
-#: field:dm.ddf.plugin,argument_ids:0
+#: view:dm.dtp.plugin:0
+#: field:dm.dtp.plugin,argument_ids:0
 #: model:ir.model,name:dm.model_dm_plugin_argument
 msgid "Argument List"
 msgstr "Liste d'arguments"
@@ -433,7 +433,7 @@ msgid "Campaigns"
 msgstr "Campagnes"
 
 #. module: dm
-#: view:dm.ddf.plugin:0
+#: view:dm.dtp.plugin:0
 msgid "DTP Plugin"
 msgstr "Plugin PAO"
 
@@ -521,8 +521,8 @@ msgid "Customer List Recruiting Origin"
 msgstr "Origine de la liste de recrutement"
 
 #. module: dm
-#: field:dm.ddf.plugin,name:0
-msgid "DDF Plugin Name"
+#: field:dm.dtp.plugin,name:0
+msgid "DTP Plugin Name"
 msgstr "Nom du plugin de PAO"
 
 #. module: dm
@@ -1190,7 +1190,7 @@ msgid "Start Campaign"
 msgstr "Démarrer la campagne"
 
 #. module: dm
-#: view:dm.ddf.plugin:0
+#: view:dm.dtp.plugin:0
 msgid "DTP Plugins"
 msgstr "Plugins de PAO"
 
@@ -1412,7 +1412,7 @@ msgstr ""
 #: rml:dm.campaign.report:0
 #: view:dm.campaign.type:0
 #: field:dm.customers_list,list_type:0
-#: field:dm.ddf.plugin,type:0
+#: field:dm.dtp.plugin,type:0
 #: field:dm.offer,preoffer_type:0
 #: field:dm.offer,type:0
 #: field:dm.offer.step,type:0
@@ -1943,7 +1943,7 @@ msgstr "Refusé"
 #: field:dm.customer.order.numeric_criteria,field:0
 #: field:dm.customer.order.text_criteria,field:0
 #: field:dm.customer.text_criteria,field:0
-#: field:dm.ddf.plugin,field:0
+#: field:dm.dtp.plugin,field:0
 msgid "Customers Field"
 msgstr "Champ clients"
 
@@ -2060,7 +2060,7 @@ msgid "Package Insert"
 msgstr "Asile Colis"
 
 #. module: dm
-#: selection:dm.ddf.plugin,type:0
+#: selection:dm.dtp.plugin,type:0
 msgid "Dynamic"
 msgstr "Dynamique"
 
@@ -2335,7 +2335,7 @@ msgstr "Suppression"
 #: field:dm.customers_list,code:0
 #: field:dm.customers_list.recruit_origin,code:0
 #: field:dm.customers_list.type,code:0
-#: field:dm.ddf.plugin,code:0
+#: field:dm.dtp.plugin,code:0
 #: field:dm.offer,code:0
 #: field:dm.offer.document,code:0
 #: field:dm.offer.history,code:0
@@ -2466,7 +2466,7 @@ msgid "Code :"
 msgstr "Code :"
 
 #. module: dm
-#: view:dm.ddf.plugin:0
+#: view:dm.dtp.plugin:0
 msgid "Dynamic Plugin"
 msgstr "Plugin dynamique"
 
@@ -2508,7 +2508,7 @@ msgid "All Campaign Types"
 msgstr "Tous les types de campagnes marketing"
 
 #. module: dm
-#: view:dm.ddf.plugin:0
+#: view:dm.dtp.plugin:0
 msgid "Customer Plugin"
 msgstr "Plugin client"
 
@@ -2721,7 +2721,7 @@ msgid "Customer Order Boolean Criteria"
 msgstr "Critères de sélection binaire pour commandes clients"
 
 #. module: dm
-#: field:dm.ddf.plugin,file_id:0
+#: field:dm.dtp.plugin,file_id:0
 msgid "File Content"
 msgstr "Contenu du Fichier"
 
@@ -2890,8 +2890,8 @@ msgid "Active"
 msgstr "Actif"
 
 #. module: dm
-#: model:ir.actions.act_window,name:dm.action_dm_ddf_plugin
-#: model:ir.ui.menu,name:dm.menu_action_dm_ddf_plugin
+#: model:ir.actions.act_window,name:dm.action_dm_dtp_plugin
+#: model:ir.ui.menu,name:dm.menu_action_dm_dtp_plugin
 msgid "All DTP Plugins"
 msgstr "Tous les plugins de PAO"
 
@@ -3372,7 +3372,7 @@ msgid "dm.campaign.purchase_line"
 msgstr "dm.campaign.purchase_line"
 
 #. module: dm
-#: field:dm.ddf.plugin,file_fname:0
+#: field:dm.dtp.plugin,file_fname:0
 msgid "Filename"
 msgstr "Nom de fichier"
 
@@ -3989,7 +3989,7 @@ msgid "Customer Lists"
 msgstr "Listes clients"
 
 #. module: dm
-#: field:dm.ddf.plugin,store_value:0
+#: field:dm.dtp.plugin,store_value:0
 msgid "Store Value"
 msgstr "Conserver la valeur"
 
@@ -4254,8 +4254,8 @@ msgstr "Code client"
 #: view:dm.customer.segmentation:0
 #: field:dm.customer.segmentation,notes:0
 #: field:dm.customers_list,notes:0
-#: view:dm.ddf.plugin:0
-#: field:dm.ddf.plugin,note:0
+#: view:dm.dtp.plugin:0
+#: field:dm.dtp.plugin,note:0
 #: view:dm.document.template:0
 #: field:dm.document.template,note:0
 #: view:dm.offer.document:0
@@ -4340,7 +4340,7 @@ msgstr "L'origine des adresses d'une liste"
 #. module: dm
 #: field:dm.customer.order,customer_id:0
 #: field:dm.customer.order,partner_id:0
-#: selection:dm.ddf.plugin,type:0
+#: selection:dm.dtp.plugin,type:0
 #: view:res.partner:0
 msgid "Customer"
 msgstr "Client"

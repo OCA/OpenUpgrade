@@ -1386,7 +1386,7 @@ rkJggg==
         <record id="dm_offer_document_paperdocumentforondemand0" model="dm.offer.document">
             <field name="copywriter_id" ref="base.main_partner"/>
             <field eval="&quot;&quot;&quot;Phone Document for OnDemand-10&quot;&quot;&quot;" name="name"/>
-            <field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm.dm_ddf_plugin_code0'),ref('dm.dm_ddf_plugin_language0')])]" name="document_template_plugin_ids"/>
+            <field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm.dm_dtp_plugin_code0'),ref('dm.dm_dtp_plugin_language0')])]" name="document_template_plugin_ids"/>
             <field name="lang_id" ref="base.lang_en"/>
             <field name="gender_id" ref="base.res_partner_title_sir"/>
             <field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
@@ -1422,7 +1422,7 @@ rkJggg==
     
     <!-- Plugin - Dynamic Text -->
     <data>
-    	<record id="dm_ddf_plugin_partner_id" model="dm.ddf.plugin">
+    	<record id="dm_dtp_plugin_partner_id" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;address_id&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;ID&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -1431,7 +1431,7 @@ rkJggg==
             <field name="field_id" ref="base.field_res_partner_address_partner_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_dynamic_text0" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_dynamic_text0" model="dm.dtp.plugin">
 			<field eval="&quot;&quot;&quot;dynamic_text&quot;&quot;&quot;" name="code"/>
 			<field eval="&quot;&quot;&quot;Dynamic text&quot;&quot;&quot;" name="name"/>
 			<field eval="0" name="store_value"/>
@@ -1439,10 +1439,10 @@ rkJggg==
 			<field eval="&quot;&quot;&quot;dynamic_text&quot;&quot;&quot;" name="type"/>
 		</record>
 		<record id="dm_plugin_argument_previous_segment0" model="dm.plugin.argument">
-			<field name="plugin_id" ref="dm.dm_ddf_plugin_dynamic_text0"/>
+			<field name="plugin_id" ref="dm.dm_dtp_plugin_dynamic_text0"/>
 			<field eval="1" name="stored_plugin"/>
 			<field eval="&quot;&quot;&quot;Previous Segment&quot;&quot;&quot;" name="name"/>
-			<field name="custome_plugin_id" ref="dm.dm_ddf_plugin_wi_tr_from_id"/>
+			<field name="custome_plugin_id" ref="dm.dm_dtp_plugin_wi_tr_from_id"/>
 		</record>
 	</data>
    
@@ -1451,7 +1451,7 @@ rkJggg==
 		<record id="dm_offer_document_startingmailingdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Starting Mailing Document-09&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm.dm_ddf_plugin_lastname0'),ref('dm.dm_ddf_plugin_street0'),ref('dm.dm_ddf_plugin_street2'),ref('dm.dm_ddf_plugin_city0'),ref('dm.dm_ddf_plugin_country0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm.dm_dtp_plugin_lastname0'),ref('dm.dm_dtp_plugin_street0'),ref('dm.dm_dtp_plugin_street2'),ref('dm.dm_dtp_plugin_city0'),ref('dm.dm_dtp_plugin_country0')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
 			<field name="gender_id" ref="base.res_partner_title_sir"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
@@ -1466,7 +1466,7 @@ rkJggg==
 		<record id="dm_offer_document_packageinsertdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Package Insert Document&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm.dm_ddf_plugin_email0'),ref('dm.dm_ddf_plugin_phone0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm.dm_dtp_plugin_email0'),ref('dm.dm_dtp_plugin_phone0')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
 			<field name="gender_id" ref="base.res_partner_title_sir"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
@@ -1480,7 +1480,7 @@ rkJggg==
 		<record id="dm_offer_document_accompanyingletterdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Accompanying Letter Document-09&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm_ddf_plugin_partner_id')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm_dtp_plugin_partner_id')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
 			<field name="gender_id" ref="base.res_partner_title_sir"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>
@@ -1494,7 +1494,7 @@ rkJggg==
 		<record id="dm_offer_document_accompanyingletterforopenerpbookdocument0" model="dm.offer.document">
 			<field name="copywriter_id" ref="base.main_partner"/>
 			<field eval="&quot;&quot;&quot;Accompanying Letter for OpenERP book Document&quot;&quot;&quot;" name="name"/>
-			<field eval="[(6,0,[ref('dm.dm_ddf_plugin_name0'),ref('dm.dm_ddf_plugin_code0')])]" name="document_template_plugin_ids"/>
+			<field eval="[(6,0,[ref('dm.dm_dtp_plugin_name0'),ref('dm.dm_dtp_plugin_code0')])]" name="document_template_plugin_ids"/>
 			<field name="lang_id" ref="base.lang_en"/>
 			<field name="gender_id" ref="base.res_partner_title_sir"/>
 			<field eval="&quot;&quot;&quot;draft&quot;&quot;&quot;" name="state"/>

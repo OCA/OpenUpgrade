@@ -39,7 +39,7 @@ _export_done_fields = {}
 
 def _do_export(self, cr, uid, data, context):
     self.pool = pooler.get_pool(cr.dbname)
-    if len(data.get('ids'))>0:
+    if len(data.get('ids')) > 0:
         self.pool.get('product.product').oscom_update_stock(cr, uid, product_ids = data.get('ids'), context=context)
     return {}
 

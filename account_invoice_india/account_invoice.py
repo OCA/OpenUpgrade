@@ -108,18 +108,20 @@ class account_invoice(osv.osv):
         cr.execute('SELECT id, retail_tax, type, number, move_id, reference ' \
                 'FROM account_invoice ' \
                 'WHERE id IN ('+','.join(map(str,ids))+')')
-       
-        for (id, retail_tax, invtype, number, move_id, reference) in cr.fetchall():
+        records = cr.fetchall()
+        for (id, retail_tax, invtype, number, move_id, reference) in records:
             if not number:
 
                 if retail_tax == 'local_retail':
                     retail_tax = 'tax'
                 if invtype in ('out_invoice','out_refund'):
                     number = self.pool.get('ir.sequence').get(cr, uid,'invoice.' + invtype + '.' + retail_tax)
+                    if not number:
+                        number = self.pool.get('ir.sequence').get(cr, uid,
+                            'account.invoice.' + invtype)
                 else:
                     number = self.pool.get('ir.sequence').get(cr, uid,
                         'account.invoice.' + invtype)
-                    
                 if type in ('in_invoice', 'in_refund'):
                     ref = reference
                 else:

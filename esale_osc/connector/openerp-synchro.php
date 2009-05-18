@@ -1,7 +1,7 @@
 <?php
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////// 												////////////////////
-///////////////////////		PLEASE CONFIGURE THE RIGHT INCLUDES FOR YOUR CONFIGURATION		////////////////////
+////////////////////////                                                                        ////////////////////
+////////////////////////      PLEASE CONFIGURE THE RIGHT INCLUDES FOR YOUR CONFIGURATION        ////////////////////
 
 	include("xmlrpcutils/xmlrpc.inc");
 	include("xmlrpcutils/xmlrpcs.inc");
@@ -34,32 +34,35 @@
 
 
 	function get_taxes() {
-		$taxes=array();
-		$result=mysql_query("select tax_class_id, tax_class_title from tax_class;");
-		if ($result) while ($row=mysql_fetch_row($result)) {
-			$taxes[]=new xmlrpcval(array(new xmlrpcval($row[0], "int"), new xmlrpcval($row[1], "string")), "array");
+		$taxes = array();
+
+		$result = mysql_query("select tax_class_id, tax_class_title from tax_class;");
+		if ($result) while ($row = mysql_fetch_row($result)) {
+			$taxes[] = new xmlrpcval(array(new xmlrpcval($row[0], "int"), new xmlrpcval($row[1], "string")), "array");
 		}
 		return new xmlrpcresp( new xmlrpcval($taxes, "array"));
 	}
 
 
 	function get_languages() {
-		$languages=array();
-		$result=mysql_query("select languages_id, name from languages;");
-		if ($result) while ($row=mysql_fetch_row($result)) {
-			$languages[]=new xmlrpcval(array(new xmlrpcval($row[0], "int"), new xmlrpcval($row[1], "string")), "array");
+		$languages = array();
+
+		$result = mysql_query("select languages_id, name from languages;");
+		if ($result) while ($row = mysql_fetch_row($result)) {
+			$languages[] = new xmlrpcval(array(new xmlrpcval($row[0], "int"), new xmlrpcval($row[1], "string")), "array");
 		}
-		return new xmlrpcresp( new xmlrpcval($languages, "array"));
+		return new xmlrpcresp(new xmlrpcval($languages, "array"));
 	}
 
 
 	function get_categories() {
-		$categories=array();
-		$result=mysql_query("select categories_id, min(language_id) from categories_description group by categories_id;");
-		if ($result) while ($row=mysql_fetch_row($result)) {
-			$resultb=mysql_query("select categories_id, categories_name from categories_description where categories_id=".$row[0]." and language_id=".$row[1].";");
-			if ($resultb and $row=mysql_fetch_row($resultb)) {
-				$categories[]=new xmlrpcval(array(new xmlrpcval($row[0], "int"), new xmlrpcval(parent_category($row[0],$row[1]), "string")), "array");
+		$categories = array();
+
+		$result = mysql_query("select categories_id, min(language_id) from categories_description group by categories_id;");
+		if ($result) while ($row = mysql_fetch_row($result)) {
+			$resultb = mysql_query("select categories_id, categories_name from categories_description where categories_id=".$row[0]." and language_id=".$row[1].";");
+			if ($resultb and $row = mysql_fetch_row($resultb)) {
+				$categories[] = new xmlrpcval(array(new xmlrpcval($row[0], "int"), new xmlrpcval(parent_category($row[0],$row[1]), "string")), "array");
 			}
 		}
 		return new xmlrpcresp( new xmlrpcval($categories, "array"));
@@ -69,26 +72,136 @@
 	function get_categories_parent($languages) {
 		$categories = array();
 		$lang_ids = "";
+
 		foreach ($languages as $lang)
-			 $lang_ids .= $lang.", ";
+			 $lang_ids = $lang.", ";
 		$lang_ids = substr($lang_ids, 0, strlen($lang_ids)-2);
-		$result=mysql_query("select categories_id, parent_id from categories order by parent_id;");
-		if ($result) while ($row=mysql_fetch_row($result)) {
+		$result = mysql_query("select categories_id, parent_id from categories order by parent_id;");
+		if ($result) while ($row = mysql_fetch_row($result)) {
 			//debug('Category: ' . $row[0].'-'. $row[1]);
 			$cat = array(new xmlrpcval($row[0], "int"), new xmlrpcval($row[1], "int"));
-			$resultlang=mysql_query("select categories_id, categories_name from categories_description where categories_id=".$row[0]." and language_id in ($lang_ids);");
-			if ($resultlang) while ($rowl=mysql_fetch_row($resultlang)) {
+			$resultlang = mysql_query("select categories_id, categories_name from categories_description where categories_id=".$row[0]." and language_id in ($lang_ids);");
+			if ($resultlang) while ($rowl = mysql_fetch_row($resultlang)) {
 				//debug('Category language: ' .$rowl[1]);
 				$cat[] = new xmlrpcval($rowl[1], "string");
 			}
 			$categories[] = new xmlrpcval($cat, "array");
 		}
-		return new xmlrpcresp( new xmlrpcval($categories, "array"));
+		return new xmlrpcresp(new xmlrpcval($categories, "array"));
 	}
 
+	function get_products($languages) {
+		$products = array();
+		$prod = array();
+		$prod_desc = array();
+		$row_product = array();
+		$products_description_str = "";
+		$products_url_str = "";
+
+		$lang_ids = implode(", ", $languages);
+		//debug('Languages ids = '.$lang_ids);
+		$result = mysql_query("select products_id,
+			products_quantity,
+			products_model,
+			products_image,
+			products_price,
+			products_date_added,
+			products_last_modified,
+			products_date_available,
+			products_weight,
+			products_status,
+			products_tax_class_id,
+			manufacturers_id
+			from products order by products_id;");
+		//debug('IF-WHILE-get_products');
+		if ($result) while ($row_product = mysql_fetch_row($result)) {
+			$resultcateg = mysql_query("select min(categories_id) from products_to_categories where products_id=".$row_product[0]." group by products_id;");
+			if ($resultcateg) {
+			   	$row = mysql_fetch_row($resultcateg);
+				$prod_cat = $row[0];
+				//debug('Product Category: ' .$prod_cat);
+			}
+
+			$prod = new xmlrpcval(array(
+				"products_id" => new xmlrpcval($row_product[0],"int"),
+				"products_quantity" => new xmlrpcval($row_product[1],"int"),
+				"products_model" => new xmlrpcval($row_product[2],"string"),
+				"products_image" => new xmlrpcval($row_product[3],"string"),
+				"products_price" => new xmlrpcval($row_product[4],"string"),
+				"products_date_added" => new xmlrpcval($row_product[5],"string"),
+				"products_last_modified" => new xmlrpcval($row_product[6],"string"),
+				"products_date_available" => new xmlrpcval($row_product[7],"string"),
+				"products_weight" =>  new xmlrpcval($row_product[8],"string"),
+				"products_status" =>  new xmlrpcval($row_product[9],"int"),
+				"products_tax_class_id" =>  new xmlrpcval($row_product[10],"int"),
+				"manufacturers_id" =>  new xmlrpcval($row_product[11],"int"),
+				"categ_id" => new xmlrpcval($prod_cat,"int")), "struct");
+			//debug('Product_id: ' . $row_product[0] .   '-IMG:' .$row_product[3]. '-CAT:' . $prod_cat  );
+
+			// Get product information in different languages
+			$prod_desc = array();
+			$resultlang = mysql_query("select products_id,
+				language_id,
+				products_name,
+				products_description,
+				products_url,
+				products_viewed
+				from products_description where products_id=".$row_product[0]." and language_id in (1,2,3,4,5,6);");
+			if ($resultlang) while ($row_desc = mysql_fetch_row($resultlang)) {
+				if (strlen($row_desc[3] == 0))
+					$products_description_str = "";
+				else
+					$products_description_str = $row_desc[3];
+				if (strlen($row_desc[4] == 0))
+					$products_url_str = "";
+				else
+					$products_url_str = $row_desc[4];
+				$prod_desc[] = new xmlrpcval(array(
+					//"products_id" => new xmlrpcval($row_desc[0],"int"),
+					"language_id" => new xmlrpcval($row_desc[1],"int"),
+					"products_name" => new xmlrpcval($row_desc[2],"string"),
+					"products_description" => new xmlrpcval($products_description_str,"string"),
+					"products_url" => new xmlrpcval($products_url_str,"string"),
+					"products_viewed" => new xmlrpcval($row_desc[5],"string")), "struct");
+				//debug('Product_id: ' . $row_desc[0] . 'language_id: ' . $row_desc[1] . 'products_name: ' . $row_desc[2]);
+			}
+			
+			// Get product discounts
+			$prod_spec = new xmlrpcval(array(), "struct"); // If product has not any discount
+			$resultspec = mysql_query("select specials_new_products_price,
+				specials_date_added,
+				specials_last_modified,
+				expires_date,
+				date_status_change,
+				status
+				from specials where products_id=". $row_product[0] .
+                                " and specials_date_added =
+                                (select max(specials_date_added) from specials where products_id=". $row_product[0] . ");");
+			if ($resultspec) {
+				$rowesp = mysql_fetch_row($resultspec);
+				//debug('Product specials: ' . $rowesp[0] . " " . $rowesp[3]);
+				$prod_spec = new xmlrpcval(array(
+					"specials_new_products_price" => new xmlrpcval($rowesp[0],"string"),
+					//"specials_date_added" => new xmlrpcval($rowesp[1],"string"),
+					//"specials_last_modified" => new xmlrpcval($rowesp[2],"string"),
+					"expires_date" => new xmlrpcval($rowesp[3],"string"),
+					//"date_status_change" => new xmlrpcval($rowesp[4],"string"),
+					"status" => new xmlrpcval($rowesp[5],"int")), "struct");
+			}
+
+			$products[] = new xmlrpcval(array(
+				'product' => $prod,
+				'product_description' => new xmlrpcval($prod_desc, "array"),
+				'product_special' => $prod_spec
+				), "struct");
+		}
+		//debug('END-IF-WHILE-get_products');
+		return new xmlrpcresp(new xmlrpcval($products, "array"));
+	}
 
 	function get_payment_methods() {
 		$payment_methods = array();
+
 		$result_modules = mysql_query("SELECT configuration_value FROM configuration WHERE (configuration_key = 'MODULE_PAYMENT_INSTALLED');");
 		if ($result_modules && $row_modules=mysql_fetch_row($result_modules)) {
 			$modules = explode(';', $row_modules[0]);
@@ -104,17 +217,17 @@
 		return new xmlrpcresp( new xmlrpcval($payment_methods, "array"));
 	}
 
-
 	function search_payment_method($payment_name) {
+		$languages = array();
+
 		$result_modules = mysql_query("SELECT configuration_value FROM configuration WHERE (configuration_key = 'MODULE_PAYMENT_INSTALLED');");
-		if ($result_modules && $row_modules=mysql_fetch_row($result_modules)) {
+		if ($result_modules && $row_modules = mysql_fetch_row($result_modules)) {
 			$modules = explode(';', $row_modules[0]);
 		}
 
-		$languages=array();
 		$result=mysql_query("select directory from languages;");
 		if ($result) while ($row=mysql_fetch_row($result)) {
-			$languages[]= $row[0];
+			$languages[] = $row[0];
 		}
 
 		reset($modules);
@@ -144,16 +257,16 @@
 
 
 	function parent_category($id, $name) {
-		$result=mysql_query("select parent_id from categories where categories_id=".$id.";");
-		if ($result && $row=mysql_fetch_row($result)) {
-			if ($row[0]==0) {
+		$result = mysql_query("select parent_id from categories where categories_id=".$id.";");
+		if ($result && $row = mysql_fetch_row($result)) {
+			if ($row[0] == 0) {
 				return $name;
 			} else {
-				$resultb=mysql_query("select min(language_id) from categories_description where categories_id=".$row[0].";");
+				$resultb = mysql_query("select min(language_id) from categories_description where categories_id=".$row[0].";");
 				if ($resultb && $rowb=mysql_fetch_row($resultb)) {
-					$resultb=mysql_query("select categories_name from categories_description where categories_id=".$row[0]." and language_id=".$rowb[0].";\n");
+					$resultb = mysql_query("select categories_name from categories_description where categories_id=".$row[0]." and language_id=".$rowb[0].";\n");
 					if ($resultb && $rowb=mysql_fetch_row($resultb)) {
-						$name=parent_category($row[0], $rowb[0] . " \\ ". $name);
+						$name = parent_category($row[0], $rowb[0] . " \\ ". $name);
 						return $name;
 					}
 				}
@@ -172,21 +285,22 @@
 
 	function set_product_manufacturer($tiny_product) {
 		$oscom_id = 0;
+
 		if(array_key_exists('manufacturers_name',$tiny_product)) {
-			$result =mysql_query("select l.languages_id from languages as l ,configuration as c where
+			$result = mysql_query("select l.languages_id from languages as l ,configuration as c where
 			c.configuration_key='DEFAULT_LANGUAGE' and c.configuration_value=l.code;");
 
-			if ($result && $row=mysql_fetch_row($result)) {
-				$lang_id=$row[0];
+			if ($result && $row = mysql_fetch_row($result)) {
+				$lang_id = $row[0];
 			}
 			$result = mysql_query("select manufacturers_id from manufacturers where (manufacturers_name='".$tiny_product['manufacturers_name']."');");
-			if ($result && $row=mysql_fetch_row($result)) {
-				$id_exist=1;
-				$oscom_id=$row[0];
+			if ($result && $row = mysql_fetch_row($result)) {
+				$id_exist = 1;
+				$oscom_id = $row[0];
 			}
-			if ($id_exist==0) {
+			if ($id_exist == 0) {
 				mysql_query("insert into manufacturers (manufacturers_name, date_added) values ('".$tiny_product['manufacturers_name']."', now());");
-				$oscom_id=mysql_insert_id();
+				$oscom_id = mysql_insert_id();
 				mysql_query("insert into manufacturers_info (manufacturers_id, languages_id,manufacturers_url) values (".$oscom_id.",".$lang_id.",'".$tiny_product['manufacturers_url']."');");
 				foreach ($tiny_product['manufacturer_langs'] as $lang=>$values){
 					mysql_query("insert into manufacturers_info (manufacturers_id, languages_id,manufacturers_url) values (".$oscom_id.",".$lang.",'".$values['manufacturers_url']."');");
@@ -205,9 +319,9 @@
 
 	function remove_product($tiny_product) {
 		if (array_key_exists('oscom_product_ids',$tiny_product)) {
-			$i=0;
+			$i = 0;
 			foreach($tiny_product['oscom_product_ids'] as $key=>$values) {
-				if($i==0) {
+				if($i == 0) {
 					$a .= $values;
 				} else {
 					$a .= ",".$values;
@@ -224,38 +338,37 @@
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function del_spe_price($tiny_val) {
-			mysql_query("delete from specials where products_id = ".$tiny_val.";");
+		mysql_query("delete from specials where products_id = ".$tiny_val.";");
 		return new xmlrpcresp(new xmlrpcval(1, "int"));
 	}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 	function set_product_spe($tiny_product) {
+		$lang_id = 1;
+		$id_exist = 0;
 
-		$lang_id=1;
-		$id_exist=0;
 		////////Check for existance of product_id ///////////
-		$result =mysql_query("select products_id from products where (products_id=".$tiny_product['product_id'].");");
+		$result = mysql_query("select products_id from products where (products_id=".$tiny_product['product_id'].");");
 		if ($result && $row=mysql_fetch_row($result)) {
-			$id_exist=1;
+			$id_exist = 1;
 		}
 
-		$result =mysql_query("select l.languages_id from languages as l configuration as c where
-		c.configuration_key='DEFAULT_LANGUAGE' and c.configuration_value=l.code;");
+		$result = mysql_query("select l.languages_id from languages as l configuration as c where c.configuration_key='DEFAULT_LANGUAGE' and c.configuration_value = l.code;");
 
-		if ($result && $row=mysql_fetch_row($result)) {
-			$lang_id=$row[0];
+		if ($result && $row = mysql_fetch_row($result)) {
+			$lang_id = $row[0];
 		}
-//		if ($tiny_product['quantity']>0) {
-//			$tiny_product['status']=1;
-//		} else {
-//			$tiny_product['status']=0;
-//		}
+		//if ($tiny_product['quantity']>0) {
+		//  $tiny_product['status']=1;
+		//} else {
+		//  $tiny_product['status']=0;
+		//}
 		$manufacturers_id = set_product_manufacturer($tiny_product);
-		if ($id_exist==0) {
+		if ($id_exist == 0) {
 			mysql_query("insert into products (products_quantity, products_model, products_price, products_weight, products_tax_class_id, products_status, manufacturers_id, products_date_added) values (".$tiny_product['quantity'].", '". $tiny_product['model']."', ".$tiny_product['price'].", ".$tiny_product['weight'].", ".$tiny_product['tax_class_id'].", ".$tiny_product['status'].", ".$manufacturers_id.", now());");
 
-			$oscom_id=mysql_insert_id();
+			$oscom_id = mysql_insert_id();
 			if ( $tiny_product['date_available'] != 'NULL') {
 				mysql_query("update products set products_date_available='".$tiny_product['date_available']."' where products_id=".$oscom_id.";");
 			}
@@ -270,14 +383,13 @@
 				values (".$oscom_id.", ".$lang.", '".$values['name']."', '".$values['description']."', '".$values['url']."');");
 			}
 		} else {
-			$oscom_id=$tiny_product['product_id'];
+			$oscom_id = $tiny_product['product_id'];
 			foreach (array('quantity', 'price', 'weight', 'tax_class_id', 'status', 'date_available') as $key) {
 				if ($key == 'date_available' and $tiny_product[$key] != 'NULL') {
 					mysql_query("update products set products_".$key."='".$tiny_product[$key]."' where products_id=".$oscom_id.";");
 				} else {
 					mysql_query("update products set products_".$key."=".$tiny_product[$key]." where products_id=".$oscom_id.";");
 				}
-
 			}
 			mysql_query("delete from specials where products_id=".$oscom_id.";");
 			mysql_query("insert into specials (products_id, specials_new_products_price, specials_date_added, date_status_change, status) values (".$oscom_id.",".$tiny_product['spe_price'].",now(),now(),".$tiny_product['spe_price_status'].");");
@@ -298,18 +410,17 @@
 			}
 		}
 
-		$cpt=0;
+		$cpt = 0;
 		if ($tiny_product['haspic']==1) {
 			if (file_exists('../../images/'.$cpt.'-'.$tiny_product['fname'])) {
 				unlink('../../images/'.$cpt.'-'.$tiny_product['fname']); // DELETE THE EXISTING IMAGES
 			}
-			if ($hd=fopen('../../images/'.$cpt.'-'.$tiny_product['fname'], "w")) {
+			if ($hd = fopen('../../images/'.$cpt.'-'.$tiny_product['fname'], "w")) {
 				fwrite($hd, base64_decode($tiny_product['picture']));
 				fclose($hd);
 				mysql_query("update products set products_image='".$cpt."-".$tiny_product['fname']."' where products_id=".$oscom_id.";");
 			}
-		}
-		else if ($tiny_product['haspic']==2) {
+		} else if ($tiny_product['haspic']==2) {
 			if (file_exists('../../images/'.$cpt.'-'.$tiny_product['fname'])) {
 				unlink('../../images/'.$cpt.'-'.$tiny_product['fname']); // DELETE THE EXISTING IMAGES
 			}
@@ -322,29 +433,30 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-function set_product_classical($tiny_product) {
-		$lang_id=1;
-		$id_exist=0;
-		////////Check for existance of product_id ///////////
-		$result =mysql_query("select products_id from products where (products_id=".$tiny_product['product_id'].");");
-		if ($result && $row=mysql_fetch_row($result)) {
-			$id_exist=1;
-		}
-		$result =mysql_query("select l.languages_id from languages as l configuration as c where c.configuration_key='DEFAULT_LANGUAGE' and c.configuration_value=l.code;");
+	function set_product_classical($tiny_product) {
+		$lang_id = 1;
+		$id_exist = 0;
 
+		////////Check for existance of product_id ///////////
+		$result = mysql_query("select products_id from products where (products_id=".$tiny_product['product_id'].");");
 		if ($result && $row=mysql_fetch_row($result)) {
-			$lang_id=$row[0];
+			$id_exist = 1;
 		}
-//		if ($tiny_product['quantity']>0) {
-//			$tiny_product['status']=1;
-//		} else {
-//			$tiny_product['status']=0;
-//		}
+		$result = mysql_query("select l.languages_id from languages as l configuration as c where c.configuration_key='DEFAULT_LANGUAGE' and c.configuration_value=l.code;");
+
+		if ($result && $row = mysql_fetch_row($result)) {
+			$lang_id = $row[0];
+		}
+		//if ($tiny_product['quantity']>0) {
+		//	$tiny_product['status']=1;
+		//} else {
+		//	$tiny_product['status']=0;
+		//}
 		$manufacturers_id = set_product_manufacturer($tiny_product);
-		if ($id_exist==0) {
+		if ($id_exist == 0) {
 			mysql_query("insert into products (products_quantity, products_model, products_price, products_weight, products_tax_class_id, products_status, manufacturers_id, products_date_added) values (".$tiny_product['quantity'].", '". $tiny_product['model']."', ".$tiny_product['price'].", ".$tiny_product['weight'].", ".$tiny_product['tax_class_id'].", ".$tiny_product['status'].", ".$manufacturers_id.", now());");
 
-			$oscom_id=mysql_insert_id();
+			$oscom_id = mysql_insert_id();
 			if ( $tiny_product['date_available'] != 'NULL') {
 				mysql_query("update products set products_date_available='".$tiny_product['date_available']."' where products_id=".$oscom_id.";");
 			}
@@ -355,7 +467,7 @@ function set_product_classical($tiny_product) {
 				values (".$oscom_id.", ".$lang.", '".$values['name']."', '".$values['description']."', '".$values['url']."');");
 			}
 		} else {
-			$oscom_id=$tiny_product['product_id'];
+			$oscom_id = $tiny_product['product_id'];
 			foreach (array('quantity', 'price', 'weight', 'tax_class_id', 'status', 'date_available') as $key) {
 				if ($key == 'date_available' and $tiny_product[$key] != 'NULL') {
 					mysql_query("update products set products_".$key."='".$tiny_product[$key]."' where products_id=".$oscom_id.";");
@@ -377,7 +489,7 @@ function set_product_classical($tiny_product) {
 			}
 		}
 
-		$cpt=0;
+		$cpt = 0;
 		if ($tiny_product['haspic']==1) {
 			if (file_exists('../../images/'.$cpt.'-'.$tiny_product['fname'])) {
 				unlink('../../images/'.$cpt.'-'.$tiny_product['fname']); // DELETE THE EXISTING IMAGES
@@ -387,8 +499,7 @@ function set_product_classical($tiny_product) {
 				fclose($hd);
 				mysql_query("update products set products_image='".$cpt."-".$tiny_product['fname']."' where products_id=".$oscom_id.";");
 			}
-		}
-		else if ($tiny_product['haspic']==2) {
+		} else if ($tiny_product['haspic']==2) {
 			if (file_exists('../../images/'.$cpt.'-'.$tiny_product['fname'])) {
 				unlink('../../images/'.$cpt.'-'.$tiny_product['fname']); // DELETE THE EXISTING IMAGES
 			}
@@ -403,6 +514,7 @@ function set_product_classical($tiny_product) {
 	function get_partner_address($address_condition, $email="", $phone="", $fax="") {
 		$addresses = array();
 		$query = "SELECT address_book_id,CONCAT(entry_firstname,' ',entry_lastname) as name, entry_street_address, entry_suburb, entry_postcode, entry_city, entry_state, entry_country_id, entry_zone_id FROM address_book";
+
 		if (is_array($address_condition)) {
 			$where = " where ";
 			$flag = true;
@@ -455,6 +567,7 @@ function set_product_classical($tiny_product) {
 		$ret_partners = array();
 		$condition = '';
 		$query = "SELECT customers_id, CONCAT(customers_firstname,' ',customers_lastname) as name, customers_email_address, customers_default_address_id, customers_telephone, customers_fax from customers";
+
 		if ($cust_id != 0) {
 			$condition = " where customers_id=".$cust_id;
 		}
@@ -474,6 +587,7 @@ function set_product_classical($tiny_product) {
 	function get_country_detail($country_name) {
 		$query = "select countries_id, countries_name, countries_iso_code_2, countries_iso_code_3 from countries";
 		$ret_country = '0';
+
 		if (!is_numeric($country_name)) {
 			if($country_name != '') {
 				$result = mysql_query($query." where countries_name='".$country_name."';");
@@ -498,6 +612,7 @@ function set_product_classical($tiny_product) {
 		$ret_state = '0';
 		$query = "select zone_id, zone_code, zone_name from zones";
 		$condition = '';
+
 		if (!is_numeric($state_name)) {
 			if ($state_name != '') {
 				$condition = " where zone_name='".$state_name."' and zone_country_id=".$country_id;
@@ -524,17 +639,18 @@ function set_product_classical($tiny_product) {
 
 
 	function get_saleorders($last_so) {
-		$saleorders=array();
-		$result=mysql_query("SELECT `orders_id` , `customers_name` , `customers_street_address` , `customers_city` , `customers_postcode` , `customers_state` , `customers_country` , `customers_telephone` , `customers_email_address` , `delivery_name` , `delivery_street_address` , `delivery_city` , `delivery_postcode` , `delivery_state` , `delivery_country` , `billing_name` , `billing_street_address` , `billing_city` , `billing_postcode` , `billing_state` , `billing_country` , `date_purchased` , `orders_status`, `customers_id`, `payment_method`, `customers_id`,`customers_company`,`delivery_company`,`billing_company` FROM `orders` where (orders_id > ".$last_so." and orders_status = 1);");
+		$saleorders = array();
+
+		$result = mysql_query("SELECT `orders_id` , `customers_name` , `customers_street_address` , `customers_city` , `customers_postcode` , `customers_state` , `customers_country` , `customers_telephone` , `customers_email_address` , `delivery_name` , `delivery_street_address` , `delivery_city` , `delivery_postcode` , `delivery_state` , `delivery_country` , `billing_name` , `billing_street_address` , `billing_city` , `billing_postcode` , `billing_state` , `billing_country` , `date_purchased` , `orders_status`, `customers_id`, `payment_method`, `customers_id`,`customers_company`,`delivery_company`,`billing_company` FROM `orders` where (orders_id > ".$last_so." and orders_status = 1);");
 
 		if ($result){
-			while ($row=mysql_fetch_row($result)) {
+			while ($row = mysql_fetch_row($result)) {
 				$shopping_price = 0;
-				$result_shopping=mysql_query("SELECT value from orders_total where class='ot_shipping' and orders_id=".$row[0].";");
+				$result_shopping = mysql_query("SELECT value from orders_total where class='ot_shipping' and orders_id=".$row[0].";");
 				if ($result_shopping && $row_shopping=mysql_fetch_row($result_shopping)) {
 					$shopping_price = $row_shopping[0];
 				}
-				$result_customer=mysql_query("SELECT customers_email_address, customers_telephone, customers_fax FROM customers WHERE customers_id=".$row[25].";");
+				$result_customer = mysql_query("SELECT customers_email_address, customers_telephone, customers_fax FROM customers WHERE customers_id=".$row[25].";");
 				if ($result_customer && $row_customer=mysql_fetch_row($result_customer)) {
 					$email = $row_customer[0];
 					$phone = $row_customer[1];
@@ -565,10 +681,10 @@ function set_product_classical($tiny_product) {
 							);
 				$billing_address = get_partner_address($billing_condition, $email, $phone, $fax);
 
-				$orderlines=array();
-				$resultb=mysql_query("select products_id, products_quantity, products_price, products_tax, products_name, orders_products_id from orders_products where orders_id=".$row[0].";");
+				$orderlines = array();
+				$resultb = mysql_query("select products_id, products_quantity, products_price, products_tax, products_name, orders_products_id from orders_products where orders_id=".$row[0].";");
 				if ($resultb){
-					while ($rowb=mysql_fetch_row($resultb)) {
+					while ($rowb = mysql_fetch_row($resultb)) {
 						$values_array = array("product_id" => new xmlrpcval($rowb[0], "int"),
 							"product_qty" => new xmlrpcval($rowb[1], "int"),
 							"price" => new xmlrpcval($rowb[2], "double"),
@@ -583,11 +699,10 @@ function set_product_classical($tiny_product) {
 								"price_prefix" => new xmlrpcval($row_orders_product_attributes[3],"string")), "struct");
 							$values_array["attributes"] = $orders_product_attributes;
 						}
-
-						$orderlines[]=new xmlrpcval($values_array, "struct");
+						$orderlines[] = new xmlrpcval($values_array, "struct");
 			 		}
 				}
-				$note="";
+				$note = "";
 				$result_comments = mysql_query("select comments FROM orders_status_history where (orders_id = ".$row[0]." and orders_status_id = 1);");
 				if ($result_comments && $row_comments=mysql_fetch_row($result_comments)) {
 					$note=$row_comments[0];
@@ -619,12 +734,12 @@ function set_product_classical($tiny_product) {
 
 
 	function get_min_open_orders($last_so) {
-		$result=mysql_query("SELECT min(`orders_id`) as min FROM `orders` where (orders_id <= ".$last_so.") and (orders_status = 2);");
+		$result = mysql_query("SELECT min(`orders_id`) as min FROM `orders` where (orders_id <= ".$last_so.") and (orders_status = 2);");
 		if ($result) {
-			$min=mysql_fetch_row($result);
+			$min = mysql_fetch_row($result);
 			return new xmlrpcresp( new xmlrpcval($min[0], "int"));
-		}
-		else return new xmlrpcresp( new xmlrpcval(-1, "int"));
+		} else
+		        return new xmlrpcresp( new xmlrpcval(-1, "int"));
 	}
 
 
@@ -656,6 +771,10 @@ function set_product_classical($tiny_product) {
 																	"signature" =>	array(	array($xmlrpcArray, $xmlrpcArray)
 																						)
 																	),
+										"get_products" => array(	"function" =>	"get_products",
+																	"signature" =>	array(	array($xmlrpcArray, $xmlrpcArray)
+																						)
+																	),																														
 										"get_payment_methods" => array(	"function" =>	"get_payment_methods",
 																		"signature" =>	array(	array($xmlrpcArray)
 																						)
@@ -702,6 +821,6 @@ function set_product_classical($tiny_product) {
 																	)
 
 										), false);
-	$server->functions_parameters_type= 'phpvals';
+	$server->functions_parameters_type = 'phpvals';
 	$server->service();
 ?>
