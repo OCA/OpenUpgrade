@@ -116,6 +116,9 @@ class account_invoice(osv.osv):
                     retail_tax = 'tax'
                 if invtype in ('out_invoice','out_refund'):
                     number = self.pool.get('ir.sequence').get(cr, uid,'invoice.' + invtype + '.' + retail_tax)
+                    if not number:
+                        number = self.pool.get('ir.sequence').get(cr, uid,
+                            'account.invoice.' + invtype)
                 else:
                     number = self.pool.get('ir.sequence').get(cr, uid,
                         'account.invoice.' + invtype)
