@@ -53,10 +53,15 @@ def geocode(address):
     mapsUrl = 'http://maps.google.com/maps/geo?q='
 
     # This joins the parts of the URL together into one string.
+    
     url = ''.join([mapsUrl,urllib.quote(address),'&output=csv&key=',mapsKey])
+    
 
     # This retrieves the URL from Google.
+#    try:
     coordinates = urllib.urlopen(url).read().split(',')
+#    except:
+#        raise wizard.except_wizard(_('Connection Error !'),_('Please check your internet connection'))
 
     # This parses out the longitude and latitude, and then combines them into a string.
     coorText = '%s,%s' % (coordinates[3],coordinates[2])
