@@ -1,5 +1,4 @@
 import pooler
-from pyDes import *
 import base64
 
 __description__ = """This plugin generate URL
