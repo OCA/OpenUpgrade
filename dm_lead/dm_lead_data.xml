@@ -41,7 +41,7 @@
 
 	<!-- PLUGINS -->
 	<data>
-		<record id="dm_ddf_plugin_case_prospect_name" model="dm.ddf.plugin">
+		<record id="dm_dtp_plugin_case_prospect_name" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;case_prospect_name&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Case Prospect Name&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -50,7 +50,7 @@
             <field name="field_id" ref="crm_configuration.field_crm_case_partner_name"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_case_contact_name" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_case_contact_name" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;case_contact_name&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Case Contact Name&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -59,7 +59,7 @@
             <field name="field_id" ref="crm_configuration.field_crm_case_partner_name2"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_case_phone" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_case_phone" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;case_phone&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Case Phone&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -68,7 +68,7 @@
             <field name="field_id" ref="crm_configuration.field_crm_case_partner_phone"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_case_mobile" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_case_mobile" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;case_mobile&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Case Mobile&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -77,7 +77,7 @@
             <field name="field_id" ref="crm_configuration.field_crm_case_partner_mobile"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_ddf_plugin_case_email" model="dm.ddf.plugin">
+        <record id="dm_dtp_plugin_case_email" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;case_email&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Case Email&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -89,7 +89,7 @@
         
         <!-- TEMPLATE -->
         <record id="dm_document_template_crm_case0" model="dm.document.template">
-            <field model="dm.ddf.plugin" search="[('model_id.model','=','crm.case')]" name="plugin_ids"/>
+            <field model="dm.dtp.plugin" search="[('model_id.model','=','crm.case')]" name="plugin_ids"/>
             <field eval="&quot;&quot;&quot;CRM Case&quot;&quot;&quot;" name="name"/>
         </record>
 	</data>

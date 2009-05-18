@@ -16,6 +16,7 @@ print dir()
 from plugin import customer_function
 from plugin.customer_function import customer_function
 from plugin.dynamic_text import dynamic_text
+from plugin.php_url import php_url
 import re
 import datetime
 from lxml import etree
@@ -185,7 +186,6 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, con
 
     dm_document = pool.get('dm.offer.document')
     dm_plugins_value = pool.get('dm.plugins.value')
-    ddf_plugin = pool.get('dm.ddf.plugin')
 
     plugins = dm_document.browse(cr, uid, document_id, ['document_template_plugin_ids' ])['document_template_plugin_ids']
 
@@ -203,8 +203,10 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, con
                     args[str(a.custome_plugin_id.code)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
             if p.type == 'dynamic_text' :
                 plugin_value = dynamic_text(cr, uid, p.ref_text_id.id, **args)
+            elif p.type == 'url' :
+                plugin_value = php_url(cr, uid, p.ref_text_id.id, **args)
             else :
-                path = os.path.join(os.getcwd(), "addons/dm/dm_ddf_plugins", cr.dbname)
+                path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
                 plugin_name = p.file_fname.split('.')[0]
                 sys.path.append(path)
                 X =  __import__(plugin_name)
