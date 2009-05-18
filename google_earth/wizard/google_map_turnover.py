@@ -139,7 +139,7 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(styleElement)
         type = ''
         if part.customer:
-            type += 'Customer,'
+            type += 'Customer '
         if part.supplier:
             type += 'Supplier'
         desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \

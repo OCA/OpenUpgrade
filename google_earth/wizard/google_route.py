@@ -60,6 +60,7 @@ def _create_kml(self, cr, uid, data, context={}):
     #Note: from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
 #    path = tools.config['addons_path']
 #    fileName = path + '/google_earth/kml/route.kml'
+    colors = ['ff000080','ff800000','ff808000','ff800080']
 
     # To find particular location
     pool = pooler.get_pool(cr.dbname)
@@ -100,13 +101,19 @@ def _create_kml(self, cr, uid, data, context={}):
 
     cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id where sale_id is not null group by a.city,sp.warehouse_id;')
     packings = cr.dictfetchall()
-
     warehouse_ids = warehouse_obj.search(cr, uid, [])
     warehouse_datas = warehouse_obj.browse(cr, uid, warehouse_ids)
     warehouse_dict = {}
 
     for whouse in warehouse_datas:
         warehouse_dict[whouse.id] = whouse.partner_address_id and whouse.partner_address_id.city or False
+
+    no_of_packs_max = max(map(lambda x: x['number_delivery'], packings)) or 0
+    no_of_packs_min = min(map(lambda x: x['number_delivery'], packings)) or 0
+    value = no_of_packs_min + (no_of_packs_max - no_of_packs_min)/2 # 25 50 75 100
+    no_of_packs_min = no_of_packs_min + value/2
+    c1 = no_of_packs_min + value/2
+    c2 = c1 + value/2
 
     for pack in packings:
         total_qty = pack['product_send']
@@ -115,15 +122,41 @@ def _create_kml(self, cr, uid, data, context={}):
         if not (warehouse_city and customer_city):
             raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer ')
 
+        no_of_delivery = pack['number_delivery']
+        desc_text = ' <html><head> <font color="red"> <b> [ Warehouse location : ' + warehouse_city + ' ]' + '  <br />[ Customer Location : ' + customer_city + ' ]' + ' <br />[ Number of product sent : ' + str(total_qty) + ' ]' + \
+        ' <br />[ Number of delivery : ' + str(no_of_delivery) + ' ]' + '</b> </font> </head></html>'
+
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(str(warehouse_city))
         placemarkdescElement = kmlDoc.createElement('description')
-        #placemarkdescElement.appendChild(kmlDoc.createTextNode('Warehouse location: ' + warehouse_city + ',Customer Location: ' + customer_city + ',Planned Date: ' + plane_date + ' ,Sale order reference: ' + str(pack.origin or '') + ',Number of product sent: ' + str(total_qty)))
-        placemarkdescElement.appendChild(kmlDoc.createTextNode('Warehouse location: ' + warehouse_city + ',Customer Location: ' + customer_city + ',Number of product sent: ' + str(total_qty)))
+#        placemarkdescElement.appendChild(kmlDoc.createTextNode('Warehouse location: ' + warehouse_city + ',Customer Location: ' + customer_city + ',Planned Date: ' + plane_date + ' ,Sale order reference: ' + str(pack.origin or '') + ',Number of product sent: ' + str(total_qty)))
+#        placemarkdescElement.appendChild(kmlDoc.createTextNode('Warehouse location: ' + warehouse_city + ',Customer Location: ' + customer_city + ',Number of product sent: ' + str(total_qty)))
+        placemarkdescElement.appendChild(kmlDoc.createTextNode(desc_text))
         placemarknameElement.appendChild(placemarknameText)
         placemarkElement.appendChild(placemarknameElement)
         placemarkElement.appendChild(placemarkdescElement)
+
+        styleElement = kmlDoc.createElement('Style')
+        placemarkElement.appendChild(styleElement)
+        linestyleElement = kmlDoc.createElement('LineStyle')
+        styleElement.appendChild(linestyleElement)
+        colorElement = kmlDoc.createElement('color')
+
+        if pack['number_delivery'] < no_of_packs_min:
+            colorElement.appendChild(kmlDoc.createTextNode(colors[0]))
+        elif pack['number_delivery'] > no_of_packs_min and pack['number_delivery'] < c1:
+            colorElement.appendChild(kmlDoc.createTextNode(colors[1]))
+        elif pack['number_delivery'] > c1 and pack['number_delivery'] < c2:
+            colorElement.appendChild(kmlDoc.createTextNode(colors[2]))
+        else:
+            colorElement.appendChild(kmlDoc.createTextNode(colors[3]))
+
+        widthElement = kmlDoc.createElement('width')
+        widthElement.appendChild(kmlDoc.createTextNode('4'))
+
+        linestyleElement.appendChild(colorElement)
+        linestyleElement.appendChild(widthElement)
 
         lineElement = kmlDoc.createElement('LineString')
         placemarkElement.appendChild(lineElement)
@@ -134,17 +167,18 @@ def _create_kml(self, cr, uid, data, context={}):
         steps = get_directions(warehouse_city, customer_city)
         if not steps: # make route path strait
             coordinates1 = geocode(warehouse_city)
+            coordinates1 = coordinates1 + '\n'
             coorElement.appendChild(kmlDoc.createTextNode(coordinates1))
             coordinates2 = geocode(customer_city)
             coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
         else:
             for s in steps:
-                coorText = '%s,%s,%s' % (s[0], s[1], s[2])
+                coorText = '%s, %s, %s \n' % (s[0], s[1], s[2])
                 coorElement.appendChild(kmlDoc.createTextNode(coorText))
 
         lineElement.appendChild(coorElement)
         documentElement.appendChild(placemarkElement)
-    out = base64.encodestring(kmlDoc.toprettyxml(' '))
+    out = base64.encodestring(kmlDoc.toxml())
     fname = 'route' + '.kml'
     return {'kml_file': out, 'name': fname}
 

@@ -180,7 +180,7 @@ def create_kml(self, cr, uid, data, context={}):
                 address += str(add.country_id.name)
         type = ''
         if part.customer:
-            type += 'Customer,'
+            type += 'Customer '
         if part.supplier:
             type += 'Supplier'
 
