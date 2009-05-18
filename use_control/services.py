@@ -47,8 +47,8 @@ def check(chk_fnct):
                 # netsvc.Service.abortResponse can't be called while it's not a static method...
                 raise Exception('warning -- %s\n\n%s' % ('Database blocked', msg[0]))
 
-            if (uid not in data) or (data[uid] < time.time()):
-                data[uid] = time.time() + 3600 * HOUR_MINI
+            if (uid not in data[db]) or (data[db][uid] < time.time()):
+                data[db][uid] = time.time() + 3600 * HOUR_MINI
                 try:
                     cr.execute('insert into use_control_time (user_id, date, duration) values (%s,%s,%s)', 
                                 (int(uid), time.strftime('%Y-%m-%d %H:%M:%S'), HOUR_MINI))
