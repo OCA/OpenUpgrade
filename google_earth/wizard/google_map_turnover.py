@@ -22,11 +22,11 @@
 
 import urllib
 import xml.dom.minidom
+import base64
 
 import wizard
 import pooler
 import tools
-import base64
 
 _earth_form =  '''<?xml version="1.0"?>
 <form string="Google Map/Earth">
