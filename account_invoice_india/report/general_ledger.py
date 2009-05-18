@@ -54,17 +54,18 @@ class GeneralLedger(report_sxw.rml_parse):
 		    "ORDER by l.date,l.move_id, pname"
 		self.cr.execute(sSQL)
 		res = self.cr.dictfetchall()
-		for rs in res:
-			sSQL = "SELECT a.name from account_move m, account_move_line l, account_account a WHERE m.id = l.move_id AND l.account_id = a.id and m.id = %s and l.id <> %s" % (rs['mid'], rs['lid'])
-			self.cr.execute(sSQL)
-			namers = self.cr.dictfetchall()
-			name = namers[0]['name']
-			if rs['debit'] > 0:
-				rs['name'] = "By " + rs['name']
-				rs['jv_name'] = "Receipt"
-			elif rs['credit'] > 0:
-				rs['name'] = "To " + rs['name']
-				rs['jv_name'] = "Payment"
+		if res:
+			for rs in res:
+				sSQL = "SELECT a.name from account_move m, account_move_line l, account_account a WHERE m.id = l.move_id AND l.account_id = a.id and m.id = %s and l.id <> %s" % (rs['mid'], rs['lid'])
+				self.cr.execute(sSQL)
+				namers = self.cr.dictfetchall()
+				name = namers[0]['name']
+				if rs['debit'] > 0:
+					rs['name'] = "By " + rs['name']
+					rs['jv_name'] = "Receipt"
+				elif rs['credit'] > 0:
+					rs['name'] = "To " + rs['name']
+					rs['jv_name'] = "Payment"
 		return res
 
 	def _sum_debit_account(self, account, form):
@@ -74,7 +75,7 @@ class GeneralLedger(report_sxw.rml_parse):
 		query = self.pool.get('account.move.line')._query_get(self.cr, self.uid, context=ctx)
 		self.cr.execute("SELECT sum(debit) "\
 				"FROM account_move_line l "\
-				"WHERE l.account_id = %d " \
+				"WHERE l.account_id = %s " \
 				"AND l.date >= '" + form['date1'] + "' "\
                 "AND l.date <= '" + form['date2'] + "' " \
                 "AND " + query, (account.id,))
@@ -87,7 +88,7 @@ class GeneralLedger(report_sxw.rml_parse):
 		query = self.pool.get('account.move.line')._query_get(self.cr, self.uid, context=ctx)
 		self.cr.execute("SELECT sum(credit) "\
 				"FROM account_move_line l "\
-				"WHERE l.account_id = %d "\
+				"WHERE l.account_id = %s "\
 				"AND l.date >= '" + form['date1'] + "' "\
                 "AND l.date <= '" + form['date2'] + "' " \
                 "AND " + query, (account.id,))
