@@ -49,7 +49,7 @@ class quality_test(base_module_quality.abstract_quality_check):
             if os.path.isdir(path):
                 for j in os.listdir(path):
                     list_files.append(os.path.join(i, j))
-        score = 0.0
+        score = 1.0
         feel_good_factor = 0
         feel_bad_factor = 0
         if '__terp__.py' not in list_files:
@@ -115,8 +115,8 @@ class quality_test(base_module_quality.abstract_quality_check):
                 feel_bad_factor += 1
                 result_dict1[key] = [key, "Tag is missing!"]
 
-
-        score = round((feel_good_factor) / float(feel_good_factor + feel_bad_factor), 2)
+        if result_dict1 or result_dict:
+            score = round((feel_good_factor) / float(feel_good_factor + feel_good_factor), 2)
         self.result_details += self.get_result_details(result_dict)
         self.result_details += self.get_result_details(result_dict1)
         return [_('__terp__.py file'), score]
