@@ -12,7 +12,9 @@
             <field name="field_id" ref="dm_partner_address.field_res_partner_address_firstname"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
+	</data>
         
+    <data noupdate="1">
         <!-- TEMPLATE -->
         <record id="dm.dm_document_template_partner0" model="dm.document.template">
             <field model="dm.dtp.plugin" search="[('model_id.model','like','res.partner')]" name="plugin_ids"/>

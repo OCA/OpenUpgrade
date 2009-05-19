@@ -28,14 +28,14 @@
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
         </record>
     </data>
-    <data noupdate="0">
+    <data noupdate="1">
          <record id="ir_actions_server_emailvision_api" model="ir.actions.server">
              <field eval="5" name="sequence"/>
              <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
              <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
              <field name="model_id" ref="dm.model_dm_campaign_document"/>
              <field eval="[(6,0,[])]" name="child_ids"/>
-             <field eval="&quot;&quot;&quot;from dm_emailvision import dm_emailvision_api\ndm_emailvision_api.send_email(cr,uid,obj,context)" name="code"/>
+             <field eval="&quot;&quot;&quot;from dm_emailvision import dm_emailvision_api\ndm_emailvision_api.send_email(cr,uid,obj,context)&quot;&quot;&quot;" name="code"/>
              <field eval="True" name="condition"/>
              <field eval="&quot;&quot;&quot;Send Email with Emailvision NMP API&quot;&quot;&quot;" name="name"/>
          </record>

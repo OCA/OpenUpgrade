@@ -120,7 +120,6 @@ class dm_dtp_plugin(osv.osv):
         'model_id' : fields.many2one('ir.model','Object'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field'),
         'encode' : fields.boolean('Encode Url Parameters'),
-#        'key' : fields.char('DES Key',size=64),
         'ref_text_id' : fields.many2one('dm.dynamic_text','Reference Text'),
      }
     _sql_constraints = [
