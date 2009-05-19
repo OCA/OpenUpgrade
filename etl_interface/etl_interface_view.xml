@@ -171,25 +171,27 @@
 					<newline />
 					<notebook colspan="4">
 						<page string="Job's Components">
-							<field name="component_ids" nolabel="1" widget="many2many"/>
+							<field name="component_ids" nolabel="1" readonly="1"/>
 						</page>
 						<page string="Other Info">
 							<separator string="Processes" colspan="4" />
 							<field name="running_process" />
 							<field name="total_process" />
 							<separator string="Notes" colspan="4" />
-							<field name="notes" colspan="4" nolabel="1" />
+							<field name="notes" colspan="4" nolabel="1"/>
 						</page>
 					</notebook>
 					<separator string="Status" colspan="4" />
 					<field name="state" select="1" />
 					<group colspan="2">
 						<button name="action_open_job" string="Open"
-							type="object" states="draft,close" icon="gtk-yes"/>
+							type="object" states="draft" icon="gtk-yes"/>
 						<button name="%(wizard_launch_job_process)d"
 							string="Launch a Process" type="action" states="open" icon="gtk-go-forward"/>
 						<button name="action_close_job" string="Close"
 							type="object" states="open" icon="gtk-cancel"/>
+						<button name="action_set_to_draft" string="Reset to draft"
+							type="object" states="close" icon="gtk-convert"/>
 					</group>
 				</form>
 			</field>

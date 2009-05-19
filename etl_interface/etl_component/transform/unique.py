@@ -29,7 +29,7 @@ class etl_component_unique(osv.osv):
      _rec_name='key'
      _columns={
           'key' : fields.char('Key', size=30),
-          'key_id' : fields.many2one('etl.component', 'property'),
+          'component_id' : fields.many2one('etl.component', 'Component'),
               }
 
 etl_component_unique()
@@ -39,7 +39,7 @@ class etl_component_transform_unique(osv.osv):
      _inherit = 'etl.component'
 
      _columns={
-      'properties' : fields.one2many('etl.component.unique','key_id', 'Property'),
+      'properties' : fields.one2many('etl.component.unique','component_id', 'Property'),
      }
 
 etl_component_transform_unique()
