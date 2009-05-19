@@ -41,7 +41,6 @@ class quality_test(base_module_quality.abstract_quality_check):
 
     def run_test_terp(self, cr, uid, module_path):
         list_files = os.listdir(module_path)
-
         current_module = module_path.split('/')[-1]
 
         for i in list_files:
@@ -115,17 +114,17 @@ class quality_test(base_module_quality.abstract_quality_check):
                 feel_bad_factor += 1
                 result_dict1[key] = [key, "Tag is missing!"]
 
-        if result_dict1 or result_dict:
-            score = round((feel_good_factor) / float(feel_good_factor + feel_good_factor), 2)
+        if result_dict1 or result_dict1:
+            score = round((feel_good_factor) / float(feel_good_factor + feel_bad_factor), 2)
         self.result_details += self.get_result_details(result_dict)
         self.result_details += self.get_result_details(result_dict1)
         return [_('__terp__.py file'), score]
 
-
     def run_test(self, cr, uid, module_path):
         terp_score = self.run_test_terp(cr, uid, module_path)
-        self.score = terp_score[1]
-        self.result = self.get_result({'__terp__.py': terp_score})
+        self.score = terp_score and terp_score[1] or 0.0
+        if terp_score:
+            self.result = self.get_result({'__terp__.py': terp_score})
         return None
 
     def get_result(self, dict_terp):
@@ -135,7 +134,7 @@ class quality_test(base_module_quality.abstract_quality_check):
         return ""
 
     def get_result_details(self, dict_terp):
-        if dict != {}:
+        if dict_terp:
             str_html = '''<html><head></head><body><table border="1">'''
             header = ('<tr><th>%s</th><th>%s</th></tr>', [_('Tag Name'), _('Feed back About terp file of Module')])
             if not self.error:
