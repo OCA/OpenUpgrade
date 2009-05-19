@@ -53,9 +53,9 @@ def geocode(address):
     mapsUrl = 'http://maps.google.com/maps/geo?q='
 
     # This joins the parts of the URL together into one string.
-    
+
     url = ''.join([mapsUrl,urllib.quote(address),'&output=csv&key=',mapsKey])
-    
+
 
     # This retrieves the URL from Google.
 #    try:
@@ -81,7 +81,13 @@ def create_kml(self, cr, uid, data, context={}):
     address_obj= pool.get('res.partner.address')
 
     res = {}
+    number_customer_inv=0
+    number_supplier_inv=0
 #    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
+
+    cr.execute(''' select count(i.id),i.type, i.partner_id from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id where i.type in ('out_invoice','in_invoice') group by i.type, i.partner_id ''')
+    invoice_partner = cr.fetchall()
+
     cr.execute("select min(aml.id) as id, sum(aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
     res_partner = cr.fetchall()
     for part in partner_data:
@@ -103,6 +109,7 @@ def create_kml(self, cr, uid, data, context={}):
     documentElementname.appendChild(kmlDoc.createTextNode('Turnover by partners'))
     documentElement.appendChild(documentElementname)
     for part in partner_data:
+        partner_id = part.id
         address = ''
         add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
         if add:
@@ -147,8 +154,18 @@ def create_kml(self, cr, uid, data, context={}):
             type += 'Customer '
         if part.supplier:
             type += 'Supplier'
+
+        for partner in invoice_partner:
+            if partner[1] == 'out_invoice' and partner[2] == partner_id:
+                number_customer_inv = partner[0]
+            if partner[1] == 'in_invoice' and partner[2] == partner_id:
+                number_supplier_inv = partner[0]
+
         desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
-                    + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
+                    + ' <br />[ Number of customer invoice : ' + str(number_customer_inv or '') + ']' + ' <br />[ Number of supplier invoice : ' + str(number_supplier_inv or '')  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
+
+#        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
+#                    + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)

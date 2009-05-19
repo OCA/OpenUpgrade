@@ -79,6 +79,8 @@ def create_kml(self, cr, uid, data, context={}):
     addresslist = []
     country_list = []
     coordinates_text = ' '
+    number_customer=0
+    number_supplier=0
     #colors = ['dfbf9f3b','88336699','59009900','880fff00','88f000cc','7fffffff','aaffffff','880fff00','880f00cc','88f000cc','33333333']
     colors = ['9f8080ff', '9f0000ff']
     pool = pooler.get_pool(cr.dbname)
@@ -110,6 +112,7 @@ def create_kml(self, cr, uid, data, context={}):
     avg_to = min(list_to) + max(list_to) / 2 or 0.0
 
     map(lambda x:res_inv.setdefault(x, 0), country_list)
+
     # fetch invoice by country
     cr.execute(''' select count(i.id),c.name from account_invoice as i left join res_partner_address as a on i.partner_id=a.partner_id left join res_country as c on a.country_id=c.id where i.type in ('out_invoice','in_invoice') group by c.name ''')
     invoice_partner = cr.fetchall()
@@ -117,14 +120,15 @@ def create_kml(self, cr, uid, data, context={}):
         if part[1]:
             res_inv[str(string.upper(part[1]))] = str(part[0])
 
-
     # fetch number of costomer by country
     map(lambda x: res_cus.setdefault(x, 0), country_list)
-    cr.execute(''' select count(distinct(p.id)), c.name from res_partner as p left join res_partner_address as a on p.id=a.partner_id left join res_country as c on c.id=a.country_id group by a.country_id, c.name  ''')
+    cr.execute(''' select count(distinct(p.id)), c.name, count(a.id) from res_partner as p left join res_partner_address as a on p.id=a.partner_id left join res_country as c on c.id=a.country_id group by a.country_id, c.name  ''')
     cust_country = cr.fetchall()
+
     for part in cust_country:
         if part[1]:
             res_cus[str(string.upper(part[1]))] = str(part[0])
+
     # fetch turnover by individual partner
 #    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
     cr.execute("select min(aml.id) as id, sum(aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
@@ -181,12 +185,14 @@ def create_kml(self, cr, uid, data, context={}):
         type = ''
         if part.customer:
             type += 'Customer '
+            number_customer += 1
         if part.supplier:
             type += 'Supplier'
+            number_supplier += 1
 
         #desc_text = address + ' , Turnover of partner : ' + str(res[part.id])
         desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
-                    + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
+                    + ' <br />[ Number of customers : ' + str(number_customer or '') + ']' + ' <br />[ Number of suppliers : ' + str(number_supplier or '')  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)

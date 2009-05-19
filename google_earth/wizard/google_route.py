@@ -60,7 +60,7 @@ def _create_kml(self, cr, uid, data, context={}):
     #Note: from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
 #    path = tools.config['addons_path']
 #    fileName = path + '/google_earth/kml/route.kml'
-    colors = ['ff000080','ff800000','ff808000','ff800080']
+    colors = ['ff000080','ff800000','ff800080','ff808000','ff8080ff','ff80ff80','ffff8080','ff008000','ff008070','ff700070']
 
     # To find particular location
     pool = pooler.get_pool(cr.dbname)
@@ -110,21 +110,29 @@ def _create_kml(self, cr, uid, data, context={}):
 
     no_of_packs_max = max(map(lambda x: x['number_delivery'], packings)) or 0
     no_of_packs_min = min(map(lambda x: x['number_delivery'], packings)) or 0
-    value = no_of_packs_min + (no_of_packs_max - no_of_packs_min)/2 # 25 50 75 100
-    no_of_packs_min = no_of_packs_min + value/2
-    c1 = no_of_packs_min + value/2
-    c2 = c1 + value/2
 
+#    value = no_of_packs_min + (no_of_packs_max - no_of_packs_min)/2 # 25 50 75 100
+#    no_of_packs_min = no_of_packs_min + value/2
+#    c1 = no_of_packs_min + value/2
+#    c2 = c1 + value/2
+
+    lower_limit=[]
+    interval = no_of_packs_max/10
+    lower_limit.append(no_of_packs_min)
+    for j in range(no_of_packs_min,no_of_packs_max):
+        lower_limit.append(no_of_packs_min+interval)
+        no_of_packs_min += interval
+
+    i=0
     for pack in packings:
         total_qty = pack['product_send']
         warehouse_city = warehouse_dict[pack['warehouse_id']]
         customer_city = pack['customer_city']
         if not (warehouse_city and customer_city):
-            raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer ')
+            raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer. ')
 
-        no_of_delivery = pack['number_delivery']
         desc_text = ' <html><head> <font color="red"> <b> [ Warehouse location : ' + warehouse_city + ' ]' + '  <br />[ Customer Location : ' + customer_city + ' ]' + ' <br />[ Number of product sent : ' + str(total_qty) + ' ]' + \
-        ' <br />[ Number of delivery : ' + str(no_of_delivery) + ' ]' + '</b> </font> </head></html>'
+        ' <br />[ Number of delivery : ' + str(pack['number_delivery']) + ' ]' + '</b> </font> </head></html>'
 
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
@@ -143,14 +151,23 @@ def _create_kml(self, cr, uid, data, context={}):
         styleElement.appendChild(linestyleElement)
         colorElement = kmlDoc.createElement('color')
 
-        if pack['number_delivery'] < no_of_packs_min:
-            colorElement.appendChild(kmlDoc.createTextNode(colors[0]))
-        elif pack['number_delivery'] > no_of_packs_min and pack['number_delivery'] < c1:
-            colorElement.appendChild(kmlDoc.createTextNode(colors[1]))
-        elif pack['number_delivery'] > c1 and pack['number_delivery'] < c2:
-            colorElement.appendChild(kmlDoc.createTextNode(colors[2]))
+#        if pack['number_delivery'] < no_of_packs_min:
+#            colorElement.appendChild(kmlDoc.createTextNode(colors[0]))
+#        elif pack['number_delivery'] > no_of_packs_min and pack['number_delivery'] < c1:
+#            colorElement.appendChild(kmlDoc.createTextNode(colors[1]))
+#        elif pack['number_delivery'] > c1 and pack['number_delivery'] < c2:
+#            colorElement.appendChild(kmlDoc.createTextNode(colors[2]))
+#        else:
+#            colorElement.appendChild(kmlDoc.createTextNode(colors[3]))
+
+        if len(lower_limit)==1:
+            if pack['number_delivery'] > lower_limit[0]:
+                colorElement.appendChild(kmlDoc.createTextNode(colors[i]))
+        elif pack['number_delivery'] > lower_limit[i]:
+                colorElement.appendChild(kmlDoc.createTextNode(colors[i]))
+                i+=1
         else:
-            colorElement.appendChild(kmlDoc.createTextNode(colors[3]))
+            colorElement.appendChild(kmlDoc.createTextNode(colors[0]))
 
         widthElement = kmlDoc.createElement('width')
         widthElement.appendChild(kmlDoc.createTextNode('4'))
