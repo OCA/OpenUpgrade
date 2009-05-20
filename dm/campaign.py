@@ -2009,6 +2009,8 @@ class res_partner(osv.osv):
     _columns = {
         'country_ids' : fields.many2many('res.country', 'partner_country_rel', 'partner_id', 'country_id', 'Allowed Countries'),
         'state_ids' : fields.many2many('res.country.state','partner_state_rel', 'partner_id', 'state_id', 'Allowed States'),
+        'deceased' : fields.boolean('Deceased'),
+        'deceased_date' : fields.datetime('Deceased Date'),
     }
     def _default_category(self, cr, uid, context={}):
         if 'category_id' in context and context['category_id']:
