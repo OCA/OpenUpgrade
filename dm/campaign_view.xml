@@ -1570,7 +1570,9 @@
                 <page string="Direct Marketing">
                 	<separator colspan="4"/>
                 	<field name="deceased"/>
-                	<field name="deceased_date" attrs="{invisible:[('deceased','!=',False)]}"/>
+                	<group attrs="{'invisible':[('deceased','!=',True)]}">
+                		<field name="deceased_date" />
+                	</group>
                     <separator string="Allowed Countries" colspan="4"/>
                     <field name="country_ids" colspan="4" nolabel="1"/>
                     <separator string="Allowed States" colspan="4"/>
