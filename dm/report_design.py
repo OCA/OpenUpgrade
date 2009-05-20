@@ -17,6 +17,7 @@ from plugin import customer_function
 from plugin.customer_function import customer_function
 from plugin.dynamic_text import dynamic_text
 from plugin.php_url import php_url
+from plugin.current_time import current_time
 import re
 import datetime
 from lxml import etree
@@ -206,6 +207,8 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None,trad
             elif p.type == 'url' :
                 args['encode'] = p.encode
                 plugin_value = php_url(cr, uid, p.ref_text_id.id, **args)
+            elif p.type == 'dynamic' :
+                plugin_value = current_time(cr,uid,**args)
             else :
                 path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
                 plugin_name = p.file_fname.split('.')[0]
