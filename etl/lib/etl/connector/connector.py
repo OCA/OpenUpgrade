@@ -53,6 +53,7 @@ class connector(signal):
         return {'name' : self.name, 'status': self.status , '_type' :self._type}
 
     def __setstate__(self, state):
+        state['_signal__connects'] = {}
         self.__dict__ = state
 
     def open(self):

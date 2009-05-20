@@ -29,7 +29,8 @@
     "depends" : ["product_variant_multi", "sale", "sale_product_multistep_configurator"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["configurator_view.xml",
+    "update_xml" : ['security/ir.model.access.csv',
+                    "configurator_view.xml",
                     "sale_view.xml"],
     "active": False,
     "installable": True

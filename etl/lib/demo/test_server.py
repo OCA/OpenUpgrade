@@ -9,7 +9,7 @@ fileconnector_partner=etl.connector.localfile('input/partner.csv')
 
 fileconnector_partner1=etl.connector.localfile('input/partner1.csv')
 fileconnector_partner3=etl.connector.localfile('input/partner3.csv')
-fileconnector_output=etl.connector.localfile('output/test1_partner.csv','r+')
+fileconnector_output=etl.connector.localfile('output/test1_partner1111.csv','r+')
 
 csv_in1= etl.component.input.csv_in(fileconnector_partner,name='Partner Data')
 csv_in2= etl.component.input.csv_in(fileconnector_partner1,name='Partner Data1')
@@ -37,7 +37,7 @@ class etl_server(threading.Thread):
     job = False
 
     # Todo:
-    #    1. make data on pickle object
+    #    1. make data on pickle object with rowcount
     #    2. use row_count/row_index in pickle for restarting ...
     #    3. check server done same concept for stoping...
     #    4. pause and restart function on job should be modify
@@ -92,7 +92,7 @@ class etl_server(threading.Thread):
                 self.job.run()
                 self.write()
         except Exception,e:
-            #self.job.pause()
+            self.job.pause()
             self.write()
 
 server = etl_server()

@@ -47,6 +47,7 @@ class component(signal):
         self.connector = connector
         self.transformer = transformer
         self.row_limit = row_limit
+        self.row_count = 0
         self.status = 'open'
 
     def __str__(self):
@@ -59,10 +60,17 @@ class component(signal):
         return res
 
     def __getstate__(self):
-        return {'name':self.name,'status':self.status, 'trans_in' : [], 'trans_out' : [], 'connector': pickle.dumps(self.connector),'_type':self._type }
+        res = super(component, self).__getstate__()
+        res.update({'row_count':self.row_count, 'name':self.name,'status':self.status, 'trans_in' : [], 'trans_out' : [], 'connector': pickle.dumps(self.connector),'_type':self._type })
+        return res
 
     def __setstate__(self, state):
+        super(component, self).__setstate__(state)
         state['connector'] = pickle.loads(state['connector'])
+        state['_signal__connects'] = {}
+        state['data'] = {}
+        state['_cache'] = {}
+        state['generator'] = None
         self.__dict__ = state
 
     def __copy__(self):
@@ -129,7 +137,8 @@ class component(signal):
             trans.start()
         self.start()
         try:
-            row_count = 0
+#            row_count = 0
+            self.row_count = 0
             while True:
                 if self.data[trans]:
                     if not self._cache['start_output'][trans]:
@@ -144,7 +153,8 @@ class component(signal):
                     self.signal('no_input')
                     raise StopIteration
                 data, chan = gen.next()
-                row_count += 1
+#                row_count += 1
+                self.row_count += 1
                 if self.row_limit and row_count > self.row_limit:
                      raise StopIteration
                 if data is None:

@@ -62,6 +62,10 @@ class localfile(connector):
         return file(self.uri, mode)
         #self.file.encoding=self.encoding
 
+        def __getstate__(self):
+            res = super(localfile, self).__getstate__()
+            return res
+
     def close(self,connector):
         """
         Closes a file connection.
