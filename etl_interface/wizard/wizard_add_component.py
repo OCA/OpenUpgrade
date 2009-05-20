@@ -52,20 +52,11 @@ def _add_component(self, cr, uid, data, context):
         comp_id = comp_obj.create(cr, uid, data['form'])
     return {}
 
-#def _get_one2many(self, cr, uid, model, context):
-#    pool = pooler.get_pool(cr.dbname)
-#    field_obj = pool.get('ir.model.fields')
-#    field_ids = field_obj.search(cr, uid, [('model','=',model)]) 
-#    for field in field_obj.browse(cr, uid,  field_ids):
-#        FIELDS[field.name] = {'type' : field.ttype, 'string' : field.field_description, 'size' : 64}
-#    return {}
-
 def _get_view(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
     job_obj = pool.get('etl.job')
     comp_obj = pool.get('etl.component')
     comp_type_obj = pool.get('etl.component.type')
-    act_obj= pool.get('ir.actions.act_window')
     comptype =comp_type_obj.browse(cr, uid,data['form']['compnent_type_id'] )
     view_name = 'view.etl.component.' +comptype.name
     cr.execute("select id, arch from ir_ui_view where name = '%s'" % view_name)
@@ -94,7 +85,7 @@ def _check_state(self, cr, uid, data, context):
     job = job_obj.browse(cr, uid, data['ids'])[0]
 
     if not job.state in ('draft'):
-        raise wizard.except_wizard(_('Job not in draft state !'), _('You can not add components in job that is in "%s" state') % job.state.upper())
+        raise wizard.except_wizard(_('Job not in draft state !'), _('You can not add components in job which is in "%s" state') % job.state.upper())
     return {}
 
 class add_component(wizard.interface):
