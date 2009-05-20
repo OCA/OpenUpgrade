@@ -194,8 +194,6 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None,trad
         args['document_id'] = document_id
         if p.type == 'fields':
             plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
-#        elif p.type == 'image' :
-#            plugin_value = '[[set_html_image(1)]]'
         elif p.type != 'image' :
             arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
             for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
@@ -206,7 +204,7 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None,trad
             if p.type == 'dynamic_text' :
                 plugin_value = dynamic_text(cr, uid, p.ref_text_id.id, **args)
             elif p.type == 'url' :
-		args['encode'] = p.encode
+                args['encode'] = p.encode
                 plugin_value = php_url(cr, uid, p.ref_text_id.id, **args)
             else :
                 path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
@@ -232,15 +230,18 @@ class offer_document(rml_parse):
         self.localcontext.update({
             'time': time,
             'document':self.document,
+            'trademark_id' : self.trademark_id,
         })
         print "Calling offer_document localcontext"
         self.context = context
 
     def trademark_id(self):
-	if 'form' not in self.datas :
-	    return 1
-	else 
-	    return self.datas['form']['trademark_id']	
+        if 'form' not in self.datas :
+            workitem_id = self.context['active_id']
+            res = self.pool.get('dm.workitem').brwose(self.cr,self.uid,workitem_id)    
+            return res.segment_id.proposition_id.camp_id.trademark_id
+        else:
+            return self.datas['form']['trademark_id']	
     def document(self):
         print "Calling document"
         if 'form' not in self.datas :
@@ -342,6 +343,7 @@ class report_xml(osv.osv):
             if not node.getchildren():
                 if  node.tag=='img' and node.get('name') and node.get('name').find('[[setHtmlImage')>=0:
                     res_id= _regex.split(node.get('name'))[1]
+                    res_id =  res_id.split(',')[0]
                     list_image_id.append((res_id,node.get('src')))
             else :
                 for n in node.getchildren():
