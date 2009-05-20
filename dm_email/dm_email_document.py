@@ -63,18 +63,18 @@ class dm_mail_service(osv.osv):
 
 dm_mail_service()
 
-def set_image_email(node,msg):
+def set_image_email(node,msg,counter):
     if not node.getchildren():
         if  node.tag=='img' and node.get('src') and node.get('src').find('data:image/gif;base64,')>=0:
-            id = _regex.split(node.get('name'))[1]
+            counter = counter + 1
             msgImage = MIMEImage(base64.decodestring(node.get('src').replace('data:image/gif;base64,','')))
-            image_name = "image%s"%id
+            image_name = "image%d"%counter
             msgImage.add_header('Content-ID','<%s>'%image_name)
             msg.attach(msgImage)
             node.set('src',"cid:%s"%image_name)
     else :
         for n in node.getchildren():
-            set_image_email(n,msg)
+            set_image_email(n,msg,counter)
 
 def create_email_queue(cr,uid,obj,context):
     pool = pooler.get_pool(cr.dbname)
@@ -98,7 +98,7 @@ def create_email_queue(cr,uid,obj,context):
         msg = MIMEMultipart('alternative')
         msgRoot.attach(msg)
 
-        set_image_email(body,msgRoot)
+        set_image_email(body,msgRoot,counter=0)
         msgText = MIMEText(etree.tostring(body), 'html')
         msg.attach(msgText)
 

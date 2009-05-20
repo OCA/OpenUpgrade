@@ -346,7 +346,6 @@ class report_xml(osv.osv):
             if not node.getchildren():
                 if  node.tag=='img' and node.get('name') and node.get('name').find('[[setHtmlImage')>=0:
                     res_id= _regex.split(node.get('name'))[1]
-                    res_id =  res_id.split(',')[0]
                     list_image_id.append((res_id,node.get('src')))
             else :
                 for n in node.getchildren():
