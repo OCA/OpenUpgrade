@@ -44,7 +44,7 @@ class join(map):
         join_keys     :
         transformer   : Transformer object to transform string data into  particular object.
         """
-        super(map, self).__init__(name=name, transformer=transformer, row_limit=0)
+        super(join, self).__init__(map_criteria, None, name, transformer, row_limit)
         self._type = 'component.transfer.join'
         self.map_criteria = map_criteria
         self.join_keys = join_keys
@@ -64,9 +64,7 @@ class join(map):
         res = join(self.map_criteria, self.join_keys, self.name, self.transformer, self.row_limit)
         return res
 
-    def process(self):
-        # to be chak process not defined
-        pass
+    
 
 
 def test():
