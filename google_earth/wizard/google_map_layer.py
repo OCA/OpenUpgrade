@@ -96,8 +96,13 @@ def create_kml(self, cr, uid, data, context={}):
         if part.address and part.address[0].country_id and part.address[0].country_id.name:
             if not string.upper(part.address[0].country_id.name) in country_list:
                 cntry = string.upper(str(part.address[0].country_id.name))
-                country_list.append(cntry)
-
+                country_name = ''
+                for char in cntry:
+                    if char == '&':
+                        country_name += 'AND'
+                    else:
+                        country_name += char
+                country_list.append(country_name)
     map(lambda x:res.setdefault(x, 0.0), country_list)
     # fetch turnover by country (should be corect)
 #    cr.execute('select sum(l.credit), c.name from account_move_line as l join res_partner_address as a on l.partner_id=a.partner_id left join res_country as c on c.id=a.country_id group by c.name')
@@ -124,11 +129,11 @@ def create_kml(self, cr, uid, data, context={}):
     map(lambda x: res_cus.setdefault(x, 0), country_list)
     cr.execute(''' select count(distinct(p.id)), c.name, count(a.id) from res_partner as p left join res_partner_address as a on p.id=a.partner_id left join res_country as c on c.id=a.country_id group by a.country_id, c.name  ''')
     cust_country = cr.fetchall()
-
+    
     for part in cust_country:
         if part[1]:
             res_cus[str(string.upper(part[1]))] = str(part[0])
-
+    
     # fetch turnover by individual partner
 #    cr.execute('select min(id) as id, sum(credit) as turnover, partner_id as partner_id from account_move_line group by partner_id')
     cr.execute("select min(aml.id) as id, sum(aml.credit) as turnover, aml.partner_id as partner_id from account_move_line aml, account_account ac, account_account_type actype where aml.account_id = ac.id and ac.user_type = actype.id and (ac.type = 'receivable') group by aml.partner_id")
@@ -189,7 +194,12 @@ def create_kml(self, cr, uid, data, context={}):
         if part.supplier:
             type += 'Supplier'
             number_supplier += 1
-
+        
+        if address == ', S. Georgia & S. Sandwich Isls.':
+            address = ', South Georgia and the South Sandwich Islands'
+        elif address == ', Saint Kitts & Nevis Anguilla':
+            address = ', Saint Kitts and Nevis'
+            
         #desc_text = address + ' , Turnover of partner : ' + str(res[part.id])
         desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Main comapny : ' + str(part.parent_id and part.parent_id.name or '') + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
                     + ' <br />[ Number of customers : ' + str(number_customer or '') + ']' + ' <br />[ Number of suppliers : ' + str(number_supplier or '')  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
