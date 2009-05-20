@@ -37,7 +37,7 @@ class etl_server(threading.Thread):
     job = False
 
     # Todo:
-    #    1. make data on pickle object
+    #    1. make data on pickle object with rowcount
     #    2. use row_count/row_index in pickle for restarting ...
     #    3. check server done same concept for stoping...
     #    4. pause and restart function on job should be modify
@@ -92,7 +92,7 @@ class etl_server(threading.Thread):
                 self.job.run()
                 self.write()
         except Exception,e:
-            #self.job.pause()
+            self.job.pause()
             self.write()
 
 server = etl_server()
