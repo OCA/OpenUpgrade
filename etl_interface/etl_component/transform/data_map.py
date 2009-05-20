@@ -46,8 +46,8 @@ etl_component_transform_map_lines()
 
 class etl_component_transform_map_fields(osv.osv):
     _name='etl.component.transform.map_fields'
+    _rec_name = 'source_field'
     _columns={
-              'name' : fields.char('Source Field', size=124),
               'dest_field' : fields.char('Destination Field', size=124),
               'source_field' : fields.char('Source Field', size=124),
               'map_line_id' : fields.many2one('etl.component.transform.map_lines', 'Map line'),

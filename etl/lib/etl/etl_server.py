@@ -6,7 +6,6 @@ class ETLThread(threading.Thread):
        self.threads = []
        self.data={}
        self.sleeptime=5
-       print
        threading.Thread.__init__(self)
        count=0
    def run(self):

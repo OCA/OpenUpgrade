@@ -507,9 +507,11 @@ class dm_event(osv.osv_memory):
     _rec_name = "segment_id"
 
     _columns = {
-        'campaign_id' : fields.many2one('dm.campaign', 'Campaign'),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True,context="{'dm_camp_id':campaign_id}"),
-        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True,context="{'dm_camp_id':campaign_id}"),
+#        'campaign_id' : fields.many2one('dm.campaign', 'Campaign'),
+#        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True,context="{'dm_camp_id':campaign_id}"),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True),
+#        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True,context="{'dm_camp_id':campaign_id}"),
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True),
         'source' : fields.selection([('address_id','Addresses')], 'Source', required=True),
         'address_id' : fields.many2one('res.partner.address', 'Address'),
         'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),

@@ -781,7 +781,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     
     <!-- Server Action -->
     
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="ir_actions_server_pdf_doc_generate0" model="dm.offer.step.action">
             <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
@@ -844,7 +844,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 
     <!-- PLUGINS -->
 
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="dm_dtp_plugin_name0" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;partner_name&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Partner Name&quot;&quot;&quot;" name="name"/>
@@ -979,7 +979,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 			<field eval="&quot;&quot;&quot;Image Plugin Logo&quot;&quot;&quot;" name="name"/>
 			<field eval="&quot;&quot;&quot;Logo&quot;&quot;&quot;" name="note"/>
 			<field eval="0" name="encode"/>
-			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
 		</record>
 		<record id="dm_dtp_plugin_imagepluginsignature0" model="dm.dtp.plugin">
 			<field name="model_id" ref="dm.model_dm_trademark"/>
@@ -989,7 +989,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 			<field eval="&quot;&quot;&quot;Image Plugin Signature&quot;&quot;&quot;" name="name"/>
 			<field eval="&quot;&quot;&quot;Sognature&quot;&quot;&quot;" name="note"/>
 			<field eval="0" name="encode"/>
-			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
 		</record>
 		<record id="dm_dtp_plugin_imageplugintopbanner0" model="dm.dtp.plugin">
 			<field name="model_id" ref="dm.model_dm_trademark"/>
@@ -999,7 +999,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 			<field eval="&quot;&quot;&quot;Image Plugin Top Banner&quot;&quot;&quot;" name="name"/>
 			<field eval="&quot;&quot;&quot;Top banner&quot;&quot;&quot;" name="note"/>
 			<field eval="0" name="encode"/>
-			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
 		</record>
 		<record id="dm_dtp_plugin_imagepluginbottombanner0" model="dm.dtp.plugin">
 			<field name="model_id" ref="dm.model_dm_trademark"/>
@@ -1009,13 +1009,13 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 			<field eval="&quot;&quot;&quot;image Plugin Bottom Banner&quot;&quot;&quot;" name="name"/>
 			<field eval="&quot;&quot;&quot;Bottom Banner&quot;&quot;&quot;" name="note"/>
 			<field eval="0" name="encode"/>
-			<field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+			<field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
 		</record>
     </data>
 
     <!-- TEMPLATE -->
 
-    <data>
+    <data noupdate="1">
         <record id="dm_document_template_partner0" model="dm.document.template">
             <field model="dm.dtp.plugin" search="[('model_id.model','like','res.partner')]" name="plugin_ids"/>
             <field eval="&quot;&quot;&quot;Partner&quot;&quot;&quot;" name="name"/>
@@ -1028,7 +1028,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
 
     <!-- TRIGGER -->
 
-    <data noupdate="O">
+    <data noupdate="1">
         <record id="dm_offer_step_transition_purchase" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Purchase&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;purchase&quot;&quot;&quot;" name="code"/>

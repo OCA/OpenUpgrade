@@ -22,6 +22,8 @@
 
 import wizard_launch_process
 import wizard_schedulers_run
+import wizard_add_component
+import wizard_add_transitions
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

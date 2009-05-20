@@ -13,7 +13,7 @@
 	</data>
 
 	<!-- OFFER STEP ACTION -->
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="ir_actions_server_html_doc_generate0" model="dm.offer.step.action">
             <field eval="&quot;&quot;&quot;# You can use the following variables
 #    - object
@@ -36,7 +36,7 @@
             <field eval="&quot;&quot;&quot;Generate HTML Document&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
-    <data noupdate="0">
+    <data noupdate="1">
         <record id="ir_actions_server_email_queue_generate" model="ir.actions.server">
             <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>

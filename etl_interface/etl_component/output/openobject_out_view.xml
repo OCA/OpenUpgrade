@@ -18,7 +18,7 @@
 			    </group>
 			    <notebook colspan="4">
 			        <page string="Property">
-			            <field name="model_id" attrs="{'required':[('type_id','=','output.openobject_out')]}" />
+			            <field name="model_id" required="1" />
 						<separator string="Fields To Load"
 							colspan="4" />
 						<field name="openobject_field_ids" colspan="4" nolabel="1" widget="one2many_list" >
@@ -101,6 +101,32 @@
 			</field>
 		</record>
 
+        <record id="etl_component_openobject_out_form1" model="ir.ui.view">
+            <field name="name">view.etl.component.output.openobject_out</field>
+            <field name="model">etl.component</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            <form string="OpenObject Out">
+                    <group col="4" colspan="4">
+                        <field name="name" select="1" required="1"/>
+                        <field name="type_id" select="1" required="0" readonly="1"/>
+                        <field name="connector_id" required="1" select="1" domain="[('type','=','openobject')]"/>
+                   <field name="transformer_id"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Property">
+                            <field name="model_id" required="1"/>
+                            <field name="openobject_field_ids" colspan="4" nolabel="1"/>
+                        </page>
+                        <page string="Other Information">
+                            <field name="row_limit"/>
+                    <field name ="encoding"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+        
 		<record id="action_etl_component_open_object_out_tree"
 			model="ir.actions.act_window">
 			<field name="name">Open-Object Out component</field>
@@ -116,6 +142,7 @@
 			<field name="res_model">etl.component</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
+			<field name="view_id"	ref="etl_component_open_object_out_form" />
 			<field name="domain">[('type_id.name','=','output.openobject_out')]</field>
 			<field name="context">{'type_id':'output.openobject_out'}</field>
 		</record>

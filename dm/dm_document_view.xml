@@ -174,12 +174,13 @@
             	    <field name="code" select="1" />                    
             	    <field name="type" select="1" />
             	    <field name="store_value" />
+		    <field name="preview_value" />
                 </group>
                 <newline/>
         		<separator string="Description" colspan="4"/>
         		<field name="note" nolabel="1" colspan="4"/>
                 <notebook colspan="4">
-                    <page string="Customer Plugin" attrs="{'invisible':[('type','!=','fields')]}">
+                    <page string="Customer Plugin" attrs="{'invisible':[('type','not in',['fields','image'])]}">
                         <field name="model_id" colspan="4" attrs="{'required':[('type','=','fields')]}" />
                         <field name="field_id"  colspan="4" domain = "[('model_id','=',model_id),('ttype','!=','one2many'),('ttype','not in',['many2one','many2many'])]" attrs="{'required':[('type','=','fields')]}" />
                     </page>
@@ -187,14 +188,15 @@
                         <field name="ref_text_id" colspan="4" attrs="{'required':[('type','=','dynamic_text')]}" />
                     </page>
                     <page string="Dynamic Plugin" attrs="{'invisible':[('type','!=','dynamic')]}">
-                            <field name="file_id" colspan="4" filename="file_fname" />
-                            <field name="file_fname" />
+                            <!--field name="file_id" colspan="4" filename="file_fname" />
+                            <field name="file_fname" /-->
+                            <field name="python_code" />
                     </page>
                     <page string="Argument List" attrs="{'invisible':[('type','not in',['dynamic','url','dynamic_text'])]}">
                         <group  colspan="4"  attrs="{'invisible':[('type','!=','url')]}">
                             <field name="encode"/>
                         </group>
-	                	<field name="argument_ids" nolabel="1" colspan="4">
+	                <field name="argument_ids" nolabel="1" colspan="4">
 	                    	<form string="Argument List">
 	                            <field name="name" select="1"/>
 	                            <field name="stored_plugin"/>

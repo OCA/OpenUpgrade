@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <wizard
+          id="wizard_job_add_component"
+            keyword="client_action_multi"
+            model="etl.job"
+            name="etl.job.add_component"
+            string="Add Component"/>
+            
+            
+        <wizard
+          id="wizard_job_add_transitions"
+            keyword="client_action_multi"
+            model="etl.job"
+            name="etl.job.add_transitions"
+            string="Add Transitions"/>
+
+    </data>
+</openerp>

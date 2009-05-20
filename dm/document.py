@@ -116,12 +116,14 @@ class dm_dtp_plugin(osv.osv):
         'file_fname': fields.char('Filename',size=64),
         'argument_ids' : fields.one2many('dm.plugin.argument', 'plugin_id', 'Argument List'),
         'note' : fields.text('Description'),
-        'type' : fields.selection([('fields','Customer'),('dynamic','Dynamic'),('url','URL'),('dynamic_text','Dynamic Text')], 'Type', required=True),
+        'type' : fields.selection([('fields','Customer'),('dynamic','Dynamic'),('url','URL'),('dynamic_text','Dynamic Text'),('image','Trademark Image')], 'Type', required=True),
         'model_id' : fields.many2one('ir.model','Object'),
         'field_id' : fields.many2one('ir.model.fields','Customers Field'),
         'encode' : fields.boolean('Encode Url Parameters'),
+        'python_code' :fields.text('Python Code', help="Python code to be executed"),
 #        'key' : fields.char('DES Key',size=64),
         'ref_text_id' : fields.many2one('dm.dynamic_text','Reference Text'),
+        'preview_value' :fields.char('Preview Text',size=64),
      }
     _sql_constraints = [
         ('code_uniq', 'UNIQUE(code)', 'The code must be unique!'),
