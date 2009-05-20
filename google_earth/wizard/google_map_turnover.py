@@ -106,8 +106,11 @@ def create_kml(self, cr, uid, data, context={}):
     documentElement = kmlDoc.createElement('Document')
     kmlElement.appendChild(documentElement)
     documentElementname = kmlDoc.createElement('name')
-    documentElementname.appendChild(kmlDoc.createTextNode('Turnover by partners'))
+    documentElementname.appendChild(kmlDoc.createTextNode('partners'))
+    documentElementdesc = kmlDoc.createElement('description')
+    documentElementdesc.appendChild(kmlDoc.createTextNode('You can see Partner information by clicking Partner'))
     documentElement.appendChild(documentElementname)
+    documentElement.appendChild(documentElementdesc)
     for part in partner_data:
         partner_id = part.id
         address = ''
@@ -161,7 +164,7 @@ def create_kml(self, cr, uid, data, context={}):
             if partner[1] == 'in_invoice' and partner[2] == partner_id:
                 number_supplier_inv = partner[0]
 
-        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br /> [Main comapny : ' + str(part.parent_id and part.parent_id.name) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
+        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + '] <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br /> [Main comapny : ' + str(part.parent_id and part.parent_id.name) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
                     + ' <br />[ Number of customer invoice : ' + str(number_customer_inv or 0 ) + ']' + ' <br />[ Number of supplier invoice : ' + str(number_supplier_inv or 0)  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
 
 #        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \

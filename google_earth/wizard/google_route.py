@@ -73,7 +73,9 @@ def _create_kml(self, cr, uid, data, context={}):
     documentElement = kmlDoc.createElement('Document')
     kmlElement.appendChild(documentElement)
     documentElementname = kmlDoc.createElement('name')
-    documentElementname.appendChild(kmlDoc.createTextNode('Delivery route'))
+    documentElementname.appendChild(kmlDoc.createTextNode('Route'))
+    documentElementdesc = kmlDoc.createElement('description')
+    documentElementdesc.appendChild(kmlDoc.createTextNode('When you click on locaion you will get path from warehouse location to customer location'))
 
 #    styleElement = kmlDoc.createElement('Style')
 #    styleElement.setAttribute('id','style15')
@@ -99,6 +101,7 @@ def _create_kml(self, cr, uid, data, context={}):
     polystyleElement.appendChild(outlineElement)
     documentElement.appendChild(polystyleElement)
     documentElement.appendChild(documentElementname)
+    documentElement.appendChild(documentElementdesc)
 
     cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id where sale_id is not null group by a.city,sp.warehouse_id;')
     packings = cr.dictfetchall()
