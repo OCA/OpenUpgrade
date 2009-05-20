@@ -81,7 +81,7 @@ class etl_connector_type(osv.osv):
 
     _columns={
               'name' : fields.char('Name', size=64, required=True),
-              'code' : fields.char('Code', size=24),
+              'code' : fields.char('Code', size=24, required=True),
      }
 etl_connector_type()
 
@@ -89,6 +89,7 @@ etl_connector_type()
 class etl_connector(osv.osv):
     _name='etl.connector'
     _cache={}
+
     def _get_connector_type(self, cr, uid, context={}):
             c_obj = self.pool.get('etl.connector.type')
             type_ids = c_obj.search(cr, uid, [])
@@ -105,14 +106,12 @@ class etl_connector(osv.osv):
               'passwd' : fields.char('Password', size=64),
 
     }
-    def onchange_type(self, cr, uid, ids, type):
-        return {'value':{}}
 
     def get_instance(self, cr, uid, id, context={}, data={}):
         if (cr.dbname, uid, data.get('process_id', False), id) not in self._cache:
             self._cache[(cr.dbname, uid, data.get('process_id', False), id)]=self.create_instance(cr, uid, id, context, data)
         return self._cache[(cr.dbname, uid, data.get('process_id', False), id)]
-    
+
     def create_instance(self, cr, uid, ids, context={}, data={}):
         # logic for super create_instance
         return False
@@ -137,7 +136,7 @@ class etl_component_type(osv.osv):
 
     _columns={
               'name' : fields.char('Name', size=64, required=True),
-              'code' : fields.char('Code', size=24),
+              'code' : fields.char('Code', size=24, required=True),
               'connector_type_id' :  fields.many2one('etl.connector.type', 'Connector Type'),
 
     }
@@ -178,11 +177,11 @@ class etl_job(osv.osv):
     _defaults = {
                 'state': lambda *a: 'draft',
      }
-    
+
     def action_set_to_draft(self, cr, uid , id, context={}):
         self.write(cr, uid , id, {'state': 'draft'})
         return True
-    
+
     def get_instance(self, cr, uid, id, context={}, data={}):
         if (cr.dbname, uid, data.get('process_id', False), id) not in self._cache:
             self._cache[(cr.dbname, uid, data.get('process_id', False), id)]=self.create_instance(cr, uid, id, context, data)
@@ -196,7 +195,7 @@ class etl_job(osv.osv):
         if context.get('action_end_job', False):
             job.signal_connect({'id':id, 'instance':job}, 'end', context['action_end_job'], data)
         if context.get('action_pause_job', False):
-            
+
             job.signal_connect({'id':id, 'instance':job}, 'pause', context['action_pause_job'], data)
         return self._cache[(cr.dbname, uid, data.get('process_id', False), id)]
 

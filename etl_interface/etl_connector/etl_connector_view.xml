@@ -35,11 +35,9 @@
 			<field name="view_id" ref="etl_connector_type_tree" />
 		</record>
 
-		<!--
-			<menuitem name="Connector Types" parent="menu_etl_configure"
+		<menuitem name="Connector Types" parent="menu_etl_configure"
 			sequence="8" action="action_etl_connector_type_tree"
-			id="menu_etl_connector_type" /> -->
-
+			id="menu_etl_connector_type" />
 
 
 		<record id="etl_connector_basic_form" model="ir.ui.view">
@@ -47,21 +45,39 @@
 			<field name="model">etl.connector</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="etl.connector">
-					<group colspan="4">
+				<form string="Connector">
+					<group col="4" colspan="4">
 						<field name="name" select="1" />
-						<field name="type" select="1"
-							on_change="onchange_type(type)" />
+						<field name="type" select="1"/>
+						<newline/>
+						<field name="uri" required="1"/>
 					</group>
 					<notebook colspan="4">
-						<page string="Property">
-							<field name="uri"/>
+					    <page string="Property" attrs="{'invisible':[('type','=','sugarcrm')]}">
+					        <group col="4" colspan="4"  attrs="{'invisible':[('type','!=','openobject')]}">
+					            <field name="db" attrs="{'required':[('type','=','openobject')], 'invisible':[('type','!=','openobject')]}"/>
+							    <field name="obj" attrs="{'required':[('type','=','openobject')], 'invisible':[('type','!=','openobject')]}"/>
+							    <field name="openobject_con_type" attrs="{'required':[('type','=','openobject')], 'invisible':[('type','!=','openobject')]}"/>
+							</group>
+							<group col="4" colspan="4"  attrs="{'invisible':[('type','!=','facebook')]}">
+    							<field name="email" attrs="{'required':[('type','=','facebook')], 'invisible':[('type','!=','facebook')]}"/>
+    						    <field name="delay" attrs="{'required':[('type','=','facebook')], 'invisible':[('type','!=','facebook')]}"/>
+						    </group>
+						    <group col="4" colspan="4"  attrs="{'invisible':[('type','!=','localfile')]}">
+						        <field name="bufsize" attrs="{'invisible':[('type','!=','localfile')]}"/>
+						        <field name="mode" attrs="{'invisible':[('type','!=','localfile')]}"/>
+					        </group>
+					         <group col="4" colspan="4"  attrs="{'invisible':[('type','!=','sql')]}">
+    						    <field name="sql_con_type" attrs="{'required':[('type','=','sql')], 'invisible':[('type','!=','sql')]}"/>
+                                <field name="sslmode" attrs="{'required':[('type','=','sql')], 'invisible':[('type','!=','sql')]}"/>
+                            </group>
+					    </page>
+						<page string="Other Information">
 							<field name="host"/>
 							<field name="port"/>
 							<field name="uid"/>
 							<field name="passwd" password="1"/>
 						</page>
-						<page string="Other Information"  attrs="{'invisible':[('type','!=',False)]}"/>
                     </notebook>
 				</form>
 			</field>
@@ -80,7 +96,7 @@
 			</field>
 		</record>
 
-		<!--<record id="action_etl_connector_basic_tree"
+		<record id="action_etl_connector_basic_tree"
 			model="ir.actions.act_window">
 			<field name="name">Connectors</field>
 			<field name="res_model">etl.connector</field>
@@ -105,11 +121,11 @@
 			<field name="view_id" ref="etl_connector_basic_form" />
 			<field name="act_window_id"
 				ref="action_etl_connector_basic_tree" />
-		</record> -->
+		</record>
 
 		<menuitem name="Connectors"
 			parent="etl_interface.menu_etl_configure" sequence="9"
-			id="etl_connector_all_tree" />
+			id="etl_connector_all_tree"  action="action_etl_connector_basic_tree"/>
 
 	</data>
 </openerp>
