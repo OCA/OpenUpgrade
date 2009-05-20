@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-	<data>
+	<data noupdate="1">
 		<!-- Media -->
 		<record model="dm.media" id="media_website">
 	    	<field name="name" eval="&quot;Web Site&quot;"/>
@@ -30,7 +30,8 @@
 		</record>
     
     <!-- PLUGINS -->
-    	
+    </data>
+	<data noupdate="1">
     	<record id="dm_dtp_plugin_campaign_website" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;website&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Website&quot;&quot;&quot;" name="name"/>
@@ -47,6 +48,8 @@
 			<field eval="0" name="store_value"/>
 			<field eval="&quot;&quot;&quot;url&quot;&quot;&quot;" name="type"/>
 		</record>
+	</data>
+<!--
 		<record id="dm_plugin_argument_segment0" model="dm.plugin.argument">
 			<field name="plugin_id" ref="dm_dtp_plugin_phpurl0"/>
 			<field eval="1" name="stored_plugin"/>
@@ -71,10 +74,14 @@
 			<field eval="&quot;&quot;&quot;Website&quot;&quot;&quot;" name="name"/>
 			<field name="custome_plugin_id" ref="dm_dtp_plugin_campaign_website"/>
 		</record>
+-->
 	
 	<!-- TEMPLATE -->
+
+	<data noupdate="1">
 		<record id="dm.dm_document_template_website0" model="dm.document.template">
         	<field eval="[(6,0,[ref('dm_website.dm_dtp_plugin_phpurl0'),ref('dm.dm_dtp_plugin_wi_segment_id'),ref('dm.dm_dtp_plugin_wi_step_id'),ref('dm.dm_dtp_plugin_partner_id'),ref('dm_website.dm_dtp_plugin_campaign_website')])]" name="plugin_ids"/>
         </record>
+
     </data>
 </openerp>

@@ -180,77 +180,74 @@
 
 		<record id="field1"
 			model="etl.component.transform.map_fields">
-			<field name="name">id</field>
+			<field name="source_field">id</field>
 			<field name="dest_field">tools.uniq_id(main.get('org', 'anonymous'),prefix='partner_')</field>
 			<field name="map_line_id" ref="map_line1" />
 		</record>
 
 		<record id="field2"
 			model="etl.component.transform.map_fields">
-			<field name="name">address_id</field>
+			<field name="source_field">address_id</field>
 			<field name="dest_field">tools.uniq_id(main.get('fn', 'anonymous'),prefix='contact_')</field>
 			<field name="map_line_id" ref="map_line1" />
 		</record>
 
 		<record id="field3"
 			model="etl.component.transform.map_fields">
-			<field name="name">name</field>
+			<field name="source_field">name</field>
 			<field name="dest_field">main.get('org',['anonymous'])[0]</field>
 			<field name="map_line_id" ref="map_line1" />
 		</record>
 
 		<record id="field4"
 			model="etl.component.transform.map_fields">
-			<field name="name">contact_name</field>
+			<field name="source_field">contact_name</field>
 			<field name="dest_field">main.get('fn','anonymous')</field>
 			<field name="map_line_id" ref="map_line1" />
 		</record>
 
 		<record id="field5"
 			model="etl.component.transform.map_fields">
-			<field name="name">email</field>
+			<field name="source_field">email</field>
 			<field name="dest_field">main.get('email','').upper()</field>
 			<field name="map_line_id" ref="map_line1" />
 		</record>
 
-		<record id="field_oo1" model="etl.component.openobject.lines">
+		<record id="field_oo1" model="etl.component.field">
 			<field name="source_field">id</field>
 			<field name="dest_field">id</field>
 			<field name="component_id" ref="component_oo_out" />
 		</record>
 
-		<record id="field_oo2" model="etl.component.openobject.lines">
+		<record id="field_oo2" model="etl.component.field">
 			<field name="source_field">name</field>
 			<field name="dest_field">name</field>
 			<field name="component_id" ref="component_oo_out" />
 		</record>
 
-		<record id="field_oo3" model="etl.component.openobject.lines">
+		<record id="field_oo3" model="etl.component.field">
 			<field name="source_field">name</field>
 			<field name="dest_field">contact_name</field>
 			<field name="component_id" ref="component_oo_out2" />
 		</record>
 
-		<record id="field_oo4" model="etl.component.openobject.lines">
+		<record id="field_oo4" model="etl.component.field">
 			<field name="source_field">id</field>
 			<field name="dest_field">address_id</field>
 			<field name="component_id" ref="component_oo_out2" />
 		</record>
 
-		<record id="field_oo5" model="etl.component.openobject.lines">
+		<record id="field_oo5" model="etl.component.field">
 			<field name="source_field">partner_id</field>
 			<field name="dest_field">id</field>
 			<field name="component_id" ref="component_oo_out2" />
 		</record>
 
-		<record id="field_oo6" model="etl.component.openobject.lines">
+		<record id="field_oo6" model="etl.component.field">
 			<field name="source_field">email</field>
 			<field name="dest_field">email</field>
 			<field name="component_id" ref="component_oo_out2" />
 		</record>
-
-
-
 
 		<!--TRANSITIONS-->
 

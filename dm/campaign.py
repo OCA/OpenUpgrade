@@ -1124,6 +1124,7 @@ class dm_campaign_proposition_segment(osv.osv):
 
     _columns = {
         'code1' : fields.function(_segment_code, string='Code', type="char", size=64, method=True, readonly=True),
+        'campaign_id' : fields.related('proposition_id', 'camp_id', type='many2one', relation='dm.campaign', string='Campaign'),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
         'type_src' : fields.selection([('internal','Internal'),('external','External')], 'Type'),
         'customers_list_id': fields.many2one('dm.customers_list','Customers List'),
@@ -2008,7 +2009,6 @@ class res_partner(osv.osv):
     _columns = {
         'country_ids' : fields.many2many('res.country', 'partner_country_rel', 'partner_id', 'country_id', 'Allowed Countries'),
         'state_ids' : fields.many2many('res.country.state','partner_state_rel', 'partner_id', 'state_id', 'Allowed States'),
-        'dm_contact_id' : fields.many2one('res.partner.address', 'Address To Use', ondelete='cascade'),
     }
     def _default_category(self, cr, uid, context={}):
         if 'category_id' in context and context['category_id']:
