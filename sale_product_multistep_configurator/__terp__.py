@@ -22,7 +22,7 @@
 
 {
     "name" : "MultiStep Product Configurator",
-    "description" : "TODO WORK IN PROGRESS!!!! DO NOT USE IN PRODUCTION YET!",
+    "description" : "Generic Multistep configurator",
     "version" : "0.5",
     "author" : "Smile",
     "website": "http://www.smile.fr",
