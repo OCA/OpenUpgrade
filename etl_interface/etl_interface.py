@@ -138,8 +138,44 @@ class etl_component_type(osv.osv):
               'name' : fields.char('Name', size=64, required=True),
               'code' : fields.char('Code', size=24, required=True),
               'connector_type_id' :  fields.many2one('etl.connector.type', 'Connector Type'),
-
+              'added' : fields.boolean('Added to Component view', readonly=True),
+              'field_ids' : fields.many2many('ir.model.fields','comp_field_rel', 'field_id', 'comp_id', 'Component fields',  domain="[('model','ilike','etl.%')]"),
     }
+    
+    def add_type_view(self, cr, uid , id, context={}):
+        type= self.browse(cr, uid, id)[0]
+        if type.added:
+            return
+        cr.execute("select id, arch from ir_ui_view where name = 'view.etl.component.form'")
+        result = cr.dictfetchall()[0]
+        fields = type.field_ids
+        if not len(type.field_ids):
+            return
+        from xml import dom, xpath
+        from lxml import etree
+        mydom = dom.minidom.parseString(result['arch'].encode('utf-8'))
+        child_node=mydom.childNodes[0].childNodes
+        for i in range(1,len(child_node)):
+            for node in child_node[i].childNodes:
+                if node.localName=='page' and node.getAttribute('string')=='Property':
+                    groupnode = mydom.createElement('group')
+                    groupnode.setAttribute('col', "4")
+                    groupnode.setAttribute('colspan', "4")
+                    groupnode.setAttribute('attrs', "{'invisible':[('type_id','!=',%s)]}" % type.id)
+                    node.appendChild(groupnode)
+                    attrs = "{'invisible':[('type_id','!=',%s)]}" % (type.id)
+                    for field in fields:
+                        newnode = mydom.createElement('field')
+                        newnode.setAttribute('name', field.name)
+                        newnode.setAttribute('attrs', attrs)
+                        if field.ttype == 'one2many':
+                            newnode.setAttribute('colspan', "4")
+                            newnode.setAttribute('nolabel', "1")
+                        groupnode.appendChild(newnode)
+        result['arch']=mydom.toxml()
+        self.pool.get('ir.ui.view').write(cr, uid, result['id'], {'arch' : result['arch']})
+        return self.write(cr, uid, id, {'added' : True})
+
 etl_component_type()
 
 
@@ -564,7 +600,7 @@ class etl_transition(osv.osv):
         return [(r['code'], r['name']) for r in result]
 
     _columns = {
-              'name' : fields.char('Name', size=64, required=True),
+              'name' : fields.char('Name', size=64),
               'type' : fields.selection([('data', 'Data Transition'), ('trigger', 'Trigger Transition')], 'Transition Type', required=True),
               'source_component_id' : fields.many2one('etl.component', 'Source Component', required=True),
               'destination_component_id' : fields.many2one('etl.component', 'Destination Component', required=True),
