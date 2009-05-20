@@ -5,6 +5,7 @@ import base64
 import wizard
 import pooler
 import tools
+from osv import osv,fields
 
 _earth_form =  '''<?xml version="1.0"?>
 <form string="Google Map/Earth">
@@ -108,6 +109,8 @@ def _create_kml(self, cr, uid, data, context={}):
     for whouse in warehouse_datas:
         warehouse_dict[whouse.id] = whouse.partner_address_id and whouse.partner_address_id.city or False
 
+    if not packings:
+        raise osv.except_osv('Warning !', 'You do not have deliveries available')
     no_of_packs_max = max(map(lambda x: x['number_delivery'], packings)) or 0
     no_of_packs_min = min(map(lambda x: x['number_delivery'], packings)) or 0
 
@@ -116,11 +119,11 @@ def _create_kml(self, cr, uid, data, context={}):
 #    c1 = no_of_packs_min + value/2
 #    c2 = c1 + value/2
 
-    lower_limit=[]
-    interval = no_of_packs_max/10
+    lower_limit = []
+    interval = no_of_packs_max / 10
     lower_limit.append(no_of_packs_min)
-    for j in range(no_of_packs_min,no_of_packs_max):
-        lower_limit.append(no_of_packs_min+interval)
+    for j in range(no_of_packs_min, no_of_packs_max):
+        lower_limit.append(no_of_packs_min + interval)
         no_of_packs_min += interval
 
     i=0
