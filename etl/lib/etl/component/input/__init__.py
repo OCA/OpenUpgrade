@@ -22,7 +22,7 @@
 
 """
  To extract data from the source systems.
-  
+
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
@@ -35,3 +35,4 @@ from vcard_in import vcard_in
 from gmail_in import gmail_in
 from sugarcrm_in import sugarcrm_in
 from xmlrpc_in import xmlrpc_in
+from gcalendar_in import gcalendar_in

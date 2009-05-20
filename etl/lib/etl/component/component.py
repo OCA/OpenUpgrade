@@ -60,11 +60,17 @@ class component(signal):
         return res
 
     def __getstate__(self):
-        return {'row_index':self.row_count, 'name':self.name,'status':self.status, 'trans_in' : [], 'trans_out' : [], 'connector': pickle.dumps(self.connector),'_type':self._type }
+        res = super(component, self).__getstate__()
+        res.update({'row_count':self.row_count, 'name':self.name,'status':self.status, 'trans_in' : [], 'trans_out' : [], 'connector': pickle.dumps(self.connector),'_type':self._type })
+        return res
 
     def __setstate__(self, state):
+        super(component, self).__setstate__(state)
         state['connector'] = pickle.loads(state['connector'])
-        state['row_index'] = state['row_index']
+        state['_signal__connects'] = {}
+        state['data'] = {}
+        state['_cache'] = {}
+        state['generator'] = None
         self.__dict__ = state
 
     def __copy__(self):
