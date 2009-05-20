@@ -165,7 +165,7 @@ def generate_reports(cr,uid,obj,report_type,context):
 
 
 
-def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, context={}):
+def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None,trademark_id=None,context={}):
     if not document_id :
         return False
     if not address_id :
@@ -194,7 +194,9 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, con
         args['document_id'] = document_id
         if p.type == 'fields':
             plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
-        else :
+#        elif p.type == 'image' :
+#            plugin_value = '[[set_html_image(1)]]'
+        elif p.type != 'image' :
             arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
             for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
                 if not a.stored_plugin :
@@ -204,6 +206,7 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None, con
             if p.type == 'dynamic_text' :
                 plugin_value = dynamic_text(cr, uid, p.ref_text_id.id, **args)
             elif p.type == 'url' :
+		args['encode'] = p.encode
                 plugin_value = php_url(cr, uid, p.ref_text_id.id, **args)
             else :
                 path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
@@ -233,6 +236,11 @@ class offer_document(rml_parse):
         print "Calling offer_document localcontext"
         self.context = context
 
+    def trademark_id(self):
+	if 'form' not in self.datas :
+	    return 1
+	else 
+	    return self.datas['form']['trademark_id']	
     def document(self):
         print "Calling document"
         if 'form' not in self.datas :
@@ -256,6 +264,7 @@ class offer_document(rml_parse):
                 workitem_id = dm_workitem_obj.create(self.cr, self.uid,{'address_id':address_id,
                                              'step_id':document.step_id.id,
                                              'segment_id' : segment_data_id[0]})
+
             else :
                 workitem_id = workitem_data[0]
         values = generate_plugin_value(self.cr,self.uid,document_id,address_id,workitem_id)

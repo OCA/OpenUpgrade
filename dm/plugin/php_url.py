@@ -18,11 +18,13 @@ def php_url(cr,uid,customer_ids,**args):
                 arguments  += '%s=%s'%(a,args[a])
             else :
                 arguments  += '&%s=%s'%(a,args[a])
+    if 'encode' in args and args['encode'] : 
+	arguments = base64.encodestring(arguments)
     url_name = args['url']
     if url_name.find('http://')<0:
         url_name = 'http://' + url_name
         if arguments :
-            url_name = url_name+"?"+ base64.encodestring(arguments)
+            url_name = url_name+"?"+ arguments
     value = "<a href= '" + url_name + "' target='_blank'>" + args['text_display'] + "</a>"
     return value
 
