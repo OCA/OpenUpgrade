@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* delivery
+# 	* delivery
 #
 msgid ""
 msgstr ""
@@ -17,7 +17,8 @@ msgstr ""
 
 #. module: delivery
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
 
 #. module: delivery
@@ -108,8 +109,7 @@ msgid "Deliveries Properties"
 msgstr ""
 
 #. module: delivery
-#: field:delivery.carrier,active:0
-#: field:delivery.grid,active:0
+#: field:delivery.carrier,active:0 field:delivery.grid,active:0
 msgid "Active"
 msgstr ""
 
@@ -175,8 +175,7 @@ msgid "Variable Factor"
 msgstr ""
 
 #. module: delivery
-#: selection:delivery.grid.line,price_type:0
-#: field:delivery.grid.line,type:0
+#: selection:delivery.grid.line,price_type:0 field:delivery.grid.line,type:0
 msgid "Variable"
 msgstr ""
 
@@ -186,17 +185,14 @@ msgid "Grid Name"
 msgstr ""
 
 #. module: delivery
-#: view:delivery.carrier:0
-#: field:delivery.carrier,name:0
-#: field:delivery.grid,carrier_id:0
-#: field:stock.picking,carrier_id:0
+#: view:delivery.carrier:0 field:delivery.carrier,name:0
+#: field:delivery.grid,carrier_id:0 field:stock.picking,carrier_id:0
 msgid "Carrier"
 msgstr ""
 
 #. module: delivery
 #: selection:delivery.grid.line,type:0
-#: selection:delivery.grid.line,variable_factor:0
-#: field:stock.picking,volume:0
+#: selection:delivery.grid.line,variable_factor:0 field:stock.picking,volume:0
 msgid "Volume"
 msgstr ""
 
@@ -235,8 +231,7 @@ msgstr ""
 
 #. module: delivery
 #: selection:delivery.grid.line,type:0
-#: selection:delivery.grid.line,variable_factor:0
-#: field:stock.picking,weight:0
+#: selection:delivery.grid.line,variable_factor:0 field:stock.picking,weight:0
 msgid "Weight"
 msgstr ""
 
@@ -252,7 +247,10 @@ msgstr ""
 
 #. module: delivery
 #: model:ir.module.module,description:delivery.module_meta_information
-msgid "Allows you to add delivery methods in sales orders and packing. You can define your own carrier and delivery grids for prices. When creating invoices from picking, Open ERP is able to add and compute the shipping line."
+msgid ""
+"Allows you to add delivery methods in sales orders and packing. You can "
+"define your own carrier and delivery grids for prices. When creating "
+"invoices from picking, Open ERP is able to add and compute the shipping line."
 msgstr ""
 
 #. module: delivery
@@ -268,7 +266,8 @@ msgstr ""
 
 #. module: delivery
 #: help:sale.order,carrier_id:0
-msgid "Complete this field if you plan to invoice the shipping based on packing."
+msgid ""
+"Complete this field if you plan to invoice the shipping based on packing."
 msgstr ""
 
 #. module: delivery
@@ -302,8 +301,7 @@ msgid "Delivery method"
 msgstr ""
 
 #. module: delivery
-#: field:delivery.carrier,price:0
-#: selection:delivery.grid.line,type:0
+#: field:delivery.carrier,price:0 selection:delivery.grid.line,type:0
 #: selection:delivery.grid.line,variable_factor:0
 msgid "Price"
 msgstr ""
@@ -313,3 +311,81 @@ msgstr ""
 msgid "Price Type"
 msgstr ""
 
+#. module: delivery
+#: model:product.template,name:delivery.delivery_product_product_template
+msgid "Delivery by Poste"
+msgstr ""
+
+#. module: delivery
+#: constraint:res.partner:0
+msgid "Error ! You can not create recursive associated members."
+msgstr ""
+
+#. module: delivery
+#: code:addons/delivery/wizard/delivery_sale_order.py:0
+#, python-format
+msgid "The order state have to be draft to add delivery lines."
+msgstr ""
+
+#. module: delivery
+#: code:addons/delivery/wizard/delivery_sale_order.py:0
+#, python-format
+msgid "No grid matching for this carrier !"
+msgstr ""
+
+#. module: delivery
+#: constraint:product.template:0
+msgid "Error: UOS must be in a different category than the UOM"
+msgstr ""
+
+#. module: delivery
+#: constraint:product.template:0
+msgid ""
+"Error: The default UOM and the purchase UOM must be in the same category."
+msgstr ""
+
+#. module: delivery
+#: code:addons/delivery/wizard/delivery_sale_order.py:0
+#, python-format
+msgid "No grid avaible !"
+msgstr ""
+
+#. module: delivery
+#: code:addons/delivery/wizard/delivery_sale_order.py:0
+#, python-format
+msgid "Order not in draft state !"
+msgstr ""
+
+#. module: delivery
+#: code:addons/delivery/delivery.py:0
+#, python-format
+msgid "No line matched this order in the choosed delivery grids !"
+msgstr ""
+
+#. module: delivery
+#: code:addons/delivery/delivery.py:0
+#, python-format
+msgid "No price available !"
+msgstr ""
+
+#. module: delivery
+#: constraint:product.product:0
+msgid "Error: Invalid ean code"
+msgstr ""
+
+#. module: delivery
+#: code:addons/delivery/stock.py:0
+#, python-format
+msgid "The carrier %s (id: %d) has no delivery grid!"
+msgstr ""
+
+#. module: delivery
+#: code:addons/delivery/stock.py:0
+#, python-format
+msgid "Warning"
+msgstr ""
+
+#. module: delivery
+#: constraint:res.partner:0
+msgid "The VAT doesn't seem to be correct."
+msgstr ""
