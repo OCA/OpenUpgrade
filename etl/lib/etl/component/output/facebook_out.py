@@ -48,6 +48,14 @@ class facebook_out(component):
             self.connector.close(self.facebook)
             self.facebook = False
 
+    def __getstate__(self):
+        res = super(facebook_out, self).__getstate__()
+        res.update({'method':self.method, 'domain':self.domain, 'fields':self.fields})
+        return res
+
+    def __setstate__(self, state):
+        super(facebook_out, self).__setstate__(state)
+        self.__dict__ = state
 
     def process(self):
         self.facebook = False

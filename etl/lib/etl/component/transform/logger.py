@@ -44,6 +44,15 @@ class logger(component):
         self._type = 'component.transfer.logger'
         self.output = output
 
+    def __getstate__(self):
+        res = super(logger, self).__getstate__()
+        res.update({'output':self.output})
+        return res
+
+    def __setstate__(self, state):
+        super(logger, self).__setstate__(state)
+        self.__dict__ = state
+
     def __copy__(self):
         res = logger(self.output, self.name)
         return res

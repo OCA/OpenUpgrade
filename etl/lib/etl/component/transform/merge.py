@@ -22,7 +22,7 @@
 """
  To merge all input flows.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 
@@ -38,8 +38,14 @@ class merge(component):
         Input Flows            : 0-x.
         * .*                   : The main data flow with input data.
         Output Flows           : 1.
-        * .*                   : Returns the main flow. 
-    """    
+        * .*                   : Returns the main flow.
+    """
+
+    def __getstate__(self):
+        pass
+
+    def __setstate__(self, state):
+        pass
 
     def process(self):
         my_gen_list = []

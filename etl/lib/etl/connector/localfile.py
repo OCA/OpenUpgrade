@@ -59,12 +59,21 @@ class localfile(connector):
             mode = self.mode
         if not mode in ['r','w','a','b','r+','w+','a+','rb','wb','ab','rb+','wb+','ab+']:
             mode = 'ab+'
+
+#        try:
         return file(self.uri, mode)
+#        except:
+#            return
         #self.file.encoding=self.encoding
 
-        def __getstate__(self):
-            res = super(localfile, self).__getstate__()
-            return res
+    def __getstate__(self):
+        res = super(localfile, self).__getstate__()
+        res.update({'mode':self.mode,'bufsize':self.bufsize, 'encoding':self.encoding, 'uri':self.uri })#
+        return res
+
+    def __setstate__(self, state):
+        super(localfile, self).__setstate__(state)
+        self.__dict__ = state
 
     def close(self,connector):
         """

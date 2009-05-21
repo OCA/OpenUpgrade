@@ -52,6 +52,15 @@ class map(component):
         res = map(self.map_criteria, self.preprocess, self.name, self.transformer, self.row_limit)
         return res
 
+    def __getstate__(self):
+        res = super(map, self).__getstate__()
+        res.update({'map_criteria':self.map_criteria,'preprocess':self.preprocess})
+        return res
+
+    def __setstate__(self, state):
+        super(map, self).__setstate__(state)
+        self.__dict__ = state
+
     def process(self):
         channels = self.input_get()
         datas = {}

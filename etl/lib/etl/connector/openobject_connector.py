@@ -71,6 +71,15 @@ class openobject_connector(connector):
         self.uid = self.login(self.user_login, self.passwd)
         return connector
 
+    def __getstate__(self):
+        res = super(openobject_connector, self).__getstate__()
+        res.update({'db':self.db, 'user_login':self.user_login, 'obj':self.obj, 'passwd':self.passwd, 'con_type':self.con_type, 'uid':self.uid, 'uri':self.uri})
+        return res
+
+    def __setstate__(self, state):
+        super(openobject_connector, self).__setstate__(state)
+        self.__dict__ = state
+
     def __convert(self, result):
         if type(result) == type(u''):
             return result.encode('utf-8')

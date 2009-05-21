@@ -40,6 +40,16 @@ class data_exist(component):
         self.connector = self.openobject_injector.connector.open()
         self.key = key
 
+    def __getstate__(self):
+        res = super(data_exist, self).__getstate__()
+        # to do: update res dic by connector and key
+        return res
+
+    def __setstate__(self, state):
+        super(data_exist, self).__setstate__(state)
+        self.__dict__ = state
+
+
     def process(self):
 
         #process incoming data
