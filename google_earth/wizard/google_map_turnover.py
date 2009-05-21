@@ -179,7 +179,7 @@ def create_kml(self, cr, uid, data, context={}):
         descriptionElement.appendChild(descriptionText)
         placemarkElement.appendChild(descriptionElement)
         styleurlElement = kmlDoc.createElement('styleUrl')
-        styleurlElement.appendChild(kmlDoc.createTextNode('#randomColorIcon'))
+        styleurlElement.appendChild(kmlDoc.createTextNode('root://styleMaps#default+nicon=0x304+hicon=0x314'))
         placemarkElement.appendChild(styleurlElement)
         pointElement = kmlDoc.createElement('Point')
         placemarkElement.appendChild(pointElement)

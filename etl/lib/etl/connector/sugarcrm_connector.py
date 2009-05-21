@@ -44,6 +44,14 @@ class sugarcrm_connector(connector):
         self.password = password
         self.encoding = encoding
 
+    def __getstate__(self):
+        res = super(sugarcrm_connector, self).__getstate__()
+        res.update({'url':self.url, 'username':self.username, 'password':self.password, 'encoding':self.encoding})
+        return res
+
+    def __setstate__(self, state):
+        super(sugarcrm_connector, self).__setstate__(state)
+        self.__dict__ = state
 
     def open(self):
         super(sugarcrm_connector, self).open()

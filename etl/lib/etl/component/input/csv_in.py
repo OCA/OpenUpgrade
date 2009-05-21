@@ -22,7 +22,7 @@
 """
  To read data from csv file.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 from etl.component import component
@@ -38,38 +38,51 @@ class csv_in(component):
         * .*           : Returns the main flow with data from csv file.
     """
 
-    def __init__(self, fileconnector, csv_params={}, name='component.input.csv_in', transformer=None, row_limit=0):   
-        """    
+    def __init__(self, fileconnector, csv_params={}, name='component.input.csv_in', transformer=None, row_limit=0):
+        """
         Required  Parameters
         fileconnector   : Localfile connector.
-        
-        Extra Parameters 
+
+        Extra Parameters
         name            : Name of Component.
         transformer     : Transformer object to transform string data into  particular object.
         row_limit       : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
-        csv_param       : To specify other csv parameter like fieldnames , restkey , restval etc. 
+        csv_param       : To specify other csv parameter like fieldnames , restkey , restval etc.
         """
-        super(csv_in, self).__init__(name=name, connector=fileconnector, transformer=transformer, row_limit=row_limit)        
+        super(csv_in, self).__init__(name=name, connector=fileconnector, transformer=transformer, row_limit=row_limit)
         self._type = 'component.input.csv_in'
-        self.csv_params = csv_params    
+        self.csv_params = csv_params
 
-    def __copy__(self):       
+    def __copy__(self):
         res = csv_in(self.connector , self.csv_params, self.name, self.transformer, self.row_limit)
-        return res   
-        
+        return res
+
     def end(self):
-        super(csv_in, self).end()     
-        if self.fp:                      
-            self.connector.close(self.fp)  
+        super(csv_in, self).end()
+        if self.fp:
+            self.connector.close(self.fp)
             self.fp = False
+
+    def __getstate__(self):
+        res = super(csv_in, self).__getstate__()
+        res.update({'csv_params':self.csv_params})#
+        return res
+
+    def __setstate__(self, state):
+        super(csv_in, self).__setstate__(state)
+#        state['mode'] = ''
+#        state['encoding'] = 'utf-8'
+#        state['bufsize'] = 0
+#        state['uri'] = ''
+        self.__dict__ = state
 
     def process(self):
         if self.is_end():
-            self.warning('No any Output attached')        
+            self.warning('No any Output attached')
         import csv
         self.fp = self.connector.open()
-        reader = csv.DictReader(self.fp, **self.csv_params)                   
-        for data in reader:                                
+        reader = csv.DictReader(self.fp, **self.csv_params)
+        for data in reader:
             if data:
                 yield data, 'main'
 
@@ -81,6 +94,6 @@ def test():
     test.check_output([{'tel': '+32.81.81.37.00', 'id': '11', 'name': 'Fabien'}])
     res = test.output()
     print res
-    
+
 if __name__ == '__main__':
     test()

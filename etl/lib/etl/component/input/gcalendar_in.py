@@ -19,62 +19,60 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-"""
-This is an ETL Component that reads data from SugarCRM.
-"""
 
 from etl.component import component
-class sugarcrm_in(component):
-    """
-        This is an ETL Component that reads data from SugarCRM
 
-    """
-    def __init__(self, sugarcrm_connector, module, name='componet.input.sugarcrm_in', transformer=False, row_limit=0):
+class gcalendar_in(component):
+
+    def __init__(self, gcalendar_conn, name='component.input.gmail_in', transformer=None, row_limit=0):
         """
-        Required Parameters
-        sugarcrm_connector  : SugarCRM connector.
-        module              : Name of the module.
+        Required  Parameters
+        gcalendar_conn     : connector for google calendar
 
         Extra Parameters
         name          : Name of Component.
-        transformer   : Transformer object to transform string data into particular type.
         row_limit     : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
         """
-
-        super(sugarcrm_in, self).__init__(name=name, connector=sugarcrm_connector, transformer=transformer, row_limit=row_limit)
-        self._type = 'componet.input.sugarcrm_in'
-        self.module = module
+        super(gcalendar_in, self).__init__(name=name, transformer=transformer, row_limit=row_limit)
+        self._type = 'component.input.gcalendar_in'
 
     def __copy__(self):
-        res = sugarcrm_in(self.sugarcrm_connector, self.module, self.name, self.transformer, self.row_limit)
+        res = gcalendar_in(self.gcalendar_conn, self.name, self.transformer, self.row_limit)
         return res
 
     def __getstate__(self):
-        res = super(sugarcrm_in, self).__getstate__()
-        res.update({'module':self.module})
+        res = super(gcalendar_in, self).__getstate__()
         return res
 
     def __setstate__(self, state):
-        super(sugarcrm_in, self).__setstate__(state)
+        super(gcalendar_in, self).__setstate__(state)
         self.__dict__ = state
 
+
     def process(self):
-        res = []
-        (portType, session_id,) = self.connector.open()
-        res = self.connector.search(portType, session_id, self.module)
-        for data in res:
-            if data:
-                yield data, 'main'
+        import gdata.contacts.service
+        feed = self.gcalendar_conn.GetCalendarEventFeed()
+        for i, an_event in enumerate(feed.entry):
+            print i,an_event
+            yield {}, 'main'
 
 def test():
-    #TODO
     from etl_test import etl_test
     import etl
-    sugarcrm_conn=etl.connector.sugarcrm_connector('admin','sugarpasswd',url='http://192.168.0.7/sugarcrm/soap.php')
-    test = etl_test.etl_component_test(sugarcrm_in(sugarcrm_conn, 'Contacts'))
-    res=test.output()
-    print res
+    import getpass
+    user = raw_input('Enter gmail username: ')
+    user = user + '@gmail.com'
+    password = getpass.unix_getpass("Enter your password:")
+    cal_conn=etl.connector.gcalendar_connector('mustufa.2007@gmail.com', 'zainabrupawala')
+    cal_service = cal_conn.open()
+    print cal_service
+    in_calendar = gcalendar_in(cal_service)
+
+    test = etl_test.etl_component_test(in_calendar)
+#    test.check_output([{'phone_numbers': [''], 'postal_addresses': [''], 'emails': [''], 'title': ''}], 'main')
+    # here add the details of the contact in your gmail in the above mentioned format
+    res = test.output()
+    print "hooo"
 
 if __name__ == '__main__':
     test()
-

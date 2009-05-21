@@ -30,7 +30,7 @@ class gmail_in(component):
         user     : User name.
         password : Password of the user.
 
-        Extra Parameters 
+        Extra Parameters
         name          : Name of Component.
         row_limit     : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
         """
@@ -42,6 +42,15 @@ class gmail_in(component):
     def __copy__(self):
         res = gmail_in(self.user, self.password, self.name, self.transformer, self.row_limit)
         return res
+
+    def __getstate__(self):
+        res = super(gmail_in, self).__getstate__()
+        res.update({'user':self.user, 'pwd':self.pwd})
+        return res
+
+    def __setstate__(self, state):
+        super(gmail_in, self).__setstate__(state)
+        self.__dict__ = state
 
     def process(self):
         import gdata.contacts.service
@@ -78,7 +87,7 @@ def test():
     password = getpass.unix_getpass("Enter your password:")
     test = etl_test.etl_component_test(gmail_in(user, password))
     test.check_output([{'phone_numbers': [''], 'postal_addresses': [''], 'emails': [''], 'title': ''}], 'main')
-    # here add the details of the contact in your gmail in the above mentioned format 
+    # here add the details of the contact in your gmail in the above mentioned format
     res = test.output()
 
 if __name__ == '__main__':

@@ -22,7 +22,7 @@
 """
  Puts job process in sleep.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 
 """
@@ -35,16 +35,16 @@ class sleep(component):
     Puts job process in sleep.
     """
     def __init__(self, delay=1, name='component.control.sleep'):
-        """ 
+        """
         Parameters
-        delay        : Delay in Seconds 
-        name         : Name of Component. 
+        delay        : Delay in Seconds
+        name         : Name of Component.
         """
         super(sleep, self).__init__(name)
         self._type = 'component.control.sleep'
         self.delay = delay
 
-    def __copy__(self):        
+    def __copy__(self):
         res = sleep(self.delay, self.name)
         return res
 
@@ -54,4 +54,12 @@ class sleep(component):
                 for d in iterator:
                     time.sleep(self.delay)
                     yield d, 'main'
+    def __getstate__(self):
+        res = super(sleep, self).__getstate__()
+        res.update({'delay':self.delay})
+        return res
+
+    def __setstate__(self, state):
+        super(sleep, self).__setstate__(state)
+        self.__dict__ = state
 

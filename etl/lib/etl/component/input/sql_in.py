@@ -22,7 +22,7 @@
 """
  To read data from SQL database.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 
@@ -44,22 +44,22 @@ class sql_in(component):
 
     def __init__(self, sqlconnector, sqlquery, name='component.input.sql_in', transformer=None, row_limit=0):
 
-        """ 
+        """
         Required Parameters
         sqlconnector  : SQLconnector connector.
         sqlquery      : SQL Query
-        
-        Extra Parameters 
+
+        Extra Parameters
         name          : Name of Component.
         transformer   : Transformer object to transform string data into particular type.
         row_limit     : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
         """
-        super(sql_in, self).__init__(name=name, connector=sqlconnector, transformer=transformer, row_limit=row_limit)        
+        super(sql_in, self).__init__(name=name, connector=sqlconnector, transformer=transformer, row_limit=row_limit)
         self._type = 'component.input.sql_in'
         self.sqlquery = sqlquery
-        
-        
-    def __copy__(self):       
+
+
+    def __copy__(self):
         res = sql_in(self.connector, self.sqlquery, self.name, self.transformer, self.row_limit)
         return res
 
@@ -69,10 +69,19 @@ class sql_in(component):
             self.connector.close(self.sql_con)
             self.sql_con = False
 
-    def process(self):       
+    def __getstate__(self):
+        res = super(sql_in, self).__getstate__()
+        res.update({'sqlquery':self.sqlquery})
+        return res
+
+    def __setstate__(self, state):
+        super(sql_in, self).__setstate__(state)
+        self.__dict__ = state
+
+    def process(self):
         self.sql_con = self.connector.open()
         cursor = self.sql_con.cursor()
-        cursor.execute(self.sqlquery)            
+        cursor.execute(self.sqlquery)
         columns_description = cursor.description
         rows = cursor.fetchall()
         for row in rows:
@@ -83,7 +92,7 @@ class sql_in(component):
                 col_count += 1
             if d:
                 yield d, 'main'
-       
+
 
 def test():
     from etl_test import etl_test
@@ -94,6 +103,6 @@ def test():
     test.check_output([{'id': 1, 'name': 'a'}, {'id': 2, 'name': 'b'}])# output according to the executed query should be written over here.
     res = test.output()
     print res
-    
+
 if __name__ == '__main__':
-    test() 
+    test()
