@@ -71,7 +71,7 @@ class document_file(osv.osv):
                                  pool = pooler.get_pool(cr.dbname)
                                  data = self.browse(cr, uid, ids[0], context=context)
                                  if not 'name' in vals :
-                                     vals.update({'name':data.name,'datas':temp,'parent_id':data.parent_id.id,'datas_fname':filename})
+                                     vals.update({'name':data.name,'datas':temp,'parent_id':data.parent_id.id,'datas_fname':filename,'partner_id':data.partner_id.id})
                                      self.create(cr, uid, vals, context=context)
                                      cr.commit()
                                  vals['datas_fname'] = newname
