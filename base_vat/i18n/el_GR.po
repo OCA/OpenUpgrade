@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* base_vat
+# 	* base_vat
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
@@ -18,7 +18,9 @@ msgstr ""
 
 #. module: base_vat
 #: help:res.partner,vat_subjected:0
-msgid "Check this box if the partner is subjected to the VAT. It will be used for the VAT legal statement."
+msgid ""
+"Check this box if the partner is subjected to the VAT. It will be used for "
+"the VAT legal statement."
 msgstr ""
 
 #. module: base_vat
@@ -29,5 +31,22 @@ msgstr ""
 #. module: base_vat
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Άκυρο XML για την αρχιτεκτονική όψης!"
 
+#. module: base_vat
+#: model:ir.module.module,description:base_vat.module_meta_information
+msgid ""
+"Enable the VAT Number for the partner. Check the validity of that VAT Number."
+msgstr ""
+"Ενεργοποιήστε τον αριθμό ΦΠΑ για τον συνεργάτη. Ελέγξτε την ορθότητα του "
+"αριθμού ΦΠΑ."
+
+#. module: base_vat
+#: field:res.partner,vat_subjected:0
+msgid "VAT Legal Statement"
+msgstr "Δήλωση ΦΠΑ"
+
+#. module: base_vat
+#: model:ir.module.module,shortdesc:base_vat.module_meta_information
+msgid "VAT"
+msgstr "ΦΠΑ"

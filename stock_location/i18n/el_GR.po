@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* stock_location
+# 	* stock_location
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
@@ -19,7 +19,7 @@ msgstr ""
 #. module: stock_location
 #: help:stock.location.path,delay:0
 msgid "Number of days to do this transition"
-msgstr ""
+msgstr "Αριθμός ημερών για να γίνει η συναλλαγή"
 
 #. module: stock_location
 #: constraint:ir.ui.view:0
@@ -29,69 +29,94 @@ msgstr ""
 #. module: stock_location
 #: selection:stock.location.path,auto:0
 msgid "Automatic No Step Added"
-msgstr ""
+msgstr "Αυτόματα Δεν Προστίθεται Επιπλέον Βήμα"
 
 #. module: stock_location
 #: help:product.product,path_ids:0
-msgid "These rules set the right path of the product in the whole location tree."
+msgid ""
+"These rules set the right path of the product in the whole location tree."
 msgstr ""
+"Αυτοί οι κανόνες θέτουν την σωστή διαδρομή του προϊόντος σε όλο το δεντρο "
+"τοποθεσιών."
 
 #. module: stock_location
 #: field:stock.location.path,location_from_id:0
 msgid "Source Location"
-msgstr ""
+msgstr "Τοποθεσία προέλευσης"
 
 #. module: stock_location
 #: field:stock.location.path,location_dest_id:0
 msgid "Destination Location"
-msgstr ""
+msgstr "Τοποθεσία προορισμού"
 
 #. module: stock_location
-#: field:stock.location.path,auto:0
-#: selection:stock.location.path,auto:0
+#: field:stock.location.path,auto:0 selection:stock.location.path,auto:0
 msgid "Automatic Move"
-msgstr ""
+msgstr "Αυτόματη Μετακίνηση"
 
 #. module: stock_location
 #: view:product.product:0
 msgid "Procurement & Locations"
-msgstr ""
+msgstr "Προμήθειες & Τοποθεσίες"
 
 #. module: stock_location
 #: field:stock.location.path,product_id:0
 msgid "Products"
-msgstr ""
+msgstr "Προϊόντα"
 
 #. module: stock_location
 #: selection:stock.location.path,auto:0
 msgid "Manual Operation"
-msgstr ""
+msgstr "Χειρωκίνητη Λειτουργία"
 
 #. module: stock_location
 #: model:ir.model,name:stock_location.model_stock_location_path
 msgid "stock.location.path"
-msgstr ""
+msgstr "διαδρομή.τοποθεσίας.αποθηκευμένων.προϊόντων"
 
 #. module: stock_location
 #: help:stock.location.path,auto:0
-msgid "This is used to define paths the product has to follow within the location tree.\n"
-"The 'Automatic Move' value will create a stock move after the current one that will be validated automatically. With 'Manual Operation', the stock move has to be validated by a worker. With 'Automatic No Step Added', the location is replaced in the original move."
+msgid ""
+"This is used to define paths the product has to follow within the location "
+"tree.\n"
+"The 'Automatic Move' value will create a stock move after the current one "
+"that will be validated automatically. With 'Manual Operation', the stock "
+"move has to be validated by a worker. With 'Automatic No Step Added', the "
+"location is replaced in the original move."
 msgstr ""
+"Αυτό χρησιμοποιήται για να ορίσει την διαδρομή που πρέπει το προϊόν να "
+"ακολουθήσει στο δέντρο τοποθεσιών.\n"
+"Η τιμή της \"Αυτόματης Μετακίνησης\" θα δημιουργήσει ένα απόθεμα μετά την "
+"τρέχουσα που ενημερωθεί αυτόματα. Με την \"Χειρωκίνητη Λειτουργία\", η "
+"μετακίνηση  του αποθέματος θα πρέπει να εγκριθεί από κάποιον υπάλληλο. Με "
+"την \"Αυτόματα Δεν Προστίθεται Επιπλέον Βήμα\", η τοποθεσία αντικαθίσταται "
+"από την αρχική μετακίνηση."
 
 #. module: stock_location
-#: field:product.product,path_ids:0
-#: view:product.product:0
+#: view:product.product:0 field:product.product,path_ids:0
 #: view:stock.location.path:0
 msgid "Location Paths"
-msgstr ""
+msgstr "Διαδρομές Τοποθεσίας"
 
 #. module: stock_location
 #: field:stock.location.path,delay:0
 msgid "Delay (days)"
-msgstr ""
+msgstr "Καθυστέρηση (ημέρες)"
 
 #. module: stock_location
 #: field:stock.location.path,name:0
 msgid "Operation"
-msgstr ""
+msgstr "Λειτουργία"
 
+#. module: stock_location
+#: model:ir.module.module,shortdesc:stock_location.module_meta_information
+msgid "Stock Location Paths"
+msgstr "Διαδρομή Τοποθεσίας Αποθηκευμένων Προϊόντων"
+
+#. module: stock_location
+#: constraint:ir.model:0
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
+msgstr ""
+"Το όνομα του Αντικειμένου πρέπει να ξεκινά με x_ και δεν πρέπει να περιέχει "
+"ειδικούς χαρακτήρες!"

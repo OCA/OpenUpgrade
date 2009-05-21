@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* sale_crm
+# 	* sale_crm
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
@@ -77,8 +77,7 @@ msgid "Products"
 msgstr ""
 
 #. module: sale_crm
-#: wizard_view:crm.case.make_order,init:0
-#: view:crm.case:0
+#: wizard_view:crm.case.make_order,init:0 view:crm.case:0
 msgid "Convert to Quote"
 msgstr ""
 
@@ -119,3 +118,107 @@ msgstr ""
 msgid "Make Case"
 msgstr ""
 
+#. module: sale_crm
+#: model:process.transition,name:sale_crm.process_transition_crmopportunityquotation
+msgid "Crm opportunity quotation"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.transition,name:sale_crm.process_transition_opportunityanalytic0
+msgid "Opportunity Analytic"
+msgstr ""
+
+#. module: sale_crm
+#: help:crm.case.make_order,init,partner_id:0
+msgid "Use this partner if there is no partner on the case"
+msgstr ""
+
+#. module: sale_crm
+#: selection:crm.case.make_order,init,picking_policy:0
+msgid "All at once"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.transition,note:sale_crm.process_transition_crmopportunityquotation
+msgid "Opportunity goes into the quotation"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.node,name:sale_crm.process_node_contractanalytic0
+msgid "Analytic account"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.node,note:sale_crm.process_node_crmquotation0
+msgid "Convert opportunity to quotation"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.node,note:sale_crm.process_node_contractpricelist0
+msgid "Contract Volume (pricelist)"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.node,name:sale_crm.process_node_crmopportunity0
+msgid "CRM Opportunity"
+msgstr ""
+
+#. module: sale_crm
+#: model:ir.module.module,shortdesc:sale_crm.module_meta_information
+msgid "Sale CRM Stuff"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.transition,note:sale_crm.process_transition_opportunityquotation0
+msgid "Opportunity convert into quotation"
+msgstr ""
+
+#. module: sale_crm
+#: selection:crm.case.make_order,init,picking_policy:0
+msgid "Direct Delivery"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.transition,name:sale_crm.process_transition_opportunityquotation0
+msgid "Opportunity Quotation"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.node,name:sale_crm.process_node_crmquotation0
+msgid "Quotation"
+msgstr ""
+
+#. module: sale_crm
+#: help:crm.case.make_order,init,close:0
+msgid "Check this to close the case after having created the sale order."
+msgstr ""
+
+#. module: sale_crm
+#: model:process.transition,note:sale_crm.process_transition_opportunitypricelist0
+msgid "Opporunity convert to the Pricelist"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.node,note:sale_crm.process_node_contractanalytic0
+msgid "Reflect the contract made with customer"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.node,note:sale_crm.process_node_crmopportunity0
+msgid "The CRM Opportunity can lead to a quotation."
+msgstr ""
+
+#. module: sale_crm
+#: model:process.transition,name:sale_crm.process_transition_opportunitypricelist0
+msgid "Opportunity Pricelist"
+msgstr ""
+
+#. module: sale_crm
+#: model:process.node,name:sale_crm.process_node_contractpricelist0
+msgid "Contract Pricelist"
+msgstr ""
+
+#. module: sale_crm
+#: wizard_field:sale_crm.make_case,init,section:0
+msgid "Case Section"
+msgstr ""

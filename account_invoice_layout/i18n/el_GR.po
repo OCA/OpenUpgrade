@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* account_invoice_layout
+# 	* account_invoice_layout
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
@@ -19,28 +19,30 @@ msgstr ""
 #. module: account_invoice_layout
 #: selection:account.invoice.line,state:0
 msgid "Sub Total"
-msgstr ""
+msgstr "Υποσύνολο"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Invoice Date:"
-msgstr ""
+msgstr "Ημερομηνία Τιμολογίου:"
 
 #. module: account_invoice_layout
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
+"Το όνομα του αντικειμένου θα πρέπει να ξεκινάει απο x_ και να μην περιέχει "
+"ειδικούς χαρακτήρες!"
 
 #. module: account_invoice_layout
-#: selection:account.invoice.line,state:0
-#: field:notify.message,name:0
+#: selection:account.invoice.line,state:0 field:notify.message,name:0
 msgid "Title"
-msgstr ""
+msgstr "Τίτλος"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Disc. (%)"
-msgstr ""
+msgstr "Εκπτ. (%)"
 
 #. module: account_invoice_layout
 #: selection:account.invoice.line,state:0
@@ -50,7 +52,7 @@ msgstr "Σημείωση"
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Supplier Invoice"
-msgstr ""
+msgstr "Τιμολόγιο Προμηθευτή"
 
 #. module: account_invoice_layout
 #: model:ir.actions.wizard,name:account_invoice_layout.wizard_notify_message
@@ -65,42 +67,42 @@ msgstr "Τιμή ανά Μονάδα"
 #. module: account_invoice_layout
 #: model:ir.model,name:account_invoice_layout.model_notify_message
 msgid "Notify By Messages"
-msgstr ""
+msgstr "Ειδοποίηση Απο Μηνύματα"
 
 #. module: account_invoice_layout
 #: wizard_button:wizard.notify_message,init,print:0
 msgid "Print"
-msgstr ""
+msgstr "Εκτύπωση"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Document"
-msgstr ""
+msgstr "Έγγραφο"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "PRO-FORMA"
-msgstr ""
+msgstr "PRO-FORMA"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Taxes:"
-msgstr ""
+msgstr "Φόροι:"
 
 #. module: account_invoice_layout
 #: view:account.invoice.line:0
 msgid "Seq."
-msgstr ""
+msgstr "Αλληλ."
 
 #. module: account_invoice_layout
 #: model:ir.ui.menu,name:account_invoice_layout.menu_finan_config_notify_message
 msgid "Notification Message"
-msgstr ""
+msgstr "Μήνυμα Ειδοποίησης"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Customer Ref:"
-msgstr ""
+msgstr "Σχετ. Πελάτης:"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
@@ -115,12 +117,12 @@ msgstr "Είδος ημερολογίου"
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Price"
-msgstr ""
+msgstr "Τιμή"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Canceled Invoice"
-msgstr ""
+msgstr "Ακυρωμένο Τιμολόγιο"
 
 #. module: account_invoice_layout
 #: field:account.invoice,abstract_line_ids:0
@@ -140,27 +142,27 @@ msgstr "Βάση"
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Fax :"
-msgstr ""
+msgstr "Fax :"
 
 #. module: account_invoice_layout
 #: field:notify.message,msg:0
 msgid "Special Message"
-msgstr ""
+msgstr "Ειδικό Μήνυμα"
 
 #. module: account_invoice_layout
 #: view:notify.message:0
 msgid "Write a notification or a wishful message."
-msgstr ""
+msgstr "Σημειώστε ένα ευχετήριο μήνυμα."
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid ":"
-msgstr ""
+msgstr ":"
 
 #. module: account_invoice_layout
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Άκυρο XML για την αρχιτεκτονική όψης!"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
@@ -171,12 +173,12 @@ msgstr "Τιμολόγιο"
 #. module: account_invoice_layout
 #: wizard_view:wizard.notify_message,init:0
 msgid "Select Message"
-msgstr ""
+msgstr "Επιλογή Μηνύματος"
 
 #. module: account_invoice_layout
 #: view:notify.message:0
 msgid "Messages"
-msgstr ""
+msgstr "Μηνύματα"
 
 #. module: account_invoice_layout
 #: selection:account.invoice.line,state:0
@@ -191,7 +193,7 @@ msgstr "Φόροι"
 #. module: account_invoice_layout
 #: selection:account.invoice.line,state:0
 msgid "Page Break"
-msgstr ""
+msgstr "Page Break"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
@@ -201,17 +203,17 @@ msgstr "Ποσό"
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Total (excl. taxes):"
-msgstr ""
+msgstr "Σύνολο (εξ. φόρων):"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Draft Invoice"
-msgstr ""
+msgstr "Πρόχειρο Τιμολόγιο"
 
 #. module: account_invoice_layout
 #: field:account.invoice.line,sequence:0
 msgid "Sequence Number"
-msgstr ""
+msgstr "Αριθμός Αλληλουχίας"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
@@ -221,17 +223,17 @@ msgstr "Ποσότητα"
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Refund"
-msgstr ""
+msgstr "Επιστροφή Χρημάτων"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "VAT :"
-msgstr ""
+msgstr "ΦΠΑ :"
 
 #. module: account_invoice_layout
 #: selection:account.invoice.line,state:0
 msgid "Separator Line"
-msgstr ""
+msgstr "Γραμμή Διαχωρισμού"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
@@ -240,33 +242,36 @@ msgstr "Φόρος"
 
 #. module: account_invoice_layout
 #: help:notify.message,msg:0
-msgid "This notification will appear at the bottom of the Invoices when printed."
+msgid ""
+"This notification will appear at the bottom of the Invoices when printed."
 msgstr ""
+"Αυτή η σημείωση θα εμφανίζεται στο κάτω μέρος των τιμολογίων όταν θα "
+"εκτυπώνονται."
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "(incl. taxes):"
-msgstr ""
+msgstr "(συμπ. φόρων):"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Tel. :"
-msgstr ""
+msgstr "Τηλ. :"
 
 #. module: account_invoice_layout
 #: wizard_button:wizard.notify_message,init,end:0
 msgid "Cancel"
-msgstr ""
+msgstr "Άκυρο"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
 msgid "Supplier Refund"
-msgstr ""
+msgstr "Επιστροφή Χρημάτων Προμηθευτή"
 
 #. module: account_invoice_layout
 #: wizard_field:wizard.notify_message,init,message:0
 msgid "Message"
-msgstr ""
+msgstr "Μήνυμα"
 
 #. module: account_invoice_layout
 #: rml:account.invoice.layout:0
@@ -276,5 +281,24 @@ msgstr "Σύνολο"
 #. module: account_invoice_layout
 #: model:ir.ui.menu,name:account_invoice_layout.menu_notify_mesage_tree_form
 msgid "All Notification Messages"
-msgstr ""
+msgstr "Όλα τα μηνύματα ειδοποίησης"
 
+#. module: account_invoice_layout
+#: model:ir.actions.wizard,name:account_invoice_layout.wizard_notify_message
+msgid "Invoices with Layout and Message"
+msgstr "Τιμολόγια με διάταξη και μήνυμα"
+
+#. module: account_invoice_layout
+#: model:ir.module.module,shortdesc:account_invoice_layout.module_meta_information
+msgid "account_invoice_layout"
+msgstr "account_invoice_layout"
+
+#. module: account_invoice_layout
+#: model:ir.actions.act_window,name:account_invoice_layout.notify_mesage_tree_form
+msgid "Write Messages"
+msgstr "Εγγραφή Μηνυμάτων"
+
+#. module: account_invoice_layout
+#: model:ir.actions.report.xml,name:account_invoice_layout.account_invoices_1
+msgid "Invoices with Layout"
+msgstr "Τιμολόγια με Διάταξη"

@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* account_tax_include
+# 	* account_tax_include
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
@@ -19,25 +19,34 @@ msgstr ""
 #. module: account_tax_include
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Άκυρο XML για την αρχιτεκτονική όψης!"
 
 #. module: account_tax_include
 #: selection:account.invoice,price_type:0
 msgid "Tax excluded"
-msgstr ""
+msgstr "Δεν συμπεριλαμβάνεται φόρος"
 
 #. module: account_tax_include
 #: view:account.tax:0
 msgid "Compute Code for Taxes included prices"
-msgstr ""
+msgstr "Κωδικός Υπολογισμού για Φόρους που συμπεριλαμβάνονται στις τιμές"
 
 #. module: account_tax_include
 #: selection:account.invoice,price_type:0
 msgid "Tax included"
-msgstr ""
+msgstr "Συμπερίληψη φόρου"
 
 #. module: account_tax_include
 #: field:account.invoice,price_type:0
 msgid "Price method"
-msgstr ""
+msgstr "Μέθοδος Τιμής"
 
+#. module: account_tax_include
+#: model:ir.module.module,shortdesc:account_tax_include.module_meta_information
+msgid "Invoices and prices with taxes included"
+msgstr "Τιμολόγια και τιμές με συμπερίληψη φόρων"
+
+#. module: account_tax_include
+#: field:account.invoice.line,price_subtotal_incl:0
+msgid "Subtotal"
+msgstr "Υποσύνολο"
