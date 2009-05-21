@@ -57,6 +57,7 @@
          'etl_component/transform/transform_data.xml'
      ],
     'update_xml': [
+         'etl_interface_data.xml',
          'etl_interface_sequence.xml',
          'etl_interface_view.xml',
          'etl_interface_wizard.xml',
@@ -95,7 +96,6 @@
          'etl_component/transform/merge_view.xml',
          'etl_component/transform/schema_validator_view.xml',
          'etl_component/transform/unique_view.xml',
-
          ],
      'demo_xml': ['etl_interface_demo.xml'],
     'installable': True,

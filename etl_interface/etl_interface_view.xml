@@ -188,6 +188,8 @@
 							type="object" states="draft" icon="gtk-yes"/>
 						<button name="%(wizard_launch_job_process)d"
 							string="Launch a Process" type="action" states="open" icon="gtk-go-forward"/>
+						<button name="action_run_all_processes" string="Run All Open Processes"
+						                            type="object" states="open" icon="gtk-media-play"/>
 						<button name="action_close_job" string="Close"
 							type="object" states="open" icon="gtk-cancel"/>
 						<button name="action_set_to_draft" string="Reset to draft"

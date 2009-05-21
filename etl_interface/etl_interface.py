@@ -217,7 +217,23 @@ class etl_job(osv.osv):
     def action_set_to_draft(self, cr, uid , id, context={}):
         self.write(cr, uid , id, {'state': 'draft'})
         return True
-
+    
+    def action_start_process(self, db, uid , ids, obj, context={}):
+        import pooler
+        db, pool = pooler.get_db_and_pool(db)
+        cr = db.cursor()
+        return obj.action_start_process(cr, uid , ids, context)
+    
+    def action_run_all_processes(self, cr, uid , id, context={}):
+        import threading
+        job = self.browse(cr, uid , id)[0]
+        process_obj = self.pool.get('etl.job.process')
+        cr.execute("select id from etl_job_process where job_id = %s and state='open'" % (id[0],))
+        process_ids = map(lambda x:x[0],cr.fetchall())
+        thread1 = threading.Thread( target=self.action_start_process , args=(cr.dbname, uid, process_ids, process_obj, context))
+        thread1.start()
+        return True
+    
     def get_instance(self, cr, uid, id, context={}, data={}):
         if (cr.dbname, uid, data.get('process_id', False), id) not in self._cache:
             self._cache[(cr.dbname, uid, data.get('process_id', False), id)]=self.create_instance(cr, uid, id, context, data)

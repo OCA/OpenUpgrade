@@ -24,43 +24,28 @@ import etl
 import tools
 from osv import osv, fields
 
-class etl_component_transform_map_lines(osv.osv):
-    _name='etl.component.transform.map_lines'
-
+class etl_component_map_field(osv.osv):
+    _name='etl.component.field'
+    _inherit ='etl.component.field'
+    _rec_name = 'source_field'
+    
     def _get_channels(self, cr, uid, context={}):
         c_obj = self.pool.get('etl.channel')
         ch_ids = c_obj.search(cr, uid, [('type', '=', 'transition')])
         result = c_obj.read(cr, uid, ch_ids, ['code', 'name'], context)
         return [(r['code'], r['name']) for r in result]
+    
+    _columns = {
+          'channel': fields.selection(_get_channels, 'Channel'),
+              }
 
-    _columns={
-              'name' : fields.selection(_get_channels, 'Source Channel'),
-              'map_field_ids' : fields.one2many('etl.component.transform.map_fields', 'map_line_id', 'Map Fields'),
-              'component_id' : fields.many2one('etl.component', 'Map Component'),
-    }
-    _defaults = {
-            'name': lambda *a: 'main',
-    }
-
-etl_component_transform_map_lines()
-
-class etl_component_transform_map_fields(osv.osv):
-    _name='etl.component.transform.map_fields'
-    _rec_name = 'source_field'
-    _columns={
-              'dest_field' : fields.char('Destination Field', size=124),
-              'source_field' : fields.char('Source Field', size=124),
-              'map_line_id' : fields.many2one('etl.component.transform.map_lines', 'Map line'),
-    }
-
-etl_component_transform_map_fields()
-
+etl_component_map_field()
 
 class etl_component_transform_map(osv.osv):
     _name = 'etl.component'
     _inherit = 'etl.component'
     _columns={
-            'map_line_ids' : fields.one2many('etl.component.transform.map_lines', 'component_id', 'Map lines'),
+            'map_line_ids' : fields.one2many('etl.component.field', 'component_id', 'Map lines'),
             'preprocess' : fields.text('Preprocess'),
     }
 
@@ -74,10 +59,9 @@ class etl_component_transform_map(osv.osv):
             if cmp.transformer_id:
                 trans_instance=obj_transformer.create_instance(cr, uid, cmp.transformer_id.id, context, data)
             for line in cmp.map_line_ids:
-                fields={}
-                for field in line.map_field_ids:
-                    fields[field.name]=field.dest_field
-                map_criteria[line.name]=fields
+                if not line.channel in map_criteria:
+                    map_criteria[line.channel] = {}
+                map_criteria[line.channel].update({line.source_field:line.dest_field})
             val = etl.component.transform.map(map_criteria, cmp.preprocess, cmp.name, trans_instance, cmp.row_limit)
         return val
 
