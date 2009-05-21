@@ -1055,6 +1055,7 @@ aW1lLnN0cmZ0aW1lKCclWS0lbS0lZCAlSDolTTolUycp
             <field eval="&quot;&quot;&quot;Purchase&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;purchase&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
 <!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
@@ -1062,6 +1063,7 @@ aW1lLnN0cmZ0aW1lKCclWS0lbS0lZCAlSDolTTolUycp
             <field eval="&quot;&quot;&quot;Not Purchase&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
             <field eval="&quot;&quot;&quot;
 purchase_trig_id = pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]\n
 step_ids = []\n
@@ -1080,6 +1082,7 @@ else:\n
             <field eval="&quot;&quot;&quot;Automatic&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;automatic&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
+            <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
 <!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>

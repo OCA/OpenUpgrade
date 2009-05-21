@@ -198,10 +198,12 @@ class dm_offer_step_transition_trigger(osv.osv):
         'gen_next_wi' : fields.boolean('Auto Generate Next Workitems'),
         'in_act_cond' : fields.text('Action Condition', required=True),
 #        'out_act_cond' : fields.text('Outgoing Action Condition', required=True),
+        'type' : fields.selection([('offer','Offer'),('as','After-Sale')],'Type', required=True),
     }
     _defaults = {
         'gen_next_wi': lambda *a: 'False',
         'in_act_cond': lambda *a: 'result = False',
+        'type' : lambda *a: 'offer',
 #        'out_act_cond': lambda *a: 'result = False',
     }
 dm_offer_step_transition_trigger()
