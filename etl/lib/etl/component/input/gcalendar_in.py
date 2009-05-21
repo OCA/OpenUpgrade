@@ -63,7 +63,7 @@ def test():
     user = raw_input('Enter gmail username: ')
     user = user + '@gmail.com'
     password = getpass.unix_getpass("Enter your password:")
-    cal_conn=etl.connector.gcalendar_connector('mustufa.2007@gmail.com', 'zainabrupawala')
+    cal_conn=etl.connector.gcalendar_connector(user, password)
     cal_service = cal_conn.open()
     print cal_service
     in_calendar = gcalendar_in(cal_service)
