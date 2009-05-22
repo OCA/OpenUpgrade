@@ -130,6 +130,7 @@ def _create_kml(self, cr, uid, data, context={}):
         no_of_packs_min += interval
 
     i=0
+    line = '------------------------------------------------------'
     for pack in packings:
         total_qty = pack['product_send']
         warehouse_city = warehouse_dict[pack['warehouse_id']]
@@ -137,8 +138,8 @@ def _create_kml(self, cr, uid, data, context={}):
         if not (warehouse_city and customer_city):
             raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer. ')
 
-        desc_text = ' <html><head> <font color="red"> <b> [ Warehouse location : ' + warehouse_city + ' ]' + '  <br />[ Customer Location : ' + customer_city + ' ]' + ' <br />[ Number of product sent : ' + str(total_qty) + ' ]' + \
-        ' <br />[ Number of delivery : ' + str(pack['number_delivery']) + ' ]' + '</b> </font> </head></html>'
+        desc_text = ' <html><head> <font color="red"> <b> Warehouse location : ' + warehouse_city + '<br/>' + line + ' <br /> Customer Location : ' + customer_city + '<br/>' + line +' <br /> Number of product sent : ' + str(total_qty) + '<br/>' +  line +\
+        ' <br />Number of delivery : ' + str(pack['number_delivery']) + '<br/>' + '</b> </font> </head></html>'
 
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
@@ -190,9 +191,12 @@ def _create_kml(self, cr, uid, data, context={}):
         steps = get_directions(warehouse_city, customer_city)
         if not steps: # make route path strait
             coordinates1 = geocode(warehouse_city)
-            coordinates1 = coordinates1 + '\n'
-            coorElement.appendChild(kmlDoc.createTextNode(coordinates1))
             coordinates2 = geocode(customer_city)
+            coordinates2 = coordinates2 + '\n'
+#            coordinates1 = coordinates1 + '\n'
+            coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
+            coorElement.appendChild(kmlDoc.createTextNode(coordinates1))
+#            coordinates2 = geocode(customer_city)
             coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
         else:
             for s in steps:
