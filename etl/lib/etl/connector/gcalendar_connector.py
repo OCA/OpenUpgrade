@@ -102,7 +102,7 @@ def test():
     """
     from etl_test import etl_test
     import etl
-    cal_conn=gcalendar_connector('mustufa.2007@gmail.com', 'zainabrupawala')
+    cal_conn=gcalendar_connector('username','password')
     cal_service = cal_conn.open()
     print cal_service
 
