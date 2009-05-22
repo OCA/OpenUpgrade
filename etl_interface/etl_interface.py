@@ -146,13 +146,13 @@ class etl_component_type(osv.osv):
         type= self.browse(cr, uid, id)[0]
         if type.added:
             return
-        cr.execute("select id, arch from ir_ui_view where name = 'view.etl.component.form'")
-        result = cr.dictfetchall()[0]
         fields = type.field_ids
         if not len(type.field_ids):
             return
         from xml import dom, xpath
         from lxml import etree
+        cr.execute("select id, arch from ir_ui_view where name = 'view.etl.component.form'")
+        result = cr.dictfetchall()[0]
         mydom = dom.minidom.parseString(result['arch'].encode('utf-8'))
         child_node=mydom.childNodes[0].childNodes
         for i in range(1,len(child_node)):
@@ -163,14 +163,17 @@ class etl_component_type(osv.osv):
                     groupnode.setAttribute('colspan', "4")
                     groupnode.setAttribute('attrs', "{'invisible':[('type_id','!=',%s)]}" % type.id)
                     node.appendChild(groupnode)
-                    attrs = "{'invisible':[('type_id','!=',%s)]}" % (type.id)
                     for field in fields:
                         newnode = mydom.createElement('field')
                         newnode.setAttribute('name', field.name)
-                        newnode.setAttribute('attrs', attrs)
-                        if field.ttype == 'one2many':
+                        newnode.setAttribute('attrs', "{'invisible':[('type_id','!=',%s)]}" % (type.id))
+                        if field.ttype in ['one2many', 'text']:
                             newnode.setAttribute('colspan', "4")
                             newnode.setAttribute('nolabel', "1")
+                            sepnode = mydom.createElement('separator')
+                            sepnode.setAttribute('colspan', "4")
+                            sepnode.setAttribute('string',  field.field_description)
+                            groupnode.appendChild(sepnode)
                         groupnode.appendChild(newnode)
         result['arch']=mydom.toxml()
         self.pool.get('ir.ui.view').write(cr, uid, result['id'], {'arch' : result['arch']})
@@ -464,20 +467,23 @@ class etl_job_process(osv.osv):
     def action_open_process(self, cr, uid, ids, context={}):
         for process in self.browse(cr, uid, ids, context):
             self.write(cr, uid, process.id, {'state':'open'})
-
+            
     def action_start_process(self, cr, uid, ids, context={}, data={}):
         for process in self.browse(cr, uid, ids, context):
             data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
             job=self.get_job_instance(cr, uid, process.id, context, data)
             job.pickle_file=tools.config['root_path']+'/save_job.p'
             if process.state in ('open', 'exception'):
-                job.run()
+                try:
+                    job.run()
+                except Exception, e:
+                    print 'Exception: ', e
+                    self.write(cr, uid, process.id, {'state':'exception'})
             elif process.state in ('pause'):
                 self.write(cr, uid, process.id, {'state':'start', 'start_date':time.strftime('%Y-%m-%d %H:%M:%S')})
                 job.signal('restart')
             else:
                 raise osv.except_osv(_('Error !'), _('Cannot start process in %s state !'%process.state))
-
         return True
 
     def action_restart_process(self, cr, uid, ids, context={}, data={}):
