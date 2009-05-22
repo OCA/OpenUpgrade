@@ -28,9 +28,10 @@
 			<field name="model">etl.project</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="etl.project">
-					<field name="name" colspan="4" select="1" />
-					<field name="job_ids" />
+				<form string="Project">
+					<field name="name" select="1" />
+					<separator string="Jobs" colspan="4" />
+					<field name="job_ids"  colspan="4" nolabel="1"/>
 				</form>
 			</field>
 		</record>
@@ -41,7 +42,7 @@
 			<field name="model">etl.project</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="etl.project">
+				<tree string="Projects">
 					<field name="name" select="1" />
 					<field name="job_ids" />
 				</tree>
@@ -91,7 +92,7 @@
 			<field name="model">etl.channel</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="etl.channel">
+				<form string="Channel">
 					<field name="name" colspan="4" select="1" />
 					<field name="code" select="1" />
 					<field name="type" select="1" />
@@ -104,7 +105,7 @@
 			<field name="model">etl.channel</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="etl.channel">
+				<tree string="Channels">
 					<field name="name" select="1" />
 					<field name="code" select="1" />
 					<field name="type" select="1" />
@@ -164,7 +165,7 @@
 			<field name="model">etl.job</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="etl_job">
+				<form string="Job">
 					<field name="name" select="1" />
 					<field name="project_id" select="1" />
 					<field name="user_id" select="1" />
@@ -188,6 +189,8 @@
 							type="object" states="draft" icon="gtk-yes"/>
 						<button name="%(wizard_launch_job_process)d"
 							string="Launch a Process" type="action" states="open" icon="gtk-go-forward"/>
+						<button name="action_run_all_processes" string="Run All Open Processes"
+						                            type="object" states="open" icon="gtk-media-play"/>
 						<button name="action_close_job" string="Close"
 							type="object" states="open" icon="gtk-cancel"/>
 						<button name="action_set_to_draft" string="Reset to draft"
@@ -203,9 +206,11 @@
 			<field name="model">etl.job</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="etl_job">
+				<tree string="Jobs">
 					<field name="name" select="1" />
 					<field name="state" select="1" />
+					<field name="component_ids"/>
+					<field name="user_id" select="1" />
 				</tree>
 			</field>
 		</record>
@@ -255,7 +260,7 @@
 			<field name="model">etl.transition</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="etl_transition">
+				<form string="Transition">
 					<field name="name" select="1" />
 					<field name="type" select="1" />
 					<separator string="Transition property" colspan="4" />
@@ -354,7 +359,7 @@
 			<field name="model">etl.job.process.statistics</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="etl_job">
+				<tree string="Jobs">
 					<field name="name" select="1" />
 					<field name="state" />
 					<field name="input_records" />
@@ -388,7 +393,7 @@
 			<field name="model">etl.job.process.log</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="etl_job">
+				<tree string="Jobs">
 					<field name="name" select="1" />
 					<field name="component_id" />
 					<field name="date_time" />
@@ -482,7 +487,7 @@
 							<button name="action_cancel_draft"	string="Set to Draft" states="cancel" type="object" icon="gtk-convert"/>
 							<button name="start_process" string="Start" states="open,pause" icon="gtk-execute"/>
 							<button name="action_pause" string="Pause" states="start" icon="gtk-media-pause"/>
-							<button name="action_restart_process"	string="Retry" type="object" states="exception" icon="gtk-ok"/>
+							<button name="start_process"	string="Retry" states="exception" icon="gtk-ok"/>
 							<button name="action_stop" string="Stop" states="start,pause" icon="gtk-no"/>
 							<button name="action_restart_process"	string="Restart" type="object" states="stop" icon="gtk-refresh"/>
 							<button name="cancel" string="Cancel" states="draft,open,exception,pause" icon="gtk-cancel"/>
@@ -496,7 +501,7 @@
 			<field name="model">etl.job.process</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="etl_job">
+				<tree string="Jobs">
 					<field name="name" select="1" />
 					<field name="job_id" select="1" />
 					<field name="start_date" select="1" />

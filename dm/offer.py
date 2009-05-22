@@ -39,7 +39,8 @@ AVAILABLE_TYPE = [
     ('new','New'),
     ('standart','Standart'),
     ('rewrite','Rewrite'),
-    ('preoffer','Offer Idea')
+    ('preoffer','Offer Idea'),
+    ('as','After-Sale')
 ]
 
 
@@ -235,7 +236,7 @@ class dm_offer(osv.osv):
     def fields_get(self, cr, uid, fields=None, context=None):
         res = super(dm_offer, self).fields_get(cr, uid, fields, context)
         if context and not context.has_key('type') and res.has_key('type'):
-            res['type']['selection'] = [('new','New'),('standart','Standart'),('rewrite','Rewrite')]
+            res['type']['selection'] = [('new','New'),('standart','Standart'),('rewrite','Rewrite'),('as','After-Sale')]
         return res
     
     def default_get(self, cr, uid, fields, context=None):

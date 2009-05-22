@@ -46,7 +46,6 @@ class logger(component):
 
     def __getstate__(self):
         res = super(logger, self).__getstate__()
-        res.update({'output':self.output})
         return res
 
     def __setstate__(self, state):

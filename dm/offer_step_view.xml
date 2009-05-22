@@ -111,7 +111,7 @@
                                 <field name="step_from_id" colspan="4" readonly="1"/>
                                 <field name="step_to_id" colspan="4" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <separator string="Action Condition and Time" colspan="4"/>
-                                <field name="condition_id" select="1"/>
+                                <field name="condition_id" select="1" domain="[('type','=','offer')]"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
@@ -136,7 +136,7 @@
                                 <field name="step_from_id" domain="[('offer_id','=',parent.offer_id)]"/>
                                 <field name="step_to_id" readonly="1"/>
                                 <separator string="Action Condition and Time" colspan="4"/>
-                                <field name="condition_id" select="1"/>
+                                <field name="condition_id" select="1" domain="[('type','=','offer')]"/>
                                 <label align="1.0" string="Delay After Trigger Date:"/>
                                 <group col="2" colspan="1">
                                     <field name="delay" nolabel="1"/>
@@ -214,9 +214,10 @@
                 <field name="type">form</field>
                 <field name="arch" type="xml">
                         <form string="Transition Trigger">
-                                <field name="name"/>
-                                <field name="code"/>
+                                <field name="name" select="1"/>
+                                <field name="code" select="2"/>
                                 <field name="gen_next_wi"/>
+                                <field name="type" select="1"/>
                                 <separator string="Action Condition" colspan="4"/>
                                 <field name="in_act_cond" nolabel="1" colspan="4"/>
 <!--                                <separator string="Outgoing Action Condition" colspan="4"/>

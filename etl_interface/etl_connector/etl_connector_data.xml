@@ -17,9 +17,13 @@
 			<field name="name">SQL</field>
 			<field name="code">sql</field>
 		</record>
-          <record id="conn_sugarcrm_connector" model="etl.connector.type">
+        <record id="conn_sugarcrm_connector" model="etl.connector.type">
 			<field name="name">SugarCRM</field>
 			<field name="code">sugarcrm</field>
+		</record>
+        <record id="conn_gcalendar_connector" model="etl.connector.type">
+			<field name="name">GCalendar</field>
+			<field name="code">gcalendar</field>
 		</record>
 	</data>
 </openerp>

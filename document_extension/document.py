@@ -78,9 +78,11 @@ class document_file(osv.osv):
                                  vals['datas']=data.datas
                                  vals['lock']=1
                              else:
-                                 vals_new=({'name':state.name,'datas':state.datas,'parent_id':state.parent_id.id,'datas_fname':state.datas_fname,'partner_id':state.partner_id.id,})
-                                 self.create(cr, uid, vals_new, context=context)
-                                 cr.commit()
+                                 if filename:
+                                     if state.datas_fname!=  filename:
+                                         vals_new=({'name':state.name,'datas':state.datas,'parent_id':state.parent_id.id,'datas_fname':state.datas_fname,'partner_id':state.partner_id.id,})
+                                         self.create(cr, uid, vals_new, context=context)
+                                         cr.commit()
 
             result = super(document_file,self).write(cr,uid,ids,vals,context=context)
             cr.commit()

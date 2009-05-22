@@ -20,20 +20,14 @@
 			            <separator string="Fields Mapping" colspan="4" />
 							<field name="map_line_ids" nolabel="1" colspan="4" widget="one2many_list">
 								<tree string="Fields lines" editable="bottom">
-									<field name="map_field_ids" nolabel="1" colspan="4" widget="one2many_list">
-										<tree string="Fields lines" editable="bottom">
-										<field name='source_field' />
-										<field name='dest_field' />
-										</tree>
-									</field>
+									<field name='channel' />
+									<field name='source_field' />
+									<field name='dest_field' />
 								</tree>
 								<form string="Fields lines">
-									<field name="map_field_ids" nolabel="1" colspan="4" widget="one2many_list">
-										<form string="Fields lines">
-										<field name='source_field' />
-										<field name='dest_field' />
-										</form>
-									</field>
+									<field name='channel' />
+									<field name='source_field' />
+									<field name='dest_field' />
 								</form>
 							</field>
 							<separator string="Pre-Process Py-Function"
@@ -109,36 +103,6 @@
 			</field>
 		</record>
 		
-    	<record id="etl_component_map_lines_form" model="ir.ui.view">
-    	    <field name="name">view.etl.component.map_lines.form</field>
-    	    <field name="model">etl.component.transform.map_lines</field>
-    	    <field name="type">form</field>
-    	    <field name="priority">10</field>
-    	    <field name="arch" type="xml">
-        	    <form string="Mapping Lines">
-        	        <field name="name"/>
-        	        <field name="map_field_ids" widget="one2many_list" nolabel="1" colspan="4" >
-            	        <field name="dest_field"/>
-            	        <field name="source_field"/>
-            	   </field>
-                </form>
-    	    </field>
-    	</record>
-    	
-    	<record id="etl_component_map_lines_tree" model="ir.ui.view">
-    	    <field name="name">view.etl.component.map_lines.tree</field>
-    	    <field name="model">etl.component.transform.map_lines</field>
-    	    <field name="type">tree</field>
-    	    <field name="priority">10</field>
-    	    <field name="arch" type="xml">
-        	    <tree string="Mapping Lines" editable="bottom">
-        	        <field name="name"/>
-        	        <field name="map_field_ids"/>
-                </tree>
-    	    </field>
-    	</record>
-	
-
     <record id="etl_component_datamap_form1" model="ir.ui.view">
         <field name="name">view.etl.component.transform.map</field>
         <field name="model">etl.component</field>

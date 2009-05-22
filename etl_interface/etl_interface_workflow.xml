@@ -88,7 +88,12 @@
 			<field name="signal">start_process</field>
 		</record>
 
-
+	<record id="trans_open_exception" model="workflow.transition">
+			<field name="act_from" ref="act_open" />
+			<field name="act_to" ref="act_exception" />
+			<field name="signal">not (action_start_process())</field>
+		</record>
+		
 		<record id="trans_open_cancel" model="workflow.transition">
 			<field name="act_from" ref="act_open" />
 			<field name="act_to" ref="act_cancel" />

@@ -19,13 +19,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import csv_in
-import vcard_in
-import excel_in
-import xml_in
-import openobject_in
-import gmail_in
-import facebook_in
-import xmlrpc_in
-import sugarcrm_in
-import gcalendar_in
+
+import wizard_email_send
+#import wizard_check_section
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

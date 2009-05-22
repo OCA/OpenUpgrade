@@ -2,8 +2,8 @@
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution    
-#    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
-#    $Id$
+#    Copyright (C) 2009 Smile.fr. All Rights Reserved
+#    authors: Raphaël Valyi
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -19,13 +19,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import csv_in
-import vcard_in
-import excel_in
-import xml_in
-import openobject_in
-import gmail_in
-import facebook_in
-import xmlrpc_in
-import sugarcrm_in
-import gcalendar_in
+from osv import fields, osv
+
+
+class sale_order_line(osv.osv):
+    _inherit = 'sale.order.line'
+
+    
+    def configurator_line_write(self, cr, user, ids, context=None):
+        return {
+            'type': 'ir.actions.act_window_close',
+        }
+
+
+sale_order_line()

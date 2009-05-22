@@ -33,7 +33,7 @@ class gcalendar_in(component):
         name          : Name of Component.
         row_limit     : Limited records are sent to destination if row limit is specified. If row limit is 0, all records are sent.
         """
-        super(gcalendar_in, self).__init__(name=name, transformer=transformer, row_limit=row_limit)
+        super(gcalendar_in, self).__init__(connector=gcalendar_conn, name=name, transformer=transformer, row_limit=row_limit)
         self._type = 'component.input.gcalendar_in'
 
     def __copy__(self):
@@ -51,7 +51,9 @@ class gcalendar_in(component):
 
     def process(self):
         import gdata.contacts.service
-        feed = self.gcalendar_conn.GetCalendarEventFeed()
+        feed = self.connector.GetCalendarEventFeed()
+        rows = []
+        data = {}
         for i, an_event in enumerate(feed.entry):
             print i,an_event
             yield {}, 'main'
@@ -63,7 +65,7 @@ def test():
     user = raw_input('Enter gmail username: ')
     user = user + '@gmail.com'
     password = getpass.unix_getpass("Enter your password:")
-    cal_conn=etl.connector.gcalendar_connector('mustufa.2007@gmail.com', 'zainabrupawala')
+    cal_conn=etl.connector.gcalendar_connector(user, password)
     cal_service = cal_conn.open()
     print cal_service
     in_calendar = gcalendar_in(cal_service)

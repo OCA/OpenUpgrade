@@ -1,7 +1,8 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution    
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -19,13 +20,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import csv_in
-import vcard_in
-import excel_in
-import xml_in
-import openobject_in
-import gmail_in
-import facebook_in
-import xmlrpc_in
-import sugarcrm_in
-import gcalendar_in
+import etl
+import tools
+from osv import osv, fields
+
+class gcalender_connector(osv.osv):
+    _name = 'etl.connector'
+    _inherit = 'etl.connector'
+
+    def create_instance(self, cr, uid, id , context={}, data={}):
+        val =  super(gcalender_connector, self).create_instance(cr, uid, id, context, data)
+        con = self.browse(cr, uid, id)
+        if con.type == 'gcalender':
+            val =  etl.connector.gcalendar_connector(con.uid, con.passwd, con.delay, con.name)
+        return val
+
+gcalender_connector()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

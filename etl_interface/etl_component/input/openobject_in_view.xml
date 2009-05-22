@@ -105,6 +105,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 			<form string="Fields">
+				<field name="channel"/>
 				<field name="source_field"/>
                 <field name="dest_field"/>
 			</form>
@@ -117,6 +118,7 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 			<tree string="Fields" editable="bottom">
+				<field name="channel"/>
 				<field name="source_field"/>
                  <field name="dest_field"/>
 			</tree>
