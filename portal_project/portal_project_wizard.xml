@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <wizard id="wizard_portal_project_email_send" 
+        		model="res.partner" 
+        		name="portal.project.email.send" 
+        		string="Email Send"/>
+        		
+        <wizard id="wizard_portal_check_section" 
+        		model="crm.case" 
+        		name="portal.crm.check.section" 
+        		string="Check Section"
+        		menu="False"/>
+
+    </data>
+</openerp>

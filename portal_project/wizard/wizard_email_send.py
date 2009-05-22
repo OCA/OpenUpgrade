@@ -19,7 +19,39 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import portal_project
+
 import wizard
+import pooler
+
+email_send_form = '''<?xml version="1.0"?>
+<form string="Email Send">
+    <field name="to"/>
+    <newline/>
+    <field name="subject"/>
+    <newline/>
+    <field name="body" />
+</form>'''
+
+email_send_fields = {
+    'to': {'string':"Recipients", 'type':'many2many', 'relation':'res.users'},
+    'subject': {'string':'Subject', 'type':'char', 'size':64, 'required':True},
+    'body': {'string':'Message', 'type':'text_tag', 'required':True}
+}
+
+def _email_send(self, cr, uid, data, context):
+    return {}
+
+class email_send(wizard.interface):
+    states = {
+        'init': {
+            'actions': [],
+            'result': {'type': 'form', 'arch': email_send_form, 'fields': email_send_fields, 'state':[('end','Cancel'), ('send','Send Email')]}
+        },
+        'send': {
+            'actions': [_email_send],
+            'result': {'type': 'state', 'state':'end'}
+        }
+    }
+email_send('portal.project.email.send')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
