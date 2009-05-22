@@ -163,13 +163,12 @@ def create_kml(self, cr, uid, data, context={}):
 
         if value_name in country_list:
             dict_country[value_name] = value_cord
-    print country_list
     kmlDoc = xml.dom.minidom.Document()
     kmlElement = kmlDoc.createElementNS('http://earth.google.com/kml/2.2','kml')
     kmlElement.setAttribute('xmlns','http://www.opengis.net/kml/2.2')
     kmlElement = kmlDoc.appendChild(kmlElement)
     documentElement = kmlDoc.createElement('Document')
-
+    line = '<br />--------------------------------------------'
     for part in partners:
         address = ''
         add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
@@ -201,9 +200,12 @@ def create_kml(self, cr, uid, data, context={}):
         elif address == ', Saint Kitts & Nevis Anguilla':
             address = ', Saint Kitts and Nevis'
 
+        desc_text = ' <html><head> <font color="red"> <b> Partner Name : ' + str(part.name) + '<br/>' + line +'<br /> Partner Code : ' + str(part.ref or '') + '<br/>' + line + ' <br />Type : ' + type + ' <br/>' +line+ '<br /> Partner Address: ' +  address + '<br/>' +line+ '<br /> Turnover of partner : ' + str(res[part.id]) + '<br/>' +line+ ' <br /> Main comapny : ' + str(part.parent_id and part.parent_id.name) + '<br/>' + line+  ' <br />Credit Limit : ' + str(part.credit_limit) + '<br/>' \
+                    + line +  ' <br /> Number of customer invoice : ' + str(number_customer or 0 ) + '<br/>' + line+' <br /> Number of supplier invoice : ' + str(number_supplier or 0)  + '<br/>' +line +'<br />Total Receivable : ' + str(part.credit) + '<br/>' + line+' <br/>Total Payable : ' + str(part.debit) + '<br/>' + line+ '<br/>Website : ' + str(part.website or '') + '<br/>' +line+ ' </b> </font> </head></html>'
+
         #desc_text = address + ' , Turnover of partner : ' + str(res[part.id])
-        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Main comapny : ' + str(part.parent_id and part.parent_id.name or '') + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
-                    + ' <br />[ Number of customers : ' + str(number_customer or '') + ']' + ' <br />[ Number of suppliers : ' + str(number_supplier or '')  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
+#        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Main comapny : ' + str(part.parent_id and part.parent_id.name or '') + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
+#                    + ' <br />[ Number of customers : ' + str(number_customer or '') + ']' + ' <br />[ Number of suppliers : ' + str(number_supplier or '')  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
@@ -250,7 +252,7 @@ def create_kml(self, cr, uid, data, context={}):
             color = colors[0]
         cooridinate = dict_country[country]
 
-        desctiption_country = '<html><head> <font color="red"> <b> Number of partner: ' + str(res_cus[country]) + '<br /> Number of Invoices made: ' + str(res_inv[country]) + '<br /> Turnover of country: ' + str(res[country]) + ' </b> </font> </head></html>'
+        desctiption_country = '<html><head> <font color="red"> <b> Number of partner: ' + str(res_cus[country])  +  line + '<br /> Number of Invoices made: ' + str(res_inv[country]) + line + '<br /> Turnover of country: ' + str(res[country]) +  line +' </b> </font> </head></html>'
 
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
