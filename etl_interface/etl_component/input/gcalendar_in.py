@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
@@ -19,8 +20,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import localfile
-import openobject_connector
-import sql_connector
-import facebook_connector
-import gcalender_connector
+import etl
+import tools
+from osv import osv, fields
+
+class etl_component_gcalendar_in(osv.osv):
+    _name='etl.component'
+    _inherit = 'etl.component'
+
+    def create_instance(self, cr, uid, id, context={}, data={}):
+        val = super(etl_component_gcalendar_in, self).create_instance(cr, uid, id, context, data)
+        cmp = self.browse(cr, uid, id)
+        if cmp.type_id.name=='input.gcalendar_in':
+            if cmp.connector_id:
+                conn_instance=obj_connector.get_instance(cr, uid, cmp.connector_id.id , context, data)
+            if cmp.transformer_id:
+                trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
+            val = etl.component.input.gcalendar_in(conn_instance, cmp.name, trans_instance, cmp.row_limit)
+        return val
+
+etl_component_gcalendar_in()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
