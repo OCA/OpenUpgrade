@@ -168,7 +168,8 @@ def create_kml(self, cr, uid, data, context={}):
     kmlElement.setAttribute('xmlns','http://www.opengis.net/kml/2.2')
     kmlElement = kmlDoc.appendChild(kmlElement)
     documentElement = kmlDoc.createElement('Document')
-    line = '<br />--------------------------------------------'
+    line = '--------------------------------------------'
+    line1 = '<br />--------------------------------------------'
     for part in partners:
         address = ''
         add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
@@ -252,7 +253,7 @@ def create_kml(self, cr, uid, data, context={}):
             color = colors[0]
         cooridinate = dict_country[country]
 
-        desctiption_country = '<html><head> <font color="red"> <b> Number of partner: ' + str(res_cus[country])  +  line + '<br /> Number of Invoices made: ' + str(res_inv[country]) + line + '<br /> Turnover of country: ' + str(res[country]) +  line +' </b> </font> </head></html>'
+        desctiption_country = '<html><head> <font color="red"> <b> Number of partner: ' + str(res_cus[country])  +  line1 + '<br /> Number of Invoices made: ' + str(res_inv[country]) + line1 + '<br /> Turnover of country: ' + str(res[country]) +  line1 +' </b> </font> </head></html>'
 
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
