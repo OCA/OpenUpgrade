@@ -181,6 +181,7 @@ etl_component_type()
 
 class etl_job(osv.osv):
     _name= 'etl.job'
+    _description = "ETL Job"
     _cache={}
 
     def __process_calc(self, cr, uid, ids, field_names, arg, context={}, query=''):

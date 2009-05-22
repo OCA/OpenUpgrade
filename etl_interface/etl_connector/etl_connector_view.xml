@@ -6,7 +6,7 @@
 			<field name="model">etl.connector.type</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="etl.connector.type">
+				<form string="Connector Type">
 					<field name="name" />
 					<field name="code" />
 				</form>
@@ -19,7 +19,7 @@
 			<field name="model">etl.connector.type</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="etl.connector.type">
+				<tree string="Connector Types">
 					<field name="name" />
 					<field name="code" />
 				</tree>
