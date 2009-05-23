@@ -111,19 +111,28 @@ def create_kml(self, cr, uid, data, context={}):
     documentElementdesc.appendChild(kmlDoc.createTextNode('You can see Partner information by clicking Partner'))
     documentElement.appendChild(documentElementname)
     documentElement.appendChild(documentElementdesc)
-    line = '--------------------------------------------'
+    line = '<font color="blue">--------------------------------------------</font>'
     for part in partner_data:
         partner_id = part.id
         address = ''
-        add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
+        mul_address = partner_obj.address_get(cr, uid, [part.id], adr_pref=['default', 'contact', 'invoice', 'delivery'])
+        address_all = map(lambda x: x and x[1], mul_address.items())
+        par_address_id = mul_address.get('contact', False)
+        if not par_address_id:
+            par_address_id = mul_address.get('default', False)
+            if not par_address_id:
+                par_address_id = address_all and address_all[0] or False
+        if par_address_id:
+            add = address_obj.browse(cr, uid, par_address_id, context)
+
         if add:
-#            address += ' <br />['
-#            if add.street:
-#                address += '  '
-#                address += str(add.street)
-#            if add.street2:
-#                address += '  '
-#                address += str(add.street2)
+            address += ''
+            if add.street:
+                address += '  '
+                address += str(add.street)
+            if add.street2:
+                address += '  '
+                address += str(add.street2)
             if add.city:
                 address += '  '
                 address += str(add.city)
@@ -133,7 +142,6 @@ def create_kml(self, cr, uid, data, context={}):
             if add.country_id:
                 address += ',  '
                 address += str(add.country_id.name)
-#            address += ']'
         styleElement = kmlDoc.createElement('Style')
         styleElement.setAttribute('id','randomColorIcon')
         iconstyleElement = kmlDoc.createElement('IconStyle')
