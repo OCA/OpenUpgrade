@@ -114,6 +114,7 @@ def generate_reports(cr,uid,obj,report_type,context):
         print "delivery_time",delivery_time
 
         document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
+        # TO ADD : Check if no docs 
         print "Doc id : ",document_id
         print report_type
 

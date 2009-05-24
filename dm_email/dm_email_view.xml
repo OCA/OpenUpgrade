@@ -48,11 +48,13 @@
             <field name="model">dm.mail_service</field>
             <field name="type">form</field>
             <field name="inherit_id" ref="dm.view_dm_mail_service_form"/>
-                <field name="arch" type="xml">
-					<field name="type_id" position="after">
-                        <field name="service_type" on_change="on_change_service_type(type_id)" invisible="1"/>
-						<field name="smtp_server_id" attrs="{'invisible':[('service_type','!=','smtp')]}">
-					</field>
+            <field name="arch" type="xml">
+				<field name="type_id" position="after">
+					<group colspan="4" attrs="{'invisible':[('service_type','!=','smtp')]}">
+						<separator string="SMTP Server Configuration" colspan="4" />
+						<field name="service_type" on_change="on_change_service_type(type_id)" invisible="1"/>
+						<field name="smtp_server_id"/>
+					</group>
 				</field>
 			</field>
 		</record>

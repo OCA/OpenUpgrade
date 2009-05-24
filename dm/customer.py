@@ -192,7 +192,9 @@ class dm_workitem(osv.osv):
         except Exception, exception:
             import traceback
             tb = sys.exc_info()
+            print "@@@@ tb :",tb
             tb_s = "".join(traceback.format_exception(*tb))
+            print "@@@@ tb_s :",tb_s
             self.write(cr, uid, [wi.id], {'state': 'error','error_msg':'Exception: %s\n%s' % (str(exception), tb_s)})
             netsvc.Logger().notifyChannel('dm action', netsvc.LOG_ERROR, 'Exception: %s\n%s' % (str(exception), tb_s))
 
@@ -234,14 +236,17 @@ class dm_workitem(osv.osv):
         return super(dm_workitem, self).__init__(*args)
 
     def mail_service_run(self, cr, uid, camp_doc, context={}):
-        print "Calling camp doc run"
+        print "Calling camp doc run for :", camp_doc.id
         context['active_id'] = camp_doc.id
         try:
             server_obj = self.pool.get('ir.actions.server')
             if not camp_doc.mail_service_id.action_id :
                 return False
             res = server_obj.run(cr, uid, [camp_doc.mail_service_id.action_id.id], context)
-            self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'done','error_msg':""})
+            camp_res = self.pool.get('dm.campaign.document').read(cr, uid, [camp_doc.id], ['state'])[0]
+            print "Camp doc State : ", camp_res['state']
+            if camp_res['state'] != 'error':
+                self.pool.get('dm.campaign.document').write(cr, uid, [camp_doc.id], {'state': 'done','error_msg':""})
         except Exception, exception:
             import traceback
             tb = sys.exc_info()

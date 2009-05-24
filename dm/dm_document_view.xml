@@ -346,7 +346,8 @@
                 <field name="delivery_time" select="1"/>
                 <field name="mail_service_id" select="2"/>
                 <field name="state" select="2"/>
-                <field name="error_msg"/>
+                <separator string="Error Message" colspan="4"/>
+                <field name="error_msg" colspan="4" nolabel="1"/>
             </form>
         </field>
     </record>

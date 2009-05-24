@@ -33,7 +33,8 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : [
-                    "dm_emailvision_data.xml"
+                    "dm_emailvision_data.xml",
+                    "dm_emailvision_view.xml",
                     ],
     "active": False,
     "installable": True,
