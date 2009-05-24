@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <openerp>
 
-	<!-- Emailvision Partner -->
-	<data>
+    <!-- Emailvision Partner -->
+    <data>
     <record id="res_partner_emailvision0" model="res.partner">
          <field model="res.country" name="country_ids" search="[]"/>
          <field name="property_product_pricelist" ref="product.list0"/>
@@ -21,7 +21,7 @@
          <field model="account.account" name="property_account_receivable" search="[('name','=','Effets à recevoir - clients')]"/>
          <field eval="[(6,0,[ref('dm.cat_mail_service')])]" name="category_id"/>
     </record>
-	</data>
+    </data>
 
     <!-- Mail Service Type -->
     <data>
@@ -30,8 +30,6 @@
         <field name="code" eval="&quot;emailvision&quot;"/>
         </record>
    </data>
-
-
 
     <!-- Transition Trigger -->
     <data>
@@ -77,5 +75,4 @@
          </record>
      </data>
 
-    
 </openerp>
