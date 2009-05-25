@@ -302,6 +302,21 @@ class etl_job_process(osv.osv):
                 res[id] = time_difference
         return res
 
+    def _get_total_records(self, cr, uid, ids, field_names, arg, context={}, query=''):
+        res = {}
+        for id in ids:
+            res[id] = {}
+            pro_obj = self.browse(cr, uid, id)
+            inp = oup = 0
+            for comp in pro_obj.component_ids:
+                inp += comp.records_in
+                oup += comp.records_out
+            if field_names[0] == 'input_records':
+                res[id][field_names[0]]= inp
+            if field_names[0] == 'output_records':
+                res[id][field_names[0]]= oup
+        return res
+
     _columns = {
               'name' : fields.char('Name', size=64, required=True, readonly=True),
               'job_id' : fields.many2one('etl.job', 'Job', required=True),
@@ -309,8 +324,8 @@ class etl_job_process(osv.osv):
               'end_date' : fields.datetime('End Date', readonly=True),
               'schedule_date' : fields.datetime('Scheduled Date', states={'done':[('readonly', True)]}),
               'compute_time' : fields.function(_get_computation_time, method=True, string= 'Computation Time', help="The total computation time to run process in Seconds"),
-              'input_records' : fields.integer('Total Input Records', readonly=True),
-              'output_records' : fields.integer('Total Output Records', readonly=True),
+              'input_records' : fields.function(_get_total_records, method=True, type='integer', string='Total Input Records' , multi='input_records'),
+              'output_records' : fields.function(_get_total_records, method=True, type='integer', string='Total Output Records' , multi='output_records'),
               'state' : fields.selection([('draft', 'Draft'), ('open', 'Open'), ('start', 'Started'), ('pause', 'Paused'), ('stop', 'Stop'), ('exception', 'Exception'), ('cancel', 'Cancel'), ('end', 'Done')], 'State', readonly=True),
               'component_ids' : fields.one2many('etl.job.process.statistics', 'job_process_id', 'Statics', readonly=True),
               'log_ids' :  fields.one2many('etl.job.process.log', 'job_process_id', 'Logs', readonly=True),
