@@ -63,7 +63,7 @@ def test():
     import getpass
     user = raw_input('Enter gmail username: ')
     password = getpass.unix_getpass("Enter your password:")
-    doc_conn=etl.connector.gdoc_connector('mustufa.2007','zainabrupawala')
+    doc_conn=etl.connector.gdoc_connector(user,password)
     in_doc = gdoc_in(doc_conn, 'home/tiny/Desktop/doc1.doc')
     test = etl_test.etl_component_test(in_doc)
 #    test.check_output([{'phone_numbers': [''], 'postal_addresses': [''], 'emails': [''], 'title': ''}], 'main')

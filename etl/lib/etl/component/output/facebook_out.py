@@ -58,7 +58,6 @@ class facebook_out(component):
         self.__dict__ = state
 
     def process(self):
-        self.facebook = False
         for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
