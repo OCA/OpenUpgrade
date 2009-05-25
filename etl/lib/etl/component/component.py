@@ -106,6 +106,10 @@ class component(signal):
         self.signal('end', {'date': datetime.datetime.today()})
 
     def start(self):
+#        print "component start status.............",self.status
+#        if self.status == 'end':
+#            print "No need to start component again"
+#            pass
         self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
 

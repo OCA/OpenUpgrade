@@ -10,7 +10,7 @@ fileconnector_partner=etl.connector.localfile('input/partner.csv')
 
 fileconnector_partner1=etl.connector.localfile('input/partner1.csv')
 fileconnector_partner3=etl.connector.localfile('input/partner3.csv')
-fileconnector_output=etl.connector.localfile('output/test1_partner22.csv','r+')
+fileconnector_output=etl.connector.localfile('output/test1_partner.csv','r+')
 
 csv_in1= etl.component.input.csv_in(fileconnector_partner,name='Partner Data')
 csv_in2= etl.component.input.csv_in(fileconnector_partner1,name='Partner Data1')
@@ -74,6 +74,7 @@ class etl_server(threading.Thread):
     def run(self):
         try:
             obj = self.read()
+            print "obj",obj
             if obj:
                 if self.job.job_id == obj.job_id:
                     if obj.status == 'end':
@@ -81,9 +82,12 @@ class etl_server(threading.Thread):
                         #self.write()
                         pass
                     elif obj.status == 'pause':
+                        self.job = False
                         self.job = obj
                         try:
+                            print "=============="
                             self.job.run()
+                            print "<<<<<<<<<<<<<<<<<<<"
                             self.write()
                         except Exception,e:
                             print e
