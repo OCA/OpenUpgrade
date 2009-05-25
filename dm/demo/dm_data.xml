@@ -1028,11 +1028,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
         <record id="dm_dtp_plugin_currenttime0" model="dm.dtp.plugin">
 			<field eval="&quot;&quot;&quot;current_time&quot;&quot;&quot;" name="code"/>
 			<field eval="0" name="store_value"/>
-			<field eval="&quot;&quot;&quot;aW1wb3J0IHRpbWUKCl9fZGVzY3JpcHRpb25fXyA9ICcnJwogICAgICAgICAgICAgICAgICAgIFRo
-aXMgcGx1Z2luIHJldHVybnMgdGhlIGN1cnJlbnQgdGltZQogICAgICAgICAgICAgICAgJycnCl9f
-YXJnc19fID0gW10KZGVmIGN1cnJlbnRfdGltZShjcix1aWQsKiphcmdzKToKICAgIHJldHVybiB0
-aW1lLnN0cmZ0aW1lKCclWS0lbS0lZCAlSDolTTolUycp
-&quot;&quot;&quot;" name="file_id"/>
+            <field eval="import time\nplugin_value = time.strftime('%Y-%m-%d %H:%M:%S')" name="python_code"/>
 			<field eval="&quot;&quot;&quot;Current Time&quot;&quot;&quot;" name="name"/>
 			<field eval="&quot;&quot;&quot;current_time.py&quot;&quot;&quot;" name="file_fname"/>
 			<field eval="0" name="encode"/>

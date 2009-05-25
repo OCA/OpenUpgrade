@@ -187,10 +187,8 @@
                     <page string="Dnynamic Text Plugin" attrs="{'invisible':[('type','!=','dynamic_text')]}">
                         <field name="ref_text_id" colspan="4" attrs="{'required':[('type','=','dynamic_text')]}" />
                     </page>
-                    <page string="Dynamic Plugin" attrs="{'invisible':[('type','!=','dynamic')]}">
-                            <!--field name="file_id" colspan="4" filename="file_fname" />
-                            <field name="file_fname" /-->
-                            <field name="python_code" />
+                    <page string="Dnynamic Text Plugin" attrs="{'invisible':[('type','!=','dynamic')]}">
+                        <field name="python_code" />
                     </page>
                     <page string="Argument List" attrs="{'invisible':[('type','not in',['dynamic','url','dynamic_text'])]}">
                         <group  colspan="4"  attrs="{'invisible':[('type','!=','url')]}">

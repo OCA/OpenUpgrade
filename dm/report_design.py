@@ -1,26 +1,18 @@
 from osv import fields
 from osv import osv
 import pooler
-import sys
-from report.report_sxw import report_sxw,browse_record_list,_fields_process,rml_parse
-from StringIO import StringIO
-import base64
 import tools
-from base_report_designer.wizard.tiny_sxw2rml import sxw2rml
-import os
 import netsvc
-from report import interface ,report_sxw
-import time
-import dm.plugin 
-print dir()
-from plugin import customer_function
+
 from plugin.customer_function import customer_function
 from plugin.dynamic_text import dynamic_text
 from plugin.php_url import php_url
 from plugin.current_time import current_time
+
 import re
 import datetime
-from lxml import etree
+
+
 internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>
 <HEAD>
@@ -60,7 +52,6 @@ def merge_message(cr, uid, keystr, context):
     com = re.compile('(\[\[.+?\]\])')
     message = com.sub(merge, keystr)
     return message
-
 
 def generate_reports(cr,uid,obj,report_type,context):
 
@@ -165,196 +156,70 @@ def generate_reports(cr,uid,obj,report_type,context):
                     attach_id = attachment_obj.create(cr,uid,attach_vals)
                     print "Attachement : ",attach_id
 
-
-
-def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None,trademark_id=None,context={}):
-    if not document_id :
+def generate_plugin_value(cr, uid,**args):
+    if not 'doc_id' in args and not args['doc_id'] :
         return False
-    if not address_id :
+    if not 'addr_id' in args and not args['addr_id'] :
+        return False
+    if not 'wi_id' in args and not args['wi_id'] :
         return False
     vals = {}
+    localcontext = {'cr':cr,'uid':uid}
+    localcontext.update(args)
 
     pool = pooler.get_pool(cr.dbname)
-    def compute_customer_plugin(cr, uid, p, cid,wi_id=None):
-        args = {}
-        res  = pool.get('ir.model').browse(cr, uid, p.model_id.id)
+    def compute_customer_plugin(cr, uid, **args):
+        res  = pool.get('ir.model').browse(cr, uid, args['plugin_obj'].model_id.id)    
         args['model_name'] = res.model
-        if wi_id:
-            args['wi_id'] = wi_id    
-        args['field_name'] = str(p.field_id.name)
-        args['field_type'] = str(p.field_id.ttype)
-        args['field_relation'] = str(p.field_id.relation)
-        return customer_function(cr,uid, [cid], **args)
+        args['field_name'] = str(args['plugin_obj'].field_id.name)
+        args['field_type'] = str(args['plugin_obj'].field_id.ttype)
+        args['field_relation'] = str(args['plugin_obj'].field_id.relation)
+        return customer_function(cr, uid, **args)
 
     dm_document = pool.get('dm.offer.document')
     dm_plugins_value = pool.get('dm.plugins.value')
 
-    plugins = dm_document.browse(cr, uid, document_id, ['document_template_plugin_ids' ])['document_template_plugin_ids']
+    plugins = dm_document.browse(cr, uid, args['doc_id'], ['document_template_plugin_ids' ])
 
-    for p in plugins :
-        args = {}
-        args['document_id'] = document_id
-        if p.type in ('fields','image'):
-            plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
+    for plugin_obj in plugins['document_template_plugin_ids'] :
+        localcontext['plugin_obj'] = plugin_obj
+        plugin_args = {}
+        if plugin_obj.python_code : 
+            exec plugin_obj.python_code in localcontext
+            plugin_value = localcontext['plugin_value']
+        elif plugin_obj.type in ('fields','image'):
+            plugin_value = compute_customer_plugin(cr, uid, plugin_obj = plugin_obj, addr_id = args['addr_id'], wi_id = args['wi_id'])
         else :
-            arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
-            for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
-                if not a.stored_plugin :
-                    args[str(a.name)]=a.value
+            arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',plugin_obj.id)])
+            for arg in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
+                if not arg.stored_plugin :
+                    plugin_args[str(arg.name)]=arg.value
                 else :
-                    args[str(a.custome_plugin_id.code)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
-            if p.type == 'dynamic_text' :
-                plugin_value = dynamic_text(cr, uid, p.ref_text_id.id, **args)
-            elif p.type == 'url' :
-                args['encode'] = p.encode
-                plugin_value = php_url(cr, uid, p.ref_text_id.id, **args)
-            elif p.type == 'dynamic' :
-                plugin_value = current_time(cr,uid,**args)
+                    value = compute_customer_plugin(cr, uid, plugin_obj = arg.custome_plugin_id, addr_id=args['addr_id'], wi_id=args['wi_id'])
+                    plugin_args[str(arg.custome_plugin_id.code)] = value
+            if plugin_obj.type == 'dynamic_text' :
+                plugin_args['ref_text_id'] = plugin_obj.ref_text_id.id
+                args.update(plugin_args)
+                plugin_value = dynamic_text(cr, uid, **args)
+            elif plugin_obj.type == 'url' :
+                plugin_args['encode'] = plugin_obj.encode
+                plugin_value = php_url(cr, uid,**plugin_args)
             else :
                 path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
-                plugin_name = p.file_fname.split('.')[0]
+                plugin_name = plugin_obj.file_fname.split('.')[0]
                 sys.path.append(path)
                 X =  __import__(plugin_name)
                 plugin_func = getattr(X, plugin_name)
-                plugin_value = plugin_func(cr, uid, address_id, **args)
+                plugin_value = plugin_func(cr, uid,**args)
 
-        if p.store_value :
+        if plugin_obj.store_value :
             dm_plugins_value.create(cr, uid,{'date':time.strftime('%Y-%m-%d'),
-                                             'address_id':address_id,
-                                             'plugin_id':p.id,
+                                             'address_id':args['addr_id'],
+                                             'plugin_id':plugin_obj.id,
                                              'value' : plugin_value})
-        vals[str(p.code)] = plugin_value
+        vals[str(plugin_obj.code)] = plugin_value
     return vals
 
-class offer_document(rml_parse):
-    def __init__(self, cr, uid, name, context):
-        print "Calling offer_document __init__"
-        super(offer_document, self).__init__(cr, uid, name, context)
-        print "Calling offer_document super"
-        self.localcontext.update({
-            'time': time,
-            'document':self.document,
-            'trademark_id' : self.trademark_id,
-        })
-        print "Calling offer_document localcontext"
-        self.context = context
 
-    def trademark_id(self):
-        if 'form' not in self.datas :
-            workitem_id = self.context['active_id']
-            res = self.pool.get('dm.workitem').brwose(self.cr,self.uid,workitem_id)    
-            return res.segment_id.proposition_id.camp_id.trademark_id
-        else:
-            return self.datas['form']['trademark_id']	
-    def document(self):
-        print "Calling document"
-        if 'form' not in self.datas :
-            address_id = self.context['address_id']
-            document_id = self.context['document_id']
-            workitem_id = self.context['active_id']
-        else :
-
-            address_id = self.datas['form']['address_id']
-            document_id = self.ids[0]
-
-            dm_workitem_obj = self.pool.get('dm.workitem')
-            workitem_data=dm_workitem_obj.search(self.cr,self.uid,[])
-
-            if not workitem_data:
-                document = self.pool.get('dm.offer.document').browse(self.cr,self.uid,document_id)
-
-                dm_segment_obj = self.pool.get('dm.campaign.proposition.segment')
-                segment_data_id=dm_segment_obj.search(self.cr,self.uid,[])
-
-                workitem_id = dm_workitem_obj.create(self.cr, self.uid,{'address_id':address_id,
-                                             'step_id':document.step_id.id,
-                                             'segment_id' : segment_data_id[0]})
-
-            else :
-                workitem_id = workitem_data[0]
-        values = generate_plugin_value(self.cr,self.uid,document_id,address_id,workitem_id)
-        return [values]
-
-from report.report_sxw import report_sxw
-
-#class my_report_sxw(report_sxw):
-#    print "Tessssssssssssssssssssssss"
-#    def create_single(self, cr, uid, ids, data, report_xml, context={}):
-#        print "----------------------------my method"
-#        report_sxw.create_single(self, cr, uid, ids, data, report_xml, context)
-
-def my_register_all(db,report=False):
-    opj = os.path.join
-    cr = db.cursor()
-    result=''
-    cr.execute("SELECT * FROM ir_act_report_xml WHERE model=%s ORDER BY id", ('dm.offer.document',))
-    result = cr.dictfetchall()
-    for r in result:
-        if netsvc.service_exist('report.'+r['report_name']):
-            continue
-        if r['report_rml'] or r['report_rml_content_data']:
-            report_sxw('report.'+r['report_name'], r['model'],
-                    opj('addons',r['report_rml'] or '/'), header=r['header'],parser=offer_document)
-    cr.execute("SELECT * FROM ir_act_report_xml WHERE auto=%s ORDER BY id", (True,))
-    result = cr.dictfetchall()
-    cr.close()
-    for r in result:
-        if netsvc.service_exist('report.'+r['report_name']):
-            continue
-        if r['report_rml'] or r['report_rml_content_data']:
-            report_sxw('report.'+r['report_name'], r['model'],
-                    opj('addons',r['report_rml'] or '/'), header=r['header'])
-        if r['report_xsl']:
-            interface.report_rml('report.'+r['report_name'], r['model'],
-                    opj('addons',r['report_xml']),
-                    r['report_xsl'] and opj('addons',r['report_xsl']))
-interface.register_all =  my_register_all
-
-class report_xml(osv.osv):
-    _inherit = 'ir.actions.report.xml'
-    _columns = {
-#        'actual_model':fields.char('Report Object', size=64),
-        'document_id':fields.integer('Document'),
-        }
-    def upload_report(self, cr, uid, report_id, file_sxw,file_type, context):
-        '''
-        Untested function
-        '''
-        pool = pooler.get_pool(cr.dbname)
-        sxwval = StringIO(base64.decodestring(file_sxw))
-        if file_type=='sxw':
-            fp = tools.file_open('normalized_oo2rml.xsl',
-                    subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
-            rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
-        if file_type=='odt':
-            fp = tools.file_open('normalized_odt2rml.xsl',
-                    subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
-            rml_content = str(sxw2rml(sxwval, xsl=fp.read()))
-        if file_type=='html':
-            rml_content = base64.decodestring(file_sxw)
-        report = pool.get('ir.actions.report.xml').write(cr, uid, [report_id], {
-            'report_sxw_content': base64.decodestring(file_sxw),
-            'report_rml_content': rml_content,
-        })
-        cr.commit()
-        db = pooler.get_db_only(cr.dbname)
-        interface.register_all(db)
-        return True
-
-    def set_image_email(self,cr,uid,report_id):
-        list_image_id = []
-        def process_tag(node,list_image_id):
-            if not node.getchildren():
-                if  node.tag=='img' and node.get('name') and node.get('name').find('[[setHtmlImage')>=0:
-                    res_id= _regex.split(node.get('name'))[1]
-                    list_image_id.append((res_id,node.get('src')))
-            else :
-                for n in node.getchildren():
-                    process_tag(n,list_image_id)
-        datas = self.report_get(cr, uid, report_id)['report_sxw_content']
-        root = etree.HTML(base64.decodestring(datas))
-        process_tag(root,list_image_id)
-        return list_image_id
-report_xml()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
