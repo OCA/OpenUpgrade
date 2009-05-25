@@ -103,4 +103,4 @@ tran=etl.transition(oo_out_address,log1)
 job1=etl.job([facebook_in_friends,facebook_in_events,map,map1,log1,oo_out_partner, oo_out_address, oo_out_address1, oo_out_event, log])
 print job1
 job1.run()
-print job1.get_statitic_info()
+#print job1.get_statitic_info()

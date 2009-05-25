@@ -83,18 +83,17 @@ class gcalendar_connector(connector):
 
     def __setstate__(self, state):
         super(gcalendar_connector, self).__setstate__(state)
+        state['_signal__connects'] = {}
         self.__dict__ = state
-
-    def __copy__(self):
-        res = gcalendar_connector(self.facebook_uri, self.email, self.password, self.delay_time)
 
     def __copy__(self):
         """
         Overrides copy method.
         """
-        res = gcalendar_connector(self.facebook_uri, self.email, self.password, self.delay_time, self.name)
+        res = gcalendar_connector(self.email, self.password, self.delay_time, self.name)
 
         return res
+
 
 def test():
     """

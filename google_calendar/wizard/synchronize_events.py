@@ -77,7 +77,7 @@ _timezone_fields = {
 
 def _tz_get(self, cr, uid, data, context={}):
     if 'tz' in context and context['tz']:
-        return'synch'
+        return 'synch'
     else:
         return 'timezone'
 
@@ -255,13 +255,13 @@ class google_calendar_wizard(wizard.interface):
             return {}
         except Exception, e:
             raise osv.except_osv('Error !', e )
-        
+
     states = {
         'init': {
             'actions': [],
             'result': {'type': 'form', 'arch': _google_form, 'fields': _google_fields, 'state': [('end', 'Cancel'),('tz', 'Synchronize')]}
         },
-        
+
         'tz': {
             'actions': [],
             'result': {'type': 'choice', 'next_state': _tz_get }

@@ -26,6 +26,7 @@
  GNU General Public License.
 """
 from etl.component import component
+import datetime
 
 class openobject_out(component):
     """
@@ -92,7 +93,7 @@ class openobject_out(component):
 def test():
     from etl_test import etl_test
     import etl
-    openobject_conn = etl.connector.openobject_connector('http://localhost:8069', 'trunk', 'admin', 'admin', con_type='xmlrpc')
+    openobject_conn = etl.connector.openobject_connector('http://localhost:8069', 'etl_test', 'admin', 'admin', con_type='xmlrpc')
     test = etl_test.etl_component_test(openobject_out(openobject_conn, 'res.country'))
     test.check_input({'main': [{'name': 'India_test', 'code':'India_test'}]})
     test.check_output([{'name': 'India_test', 'code':'India_test'}], 'main')

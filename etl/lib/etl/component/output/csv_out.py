@@ -85,6 +85,7 @@ class csv_out(component):
         for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
+                    print "ddddd>>>",d
                     if not self.fp:
                         self.fp = self.connector.open()
                         print self.fp
