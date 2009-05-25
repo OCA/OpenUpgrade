@@ -36,3 +36,4 @@ from gmail_in import gmail_in
 from sugarcrm_in import sugarcrm_in
 from xmlrpc_in import xmlrpc_in
 from gcalendar_in import gcalendar_in
+from gdoc_in import gdoc_in
