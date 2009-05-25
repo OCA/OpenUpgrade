@@ -16,15 +16,6 @@
 	<!-- OFFER STEP ACTION -->
     <data noupdate="0">
         <record id="ir_actions_server_html_doc_generate0" model="ir.actions.server">
-            <field eval="&quot;&quot;&quot;# You can use the following variables
-#    - object
-#    - object2
-#    - time
-#    - cr
-#    - uid
-#    - ids
-# If you plan to return an action, assign: action = {...}
-&quot;&quot;&quot;" name="code"/>
             <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>

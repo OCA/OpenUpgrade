@@ -194,13 +194,13 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None,trad
     for p in plugins :
         args = {}
         args['document_id'] = document_id
-        if p.type == 'fields':
+        if p.type == ('fields','image'):
             plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
-        elif p.type != 'image' :
+        else :
             arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
             for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
                 if not a.stored_plugin :
-                    args[str(a.name)]=str(a.value)
+                    args[str(a.name)]=a.value
                 else :
                     args[str(a.custome_plugin_id.code)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
             if p.type == 'dynamic_text' :
