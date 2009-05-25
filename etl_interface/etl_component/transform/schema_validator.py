@@ -35,6 +35,24 @@ class etl_component_schema_validation(osv.osv):
           'field_size' : fields.boolean('Check Field Size'),
           'field_format' : fields.boolean('Check Format'),
           'not_null' : fields.boolean('Check NOT NULL'),
+          'field_key' : fields.boolean('Check Key'),
               }
+    
+    def create_instance(self, cr, uid, id, context={}, data={}):
+        val=super(etl_component_schema_validation, self).create_instance(cr, uid, id, context, data)       
+        cmp =self.browse(cr, uid, id,context=context)
+        if cmp.type_id.name == 'transform.schema_validator':
+            schema = {
+                        'invalid_field' : cmp.field_extra,
+                        'invalid_name' : cmp.field_name,
+                        'invalid_key' : cmp.field_key,
+                        'invalid_null' : cmp.not_null,
+                        'invalid_type' : cmp.field_type,
+                        'invalid_size' : cmp.field_size,
+                        'invalid_format' : cmp.field_format
+                      }
+            val = etl.component.transform.schema_validator(schema, cmp.name)
+        return val
+    
 etl_component_schema_validation()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

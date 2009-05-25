@@ -59,7 +59,21 @@ class etl_transformer(osv.osv):
 
     def create_instance(self, cr, uid, id, context, data={}):
         trans = self.browse(cr, uid, id)
-        val = etl.transformer(trans.tranformer_line_ids)
+        trans_data = {}
+        TRAN_MAP ={
+                'string' : etl.transformer.STRING,
+                'float' : etl.transformer.FLOAT,
+                'long' : etl.transformer.LONG,
+                'datetime' : etl.transformer.DATETIME,
+                'complex' : etl.transformer.COMPLEX,
+                'time' : etl.transformer.TIME,
+                'date' : etl.transformer.DATE,
+                'integer' : etl.transformer.INTEGER,
+                'boolean' : etl.transformer.BOOLEAN,
+                   }
+        for line in  trans.tranformer_line_ids:
+            trans_data[line.name] = TRAN_MAP[line.type]
+        val = etl.transformer(trans_data)
         return val
 
 etl_transformer()
@@ -494,13 +508,14 @@ class etl_job_process(osv.osv):
                 except Exception, e:
                     print 'Exception: ', e
                     self.write(cr, uid, process.id, {'state':'exception'})
+                    return False
             elif process.state in ('pause'):
                 self.write(cr, uid, process.id, {'state':'start', 'start_date':time.strftime('%Y-%m-%d %H:%M:%S')})
                 job.signal('restart')
             else:
                 raise osv.except_osv(_('Error !'), _('Cannot start process in %s state !'%process.state))
         return True
-
+    
     def action_restart_process(self, cr, uid, ids, context={}, data={}):
         for process in self.browse(cr, uid, ids, context):
             data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
@@ -622,7 +637,16 @@ class etl_component(osv.osv):
                 obj_transition.get_instance(cr, uid, tran_out.id, context, data)
 
     def create_instance(self, cr, uid, id, context={}, data={}):
-        return True
+        obj_connector=self.pool.get('etl.connector')
+        obj_transformer = self.pool.get('etl.transformer')
+        cmp=self.browse(cr, uid, id)
+        conn_instance = trans_instance = False
+        if cmp.connector_id:
+            conn_instance=obj_connector.get_instance(cr, uid, cmp.connector_id.id , context, data)
+        if cmp.transformer_id:
+            trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
+        val = etl.component.component(name=cmp.name)
+        return val
 
 etl_component()
 

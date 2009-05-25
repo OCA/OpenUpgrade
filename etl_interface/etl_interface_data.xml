@@ -67,7 +67,7 @@
 	</data>
 	<data>
 		<record id="etl_interface.comp_transform_schema_validation" model="etl.component.type">
-			<field eval="[(6,0,[ref('etl_interface.field_etl_component_field_name'),ref('etl_interface.field_etl_component_field_type'),ref('etl_interface.field_etl_component_field_size'),ref('etl_interface.field_etl_component_not_null'),ref('etl_interface.field_etl_component_field_extra')])]" name="field_ids"/>
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_field_name'),ref('etl_interface.field_etl_component_field_type'),ref('etl_interface.field_etl_component_field_size'),ref('etl_interface.field_etl_component_not_null'),ref('etl_interface.field_etl_component_field_extra'),ref('etl_interface.field_etl_component_field_key')])]" name="field_ids"/>
 		</record>
 	</data>
 	<data>
