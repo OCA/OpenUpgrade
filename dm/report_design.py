@@ -17,6 +17,7 @@ from plugin import customer_function
 from plugin.customer_function import customer_function
 from plugin.dynamic_text import dynamic_text
 from plugin.php_url import php_url
+from plugin.current_time import current_time
 import re
 import datetime
 from lxml import etree
@@ -113,6 +114,7 @@ def generate_reports(cr,uid,obj,report_type,context):
         print "delivery_time",delivery_time
 
         document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
+        # TO ADD : Check if no docs 
         print "Doc id : ",document_id
         print report_type
 
@@ -192,13 +194,13 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None,trad
     for p in plugins :
         args = {}
         args['document_id'] = document_id
-        if p.type == 'fields':
+        if p.type in ('fields','image'):
             plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
-        elif p.type != 'image' :
+        else :
             arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
             for a in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
                 if not a.stored_plugin :
-                    args[str(a.name)]=str(a.value)
+                    args[str(a.name)]=a.value
                 else :
                     args[str(a.custome_plugin_id.code)]=compute_customer_plugin(cr, uid, a.custome_plugin_id, address_id,workitem_id)
             if p.type == 'dynamic_text' :
@@ -206,6 +208,8 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None,trad
             elif p.type == 'url' :
                 args['encode'] = p.encode
                 plugin_value = php_url(cr, uid, p.ref_text_id.id, **args)
+            elif p.type == 'dynamic' :
+                plugin_value = current_time(cr,uid,**args)
             else :
                 path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
                 plugin_name = p.file_fname.split('.')[0]
@@ -343,7 +347,6 @@ class report_xml(osv.osv):
             if not node.getchildren():
                 if  node.tag=='img' and node.get('name') and node.get('name').find('[[setHtmlImage')>=0:
                     res_id= _regex.split(node.get('name'))[1]
-                    res_id =  res_id.split(',')[0]
                     list_image_id.append((res_id,node.get('src')))
             else :
                 for n in node.getchildren():

@@ -107,4 +107,3 @@ class add_component(wizard.interface):
 add_component("etl.job.add_component")
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

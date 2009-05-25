@@ -34,9 +34,7 @@ class mrp_bom_customization_configurator_line(osv.osv_memory):
                 }
     
     def onchange_customization_key_id(self, cr, uid, ids, customization_key_id):
-        print "(((((((((((((((((((((((((((((("
-        print "onchange_customization_key_id"
-        print "))))))))))))))))))))))))))))))"
+        pass
     
 mrp_bom_customization_configurator_line()
 
@@ -147,9 +145,7 @@ class mrp_bom_customization_configurator(osv.osv_memory):
         return {'value':{'configurator_line_ids':line_ids}}
     
     def onchange_configurator_line_ids(self, cr, uid, ids, configurator_line_ids, bom_property_id_selection, product_id):
-        print "(((((((((((((((((((((((((((((("
-        print "onchange_configurator_line_ids"
-        print "))))))))))))))))))))))))))))))"
+        pass
     
     def create(self, cr, uid, vals, context=None):
         id = super(osv.osv_memory, self).create(cr, uid, vals, context)

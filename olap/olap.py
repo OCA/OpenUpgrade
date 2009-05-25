@@ -1124,7 +1124,8 @@ class bi_load_db_wizard(osv.osv_memory):
                 if tables_id:
                     cr.execute('select column_db_name,id,table_id from olap_database_columns where table_id in (' + ','.join(tables_id) + ')')
                 else:
-                    cr.execute('select column_db_name,id,table_id from olap_database_columns')
+#                    cr.execute('select column_db_name,id,table_id from olap_database_columns ')
+                    cr.execute("select olap_database_columns.column_db_name, olap_database_columns.id, olap_database_columns.table_id from olap_database_columns join olap_database_tables on olap_database_columns.table_id = olap_database_tables.id where olap_database_tables.fact_database_id=%d",(id_db,))
                 table_col = {}
                 cols_name = {}
                 for x in tables:
@@ -1416,23 +1417,23 @@ class bi_load_db_wizard(osv.osv_memory):
                     id_to_write = filter(lambda x:(int(cols[x][1]) == int(tables[constraint[0]])and (constraint[1] == cols[x][0])),cols)
                     col_id = tcol.write(cr,uid,int(id_to_write[0]),val,context)
 
-            pooler.get_pool(cr.dbname).get('olap.fact.database').write(cr,uid,[id_db],{'loaded':True})
+            temp = pooler.get_pool(cr.dbname).get('olap.fact.database').write(cr,uid,[id_db],{'loaded':True})
             wf_service = netsvc.LocalService('workflow')
             wf_service.trg_validate(uid,'olap.schema',context['active_id'],'dbload',cr)
             model_data_ids = self.pool.get('ir.model.data').search(cr,uid,[('model','=','ir.ui.view'),('name','=','view_olap_schema_form')])
             resource_id = self.pool.get('ir.model.data').read(cr,uid,model_data_ids,fields = ['res_id'])[0]['res_id']
 
             return {'type':'ir.actions.act_window_close' }
-#           return{
-#           'domain': "[]",
-#           'name': 'Olap Schema',
+#            return{
+#           'domain': [],
+#           'name': 'view_olap_schema_form',
 #           'view_type': 'form',
 #           'view_mode': 'form,tree',
 #           'res_id': context['active_id'],
 #           'res_model': 'olap.schema',
 #           'view': [(resource_id,'form')],
-#           'type': 'ir.actions.act_window'
-#       }
+#           'type': 'ir.actions.act_window_close'
+#            }
 #
 
     def action_cancel(self,cr,uid,ids,context = None):

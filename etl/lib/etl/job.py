@@ -86,6 +86,7 @@ class job(signal):
         return self.__copy__()
 
     def __getstate__(self):
+        res = super(job, self).__getstate__()
         _components = self.__dict__.get('_components')
         components = []
         for comp in _components:
@@ -94,9 +95,11 @@ class job(signal):
         transitions = []
         for transition in self.get_transitions():
             transitions.append(pickle.dumps(transition))
+        res.update({'job_id': self.job_id, 'name' :self.name, 'status':self.status , 'single_components':components, 'transitions' : transitions})
+        return res
 
-        return {'job_id': self.job_id, 'name' :self.name, 'status':self.status , 'single_components':components, 'transitions' : transitions}
     def __setstate__(self, state):
+        super(job, self).__setstate__(state)
         components = []
         for component in state.get('single_components',[]):
             _cmp = pickle.loads(component)
@@ -116,7 +119,12 @@ class job(signal):
 #        state['__connects'] = connects
 
         state['_components'] = components
+#        self.__dict__ = state
+        state['_signal__connects'] = {}
         self.__dict__ = state
+        self.logger = logger.logger()
+        self._cache = {}
+        self.register_actions()
         return
 
 
@@ -147,12 +155,18 @@ class job(signal):
 
 
     def restart(self):
+        if self.status == 'end':
+            print "job is alreadyyy done...restart...."
+            pass
         for tran in self.get_transitions():
             tran.restart()
         self.status = 'start'
         self.signal('restart', {'date': datetime.datetime.today()})
 
     def start(self):
+        if self.status == 'end':
+            print "job is alreadyyy done.. in start....."
+            pass
         self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
         for c in self.get_end_components():

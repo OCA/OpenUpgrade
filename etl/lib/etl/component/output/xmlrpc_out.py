@@ -22,7 +22,7 @@
 """
  To get the response for the request made to xmlrpc server.
 
- Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>). 
+ Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
 
@@ -38,22 +38,27 @@ class xmlrpc_out(component):
 
     def __copy__(self):
         res = xmlrpc_out(self.connector, self.name, self.transformer, self.row_limit)
-        return res          
-        
+        return res
+
+    def __getstate__(self):
+        res = super(xmlrpc_out, self).__getstate__()
+        return res
+
+    def __setstate__(self, state):
+        super(xmlrpc_out, self).__setstate__(state)
+        self.__dict__ = state
 
     def process(self):
         self.server = False
         datas = []
         for channel, trans in self.input_get().items():
             for iterator in trans:
-                for d in iterator:    
-                    self.server = self.connector.connect() 
-                    self.server.import_data([d])     
+                for d in iterator:
+                    self.server = self.connector.connect()
+                    self.server.import_data([d])
                     self.connector.close(self.server)
-                    self.server = False               
-                    yield d, 'main'               
-        
-        
+                    self.server = False
+                    yield d, 'main'
 
 def test():
     from etl_test import etl_test

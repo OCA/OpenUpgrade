@@ -67,6 +67,15 @@ class facebook_connector(connector):
         session = facebook.auth.getSession()
         return facebook
 
+    def __getstate__(self):
+        res = super(facebook_connector, self).__getstate__()
+        res.update({'email':self.email, 'delay_time':self.delay_time, 'uid':self.uid, 'api_key':self.api_key, 'secret_key':self.secret_key, 'facebook_uri':self.facebook_uri})
+        return res
+
+    def __setstate__(self, state):
+        super(facebook_connector, self).__setstate__(state)
+        self.__dict__ = state
+
     def execute(self, facebook, method, fields):
         """
         Required Parameters
@@ -138,7 +147,6 @@ class facebook_connector(connector):
         Overrides copy method.
         """
         res = facebook_connector(self.facebook_uri, self.email, self.password, self.delay_time, self.name)
-
         return res
 
 def test():

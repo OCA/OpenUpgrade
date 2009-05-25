@@ -71,12 +71,18 @@ class document_file(osv.osv):
                                  pool = pooler.get_pool(cr.dbname)
                                  data = self.browse(cr, uid, ids[0], context=context)
                                  if not 'name' in vals :
-                                     vals.update({'name':data.name,'datas':temp,'parent_id':data.parent_id.id,'datas_fname':filename})
+                                     vals.update({'name':data.name,'datas':temp,'parent_id':data.parent_id.id,'datas_fname':filename,'partner_id':data.partner_id.id})
                                      self.create(cr, uid, vals, context=context)
                                      cr.commit()
                                  vals['datas_fname'] = newname
                                  vals['datas']=data.datas
                                  vals['lock']=1
+                             else:
+                                 if filename:
+                                     if state.datas_fname!=  filename:
+                                         vals_new=({'name':state.name,'datas':state.datas,'parent_id':state.parent_id.id,'datas_fname':state.datas_fname,'partner_id':state.partner_id.id,})
+                                         self.create(cr, uid, vals_new, context=context)
+                                         cr.commit()
 
             result = super(document_file,self).write(cr,uid,ids,vals,context=context)
             cr.commit()

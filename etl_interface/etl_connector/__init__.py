@@ -23,3 +23,4 @@ import localfile
 import openobject_connector
 import sql_connector
 import facebook_connector
+import gcalender_connector

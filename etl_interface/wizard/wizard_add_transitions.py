@@ -30,7 +30,6 @@ import wizard
 
 TRANS_FORM = """<?xml version="1.0"?>
                     <form string="Transition">
-                        <field name="name" select="1" />
                         <field name="type" select="1" />
                         <separator string="Transition property" colspan="4" />
                         <newline />
@@ -44,7 +43,6 @@ TRANS_FORM = """<?xml version="1.0"?>
                     </form>"""
 
 trans_fields = {
-                'name' : {'required': True, 'type': 'char', 'string': 'Name', 'size': 64} ,
                 'channel_source' : {'selection': [('main', 'main'), ('error', 'error'), ('gmail', 'gmail'), ('partner', 'partner'), ('address', 'address')], 'type': 'selection', 'string': 'Source Channel'} ,
                 'state' : {'readonly': True, 'selection': [('open', 'Open'), ('close', 'Close')], 'type': 'selection', 'string': 'State', 'default' : lambda *a: 'open'} ,
                 'channel_destination' : {'selection': [('main', 'main'), ('error', 'error'), ('gmail', 'gmail'), ('partner', 'partner'), ('address', 'address')], 'type': 'selection', 'string': 'Destination Channel'} ,

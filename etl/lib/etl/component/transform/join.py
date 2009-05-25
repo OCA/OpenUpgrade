@@ -60,12 +60,18 @@ class join(map):
             return res
         self.preprocess = preprocess
 
+    def __getstate__(self):
+        res = super(join, self).__getstate__()
+        res.update({'map_criteria':self.map_criteria, 'join_keys':self.join_keys})
+        return res
+
+    def __setstate__(self, state):
+        super(join, self).__setstate__(state)
+        self.__dict__ = state
+
     def __copy__(self):
         res = join(self.map_criteria, self.join_keys, self.name, self.transformer, self.row_limit)
         return res
-
-    
-
 
 def test():
     from etl_test import etl_test

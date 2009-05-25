@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="etl_interface.comp_control_sleep" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_delay')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_input_csv_in" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_csv_params')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_input_facebook_in" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_field_ids'),ref('etl_interface.field_etl_component_domain'),ref('etl_interface.field_etl_component_method')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_input_excel_in" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_excel_params')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_input_openobject_in" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_model_id'),ref('etl_interface.field_etl_component_field_ids')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_input_xml_in" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_xml_params')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_input_sugarcrm_in" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_module_name')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_output_csv_out" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_csv_params')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_output_excel_out" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_excel_params')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_output_openobject_out" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_model_id'),ref('etl_interface.field_etl_component_field_ids')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_output_xml_out" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_xml_params')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_transform_filter" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_criteria_ids')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_transform_map" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_map_line_ids'),ref('etl_interface.field_etl_component_preprocess')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_transform_schema_validation" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_field_name'),ref('etl_interface.field_etl_component_field_type'),ref('etl_interface.field_etl_component_field_size'),ref('etl_interface.field_etl_component_not_null'),ref('etl_interface.field_etl_component_field_extra')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_transform_sort" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_field_to_sort')])]" name="field_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="etl_interface.comp_transform_unique" model="etl.component.type">
+			<field eval="[(6,0,[ref('etl_interface.field_etl_component_properties')])]" name="field_ids"/>
+		</record>
+	</data>
+</openerp>

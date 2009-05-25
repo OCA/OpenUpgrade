@@ -5,6 +5,7 @@ sys.path.append('..')
 
 import etl
 
+
 fileconnector_partner=etl.connector.localfile('input/partner.csv')
 
 fileconnector_partner1=etl.connector.localfile('input/partner1.csv')
@@ -27,7 +28,7 @@ tran4=etl.transition(sleep1,log2)
 tran5=etl.transition(sort1,csv_out1)
 
 
-job1=etl.job([csv_in1,csv_in2,csv_out1,sort1,log1,log2,sleep1], name="vvvvvvvv")
+job1=etl.job([csv_in1,csv_in2,csv_out1,sort1,log1,log2,sleep1], name="vvvfvvv22vvv")
 
 
 
@@ -73,6 +74,7 @@ class etl_server(threading.Thread):
     def run(self):
         try:
             obj = self.read()
+            print "obj",obj
             if obj:
                 if self.job.job_id == obj.job_id:
                     if obj.status == 'end':
@@ -80,9 +82,15 @@ class etl_server(threading.Thread):
                         #self.write()
                         pass
                     elif obj.status == 'pause':
+                        self.job = False
                         self.job = obj
-                        self.job.run() # or run
-                        self.write()
+                        try:
+                            print "=============="
+                            self.job.run()
+                            print "<<<<<<<<<<<<<<<<<<<"
+                            self.write()
+                        except Exception,e:
+                            print e
                     else:
                         pass
                 else:

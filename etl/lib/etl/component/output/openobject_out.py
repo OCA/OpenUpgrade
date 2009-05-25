@@ -61,7 +61,14 @@ class openobject_out(component):
         res = openobject_out(self.connector, self.model, self.fields, self.name, self.transformer, self.row_limit)
         return res
 
+    def __getstate__(self):
+        res = super(openobject_out, self).__getstate__()
+        res.update({'fields':self.fields, 'model':self.model})
+        return res
 
+    def __setstate__(self, state):
+        super(openobject_out, self).__setstate__(state)
+        self.__dict__ = state
 
     def process(self):
         datas = []

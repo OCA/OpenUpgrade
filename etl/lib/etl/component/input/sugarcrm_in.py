@@ -49,6 +49,15 @@ class sugarcrm_in(component):
         res = sugarcrm_in(self.sugarcrm_connector, self.module, self.name, self.transformer, self.row_limit)
         return res
 
+    def __getstate__(self):
+        res = super(sugarcrm_in, self).__getstate__()
+        res.update({'module':self.module})
+        return res
+
+    def __setstate__(self, state):
+        super(sugarcrm_in, self).__setstate__(state)
+        self.__dict__ = state
+
     def process(self):
         res = []
         (portType, session_id,) = self.connector.open()

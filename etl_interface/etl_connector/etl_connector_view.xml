@@ -6,7 +6,7 @@
 			<field name="model">etl.connector.type</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="etl.connector.type">
+				<form string="Connector Type">
 					<field name="name" />
 					<field name="code" />
 				</form>
@@ -19,7 +19,7 @@
 			<field name="model">etl.connector.type</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="etl.connector.type">
+				<tree string="Connector Types">
 					<field name="name" />
 					<field name="code" />
 				</tree>
@@ -53,19 +53,16 @@
 						<field name="uri" required="1"/>
 					</group>
 					<notebook colspan="4">
-					    <page string="Property" attrs="{'invisible':[('type','=','sugarcrm')]}">
+					    <page string="Property" attrs="{'invisible': [('type', 'in', ['sugarcrm','facebook','gcalendar',False])]}">
 					        <group col="4" colspan="4"  attrs="{'invisible':[('type','!=','openobject')]}">
 					            <field name="db" attrs="{'required':[('type','=','openobject')], 'invisible':[('type','!=','openobject')]}"/>
 							    <field name="obj" attrs="{'required':[('type','=','openobject')], 'invisible':[('type','!=','openobject')]}"/>
 							    <field name="openobject_con_type" attrs="{'required':[('type','=','openobject')], 'invisible':[('type','!=','openobject')]}"/>
 							</group>
-							<group col="4" colspan="4"  attrs="{'invisible':[('type','!=','facebook')]}">
-    							<field name="email" attrs="{'required':[('type','=','facebook')], 'invisible':[('type','!=','facebook')]}"/>
-    						    <field name="delay" attrs="{'required':[('type','=','facebook')], 'invisible':[('type','!=','facebook')]}"/>
-						    </group>
 						    <group col="4" colspan="4"  attrs="{'invisible':[('type','!=','localfile')]}">
 						        <field name="bufsize" attrs="{'invisible':[('type','!=','localfile')]}"/>
 						        <field name="mode" attrs="{'invisible':[('type','!=','localfile')]}"/>
+						        <field name="local_name" attrs="{'invisible':[('type','!=','localfile')]}"/>
 					        </group>
 					         <group col="4" colspan="4"  attrs="{'invisible':[('type','!=','sql')]}">
     						    <field name="sql_con_type" attrs="{'required':[('type','=','sql')], 'invisible':[('type','!=','sql')]}"/>
@@ -75,8 +72,9 @@
 						<page string="Other Information">
 							<field name="host"/>
 							<field name="port"/>
-							<field name="uid"/>
-							<field name="passwd" password="1"/>
+							<field name="uid" attrs="{'required':[('type','in',['gcalendar', 'facebook'])]}"/>
+							<field name="passwd" password="1" attrs="{'required':[('type','in',['gcalendar', 'facebook'])]}"/>
+							<field name="delay" attrs="{'required':[('type','in',['gcalendar', 'facebook'])], 'invisible':[('type','!=','gcalendar')]}"/>
 						</page>
                     </notebook>
 				</form>

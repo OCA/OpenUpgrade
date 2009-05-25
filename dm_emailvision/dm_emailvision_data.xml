@@ -1,6 +1,36 @@
 <?xml version="1.0"?>
 <openerp>
-    
+
+    <!-- Emailvision Partner -->
+    <data>
+    <record id="res_partner_emailvision0" model="res.partner">
+         <field model="res.country" name="country_ids" search="[]"/>
+         <field name="property_product_pricelist" ref="product.list0"/>
+         <field eval="&quot;&quot;&quot;Corp.&quot;&quot;&quot;" name="title"/>
+         <field model="account.account" name="property_account_payable" search="[('name','=','Effets à payer')]"/>
+         <field name="property_stock_supplier" ref="stock.stock_location_suppliers"/>
+         <field eval="&quot;&quot;&quot;EV&quot;&quot;&quot;" name="ref"/>
+         <field eval="0" name="customer"/>
+         <field eval="1" name="supplier"/>
+         <field name="property_stock_customer" ref="stock.stock_location_customers"/>
+         <field eval="1" name="active"/>
+         <field eval="&quot;&quot;&quot;en_US&quot;&quot;&quot;" name="lang"/>
+         <field eval="&quot;&quot;&quot;Emailvision&quot;&quot;&quot;" name="name"/>
+         <field name="property_product_pricelist_purchase" ref="purchase.list0"/>
+         <field model="res.country.state" name="state_ids" search="[]"/>
+         <field model="account.account" name="property_account_receivable" search="[('name','=','Effets à recevoir - clients')]"/>
+         <field eval="[(6,0,[ref('dm.cat_mail_service')])]" name="category_id"/>
+    </record>
+    </data>
+
+    <!-- Mail Service Type -->
+    <data>
+        <record model="dm.mail_service.type" id="dm_mail_service_type_emailvision">
+        <field name="name" eval="&quot;Emailvision&quot;"/>
+        <field name="code" eval="&quot;emailvision&quot;"/>
+        </record>
+   </data>
+
     <!-- Transition Trigger -->
     <data>
         <record id="dm_offer_step_transition_ev_mail_opened" model="dm.offer.step.transition.trigger">
@@ -8,27 +38,31 @@
             <field eval="&quot;&quot;&quot;ev_mail_opened&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
         </record>
         <record id="dm_offer_step_transition_ev_link_clicked" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Emailvision - Link Clicked&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;ev_link_clicked&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
         </record>
         <record id="dm_offer_step_transition_ev_mail_not_opened" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Emailvision - Mail Not Opened&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;ev_mail_not_opened&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
         </record>
         <record id="dm_offer_step_transition_ev_link_not_clicked" model="dm.offer.step.transition.trigger">
             <field eval="&quot;&quot;&quot;Emailvision - Link Not Clicked&quot;&quot;&quot;" name="name"/>
             <field eval="&quot;&quot;&quot;ev_link_not_clicked&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;False&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
         </record>
     </data>
-    <data noupdate="1">
+    <data noupdate="0">
          <record id="ir_actions_server_emailvision_api" model="ir.actions.server">
              <field eval="5" name="sequence"/>
              <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
@@ -41,5 +75,4 @@
          </record>
      </data>
 
-    
 </openerp>

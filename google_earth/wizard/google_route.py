@@ -73,7 +73,9 @@ def _create_kml(self, cr, uid, data, context={}):
     documentElement = kmlDoc.createElement('Document')
     kmlElement.appendChild(documentElement)
     documentElementname = kmlDoc.createElement('name')
-    documentElementname.appendChild(kmlDoc.createTextNode('Delivery route'))
+    documentElementname.appendChild(kmlDoc.createTextNode('Route'))
+    documentElementdesc = kmlDoc.createElement('description')
+    documentElementdesc.appendChild(kmlDoc.createTextNode('When you click on locaion you will get path from warehouse location to customer location'))
 
 #    styleElement = kmlDoc.createElement('Style')
 #    styleElement.setAttribute('id','style15')
@@ -99,8 +101,11 @@ def _create_kml(self, cr, uid, data, context={}):
     polystyleElement.appendChild(outlineElement)
     documentElement.appendChild(polystyleElement)
     documentElement.appendChild(documentElementname)
+    documentElement.appendChild(documentElementdesc)
 
-    cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id where sale_id is not null group by a.city,sp.warehouse_id;')
+    #cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id where sale_id is not null group by a.city,sp.warehouse_id;')
+    cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city, cc.name as customer_country from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id left join res_country as cc on a.country_id=cc.id where sale_id is not null group by a.city,cc.name,sp.warehouse_id;')
+
     packings = cr.dictfetchall()
     warehouse_ids = warehouse_obj.search(cr, uid, [])
     warehouse_datas = warehouse_obj.browse(cr, uid, warehouse_ids)
@@ -127,15 +132,21 @@ def _create_kml(self, cr, uid, data, context={}):
         no_of_packs_min += interval
 
     i=0
+#    line = '------------------------------------------------------'
+    line = ''
     for pack in packings:
         total_qty = pack['product_send']
         warehouse_city = warehouse_dict[pack['warehouse_id']]
         customer_city = pack['customer_city']
+        customer_country = pack['customer_country']
         if not (warehouse_city and customer_city):
             raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer. ')
 
-        desc_text = ' <html><head> <font color="red"> <b> [ Warehouse location : ' + warehouse_city + ' ]' + '  <br />[ Customer Location : ' + customer_city + ' ]' + ' <br />[ Number of product sent : ' + str(total_qty) + ' ]' + \
-        ' <br />[ Number of delivery : ' + str(pack['number_delivery']) + ' ]' + '</b> </font> </head></html>'
+#        desc_text = '<html><head> <font color="red"> <b> Warehouse location : ' + warehouse_city + '<br/>' + line + ' <br /> Customer Location : ' + customer_city + ' ' + customer_country + '<br/>' + line +' <br /> Number of product sent : ' + str(total_qty) + '<br/>' +  line +\
+#        ' <br />Number of delivery : ' + str(pack['number_delivery']) + '<br/>' + '</b> </font> </head></html>'
+
+        desc_text = '<html><head><font color="red"><b> <table border=10 bordercolor="blue"><tr><td>  Warehouse location</td> <td>' + warehouse_city + '</td></tr><tr><td>' + line + '  Customer Location</td><td> ' + customer_city + ' ' + customer_country + '</td></tr><tr><td>' + line +' Number of product sent</td><td> ' + str(total_qty) + '</td></tr>' +  line +\
+        ' <tr><td>Number of delivery</td><td> ' + str(pack['number_delivery']) + '</td></tr>' + '</table></b>  </font></head></html>'
 
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
@@ -187,9 +198,12 @@ def _create_kml(self, cr, uid, data, context={}):
         steps = get_directions(warehouse_city, customer_city)
         if not steps: # make route path strait
             coordinates1 = geocode(warehouse_city)
-            coordinates1 = coordinates1 + '\n'
-            coorElement.appendChild(kmlDoc.createTextNode(coordinates1))
             coordinates2 = geocode(customer_city)
+            coordinates2 = coordinates2 + '\n'
+#            coordinates1 = coordinates1 + '\n'
+            coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
+            coorElement.appendChild(kmlDoc.createTextNode(coordinates1))
+#            coordinates2 = geocode(customer_city)
             coorElement.appendChild(kmlDoc.createTextNode(coordinates2))
         else:
             for s in steps:
