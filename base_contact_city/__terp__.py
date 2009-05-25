@@ -21,7 +21,7 @@
 #
 ##############################################################################
 {
-	"name" : "City for base_contat",
+	"name" : "City for base_contact",
 	"version" : "1.0",
 	"author" : "Pablo Rocandio",
 	"category" : "Generic Modules/Base",
