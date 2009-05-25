@@ -194,7 +194,7 @@ def generate_plugin_value(cr, uid, document_id, address_id,workitem_id=None,trad
     for p in plugins :
         args = {}
         args['document_id'] = document_id
-        if p.type == ('fields','image'):
+        if p.type in ('fields','image'):
             plugin_value = compute_customer_plugin(cr, uid, p, address_id,workitem_id)
         else :
             arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',p.id)])
