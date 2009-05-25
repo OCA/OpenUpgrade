@@ -30,7 +30,8 @@
     "demo_xml" : ["multi_company_account_demo.xml",],
     "update_xml" : [
         "multi_company_account_data.xml", 
-        "multi_company_account_view.xml"
+        "multi_company_account_view.xml",
+        "wizard/company_header_footer_setup_view.xml"
     ],
     "active": False,
     "installable": True
