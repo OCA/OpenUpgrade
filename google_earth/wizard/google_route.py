@@ -62,10 +62,41 @@ def _create_kml(self, cr, uid, data, context={}):
 #    path = tools.config['addons_path']
 #    fileName = path + '/google_earth/kml/route.kml'
     colors = ['ff000080','ff800000','ff800080','ff808000','ff8080ff','ff80ff80','ffff8080','ff008000','ff008070','ff700070']
-
-    # To find particular location
     pool = pooler.get_pool(cr.dbname)
     warehouse_obj = pool.get('stock.warehouse')
+     #cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id where sale_id is not null group by a.city,sp.warehouse_id;')
+    cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city, cc.name as customer_country from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id left join res_country as cc on a.country_id=cc.id where sale_id is not null group by a.city,cc.name,sp.warehouse_id;')
+
+    packings = cr.dictfetchall()
+    warehouse_ids = warehouse_obj.search(cr, uid, [])
+    warehouse_datas = warehouse_obj.browse(cr, uid, warehouse_ids)
+    warehouse_dict = {}
+
+    for whouse in warehouse_datas:
+        warehouse_dict[whouse.id] = whouse.partner_address_id and whouse.partner_address_id.city or False
+
+    if not packings:
+        raise osv.except_osv('Warning !', 'You do not have deliveries available')
+    no_of_packs_max = max(map(lambda x: x['number_delivery'], packings)) or 0
+    no_of_packs_min = min(map(lambda x: x['number_delivery'], packings)) or 0
+
+#    value = no_of_packs_min + (no_of_packs_max - no_of_packs_min)/2 # 25 50 75 100
+#    no_of_packs_min = no_of_packs_min + value/2
+#    c1 = no_of_packs_min + value/2
+#    c2 = c1 + value/2
+    lower_limit = []
+    start_range = []
+    end_range = []
+    interval = no_of_packs_max / 10
+    lower_limit.append(no_of_packs_min)
+    for j in range(no_of_packs_min, no_of_packs_max):
+        start_range.append(no_of_packs_min)
+        lower_limit.append(no_of_packs_min + interval)
+        no_of_packs_min += interval
+        end_range.append(no_of_packs_min)
+
+    # To find particular location
+    
     kmlDoc = xml.dom.minidom.Document()
     kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
     kmlElement = kmlDoc.appendChild(kmlElement)
@@ -75,7 +106,21 @@ def _create_kml(self, cr, uid, data, context={}):
     documentElementname = kmlDoc.createElement('name')
     documentElementname.appendChild(kmlDoc.createTextNode('Route'))
     documentElementdesc = kmlDoc.createElement('description')
-    documentElementdesc.appendChild(kmlDoc.createTextNode('When you click on locaion you will get path from warehouse location to customer location'))
+#    documentElementdesc.appendChild(kmlDoc.createTextNode('When you click on locaion you will get path from warehouse location to customer location'))
+    documentElementdesc.appendChild(kmlDoc.createTextNode(
+    ' COLOR INFO : \n' \
+    ' ------------ \n' \
+    ' MARUN COLOR : ' + str(start_range[0]) + '-' + str(end_range[0]) + ' Range \n' \
+    ' DARK BLUE COLOR : ' + str(start_range[1]) + '-' + str(end_range[1]) + ' Range \n' \
+    ' DARK PINK COLOR : ' + str(start_range[2]) + '-' + str(end_range[2]) + ' Range \n' \
+    ' DARK TURQUOISE COLOR : ' + str(start_range[3]) + '-' + str(end_range[3]) + ' Range \n' \
+    ' LIGHT RED COLOR : ' + str(start_range[4]) + '-' + str(end_range[4]) + ' Range \n' \
+    ' LIGHT GREEN COLOR : ' + str(start_range[5]) + '-' + str(end_range[5]) + ' Range \n' \
+    ' LIGHT SLATE BLUE COLOR : ' + str(start_range[6]) + '-' + str(end_range[6]) + ' Range \n' \
+    ' DARK GREEN COLOR : ' + str(start_range[7]) + '-' + str(end_range[7]) + ' \n' \
+    ' DARK GOLDEN COLOR : ' + str(start_range[8]) + '-' + str(end_range[8]) + ' Range \n' \
+#    ' DARK ORCHID COLOR : ' + str(start_range[9]) + '-' + str(end_range[9]) + ' Range' \
+    ))
 
 #    styleElement = kmlDoc.createElement('Style')
 #    styleElement.setAttribute('id','style15')
@@ -102,35 +147,6 @@ def _create_kml(self, cr, uid, data, context={}):
     documentElement.appendChild(polystyleElement)
     documentElement.appendChild(documentElementname)
     documentElement.appendChild(documentElementdesc)
-
-    #cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id where sale_id is not null group by a.city,sp.warehouse_id;')
-    cr.execute('select sp.warehouse_id, sum(m.product_qty) as product_send, count(s.id) as number_delivery,a.city as customer_city, cc.name as customer_country from stock_picking as s left join sale_order as so on s.sale_id=so.id left join sale_shop as sp on so.shop_id=sp.id left join stock_warehouse as w on w.id=sp.warehouse_id left join stock_move as m on s.id=m.picking_id left join res_partner_address as a on a.id=s.address_id  left join res_partner as p on p.id=a.partner_id left join res_country as cc on a.country_id=cc.id where sale_id is not null group by a.city,cc.name,sp.warehouse_id;')
-
-    packings = cr.dictfetchall()
-    warehouse_ids = warehouse_obj.search(cr, uid, [])
-    warehouse_datas = warehouse_obj.browse(cr, uid, warehouse_ids)
-    warehouse_dict = {}
-
-    for whouse in warehouse_datas:
-        warehouse_dict[whouse.id] = whouse.partner_address_id and whouse.partner_address_id.city or False
-
-    if not packings:
-        raise osv.except_osv('Warning !', 'You do not have deliveries available')
-    no_of_packs_max = max(map(lambda x: x['number_delivery'], packings)) or 0
-    no_of_packs_min = min(map(lambda x: x['number_delivery'], packings)) or 0
-
-#    value = no_of_packs_min + (no_of_packs_max - no_of_packs_min)/2 # 25 50 75 100
-#    no_of_packs_min = no_of_packs_min + value/2
-#    c1 = no_of_packs_min + value/2
-#    c2 = c1 + value/2
-
-    lower_limit = []
-    interval = no_of_packs_max / 10
-    lower_limit.append(no_of_packs_min)
-    for j in range(no_of_packs_min, no_of_packs_max):
-        lower_limit.append(no_of_packs_min + interval)
-        no_of_packs_min += interval
-
     i=0
 #    line = '------------------------------------------------------'
     line = ''
@@ -173,7 +189,6 @@ def _create_kml(self, cr, uid, data, context={}):
 #            colorElement.appendChild(kmlDoc.createTextNode(colors[2]))
 #        else:
 #            colorElement.appendChild(kmlDoc.createTextNode(colors[3]))
-
         if len(lower_limit)==1:
             if pack['number_delivery'] > lower_limit[0]:
                 colorElement.appendChild(kmlDoc.createTextNode(colors[i]))
@@ -181,8 +196,8 @@ def _create_kml(self, cr, uid, data, context={}):
                 colorElement.appendChild(kmlDoc.createTextNode(colors[i]))
                 i+=1
         else:
-            colorElement.appendChild(kmlDoc.createTextNode(colors[0]))
-
+            colorElement.appendChild(kmlDoc.createTextNode(colors[i]))
+            i+=1
         widthElement = kmlDoc.createElement('width')
         widthElement.appendChild(kmlDoc.createTextNode('4'))
 

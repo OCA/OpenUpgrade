@@ -239,7 +239,7 @@ def create_kml(self, cr, uid, data, context={}):
     documentElementname = kmlDoc.createElement('name')
     documentElementname.appendChild(kmlDoc.createTextNode('Country Wise Turnover'))
     documentElementdesc = kmlDoc.createElement('description')
-    documentElementdesc.appendChild(kmlDoc.createTextNode('Tinyerp'))
+    documentElementdesc.appendChild(kmlDoc.createTextNode('COLOR INFO : \n LIGHT RED - Below Average Turnover \n DARK RED - Above Average Turnover'))
 
     documentElement.appendChild(documentElementname)
     documentElement.appendChild(documentElementdesc)
