@@ -112,7 +112,7 @@ class dm_workitem(osv.osv):
         done = False
         try:
             server_obj = self.pool.get('ir.actions.server')
-            print "Calling run for : ",wi.step_id.action_id.server_action_id.name
+            print "Calling run for : ",wi.step_id.action_id.name
             res = True
 
             """ Check if action must be done or cancelled """
@@ -182,7 +182,7 @@ class dm_workitem(osv.osv):
 
             if res:
                 """ Execute Action """
-                res = server_obj.run(cr, uid, [wi.step_id.action_id.server_action_id.id], context)
+                res = server_obj.run(cr, uid, [wi.step_id.action_id.id], context)
                 self.write(cr, uid, [wi.id], {'state': 'done','error_msg':""})
                 done = True
             else:

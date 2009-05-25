@@ -33,7 +33,7 @@
     "demo_xml" : [],
     "update_xml" : [
                     "dm_partner_address_view.xml",
-                    "dm_partner_address_data.xml",
+#                    "dm_partner_address_data.xml",
                     ],
     "active": False,
     "installable": True,

@@ -781,21 +781,26 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
     
     <!-- Server Action -->
     
-    <data noupdate="1">
-        <record id="ir_actions_server_pdf_doc_generate0" model="dm.offer.step.action">
+    <data noupdate="0">
+        <record id="ir_actions_server_pdf_doc_generate0" model="ir.actions.server">
             <field eval="5" name="sequence"/>
             <field eval="&quot;&quot;&quot;code&quot;&quot;&quot;" name="state"/>
             <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
             <field name="model_id" ref="dm.model_dm_workitem"/>
-            <field name="media_id" ref="dm.media_paper"/>
             <field eval="[(6,0,[])]" name="child_ids"/>
-            <field eval="1" name="dm_action"/>
             <field eval="&quot;&quot;&quot;from dm import report_design \nreport_design.generate_reports(cr,uid,obj,'pdf',context)&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
             <field eval="&quot;&quot;&quot;Generate PDF Document&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
-
+<!--
+    <data noupdate="0">
+        <record id="dm_offer_step_action_pdf_doc_generate0" model="dm.offer.step.action">
+            <field name="media_id" ref="dm.media_paper"/>
+            <field name="server_action_id" ref="ir_actions_server_pdf_doc_generate0"/>
+        </record>
+    </data>
+-->
     <!-- ACCOUNT JOURNAL -->
 <!--
     <data noupdate="1">

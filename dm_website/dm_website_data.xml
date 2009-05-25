@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <openerp>
-	<data noupdate="1">
+	<data noupdate="0">
 		<!-- Media -->
 		<record model="dm.media" id="media_website">
 	    	<field name="name" eval="&quot;Web Site&quot;"/>
@@ -8,7 +8,7 @@
 	    </record>
     
     	<!-- Server Action -->
-	    <record id="ir_actions_server_none0" model="dm.offer.step.action">
+	    <record id="ir_actions_server_none0" model="ir.actions.server">
 	    	<field eval="&quot;&quot;&quot;# You can use the following variables
 	#    - object
 	#    - object2
@@ -22,9 +22,7 @@
 	        <field eval="&quot;&quot;&quot;dummy&quot;&quot;&quot;" name="state"/>
 	        <field eval="&quot;&quot;&quot;ir.actions.server&quot;&quot;&quot;" name="type"/>
 	        <field name="model_id" ref="dm.model_dm_workitem"/>
-	        <field name="media_id" ref="media_website"/>
 	        <field eval="[(6,0,[])]" name="child_ids"/>
-	        <field eval="1" name="dm_action"/>
 	        <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="condition"/>
 	        <field eval="&quot;&quot;&quot;None&quot;&quot;&quot;" name="name"/>
 		</record>
