@@ -45,6 +45,13 @@ dm_dynamic_text()
 class dm_dtp_plugin(osv.osv):
     _name = "dm.dtp.plugin"
 
+    def copy(self, cr, uid, id, default=None, context={}):
+        if not default:
+            default = {}
+        data = self.browse(cr, uid, id, context)
+        default['code'] = (data['code'] or '') + '(copy)'
+        return super(dm_dtp_plugin, self).copy(cr, uid, id, default, context=context)
+
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
         if context and 'dm_template_id' in context:
             if not context['dm_template_id']:
