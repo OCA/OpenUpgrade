@@ -33,4 +33,4 @@ from openobject_out import openobject_out
 from facebook_out import facebook_out
 from gcalendar_out import gcalendar_out
 from xmlrpc_out import xmlrpc_out
-
+from gdoc_out import gdoc_out
