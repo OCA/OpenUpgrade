@@ -185,7 +185,7 @@ def generate_plugin_value(cr, uid,**args):
         localcontext['plugin_obj'] = plugin_obj
         plugin_args = {}
         if plugin_obj.python_code : 
-            exec plugin_obj.python_code in localcontext
+            exec plugin_obj.python_code.replace('\r','') in localcontext
             plugin_value = localcontext['plugin_value']
         elif plugin_obj.type in ('fields','image'):
             plugin_value = compute_customer_plugin(cr, uid, plugin_obj = plugin_obj, addr_id = args['addr_id'], wi_id = args['wi_id'])
