@@ -63,13 +63,13 @@ def test():
     import getpass
     user = raw_input('Enter gmail username: ')
     password = getpass.unix_getpass("Enter your password:")
-    doc_conn=etl.connector.gdoc_connector(user,password)
+    doc_conn=etl.connector.gdoc_connector(user, password)
     in_doc = gdoc_in(doc_conn, 'home/tiny/Desktop/doc1.doc')
     test = etl_test.etl_component_test(in_doc)
 #    test.check_output([{'phone_numbers': [''], 'postal_addresses': [''], 'emails': [''], 'title': ''}], 'main')
     # here add the details of the contact in your gmail in the above mentioned format
     res = test.output()
-    print "hooo"
+    print res
 
 if __name__ == '__main__':
     test()

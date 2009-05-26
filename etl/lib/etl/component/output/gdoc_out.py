@@ -20,7 +20,7 @@
 #
 ##############################################################################
 """
-This is an ETL Component that writes data to facebook.
+This is an ETL Component that writes data to google doc.
 """
 
 from etl.component import component
@@ -28,17 +28,19 @@ from etl.component import component
 
 class gdoc_out(component):
     """
-    This is an ETL Component that writes data to facebook.
+    This is an ETL Component that writes data to google doc.
     """
 
-    def __init__(self, gdoc_connector, method, path, name='component.input.gdoc_out', transformer=None, row_limit=0):
+    def __init__(self, gdoc_connector, method, path, doc_type='DOC', title='Document', name='component.input.gdoc_out', transformer=None, row_limit=0):
         super(gdoc_out, self).__init__(name=name, connector=gdoc_connector, transformer=transformer, row_limit=row_limit)
         self._type = 'component.output.gdoc_out'
         self.method = method
         self.path = path
+        self.doc_type = doc_type
+        self.title = title
 
     def __copy__(self):
-        res = gdoc_out(self.connector, self.method, self.path, self.name, self.transformer, self.row_limit)
+        res = gdoc_out(self.connector, self.method, self.path, self.doc_type , self.title, self.name, self.transformer, self.row_limit)
         return res
 
     def __getstate__(self):
@@ -49,32 +51,37 @@ class gdoc_out(component):
         super(gdoc_out, self).__setstate__(state)
         self.__dict__ = state
 
-    def save_doc(self, gdoc_service):
-        print "!!!!!!!!!!!!!!!!"
-        import gdata
+    def upload_doc(self, gdoc_service):
+        # Todo: check by uploading different file types
+        #       check for upload document to a folder
+        #       create new document (blank) on google
+        #       modify exiting doucment and its metadata
+        #       check for permission on docs
+        #       retrieve doc/ppt/ss by query...
+        #       folder management
         import gdata.docs.service
-        ms = gdata.MediaSource(file_path=self.path, content_type=gdata.docs.service.SUPPORTED_FILETYPES['png'])
-        entry = gdoc_service.UploadDocument(ms, 'screenshot tinyerp')
-        print 'Document now accessible online at:', entry.GetAlternateLink().href
+        ms = gdata.MediaSource(file_path=self.path, content_type=gdata.docs.service.SUPPORTED_FILETYPES[self.doc_type])
+        entry = gdoc_service.UploadDocument(ms, self.title)
+
+    def upload_ppt(self, gdoc_service):
+        import gdata.docs.service
+        ms = gdata.MediaSource(file_path=self.path, content_type=gdata.docs.service.SUPPORTED_FILETYPES['PPT'])
+        entry = gdoc_service.UploadPresentation(ms, self.title)
+
+    def upload_spreadsheet(self, gdoc_service):
+        import gdata.docs.service
+        ms = gdata.MediaSource(file_path=self.path, content_type=gdata.docs.service.SUPPORTED_FILETYPES['XLS'])
+        entry = gdoc_service.UploadSpreadsheet(ms, self.title)
 
     def process(self):
         gdoc_service = self.connector.open()
         for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
-                    self.save_doc(gdoc_service)
+                    # call method
                     yield d, 'main'
 
 def test():
-#    from etl_test import etl_test
-#    import etl
-#    facebook_conn = etl.connector.facebook_connector('http://facebook.com', 'modiinfo@gmail.com')
-#    test = etl_test.etl_component_test(facebook_out(facebook_conn, 'set_events', name='facebook test'))
-#    test.check_output([{'id': 'event2', 'name': 'mustufa'}], 'main')
-#    test.check_input({'main': [{'id': 'event2', 'name': 'mustufa'}]})
-#    res = test.output()
-
-
     from etl_test import etl_test
     import etl
     import getpass
@@ -84,11 +91,8 @@ def test():
     out_doc = gdoc_out(doc_conn, '', 'home/tiny/Desktop/1.png')
     test = etl_test.etl_component_test(out_doc)
 #    test.check_output([{'phone_numbers': [''], 'postal_addresses': [''], 'emails': [''], 'title': ''}], 'main')
-    # here add the details of the contact in your gmail in the above mentioned format
     res = test.output()
-    print "hooo"
     print res
 
 if __name__ == '__main__':
     test()
-

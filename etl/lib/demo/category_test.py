@@ -23,7 +23,7 @@ map = etl.component.transform.map({'main':{
     'category_name':"main.get('cat_name',['anonymous'])",
 }})
 
-ooconnector = etl.connector.openobject_connector('http://mra.tinyerp.co.in:8069', 'trunk', 'admin', 'admin', con_type='xmlrpc')
+ooconnector = etl.connector.openobject_connector('http://localhost:8069', 'etl', 'admin', 'admin', con_type='xmlrpc')
 
 oo_out_cat= etl.component.output.openobject_out(
      ooconnector,

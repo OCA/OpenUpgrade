@@ -21,6 +21,9 @@
 ##############################################################################
 
 from etl.component import component
+import datetime
+import dateutil
+from dateutil.parser import *
 
 class gcalendar_in(component):
 
@@ -51,12 +54,21 @@ class gcalendar_in(component):
 
     def process(self):
         import gdata.contacts.service
-        feed = self.connector.GetCalendarEventFeed()
-        rows = []
-        data = {}
+        calendar_service = self.connector.open()
+        feed = calendar_service.GetCalendarEventFeed()
+
         for i, an_event in enumerate(feed.entry):
-            print i,an_event
-            yield {}, 'main'
+            data = {}
+            data['name']= an_event.title.text
+            for i in an_event.when:
+                start_time = dateutil.parser.parse(i.start_time)
+                end_time = dateutil.parser.parse(i.end_time)
+
+#                start_time = datetime.datetime(*start_time.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+#                end_time = datetime.datetime(*end_time.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
+                data['date_begin'] = start_time
+                data['date_end'] = end_time
+            yield data, 'main'
 
 def test():
     from etl_test import etl_test
@@ -66,15 +78,14 @@ def test():
     user = user + '@gmail.com'
     password = getpass.unix_getpass("Enter your password:")
     cal_conn=etl.connector.gcalendar_connector(user, password)
-    cal_service = cal_conn.open()
-    print cal_service
-    in_calendar = gcalendar_in(cal_service)
+    in_calendar = gcalendar_in(cal_conn)
 
     test = etl_test.etl_component_test(in_calendar)
-#    test.check_output([{'phone_numbers': [''], 'postal_addresses': [''], 'emails': [''], 'title': ''}], 'main')
+
+#    test.check_output([{'date_end': '2009-05-23 15:00:00', 'date_begin': '2009-05-23 14:00:00', 'name': 'Outing'}, {'date_end': '2009-05-23 10:00:00', 'date_begin': '2009-05-23 09:00:00', 'name': 'Reporting'}, {'date_end': '2009-06-07 00:00:00', 'date_begin': '2009-06-06 00:00:00', 'name': 'Submission'}], 'main')
     # here add the details of the contact in your gmail in the above mentioned format
     res = test.output()
-    print "hooo"
+    print "output: ",res
 
 if __name__ == '__main__':
     test()

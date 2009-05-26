@@ -66,8 +66,6 @@ class facebook_out(component):
                     self.connector.execute(self.facebook, self.method, fields=self.fields)
                     yield d, 'main'
 
-
-
 def test():
     from etl_test import etl_test
     import etl
