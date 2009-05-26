@@ -196,7 +196,7 @@ def generate_plugin_value(cr, uid,**args):
                     plugin_args[str(arg.name)]=arg.value
                 else :
                     value = compute_customer_plugin(cr, uid, plugin_obj = arg.custome_plugin_id, addr_id=args['addr_id'], wi_id=args['wi_id'])
-                    plugin_args[str(arg.custome_plugin_id.code)] = value
+                    plugin_args[str(arg.name)] = value
             if plugin_obj.type == 'dynamic_text' :
                 plugin_args['ref_text_id'] = plugin_obj.ref_text_id.id
                 args.update(plugin_args)
