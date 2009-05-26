@@ -30,7 +30,7 @@ from report.report_sxw import report_sxw
 from report import interface
 from StringIO import StringIO
 import base64
-from lxml import etre 
+from lxml import etree
 
 _regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
 
