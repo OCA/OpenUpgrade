@@ -57,6 +57,7 @@ def _create_kml(self, cr, uid, data, context={}):
     #    2. you can put differnt data on path like product sent, etc
     #    3. should be test for all cities (Shanghai -> Hongkong ) check to upper and lower possiblities to search
     #    4. different colors accoridingly to number of deleveries
+    #    5. use image color display instead of static desctiption of ranges
 
     #Note: from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
 #    path = tools.config['addons_path']
@@ -96,7 +97,7 @@ def _create_kml(self, cr, uid, data, context={}):
         end_range.append(no_of_packs_min)
 
     # To find particular location
-    
+
     kmlDoc = xml.dom.minidom.Document()
     kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
     kmlElement = kmlDoc.appendChild(kmlElement)
@@ -108,17 +109,19 @@ def _create_kml(self, cr, uid, data, context={}):
     documentElementdesc = kmlDoc.createElement('description')
 #    documentElementdesc.appendChild(kmlDoc.createTextNode('When you click on locaion you will get path from warehouse location to customer location'))
     documentElementdesc.appendChild(kmlDoc.createTextNode(
-    ' COLOR INFO : \n' \
-    ' ------------ \n' \
-    ' MARUN COLOR : ' + str(start_range[0]) + '-' + str(end_range[0]) + ' Range \n' \
-    ' DARK BLUE COLOR : ' + str(start_range[1]) + '-' + str(end_range[1]) + ' Range \n' \
-    ' DARK PINK COLOR : ' + str(start_range[2]) + '-' + str(end_range[2]) + ' Range \n' \
-    ' DARK TURQUOISE COLOR : ' + str(start_range[3]) + '-' + str(end_range[3]) + ' Range \n' \
-    ' LIGHT RED COLOR : ' + str(start_range[4]) + '-' + str(end_range[4]) + ' Range \n' \
-    ' LIGHT GREEN COLOR : ' + str(start_range[5]) + '-' + str(end_range[5]) + ' Range \n' \
-    ' LIGHT SLATE BLUE COLOR : ' + str(start_range[6]) + '-' + str(end_range[6]) + ' Range \n' \
-    ' DARK GREEN COLOR : ' + str(start_range[7]) + '-' + str(end_range[7]) + ' \n' \
-    ' DARK GOLDEN COLOR : ' + str(start_range[8]) + '-' + str(end_range[8]) + ' Range \n' \
+    ' Color  :           Number of Delivery range \n' \
+    '================================================================================================='
+    ' Marun : ' + str(start_range[0]) + '-' + str(end_range[0]) + '\n' \
+    ' Dark Blue : ' + str(start_range[1]) + '-' + str(end_range[1]) + '\n' \
+    ' Dark Pink : ' + str(start_range[2]) + '-' + str(end_range[2]) + '\n' \
+    ' Dark Turquoise : ' + str(start_range[3]) + '-' + str(end_range[3]) + '\n' \
+    ' Light Red : ' + str(start_range[4]) + '-' + str(end_range[4]) + '\n' \
+    ' Light Green : ' + str(start_range[5]) + '-' + str(end_range[5]) + '\n' \
+    ' Light Slate Blue : ' + str(start_range[6]) + '-' + str(end_range[6]) + '\n' \
+    ' Dark Green : ' + str(start_range[7]) + '-' + str(end_range[7]) + ' \n' \
+    ' Dark Golden : ' + str(start_range[8]) + '-' + str(end_range[8]) + '\n' \
+    '=================================================================================================' \
+    'Note: map display delivery route from warehouse location to customer locations(cities), it calculates number of deliveries by cities \n' \
 #    ' DARK ORCHID COLOR : ' + str(start_range[9]) + '-' + str(end_range[9]) + ' Range' \
     ))
 
