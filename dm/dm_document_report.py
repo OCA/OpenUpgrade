@@ -57,7 +57,7 @@ class offer_document(report_sxw.rml_parse):
 
     def document(self):
         if 'form' not in self.datas :
-            add_id = self.context['address_id']
+            addr_id = self.context['address_id']
             doc_id = self.context['document_id']
             wi_id = self.context['active_id']
         else :

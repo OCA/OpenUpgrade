@@ -155,43 +155,45 @@ class etl_component_type(osv.osv):
               'added' : fields.boolean('Added to Component view', readonly=True),
               'field_ids' : fields.many2many('ir.model.fields','comp_field_rel', 'field_id', 'comp_id', 'Component fields',  domain="[('model','ilike','etl.%')]"),
     }
-    
-    def add_type_view(self, cr, uid , id, context={}):
-        type= self.browse(cr, uid, id)[0]
-        if type.added:
-            return
-        fields = type.field_ids
-        if not len(type.field_ids):
-            return
-        from xml import dom, xpath
-        from lxml import etree
-        cr.execute("select id, arch from ir_ui_view where name = 'view.etl.component.form'")
-        result = cr.dictfetchall()[0]
-        mydom = dom.minidom.parseString(result['arch'].encode('utf-8'))
-        child_node=mydom.childNodes[0].childNodes
-        for i in range(1,len(child_node)):
-            for node in child_node[i].childNodes:
-                if node.localName=='page' and node.getAttribute('string')=='Property':
-                    groupnode = mydom.createElement('group')
-                    groupnode.setAttribute('col', "4")
-                    groupnode.setAttribute('colspan', "4")
-                    groupnode.setAttribute('attrs', "{'invisible':[('type_id','!=',%s)]}" % type.id)
-                    node.appendChild(groupnode)
-                    for field in fields:
-                        newnode = mydom.createElement('field')
-                        newnode.setAttribute('name', field.name)
-                        newnode.setAttribute('attrs', "{'invisible':[('type_id','!=',%s)]}" % (type.id))
-                        if field.ttype in ['one2many', 'text']:
-                            newnode.setAttribute('colspan', "4")
-                            newnode.setAttribute('nolabel', "1")
-                            sepnode = mydom.createElement('separator')
-                            sepnode.setAttribute('colspan', "4")
-                            sepnode.setAttribute('string',  field.field_description)
-                            groupnode.appendChild(sepnode)
-                        groupnode.appendChild(newnode)
-        result['arch']=mydom.toxml()
-        self.pool.get('ir.ui.view').write(cr, uid, result['id'], {'arch' : result['arch']})
-        return self.write(cr, uid, id, {'added' : True})
+
+    def add_type_view(self, cr, uid , ids, context={}):
+        for id in ids:
+            type= self.browse(cr, uid, id)
+            if type.added:
+                continue
+            fields = type.field_ids
+            if not len(type.field_ids):
+                continue
+            from xml import dom, xpath
+            from lxml import etree
+            cr.execute("select id, arch from ir_ui_view where name = 'view.etl.component.form'")
+            result = cr.dictfetchall()[0]
+            mydom = dom.minidom.parseString(result['arch'].encode('utf-8'))
+            child_node=mydom.childNodes[0].childNodes
+            for i in range(1,len(child_node)):
+                for node in child_node[i].childNodes:
+                    if node.localName=='page' and node.getAttribute('string')=='Property':
+                        groupnode = mydom.createElement('group')
+                        groupnode.setAttribute('col', "4")
+                        groupnode.setAttribute('colspan', "4")
+                        groupnode.setAttribute('attrs', "{'invisible':[('type_id','!=',%s)]}" % type.id)
+                        node.appendChild(groupnode)
+                        for field in fields:
+                            newnode = mydom.createElement('field')
+                            newnode.setAttribute('name', field.name)
+                            newnode.setAttribute('attrs', "{'invisible':[('type_id','!=',%s)]}" % (type.id))
+                            if field.ttype in ['one2many', 'text']:
+                                newnode.setAttribute('colspan', "4")
+                                newnode.setAttribute('nolabel', "1")
+                                sepnode = mydom.createElement('separator')
+                                sepnode.setAttribute('colspan', "4")
+                                sepnode.setAttribute('string',  field.field_description)
+                                groupnode.appendChild(sepnode)
+                            groupnode.appendChild(newnode)
+            result['arch']=mydom.toxml()
+            self.pool.get('ir.ui.view').write(cr, uid, result['id'], {'arch' : result['arch']})
+            self.write(cr, uid, id, {'added' : True})
+        return True
 
 etl_component_type()
 
@@ -235,13 +237,13 @@ class etl_job(osv.osv):
     def action_set_to_draft(self, cr, uid , id, context={}):
         self.write(cr, uid , id, {'state': 'draft'})
         return True
-    
+
     def action_start_process(self, db, uid , ids, obj, context={}):
         import pooler
         db, pool = pooler.get_db_and_pool(db)
         cr = db.cursor()
         return obj.action_start_process(cr, uid , ids, context)
-    
+
     def action_run_all_processes(self, cr, uid , id, context={}):
         import threading
         job = self.browse(cr, uid , id)[0]
@@ -251,7 +253,7 @@ class etl_job(osv.osv):
         thread1 = threading.Thread( target=self.action_start_process , args=(cr.dbname, uid, process_ids, process_obj, context))
         thread1.start()
         return True
-    
+
     def get_instance(self, cr, uid, id, context={}, data={}):
         if (cr.dbname, uid, data.get('process_id', False), id) not in self._cache:
             self._cache[(cr.dbname, uid, data.get('process_id', False), id)]=self.create_instance(cr, uid, id, context, data)
@@ -351,6 +353,9 @@ class etl_job_process(osv.osv):
     _defaults = {
             'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'etl.job.process'),
             'state': lambda *a: 'draft',
+            'log': lambda *a: 1,
+            'statistics': lambda *a: 1,
+
     }
 
 
@@ -496,7 +501,7 @@ class etl_job_process(osv.osv):
     def action_open_process(self, cr, uid, ids, context={}):
         for process in self.browse(cr, uid, ids, context):
             self.write(cr, uid, process.id, {'state':'open'})
-            
+
     def action_start_process(self, cr, uid, ids, context={}, data={}):
         for process in self.browse(cr, uid, ids, context):
             data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
@@ -508,14 +513,13 @@ class etl_job_process(osv.osv):
                 except Exception, e:
                     print 'Exception: ', e
                     self.write(cr, uid, process.id, {'state':'exception'})
-                    return False
             elif process.state in ('pause'):
                 self.write(cr, uid, process.id, {'state':'start', 'start_date':time.strftime('%Y-%m-%d %H:%M:%S')})
                 job.signal('restart')
             else:
                 raise osv.except_osv(_('Error !'), _('Cannot start process in %s state !'%process.state))
         return True
-    
+
     def action_restart_process(self, cr, uid, ids, context={}, data={}):
         for process in self.browse(cr, uid, ids, context):
             data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
@@ -545,7 +549,6 @@ class etl_job_process(osv.osv):
                 return True
             else:
                 return False
-
 
     def action_stop_process(self, cr, uid, ids, context={}, data={}):
         for process in self.browse(cr, uid, ids, context):
@@ -637,16 +640,7 @@ class etl_component(osv.osv):
                 obj_transition.get_instance(cr, uid, tran_out.id, context, data)
 
     def create_instance(self, cr, uid, id, context={}, data={}):
-        obj_connector=self.pool.get('etl.connector')
-        obj_transformer = self.pool.get('etl.transformer')
-        cmp=self.browse(cr, uid, id)
-        conn_instance = trans_instance = False
-        if cmp.connector_id:
-            conn_instance=obj_connector.get_instance(cr, uid, cmp.connector_id.id , context, data)
-        if cmp.transformer_id:
-            trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
-        val = etl.component.component(name=cmp.name)
-        return val
+        return True
 
 etl_component()
 

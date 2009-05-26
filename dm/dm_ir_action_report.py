@@ -31,6 +31,7 @@ from report import interface
 from StringIO import StringIO
 import base64
 import re
+import tools
 from lxml import etree
 
 _regex = re.compile('\[\[setHtmlImage\((.+?)\)\]\]')
@@ -51,10 +52,8 @@ def my_register_all(db,report=False):
         if netsvc.service_exist('report.'+r['report_name']):
             continue
         if r['report_rml'] or r['report_rml_content_data']:
-            print "2222222222222222222255555555"
             report_sxw('report.'+r['report_name'], r['model'],
                     opj('addons',r['report_rml'] or '/'), header=r['header'],parser=offer_document)
-            print "222222222222222222222222"
     cr.execute("SELECT * FROM ir_act_report_xml WHERE auto=%s ORDER BY id", (True,))
     result = cr.dictfetchall()
     cr.close()
@@ -101,7 +100,6 @@ class report_xml(osv.osv):
         db = pooler.get_db_only(cr.dbname)
         interface.register_all(db)
         return True
-        
     def set_image_email(self,cr,uid,report_id):
         list_image_id = []
         def process_tag(node,list_image_id):
