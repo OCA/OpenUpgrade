@@ -25,6 +25,10 @@
 			<field name="name">GCalendar</field>
 			<field name="code">gcalendar</field>
 		</record>
+        <record id="conn_gdoc_connector" model="etl.connector.type">
+			<field name="name">GDoc</field>
+			<field name="code">gdoc</field>
+		</record>
 	</data>
 </openerp>
 
