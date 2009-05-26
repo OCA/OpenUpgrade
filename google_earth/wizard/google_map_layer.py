@@ -239,7 +239,7 @@ def create_kml(self, cr, uid, data, context={}):
     documentElementname = kmlDoc.createElement('name')
     documentElementname.appendChild(kmlDoc.createTextNode('Country Wise Turnover'))
     documentElementdesc = kmlDoc.createElement('description')
-    documentElementdesc.appendChild(kmlDoc.createTextNode('Tinyerp'))
+    documentElementdesc.appendChild(kmlDoc.createTextNode('============================= \n Light Red - Low Turnover \n Dart Red - High Turnover \n ============================='))
 
     documentElement.appendChild(documentElementname)
     documentElement.appendChild(documentElementdesc)
@@ -296,7 +296,7 @@ def create_kml(self, cr, uid, data, context={}):
         documentElement.appendChild(folderElement)
 
     out = base64.encodestring(kmlDoc.toxml())
-    fname = 'region' + '.kml'
+    fname = 'partner_region' + '.kml'
     return {'kml_file': out, 'name': fname}
 
 class customer_on_map(wizard.interface):
