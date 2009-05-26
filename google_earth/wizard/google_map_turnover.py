@@ -94,12 +94,7 @@ def create_kml(self, cr, uid, data, context={}):
         res[part.id]= 0
     for ml_id, turnover, partner_id in res_partner:
         res[partner_id] = turnover
-#    for part in partner_data:
-#        for id, turnover, partner_id in res_partner:
-#            if partner_id == part.id:
-#                res[part.id] = turnover
-#            if not (partner_id == part.id):
-#                res[part.id] = 0
+
     kmlDoc = xml.dom.minidom.Document()
     kmlElement = kmlDoc.createElementNS('http://maps.google.com/kml/2.2','kml')
     kmlElement = kmlDoc.appendChild(kmlElement)
@@ -176,11 +171,6 @@ def create_kml(self, cr, uid, data, context={}):
 
         desc_text = ' <html><head> <font color="red"> <b> Partner Name : ' + str(part.name) + '<br/>' + line +'<br /> Partner Code : ' + str(part.ref or '') + '<br/>' + line + ' <br />Type : ' + type + ' <br/>' +line+ '<br /> Partner Address: ' +  address + '<br/>' +line+ '<br /> Turnover of partner : ' + str(res[part.id]) + '<br/>' +line+ ' <br /> Main comapny : ' + str(part.parent_id and part.parent_id.name) + '<br/>' + line+  ' <br />Credit Limit : ' + str(part.credit_limit) + '<br/>' \
                     + line +  ' <br /> Number of customer invoice : ' + str(number_customer_inv or 0 ) + '<br/>' + line+' <br /> Number of supplier invoice : ' + str(number_supplier_inv or 0)  + '<br/>' +line +'<br />Total Receivable : ' + str(part.credit) + '<br/>' + line+' <br/>Total Payable : ' + str(part.debit) + '<br/>' + line+ '<br/>Website : ' + str(part.website or '') + '<br/>' +line+ ' </b> </font> </head></html>'
-#        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + '] <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br /> [Main comapny : ' + str(part.parent_id and part.parent_id.name) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
-#                    + ' <br />[ Number of customer invoice : ' + str(number_customer_inv or 0 ) + ']' + ' <br />[ Number of supplier invoice : ' + str(number_supplier_inv or 0)  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
-
-#        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
-#                    + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
