@@ -10,7 +10,9 @@ from plugin.php_url import php_url
 from plugin.current_time import current_time
 
 import re
+import time
 import datetime
+import base64
 
 
 internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
