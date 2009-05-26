@@ -111,18 +111,28 @@ def create_kml(self, cr, uid, data, context={}):
     documentElementdesc.appendChild(kmlDoc.createTextNode('You can see Partner information by clicking Partner'))
     documentElement.appendChild(documentElementname)
     documentElement.appendChild(documentElementdesc)
+    line = '<font color="blue">--------------------------------------------</font>'
     for part in partner_data:
         partner_id = part.id
         address = ''
-        add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
+        mul_address = partner_obj.address_get(cr, uid, [part.id], adr_pref=['default', 'contact', 'invoice', 'delivery'])
+        address_all = map(lambda x: x and x[1], mul_address.items())
+        par_address_id = mul_address.get('contact', False)
+        if not par_address_id:
+            par_address_id = mul_address.get('default', False)
+            if not par_address_id:
+                par_address_id = address_all and address_all[0] or False
+        if par_address_id:
+            add = address_obj.browse(cr, uid, par_address_id, context)
+
         if add:
-#            address += ' <br />['
-#            if add.street:
-#                address += '  '
-#                address += str(add.street)
-#            if add.street2:
-#                address += '  '
-#                address += str(add.street2)
+            address += ''
+            if add.street:
+                address += '  '
+                address += str(add.street)
+            if add.street2:
+                address += '  '
+                address += str(add.street2)
             if add.city:
                 address += '  '
                 address += str(add.city)
@@ -132,7 +142,6 @@ def create_kml(self, cr, uid, data, context={}):
             if add.country_id:
                 address += ',  '
                 address += str(add.country_id.name)
-#            address += ']'
         styleElement = kmlDoc.createElement('Style')
         styleElement.setAttribute('id','randomColorIcon')
         iconstyleElement = kmlDoc.createElement('IconStyle')
@@ -164,8 +173,11 @@ def create_kml(self, cr, uid, data, context={}):
             if partner[1] == 'in_invoice' and partner[2] == partner_id:
                 number_supplier_inv = partner[0]
 
-        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + '] <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br /> [Main comapny : ' + str(part.parent_id and part.parent_id.name) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
-                    + ' <br />[ Number of customer invoice : ' + str(number_customer_inv or 0 ) + ']' + ' <br />[ Number of supplier invoice : ' + str(number_supplier_inv or 0)  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
+
+        desc_text = ' <html><head> <font color="red"> <b> Partner Name : ' + str(part.name) + '<br/>' + line +'<br /> Partner Code : ' + str(part.ref or '') + '<br/>' + line + ' <br />Type : ' + type + ' <br/>' +line+ '<br /> Partner Address: ' +  address + '<br/>' +line+ '<br /> Turnover of partner : ' + str(res[part.id]) + '<br/>' +line+ ' <br /> Main comapny : ' + str(part.parent_id and part.parent_id.name) + '<br/>' + line+  ' <br />Credit Limit : ' + str(part.credit_limit) + '<br/>' \
+                    + line +  ' <br /> Number of customer invoice : ' + str(number_customer_inv or 0 ) + '<br/>' + line+' <br /> Number of supplier invoice : ' + str(number_supplier_inv or 0)  + '<br/>' +line +'<br />Total Receivable : ' + str(part.credit) + '<br/>' + line+' <br/>Total Payable : ' + str(part.debit) + '<br/>' + line+ '<br/>Website : ' + str(part.website or '') + '<br/>' +line+ ' </b> </font> </head></html>'
+#        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + '] <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br /> [Main comapny : ' + str(part.parent_id and part.parent_id.name) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
+#                    + ' <br />[ Number of customer invoice : ' + str(number_customer_inv or 0 ) + ']' + ' <br />[ Number of supplier invoice : ' + str(number_supplier_inv or 0)  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
 
 #        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
 #                    + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
@@ -179,7 +191,7 @@ def create_kml(self, cr, uid, data, context={}):
         descriptionElement.appendChild(descriptionText)
         placemarkElement.appendChild(descriptionElement)
         styleurlElement = kmlDoc.createElement('styleUrl')
-        styleurlElement.appendChild(kmlDoc.createTextNode('#randomColorIcon'))
+        styleurlElement.appendChild(kmlDoc.createTextNode('root://styleMaps#default+nicon=0x304+hicon=0x314'))
         placemarkElement.appendChild(styleurlElement)
         pointElement = kmlDoc.createElement('Point')
         placemarkElement.appendChild(pointElement)

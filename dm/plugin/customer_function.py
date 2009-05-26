@@ -7,20 +7,22 @@ __description__ = '''
                 '''
 __args__ = []
 
-def customer_function(cr,uid,ids,**args):
+def customer_function(cr, uid, **args):
     pool = pooler.get_pool(cr.dbname)
     model_name = args['model_name']
     model_object =  pool.get(model_name)
-    if model_name in ['dm.workitem','dm.campaign','dm.offer.step'] and 'wi_id' in args:
-        data = pool.get('dm.workitem').browse(cr,uid,[args['wi_id']])[0]
+    if model_name in ['dm.workitem','dm.campaign','dm.offer.step','dm.trademark'] and 'wi_id' in args:
+        data = pool.get('dm.workitem').browse(cr,uid,args['wi_id'])
         if model_name == 'dm.campaign':
-            res = pool.get(model_name).read(cr,uid,[data.segment_id.proposition_id.camp_id.id])[0]
+            res = pool.get(model_name).read(cr,uid,data.segment_id.proposition_id.camp_id.id)
         elif model_name == 'dm.offer.step':
-            res = pool.get(model_name).read(cr,uid,[data.step_id.id])[0]
+            res = pool.get(model_name).read(cr,uid,data.step_id.id)
+        elif model_name == 'dm.trademark' :
+            res = pool.get(model_name).read(cr,uid,data.segment_id.proposition_id.camp_id.trademark_id.id)
         else:
             res = pool.get(model_name).read(cr,uid,args['wi_id'])
     else :
-        res = pool.get('res.partner.address').read(cr,uid,ids)[0]
+        res = pool.get('res.partner.address').read(cr,uid,args['addr_id'])
         if model_name == 'res.partner' :
             if res['partner_id']:
                 res = model_object.read(cr,uid,res['partner_id'][0])

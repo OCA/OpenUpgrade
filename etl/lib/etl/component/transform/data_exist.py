@@ -37,7 +37,7 @@ class data_exist(component):
         super(data_exist, self).__init__(name=name )
         self._type = 'component.transfer.data_exist'
         self.openobject_injector = openobject_injector
-        self.connector = self.openobject_injector.connector.open()
+        self.conn = self.openobject_injector.connector.open()
         self.key = key
 
     def __getstate__(self):
@@ -51,18 +51,17 @@ class data_exist(component):
 
 
     def process(self):
-
         #process incoming data
         for channel, trans in self.input_get().items():
             for iterator in trans:
                 for d in iterator:
                     #check if record exists on openobject_injector
-                    ids = self.openobject_injector.connector.execute(self.connector, 'execute', self.openobject_injector.model, 'search', [(self.key,'=',d[self.key])], 0, self.openobject_injector.row_limit, False, self.openobject_injector.context, False)
+                    ids = self.openobject_injector.connector.execute(self.conn, 'execute', self.openobject_injector.model, 'search', [(self.key,'=',d[self.key])], 0, self.openobject_injector.row_limit, False, self.openobject_injector.context, False)
                     if ids:
                         yield d, 'duplicated'
                     else :
                         yield d, 'main'
-        self.openobject_injector.connector.close(self.connector)
+        self.openobject_injector.connector.close(self.conn)
 
 
 #TODO unique test

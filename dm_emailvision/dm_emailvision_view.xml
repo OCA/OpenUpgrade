@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+    <openerp>
+       <data>
+
+	<!--
+	=======================================================
+	   MAIL SERVICE EXTENSION
+	=======================================================
+	-->
+
+		<record id="view_dm_mail_service_form_inherit_ev" model="ir.ui.view">
+		  <field name="name">dm.mail_service.form.inherit_ev</field>
+		  <field name="model">dm.mail_service</field>
+		  <field name="type">form</field>
+		  <field name="inherit_id" ref="dm.view_dm_mail_service_form"/>
+		  <field name="arch" type="xml">
+			<field name="type_id" position="after">
+				<group colspan="4" attrs="{'invisible':[('service_type','!=','emailvision')]}">
+				<separator string="Emailvision NMS API Configuration" colspan="4"/>
+				<field name="ev_host"/>
+				<field name="ev_service"/>
+				<field name="ev_encrypt"/>
+				<field name="ev_random"/>
+				</group>
+			</field>
+		  </field>
+		</record>
+<!--
+		<record id="view_dm_mail_service_form_inherit2" model="ir.ui.view">
+			<field name="name">dm.mail_service.form.inherit2</field>
+			<field name="model">dm.mail_service</field>
+		  <field name="type">form</field>
+			<field name="inherit_id" ref="dm.view_dm_mail_service_form"/>
+		   <field name="arch" type="xml">
+		  <field name="type_id" position="replace">
+		   <field name="type_id" on_change="on_change_service_type(type_id)" widget="selection"/>
+		  </field>
+		  </field>
+		</record>
+-->
+		</data>
+	</openerp>

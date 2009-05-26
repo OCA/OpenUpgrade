@@ -163,16 +163,26 @@ def create_kml(self, cr, uid, data, context={}):
 
         if value_name in country_list:
             dict_country[value_name] = value_cord
-    print country_list
     kmlDoc = xml.dom.minidom.Document()
     kmlElement = kmlDoc.createElementNS('http://earth.google.com/kml/2.2','kml')
     kmlElement.setAttribute('xmlns','http://www.opengis.net/kml/2.2')
     kmlElement = kmlDoc.appendChild(kmlElement)
     documentElement = kmlDoc.createElement('Document')
-
+    line = '<font color="blue">--------------------------------------------</font>'
+    line1 = '<font color="blue"><br />--------------------------------------------</font>'
+    line1 = ''
     for part in partners:
         address = ''
-        add = address_obj.browse(cr, uid, part.address and part.address[0].id, context) # Todo: should be work for multiple address
+        mul_address = partner_obj.address_get(cr, uid, [part.id], adr_pref=['default', 'contact', 'invoice', 'delivery'])
+        address_all = map(lambda x: x and x[1], mul_address.items())
+        par_address_id = mul_address.get('contact', False)
+        if not par_address_id:
+            par_address_id = mul_address.get('default', False)
+            if not par_address_id:
+                par_address_id = address_all and address_all[0] or False
+        if par_address_id:
+            add = address_obj.browse(cr, uid, par_address_id, context)
+
         if add:
 #            if add.street:
 #                address += str(add.street)
@@ -196,14 +206,17 @@ def create_kml(self, cr, uid, data, context={}):
             type += 'Supplier'
             number_supplier += 1
 
-        if address == ', S. Georgia & S. Sandwich Isls.':
+        if address == ', S. Georgia & S. Sandwich Isls.': # to be check
             address = ', South Georgia and the South Sandwich Islands'
         elif address == ', Saint Kitts & Nevis Anguilla':
             address = ', Saint Kitts and Nevis'
 
+        desc_text = ' <html><head> <font color="red"> <b> Partner Name : ' + str(part.name) + '<br/>' + line +'<br /> Partner Code : ' + str(part.ref or '') + '<br/>' + line + ' <br />Type : ' + type + ' <br/>' +line+ '<br /> Partner Address: ' +  address + '<br/>' +line+ '<br /> Turnover of partner : ' + str(res[part.id]) + '<br/>' +line+ ' <br /> Main comapny : ' + str(part.parent_id and part.parent_id.name) + '<br/>' + line+  ' <br />Credit Limit : ' + str(part.credit_limit) + '<br/>' \
+                    + line +  ' <br /> Number of customer invoice : ' + str(number_customer or 0 ) + '<br/>' + line+' <br /> Number of supplier invoice : ' + str(number_supplier or 0)  + '<br/>' +line +'<br />Total Receivable : ' + str(part.credit) + '<br/>' + line+' <br/>Total Payable : ' + str(part.debit) + '<br/>' + line+ '<br/>Website : ' + str(part.website or '') + '<br/>' +line+ ' </b> </font> </head></html>'
+
         #desc_text = address + ' , Turnover of partner : ' + str(res[part.id])
-        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Main comapny : ' + str(part.parent_id and part.parent_id.name or '') + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
-                    + ' <br />[ Number of customers : ' + str(number_customer or '') + ']' + ' <br />[ Number of suppliers : ' + str(number_supplier or '')  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
+#        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Main comapny : ' + str(part.parent_id and part.parent_id.name or '') + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
+#                    + ' <br />[ Number of customers : ' + str(number_customer or '') + ']' + ' <br />[ Number of suppliers : ' + str(number_supplier or '')  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
@@ -236,22 +249,16 @@ def create_kml(self, cr, uid, data, context={}):
     foldernameElement.appendChild(kmlDoc.createTextNode('Folder'))
     folderElement.appendChild(foldernameElement)
 
-    #different color should be used
-#    len_color = len(colors)
-#    cnt = 0
-#    country_list.sort()
     country_list.sort()
     for country in country_list:
-#        if cnt > len_color:
-#            cnt = 0
         if res[country] > avg_to:
             color = colors[1]
         else:
             color = colors[0]
         cooridinate = dict_country[country]
 
-        desctiption_country = '<html><head> <font color="red"> <b> Number of partner: ' + str(res_cus[country]) + '<br /> Number of Invoices made: ' + str(res_inv[country]) + '<br /> Turnover of country: ' + str(res[country]) + ' </b> </font> </head></html>'
-
+#        desctiption_country = '<html><head> <font color="red"> <b> Number of partner: ' + str(res_cus[country])  +  line1 + '<br /> Number of Invoices made: ' + str(res_inv[country]) + line1 + '<br /> Turnover of country: ' + str(res[country]) +  line1 +' </b> </font> </head></html>'
+        desctiption_country = '<html><head><font color="red"><b><table border=10 bordercolor="red"><tr><td>   Number of partner </td><td>' + str(res_cus[country])  +  line1 + '</td></tr><tr><td> Number of Invoices made </td><td>' + str(res_inv[country]) + line1 + '</td></tr><tr><td>Turnover of country</td><td> ' + str(res[country]) +  line1 +' </td></tr></b> </font> </table></head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(country)
@@ -270,7 +277,6 @@ def create_kml(self, cr, uid, data, context={}):
         placemarkElement.appendChild(placemarkdescElement)
         placemarkElement.appendChild(placemarkstyleElement)
 
-#        cnt += 1
         geometryElement = kmlDoc.createElement('MultiGeometry')
         polygonElement = kmlDoc.createElement('Polygon')
 

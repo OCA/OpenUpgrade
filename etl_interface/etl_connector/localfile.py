@@ -45,7 +45,6 @@ class etl_connector_localfile(osv.osv):
         ('local_name_uniq', 'UNIQUE(local_name)', 'The Local Name must be unique!'),
     ]
 
-
     def create(self, cr, uid, vals, context={}):
         if not vals['type'] == 'localfile':
             return super(etl_connector_localfile, self).create(cr, uid, vals, context)
@@ -67,7 +66,9 @@ class etl_connector_localfile(osv.osv):
     
     def write(self, cr, uid, id ,vals, context={}):
         if 'uri' in vals:
-            if self.browse(cr, uid, id[0]).type == 'localfile':
+            local = self.browse(cr, uid, id[0])
+            if local.type == 'localfile':
+                os.remove(self._path+local.local_name)
                 vals['local_name'] = self.copy_file(cr, uid, vals['uri'])
         return super(etl_connector_localfile, self).write(cr, uid, id ,vals, context)
         
@@ -80,5 +81,5 @@ class etl_connector_localfile(osv.osv):
         return val
     
 etl_connector_localfile()
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

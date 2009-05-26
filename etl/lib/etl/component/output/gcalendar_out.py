@@ -74,7 +74,7 @@ class gcalendar_out(component):
         res = oo_in_event.output()
 #        print res
         for d in res['main']:
-            print d
+#            print d
             event.title = atom.Title(text=d['name'])
             event.content = atom.Content(text=d['name'])
 #            event.where.append(gdata.calendar.Where(value_string=where))
@@ -90,9 +90,9 @@ class gcalendar_out(component):
               start_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime())
               end_time = time.strftime('%Y-%m-%dT%H:%M:%S.000Z', time.gmtime(time.time() + 3600))
             event.when.append(gdata.calendar.When(start_time=start_time, end_time=end_time))
-            print event
+#            print event
             new_event = calendar_service.InsertEvent(event, "/calendar/feeds/default/private/full")
-            print new_event
+#            print new_event
 #            new_event.GetEditLink().href
             yield event, 'main'
 
