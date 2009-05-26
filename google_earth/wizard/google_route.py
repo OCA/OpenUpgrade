@@ -54,10 +54,8 @@ def get_directions(source, destination):
 def _create_kml(self, cr, uid, data, context={}):
     #Todo:
     #    1. should be work with different country cities currenly it takes strait path if cities are in differnt countries
-    #    2. you can put differnt data on path like product sent, etc
-    #    3. should be test for all cities (Shanghai -> Hongkong ) check to upper and lower possiblities to search
-    #    4. different colors accoridingly to number of deleveries
-    #    5. use image color display instead of static desctiption of ranges
+    #    2. should be test for all cities (Shanghai -> Hongkong ) check to upper and lower possiblities to search
+    #    3. packages needed : google.directions-0.3.tar.gz
 
     #Note: from google.directions import GoogleDirections : this package shuld be install in order to run the wizard
 #    path = tools.config['addons_path']
@@ -95,6 +93,13 @@ def _create_kml(self, cr, uid, data, context={}):
         lower_limit.append(no_of_packs_min + interval)
         no_of_packs_min += interval
         end_range.append(no_of_packs_min)
+
+#    if len(start_range) < 8:
+#        for l in range(len(start_range), 9):
+#            start_range.append(0)
+#    if len(end_range) < 8:
+#        for l in range(len(end_range), 9):
+#            end_range.append(0)
 
     # To find particular location
 
@@ -192,6 +197,8 @@ def _create_kml(self, cr, uid, data, context={}):
 #            colorElement.appendChild(kmlDoc.createTextNode(colors[2]))
 #        else:
 #            colorElement.appendChild(kmlDoc.createTextNode(colors[3]))
+
+        # fix me : list index out of range error: if no of packing less/ deliveries
         if len(lower_limit)==1:
             if pack['number_delivery'] > lower_limit[0]:
                 colorElement.appendChild(kmlDoc.createTextNode(colors[i]))
