@@ -115,7 +115,7 @@ def generate_reports(cr,uid,obj,report_type,context):
             'mail_service_id':camp_mail_service.mail_service_id.id,
             'delivery_time' : delivery_time,
             'document_id' : document_id[0],
-            'address_id' : obj.address_id.id
+            'address_id' : address_id,
             }
         camp_doc  = pool.get('dm.campaign.document').create(cr,uid,vals)
         print "camp_doc",camp_doc
