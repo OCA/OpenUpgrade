@@ -59,7 +59,21 @@ class etl_transformer(osv.osv):
 
     def create_instance(self, cr, uid, id, context, data={}):
         trans = self.browse(cr, uid, id)
-        val = etl.transformer(trans.tranformer_line_ids)
+        trans_data = {}
+        TRAN_MAP ={
+                'string' : etl.transformer.STRING,
+                'float' : etl.transformer.FLOAT,
+                'long' : etl.transformer.LONG,
+                'datetime' : etl.transformer.DATETIME,
+                'complex' : etl.transformer.COMPLEX,
+                'time' : etl.transformer.TIME,
+                'date' : etl.transformer.DATE,
+                'integer' : etl.transformer.INTEGER,
+                'boolean' : etl.transformer.BOOLEAN,
+                   }
+        for line in  trans.tranformer_line_ids:
+            trans_data[line.name] = TRAN_MAP[line.type]
+        val = etl.transformer(trans_data)
         return val
 
 etl_transformer()
@@ -302,6 +316,21 @@ class etl_job_process(osv.osv):
                 res[id] = time_difference
         return res
 
+    def _get_total_records(self, cr, uid, ids, field_names, arg, context={}, query=''):
+        res = {}
+        for id in ids:
+            res[id] = {}
+            pro_obj = self.browse(cr, uid, id)
+            inp = oup = 0
+            for comp in pro_obj.component_ids:
+                inp += comp.records_in
+                oup += comp.records_out
+            if field_names[0] == 'input_records':
+                res[id][field_names[0]]= inp
+            if field_names[0] == 'output_records':
+                res[id][field_names[0]]= oup
+        return res
+
     _columns = {
               'name' : fields.char('Name', size=64, required=True, readonly=True),
               'job_id' : fields.many2one('etl.job', 'Job', required=True),
@@ -309,8 +338,8 @@ class etl_job_process(osv.osv):
               'end_date' : fields.datetime('End Date', readonly=True),
               'schedule_date' : fields.datetime('Scheduled Date', states={'done':[('readonly', True)]}),
               'compute_time' : fields.function(_get_computation_time, method=True, string= 'Computation Time', help="The total computation time to run process in Seconds"),
-              'input_records' : fields.integer('Total Input Records', readonly=True),
-              'output_records' : fields.integer('Total Output Records', readonly=True),
+              'input_records' : fields.function(_get_total_records, method=True, type='integer', string='Total Input Records' , multi='input_records'),
+              'output_records' : fields.function(_get_total_records, method=True, type='integer', string='Total Output Records' , multi='output_records'),
               'state' : fields.selection([('draft', 'Draft'), ('open', 'Open'), ('start', 'Started'), ('pause', 'Paused'), ('stop', 'Stop'), ('exception', 'Exception'), ('cancel', 'Cancel'), ('end', 'Done')], 'State', readonly=True),
               'component_ids' : fields.one2many('etl.job.process.statistics', 'job_process_id', 'Statics', readonly=True),
               'log_ids' :  fields.one2many('etl.job.process.log', 'job_process_id', 'Logs', readonly=True),
@@ -479,13 +508,14 @@ class etl_job_process(osv.osv):
                 except Exception, e:
                     print 'Exception: ', e
                     self.write(cr, uid, process.id, {'state':'exception'})
+                    return False
             elif process.state in ('pause'):
                 self.write(cr, uid, process.id, {'state':'start', 'start_date':time.strftime('%Y-%m-%d %H:%M:%S')})
                 job.signal('restart')
             else:
                 raise osv.except_osv(_('Error !'), _('Cannot start process in %s state !'%process.state))
         return True
-
+    
     def action_restart_process(self, cr, uid, ids, context={}, data={}):
         for process in self.browse(cr, uid, ids, context):
             data.update({'dbname':cr.dbname, 'uid':uid, 'process_id':process.id})
@@ -607,7 +637,16 @@ class etl_component(osv.osv):
                 obj_transition.get_instance(cr, uid, tran_out.id, context, data)
 
     def create_instance(self, cr, uid, id, context={}, data={}):
-        return True
+        obj_connector=self.pool.get('etl.connector')
+        obj_transformer = self.pool.get('etl.transformer')
+        cmp=self.browse(cr, uid, id)
+        conn_instance = trans_instance = False
+        if cmp.connector_id:
+            conn_instance=obj_connector.get_instance(cr, uid, cmp.connector_id.id , context, data)
+        if cmp.transformer_id:
+            trans_instance=obj_transformer.get_instance(cr, uid, cmp.transformer_id.id, context, data)
+        val = etl.component.component(name=cmp.name)
+        return val
 
 etl_component()
 

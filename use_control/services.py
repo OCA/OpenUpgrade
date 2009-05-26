@@ -26,6 +26,7 @@ import netsvc
 import os
 import os.path
 import tools
+from math import ceil
 
 ##############################################################################
 # Service to record use of the database
@@ -85,7 +86,8 @@ class use_control_service(netsvc.Service):
                 for file in files:
                     filename = os.path.join(path, file)
                     dir_size += os.path.getsize(filename)
-        return float((dir_size + db_size) / (1024*1024) + 1.0) / 1024.0
+        r = float((dir_size + db_size) / (1024*1024) + 1.0) / 1024.0
+        return ceil(r)
 
     def data_get(self, password, db):
         security.check_super(password)
@@ -98,15 +100,15 @@ class use_control_service(netsvc.Service):
             from
                 use_control_time t
             left join
-                res_users u on (u.id=t.user_id)
-            where (not uploaded) or (uploaded is null)
+                res_users u on (u.id = t.user_id)
+            where (uploaded = %s) or (uploaded is null)
             group by
                 to_char(t.date, 'YYYY-MM-DD'),
                 u.name,
                 u.login
-           ''')
+           ''', (False,))
         data = cr.fetchall()
-        cr.execute('update use_control_time set uploaded=True where (not uploaded) or (uploaded is null)')
+        cr.execute('update use_control_time set uploaded=%s where (uploaded = %s) or (uploaded is null)', (True, False))
         cr.execute('select name from ir_module_module where state=%s', ('installed',))
         modules = map(lambda x: x[0], cr.fetchall())
 

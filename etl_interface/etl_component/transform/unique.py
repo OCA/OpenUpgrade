@@ -41,7 +41,14 @@ class etl_component_transform_unique(osv.osv):
      _columns={
       'properties' : fields.one2many('etl.component.unique','component_id', 'Property'),
      }
-
+     
+     def create_instance(self, cr, uid, id, context={}, data={}):
+        val=super(etl_component_transform_unique, self).create_instance(cr, uid, id, context, data)       
+        cmp =self.browse(cr, uid, id,context=context)
+        if cmp.type_id.name == 'transform.unique':
+            val = etl.component.transform.unique(cmp.name)
+        return val
+    
 etl_component_transform_unique()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

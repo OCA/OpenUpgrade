@@ -22,6 +22,7 @@
 						<field name="field_format"/>
 						<field name="not_null"/>
 						<field name="field_type" />
+						<field name="field_key" />
 			        </page>
 		            <page string="Transitions Detail">
 		                    <field name="trans_in_ids" nolabel="1" colspan="4" widget="one2many_list">
@@ -112,6 +113,7 @@
     						<field name="field_format"/>
     						<field name="not_null"/>
     						<field name="field_type" />
+    						<field name="field_key" />
                         </page>
                         <page string="Other Information">
                             <field name="row_limit"/>

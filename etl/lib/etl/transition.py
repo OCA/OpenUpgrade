@@ -86,18 +86,23 @@ class transition(signal):
         self.signal('stop')
 
     def end(self):
-#        self.status = 'end'
+        self.status = 'end'
         self.signal('end', {'date': datetime.datetime.today()})
 
     def start(self):
-#        self.status = 'start'
+#        if self.status == 'end':
+#            print "Transition::::::::;; already end::"
+#            pass
+        self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
 
     def pause(self):
-        pass
-#        self.status = 'pause'
+        self.status = 'pause'
         self.signal('pause') #today
 
     def restart(self):
+#        if self.status == 'end':
+#            print "Transition::::::::;; already end::"
+#            pass
         self.status = 'start'
         self.signal('restart')

@@ -155,12 +155,18 @@ class job(signal):
 
 
     def restart(self):
+        if self.status == 'end':
+            print "job is alreadyyy done...restart...."
+            pass
         for tran in self.get_transitions():
             tran.restart()
         self.status = 'start'
         self.signal('restart', {'date': datetime.datetime.today()})
 
     def start(self):
+        if self.status == 'end':
+            print "job is alreadyyy done.. in start....."
+            pass
         self.status = 'start'
         self.signal('start', {'date': datetime.datetime.today()})
         for c in self.get_end_components():
