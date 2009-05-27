@@ -223,7 +223,7 @@ class job(signal):
 #        else:
         path_profile = os.path.realpath('test_cprofile')
         cProfile.runctx('self.start()', globals(), locals(), path_profile)
-        stats = pstats.Stats(path)
+        stats = pstats.Stats(path_profile)
         #to print statstics use: stats.print_stats(10)
         self.end()
 
