@@ -25,11 +25,15 @@
  Copyright (C) 2004-2009 Tiny SPRL (<http://tiny.be>).
  GNU General Public License.
 """
-from signal import signal
 import time
 import logger
 import pickle
 import datetime
+import cProfile
+import pstats
+import os
+
+from signal import signal
 
 class job(signal):
     """
@@ -155,23 +159,19 @@ class job(signal):
 
 
     def restart(self):
-        if self.status == 'end':
-            print "job is alreadyyy done...restart...."
-            pass
-        for tran in self.get_transitions():
-            tran.restart()
-        self.status = 'start'
-        self.signal('restart', {'date': datetime.datetime.today()})
+        if not self.status == 'end':
+            for tran in self.get_transitions():
+                tran.restart()
+            self.status = 'start'
+            self.signal('restart', {'date': datetime.datetime.today()})
 
     def start(self):
-        if self.status == 'end':
-            print "job is alreadyyy done.. in start....."
-            pass
-        self.status = 'start'
-        self.signal('start', {'date': datetime.datetime.today()})
-        for c in self.get_end_components():
-            for a in c.channel_get():
-                pass
+        if not self.status == 'end':
+            self.status = 'start'
+            self.signal('start', {'date': datetime.datetime.today()})
+            for c in self.get_end_components():
+                for a in c.channel_get():
+                    pass
 
     def end(self):
         self.status = 'end'
@@ -221,7 +221,10 @@ class job(signal):
 #            job.restart()
 #            job.end()
 #        else:
-        self.start()
+        path_profile = os.path.realpath('test_cprofile')
+        cProfile.runctx('self.start()', globals(), locals(), path_profile)
+        stats = pstats.Stats(path)
+        #to print statstics use: stats.print_stats(10)
         self.end()
 
     def get_statitic_info(self):

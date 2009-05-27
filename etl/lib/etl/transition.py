@@ -56,6 +56,7 @@ class transition(signal):
         res = super(transition, self).__getstate__()
         res.update({ 'type' : self.type,'status' : self.status, 'source' : pickle.dumps(self.source), 'destination': pickle.dumps(self.destination), 'trigger' : self.trigger, 'channel_source' : self.channel_source, 'channel_destination' : self.channel_destination})
         return res
+
     def __setstate__(self, state):
         super(transition, self).__setstate__(state)
         source = pickle.loads(state['source'])
