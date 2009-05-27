@@ -1,6 +1,6 @@
 import pooler
 
-__description__ = """This plugin return the text base on the languge and gender selected in the document"""
+__description__ = """This plugin return a text based on the languge and gender selected in the document"""
 
 def dynamic_text(cr,uid,**args):
     doc_id = args['doc_id']

@@ -13,7 +13,8 @@ import re
 import time
 import datetime
 import base64
-
+import os
+import sys
 
 internal_html_report = '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <HTML>

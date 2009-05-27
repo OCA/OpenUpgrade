@@ -34,7 +34,7 @@ class dm_dynamic_text(osv.osv):
     _rec_name = 'content'
     _columns = {
         'language_id' : fields.many2one('res.lang','Language',ondelete='cascade'),
-        'gender_id' : fields.many2one('res.partner.title', 'Gender', domain="[('domain','=','contact')]"),
+        'gender_id' : fields.many2one('partner.gender', 'Gender'),
         'content' : fields.text('Content'),
         'previous_step_id' : fields.many2one('dm.offer.step','Previous Step',ondelete='cascade'),
         'ref_text_id' : fields.many2one('dm.dynamic_text', 'Reference Text'),
@@ -243,7 +243,8 @@ class dm_offer_document(osv.osv):
               'document_id','document_template_plugin_id','Dynamic Plugins',),
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
         'note' : fields.text('Description'),
-        'gender_id' : fields.many2one('res.partner.title', 'Gender' ,domain=[('domain','=','contact')]),
+#        'gender_id' : fields.many2one('res.partner.title', 'Gender' ,domain=[('domain','=','contact')]),
+        'gender_id' : fields.many2one('partner.gender', 'Gender'),
     }
     _defaults = {
         'state': lambda *a: 'draft',
