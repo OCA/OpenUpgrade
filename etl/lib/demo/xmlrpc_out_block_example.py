@@ -7,7 +7,7 @@ xmlrpc_out = etl.component.output.xmlrpc_out_block(xmlrpc_conn)
 filevcard = etl.connector.localfile('input/contacts.vcf')
 vcard_in1 = etl.component.input.vcard_in(filevcard)
 map = etl.component.transform.map({'main':{    
-    'org': "main.get('org',['anonymous'])[0]",
+    'org': "main.get('org',['anonymous'])",
     'fn': "main.get('fn','anonymous')",
     'email': "main.get('email','')"
 }})

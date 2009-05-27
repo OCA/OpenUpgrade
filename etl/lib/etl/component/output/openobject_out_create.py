@@ -41,7 +41,7 @@ class openobject_out_create(openobject_out):
     * main                : Returns all data.
     """
 
-    def __init__(self, openobject_connector, model, fields=[], name='component.output.openobject_out_create', transformer=None, row_limit=0):
+    def __init__(self, openobject_connector, model, fields=[], key='id', name='component.output.openobject_out_create', transformer=None, row_limit=0):
         """
         Parameters
         openobject_connector : Open object connector to connect with OpenERP server.
@@ -55,7 +55,7 @@ class openobject_out_create(openobject_out):
         """
         super(openobject_out_create, self).__init__(openobject_connector, model, fields=fields, name=name, transformer=transformer, row_limit=row_limit)
         self._type = 'component.output.openobject_out_create'
-        
+        self.key = key
 
     
 
@@ -77,7 +77,8 @@ class openobject_out_create(openobject_out):
                     op_oc = self.connector.open()
                     res = self.connector.execute(op_oc, 'execute', self.model, 'create', values)
                     self.connector.close(op_oc)
-                    yield {'id':res}, 'main'
+                    d.update({self.key:res})
+                    yield d, 'main'
 
 def test():
     pass
