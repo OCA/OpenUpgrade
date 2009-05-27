@@ -1025,6 +1025,15 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="dm.field_dm_offer_step_code"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
+        <record id="dm_dtp_plugin_wi_so_id" model="dm.dtp.plugin">
+            <field eval="&quot;&quot;&quot;sale_order_id&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Sale Order ID&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="dm.model_dm_workitem"/>
+            <field eval="&quot;&quot;&quot;Sale Order - Id&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="dm.field_dm_workitem_sale_order_id"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
         <record id="dm_dtp_plugin_currenttime0" model="dm.dtp.plugin">
 			<field eval="&quot;&quot;&quot;current_time&quot;&quot;&quot;" name="code"/>
 			<field eval="0" name="store_value"/>
