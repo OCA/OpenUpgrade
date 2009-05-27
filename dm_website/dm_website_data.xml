@@ -78,7 +78,7 @@
 
 	<data noupdate="1">
 		<record id="dm.dm_document_template_website0" model="dm.document.template">
-        	<field eval="[(6,0,[ref('dm_website.dm_dtp_plugin_phpurl0'),ref('dm.dm_dtp_plugin_wi_segment_id'),ref('dm.dm_dtp_plugin_wi_step_id'),ref('dm.dm_dtp_plugin_partner_id'),ref('dm_website.dm_dtp_plugin_campaign_website'),ref('dm.dm_dtp_plugin_wi_so_id')])]" name="plugin_ids"/>
+        	<field eval="[(6,0,[ref('dm_website.dm_dtp_plugin_phpurl0'),ref('dm.dm_dtp_plugin_wi_segment_id'),ref('dm.dm_dtp_plugin_wi_step_id'),ref('dm.dm_dtp_plugin_partner_address_id'),ref('dm_website.dm_dtp_plugin_campaign_website'),ref('dm.dm_dtp_plugin_wi_so_id')])]" name="plugin_ids"/>
         </record>
 
     </data>

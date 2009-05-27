@@ -244,7 +244,7 @@ class dm_offer_document(osv.osv):
         'state' : fields.selection([('draft','Draft'),('validate','Validated')], 'Status', readonly=True),
         'note' : fields.text('Description'),
 #        'gender_id' : fields.many2one('res.partner.title', 'Gender' ,domain=[('domain','=','contact')]),
-        'gender_id' : fields.many2one('partner.gender', 'Gender'),
+        'gender_id' : fields.many2one('partner.gender', 'Gender', ondelete="cascade"),
     }
     _defaults = {
         'state': lambda *a: 'draft',
