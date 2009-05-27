@@ -28,7 +28,7 @@ from dateutil.parser import *
 
 class gcalendar_in(component):
 
-    def __init__(self, gcalendar_conn, name='component.input.gmail_in', transformer=None, row_limit=0):
+    def __init__(self, gcalendar_conn, datetime_format='%Y-%m-%d %H:%M:%S', timezone='Asia/Calcutta', name='component.input.gcalendar_in', transformer=None, row_limit=0):
         """
         Required  Parameters
         gcalendar_conn     : connector for google calendar
@@ -39,6 +39,8 @@ class gcalendar_in(component):
         """
         super(gcalendar_in, self).__init__(connector=gcalendar_conn, name=name, transformer=transformer, row_limit=row_limit)
         self._type = 'component.input.gcalendar_in'
+        self.datetime_format = datetime_format
+        self.timezone = timezone
 
     def __copy__(self):
         res = gcalendar_in(self.gcalendar_conn, self.name, self.transformer, self.row_limit)
@@ -57,20 +59,20 @@ class gcalendar_in(component):
         import gdata.contacts.service
         calendar_service = self.connector.open()
         feed = calendar_service.GetCalendarEventFeed()
-
-
         for i, an_event in enumerate(feed.entry):
             data = {}
             data['name']= an_event.title.text
             for i in an_event.when:
                 start_time = dateutil.parser.parse(i.start_time)
                 end_time = dateutil.parser.parse(i.end_time)
-
-#                start_time = datetime.datetime(*start_time.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-#                end_time = datetime.datetime(*end_time.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-
-                data['date_begin'] = i.start_time
-                data['date_end'] = i.end_time
+                from pytz import timezone
+                au_tz = timezone(self.timezone)
+                au_dt = au_tz.normalize(start_time.astimezone(au_tz))
+                timestring = datetime.datetime(*au_dt.timetuple()[:6]).strftime(self.datetime_format)
+                au_dt = au_tz.normalize(end_time.astimezone(au_tz))
+                timestring_end = datetime.datetime(*au_dt.timetuple()[:6]).strftime(self.datetime_format)
+                data['date_begin'] = timestring
+                data['date_end'] = timestring_end
             yield data, 'main'
 
 def test():

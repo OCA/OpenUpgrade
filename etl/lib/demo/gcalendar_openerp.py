@@ -12,7 +12,7 @@ user = user + '@gmail.com'
 password = getpass.unix_getpass("Enter your password:")
 cal_conn=etl.connector.gcalendar_connector(user, password)
 cal_service = cal_conn.open()
-gcalendar_in_events= etl.component.input.gcalendar_in(cal_conn,'Get user events')
+gcalendar_in_events= etl.component.input.gcalendar_in(cal_conn,datetime_format='%Y-%m-%d %H:%M:%S',timezone='Asia/Calcutta',name='Get user events')
 
 #log1=etl.component.transform.logger(name='After write')
 #log=etl.component.transform.logger(name='After map')
@@ -20,13 +20,18 @@ gcalendar_in_events= etl.component.input.gcalendar_in(cal_conn,'Get user events'
 map = etl.component.transform.map({'main':{
     'id': "tools.uniq_id(main.get('name', 'anonymous'), prefix='event_')",
     'name': "main.get('name','anonymous')",
-    'date_begin':"main.get(datetime.datetime.fromtimestamp(time.mktime(time.strptime('date_begin','%Y-%m-%dT%H:%M:%S.000Z'))).strftime('%Y-%m-%d %H:%M:%S')) ",
-    'date_end':"main.get(datetime.datetime.fromtimestamp(time.mktime(time.strptime('date_end','%Y-%m-%dT%H:%M:%S.000Z'))).strftime('%Y-%m-%d %H:%M:%S'))",
-    'product_id':"main.get('product_id', 'Google Tasks')",
+#    'date_begin':"main.get(datetime.datetime.fromtimestamp(time.mktime(time.strptime('date_begin','%Y-%m-%dT%H:%M:%S.000Z'))).strftime('%Y-%m-%d %H:%M:%S')) ",
+#    'date_end':"main.get(datetime.datetime.fromtimestamp(time.mktime(time.strptime('date_end','%Y-%m-%dT%H:%M:%S.000Z'))).strftime('%Y-%m-%d %H:%M:%S'))",
+
+    'date_begin':"main.get('date_begin') ",
+    'date_end':"main.get('date_end')",
+
+
+    'product_id':"main.get('product_id', 'Advance Product')",
 }})
 
 
-ooconnector = etl.connector.openobject_connector('http://localhost:8069', 'test', 'admin', 'admin', con_type='xmlrpc')
+ooconnector = etl.connector.openobject_connector('http://localhost:8069', 'trunk_mra', 'admin', 'admin', con_type='xmlrpc')
 
 oo_out_event= etl.component.output.openobject_out(
      ooconnector,
