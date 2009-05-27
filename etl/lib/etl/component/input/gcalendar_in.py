@@ -23,6 +23,7 @@
 from etl.component import component
 import datetime
 import dateutil
+import time
 from dateutil.parser import *
 
 class gcalendar_in(component):
@@ -57,6 +58,7 @@ class gcalendar_in(component):
         calendar_service = self.connector.open()
         feed = calendar_service.GetCalendarEventFeed()
 
+
         for i, an_event in enumerate(feed.entry):
             data = {}
             data['name']= an_event.title.text
@@ -66,13 +68,15 @@ class gcalendar_in(component):
 
 #                start_time = datetime.datetime(*start_time.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
 #                end_time = datetime.datetime(*end_time.timetuple()[:6]).strftime('%Y-%m-%d %H:%M:%S')
-                data['date_begin'] = start_time
-                data['date_end'] = end_time
+
+                data['date_begin'] = i.start_time
+                data['date_end'] = i.end_time
             yield data, 'main'
 
 def test():
     from etl_test import etl_test
     import etl
+    from etl import transformer
     import getpass
     user = raw_input('Enter gmail username: ')
     user = user + '@gmail.com'
@@ -82,10 +86,13 @@ def test():
 
     test = etl_test.etl_component_test(in_calendar)
 
+#    transformer_description= {'date_begin':transformer.DATETIME, 'date_end':transformer.DATETIME}
+#    transformer=transformer(transformer_description)
+
 #    test.check_output([{'date_end': '2009-05-23 15:00:00', 'date_begin': '2009-05-23 14:00:00', 'name': 'Outing'}, {'date_end': '2009-05-23 10:00:00', 'date_begin': '2009-05-23 09:00:00', 'name': 'Reporting'}, {'date_end': '2009-06-07 00:00:00', 'date_begin': '2009-06-06 00:00:00', 'name': 'Submission'}], 'main')
     # here add the details of the contact in your gmail in the above mentioned format
+#    test1 = gcalender_in_component=etl_test.etl_component_test(etl.component.input.gcalendar_in(cal_conn,transformer=transformer))
     res = test.output()
-    print "output: ",res
 
 if __name__ == '__main__':
     test()
