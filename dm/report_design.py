@@ -109,7 +109,6 @@ def generate_reports(cr,uid,obj,report_type,context):
         document_id = dm_doc_obj.search(cr,uid,[('step_id','=',obj.step_id.id),('category_id','=','Production')])
         # TO ADD : Check if no docs 
         print "Doc id : ",document_id
-        print report_type
 
         vals={  'segment_id': obj.segment_id.id,
             'name': obj.step_id.code + "_" +str(address_id),
@@ -125,7 +124,6 @@ def generate_reports(cr,uid,obj,report_type,context):
         if document_id :
             report_ids = report_xml.search(cr,uid,[('document_id','=',document_id[0]),('report_type','=',report_type)])
             print "report_ids : ",report_ids
-            print dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
 
             document_data = dm_doc_obj.read(cr,uid,document_id,['name','editor','content','subject'])[0]
             print "Doc name : ",document_data['name']
@@ -158,6 +156,52 @@ def generate_reports(cr,uid,obj,report_type,context):
                     attach_id = attachment_obj.create(cr,uid,attach_vals)
                     print "Attachement : ",attach_id
 
+def compute_customer_plugin(cr, uid, **args):
+    res  = pool.get('ir.model').browse(cr, uid, args['plugin_obj'].model_id.id)    
+    args['model_name'] = res.model
+    args['field_name'] = str(args['plugin_obj'].field_id.name)
+    args['field_type'] = str(args['plugin_obj'].field_id.ttype)
+    args['field_relation'] = str(args['plugin_obj'].field_id.relation)
+    return customer_function(cr, uid, **args)
+
+def _generate_value(cr,uid,plugin_obj,localcontext,**args):
+    pool = pooler.get_pool(cr.dbname)
+    localcontext['plugin_obj'] = plugin_obj
+    plugin_args = {}
+    plugin_value = ''
+    if plugin_obj.python_code : 
+        exec plugin_obj.python_code.replace('\r','') in localcontext
+        plugin_value =  localcontext['plugin_value']
+    elif plugin_obj.type in ('fields','image'):
+        res  = pool.get('ir.model').browse(cr, uid, plugin_obj.model_id.id)    
+        args['model_name'] = res.model
+        args['field_name'] = str(plugin_obj.field_id.name)
+        args['field_type'] = str(plugin_obj.field_id.ttype)
+        args['field_relation'] = str(plugin_obj.field_id.relation)
+        plugin_value = customer_function(cr, uid, **args)
+    else :
+        arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',plugin_obj.id)])
+        for arg in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
+            if not arg.stored_plugin :
+                plugin_args[str(arg.name)]=arg.value
+            else :
+                plugin_args[str(arg.name)] = _generate_value(cr,uid,arg.custome_plugin_id,localcontext,**args)
+        if plugin_obj.type == 'dynamic_text' :
+            plugin_args['ref_text_id'] = plugin_obj.ref_text_id.id
+            args.update(plugin_args)
+            plugin_value = dynamic_text(cr, uid, **args)
+        elif plugin_obj.type == 'url' :
+            plugin_args['encode'] = plugin_obj.encode
+            plugin_value = php_url(cr, uid,**plugin_args)
+        else :
+            path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
+            plugin_name = plugin_obj.file_fname.split('.')[0]
+            sys.path.append(path)
+            X =  __import__(plugin_name)
+            plugin_func = getattr(X, plugin_name)
+            plugin_value = plugin_func(cr, uid,**args)
+    return plugin_value
+
 def generate_plugin_value(cr, uid,**args):
     if not 'doc_id' in args and not args['doc_id'] :
         return False
@@ -170,50 +214,20 @@ def generate_plugin_value(cr, uid,**args):
     localcontext.update(args)
 
     pool = pooler.get_pool(cr.dbname)
-    def compute_customer_plugin(cr, uid, **args):
-        res  = pool.get('ir.model').browse(cr, uid, args['plugin_obj'].model_id.id)    
-        args['model_name'] = res.model
-        args['field_name'] = str(args['plugin_obj'].field_id.name)
-        args['field_type'] = str(args['plugin_obj'].field_id.ttype)
-        args['field_relation'] = str(args['plugin_obj'].field_id.relation)
-        return customer_function(cr, uid, **args)
+    
 
     dm_document = pool.get('dm.offer.document')
     dm_plugins_value = pool.get('dm.plugins.value')
 
     plugins = dm_document.browse(cr, uid, args['doc_id'], ['document_template_plugin_ids' ])
-
-    for plugin_obj in plugins['document_template_plugin_ids'] :
-        localcontext['plugin_obj'] = plugin_obj
-        plugin_args = {}
-        if plugin_obj.python_code : 
-            exec plugin_obj.python_code.replace('\r','') in localcontext
-            plugin_value = localcontext['plugin_value']
-        elif plugin_obj.type in ('fields','image'):
-            plugin_value = compute_customer_plugin(cr, uid, plugin_obj = plugin_obj, addr_id = args['addr_id'], wi_id = args['wi_id'])
-        else :
-            arg_ids = pool.get('dm.plugin.argument').search(cr,uid,[('plugin_id','=',plugin_obj.id)])
-            for arg in pool.get('dm.plugin.argument').browse(cr,uid,arg_ids):
-                if not arg.stored_plugin :
-                    plugin_args[str(arg.name)]=arg.value
-                else :
-                    value = compute_customer_plugin(cr, uid, plugin_obj = arg.custome_plugin_id, addr_id=args['addr_id'], wi_id=args['wi_id'])
-                    plugin_args[str(arg.name)] = value
-            if plugin_obj.type == 'dynamic_text' :
-                plugin_args['ref_text_id'] = plugin_obj.ref_text_id.id
-                args.update(plugin_args)
-                plugin_value = dynamic_text(cr, uid, **args)
-            elif plugin_obj.type == 'url' :
-                plugin_args['encode'] = plugin_obj.encode
-                plugin_value = php_url(cr, uid,**plugin_args)
-            else :
-                path = os.path.join(os.getcwd(), "addons/dm/dm_dtp_plugins", cr.dbname)
-                plugin_name = plugin_obj.file_fname.split('.')[0]
-                sys.path.append(path)
-                X =  __import__(plugin_name)
-                plugin_func = getattr(X, plugin_name)
-                plugin_value = plugin_func(cr, uid,**args)
-
+    if 'plugin_list' in args and args['plugin_list'] :
+        p_ids = pool.get('dm.dtp.plugin').search(cr,uid,[('code','in',args['plugin_list'])])
+        plugin_ids = pool.get('dm.dtp.plugin').browse(cr,uid,p_ids)
+    else :
+        plugins = dm_document.browse(cr, uid, args['doc_id'], ['document_template_plugin_ids' ])
+        plugin_ids = plugins['document_template_plugin_ids']
+    for plugin_obj in plugin_ids :
+        plugin_value = _generate_value(cr,uid,plugin_obj,localcontext,**args)
         if plugin_obj.store_value :
             dm_plugins_value.create(cr, uid,{'date':time.strftime('%Y-%m-%d'),
                                              'address_id':args['addr_id'],
@@ -221,7 +235,5 @@ def generate_plugin_value(cr, uid,**args):
                                              'value' : plugin_value})
         vals[str(plugin_obj.code)] = plugin_value
     return vals
-
-
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

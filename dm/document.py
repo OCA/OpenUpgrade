@@ -147,7 +147,7 @@ class dm_plugin_argument(osv.osv):
         'plugin_id' : fields.many2one('dm.dtp.plugin','Plugin'),
         'note' : fields.text('Description',readonly=True),
         'stored_plugin' : fields.boolean('Value from plugin'),
-        'custome_plugin_id' : fields.many2one('dm.dtp.plugin','Plugin For Value' ,domain=[('type','=','fields')]),
+        'custome_plugin_id' : fields.many2one('dm.dtp.plugin','Plugin For Value'),
         }
 dm_plugin_argument()
 

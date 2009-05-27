@@ -1074,18 +1074,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;
-purchase_trig_id = pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]\n
-step_ids = []\n
-for x in wi.tr_from_id.step_from_id.outgoing_transition_ids:\n
-    if x.condition_id.id == purchase_trig_id:\n
-         step_ids.append(x.step_to_id.id)\n
-wi_ids = pool.get('dm.workitem').search(cr, uid, [('step_id','in',step_ids),('address_id','=',wi.address_id.id)])\n
-if wi_ids:\n
-    result = False\n
-else:\n
-    result = True\n
-&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;purchase_trig_id = pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]\nstep_ids = []\nfor x in wi.tr_from_id.step_from_id.outgoing_transition_ids:\n    if x.condition_id.id == purchase_trig_id:\n         step_ids.append(x.step_to_id.id)\nwi_ids = pool.get('dm.workitem').search(cr, uid, [('step_id','in',step_ids),('address_id','=',wi.address_id.id)])\nif wi_ids:\n    result = False\nelse:\n    result = True&quot;&quot;&quot;" name="in_act_cond"/>
 <!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
         <record id="dm_offer_step_transition_automatic" model="dm.offer.step.transition.trigger">

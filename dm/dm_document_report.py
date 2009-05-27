@@ -24,7 +24,11 @@ import time
 import pooler
 from report import report_sxw
 from report_design import generate_plugin_value
+import re
+import base64
 
+_regexp1 = re.compile('(\[\'.+?\'\])')
+_regexp2 = re.compile('\'.+?\'')
 class offer_document(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         print "Calling offer_document __init__"
@@ -38,19 +42,25 @@ class offer_document(report_sxw.rml_parse):
         print "Calling offer_document localcontext"
         self.context = context
 
-    def _report_type(self):
+    def _plugin_list(self):
         ir_obj = self.pool.get('ir.actions.report.xml')
-        report_xml_ids = ir_obj.search(cr, uid,[('report_name', '=', self.name[7:])], context=context)
+        print self.name
+        report_xml_ids = ir_obj.search(self.cr, self.uid,[('report_name', '=', self.name)])
         if report_xml_ids:
-            report_xml = ir_obj.browse(cr, uid, report_xml_ids[0], context=context)
-            return report_xml.report_type
+            report_xml = ir_obj.browse(self.cr, self.uid, report_xml_ids[0])
+            raw_plugin_list = _regexp1.findall(report_xml.report_rml_content)
+            plugin_list = []
+            for i in raw_plugin_list :
+                plugin = _regexp2.findall(i)[0].replace("'",'')
+                plugin_list.append(plugin)
+            return plugin_list
         else :
             return False
 
     def trademark_id(self):
         if 'form' not in self.datas :
             workitem_id = self.context['active_id']
-            res = self.pool.get('dm.workitem').brwose(self.cr,self.uid,workitem_id)    
+            res = self.pool.get('dm.workitem').browse(self.cr,self.uid,workitem_id)
             return res.segment_id.proposition_id.camp_id.trademark_id
         else:
             return self.datas['form']['trademark_id']	
@@ -80,7 +90,7 @@ class offer_document(report_sxw.rml_parse):
 
             else :
                 wi_id = wi_data[0]
-        values = generate_plugin_value(self.cr,self.uid,doc_id=doc_id,addr_id=addr_id,wi_id=wi_id)
+        values = generate_plugin_value(self.cr,self.uid,doc_id=doc_id,addr_id=addr_id,wi_id=wi_id,plugin_list=self._plugin_list())
         return [values]
         
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:        

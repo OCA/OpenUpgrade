@@ -70,10 +70,7 @@ def customer_function(cr, uid, **args):
                     return previous_step_id.step_from_id.id
                 else : return False
             else : 
-                if res[args['field_name']]:
-                    return res[args['field_name']][0]
-                else:
-                    return ''
+                return res[args['field_name']] and res[args['field_name']][0] or ''
         return res[args['field_name']]
     elif args['field_type'] not in ['many2many','one2many']:
         return res[args['field_name']]

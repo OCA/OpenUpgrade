@@ -57,7 +57,6 @@ class dm_mail_service(osv.osv):
         if type_id:
             service_type = self.pool.get('dm.mail_service.type').read(cr, uid, [type_id])[0]
             res['value'] = {'service_type':service_type['code']}
-        print res
         return res
 
 
