@@ -63,14 +63,17 @@ def customer_function(cr, uid, **args):
                     read_name = pool.get('res.partner').read(cr,uid,res['name'][0],['name'])
                     res[args['field_name']] = read_name['name']
                 else : return ' '
-        if (model_name == 'dm.workitem') or (model_name == 'res.partner.address' and args['field_name'] == 'partner_id'):
+        if (model_name == 'dm.workitem'):
             if args['field_name'] == 'tr_from_id':
                 if res['tr_from_id']:
                     previous_step_id = pool.get('dm.offer.step.transition').browse(cr,uid,[res['tr_from_id'][0]])[0]
                     return previous_step_id.step_from_id.id
                 else : return False
             else : 
-                return res[args['field_name']][0]
+                if res[args['field_name']]:
+                    return res[args['field_name']][0]
+                else:
+                    return ''
         return res[args['field_name']]
     elif args['field_type'] not in ['many2many','one2many']:
         return res[args['field_name']]
