@@ -43,21 +43,21 @@ class xmlrpc_in_block(xmlrpc_in):
     
 
     def process(self):
-        start_com = False
-        end_com = False
+        start_coms = []
+        end_coms = []
         start_dummy = etl.component.component(name='start dummy')
         end_dummy = etl.component.component(name='end dummy')
         for com in self.rel_job.get_components():
             if com.is_start():
-                start_com = com
+                start_coms.append(com)
             if com.is_end():
-                end_com = com
+                end_coms.append(com)
         self.rel_job.add_component(start_dummy)
         self.rel_job.add_component(end_dummy)
-        if start_com:
+        for start_com in start_coms:
             tran = etl.transition(start_dummy,start_com)
-        if end_com:
-            tran = etl.transition(end_com,end_dummy)
+        for end_com in end_coms:
+            tran = etl.transition(end_com,end_dummy,'','')
         self.start_dummy = start_dummy
         self.end_dummy = end_dummy
         self.end_dummy.datas = []
@@ -73,14 +73,15 @@ class xmlrpc_in_block(xmlrpc_in):
         self.end_dummy.datas = []
         for channel, trans in self.end_dummy.input_get().items():
             for iterator in trans:
-                for d in iterator:
-                    self.end_dummy.datas.append(d)        
+                for d in iterator:                    
+                    self.end_dummy.datas.append(d)
         for d in self.end_dummy.datas:
             yield d, 'main'
 
 
     def import_data(self, datas):
         self.datas = datas
+        self.end_dummy.datas = []        
         for com in self.rel_job.get_components():
             com.generator = False
         self.start_dummy.generator = self.iterator(self.datas)

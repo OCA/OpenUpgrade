@@ -166,12 +166,12 @@ class job(signal):
             self.signal('restart', {'date': datetime.datetime.today()})
 
     def start(self):
-        if not self.status == 'end':
-            self.status = 'start'
-            self.signal('start', {'date': datetime.datetime.today()})
-            for c in self.get_end_components():
-                for a in c.channel_get():
-                    pass
+        #if not self.status == 'end':
+        self.status = 'start'
+        self.signal('start', {'date': datetime.datetime.today()})
+        for c in self.get_end_components():
+            for a in c.channel_get():
+                pass
 
     def end(self):
         self.status = 'end'

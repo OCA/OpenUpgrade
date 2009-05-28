@@ -26,6 +26,7 @@ from osv import fields, osv
 import pooler
 import os
 from dm_document_report import offer_document
+from base_report_designer.wizard.tiny_sxw2rml import sxw2rml
 from report.report_sxw import report_sxw
 from report import interface
 from StringIO import StringIO
