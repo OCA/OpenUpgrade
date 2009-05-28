@@ -136,7 +136,7 @@ def _create_kml(self, cr, uid, data, context={}):
         if not (warehouse_city and customer_city):
             raise wizard.except_wizard('Warning!','Address is not defiend on warehouse or customer. ')
 
-        desc_text = '<html><head><font color="red"><b> <table border=10 bordercolor="blue"><tr><td>  Warehouse location</td> <td>' + warehouse_city + '</td></tr><tr><td>' + line + '  Customer Location</td><td> ' + customer_city + ' ' + customer_country + '</td></tr><tr><td>' + line +' Number of product sent</td><td> ' + str(total_qty) + '</td></tr>' +  line +\
+        desc_text = '<html><head><font color="red" size=1.9><b> <table border=5 bordercolor="blue"><tr><td>  Warehouse location</td> <td>' + warehouse_city + '</td></tr><tr><td>' + line + '  Customer Location</td><td> ' + customer_city + ' ' + customer_country + '</td></tr><tr><td>' + line +' Number of product sent</td><td> ' + str(total_qty) + '</td></tr>' +  line +\
         ' <tr><td>Number of delivery</td><td> ' + str(pack['number_delivery']) + '</td></tr>' + '</table></b>  </font></head></html>'
 
         placemarkElement = kmlDoc.createElement('Placemark')
