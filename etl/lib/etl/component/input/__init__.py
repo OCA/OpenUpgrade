@@ -37,3 +37,4 @@ from sugarcrm_in import sugarcrm_in
 from xmlrpc_in import xmlrpc_in
 from gcalendar_in import gcalendar_in
 from gdoc_in import gdoc_in
+from xmlrpc_in_block import xmlrpc_in_block

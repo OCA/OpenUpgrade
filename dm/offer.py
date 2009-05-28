@@ -122,7 +122,7 @@ class dm_offer(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
-        'lang_orig_id' : fields.many2one('res.lang', 'Original Language'),
+        'lang_orig_id' : fields.many2one('res.lang', 'Original Language', required=True),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter',domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
         'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
         'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),

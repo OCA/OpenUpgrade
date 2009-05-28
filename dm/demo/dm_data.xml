@@ -967,56 +967,56 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="dm.field_dm_workitem_tr_from_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
-        <record id="dm_dtp_plugin_partner_id" model="dm.dtp.plugin">
+        <record id="dm_dtp_plugin_partner_address_id" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;address_id&quot;&quot;&quot;" name="code"/>
-            <field eval="&quot;&quot;&quot;ID&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Address ID&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
-            <field name="model_id" ref="base.model_res_partner_address"/>
+            <field name="model_id" ref="dm.model_dm_workitem"/>
             <field eval="&quot;&quot;&quot;Partner Address - Id&quot;&quot;&quot;" name="note"/>
-            <field name="field_id" ref="base.field_res_partner_address_partner_id"/> 
+            <field name="field_id" ref="dm.field_dm_workitem_address_id"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
         <record id="dm_dtp_plugin_imagepluginlogo0" model="dm.dtp.plugin">
-			<field name="model_id" ref="dm.model_dm_trademark"/>
-			<field eval="&quot;&quot;&quot;logo&quot;&quot;&quot;" name="code"/>
-			<field eval="0" name="store_value"/>
-			<field name="field_id" ref="dm.field_dm_trademark_logo"/>
-			<field eval="&quot;&quot;&quot;Logo&quot;&quot;&quot;" name="name"/>
-			<field eval="&quot;&quot;&quot;Trademark - Logo&quot;&quot;&quot;" name="note"/>
-			<field eval="0" name="encode"/>
-			<field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
-		</record>
-		<record id="dm_dtp_plugin_imagepluginsignature0" model="dm.dtp.plugin">
-			<field name="model_id" ref="dm.model_dm_trademark"/>
-			<field eval="&quot;&quot;&quot;signature&quot;&quot;&quot;" name="code"/>
-			<field eval="0" name="store_value"/>
-			<field name="field_id" ref="dm.field_dm_trademark_signature"/>
-			<field eval="&quot;&quot;&quot;Signature&quot;&quot;&quot;" name="name"/>
-			<field eval="&quot;&quot;&quot;Trademark - Signature&quot;&quot;&quot;" name="note"/>
-			<field eval="0" name="encode"/>
-			<field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
-		</record>
-		<record id="dm_dtp_plugin_imageplugintopbanner0" model="dm.dtp.plugin">
-			<field name="model_id" ref="dm.model_dm_trademark"/>
-			<field eval="&quot;&quot;&quot;top_banner&quot;&quot;&quot;" name="code"/>
-			<field eval="0" name="store_value"/>
-			<field name="field_id" ref="dm.field_dm_trademark_banner_top"/>
-			<field eval="&quot;&quot;&quot;Top Banner&quot;&quot;&quot;" name="name"/>
-			<field eval="&quot;&quot;&quot;Trademark - Top Banner&quot;&quot;&quot;" name="note"/>
-			<field eval="0" name="encode"/>
-			<field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
-		</record>
-		<record id="dm_dtp_plugin_imagepluginbottombanner0" model="dm.dtp.plugin">
-			<field name="model_id" ref="dm.model_dm_trademark"/>
-			<field eval="&quot;&quot;&quot;bottom_banner&quot;&quot;&quot;" name="code"/>
-			<field eval="0" name="store_value"/>
-			<field name="field_id" ref="dm.field_dm_trademark_banner_bottom"/>
-			<field eval="&quot;&quot;&quot;Bottom Banner&quot;&quot;&quot;" name="name"/>
-			<field eval="&quot;&quot;&quot;Trademark - Bottom Banner&quot;&quot;&quot;" name="note"/>
-			<field eval="0" name="encode"/>
-			<field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
-		</record>
-		<record id="dm_dtp_plugin_wi_step_code" model="dm.dtp.plugin">
+            <field name="model_id" ref="dm.model_dm_trademark"/>
+            <field eval="&quot;&quot;&quot;logo&quot;&quot;&quot;" name="code"/>
+            <field eval="0" name="store_value"/>
+            <field name="field_id" ref="dm.field_dm_trademark_logo"/>
+            <field eval="&quot;&quot;&quot;Logo&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Trademark - Logo&quot;&quot;&quot;" name="note"/>
+            <field eval="0" name="encode"/>
+            <field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_dtp_plugin_imagepluginsignature0" model="dm.dtp.plugin">
+            <field name="model_id" ref="dm.model_dm_trademark"/>
+            <field eval="&quot;&quot;&quot;signature&quot;&quot;&quot;" name="code"/>
+            <field eval="0" name="store_value"/>
+            <field name="field_id" ref="dm.field_dm_trademark_signature"/>
+            <field eval="&quot;&quot;&quot;Signature&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Trademark - Signature&quot;&quot;&quot;" name="note"/>
+            <field eval="0" name="encode"/>
+            <field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_dtp_plugin_imageplugintopbanner0" model="dm.dtp.plugin">
+            <field name="model_id" ref="dm.model_dm_trademark"/>
+            <field eval="&quot;&quot;&quot;top_banner&quot;&quot;&quot;" name="code"/>
+            <field eval="0" name="store_value"/>
+            <field name="field_id" ref="dm.field_dm_trademark_banner_top"/>
+            <field eval="&quot;&quot;&quot;Top Banner&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Trademark - Top Banner&quot;&quot;&quot;" name="note"/>
+            <field eval="0" name="encode"/>
+            <field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_dtp_plugin_imagepluginbottombanner0" model="dm.dtp.plugin">
+            <field name="model_id" ref="dm.model_dm_trademark"/>
+            <field eval="&quot;&quot;&quot;bottom_banner&quot;&quot;&quot;" name="code"/>
+            <field eval="0" name="store_value"/>
+            <field name="field_id" ref="dm.field_dm_trademark_banner_bottom"/>
+            <field eval="&quot;&quot;&quot;Bottom Banner&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;Trademark - Bottom Banner&quot;&quot;&quot;" name="note"/>
+            <field eval="0" name="encode"/>
+            <field eval="&quot;&quot;&quot;image&quot;&quot;&quot;" name="type"/>
+        </record>
+        <record id="dm_dtp_plugin_wi_step_code" model="dm.dtp.plugin">
             <field eval="&quot;&quot;&quot;step_code&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;Step Code&quot;&quot;&quot;" name="name"/>
             <field eval="0" name="store_value"/>
@@ -1025,15 +1025,24 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field name="field_id" ref="dm.field_dm_offer_step_code"/> 
             <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
         </record>
+        <record id="dm_dtp_plugin_wi_so_id" model="dm.dtp.plugin">
+            <field eval="&quot;&quot;&quot;sale_order_id&quot;&quot;&quot;" name="code"/>
+            <field eval="&quot;&quot;&quot;Sale Order ID&quot;&quot;&quot;" name="name"/>
+            <field eval="0" name="store_value"/>
+            <field name="model_id" ref="dm.model_dm_workitem"/>
+            <field eval="&quot;&quot;&quot;Sale Order - Id&quot;&quot;&quot;" name="note"/>
+            <field name="field_id" ref="dm.field_dm_workitem_sale_order_id"/> 
+            <field eval="&quot;&quot;&quot;fields&quot;&quot;&quot;" name="type"/>
+        </record>
         <record id="dm_dtp_plugin_currenttime0" model="dm.dtp.plugin">
-			<field eval="&quot;&quot;&quot;current_time&quot;&quot;&quot;" name="code"/>
-			<field eval="0" name="store_value"/>
+            <field eval="&quot;&quot;&quot;current_time&quot;&quot;&quot;" name="code"/>
+            <field eval="0" name="store_value"/>
             <field eval="&quot;&quot;&quot;import time\nplugin_value = time.strftime('%Y-%m-%d %H:%M:%S')&quot;&quot;&quot;" name="python_code"/>
-			<field eval="&quot;&quot;&quot;Current Time&quot;&quot;&quot;" name="name"/>
-			<field eval="&quot;&quot;&quot;current_time.py&quot;&quot;&quot;" name="file_fname"/>
-			<field eval="0" name="encode"/>
-			<field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
-		</record>
+            <field eval="&quot;&quot;&quot;Current Time&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;current_time.py&quot;&quot;&quot;" name="file_fname"/>
+            <field eval="0" name="encode"/>
+            <field eval="&quot;&quot;&quot;dynamic&quot;&quot;&quot;" name="type"/>
+        </record>
     </data>
 
     <!-- TEMPLATE -->
@@ -1044,7 +1053,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;Partner&quot;&quot;&quot;" name="name"/>
         </record>
         <record id="dm_document_template_website0" model="dm.document.template">
-        	<field model="dm.dtp.plugin" search="[('model_id.model','like','dm.workitem')]" name="plugin_ids"/>
+            <field model="dm.dtp.plugin" search="[('model_id.model','like','dm.workitem')]" name="plugin_ids"/>
             <field eval="&quot;&quot;&quot;Website&quot;&quot;&quot;" name="name"/>
         </record>
     </data>
@@ -1065,18 +1074,7 @@ In a multimedia context, the term mailing could be a paper mail, an e-mail, an s
             <field eval="&quot;&quot;&quot;notpurchase&quot;&quot;&quot;" name="code"/>
             <field eval="&quot;&quot;&quot;True&quot;&quot;&quot;" name="gen_next_wi"/>
             <field eval="&quot;&quot;&quot;offer&quot;&quot;&quot;" name="type"/>
-            <field eval="&quot;&quot;&quot;
-purchase_trig_id = pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]\n
-step_ids = []\n
-for x in wi.tr_from_id.step_from_id.outgoing_transition_ids:\n
-    if x.condition_id.id == purchase_trig_id:\n
-         step_ids.append(x.step_to_id.id)\n
-wi_ids = pool.get('dm.workitem').search(cr, uid, [('step_id','in',step_ids),('address_id','=',wi.address_id.id)])\n
-if wi_ids:\n
-    result = False\n
-else:\n
-    result = True\n
-&quot;&quot;&quot;" name="in_act_cond"/>
+            <field eval="&quot;&quot;&quot;purchase_trig_id = pool.get('dm.offer.step.transition.trigger').search(cr, uid, [('code','=','purchase')])[0]\nstep_ids = []\nfor x in wi.tr_from_id.step_from_id.outgoing_transition_ids:\n    if x.condition_id.id == purchase_trig_id:\n         step_ids.append(x.step_to_id.id)\nwi_ids = pool.get('dm.workitem').search(cr, uid, [('step_id','in',step_ids),('address_id','=',wi.address_id.id)])\nif wi_ids:\n    result = False\nelse:\n    result = True&quot;&quot;&quot;" name="in_act_cond"/>
 <!--            <field eval="&quot;&quot;&quot;result = True&quot;&quot;&quot;" name="out_act_cond"/>-->
         </record>
         <record id="dm_offer_step_transition_automatic" model="dm.offer.step.transition.trigger">

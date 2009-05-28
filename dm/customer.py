@@ -97,7 +97,8 @@ class dm_workitem(osv.osv):
         'source' : fields.selection(_SOURCES, 'Source', required=True),
         'error_msg' : fields.text('System Message'),
         'is_global': fields.boolean('Global Workitem'),
-        'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition'),
+        'tr_from_id' : fields.many2one('dm.offer.step.transition', 'Source Transition', select="1", ondelete="cascade"),
+        'sale_order_id' : fields.many2one('sale.order','Sale Order'),
         'state' : fields.selection(SELECTION_LIST, 'Status'),
     }
     _defaults = {
@@ -512,14 +513,12 @@ class dm_event(osv.osv_memory):
     _rec_name = "segment_id"
 
     _columns = {
-#        'campaign_id' : fields.many2one('dm.campaign', 'Campaign'),
-#        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True,context="{'dm_camp_id':campaign_id}"),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segment', required=True),
-#        'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True,context="{'dm_camp_id':campaign_id}"),
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step', required=True),
         'source' : fields.selection([('address_id','Addresses')], 'Source', required=True),
         'address_id' : fields.many2one('res.partner.address', 'Address'),
         'trigger_type_id' : fields.many2one('dm.offer.step.transition.trigger','Trigger Condition',required=True),
+        'sale_order_id' : fields.many2one('sale.order', 'Sale Order'),
         'action_time': fields.datetime('Action Time'),
     }
     _defaults = {
@@ -553,7 +552,7 @@ class dm_event(osv.osv_memory):
             try:
                 wi_id = self.pool.get('dm.workitem').create(cr, uid, {'step_id':tr.step_to_id.id or False, 'segment_id':obj.segment_id.id or False,
                 'address_id':obj.address_id.id, 'action_time':next_action_time.strftime('%Y-%m-%d  %H:%M:%S'),
-                'tr_from_id':tr.id,'source':obj.source})
+                'tr_from_id':tr.id,'source':obj.source, 'sale_order_id':obj.sale_order_id.id})
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_DEBUG, "Creating Workitem with action at %s"% next_action_time.strftime('%Y-%m-%d  %H:%M:%S'))
             except:
                 netsvc.Logger().notifyChannel('dm event', netsvc.LOG_ERROR, "Event cannot create Workitem")
