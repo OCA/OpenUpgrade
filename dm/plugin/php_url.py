@@ -21,7 +21,7 @@ def php_url(cr,uid,**plugin_args):
             arguments  += '&%s=%s'%(a,plugin_args[a])
     if 'encode' in plugin_args and plugin_args['encode'] : 
         arguments = base64.encodestring(arguments)
-    url_name = plugin_args['url']
+    url_name = plugin_args['url'] or ''
     if url_name.find('http://')<0:
         url_name = 'http://' + url_name
         if arguments :
