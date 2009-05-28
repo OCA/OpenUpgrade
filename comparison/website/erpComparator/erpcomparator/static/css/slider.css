@@ -1,0 +1,60 @@
+.fl {
+	float: left; display: inline;
+}
+.slider img {
+	border: 0; display: block;
+}
+.slider {
+	position: relative; width: 890px; margin: 0 auto 10px 2px; text-align: left; /* float: left; */
+}
+.slider .item a:hover img
+{
+	text-decoration: none;
+}
+.slider .messaging {
+	display: block; padding: 5px; margin: 0 20px 5px 20px; background: #ffffcc;
+}
+
+.slider .scr_title{
+	display: block;
+}
+
+.slider .prev, .slider .next {
+	position: absolute; top: 48%; display: none;
+}
+.slider .next {
+	/*right: -0pt;*/
+	right: 30px;
+}
+
+.slider .news_items {
+	left:15px;
+	overflow:hidden;
+	position:relative;
+	top:5pt;
+	width:830px;
+}
+.slider .container {
+	position: relative; top: 0; left: 0; width: 100%; 
+}
+.slider .icon_items {
+    /*
+        The width must be equal to .item ((width + margin-right) * 2). width: 580px; 
+    */
+	position: relative;top: 5pt; left: 15px; overflow: hidden;
+}
+.slider .view_all {
+	font-size: .8em; padding: 5px; margin: 0 0 2px 0; border-top: #eeeeed 1px solid; border-bottom: #eeeeed 1px solid; text-align: center;
+}
+.slider .item {
+    /*
+        Must contain a width and a margin-right.
+    */
+	width: 200px; margin-right: 7px;
+}
+.slider .item div {
+	font-size: .8em; width: 175px; padding: 10px 0 10px 0;
+}
+.slider .item img {
+	padding: 5px;
+}
