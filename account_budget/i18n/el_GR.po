@@ -1,6 +1,6 @@
 # Translation of OpenERP Server.
 # This file containt the translation of the following modules:
-#	* account_budget
+# 	* account_budget
 #
 # Copyright (C) 2008,2009 P. Christeas <p_christ@hol.gr>
 msgid ""
@@ -19,43 +19,42 @@ msgstr ""
 #. module: account_budget
 #: view:account.budget.post:0
 msgid "Dotations"
-msgstr ""
+msgstr "Dotations"
 
 #. module: account_budget
 #: field:crossovered.budget,creating_user_id:0
 msgid "Responsible User"
-msgstr ""
+msgstr "Υπεύθυνος Χρήστης"
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "% performance"
-msgstr ""
+msgstr "% επίδοσης"
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "From"
-msgstr ""
+msgstr "Απο"
 
 #. module: account_budget
 #: model:ir.actions.wizard,name:account_budget.wizard_budget_spread
 msgid "Spread amount"
-msgstr ""
+msgstr "Spread amount"
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.analytic.account.budget:0 rml:crossovered.budget.report:0
 msgid "Printed at:"
-msgstr ""
+msgstr "Εκτυπωμένο στίς:"
 
 #. module: account_budget
 #: view:crossovered.budget:0
 msgid "Confirm"
-msgstr ""
+msgstr "Επιβεβαίωση"
 
 #. module: account_budget
 #: field:crossovered.budget,validating_user_id:0
 msgid "Validate User"
-msgstr ""
+msgstr "Επικυρωμένος Χρήστης"
 
 #. module: account_budget
 #: field:crossovered.budget.lines,analytic_account_id:0
@@ -70,7 +69,7 @@ msgstr ""
 #. module: account_budget
 #: selection:crossovered.budget,state:0
 msgid "Confirmed"
-msgstr ""
+msgstr "Επιβεβαιωμένο"
 
 #. module: account_budget
 #: field:account.budget.post.dotation,period_id:0
@@ -78,29 +77,28 @@ msgid "Period"
 msgstr "Περίοδος"
 
 #. module: account_budget
-#: wizard_button:wizard.analytic.account.budget.report,init,report:0
 #: wizard_button:account.budget.report,init,report:0
+#: wizard_button:wizard.analytic.account.budget.report,init,report:0
 #: wizard_button:wizard.crossovered.budget,init,report:0
 #: wizard_button:wizard.crossovered.budget.summary,init,report:0
 msgid "Print"
-msgstr ""
+msgstr "Εκτύπωση"
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Printing date:"
-msgstr ""
+msgstr "Ημερομηνία εκτύπωσης:"
 
 #. module: account_budget
 #: selection:crossovered.budget,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Πρόχειρο"
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:account.budget:0
+#: rml:account.analytic.account.budget:0 rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "at"
-msgstr ""
+msgstr "στο"
 
 #. module: account_budget
 #: model:ir.actions.report.xml,name:account_budget.account_analytic_account_budget
@@ -108,29 +106,28 @@ msgstr ""
 #: model:ir.actions.wizard,name:account_budget.account_analytic_account_budget_report
 #: model:ir.actions.wizard,name:account_budget.wizard_crossovered_budget_menu
 msgid "Print Budgets"
-msgstr ""
+msgstr "Εκτύπωση Προϋπολογισμών"
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:account.budget:0
+#: rml:account.analytic.account.budget:0 rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "Currency:"
-msgstr ""
+msgstr "Νόμισμα:"
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Performance"
-msgstr ""
+msgstr "Επίδοση"
 
 #. module: account_budget
 #: field:crossovered.budget.lines,percentage:0
 msgid "Percentage"
-msgstr ""
+msgstr "Ποσοστό"
 
 #. module: account_budget
 #: selection:crossovered.budget,state:0
 msgid "Validated"
-msgstr ""
+msgstr "Επικυρωμένο"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_crossovered_budget_lines
@@ -140,30 +137,30 @@ msgstr ""
 #. module: account_budget
 #: field:crossovered.budget,state:0
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.budget:0 rml:crossovered.budget.report:0
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.analytic.account.budget:0 rml:crossovered.budget.report:0
 msgid "Description"
 msgstr "Περιγραφή"
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
 msgid "Analytic Account :"
-msgstr ""
+msgstr "Αναλυτικός Λογαριασμός:"
 
 #. module: account_budget
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
 msgstr ""
+"Το όνομα του αντικειμένου θα πρέπει να ξεκινάει με x_ και να μην περιέχει "
+"ειδικούς χαρακτήρες!"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_account_budget_post_dotation
@@ -178,61 +175,57 @@ msgstr ""
 #. module: account_budget
 #: rml:account.budget:0
 msgid "A/c No."
-msgstr ""
+msgstr "A/c No."
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:account.budget:0
+#: rml:account.analytic.account.budget:0 rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "to"
-msgstr ""
+msgstr "σε"
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:account.budget:0
+#: rml:account.analytic.account.budget:0 rml:account.budget:0
 #: rml:crossovered.budget.report:0
 msgid "Total :"
-msgstr ""
+msgstr "Σύνολο :"
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
 #: field:crossovered.budget.lines,planned_amount:0
+#: rml:crossovered.budget.report:0
 msgid "Planned Amount"
-msgstr ""
+msgstr "Μελετημένο Ποσό"
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.analytic.account.budget:0 rml:crossovered.budget.report:0
 msgid "Perc(%)"
-msgstr ""
+msgstr "Ποσοστ.(%)"
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Period Budget"
-msgstr ""
+msgstr "Προϋπολογισμός Περιόδου"
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Budget Analysis"
-msgstr ""
+msgstr "Ανάλυση Προϋπολογισμού"
 
 #. module: account_budget
-#: field:account.budget.post,account_ids:0
-#: view:account.budget.post:0
+#: field:account.budget.post,account_ids:0 view:account.budget.post:0
 msgid "Accounts"
 msgstr "Λογαριασμoί"
 
 #. module: account_budget
 #: view:crossovered.budget:0
 msgid "Validate"
-msgstr ""
+msgstr "Επικυρωμένο"
 
 #. module: account_budget
 #: wizard_view:wizard.crossovered.budget,init:0
 #: wizard_view:wizard.crossovered.budget.summary,init:0
 msgid "Select Options"
-msgstr ""
+msgstr "Επιλογή Ρυθμίσεων"
 
 #. module: account_budget
 #: model:ir.actions.act_window,name:account_budget.open_budget_post_form
@@ -242,30 +235,28 @@ msgstr ""
 
 #. module: account_budget
 #: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
 #: field:crossovered.budget.lines,practical_amount:0
+#: rml:crossovered.budget.report:0
 msgid "Practical Amount"
-msgstr ""
+msgstr "Πρακτικό Ποσό"
 
 #. module: account_budget
-#: field:crossovered.budget,date_to:0
-#: field:crossovered.budget.lines,date_to:0
+#: field:crossovered.budget,date_to:0 field:crossovered.budget.lines,date_to:0
 msgid "End Date"
-msgstr ""
+msgstr "Ημερομηνία Λήξης"
 
 #. module: account_budget
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr ""
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: account_budget
 #: field:crossovered.budget.lines,theoritical_amount:0
 msgid "Theoritical Amount"
-msgstr ""
+msgstr "Θεωρητικό Ποσό"
 
 #. module: account_budget
-#: field:account.budget.post.dotation,name:0
-#: field:account.budget.post,name:0
+#: field:account.budget.post.dotation,name:0 field:account.budget.post,name:0
 #: field:crossovered.budget,name:0
 msgid "Name"
 msgstr "Ονομασία"
@@ -273,18 +264,17 @@ msgstr "Ονομασία"
 #. module: account_budget
 #: model:ir.actions.wizard,name:account_budget.wizard_crossovered_budget_menu_1
 msgid "Print Summary of Budgets"
-msgstr ""
+msgstr "Εκτύπωση Περίληψης Προϋπολογισμών"
 
 #. module: account_budget
 #: selection:crossovered.budget,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Ακυρωμένο"
 
 #. module: account_budget
-#: selection:crossovered.budget,state:0
-#: view:crossovered.budget:0
+#: view:crossovered.budget:0 selection:crossovered.budget,state:0
 msgid "Done"
-msgstr ""
+msgstr "Εκπληρωμένο"
 
 #. module: account_budget
 #: field:crossovered.budget.lines,general_budget_id:0
@@ -292,8 +282,7 @@ msgid "Master Budget Ref"
 msgstr ""
 
 #. module: account_budget
-#: view:account.analytic.account:0
-#: view:account.budget.post:0
+#: view:account.analytic.account:0 view:account.budget.post:0
 msgid "Lines"
 msgstr "Γραμμές"
 
@@ -314,7 +303,7 @@ msgstr ""
 #. module: account_budget
 #: wizard_view:wizard.analytic.account.budget.report,init:0
 msgid "Select Dates Period"
-msgstr ""
+msgstr "Επιλογή Ημερομηνιών Περιόδου"
 
 #. module: account_budget
 #: wizard_field:account.budget.spread,init,amount:0
@@ -325,14 +314,14 @@ msgstr "Ποσό"
 #. module: account_budget
 #: field:crossovered.budget.lines,paid_date:0
 msgid "Paid Date"
-msgstr ""
+msgstr "Ημερομηνία Πληρωμής"
 
 #. module: account_budget
 #: model:ir.actions.act_window,name:account_budget.action_account_budget_post_tree
 #: model:ir.ui.menu,name:account_budget.menu_action_account_budget_post_tree
 #: model:ir.ui.menu,name:account_budget.next_id_31
 msgid "Budgets"
-msgstr ""
+msgstr "Προϋπολογισμοί"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_account_budget_post
@@ -350,12 +339,12 @@ msgstr "Τέλος περιόδου"
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Budget Item Detail"
-msgstr ""
+msgstr "Λεπτομέρεια Είδους Προϋπολογισμού"
 
 #. module: account_budget
 #: wizard_view:account.budget.report,init:0
 msgid "Select period"
-msgstr ""
+msgstr "Επιλογή περιόδου"
 
 #. module: account_budget
 #: wizard_field:wizard.analytic.account.budget.report,init,date_from:0
@@ -371,8 +360,7 @@ msgid "Fiscal Year"
 msgstr "Λογιστική Χρήση"
 
 #. module: account_budget
-#: field:account.budget.post,code:0
-#: field:crossovered.budget,code:0
+#: field:account.budget.post,code:0 field:crossovered.budget,code:0
 msgid "Code"
 msgstr "Κωδικός"
 
@@ -392,15 +380,14 @@ msgid "Crossovered Budget"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
+#: rml:account.analytic.account.budget:0 rml:crossovered.budget.report:0
 msgid "Theoretical Amount"
-msgstr ""
+msgstr "Θεωρητικό Ποσό"
 
 #. module: account_budget
 #: rml:account.budget:0
 msgid "Results"
-msgstr ""
+msgstr "Αποτελέσματα"
 
 #. module: account_budget
 #: field:account.budget.post,dotation_ids:0
@@ -410,11 +397,10 @@ msgstr "Δαπάνες"
 #. module: account_budget
 #: rml:crossovered.budget.report:0
 msgid "Budget :"
-msgstr ""
+msgstr "Προϋπολογισμός :"
 
 #. module: account_budget
-#: rml:account.budget:0
-#: wizard_view:account.budget.spread,init:0
+#: rml:account.budget:0 wizard_view:account.budget.spread,init:0
 #: wizard_button:account.budget.spread,init,spread:0
 #: view:account.budget.post:0
 msgid "Spread"
@@ -423,45 +409,156 @@ msgstr ""
 #. module: account_budget
 #: model:ir.actions.report.xml,name:account_budget.account_budget
 msgid "Print Budget"
-msgstr ""
+msgstr "Εκτύπωση Προϋπολογισμού"
 
 #. module: account_budget
-#: model:ir.actions.act_window,name:account_budget.act_crossovered_budget_lines_view
-#: field:account.analytic.account,crossovered_budget_line:0
-#: field:account.budget.post,crossovered_budget_line:0
-#: field:crossovered.budget,crossovered_budget_line:0
-#: model:ir.ui.menu,name:account_budget.menu_act_crossovered_budget_lines_view
-#: view:crossovered.budget:0
 #: view:account.analytic.account:0
+#: field:account.analytic.account,crossovered_budget_line:0
 #: view:account.budget.post:0
+#: field:account.budget.post,crossovered_budget_line:0
+#: view:crossovered.budget:0
+#: field:crossovered.budget,crossovered_budget_line:0
 #: view:crossovered.budget.lines:0
+#: model:ir.actions.act_window,name:account_budget.act_account_analytic_account_cb_lines
+#: model:ir.actions.act_window,name:account_budget.act_crossovered_budget_lines_view
+#: model:ir.model,name:account_budget.model_crossovered_budget_lines
+#: model:ir.ui.menu,name:account_budget.menu_act_crossovered_budget_lines_view
 msgid "Budget Lines"
-msgstr ""
+msgstr "Γραμμές Προϋπολογισμού"
 
 #. module: account_budget
-#: wizard_button:wizard.analytic.account.budget.report,init,end:0
 #: wizard_button:account.budget.report,init,end:0
-#: wizard_button:account.budget.spread,init,end:0
+#: wizard_button:account.budget.spread,init,end:0 view:crossovered.budget:0
+#: wizard_button:wizard.analytic.account.budget.report,init,end:0
 #: wizard_button:wizard.crossovered.budget,init,end:0
 #: wizard_button:wizard.crossovered.budget.summary,init,end:0
-#: view:crossovered.budget:0
 msgid "Cancel"
-msgstr ""
+msgstr "Άκυρο"
 
 #. module: account_budget
 #: field:account.budget.post.dotation,tot_planned:0
 msgid "Total Planned Amount"
-msgstr ""
+msgstr "Συνολικά Μελετηθέν Ποσό"
 
 #. module: account_budget
 #: field:crossovered.budget,date_from:0
 #: field:crossovered.budget.lines,date_from:0
 msgid "Start Date"
+msgstr "Ημερομηνία Έναρξης"
+
+#. module: account_budget
+#: rml:account.analytic.account.budget:0 rml:crossovered.budget.report:0
+msgid "Analysis from"
+msgstr "Ανάλυση απο"
+
+#. module: account_budget
+#: model:ir.actions.act_window,name:account_budget.open_budget_post_form
+#: model:ir.ui.menu,name:account_budget.menu_budget_post_form
+msgid "Budgetary Positions"
 msgstr ""
 
 #. module: account_budget
-#: rml:account.analytic.account.budget:0
-#: rml:crossovered.budget.report:0
-msgid "Analysis from"
+#: code:addons/account_budget/wizard/wizard_budget_report.py:0
+#, python-format
+msgid "Insufficient Data!"
+msgstr "Ανεπαρκή Δεδομένα!"
+
+#. module: account_budget
+#: model:ir.module.module,description:account_budget.module_meta_information
+msgid ""
+"This module allows accountants to manage analytic and crossovered budgets.\n"
+"\n"
+"Once the Master Budgets and the Budgets defined (in Financial\n"
+"Management/Budgets/), the Project Managers can set the planned amount on "
+"each\n"
+"Analytic Account.\n"
+"\n"
+"The accountant has the possibility to see the total of amount planned for "
+"each\n"
+"Budget and Master Budget in order to ensure the total planned is not\n"
+"greater/lower than what he planned for this Budget/Master Budget. Each list "
+"of\n"
+"record can also be switched to a graphical view of it.\n"
+"\n"
+"Three reports are available:\n"
+"    1. The first is available from a list of Budgets. It gives the "
+"spreading, for these Budgets, of the Analytic Accounts per Master Budgets.\n"
+"\n"
+"    2. The second is a summary of the previous one, it only gives the "
+"spreading, for the selected Budgets, of the Analytic Accounts.\n"
+"\n"
+"    3. The last one is available from the Analytic Chart of Accounts. It "
+"gives the spreading, for the selected Analytic Accounts, of the Master "
+"Budgets per Budgets.\n"
+"\n"
+msgstr ""
+"This module allows accountants to manage analytic and crossovered budgets.\n"
+"\n"
+"Once the Master Budgets and the Budgets defined (in Financial\n"
+"Management/Budgets/), the Project Managers can set the planned amount on "
+"each\n"
+"Analytic Account.\n"
+"\n"
+"The accountant has the possibility to see the total of amount planned for "
+"each\n"
+"Budget and Master Budget in order to ensure the total planned is not\n"
+"greater/lower than what he planned for this Budget/Master Budget. Each list "
+"of\n"
+"record can also be switched to a graphical view of it.\n"
+"\n"
+"Three reports are available:\n"
+"    1. The first is available from a list of Budgets. It gives the "
+"spreading, for these Budgets, of the Analytic Accounts per Master Budgets.\n"
+"\n"
+"    2. The second is a summary of the previous one, it only gives the "
+"spreading, for the selected Budgets, of the Analytic Accounts.\n"
+"\n"
+"    3. The last one is available from the Analytic Chart of Accounts. It "
+"gives the spreading, for the selected Analytic Accounts, of the Master "
+"Budgets per Budgets.\n"
+"\n"
+
+#. module: account_budget
+#: code:addons/account_budget/wizard/wizard_budget_report.py:0
+#, python-format
+msgid "No Dotations or Master Budget Expenses Found on Budget %s!"
+msgstr "No Dotations or Master Budget Expenses Found on Budget %s!"
+
+#. module: account_budget
+#: code:addons/account_budget/crossovered_budget.py:0
+#, python-format
+msgid "Error!"
+msgstr "Σφάλμα!"
+
+#. module: account_budget
+#: view:account.budget.post.dotation:0
+#: model:ir.model,name:account_budget.model_account_budget_post_dotation
+msgid "Budget Dotation"
+msgstr "Budget Dotation"
+
+#. module: account_budget
+#: view:account.budget.post.dotation:0
+msgid "Budget Dotations"
+msgstr "Budget Dotations"
+
+#. module: account_budget
+#: view:account.budget.post:0
+#: field:crossovered.budget.lines,general_budget_id:0
+#: model:ir.model,name:account_budget.model_account_budget_post
+msgid "Budgetary Position"
+msgstr "Θέσεις Προϋπολογισμού"
+
+#. module: account_budget
+#: field:account.budget.post,dotation_ids:0
+msgid "Spreading"
 msgstr ""
 
+#. module: account_budget
+#: field:crossovered.budget.lines,analytic_account_id:0
+msgid "Analytic Account"
+msgstr "Αναλυτικός Λογαριασμός"
+
+#. module: account_budget
+#: model:ir.module.module,shortdesc:account_budget.module_meta_information
+msgid "Budget Management"
+msgstr "Διαχείριση Προϋπολογισμού"
