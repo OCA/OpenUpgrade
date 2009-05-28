@@ -184,11 +184,11 @@ def create_kml(self, cr, uid, data, context={}):
             add = address_obj.browse(cr, uid, par_address_id, context)
 
         if add:
-#            if add.street:
-#                address += str(add.street)
-#            if add.street2:
-#                address += ', '
-#                address += str(add.street2)
+            if add.street:
+                address += str(add.street)
+            if add.street2:
+                address += ', '
+                address += str(add.street2)
             if add.city:
                 address += ', '
                 address += str(add.city)
@@ -211,12 +211,11 @@ def create_kml(self, cr, uid, data, context={}):
         elif address == ', Saint Kitts & Nevis Anguilla':
             address = ', Saint Kitts and Nevis'
 
-        desc_text = ' <html><head> <font color="red"> <b> Partner Name : ' + str(part.name) + '<br/>' + line +'<br /> Partner Code : ' + str(part.ref or '') + '<br/>' + line + ' <br />Type : ' + type + ' <br/>' +line+ '<br /> Partner Address: ' +  address + '<br/>' +line+ '<br /> Turnover of partner : ' + str(res[part.id]) + '<br/>' +line+ ' <br /> Main comapny : ' + str(part.parent_id and part.parent_id.name) + '<br/>' + line+  ' <br />Credit Limit : ' + str(part.credit_limit) + '<br/>' \
-                    + line +  ' <br /> Number of customer invoice : ' + str(number_customer or 0 ) + '<br/>' + line+' <br /> Number of supplier invoice : ' + str(number_supplier or 0)  + '<br/>' +line +'<br />Total Receivable : ' + str(part.credit) + '<br/>' + line+' <br/>Total Payable : ' + str(part.debit) + '<br/>' + line+ '<br/>Website : ' + str(part.website or '') + '<br/>' +line+ ' </b> </font> </head></html>'
+#        desc_text = ' <html><head> <font color="red"> <b> Partner Name : ' + str(part.name) + '<br/>' + line +'<br /> Partner Code : ' + str(part.ref or '') + '<br/>' + line + ' <br />Type : ' + type + ' <br/>' +line+ '<br /> Partner Address: ' +  address + '<br/>' +line+ '<br /> Turnover of partner : ' + str(res[part.id]) + '<br/>' +line+ ' <br /> Main comapny : ' + str(part.parent_id and part.parent_id.name) + '<br/>' + line+  ' <br />Credit Limit : ' + str(part.credit_limit) + '<br/>' \
+#                    + line +  ' <br /> Number of customer invoice : ' + str(number_customer or 0 ) + '<br/>' + line+' <br /> Number of supplier invoice : ' + str(number_supplier or 0)  + '<br/>' +line +'<br />Total Receivable : ' + str(part.credit) + '<br/>' + line+' <br/>Total Payable : ' + str(part.debit) + '<br/>' + line+ '<br/>Website : ' + str(part.website or '') + '<br/>' +line+ ' </b> </font> </head></html>'
+        desc_text = ' <html><head> <font color="red"> <b><table border=10 bordercolor="red"><tr><td> Partner Name:</td><td>' + str(part.name) + '</td></tr><tr>' + '<td> Partner Code:</td><td> ' + str(part.ref or '') + '</td></tr>' + '<tr><td>Type:</td><td>' + type + '</td></tr><tr><td>' + 'Partner Address: </td><td>' +  address + '</td></tr>' + '<tr><td>Turnover of partner:</td><td> ' + str(res[part.id]) + '</td></tr>' + ' <tr><td> Main comapny:</td><td>' + str(part.parent_id and part.parent_id.name) + '</td></tr>' + '<tr><td>Credit Limit:</td><td>' + str(part.credit_limit) + '</td></tr>' \
+                    +  '<tr><td>Number of customer invoice:</td><td>' + str(number_customer or 0 ) + '</td><tr>' +' <tr><td>Number of supplier invoice:</td><td>' + str(number_supplier or 0) + '</td></tr>'  + '<tr><td>' +'Total Receivable:</td><td> ' + str(part.credit) + '</td></tr>' +' <tr><td>Total Payable:</td><td>' + str(part.debit) + '</td></tr>' + '<tr><td>Website:</td><td>' + str(part.website or '') + '</td></tr>'+ '</table> </b> </font> </head></html>'
 
-        #desc_text = address + ' , Turnover of partner : ' + str(res[part.id])
-#        desc_text = ' <html><head> <font color="red"> <b> [ Partner Name : ' + str(part.name) + ' <br />[ Partner Code : ' + str(part.ref or '') + ' ]' + ' <br />[ Type : ' + type + ' ]' + '<br /> [ Partner Address: ' +  address + ' ]' + ' <br />[Turnover of partner : ' + str(res[part.id]) + ']' + ' <br />[Main comapny : ' + str(part.parent_id and part.parent_id.name or '') + ']' + ' <br />[Credit Limit : ' + str(part.credit_limit) + ']' \
-#                    + ' <br />[ Number of customers : ' + str(number_customer or '') + ']' + ' <br />[ Number of suppliers : ' + str(number_supplier or '')  + ']' + ' <br />[Total Receivable : ' + str(part.credit) + ']' + ' <br />[Total Payable : ' + str(part.debit) + ']' + ' <br />[Website : ' + str(part.website or '') + ']' + ' </b> </font> </head></html>'
         placemarkElement = kmlDoc.createElement('Placemark')
         placemarknameElement = kmlDoc.createElement('name')
         placemarknameText = kmlDoc.createTextNode(part.name)
