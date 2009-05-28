@@ -1,129 +1,134 @@
-# Translation of OpenERP Server.
-# This file contains the translation of the following modules:
-#	* report_analytic_planning
+# Greek translation for openobject-addons
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the openobject-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 5.0.0\n"
-"Report-Msgid-Bugs-To: support@openerp.com\n"
-"POT-Creation-Date: 2009-03-23 08:50:46+0000\n"
-"PO-Revision-Date: 2009-03-23 08:50:46+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"Project-Id-Version: openobject-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2009-04-09 17:23+0000\n"
+"PO-Revision-Date: 2009-05-18 21:35+0000\n"
+"Last-Translator: Makis Nicolaou <mark.nicolaou@gmail.com>\n"
+"Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-05-28 09:07+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "To:"
-msgstr ""
+msgstr "Έως:"
 
 #. module: report_analytic_planning
 #: view:report_account_analytic.planning:0
 msgid "Planning by Account"
-msgstr ""
+msgstr "Σχεδίαση κατα Λογαριασμό"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "Summary by project"
-msgstr ""
+msgstr "Περίληψη κατα έργο"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning.line,amount_unit:0
 msgid "Qty UoM"
-msgstr ""
+msgstr "Ποσότητα 1ης ΜΜ"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning,user_id:0
 msgid "Responsible"
-msgstr ""
+msgstr "Υπεύθυνος"
 
 #. module: report_analytic_planning
 #: model:ir.model,name:report_analytic_planning.model_report_account_analytic_planning_stat
 msgid "Planning stat"
-msgstr ""
+msgstr "Στατιστική Σχεδιασμού"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning,state:0
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning.line,account_id:0
 msgid "Analytic account"
-msgstr ""
+msgstr "Αναλυτικός λογαριασμός"
 
 #. module: report_analytic_planning
 #: constraint:ir.model:0
-msgid "The Object name must start with x_ and not contain any special character !"
-msgstr "Το όνομα αντικειμένου πρέπει να αρχίζει με x_ και να μήν περιέχει ειδικούς χαρακτήρες!"
+msgid ""
+"The Object name must start with x_ and not contain any special character !"
+msgstr ""
+"Το όνομα του αντικειμένου θα πρέπει να ξεκινάει με x_ και να μην περιέχει "
+"ειδικούς χαρακτήρες!"
 
 #. module: report_analytic_planning
 #: model:ir.actions.act_window,name:report_analytic_planning.action_account_analytic_planning_stat_form
 #: model:ir.ui.menu,name:report_analytic_planning.menu_report_account_analytic_planning_stat
 msgid "Planning Statistics"
-msgstr ""
+msgstr "Στατιστικά Σχεδιασμού"
 
 #. module: report_analytic_planning
 #: model:ir.model,name:report_analytic_planning.model_report_account_analytic_planning_stat_account
 msgid "Planning account stat"
-msgstr ""
+msgstr "Στατιστική λογαριασμού σχεδιασμού"
 
 #. module: report_analytic_planning
 #: model:ir.model,name:report_analytic_planning.model_report_account_analytic_planning_line
 #: view:report_account_analytic.planning:0
 msgid "Planning Line"
-msgstr ""
+msgstr "Γραμμή Σχεδιασμού"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "Real"
-msgstr ""
+msgstr "Πραγματικό"
 
 #. module: report_analytic_planning
 #: model:ir.actions.act_window,name:report_analytic_planning.action_account_analytic_planning_stat_my_form
 #: model:ir.ui.menu,name:report_analytic_planning.menu_report_account_analytic_planning_stat_my
 msgid "My Planning Statistics"
-msgstr ""
+msgstr "Οι Στατιστικές Σχεδιασμού Μου"
 
 #. module: report_analytic_planning
 #: model:ir.module.module,description:report_analytic_planning.module_meta_information
 msgid "Planning on analytic accounts."
-msgstr ""
+msgstr "Σχεδιασμός στους αναλυτικούς λογαριασμούς."
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning,name:0
 msgid "Planning Name"
-msgstr ""
+msgstr "Όνομα Σχεδιασμού"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "Quantities"
-msgstr ""
+msgstr "Ποσότητες"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "HR Planning"
-msgstr "Σχεδιασμός ΑΔ"
+msgstr "Σχεδιασμός Ανθρώπινου Δυναμικού"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning.stat,sum_amount_real:0
 #: field:report_account_analytic.planning.stat.account,sum_amount_real:0
 #: field:report_account_analytic.planning.stat.user,sum_amount_real:0
 msgid "Timesheet"
-msgstr ""
+msgstr "Χρονοδιάγραμμα"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning.stat,sum_amount:0
 msgid "Planned hours"
-msgstr ""
+msgstr "Μελετημένες Ώρες"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "Responsible:"
-msgstr ""
+msgstr "Υπεύθυνος:"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning.line,amount:0
@@ -133,54 +138,54 @@ msgstr "Ποσότητα"
 #. module: report_analytic_planning
 #: view:report_account_analytic.planning:0
 msgid "Quantities by Account"
-msgstr ""
+msgstr "Ποσότητες κατα Λογαριασμό"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "From:"
-msgstr ""
+msgstr "Από:"
 
 #. module: report_analytic_planning
 #: view:report_account_analytic.planning:0
 msgid "Time by Account"
-msgstr ""
+msgstr "Χρόνος κατα Λογαριασμό"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning,date_to:0
 msgid "End Date"
-msgstr ""
+msgstr "Ημερομηνία Λήξης"
 
 #. module: report_analytic_planning
 #: constraint:ir.ui.view:0
 msgid "Invalid XML for View Architecture!"
-msgstr "Άκυρο XML για αρχιτεκτονική Προβολής!"
+msgstr "Άκυρο XML για Αρχιτεκτονική Όψης!"
 
 #. module: report_analytic_planning
 #: view:report_account_analytic.planning:0
 msgid "Time by User"
-msgstr ""
+msgstr "Χρόνος κατα Χρήστη"
 
 #. module: report_analytic_planning
 #: model:ir.actions.act_window,name:report_analytic_planning.action_account_analytic_planning_stat_my_manager_form
 #: model:ir.ui.menu,name:report_analytic_planning.menu_report_account_analytic_planning_stat_my_manager
 msgid "Planning Statistics of My Projects"
-msgstr ""
+msgstr "Στατιστική Σχεδιασμού των Έργων Μου"
 
 #. module: report_analytic_planning
 #: model:ir.actions.act_window,name:report_analytic_planning.action_account_analytic_planning_form_current
 #: model:ir.ui.menu,name:report_analytic_planning.menu_report_account_analytic_planning_current
 msgid "Current Planning"
-msgstr ""
+msgstr "Τρέχοντες Σχεδιασμοί"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "Summary by user"
-msgstr ""
+msgstr "Περίληψη κατα χρήστη"
 
 #. module: report_analytic_planning
 #: view:report_account_analytic.planning:0
 msgid "Analysis"
-msgstr ""
+msgstr "Ανάλυση"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning.line,user_id:0
@@ -193,65 +198,65 @@ msgstr "Χρήστης"
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "Project"
-msgstr ""
+msgstr "Έργο"
 
 #. module: report_analytic_planning
 #: view:report_account_analytic.planning:0
 msgid "Total Timesheet"
-msgstr ""
+msgstr "Σύνολο Χρονοδιαγράμματος"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "Details of user's time by projects"
-msgstr ""
+msgstr "Λεπτομέρειες του χρόνου χρήστη κατα έργα"
 
 #. module: report_analytic_planning
 #: model:ir.model,name:report_analytic_planning.model_report_account_analytic_planning_stat_user
 msgid "Planning user stat"
-msgstr ""
+msgstr "Στατιστική Σχεδιασμού Χρήστη"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 #: field:report_account_analytic.planning.stat.account,quantity:0
 #: field:report_account_analytic.planning.stat.user,quantity:0
 msgid "Planned"
-msgstr ""
+msgstr "Σχεδιασμένο"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning,stat_ids:0
 msgid "Planning analysis"
-msgstr ""
+msgstr "Ανάλυση Σχεδιασμού"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "["
-msgstr ""
+msgstr "["
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning,line_ids:0
 msgid "Planning lines"
-msgstr ""
+msgstr "Γραμμές σχεδιασμού"
 
 #. module: report_analytic_planning
 #: model:ir.module.module,shortdesc:report_analytic_planning.module_meta_information
 msgid "Analytic planning - Reporting"
-msgstr ""
+msgstr "Σχεδιασμός Αναλυτικής - Αναφορές"
 
 #. module: report_analytic_planning
 #: rml:report_account_analytic.planning.print:0
 msgid "]"
-msgstr ""
+msgstr "]"
 
 #. module: report_analytic_planning
 #: model:ir.actions.act_window,name:report_analytic_planning.action_account_analytic_planning_form_my
 #: model:ir.ui.menu,name:report_analytic_planning.menu_report_account_analytic_planning_my2
 msgid "My Planning"
-msgstr ""
+msgstr "Οι Σχεδιασμοί Μου"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning,stat_user_ids:0
 msgid "Planning by user"
-msgstr ""
+msgstr "Σχεδιασμοί κατα χρήστη"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning.line,note:0
@@ -262,23 +267,23 @@ msgstr "Σημείωση"
 #: rml:report_account_analytic.planning.print:0
 #: field:report_account_analytic.planning.stat,sum_amount_tasks:0
 msgid "Tasks"
-msgstr ""
+msgstr "Εργασίες"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning,stat_account_ids:0
 msgid "Planning by account"
-msgstr ""
+msgstr "Σχεδιασμοί κατα λογαριασμό"
 
 #. module: report_analytic_planning
 #: view:report_account_analytic.planning:0
 msgid "Quantities by User"
-msgstr ""
+msgstr "Ποσότητες κατα Χρήστη"
 
 #. module: report_analytic_planning
 #: model:ir.actions.act_window,name:report_analytic_planning.action_account_analytic_planning_form_current_my
 #: model:ir.ui.menu,name:report_analytic_planning.menu_report_account_analytic_planning_current_my
 msgid "My Current Planning"
-msgstr ""
+msgstr "Οι τρέχοντες σχεδιασμοί μου"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning.stat.account,account_id:0
@@ -288,7 +293,7 @@ msgstr "Αναλυτικός Λογαριασμός"
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning.stat,manager_id:0
 msgid "Manager"
-msgstr ""
+msgstr "Διαχειριστής"
 
 #. module: report_analytic_planning
 #: model:ir.actions.act_window,name:report_analytic_planning.action_account_analytic_planning_form
@@ -303,36 +308,35 @@ msgstr ""
 #: field:report_account_analytic.planning.stat.account,planning_id:0
 #: field:report_account_analytic.planning.stat.user,planning_id:0
 msgid "Planning"
-msgstr ""
+msgstr "Σχεδιασμός"
 
 #. module: report_analytic_planning
 #: selection:report_account_analytic.planning,state:0
 msgid "Done"
-msgstr ""
+msgstr "Εκπληρωμένο"
 
 #. module: report_analytic_planning
 #: view:report_account_analytic.planning:0
 msgid "Total Planned"
-msgstr ""
+msgstr "Συνολικός Σχεδιασμός"
 
 #. module: report_analytic_planning
 #: field:report_account_analytic.planning,date_from:0
 msgid "Start Date"
-msgstr ""
+msgstr "Ημερομηνία Έναρξης"
 
 #. module: report_analytic_planning
 #: view:report_account_analytic.planning.stat:0
 msgid "Planning statistics"
-msgstr ""
+msgstr "Στατιστικά Σχεδιασμού"
 
 #. module: report_analytic_planning
 #: selection:report_account_analytic.planning,state:0
 msgid "Open"
-msgstr ""
+msgstr "Ανοιχτό"
 
 #. module: report_analytic_planning
 #: model:ir.actions.act_window,name:report_analytic_planning.action_account_analytic_planning_form_new
 #: model:ir.ui.menu,name:report_analytic_planning.menu_report_account_analytic_planning_new
 msgid "New Planning"
-msgstr ""
-
+msgstr "Νέος Σχεδιασμός"
