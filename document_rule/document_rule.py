@@ -49,7 +49,7 @@ class document_rule(osv.osv):
                 'regex_filename' : fields.char('Regular Expression on filename', size=128),
                 'resource_object':fields.char('Resource Model',size=64),
                 'ressource_id': fields.integer('Resource ID'),
-                'act_copy_directory_id':fields.many2one('document.directory', 'Copy to'),
+                'act_copy_directory_id':fields.many2one('document.directory', 'Copy to',),
                 'act_move_directory_id':fields.many2one('document.directory', 'Move to'),
                 'act_assign_user_id': fields.many2one('res.users', 'Assign to User'),
                 'act_assign_partner_id': fields.many2one('res.partner', 'Assign to Partner'),
@@ -101,8 +101,9 @@ class document_file(osv.osv):
                     regex_filename = action.regex_filename
                     result_filename = True
                     if regex_filename:
-                        ptrn = re.compile(str(regex_filename))
-                        _result = ptrn.search(str(attch.datas_fname))
+                        patten=re.compile(".*\.([a-zA-Z0-9]|[a-zA-Z0-9])", re.IGNORECASE)
+                        if patten.match(regex_filename):
+                            _result = True
                         if not _result:
                             result_filename = False
                     regex_h = not regex_filename or result_filename
@@ -112,10 +113,10 @@ class document_file(osv.osv):
                     if ok:
                         if action.server_act:
                             context.update({'active_id':case.id,'active_ids':[attch.id]})
-                            self.pool.get('ir.actions.server').run(cr, uid, [action.server_action_id.id], context)
+                            self.pool.get('ir.actions.server').run(cr, uid, [action.server_act.id], context)
                         write = {}
                         if action.act_copy_directory_id:
-                            write['partner_id'] = action.act_assign_partner_id.id
+                            write['parent_id'] = action.act_copy_directory_id.id
                             self.copy(cr, uid, attch.id, write, context=context)
                         if action.act_assign_partner_id:
                             attch.partner_id = action.act_assign_partner_id
