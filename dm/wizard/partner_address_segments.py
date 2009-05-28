@@ -26,7 +26,7 @@ from osv import osv
 
 segment_form = """<?xml version="1.0" ?>
 <form string="Segments">
-    <separator string="Segments" colspan="4">
+    <separator string="Segments" colspan="4"/>
     <field name="segment_ids" readonly="1" nolabel="1" colspan="4"/>
 </form>"""
 
@@ -38,10 +38,7 @@ def _show_segments(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
     wi_obj = pool.get('dm.workitem')
     workitems = wi_obj.search(cr,uid,[('address_id','=',data['id'])])
-    segment_list = []
-    for wi in wi_obj.browse(cr,uid,workitems):
-        segment_list.append(wi.segment_id.id)
-    data['form']['segment_ids'] = segment_list
+    data['form']['segment_ids'] = [wi.segment_id.id for wi in wi_obj.browse(cr,uid,workitems)]
     return data['form']
 
 class wizard_address_segments(wizard.interface):
