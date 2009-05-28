@@ -115,9 +115,8 @@ class document_file(osv.osv):
                             self.pool.get('ir.actions.server').run(cr, uid, [action.server_action_id.id], context)
                         write = {}
                         if action.act_copy_directory_id:
-                            new_vals= {'name':attch.name,'datas':attch.datas,'parent_id': action.act_copy_directory_id.id,'datas_fname':attch.datas_fname,'partner_id':attch.partner_id.id}
-                            self.create(cr, uid, new_vals, context=context)
-                            action.act_copy_directory_id=False
+                            write['partner_id'] = action.act_assign_partner_id.id
+                            self.copy(cr, uid, attch.id, write, context=context)
                         if action.act_assign_partner_id:
                             attch.partner_id = action.act_assign_partner_id
                             write['partner_id'] = action.act_assign_partner_id.id
