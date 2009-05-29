@@ -41,7 +41,7 @@ Finally, this module is better used along with the product_variant_configurator 
 will help the salesman selecting the appropriate variant in the sale order line
 using dimension criteria instead of having to crawl the full space of variants.
     """,
-    "depends" : ["base", "product", "sale"],
+    "depends" : ["base", "product"],
     "init_xml" : [],
     "demo_xml" : ["demo_data.xml"],
     "update_xml" : [

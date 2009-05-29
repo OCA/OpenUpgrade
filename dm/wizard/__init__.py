@@ -31,6 +31,7 @@ import campaign_group_tasks
 import document_report
 import workitem_wizard
 import partner_address_segments
+import after_sale_action
 #import proposition_copy
 #import campaign_copy
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

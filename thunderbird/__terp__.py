@@ -8,6 +8,6 @@
 	"init_xml" : [],
 	"demo_xml" : [],
 	"update_xml" : ["partner/partner_view.xml"],
-	"active": True,
+	"active": False,
 	"installable": True
 }

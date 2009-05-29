@@ -3,6 +3,8 @@ from turbogears import controllers
 import cherrypy
 import re
 
+import os 
+ 
 from erpcomparator import rpc
 from erpcomparator import common
 from erpcomparator.tinyres import TinyResource
@@ -14,9 +16,14 @@ class Softwares(controllers.Controller, TinyResource):
         proxy = rpc.RPCProxy('comparison.item')
         url_re = re.compile('(http\:\/\/[^\s]+)|(file\:\/\/[^\s]+)|(ftp\:\/\/[^\s]+)|(https\:\/\/[^\s]+)', re.MULTILINE)
         ids = proxy.search([], 0, 0, 0, rpc.session.context)        
-        res = proxy.read(ids, ['name', 'note'], rpc.session.context)
-
+        res = proxy.read(ids, ['name', 'note', 'code'], rpc.session.context)
+        
+        full_dir = os.path.realpath("erpcomparator/static/images/Screenshots")
+        lst_folder = os.listdir(full_dir)    
+          
         for note in res:
+            files = []
+            file_names = [] 
             if note['note']:
                 notes = str(note['note'])
                 note['note'] = re.sub(r'<','less than',notes) or re.sub(r'>', 'greater than', notes)
@@ -26,5 +33,13 @@ class Softwares(controllers.Controller, TinyResource):
                 note['note'] = url_re.sub(substitue_url, note['note'])
                 note['note'] = note['note'].replace('\n',' <br/>')
                 note['note'] = note['note'].replace('&','&amp;')
-  
+                
+            for d in lst_folder: 
+                if d.startswith(note['code']):
+                    files.append(d)
+                    lst = d.split('_')[1].split('.')[0]
+                    file_names.append(lst)
+          
+            note['code'] = {note['code']: [files, file_names]}
+            
         return dict(res=res)

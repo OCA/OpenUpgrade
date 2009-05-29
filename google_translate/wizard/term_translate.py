@@ -21,10 +21,10 @@
 ##############################################################################
 import urllib
 from urllib import urlopen, urlencode, unquote
+import re
 
 import wizard
 import pooler
-import re
 
 trans_form = '''<?xml version="1.0"?>
     <form string="Translation" colspan="4">
@@ -55,7 +55,6 @@ def _translate(self, cr, uid, data, context={}):
     in_lang = 'en'
     ids = data['ids']
     translation_data = tran_obj.browse(cr, uid, ids, context)
-
     for trans in translation_data:
         if not trans.need_review:
             continue
@@ -63,28 +62,27 @@ def _translate(self, cr, uid, data, context={}):
             in_lang = context['lang'][:2].lower().encode('utf-8')
 
         if not trans['lang'] or not trans['src']:
-            raise osv.except_osv('Warning !',
-                                     'Please provide language and source')
+            raise wizard.except_wizard('Warning!', 'Please provide language and source')
         out_lang = trans['lang'][:2].lower().encode('utf-8')
         src = trans['src'].encode('utf-8')
         setUserAgent("Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008070400 SUSE/3.0.1-0.1 Firefox/3.0.1")
-
         try:
             post_params = urllib.urlencode({"langpair":"%s|%s" %(in_lang, out_lang), "text":src,"ie":"UTF8", "oe":"UTF8"})
         except KeyError, error:
             return
-
         page = urllib.urlopen("http://translate.google.com/translate_t", post_params)
         content = page.read()
         page.close()
         match = re.search("<div id=result_box dir=\"ltr\">(.*?)</div>", content)
+        if not match:
+            match = re.search("<div id=result_box dir=\"rtl\">(.*?)</div>", content)
         value = src
         if match:
             value = match.groups()[0]
-        tran_obj.write(cr, uid, trans.id, {'value':value, 'need_review':False})
+        tran_obj.write(cr, uid, trans.id, {'value': value, 'need_review': False})
     return {}
 
-class google_translate_wizard(wizard.interface):
+class google_translate(wizard.interface):
     states = {
         'init': {
              'actions': [],
@@ -96,6 +94,6 @@ class google_translate_wizard(wizard.interface):
                 },
             }
 
-google_translate_wizard('google.translate.wizard')
+google_translate('google.translate.wizard')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

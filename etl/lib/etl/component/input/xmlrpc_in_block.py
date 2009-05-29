@@ -35,9 +35,10 @@ class xmlrpc_in_block(xmlrpc_in):
     """
     _register_functions=[]
 
-    def __init__(self, xmlrpc_connector, job, name='component.input.xmlrpc_in_block', transformer=None, row_limit=0):        
+    def __init__(self, xmlrpc_connector, job, name='component.input.xmlrpc_in_block', key='output_channel', transformer=None, row_limit=0):        
         super(xmlrpc_in_block, self).__init__(xmlrpc_connector, job, name=name, transformer=transformer, row_limit=row_limit)
-        self._type = 'component.input.xmlrpc_in_block'    
+        self._type = 'component.input.xmlrpc_in_block'
+        self.key = key
 
 
     
@@ -73,7 +74,8 @@ class xmlrpc_in_block(xmlrpc_in):
         self.end_dummy.datas = []
         for channel, trans in self.end_dummy.input_get().items():
             for iterator in trans:
-                for d in iterator:                    
+                for chan, d in iterator:                    
+                    d.update({self.key:chan})
                     self.end_dummy.datas.append(d)
         for d in self.end_dummy.datas:
             yield d, 'main'
