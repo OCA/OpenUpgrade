@@ -1063,11 +1063,6 @@ class dm_campaign_proposition_segment(osv.osv):
         return super(dm_campaign_proposition_segment, self).create(cr, uid, vals, context)
   
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
-        if context and 'address_id' in context:
-            wi_obj = self.pool.get('dm.workitem')
-            workitems = wi_obj.search(cr,uid,[('address_id','=',context['address_id'])])
-            segments = [wi.segment_id.id for wi in wi_obj.browse(cr,uid,workitems)]
-            return segments
         if context and 'dm_camp_id' in context:
             if not context['dm_camp_id']:
                 return []

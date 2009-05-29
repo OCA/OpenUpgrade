@@ -21,21 +21,30 @@
 ##############################################################################
 import wizard
 import pooler
+from tools.misc import UpdateableStr
 from osv import fields
 from osv import osv
 
-parameter_form = """<?xml version="1.0" ?>
-<form string="After-Sale Action">
-    <field name="segment_id" colspan="4" context="{'address_id':1}"/>
-    <field name="action_id" colspan="4"/>
-</form>"""
+FORM = UpdateableStr()
 
 parameter_fields = {
     'segment_id':{'string':'Segment', 'type':'many2one', 'relation':'dm.campaign.proposition.segment', 'required':True},
     'action_id':{'string':'Action', 'type':'many2one', 'relation':'dm.offer.step.transition.trigger', 'required':True , 'domain':[('type','=','as')]},
 }
 
-def _create_event(self, cr, uid, data, context):
+def search_segment(self, cr, uid, data, context):
+    pool = pooler.get_pool(cr.dbname)
+    wi_obj = pool.get('dm.workitem')
+    workitems = wi_obj.search(cr,uid,[('address_id','=',data['id'])])
+    ids = [wi.segment_id.id for wi in wi_obj.browse(cr,uid,workitems)]
+    FORM.string = """<?xml version="1.0" ?>
+    <form string="After-Sale Action">
+    <field name="segment_id" colspan="4" domain="[('id', 'in', [%s])]"/>
+        <field name="action_id" colspan="4"/>
+        </form>"""%','.join([str(x) for x in ids])
+    return {}
+
+def _create_event(self,cr,uid,data,context):
     pool = pooler.get_pool(cr.dbname)
     vals = {
         'segment_id' : data['form']['segment_id'],
@@ -43,14 +52,14 @@ def _create_event(self, cr, uid, data, context):
         'address_id' : data['id'],
         'trigger_type_id' : data['form']['action_id']
     }
-    pool.get('dm.event').create(cr,uid,vals,context)
+    id = pool.get('dm.event').create(cr,uid,vals,context)
     return {}
 
 class wizard_after_sale_action(wizard.interface):
     states = {
         'init':{
-            'actions': [],
-            'result': {'type':'form', 'arch':parameter_form, 'fields':parameter_fields, 'state':[('end', 'Cancel'),('send', 'Send Document')]},
+            'actions': [search_segment],
+            'result': {'type':'form', 'arch':FORM, 'fields':parameter_fields, 'state':[('end', 'Cancel'),('send', 'Send Document')]},
         },
         'send': {
             'actions': [],
