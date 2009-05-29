@@ -129,7 +129,11 @@
 			</tr>
 		</table>
 		
-		<div width="800px" id="scr_title" style="padding: 15px;"><h3 ><b>Screen Shots</b></h3></div>
+		<div width="800px" id="scr_title" style="padding-left: 15px; padding-right: 15px;">
+			<h3 style="padding:0px;">
+				<b style="padding-left: 15px;"> Screen Shots</b>
+			</h3>
+		</div>
 		
 		<div id="screenshots">
 			<div py:for="r in res" id="${r['id']}">
@@ -137,7 +141,7 @@
 					<div class="messaging" style="display: none;">Please Note: You may have disabled JavaScript and/or CSS.</div>
 					<div class="icon_items" id="img_${r['id']}" style="display:none;">
 						<a class="prev" href="#"><img height="16" width="16" env="images" title="Previous" alt="Previous" src="/static/images/previous.png" /></a>         
-						<a class="next" href="#" style="display: block;"><img height="16" width="16" env="images" title="Next" alt="Next" src="/static/images/next.png" /></a>
+						<a class="next" href="#" style="display:none;"><img height="16" width="16" env="images" title="Next" alt="Next" src="/static/images/next.png" /></a>
 						<div class="news_items">
 							<a name="skip_to_1"></a>
 							<div id="gallery" >
