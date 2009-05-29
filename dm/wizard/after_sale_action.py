@@ -35,28 +35,15 @@ parameter_fields = {
     'action_id':{'string':'Action', 'type':'many2one', 'relation':'dm.offer.step.transition.trigger', 'required':True , 'domain':[('type','=','as')]},
 }
 
-#def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=80):
-#    print "=------------------", name
-#    pool = pooler.get_pool(cr.dbname)
-#    wi_obj = pool.get('dm.workitem')
-#    workitems = wi_obj.search(cr,uid,[('address_id','=',data['id'])])
-#    lst = [wi.segment_id.id for wi in wi_obj.browse(cr,uid,workitems)]
-#    
-#    ids = self.search(cr,uid,['id','in',lst])
-#    return self.name_get(cr, uid, ids, context=context)
-
-def _segment(self, cr, uid, data, context):
-    print "---------------------", context
+def _create_event(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
-    wi_obj = pool.get('dm.workitem')
-    workitems = wi_obj.search(cr,uid,[('address_id','=',data['id'])])
-    ids = [wi.segment_id.id for wi in wi_obj.browse(cr,uid,workitems)]
-    srch_id = pool.get('dm.campaign.proposition.segment').name_search(cr,uid,[('id','in',ids)])
-    print "=====================================", srch_id,data['form']
-    return data['form']
-
-def temp(self,cr,uid,data,context):
-    print "TEMP >>>>>>>>>>>>>>"
+    vals = {
+        'segment_id' : data['form']['segment_id'],
+        'step_id' : pool.get('dm.offer.step').search(cr,uid,[('type_id.code','=','ASEVENT'),('name','=','After-Sale Event (email)')])[0],
+        'address_id' : data['id'],
+        'trigger_type_id' : data['form']['action_id']
+    }
+    pool.get('dm.event').create(cr,uid,vals,context)
     return {}
 
 class wizard_after_sale_action(wizard.interface):
@@ -65,9 +52,9 @@ class wizard_after_sale_action(wizard.interface):
             'actions': [],
             'result': {'type':'form', 'arch':parameter_form, 'fields':parameter_fields, 'state':[('end', 'Cancel'),('send', 'Send Document')]},
         },
-        'end': {
+        'send': {
             'actions': [],
-            'result': {'type': 'action', 'action':temp, 'state':'end'}
+            'result': {'type': 'action', 'action':_create_event, 'state':'end'}
         }
     }
 wizard_after_sale_action("wizard_after_sale_action")
